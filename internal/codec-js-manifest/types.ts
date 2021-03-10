@@ -7,7 +7,7 @@
 
 import {ManifestDependenciesField} from "./normalize/dependencies";
 import {SPDXExpressionNode} from "@internal/codec-spdx-license";
-import {SemverVersionNode} from "@internal/codec-semver";
+import {SemverVersion} from "@internal/codec-semver";
 import {Consumer} from "@internal/consume";
 import {
 	AbsoluteFilePath,
@@ -103,7 +103,7 @@ export type ManifestEnvironment = {
 export type ManifestMetadata = {
 	name: ManifestName;
 	description: MString;
-	version: undefined | SemverVersionNode;
+	version: undefined | SemverVersion;
 	license: undefined | SPDXExpressionNode;
 	private: boolean;
 	keywords: string[];

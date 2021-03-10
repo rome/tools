@@ -7,7 +7,7 @@
 
 import {Consumer} from "@internal/consume";
 import {
-	SemverRangeNode,
+	SemverRange,
 	parseSemverRange,
 	stringifySemver,
 } from "@internal/codec-semver";
@@ -233,7 +233,7 @@ function parseHttpTarball(
 //# Semver Range
 type SemverPattern = {
 	type: "semver";
-	range: SemverRangeNode;
+	range: SemverRange;
 };
 
 function parseSemver(
@@ -327,7 +327,7 @@ const NPM_PREFIX = "npm:";
 type NpmPattern = {
 	type: "npm";
 	name: ManifestName;
-	range: undefined | SemverRangeNode;
+	range: undefined | SemverRange;
 };
 
 function parseNpm(
@@ -396,7 +396,7 @@ function parseNpm(
 	offset += nameRaw.length;
 	offset++;
 
-	let range: undefined | SemverRangeNode;
+	let range: undefined | SemverRange;
 	if (rangeRaw !== undefined) {
 		range = tryParseWithOptionalOffsetPosition(
 			{

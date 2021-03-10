@@ -1,5 +1,5 @@
 {
-	"name": "@internal/commit-parser",
+	"name": "@internal/codec-commit",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

@@ -6,11 +6,11 @@
  */
 
 import {
-	AbsoluteVersionNode,
-	ComparatorOperator,
-	RangeNode,
-	VersionNode,
-	WildcardNode,
+	SemverComparatorOperator,
+	SemverRange,
+	SemverVersion,
+	SemverWildcard,
+	SemverWildcardVersion,
 } from "./types";
 import {compareFromAst} from "./compare";
 
@@ -18,9 +18,9 @@ function buildVersion(
 	major: undefined | number,
 	minor: undefined | number,
 	patch: undefined | number,
-): VersionNode {
+): SemverWildcardVersion | SemverVersion {
 	return {
-		type: "WildcardVersion",
+		type: "SemverWildcardVersion",
 		major,
 		minor,
 		patch,
@@ -30,11 +30,11 @@ function buildVersion(
 }
 
 function compareOp(
-	op: ComparatorOperator,
-	version: AbsoluteVersionNode,
-	range: WildcardNode | VersionNode,
+	op: SemverComparatorOperator,
+	version: SemverVersion,
+	range: SemverWildcard | SemverWildcardVersion | SemverVersion,
 ): boolean {
-	if (range.type === "Wildcard") {
+	if (range.type === "SemverWildcard") {
 		return true;
 	}
 
@@ -107,32 +107,34 @@ function compareOp(
 }
 
 function inRange(
-	version: AbsoluteVersionNode,
-	left: WildcardNode | VersionNode,
-	right: WildcardNode | VersionNode,
+	version: SemverVersion,
+	left: SemverWildcard | SemverWildcardVersion | SemverVersion,
+	right: SemverWildcard | SemverWildcardVersion | SemverVersion,
 ): boolean {
-	if (left.type === "Wildcard" || right.type === "Wildcard") {
+	if (left.type === "SemverWildcard" || right.type === "SemverWildcard") {
 		return true;
 	}
 
 	return compareOp(">=", version, left) && compareOp("<=", version, right);
 }
 
-function collectVersions(range: RangeNode): VersionNode[] {
+function collectVersions(
+	range: SemverRange,
+): (SemverWildcardVersion | SemverVersion)[] {
 	switch (range.type) {
-		case "AbsoluteVersion":
-		case "WildcardVersion":
+		case "SemverAbsoluteVersion":
+		case "SemverWildcardVersion":
 			return [range];
 
-		case "Wildcard":
+		case "SemverWildcard":
 			return [];
 
-		case "Comparator":
+		case "SemverComparator":
 			return collectVersions(range.version);
 
-		case "LogicalAnd":
-		case "LogicalOr":
-		case "VersionRange":
+		case "SemverLogicalAnd":
+		case "SemverLogicalOr":
+		case "SemverVersionRange":
 			return [...collectVersions(range.left), ...collectVersions(range.right)];
 
 		default:
@@ -141,8 +143,8 @@ function collectVersions(range: RangeNode): VersionNode[] {
 }
 
 export function satisfiesFromAst(
-	version: AbsoluteVersionNode,
-	range: RangeNode,
+	version: SemverVersion,
+	range: SemverRange,
 ): boolean {
 	const res = satisfiesSub(version, range);
 	if (!res) {
@@ -176,29 +178,29 @@ export function satisfiesFromAst(
 	return true;
 }
 
-function satisfiesSub(version: AbsoluteVersionNode, range: RangeNode): boolean {
+function satisfiesSub(version: SemverVersion, range: SemverRange): boolean {
 	switch (range.type) {
-		case "AbsoluteVersion":
-		case "WildcardVersion":
+		case "SemverAbsoluteVersion":
+		case "SemverWildcardVersion":
 			return compareOp("=", version, range);
 
-		case "Wildcard":
+		case "SemverWildcard":
 			return true;
 
-		case "Comparator":
+		case "SemverComparator":
 			return compareOp(range.operator, version, range.version);
 
-		case "LogicalAnd":
+		case "SemverLogicalAnd":
 			return (
 				satisfiesSub(version, range.left) && satisfiesSub(version, range.right)
 			);
 
-		case "LogicalOr":
+		case "SemverLogicalOr":
 			return (
 				satisfiesSub(version, range.left) || satisfiesSub(version, range.right)
 			);
 
-		case "VersionRange":
+		case "SemverVersionRange":
 			return (
 				inRange(version, range.left, range.right) ||
 				inRange(version, range.right, range.left)

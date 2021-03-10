@@ -6,17 +6,17 @@
  */
 
 import {
-	AbsoluteVersionNode,
-	ComparatorNode,
-	ComparatorOperator,
-	LogicalAndNode,
-	LogicalOrNode,
-	RangeNode,
+	SemverComparator,
+	SemverComparatorOperator,
+	SemverLogicalAnd,
+	SemverLogicalOr,
+	SemverRange,
+	SemverVersion,
+	SemverVersionPrereleaseParts,
+	SemverVersionRange,
+	SemverWildcard,
+	SemverWildcardVersion,
 	Tokens,
-	VersionNode,
-	VersionPrereleaseParts,
-	VersionRangeNode,
-	WildcardNode,
 } from "./types";
 import {
 	ParserCore,
@@ -57,7 +57,7 @@ const semverParser = createParser<SemverParserTypes>({
 			(char === "~" && nextChar === ">")
 		) {
 			// @ts-ignore: TS doesn't infer the possible combinations
-			const value: ComparatorOperator = char + nextChar;
+			const value: SemverComparatorOperator = char + nextChar;
 			return parser.finishValueToken("Operator", value, index.add(2));
 		}
 
@@ -68,7 +68,7 @@ const semverParser = createParser<SemverParserTypes>({
 			char === "~" ||
 			char === "="
 		) {
-			const op: ComparatorOperator = char;
+			const op: SemverComparatorOperator = char;
 			return parser.finishValueToken("Operator", op);
 		}
 
@@ -132,7 +132,7 @@ function eatSpaceToken(parser: SemverParser) {
 
 function parseVersionOrWildcard(
 	parser: SemverParser,
-): WildcardNode | VersionNode {
+): SemverWildcard | SemverWildcardVersion | SemverVersion {
 	const startPos = parser.getPosition();
 	const startToken = parser.getToken();
 	const version = parseVersion(parser);
@@ -146,7 +146,7 @@ function parseVersionOrWildcard(
 		version.build.length === 0
 	) {
 		return {
-			type: "Wildcard",
+			type: "SemverWildcard",
 			loc: parser.finishLoc(startPos),
 		};
 	}
@@ -154,7 +154,9 @@ function parseVersionOrWildcard(
 	return version;
 }
 
-function parseVersion(parser: SemverParser): VersionNode {
+function parseVersion(
+	parser: SemverParser,
+): SemverWildcardVersion | SemverVersion {
 	const startPos = parser.getPosition();
 	const startToken = parser.getToken();
 
@@ -189,7 +191,7 @@ function parseVersion(parser: SemverParser): VersionNode {
 	}
 
 	// The dash is optional in loose mode. eg. 1.2.3pre
-	let prerelease: VersionPrereleaseParts = [];
+	let prerelease: SemverVersionPrereleaseParts = [];
 	if (
 		parser.eatToken("Dash") ||
 		(parser.options.loose && parser.matchToken("Word"))
@@ -197,14 +199,14 @@ function parseVersion(parser: SemverParser): VersionNode {
 		prerelease = parseVersionQualifierParts(parser);
 	}
 
-	let build: VersionPrereleaseParts = [];
+	let build: SemverVersionPrereleaseParts = [];
 	if (parser.eatToken("Plus")) {
 		build = parseVersionQualifierParts(parser);
 	}
 
 	if (major !== undefined && minor !== undefined && patch !== undefined) {
 		return {
-			type: "AbsoluteVersion",
+			type: "SemverAbsoluteVersion",
 			loc: parser.finishLoc(startPos),
 			major,
 			minor,
@@ -214,7 +216,7 @@ function parseVersion(parser: SemverParser): VersionNode {
 		};
 	} else {
 		return {
-			type: "WildcardVersion",
+			type: "SemverWildcardVersion",
 			loc: parser.finishLoc(startPos),
 			major,
 			minor,
@@ -227,8 +229,8 @@ function parseVersion(parser: SemverParser): VersionNode {
 
 function parseVersionQualifierParts(
 	parser: SemverParser,
-): VersionPrereleaseParts {
-	const parts: VersionPrereleaseParts = [];
+): SemverVersionPrereleaseParts {
+	const parts: SemverVersionPrereleaseParts = [];
 	do {
 		parts.push(parseVersionQualifierPart(parser));
 	} while (parser.eatToken("Dot") !== undefined);
@@ -309,14 +311,17 @@ function parseVersionNumber(parser: SemverParser): undefined | number {
 	return undefined;
 }
 
-function parseLogicalOr(parser: SemverParser, left: RangeNode): LogicalOrNode {
+function parseLogicalOr(
+	parser: SemverParser,
+	left: SemverRange,
+): SemverLogicalOr {
 	parser.nextToken();
 	eatSpaceToken(parser);
 
 	const right = parseExpression(parser);
 	return {
 		loc: parser.finishLoc(parser.getLoc(left).start),
-		type: "LogicalOr",
+		type: "SemverLogicalOr",
 		left,
 		right,
 	};
@@ -324,15 +329,18 @@ function parseLogicalOr(parser: SemverParser, left: RangeNode): LogicalOrNode {
 
 function validateRangeSide(
 	parser: SemverParser,
-	node: RangeNode,
-): VersionNode | WildcardNode {
+	node: SemverRange,
+): SemverWildcardVersion | SemverVersion | SemverWildcard {
 	// In loose mode, we allow ranges to be a bare wildcard instead of a version
 	// eg. * - 1.2.3
-	if (node.type === "WildcardVersion" || node.type === "AbsoluteVersion") {
+	if (
+		node.type === "SemverWildcardVersion" ||
+		node.type === "SemverAbsoluteVersion"
+	) {
 		return node;
 	}
 
-	if (node.type === "Wildcard" && parser.options.loose) {
+	if (node.type === "SemverWildcard" && parser.options.loose) {
 		return node;
 	}
 
@@ -344,31 +352,34 @@ function validateRangeSide(
 
 function parseVersionRange(
 	parser: SemverParser,
-	left: RangeNode,
-): VersionRangeNode {
+	left: SemverRange,
+): SemverVersionRange {
 	parser.nextToken();
 	eatSpaceToken(parser);
 
 	const right = parseVersionOrWildcard(parser);
 
 	return {
-		type: "VersionRange",
+		type: "SemverVersionRange",
 		loc: parser.finishLoc(parser.getLoc(left).start),
 		left: validateRangeSide(parser, left),
 		right: validateRangeSide(parser, right),
 	};
 }
 
-function parseWildcard(parser: SemverParser): WildcardNode {
+function parseWildcard(parser: SemverParser): SemverWildcard {
 	const startPos = parser.getPosition();
 	parser.nextToken();
-	return {type: "Wildcard", loc: parser.finishLoc(startPos)};
+	return {
+		type: "SemverWildcard",
+		loc: parser.finishLoc(startPos),
+	};
 }
 
 function parseAtomOperator(
 	parser: SemverParser,
 	token: Tokens["Operator"],
-): ComparatorNode {
+): SemverComparator {
 	const startPos = parser.getPosition();
 	parser.nextToken();
 	eatSpaceToken(parser);
@@ -376,7 +387,7 @@ function parseAtomOperator(
 	const version = parseVersionOrWildcard(parser);
 
 	return {
-		type: "Comparator",
+		type: "SemverComparator",
 		loc: parser.finishLoc(startPos),
 		operator: token.value,
 		version,
@@ -445,11 +456,14 @@ function parseAtom(parser: SemverParser) {
 	}
 }
 
-function parseLogicalAnd(parser: SemverParser, left: RangeNode): LogicalAndNode {
+function parseLogicalAnd(
+	parser: SemverParser,
+	left: SemverRange,
+): SemverLogicalAnd {
 	const right = parseExpression(parser);
 
 	return {
-		type: "LogicalAnd",
+		type: "SemverLogicalAnd",
 		left,
 		right,
 		loc: {
@@ -460,7 +474,7 @@ function parseLogicalAnd(parser: SemverParser, left: RangeNode): LogicalAndNode 
 	};
 }
 
-function parseExpression(parser: SemverParser): RangeNode {
+function parseExpression(parser: SemverParser): SemverRange {
 	const left = parseAtom(parser);
 	eatSpaceToken(parser);
 
@@ -479,7 +493,7 @@ function parseExpression(parser: SemverParser): RangeNode {
 	return left;
 }
 
-function parseInitialRange(parser: SemverParser): RangeNode {
+function parseInitialRange(parser: SemverParser): SemverRange {
 	// Allow spaces at the beginning, spaces at the end have been removed by the trimRight in the constructor
 	eatSpaceToken(parser);
 
@@ -494,11 +508,11 @@ function parseInitialRange(parser: SemverParser): RangeNode {
 	return expr;
 }
 
-function parseInitialVersion(parser: SemverParser): AbsoluteVersionNode {
+function parseInitialVersion(parser: SemverParser): SemverVersion {
 	const node = parseInitialRange(parser);
 
 	// Verify the return value in version mode
-	if (node.type !== "AbsoluteVersion") {
+	if (node.type !== "SemverAbsoluteVersion") {
 		throw parser.unexpected({
 			...descriptions.SEMVER.EXPECTED_VERSION,
 			start: parser.getLoc(node).start,
@@ -508,12 +522,10 @@ function parseInitialVersion(parser: SemverParser): AbsoluteVersionNode {
 	return node;
 }
 
-export function parseSemverRange(opts: SemverParserOptions): RangeNode {
+export function parseSemverRange(opts: SemverParserOptions): SemverRange {
 	return parseInitialRange(semverParser.create(opts, {mode: "range"}));
 }
 
-export function parseSemverVersion(
-	opts: SemverParserOptions,
-): AbsoluteVersionNode {
+export function parseSemverVersion(opts: SemverParserOptions): SemverVersion {
 	return parseInitialVersion(semverParser.create(opts, {mode: "version"}));
 }

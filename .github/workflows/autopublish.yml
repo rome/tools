@@ -1,5 +1,6 @@
 name: Auto-publish
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
   push:
@@ -10,7 +11,7 @@ on:
 
 jobs:
   check:
-    name: Check if there was a version update
+    name: Check version
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ env.tag }}
@@ -27,13 +28,14 @@ jobs:
 
       - name: Check nightly status
         id: nightly
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'schedule' || github.event_name = 'workflow_dispatch'
         run: |
           echo "tag=nightly" >> $GITHUB_ENV
           echo "nightly=true" >> $GITHUB_ENV
 
       - name: Check version changes
         uses: EndBug/version-check@v1
+        if: env.nightly != 'true'
         id: version
         with:
           diff-search: true
@@ -43,7 +45,7 @@ jobs:
 
       - name: Check prerelease status
         id: prerelease
-        if: steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
 
@@ -52,7 +54,7 @@ jobs:
         run: 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
 
   build:
-    name: Build Release
+    name: Build
     needs: check
     if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
     outputs:
@@ -99,8 +101,9 @@ jobs:
           if-no-files-found: error
 
   publish:
-    name: Publish Release
+    name: Publish
     needs: build
+    environment: npm-publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -116,3 +119,20 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: dist.tar.gz
+
+      - name: npm publish
+        run: npm publish dist.tar.gz --tag ${{ needs.build.outputs.tag }}
+
+      - name: Create GitHub release and tag
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: v${{ needs.build.outputs.version }}
+          tag_name: v${{ needs.build.outputs.version }}
+          draft: false
+          prerelease: ${{ needs.build.outputs.tag !== 'latest' }}
+          files: dist.tar.gz
+          fail_on_unmatched_files: true
+
+      # TODO update latest branch if latest

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteVersionNode, VersionNode} from "./types";
+import {SemverVersion, SemverWildcardVersion} from "./types";
 
 // -1: Lesser
 // 0: Equal
@@ -41,8 +41,8 @@ function compareIdentifiers(
 }
 
 function compareMain(
-	version: AbsoluteVersionNode,
-	range: VersionNode,
+	version: SemverVersion,
+	range: SemverWildcardVersion | SemverVersion,
 ): CompareRet {
 	return (
 		compareIdentifiers(version.major, range.major) ||
@@ -52,8 +52,8 @@ function compareMain(
 }
 
 function comparePre(
-	version: AbsoluteVersionNode,
-	range: VersionNode,
+	version: SemverVersion,
+	range: SemverWildcardVersion | SemverVersion,
 ): CompareRet {
 	// NOT having a prerelease is > having one
 	if (version.prerelease.length > 0 && range.prerelease.length === 0) {
@@ -86,8 +86,8 @@ function comparePre(
 }
 
 export function compareFromAst(
-	version: AbsoluteVersionNode,
-	range: VersionNode,
+	version: SemverVersion,
+	range: SemverWildcardVersion | SemverVersion,
 ): CompareRet {
 	return compareMain(version, range) || comparePre(version, range);
 }

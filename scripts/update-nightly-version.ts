@@ -1,5 +1,4 @@
-import {ROOT} from "./_utils";
-import {runNPMVersion} from "./update-version";
+import {updateVersion} from "./_utils";
 import {VERSION} from "@internal/core";
 
 export async function main() {
@@ -10,5 +9,5 @@ export async function main() {
 	const newVersion = `${version}-nightly.${dateParts.join(".")}`;
 
 	// And then update it
-	await runNPMVersion([newVersion], ROOT);
+	await updateVersion(newVersion);
 }

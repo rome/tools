@@ -475,7 +475,7 @@ export abstract class ReadableBasePath<
 		input: string;
 	}> {
 		return {
-			input: (await this.readFile()).toString(),
+			input: await this.readFileText(),
 			path: this.assertReadable(),
 		};
 	}
