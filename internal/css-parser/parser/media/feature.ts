@@ -10,7 +10,7 @@ import {
 } from "@internal/ast";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
-import {isCondition} from "@internal/css-parser/parser/media/conditions";
+// import {isCondition} from "@internal/css-parser/parser/media/conditions";
 
 export function parseMediaFeatureName(parser: CSSParser): CSSMediaFeatureName | undefined {
 
@@ -24,37 +24,47 @@ export function parseMediaFeatureName(parser: CSSParser): CSSMediaFeatureName | 
 
 	return parser.finishNode(namePosition, {
 		type: "CSSMediaFeatureName",
-		value: parser.finishNode(namePosition, {
-			type: "CSSString",
-			value: ident.value
-		})
+		value: ident.value
 	});
 }
 
 export function parseMediaFeatureValue(parser: CSSParser ): CSSMediaFeatureValue | undefined {
-	const token = parser.nextToken();
+	// move forward and get rid of all the white spaces
+	parser.nextToken();
+	while (matchToken(parser, "Whitespace")) {
+		readToken(parser, "Whitespace");
+	}
+	const token = parser.getToken();
 	const start  = parser.getPosition();
 	let value: CSSDimension | CSSString | CSSNumber | undefined = undefined;
 
 	if (token.type === "Ident") {
+		parser.nextToken();
 		value = parser.finishNode(start, {
 			type: "CSSString",
 			value: token.value
 		});
 	} else if (token.type === "Dimension") {
+		parser.nextToken();
 		value = parser.finishNode(start, {
 			type: "CSSDimension",
 			unit: token.unit,
 			value: token.value,
 		});
 	} else if (token.type === "Number") {
+		parser.nextToken();
 		value = parser.finishNode(start, {
 			type: "CSSNumber",
 			raw: token.raw,
 			value: token.value,
 		});
 	} else {
-		// TODO: error
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.MEDIA_QUERY_FEATURE_UNEXPECTED_VALUE,
+
+			token
+		});
+		parser.nextToken();
 		return undefined;
 	}
 
@@ -91,7 +101,6 @@ export function parseMediaFeature(parser: CSSParser): CSSMediaFeature | undefine
 	const start = parser.getPosition();
 	let  value: CSSMediaFeatureBoolean | CSSMediaFeaturePlain | undefined = undefined;
 
-	console.log()
 	// in every case, the first token must but an Ident
 	const startToken = readToken(parser, "Ident") as Tokens["Ident"];
 	// the value of the feature can be a:
@@ -103,7 +112,7 @@ export function parseMediaFeature(parser: CSSParser): CSSMediaFeature | undefine
 		readToken(parser, "Whitespace");
 	}
 
-		const nextToken = parser.getToken();
+	const nextToken = parser.getToken();
 
 	// if we have a right parenthesis, it means we have a boolean
 	if (nextToken.type === "RightParen") {
@@ -112,9 +121,20 @@ export function parseMediaFeature(parser: CSSParser): CSSMediaFeature | undefine
 			value: startToken.value,
 
 		})
-	} else {
+	} else if (nextToken.type === "Colon") {
+		const name = parser.finishNode(start, {
+			type: "CSSMediaFeatureName",
+			value: startToken.value
+		})
+		const featureValue = parseMediaFeatureValue(parser)
+		if (featureValue) {
 
-		value = parseMediaFeaturePlain(parser);
+			value = parser.finishNode(start, {
+				type: "CSSMediaFeaturePlain",
+				value: featureValue,
+				name
+			})
+		}
 	}
 
 	// if (isCondition(token.value)) {
@@ -124,7 +144,7 @@ export function parseMediaFeature(parser: CSSParser): CSSMediaFeature | undefine
 	// }
 
 	if (value) {
-		parser.nextToken();
+		console.log('token before media feature', parser.getToken())
 		return parser.finishNode(start, {
 			type: "CSSMediaFeature",
 			value

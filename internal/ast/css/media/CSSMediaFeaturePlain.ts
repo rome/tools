@@ -3,7 +3,7 @@ import {createBuilder} from "../../utils";
 
 export interface CSSMediaFeaturePlain extends NodeBaseWithComments {
 	readonly type: "CSSMediaFeaturePlain";
-	readonly name?: CSSMediaFeatureName;
+	readonly name: CSSMediaFeatureName;
 	readonly value: CSSMediaFeatureValue;
 }
 

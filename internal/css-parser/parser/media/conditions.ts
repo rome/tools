@@ -39,14 +39,20 @@ export function parseMediaNot(parser: CSSParser): CSSMediaNot | undefined {
 }
 
 export function parseMediaAnd(parser: CSSParser): CSSMediaAnd | undefined {
+	// TODO: implement loop with commas
+	const start = parser.getPosition();
 	const value = parseMediaInParens(parser);
-	if (!value) {
+	if (value) {
+		return parser.finishNode(start, {
+			type: "CSSMediaAnd",
+			value: [value]
+		})
+	}
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.MALFORMED_MEDIA_QUERY,
 			token: parser.getToken()
 		})
-	}
-	return undefined;
+	return undefined
 }
 
 export function parseMediaOr(parser: CSSParser): CSSMediaOr | undefined {

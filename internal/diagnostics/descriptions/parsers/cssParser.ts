@@ -149,5 +149,9 @@ export const cssParser = createDiagnosticsCategory({
 	},
 	MEDIA_QUERY_EXPECTED_NOT_OR_PARENTHESIS: {
 		message: markup`A left parenthesis or the keyword <emphasis>not</emphasis> are expected in this position.`
+	},
+
+	MEDIA_QUERY_FEATURE_UNEXPECTED_VALUE: {
+		message: markup`The value provided inside the media feature is not correct.`
 	}
 });

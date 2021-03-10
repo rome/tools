@@ -24,7 +24,7 @@ CSSRoot {
 											value: "color"
 											loc: SourceLocation media/feature/input.css 1:19-1:24
 										}
-										loc: SourceLocation media/feature/input.css 1:19-1:25
+										loc: SourceLocation media/feature/input.css 1:19-1:24
 									}
 									loc: SourceLocation media/feature/input.css 1:18-1:25
 								}
@@ -61,7 +61,7 @@ CSSRoot {
 											value: "color"
 											loc: SourceLocation media/feature/input.css 2:24-2:29
 										}
-										loc: SourceLocation media/feature/input.css 2:24-2:30
+										loc: SourceLocation media/feature/input.css 2:24-2:29
 									}
 									loc: SourceLocation media/feature/input.css 2:23-2:30
 								}
@@ -80,11 +80,106 @@ CSSRoot {
 			}
 			loc: SourceLocation media/feature/input.css 2:0-2:33
 		}
+		CSSAtRule {
+			name: "media"
+			prelude: [
+				CSSMediaQueryList {
+					value: [
+						CSSMediaQuery {
+							condition: "only"
+							value: CSSMediaType {
+								value: "screen"
+								loc: SourceLocation media/feature/input.css 3:12-3:18
+							}
+							conditionWithoutOr: CSSMediaConditionWithoutOr {
+								value: CSSMediaInParens {
+									value: CSSMediaFeature {
+										value: CSSMediaFeaturePlain {
+											name: CSSMediaFeatureName {
+												value: "min-width"
+												loc: SourceLocation media/feature/input.css 3:24-3:33
+											}
+											value: CSSMediaFeatureValue {
+												value: CSSDimension {
+													value: 800
+													unit: "px"
+													loc: SourceLocation media/feature/input.css 3:35-3:40
+												}
+												loc: SourceLocation media/feature/input.css 3:35-3:40
+											}
+											loc: SourceLocation media/feature/input.css 3:24-3:40
+										}
+										loc: SourceLocation media/feature/input.css 3:24-3:40
+									}
+									loc: SourceLocation media/feature/input.css 3:23-3:41
+								}
+								loc: SourceLocation media/feature/input.css 3:19-3:41
+							}
+							loc: SourceLocation media/feature/input.css 3:6-3:41
+						}
+					]
+					loc: SourceLocation media/feature/input.css 3:6-3:42
+				}
+			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation media/feature/input.css 3:42-3:44
+			}
+			loc: SourceLocation media/feature/input.css 3:0-3:44
+		}
+		CSSAtRule {
+			name: "media"
+			prelude: [
+				CSSMediaQueryList {
+					value: [
+						CSSMediaQuery {
+							value: CSSMediaType {
+								value: "screen"
+								loc: SourceLocation media/feature/input.css 4:7-4:13
+							}
+							conditionWithoutOr: CSSMediaConditionWithoutOr {
+								value: CSSMediaInParens {
+									value: CSSMediaFeature {
+										value: CSSMediaFeaturePlain {
+											name: CSSMediaFeatureName {
+												value: "min-width"
+												loc: SourceLocation media/feature/input.css 4:19-4:35
+											}
+											value: CSSMediaFeatureValue {
+												value: CSSDimension {
+													value: 800
+													unit: "px"
+													loc: SourceLocation media/feature/input.css 4:46-4:51
+												}
+												loc: SourceLocation media/feature/input.css 4:46-4:51
+											}
+											loc: SourceLocation media/feature/input.css 4:19-4:51
+										}
+										loc: SourceLocation media/feature/input.css 4:19-4:51
+									}
+									loc: SourceLocation media/feature/input.css 4:18-4:60
+								}
+								loc: SourceLocation media/feature/input.css 4:14-4:60
+							}
+							loc: SourceLocation media/feature/input.css 4:6-4:60
+						}
+					]
+					loc: SourceLocation media/feature/input.css 4:6-4:61
+				}
+			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation media/feature/input.css 4:61-4:63
+			}
+			loc: SourceLocation media/feature/input.css 4:0-4:63
+		}
 	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	path: RelativePath<media/feature/input.css>
-	loc: SourceLocation media/feature/input.css 1:0-2:33
+	loc: SourceLocation media/feature/input.css 1:0-4:63
 }
 ```

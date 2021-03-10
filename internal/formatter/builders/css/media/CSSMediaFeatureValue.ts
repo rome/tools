@@ -5,5 +5,5 @@ export default function CSSMediaFeatureValue(
 	builder: Builder,
 	node: CSSMediaFeatureValue,
 ): Token {
-	throw new Error("unimplemented");
+	return builder.tokenize(node.value, node)
 }

@@ -31,6 +31,10 @@ screen {
 
 @media screen   , not all    ,only print {}
 
+
+@media only screen and (min-width: 800px) {}
+@media screen and (min-width       :          800px        ) {}
+
 ```
 
 ### `Output`
@@ -43,6 +47,11 @@ screen {
 }
 
 @media screen, not all, only print {
+}
+
+@media only screen and (min-width: 800px) {
+}
+@media screen and (min-width: 800px) {
 }
 
 ```

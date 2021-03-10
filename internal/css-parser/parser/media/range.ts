@@ -5,7 +5,7 @@ import {
 	RangeValueGTValue,
 	RangeValueLTValue
 } from "@internal/ast";
-import {CSSParser, Tokens} from "@internal/css-parser/types";
+import {CSSParser} from "@internal/css-parser/types";
 import {parseMediaFeatureName, parseMediaFeatureValue} from "@internal/css-parser/parser/media/feature";
 import {parseMediaFeatureComparison, parseMediaFeatureGT} from "@internal/css-parser/parser/media/comparison";
 import {descriptions} from "@internal/diagnostics";

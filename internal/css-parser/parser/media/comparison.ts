@@ -1,5 +1,11 @@
 import {CSSParser} from "@internal/css-parser/types";
-import {CSSMediaFeatureComparison, CSSMediaFeatureGT, CSSMediaFeatureEQ, CSSMediaFeatureLT} from "@internal/ast";
+import {
+	CSSMediaFeatureComparison,
+	CSSMediaFeatureGT,
+	CSSMediaFeatureEQ,
+	CSSMediaFeatureLT,
+	CSSMediaCondition
+} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 
 export function parseMediaFeatureGT(parser: CSSParser): CSSMediaFeatureGT | undefined {
@@ -77,4 +83,9 @@ export function parseMediaFeatureComparison(parser: CSSParser): CSSMediaFeatureC
 
 
 	return undefined;
+}
+
+
+export function parseMediaCondition(parser: CSSParser): CSSMediaCondition | undefined {
+	return undefined
 }

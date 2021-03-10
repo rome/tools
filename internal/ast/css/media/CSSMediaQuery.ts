@@ -9,8 +9,8 @@ import {createBuilder} from "../../utils";
 export type CSSMediaQueryCondition = "not" | "only" | undefined;
 export interface CSSMediaQuery extends NodeBaseWithComments {
 	readonly type: "CSSMediaQuery";
-	readonly condition?: CSSMediaQueryCondition;
-	readonly conditionWithoutOr?: CSSMediaConditionWithoutOr;
+	readonly condition?: CSSMediaQueryCondition | undefined;
+	readonly conditionWithoutOr?: CSSMediaConditionWithoutOr | undefined;
 	readonly value: CSSMediaCondition | CSSMediaType;
 }
 

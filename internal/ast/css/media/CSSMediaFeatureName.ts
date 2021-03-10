@@ -1,9 +1,9 @@
-import {CSSString, NodeBaseWithComments} from "@internal/ast";
+import {NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSMediaFeatureName extends NodeBaseWithComments {
 	readonly type: "CSSMediaFeatureName";
-	readonly value: CSSString;
+	readonly value: string;
 }
 
 export const cssMediaFeatureName = createBuilder<CSSMediaFeatureName>(
