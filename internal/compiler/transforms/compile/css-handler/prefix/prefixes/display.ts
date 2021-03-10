@@ -14,6 +14,9 @@ export default [
 				"flex",
 				"flexbox",
 				targets,
+				(propertyName) =>
+					propertyName === "-moz-flex" ? "-moz-box" : propertyName
+				,
 			);
 		},
 	}),
@@ -26,6 +29,7 @@ export default [
 				"inline-flex",
 				"flexbox",
 				targets,
+				(value) => value === "-moz-inline-flex" ? "-moz-inline-box" : value,
 			);
 		},
 	}),

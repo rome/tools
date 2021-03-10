@@ -52,7 +52,7 @@ export const helperVisitors: AnyVisitor[] = [
 export const stageTransforms: TransformStageFactories = {
 	// These may effect dependency analysis
 	pre: () => [optimizeImports, optimizeExports, jsx],
-	compile: (projectConfig: ProjectConfig, options: CompilerOptions) => [
+	compile: (projectConfig: ProjectConfig) => [
 		paramlessCatch,
 		optionalChaining,
 		nullishCoalescing,

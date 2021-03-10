@@ -7,9 +7,9 @@ import {
 } from "@internal/ast";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {
+	CompilerPath,
 	EnterSignal,
 	ExitSignal,
-	CompilerPath,
 	createVisitor,
 	signals,
 } from "@internal/compiler";
@@ -17,16 +17,17 @@ import {
 	VisitorStateEnter,
 	VisitorStateExit,
 } from "@internal/compiler/lib/VisitorState";
-import { Browser } from "@internal/browser-features/Browser";
+import {Browser} from "@internal/browser-features/Browser";
 
 export function nodeHasPrefixedProperty(
 	node: CSSBlock,
 	property: string,
 	prefix: string,
+	rename: (propertyName: string) => string = (propertyName) => propertyName,
 ): boolean {
 	if (node.value) {
 		return node.value.some((n) =>
-			n.type === "CSSDeclaration" && n.name === `-${prefix}-${property}`
+			n.type === "CSSDeclaration" && n.name === rename(`-${prefix}-${property}`)
 		);
 	}
 	return false;
@@ -37,6 +38,7 @@ export function nodeHasPrefixedPropertyValue(
 	property: string,
 	value: string,
 	prefix: string,
+	rename: (value: string) => string = (value) => value,
 ): boolean {
 	if (node.value) {
 		return node.value.some((n) =>
@@ -44,7 +46,7 @@ export function nodeHasPrefixedPropertyValue(
 			n.name === property &&
 			n.value.length === 1 &&
 			n.value[0]?.type === "CSSIdentifier" &&
-			n.value[0].value === `-${prefix}-${value}`
+			n.value[0].value === rename(`-${prefix}-${value}`)
 		);
 	}
 	return false;
@@ -116,7 +118,8 @@ export function prefixCSSProperty(
 	path: CompilerPath,
 	propertyName: string,
 	browserFeaturesPropertyName: string,
-	targets: Browser[]
+	targets: Browser[],
+	rename: (propertyName: string) => string = (propertyName) => propertyName,
 ) {
 	const {node} = path;
 	if (node.type === "CSSBlock") {
@@ -125,13 +128,22 @@ export function prefixCSSProperty(
 			if (propertyIndex > -1) {
 				const property = node.value[propertyIndex] as CSSDeclaration;
 				const newDeclarations = [];
-				const prefixes = new Set(targets.filter((browser) => browser.cssFeatureRequiresPrefix(browserFeaturesPropertyName)).map((browser) => browser.getPrefix()));
+				const prefixes = new Set(
+					targets.filter((browser) =>
+						browser.cssFeatureRequiresPrefix(browserFeaturesPropertyName)
+					).map((browser) => browser.getPrefix()),
+				);
 				for (const prefix of prefixes) {
-					const hasPrefix = nodeHasPrefixedProperty(node, propertyName, prefix);
+					const hasPrefix = nodeHasPrefixedProperty(
+						node,
+						propertyName,
+						prefix,
+						rename,
+					);
 					if (!hasPrefix) {
 						newDeclarations.push(
 							cssDeclaration.create({
-								name: `-${prefix}-${property.name}`,
+								name: rename(`-${prefix}-${property.name}`),
 								value: property.value,
 								important: property.important,
 							}),
@@ -143,8 +155,8 @@ export function prefixCSSProperty(
 						...node,
 						value: [
 							...node.value.slice(0, propertyIndex),
-							property,
 							...newDeclarations,
+							property,
 							...node.value.slice(propertyIndex + 1, node.value.length),
 						],
 					});
@@ -162,7 +174,8 @@ export function prefixCSSValue(
 	propertyName: string,
 	value: string,
 	browserFeaturesPropertyName: string,
-	targets: Browser[]
+	targets: Browser[],
+	rename: (value: string) => string = (value) => value,
 ) {
 	const {node} = path;
 	if (node.type === "CSSBlock") {
@@ -171,19 +184,26 @@ export function prefixCSSValue(
 			if (propertyIndex > -1) {
 				const property = node.value[propertyIndex] as CSSDeclaration;
 				const newDeclarations = [];
-				const prefixes = new Set(targets.filter((browser) => browser.cssFeatureRequiresPrefix(browserFeaturesPropertyName)).map((browser) => browser.getPrefix()));
+				const prefixes = new Set(
+					targets.filter((browser) =>
+						browser.cssFeatureRequiresPrefix(browserFeaturesPropertyName)
+					).map((browser) => browser.getPrefix()),
+				);
 				for (const prefix of prefixes) {
 					const hasPrefix = nodeHasPrefixedPropertyValue(
 						node,
 						propertyName,
 						value,
 						prefix,
+						rename,
 					);
 					if (!hasPrefix) {
 						newDeclarations.push(
 							cssDeclaration.create({
 								name: property.name,
-								value: [cssIdentifier.create({value: `-${prefix}-${value}`})],
+								value: [
+									cssIdentifier.create({value: rename(`-${prefix}-${value}`)}),
+								],
 								important: property.important,
 							}),
 						);
@@ -194,8 +214,8 @@ export function prefixCSSValue(
 						...node,
 						value: [
 							...node.value.slice(0, propertyIndex),
-							property,
 							...newDeclarations,
+							property,
 							...node.value.slice(propertyIndex + 1, node.value.length),
 						],
 					});

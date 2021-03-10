@@ -119,7 +119,10 @@ export abstract class Browser {
 
 		let value = false;
 
-		if (featureConsumer.has(this.getId()) &&  featureConsumer.get(this.getId()).has(this.getVersion().toString())) {
+		if (
+			featureConsumer.has(this.getId()) &&
+			featureConsumer.get(this.getId()).has(this.getVersion().toString())
+		) {
 			value = featureConsumer.getPath([
 				this.getId(),
 				this.getVersion().toString(),

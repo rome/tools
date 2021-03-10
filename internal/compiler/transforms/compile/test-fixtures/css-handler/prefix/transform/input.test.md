@@ -37,25 +37,25 @@
 ```css
 .style {
 	text-align: center;
-	transform: none;
 	-moz-transform: none;
 	-webkit-transform: none;
 	-o-transform: none;
+	transform: none;
 	align-content: center;
 }
 
 .style {
-	transform: none;
 	-moz-transform: none;
 	-webkit-transform: none;
 	-o-transform: none;
+	transform: none;
 }
 
 .style {
 	text-align: center;
-	transform: none;
 	-webkit-transform: none;
 	-o-transform: none;
+	transform: none;
 	-moz-transform: none;
 	align-content: center;
 }

@@ -56,22 +56,22 @@
 ```css
 .style {
 	text-align: center;
-	display: flex;
-	display: -moz-flex;
+	display: -moz-box;
 	display: -webkit-flex;
+	display: flex;
 	align-content: center;
 }
 
 .style {
-	display: flex;
-	display: -moz-flex;
+	display: -moz-box;
 	display: -webkit-flex;
+	display: flex;
 }
 
 .style {
 	text-align: center;
+	display: -moz-box;
 	display: flex;
-	display: -moz-flex;
 	display: -webkit-flex;
 	align-content: center;
 }
@@ -84,16 +84,16 @@
 
 .style {
 	text-align: center;
-	display: inline-flex;
-	display: -moz-inline-flex;
+	display: -moz-inline-box;
 	display: -webkit-inline-flex;
+	display: inline-flex;
 	align-content: center;
 }
 
 .style {
 	text-align: center;
+	display: -moz-inline-box;
 	display: inline-flex;
-	display: -moz-inline-flex;
 	display: -webkit-inline-flex;
 	align-content: center;
 }

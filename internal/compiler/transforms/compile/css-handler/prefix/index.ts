@@ -19,7 +19,7 @@ export default (projectConfig: ProjectConfig) =>
 	prefixVisitors.map((prefixVisitor) =>
 		wrapPrefixVisitor(
 			prefixVisitor,
-			resolveBrowsers(">0%") // TODO: load from ProjectConfig
+			resolveBrowsers(">0%"), // TODO: load from ProjectConfig
 		)
 	)
 ;

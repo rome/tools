@@ -37,25 +37,25 @@
 ```css
 .style {
 	text-align: center;
-	transition: body 0.3s;
 	-moz-transition: body 0.3s;
 	-webkit-transition: body 0.3s;
 	-o-transition: body 0.3s;
+	transition: body 0.3s;
 	align-content: center;
 }
 
 .style {
-	transition: body 0.3s;
 	-moz-transition: body 0.3s;
 	-webkit-transition: body 0.3s;
 	-o-transition: body 0.3s;
+	transition: body 0.3s;
 }
 
 .style {
 	text-align: center;
-	transition: body 0.3s;
 	-moz-transition: body 0.3s;
 	-o-transition: body 0.3s;
+	transition: body 0.3s;
 	-webkit-transition: body 0.3s;
 	align-content: center;
 }
