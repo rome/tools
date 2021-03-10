@@ -131,7 +131,7 @@ jobs:
           name: v${{ needs.build.outputs.version }}
           tag_name: v${{ needs.build.outputs.version }}
           draft: false
-          prerelease: ${{ needs.build.outputs.tag !== 'latest' }}
+          prerelease: ${{ needs.build.outputs.tag != 'latest' }}
           files: dist.tar.gz
           fail_on_unmatched_files: true
 
