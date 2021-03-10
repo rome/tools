@@ -40,6 +40,10 @@ import {
 import {FSReadStream, FSStats, createFakeStats} from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
+import {
+	ExtensionHandler,
+	ExtensionParseInfo,
+} from "./../common/file-handlers/types";
 import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
@@ -563,7 +567,6 @@ export default class Worker {
 		options: WorkerParseOptions,
 	): Promise<WorkerParseResult> {
 		const path = ref.real;
-		const {uid} = ref;
 		const project = this.getProject(ref);
 
 		// Fetch and validate extension handler
@@ -572,20 +575,7 @@ export default class Worker {
 			throw new Error(`We don't know how to parse ${path}`);
 		}
 
-		// Get source type
-		let sourceTypeJS: undefined | ConstJSSourceType;
-		if (options.sourceTypeJS !== undefined) {
-			sourceTypeJS = options.sourceTypeJS;
-		} else if (handler.sourceTypeJS !== undefined) {
-			sourceTypeJS = handler.sourceTypeJS;
-		} else {
-			sourceTypeJS = "script";
-
-			const manifest = this.getPartialManifest(ref);
-			if (manifest?.type === "module") {
-				sourceTypeJS = "module";
-			}
-		}
+		const parseInfo = await this.getParseInfo(project, ref, handler, options);
 
 		const cacheEnabled = options.cache !== false;
 
@@ -600,7 +590,7 @@ export default class Worker {
 
 				if (
 					cachedResult.ast.type === "JSRoot" &&
-					cachedResult.ast.sourceType !== sourceTypeJS
+					cachedResult.ast.sourceType !== parseInfo.sourceTypeJS
 				) {
 					useCached = false;
 				}
@@ -620,27 +610,9 @@ export default class Worker {
 
 		this.logger.info(markup`Parsing: ${path}`);
 
-		const cacheFile = await this.cache.getFile(ref);
-		const integrity = await this.cache.getIntegrity(ref);
-		const {mtimeNs} = await cacheFile.getStats();
-
-		const manifest = this.getPartialManifest(ref);
-		let manifestPath: undefined | string;
-		if (manifest !== undefined) {
-			manifestPath = manifest.path.join();
-		}
-
-		const {sourceText, astModifiedFromSource, ast} = await handler.parse({
-			sourceTypeJS,
-			path: uid,
-			manifestPath,
-			integrity,
-			mtimeNs,
-			file: ref,
-			worker: this,
-			project,
-			parseOptions: options,
-		});
+		const {sourceText, astModifiedFromSource, ast} = await handler.parse(
+			parseInfo,
+		);
 
 		// If the AST is corrupt then we don't under any circumstance allow it
 		if (ast.corrupt && !options.allowCorrupt) {
@@ -665,8 +637,8 @@ export default class Worker {
 			project,
 			path,
 			astModifiedFromSource,
-			integrity,
-			mtimeNs,
+			integrity: parseInfo.integrity,
+			mtimeNs: parseInfo.mtimeNs,
 		};
 
 		if (cacheEnabled) {
@@ -681,7 +653,6 @@ export default class Worker {
 		options: WorkerParseOptions,
 	): Promise<WorkerTokenizeResult> {
 		const path = ref.real;
-		const {uid} = ref;
 		const project = this.getProject(ref);
 
 		// Fetch and validate extension handler
@@ -690,36 +661,43 @@ export default class Worker {
 			throw new Error(`We don't know how to tokenize ${path}`);
 		}
 
-		// Get source type
-		let sourceTypeJS: undefined | ConstJSSourceType;
-		if (options.sourceTypeJS !== undefined) {
-			sourceTypeJS = options.sourceTypeJS;
-		} else if (handler.sourceTypeJS !== undefined) {
-			sourceTypeJS = handler.sourceTypeJS;
-		} else {
-			sourceTypeJS = "script";
-
-			const manifest = this.getPartialManifest(ref);
-			if (manifest?.type === "module") {
-				sourceTypeJS = "module";
-			}
-		}
+		const parseInfo = await this.getParseInfo(project, ref, handler, options);
 
 		this.logger.info(markup`Tokenizing: ${path}`);
+
+		const {sourceText, tokens} = await handler.tokenize(parseInfo);
+
+		const res: WorkerTokenizeResult = {
+			tokens,
+			sourceText,
+			project,
+			path,
+			integrity: parseInfo.integrity,
+			mtimeNs: parseInfo.mtimeNs,
+		};
+
+		return res;
+	}
+
+	private async getParseInfo(
+		project: WorkerProject,
+		ref: FileReference,
+		handler: ExtensionHandler,
+		options: WorkerParseOptions,
+	): Promise<ExtensionParseInfo> {
+		const sourceTypeJS =
+			options.sourceTypeJS || this.getSourceTypeJs(ref, handler);
 
 		const cacheFile = await this.cache.getFile(ref);
 		const integrity = await this.cache.getIntegrity(ref);
 		const {mtimeNs} = await cacheFile.getStats();
 
 		const manifest = this.getPartialManifest(ref);
-		let manifestPath: undefined | string;
-		if (manifest !== undefined) {
-			manifestPath = manifest.path.join();
-		}
+		const manifestPath = manifest?.path.join();
 
-		const {sourceText, tokens} = await handler.tokenize({
+		return {
 			sourceTypeJS,
-			path: uid,
+			path: ref.uid,
 			manifestPath,
 			integrity,
 			mtimeNs,
@@ -727,18 +705,19 @@ export default class Worker {
 			worker: this,
 			project,
 			parseOptions: options,
-		});
-
-		const res: WorkerTokenizeResult = {
-			tokens,
-			sourceText,
-			project,
-			path,
-			integrity,
-			mtimeNs,
 		};
+	}
 
-		return res;
+	private getSourceTypeJs(
+		fileRef: FileReference,
+		handler: ExtensionHandler,
+	): ConstJSSourceType {
+		if (handler.sourceTypeJS !== undefined) {
+			return handler.sourceTypeJS;
+		} else {
+			const manifest = this.getPartialManifest(fileRef);
+			return manifest?.type === "module" ? "module" : "script";
+		}
 	}
 
 	private async evict(
