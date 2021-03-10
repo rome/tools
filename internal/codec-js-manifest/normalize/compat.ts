@@ -45,6 +45,7 @@ export function normalizeCompatManifest(
 	// Convert bad licenses
 	if (version !== undefined && name === "didyoumean") {
 		const license = PACKAGE_LICENSE_ALIASES.get(name);
+		// rome-ignore lint/js/preferOptionalChaining: This breaks TypeScript refinement
 		if (
 			license !== undefined &&
 			consumer.get("license").asUnknown() === license.badLicense &&
