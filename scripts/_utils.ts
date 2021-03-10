@@ -144,7 +144,7 @@ function determineDelimiter(path: AbsoluteFilePath): CommentDelimiter {
 function createGeneratedCommentInstructions(scriptName: undefined | string): string {
 	let instructions = `Everything below is automatically generated. DO NOT MODIFY.`;
 	if (scriptName !== undefined) {
-		instructions += `Run \`./rome run scripts/${scriptName}\` to update.`;
+		instructions += ` Run \`./rome run scripts/${scriptName}\` to update.`;
 	}
 	return instructions;
 }

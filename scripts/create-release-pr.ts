@@ -252,18 +252,18 @@ export async function main([explicitNewVersion]: string[]): Promise<number> {
 	);
 
 	async function revert() {
-		//git(["stash"]);
-		//git(["checkout", previousBranch]);
+		git(["stash"]);
+		git(["checkout", previousBranch]);
 	}
 
 	try {
 		const newVersion = explicitNewVersion || (await inferNewVersion(commits));
 		const releaseBranch = `release/${newVersion}`;
-		//git(["checkout", "-b", releaseBranch]);
+		git(["checkout", "-b", releaseBranch]);
 		await updateVersion(newVersion);
 
 		if (await isNewVersion(newVersion)) {
-			//git(["add", "package.json"]);
+			git(["add", "package.json"]);
 		} else {
 			await revert();
 			reporter.error(
@@ -281,10 +281,10 @@ export async function main([explicitNewVersion]: string[]): Promise<number> {
 				lines: generateChangelogMarkdown(newVersion, commits),
 			};
 		});
-		//git(["add", "CHANGELOG.md"]);
+		git(["add", "CHANGELOG.md"]);
 
-		//git(["commit", "-m", `Release v${newVersion}`]);
-		//git(["push", "--set-upstream", "origin", `${releaseBranch}`]);
+		git(["commit", "-m", `Release v${newVersion}`]);
+		git(["push", "--set-upstream", "origin", `${releaseBranch}`]);
 
 		reporter.success(markup`Created release branch <emphasis>${releaseBranch}</emphasis>.`);
 		reporter.info(markup`Please review <filelink target="${changelogPath.join()}">CHANGELOG.md</filelink> and remove unrelated entries.`);
