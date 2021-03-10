@@ -1,4 +1,5 @@
 import {markup} from "@internal/markup";
+import {CommitMetadata, parseCommit} from "@internal/codec-commit";
 import {
 	updateVersion,
 	ROOT,
@@ -8,9 +9,96 @@ import {
 import child = require("child_process");
 import https = require("https");
 import http = require("http");
-import {Commit, parseCommitLog, git} from "./vcs/utils";
 import {VERSION} from "@internal/core";
 import {incrementSemver, parseSemverVersion, SemverModifier, stringifySemver} from "@internal/codec-semver";
+
+const PROPERTY_DELIM = "<--ROME-PROPERTY-->";
+const LINE_DELIM = "<--ROME-LINE-->";
+
+interface Commit {
+	authorEmail: string;
+	authorName: string;
+	body: string;
+	commit: string;
+	date: string;
+	rawBody: string;
+	refNames?: string;
+	subject: string;
+	meta: CommitMetadata;
+}
+
+const placeholders = [
+	// authorEmail
+	"%aE",
+	// authorName
+	"%aN",
+	// body
+	"%b",
+	// commit
+	"%H",
+	// date
+	"%ad",
+	// rawBody
+	"%B",
+	// refNames
+	"%d",
+	// subject
+	"%s",
+];
+
+export function git(args: string[]): string {
+	const res = child.spawnSync("git", args, {
+		encoding: "utf8",
+		cwd: ROOT.join(),
+	});
+	if (res.error !== undefined) {
+		throw res.error;
+	}
+
+	return res.stdout.toString().trim();
+}
+
+export function parseCommitLog(
+	opts: {
+		from: string;
+		to: string;
+	},
+): Commit[] {
+	const log = git(
+		[
+			"log",
+			`--pretty='format:${placeholders.join(PROPERTY_DELIM)}${LINE_DELIM}'`,
+			`${opts.from}..${opts.to}`,
+			"internal",
+		],
+	);
+
+	const lines = log.split(LINE_DELIM);
+	const commits: Commit[] = [];
+
+	for (const line of lines) {
+		const values = line.trim().split(PROPERTY_DELIM);
+		if (values.length <= 1) {
+			continue;
+		}
+
+		const commit: Commit = {
+			authorEmail: values[0],
+			authorName: values[1],
+			body: values[2],
+			commit: values[3],
+			date: values[4],
+			rawBody: values[5],
+			refNames: values[6],
+			subject: values[7],
+			meta: parseCommit(values[5]),
+		};
+
+		commits.push(commit);
+	}
+
+	return commits;
+}
 
 function generateChangelogMarkdown(version: string, commits: Commit[]): string[] {
 	function renderItems(items: Commit[], title: string, expandable = false) {
@@ -22,17 +110,44 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 			`### ${title}`,
 			``,
 		];
+
 		if (expandable) {
 			lines.push("<details><summary>Click to expand</summary>");
 			lines.push("");
 		}
-		for (const commit of items) {
-			lines.push(`- ${commit.subject ? commit.subject.trim() : "_no subject provided_"}`);
+
+		for (const {meta} of items) {
+			let summary = "";
+
+			const hasType = meta.type !== undefined || meta.scope !== undefined;
+			if (hasType) {
+				summary += "`";
+			}
+			if (meta.type !== undefined) {
+				summary += meta.type;
+			}
+			if (meta.scope !== undefined) {
+				summary += `(${meta.scope})`;
+			}
+			if (hasType) {
+				summary += ": ";
+			}
+
+			if (meta.pullRequest === undefined) {
+				summary += meta.description;
+			} else {
+				summary += `[${meta.description}](https://github.com/rome/tools/pull/${meta.pullRequest})`;
+			}
+
+			lines.push(`- ${summary}`);
 		}
+
 		if (expandable) {
 			lines.push("");
 			lines.push("</details>");
 		}
+
+		lines.push("");
 		return lines;
 	}
 
@@ -42,17 +157,14 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 	const misc = [];
 
 	for (const commit of commits) {
-		const {meta} = commit;
-		if (meta === undefined) {
-			continue;
-		}
+		const {meta: conv} = commit;
 
-		if (meta.breaking) {
+		if (conv.breaking) {
 			breaking.push(commit);
 			continue;
 		}
 
-		switch (meta.commitType) {
+		switch (conv.type) {
 			case "feat": {
 				features.push(commit);
 				break;
@@ -72,6 +184,7 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 
 	return [
 		`## [${version}](https://github.com/rome/tools/releases/tag/v${version})`,
+		``,
 		...renderItems(features, "Features"),
 		...renderItems(fixes, "Bug fixes"),
 		...renderItems(breaking, "BREAKING CHANGES"),
@@ -83,17 +196,23 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 // Determine if the next release should be a major, minor, or patch release
 // based on the commits since the last release commit
 function inferSemverModifier(commits: Commit[]): SemverModifier {
+	let hasFeature = false;
+
 	for (const commit of commits) {
-		if (commit.meta?.breaking) {
+		if (commit.meta.breaking) {
 			return SemverModifier.MAJOR;
 		}
 
-		if (commit.meta?.commitType === "feat") {
-			return SemverModifier.MINOR;
+		if (commit.meta.type === "feat") {
+			hasFeature = true;
 		}
 	}
 
-	return SemverModifier.PATCH;
+	if (hasFeature) {
+		return SemverModifier.MINOR;
+	} else {
+		return SemverModifier.PATCH;
+	}
 }
 
 async function inferNewVersion(commits: Commit[]): Promise<string> {
@@ -138,8 +257,8 @@ async function isNewVersion(version: string): Promise<boolean> {
 
 export async function main([explicitNewVersion]: string[]): Promise<number> {
 	if (isDirty()) {
-		reporter.error("Uncommitted changes.");
-		return 1;
+		//reporter.error("Uncommitted changes.");
+		//return 1;
 	}
 
 	const previousBranch = git(["rev-parse", "--abbrev-ref", "HEAD"]);
@@ -173,10 +292,6 @@ export async function main([explicitNewVersion]: string[]): Promise<number> {
 			return 1;
 		}
 
-		reporter.success(
-			markup`Version <emphasis>${newVersion}</emphasis> is free.`,
-		);
-
 		const changelogPath = ROOT.append("CHANGELOG.md");
 		await modifyGeneratedFile({
 			path: changelogPath,
@@ -191,10 +306,10 @@ export async function main([explicitNewVersion]: string[]): Promise<number> {
 		//git(["commit", "-m", `Release v${newVersion}`]);
 		//git(["push", "--set-upstream", "origin", `${releaseBranch}`]);
 
-		reporter.success(markup`Created release branch ${releaseBranch}.`);
-		reporter.info(markup`Please review <filelink target="${changelogPath.join()}>CHANGELOG.md</filelink> and remove unrelated entries.`);
+		reporter.success(markup`Created release branch <emphasis>${releaseBranch}</emphasis>.`);
+		reporter.info(markup`Please review <filelink target="${changelogPath.join()}">CHANGELOG.md</filelink> and remove unrelated entries.`);
 		reporter.br();
-		reporter.info(markup`Once verified, you can create a pull request at <hyperlink target="https://github.com/rome/tools/pull/new/${releaseBranch}" />.`);
+		reporter.info(markup`Once verified, you can create a pull request at: <hyperlink target="https://github.com/rome/tools/pull/new/${releaseBranch}" />`);
 		reporter.info(markup`When merged and approved, the release will be automatically published`);
 
 		return 0;
