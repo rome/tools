@@ -1,4 +1,4 @@
-import {BaseTokens, TokenValues} from "@internal/parser-core";
+import {TokenBase} from "@internal/parser-core";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {Manifest} from "@internal/codec-js-manifest";
 import {
@@ -43,7 +43,7 @@ export type WorkerParseResult = {
 };
 
 export type WorkerTokenizeResult = {
-	tokens: TokenValues<BaseTokens>[];
+	tokens: TokenBase[];
 	integrity: undefined | DiagnosticIntegrity;
 	mtimeNs: bigint;
 	project: WorkerProject;

@@ -1,4 +1,4 @@
-import {BaseTokens, TokenValues} from "@internal/parser-core";
+import {TokenBase} from "@internal/parser-core";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -434,7 +434,7 @@ export default class WorkerAPI {
 	public async tokenize(
 		ref: FileReference,
 		opts: WorkerParseOptions,
-	): Promise<TokenValues<BaseTokens>[]> {
+	): Promise<TokenBase[]> {
 		let {tokens} = await this.worker.tokenize(
 			ref,
 			{

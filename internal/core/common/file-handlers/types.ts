@@ -1,4 +1,4 @@
-import {BaseTokens, TokenValues} from "@internal/parser-core";
+import {TokenBase} from "@internal/parser-core";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -51,9 +51,9 @@ export type ExtensionHandlerParseResult<ParseRoot extends AnyRoot = AnyRoot> = {
 	ast: ParseRoot;
 };
 
-export interface ExtensionHandlerTokenizeResult<Tokens extends BaseTokens> {
+export interface ExtensionHandlerTokenizeResult {
 	sourceText: string;
-	tokens: TokenValues<Tokens>[];
+	tokens: TokenBase[];
 }
 
 export type PartialExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = {
@@ -77,9 +77,9 @@ export type PartialExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = {
 		opts: ExtensionParseInfo,
 	) => Promise<ExtensionHandlerParseResult<ParseRoot>>;
 
-	tokenize?: <Tokens extends BaseTokens>(
+	tokenize?: (
 		info: ExtensionParseInfo,
-	) => Promise<ExtensionHandlerTokenizeResult<Tokens>>;
+	) => Promise<ExtensionHandlerTokenizeResult>;
 };
 
 export type ExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = PartialExtensionHandler<ParseRoot> & {

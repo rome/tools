@@ -1,4 +1,4 @@
-import {BaseTokens, TokenValues} from "@internal/parser-core";
+import {TokenBase} from "@internal/parser-core";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -1008,7 +1008,7 @@ export default class ServerRequest {
 	public async requestWorkerTokenize(
 		path: AbsoluteFilePath,
 		opts: WorkerParseOptions,
-	): Promise<TokenValues<BaseTokens>[]> {
+	): Promise<TokenBase[]> {
 		this.checkCancelled();
 
 		return this.wrapRequestDiagnostic(

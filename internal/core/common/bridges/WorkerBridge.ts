@@ -1,4 +1,4 @@
-import {BaseTokens, TokenValues} from "@internal/parser-core";
+import {TokenBase} from "@internal/parser-core";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -203,7 +203,7 @@ export default createBridge({
 				ref: FileReference;
 				options: WorkerParseOptions;
 			},
-			TokenValues<BaseTokens>[]
+			TokenBase[]
 		>(),
 
 		getFileBuffers: createBridgeEventDeclaration<
