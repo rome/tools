@@ -1,5 +1,6 @@
 name: Auto-publish
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
   push:
@@ -27,7 +28,7 @@ jobs:
 
       - name: Check nightly status
         id: nightly
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'schedule' || github.event_name = 'workflow_dispatch'
         run: |
           echo "tag=nightly" >> $GITHUB_ENV
           echo "nightly=true" >> $GITHUB_ENV
