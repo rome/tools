@@ -178,4 +178,3 @@ We will write the completions to `~/.config/fish/completions/rome.fish`. No prof
 ##### `zsh`
 
 We will write the completions to `~/.zsh-completions/_rome`.
-

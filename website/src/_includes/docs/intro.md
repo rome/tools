@@ -20,6 +20,12 @@
 
 </section>
 
+## Docs
+
+## Using Rome with other tools
+
+
+
 ## Development Status
 
 **Rome is currently only supported as a [linter](#linting) for JavaScript and TypeScript.** We are actively working on support for other languages.
