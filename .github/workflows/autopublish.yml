@@ -34,6 +34,7 @@ jobs:
 
       - name: Check version changes
         uses: EndBug/version-check@v1
+        if: env.nightly != 'true'
         id: version
         with:
           diff-search: true
@@ -43,7 +44,7 @@ jobs:
 
       - name: Check prerelease status
         id: prerelease
-        if: steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
 
