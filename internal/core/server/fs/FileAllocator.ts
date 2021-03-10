@@ -17,6 +17,7 @@ import {
 } from "@internal/diagnostics";
 import {matchPathPatterns} from "@internal/path-match";
 import {ServerRefreshFile} from "../Server";
+import {createResourceFromCallback} from "@internal/resources";
 
 export default class FileAllocator {
 	constructor(server: Server) {
@@ -24,6 +25,10 @@ export default class FileAllocator {
 		this.fileToWorker = new AbsoluteFilePathMap();
 		this.locker = new PathLocker();
 		this.logger = server.logger.namespace(markup`FileAllocator`);
+
+		server.resources.add(createResourceFromCallback("FileAllocator", () => {
+			this.fileToWorker.clear();
+		}));
 	}
 
 	private server: Server;
