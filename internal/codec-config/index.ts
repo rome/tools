@@ -6,12 +6,7 @@ import {
 	PartialConfigHandler,
 } from "@internal/codec-config/types";
 import {RequiredProps} from "@internal/typescript-helpers";
-import {
-	json as _json,
-	json5 as _json5,
-	rjson as _rjson,
-	yaml as _yaml,
-} from "./json/index";
+import {json as _json} from "./json/index";
 import {toml as _toml} from "./toml/index";
 import {Consumer, consume, consumeUnknown} from "@internal/consume";
 import {ParserOptions} from "@internal/parser-core";
@@ -30,11 +25,8 @@ export {ConfigCommentMap, ConsumeConfigResult} from "./types";
 export const CONFIG_HANDLERS: ConfigHandler[] = [];
 export const CONFIG_EXTENSIONS: string[] = [];
 
-export const rjson = partialToFull(_rjson);
 export const json = partialToFull(_json);
-export const yaml = partialToFull(_yaml);
 export const toml = partialToFull(_toml);
-export const json5 = partialToFull(_json5);
 
 function partialToFull(partial: PartialConfigHandler): ConfigHandler {
 	const full: ConfigHandler = {

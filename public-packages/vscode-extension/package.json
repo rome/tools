@@ -15,38 +15,11 @@
 		"onLanguage:javascriptreact",
 		"onLanguage:typescript",
 		"onLanguage:typescriptreact",
-		"onLanguage:json",
-		"onLanguage:rjson"
+		"onLanguage:json"
 	],
-	"contributes": {
-		"languages": [
-			{
-				"id": "rjson",
-				"aliases": [
-					"Rome JSON",
-					"RJSON"
-				],
-				"extensions": [
-					".rjson"
-				],
-				"mimetypes": [
-					"application/rjson"
-				],
-				"configuration": "./syntaxes/rjson-language-configuration.json"
-			}
-		],
-		"grammars": [
-			{
-				"language": "rjson",
-				"scopeName": "source.json.rome",
-				"path": "./syntaxes/RJSON.tmLanguage.json"
-			}
-		]
-	},
 	"files": [
 		"/icon.png",
-		"/README.md",
-		"/syntaxes"
+		"/README.md"
 	],
 	"main": "index.ts",
 	"engines": {

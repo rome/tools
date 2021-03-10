@@ -67,8 +67,6 @@ export type DiagnosticLanguage =
 	| "binary"
 	| "rser"
 	| "json"
-	| "rjson"
-	| "json5"
 	| "js"
 	| "url"
 	| "urlquery"
@@ -78,7 +76,6 @@ export type DiagnosticLanguage =
 	| "html"
 	| "markdown"
 	| "text"
-	| "yaml"
 	| "toml"
 	| "browserquery"
 	| "unknown";

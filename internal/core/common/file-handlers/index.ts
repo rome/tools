@@ -179,11 +179,6 @@ setHandler("css", cssHandler);
 // Config
 for (const handler of CONFIG_HANDLERS) {
 	for (const ext of handler.extensions) {
-		if (ext === "yaml" || ext === "yml" || ext === "toml" || ext === "ini") {
-			// Temporarily disable WIP extensions
-			continue;
-		}
-
 		setHandler(
 			ext,
 			{

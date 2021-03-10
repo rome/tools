@@ -363,8 +363,7 @@ export function createIntegrationTest(
 			// some flexibility if we want invalid project config tests.
 			if (
 				!opts.disableProjectConfig &&
-				files[".config/rome.json"] === undefined &&
-				files[".config/rome.rjson"] === undefined
+				files[".config/rome.json"] === undefined
 			) {
 				files[".config/rome.json"] = json.stringify(projectConfig) + "\n";
 			}

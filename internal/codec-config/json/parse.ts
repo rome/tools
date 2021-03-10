@@ -47,15 +47,6 @@ function isJSONStringValueChar(
 		return false;
 	}
 
-	return isRJSONStringValueChar(char, index, input);
-}
-
-// NOTE: Different methods as we allow newlines in RJSON strings
-function isRJSONStringValueChar(
-	char: string,
-	index: ZeroIndexed,
-	input: string,
-): boolean {
 	return !(char === '"' && !isEscaped(index, input));
 }
 
@@ -170,9 +161,7 @@ export const jsonParser = createParser<JSONParserTypes>({
 			case '"': {
 				const [value, end, overflow] = parser.readInputFrom(
 					index.increment(),
-					parser.meta.type === "rjson"
-						? isRJSONStringValueChar
-						: isJSONStringValueChar,
+					isJSONStringValueChar,
 				);
 
 				if (overflow) {
@@ -182,17 +171,15 @@ export const jsonParser = createParser<JSONParserTypes>({
 					});
 				}
 
-				// Don't allow newlines in JSON
-				if (parser.meta.type !== "rjson") {
-					for (let strIndex = 0; strIndex < value.length; strIndex++) {
-						const char = value[strIndex];
+				// Don't allow newlines in strings
+				for (let strIndex = 0; strIndex < value.length; strIndex++) {
+					const char = value[strIndex];
 
-						if (char === "\n") {
-							throw parser.unexpected({
-								description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
-								start: parser.getPositionFromIndex(index.add(strIndex)),
-							});
-						}
+					if (char === "\n") {
+						throw parser.unexpected({
+							description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
+							start: parser.getPositionFromIndex(index.add(strIndex)),
+						});
 					}
 				}
 
@@ -205,7 +192,6 @@ export const jsonParser = createParser<JSONParserTypes>({
 							start: parser.getPositionFromIndex(index.add(strIndex)),
 						});
 					},
-					parser.meta.type === "rjson",
 				);
 
 				// increment to take the trailing quote
@@ -459,13 +445,10 @@ function removeUnderscores(
 		const char = raw[i];
 
 		if (char === "_") {
-			// Don't allow separators in JSON
-			if (parser.meta.type !== "rjson") {
-				throw parser.unexpected({
-					description: descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
-					start: parser.getPositionFromIndex(index.increment()),
-				});
-			}
+			throw parser.unexpected({
+				description: descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
+				start: parser.getPositionFromIndex(index.increment()),
+			});
 		} else {
 			str += char;
 		}
@@ -494,12 +477,10 @@ function eatComments(parser: JSONParser): Comments {
 			break;
 		}
 
-		// Comments aren't allowed in regular JSON
-		if (parser.meta.type !== "rjson") {
-			throw parser.unexpected({
-				description: descriptions.JSON.COMMENTS_IN_JSON,
-			});
-		}
+		// Comments aren't allowed
+		throw parser.unexpected({
+			description: descriptions.JSON.COMMENTS_IN_JSON,
+		});
 
 		parser.nextToken();
 	}
@@ -590,40 +571,23 @@ function parseArray(parser: JSONParser): JSONValue[] {
 function eatPropertySeparator(parser: JSONParser): boolean {
 	const token = parser.getToken();
 
-	// Implicit commas are only allowed in rjson
-	if (parser.meta.type === "rjson") {
-		// Eat the token, don't care if we're in RJSON
-		if (token.type === "Comma") {
-			parser.nextToken();
-		}
-
-		// An object or array close is an instant failure
-		// Doesn't matter what we're parsing since the subsequent tokens will be validated
-		if (token.type === "BraceClose" || token.type === "BracketClose") {
-			return false;
-		}
-
-		return true;
-	} else {
-		if (token.type !== "Comma") {
-			return false;
-		}
-
-		// Make sure this isn't a trailing comma
-		const lookahead = parser.lookaheadToken();
-		if (lookahead.type === "BraceClose" || lookahead.type === "BracketClose") {
-			throw parser.unexpected({
-				description: descriptions.JSON.TRAILING_COMMA_IN_JSON,
-			});
-		}
-
-		parser.nextToken();
-		return true;
+	if (token.type !== "Comma") {
+		return false;
 	}
+
+	// Make sure this isn't a trailing comma
+	const lookahead = parser.lookaheadToken();
+	if (lookahead.type === "BraceClose" || lookahead.type === "BracketClose") {
+		throw parser.unexpected({
+			description: descriptions.JSON.TRAILING_COMMA_IN_JSON,
+		});
+	}
+
+	parser.nextToken();
+	return true;
 }
 
 function parseWord(parser: JSONParser, isStart: boolean): JSONValue {
-	const start = parser.getPosition();
 	const token = parser.expectToken("Word");
 
 	switch (token.value) {
@@ -643,13 +607,9 @@ function parseWord(parser: JSONParser, isStart: boolean): JSONValue {
 	}
 
 	if (isStart && parser.matchToken("Colon")) {
-		if (parser.meta.type === "rjson") {
-			return parseObject(parser, start, token.value);
-		} else {
-			throw parser.unexpected({
-				description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
-			});
-		}
+		throw parser.unexpected({
+			description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
+		});
 	}
 
 	throw parser.unexpected({
@@ -722,14 +682,9 @@ function parsePropertyKey(parser: JSONParser) {
 		}
 
 		case "Word":
-			if (parser.meta.type === "rjson") {
-				parser.nextToken();
-				return token.value;
-			} else {
-				throw parser.unexpected({
-					description: descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON,
-				});
-			}
+			throw parser.unexpected({
+				description: descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON,
+			});
 
 		default:
 			throw parser.unexpected();
@@ -741,13 +696,9 @@ function parseString(parser: JSONParser, isStart: boolean): string | JSONObject 
 	const token = parser.expectToken("String");
 
 	if (isStart && parser.nextToken().type === "Colon") {
-		if (parser.meta.type === "rjson") {
-			return parseObject(parser, start, token.value);
-		} else {
-			throw parser.unexpected({
-				description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
-			});
-		}
+		throw parser.unexpected({
+			description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
+		});
 	} else {
 		return token.value;
 	}
@@ -785,14 +736,9 @@ function parseExpression(
 
 function parseEntry(parser: JSONParser): JSONValue {
 	if (parser.matchToken("EOF")) {
-		if (parser.meta.type === "rjson") {
-			// If we're in RJSON mode then an empty input is an implicit object
-			return {};
-		} else {
-			throw parser.unexpected({
-				description: descriptions.JSON.EMPTY_INPUT_IN_JSON,
-			});
-		}
+		throw parser.unexpected({
+			description: descriptions.JSON.EMPTY_INPUT_IN_JSON,
+		});
 	} else {
 		return parseExpression(parser, true);
 	}

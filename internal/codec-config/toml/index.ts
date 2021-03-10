@@ -19,6 +19,7 @@ function isSingleStringValueChar(
 ): boolean {
 	return !(char === "'" && !isEscaped(index, input));
 }
+
 function isDoubleStringValueChar(
 	char: string,
 	index: ZeroIndexed,

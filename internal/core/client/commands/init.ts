@@ -6,9 +6,7 @@ import {commandCategories} from "@internal/core/common/commands";
 
 interface ConfigRadioOptions extends SelectOptions {
 	json?: SelectOption;
-	rjson?: SelectOption;
 	toml?: SelectOption;
-	yaml?: SelectOption;
 }
 
 interface IndentStyleOptions extends SelectOptions {
@@ -50,9 +48,6 @@ export default createLocalCommand({
 		const configTypeOptions: ConfigRadioOptions = {
 			json: {
 				label: markup`JSON (package.json)`,
-			},
-			rjson: {
-				label: markup`RJSON (loose JSON format)`,
 			},
 			// TODO: not supported yet
 			// toml: {

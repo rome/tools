@@ -46,7 +46,7 @@ export async function main([ruleName]: string[]): Promise<number> {
 
 	// Write test fixture
 	await writeFile(
-		rulesPath.append(`${ruleName}.test.rjson`),
+		rulesPath.append(`${ruleName}.test.toml`),
 		dedent`
 			filename: "filename.ts"
 			invalid: [

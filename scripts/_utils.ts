@@ -125,8 +125,7 @@ type CommentDelimiter = "SLASH" | "ARROW" | "HASH";
 function determineDelimiter(path: AbsoluteFilePath): CommentDelimiter {
 	if (
 		path.hasExtension("ts") ||
-		path.hasExtension("js") ||
-		path.hasExtension("rjson")
+		path.hasExtension("js")
 	) {
 		return "SLASH";
 	}

@@ -4,7 +4,7 @@ import {StaticMarkup, markup} from "@internal/markup";
 import {ServerRequest, VERSION} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
-import {ConfigCommentMap, JSONObject, rjson} from "@internal/codec-config";
+import {ConfigCommentMap, JSONObject} from "@internal/codec-config";
 import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
 import {IndentStyle, PROJECT_CONFIG_DIRECTORY} from "@internal/project";
 import {AbsoluteFilePathMap} from "@internal/path";
@@ -17,11 +17,9 @@ import {
 import {convertManifestToJSON} from "@internal/codec-js-manifest";
 import {parseSemverRange} from "@internal/codec-semver";
 import {spawn} from "@internal/child-process";
-import {ConfigHandler} from "@internal/codec-config/types";
+import {ConfigHandler, ConfigType} from "@internal/codec-config/types";
 import updateConfig from "@internal/core/server/utils/updateConfig";
 import retrieveConfigHandler from "@internal/codec-config/retrieveConfigHandler";
-
-type ConfigType = "rjson" | "toml" | "json";
 
 type Flags =
 	| {
@@ -51,7 +49,7 @@ export default createServerCommand<Flags>({
 				{
 					description: markup``,
 				},
-			).asStringSet<ConfigType>(["rjson", "json"], "rjson"),
+			).asStringSet<ConfigType>(["json", "toml"], "json"),
 			indentStyle: c.get(
 				"indentStyle",
 				{
@@ -135,13 +133,6 @@ export default createServerCommand<Flags>({
 		} else if (configType && indentSize && indentStyle) {
 			req.expectArgumentLength(3);
 			let configHandler: ConfigHandler = retrieveConfigHandler(configType);
-
-			if (!configType) {
-				client.reporter.warn(
-					markup`No extension chosen; Rome will now use RJSON extension for your project configuration as fallback.`,
-				);
-				configHandler = rjson;
-			}
 
 			reporter.heading(markup`Welcome to Rome! Let's get you started...`);
 

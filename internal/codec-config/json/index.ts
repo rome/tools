@@ -1,24 +1,19 @@
 import {jsonParser, parseJSONExtra} from "@internal/codec-config/json/parse";
 import {TokenValues} from "@internal/parser-core";
 import {Tokens} from "./types";
-import {stringifyRootConsumer} from "./stringify";
 import {
 	ConfigParserOptions,
-	JSONConfigType,
+	ConfigType,
 	PartialConfigHandler,
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
 
 function createJSONParserMethods(
-	type: JSONConfigType,
-): Omit<PartialConfigHandler, "extensions" | "language"> {
+	type: ConfigType,
+): Omit<PartialConfigHandler, "extensions" | "language" | "stringifyFromConsumer"> {
 	return {
 		type,
 		jsonSuperset: true,
-
-		stringifyFromConsumer(opts: PartialConsumeConfigResult): string {
-			return stringifyRootConsumer(opts.consumer, opts.comments, type);
-		},
 
 		parseExtra(opts) {
 			return parseJSONExtra(opts, type);
@@ -43,27 +38,5 @@ export const json: PartialConfigHandler = {
 		} else {
 			return serial;
 		}
-	},
-};
-
-export const json5: PartialConfigHandler = {
-	extensions: ["json5"],
-	language: "json5",
-	...createJSONParserMethods("json"),
-};
-
-export const rjson: PartialConfigHandler = {
-	...createJSONParserMethods("rjson"),
-	extensions: ["rjson"],
-	language: "rjson",
-};
-
-export const yaml: PartialConfigHandler = {
-	...createJSONParserMethods("yaml"),
-	extensions: ["yaml", "yml"],
-	language: "yaml",
-
-	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {
-		throw new Error("todo");
 	},
 };

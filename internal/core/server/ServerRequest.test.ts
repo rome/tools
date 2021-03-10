@@ -48,7 +48,7 @@ test(
 				}
 			});
 
-			await h.writeFile(".config/rome.rjson", "");
+			await h.writeFile(".config/rome.json", "");
 
 			await sub.release();
 

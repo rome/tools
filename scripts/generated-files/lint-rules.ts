@@ -44,7 +44,7 @@ export async function getLintDefs(): Promise<LintDefinition[]> {
 				defs.push({
 					docs: lintRulesDocFolder.append(`${ruleName}.md`),
 					hasRJSON: categoryPaths.has(
-						categoryPath.append(`${basename}.test.rjson`),
+						categoryPath.append(`${basename}.test.toml`),
 					),
 					basename,
 					category,
@@ -154,7 +154,7 @@ export async function main() {
 			for (const {basename, ruleName, hasRJSON} of defs) {
 				if (hasRJSON) {
 					lines.push("// @ts-ignore");
-					lines.push(`import ${basename} from "./${ruleName}.test.rjson";`);
+					lines.push(`import ${basename} from "./${ruleName}.test.toml";`);
 				}
 			}
 			lines.push("");
