@@ -79,7 +79,7 @@ jobs:
       - name: Update version if nightly
         if: needs.check.outputs.nightly == 'true'
         run: |
-          ./rome run scripts/update-nightly-version
+          ./script update-nightly-version
           NEW_VERSION=$(./rome --version)
           echo "version=$NEW_VERSION" >> $GITHUB_ENV
           echo "tag=nightly" >> $GITHUB_ENV
