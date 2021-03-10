@@ -28,7 +28,7 @@ jobs:
 
       - name: Check nightly status
         id: nightly
-        if: github.event_name == 'schedule' || github.event_name = 'workflow_dispatch'
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           echo "tag=nightly" >> $GITHUB_ENV
           echo "nightly=true" >> $GITHUB_ENV
