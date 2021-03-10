@@ -25,7 +25,7 @@ export const CHILD_ARGS = [
 ];
 
 export function getBinPath(): AbsoluteFilePath {
-	return createAbsoluteFilePath(__filename);
+	return createAbsoluteFilePath(module.filename);
 }
 
 const MEGABYTE = 10_000;
