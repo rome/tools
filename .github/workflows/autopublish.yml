@@ -80,7 +80,8 @@ jobs:
         if: needs.check.outputs.nightly == 'true'
         run: |
           ./script update-nightly-version
-          NEW_VERSION=$(./rome --version)
+
+          NEW_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
           echo "version=$NEW_VERSION" >> $GITHUB_ENV
           echo "tag=nightly" >> $GITHUB_ENV
 
