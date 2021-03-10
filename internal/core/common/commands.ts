@@ -35,7 +35,6 @@ export type CommandName =
 	| "lsp"
 	| "noop"
 	| "parse"
-	| "tokenize"
 	| "publish"
 	| "resolve"
 	| "restart"
