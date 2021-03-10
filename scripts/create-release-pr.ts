@@ -1,5 +1,5 @@
 import {markup} from "@internal/markup";
-import {CommitMetadata, parseCommit} from "@internal/codec-commit";
+import {Commit, parseCommit} from "@internal/codec-commit";
 import {
 	updateVersion,
 	ROOT,
@@ -12,39 +12,7 @@ import http = require("http");
 import {VERSION} from "@internal/core";
 import {incrementSemver, parseSemverVersion, SemverModifier, stringifySemver} from "@internal/codec-semver";
 
-const PROPERTY_DELIM = "<--ROME-PROPERTY-->";
-const LINE_DELIM = "<--ROME-LINE-->";
-
-interface Commit {
-	authorEmail: string;
-	authorName: string;
-	body: string;
-	commit: string;
-	date: string;
-	rawBody: string;
-	refNames?: string;
-	subject: string;
-	meta: CommitMetadata;
-}
-
-const placeholders = [
-	// authorEmail
-	"%aE",
-	// authorName
-	"%aN",
-	// body
-	"%b",
-	// commit
-	"%H",
-	// date
-	"%ad",
-	// rawBody
-	"%B",
-	// refNames
-	"%d",
-	// subject
-	"%s",
-];
+const COMMIT_DELIM = "<--ROME-LINE-->";
 
 export function git(args: string[]): string {
 	const res = child.spawnSync("git", args, {
@@ -64,44 +32,41 @@ export function parseCommitLog(
 		to: string;
 	},
 ): Commit[] {
-	const log = git(
+	const out = git(
 		[
 			"log",
-			`--pretty='format:${placeholders.join(PROPERTY_DELIM)}${LINE_DELIM}'`,
+			`--pretty='format:%B${COMMIT_DELIM}'`,
 			`${opts.from}..${opts.to}`,
 			"internal",
 		],
 	);
 
-	const lines = log.split(LINE_DELIM);
+	const commitBodies = out.split(COMMIT_DELIM);
 	const commits: Commit[] = [];
 
-	for (const line of lines) {
-		const values = line.trim().split(PROPERTY_DELIM);
-		if (values.length <= 1) {
-			continue;
+	for (const commitBody of commitBodies) {
+		const root = parseCommit(commitBody);
+		commits.push(root);
+
+		// Try to parse each other line in the commit body as a commit
+		for (const line of commitBody.split("\n").slice(1)) {
+			const commit = parseCommit(line);
+			// Only consider this valid if it has a type
+			if (commit.type !== undefined) {
+				commits.push({
+					...commit,
+					// Other lines wont have the suffix but inherit it if it exists anyway
+					pullRequest: commit.pullRequest ?? root.pullRequest,
+				});
+			}
 		}
-
-		const commit: Commit = {
-			authorEmail: values[0],
-			authorName: values[1],
-			body: values[2],
-			commit: values[3],
-			date: values[4],
-			rawBody: values[5],
-			refNames: values[6],
-			subject: values[7],
-			meta: parseCommit(values[5]),
-		};
-
-		commits.push(commit);
 	}
 
 	return commits;
 }
 
 function generateChangelogMarkdown(version: string, commits: Commit[]): string[] {
-	function renderItems(items: Commit[], title: string, expandable = false) {
+	function renderItems(items: Commit[], title: string, expandable: boolean = false) {
 		if (items.length === 0) {
 			return [];
 		}
@@ -116,27 +81,34 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 			lines.push("");
 		}
 
-		for (const {meta} of items) {
+		for (const {type, scope, pullRequest, description} of items) {
 			let summary = "";
 
-			const hasType = meta.type !== undefined || meta.scope !== undefined;
-			if (hasType) {
+			const hasTypePrefix = expandable && type !== undefined;
+			const hasPrefix = hasTypePrefix || scope !== undefined;
+			if (hasPrefix) {
 				summary += "`";
 			}
-			if (meta.type !== undefined) {
-				summary += meta.type;
+			if (hasTypePrefix) {
+				summary += type;
 			}
-			if (meta.scope !== undefined) {
-				summary += `(${meta.scope})`;
+			if (scope !== undefined) {
+				if (hasTypePrefix) {
+					summary += "(";
+				}
+				summary += scope;
+				if (hasTypePrefix) {
+					summary += ")";
+				}
 			}
-			if (hasType) {
+			if (hasPrefix) {
 				summary += ": ";
 			}
 
-			if (meta.pullRequest === undefined) {
-				summary += meta.description;
+			if (pullRequest === undefined) {
+				summary += description;
 			} else {
-				summary += `[${meta.description}](https://github.com/rome/tools/pull/${meta.pullRequest})`;
+				summary += `[${description}](https://github.com/rome/tools/pull/${pullRequest})`;
 			}
 
 			lines.push(`- ${summary}`);
@@ -155,16 +127,15 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 	const fixes = [];
 	const breaking = [];
 	const misc = [];
+	const internal = [];
 
 	for (const commit of commits) {
-		const {meta: conv} = commit;
-
-		if (conv.breaking) {
+		if (commit.breaking) {
 			breaking.push(commit);
 			continue;
 		}
 
-		switch (conv.type) {
+		switch (commit.type) {
 			case "feat": {
 				features.push(commit);
 				break;
@@ -172,6 +143,14 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 
 			case "fix": {
 				fixes.push(commit);
+				break;
+			}
+
+			case "test":
+			case "refactor":
+			case "perf":
+			case "chore": {
+				internal.push(commit);
 				break;
 			}
 
@@ -185,10 +164,11 @@ function generateChangelogMarkdown(version: string, commits: Commit[]): string[]
 	return [
 		`## [${version}](https://github.com/rome/tools/releases/tag/v${version})`,
 		``,
+		...renderItems(breaking, "BREAKING CHANGES"),
 		...renderItems(features, "Features"),
 		...renderItems(fixes, "Bug fixes"),
-		...renderItems(breaking, "BREAKING CHANGES"),
 		...renderItems(misc, "Miscellaneous", true),
+		...renderItems(internal, "Internal", true),
 		``,
 	];
 }
@@ -199,11 +179,11 @@ function inferSemverModifier(commits: Commit[]): SemverModifier {
 	let hasFeature = false;
 
 	for (const commit of commits) {
-		if (commit.meta.breaking) {
+		if (commit.breaking) {
 			return SemverModifier.MAJOR;
 		}
 
-		if (commit.meta.type === "feat") {
+		if (commit.type === "feat") {
 			hasFeature = true;
 		}
 	}

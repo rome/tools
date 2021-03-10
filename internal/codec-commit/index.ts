@@ -1,4 +1,4 @@
-export interface CommitMetadata {
+export interface Commit {
 	readonly type: undefined | string;
 	readonly description: string;
 	readonly scope: undefined | string;
@@ -11,15 +11,15 @@ export interface CommitMetadata {
 // and was more complex than this regex approach. If we ever need to perform actual validation, and not
 // metadata extraction, we can go back to ParserCore but implement it with token state.
 
-export function parseCommit(input: string): CommitMetadata {
+export function parseCommit(input: string): Commit {
 	let line = input.split("\n")[0];
 
-	let type: CommitMetadata["type"];
-	let scope: CommitMetadata["scope"];
-	let breaking: CommitMetadata["breaking"] = false;
-	let pullRequest: CommitMetadata["pullRequest"];
-	let fixesIssues: CommitMetadata["fixesIssues"] = [];
-	let description: CommitMetadata["description"] = "";
+	let type: Commit["type"];
+	let scope: Commit["scope"];
+	let breaking: Commit["breaking"] = false;
+	let pullRequest: Commit["pullRequest"];
+	let fixesIssues: Commit["fixesIssues"] = [];
+	let description: Commit["description"] = "";
 
 	// Extract the type
 	const typeMatch = line.match(/^([a-zA-Z]+)(?:[:(!])/);
@@ -52,7 +52,7 @@ export function parseCommit(input: string): CommitMetadata {
 	const pullRequestMatch = description.match(/\(#(\d+)\)$/);
 	if (pullRequestMatch != null) {
 		pullRequest = Number(pullRequestMatch[1]);
-		description = description.slice(0, -pullRequestMatch[0].length);
+		description = description.slice(0, -pullRequestMatch[0].length).trim();
 	}
 
 	// TODO fixesIssues
