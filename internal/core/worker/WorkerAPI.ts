@@ -435,7 +435,7 @@ export default class WorkerAPI {
 		ref: FileReference,
 		opts: WorkerParseOptions,
 	): Promise<TokenBase[]> {
-		let {tokens} = await this.worker.tokenize(
+		const {tokens} = await this.worker.tokenize(
 			ref,
 			{
 				...opts,
