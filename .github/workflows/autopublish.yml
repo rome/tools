@@ -101,6 +101,7 @@ jobs:
   publish:
     name: Publish
     needs: build
+    environment: npm-publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
