@@ -28,6 +28,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	A11_Y_NO_POSITIVE_TABINDEX: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noPositiveTabindex"],
+		message: markup`Avoid positive integer values for the <emphasis>tabIndex</emphasis> attribute.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.`,
+			},
+		],
+	},
 	A11_Y_NO_SVG_WITHOUT_TITLE: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noSvgWithoutTitle"],
 		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
@@ -346,17 +357,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`The default button type of "submit" causes page reloads and is not typical behavior in a React application.`,
-			},
-		],
-	},
-	JSX_A11Y_TABINDEX_NO_POSITIVE: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noPositiveTabindex"],
-		message: markup`Avoid positive integer values for the <emphasis>tabIndex</emphasis> attribute.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.`,
 			},
 		],
 	},

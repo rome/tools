@@ -1,8 +1,9 @@
-/* GENERATED:START(hash:faf4e375ca7405d0bb228c8feccf6b11a88eff8f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:f57d33cd8ee10300cec9895eb1879184d233c047,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noDistractingElements from "./a11y/noDistractingElements";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole";
 import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex";
+import noPositiveTabindex from "./a11y/noPositiveTabindex";
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle";
 import useAltText from "./a11y/useAltText";
 import useAriaProptypes from "./a11y/useAriaProptypes";
@@ -63,7 +64,6 @@ import noAccessKey from "./jsx-a11y/noAccessKey";
 import noAutofocus from "./jsx-a11y/noAutofocus";
 import noHeaderScope from "./jsx-a11y/noHeaderScope";
 import noOnChange from "./jsx-a11y/noOnChange";
-import noPositiveTabindex from "./jsx-a11y/noPositiveTabindex";
 import noRedundantAlt from "./jsx-a11y/noRedundantAlt";
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
@@ -124,6 +124,7 @@ lintTransforms.set(
 	noNoninteractiveElementToInteractiveRole,
 );
 lintTransforms.set("a11y/noNoninteractiveTabindex", noNoninteractiveTabindex);
+lintTransforms.set("a11y/noPositiveTabindex", noPositiveTabindex);
 lintTransforms.set("a11y/noSvgWithoutTitle", noSvgWithoutTitle);
 lintTransforms.set("a11y/useAltText", useAltText);
 lintTransforms.set("a11y/useAriaProptypes", useAriaProptypes);
@@ -190,7 +191,6 @@ lintTransforms.set("jsx-a11y/noAccessKey", noAccessKey);
 lintTransforms.set("jsx-a11y/noAutofocus", noAutofocus);
 lintTransforms.set("jsx-a11y/noHeaderScope", noHeaderScope);
 lintTransforms.set("jsx-a11y/noOnChange", noOnChange);
-lintTransforms.set("jsx-a11y/noPositiveTabindex", noPositiveTabindex);
 lintTransforms.set("jsx-a11y/noRedundantAlt", noRedundantAlt);
 lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
 lintTransforms.set("jsx-a11y/noTargetBlank", noTargetBlank);
@@ -268,6 +268,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/noDistractingElements",
 	"a11y/noNoninteractiveElementToInteractiveRole",
 	"a11y/noNoninteractiveTabindex",
+	"a11y/noPositiveTabindex",
 	"a11y/noSvgWithoutTitle",
 	"a11y/useAltText",
 	"a11y/useAriaProptypes",
@@ -328,7 +329,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"jsx-a11y/noAutofocus",
 	"jsx-a11y/noHeaderScope",
 	"jsx-a11y/noOnChange",
-	"jsx-a11y/noPositiveTabindex",
 	"jsx-a11y/noRedundantAlt",
 	"jsx-a11y/noRedundantRoles",
 	"jsx-a11y/noTargetBlank",
@@ -386,6 +386,7 @@ export type LintRuleName =
 	| "a11y/noDistractingElements"
 	| "a11y/noNoninteractiveElementToInteractiveRole"
 	| "a11y/noNoninteractiveTabindex"
+	| "a11y/noPositiveTabindex"
 	| "a11y/noSvgWithoutTitle"
 	| "a11y/useAltText"
 	| "a11y/useAriaProptypes"
@@ -446,7 +447,6 @@ export type LintRuleName =
 	| "jsx-a11y/noAutofocus"
 	| "jsx-a11y/noHeaderScope"
 	| "jsx-a11y/noOnChange"
-	| "jsx-a11y/noPositiveTabindex"
 	| "jsx-a11y/noRedundantAlt"
 	| "jsx-a11y/noRedundantRoles"
 	| "jsx-a11y/noTargetBlank"

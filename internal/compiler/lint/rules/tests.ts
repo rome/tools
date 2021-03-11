@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | (Test[]) | (Test[][]);
 }>;
 
-/* GENERATED:START(hash:7c338129a77fa5641ec09fc8d7de4672265d412c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:9ecc92d1d80cfbf0d79865bac7312cde13141a66,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -21,6 +21,8 @@ import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
 // @ts-ignore
 import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex.test.rjson";
+// @ts-ignore
+import noPositiveTabindex from "./a11y/noPositiveTabindex.test.rjson";
 // @ts-ignore
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
@@ -140,8 +142,6 @@ import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
 // @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
-import noPositiveTabindex from "./jsx-a11y/noPositiveTabindex.test.rjson";
-// @ts-ignore
 import noRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
@@ -250,6 +250,10 @@ export const tests: Tests = {
 	"a11y/noNoninteractiveTabindex": {
 		category: ["lint", "a11y", "noNoninteractiveTabindex"],
 		cases: noNoninteractiveTabindex,
+	},
+	"a11y/noPositiveTabindex": {
+		category: ["lint", "a11y", "noPositiveTabindex"],
+		cases: noPositiveTabindex,
 	},
 	"a11y/noSvgWithoutTitle": {
 		category: ["lint", "a11y", "noSvgWithoutTitle"],
@@ -486,10 +490,6 @@ export const tests: Tests = {
 	"jsx-a11y/noOnChange": {
 		category: ["lint", "jsx-a11y", "noOnChange"],
 		cases: noOnChange,
-	},
-	"jsx-a11y/noPositiveTabindex": {
-		category: ["lint", "jsx-a11y", "noPositiveTabindex"],
-		cases: noPositiveTabindex,
 	},
 	"jsx-a11y/noRedundantAlt": {
 		category: ["lint", "jsx-a11y", "noRedundantAlt"],
