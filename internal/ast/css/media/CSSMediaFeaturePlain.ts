@@ -1,4 +1,8 @@
-import {CSSMediaFeatureName, CSSMediaFeatureValue, NodeBaseWithComments} from "@internal/ast";
+import {
+	CSSMediaFeatureName,
+	CSSMediaFeatureValue,
+	NodeBaseWithComments,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSMediaFeaturePlain extends NodeBaseWithComments {
@@ -13,7 +17,7 @@ export const cssMediaFeaturePlain = createBuilder<CSSMediaFeaturePlain>(
 		bindingKeys: {},
 		visitorKeys: {
 			value: true,
-			name: true
+			name: true,
 		},
 	},
 );

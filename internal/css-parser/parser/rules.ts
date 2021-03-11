@@ -1,5 +1,5 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
-import {CSSAtRule, CSSRule, CSSSelector} from "@internal/ast";
+import {AnyCSSValue, CSSAtRule, CSSRule, CSSSelector} from "@internal/ast";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseSelectors} from "@internal/css-parser/parser/selectors";
 import {descriptions} from "@internal/diagnostics";
@@ -8,7 +8,6 @@ import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
 import {parseComplexBlock} from "@internal/css-parser/parser/block";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseMediaList} from "@internal/css-parser/parser/media";
-import {AnyCSSValue} from "@internal/ast/css/unions";
 
 export function parseRules(
 	parser: CSSParser,

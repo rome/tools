@@ -1,9 +1,14 @@
-import {CSSDimension, CSSNumber, CSSString, NodeBaseWithComments} from "@internal/ast";
+import {
+	CSSDimension,
+	CSSNumber,
+	CSSString,
+	NodeBaseWithComments,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSMediaFeatureValue extends NodeBaseWithComments {
 	readonly type: "CSSMediaFeatureValue";
-	readonly value : CSSNumber | CSSDimension | CSSString
+	readonly value: CSSNumber | CSSDimension | CSSString;
 }
 
 export const cssMediaFeatureValue = createBuilder<CSSMediaFeatureValue>(
@@ -11,7 +16,7 @@ export const cssMediaFeatureValue = createBuilder<CSSMediaFeatureValue>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true
+			value: true,
 		},
 	},
 );

@@ -1,6 +1,5 @@
-import {NodeBaseWithComments} from "@internal/ast";
+import {AnyCSSValue, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSFunction extends NodeBaseWithComments {
 	readonly type: "CSSFunction";

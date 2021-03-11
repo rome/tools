@@ -1,11 +1,11 @@
 import {
+	AnyCSSValue,
 	CSSAtRule,
 	CSSDeclaration,
 	CSSRule,
 	NodeBaseWithComments,
 } from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSBlock extends NodeBaseWithComments {
 	readonly type: "CSSBlock";

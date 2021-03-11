@@ -5,7 +5,7 @@ import {ValueToken} from "@internal/parser-core";
 import {parseSimpleBlock} from "@internal/css-parser/parser/block";
 import {parseFunction} from "@internal/css-parser/parser/function";
 import {parseUrl} from "@internal/css-parser/parser/url";
-import {AnyCSSValue} from "@internal/ast/css/unions";
+import {AnyCSSValue} from "@internal/ast";
 
 export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
 	if (

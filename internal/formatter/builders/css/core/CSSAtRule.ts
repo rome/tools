@@ -1,5 +1,5 @@
 import {CSSAtRule} from "@internal/ast";
-import {Builder, Token, concat, space} from "@internal/formatter";
+import {Builder, Token, concat, hardline, space} from "@internal/formatter";
 
 export default function CSSAtRule(builder: Builder, node: CSSAtRule): Token {
 	const tokens: Token[] = [];
@@ -10,5 +10,6 @@ export default function CSSAtRule(builder: Builder, node: CSSAtRule): Token {
 		tokens.push(space);
 	}
 	tokens.push(builder.tokenize(node.block, node));
+	tokens.push(hardline);
 	return concat(tokens);
 }

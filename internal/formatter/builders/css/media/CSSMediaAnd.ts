@@ -1,6 +1,6 @@
 import {CSSMediaAnd} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function CSSMediaAnd(builder: Builder, node: CSSMediaAnd): Token {
-	throw new Error("unimplemented");
+	return concat(["and", space, builder.tokenize(node.value, node)]);
 }

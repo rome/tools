@@ -11,7 +11,7 @@ export const cssMediaFeatureName = createBuilder<CSSMediaFeatureName>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true
+			value: true,
 		},
 	},
 );

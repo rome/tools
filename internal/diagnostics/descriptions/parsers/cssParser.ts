@@ -142,16 +142,20 @@ export const cssParser = createDiagnosticsCategory({
 	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: {},
 	MALFORMED_MEDIA_QUERY: {},
 	MEDIA_QUERY_EXPECTED_PARENTHESIS: {
-		message: markup`A left parenthesis is expected in this position.`
+		message: markup`A left parenthesis is expected in this position.`,
 	},
 	MEDIA_QUERY_EXPECTED_COMPARISON: {
-		message: markup`The comparison is not correct, only <emphasis> \<, \> and = </emphasis> are valid.`
+		message: markup`The comparison is not correct, only <emphasis> \<, \> and = </emphasis> are valid.`,
 	},
 	MEDIA_QUERY_EXPECTED_NOT_OR_PARENTHESIS: {
-		message: markup`A left parenthesis or the keyword <emphasis>not</emphasis> are expected in this position.`
+		message: markup`A left parenthesis or the keyword <emphasis>not</emphasis> are expected in this position.`,
 	},
 
 	MEDIA_QUERY_FEATURE_UNEXPECTED_VALUE: {
-		message: markup`The value provided inside the media feature is not correct.`
-	}
+		message: markup`The value provided inside the media feature is not correct.`,
+	},
+
+	MEDIA_QUERY_FEATURE_EXPECTED_KEYWORD: (keyword: string) => ({
+		message: markup`The keyword <emphasis>${keyword}</emphasis> is expected in this position.`,
+	}),
 });

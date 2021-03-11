@@ -1,4 +1,8 @@
-import {CSSMediaFeatureBoolean, CSSMediaFeaturePlain, NodeBaseWithComments} from "@internal/ast";
+import {
+	CSSMediaFeatureBoolean,
+	CSSMediaFeaturePlain,
+	NodeBaseWithComments,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export type ValidFeatures =
@@ -27,7 +31,7 @@ export const cssMediaFeature = createBuilder<CSSMediaFeature>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true
+			value: true,
 		},
 	},
 );

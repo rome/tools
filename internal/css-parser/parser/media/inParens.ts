@@ -7,7 +7,10 @@ import {parseMediaCondition} from "@internal/css-parser/parser/media/comparison"
 export function parseMediaInParens(
 	parser: CSSParser,
 ): CSSMediaInParens | undefined {
-
+	// remove possible white spaces
+	while (matchToken(parser, "Whitespace")) {
+		readToken(parser, "Whitespace");
+	}
 	const token = parser.getToken();
 
 	if (token.type === "LeftParen") {
@@ -24,13 +27,15 @@ export function parseMediaInParens(
 				const maybeRightParenToken = parser.getToken();
 				// TODO: to handle when we don't have right parenthesis
 				if (maybeRightParenToken.type === "RightParen") {
-					parser.nextToken()
-					return parser.finishNode(start, {
-						type: "CSSMediaInParens",
-						value: mediaCondition
-					})
+					parser.nextToken();
+					return parser.finishNode(
+						start,
+						{
+							type: "CSSMediaInParens",
+							value: mediaCondition,
+						},
+					);
 				}
-
 			}
 		} else {
 			// TODO: refactor here to understand boolean or not
@@ -43,13 +48,15 @@ export function parseMediaInParens(
 				const maybeRightParenToken = parser.getToken();
 				// TODO: to handle when we don't have right parenthesis
 				if (maybeRightParenToken.type === "RightParen") {
-					parser.nextToken()
-					return parser.finishNode(start, {
-						type: "CSSMediaInParens",
-						value: feature
-					})
+					parser.nextToken();
+					return parser.finishNode(
+						start,
+						{
+							type: "CSSMediaInParens",
+							value: feature,
+						},
+					);
 				}
-
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
+	AnyCSSValue,
 	CSSAtRule,
 	CSSBlock,
 	CSSCustomProperty,
@@ -15,7 +16,6 @@ import {
 } from "@internal/css-parser/utils";
 import {parseAtRule} from "@internal/css-parser/parser/rules";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
-import {AnyCSSValue} from "@internal/ast/css/unions";
 
 export function parseDeclarations(
 	parser: CSSParser,

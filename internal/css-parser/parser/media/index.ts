@@ -1,5 +1,6 @@
 import {
 	CSSMediaConditionWithoutOr,
+	CSSMediaConditionWithoutOrWithParens,
 	CSSMediaQuery,
 	CSSMediaQueryCondition,
 	CSSMediaQueryList,
@@ -8,7 +9,10 @@ import {CSSParser} from "@internal/css-parser/types";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaType} from "@internal/css-parser/parser/media/type";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
-import {parseMediaNot} from "@internal/css-parser/parser/media/conditions";
+import {
+	parseMediaAnd,
+	parseMediaNot,
+} from "@internal/css-parser/parser/media/conditions";
 import {descriptions} from "@internal/diagnostics";
 import {parseMediaCondition} from "@internal/css-parser/parser/media/comparison";
 
@@ -26,29 +30,54 @@ function tryParseConditionWithoutOr(
 
 	const token = parser.getToken();
 
-	if (token.type === 'Ident') {
+	if (token.type === "Ident") {
 		if (token.value === "not") {
 			const mediaNot = parseMediaNot(parser);
 			if (mediaNot) {
-				return parser.finishNode(start, {
-					type: "CSSMediaConditionWithoutOr",
-					value: mediaNot
-				})
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSMediaConditionWithoutOr",
+						value: mediaNot,
+					},
+				);
 			}
 		}
-	}else if (token.type === "LeftParen") {
+	} else if (token.type === "LeftParen") {
+		let value: CSSMediaConditionWithoutOrWithParens;
 		const feature = parseMediaInParens(parser);
 		if (feature) {
-			return parser.finishNode(start, {
-				type: "CSSMediaConditionWithoutOr",
-				value: feature
-			})
+			value = [feature];
+			while (true) {
+				while (matchToken(parser, "Whitespace")) {
+					readToken(parser, "Whitespace");
+				}
+
+				const token = parser.getToken();
+
+				if (token.type === "Ident" && token.value === "and") {
+					const mediaAnd = parseMediaAnd(parser);
+					if (mediaAnd) {
+						value.push(mediaAnd);
+					}
+				} else {
+					break;
+				}
+			}
+
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSMediaConditionWithoutOr",
+					value,
+				},
+			);
 		}
 	} else {
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.MEDIA_QUERY_EXPECTED_NOT_OR_PARENTHESIS,
-			token
-		})
+			token,
+		});
 	}
 
 	return undefined;
@@ -124,25 +153,22 @@ export function parseMediaList(parser: CSSParser): CSSMediaQueryList | undefined
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
 	}
-		while (!(parser.matchToken("EOF") && parser.matchToken("LeftCurlyBracket"))) {
-			if (parser.matchToken("Comma")) {
-				parser.nextToken();
+	while (!(parser.matchToken("EOF") && parser.matchToken("LeftCurlyBracket"))) {
+		if (parser.matchToken("Comma")) {
+			parser.nextToken();
+		}
+		while (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
+		}
 
-			}
-				while (matchToken(parser, "Whitespace")) {
-				readToken(parser, "Whitespace");
-			}
-
-			if (parser.matchToken("LeftCurlyBracket")) {
-				break;
-			}
-			const media = parseMedia(parser);
-			if (media) {
-				list.push(media);
-			}
-
+		if (parser.matchToken("LeftCurlyBracket")) {
+			break;
+		}
+		const media = parseMedia(parser);
+		if (media) {
+			list.push(media);
+		}
 	}
-
 
 	return parser.finishNode(
 		start,

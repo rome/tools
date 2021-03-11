@@ -1,13 +1,21 @@
 import {CSSMediaConditionWithoutOr} from "@internal/ast";
-import {Builder, concat, space, Token} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function CSSMediaConditionWithoutOr(
 	builder: Builder,
 	node: CSSMediaConditionWithoutOr,
 ): Token {
-	return concat([
-		"and",
-		space,
-		builder.tokenize(node.value, node)
-	])
+	const value = node.value;
+	if (Array.isArray(value)) {
+		return concat(
+			value.map((n, index) => {
+				if (index + 1 < value.length) {
+					return concat([builder.tokenize(n, node), space]);
+				}
+				return builder.tokenize(n, node);
+			}),
+		);
+	} else {
+		return builder.tokenize(value, node);
+	}
 }

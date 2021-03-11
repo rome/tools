@@ -1,6 +1,6 @@
 import {CSSMediaOr} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function CSSMediaOr(builder: Builder, node: CSSMediaOr): Token {
-	throw new Error("unimplemented");
+	return concat(["or", space, builder.tokenize(node.value, node)]);
 }

@@ -1,58 +1,78 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {
+	CSSMediaCondition,
 	CSSMediaFeatureComparison,
-	CSSMediaFeatureGT,
 	CSSMediaFeatureEQ,
+	CSSMediaFeatureGT,
 	CSSMediaFeatureLT,
-	CSSMediaCondition
 } from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 
-export function parseMediaFeatureGT(parser: CSSParser): CSSMediaFeatureGT | undefined {
+export function parseMediaFeatureGT(
+	parser: CSSParser,
+): CSSMediaFeatureGT | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken();
 	if (token.type === "Ident" && token.value === ">") {
-			const equalToken = parser.nextToken();
-			const hasEqual = equalToken.type === "Ident" && equalToken.value === "+"
-			return parser.finishNode(start, {
+		const equalToken = parser.nextToken();
+		const hasEqual = equalToken.type === "Ident" && equalToken.value === "+";
+		return parser.finishNode(
+			start,
+			{
 				type: "CSSMediaFeatureGT",
-				hasEqual
-			})
+				hasEqual,
+			},
+		);
 	}
-	return undefined
+	return undefined;
 }
 
-export function parseMediaFeatureLT(parser: CSSParser): CSSMediaFeatureLT | undefined {
+export function parseMediaFeatureLT(
+	parser: CSSParser,
+): CSSMediaFeatureLT | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken();
 	if (token.type === "Ident" && token.value === "<") {
-			const equalToken = parser.nextToken();
-			const hasEqual = equalToken.type === "Ident" && equalToken.value === "+"
-			return parser.finishNode(start, {
+		const equalToken = parser.nextToken();
+		const hasEqual = equalToken.type === "Ident" && equalToken.value === "+";
+		return parser.finishNode(
+			start,
+			{
 				type: "CSSMediaFeatureLT",
-				hasEqual
-			})
+				hasEqual,
+			},
+		);
 	}
-	return undefined
+	return undefined;
 }
 
-export function parseMediaFeatureEQ(parser: CSSParser): CSSMediaFeatureEQ | undefined {
+export function parseMediaFeatureEQ(
+	parser: CSSParser,
+): CSSMediaFeatureEQ | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken();
 
-	if (token.type === "Ident" &&  token.value === "=") {
-
-	return parser.finishNode(start, {
-		type: "CSSMediaFeatureEQ",
-	})
+	if (token.type === "Ident" && token.value === "=") {
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSMediaFeatureEQ",
+			},
+		);
 	}
-	return undefined
+	return undefined;
 }
 
-export function parseMediaFeatureComparison(parser: CSSParser): CSSMediaFeatureComparison | undefined {
+export function parseMediaFeatureComparison(
+	parser: CSSParser,
+): CSSMediaFeatureComparison | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken();
-	let value:  CSSMediaFeatureGT | CSSMediaFeatureEQ | CSSMediaFeatureLT | undefined = undefined;
+	let value:
+		| CSSMediaFeatureGT
+		| CSSMediaFeatureEQ
+		| CSSMediaFeatureLT
+		| undefined = undefined;
 
 	const eq = parseMediaFeatureEQ(parser);
 	if (eq) {
@@ -71,21 +91,24 @@ export function parseMediaFeatureComparison(parser: CSSParser): CSSMediaFeatureC
 
 	if (value) {
 		parser.nextToken();
-		return parser.finishNode(start, {
-			type: "CSSMediaFeatureComparison",
-			value
-		})
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSMediaFeatureComparison",
+				value,
+			},
+		);
 	}
 	parser.unexpectedDiagnostic({
 		description: descriptions.CSS_PARSER.MEDIA_QUERY_EXPECTED_COMPARISON,
-		token
-	})
-
+		token,
+	});
 
 	return undefined;
 }
 
-
-export function parseMediaCondition(parser: CSSParser): CSSMediaCondition | undefined {
-	return undefined
+export function parseMediaCondition(
+	parser: CSSParser,
+): CSSMediaCondition | undefined {
+	return undefined;
 }

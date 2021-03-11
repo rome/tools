@@ -35,6 +35,10 @@ screen {
 @media only screen and (min-width: 800px) {}
 @media screen and (min-width       :          800px        ) {}
 
+@media screen and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px){}
+
+@media screen and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px){}
+
 ```
 
 ### `Output`
@@ -52,6 +56,12 @@ screen {
 @media only screen and (min-width: 800px) {
 }
 @media screen and (min-width: 800px) {
+}
+
+@media screen and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) {
+}
+
+@media screen and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) {
 }
 
 ```

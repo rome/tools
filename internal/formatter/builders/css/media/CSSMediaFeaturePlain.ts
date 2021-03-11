@@ -1,5 +1,5 @@
 import {CSSMediaFeaturePlain} from "@internal/ast";
-import {Builder, concat, space, Token} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function CSSMediaFeaturePlain(
 	builder: Builder,
@@ -9,6 +9,6 @@ export default function CSSMediaFeaturePlain(
 		builder.tokenize(node.name, node),
 		":",
 		space,
-		builder.tokenize(node.value, node)
-	])
+		builder.tokenize(node.value, node),
+	]);
 }

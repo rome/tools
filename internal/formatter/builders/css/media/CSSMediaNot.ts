@@ -1,6 +1,6 @@
 import {CSSMediaNot} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function CSSMediaNot(builder: Builder, node: CSSMediaNot): Token {
-	throw new Error("unimplemented");
+	return concat(["not", space, builder.tokenize(node.value, node)]);
 }

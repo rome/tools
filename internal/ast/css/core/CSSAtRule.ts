@@ -1,11 +1,11 @@
 import {
+	AnyCSSValue,
 	CSSBlock,
 	CSSKeyframe,
 	CSSMediaQueryList,
 	NodeBaseWithComments,
 } from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyCSSValue} from "@internal/ast/css/unions";
 
 export interface CSSAtRule extends NodeBaseWithComments {
 	readonly type: "CSSAtRule";
