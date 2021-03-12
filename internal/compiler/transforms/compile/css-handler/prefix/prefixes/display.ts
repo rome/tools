@@ -8,29 +8,31 @@ export default [
 	createPrefixVisitor({
 		name: "display/flex",
 		enter(path, targets) {
-			return prefixCSSValue(
+			return prefixCSSValue({
 				path,
-				"display",
-				"flex",
-				"flexbox",
+				propertyName: "display",
+				value: "flex",
+				browserFeaturesKey: "flexbox",
 				targets,
-				(propertyName) =>
+				rename: (propertyName) =>
 					propertyName === "-moz-flex" ? "-moz-box" : propertyName
 				,
-			);
+			});
 		},
 	}),
 	createPrefixVisitor({
 		name: "display/inline-flex",
 		enter(path, targets) {
-			return prefixCSSValue(
+			return prefixCSSValue({
 				path,
-				"display",
-				"inline-flex",
-				"flexbox",
+				propertyName: "display",
+				value: "inline-flex",
+				browserFeaturesKey: "flexbox",
 				targets,
-				(value) => value === "-moz-inline-flex" ? "-moz-inline-box" : value,
-			);
+				rename: (value) =>
+					value === "-moz-inline-flex" ? "-moz-inline-box" : value
+				,
+			});
 		},
 	}),
 ];

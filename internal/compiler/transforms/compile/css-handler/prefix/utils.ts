@@ -114,12 +114,27 @@ export function wrapPrefixVisitor<State extends UnknownObject>(
 	});
 }
 
+interface PrefixCSSPropertyProps {
+	path: CompilerPath;
+	propertyName: string;
+	browserFeaturesKey: string;
+	targets: Browser[];
+	rename?: (propertyName: string) => string;
+}
+
+interface PrefixCSSValueProps extends PrefixCSSPropertyProps {
+	value: string;
+	rename?: (value: string) => string;
+}
+
 export function prefixCSSProperty(
-	path: CompilerPath,
-	propertyName: string,
-	browserFeaturesPropertyName: string,
-	targets: Browser[],
-	rename: (propertyName: string) => string = (propertyName) => propertyName,
+	{
+		path,
+		propertyName,
+		browserFeaturesKey,
+		targets,
+		rename = (propertyName) => propertyName,
+	}: PrefixCSSPropertyProps,
 ) {
 	const {node} = path;
 	if (node.type === "CSSBlock") {
@@ -130,7 +145,7 @@ export function prefixCSSProperty(
 				const newDeclarations = [];
 				const prefixes = new Set(
 					targets.filter((browser) =>
-						browser.cssFeatureRequiresPrefix(browserFeaturesPropertyName)
+						browser.cssFeatureRequiresPrefix(browserFeaturesKey)
 					).map((browser) => browser.getPrefix()),
 				);
 				for (const prefix of prefixes) {
@@ -170,12 +185,14 @@ export function prefixCSSProperty(
 }
 
 export function prefixCSSValue(
-	path: CompilerPath,
-	propertyName: string,
-	value: string,
-	browserFeaturesPropertyName: string,
-	targets: Browser[],
-	rename: (value: string) => string = (value) => value,
+	{
+		path,
+		propertyName,
+		value,
+		browserFeaturesKey,
+		targets,
+		rename = (value) => value,
+	}: PrefixCSSValueProps,
 ) {
 	const {node} = path;
 	if (node.type === "CSSBlock") {
@@ -186,7 +203,7 @@ export function prefixCSSValue(
 				const newDeclarations = [];
 				const prefixes = new Set(
 					targets.filter((browser) =>
-						browser.cssFeatureRequiresPrefix(browserFeaturesPropertyName)
+						browser.cssFeatureRequiresPrefix(browserFeaturesKey)
 					).map((browser) => browser.getPrefix()),
 				);
 				for (const prefix of prefixes) {

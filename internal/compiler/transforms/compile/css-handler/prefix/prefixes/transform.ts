@@ -7,6 +7,11 @@ import {
 export default createPrefixVisitor({
 	name: "transform",
 	enter(path, targets) {
-		return prefixCSSProperty(path, "transform", "transforms2d", targets);
+		return prefixCSSProperty({
+			path,
+			propertyName: "transform",
+			browserFeaturesKey: "transforms2d",
+			targets,
+		});
 	},
 });

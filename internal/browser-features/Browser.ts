@@ -12,6 +12,7 @@ export type BrowserTypes = "desktop" | "mobile";
 export abstract class Browser {
 	private readonly id: string;
 	private readonly version: number;
+	private prefix?: string;
 
 	private readonly cssFeatureCache = new Map<string, boolean>();
 
@@ -66,10 +67,12 @@ export abstract class Browser {
 	}
 
 	public getPrefix(): string {
-		return (
-			this.getVersionConsumer().get("p").asStringOrVoid() ??
-			this.getDefaultPrefix()
-		);
+		if (this.prefix == null) {
+			this.prefix =
+				this.getVersionConsumer().get("p").asStringOrVoid() ??
+				this.getDefaultPrefix();
+		}
+		return this.prefix;
 	}
 
 	public getGlobalUsage(): number {
