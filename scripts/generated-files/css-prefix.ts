@@ -4,7 +4,6 @@ const cssPrefixFolder = INTERNAL.append("compiler", "transforms", "compile", "cs
 
 type VisitorDefinition = {
 	basename: string;
-	array: boolean;
 };
 
 export async function getPrefixVisitorDefs(): Promise<VisitorDefinition[]> {
@@ -15,11 +14,8 @@ export async function getPrefixVisitorDefs(): Promise<VisitorDefinition[]> {
 			path.getBasename()[0] !== "." &&
 			path.hasEndExtension("ts")
 		) {
-			const basename = path.getExtensionlessBasename();
-
 			defs.push({
-				basename,
-				array: false,
+				basename: path.getExtensionlessBasename(),
 			});
 		}
 	}
@@ -30,7 +26,6 @@ export async function getPrefixVisitorDefs(): Promise<VisitorDefinition[]> {
 
 	return defs;
 }
-// TODO test this
 export async function main() {
 	const defs = await getPrefixVisitorDefs();
 
@@ -47,8 +42,8 @@ export async function main() {
 			}
 			lines.push("");
 			lines.push("const prefixVisitors: PrefixVisitor<UnknownObject>[] = [",);
-			for (const {basename, array} of defs) {
-				lines.push(array ? `\t...${basename},` : `\t${basename},`);
+			for (const {basename} of defs) {
+				lines.push(`\t...${basename},`);
 			}
 			lines.push("];");
 

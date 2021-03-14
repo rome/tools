@@ -105,10 +105,10 @@ export function wrapPrefixVisitor<State extends UnknownObject>(
 ) {
 	return createVisitor<State>({
 		name: visitor.name,
-		enter: visitor.enter
+		enter: visitor.enter != null
 			? (path, state) => visitor.enter!(path, targets, state)
 			: undefined,
-		exit: visitor.exit
+		exit: visitor.exit != null
 			? (path, state) => visitor.exit!(path, targets, state)
 			: undefined,
 	});
