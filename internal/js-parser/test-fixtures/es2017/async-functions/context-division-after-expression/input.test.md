@@ -8,51 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-2:6
-	path: UIDPath<es2017/async-functions/context-division-after-expression/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-1:27
 			expression: JSUnaryExpression {
 				operator: "void"
 				prefix: true
-				loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-1:27
 				argument: JSFunctionExpression {
 					id: JSBindingIdentifier {
 						name: "fn"
 						loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:20-1:22 (fn)
 					}
-					loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:5-1:27
 					body: JSBlockStatement {
-						body: Array []
-						directives: Array []
+						body: []
+						directives: []
 						loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:25-1:27
 					}
 					head: JSFunctionHead {
 						async: true
 						generator: false
 						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						typeParameters: undefined
+						params: []
 						loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:22-1:24
 					}
+					loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:5-1:27
 				}
+				loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-1:27
 			}
+			loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-1:27
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:0-2:6
 			expression: JSRegExpLiteral {
 				global: true
 				insensitive: false
@@ -60,10 +44,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:0-2:6
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:1-2:4
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "f"
 							loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:1-2:2
@@ -77,10 +59,22 @@ JSRoot {
 							loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:3-2:4
 						}
 					]
+					loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:1-2:4
 				}
+				loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:0-2:6
 			}
+			loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:0-2:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/context-division-after-expression/input.js>
+	loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-2:6
 }
 ```
 

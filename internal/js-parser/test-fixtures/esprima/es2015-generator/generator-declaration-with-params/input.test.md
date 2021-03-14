@@ -8,70 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-generator/generator-declaration-with-params/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:10-1:13 (foo)
 			}
-			loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:0-1:25
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:13-1:22
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "x"
-						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:14-1:15 (x)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:14-1:15
 						}
+						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:14-1:15 (x)
 					}
 					JSBindingIdentifier {
 						name: "y"
-						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:17-1:18 (y)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:17-1:18
 						}
+						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:17-1:18 (y)
 					}
 					JSBindingIdentifier {
 						name: "z"
-						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:20-1:21 (z)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:20-1:21
 						}
+						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:20-1:21 (z)
 					}
 				]
+				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:13-1:22
 			}
+			loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-declaration-with-params/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:0-2:0
 }
 ```
 

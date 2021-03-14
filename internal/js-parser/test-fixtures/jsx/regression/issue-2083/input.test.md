@@ -8,51 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-2:0
-	path: UIDPath<jsx/regression/issue-2083/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:27
 			expression: JSConditionalExpression {
-				loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:26
-				test: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:4
-				}
 				alternate: JSXElement {
+					attributes: []
+					children: []
+					selfClosing: true
 					name: JSXIdentifier {
 						name: "div"
 						loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:20-1:23
 					}
-					attributes: Array []
-					children: Array []
-					selfClosing: true
-					typeArguments: undefined
 					loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:19-1:26
 				}
 				consequent: JSXElement {
+					attributes: []
+					children: []
+					selfClosing: true
 					name: JSXIdentifier {
 						name: "div"
 						loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:9-1:12
 					}
-					attributes: Array []
-					children: Array []
-					selfClosing: true
-					typeArguments: undefined
 					loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:8-1:15
 				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:4
+				}
+				loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:26
 			}
+			loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/regression/issue-2083/input.jsx>
+	loc: SourceLocation jsx/regression/issue-2083/input.jsx 1:0-2:0
 }
 ```
 

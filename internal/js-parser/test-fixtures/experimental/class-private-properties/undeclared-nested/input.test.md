@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 1:0-7:0
-	path: UIDPath<experimental/class-private-properties/undeclared-nested/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 1:0-6:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 1:0-6:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -41,19 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 2:2-2:4
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 2:2-2:5
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 2:2-2:5
 					}
 					JSClassMethod {
 						kind: "method"
@@ -64,46 +43,26 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:2-3:6
 						}
-						loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:2-5:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:2-3:6
 							start: Position 3:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: true
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:6-3:8
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:9-5:3
-							body: Array [
+							body: [
 								JSVariableDeclarationStatement {
-									loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:4-4:25
 									declaration: JSVariableDeclaration {
 										kind: "var"
-										loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:4-4:25
-										declarations: Array [
+										declarations: [
 											JSVariableDeclarator {
 												id: JSBindingIdentifier {
 													name: "prop"
 													loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:8-4:12 (prop)
 												}
-												loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:8-4:24
 												init: JSMemberExpression {
-													loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:15-4:24
 													object: JSReferenceIdentifier {
 														name: "foo"
 														loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:15-4:18 (foo)
@@ -118,18 +77,43 @@ JSRoot {
 														}
 														loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:19-4:24
 													}
+													loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:15-4:24
 												}
+												loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:8-4:24
 											}
 										]
+										loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:4-4:25
 									}
+									loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 4:4-4:25
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:9-5:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: true
+							params: []
+							loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:6-3:8
+						}
+						loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 3:2-5:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 1:0-6:1
 			}
+			loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 1:0-6:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/undeclared-nested/input.js>
+	loc: SourceLocation experimental/class-private-properties/undeclared-nested/input.js 1:0-7:0
 }
 ```
 

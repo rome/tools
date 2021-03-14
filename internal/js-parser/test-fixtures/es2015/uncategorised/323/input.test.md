@@ -8,65 +8,57 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/323/input.js 1:0-1:33
-	path: UIDPath<es2015/uncategorised/323/input.js>
-	body: Array [
+	body: [
 		JSForInStatement {
-			loc: SourceLocation es2015/uncategorised/323/input.js 1:0-1:33
-			right: JSReferenceIdentifier {
-				name: "obj"
-				loc: SourceLocation es2015/uncategorised/323/input.js 1:26-1:29 (obj)
-			}
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/uncategorised/323/input.js 1:31-1:33
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/323/input.js 1:5-1:22
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/323/input.js 1:9-1:22
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "name"
-									loc: SourceLocation es2015/uncategorised/323/input.js 1:10-1:14 (name)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/uncategorised/323/input.js 1:10-1:14
 									}
+									loc: SourceLocation es2015/uncategorised/323/input.js 1:10-1:14 (name)
 								}
 								JSBindingIdentifier {
 									name: "value"
-									loc: SourceLocation es2015/uncategorised/323/input.js 1:16-1:21 (value)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/uncategorised/323/input.js 1:16-1:21
 									}
+									loc: SourceLocation es2015/uncategorised/323/input.js 1:16-1:21 (value)
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/323/input.js 1:9-1:22
 						}
-						init: undefined
 						loc: SourceLocation es2015/uncategorised/323/input.js 1:9-1:22
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/323/input.js 1:5-1:22
 			}
+			right: JSReferenceIdentifier {
+				name: "obj"
+				loc: SourceLocation es2015/uncategorised/323/input.js 1:26-1:29 (obj)
+			}
+			loc: SourceLocation es2015/uncategorised/323/input.js 1:0-1:33
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/323/input.js>
+	loc: SourceLocation es2015/uncategorised/323/input.js 1:0-1:33
 }
 ```
 

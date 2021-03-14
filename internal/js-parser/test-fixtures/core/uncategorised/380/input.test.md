@@ -8,55 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
-	path: UIDPath<core/uncategorised/380/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unterminated regular expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<core/uncategorised/380/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation core/uncategorised/380/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation core/uncategorised/380/input.js 1:4-1:11
 						init: JSBinaryExpression {
 							operator: "/"
-							loc: SourceLocation core/uncategorised/380/input.js 1:8-1:11
-							right: JSReferenceIdentifier {
-								name: "INVALID_PLACEHOLDER"
-								loc: SourceLocation core/uncategorised/380/input.js 1:11-1:11
-							}
 							left: JSRegExpLiteral {
 								global: false
 								insensitive: false
@@ -64,18 +27,51 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: SourceLocation core/uncategorised/380/input.js 1:8-1:10
 								expression: JSRegExpSubExpression {
-									body: Array []
+									body: []
 									loc: SourceLocation core/uncategorised/380/input.js 1:9-1:9
 								}
+								loc: SourceLocation core/uncategorised/380/input.js 1:8-1:10
 							}
+							right: JSReferenceIdentifier {
+								name: "INVALID_PLACEHOLDER"
+								loc: SourceLocation core/uncategorised/380/input.js 1:11-1:11
+							}
+							loc: SourceLocation core/uncategorised/380/input.js 1:8-1:11
 						}
+						loc: SourceLocation core/uncategorised/380/input.js 1:4-1:11
 					}
 				]
+				loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
+			}
+			loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unterminated regular expression"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/380/input.js>
+				end: Position 1:9
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/380/input.js>
+	loc: SourceLocation core/uncategorised/380/input.js 1:0-1:11
 }
 ```
 

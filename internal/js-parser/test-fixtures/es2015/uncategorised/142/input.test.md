@@ -8,28 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/142/input.js 1:0-1:19
-	path: UIDPath<es2015/uncategorised/142/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/142/input.js 1:0-1:19
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/142/input.js 1:1-1:18
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSComputedPropertyKey {
 							value: JSBinaryExpression {
 								operator: "+"
-								loc: SourceLocation es2015/uncategorised/142/input.js 1:3-1:12
 								left: JSStringLiteral {
 									value: "x"
 									loc: SourceLocation es2015/uncategorised/142/input.js 1:3-1:6
@@ -38,20 +24,31 @@ JSRoot {
 									value: "y"
 									loc: SourceLocation es2015/uncategorised/142/input.js 1:9-1:12
 								}
+								loc: SourceLocation es2015/uncategorised/142/input.js 1:3-1:12
 							}
 							loc: SourceLocation es2015/uncategorised/142/input.js 1:2-1:13
 						}
 						value: JSNumericLiteral {
 							value: 10
-							format: undefined
 							loc: SourceLocation es2015/uncategorised/142/input.js 1:15-1:17
 						}
 						loc: SourceLocation es2015/uncategorised/142/input.js 1:2-1:17
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/142/input.js 1:1-1:18
 			}
+			loc: SourceLocation es2015/uncategorised/142/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/142/input.js>
+	loc: SourceLocation es2015/uncategorised/142/input.js 1:0-1:19
 }
 ```
 

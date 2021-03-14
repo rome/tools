@@ -8,33 +8,30 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/enum/export/input.ts 1:0-2:0
-	path: UIDPath<typescript/enum/export/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/enum/export/input.ts 1:0-1:16
 			declaration: TSEnumDeclaration {
+				const: false
+				members: []
 				id: JSBindingIdentifier {
 					name: "E"
 					loc: SourceLocation typescript/enum/export/input.ts 1:12-1:13 (E)
 				}
-				const: false
-				members: Array []
 				loc: SourceLocation typescript/enum/export/input.ts 1:7-1:16
 			}
+			loc: SourceLocation typescript/enum/export/input.ts 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/enum/export/input.ts>
+	loc: SourceLocation typescript/enum/export/input.ts 1:0-2:0
 }
 ```
 

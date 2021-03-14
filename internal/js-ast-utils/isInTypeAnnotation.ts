@@ -6,12 +6,12 @@
  */
 
 import {AnyNode} from "@internal/ast";
-import {Path} from "@internal/compiler";
+import {CompilerPath} from "@internal/compiler";
 import {isTypeNode} from "./isTypeNode";
 import {isTypeExpressionWrapperNode} from "./isTypeExpressionWrapperNode";
 
 // Is this honestly the best heuristics?
-function getTypeNode(path: Path): undefined | AnyNode {
+function getTypeNode(path: CompilerPath): undefined | AnyNode {
 	const {parent, parentPath} = path;
 	if (parent === undefined || parentPath === undefined) {
 		return undefined;
@@ -28,7 +28,7 @@ function getTypeNode(path: Path): undefined | AnyNode {
 	return undefined;
 }
 
-export function isInTypeAnnotation(path: Path): boolean {
+export function isInTypeAnnotation(path: CompilerPath): boolean {
 	const match = getTypeNode(path);
 	if (match === undefined) {
 		return false;

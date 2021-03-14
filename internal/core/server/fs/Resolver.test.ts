@@ -7,7 +7,7 @@ function foundToRelativePath(
 	cwd: AbsoluteFilePath,
 	res: ResolverQueryResponseFound,
 ): string {
-	return cwd.relative(res.path).join();
+	return cwd.relative(res.path.assertAbsolute()).join();
 }
 
 test(

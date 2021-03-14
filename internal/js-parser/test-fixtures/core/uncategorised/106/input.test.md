@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
-	path: UIDPath<core/uncategorised/106/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation core/uncategorised/106/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation core/uncategorised/106/input.js 1:4-1:18
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -39,10 +25,8 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: SourceLocation core/uncategorised/106/input.js 1:8-1:18
 							expression: JSRegExpSubExpression {
-								loc: SourceLocation core/uncategorised/106/input.js 1:9-1:17
-								body: Array [
+								body: [
 									JSRegExpCharacter {
 										value: "f"
 										loc: SourceLocation core/uncategorised/106/input.js 1:9-1:10
@@ -72,13 +56,27 @@ JSRoot {
 										loc: SourceLocation core/uncategorised/106/input.js 1:16-1:17
 									}
 								]
+								loc: SourceLocation core/uncategorised/106/input.js 1:9-1:17
 							}
+							loc: SourceLocation core/uncategorised/106/input.js 1:8-1:18
 						}
+						loc: SourceLocation core/uncategorised/106/input.js 1:4-1:18
 					}
 				]
+				loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
 			}
+			loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/106/input.js>
+	loc: SourceLocation core/uncategorised/106/input.js 1:0-1:18
 }
 ```
 

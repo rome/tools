@@ -8,44 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/413/input.js 1:0-1:5
-	path: UIDPath<core/uncategorised/413/input.js>
-	body: Array [
+	body: [
 		JSThrowStatement {
-			loc: SourceLocation core/uncategorised/413/input.js 1:0-1:5
 			argument: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation core/uncategorised/413/input.js 1:5-1:5
 			}
+			loc: SourceLocation core/uncategorised/413/input.js 1:0-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an throw argument"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "throw argument"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:5
 				path: UIDPath<core/uncategorised/413/input.js>
+				end: Position 1:5
 				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/413/input.js>
+	loc: SourceLocation core/uncategorised/413/input.js 1:0-1:5
 }
 ```
 

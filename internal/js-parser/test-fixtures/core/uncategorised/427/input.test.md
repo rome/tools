@@ -8,56 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/427/input.js 1:0-1:32
-	path: UIDPath<core/uncategorised/427/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Multiple default clauses"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:22
-				path: UIDPath<core/uncategorised/427/input.js>
-				start: Position 1:22
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			loc: SourceLocation core/uncategorised/427/input.js 1:0-1:32
+			cases: [
+				JSSwitchCase {
+					consequent: []
+					loc: SourceLocation core/uncategorised/427/input.js 1:13-1:21
+				}
+				JSSwitchCase {
+					consequent: []
+					loc: SourceLocation core/uncategorised/427/input.js 1:22-1:30
+				}
+			]
 			discriminant: JSReferenceIdentifier {
 				name: "c"
 				loc: SourceLocation core/uncategorised/427/input.js 1:8-1:9 (c)
 			}
-			cases: Array [
-				JSSwitchCase {
-					consequent: Array []
-					test: undefined
-					loc: SourceLocation core/uncategorised/427/input.js 1:13-1:21
-				}
-				JSSwitchCase {
-					consequent: Array []
-					test: undefined
-					loc: SourceLocation core/uncategorised/427/input.js 1:22-1:30
-				}
-			]
+			loc: SourceLocation core/uncategorised/427/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Multiple default clauses"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/427/input.js>
+				end: Position 1:22
+				start: Position 1:22
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/427/input.js>
+	loc: SourceLocation core/uncategorised/427/input.js 1:0-1:32
 }
 ```
 

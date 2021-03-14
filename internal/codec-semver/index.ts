@@ -5,47 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AbsoluteVersionNode,
-	RangeNode,
-	UserRange,
-	UserVersion,
-	UserVersions,
-} from "./types";
+import {SemverModifier, SemverRange, SemverVersion} from "./types";
 import {satisfiesFromAst} from "./satisfies";
 import {compareFromAst} from "./compare";
-import {
-	SemverParserOptions,
-	parseSemverRange,
-	parseSemverVersion,
-} from "./parse";
-import {normalizeUserRange, normalizeUserVersion} from "./utils";
-import {DiagnosticsError} from "@internal/diagnostics";
+import {parseSemverRange, parseSemverVersion} from "./parse";
 
-// export some simple types that don't expose too much internal terminology
-export type SemverRangeNode = RangeNode;
-
-export type SemverVersionNode = AbsoluteVersionNode;
+export {SemverModifier, SemverRange, SemverVersion} from "./types";
 
 export {parseSemverRange, parseSemverVersion};
 
 export {default as stringifySemver} from "./stringify";
 
-export function sortSemverVersions(
-	rawVersions: UserVersions,
-	opts?: SemverParserOptions,
-): AbsoluteVersionNode[] {
-	const versions = rawVersions.map((ver) => normalizeUserVersion(ver, opts));
+export function sortSemverVersions(versions: SemverVersion[]): SemverVersion[] {
 	return versions.sort((a, b) => compareFromAst(a, b));
 }
 
 export function maxSatisfyingSemver(
-	rawVersions: UserVersions,
-	rawRange: UserRange,
-	opts: SemverParserOptions,
-): undefined | AbsoluteVersionNode {
-	const versions = sortSemverVersions(rawVersions, opts).reverse();
-	const range = normalizeUserRange(rawRange, opts);
+	unsortedVersions: SemverVersion[],
+	range: SemverRange,
+): undefined | SemverVersion {
+	const versions = sortSemverVersions(unsortedVersions).reverse();
 
 	for (const version of versions) {
 		if (satisfiesFromAst(version, range)) {
@@ -57,12 +36,10 @@ export function maxSatisfyingSemver(
 }
 
 export function minSatisfyingSemver(
-	rawVersions: UserVersions,
-	rawRange: UserRange,
-	opts?: SemverParserOptions,
-): undefined | AbsoluteVersionNode {
-	const versions = sortSemverVersions(rawVersions, opts);
-	const range = normalizeUserRange(rawRange, opts);
+	unsortedVersions: SemverVersion[],
+	range: SemverRange,
+): undefined | SemverVersion {
+	const versions = sortSemverVersions(unsortedVersions);
 
 	for (const version of versions) {
 		if (satisfiesFromAst(version, range)) {
@@ -73,20 +50,39 @@ export function minSatisfyingSemver(
 	return undefined;
 }
 
-export function satisfiesSemver(
-	rawVersion: UserVersion,
-	rawRange: UserRange,
-	opts?: SemverParserOptions,
-) {
-	try {
-		const version = normalizeUserVersion(rawVersion, opts);
-		const range = normalizeUserRange(rawRange, opts);
-		return satisfiesFromAst(version, range);
-	} catch (err) {
-		if (err instanceof DiagnosticsError) {
-			return false;
-		} else {
-			throw err;
-		}
+export {satisfiesFromAst as satisfiesSemver};
+
+export function incrementSemver(
+	version: SemverVersion,
+	modifier: SemverModifier,
+): SemverVersion {
+	switch (modifier) {
+		case SemverModifier.MAJOR:
+			return {
+				type: "SemverAbsoluteVersion",
+				major: version.major + 1,
+				minor: 0,
+				patch: 0,
+				// TODO should we actually be removing these?
+				prerelease: [],
+				build: [],
+			};
+
+		case SemverModifier.MINOR:
+			return {
+				...version,
+				minor: version.minor + 1,
+				patch: 0,
+				prerelease: [],
+				build: [],
+			};
+
+		case SemverModifier.PATCH:
+			return {
+				...version,
+				patch: version.patch + 1,
+				prerelease: [],
+				build: [],
+			};
 	}
 }

@@ -8,59 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/407/input.js 1:0-1:5
-	path: UIDPath<core/uncategorised/407/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:1
-				path: UIDPath<core/uncategorised/407/input.js>
-				start: Position 1:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/407/input.js 1:0-1:1
 			expression: JSReferenceIdentifier {
 				name: "a"
 				loc: SourceLocation core/uncategorised/407/input.js 1:0-1:1 (a)
 			}
+			loc: SourceLocation core/uncategorised/407/input.js 1:0-1:1
 		}
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation core/uncategorised/407/input.js 1:2-1:5
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation core/uncategorised/407/input.js 1:4-1:5
-			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/407/input.js 1:5-1:5
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation core/uncategorised/407/input.js 1:5-1:5
 				}
+				loc: SourceLocation core/uncategorised/407/input.js 1:5-1:5
+			}
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/407/input.js 1:4-1:5
+			}
+			loc: SourceLocation core/uncategorised/407/input.js 1:2-1:5
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/407/input.js>
+				end: Position 1:1
+				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/407/input.js>
+	loc: SourceLocation core/uncategorised/407/input.js 1:0-1:5
 }
 ```
 

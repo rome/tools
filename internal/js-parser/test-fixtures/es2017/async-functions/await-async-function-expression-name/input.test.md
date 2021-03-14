@@ -8,63 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:0-1:28
-	path: UIDPath<es2017/async-functions/await-async-function-expression-name/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<es2017/async-functions/await-async-function-expression-name/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:0-1:28
 			expression: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "await"
 					loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:16-1:21 (await)
 				}
-				loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:1-1:26
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:24-1:26
 				}
 				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:21-1:23
 				}
+				loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:1-1:26
+			}
+			loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:0-1:28
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/await-async-function-expression-name/input.js>
+				end: Position 1:21
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-async-function-expression-name/input.js>
+	loc: SourceLocation es2017/async-functions/await-async-function-expression-name/input.js 1:0-1:28
 }
 ```
 

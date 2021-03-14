@@ -8,83 +8,71 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:0-3:1
-	path: UIDPath<es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:15-1:17 (fn)
 			}
-			loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: true
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:17-1:19
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:20-3:1
-				body: Array [
+				body: [
 					JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "g"
 							loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:11-2:12 (g)
 						}
-						loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:2-2:26
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:24-2:26
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:12-2:23
-							params: Array [
+							params: [
 								JSBindingAssignmentPattern {
-									loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:13-2:22
+									left: JSBindingIdentifier {
+										name: "x"
+										meta: JSPatternMeta {
+											loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:13-2:14
+										}
+										loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:13-2:14 (x)
+									}
 									right: JSReferenceIdentifier {
 										name: "await"
 										loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:17-2:22 (await)
 									}
-									left: JSBindingIdentifier {
-										name: "x"
-										loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:13-2:14 (x)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:13-2:14
-										}
-									}
+									loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:13-2:22
 								}
 							]
+							loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:12-2:23
 						}
+						loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 2:2-2:26
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:20-3:1
 			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:17-1:19
+			}
+			loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js>
+	loc: SourceLocation es2017/async-functions/await-identifier-inside-parameters-of-nested-function/input.js 1:0-3:1
 }
 ```
 

@@ -8,20 +8,8 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
-	path: UIDPath<es2015/uncategorised/195/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -29,32 +17,42 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: true
-				loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation es2015/uncategorised/195/input.js 1:1-1:5
-					body: Array [
+					body: [
 						JSRegExpCharSet {
-							invert: false
-							loc: SourceLocation es2015/uncategorised/195/input.js 1:1-1:5
-							body: Array [
+							body: [
 								JSRegExpCharSetRange {
-									loc: SourceLocation es2015/uncategorised/195/input.js 1:2-1:5
 									end: JSRegExpCharacter {
 										value: "z"
 										loc: SourceLocation es2015/uncategorised/195/input.js 1:4-1:5
 									}
+									loc: SourceLocation es2015/uncategorised/195/input.js 1:2-1:5
 									start: JSRegExpCharacter {
 										value: "a"
 										loc: SourceLocation es2015/uncategorised/195/input.js 1:2-1:3
 									}
 								}
 							]
+							invert: false
+							loc: SourceLocation es2015/uncategorised/195/input.js 1:1-1:5
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/195/input.js 1:1-1:5
 				}
+				loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
 			}
+			loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/195/input.js>
+	loc: SourceLocation es2015/uncategorised/195/input.js 1:0-1:8
 }
 ```
 

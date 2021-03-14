@@ -9,7 +9,7 @@ test(
 			server: {},
 			client: {},
 			shared: {},
-		}).createFromLocal();
+		}).createFromLocal({optionalResource: true});
 
 		async function foo() {
 			test = "two";
@@ -45,7 +45,7 @@ test(
 			shared: {
 				greet: createBridgeEventDeclaration<string, string>(),
 			},
-		}).createFromLocal();
+		}).createFromLocal({optionalResource: true});
 
 		async function foo() {
 			await server.handshake();
@@ -67,14 +67,8 @@ test(
 		foo();
 		await bar();
 
-		t.looksLike(
-			client.getSubscriptions(),
-			new Set(["Bridge.heartbeat", "Bridge.teardown", "greet"]),
-		);
-		t.looksLike(
-			server.getSubscriptions(),
-			new Set(["Bridge.heartbeat", "Bridge.teardown"]),
-		);
+		t.looksLike(client.getSubscriptionsForHandshake(), new Set([1]));
+		t.looksLike(server.getSubscriptionsForHandshake(), new Set([]));
 
 		t.looksLike(fooMessages, ["foo"]);
 

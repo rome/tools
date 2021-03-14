@@ -1,6 +1,10 @@
 .DS_Store
 Profile-*.json
+# Editor configuration
 .vscode
 .idea
-# ignore test files that contributors could create locally
+# Release artifacts
+/dist
+/dist.tar.gz
+# Ignore test files that contributors could create locally
 /test.*

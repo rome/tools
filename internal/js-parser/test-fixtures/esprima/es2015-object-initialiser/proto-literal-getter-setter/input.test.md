@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:0-1:62
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:1-1:61
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
@@ -33,7 +20,9 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:3-1:14
 						}
-						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:16-1:20}
+						value: JSNullLiteral {
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:16-1:20
+						}
 						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:3-1:20
 					}
 					JSObjectMethod {
@@ -45,23 +34,19 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:26-1:35
 						}
-						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:22-1:39
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:37-1:39
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:35-1:37
 						}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:22-1:39
 					}
 					JSObjectMethod {
 						kind: "set"
@@ -72,38 +57,43 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:45-1:54
 						}
-						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:41-1:59
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:57-1:59
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:54-1:57
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "x"
-									loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:55-1:56 (x)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:55-1:56
 									}
+									loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:55-1:56 (x)
 								}
 							]
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:54-1:57
 						}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:41-1:59
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:1-1:61
 			}
+			loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:0-1:62
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js>
+	loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js 1:0-2:0
 }
 ```
 

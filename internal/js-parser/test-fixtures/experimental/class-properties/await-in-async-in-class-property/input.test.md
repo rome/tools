@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 1:0-4:0
-	path: UIDPath<experimental/class-properties/await-in-async-in-class-property/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 1:6-1:7 (C)
 			}
-			loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -41,49 +24,52 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:2-2:3
 						}
-						value: JSArrowFunctionExpression {
-							loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:6-2:28
-							head: JSFunctionHead {
-								async: true
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:6-2:17
-							}
-							body: JSAwaitExpression {
-								loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:18-2:28
-								argument: JSUnaryExpression {
-									operator: "+"
-									prefix: true
-									loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:24-2:28
-									argument: JSNumericLiteral {
-										value: 42
-										format: undefined
-										loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:26-2:28
-									}
-								}
-							}
-						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:2-2:29
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:2-2:3
 							start: Position 2:2
 						}
+						value: JSArrowFunctionExpression {
+							body: JSAwaitExpression {
+								argument: JSUnaryExpression {
+									operator: "+"
+									prefix: true
+									argument: JSNumericLiteral {
+										value: 42
+										loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:26-2:28
+									}
+									loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:24-2:28
+								}
+								loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:18-2:28
+							}
+							head: JSFunctionHead {
+								async: true
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:6-2:17
+							}
+							loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:6-2:28
+						}
+						loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 2:2-2:29
 					}
 				]
+				loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 1:0-3:1
 			}
+			loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/await-in-async-in-class-property/input.js>
+	loc: SourceLocation experimental/class-properties/await-in-async-in-class-property/input.js 1:0-4:0
 }
 ```
 

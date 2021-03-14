@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/attribute-arbitrary-expression/input.jsx>
-	syntax: Array ["jsx"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "JSX attribute value should be either an expression or a quoted JSX text"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<jsx/errors/attribute-arbitrary-expression/input.jsx>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-1:17
 			expression: JSXElement {
-				name: JSXReferenceIdentifier {
-					name: "Foo"
-					loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:1-1:4
-				}
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
-				loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-1:17
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "bar"
@@ -66,7 +28,6 @@ JSRoot {
 							name: "bar"
 							loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:9-1:12
 						}
-						value: undefined
 						loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:9-1:12
 					}
 					JSXAttribute {
@@ -74,7 +35,6 @@ JSRoot {
 							name: ""
 							loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:12-1:13
 						}
-						value: undefined
 						loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:12-1:13
 					}
 					JSXAttribute {
@@ -82,13 +42,45 @@ JSRoot {
 							name: ""
 							loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:13-1:14
 						}
-						value: undefined
 						loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:13-1:14
 					}
 				]
+				children: []
+				selfClosing: true
+				name: JSXReferenceIdentifier {
+					name: "Foo"
+					loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-1:17
+			}
+			loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-1:17
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "JSX attribute value should be either an expression or a quoted JSX text"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<jsx/errors/attribute-arbitrary-expression/input.jsx>
+				end: Position 1:9
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/attribute-arbitrary-expression/input.jsx>
+	loc: SourceLocation jsx/errors/attribute-arbitrary-expression/input.jsx 1:0-2:0
 }
 ```
 

@@ -8,49 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:0-3:0
-	path: UIDPath<es2015/modules/duplicate-named-export-class-declaration/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:19
-				path: UIDPath<es2015/modules/duplicate-named-export-class-declaration/input.js>
-				start: Position 2:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "`Foo` has already been exported. Exported identifiers must be unique."}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:9-1:12}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:0-1:15
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "Foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:9-1:12 (Foo)
@@ -59,31 +21,63 @@ JSRoot {
 						name: "Foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:9-1:12 (Foo)
 					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:9-1:12
 				}
 			]
+			loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:0-1:15
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 2:0-2:19
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 2:13-2:16 (Foo)
 				}
-				loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 2:7-2:19
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
+					body: []
 					loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 2:7-2:19
 				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 2:7-2:19
+			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 2:0-2:19
+		}
+		JSEmptyStatement {
+			loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 2:19-2:20
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:9-1:12
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "`"}, "Foo", RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/duplicate-named-export-class-declaration/input.js>
+				end: Position 2:19
+				start: Position 2:7
 			}
 		}
-		JSEmptyStatement {loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 2:19-2:20}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-named-export-class-declaration/input.js>
+	loc: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:0-3:0
 }
 ```
 

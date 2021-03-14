@@ -8,52 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:0-2:0
-	path: UIDPath<es2015/destructuring/error-operator-for-default/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Only '=' operator can be used for specifying default value."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:3
-				path: UIDPath<es2015/destructuring/error-operator-for-default/input.js>
-				start: Position 1:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:0-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:1-1:13
-				right: JSReferenceIdentifier {
-					name: "a"
-					loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:12-1:13 (a)
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:1-1:9
-					elements: Array [
+					elements: [
 						JSAssignmentAssignmentPattern {
 							operator: "+="
-							loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:2-1:8
 							left: JSAssignmentIdentifier {
 								name: "a"
 								loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:2-1:3 (a)
@@ -62,12 +24,45 @@ JSRoot {
 								name: "a"
 								loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:7-1:8 (a)
 							}
+							loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:2-1:8
 						}
 					]
+					loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:1-1:9
 				}
+				right: JSReferenceIdentifier {
+					name: "a"
+					loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:12-1:13 (a)
+				}
+				loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:1-1:13
+			}
+			loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Only '=' operator can be used for specifying default value."}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/destructuring/error-operator-for-default/input.js>
+				end: Position 1:3
+				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/destructuring/error-operator-for-default/input.js>
+	loc: SourceLocation es2015/destructuring/error-operator-for-default/input.js 1:0-2:0
 }
 ```
 

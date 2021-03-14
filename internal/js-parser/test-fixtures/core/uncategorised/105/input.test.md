@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
-	path: UIDPath<core/uncategorised/105/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation core/uncategorised/105/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation core/uncategorised/105/input.js 1:4-1:17
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: true
@@ -39,14 +25,10 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: SourceLocation core/uncategorised/105/input.js 1:8-1:17
 							expression: JSRegExpSubExpression {
-								loc: SourceLocation core/uncategorised/105/input.js 1:9-1:14
-								body: Array [
+								body: [
 									JSRegExpCharSet {
-										invert: false
-										loc: SourceLocation core/uncategorised/105/input.js 1:9-1:14
-										body: Array [
+										body: [
 											JSRegExpCharacter {
 												value: "P"
 												loc: SourceLocation core/uncategorised/105/input.js 1:10-1:11
@@ -64,15 +46,31 @@ JSRoot {
 												loc: SourceLocation core/uncategorised/105/input.js 1:13-1:14
 											}
 										]
+										invert: false
+										loc: SourceLocation core/uncategorised/105/input.js 1:9-1:14
 									}
 								]
+								loc: SourceLocation core/uncategorised/105/input.js 1:9-1:14
 							}
+							loc: SourceLocation core/uncategorised/105/input.js 1:8-1:17
 						}
+						loc: SourceLocation core/uncategorised/105/input.js 1:4-1:17
 					}
 				]
+				loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
 			}
+			loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/105/input.js>
+	loc: SourceLocation core/uncategorised/105/input.js 1:0-1:17
 }
 ```
 

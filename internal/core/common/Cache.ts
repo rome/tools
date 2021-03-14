@@ -2,16 +2,10 @@ import {ReporterNamespace} from "@internal/cli-reporter";
 import {
 	RSERValue,
 	encodeValueToRSERSingleMessageStream,
-} from "@internal/codec-binary-serial";
-import {
-	createDirectory,
-	exists,
-	removeDirectory,
-	removeFile,
-	writeFile,
-} from "@internal/fs";
-import {AnyMarkups, markup} from "@internal/markup";
+} from "@internal/binary-transport";
+import {Markup, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 import FatalErrorHandler from "./FatalErrorHandler";
 import {UserConfig} from "./userConfig";
 
@@ -37,6 +31,7 @@ export default class Cache {
 			writeDisabled: boolean;
 			readDisabled: boolean;
 		},
+		resources: Resource,
 	) {
 		this.writeDisabled = writeDisabled;
 		this.readDisabled = readDisabled;
@@ -48,6 +43,16 @@ export default class Cache {
 		this.runningWritePromise = undefined;
 		this.pendingWriteTimer = undefined;
 		this.pendingWrites = new AbsoluteFilePathMap();
+		this.releasing = false;
+
+		resources.add(
+			createResourceFromCallback(
+				"Cache",
+				async () => {
+					await this.teardown();
+				},
+			),
+		);
 	}
 
 	public writeDisabled: boolean;
@@ -61,6 +66,8 @@ export default class Cache {
 	protected pendingWrites: AbsoluteFilePathMap<AbsoluteFilePathMap<WriteOperation>>;
 	protected pendingWriteTimer: undefined | NodeJS.Timeout;
 
+	private releasing: boolean;
+
 	public getDirectory(): AbsoluteFilePath {
 		return this.directoryPath;
 	}
@@ -71,20 +78,23 @@ export default class Cache {
 
 		this.pendingWrites.delete(directory);
 
-		if (await exists(directory)) {
-			await removeDirectory(directory);
+		if (await directory.exists()) {
+			await directory.removeDirectory();
 		}
 	}
 
 	protected getCacheDirectory(uid: UIDPath): AbsoluteFilePath {
-		return this.directoryPath.append(uid.join());
+		return this.directoryPath.append(...uid.getSegments());
 	}
 
 	public getCacheFilename(uid: UIDPath, name: string): AbsoluteFilePath {
 		return this.getCacheDirectory(uid).append(`${name}.bin`);
 	}
 
-	public async teardown() {
+	private async teardown() {
+		this.releasing = true;
+		this.clearBatchWriteTimer();
+
 		// Wait on possible running writePending
 		await this.runningWritePromise;
 
@@ -92,34 +102,35 @@ export default class Cache {
 		await this.writePending("end");
 	}
 
-	protected async writePending(reason: "queue" | "end") {
-		// Clear timer since we're now running
+	private clearBatchWriteTimer() {
 		const {pendingWriteTimer} = this;
 		if (pendingWriteTimer !== undefined) {
 			clearTimeout(pendingWriteTimer);
 		}
+	}
+
+	protected async writePending(reason: "queue" | "end") {
+		// Clear timer since we're now running
+		this.clearBatchWriteTimer();
 
 		const {pendingWrites} = this;
 		this.pendingWrites = new AbsoluteFilePathMap();
 
 		// Write pending files
-		const filelinks: AnyMarkups = [];
+		const filelinks: Markup[] = [];
 		for (const [directory, ops] of pendingWrites) {
-			await createDirectory(directory);
+			await directory.createDirectory();
 
 			for (const [path, op] of ops) {
-				filelinks.push(markup`${path}`);
+				filelinks.push(path);
 				switch (op.type) {
 					case "delete": {
-						await removeFile(path);
+						await path.removeFile();
 						break;
 					}
 
 					case "update": {
-						await writeFile(
-							path,
-							new DataView(encodeValueToRSERSingleMessageStream(op.value)),
-						);
+						await path.writeFile(encodeValueToRSERSingleMessageStream(op.value));
 						break;
 					}
 				}
@@ -153,10 +164,15 @@ export default class Cache {
 			return;
 		}
 
+		// If we are releasing then don't queue any new timers as it will explicitly call writePending
+		if (this.releasing) {
+			return;
+		}
+
 		this.pendingWriteTimer = setTimeout(
 			() => {
 				this.runningWritePromise = this.writePending("queue").catch((err) => {
-					this.fatalErrorHandler.handle(err);
+					return this.fatalErrorHandler.handle(err);
 				}).finally(() => {
 					// Finished running
 					this.runningWritePromise = undefined;

@@ -8,33 +8,13 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:12
-	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:11
-				right: JSReferenceIdentifier {
-					name: "t"
-					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:10-1:11 (t)
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:7
-					elements: Array [
+					elements: [
 						JSMemberExpression {
-							loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:2-1:5
 							object: JSReferenceIdentifier {
 								name: "a"
 								loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:2-1:3 (a)
@@ -46,12 +26,29 @@ JSRoot {
 								}
 								loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:4-1:5 (x)
 							}
+							loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:2-1:5
 						}
 					]
+					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:7
 				}
+				right: JSReferenceIdentifier {
+					name: "t"
+					loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:10-1:11 (t)
+				}
+				loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:11
 			}
+			loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:12
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js>
+	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js 1:0-1:12
 }
 ```
 

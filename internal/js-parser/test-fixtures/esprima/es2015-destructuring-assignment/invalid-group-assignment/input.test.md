@@ -8,48 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in assignment expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-1:11
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:5-1:5
 				}
 				right: JSSequenceExpression {
-					loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:7-1:10
-					expressions: Array [
+					expressions: [
 						JSReferenceIdentifier {
 							name: "c"
 							loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:7-1:8 (c)
@@ -59,10 +27,38 @@ JSRoot {
 							loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:9-1:10 (d)
 						}
 					]
+					loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:6-1:11
 				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-1:11
+			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-1:12
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "assignment expression"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js>
+				end: Position 1:5
+				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js>
+	loc: SourceLocation esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js 1:0-2:0
 }
 ```
 
@@ -70,12 +66,12 @@ JSRoot {
 
 ```
 
- esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js:1:1 parse(js) ━━━━━━━━━━━
+ esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js:1 parse(js) ━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in assignment expression
 
     (a,b)=(c,d);
-     ^^^
+    ^^^^^
 
 
 ```

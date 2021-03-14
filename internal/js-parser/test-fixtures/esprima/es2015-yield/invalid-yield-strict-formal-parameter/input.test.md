@@ -8,75 +8,60 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:30
-				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js>
-				start: Position 1:25
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:23-1:24 (f)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:14-1:34
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:32-1:34
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:24-1:31
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "yield"
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:25-1:30 (yield)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:25-1:30
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:25-1:30 (yield)
 					}
 				]
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:24-1:31
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:14-1:34
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js>
+				end: Position 1:30
+				start: Position 1:25
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:0-2:0
 }
 ```
 

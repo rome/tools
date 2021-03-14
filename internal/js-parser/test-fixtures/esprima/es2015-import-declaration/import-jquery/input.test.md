@@ -8,40 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/import-jquery/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:0-1:22
-			source: JSStringLiteral {
-				value: "jquery"
-				loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:14-1:22
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:0-1:8
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "$"
 						loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:7-1:8 ($)
 					}
-					importKind: undefined
 					loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:7-1:8
 				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:0-1:8
 			}
+			source: JSStringLiteral {
+				value: "jquery"
+				loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:14-1:22
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/import-jquery/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/import-jquery/input.js 1:0-2:0
 }
 ```
 

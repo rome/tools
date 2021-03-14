@@ -8,41 +8,37 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	comments: Array []
+	body: []
+	comments: []
 	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/GH-1106-02/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/GH-1106-02/input.js>
-	directives: Array [
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Bad character escape sequence"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/GH-1106-02/input.js>
+				end: Position 1:3
+				start: Position 1:3
+			}
+		}
+	]
+	directives: [
 		JSDirective {
 			value: "\\xx"
 			loc: SourceLocation esprima/invalid-syntax/GH-1106-02/input.js 1:0-1:6
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Bad character escape sequence"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:3
-				path: UIDPath<esprima/invalid-syntax/GH-1106-02/input.js>
-				start: Position 1:3
-			}
-		}
-	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/GH-1106-02/input.js>
+	loc: SourceLocation esprima/invalid-syntax/GH-1106-02/input.js 1:0-2:0
 }
 ```
 

@@ -8,17 +8,86 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/abstract/input.ts 1:0-8:0
-	path: UIDPath<typescript/class/abstract/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
+	body: [
+		JSClassDeclaration {
+			abstract: true
+			id: JSBindingIdentifier {
+				name: "C1"
+				loc: SourceLocation typescript/class/abstract/input.ts 1:15-1:17 (C1)
+			}
+			meta: JSClassHead {
+				body: []
+				loc: SourceLocation typescript/class/abstract/input.ts 1:0-1:20
+			}
+			loc: SourceLocation typescript/class/abstract/input.ts 1:0-1:20
+		}
+		JSClassDeclaration {
+			abstract: true
+			declare: true
+			id: JSBindingIdentifier {
+				name: "C2"
+				loc: SourceLocation typescript/class/abstract/input.ts 2:23-2:25 (C2)
+			}
+			meta: JSClassHead {
+				body: []
+				loc: SourceLocation typescript/class/abstract/input.ts 2:0-2:28
+			}
+			loc: SourceLocation typescript/class/abstract/input.ts 2:0-2:28
+		}
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			trailingComments: ["0"]
+			declaration: JSClassDeclaration {
+				abstract: true
+				trailingComments: ["0"]
+				id: JSBindingIdentifier {
+					name: "C3"
+					loc: SourceLocation typescript/class/abstract/input.ts 3:22-3:24 (C3)
+				}
+				meta: JSClassHead {
+					body: []
+					loc: SourceLocation typescript/class/abstract/input.ts 3:7-3:27
+				}
+				loc: SourceLocation typescript/class/abstract/input.ts 3:7-3:27
+			}
+			loc: SourceLocation typescript/class/abstract/input.ts 3:0-3:27
+		}
+		JSExportDefaultDeclaration {
+			leadingComments: ["0"]
+			declaration: JSClassDeclaration {
+				abstract: true
+				leadingComments: ["0"]
+				id: JSBindingIdentifier {
+					name: "*default*"
+					loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
+				}
+				meta: JSClassHead {
+					body: []
+					loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
+				}
+				loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
+			}
+			loc: SourceLocation typescript/class/abstract/input.ts 5:0-5:33
+		}
+		JSExportDefaultDeclaration {
+			trailingComments: ["1"]
+			declaration: JSClassDeclaration {
+				abstract: true
+				trailingComments: ["1"]
+				id: JSBindingIdentifier {
+					name: "C4"
+					loc: SourceLocation typescript/class/abstract/input.ts 6:30-6:32 (C4)
+				}
+				meta: JSClassHead {
+					body: []
+					loc: SourceLocation typescript/class/abstract/input.ts 6:15-6:36
+				}
+				loc: SourceLocation typescript/class/abstract/input.ts 6:15-6:36
+			}
+			loc: SourceLocation typescript/class/abstract/input.ts 6:0-6:36
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " `export abstract class {}` is not valid TypeScript."
@@ -30,109 +99,14 @@ JSRoot {
 			loc: SourceLocation typescript/class/abstract/input.ts 7:0-7:50
 		}
 	]
-	body: Array [
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "C1"
-				loc: SourceLocation typescript/class/abstract/input.ts 1:15-1:17 (C1)
-			}
-			abstract: true
-			loc: SourceLocation typescript/class/abstract/input.ts 1:0-1:20
-			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/abstract/input.ts 1:0-1:20
-			}
-		}
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "C2"
-				loc: SourceLocation typescript/class/abstract/input.ts 2:23-2:25 (C2)
-			}
-			abstract: true
-			declare: true
-			loc: SourceLocation typescript/class/abstract/input.ts 2:0-2:28
-			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/abstract/input.ts 2:0-2:28
-			}
-		}
-		JSExportLocalDeclaration {
-			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/class/abstract/input.ts 3:0-3:27
-			trailingComments: Array ["0"]
-			declaration: JSClassDeclaration {
-				id: JSBindingIdentifier {
-					name: "C3"
-					loc: SourceLocation typescript/class/abstract/input.ts 3:22-3:24 (C3)
-				}
-				abstract: true
-				loc: SourceLocation typescript/class/abstract/input.ts 3:7-3:27
-				trailingComments: Array ["0"]
-				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					trailingComments: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/class/abstract/input.ts 3:7-3:27
-				}
-			}
-		}
-		JSExportDefaultDeclaration {
-			leadingComments: Array ["0"]
-			loc: SourceLocation typescript/class/abstract/input.ts 5:0-5:33
-			declaration: JSClassDeclaration {
-				id: JSBindingIdentifier {
-					name: "*default*"
-					loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
-				}
-				abstract: true
-				leadingComments: Array ["0"]
-				loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
-				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					leadingComments: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
-				}
-			}
-		}
-		JSExportDefaultDeclaration {
-			loc: SourceLocation typescript/class/abstract/input.ts 6:0-6:36
-			trailingComments: Array ["1"]
-			declaration: JSClassDeclaration {
-				id: JSBindingIdentifier {
-					name: "C4"
-					loc: SourceLocation typescript/class/abstract/input.ts 6:30-6:32 (C4)
-				}
-				abstract: true
-				loc: SourceLocation typescript/class/abstract/input.ts 6:15-6:36
-				trailingComments: Array ["1"]
-				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					trailingComments: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/class/abstract/input.ts 6:15-6:36
-				}
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/abstract/input.ts>
+	loc: SourceLocation typescript/class/abstract/input.ts 1:0-8:0
 }
 ```
 

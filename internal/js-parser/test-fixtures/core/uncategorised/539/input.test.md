@@ -8,57 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/539/input.js 1:0-1:31
-	path: UIDPath<core/uncategorised/539/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation core/uncategorised/539/input.js 1:9-1:10 (f)
 			}
-			loc: SourceLocation core/uncategorised/539/input.js 1:0-1:31
 			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation core/uncategorised/539/input.js 1:14-1:31
-				directives: Array [
+				body: []
+				directives: [
 					JSDirective {
 						value: "use strict"
 						loc: SourceLocation core/uncategorised/539/input.js 1:16-1:29
 					}
 				]
+				loc: SourceLocation core/uncategorised/539/input.js 1:14-1:31
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/539/input.js 1:10-1:13
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "f"
-						loc: SourceLocation core/uncategorised/539/input.js 1:11-1:12 (f)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation core/uncategorised/539/input.js 1:11-1:12
 						}
+						loc: SourceLocation core/uncategorised/539/input.js 1:11-1:12 (f)
 					}
 				]
+				loc: SourceLocation core/uncategorised/539/input.js 1:10-1:13
 			}
+			loc: SourceLocation core/uncategorised/539/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/539/input.js>
+	loc: SourceLocation core/uncategorised/539/input.js 1:0-1:31
 }
 ```
 

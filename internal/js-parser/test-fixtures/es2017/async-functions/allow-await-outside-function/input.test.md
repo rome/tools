@@ -8,52 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/allow-await-outside-function/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:0-1:5
 			expression: JSReferenceIdentifier {
 				name: "await"
 				loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:0-1:5 (await)
 			}
+			loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:0-1:5
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:6-1:7
 			expression: JSNumericLiteral {
 				value: 1
-				format: undefined
 				loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:6-1:7
 			}
+			loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:6-1:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:5
 				path: UIDPath<es2017/async-functions/allow-await-outside-function/input.js>
+				end: Position 1:5
 				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/allow-await-outside-function/input.js>
+	loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:0-2:0
 }
 ```
 

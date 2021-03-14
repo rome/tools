@@ -5,12 +5,12 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern, isConditional} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
-function inComponentDidUpdate(path: Path): boolean {
+function inComponentDidUpdate(path: CompilerPath): boolean {
 	const func = path.findAncestry(({node}) => isConditional(node)) !== undefined;
 	return (
 		!func &&

@@ -8,53 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/342/input.js 1:0-1:31
-	path: UIDPath<es2015/uncategorised/342/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<es2015/uncategorised/342/input.js>
-				start: Position 1:22
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>v</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening block character <emphasis>{</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/342/input.js 1:0-1:31
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/342/input.js 1:0-1:31
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/uncategorised/342/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation es2015/uncategorised/342/input.js 1:4-1:31
-					properties: Array [
+					properties: [
 						JSObjectMethod {
 							kind: "set"
 							key: JSStaticPropertyKey {
@@ -64,16 +27,11 @@ JSRoot {
 								}
 								loc: SourceLocation es2015/uncategorised/342/input.js 1:10-1:16
 							}
-							loc: SourceLocation es2015/uncategorised/342/input.js 1:6-1:31
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation es2015/uncategorised/342/input.js 1:22-1:31
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation es2015/uncategorised/342/input.js 1:22-1:29
 										expression: JSAssignmentExpression {
 											operator: "="
-											loc: SourceLocation es2015/uncategorised/342/input.js 1:22-1:29
 											left: JSAssignmentIdentifier {
 												name: "v"
 												loc: SourceLocation es2015/uncategorised/342/input.js 1:22-1:23 (v)
@@ -82,37 +40,69 @@ JSRoot {
 												name: "val"
 												loc: SourceLocation es2015/uncategorised/342/input.js 1:26-1:29 (val)
 											}
+											loc: SourceLocation es2015/uncategorised/342/input.js 1:22-1:29
 										}
+										loc: SourceLocation es2015/uncategorised/342/input.js 1:22-1:29
 									}
 								]
+								directives: []
+								loc: SourceLocation es2015/uncategorised/342/input.js 1:22-1:31
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation es2015/uncategorised/342/input.js 1:16-1:21
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "val"
-										loc: SourceLocation es2015/uncategorised/342/input.js 1:17-1:20 (val)
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation es2015/uncategorised/342/input.js 1:17-1:20
 										}
+										loc: SourceLocation es2015/uncategorised/342/input.js 1:17-1:20 (val)
 									}
 								]
+								loc: SourceLocation es2015/uncategorised/342/input.js 1:16-1:21
 							}
+							loc: SourceLocation es2015/uncategorised/342/input.js 1:6-1:31
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/342/input.js 1:4-1:31
 				}
+				loc: SourceLocation es2015/uncategorised/342/input.js 1:0-1:31
+			}
+			loc: SourceLocation es2015/uncategorised/342/input.js 1:0-1:31
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "Expected the opening "}, "block", RAW_MARKUP {value: " character <emphasis>"}, "{", RAW_MARKUP {value: "</emphasis>"}]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "v", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/342/input.js>
+				end: Position 1:21
+				start: Position 1:22
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/342/input.js>
+	loc: SourceLocation es2015/uncategorised/342/input.js 1:0-1:31
 }
 ```
 

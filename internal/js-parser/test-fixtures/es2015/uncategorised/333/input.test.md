@@ -8,54 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/333/input.js 1:0-1:39
-	path: UIDPath<es2015/uncategorised/333/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/uncategorised/333/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "eval is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:20
-				path: UIDPath<es2015/uncategorised/333/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/333/input.js 1:14-1:31
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/333/input.js 1:15-1:31
-				right: JSReferenceIdentifier {
-					name: "defValue"
-					loc: SourceLocation es2015/uncategorised/333/input.js 1:23-1:31 (defValue)
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation es2015/uncategorised/333/input.js 1:15-1:20
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -71,14 +29,19 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/333/input.js 1:16-1:20
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/333/input.js 1:15-1:20
 				}
+				right: JSReferenceIdentifier {
+					name: "defValue"
+					loc: SourceLocation es2015/uncategorised/333/input.js 1:23-1:31 (defValue)
+				}
+				loc: SourceLocation es2015/uncategorised/333/input.js 1:15-1:31
 			}
+			loc: SourceLocation es2015/uncategorised/333/input.js 1:14-1:31
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/333/input.js 1:31-1:38
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/333/input.js 1:31-1:38
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation es2015/uncategorised/333/input.js 1:31-1:32
@@ -87,16 +50,43 @@ JSRoot {
 					name: "obj"
 					loc: SourceLocation es2015/uncategorised/333/input.js 1:35-1:38 (obj)
 				}
+				loc: SourceLocation es2015/uncategorised/333/input.js 1:31-1:38
 			}
+			loc: SourceLocation es2015/uncategorised/333/input.js 1:31-1:38
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/333/input.js 1:38-1:39
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/333/input.js 1:38-1:39
 			}
+			loc: SourceLocation es2015/uncategorised/333/input.js 1:38-1:39
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["eval", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/333/input.js>
+				end: Position 1:20
+				start: Position 1:16
+			}
+		}
+	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/uncategorised/333/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/333/input.js>
+	loc: SourceLocation es2015/uncategorised/333/input.js 1:0-1:39
 }
 ```
 

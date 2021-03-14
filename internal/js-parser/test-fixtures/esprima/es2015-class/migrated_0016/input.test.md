@@ -8,54 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-class/migrated_0016/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-1:27
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-1:27
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:4-1:27
 						init: JSClassExpression {
 							id: JSBindingIdentifier {
 								name: "A"
 								loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:14-1:15 (A)
 							}
-							loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:8-1:27
 							meta: JSClassHead {
-								body: Array []
-								implements: undefined
-								superTypeParameters: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:8-1:27
+								body: []
 								superClass: JSNumericLiteral {
 									value: 0
-									format: undefined
 									loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:24-1:25
 								}
+								loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:8-1:27
 							}
+							loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:8-1:27
 						}
+						loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:4-1:27
 					}
 				]
+				loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-1:27
 			}
+			loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-class/migrated_0016/input.js>
+	loc: SourceLocation esprima/es2015-class/migrated_0016/input.js 1:0-2:0
 }
 ```
 

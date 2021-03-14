@@ -8,20 +8,8 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:4
-	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0000/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:4
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -29,19 +17,29 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:3
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:1-1:2
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "p"
 							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:1-1:2
 						}
 					]
+					loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:1-1:2
 				}
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:3
 			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0000/input.js>
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:4
 }
 ```
 

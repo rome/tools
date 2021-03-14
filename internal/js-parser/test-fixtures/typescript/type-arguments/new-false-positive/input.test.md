@@ -8,40 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:0-2:0
-	path: UIDPath<typescript/type-arguments/new-false-positive/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:0-1:10
 			expression: JSBinaryExpression {
 				operator: "<"
-				loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:0-1:9
-				right: JSReferenceIdentifier {
-					name: "T"
-					loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:8-1:9 (T)
-				}
 				left: JSNewExpression {
-					arguments: Array []
-					optional: undefined
-					typeArguments: undefined
-					loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:0-1:5
+					arguments: []
 					callee: JSReferenceIdentifier {
 						name: "A"
 						loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:4-1:5 (A)
 					}
+					loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:0-1:5
 				}
+				right: JSReferenceIdentifier {
+					name: "T"
+					loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:8-1:9 (T)
+				}
+				loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:0-1:9
 			}
+			loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-arguments/new-false-positive/input.ts>
+	loc: SourceLocation typescript/type-arguments/new-false-positive/input.ts 1:0-2:0
 }
 ```
 

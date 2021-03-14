@@ -8,70 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js>
-				start: Position 1:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:0-1:21
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:1-1:20
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:18-1:20
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:11-1:18
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "yield"
-							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:12-1:17 (yield)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:12-1:17
 							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:12-1:17 (yield)
 						}
 					]
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:11-1:18
 				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:1-1:20
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:0-1:21
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js>
+				end: Position 1:17
+				start: Position 1:12
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-expression-parameter/input.js 1:0-2:0
 }
 ```
 

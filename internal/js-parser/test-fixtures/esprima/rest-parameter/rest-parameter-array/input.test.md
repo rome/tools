@@ -8,61 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:0-2:0
-	path: UIDPath<esprima/rest-parameter/rest-parameter-array/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:9-1:10 (f)
 			}
-			loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:0-1:21
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:19-1:21
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:10-1:18
+				params: []
 				rest: JSBindingArrayPattern {
-					rest: undefined
-					loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:14-1:17
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:14-1:17
-					}
-					elements: Array [
+					elements: [
 						JSBindingIdentifier {
 							name: "a"
-							loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:15-1:16 (a)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:15-1:16
 							}
+							loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:15-1:16 (a)
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:14-1:17
+					}
+					loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:14-1:17
 				}
+				loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:10-1:18
 			}
+			loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/rest-parameter/rest-parameter-array/input.js>
+	loc: SourceLocation esprima/rest-parameter/rest-parameter-array/input.js 1:0-2:0
 }
 ```
 

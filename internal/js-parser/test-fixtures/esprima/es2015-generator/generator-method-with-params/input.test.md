@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-generator/generator-method-with-params/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:0-1:22
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:1-1:21
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -34,56 +21,57 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:4-1:7
 						}
-						loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:3-1:19
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:17-1:19
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:7-1:16
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "x"
-									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:8-1:9 (x)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:8-1:9
 									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:8-1:9 (x)
 								}
 								JSBindingIdentifier {
 									name: "y"
-									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:11-1:12 (y)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:11-1:12
 									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:11-1:12 (y)
 								}
 								JSBindingIdentifier {
 									name: "z"
-									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:14-1:15 (z)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:14-1:15
 									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:14-1:15 (z)
 								}
 							]
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:7-1:16
 						}
+						loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:3-1:19
 					}
 				]
+				loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:1-1:21
 			}
+			loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-method-with-params/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-method-with-params/input.js 1:0-2:0
 }
 ```
 

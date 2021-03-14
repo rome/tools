@@ -8,61 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:0-1:36
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:0-1:35
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:33-1:35
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:0-1:32
-					params: Array [
+					params: [
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:7-1:28
 							left: JSBindingIdentifier {
 								name: "a"
 								loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:7-1:8 (a)
 							}
 							right: JSArrowFunctionExpression {
-								loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:11-1:28
 								body: JSBlockStatement {
-									body: Array []
-									directives: Array []
+									body: []
+									directives: []
 									loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:26-1:28
 								}
 								head: JSFunctionHead {
 									async: false
 									hasHoistedVars: false
-									rest: undefined
-									returnType: undefined
-									thisType: undefined
-									loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:11-1:25
-									params: Array [
+									params: [
 										JSBindingObjectPattern {
-											rest: undefined
-											loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:12-1:21
-											properties: Array [
+											properties: [
 												JSBindingObjectPatternProperty {
 													key: JSStaticPropertyKey {
 														value: JSIdentifier {
@@ -78,16 +53,32 @@ JSRoot {
 													loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:14-1:19
 												}
 											]
+											loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:12-1:21
 										}
 									]
+									loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:11-1:25
 								}
+								loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:11-1:28
 							}
+							loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:7-1:28
 						}
 					]
+					loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:0-1:32
 				}
+				loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:0-1:35
 			}
+			loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js>
+	loc: SourceLocation es2017/async-functions/await-binding-inside-arrow-params-inside-async-arrow-params/input.js 1:0-2:0
 }
 ```
 

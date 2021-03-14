@@ -8,30 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-4:0
-	path: UIDPath<es2020/nullish-coalescing-operator/multiline/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-3:7
 			expression: JSLogicalExpression {
 				operator: "??"
-				loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-3:6
-				right: JSReferenceIdentifier {
-					name: "c"
-					loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 3:5-3:6 (c)
-				}
 				left: JSLogicalExpression {
 					operator: "??"
-					loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-2:6
 					left: JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-1:1 (a)
@@ -40,10 +22,26 @@ JSRoot {
 						name: "b"
 						loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 2:5-2:6 (b)
 					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-2:6
 				}
+				right: JSReferenceIdentifier {
+					name: "c"
+					loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 3:5-3:6 (c)
+				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-3:6
 			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-3:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/nullish-coalescing-operator/multiline/input.js>
+	loc: SourceLocation es2020/nullish-coalescing-operator/multiline/input.js 1:0-4:0
 }
 ```
 

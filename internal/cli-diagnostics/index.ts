@@ -6,8 +6,8 @@
  */
 
 import {
-	DiagnosticSuppressions,
-	Diagnostics,
+	Diagnostic,
+	DiagnosticSuppression,
 	DiagnosticsProcessor,
 } from "@internal/diagnostics";
 import {DiagnosticsPrinterOptions} from "./types";
@@ -30,34 +30,31 @@ export async function printDiagnostics(
 		diagnostics,
 		suppressions,
 		printerOptions,
-		excludeFooter,
 	}: {
-		diagnostics: Diagnostics;
-		suppressions: DiagnosticSuppressions;
+		diagnostics: Diagnostic[];
+		suppressions: DiagnosticSuppression[];
 		printerOptions: DiagnosticsPrinterOptions;
-		excludeFooter?: boolean;
 	},
 ): Promise<DiagnosticsPrinter> {
 	const printer = new DiagnosticsPrinter(printerOptions);
 	printer.processor.addDiagnostics(diagnostics);
 	printer.processor.addSuppressions(suppressions);
 	await printer.print({
-		showFooter: !excludeFooter && printer.hasProblems(),
+		showFooter: false,
 	});
 	return printer;
 }
 
 export async function printDiagnosticsToString(
 	opts: {
-		diagnostics: Diagnostics;
-		suppressions: DiagnosticSuppressions;
+		diagnostics: Diagnostic[];
+		suppressions: DiagnosticSuppression[];
 		printerOptions?: Partial<DiagnosticsPrinterOptions>;
 		format?: ReporterStream["format"];
-		excludeFooter?: boolean;
 		features?: Partial<TerminalFeatures>;
 	},
 ): Promise<string> {
-	const reporter = new Reporter();
+	const reporter = new Reporter("DiagnosticsPrinter");
 	const stream = reporter.attachCaptureStream(opts.format, opts.features);
 	await printDiagnostics({
 		...opts,
@@ -67,5 +64,6 @@ export async function printDiagnosticsToString(
 			...opts.printerOptions,
 		},
 	});
+	await reporter.resources.release();
 	return stream.read();
 }

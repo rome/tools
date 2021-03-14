@@ -8,54 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
-	path: UIDPath<es2015/class-methods/direct-super-outside-constructor/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:13
-				path: UIDPath<es2015/class-methods/direct-super-outside-constructor/input.js>
-				start: Position 2:8
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -65,47 +25,75 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:2-2:3
 						}
-						loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:2-2:16
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:2-2:3
 							start: Position 2:2
+						}
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSCallExpression {
+										arguments: []
+										callee: JSSuper {
+											loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:13
+										}
+										loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:15
+									}
+									loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:15
+								}
+							]
+							directives: []
+							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:7-2:16
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:4-2:6
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:7-2:16
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:15
-									expression: JSCallExpression {
-										arguments: Array []
-										callee: JSSuper {loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:13}
-										loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:15
-									}
-								}
-							]
-						}
+						loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:2-2:16
 					}
 				]
+				loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
+			}
+			loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/class-methods/direct-super-outside-constructor/input.js>
+				end: Position 2:13
+				start: Position 2:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class-methods/direct-super-outside-constructor/input.js>
+	loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
 }
 ```
 

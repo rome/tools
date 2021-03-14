@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/static/input.js 1:0-5:0
-	path: UIDPath<experimental/class-private-properties/static/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-private-properties/static/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-private-properties/static/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/static/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -41,19 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/static/input.js 2:9-2:11
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/static/input.js 2:2-2:12
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/static/input.js 2:2-2:11
 							start: Position 2:2
 						}
+						loc: SourceLocation experimental/class-private-properties/static/input.js 2:2-2:12
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -63,28 +42,35 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/static/input.js 3:9-3:11
 						}
-						value: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation experimental/class-private-properties/static/input.js 3:14-3:15
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/static/input.js 3:2-3:16
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/static/input.js 3:2-3:11
 							start: Position 3:2
 						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/static/input.js 3:14-3:15
+						}
+						loc: SourceLocation experimental/class-private-properties/static/input.js 3:2-3:16
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/static/input.js 1:0-4:1
 			}
+			loc: SourceLocation experimental/class-private-properties/static/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/static/input.js>
+	loc: SourceLocation experimental/class-private-properties/static/input.js 1:0-5:0
 }
 ```
 

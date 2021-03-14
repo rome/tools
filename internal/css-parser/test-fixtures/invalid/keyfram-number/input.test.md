@@ -6,17 +6,12 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
-	path: RelativePath<invalid/keyfram-number/input.css>
-	body: Array [
+	body: [
 		CSSAtRule {
 			name: "keyframes"
-			prelude: Array []
-			loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
+			prelude: []
 			block: CSSKeyframe {
+				value: []
 				name: CSSKeyframeName {
 					value: CSSRaw {
 						value: "foo"
@@ -24,34 +19,36 @@ CSSRoot {
 					}
 					loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:14
 				}
-				value: Array []
 				loc: SourceLocation invalid/keyfram-number/input.css 1:10-5:1
 			}
+			loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 2:3
-				path: RelativePath<invalid/keyfram-number/input.css>
-				start: Position 2:1
-			}
-			description: Object {
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The selector name of the keyframe is not correct."}
-				advice: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<css>"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "The only valid values are percentages, and the keywords <emphasis>from</emphasis> and <emphasis>to</emphasis>."}
 					}
 				]
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "The selector name of the keyframe is not correct."}
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/keyfram-number/input.css>
+				end: Position 2:3
+				start: Position 2:1
 			}
 		}
 	]
+	path: RelativePath<invalid/keyfram-number/input.css>
+	loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
 }
 ```

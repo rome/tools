@@ -8,53 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/call-signature/input.ts 1:0-4:0
-	path: UIDPath<typescript/interface/call-signature/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/call-signature/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/call-signature/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/call-signature/input.ts 1:12-3:1
-				body: Array [
+				body: [
 					TSCallSignatureDeclaration {
-						loc: SourceLocation typescript/interface/call-signature/input.ts 2:4-2:22
-						typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/call-signature/input.ts 2:17-2:21}
 						meta: TSSignatureDeclarationMeta {
-							rest: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/interface/call-signature/input.ts 2:4-2:21
-							parameters: Array [
+							parameters: [
 								JSBindingIdentifier {
 									name: "x"
-									loc: SourceLocation typescript/interface/call-signature/input.ts 2:5-2:6 (x)
 									meta: JSPatternMeta {
-										optional: undefined
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/interface/call-signature/input.ts 2:8-2:14
+										}
 										loc: SourceLocation typescript/interface/call-signature/input.ts 2:5-2:14
-										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/call-signature/input.ts 2:8-2:14}
 									}
+									loc: SourceLocation typescript/interface/call-signature/input.ts 2:5-2:6 (x)
 								}
 							]
+							loc: SourceLocation typescript/interface/call-signature/input.ts 2:4-2:21
 						}
+						typeAnnotation: TSVoidKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/call-signature/input.ts 2:17-2:21
+						}
+						loc: SourceLocation typescript/interface/call-signature/input.ts 2:4-2:22
 					}
 				]
+				loc: SourceLocation typescript/interface/call-signature/input.ts 1:12-3:1
 			}
+			loc: SourceLocation typescript/interface/call-signature/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/call-signature/input.ts>
+	loc: SourceLocation typescript/interface/call-signature/input.ts 1:0-4:0
 }
 ```
 

@@ -8,74 +8,68 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSForInStatement {
+			body: JSEmptyStatement {
+				loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:23-1:24
+			}
+			left: JSVariableDeclaration {
+				kind: "var"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
+							elements: [
+								JSBindingIdentifier {
+									name: "a"
+									meta: JSPatternMeta {
+										loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:10-1:11
+									}
+									loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:10-1:11 (a)
+								}
+							]
+							loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:9-1:12
+						}
+						init: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:15-1:16
+						}
+						loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:9-1:16
+					}
+				]
+				loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:5-1:16
+			}
+			right: JSObjectExpression {
+				properties: []
+				loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:20-1:22
+			}
+			loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:0-1:24
+		}
+	]
+	comments: []
 	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:0-1:24
-	path: UIDPath<es2015/for-in/var-arraybindingpattern-initializer/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:16
 				path: UIDPath<es2015/for-in/var-arraybindingpattern-initializer/input.js>
+				end: Position 1:16
 				start: Position 1:5
 			}
 		}
 	]
-	body: Array [
-		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:23-1:24}
-			loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:0-1:24
-			right: JSObjectExpression {
-				properties: Array []
-				loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:20-1:22
-			}
-			left: JSVariableDeclaration {
-				kind: "var"
-				loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:5-1:16
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:9-1:12
-							elements: Array [
-								JSBindingIdentifier {
-									name: "a"
-									loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:10-1:11 (a)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:10-1:11
-									}
-								}
-							]
-						}
-						loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:9-1:16
-						init: JSNumericLiteral {
-							value: 0
-							format: undefined
-							loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:15-1:16
-						}
-					}
-				]
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-in/var-arraybindingpattern-initializer/input.js>
+	loc: SourceLocation es2015/for-in/var-arraybindingpattern-initializer/input.js 1:0-1:24
 }
 ```
 

@@ -8,89 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/15/input.js 1:0-3:0
-	path: UIDPath<es2018/object-rest-spread/15/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2018/object-rest-spread/15/input.js 1:0-1:21
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2018/object-rest-spread/15/input.js 1:7-1:21
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2018/object-rest-spread/15/input.js 1:7-1:21
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: SourceLocation es2018/object-rest-spread/15/input.js 1:13-1:16 (foo)
 							}
-							loc: SourceLocation es2018/object-rest-spread/15/input.js 1:13-1:20
 							init: JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation es2018/object-rest-spread/15/input.js 1:19-1:20
 							}
+							loc: SourceLocation es2018/object-rest-spread/15/input.js 1:13-1:20
 						}
 					]
+					loc: SourceLocation es2018/object-rest-spread/15/input.js 1:7-1:21
 				}
+				loc: SourceLocation es2018/object-rest-spread/15/input.js 1:7-1:21
 			}
+			loc: SourceLocation es2018/object-rest-spread/15/input.js 1:0-1:21
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2018/object-rest-spread/15/input.js 2:0-2:44
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2018/object-rest-spread/15/input.js 2:7-2:44
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2018/object-rest-spread/15/input.js 2:7-2:44
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingArrayPattern {
-								rest: undefined
-								loc: SourceLocation es2018/object-rest-spread/15/input.js 2:13-2:37
-								elements: Array [
+								elements: [
 									JSBindingIdentifier {
 										name: "bar"
-										loc: SourceLocation es2018/object-rest-spread/15/input.js 2:14-2:17 (bar)
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation es2018/object-rest-spread/15/input.js 2:14-2:17
 										}
+										loc: SourceLocation es2018/object-rest-spread/15/input.js 2:14-2:17 (bar)
 									}
 									JSBindingArrayPattern {
-										rest: undefined
-										loc: SourceLocation es2018/object-rest-spread/15/input.js 2:19-2:36
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2018/object-rest-spread/15/input.js 2:19-2:36
-										}
-										elements: Array [
+										elements: [
 											JSBindingObjectPattern {
-												loc: SourceLocation es2018/object-rest-spread/15/input.js 2:20-2:35
-												rest: JSBindingIdentifier {
-													name: "foo"
-													loc: SourceLocation es2018/object-rest-spread/15/input.js 2:30-2:33 (foo)
-												}
-												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
-													loc: SourceLocation es2018/object-rest-spread/15/input.js 2:20-2:35
-												}
-												properties: Array [
+												properties: [
 													JSBindingObjectPatternProperty {
 														key: JSStaticPropertyKey {
 															value: JSIdentifier {
@@ -106,22 +68,47 @@ JSRoot {
 														loc: SourceLocation es2018/object-rest-spread/15/input.js 2:22-2:25
 													}
 												]
+												meta: JSPatternMeta {
+													loc: SourceLocation es2018/object-rest-spread/15/input.js 2:20-2:35
+												}
+												rest: JSBindingIdentifier {
+													name: "foo"
+													loc: SourceLocation es2018/object-rest-spread/15/input.js 2:30-2:33 (foo)
+												}
+												loc: SourceLocation es2018/object-rest-spread/15/input.js 2:20-2:35
 											}
 										]
+										meta: JSPatternMeta {
+											loc: SourceLocation es2018/object-rest-spread/15/input.js 2:19-2:36
+										}
+										loc: SourceLocation es2018/object-rest-spread/15/input.js 2:19-2:36
 									}
 								]
+								loc: SourceLocation es2018/object-rest-spread/15/input.js 2:13-2:37
 							}
-							loc: SourceLocation es2018/object-rest-spread/15/input.js 2:13-2:43
 							init: JSReferenceIdentifier {
 								name: "qux"
 								loc: SourceLocation es2018/object-rest-spread/15/input.js 2:40-2:43 (qux)
 							}
+							loc: SourceLocation es2018/object-rest-spread/15/input.js 2:13-2:43
 						}
 					]
+					loc: SourceLocation es2018/object-rest-spread/15/input.js 2:7-2:44
 				}
+				loc: SourceLocation es2018/object-rest-spread/15/input.js 2:7-2:44
 			}
+			loc: SourceLocation es2018/object-rest-spread/15/input.js 2:0-2:44
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/15/input.js>
+	loc: SourceLocation es2018/object-rest-spread/15/input.js 1:0-3:0
 }
 ```
 

@@ -8,23 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:0-1:10
-	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/61/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:0-1:10
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:0-1:10
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "\\u{\\u{0}"
 						raw: "\\u{\\u{0}"
@@ -32,28 +20,36 @@ JSRoot {
 						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:1-1:9
 					}
 				]
+				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:0-1:10
 			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:0-1:10
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:2
 				path: UIDPath<experimental/template-literal-invalid-escapes-untagged/61/input.js>
+				end: Position 1:2
 				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/61/input.js>
+	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:0-1:10
 }
 ```
 

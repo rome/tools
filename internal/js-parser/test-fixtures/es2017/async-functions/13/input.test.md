@@ -8,87 +8,74 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/13/input.js 1:0-1:52
-	path: UIDPath<es2017/async-functions/13/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/13/input.js 1:0-1:52
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2017/async-functions/13/input.js 1:1-1:51
-				head: JSFunctionHead {
-					async: false
-					generator: false
-					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2017/async-functions/13/input.js 1:9-1:12
-					params: Array [
-						JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation es2017/async-functions/13/input.js 1:10-1:11 (x)
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation es2017/async-functions/13/input.js 1:10-1:11
-							}
-						}
-					]
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2017/async-functions/13/input.js 1:13-1:51
-					body: Array [
+					body: [
 						JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: "inner"
 								loc: SourceLocation es2017/async-functions/13/input.js 1:30-1:35 (inner)
 							}
-							loc: SourceLocation es2017/async-functions/13/input.js 1:15-1:49
-							head: JSFunctionHead {
-								async: true
-								generator: false
-								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation es2017/async-functions/13/input.js 1:35-1:37
-							}
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation es2017/async-functions/13/input.js 1:38-1:49
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation es2017/async-functions/13/input.js 1:40-1:47
 										expression: JSAwaitExpression {
-											loc: SourceLocation es2017/async-functions/13/input.js 1:40-1:47
 											argument: JSReferenceIdentifier {
 												name: "x"
 												loc: SourceLocation es2017/async-functions/13/input.js 1:46-1:47 (x)
 											}
+											loc: SourceLocation es2017/async-functions/13/input.js 1:40-1:47
 										}
+										loc: SourceLocation es2017/async-functions/13/input.js 1:40-1:47
 									}
 								]
+								directives: []
+								loc: SourceLocation es2017/async-functions/13/input.js 1:38-1:49
 							}
+							head: JSFunctionHead {
+								async: true
+								generator: false
+								hasHoistedVars: false
+								params: []
+								loc: SourceLocation es2017/async-functions/13/input.js 1:35-1:37
+							}
+							loc: SourceLocation es2017/async-functions/13/input.js 1:15-1:49
 						}
 					]
+					directives: []
+					loc: SourceLocation es2017/async-functions/13/input.js 1:13-1:51
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: [
+						JSBindingIdentifier {
+							name: "x"
+							meta: JSPatternMeta {
+								loc: SourceLocation es2017/async-functions/13/input.js 1:10-1:11
+							}
+							loc: SourceLocation es2017/async-functions/13/input.js 1:10-1:11 (x)
+						}
+					]
+					loc: SourceLocation es2017/async-functions/13/input.js 1:9-1:12
+				}
+				loc: SourceLocation es2017/async-functions/13/input.js 1:1-1:51
 			}
+			loc: SourceLocation es2017/async-functions/13/input.js 1:0-1:52
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/13/input.js>
+	loc: SourceLocation es2017/async-functions/13/input.js 1:0-1:52
 }
 ```
 

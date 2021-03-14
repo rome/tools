@@ -8,52 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:0-5:1
-	path: UIDPath<experimental/class-properties/arguments-in-function/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:9-1:11 (fn)
 			}
-			loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:0-5:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:14-5:1
-				body: Array [
+				body: [
 					JSClassDeclaration {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 2:8-2:9 (A)
 						}
-						loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 2:2-4:3
 						meta: JSClassHead {
-							implements: undefined
-							superClass: undefined
-							superTypeParameters: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 2:2-4:3
-							body: Array [
+							body: [
 								JSClassProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -62,58 +31,71 @@ JSRoot {
 										}
 										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:4-3:7
 									}
+									meta: JSClassPropertyMeta {
+										abstract: false
+										optional: false
+										readonly: false
+										static: false
+										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:4-3:7
+										start: Position 3:4
+									}
 									value: JSFunctionExpression {
 										id: JSBindingIdentifier {
 											name: "f"
 											loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:19-3:20 (f)
 										}
-										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:10-3:36
-										head: JSFunctionHead {
-											async: false
-											generator: false
-											hasHoistedVars: false
-											params: Array []
-											rest: undefined
-											returnType: undefined
-											thisType: undefined
-											typeParameters: undefined
-											loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:20-3:22
-										}
 										body: JSBlockStatement {
-											directives: Array []
-											loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:23-3:36
-											body: Array [
+											body: [
 												JSExpressionStatement {
-													loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:25-3:34
 													expression: JSReferenceIdentifier {
 														name: "arguments"
 														loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:25-3:34 (arguments)
 													}
+													loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:25-3:34
 												}
 											]
+											directives: []
+											loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:23-3:36
 										}
+										head: JSFunctionHead {
+											async: false
+											generator: false
+											hasHoistedVars: false
+											params: []
+											loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:20-3:22
+										}
+										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:10-3:36
 									}
-									definite: undefined
-									typeAnnotation: undefined
 									loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:4-3:37
-									meta: JSClassPropertyMeta {
-										abstract: false
-										accessibility: undefined
-										optional: false
-										readonly: false
-										static: false
-										typeAnnotation: undefined
-										loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 3:4-3:7
-										start: Position 3:4
-									}
 								}
 							]
+							loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 2:2-4:3
 						}
+						loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 2:2-4:3
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:14-5:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:11-1:13
+			}
+			loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-properties/arguments-in-function/input.js>
+	loc: SourceLocation experimental/class-properties/arguments-in-function/input.js 1:0-5:1
 }
 ```
 

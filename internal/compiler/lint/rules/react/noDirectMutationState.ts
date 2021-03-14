@@ -1,11 +1,11 @@
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {AnyNode} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
 // Check if this.state mutation was in the constructor
-function isMutationInConstructor(path: Path): boolean {
+function isMutationInConstructor(path: CompilerPath): boolean {
 	// Find the first instance of a constructor or a call method
 	const ancestor = path.findAncestry(({node}) =>
 		(node.type === "JSClassMethod" &&

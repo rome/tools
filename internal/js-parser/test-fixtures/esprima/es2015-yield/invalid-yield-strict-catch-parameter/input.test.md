@@ -8,63 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSTryStatement {
+			block: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:18-1:20
+			}
+			handler: JSCatchClause {
+				body: JSBlockStatement {
+					body: []
+					directives: []
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:35-1:37
+				}
+				param: JSBindingIdentifier {
+					name: "yield"
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:28-1:33 (yield)
+				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:21-1:37
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:14-1:37
+		}
+	]
+	comments: []
 	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js>
-	directives: Array [
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js>
+				end: Position 1:33
+				start: Position 1:28
+			}
+		}
+	]
+	directives: [
 		JSDirective {
 			value: "use strict"
 			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:0-1:13
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:33
-				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js>
-				start: Position 1:28
-			}
-		}
-	]
-	body: Array [
-		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:14-1:37
-			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:18-1:20
-			}
-			handler: JSCatchClause {
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:21-1:37
-				param: JSBindingIdentifier {
-					name: "yield"
-					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:28-1:33 (yield)
-				}
-				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
-					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:35-1:37
-				}
-			}
-		}
-	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js 1:0-2:0
 }
 ```
 

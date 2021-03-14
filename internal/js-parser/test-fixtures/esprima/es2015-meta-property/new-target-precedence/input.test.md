@@ -8,51 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:0-4:0
-	path: UIDPath<esprima/es2015-meta-property/new-target-precedence/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:9-1:10 (f)
 			}
-			loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:13-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:4-2:23
 						expression: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:4-2:22
+							arguments: []
 							callee: JSNewExpression {
-								arguments: Array []
-								optional: undefined
-								typeArguments: undefined
-								loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:4-2:20
+								arguments: []
 								callee: JSMetaProperty {
-									loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:8-2:18
 									meta: JSIdentifier {
 										name: "new"
 										loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:8-2:11 (new)
@@ -61,14 +30,37 @@ JSRoot {
 										name: "target"
 										loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:12-2:18 (target)
 									}
+									loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:8-2:18
 								}
+								loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:4-2:20
 							}
+							loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:4-2:22
 						}
+						loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 2:4-2:23
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:13-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:10-1:12
+			}
+			loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-meta-property/new-target-precedence/input.js>
+	loc: SourceLocation esprima/es2015-meta-property/new-target-precedence/input.js 1:0-4:0
 }
 ```
 

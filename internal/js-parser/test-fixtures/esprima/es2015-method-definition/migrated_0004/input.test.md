@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-method-definition/migrated_0004/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:0-1:17
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:0-1:17
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:4-1:17
-					properties: Array [
+					properties: [
 						JSObjectMethod {
 							kind: "method"
 							key: JSStaticPropertyKey {
@@ -41,29 +27,37 @@ JSRoot {
 								}
 								loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:6-1:9
 							}
-							loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:6-1:15
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:12-1:15
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:9-1:11
 							}
+							loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:6-1:15
 						}
 					]
+					loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:4-1:17
 				}
+				loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:0-1:17
 			}
+			loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-method-definition/migrated_0004/input.js>
+	loc: SourceLocation esprima/es2015-method-definition/migrated_0004/input.js 1:0-2:0
 }
 ```
 

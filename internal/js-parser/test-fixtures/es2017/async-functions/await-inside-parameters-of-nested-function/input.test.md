@@ -8,122 +8,107 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:0-3:1
-	path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a comma to separate items in function params"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:24
-				path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-function/input.js>
-				start: Position 2:25
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:15-1:18 (foo)
 			}
-			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: true
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:18-1:20
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:21-3:1
-				body: Array [
+				body: [
 					JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "bar"
 							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:11-2:14 (bar)
 						}
-						loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:2-3:1
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:25-3:1
-							body: Array [
+							body: [
 								JSExpressionStatement {
-									loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:25-2:26
 									expression: JSNumericLiteral {
 										value: 2
-										format: undefined
 										loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:25-2:26
 									}
+									loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:25-2:26
 								}
 								JSExpressionStatement {
-									loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:26-2:27
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:26-2:27
 									}
+									loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:26-2:27
 								}
 								JSBlockStatement {
-									body: Array []
-									directives: Array []
+									body: []
+									directives: []
 									loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:28-2:30
 								}
 							]
+							directives: []
+							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:25-3:1
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:14-2:24
-							params: Array [
+							params: [
 								JSBindingAssignmentPattern {
-									loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:15-2:24
+									left: JSBindingIdentifier {
+										name: "x"
+										meta: JSPatternMeta {
+											loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:15-2:16
+										}
+										loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:15-2:16 (x)
+									}
 									right: JSReferenceIdentifier {
 										name: "await"
 										loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:19-2:24 (await)
 									}
-									left: JSBindingIdentifier {
-										name: "x"
-										loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:15-2:16 (x)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:15-2:16
-										}
-									}
+									loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:15-2:24
 								}
 							]
+							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:14-2:24
 						}
+						loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 2:2-3:1
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:21-3:1
+			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:18-1:20
+			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected a comma to separate items in "}, "function params"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-function/input.js>
+				end: Position 2:24
+				start: Position 2:25
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-function/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-function/input.js 1:0-3:1
 }
 ```
 

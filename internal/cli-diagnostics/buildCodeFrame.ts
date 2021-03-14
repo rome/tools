@@ -15,12 +15,12 @@ import {
 } from "./constants";
 import {Position} from "@internal/parser-core";
 import {ToLines, cleanEquivalentString, showInvisibles} from "./utils";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {
-	AnyMarkups,
+	Markup,
 	StaticMarkup,
-	concatMarkup,
 	isEmptyMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
 	readMarkup,
@@ -36,7 +36,7 @@ function formatLineView(
 		// NB: The `word-break` default is probably better? lineWrap: "char-break",
 	};
 
-	const parts: AnyMarkups = [line];
+	const parts: Markup[] = [line];
 
 	if (gutterLength > 0) {
 		parts.push(
@@ -87,7 +87,7 @@ function formatLineView(
 		);
 	}
 
-	return markupTag("view", concatMarkup(parts), attributes);
+	return markupTag("view", joinMarkup(parts), attributes);
 }
 
 type Marker = {
@@ -105,18 +105,18 @@ type FormattedLine = {
 export default function buildCodeFrame(
 	{
 		lines: allLines,
-		truncateLines,
 		start,
 		end,
 		type,
 		markerMessage = markup``,
+		truncateLines,
 	}: {
 		lines: ToLines;
 		type: "pointer" | "all";
-		truncateLines?: number;
 		start?: Position;
 		end?: Position;
 		markerMessage?: StaticMarkup;
+		truncateLines?: number;
 	},
 ): {
 	frame: StaticMarkup;
@@ -140,7 +140,7 @@ export default function buildCodeFrame(
 		};
 	}
 
-	// Whether we truncated lines
+	// Whether we truncated any text
 	let truncated = false;
 
 	const startLineIndex =
@@ -223,10 +223,12 @@ export default function buildCodeFrame(
 		highlightLine = showInvisibles(
 			readMarkup(highlightLine),
 			{
+				ignoreTrailingCarriageReturn: true,
 				ignoreLeadingTabs: true,
 				ignoreLoneSpaces: true,
 				atLineStart: true,
 				atLineEnd: true,
+				nextText: undefined,
 			},
 		).value;
 
@@ -323,7 +325,7 @@ export default function buildCodeFrame(
 	)}">...</pad></emphasis>${GUTTER}`;
 
 	// Build the frame
-	const result: AnyMarkups = [];
+	const result: Markup[] = [];
 	for (const selection of formattedLines) {
 		if (!selection) {
 			result.push(omittedLine);
@@ -343,6 +345,6 @@ export default function buildCodeFrame(
 
 	return {
 		truncated,
-		frame: concatMarkup(result, markup`\n`),
+		frame: joinMarkup(result, markup`\n`),
 	};
 }

@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 1:0-4:0
-	path: UIDPath<experimental/class-private-properties/failure-numeric-start-identifier/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Identifier directly after number"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:4
-				path: UIDPath<experimental/class-private-properties/failure-numeric-start-identifier/input.js>
-				start: Position 2:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,28 +24,51 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:4-2:5
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:4-2:5
+							start: Position 2:4
+						}
 						value: JSReferenceIdentifier {
 							name: "y"
 							loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:8-2:9 (y)
 						}
-						definite: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:4-2:9
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 2:4-2:5
-							start: Position 2:4
-						}
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 1:0-3:1
+			}
+			loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Identifier directly after number"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-properties/failure-numeric-start-identifier/input.js>
+				end: Position 2:4
+				start: Position 2:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/failure-numeric-start-identifier/input.js>
+	loc: SourceLocation experimental/class-private-properties/failure-numeric-start-identifier/input.js 1:0-4:0
 }
 ```
 

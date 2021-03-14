@@ -8,72 +8,73 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-optional/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-1:44
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-1:44
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/tuple-optional/input.ts 1:4-1:44
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/tuple-optional/input.ts 1:4-1:44
 								typeAnnotation: TSTupleType {
-									loc: SourceLocation typescript/types/tuple-optional/input.ts 1:7-1:44
-									elementTypes: Array [
+									elementTypes: [
 										TSTupleElement {
-											name: undefined
 											optional: false
-											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:8-1:14
-											typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional/input.ts 1:8-1:14}
-										}
-										TSTupleElement {
-											name: undefined
-											optional: true
-											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:16-1:23
-											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional/input.ts 1:16-1:22}
-										}
-										TSTupleElement {
-											name: undefined
-											optional: true
-											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:25-1:43
-											typeAnnotation: TSParenthesizedType {
-												loc: SourceLocation typescript/types/tuple-optional/input.ts 1:25-1:42
-												typeAnnotation: TSUnionTypeAnnotation {
-													loc: SourceLocation typescript/types/tuple-optional/input.ts 1:26-1:41
-													types: Array [
-														TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional/input.ts 1:26-1:32}
-														TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-optional/input.ts 1:35-1:41}
-													]
-												}
+											typeAnnotation: TSStringKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple-optional/input.ts 1:8-1:14
 											}
+											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:8-1:14
+										}
+										TSTupleElement {
+											optional: true
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple-optional/input.ts 1:16-1:22
+											}
+											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:16-1:23
+										}
+										TSTupleElement {
+											optional: true
+											typeAnnotation: TSParenthesizedType {
+												typeAnnotation: TSUnionTypeAnnotation {
+													types: [
+														TSStringKeywordTypeAnnotation {
+															loc: SourceLocation typescript/types/tuple-optional/input.ts 1:26-1:32
+														}
+														TSNumberKeywordTypeAnnotation {
+															loc: SourceLocation typescript/types/tuple-optional/input.ts 1:35-1:41
+														}
+													]
+													loc: SourceLocation typescript/types/tuple-optional/input.ts 1:26-1:41
+												}
+												loc: SourceLocation typescript/types/tuple-optional/input.ts 1:25-1:42
+											}
+											loc: SourceLocation typescript/types/tuple-optional/input.ts 1:25-1:43
 										}
 									]
+									loc: SourceLocation typescript/types/tuple-optional/input.ts 1:7-1:44
 								}
+								loc: SourceLocation typescript/types/tuple-optional/input.ts 1:4-1:44
 							}
+							loc: SourceLocation typescript/types/tuple-optional/input.ts 1:4-1:44
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/tuple-optional/input.ts 1:4-1:44
 					}
 				]
+				loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-1:44
 			}
+			loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-1:44
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-optional/input.ts>
+	loc: SourceLocation typescript/types/tuple-optional/input.ts 1:0-2:0
 }
 ```
 

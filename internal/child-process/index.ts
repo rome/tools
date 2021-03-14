@@ -5,7 +5,7 @@ import {AbsoluteFilePath} from "@internal/path";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	DiagnosticCategory,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 } from "@internal/diagnostics";
 import {StaticMarkup, markup} from "@internal/markup";
 
@@ -82,7 +82,7 @@ export class ChildProcess {
 		message: StaticMarkup,
 		category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["childProcess/failure"],
 	) {
-		throw createSingleDiagnosticError({
+		throw createSingleDiagnosticsError({
 			description: {
 				category,
 				message,

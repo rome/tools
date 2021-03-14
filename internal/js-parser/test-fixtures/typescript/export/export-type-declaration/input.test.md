@@ -8,167 +8,155 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/export/export-type-declaration/input.ts 1:0-5:0
-	path: UIDPath<typescript/export/export-type-declaration/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:23
-				path: UIDPath<typescript/export/export-type-declaration/input.ts>
-				start: Position 3:24
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "type"
-			specifiers: undefined
-			loc: SourceLocation typescript/export/export-type-declaration/input.ts 1:0-1:18
 			declaration: TSTypeAlias {
 				id: JSBindingIdentifier {
 					name: "A"
 					loc: SourceLocation typescript/export/export-type-declaration/input.ts 1:12-1:13 (A)
 				}
-				typeParameters: undefined
-				loc: SourceLocation typescript/export/export-type-declaration/input.ts 1:7-1:18
 				right: TSNumericLiteralTypeAnnotation {
 					value: 2
-					format: undefined
 					loc: SourceLocation typescript/export/export-type-declaration/input.ts 1:16-1:17
 				}
+				loc: SourceLocation typescript/export/export-type-declaration/input.ts 1:7-1:18
 			}
+			loc: SourceLocation typescript/export/export-type-declaration/input.ts 1:0-1:18
 		}
 		JSExportLocalDeclaration {
 			exportKind: "type"
-			specifiers: undefined
-			loc: SourceLocation typescript/export/export-type-declaration/input.ts 2:0-2:21
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "B"
 					loc: SourceLocation typescript/export/export-type-declaration/input.ts 2:17-2:18 (B)
 				}
-				extends: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/export/export-type-declaration/input.ts 2:7-2:21
 				body: TSInterfaceBody {
-					body: Array []
+					body: []
 					loc: SourceLocation typescript/export/export-type-declaration/input.ts 2:19-2:21
 				}
+				loc: SourceLocation typescript/export/export-type-declaration/input.ts 2:7-2:21
 			}
+			loc: SourceLocation typescript/export/export-type-declaration/input.ts 2:0-2:21
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:0-4:29
 			declaration: JSFunctionDeclaration {
+				declare: true
 				id: JSBindingIdentifier {
 					name: "function"
 					loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:15-3:23 (function)
 				}
-				declare: true
-				loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:7-4:29
-				head: JSFunctionHead {
-					async: false
-					generator: false
-					hasHoistedVars: true
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:24-3:25
-					params: Array [
-						JSBindingIdentifier {
-							name: "a"
-							loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:24-3:25 (a)
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:24-3:25
-							}
-						}
-					]
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:25-4:29
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:25-3:27
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:26-3:26
 							}
+							loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:25-3:27
 						}
 						JSExpressionStatement {
-							loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:27-3:28
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:27-3:28
 							}
+							loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:27-3:28
 						}
 						JSExpressionStatement {
-							loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:29-3:36
 							expression: JSReferenceIdentifier {
 								name: "string"
 								loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:29-3:35 (string)
 							}
+							loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:29-3:36
 						}
 						JSExportLocalDeclaration {
 							exportKind: "value"
-							specifiers: undefined
-							loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:0-4:29
 							declaration: JSVariableDeclarationStatement {
 								declare: true
-								loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:7-4:29
 								declaration: JSVariableDeclaration {
 									kind: "var"
-									loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:7-4:29
-									declarations: Array [
+									declarations: [
 										JSVariableDeclarator {
 											id: JSBindingIdentifier {
 												name: "b"
-												loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:19-4:28
 												meta: JSPatternMeta {
-													definite: undefined
+													typeAnnotation: TSStringKeywordTypeAnnotation {
+														loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:22-4:28
+													}
 													loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:19-4:28
-													typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:22-4:28}
 												}
+												loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:19-4:28
 											}
-											init: undefined
 											loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:19-4:28
 										}
 									]
+									loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:7-4:29
 								}
+								loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:7-4:29
 							}
+							loc: SourceLocation typescript/export/export-type-declaration/input.ts 4:0-4:29
 						}
 					]
+					directives: []
+					loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:25-4:29
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: true
+					params: [
+						JSBindingIdentifier {
+							name: "a"
+							meta: JSPatternMeta {
+								loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:24-3:25
+							}
+							loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:24-3:25 (a)
+						}
+					]
+					loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:24-3:25
+				}
+				loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:7-4:29
+			}
+			loc: SourceLocation typescript/export/export-type-declaration/input.ts 3:0-4:29
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"function params"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"("
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/export/export-type-declaration/input.ts>
+				end: Position 3:23
+				start: Position 3:24
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/export/export-type-declaration/input.ts>
+	loc: SourceLocation typescript/export/export-type-declaration/input.ts 1:0-5:0
 }
 ```
 

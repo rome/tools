@@ -8,38 +8,22 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/export/export-type/input.ts 1:0-3:0
-	path: UIDPath<typescript/export/export-type/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/export/export-type/input.ts 1:5-1:6 (A)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/export/export-type/input.ts 1:0-1:11
 			right: TSNumericLiteralTypeAnnotation {
 				value: 2
-				format: undefined
 				loc: SourceLocation typescript/export/export-type/input.ts 1:9-1:10
 			}
+			loc: SourceLocation typescript/export/export-type/input.ts 1:0-1:11
 		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "type"
-			loc: SourceLocation typescript/export/export-type/input.ts 2:0-2:18
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation typescript/export/export-type/input.ts 2:14-2:15
 					exported: JSIdentifier {
 						name: "A"
 						loc: SourceLocation typescript/export/export-type/input.ts 2:14-2:15 (A)
@@ -48,10 +32,21 @@ JSRoot {
 						name: "A"
 						loc: SourceLocation typescript/export/export-type/input.ts 2:14-2:15 (A)
 					}
+					loc: SourceLocation typescript/export/export-type/input.ts 2:14-2:15
 				}
 			]
+			loc: SourceLocation typescript/export/export-type/input.ts 2:0-2:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/export/export-type/input.ts>
+	loc: SourceLocation typescript/export/export-type/input.ts 1:0-3:0
 }
 ```
 

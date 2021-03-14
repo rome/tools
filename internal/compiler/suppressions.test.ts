@@ -12,16 +12,16 @@ import {dedent} from "@internal/string-utils";
 import * as signals from "./signals";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	DiagnosticSuppressions,
-	Diagnostics,
+	Diagnostic,
+	DiagnosticSuppression,
 	equalCategoryNames,
 } from "@internal/diagnostics";
 
 function extractSuppressionsFromSource(
 	sourceText: string,
 ): {
-	suppressions: DiagnosticSuppressions;
-	diagnostics: Diagnostics;
+	suppressions: DiagnosticSuppression[];
+	diagnostics: Diagnostic[];
 } {
 	const ast = parseJS({
 		sourceType: "script",

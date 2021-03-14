@@ -8,24 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/265/input.js 1:0-1:13
-	path: UIDPath<es2015/uncategorised/265/input.js>
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			cases: Array []
-			loc: SourceLocation es2015/uncategorised/265/input.js 1:0-1:13
+			cases: []
 			discriminant: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation es2015/uncategorised/265/input.js 1:7-1:13
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "test"
 						raw: "test"
@@ -33,33 +21,47 @@ JSRoot {
 						loc: SourceLocation es2015/uncategorised/265/input.js 1:8-1:12
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/265/input.js 1:7-1:13
 			}
+			loc: SourceLocation es2015/uncategorised/265/input.js 1:0-1:13
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<es2015/uncategorised/265/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>`</emphasis>"}
-				advice: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening switch discriminant character <emphasis>(</emphasis>"}
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"switch discriminant"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"("
+							RAW_MARKUP {value: "</emphasis>"}
+						]
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "`", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/265/input.js>
+				end: Position 1:6
+				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/265/input.js>
+	loc: SourceLocation es2015/uncategorised/265/input.js 1:0-1:13
 }
 ```
 

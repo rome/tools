@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:0-1:27
-	path: UIDPath<es2015/yield/parameter-default-inside-generator-method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<es2015/yield/parameter-default-inside-generator-method/input.js>
-				start: Position 1:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:0-1:27
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:1-1:26
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -52,46 +21,66 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:4-1:10
 						}
-						loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:3-1:24
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:22-1:24
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:10-1:21
-							params: Array [
+							params: [
 								JSBindingAssignmentPattern {
-									loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:11-1:20
+									left: JSBindingIdentifier {
+										name: "x"
+										meta: JSPatternMeta {
+											loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:11-1:12
+										}
+										loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:11-1:12 (x)
+									}
 									right: JSYieldExpression {
-										argument: undefined
 										delegate: false
 										loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:15-1:20
 									}
-									left: JSBindingIdentifier {
-										name: "x"
-										loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:11-1:12 (x)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:11-1:12
-										}
-									}
+									loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:11-1:20
 								}
 							]
+							loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:10-1:21
 						}
+						loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:3-1:24
 					}
 				]
+				loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:1-1:26
+			}
+			loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:0-1:27
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/parameter-default-inside-generator-method/input.js>
+				end: Position 1:15
+				start: Position 1:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/parameter-default-inside-generator-method/input.js>
+	loc: SourceLocation es2015/yield/parameter-default-inside-generator-method/input.js 1:0-1:27
 }
 ```
 

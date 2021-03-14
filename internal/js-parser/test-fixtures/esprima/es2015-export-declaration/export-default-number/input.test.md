@@ -8,27 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-default-number/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-default-number/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation esprima/es2015-export-declaration/export-default-number/input.js 1:0-1:18
 			declaration: JSNumericLiteral {
 				value: 42
-				format: undefined
 				loc: SourceLocation esprima/es2015-export-declaration/export-default-number/input.js 1:15-1:17
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-number/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-default-number/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-number/input.js 1:0-2:0
 }
 ```
 

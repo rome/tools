@@ -8,50 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/222/input.js 1:0-1:17
-	path: UIDPath<es2015/uncategorised/222/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in assignment object property value"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<es2015/uncategorised/222/input.js>
-				start: Position 1:7
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/222/input.js 1:0-1:17
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/222/input.js 1:1-1:16
-				right: JSNumericLiteral {
-					value: 42
-					format: undefined
-					loc: SourceLocation es2015/uncategorised/222/input.js 1:14-1:16
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation es2015/uncategorised/222/input.js 1:1-1:11
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -67,10 +29,42 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/222/input.js 1:3-1:9
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/222/input.js 1:1-1:11
 				}
+				right: JSNumericLiteral {
+					value: 42
+					loc: SourceLocation es2015/uncategorised/222/input.js 1:14-1:16
+				}
+				loc: SourceLocation es2015/uncategorised/222/input.js 1:1-1:16
+			}
+			loc: SourceLocation es2015/uncategorised/222/input.js 1:0-1:17
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "assignment object property value"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/222/input.js>
+				end: Position 1:9
+				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/222/input.js>
+	loc: SourceLocation es2015/uncategorised/222/input.js 1:0-1:17
 }
 ```
 

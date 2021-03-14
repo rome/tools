@@ -6,7 +6,7 @@ Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc
 
 ## Getting Started
 
-Getting started with developing Rome takes only three commands. You will only need Node v12 or above.
+Getting started with developing Rome takes three commands. You will only need Node v14 or above.
 
 ```bash
 git clone https://github.com/rome/tools
@@ -14,9 +14,11 @@ cd tools
 ./rome --help
 ```
 
+No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
+
 ## Developing on Windows
 
-You need to use the backslash (`\`) to run any `rome` command on Windows instead of the slash (`/`); Windows uses backslashes for file paths.
+Use a backslash (`\`) rather than a forward slash (`/`) when running commands.
 
 For example, to run help:
 
@@ -28,8 +30,6 @@ or you can directly use `rome` without any path referencing like below:
 ```bash
 rome --help
 ```
-
-No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
 ### User files
 
@@ -104,8 +104,42 @@ And to update snapshots:
 If you are adding a new lint rule, or modifying some core code, you might need to regenerate some files. We have generated files to avoid having to write a lot of boilerplate and automate common tasks.
 
 ```bash
-./rome run scripts/generate-all-files
+./script generate-all-files
 ```
+
+Or if using Windows:
+
+```
+.\script generate-all-files
+```
+
+## Commit messages
+
+Internally, the Rome team adheres as closely as possible to the [conventional commit specification](https://www.conventionalcommits.org/en/v1.0.0-beta.2/).
+Following this convention encourages commit best-practices and facilitates commit-powered features like change log generation.
+
+The following commit prefixes are supported:
+
+- `feat:`, a new feature
+- `fix:`, a bugfix
+- `docs:`, a documentation update
+- `test`, a test update
+- `chore:`, project housekeeping
+- `perf:`, project performance
+- `refactor:`, refactor of the code without change in functionality
+
+Below are examples of well-formatted commits:
+
+```
+feat(compiler): implement parsing for new type of files
+fix: fix nasty unhandled error
+docs: fix link to website page
+test(lint): add more cases to handle invalid rules
+```
+
+### Creating pull requests
+
+When creating a new pull request, it's preferable to use a conventional commit-formatted title, as this title will be used as the default commit message on the squashed commit after merging.
 
 ## Scripts
 
@@ -113,10 +147,10 @@ Here are some other scripts that you might find useful.
 
 ### `lint-create-rule`
 
-This is used to generate new lint rules and boilperlate.
+This is used to generate new lint rules and boilerplate.
 
 ```bash
-./rome run scripts/lint-create-rule [category]/[ruleName]
+./script lint-create-rule [category]/[ruleName]
 ```
 
 The `category` is one of the lint category folders defined in [`internal/compiler/lint/rules`](https://github.com/rome/tools/tree/main/internal/compiler/lint/rules). Some of these represent specific languages, or general themes.
@@ -124,7 +158,7 @@ The `category` is one of the lint category folders defined in [`internal/compile
 For example, to create a rule in the `js` category called `useCamelCase` run:
 
 ```bash
-./rome run scripts/lint-create-rule js/useCamelCase
+./script lint-create-rule js/useCamelCase
 ```
 
 The created files will be listed in the console output. See those files for inline comments on what to insert. Use other lint rules as a reference.
@@ -134,7 +168,7 @@ The created files will be listed in the console output. See those files for inli
 This is used to generate new ast nodes and boilerplate.
 
 ```bash
-./rome run scripts/ast-create-node [language]/[category]/[nodeType]
+./script ast-create-node [language]/[category]/[nodeType]
 ```
 
 The `language` is one of the language folders defined in [`https://github.com/rome/tools/tree/main/internal/ast/`]
@@ -142,7 +176,7 @@ The `language` is one of the language folders defined in [`https://github.com/ro
 The `category` is one of the category folders inside the `language` folders.
 
 ```bash
-./rome run scripts/ast-create-node js/typescript/JSArrayType
+./script ast-create-node js/typescript/JSArrayType
 ```
 
-The created files will be listed in the console output.
+The created files will be displayed in the console output.

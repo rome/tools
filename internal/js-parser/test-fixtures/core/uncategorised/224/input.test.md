@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/224/input.js 1:0-1:1
-	path: UIDPath<core/uncategorised/224/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/224/input.js 1:0-1:1
 			expression: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation core/uncategorised/224/input.js 1:0-1:1 (x)
 			}
+			loc: SourceLocation core/uncategorised/224/input.js 1:0-1:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/224/input.js>
+	loc: SourceLocation core/uncategorised/224/input.js 1:0-1:1
 }
 ```
 

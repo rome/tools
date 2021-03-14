@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/24/input.js 1:0-1:16
-	path: UIDPath<core/uncategorised/24/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/24/input.js 1:0-1:16
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/uncategorised/24/input.js 1:0-1:16
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/24/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation core/uncategorised/24/input.js 1:4-1:16
-					properties: Array [
+					properties: [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -42,16 +28,27 @@ JSRoot {
 							}
 							value: JSNumericLiteral {
 								value: 42
-								format: undefined
 								loc: SourceLocation core/uncategorised/24/input.js 1:12-1:14
 							}
 							loc: SourceLocation core/uncategorised/24/input.js 1:6-1:14
 						}
 					]
+					loc: SourceLocation core/uncategorised/24/input.js 1:4-1:16
 				}
+				loc: SourceLocation core/uncategorised/24/input.js 1:0-1:16
 			}
+			loc: SourceLocation core/uncategorised/24/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/24/input.js>
+	loc: SourceLocation core/uncategorised/24/input.js 1:0-1:16
 }
 ```
 

@@ -8,76 +8,67 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:0-4:0
-	path: UIDPath<es2017/async-functions/allow-await-outside-function-throw/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:14
-				path: UIDPath<es2017/async-functions/allow-await-outside-function-throw/input.js>
-				start: Position 2:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:9-1:10 (a)
 			}
-			loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:13-3:1
-				body: Array [
+				body: [
 					JSReturnStatement {
-						loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:2-2:14
 						argument: JSReferenceIdentifier {
 							name: "await"
 							loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:9-2:14 (await)
 						}
+						loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:2-2:14
 					}
 					JSExpressionStatement {
-						loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:15-2:16
 						expression: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:15-2:16
 						}
+						loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 2:15-2:16
 					}
 				]
+				directives: []
+				loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:13-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:10-1:12
+			}
+			loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/allow-await-outside-function-throw/input.js>
+				end: Position 2:14
+				start: Position 2:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/allow-await-outside-function-throw/input.js>
+	loc: SourceLocation es2017/async-functions/allow-await-outside-function-throw/input.js 1:0-4:0
 }
 ```
 

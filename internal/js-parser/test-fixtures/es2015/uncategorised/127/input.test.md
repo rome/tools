@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/127/input.js 1:0-1:29
-	path: UIDPath<es2015/uncategorised/127/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Constructor cannot be a generator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:22
-				path: UIDPath<es2015/uncategorised/127/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/uncategorised/127/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/uncategorised/127/input.js 1:0-1:29
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/127/input.js 1:0-1:29
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,38 +25,59 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/127/input.js 1:11-1:22
 						}
-						loc: SourceLocation es2015/uncategorised/127/input.js 1:10-1:27
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation es2015/uncategorised/127/input.js 1:25-1:27
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/uncategorised/127/input.js 1:10-1:22
 							start: Position 1:10
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation es2015/uncategorised/127/input.js 1:25-1:27
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/127/input.js 1:22-1:24
 						}
+						loc: SourceLocation es2015/uncategorised/127/input.js 1:10-1:27
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/127/input.js 1:0-1:29
+			}
+			loc: SourceLocation es2015/uncategorised/127/input.js 1:0-1:29
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Constructor cannot be a generator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/127/input.js>
+				end: Position 1:22
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/127/input.js>
+	loc: SourceLocation es2015/uncategorised/127/input.js 1:0-1:29
 }
 ```
 

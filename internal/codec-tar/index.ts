@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {getByteLength} from "@internal/binary";
 import stream = require("stream");
 
 type HeaderType =
@@ -102,16 +103,17 @@ function encodeHeader(header: Header): Buffer {
 	const buf = Buffer.alloc(512);
 
 	let name = header.name;
+	const nameLength = getByteLength(name);
 	let prefix = "";
 
-	if (Buffer.byteLength(name) !== name.length) {
+	if (nameLength !== name.length) {
 		throw new Error(
 			"utf-8 filename is only supported in PAX, we only support USTAR",
 		);
 	}
 
 	// If a filename is over 100 characters then split it up if possible (requires a directory)
-	while (Buffer.byteLength(name) > 100) {
+	while (nameLength > 100) {
 		const i = name.indexOf("/");
 		if (i === -1) {
 			throw new Error(
@@ -123,15 +125,16 @@ function encodeHeader(header: Header): Buffer {
 		name = name.slice(i + 1);
 	}
 
-	if (Buffer.byteLength(name) > 100) {
+	if (nameLength > 100) {
 		throw new Error("filename is too long for USTAR");
 	}
 
-	if (Buffer.byteLength(prefix) > 155) {
+	const prefixLength = getByteLength(prefix);
+	if (prefixLength > 155) {
 		throw new Error("prefix is too long for USTAR");
 	}
 
-	if (header.linkname !== undefined && Buffer.byteLength(header.linkname) > 100) {
+	if (header.linkname !== undefined && getByteLength(header.linkname) > 100) {
 		throw new Error("linkname is too long for USTAR");
 	}
 

@@ -8,60 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/365/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/365/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<es2015/uncategorised/365/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "await"
 				loc: SourceLocation es2015/uncategorised/365/input.js 1:9-1:14 (await)
 			}
-			loc: SourceLocation es2015/uncategorised/365/input.js 1:0-1:19
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/uncategorised/365/input.js 1:17-1:19
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2015/uncategorised/365/input.js 1:14-1:16
+			}
+			loc: SourceLocation es2015/uncategorised/365/input.js 1:0-1:19
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/365/input.js>
+				end: Position 1:14
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/365/input.js>
+	loc: SourceLocation es2015/uncategorised/365/input.js 1:0-2:0
 }
 ```
 

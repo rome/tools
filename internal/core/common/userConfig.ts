@@ -15,7 +15,6 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {Consumer} from "@internal/consume";
 import {descriptions} from "@internal/diagnostics";
-import {exists, readFileText} from "@internal/fs";
 
 export type UserConfig = {
 	configPath: undefined | AbsoluteFilePath;
@@ -50,8 +49,8 @@ export async function normalizeUserConfig(
 		const prop = consumer.get("vscodeTheme");
 		const path = prop.asAbsoluteFilePath(undefined, configPath.getParent());
 
-		if (await exists(path)) {
-			const input = await readFileText(path);
+		if (await path.exists()) {
+			const input = await path.readFileText();
 
 			userConfig.syntaxTheme = json.consumeValue({
 				consumeDiagnosticCategoryValue: "vscodeTheme",
@@ -80,11 +79,11 @@ export async function getUserConfigFile(): Promise<
 	for (const configFilename of USER_CONFIG_FILENAMES) {
 		const configPath = USER_CONFIG_DIRECTORY.append(configFilename);
 
-		if (!(await exists(configPath))) {
+		if (await configPath.notExists()) {
 			continue;
 		}
 
-		const configFile = await readFileText(configPath);
+		const configFile = await configPath.readFileText();
 		const consumer = json.consumeValue({
 			path: configPath,
 			input: configFile,

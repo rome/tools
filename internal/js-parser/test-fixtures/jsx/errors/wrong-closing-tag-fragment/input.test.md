@@ -8,50 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/wrong-closing-tag-fragment/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:14
 			expression: JSXFragment {
-				children: Array []
+				children: []
 				loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:14
 			}
+			loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:14
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:2
-				path: UIDPath<jsx/errors/wrong-closing-tag-fragment/input.jsx>
-				start: Position 1:0
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected JSX closing fragment tag"}
-				advice: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Originated from this opening tag"}
 					}
-					frame {location: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:2}
+					frame {
+						location: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:2
+					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected JSX closing fragment tag"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<jsx/errors/wrong-closing-tag-fragment/input.jsx>
+				end: Position 1:2
+				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/wrong-closing-tag-fragment/input.jsx>
+	loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-2:0
 }
 ```
 

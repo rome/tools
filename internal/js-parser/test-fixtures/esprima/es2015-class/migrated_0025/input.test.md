@@ -8,41 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-class/migrated_0025/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:0-1:21
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "A"
 					loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:7-1:8 (A)
 				}
-				loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:1-1:20
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:1-1:20
+					body: []
 					superClass: JSNumericLiteral {
 						value: 0
-						format: undefined
 						loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:17-1:18
 					}
+					loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:1-1:20
 				}
+				loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:1-1:20
 			}
+			loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-class/migrated_0025/input.js>
+	loc: SourceLocation esprima/es2015-class/migrated_0025/input.js 1:0-2:0
 }
 ```
 

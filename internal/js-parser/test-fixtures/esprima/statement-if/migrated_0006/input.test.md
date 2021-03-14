@@ -8,38 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-if/migrated_0006/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: JSEmptyStatement {loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:22-1:23}
-			loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:0-1:23
-			test: JSBooleanLiteral {
-				value: true
-				loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:4-1:8
+			alternate: JSEmptyStatement {
+				loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:22-1:23
 			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:10-1:17
 				expression: JSCallExpression {
-					arguments: Array []
-					loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:10-1:16
+					arguments: []
 					callee: JSReferenceIdentifier {
 						name: "that"
 						loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:10-1:14 (that)
 					}
+					loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:10-1:16
 				}
+				loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:10-1:17
 			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:4-1:8
+			}
+			loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-if/migrated_0006/input.js>
+	loc: SourceLocation esprima/statement-if/migrated_0006/input.js 1:0-2:0
 }
 ```
 

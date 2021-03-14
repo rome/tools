@@ -8,64 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/invalid-const-init/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<esprima/es2015-for-of/invalid-const-init/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:22-1:23}
-			loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:0-1:23
-			right: JSReferenceIdentifier {
-				name: "y"
-				loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:20-1:21 (y)
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:22-1:23
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:5-1:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:11-1:12 (x)
 						}
-						loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:11-1:16
 						init: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:15-1:16
 						}
+						loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:11-1:16
 					}
 				]
+				loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:5-1:16
+			}
+			right: JSReferenceIdentifier {
+				name: "y"
+				loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:20-1:21 (y)
+			}
+			loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:0-1:23
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-for-of/invalid-const-init/input.js>
+				end: Position 1:16
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/invalid-const-init/input.js>
+	loc: SourceLocation esprima/es2015-for-of/invalid-const-init/input.js 1:0-2:0
 }
 ```
 

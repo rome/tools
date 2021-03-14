@@ -8,119 +8,103 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:0-7:0
-	path: UIDPath<typescript/export/export-value-declaration/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:0-1:13
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:7-1:13
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:7-1:13
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "a"
 								loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:11-1:12 (a)
 							}
-							init: undefined
 							loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:11-1:12
 						}
 					]
+					loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:7-1:13
 				}
+				loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:7-1:13
 			}
+			loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:0-1:13
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/export/export-value-declaration/input.ts 2:0-2:22
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "b"
 					loc: SourceLocation typescript/export/export-value-declaration/input.ts 2:16-2:17 (b)
 				}
-				loc: SourceLocation typescript/export/export-value-declaration/input.ts 2:7-2:22
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation typescript/export/export-value-declaration/input.ts 2:20-2:22
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation typescript/export/export-value-declaration/input.ts 2:17-2:19
 				}
+				loc: SourceLocation typescript/export/export-value-declaration/input.ts 2:7-2:22
 			}
+			loc: SourceLocation typescript/export/export-value-declaration/input.ts 2:0-2:22
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/export/export-value-declaration/input.ts 3:0-3:17
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: SourceLocation typescript/export/export-value-declaration/input.ts 3:13-3:14 (C)
 				}
-				loc: SourceLocation typescript/export/export-value-declaration/input.ts 3:7-3:17
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
+					body: []
 					loc: SourceLocation typescript/export/export-value-declaration/input.ts 3:7-3:17
 				}
+				loc: SourceLocation typescript/export/export-value-declaration/input.ts 3:7-3:17
 			}
+			loc: SourceLocation typescript/export/export-value-declaration/input.ts 3:0-3:17
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/export/export-value-declaration/input.ts 5:0-5:16
 			declaration: TSEnumDeclaration {
+				const: false
+				members: []
 				id: JSBindingIdentifier {
 					name: "D"
 					loc: SourceLocation typescript/export/export-value-declaration/input.ts 5:12-5:13 (D)
 				}
-				const: false
-				members: Array []
 				loc: SourceLocation typescript/export/export-value-declaration/input.ts 5:7-5:16
 			}
+			loc: SourceLocation typescript/export/export-value-declaration/input.ts 5:0-5:16
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/export/export-value-declaration/input.ts 6:0-6:21
 			declaration: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "E"
 					loc: SourceLocation typescript/export/export-value-declaration/input.ts 6:17-6:18 (E)
 				}
-				loc: SourceLocation typescript/export/export-value-declaration/input.ts 6:7-6:21
 				body: TSModuleBlock {
-					body: Array []
+					body: []
 					loc: SourceLocation typescript/export/export-value-declaration/input.ts 6:19-6:21
 				}
+				loc: SourceLocation typescript/export/export-value-declaration/input.ts 6:7-6:21
 			}
+			loc: SourceLocation typescript/export/export-value-declaration/input.ts 6:0-6:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/export/export-value-declaration/input.ts>
+	loc: SourceLocation typescript/export/export-value-declaration/input.ts 1:0-7:0
 }
 ```
 

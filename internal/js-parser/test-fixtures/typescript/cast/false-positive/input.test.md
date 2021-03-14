@@ -8,39 +8,21 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/false-positive/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:14
 			expression: JSCallExpression {
-				loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:13
-				callee: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:1 (f)
-				}
-				arguments: Array [
+				arguments: [
 					JSBinaryExpression {
 						operator: "<"
-						loc: SourceLocation typescript/cast/false-positive/input.ts 1:2-1:7
 						left: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation typescript/cast/false-positive/input.ts 1:2-1:3 (x)
 						}
 						right: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation typescript/cast/false-positive/input.ts 1:6-1:7
 						}
+						loc: SourceLocation typescript/cast/false-positive/input.ts 1:2-1:7
 					}
 					JSRegExpLiteral {
 						global: false
@@ -49,21 +31,36 @@ JSRoot {
 						noDotNewline: false
 						sticky: false
 						unicode: false
-						loc: SourceLocation typescript/cast/false-positive/input.ts 1:9-1:12
 						expression: JSRegExpSubExpression {
-							loc: SourceLocation typescript/cast/false-positive/input.ts 1:10-1:11
-							body: Array [
+							body: [
 								JSRegExpCharacter {
 									value: "a"
 									loc: SourceLocation typescript/cast/false-positive/input.ts 1:10-1:11
 								}
 							]
+							loc: SourceLocation typescript/cast/false-positive/input.ts 1:10-1:11
 						}
+						loc: SourceLocation typescript/cast/false-positive/input.ts 1:9-1:12
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:1 (f)
+				}
+				loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:13
 			}
+			loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/false-positive/input.ts>
+	loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-2:0
 }
 ```
 

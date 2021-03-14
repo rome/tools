@@ -8,49 +8,45 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/314/input.js 1:0-2:8
-	path: UIDPath<core/uncategorised/314/input.js>
-	comments: Array [
+	body: [
+		JSBlockStatement {
+			body: [
+				JSThrowStatement {
+					trailingComments: ["0"]
+					argument: JSReferenceIdentifier {
+						name: "error"
+						loc: SourceLocation core/uncategorised/314/input.js 1:8-1:13 (error)
+					}
+					loc: SourceLocation core/uncategorised/314/input.js 1:2-1:13
+				}
+				JSExpressionStatement {
+					leadingComments: ["0"]
+					expression: JSReferenceIdentifier {
+						name: "error"
+						loc: SourceLocation core/uncategorised/314/input.js 2:0-2:5 (error)
+					}
+					loc: SourceLocation core/uncategorised/314/input.js 2:0-2:6
+				}
+			]
+			directives: []
+			loc: SourceLocation core/uncategorised/314/input.js 1:0-2:8
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Comment"
 			loc: SourceLocation core/uncategorised/314/input.js 1:13-1:23
 		}
 	]
-	body: Array [
-		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation core/uncategorised/314/input.js 1:0-2:8
-			body: Array [
-				JSThrowStatement {
-					loc: SourceLocation core/uncategorised/314/input.js 1:2-1:13
-					trailingComments: Array ["0"]
-					argument: JSReferenceIdentifier {
-						name: "error"
-						trailingComments: undefined
-						loc: SourceLocation core/uncategorised/314/input.js 1:8-1:13 (error)
-					}
-				}
-				JSExpressionStatement {
-					leadingComments: Array ["0"]
-					loc: SourceLocation core/uncategorised/314/input.js 2:0-2:6
-					expression: JSReferenceIdentifier {
-						name: "error"
-						leadingComments: undefined
-						loc: SourceLocation core/uncategorised/314/input.js 2:0-2:5 (error)
-					}
-				}
-			]
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/314/input.js>
+	loc: SourceLocation core/uncategorised/314/input.js 1:0-2:8
 }
 ```
 

@@ -8,38 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/null-assertion-and-assign/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "+="
-				loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:7
-				right: JSNumericLiteral {
-					value: 1
-					format: undefined
-					loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:6-1:7
-				}
 				left: TSAssignmentNonNullExpression {
-					loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:2
 					expression: JSAssignmentIdentifier {
 						name: "x"
 						loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:1 (x)
 					}
+					loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:2
 				}
+				right: JSNumericLiteral {
+					value: 1
+					loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:6-1:7
+				}
+				loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:7
 			}
+			loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/null-assertion-and-assign/input.ts>
+	loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-2:0
 }
 ```
 

@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-7:0
-	path: UIDPath<experimental/class-private-properties/invalid-destructuring/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:6-1:7 (C)
 			}
-			loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-6:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-6:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -41,23 +24,19 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:2-2:4
 						}
-						value: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:7-2:8
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:7-2:8
+						}
+						loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 2:2-2:9
 					}
 					JSClassMethod {
 						kind: "method"
@@ -68,43 +47,23 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:2-3:3
 						}
-						loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:2-5:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:2-3:3
 							start: Position 3:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:3-3:5
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:6-5:3
-							body: Array [
+							body: [
 								JSVariableDeclarationStatement {
-									loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:4-4:25
 									declaration: JSVariableDeclaration {
 										kind: "const"
-										loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:4-4:25
-										declarations: Array [
+										declarations: [
 											JSVariableDeclarator {
 												id: JSBindingObjectPattern {
-													rest: undefined
-													loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:10-4:17
-													properties: Array [
+													properties: [
 														JSBindingObjectPatternProperty {
 															key: JSStaticPropertyKey {
 																value: JSPrivateName {
@@ -123,20 +82,46 @@ JSRoot {
 															loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:11-4:16
 														}
 													]
+													loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:10-4:17
 												}
-												init: JSThisExpression {loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:20-4:24}
+												init: JSThisExpression {
+													loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:20-4:24
+												}
 												loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:10-4:24
 											}
 										]
+										loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:4-4:25
 									}
+									loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 4:4-4:25
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:6-5:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:3-3:5
+						}
+						loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 3:2-5:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-6:1
 			}
+			loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-6:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/invalid-destructuring/input.js>
+	loc: SourceLocation experimental/class-private-properties/invalid-destructuring/input.js 1:0-7:0
 }
 ```
 

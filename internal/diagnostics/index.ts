@@ -17,7 +17,13 @@ export * from "./derive";
 
 export * from "./helpers";
 
-export {default as DiagnosticsProcessor} from "./DiagnosticsProcessor";
+export {
+	DEFAULT_PROCESSOR_FILTER_OPTIONS as DEFAULT_PROCESSOR_FILTER_FLAGS,
+	DiagnosticsProcessorCalculatedPath,
+	DiagnosticsProcessorFilterOptions,
+	DiagnosticsProcessorOptions,
+	default as DiagnosticsProcessor,
+} from "./DiagnosticsProcessor";
 
 export * from "./categories";
 

@@ -8,22 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-5:0
-	path: UIDPath<es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:14
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:14
+				object: JSMemberExpression {
+					object: JSReferenceIdentifier {
+						name: "foo"
+						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:3 (foo)
+					}
+					property: JSStaticMemberProperty {
+						optional: true
+						value: JSIdentifier {
+							name: "class"
+							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:5-1:10 (class)
+						}
+						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:5-1:10 (class)
+					}
+					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:10
+				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "bar"
@@ -31,27 +33,27 @@ JSRoot {
 					}
 					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:11-1:14 (bar)
 				}
-				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:10
-					object: JSReferenceIdentifier {
-						name: "foo"
-						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:3 (foo)
-					}
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "class"
-							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:5-1:10 (class)
-						}
-						optional: true
-						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:5-1:10 (class)
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:14
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:0-2:17
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:0-2:17
+				object: JSMemberExpression {
+					object: JSReferenceIdentifier {
+						name: "foo"
+						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:0-2:3 (foo)
+					}
+					property: JSStaticMemberProperty {
+						optional: true
+						value: JSIdentifier {
+							name: "function"
+							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:5-2:13 (function)
+						}
+						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:5-2:13 (function)
+					}
+					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:0-2:13
+				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "bar"
@@ -59,27 +61,38 @@ JSRoot {
 					}
 					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:14-2:17 (bar)
 				}
-				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:0-2:13
-					object: JSReferenceIdentifier {
-						name: "foo"
-						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:0-2:3 (foo)
-					}
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "function"
-							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:5-2:13 (function)
-						}
-						optional: true
-						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:5-2:13 (function)
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:0-2:17
 			}
+			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 2:0-2:17
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:19
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:19
+				object: JSMemberExpression {
+					object: JSMemberExpression {
+						object: JSReferenceIdentifier {
+							name: "foo"
+							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:3 (foo)
+						}
+						property: JSStaticMemberProperty {
+							optional: true
+							value: JSIdentifier {
+								name: "bar"
+								loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:5-3:8 (bar)
+							}
+							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:5-3:8 (bar)
+						}
+						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:8
+					}
+					property: JSStaticMemberProperty {
+						optional: true
+						value: JSIdentifier {
+							name: "class"
+							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:10-3:15 (class)
+						}
+						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:10-3:15 (class)
+					}
+					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:15
+				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "bar"
@@ -87,64 +100,49 @@ JSRoot {
 					}
 					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:16-3:19 (bar)
 				}
-				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:15
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "class"
-							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:10-3:15 (class)
-						}
-						optional: true
-						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:10-3:15 (class)
-					}
-					object: JSMemberExpression {
-						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:8
-						object: JSReferenceIdentifier {
-							name: "foo"
-							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:3 (foo)
-						}
-						property: JSStaticMemberProperty {
-							value: JSIdentifier {
-								name: "bar"
-								loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:5-3:8 (bar)
-							}
-							optional: true
-							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:5-3:8 (bar)
-						}
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:19
 			}
+			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 3:0-3:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:0-4:18
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:0-4:18
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "bar"
-						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:15-4:18 (bar)
-					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:15-4:18 (bar)
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:0-4:13
 					object: JSReferenceIdentifier {
 						name: "foo"
 						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:0-4:3 (foo)
 					}
 					property: JSStaticMemberProperty {
+						optional: true
 						value: JSIdentifier {
 							name: "function"
 							loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:5-4:13 (function)
 						}
-						optional: true
 						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:5-4:13 (function)
 					}
+					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:0-4:13
 				}
+				property: JSStaticMemberProperty {
+					optional: true
+					value: JSIdentifier {
+						name: "bar"
+						loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:15-4:18 (bar)
+					}
+					loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:15-4:18 (bar)
+				}
+				loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:0-4:18
 			}
+			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 4:0-4:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js>
+	loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-5:0
 }
 ```
 

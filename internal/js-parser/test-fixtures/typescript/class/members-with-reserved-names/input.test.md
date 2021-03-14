@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/members-with-reserved-names/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,15 +25,12 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:11-2:17
 						}
-						body: undefined
-						loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:4-2:26
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:4-2:17
 							start: Position 2:4
 						}
@@ -58,18 +38,29 @@ JSRoot {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:21-2:25
+							}
 							loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:17-2:25
-							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:21-2:25}
 						}
+						loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 2:4-2:26
 					}
 				]
+				loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-3:1
 			}
+			loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/members-with-reserved-names/input.ts>
+	loc: SourceLocation typescript/class/members-with-reserved-names/input.ts 1:0-4:0
 }
 ```
 

@@ -8,46 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/252/input.js 1:0-1:36
-	path: UIDPath<core/uncategorised/252/input.js>
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation core/uncategorised/252/input.js 1:0-1:36
-			label: JSIdentifier {
-				name: "done"
-				loc: SourceLocation core/uncategorised/252/input.js 1:0-1:4 (done)
-			}
 			body: JSWhileStatement {
-				loc: SourceLocation core/uncategorised/252/input.js 1:6-1:36
-				test: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation core/uncategorised/252/input.js 1:13-1:17
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation core/uncategorised/252/input.js 1:19-1:36
-					body: Array [
+					body: [
 						JSContinueStatement {
-							loc: SourceLocation core/uncategorised/252/input.js 1:21-1:34
 							label: JSIdentifier {
 								name: "done"
 								loc: SourceLocation core/uncategorised/252/input.js 1:30-1:34 (done)
 							}
+							loc: SourceLocation core/uncategorised/252/input.js 1:21-1:34
 						}
 					]
+					directives: []
+					loc: SourceLocation core/uncategorised/252/input.js 1:19-1:36
 				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation core/uncategorised/252/input.js 1:13-1:17
+				}
+				loc: SourceLocation core/uncategorised/252/input.js 1:6-1:36
 			}
+			label: JSIdentifier {
+				name: "done"
+				loc: SourceLocation core/uncategorised/252/input.js 1:0-1:4 (done)
+			}
+			loc: SourceLocation core/uncategorised/252/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/252/input.js>
+	loc: SourceLocation core/uncategorised/252/input.js 1:0-1:36
 }
 ```
 

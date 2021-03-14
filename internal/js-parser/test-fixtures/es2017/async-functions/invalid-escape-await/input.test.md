@@ -8,75 +8,66 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/invalid-escape-await/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:30
-				path: UIDPath<es2017/async-functions/invalid-escape-await/input.js>
-				start: Position 1:20
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:0-1:35
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:1-1:34
-				head: JSFunctionHead {
-					async: true
-					generator: false
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:15-1:17
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:18-1:34
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:20-1:30
 							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:20-1:30 (await)
 							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:20-1:30
 						}
 						JSExpressionStatement {
-							loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:31-1:32
 							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:31-1:32 (x)
 							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:31-1:32
 						}
 					]
+					directives: []
+					loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:18-1:34
 				}
+				head: JSFunctionHead {
+					async: true
+					generator: false
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:15-1:17
+				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:1-1:34
+			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:0-1:35
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-escape-await/input.js>
+				end: Position 1:30
+				start: Position 1:20
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-escape-await/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-escape-await/input.js 1:0-2:0
 }
 ```
 

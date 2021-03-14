@@ -8,31 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-left-hand-side/migrated_0015/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-1:21
 			expression: JSMemberExpression {
-				loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-1:21
-				property: JSStaticMemberProperty {
-					value: JSIdentifier {
-						name: "galaxies"
-						loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:13-1:21 (galaxies)
-					}
-					loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:13-1:21 (galaxies)
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-1:12
 					object: JSReferenceIdentifier {
 						name: "universe"
 						loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-1:8 (universe)
@@ -40,15 +19,33 @@ JSRoot {
 					property: JSComputedMemberProperty {
 						value: JSNumericLiteral {
 							value: 42
-							format: undefined
 							loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:9-1:11
 						}
 						loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:8-1:12
 					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-1:12
 				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "galaxies"
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:13-1:21 (galaxies)
+					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:13-1:21 (galaxies)
+				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-1:21
 			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0015/input.js>
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0015/input.js 1:0-2:0
 }
 ```
 

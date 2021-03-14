@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/19/input.jsx 1:0-1:53
-	path: UIDPath<jsx/basic/19/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/19/input.jsx 1:0-1:53
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/basic/19/input.jsx 1:1-1:4
-				}
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/19/input.jsx 1:0-1:53
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "pre"
@@ -55,16 +35,33 @@ JSRoot {
 						loc: SourceLocation jsx/basic/19/input.jsx 1:19-1:35
 					}
 					JSXSpreadAttribute {
-						loc: SourceLocation jsx/basic/19/input.jsx 1:36-1:46
 						argument: JSReferenceIdentifier {
 							name: "props"
 							loc: SourceLocation jsx/basic/19/input.jsx 1:40-1:45 (props)
 						}
+						loc: SourceLocation jsx/basic/19/input.jsx 1:36-1:46
 					}
 				]
+				children: []
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/basic/19/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/basic/19/input.jsx 1:0-1:53
 			}
+			loc: SourceLocation jsx/basic/19/input.jsx 1:0-1:53
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/19/input.jsx>
+	loc: SourceLocation jsx/basic/19/input.jsx 1:0-1:53
 }
 ```
 

@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:0-5:0
-	path: UIDPath<es2015/object/async-method-linebreak/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "There shouldn't be any newlines between async and the rest of the function"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:9
-				path: UIDPath<es2015/object/async-method-linebreak/input.js>
-				start: Position 3:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:0-4:2
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:1-4:1
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -52,28 +21,51 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/object/async-method-linebreak/input.js 3:4-3:7
 						}
-						loc: SourceLocation es2015/object/async-method-linebreak/input.js 2:4-3:12
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/object/async-method-linebreak/input.js 3:10-3:12
 						}
 						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/object/async-method-linebreak/input.js 3:7-3:9
 						}
+						loc: SourceLocation es2015/object/async-method-linebreak/input.js 2:4-3:12
 					}
 				]
+				loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:1-4:1
+			}
+			loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:0-4:2
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "There shouldn't be any newlines between async and the rest of the function"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/object/async-method-linebreak/input.js>
+				end: Position 2:9
+				start: Position 3:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/object/async-method-linebreak/input.js>
+	loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:0-5:0
 }
 ```
 

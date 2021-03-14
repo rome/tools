@@ -8,62 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/array-pattern-empty-with-object/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "emptyWithObject"
 				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:9-1:24 (emptyWithObject)
 			}
-			loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:0-1:36
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:34-1:36
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:24-1:33
+				params: []
 				rest: JSBindingArrayPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:28-1:32
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:28-1:32
-					}
-					elements: Array [
+					elements: [
 						JSBindingObjectPattern {
-							properties: Array []
-							rest: undefined
-							loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:29-1:31
+							properties: []
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:29-1:31
 							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:29-1:31
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:28-1:32
+					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:28-1:32
 				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:24-1:33
 			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/array-pattern-empty-with-object/input.js>
+	loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-object/input.js 1:0-2:0
 }
 ```
 

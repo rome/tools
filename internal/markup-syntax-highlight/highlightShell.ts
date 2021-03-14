@@ -1,7 +1,7 @@
 import {HighlightCodeResult} from "./types";
-import {concatMarkup, filePathToMarkup, markup} from "@internal/markup";
+import {joinMarkup, markup, pathToMarkup} from "@internal/markup";
 import {concatSplitLinesMarkup, markupToken} from "./utils";
-import {createAnyPath} from "@internal/path";
+import {createPath} from "@internal/path";
 import {markupTag} from "@internal/markup/escape";
 
 // Very crude. Should be updated to support hash bangs and other fancy syntax
@@ -28,8 +28,8 @@ export default function highlightShell(
 				if (segment.length === 1) {
 					return punc;
 				} else {
-					return concatMarkup([
-						filePathToMarkup(createAnyPath(segment.slice(0, -1)), true),
+					return joinMarkup([
+						pathToMarkup(createPath(segment.slice(0, -1)), true),
 						punc,
 					]);
 				}
@@ -53,5 +53,5 @@ export default function highlightShell(
 		return markup`<dim>${segment}</dim>`;
 	});
 
-	return concatSplitLinesMarkup([concatMarkup(parts, markup` `)]);
+	return concatSplitLinesMarkup([joinMarkup(parts, markup` `)]);
 }

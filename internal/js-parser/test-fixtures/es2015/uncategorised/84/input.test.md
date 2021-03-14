@@ -8,45 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
-	path: UIDPath<es2015/uncategorised/84/input.js>
-	body: Array [
+	body: [
 		JSExportAllDeclaration {
-			exportKind: undefined
-			loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
 			source: JSStringLiteral {
 				value: ""
 				loc: SourceLocation es2015/uncategorised/84/input.js 1:8-1:8
 			}
+			loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected `from` for an export node"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:8
 				path: UIDPath<es2015/uncategorised/84/input.js>
+				end: Position 1:8
 				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/84/input.js>
+	loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
 }
 ```
 

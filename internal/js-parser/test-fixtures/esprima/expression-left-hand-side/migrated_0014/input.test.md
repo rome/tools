@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-left-hand-side/migrated_0014/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-left-hand-side/migrated_0014/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-left-hand-side/migrated_0014/input.js 1:0-1:20
 			expression: JSMemberExpression {
-				loc: SourceLocation esprima/expression-left-hand-side/migrated_0014/input.js 1:0-1:20
 				object: JSReferenceIdentifier {
 					name: "universe"
 					loc: SourceLocation esprima/expression-left-hand-side/migrated_0014/input.js 1:0-1:8 (universe)
@@ -35,9 +22,20 @@ JSRoot {
 					}
 					loc: SourceLocation esprima/expression-left-hand-side/migrated_0014/input.js 1:8-1:20
 				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0014/input.js 1:0-1:20
 			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0014/input.js 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-left-hand-side/migrated_0014/input.js>
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0014/input.js 1:0-2:0
 }
 ```
 

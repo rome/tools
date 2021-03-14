@@ -8,45 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/524/input.js 1:0-2:3
-	path: UIDPath<core/uncategorised/524/input.js>
-	body: Array [
+	body: [
 		JSThrowStatement {
-			loc: SourceLocation core/uncategorised/524/input.js 1:0-2:3
 			argument: JSNumericLiteral {
 				value: 10
-				format: undefined
 				loc: SourceLocation core/uncategorised/524/input.js 2:0-2:2
 			}
+			loc: SourceLocation core/uncategorised/524/input.js 1:0-2:3
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Illegal newline after throw"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:5
 				path: UIDPath<core/uncategorised/524/input.js>
+				end: Position 1:5
 				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/524/input.js>
+	loc: SourceLocation core/uncategorised/524/input.js 1:0-2:3
 }
 ```
 

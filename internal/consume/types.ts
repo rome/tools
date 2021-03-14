@@ -11,7 +11,7 @@ import {
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import Consumer from "./Consumer";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
 
 export type ConsumerMapCallback<T> = (c: Consumer, i: number) => T;
@@ -88,7 +88,7 @@ export type ConsumerOptions = {
 	handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;
 	onDefinition?: ConsumerOnDefinition;
 	propertyMetadata?: ConsumePropertyMetadata;
-	path: AnyPath;
+	path: Path;
 	objectPath: ConsumePath;
 	context: ConsumeContext;
 	value: unknown;

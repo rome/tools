@@ -6,62 +6,31 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/calc-space/input.css 1:0-3:1
-	path: RelativePath<invalid/calc-space/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 2:20
-				path: RelativePath<invalid/calc-space/input.css>
-				start: Position 2:16
-			}
-			description: Object {
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "An operator is needed."}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Consider adding <emphasis>+ or -</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation invalid/calc-space/input.css 1:0-3:1
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation invalid/calc-space/input.css 1:0-1:7
-					patterns: Array [
+					patterns: [
 						CSSClassSelector {
 							value: "style"
 							loc: SourceLocation invalid/calc-space/input.css 1:0-1:6
 						}
 					]
+					loc: SourceLocation invalid/calc-space/input.css 1:0-1:7
 				}
 			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "width"
-						value: Array [
+						value: [
 							CSSCalcFunction {
 								name: "calc"
-								loc: SourceLocation invalid/calc-space/input.css 2:13-2:20
-								params: Array [
+								params: [
 									CSSCalcSum {
-										value: Array [
+										value: [
 											CSSCalcProduct {
-												value: Array [
+												value: [
 													CSSCalcValue {
 														value: CSSDimension {
 															value: 2
@@ -77,9 +46,9 @@ CSSRoot {
 										loc: SourceLocation invalid/calc-space/input.css 2:13-2:16
 									}
 								]
+								loc: SourceLocation invalid/calc-space/input.css 2:13-2:20
 							}
 							CSSRaw {
-								value: undefined
 								loc: SourceLocation invalid/calc-space/input.css 2:20-2:21
 							}
 						]
@@ -90,7 +59,34 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/calc-space/input.css 1:7-3:1
 			}
+			loc: SourceLocation invalid/calc-space/input.css 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<css>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Consider adding <emphasis>+ or -</emphasis>"}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "An operator is needed."}
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/calc-space/input.css>
+				end: Position 2:20
+				start: Position 2:16
+			}
+		}
+	]
+	path: RelativePath<invalid/calc-space/input.css>
+	loc: SourceLocation invalid/calc-space/input.css 1:0-3:1
 }
 ```

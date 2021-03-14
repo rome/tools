@@ -8,88 +8,78 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/19/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/19/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<es2018/object-rest-spread/19/input.js>
-				start: Position 1:18
-			}
-		}
-	]
-	body: Array [
+	body: [
 		TSDeclareFunction {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: SourceLocation es2018/object-rest-spread/19/input.js 1:9-1:13 (test)
 			}
-			loc: SourceLocation es2018/object-rest-spread/19/input.js 1:0-1:20
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2018/object-rest-spread/19/input.js 1:13-1:20
-				params: Array [
+				params: [
 					JSBindingObjectPattern {
-						properties: Array []
-						loc: SourceLocation es2018/object-rest-spread/19/input.js 1:14-1:20
+						properties: []
+						meta: JSPatternMeta {
+							loc: SourceLocation es2018/object-rest-spread/19/input.js 1:14-1:20
+						}
 						rest: JSBindingIdentifier {
 							name: ""
 							loc: SourceLocation es2018/object-rest-spread/19/input.js 1:18-1:19 ()
 						}
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation es2018/object-rest-spread/19/input.js 1:14-1:20
-						}
+						loc: SourceLocation es2018/object-rest-spread/19/input.js 1:14-1:20
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/19/input.js 1:13-1:20
 			}
+			loc: SourceLocation es2018/object-rest-spread/19/input.js 1:0-1:20
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2018/object-rest-spread/19/input.js 1:20-1:21
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2018/object-rest-spread/19/input.js 1:20-1:21
 			}
+			loc: SourceLocation es2018/object-rest-spread/19/input.js 1:20-1:21
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2018/object-rest-spread/19/input.js 1:21-1:22
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2018/object-rest-spread/19/input.js 1:21-1:22
 			}
+			loc: SourceLocation es2018/object-rest-spread/19/input.js 1:21-1:22
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2018/object-rest-spread/19/input.js 1:23-1:25
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/object-rest-spread/19/input.js>
+				end: Position 1:18
+				start: Position 1:18
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/19/input.js>
+	loc: SourceLocation es2018/object-rest-spread/19/input.js 1:0-2:0
 }
 ```
 

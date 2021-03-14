@@ -8,49 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/418/input.js 1:0-1:15
-	path: UIDPath<core/uncategorised/418/input.js>
-	body: Array [
+	body: [
 		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation core/uncategorised/418/input.js 1:14-1:15}
-			loc: SourceLocation core/uncategorised/418/input.js 1:0-1:15
+			body: JSEmptyStatement {
+				loc: SourceLocation core/uncategorised/418/input.js 1:14-1:15
+			}
 			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation core/uncategorised/418/input.js 1:8-1:7
 			}
 			right: JSObjectExpression {
-				properties: Array []
+				properties: []
 				loc: SourceLocation core/uncategorised/418/input.js 1:11-1:13
 			}
+			loc: SourceLocation core/uncategorised/418/input.js 1:0-1:15
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in for-in statement"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "for-in statement"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:7
 				path: UIDPath<core/uncategorised/418/input.js>
+				end: Position 1:7
 				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/418/input.js>
+	loc: SourceLocation core/uncategorised/418/input.js 1:0-1:15
 }
 ```
 

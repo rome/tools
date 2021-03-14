@@ -15,14 +15,14 @@ import {
 	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
+	ProjectDefinition,
 } from "@internal/project";
 import {
-	Diagnostics,
+	Diagnostic,
 	DiagnosticsProcessor,
 	catchDiagnostics,
 	descriptions,
 } from "@internal/diagnostics";
-import {EventQueue} from "@internal/events";
 import {json} from "@internal/codec-config";
 import {WorkerPartialManifest} from "@internal/core";
 import {
@@ -31,23 +31,15 @@ import {
 	AbsoluteFilePathSet,
 	createRelativePath,
 } from "@internal/path";
-import {
-	CachedFileReader,
-	FSStats,
-	FSWatcher,
-	FileNotFound,
-	exists,
-	lstat,
-	readDirectory,
-	watch,
-} from "@internal/fs";
-import crypto = require("crypto");
-
+import {CachedFileReader, FSStats, FSWatcher, FileNotFound} from "@internal/fs";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";
 import {VoidCallback} from "@internal/typescript-helpers";
-import {GlobalLock} from "@internal/async";
+import {GlobalLock, promiseAllFrom} from "@internal/async";
+import {DurationMeasurer} from "@internal/numbers";
+import crypto = require("crypto");
+import {createResourceFromCallback} from "@internal/resources";
 
 // Paths that we will under no circumstance want to include
 const DEFAULT_DENYLIST = [
@@ -168,20 +160,19 @@ export default class MemoryFileSystem {
 		this.watchers = new AbsoluteFilePathMap();
 		this.activeWatcherIds = new Set();
 
-		this.changedFileEvent = new EventQueue();
-		this.deletedFileEvent = new EventQueue();
-		this.newFileEvent = new EventQueue();
-
 		this.processingLock = new GlobalLock();
-		this.processingLock.attachLock(this.changedFileEvent.lock);
-		this.processingLock.attachLock(this.deletedFileEvent.lock);
+
+		server.resources.add(
+			createResourceFromCallback(
+				"MemoryFileSystem",
+				() => {
+					return this.end();
+				},
+			),
+		);
 	}
 
-	public changedFileEvent: EventQueue<ChangedFileEventItem>;
-	public deletedFileEvent: EventQueue<AbsoluteFilePath>;
-	public newFileEvent: EventQueue<AbsoluteFilePath>;
 	public processingLock: GlobalLock;
-
 	private manifestCounter: number;
 	private watcherCounter: number;
 	private server: Server;
@@ -202,8 +193,30 @@ export default class MemoryFileSystem {
 	// Used to maintain fake mtimes for file buffers
 	private buffers: AbsoluteFilePathMap<SimpleStats>;
 
-	isActiveWatcherId(id: undefined | number): boolean {
+	private isActiveWatcherId(id: undefined | number): boolean {
 		return id === undefined || this.activeWatcherIds.has(id);
+	}
+
+	public async end() {
+		await promiseAllFrom(
+			this.watchers.values(),
+			(watcher) => {
+				return watcher.close();
+			},
+		);
+
+		this.watchers.clear();
+		this.files.clear();
+		this.directories.clear();
+		this.manifests.clear();
+		this.buffers.clear();
+		this.directoryListings.clear();
+	}
+
+	// Given a path that exists in our files map, return the instance we have stored that matches the input path
+	// This allows us to use the memoized and cached path derivatives
+	public coalescePath(path: AbsoluteFilePath): AbsoluteFilePath {
+		return this.files.normalizeKey(path);
 	}
 
 	public async init() {
@@ -215,18 +228,18 @@ export default class MemoryFileSystem {
 		const files = this.server.virtualModules.getStatMap();
 		const reader = new CachedFileReader();
 
-		for (const [path, {stats, content}] of files) {
-			if (stats.isDirectory()) {
-				this.directories.set(path, toSimpleStats(stats));
+		for (const [path, entry] of files) {
+			if (entry.type === "directory") {
+				this.directories.set(path, toSimpleStats(entry.stats));
 			} else {
-				reader.cache(path, Buffer.from(content ?? ""));
-				this.files.set(path, toSimpleStats(stats));
+				reader.cache(path, entry.content);
+				this.files.set(path, toSimpleStats(entry.stats));
 				this.addFileToDirectoryListing(path);
 
 				if (isValidManifest(path)) {
 					await this.declareManifest({
 						isPartialProject: false,
-						diagnostics: this.server.createDisconnectedDiagnosticsProcessor([]),
+						diagnostics: this.server.createDisconnectedDiagnosticsProcessor(),
 						dirname: path.getParent(),
 						path,
 						reader,
@@ -234,6 +247,10 @@ export default class MemoryFileSystem {
 				}
 			}
 		}
+	}
+
+	public hasAnyBuffers(): boolean {
+		return this.buffers.size > 0;
 	}
 
 	public hasBuffer(path: AbsoluteFilePath): boolean {
@@ -294,14 +311,13 @@ export default class MemoryFileSystem {
 					return;
 				}
 
-				const watcher = watch(
-					directoryPath,
+				const watcher = directoryPath.watch(
 					{recursive, persistent: false},
 					(eventType, filename) => {
 						this.logger.info(
-							markup`Raw fs.watch event in <emphasis>${directoryPath}</emphasis> type ${eventType} for ${String(
+							markup`Raw fs.watch event in <emphasis>${directoryPath}</emphasis> type ${eventType} for <emphasis>${String(
 								filename,
-							)}`,
+							)}</emphasis>`,
 						);
 
 						if (filename === null) {
@@ -323,7 +339,7 @@ export default class MemoryFileSystem {
 			// No need to call watch() on the projectDirectory since it will call us
 
 			// Perform an initial crawl
-			const start = Date.now();
+			const start = new DurationMeasurer();
 			const stats = await this.hardStat(projectDirectory);
 			await this.addDirectory(
 				projectDirectory,
@@ -336,11 +352,10 @@ export default class MemoryFileSystem {
 					reader: new CachedFileReader(),
 				},
 			);
-			const took = Date.now() - start;
 			logger.info(
 				markup`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory}</emphasis>. Added <number>${String(
 					this.countFiles(projectDirectory),
-				)}</number> files. Took <duration>${String(took)}</duration>`,
+				)}</number> files. Took ${start.since()}`,
 			);
 		} finally {
 			activity.end();
@@ -386,12 +401,6 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	public unwatchAll() {
-		for (const {close} of this.watchers.values()) {
-			close();
-		}
-	}
-
 	public readdir(path: AbsoluteFilePath): Iterable<AbsoluteFilePath> {
 		const listing = this.directoryListings.get(path);
 		if (listing === undefined) {
@@ -427,8 +436,12 @@ export default class MemoryFileSystem {
 		return undefined;
 	}
 
-	public getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
+	public getPartialManifest(
+		def: ManifestDefinition,
+		project: ProjectDefinition,
+	): WorkerPartialManifest {
 		return {
+			project: project.id,
 			path: def.path,
 			hash: def.hash,
 			type: def.manifest.type,
@@ -465,10 +478,10 @@ export default class MemoryFileSystem {
 		// Wait for any subscribers that might need the file's stats
 		// Only emit these events for files
 		if (directoryInfo === undefined) {
-			await Promise.all([
-				this.deletedFileEvent.push(path),
-				this.server.refreshFileEvent.push(path),
-			]);
+			await this.server.refreshFileEvent.push({
+				type: "DELETED",
+				path,
+			});
 		}
 
 		// Remove from 'all possible caches
@@ -580,12 +593,10 @@ export default class MemoryFileSystem {
 		}
 
 		const diagnostics = this.server.createDiagnosticsProcessor({
-			origins: [
-				{
-					category: "memory-fs",
-					message: "Crawling project directory",
-				},
-			],
+			origin: {
+				entity: "MemoryFileSystem",
+				message: "Crawling project directory",
+			},
 		});
 
 		this.logger.info(markup`Watching ${directoryLink}`);
@@ -616,7 +627,7 @@ export default class MemoryFileSystem {
 
 	// Query actual file system for stats
 	private async hardStat(path: AbsoluteFilePath): Promise<SimpleStats> {
-		const stats = await lstat(path);
+		const stats = await path.lstat();
 		return toSimpleStats(stats);
 	}
 
@@ -626,15 +637,6 @@ export default class MemoryFileSystem {
 			return undefined;
 		} else {
 			return stats.mtimeNs;
-		}
-	}
-
-	public getMtimeNs(path: AbsoluteFilePath): bigint {
-		const mtimeNs = this.maybeGetMtimeNs(path);
-		if (mtimeNs === undefined) {
-			throw new FileNotFound(path, "Not found in memory file system");
-		} else {
-			return mtimeNs;
 		}
 	}
 
@@ -653,15 +655,15 @@ export default class MemoryFileSystem {
 	private isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
 		type;
 
-		const project = this.server.projectManager.findLoadedProject(path);
-		if (project === undefined) {
-			return false;
-		}
-
 		// Ensure we aren't in any of the default denylists
 		const basename = path.getBasename();
 		if (DEFAULT_DENYLIST.includes(basename)) {
 			return true;
+		}
+
+		const project = this.server.projectManager.findLoadedProject(path);
+		if (project === undefined) {
+			return false;
 		}
 
 		return false;
@@ -693,7 +695,6 @@ export default class MemoryFileSystem {
 		// Fetch the manifest
 		const manifestRaw = await reader.readFileText(path);
 		const hash = crypto.createHash("sha256").update(manifestRaw).digest("hex");
-
 		const consumer = json.consumeValue({
 			path,
 			input: manifestRaw,
@@ -708,7 +709,7 @@ export default class MemoryFileSystem {
 
 		// If manifest is undefined then we failed to validate and have diagnostics
 		if (rawDiagnostics.length > 0) {
-			const normalizedDiagnostics: Diagnostics = rawDiagnostics.map((diag) => ({
+			const normalizedDiagnostics: Diagnostic[] = rawDiagnostics.map((diag) => ({
 				...diag,
 				description: {
 					...diag.description,
@@ -765,7 +766,7 @@ export default class MemoryFileSystem {
 		// Tell all workers of our discovery
 		for (const worker of this.server.workerManager.getWorkers()) {
 			worker.bridge.events.updateManifests.send({
-				manifests: [{id: def.id, manifest: this.getPartialManifest(def)}],
+				manifests: new Map([[def.id, this.getPartialManifest(def, project)]]),
 			});
 		}
 	}
@@ -854,7 +855,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Crawl the directory
-		const paths = await readDirectory(directoryPath);
+		const paths = await directoryPath.readDirectory();
 
 		// Declare the file
 		const declareItem = async (path: AbsoluteFilePath) => {
@@ -882,7 +883,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Add the rest of the items
-		await Promise.all(Array.from(paths, declareItem));
+		await promiseAllFrom(paths, declareItem);
 
 		// If this directory is a project then mark it as initialized as we've crawled all their descendents
 		const project = this.server.projectManager.getProjectFromPath(directoryPath);
@@ -906,10 +907,12 @@ export default class MemoryFileSystem {
 			}
 		}
 
-		// if we're watching the parent directory then we'd have it in our cache if it existed
-		const parent = path.getParent();
-		if (this.directories.has(parent)) {
-			return false;
+		// If we're watching the parent directory then we'd have it in our cache if it existed
+		if (path.hasParent()) {
+			const parent = path.getParent();
+			if (this.directories.has(parent)) {
+				return false;
+			}
 		}
 
 		return undefined;
@@ -918,7 +921,7 @@ export default class MemoryFileSystem {
 	public async existsHard(path: AbsoluteFilePath): Promise<boolean> {
 		const resolvedExistence: undefined | boolean = this.exists(path);
 		if (resolvedExistence === undefined) {
-			return exists(path);
+			return path.exists();
 		} else {
 			return resolvedExistence;
 		}
@@ -933,12 +936,10 @@ export default class MemoryFileSystem {
 			return;
 		}
 
-		const diagnostics = this.server.createDisconnectedDiagnosticsProcessor([
-			{
-				category: "memory-fs",
-				message: originMessage,
-			},
-		]);
+		const diagnostics = this.server.createDisconnectedDiagnosticsProcessor({
+			entity: "MemoryFileSystem",
+			message: originMessage,
+		});
 
 		let newStats;
 		try {
@@ -1020,10 +1021,12 @@ export default class MemoryFileSystem {
 		if (oldStats !== undefined && opts.reason === "watch") {
 			this.logger.info(markup`File change: <emphasis>${path}</emphasis>`);
 
-			await Promise.all([
-				this.server.refreshFileEvent.push(path),
-				this.changedFileEvent.push({path, oldStats, newStats: stats}),
-			]);
+			await this.server.refreshFileEvent.push({
+				type: "DISK_UPDATE",
+				path,
+				oldStats,
+				newStats: stats,
+			});
 
 			// Watcher could have been closed by an event
 			if (!this.isActiveWatcherId(opts.watcherId)) {
@@ -1067,7 +1070,7 @@ export default class MemoryFileSystem {
 		}
 
 		if (isNew) {
-			await this.newFileEvent.push(path);
+			this.server.refreshFileEvent.push({type: "CREATED", path});
 		}
 
 		return true;

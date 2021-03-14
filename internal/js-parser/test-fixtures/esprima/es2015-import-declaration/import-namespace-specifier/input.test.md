@@ -8,40 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/import-namespace-specifier/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:0-1:27
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:21-1:26
-			}
+			namedSpecifiers: []
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:0-1:15
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:12-1:15 (foo)
 					}
-					importKind: undefined
 					loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:12-1:15
 				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:0-1:15
 			}
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:21-1:26
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/import-namespace-specifier/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/import-namespace-specifier/input.js 1:0-2:0
 }
 ```
 

@@ -8,39 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 1:0-3:0
-	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0013/input.js>
-	body: Array [
+	body: [
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 1:0-2:8
-			body: Array [
+			body: [
 				JSThrowStatement {
-					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 1:2-1:13
 					argument: JSReferenceIdentifier {
 						name: "error"
 						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 1:8-1:13 (error)
 					}
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 1:2-1:13
 				}
 				JSExpressionStatement {
-					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 2:0-2:6
 					expression: JSReferenceIdentifier {
 						name: "error"
 						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 2:0-2:5 (error)
 					}
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 2:0-2:6
 				}
 			]
+			directives: []
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 1:0-2:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0013/input.js>
+	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0013/input.js 1:0-3:0
 }
 ```
 

@@ -8,18 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSEmptyStatement {
+			loc: SourceLocation esprima/statement-empty/migrated_0000/input.js 1:0-1:1
+		}
+	]
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	directives: Array []
+	diagnostics: []
+	directives: []
 	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
 	sourceType: "script"
-	syntax: Array []
-	body: Array [JSEmptyStatement {loc: SourceLocation esprima/statement-empty/migrated_0000/input.js 1:0-1:1}]
-	loc: SourceLocation esprima/statement-empty/migrated_0000/input.js 1:0-2:0
+	syntax: []
 	path: UIDPath<esprima/statement-empty/migrated_0000/input.js>
+	loc: SourceLocation esprima/statement-empty/migrated_0000/input.js 1:0-2:0
 }
 ```
 

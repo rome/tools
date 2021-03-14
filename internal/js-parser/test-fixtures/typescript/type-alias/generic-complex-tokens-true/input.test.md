@@ -8,55 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:0-2:0
-	path: UIDPath<typescript/type-alias/generic-complex-tokens-true/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:5-1:6 (T)
 			}
-			loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:0-1:52
 			right: TSTypeReference {
-				loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:43-1:51
 				typeName: JSReferenceIdentifier {
 					name: "Array"
 					loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:43-1:48 (Array)
 				}
 				typeParameters: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:48-1:51
-					params: Array [
+					params: [
 						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:49-1:50
 							typeName: JSReferenceIdentifier {
 								name: "U"
 								loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:49-1:50 (U)
 							}
+							loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:49-1:50
 						}
 					]
+					loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:48-1:51
 				}
+				loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:43-1:51
 			}
 			typeParameters: TSTypeParameterDeclaration {
-				loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:6-1:40
-				params: Array [
+				params: [
 					TSTypeParameter {
 						name: "U"
-						constraint: TSObjectKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:17-1:23}
-						loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:7-1:39
+						constraint: TSObjectKeywordTypeAnnotation {
+							loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:17-1:23
+						}
 						default: TSObjectTypeAnnotation {
-							loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:26-1:39
-							members: Array [
+							members: [
 								TSPropertySignature {
+									optional: false
+									readonly: false
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "x"
@@ -64,18 +52,31 @@ JSRoot {
 										}
 										loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:28-1:29
 									}
-									optional: false
-									readonly: false
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:31-1:37
+									}
 									loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:28-1:37
-									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:31-1:37}
 								}
 							]
+							loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:26-1:39
 						}
+						loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:7-1:39
 					}
 				]
+				loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:6-1:40
 			}
+			loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:0-1:52
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-alias/generic-complex-tokens-true/input.ts>
+	loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:0-2:0
 }
 ```
 

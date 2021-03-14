@@ -8,88 +8,81 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-4:0
-	path: UIDPath<es2016/simple-parameter-list/async-arrow-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:15
-				path: UIDPath<es2016/simple-parameter-list/async-arrow-function/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-3:2
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:4-1:5 (a)
 						}
-						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:4-3:1
 						init: JSArrowFunctionExpression {
-							loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:8-3:1
 							body: JSBlockStatement {
-								body: Array []
-								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:32-3:1
-								directives: Array [
+								body: []
+								directives: [
 									JSDirective {
 										value: "use strict"
 										loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 2:2-2:15
 									}
 								]
+								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:32-3:1
 							}
 							head: JSFunctionHead {
 								async: true
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:8-1:31
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:15-1:27
 										left: JSBindingIdentifier {
 											name: "options"
 											loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:15-1:22 (options)
 										}
 										right: JSObjectExpression {
-											properties: Array []
+											properties: []
 											loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:25-1:27
 										}
+										loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:15-1:27
 									}
 								]
+								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:8-1:31
 							}
+							loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:8-3:1
 						}
+						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:4-3:1
 					}
 				]
+				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-3:2
+			}
+			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-3:2
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2016/simple-parameter-list/async-arrow-function/input.js>
+				end: Position 2:15
+				start: Position 2:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/simple-parameter-list/async-arrow-function/input.js>
+	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-4:0
 }
 ```
 

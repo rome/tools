@@ -8,63 +8,60 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-in/const-initializer/input.js 1:0-1:24
-	path: UIDPath<es2015/for-in/const-initializer/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<es2015/for-in/const-initializer/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation es2015/for-in/const-initializer/input.js 1:23-1:24}
-			loc: SourceLocation es2015/for-in/const-initializer/input.js 1:0-1:24
-			right: JSObjectExpression {
-				properties: Array []
-				loc: SourceLocation es2015/for-in/const-initializer/input.js 1:20-1:22
+			body: JSEmptyStatement {
+				loc: SourceLocation es2015/for-in/const-initializer/input.js 1:23-1:24
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/for-in/const-initializer/input.js 1:5-1:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/for-in/const-initializer/input.js 1:11-1:12 (a)
 						}
-						loc: SourceLocation es2015/for-in/const-initializer/input.js 1:11-1:16
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation es2015/for-in/const-initializer/input.js 1:15-1:16
 						}
+						loc: SourceLocation es2015/for-in/const-initializer/input.js 1:11-1:16
 					}
 				]
+				loc: SourceLocation es2015/for-in/const-initializer/input.js 1:5-1:16
+			}
+			right: JSObjectExpression {
+				properties: []
+				loc: SourceLocation es2015/for-in/const-initializer/input.js 1:20-1:22
+			}
+			loc: SourceLocation es2015/for-in/const-initializer/input.js 1:0-1:24
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/for-in/const-initializer/input.js>
+				end: Position 1:16
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-in/const-initializer/input.js>
+	loc: SourceLocation es2015/for-in/const-initializer/input.js 1:0-1:24
 }
 ```
 

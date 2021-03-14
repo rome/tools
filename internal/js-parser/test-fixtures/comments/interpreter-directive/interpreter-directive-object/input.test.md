@@ -8,32 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 1:0-4:0
-	path: UIDPath<comments/interpreter-directive/interpreter-directive-object/input.js>
-	interpreter: JSInterpreterDirective {
-		value: "/usr/bin/env babel-node"
-		loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 1:1-1:25
-	}
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:0-3:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:0-3:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:4-3:13
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -49,17 +31,33 @@ JSRoot {
 									loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:6-3:11
 								}
 							]
+							loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:4-3:13
 						}
-						loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:4-3:17
 						init: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:16-3:17 (x)
 						}
+						loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:4-3:17
 					}
 				]
+				loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:0-3:18
 			}
+			loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:0-3:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	interpreter: JSInterpreterDirective {
+		value: "/usr/bin/env babel-node"
+		loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 1:1-1:25
+	}
+	path: UIDPath<comments/interpreter-directive/interpreter-directive-object/input.js>
+	loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 1:0-4:0
 }
 ```
 

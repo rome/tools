@@ -8,65 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/485/input.js 1:0-1:37
-	path: UIDPath<core/uncategorised/485/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "arguments is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<core/uncategorised/485/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "arguments"
 				loc: SourceLocation core/uncategorised/485/input.js 1:9-1:18 (arguments)
 			}
-			loc: SourceLocation core/uncategorised/485/input.js 1:0-1:37
 			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation core/uncategorised/485/input.js 1:21-1:37
-				directives: Array [
+				body: []
+				directives: [
 					JSDirective {
 						value: "use strict"
 						loc: SourceLocation core/uncategorised/485/input.js 1:22-1:35
 					}
 				]
+				loc: SourceLocation core/uncategorised/485/input.js 1:21-1:37
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/uncategorised/485/input.js 1:18-1:20
+			}
+			loc: SourceLocation core/uncategorised/485/input.js 1:0-1:37
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["arguments", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/485/input.js>
+				end: Position 1:18
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/485/input.js>
+	loc: SourceLocation core/uncategorised/485/input.js 1:0-1:37
 }
 ```
 

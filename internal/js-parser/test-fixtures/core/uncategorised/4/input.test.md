@@ -8,20 +8,8 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/4/input.js 1:0-1:8
-	path: UIDPath<core/uncategorised/4/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/4/input.js 1:0-1:8
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -29,10 +17,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation core/uncategorised/4/input.js 1:0-1:8
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation core/uncategorised/4/input.js 1:1-1:7
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "f"
 							loc: SourceLocation core/uncategorised/4/input.js 1:1-1:2
@@ -58,10 +44,22 @@ JSRoot {
 							loc: SourceLocation core/uncategorised/4/input.js 1:6-1:7
 						}
 					]
+					loc: SourceLocation core/uncategorised/4/input.js 1:1-1:7
 				}
+				loc: SourceLocation core/uncategorised/4/input.js 1:0-1:8
 			}
+			loc: SourceLocation core/uncategorised/4/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/4/input.js>
+	loc: SourceLocation core/uncategorised/4/input.js 1:0-1:8
 }
 ```
 

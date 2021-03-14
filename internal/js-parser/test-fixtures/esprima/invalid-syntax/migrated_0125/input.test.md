@@ -8,49 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0125/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0125/input.js>
-	body: Array [
+	body: [
 		JSForInStatement {
-			body: JSEmptyStatement {loc: SourceLocation esprima/invalid-syntax/migrated_0125/input.js 1:17-1:18}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0125/input.js 1:0-1:18
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/invalid-syntax/migrated_0125/input.js 1:17-1:18
+			}
 			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0125/input.js 1:11-1:10
 			}
 			right: JSObjectExpression {
-				properties: Array []
+				properties: []
 				loc: SourceLocation esprima/invalid-syntax/migrated_0125/input.js 1:14-1:16
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0125/input.js 1:0-1:18
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid left-hand side in for-in statement"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "for-in statement"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:10
 				path: UIDPath<esprima/invalid-syntax/migrated_0125/input.js>
+				end: Position 1:10
 				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0125/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0125/input.js 1:0-2:0
 }
 ```
 

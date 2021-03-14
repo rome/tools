@@ -8,106 +8,90 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:0-4:0
-	path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:13
-				path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js>
-				start: Position 2:13
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:0-3:2
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:1-3:1
-				head: JSFunctionHead {
-					async: false
-					generator: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:10-1:12
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:13-3:1
-					body: Array [
+					body: [
 						JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: ""
 								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:13-2:14 ()
 							}
-							loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:4-2:29
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:27-2:29
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: true
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:26
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
-										loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:25
 										left: JSBindingIdentifier {
 											name: "x"
-											loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:15 (x)
 											meta: JSPatternMeta {
-												optional: undefined
-												typeAnnotation: undefined
 												loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:15
 											}
+											loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:15 (x)
 										}
 										right: JSYieldExpression {
 											delegate: false
-											loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:18-2:25
 											argument: JSNumericLiteral {
 												value: 3
-												format: undefined
 												loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:24-2:25
 											}
+											loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:18-2:25
 										}
+										loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:25
 									}
 								]
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:14-2:26
 							}
+							loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 2:4-2:29
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:13-3:1
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:10-1:12
+				}
+				loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:1-3:1
+			}
+			loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:0-3:2
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js>
+				end: Position 2:13
+				start: Position 2:13
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js 1:0-4:0
 }
 ```
 

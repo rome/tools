@@ -8,39 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/383/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/383/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/uncategorised/383/input.js 1:0-1:19
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: SourceLocation es2015/uncategorised/383/input.js 1:13-1:16 (Foo)
 				}
-				loc: SourceLocation es2015/uncategorised/383/input.js 1:7-1:19
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
+					body: []
 					loc: SourceLocation es2015/uncategorised/383/input.js 1:7-1:19
 				}
+				loc: SourceLocation es2015/uncategorised/383/input.js 1:7-1:19
 			}
+			loc: SourceLocation es2015/uncategorised/383/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/383/input.js>
+	loc: SourceLocation es2015/uncategorised/383/input.js 1:0-2:0
 }
 ```
 

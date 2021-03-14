@@ -10,7 +10,7 @@ import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import T, {SerialTypeFactory} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
-import {StaticMarkup, concatMarkup, markup} from "@internal/markup";
+import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
 
 export default class UnionT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, types: T[]) {
@@ -120,7 +120,7 @@ export default class UnionT extends T {
 	}
 
 	public humanize(builder: HumanBuilder): StaticMarkup {
-		return concatMarkup(
+		return joinMarkup(
 			this.types.map((type) => builder.humanize(type)),
 			markup` | `,
 		);

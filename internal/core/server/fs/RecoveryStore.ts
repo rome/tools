@@ -4,30 +4,21 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 } from "@internal/path";
-import {
-	FSHandle,
-	FSStats,
-	createDirectory,
-	exists,
-	lstat,
-	openFile,
-	readDirectory,
-	readFileText,
-	removeDirectory,
-	writeFile,
-} from "@internal/fs";
+import {FSHandle, FSStats} from "@internal/fs";
 import {Dict} from "@internal/typescript-helpers";
 import {json} from "@internal/codec-config";
 import {
+	Diagnostic,
 	DiagnosticLocation,
-	Diagnostics,
 	catchDiagnostics,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
+import {createResourceFromTimeout} from "@internal/resources";
+import {promiseAllFrom} from "@internal/async";
 
 export type RecoverySaveFile =
 	| {
@@ -143,7 +134,7 @@ export default class RecoveryStore {
 	private async readRecoveryDirectory(): Promise<AbsoluteFilePathSet> {
 		const paths: [AbsoluteFilePath, number][] = [];
 
-		for (const path of await readDirectory(this.recoveryDirectoryPath)) {
+		for (const path of await this.recoveryDirectoryPath.readDirectory()) {
 			const basename = path.getBasename();
 			if (basename[0] === ".") {
 				continue;
@@ -165,7 +156,7 @@ export default class RecoveryStore {
 	}
 
 	public async init() {
-		await createDirectory(this.recoveryDirectoryPath);
+		await this.recoveryDirectoryPath.createDirectory();
 
 		// Register initial stores
 		this.evictableStoreIds = Array.from(
@@ -205,15 +196,15 @@ export default class RecoveryStore {
 		this.logger.info(
 			markup`Dropping recovery store <emphasis>${storeId}</emphasis>. Reason: ${reason}`,
 		);
-		await removeDirectory(this.getStoreDirectoryPath(storeId));
+		await this.getStoreDirectoryPath(storeId).removeDirectory();
 	}
 
 	public async getAllStores(): Promise<{
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 		stores: RecoveryDiskStore[];
 	}> {
 		const stores: RecoveryDiskStore[] = [];
-		let diagnostics: Diagnostics = [];
+		let diagnostics: Diagnostic[] = [];
 
 		for (const path of await this.readRecoveryDirectory()) {
 			const {diagnostics: storeDiagnostics} = await catchDiagnostics(async () => {
@@ -239,7 +230,7 @@ export default class RecoveryStore {
 			if (location === undefined) {
 				throw new Error(`Recovery store ${storeId} not found`);
 			} else {
-				throw createSingleDiagnosticError({
+				throw createSingleDiagnosticsError({
 					description: descriptions.RECOVERY_STORE.NOT_FOUND(storeId),
 					location,
 				});
@@ -253,11 +244,11 @@ export default class RecoveryStore {
 		storeId: string,
 	): Promise<undefined | RecoveryDiskStore> {
 		const indexPath = this.getStoreIndexPath(storeId);
-		if (!(await exists(indexPath))) {
+		if (await indexPath.notExists()) {
 			return undefined;
 		}
 
-		const indexContent = await readFileText(indexPath);
+		const indexContent = await indexPath.readFileText();
 		const index = json.consumeValue({
 			input: indexContent,
 			path: indexPath,
@@ -299,7 +290,7 @@ export default class RecoveryStore {
 		this.requestIdToStore.set(req.id, store);
 
 		const path = this.getStoreDirectoryPath(store.storeId);
-		await createDirectory(path);
+		await path.createDirectory();
 		this.logger.info(
 			markup`Created store <emphasis>${store.storeId}</emphasis> at <emphasis>${path}</emphasis>`,
 		);
@@ -313,7 +304,11 @@ export default class RecoveryStore {
 		return store;
 	}
 
-	public async save(req: ServerRequest, path: AbsoluteFilePath, content: Buffer) {
+	public async save(
+		req: ServerRequest,
+		path: AbsoluteFilePath,
+		content: ArrayBufferView,
+	) {
 		if (this.blockSave !== undefined) {
 			await this.blockSave;
 		}
@@ -329,7 +324,7 @@ export default class RecoveryStore {
 		store.index.files[fileId] = path.join();
 
 		const storePath = this.getStoreDirectoryPath(store.storeId).append(fileId);
-		await writeFile(storePath, content);
+		await storePath.writeFile(content);
 		this.logger.info(
 			markup`Save file from <emphasis>${path}</emphasis> to <emphasis>${storePath}</emphasis>`,
 		);
@@ -359,11 +354,11 @@ export default class RecoveryStore {
 
 			// Calculate mtime we expect
 			let mtimeNs: undefined | bigint;
-			if (await exists(originalPath)) {
-				mtimeNs = (await lstat(originalPath)).mtimeNs;
+			if (await originalPath.exists()) {
+				mtimeNs = (await originalPath.lstat()).mtimeNs;
 			}
 
-			const content = await readFileText(artifactPath);
+			const content = await artifactPath.readFileText();
 
 			req.queueSaveFile(
 				originalPath,
@@ -393,7 +388,7 @@ export default class RecoveryStore {
 		const store = this.requestIdToStore.get(req.id);
 		if (store !== undefined) {
 			const indexPath = this.getStoreIndexPath(store.storeId);
-			await writeFile(indexPath, json.stringify(store.index));
+			await indexPath.writeFile(json.stringify(store.index));
 			this.logger.info(
 				markup`Committed store index to <emphasis>${indexPath}</emphasis>`,
 			);
@@ -412,7 +407,7 @@ export default class RecoveryStore {
 
 		try {
 			if (op.type === "UNSAFE_WRITE") {
-				await writeFile(path, op.content);
+				await path.writeFile(op.content);
 				success = true;
 			} else if (op.type === "WRITE") {
 				const {mtimeNs, content} = op;
@@ -422,7 +417,7 @@ export default class RecoveryStore {
 					try {
 						// `mtime === undefined` means we expect the file to not exist
 						// wx: Open file for writing. Fails if the path exists.
-						fd = await openFile(path, "wx");
+						fd = await path.openFile("wx");
 						await fd.writeFile(content);
 						success = true;
 					} catch (err) {
@@ -436,7 +431,7 @@ export default class RecoveryStore {
 					try {
 						// `mtime !== undefined` means we expect the file to exist
 						// r+: Open file for reading and writing. An exception occurs if the file does not exist.
-						fd = await openFile(path, "r+");
+						fd = await path.openFile("r+");
 
 						// First verify the mtime
 						// @ts-ignore: This is accurate
@@ -460,7 +455,7 @@ export default class RecoveryStore {
 				}
 			}
 		} catch (err) {
-			registerFile([path]);
+			throw err;
 		} finally {
 			// Close file descriptor
 			if (fd !== undefined) {
@@ -468,7 +463,7 @@ export default class RecoveryStore {
 			}
 
 			// We want writeFiles to only return once all the refreshFileEvent handlers have ran
-			// We call maybeRefreshPath to do a hard check on the filesystem and update our in memory fs
+			// We call refreshPath to do a hard check on the filesystem and update our in memory fs
 			// This mitigates slow watch events
 			server.fatalErrorHandler.wrapPromise(
 				server.memoryFs.refreshPath(path, {}, "Server.writeFiles"),
@@ -492,20 +487,20 @@ export default class RecoveryStore {
 
 		// For unsafe writes we don't bother checking for locks or mtime
 		if (opts.unsafeWrites) {
-			await Promise.all(
-				Array.from(
-					files,
-					async ([path, {content}]) => {
-						await writeFile(path, content);
-					},
-				),
+			await promiseAllFrom(
+				files,
+				async ([path, {content}]) => {
+					await path.writeFile(content);
+				},
 			);
 			return files.size;
 		}
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
-		const teardowns: (() => Promise<void>)[] = [];
 		const {server} = this;
+		const resources = server.resources.createContainer(
+			"RecoveryStore.writeFiles",
+		);
 
 		// Files successfully written
 		let fileCount = 0;
@@ -530,51 +525,53 @@ export default class RecoveryStore {
 				}
 			};
 
-			const sub = server.refreshFileEvent.subscribe(registerFile);
-			teardowns.push(() => sub.unsubscribe());
+			resources.add(
+				server.refreshFileEvent.subscribe((events) => {
+					for (const {path} of events) {
+						registerFile([path]);
+					}
+				}),
+			);
 		});
 
 		try {
 			// Write files
 			// We call fs.open to avoid race conditions since we want to check the mtime, and then update the
 			// file if it's the same
-			await Promise.all(
-				Array.from(
-					files,
-					async ([path, op]) => {
-						const success = await this.writeFile(path, op, events, registerFile);
-						if (success) {
-							fileCount++;
-						}
-					},
-				),
+			await promiseAllFrom(
+				files,
+				async ([path, op]) => {
+					const success = await this.writeFile(path, op, events, registerFile);
+					if (success) {
+						fileCount++;
+					}
+				},
 			);
 
 			// Protects against file events not being emitted and causing hanging
 			const timeoutPromise = new Promise((resolve, reject) => {
-				const timeout = setTimeout(
-					() => {
-						const lines = [
-							"File events should have been emitted within a second. Did not receive an event for:",
-						];
-						for (const path of paths) {
-							lines.push(` - ${path.join()}`);
-						}
-						reject(new Error(lines.join("\n")));
-					},
-					1_000,
+				resources.add(
+					createResourceFromTimeout(
+						"FileHangDetector",
+						setTimeout(
+							() => {
+								const lines = [
+									"File events should have been emitted within a second. Did not receive an event for:",
+								];
+								for (const path of paths) {
+									lines.push(` - ${path.join()}`);
+								}
+								reject(new Error(lines.join("\n")));
+							},
+							1_000,
+						),
+					),
 				);
-
-				teardowns.push(async () => {
-					clearTimeout(timeout);
-				});
 			});
 
 			await Promise.race([waitRefresh, timeoutPromise]);
 		} finally {
-			for (const teardown of teardowns) {
-				await teardown();
-			}
+			await resources.release();
 			await this.server.memoryFs.processingLock.wait();
 		}
 

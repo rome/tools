@@ -2,7 +2,7 @@ import {test} from "rome";
 import {tests} from "./tests";
 import {testLint} from "../utils/testing";
 import {dedent} from "@internal/string-utils";
-import {createAnyPath} from "@internal/path";
+import {createPath} from "@internal/path";
 
 for (const name in tests) {
 	test(
@@ -27,7 +27,7 @@ for (const name in tests) {
 								valid: valid ? valid.map((str) => dedent(str)) : [],
 								category,
 								snapshotFilename: `${name}.test.md`,
-								path: createAnyPath(filename),
+								path: createPath(filename),
 							},
 						);
 					}
@@ -40,7 +40,7 @@ for (const name in tests) {
 							valid: valid ? valid.map((str) => dedent(str)) : [],
 							category,
 							snapshotFilename: `${name}.test.md`,
-							path: createAnyPath(filename),
+							path: createPath(filename),
 						},
 					);
 				}

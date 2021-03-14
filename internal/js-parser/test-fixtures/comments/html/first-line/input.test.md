@@ -8,23 +8,8 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	trailingComments: Array []
-	loc: SourceLocation comments/html/first-line/input.js 1:0-2:0
-	path: UIDPath<comments/html/first-line/input.js>
-	innerComments: Array [
-		"0"
-		"1"
-	]
-	comments: Array [
+	body: []
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: ""
@@ -36,6 +21,16 @@ JSRoot {
 			loc: SourceLocation comments/html/first-line/input.js 1:5-1:16
 		}
 	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	innerComments: ["0", "1"]
+	sourceType: "script"
+	syntax: []
+	trailingComments: []
+	path: UIDPath<comments/html/first-line/input.js>
+	loc: SourceLocation comments/html/first-line/input.js 1:0-2:0
 }
 ```
 

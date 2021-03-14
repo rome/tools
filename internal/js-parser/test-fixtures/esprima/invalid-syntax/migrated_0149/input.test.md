@@ -8,44 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0149/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0149/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0149/input.js 1:2-1:7
 			expression: JSReferenceIdentifier {
 				name: "hello"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0149/input.js 1:2-1:7 (hello)
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0149/input.js 1:2-1:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated comment"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:0
 				path: UIDPath<esprima/invalid-syntax/migrated_0149/input.js>
+				end: Position 1:0
 				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0149/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0149/input.js 1:0-2:0
 }
 ```
 

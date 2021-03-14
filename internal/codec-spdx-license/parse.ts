@@ -15,8 +15,8 @@ import {
 	isDigit,
 } from "@internal/parser-core";
 import {getSPDXLicense, licenseNames} from "./index";
-import {Diagnostics, descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {Diagnostic, descriptions} from "@internal/diagnostics";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	ExpressionNode,
 	LicenseNode,
@@ -57,7 +57,7 @@ type SPDXParser = ParserCore<SPDXParserTypes>;
 
 export interface SPDXLicenseParseResult {
 	license: ExpressionNode;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 }
 
 const spdxLicenseParser = createParser<SPDXParserTypes>({

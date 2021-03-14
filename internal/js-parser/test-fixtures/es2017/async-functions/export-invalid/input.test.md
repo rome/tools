@@ -8,45 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/export-invalid/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:32
-				path: UIDPath<es2017/async-functions/export-invalid/input.js>
-				start: Position 1:31
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>(</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>=></emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:0-1:33
 			declaration: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:15-1:33
 				body: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:32-1:32
@@ -54,24 +18,49 @@ JSRoot {
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:15-1:30
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "functionX"
 							loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:21-1:30 (functionX)
 						}
 					]
+					loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:15-1:30
 				}
+				loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:15-1:33
 			}
+			loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:0-1:33
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:34-1:36
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, "=>", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "(", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/export-invalid/input.js>
+				end: Position 1:32
+				start: Position 1:31
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2017/async-functions/export-invalid/input.js>
+	loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:0-2:0
 }
 ```
 

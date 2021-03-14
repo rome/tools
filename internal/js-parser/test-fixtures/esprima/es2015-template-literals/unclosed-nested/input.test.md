@@ -8,47 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-template-literals/unclosed-nested/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<esprima/es2015-template-literals/unclosed-nested/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed <emphasis>template expression value</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
-					}
-					frame {location: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 2:0-2:0}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
 			expression: JSTemplateLiteral {
-				loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
-				quasis: Array [
+				expressions: [
+					JSTaggedTemplateExpression {
+						quasi: JSTemplateLiteral {
+							expressions: []
+							quasis: [
+								JSTemplateElement {
+									cooked: "test"
+									raw: "test"
+									tail: true
+									loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:13-1:17
+								}
+							]
+							loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:12-1:18
+						}
+						tag: JSNumericLiteral {
+							value: 10
+							loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:9-1:11
+						}
+						loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:9-1:18
+					}
+				]
+				quasis: [
 					JSTemplateElement {
 						cooked: "hello "
 						raw: "hello "
@@ -62,32 +46,44 @@ JSRoot {
 						loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 2:0-2:0
 					}
 				]
-				expressions: Array [
-					JSTaggedTemplateExpression {
-						typeArguments: undefined
-						loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:9-1:18
-						tag: JSNumericLiteral {
-							value: 10
-							format: undefined
-							loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:9-1:11
-						}
-						quasi: JSTemplateLiteral {
-							expressions: Array []
-							loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:12-1:18
-							quasis: Array [
-								JSTemplateElement {
-									cooked: "test"
-									raw: "test"
-									tail: true
-									loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:13-1:17
-								}
-							]
-						}
+				loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
+			}
+			loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis> here"}]
+					}
+					frame {
+						location: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 2:0-2:0
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unclosed <emphasis>"}, "template expression value", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-template-literals/unclosed-nested/input.js>
+				end: Position 1:7
+				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-template-literals/unclosed-nested/input.js>
+	loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
 }
 ```
 

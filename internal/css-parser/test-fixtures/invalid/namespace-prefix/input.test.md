@@ -6,53 +6,50 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
+	body: [
+		CSSRule {
+			prelude: [
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/namespace-prefix/input.css 1:0-1:2
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/namespace-prefix/input.css 1:2-1:3
+				}
+				CSSSelector {
+					patterns: []
+					loc: SourceLocation invalid/namespace-prefix/input.css 1:3-1:4
+				}
+			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/namespace-prefix/input.css 1:4-3:1
+			}
+			loc: SourceLocation invalid/namespace-prefix/input.css 1:0-3:1
+		}
+	]
+	comments: []
 	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/namespace-prefix/input.css 1:0-3:1
-	path: RelativePath<invalid/namespace-prefix/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<css>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "css"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid attribute name found."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "css"
-				sourceText: undefined
-				end: Position 1:2
 				path: RelativePath<invalid/namespace-prefix/input.css>
+				end: Position 1:2
 				start: Position 1:1
 			}
 		}
 	]
-	body: Array [
-		CSSRule {
-			loc: SourceLocation invalid/namespace-prefix/input.css 1:0-3:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/namespace-prefix/input.css 1:4-3:1
-			}
-			prelude: Array [
-				CSSSelector {
-					patterns: Array []
-					loc: SourceLocation invalid/namespace-prefix/input.css 1:0-1:2
-				}
-				CSSSelector {
-					patterns: Array []
-					loc: SourceLocation invalid/namespace-prefix/input.css 1:2-1:3
-				}
-				CSSSelector {
-					patterns: Array []
-					loc: SourceLocation invalid/namespace-prefix/input.css 1:3-1:4
-				}
-			]
-		}
-	]
+	path: RelativePath<invalid/namespace-prefix/input.css>
+	loc: SourceLocation invalid/namespace-prefix/input.css 1:0-3:1
 }
 ```

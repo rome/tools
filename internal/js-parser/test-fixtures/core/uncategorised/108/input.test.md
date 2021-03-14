@@ -8,48 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/108/input.js 1:0-1:22
-	path: UIDPath<core/uncategorised/108/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Regular expression flags can't contain unicode escapes"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<core/uncategorised/108/input.js>
-				start: Position 1:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/108/input.js 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/108/input.js 1:0-1:22
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation core/uncategorised/108/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation core/uncategorised/108/input.js 1:4-1:22
 						init: JSRegExpLiteral {
 							global: true
 							insensitive: false
@@ -57,14 +25,10 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: SourceLocation core/uncategorised/108/input.js 1:8-1:22
 							expression: JSRegExpSubExpression {
-								loc: SourceLocation core/uncategorised/108/input.js 1:9-1:14
-								body: Array [
+								body: [
 									JSRegExpCharSet {
-										invert: false
-										loc: SourceLocation core/uncategorised/108/input.js 1:9-1:14
-										body: Array [
+										body: [
 											JSRegExpCharacter {
 												value: "P"
 												loc: SourceLocation core/uncategorised/108/input.js 1:10-1:11
@@ -82,15 +46,47 @@ JSRoot {
 												loc: SourceLocation core/uncategorised/108/input.js 1:13-1:14
 											}
 										]
+										invert: false
+										loc: SourceLocation core/uncategorised/108/input.js 1:9-1:14
 									}
 								]
+								loc: SourceLocation core/uncategorised/108/input.js 1:9-1:14
 							}
+							loc: SourceLocation core/uncategorised/108/input.js 1:8-1:22
 						}
+						loc: SourceLocation core/uncategorised/108/input.js 1:4-1:22
 					}
 				]
+				loc: SourceLocation core/uncategorised/108/input.js 1:0-1:22
+			}
+			loc: SourceLocation core/uncategorised/108/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Regular expression flags can't contain unicode escapes"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/108/input.js>
+				end: Position 1:16
+				start: Position 1:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/108/input.js>
+	loc: SourceLocation core/uncategorised/108/input.js 1:0-1:22
 }
 ```
 

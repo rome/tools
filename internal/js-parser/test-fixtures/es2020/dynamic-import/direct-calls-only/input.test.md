@@ -8,64 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:0-4:0
-	path: UIDPath<es2020/dynamic-import/direct-calls-only/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The only valid meta property for import is import.meta"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:20
-				path: UIDPath<es2020/dynamic-import/direct-calls-only/input.js>
-				start: Position 2:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "failsParse"
 				loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:9-1:19 (failsParse)
 			}
-			loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:19-1:21
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:22-3:1
-				body: Array [
+				body: [
 					JSReturnStatement {
-						loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:2-2:23
 						argument: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:9-2:22
+							arguments: []
 							callee: JSMetaProperty {
-								loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:9-2:20
 								meta: JSIdentifier {
 									name: "import"
 									loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:9-2:15 (import)
@@ -74,13 +28,51 @@ JSRoot {
 									name: "then"
 									loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:16-2:20 (then)
 								}
+								loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:9-2:20
 							}
+							loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:9-2:22
 						}
+						loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:2-2:23
 					}
 				]
+				directives: []
+				loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:22-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:19-1:21
+			}
+			loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "The only valid meta property for "}, "import", RAW_MARKUP {value: " is "}, "import", RAW_MARKUP {value: "."}, "meta"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2020/dynamic-import/direct-calls-only/input.js>
+				end: Position 2:20
+				start: Position 2:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/dynamic-import/direct-calls-only/input.js>
+	loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:0-4:0
 }
 ```
 

@@ -14,18 +14,18 @@ import {
 	markupToPlainText,
 } from "@internal/cli-layout";
 import {
-	AnyMarkup,
-	AnyMarkups,
+	Markup,
 	MarkupFormatOptions,
 	MarkupTagName,
 	StaticMarkup,
-	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
 	normalizeMarkup,
 	readMarkup,
+	serializeLazyMarkup,
 } from "@internal/markup";
 import {
 	ReporterCaptureStream,
@@ -38,22 +38,20 @@ import {
 	ReporterStepCallback,
 	ReporterStream,
 	ReporterStreamAttached,
-	ReporterStreamHandle,
-	ReporterStreamLineSnapshot,
 	ReporterStreamState,
 	SelectArguments,
 	SelectOptions,
 	SelectOptionsKeys,
 	WrapperFactory,
 } from "./types";
+import {Event} from "@internal/events";
 import Progress from "./Progress";
 import prettyFormat from "@internal/pretty-format";
 import stream = require("stream");
-import {CWD_PATH} from "@internal/path";
+import {CWD_PATH, HOME_PATH} from "@internal/path";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
-
 import {
 	DEFAULT_TERMINAL_FEATURES,
 	Stdout,
@@ -67,6 +65,12 @@ import {
 	mergeObjects,
 } from "@internal/typescript-helpers";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
+import {
+	Resource,
+	createResourceContainer,
+	createResourceFromCallback,
+	createResourceRoot,
+} from "@internal/resources";
 
 export type ReporterOptions = {
 	shouldRedirectOutToErr?: boolean;
@@ -77,14 +81,12 @@ export type ReporterOptions = {
 };
 
 export type LogOptions = {
-	replaceLineSnapshot?: ReporterStreamLineSnapshot;
-	handles?: ReporterStreamHandle[];
+	streams?: ReporterStreamAttached[];
 	stderr?: boolean;
 	noNewline?: boolean;
-	preferNoNewline?: boolean;
 };
 
-export type LogCategoryUserOptions = Pick<LogOptions, "stderr" | "handles">;
+export type LogCategoryUserOptions = Pick<LogOptions, "stderr" | "streams">;
 
 export type LogCategoryOptions = LogCategoryUserOptions & {
 	unicodePrefix: string;
@@ -101,46 +103,63 @@ type QuestionOptions = {
 	normalize?: (value: string) => string;
 };
 
+let cachedFromProcess: undefined | Reporter;
+
 export default class Reporter implements ReporterNamespace {
-	constructor(opts: ReporterOptions = {}) {
+	constructor(name: string, opts: ReporterOptions = {}) {
 		this.activeElements = new Set();
 		this.indentLevel = 0;
-		this.markupOptions =
-			opts.markupOptions === undefined ? {} : opts.markupOptions;
+		this.markupOptions = opts.markupOptions;
 		this.shouldRedirectOutToErr = opts.shouldRedirectOutToErr ?? false;
 		this.stdin = opts.stdin;
 		this.wrapperFactory = opts.wrapperFactory;
-		this.streamHandles = new Set();
+		this.streams = new Set();
+
+		this.resources = createResourceRoot(`Reporter<${name}>`);
+		this[Symbol.toStringTag] = `Reporter<${name}>`;
+		this.name = name;
 
 		if (opts.streams !== undefined) {
 			for (const stream of opts.streams) {
-				this.addStream(stream);
+				this.addAttachedStream(stream);
 			}
 		}
 	}
 
-	public markupOptions: MarkupFormatOptions;
+	public markupOptions: undefined | MarkupFormatOptions;
+	public resources: Resource;
+	public [Symbol.toStringTag]: string;
 
+	private name: string;
 	private indentLevel: number;
 	private shouldRedirectOutToErr: boolean;
 	private wrapperFactory: undefined | WrapperFactory;
-	private streamHandles: Set<ReporterStreamHandle>;
+	private streams: Set<ReporterStreamAttached>;
 	private stdin: undefined | NodeJS.ReadStream;
 
-	// Store active progress indicators so we can easily bail out and destroy them
+	// Store active progress indicators so we can redraw them on feature updates
 	private activeElements: Set<{
 		render: VoidCallback;
-		end: VoidCallback;
 	}>;
 
-	public static fromProcess(opts: ReporterOptions = {}): Reporter {
-		const reporter = new Reporter({
-			...opts,
-			markupOptions: {
-				cwd: CWD_PATH,
-				...opts.markupOptions,
+	public static fromProcess(unique: boolean = false): Reporter {
+		if (cachedFromProcess !== undefined && !unique) {
+			return cachedFromProcess;
+		}
+
+		const reporter = new Reporter(
+			"Process",
+			{
+				markupOptions: {
+					cwd: CWD_PATH,
+					home: HOME_PATH,
+				},
 			},
-		});
+		);
+
+		if (!unique) {
+			cachedFromProcess = reporter;
+		}
 
 		reporter.attachStdoutStreams(process.stdout, process.stderr);
 
@@ -149,31 +168,19 @@ export default class Reporter implements ReporterNamespace {
 
 	// Produce a new Reporter with all the streams of the input reporters. Streams will NOT be in sync.
 	public static concat(reporters: Reporter[]): Reporter {
-		const reporter = new Reporter();
-		for (const otherReporter of reporters) {
-			for (const {stream} of otherReporter.getStreamHandles()) {
-				reporter.addAttachedStream(stream);
+		const streams: Set<ReporterStreamAttached> = new Set();
+		for (const reporter of reporters) {
+			for (const stream of reporter.getStreams()) {
+				streams.add(stream);
 			}
 		}
-		return reporter;
-	}
 
-	public getLineSnapshot(populate: boolean = true): ReporterStreamLineSnapshot {
-		const snapshot: ReporterStreamLineSnapshot = {
-			close: () => {
-				for (const {stream} of this.getStreamHandles()) {
-					stream.state.lineSnapshots.delete(snapshot);
-				}
+		return new Reporter(
+			reporters.map((reporter) => reporter[Symbol.toStringTag]).join(" & "),
+			{
+				streams: Array.from(streams),
 			},
-		};
-
-		if (populate) {
-			for (const {stream} of this.getStreamHandles()) {
-				stream.state.lineSnapshots.set(snapshot, stream.state.currentLine);
-			}
-		}
-
-		return snapshot;
+		);
 	}
 
 	public attachStdoutStreams(
@@ -183,16 +190,14 @@ export default class Reporter implements ReporterNamespace {
 			format?: ReporterStream["format"];
 		} = {},
 	): ReporterDerivedStreams {
-		const {features, updateEvent, setupUpdateEvent, closeUpdateEvent} = inferTerminalFeatures(
+		const {features, updateEvent, setupUpdateEvent} = inferTerminalFeatures(
 			stdout,
 			force,
 		);
 
 		const {format = features.colorDepth > 1 ? "ansi" : "none"} = force;
 
-		setupUpdateEvent();
-
-		const handle = this.addStream({
+		const stream = this.addStream({
 			format,
 			features,
 			write: (chunk, error) => {
@@ -208,19 +213,19 @@ export default class Reporter implements ReporterNamespace {
 					}
 				}
 			},
-			init: setupUpdateEvent,
-			teardown: closeUpdateEvent,
 		});
 
+		stream.resources.add(setupUpdateEvent());
+
 		updateEvent.subscribe((features) => {
-			handle.stream.updateFeatures(features);
+			stream.updateFeatures(features);
 		});
 
 		return {
 			format,
 			features,
 			featuresUpdated: updateEvent,
-			handle,
+			stream,
 		};
 	}
 
@@ -228,30 +233,30 @@ export default class Reporter implements ReporterNamespace {
 		stream: ReporterStream,
 		check?: () => boolean,
 	): ReporterConditionalStream {
-		let handle: undefined | ReporterStreamHandle;
+		let attached: undefined | ReporterStreamAttached;
 
 		const cond: ReporterConditionalStream = {
-			enable: () => {
-				if (handle === undefined) {
-					handle = this.addStream(stream);
+			enable: async () => {
+				if (attached === undefined) {
+					attached = this.addStream(stream);
 				}
 			},
-			disable: () => {
-				if (handle !== undefined) {
-					handle.remove();
-					handle = undefined;
+			async disable() {
+				if (attached !== undefined) {
+					attached.resources.release();
+					attached = undefined;
 				}
 			},
-			update: () => {
+			async update() {
 				if (check !== undefined) {
 					if (check()) {
-						cond.enable();
+						await cond.enable();
 					} else {
-						cond.disable();
+						await cond.disable();
 					}
 				}
 
-				return handle !== undefined;
+				return stream !== undefined;
 			},
 		};
 
@@ -286,11 +291,11 @@ export default class Reporter implements ReporterNamespace {
 					? convertToMarkupFromRandomString(buff)
 					: markup`${buff}`;
 			},
-			remove: stream.remove,
+			resources: stream.resources,
 		};
 	}
 
-	protected getMessagePrefix(): AnyMarkup {
+	protected getMessagePrefix(): Markup {
 		return markup``;
 	}
 
@@ -306,44 +311,39 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public addAttachedStream(stream: ReporterStreamAttached): ReporterStreamHandle {
-		const handle: ReporterStreamHandle = {
-			stream,
-			remove: () => {
-				if (!this.streamHandles.has(handle)) {
-					return;
-				}
-
-				this.streamHandles.delete(handle);
-				stream.handles.delete(handle);
-
-				// Only teardown when all handles have been removed
-				if (stream.teardown !== undefined && stream.handles.size === 0) {
-					stream.teardown();
-				}
-			},
-		};
-		stream.handles.add(handle);
-		this.streamHandles.add(handle);
-		return handle;
+	public addAttachedStream(stream: ReporterStreamAttached): void {
+		stream.resources.add(
+			createResourceFromCallback(
+				"ReporterStreamHandle",
+				() => {
+					this.streams.delete(stream);
+				},
+			),
+		);
+		stream.featuresUpdated.subscribe(() => {
+			this.refreshActiveElements();
+		});
+		this.streams.add(stream);
 	}
 
 	public addStream(
 		unattached: ReporterStream,
 		state?: Partial<ReporterStreamState>,
-	): ReporterStreamHandle {
-		unattached.init?.();
-
+	): ReporterStreamAttached {
 		const stream: ReporterStreamAttached = {
 			...unattached,
-			handles: new Set(),
+			activeElements: new Set(),
 			state: mergeObjects(streamUtils.createStreamState(), state),
-			updateFeatures: (newFeatures) => {
+			updateFeatures: async (newFeatures) => {
 				stream.features = newFeatures;
-				this.refreshActiveElements();
+				await stream.featuresUpdated.callOptional(newFeatures);
 			},
+			featuresUpdated: new Event("ReporterStream.featuresUpdated"),
+			resources: createResourceContainer("ReporterStream"),
 		};
-		return this.addAttachedStream(stream);
+		this.resources.add(stream);
+		this.addAttachedStream(stream);
+		return stream;
 	}
 
 	public getStdin(): NodeJS.ReadStream {
@@ -355,7 +355,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async question(
-		message: AnyMarkup,
+		message: Markup,
 		{hint, default: def = "", yes = false}: QuestionOptions = {},
 	): Promise<string> {
 		if (yes) {
@@ -419,7 +419,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async questionValidate<T>(
-		message: AnyMarkup,
+		message: Markup,
 		validate: (value: string) => QuestionValidateResult<T>,
 		options: Omit<QuestionOptions, "normalize"> = {},
 	): Promise<T> {
@@ -454,7 +454,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public async radioConfirm(message: AnyMarkup): Promise<boolean> {
+	public async radioConfirm(message: Markup): Promise<boolean> {
 		const answer = await this.radio(
 			message,
 			{
@@ -493,7 +493,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async radio<Options extends SelectOptions>(
-		message: AnyMarkup,
+		message: Markup,
 		arg: SelectArguments<Options>,
 	): Promise<SelectOptionsKeys<Options>> {
 		const set = await this.select(message, {...arg, radio: true});
@@ -503,52 +503,51 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async select<Options extends SelectOptions>(
-		message: AnyMarkup,
+		message: Markup,
 		args: SelectArguments<Options>,
 	): Promise<Set<SelectOptionsKeys<Options>>> {
 		return select(this, message, args);
 	}
 
-	public hasStreamHandles(opts?: LogCategoryUserOptions): boolean {
-		if (opts?.handles !== undefined) {
-			return opts.handles.length > 0;
+	public hasStreams(opts?: LogCategoryUserOptions): boolean {
+		if (opts?.streams !== undefined) {
+			return opts.streams.length > 0;
 		}
 
-		return this.streamHandles.size > 0;
+		return this.streams.size > 0;
 	}
 
-	public getStreamHandles(
+	public getStreams(
 		opts?: LogCategoryUserOptions,
-	): Iterable<ReporterStreamHandle> {
-		if (opts?.handles !== undefined) {
-			return opts.handles;
+	): Iterable<ReporterStreamAttached> {
+		if (opts?.streams !== undefined) {
+			return opts.streams;
 		}
 
-		return this.streamHandles;
+		return this.streams;
 	}
 
-	public teardown() {
-		for (const handle of this.streamHandles) {
-			handle.remove();
-		}
-
-		for (const elem of this.activeElements) {
-			elem.end();
-		}
-		this.activeElements.clear();
+	public updateMarkupOptions(opts: MarkupFormatOptions) {
+		this.markupOptions = {
+			...this.markupOptions,
+			...opts,
+		};
 	}
 
 	public fork(opts: Partial<ReporterOptions> = {}) {
-		return new Reporter({
-			streams: [...Array.from(this.streamHandles, (handle) => handle.stream)],
-			markupOptions: this.markupOptions,
-			wrapperFactory: this.wrapperFactory,
-			...opts,
-		});
+		return new Reporter(
+			this.name,
+			{
+				streams: [...this.streams],
+				markupOptions: this.markupOptions,
+				wrapperFactory: this.wrapperFactory,
+				...opts,
+			},
+		);
 	}
 
-	public table(head: AnyMarkups, rawBody: AnyMarkups[]) {
-		let body: AnyMarkups = [];
+	public table(head: Markup[], rawBody: Markup[][]) {
+		let body: Markup[] = [];
 
 		if (head.length > 0) {
 			body.push(markup`<tr>`);
@@ -566,39 +565,34 @@ export default class Reporter implements ReporterNamespace {
 			body.push(markup`</tr>`);
 		}
 
-		this.log(markup`<table>${concatMarkup(body)}</table>`);
+		this.log(markup`<table>${joinMarkup(body)}</table>`);
 	}
 
 	public inspect(value: unknown, opts?: LogOptions) {
-		if (!this.hasStreamHandles(opts)) {
+		if (!this.hasStreams(opts)) {
 			return;
 		}
 
-		let formatted;
-		if (typeof value !== "number" && typeof value !== "string") {
-			formatted = markup`${prettyFormat(value)}`;
-		} else {
-			formatted = markup`${String(value)}`;
-		}
+		const formatted = markup`${prettyFormat(value)}`;
 
-		for (const {stream} of this.getStreamHandles(opts)) {
+		for (const stream of this.getStreams(opts)) {
 			this._logMarkup(stream, formatted, opts);
 		}
 	}
 
 	public write(msg: string, stderr: boolean = false) {
-		for (const {stream} of this.getStreamHandles()) {
+		for (const stream of this.getStreams()) {
 			stream.write(msg, stderr || this.shouldRedirectOutToErr);
 		}
 	}
 
 	public clearScreen(opts?: LogCategoryUserOptions) {
-		for (const {stream} of this.getStreamHandles(opts)) {
+		for (const stream of this.getStreams(opts)) {
 			streamUtils.clearScreen(stream);
 		}
 	}
 
-	public heading(text: AnyMarkup) {
+	public heading(text: Markup) {
 		this.br();
 		this.log(markup`<inverse><emphasis> ${text} </emphasis></inverse>`);
 		this.br();
@@ -637,24 +631,15 @@ export default class Reporter implements ReporterNamespace {
 		this.br(opts);
 	}
 
-	public hr(text: AnyMarkup = markup``, opts?: LogCategoryUserOptions) {
-		for (const {stream} of this.getStreamHandles(opts)) {
-			this.br();
+	public hr(text: Markup = markup``, opts?: LogCategoryUserOptions) {
+		this.br(opts);
+		for (const stream of this.getStreams(opts)) {
 			this._logMarkup(stream, markup`<hr>${text}</hr>`);
-			this._logMarkup(stream, markup``);
 		}
+		this.br(opts);
 	}
 
-	public removeLine(
-		snapshot: ReporterStreamLineSnapshot,
-		opts?: LogCategoryUserOptions,
-	) {
-		for (const {stream} of this.getStreamHandles(opts)) {
-			streamUtils.removeLine(stream, snapshot, opts?.stderr);
-		}
-	}
-
-	public async steps(callbacks: ReporterStepCallback[], clear: boolean = true) {
+	public async steps(callbacks: ReporterStepCallback[]) {
 		let total = 0;
 		let current = 1;
 
@@ -667,23 +652,13 @@ export default class Reporter implements ReporterNamespace {
 		}
 
 		for (const {message, callback} of filteredCallbacks) {
-			const lineSnapshot = this.getLineSnapshot();
-
-			try {
-				this.step(current, total, message);
-
-				await callback();
-
-				if (clear) {
-					this.removeLine(lineSnapshot);
-				}
-			} finally {
-				lineSnapshot.close();
-			}
+			this.step(current, total, message);
+			await callback();
+			current++;
 		}
 	}
 
-	public step(current: number, total: number, msg: AnyMarkup, opts?: LogOptions) {
+	public step(current: number, total: number, msg: Markup, opts?: LogOptions) {
 		this.log(
 			markup`<dim>[${String(current)}/${String(total)}]</dim> ${msg}`,
 			opts,
@@ -696,7 +671,7 @@ export default class Reporter implements ReporterNamespace {
 		},
 	) {
 		const force = opts?.force;
-		for (const {stream} of this.getStreamHandles(opts)) {
+		for (const stream of this.getStreams(opts)) {
 			if (streamUtils.getLeadingNewlineCount(stream) < 2 || force) {
 				this._logMarkup(stream, markup``, opts);
 			}
@@ -712,11 +687,11 @@ export default class Reporter implements ReporterNamespace {
 		}
 	};
 
-	public stripMarkup(str: AnyMarkup): string {
+	public stripMarkup(str: Markup): string {
 		return markupToJoinedPlainText(str, this.markupOptions);
 	}
 
-	private format(stream: ReporterStreamAttached, str: AnyMarkup): string[] {
+	private format(stream: ReporterStreamAttached, str: Markup): string[] {
 		if (isEmptyMarkup(str)) {
 			return [""];
 		}
@@ -752,13 +727,19 @@ export default class Reporter implements ReporterNamespace {
 			case "none":
 				return markupToPlainText(built, gridMarkupOptions).lines;
 
-			case "markup":
-				return [readMarkup(normalizeMarkup(built, this.markupOptions).text)];
+			case "markup": {
+				const lazy = serializeLazyMarkup(built);
+				if (this.markupOptions === undefined) {
+					return [readMarkup(lazy)];
+				} else {
+					return [readMarkup(normalizeMarkup(lazy, this.markupOptions).text)];
+				}
+			}
 		}
 	}
 
-	public log(msg: AnyMarkup, opts: LogOptions = {}) {
-		for (const {stream} of this.getStreamHandles(opts)) {
+	public log(msg: Markup, opts: LogOptions = {}) {
+		for (const stream of this.getStreams(opts)) {
 			this._logMarkup(stream, msg, opts);
 		}
 	}
@@ -769,39 +750,36 @@ export default class Reporter implements ReporterNamespace {
 			stderr: opts.stderr || this.shouldRedirectOutToErr,
 		};
 
-		for (const {stream} of this.getStreamHandles(opts)) {
-			streamUtils.log(stream, msg, opts);
+		for (const stream of this.getStreams(opts)) {
+			streamUtils.log(stream, msg.split("\n"), opts);
 		}
 	}
 
 	private _logMarkup(
 		stream: ReporterStreamAttached,
-		msg: AnyMarkup,
+		msg: Markup,
 		opts: LogOptions = {},
 	) {
 		const lines = this.format(stream, msg);
-		for (let i = 0; i < lines.length; i++) {
-			streamUtils.log(
-				stream,
-				lines[i],
-				{
-					...opts,
-					stderr: opts.stderr || this.shouldRedirectOutToErr,
-					noNewline: i === lines.length - 1 ? opts.noNewline : false,
-				},
-				i,
-			);
-		}
+		streamUtils.log(
+			stream,
+			lines,
+			{
+				...opts,
+				stderr: opts.stderr || this.shouldRedirectOutToErr,
+				noNewline: opts.noNewline,
+			},
+		);
 	}
 
-	private logCategory(rawInner: AnyMarkup, opts: LogCategoryOptions) {
-		if (!this.hasStreamHandles(opts)) {
+	private logCategory(rawInner: Markup, opts: LogCategoryOptions) {
+		if (!this.hasStreams(opts)) {
 			return;
 		}
 
 		let inner = markupTag(opts.markupTag, rawInner);
 
-		for (const {stream} of this.getStreamHandles(opts)) {
+		for (const stream of this.getStreams(opts)) {
 			const prefixInner = stream.features.unicode
 				? markup`${opts.unicodePrefix}`
 				: markup`${opts.rawPrefix}`;
@@ -820,7 +798,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public success(msg: AnyMarkup, opts?: LogCategoryUserOptions) {
+	public success(msg: Markup, opts?: LogCategoryUserOptions) {
 		this.logCategory(
 			msg,
 			mergeObjects<LogCategoryOptions>(
@@ -834,7 +812,7 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	public error(msg: AnyMarkup, opts?: LogOptions) {
+	public error(msg: Markup, opts?: LogOptions) {
 		this.logCategory(
 			msg,
 			mergeObjects<LogCategoryOptions>(
@@ -849,7 +827,7 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	public info(msg: AnyMarkup, opts?: LogOptions) {
+	public info(msg: Markup, opts?: LogOptions) {
 		this.logCategory(
 			msg,
 			mergeObjects<LogCategoryOptions>(
@@ -863,7 +841,7 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	public warn(msg: AnyMarkup, opts?: LogOptions) {
+	public warn(msg: Markup, opts?: LogOptions) {
 		this.logCategory(
 			msg,
 			mergeObjects<LogCategoryOptions>(
@@ -879,7 +857,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public command(command: string, prefix: boolean = true) {
-		let highlighted = concatMarkup(
+		let highlighted = joinMarkup(
 			highlightShell({
 				input: command,
 			}),
@@ -893,8 +871,8 @@ export default class Reporter implements ReporterNamespace {
 		this.log(highlighted);
 	}
 
-	public namespace(...prefixes: AnyMarkup[]): ReporterNamespace {
-		const prefix = concatMarkup(prefixes.map((prefix) => markup`[${prefix}]`));
+	public namespace(...prefixes: Markup[]): ReporterNamespace {
+		const prefix = joinMarkup(prefixes.map((prefix) => markup`[${prefix}]`));
 
 		return {
 			namespace: (...addPrefixes) => {
@@ -919,12 +897,19 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public processedList<T>(
-		items: T[],
-		callback: (reporter: Reporter, item: T) => void | AnyMarkup,
+		iterable: Iterable<T>,
+		callback: (reporter: Reporter, item: T) => void | Markup,
 		opts: ReporterListOptions = {},
 	): {
 		truncated: boolean;
 	} {
+		// Avoid the overhead if there's nobody listening
+		if (!this.hasStreams()) {
+			return {truncated: false};
+		}
+
+		let items: T[] = Array.from(iterable);
+
 		if (items.length === 0) {
 			// We make some assumptions that there's at least one item
 			return {truncated: false};
@@ -939,7 +924,7 @@ export default class Reporter implements ReporterNamespace {
 			start += truncatedCount;
 		}
 
-		let buff: AnyMarkup = markup``;
+		let buff: Markup = markup``;
 
 		for (let i = 0; i < items.length; i++) {
 			const item = items[i];
@@ -948,7 +933,7 @@ export default class Reporter implements ReporterNamespace {
 			});
 			const stream = reporter.attachCaptureStream("markup");
 			const str = callback(reporter, item);
-			stream.remove();
+			reporter.resources.release();
 
 			let inner =
 				str === undefined
@@ -979,7 +964,7 @@ export default class Reporter implements ReporterNamespace {
 		return {truncated: truncatedCount > 0};
 	}
 
-	public list(items: AnyMarkups, opts: ReporterListOptions = {}) {
+	public list(items: Iterable<Markup>, opts: ReporterListOptions = {}) {
 		return this.processedList(
 			items,
 			(reporter, str) => {
@@ -995,14 +980,16 @@ export default class Reporter implements ReporterNamespace {
 	): ReporterProgress {
 		const bar = new Progress(
 			this,
+			this.activeElements.size,
 			opts,
 			() => {
 				this.activeElements.delete(bar);
-
 				onEnd?.();
 			},
 		);
+
 		this.activeElements.add(bar);
+		this.resources.add(bar);
 		return bar;
 	}
 }

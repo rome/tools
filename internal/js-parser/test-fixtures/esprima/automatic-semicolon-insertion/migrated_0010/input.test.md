@@ -8,54 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:0-3:0
-	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0010/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:0-2:5
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:1-2:4
-				head: JSFunctionHead {
-					async: false
-					generator: false
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:9-1:11
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:11-2:4
-					body: Array [
+					body: [
 						JSReturnStatement {
-							argument: undefined
 							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:13-1:19
 						}
 						JSExpressionStatement {
-							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 2:0-2:2
 							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 2:0-2:1 (x)
 							}
+							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 2:0-2:2
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:11-2:4
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:9-1:11
+				}
+				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:1-2:4
 			}
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:0-2:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0010/input.js>
+	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0010/input.js 1:0-3:0
 }
 ```
 

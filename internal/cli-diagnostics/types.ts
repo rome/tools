@@ -6,25 +6,22 @@
  */
 
 import {Reporter} from "@internal/cli-reporter";
-import {AbsoluteFilePath, AnyPath} from "@internal/path";
+import {AbsoluteFilePath, Path} from "@internal/path";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
 import {FSReadStream} from "@internal/fs";
 
-export type DiagnosticPrinterAuxiliaryFormat = undefined | "github-actions";
+export type DiagnosticsPrinterAuxiliaryFormat = undefined | "github-actions";
 
 export type DiagnosticsPrinterFlags = {
-	auxiliaryDiagnosticFormat: DiagnosticPrinterAuxiliaryFormat;
-	grep: string;
+	auxiliaryDiagnosticFormat: DiagnosticsPrinterAuxiliaryFormat;
 	fieri: boolean;
-	inverseGrep: boolean;
-	verboseDiagnostics: boolean | "NO_TRUNCATE";
-	maxDiagnostics: number;
-	showAllDiagnostics: boolean;
+	truncateDiagnostics: boolean;
+	verboseDiagnostics: boolean;
 };
 
 export type DiagnosticsFileHandler = {
-	read?: (path: AnyPath) => Promise<undefined | string | FSReadStream>;
-	exists?: (path: AnyPath) => Promise<undefined | boolean>;
+	read?: (path: Path) => Promise<undefined | string | FSReadStream>;
+	exists?: (path: Path) => Promise<undefined | boolean>;
 };
 
 export type DiagnosticsPrinterOptions = {
@@ -33,6 +30,6 @@ export type DiagnosticsPrinterOptions = {
 	streaming?: boolean;
 	wrapErrors?: boolean;
 	cwd?: AbsoluteFilePath;
-	flags?: DiagnosticsPrinterFlags;
+	flags?: Partial<DiagnosticsPrinterFlags>;
 	fileHandlers?: DiagnosticsFileHandler[];
 };

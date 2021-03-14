@@ -26,7 +26,7 @@ export default class Hub {
 			ast,
 			project,
 			origin: {
-				category: "typeChecking",
+				entity: "typeChecking",
 			},
 		});
 		this.utils = new Utils(this);

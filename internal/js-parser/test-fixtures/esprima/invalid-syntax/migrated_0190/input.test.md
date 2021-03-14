@@ -8,82 +8,68 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0190/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "arguments is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:41
-				path: UIDPath<esprima/invalid-syntax/migrated_0190/input.js>
-				start: Position 1:32
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:9-1:14 (hello)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:0-1:49
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:14-1:16
-			}
 			body: JSBlockStatement {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:17-1:49
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:18-1:31
-					}
-				]
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:32-1:47
 						expression: JSAssignmentExpression {
 							operator: "="
-							loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:32-1:46
 							left: JSAssignmentIdentifier {
 								name: "arguments"
 								loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:32-1:41 (arguments)
 							}
 							right: JSNumericLiteral {
 								value: 10
-								format: undefined
 								loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:44-1:46
 							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:32-1:46
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:32-1:47
 					}
 				]
+				directives: [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:18-1:31
+					}
+				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:17-1:49
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:14-1:16
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:0-1:49
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["arguments", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0190/input.js>
+				end: Position 1:41
+				start: Position 1:32
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0190/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0190/input.js 1:0-2:0
 }
 ```
 

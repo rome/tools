@@ -1,14 +1,14 @@
 import {test} from "rome";
 import {tryStaticEvaluationPath} from "./tryStaticEvaluationPath";
 import {template} from "./template";
-import {CompilerContext, Path, Scope} from "@internal/compiler";
+import {CompilerContext, CompilerPath, Scope} from "@internal/compiler";
 
 import {MOCK_JS_ROOT} from "@internal/ast";
 
 test(
 	"evaluates a node under a path",
 	(t) => {
-		const path = new Path(
+		const path = new CompilerPath(
 			template.expression`2 + 2 * 10;`,
 			new CompilerContext({ast: MOCK_JS_ROOT}),
 			{

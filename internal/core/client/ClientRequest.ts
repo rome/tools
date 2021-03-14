@@ -13,8 +13,10 @@ import {LocalCommand, localCommands} from "./commands";
 import Client from "./Client";
 import {consumeUnknown} from "@internal/consume";
 import review from "./review";
-import {BridgeError} from "@internal/events";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import SilentClientError from "./SilentClientError";
+import {ClientQueryResponse} from "../common/types/client";
+import {isBridgeEndDiagnosticsError} from "@internal/events";
 
 export type ClientRequestType = "local" | "server";
 
@@ -37,7 +39,7 @@ export default class ClientRequest {
 		return new ClientRequest(this.client, this.type, query);
 	}
 
-	public async init(): Promise<ServerQueryResponse> {
+	public async init(): Promise<ClientQueryResponse> {
 		const {requestFlags} = this.query;
 		if (requestFlags?.review) {
 			return await this.initReview();
@@ -46,11 +48,11 @@ export default class ClientRequest {
 		}
 	}
 
-	private async initReview(): Promise<ServerQueryResponse> {
+	private async initReview(): Promise<ClientQueryResponse> {
 		return review(this);
 	}
 
-	public async initCommand(): Promise<ServerQueryResponse> {
+	public async initCommand(): Promise<ClientQueryResponse> {
 		const localCommand = localCommands.get(this.query.commandName);
 
 		if (this.type === "server" || localCommand === undefined) {
@@ -63,7 +65,7 @@ export default class ClientRequest {
 	private async initFromLocal(
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		localCommand: LocalCommand<any>,
-	): Promise<ServerQueryResponse> {
+	): Promise<ClientQueryResponse> {
 		const {query} = this;
 
 		let flags;
@@ -76,23 +78,35 @@ export default class ClientRequest {
 			);
 		}
 
-		const res = await localCommand.callback(this, flags);
-		if (res === true) {
-			return {
-				type: "SUCCESS",
-				data: undefined,
-				hasData: false,
-				markers: [],
-				files: {},
-			};
-		} else if (res === false) {
-			return {
-				type: "EXIT",
-				code: 1,
-				markers: [],
-			};
-		} else {
-			return res;
+		try {
+			const res = await localCommand.callback(this, flags);
+			if (res === true) {
+				return {
+					type: "SUCCESS",
+					data: undefined,
+					hasData: false,
+					markers: [],
+					files: {},
+				};
+			} else if (res === false) {
+				return {
+					type: "CLIENT_ERROR",
+					message: "Command return",
+					markers: [],
+				};
+			} else {
+				return res;
+			}
+		} catch (err) {
+			if (err instanceof SilentClientError) {
+				return {
+					type: "CLIENT_ERROR",
+					message: err.message,
+					markers: [],
+				};
+			} else {
+				throw err;
+			}
 		}
 	}
 
@@ -103,7 +117,7 @@ export default class ClientRequest {
 			const bridge = await client.findOrStartServer();
 			return await bridge.events.query.call(this.query);
 		} catch (err) {
-			if (err instanceof BridgeError) {
+			if (isBridgeEndDiagnosticsError(err)) {
 				return {
 					type: "CANCELLED",
 					markers: [],

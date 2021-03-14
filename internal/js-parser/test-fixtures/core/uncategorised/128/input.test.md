@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
-	path: UIDPath<core/uncategorised/128/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
 			expression: JSMemberExpression {
-				loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
 				object: JSReferenceIdentifier {
 					name: "universe"
 					loc: SourceLocation core/uncategorised/128/input.js 1:0-1:8 (universe)
@@ -35,9 +22,20 @@ JSRoot {
 					}
 					loc: SourceLocation core/uncategorised/128/input.js 1:9-1:11 (if)
 				}
+				loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
 			}
+			loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/128/input.js>
+	loc: SourceLocation core/uncategorised/128/input.js 1:0-1:11
 }
 ```
 

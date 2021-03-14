@@ -8,33 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-4:5
-	path: UIDPath<core/categorized/regex-after-block/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-2:1
+			consequent: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation core/categorized/regex-after-block/input.js 1:10-2:1
+			}
 			test: JSBooleanLiteral {
 				value: true
 				loc: SourceLocation core/categorized/regex-after-block/input.js 1:4-1:8
 			}
-			consequent: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation core/categorized/regex-after-block/input.js 1:10-2:1
-			}
+			loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-2:1
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/regex-after-block/input.js 4:0-4:5
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -42,10 +29,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation core/categorized/regex-after-block/input.js 4:0-4:5
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:4
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "f"
 							loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:2
@@ -59,10 +44,22 @@ JSRoot {
 							loc: SourceLocation core/categorized/regex-after-block/input.js 4:3-4:4
 						}
 					]
+					loc: SourceLocation core/categorized/regex-after-block/input.js 4:1-4:4
 				}
+				loc: SourceLocation core/categorized/regex-after-block/input.js 4:0-4:5
 			}
+			loc: SourceLocation core/categorized/regex-after-block/input.js 4:0-4:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/categorized/regex-after-block/input.js>
+	loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-4:5
 }
 ```
 

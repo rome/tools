@@ -7,13 +7,14 @@
 
 import {Event} from "@internal/events";
 import {TerminalFeatures} from "@internal/cli-environment";
-import {AnyMarkup, AnyMarkups, StaticMarkup} from "@internal/markup";
-import {ZeroIndexed} from "@internal/math";
+import {Markup, StaticMarkup} from "@internal/markup";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	AsyncCallback,
 	AsyncVoidCallback,
 	VoidCallback,
 } from "@internal/typescript-helpers";
+import {Resource} from "@internal/resources";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type WrapperFactory = <T extends (...args: any[]) => any>(
@@ -42,13 +43,13 @@ export type SelectArguments<Options extends SelectOptions> = {
 };
 
 export type ReporterStepCallback = {
-	message: AnyMarkup;
+	message: Markup;
 	test?: AsyncCallback<boolean>;
 	callback: AsyncVoidCallback;
 };
 
 export interface ReporterListOptions {
-	prefix?: AnyMarkup;
+	prefix?: Markup;
 	reverse?: boolean;
 	truncate?: number;
 	ordered?: boolean;
@@ -56,64 +57,57 @@ export interface ReporterListOptions {
 	start?: number;
 }
 
-export type ReporterStreamLineSnapshot = {
-	close: VoidCallback;
-};
-
 export type ReporterStreamState = {
-	lineSnapshots: Map<ReporterStreamLineSnapshot, ZeroIndexed>;
 	currentLine: ZeroIndexed;
 	buffer: string[];
 	leadingNewline: boolean;
-	nextLineInsertLeadingNewline: boolean;
 };
 
 export interface ReporterNamespace {
-	success: (msg: AnyMarkup) => void;
-	info: (msg: AnyMarkup) => void;
-	error: (msg: AnyMarkup) => void;
-	warn: (msg: AnyMarkup) => void;
-	log: (msg: AnyMarkup) => void;
-	list: (items: AnyMarkups, opts?: ReporterListOptions) => void;
-	namespace: (...prefixes: AnyMarkup[]) => ReporterNamespace;
+	success: (msg: Markup) => void;
+	info: (msg: Markup) => void;
+	error: (msg: Markup) => void;
+	warn: (msg: Markup) => void;
+	log: (msg: Markup) => void;
+	list: (items: Markup[], opts?: ReporterListOptions) => void;
+	namespace: (...prefixes: Markup[]) => ReporterNamespace;
 }
 
 export type ReporterConditionalStream = {
-	enable: () => void;
-	disable: () => void;
-	update: () => boolean;
+	enable: () => Promise<void>;
+	disable: () => Promise<void>;
+	update: () => Promise<boolean>;
 };
 
 export type ReporterCaptureStream = {
 	read: () => string;
 	readAsMarkup: () => StaticMarkup;
-	remove: VoidCallback;
+	resources: Resource;
 };
 
 export interface ReporterStream {
 	features: TerminalFeatures;
 	format: "markup" | "ansi" | "html" | "none";
 	write: (chunk: string, error: boolean) => void;
-	init?: VoidCallback;
-	teardown?: VoidCallback;
 }
 
 export interface ReporterStreamAttached extends ReporterStream {
-	handles: Set<ReporterStreamHandle>;
+	activeElements: Set<ActiveElement>;
 	state: ReporterStreamState;
-	updateFeatures: (features: TerminalFeatures) => void;
-}
-
-export interface ReporterStreamHandle {
-	stream: ReporterStreamAttached;
-	remove: VoidCallback;
+	updateFeatures: (features: TerminalFeatures) => Promise<void>;
+	featuresUpdated: Event<TerminalFeatures, void>;
+	resources: Resource;
 }
 
 export type ReporterDerivedStreams = {
-	handle: ReporterStreamHandle;
+	stream: ReporterStreamAttached;
 	format: ReporterStream["format"];
 	features: TerminalFeatures;
 	featuresUpdated: Event<TerminalFeatures, void>;
+};
+
+export type ActiveElement = {
+	rendered: Set<ReporterStreamAttached>;
 };
 
 export type ReporterProgressOptions = {
@@ -129,8 +123,8 @@ export type ReporterProgress = {
 	render: VoidCallback;
 	setCurrent: (current: number) => void;
 	setTotal: (total: number, approximate?: boolean) => void;
-	setText: (text: AnyMarkup) => void;
-	pushText: (text: AnyMarkup, id?: string) => string;
+	setText: (text: Markup) => void;
+	pushText: (text: Markup, id?: string) => string;
 	popText: (id: string) => void;
 	setApproximateETA: (duration: number) => void;
 	tick: VoidCallback;

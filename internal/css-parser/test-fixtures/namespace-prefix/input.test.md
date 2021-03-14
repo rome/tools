@@ -6,24 +6,11 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation namespace-prefix/input.css 1:0-23:1
-	path: RelativePath<namespace-prefix/input.css>
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation namespace-prefix/input.css 1:0-3:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation namespace-prefix/input.css 1:14-3:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation namespace-prefix/input.css 1:0-1:14
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: CSSQualifiedName {
 								localName: "div"
@@ -33,20 +20,20 @@ CSSRoot {
 							loc: SourceLocation namespace-prefix/input.css 1:0-1:13
 						}
 					]
+					loc: SourceLocation namespace-prefix/input.css 1:0-1:14
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation namespace-prefix/input.css 1:14-3:1
+			}
+			loc: SourceLocation namespace-prefix/input.css 1:0-3:1
 		}
 		CSSRule {
-			loc: SourceLocation namespace-prefix/input.css 5:0-7:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation namespace-prefix/input.css 5:6-7:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation namespace-prefix/input.css 5:0-5:6
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: CSSQualifiedName {
 								localName: "div"
@@ -56,20 +43,20 @@ CSSRoot {
 							loc: SourceLocation namespace-prefix/input.css 5:0-5:5
 						}
 					]
+					loc: SourceLocation namespace-prefix/input.css 5:0-5:6
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation namespace-prefix/input.css 5:6-7:1
+			}
+			loc: SourceLocation namespace-prefix/input.css 5:0-7:1
 		}
 		CSSRule {
-			loc: SourceLocation namespace-prefix/input.css 9:0-11:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation namespace-prefix/input.css 9:5-11:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation namespace-prefix/input.css 9:0-9:5
-					patterns: Array [
+					patterns: [
 						CSSTypeSelector {
 							value: CSSQualifiedName {
 								localName: "div"
@@ -79,87 +66,90 @@ CSSRoot {
 							loc: SourceLocation namespace-prefix/input.css 9:0-9:4
 						}
 					]
+					loc: SourceLocation namespace-prefix/input.css 9:0-9:5
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation namespace-prefix/input.css 9:5-11:1
+			}
+			loc: SourceLocation namespace-prefix/input.css 9:0-11:1
 		}
 		CSSRule {
-			loc: SourceLocation namespace-prefix/input.css 13:0-15:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation namespace-prefix/input.css 13:9-15:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation namespace-prefix/input.css 13:0-13:9
-					patterns: Array [
+					patterns: [
 						CSSAttributeSelector {
-							value: undefined
-							matcher: undefined
-							modifier: undefined
-							loc: SourceLocation namespace-prefix/input.css 13:0-13:8
 							attribute: CSSQualifiedName {
 								localName: "attr"
 								namespace: "*"
 								loc: SourceLocation namespace-prefix/input.css 13:1-13:7
 							}
+							loc: SourceLocation namespace-prefix/input.css 13:0-13:8
 						}
 					]
+					loc: SourceLocation namespace-prefix/input.css 13:0-13:9
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation namespace-prefix/input.css 13:9-15:1
+			}
+			loc: SourceLocation namespace-prefix/input.css 13:0-15:1
 		}
 		CSSRule {
-			loc: SourceLocation namespace-prefix/input.css 17:0-19:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation namespace-prefix/input.css 17:17-19:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation namespace-prefix/input.css 17:0-17:17
-					patterns: Array [
+					patterns: [
 						CSSAttributeSelector {
-							value: undefined
-							matcher: undefined
-							modifier: undefined
-							loc: SourceLocation namespace-prefix/input.css 17:0-17:16
 							attribute: CSSQualifiedName {
 								localName: "attr"
 								namespace: "namespace"
 								loc: SourceLocation namespace-prefix/input.css 17:1-17:15
 							}
+							loc: SourceLocation namespace-prefix/input.css 17:0-17:16
 						}
 					]
+					loc: SourceLocation namespace-prefix/input.css 17:0-17:17
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation namespace-prefix/input.css 17:17-19:1
+			}
+			loc: SourceLocation namespace-prefix/input.css 17:0-19:1
 		}
 		CSSRule {
-			loc: SourceLocation namespace-prefix/input.css 21:0-23:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation namespace-prefix/input.css 21:8-23:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation namespace-prefix/input.css 21:0-21:8
-					patterns: Array [
+					patterns: [
 						CSSAttributeSelector {
-							value: undefined
-							matcher: undefined
-							modifier: undefined
-							loc: SourceLocation namespace-prefix/input.css 21:0-21:7
 							attribute: CSSQualifiedName {
 								localName: "attr"
 								namespace: ""
 								loc: SourceLocation namespace-prefix/input.css 21:1-21:6
 							}
+							loc: SourceLocation namespace-prefix/input.css 21:0-21:7
 						}
 					]
+					loc: SourceLocation namespace-prefix/input.css 21:0-21:8
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation namespace-prefix/input.css 21:8-23:1
+			}
+			loc: SourceLocation namespace-prefix/input.css 21:0-23:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<namespace-prefix/input.css>
+	loc: SourceLocation namespace-prefix/input.css 1:0-23:1
 }
 ```

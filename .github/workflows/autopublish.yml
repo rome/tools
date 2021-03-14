@@ -1,0 +1,141 @@
+name: Auto-publish
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'package.json'
+
+jobs:
+  check:
+    name: Check version
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ env.tag }}
+      version: ${{ env.version }}
+      prerelease: ${{ env.prerelease }}
+      nightly: ${{ env.nightly }}
+      version_changed: ${{ steps.version.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set default release tag
+        run: |
+          echo "tag=latest" >> $GITHUB_ENV
+
+      - name: Check nightly status
+        id: nightly
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          echo "tag=nightly" >> $GITHUB_ENV
+          echo "nightly=true" >> $GITHUB_ENV
+
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        if: env.nightly != 'true'
+        id: version
+        with:
+          diff-search: true
+
+      - run: |
+          echo "version=${{ steps.version.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Check prerelease status
+        id: prerelease
+        if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
+        run: |
+          echo "prerelease=true" >> $GITHUB_ENV
+
+      - name: Check version status
+        if: steps.version.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
+
+  build:
+    name: Build
+    needs: check
+    if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
+    outputs:
+      tag: ${{ env.tag }}
+      version: ${{ env.version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
+
+      - run: |
+          echo "tag=${{ needs.check.outputs.tag }}" >> $GITHUB_ENV
+          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
+
+      - name: Set tag if prerelease
+        if: needs.check.outputs.prerelease == 'true'
+        run: |
+          echo "tag=prerelease" >> $GITHUB_ENV
+
+      - name: Update version if nightly
+        if: needs.check.outputs.nightly == 'true'
+        run: |
+          ./script update-nightly-version
+
+          NEW_VERSION=$(node -p -e "require('./package.json').version")
+          echo "version=$NEW_VERSION" >> $GITHUB_ENV
+          echo "tag=nightly" >> $GITHUB_ENV
+
+      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+      - name: Build package
+        run: ./script build-release dist
+
+      - name: Build tarball
+        run: tar -C dist -cvzf dist.tar.gz .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist.tar.gz
+          path: dist.tar.gz
+          retention-days: 5
+          if-no-files-found: error
+
+  publish:
+    name: Publish
+    needs: build
+    environment: npm-publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: |
+          echo "Publishing ${{ needs.build.outputs.version }} ${{ needs.build.outputs.tag }}"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist.tar.gz
+
+      - name: npm publish
+        run: npm publish dist.tar.gz --tag ${{ needs.build.outputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub release and tag
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: v${{ needs.build.outputs.version }}
+          tag_name: v${{ needs.build.outputs.version }}
+          draft: false
+          prerelease: ${{ needs.build.outputs.tag != 'latest' }}
+          files: dist.tar.gz
+          fail_on_unmatched_files: true
+
+      # TODO update latest branch if latest

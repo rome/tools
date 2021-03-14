@@ -8,37 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-2:0
-	path: UIDPath<es2015/array-rest-spread/with-object/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-1:31
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-1:31
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							elements: Array []
-							loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:4-1:17
+							elements: []
 							rest: JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:8-1:16
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:8-1:16
-								}
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -54,34 +33,47 @@ JSRoot {
 										loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:9-1:15
 									}
 								]
+								meta: JSPatternMeta {
+									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:8-1:16
+								}
+								loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:8-1:16
 							}
+							loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:4-1:17
 						}
-						loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:4-1:30
 						init: JSArrayExpression {
-							loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:20-1:30
-							elements: Array [
+							elements: [
 								JSNumericLiteral {
 									value: 1
-									format: undefined
 									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:22-1:23
 								}
 								JSNumericLiteral {
 									value: 2
-									format: undefined
 									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:25-1:26
 								}
 								JSNumericLiteral {
 									value: 3
-									format: undefined
 									loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:28-1:29
 								}
 							]
+							loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:20-1:30
 						}
+						loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:4-1:30
 					}
 				]
+				loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-1:31
 			}
+			loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/array-rest-spread/with-object/input.js>
+	loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-2:0
 }
 ```
 

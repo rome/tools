@@ -8,90 +8,80 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0249/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:45
-				path: UIDPath<esprima/invalid-syntax/migrated_0249/input.js>
-				start: Position 1:36
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>__proto__</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45 (__proto__)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "t"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:23-1:24 (t)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:14-1:50
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:47-1:50
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:24-1:46
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "__proto__"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:25-1:34 (__proto__)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:25-1:34
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:25-1:34 (__proto__)
 					}
 					JSBindingIdentifier {
 						name: "__proto__"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45 (__proto__)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45 (__proto__)
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:24-1:46
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:14-1:50
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45 (__proto__)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "__proto__", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0249/input.js>
+				end: Position 1:45
+				start: Position 1:36
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0249/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:0-2:0
 }
 ```
 

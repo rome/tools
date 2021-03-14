@@ -8,96 +8,84 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:0-2:0
-	path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "In strict mode code, functions can only be declared at top level or inside a block"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:34
-				path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
-				start: Position 1:35
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:9-1:12 (foo)
 			}
-			loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:0-1:53
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:15-1:53
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:16-1:29
-					}
-				]
-				body: Array [
+				body: [
 					JSLabeledStatement {
-						loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:30-1:52
-						label: JSIdentifier {
-							name: "bar"
-							loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:30-1:33 (bar)
-						}
 						body: JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: "baz"
 								loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:44-1:47 (baz)
 							}
-							loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:35-1:52
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:50-1:52
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:47-1:49
 							}
+							loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:35-1:52
 						}
+						label: JSIdentifier {
+							name: "bar"
+							loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:30-1:33 (bar)
+						}
+						loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:30-1:52
 					}
 				]
+				directives: [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:16-1:29
+					}
+				]
+				loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:15-1:53
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:12-1:14
+			}
+			loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:0-1:53
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "In strict mode code, functions can only be declared at top level or inside a block"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
+				end: Position 1:34
+				start: Position 1:35
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
+	loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:0-2:0
 }
 ```
 

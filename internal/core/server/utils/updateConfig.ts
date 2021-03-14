@@ -1,5 +1,4 @@
 import {ConfigCommentMap} from "@internal/codec-config";
-import {writeFile} from "@internal/fs";
 import {ConfigHandler} from "@internal/codec-config/types";
 import {AbsoluteFilePath} from "@internal/path";
 import {RawUserProjectConfig} from "@internal/project";
@@ -21,8 +20,7 @@ export default async function updateConfig(
 		...config,
 		...partial,
 	};
-	await writeFile(
-		configPath,
+	await configPath.writeFile(
 		configHandler.stringify(finalConfig, comments) + "\n",
 	);
 }

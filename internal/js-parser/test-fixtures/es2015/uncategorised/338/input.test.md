@@ -8,52 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/338/input.js 1:0-1:38
-	path: UIDPath<es2015/uncategorised/338/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2015/uncategorised/338/input.js 1:0-1:32
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: SourceLocation es2015/uncategorised/338/input.js 1:24-1:27 (foo)
 				}
-				loc: SourceLocation es2015/uncategorised/338/input.js 1:15-1:32
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/338/input.js 1:30-1:32
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/uncategorised/338/input.js 1:27-1:29
 				}
+				loc: SourceLocation es2015/uncategorised/338/input.js 1:15-1:32
 			}
+			loc: SourceLocation es2015/uncategorised/338/input.js 1:0-1:32
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/338/input.js 1:33-1:38
 			expression: JSBooleanLiteral {
 				value: false
 				loc: SourceLocation es2015/uncategorised/338/input.js 1:33-1:38
 			}
+			loc: SourceLocation es2015/uncategorised/338/input.js 1:33-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/338/input.js>
+	loc: SourceLocation es2015/uncategorised/338/input.js 1:0-1:38
 }
 ```
 

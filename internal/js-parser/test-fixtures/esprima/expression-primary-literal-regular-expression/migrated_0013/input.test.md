@@ -8,39 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:0-1:18
-	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0013/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:0-1:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:4-1:18
 						init: JSMemberExpression {
-							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:8-1:18
-							property: JSStaticMemberProperty {
-								value: JSIdentifier {
-									name: "test"
-									loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:14-1:18 (test)
-								}
-								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:14-1:18 (test)
-							}
 							object: JSRegExpLiteral {
 								global: true
 								insensitive: false
@@ -48,10 +26,8 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:8-1:13
 								expression: JSRegExpSubExpression {
-									loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:9-1:11
-									body: Array [
+									body: [
 										JSRegExpCharacter {
 											value: "4"
 											loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:9-1:10
@@ -61,14 +37,36 @@ JSRoot {
 											loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:10-1:11
 										}
 									]
+									loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:9-1:11
 								}
+								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:8-1:13
 							}
+							property: JSStaticMemberProperty {
+								value: JSIdentifier {
+									name: "test"
+									loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:14-1:18 (test)
+								}
+								loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:14-1:18 (test)
+							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:8-1:18
 						}
+						loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:4-1:18
 					}
 				]
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:0-1:18
 			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-literal-regular-expression/migrated_0013/input.js>
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0013/input.js 1:0-1:18
 }
 ```
 

@@ -24,9 +24,9 @@ import {
 import {AbsoluteFilePath, HOME_PATH, createUIDPath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 import {
-	AnyMarkups,
+	Markup,
 	StaticMarkup,
-	concatMarkup,
+	joinMarkup,
 	joinMarkupLines,
 	markup,
 	readMarkup,
@@ -37,12 +37,12 @@ import {
 	DiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
-import {exists, readFileText, writeFile} from "@internal/fs";
 import {prettyFormatEager} from "@internal/pretty-format";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
-import {RSERObject} from "@internal/codec-binary-serial";
+import {RSERObject} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
 import {markupToPlainText} from "@internal/cli-layout";
+import {safeProcessExit} from "@internal/resources";
 
 export type Examples = {
 	description: StaticMarkup;
@@ -86,7 +86,7 @@ export type ParserOptions<T> = {
 	cwd: AbsoluteFilePath;
 	args: string[];
 	defineFlags: (consumer: Consumer) => T;
-
+	onRunHiddenCommand?: (reporter: Reporter) => void;
 	examples?: Examples;
 	usage?: string;
 	description?: StaticMarkup;
@@ -431,7 +431,7 @@ export default class Parser<T> {
 
 		// Write completions
 		const res = await this.generateShellCompletions(shell);
-		await writeFile(path, res);
+		await path.writeFile(res);
 		reporter.success(
 			markup`Wrote shell completions to <emphasis>${path}</emphasis>`,
 		);
@@ -446,7 +446,7 @@ export default class Parser<T> {
 				// Find the profile
 				let profilePath;
 				for (const path of possibleProfiles) {
-					if (await exists(path)) {
+					if (await path.exists()) {
 						profilePath = path;
 						break;
 					}
@@ -455,23 +455,24 @@ export default class Parser<T> {
 					reporter.error(
 						markup`Could not find your bash profile. Tried the following:`,
 					);
-					reporter.list(
-						possibleProfiles.map((path) => {
-							return markup`${path}`;
-						}),
-					);
+					reporter.list(possibleProfiles);
 				} else {
-					let file = await readFileText(profilePath);
+					let file = await profilePath.readFileText();
 					if (file.includes(path.getBasename())) {
 						reporter.warn(
 							markup`Skipped <emphasis>${profilePath}</emphasis> modifications as looks like it was already included`,
 						);
 					} else {
+						let sourceRelative = path.relative(profilePath);
+						if (sourceRelative.isRelative()) {
+							sourceRelative = sourceRelative.toExplicitRelative();
+						}
+
 						file = file.trim();
 						file += "\n";
-						file += `source ${path.relative(profilePath).preferExplicitRelative().join()}`;
+						file += `source ${sourceRelative.join()}`;
 						file += "\n";
-						await writeFile(profilePath, file);
+						await profilePath.writeFile(file);
 						reporter.success(
 							markup`Added completions to <emphasis>${profilePath}</emphasis>`,
 						);
@@ -482,13 +483,13 @@ export default class Parser<T> {
 		}
 
 		reporter.info(markup`Restart your shell to enable!`);
-		this.exit(0);
+		await this.exit(0);
 	}
 
 	private async logShellCompletions(shell: SupportedCompletionShells) {
 		const res = await this.generateShellCompletions(shell);
 		this.reporter.logRaw(res);
-		this.exit(0);
+		await this.exit(0);
 	}
 
 	public async init(): Promise<T> {
@@ -505,8 +506,8 @@ export default class Parser<T> {
 				},
 			).asBoolean(false);
 			if (shouldDisplayVersion) {
-				this.reporter.log(markup`${version}`);
-				this.exit(0);
+				this.reporter.log(version);
+				await this.exit(0);
 			}
 		}
 
@@ -580,15 +581,16 @@ export default class Parser<T> {
 			await this.showHelp(
 				definedCommand === undefined ? undefined : definedCommand.command,
 			);
-			this.exit(1);
+			await this.exit(1);
 		}
 
 		if (definedCommand !== undefined) {
 			this.ranCommand = definedCommand.command;
-			if (definedCommand.command.hidden === true) {
-				this.reporter.warn(
-					markup`This command has been hidden. Consider its usage to be experimental and do not expect support or backwards compatibility.`,
-				);
+			if (
+				definedCommand.command.hidden === true &&
+				this.opts.onRunHiddenCommand !== undefined
+			) {
+				this.opts.onRunHiddenCommand(this.reporter);
 			}
 			await definedCommand.command.callback(definedCommand.flags);
 		}
@@ -596,7 +598,7 @@ export default class Parser<T> {
 		return rootFlags;
 	}
 
-	private buildOptionsHelp(keys: string[]): AnyMarkups[] {
+	private buildOptionsHelp(keys: string[]): Markup[][] {
 		const optionOutput: {
 			argName: string;
 			arg: StaticMarkup;
@@ -660,7 +662,7 @@ export default class Parser<T> {
 					isDisplayableHelpValue(item)
 				);
 				if (displayAllowedValues !== undefined) {
-					const printedValues = concatMarkup(
+					const printedValues = joinMarkup(
 						displayAllowedValues.map((value) => prettyFormatEager(value)),
 						markup` `,
 					);
@@ -670,7 +672,7 @@ export default class Parser<T> {
 
 			optionOutput.push({
 				argName,
-				arg: concatMarkup(
+				arg: joinMarkup(
 					highlightShell({input: argCol, isShorthand: !!metadata.alternateName}),
 					markup` `,
 				),
@@ -1220,9 +1222,9 @@ export default class Parser<T> {
 		return flags;
 	}
 
-	private exit(code: number) {
+	private async exit(code: number): Promise<void> {
 		if (!this.opts.noProcessExit) {
-			process.exit(code);
+			await safeProcessExit(code);
 		}
 	}
 }

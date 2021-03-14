@@ -89,7 +89,6 @@ export default class ParserBranchFinder<T> {
 		setState(parser, prevState);
 
 		// Verify that we didn't exceed the maxDiagnostics, this should have already been done in Parser#addDiagnostic
-
 		// but do it again as a sanity check. Previously some code caused the state to be manipulated in odd ways
 		const newDiagnosticCount = newState.diagnostics.length;
 		const prevDiagnosticCount = prevState.diagnostics.length;

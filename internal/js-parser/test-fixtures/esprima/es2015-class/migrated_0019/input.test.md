@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-class/migrated_0019/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Duplicate constructor in the same class"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:42
-				path: UIDPath<esprima/es2015-class/migrated_0019/input.js>
-				start: Position 1:27
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:0-1:47
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:0-1:47
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -60,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:9-1:22
 						}
-						loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:9-1:26
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:24-1:26
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:9-1:22
 							start: Position 1:9
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:24-1:26
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:22-1:24
 						}
+						loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:9-1:26
 					}
 					JSClassMethod {
 						kind: "constructor"
@@ -97,38 +56,59 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:27-1:42
 						}
-						loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:27-1:46
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:44-1:46
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:27-1:42
 							start: Position 1:27
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:44-1:46
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:42-1:44
 						}
+						loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:27-1:46
 					}
 				]
+				loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:0-1:47
+			}
+			loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:0-1:47
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Duplicate constructor in the same class"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-class/migrated_0019/input.js>
+				end: Position 1:42
+				start: Position 1:27
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-class/migrated_0019/input.js>
+	loc: SourceLocation esprima/es2015-class/migrated_0019/input.js 1:0-2:0
 }
 ```
 

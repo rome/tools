@@ -8,87 +8,74 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0258/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<esprima/invalid-syntax/migrated_0258/input.js>
-				start: Position 1:18
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:9-1:10 (f)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:0-1:24
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:22-1:24
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:10-1:22
-				rest: JSBindingIdentifier {
-					name: "b"
-					loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:17-1:18 (b)
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:17-1:18
-					}
-				}
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "a"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:11-1:12 (a)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:11-1:12
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:11-1:12 (a)
 					}
 					JSBindingIdentifier {
 						name: "c"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:20-1:21 (c)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:20-1:21
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:20-1:21 (c)
 					}
 				]
+				rest: JSBindingIdentifier {
+					name: "b"
+					meta: JSPatternMeta {
+						loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:17-1:18
+					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:17-1:18 (b)
+				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:10-1:22
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:0-1:24
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0258/input.js>
+				end: Position 1:18
+				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0258/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0258/input.js 1:0-2:0
 }
 ```
 

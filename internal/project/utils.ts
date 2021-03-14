@@ -6,7 +6,7 @@
  */
 
 import {Consumer} from "@internal/consume";
-import {PathPatterns, parsePathPattern} from "@internal/path-match";
+import {PathPattern, parsePathPattern} from "@internal/path-match";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {PartialProjectConfig} from "./types";
 import {
@@ -23,7 +23,7 @@ export function arrayOfStrings(consumer: Consumer): string[] {
 	}
 }
 
-export function arrayOfPatterns(consumer: Consumer): PathPatterns {
+export function arrayOfPatterns(consumer: Consumer): PathPattern[] {
 	// TODO consumer.handleThrownDiagnostics
 	return consumer.asMappedArray((item) => {
 		return parsePathPattern({

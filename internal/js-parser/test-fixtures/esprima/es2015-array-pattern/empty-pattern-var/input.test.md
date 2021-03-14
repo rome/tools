@@ -8,41 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-array-pattern/empty-pattern-var/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:0-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							elements: Array []
-							rest: undefined
+							elements: []
 							loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:4-1:6
 						}
-						loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:4-1:10
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:9-1:10
 						}
+						loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:4-1:10
 					}
 				]
+				loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:0-1:11
 			}
+			loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-array-pattern/empty-pattern-var/input.js>
+	loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-var/input.js 1:0-2:0
 }
 ```
 

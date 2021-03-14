@@ -8,30 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-for-of/for-of-array-pattern/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:17-1:18}
-			loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:0-1:18
-			right: JSReferenceIdentifier {
-				name: "r"
-				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:15-1:16 (r)
+			body: JSEmptyStatement {
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:17-1:18
 			}
 			left: JSAssignmentArrayPattern {
-				rest: undefined
-				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:5-1:11
-				elements: Array [
+				elements: [
 					JSAssignmentIdentifier {
 						name: "p"
 						loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:6-1:7 (p)
@@ -41,9 +25,24 @@ JSRoot {
 						loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:9-1:10 (q)
 					}
 				]
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:5-1:11
 			}
+			right: JSReferenceIdentifier {
+				name: "r"
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:15-1:16 (r)
+			}
+			loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-for-of/for-of-array-pattern/input.js>
+	loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern/input.js 1:0-2:0
 }
 ```
 

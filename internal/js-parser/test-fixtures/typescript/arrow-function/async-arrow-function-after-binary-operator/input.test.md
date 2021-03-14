@@ -8,59 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-1:24
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-1:24
 				left: JSNumericLiteral {
 					value: 4
-					format: undefined
 					loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-1:1
 				}
 				right: JSArrowFunctionExpression {
-					loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:4-1:24
 					body: JSNumericLiteral {
 						value: 2
-						format: undefined
 						loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:23-1:24
 					}
 					head: JSFunctionHead {
 						async: true
 						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:4-1:22
+						params: []
 						typeParameters: TSTypeParameterDeclaration {
-							loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:9-1:17
-							params: Array [
+							params: [
 								TSTypeParameter {
 									name: "number"
-									constraint: undefined
-									default: undefined
 									loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:10-1:16
 								}
 							]
+							loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:9-1:17
 						}
+						loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:4-1:22
 					}
+					loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:4-1:24
 				}
+				loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-1:24
 			}
+			loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts>
+	loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-2:0
 }
 ```
 

@@ -8,87 +8,83 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:0-2:0
-	path: UIDPath<experimental/module-attributes/dynamic-import-with-valid-syntax/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<experimental/module-attributes/dynamic-import-with-valid-syntax/input.js>
-				start: Position 1:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:0-1:18
 			expression: JSImportCall {
-				loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:6-1:18
 				argument: JSStringLiteral {
 					value: "foo.json"
 					loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:7-1:17
 				}
+				loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:6-1:18
 			}
+			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:0-1:18
 		}
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:19-1:45
-			body: Array [
+			body: [
 				JSWithStatement {
-					loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:21-1:43
-					object: JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:25-1:26
-					}
 					body: JSBlockStatement {
-						directives: Array []
-						loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:27-1:43
-						body: Array [
+						body: [
 							JSLabeledStatement {
-								loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:29-1:41
-								label: JSIdentifier {
-									name: "type"
-									loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:29-1:33 (type)
-								}
 								body: JSExpressionStatement {
-									loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:35-1:41
 									expression: JSStringLiteral {
 										value: "json"
 										loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:35-1:41
 									}
+									loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:35-1:41
 								}
+								label: JSIdentifier {
+									name: "type"
+									loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:29-1:33 (type)
+								}
+								loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:29-1:41
 							}
 						]
+						directives: []
+						loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:27-1:43
 					}
+					object: JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:25-1:26
+					}
+					loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:21-1:43
 				}
 			]
+			directives: []
+			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:19-1:45
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:45-1:46
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:45-1:46
 			}
+			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:45-1:46
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/module-attributes/dynamic-import-with-valid-syntax/input.js>
+				end: Position 1:18
+				start: Position 1:17
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/dynamic-import-with-valid-syntax/input.js>
+	loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:0-2:0
 }
 ```
 

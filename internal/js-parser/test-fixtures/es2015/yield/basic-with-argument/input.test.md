@@ -8,54 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:0-1:26
-	path: UIDPath<es2015/yield/basic-with-argument/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:0-1:26
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:1-1:25
-				head: JSFunctionHead {
-					async: false
-					generator: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:11-1:13
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:14-1:25
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:16-1:23
 							expression: JSYieldExpression {
 								delegate: false
-								loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:16-1:23
 								argument: JSReferenceIdentifier {
 									name: "v"
 									loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:22-1:23 (v)
 								}
+								loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:16-1:23
 							}
+							loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:16-1:23
 						}
 					]
+					directives: []
+					loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:14-1:25
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:11-1:13
+				}
+				loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:1-1:25
 			}
+			loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/yield/basic-with-argument/input.js>
+	loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:0-1:26
 }
 ```
 

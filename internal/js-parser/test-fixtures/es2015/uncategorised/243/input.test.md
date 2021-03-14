@@ -8,66 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/243/input.js 1:0-1:24
-	path: UIDPath<es2015/uncategorised/243/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/uncategorised/243/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "eval is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<es2015/uncategorised/243/input.js>
-				start: Position 1:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/243/input.js 1:14-1:24
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/243/input.js 1:14-1:24
 				body: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation es2015/uncategorised/243/input.js 1:22-1:24
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/243/input.js 1:14-1:21
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "eval"
 							loc: SourceLocation es2015/uncategorised/243/input.js 1:14-1:18 (eval)
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/243/input.js 1:14-1:21
 				}
+				loc: SourceLocation es2015/uncategorised/243/input.js 1:14-1:24
+			}
+			loc: SourceLocation es2015/uncategorised/243/input.js 1:14-1:24
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["eval", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/243/input.js>
+				end: Position 1:18
+				start: Position 1:14
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/uncategorised/243/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/243/input.js>
+	loc: SourceLocation es2015/uncategorised/243/input.js 1:0-1:24
 }
 ```
 

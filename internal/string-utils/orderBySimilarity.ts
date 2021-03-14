@@ -93,8 +93,6 @@ export type Rating = {
 	rating: number;
 };
 
-export type Ratings = Rating[];
-
 type OrderBySimilarityOptions = {
 	minRating?: number;
 	ignoreCase?: boolean;
@@ -104,13 +102,13 @@ export function orderBySimilarity(
 	compareStr: string,
 	targets: string[],
 	{minRating, ignoreCase = false}: OrderBySimilarityOptions = {},
-): Ratings {
+): Rating[] {
 	if (targets.length === 0) {
 		return [];
 	}
 
 	// Calculate the rating for each target string
-	const ratings: Ratings = Array.from(
+	const ratings: Rating[] = Array.from(
 		targets,
 		(target: string): Rating => {
 			if (ignoreCase) {
@@ -131,7 +129,7 @@ export function orderBySimilarity(
 	);
 
 	// Sort ratings, with the highest at the beginning
-	const sortedRatings: Ratings = ratings.sort((a, b) => {
+	const sortedRatings: Rating[] = ratings.sort((a, b) => {
 		return b.rating - a.rating;
 	}).filter((item) => minRating === undefined || item.rating >= minRating);
 

@@ -12,7 +12,7 @@ import {
 	DiagnosticSuppression,
 	equalCategoryNames,
 } from "@internal/diagnostics";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {addPositions} from "@internal/parser-core";
 import {equalPaths} from "@internal/path";
 import CompilerContext from "./lib/CompilerContext";

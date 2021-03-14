@@ -8,41 +8,26 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/generic/input.ts 1:0-2:0
-	path: UIDPath<typescript/class/generic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/generic/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/generic/input.ts 1:0-1:44
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				loc: SourceLocation typescript/class/generic/input.ts 1:0-1:44
+				body: []
 				typeParameters: TSTypeParameterDeclaration {
-					loc: SourceLocation typescript/class/generic/input.ts 1:7-1:41
-					params: Array [
+					params: [
 						TSTypeParameter {
 							name: "T"
-							constraint: TSObjectKeywordTypeAnnotation {loc: SourceLocation typescript/class/generic/input.ts 1:18-1:24}
-							loc: SourceLocation typescript/class/generic/input.ts 1:8-1:40
+							constraint: TSObjectKeywordTypeAnnotation {
+								loc: SourceLocation typescript/class/generic/input.ts 1:18-1:24
+							}
 							default: TSObjectTypeAnnotation {
-								loc: SourceLocation typescript/class/generic/input.ts 1:27-1:40
-								members: Array [
+								members: [
 									TSPropertySignature {
+										optional: false
+										readonly: false
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "x"
@@ -50,19 +35,33 @@ JSRoot {
 											}
 											loc: SourceLocation typescript/class/generic/input.ts 1:29-1:30
 										}
-										optional: false
-										readonly: false
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: SourceLocation typescript/class/generic/input.ts 1:32-1:38
+										}
 										loc: SourceLocation typescript/class/generic/input.ts 1:29-1:38
-										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/generic/input.ts 1:32-1:38}
 									}
 								]
+								loc: SourceLocation typescript/class/generic/input.ts 1:27-1:40
 							}
+							loc: SourceLocation typescript/class/generic/input.ts 1:8-1:40
 						}
 					]
+					loc: SourceLocation typescript/class/generic/input.ts 1:7-1:41
 				}
+				loc: SourceLocation typescript/class/generic/input.ts 1:0-1:44
 			}
+			loc: SourceLocation typescript/class/generic/input.ts 1:0-1:44
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/generic/input.ts>
+	loc: SourceLocation typescript/class/generic/input.ts 1:0-2:0
 }
 ```
 

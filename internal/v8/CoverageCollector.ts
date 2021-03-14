@@ -15,7 +15,7 @@ import {
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {Position, derivePositionKey} from "@internal/parser-core";
 import {urlToFilename} from "./utils";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import inspector = require("inspector");
 import {MixedPathMap} from "@internal/path";
 

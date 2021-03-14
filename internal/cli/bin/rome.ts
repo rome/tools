@@ -5,16 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {initErrorHooks, sourceMapManager} from "@internal/v8";
+import {errorSourceMaps, initErrorHooks} from "@internal/v8";
 import {VERSION, getBinPath} from "@internal/core";
 import cli from "../cli";
 import server from "../server";
-import testWorker from "../testWorker";
 import worker from "../worker";
 import {SourceMapConsumer} from "@internal/codec-source-map";
-import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
-import {readFileTextSync} from "@internal/fs";
 import FatalErrorHandler from "@internal/core/common/FatalErrorHandler";
 
 async function main(): Promise<void> {
@@ -28,20 +25,17 @@ async function main(): Promise<void> {
 		case "worker":
 			return worker();
 
-		case "test-worker":
-			return testWorker();
-
 		default:
 			return cli();
 	}
 }
 
 const bin = getBinPath();
-sourceMapManager.add(
+errorSourceMaps.add(
 	bin,
 	SourceMapConsumer.fromJSONLazy(
 		bin,
-		() => JSON.parse(readFileTextSync(getBinPath().addExtension(".map"))),
+		() => JSON.parse(getBinPath().addExtension(".map").readFileTextSync()),
 	),
 );
 
@@ -56,12 +50,7 @@ export function executeCLIMain() {
 	);
 
 	const fatalErrorHandler = new FatalErrorHandler({
-		getOptions() {
-			return {
-				source: markup`cli`,
-				reporter: Reporter.fromProcess(),
-			};
-		},
+		source: markup`cli`,
 	});
 
 	fatalErrorHandler.wrapPromise(main());

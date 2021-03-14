@@ -8,76 +8,67 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:0-3:1
-	path: UIDPath<experimental/top-level-await/inside-function/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:7
-				path: UIDPath<experimental/top-level-await/inside-function/input.js>
-				start: Position 2:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:9-1:11 (fn)
 			}
-			loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:14-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:2-2:7
 						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:2-2:7 (await)
 						}
+						loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:2-2:7
 					}
 					JSExpressionStatement {
-						loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:8-2:10
 						expression: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:8-2:9
 						}
+						loc: SourceLocation experimental/top-level-await/inside-function/input.js 2:8-2:10
 					}
 				]
+				directives: []
+				loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:14-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:11-1:13
+			}
+			loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/top-level-await/inside-function/input.js>
+				end: Position 2:7
+				start: Position 2:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/top-level-await/inside-function/input.js>
+	loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:0-3:1
 }
 ```
 

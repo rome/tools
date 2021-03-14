@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/bigint/valid-hex/input.js 1:0-2:0
-	path: UIDPath<es2020/bigint/valid-hex/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/bigint/valid-hex/input.js 1:0-1:9
 			expression: JSBigIntLiteral {
 				value: "0xFFF123"
 				loc: SourceLocation es2020/bigint/valid-hex/input.js 1:0-1:9
 			}
+			loc: SourceLocation es2020/bigint/valid-hex/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/bigint/valid-hex/input.js>
+	loc: SourceLocation es2020/bigint/valid-hex/input.js 1:0-2:0
 }
 ```
 

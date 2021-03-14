@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 1:0-4:0
-	path: UIDPath<experimental/class-private-properties/invalid-object-method/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 1:6-1:7 (C)
 			}
-			loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 1:0-3:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -41,9 +24,16 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:2-2:4
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:2-2:4
+							start: Position 2:2
+						}
 						value: JSObjectExpression {
-							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:8-2:18
-							properties: Array [
+							properties: [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSPrivateName {
@@ -57,30 +47,30 @@ JSRoot {
 									}
 									value: JSNumericLiteral {
 										value: 42
-										format: undefined
 										loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:14-2:16
 									}
 									loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:10-2:16
 								}
 							]
+							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:8-2:18
 						}
-						typeAnnotation: undefined
 						loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:2-2:20
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 2:2-2:4
-							start: Position 2:2
-						}
 					}
 				]
+				loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 1:0-3:1
 			}
+			loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-properties/invalid-object-method/input.js>
+	loc: SourceLocation experimental/class-private-properties/invalid-object-method/input.js 1:0-4:0
 }
 ```
 

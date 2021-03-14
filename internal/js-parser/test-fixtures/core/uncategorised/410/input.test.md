@@ -8,49 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/410/input.js 1:0-1:8
-	path: UIDPath<core/uncategorised/410/input.js>
-	body: Array [
+	body: [
 		JSBreakStatement {
-			label: undefined
 			loc: SourceLocation core/uncategorised/410/input.js 1:0-1:5
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/410/input.js 1:6-1:8
 			expression: JSNumericLiteral {
 				value: 1
-				format: undefined
 				loc: SourceLocation core/uncategorised/410/input.js 1:6-1:7
 			}
+			loc: SourceLocation core/uncategorised/410/input.js 1:6-1:8
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>1</emphasis>"}
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "1", RAW_MARKUP {value: "</emphasis>"}]
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:7
 				path: UIDPath<core/uncategorised/410/input.js>
+				end: Position 1:7
 				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/410/input.js>
+	loc: SourceLocation core/uncategorised/410/input.js 1:0-1:8
 }
 ```
 

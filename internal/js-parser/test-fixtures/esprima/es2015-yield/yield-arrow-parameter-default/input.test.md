@@ -8,38 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-arrow-parameter-default/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:0-1:17
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:15-1:17
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:0-1:14
-					params: Array [
+					params: [
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:1-1:10
 							left: JSBindingIdentifier {
 								name: "x"
 								loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:1-1:2 (x)
@@ -48,12 +30,25 @@ JSRoot {
 								name: "yield"
 								loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:5-1:10 (yield)
 							}
+							loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:1-1:10
 						}
 					]
+					loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:0-1:14
 				}
+				loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:0-1:17
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-arrow-parameter-default/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-arrow-parameter-default/input.js 1:0-2:0
 }
 ```
 

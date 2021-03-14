@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:19
-				path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js>
-				start: Position 2:0
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:0-1:19
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:0-1:19
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:9-1:12
 					imported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:9-1:12 (foo)
@@ -59,12 +21,11 @@ JSRoot {
 							name: "foo"
 							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:9-1:12 (foo)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:9-1:12
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:9-1:12
 				}
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:14-1:17
 					imported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:14-1:17 (bar)
@@ -74,13 +35,43 @@ JSRoot {
 							name: "bar"
 							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:14-1:17 (bar)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:14-1:17
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:14-1:17
 				}
 			]
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:0-1:19
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected keyword <emphasis>"}, "from", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js>
+				end: Position 1:19
+				start: Position 2:0
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-module-specifier/input.js 1:0-2:0
 }
 ```
 

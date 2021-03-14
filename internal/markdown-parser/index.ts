@@ -14,7 +14,7 @@ import {
 	MarkdownListItem,
 	MarkdownRoot,
 } from "@internal/ast";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {isEscaped} from "@internal/string-utils";
 import {CodeProperties, MarkdownParserTypes} from "./types";
 import {hasThematicBreak, isntInlineCharacter} from "./utils";
@@ -69,40 +69,6 @@ const markdownParser = createParser<MarkdownParserTypes>({
 		if (!(escaped || state.isParagraph)) {
 			if (char === "#") {
 				return [state, consumeHeading(parser, index)];
-			}
-			if (char === "\n") {
-				const nextChar = parser.getInputCharOnly(index.increment());
-				if (nextChar === "#") {
-					return [state, consumeHeading(parser, index.add(1))];
-				}
-
-				if (nextChar === "`") {
-					const token = consumeCode(parser, index.add(1));
-					if (token) {
-						return [state, token];
-					}
-				}
-
-				if (isDigit(nextChar)) {
-					const token = tokenizeListItem(parser, index);
-					if (token) {
-						return [
-							{
-								isParagraph: true,
-								isListItem: true,
-							},
-							token,
-						];
-					}
-				}
-
-				return [
-					{
-						isParagraph: false,
-						isListItem: false,
-					},
-					parser.finishToken("NewLine"),
-				];
 			}
 
 			if (char === "-") {

@@ -8,82 +8,71 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:0-1:33
-	path: UIDPath<es2015/yield/yield-star-parameter-default-inside-generator/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<es2015/yield/yield-star-parameter-default-inside-generator/input.js>
-				start: Position 1:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:10-1:12 (fn)
 			}
-			loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:0-1:33
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:31-1:33
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:12-1:30
-				params: Array [
+				params: [
 					JSBindingAssignmentPattern {
-						loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:13-1:29
 						left: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:13-1:14 (x)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:13-1:14
 							}
+							loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:13-1:14 (x)
 						}
 						right: JSYieldExpression {
 							delegate: true
-							loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:17-1:29
 							argument: JSYieldExpression {
-								argument: undefined
 								delegate: false
 								loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:24-1:29
 							}
+							loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:17-1:29
 						}
+						loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:13-1:29
 					}
 				]
+				loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:12-1:30
+			}
+			loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:0-1:33
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/yield-star-parameter-default-inside-generator/input.js>
+				end: Position 1:17
+				start: Position 1:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/yield-star-parameter-default-inside-generator/input.js>
+	loc: SourceLocation es2015/yield/yield-star-parameter-default-inside-generator/input.js 1:0-1:33
 }
 ```
 

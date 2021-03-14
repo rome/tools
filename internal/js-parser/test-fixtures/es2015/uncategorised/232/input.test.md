@@ -8,58 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/232/input.js 1:0-1:17
-	path: UIDPath<es2015/uncategorised/232/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>default</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:13
-				path: UIDPath<es2015/uncategorised/232/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/232/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/uncategorised/232/input.js 1:0-1:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "default"
 							loc: SourceLocation es2015/uncategorised/232/input.js 1:6-1:13 (default)
 						}
-						loc: SourceLocation es2015/uncategorised/232/input.js 1:6-1:17
 						init: JSNumericLiteral {
 							value: 2
-							format: undefined
 							loc: SourceLocation es2015/uncategorised/232/input.js 1:16-1:17
 						}
+						loc: SourceLocation es2015/uncategorised/232/input.js 1:6-1:17
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/232/input.js 1:0-1:17
+			}
+			loc: SourceLocation es2015/uncategorised/232/input.js 1:0-1:17
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "default", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/232/input.js>
+				end: Position 1:13
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/232/input.js>
+	loc: SourceLocation es2015/uncategorised/232/input.js 1:0-1:17
 }
 ```
 

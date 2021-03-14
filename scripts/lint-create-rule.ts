@@ -1,6 +1,5 @@
 import {INTERNAL, ROOT, reporter, writeFile} from "./_utils";
 import {dedent, toCamelCase} from "@internal/string-utils";
-import {readFileText} from "@internal/fs";
 import {main as generateLintRules} from "./generated-files/lint-rules";
 import {markup} from "@internal/markup";
 
@@ -90,12 +89,12 @@ export async function main([ruleName]: string[]): Promise<number> {
 		"descriptions",
 		"lint.ts",
 	);
-	let descriptions = await readFileText(diagDescriptionsPath);
+	let descriptions = await diagDescriptionsPath.readFileText();
 	let message = "markup`INSERT MESSAGE HERE`";
 	descriptions = descriptions.replace(
 		"createDiagnosticsCategory({",
 		`createDiagnosticsCategory({\n	${descriptionKey}: {
-			category: "${categoryName}",
+			category: DIAGNOSTIC_CATEGORIES["${categoryName}"],
 			message: ${message},
 		},`,
 	);

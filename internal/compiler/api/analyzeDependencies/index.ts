@@ -51,7 +51,7 @@ export default async function analyzeDependencies(
 		ast,
 		project,
 		origin: {
-			category: "analyzeDependencies",
+			entity: "compiler.analyzeDependencies",
 		},
 	});
 	({ast} = await transform({...req, stage: "pre"}));

@@ -8,67 +8,62 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-lexical-declaration/invalid_let_forin/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<esprima/es2015-lexical-declaration/invalid_let_forin/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSForInStatement {
-			loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:0-1:22
-			right: JSReferenceIdentifier {
-				name: "y"
-				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:18-1:19 (y)
-			}
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:20-1:22
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:5-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:9-1:10 (x)
 						}
-						loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:9-1:14
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:13-1:14
 						}
+						loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:9-1:14
 					}
 				]
+				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:5-1:14
+			}
+			right: JSReferenceIdentifier {
+				name: "y"
+				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:18-1:19 (y)
+			}
+			loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-lexical-declaration/invalid_let_forin/input.js>
+				end: Position 1:14
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-lexical-declaration/invalid_let_forin/input.js>
+	loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:0-2:0
 }
 ```
 

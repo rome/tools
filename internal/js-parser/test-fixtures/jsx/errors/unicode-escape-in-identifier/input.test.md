@@ -8,51 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
-	path: UIDPath<jsx/errors/unicode-escape-in-identifier/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
 			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: false
 				name: JSXReferenceIdentifier {
 					name: ""
 					loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:1-1:10
 				}
-				attributes: Array []
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
 				loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
 			}
+			loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:1
 				path: UIDPath<jsx/errors/unicode-escape-in-identifier/input.jsx>
+				end: Position 1:1
 				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/unicode-escape-in-identifier/input.jsx>
+	loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
 }
 ```
 

@@ -8,34 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-as-identifier-4/input.js 1:0-2:0
-	path: UIDPath<es2015/let/let-as-identifier-4/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/let/let-as-identifier-4/input.js 1:0-1:9
 			expression: JSBinaryExpression {
 				operator: "in"
-				loc: SourceLocation es2015/let/let-as-identifier-4/input.js 1:0-1:9
 				left: JSReferenceIdentifier {
 					name: "let"
 					loc: SourceLocation es2015/let/let-as-identifier-4/input.js 1:0-1:3 (let)
 				}
 				right: JSObjectExpression {
-					properties: Array []
+					properties: []
 					loc: SourceLocation es2015/let/let-as-identifier-4/input.js 1:7-1:9
 				}
+				loc: SourceLocation es2015/let/let-as-identifier-4/input.js 1:0-1:9
 			}
+			loc: SourceLocation es2015/let/let-as-identifier-4/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-as-identifier-4/input.js>
+	loc: SourceLocation es2015/let/let-as-identifier-4/input.js 1:0-2:0
 }
 ```
 

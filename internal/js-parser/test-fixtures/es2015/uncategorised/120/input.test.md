@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/120/input.js 1:0-1:28
-	path: UIDPath<es2015/uncategorised/120/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/uncategorised/120/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/uncategorised/120/input.js 1:0-1:28
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/120/input.js 1:0-1:28
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,48 +25,51 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/120/input.js 1:17-1:20
 						}
-						loc: SourceLocation es2015/uncategorised/120/input.js 1:10-1:26
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation es2015/uncategorised/120/input.js 1:24-1:26
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/uncategorised/120/input.js 1:10-1:20
 							start: Position 1:10
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation es2015/uncategorised/120/input.js 1:24-1:26
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/uncategorised/120/input.js 1:20-1:23
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "v"
-									loc: SourceLocation es2015/uncategorised/120/input.js 1:21-1:22 (v)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/uncategorised/120/input.js 1:21-1:22
 									}
+									loc: SourceLocation es2015/uncategorised/120/input.js 1:21-1:22 (v)
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/120/input.js 1:20-1:23
 						}
+						loc: SourceLocation es2015/uncategorised/120/input.js 1:10-1:26
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/120/input.js 1:0-1:28
 			}
+			loc: SourceLocation es2015/uncategorised/120/input.js 1:0-1:28
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/120/input.js>
+	loc: SourceLocation es2015/uncategorised/120/input.js 1:0-1:28
 }
 ```
 

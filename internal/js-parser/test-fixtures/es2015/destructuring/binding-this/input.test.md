@@ -8,47 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-2:0
-	path: UIDPath<es2015/destructuring/binding-this/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>this</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2015/destructuring/binding-this/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-1:18
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/destructuring/binding-this/input.js 1:4-1:12
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -64,17 +31,45 @@ JSRoot {
 									loc: SourceLocation es2015/destructuring/binding-this/input.js 1:6-1:10
 								}
 							]
+							loc: SourceLocation es2015/destructuring/binding-this/input.js 1:4-1:12
 						}
-						loc: SourceLocation es2015/destructuring/binding-this/input.js 1:4-1:17
 						init: JSObjectExpression {
-							properties: Array []
+							properties: []
 							loc: SourceLocation es2015/destructuring/binding-this/input.js 1:15-1:17
 						}
+						loc: SourceLocation es2015/destructuring/binding-this/input.js 1:4-1:17
 					}
 				]
+				loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-1:18
+			}
+			loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-1:18
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "this", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/destructuring/binding-this/input.js>
+				end: Position 1:10
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/destructuring/binding-this/input.js>
+	loc: SourceLocation es2015/destructuring/binding-this/input.js 1:0-2:0
 }
 ```
 

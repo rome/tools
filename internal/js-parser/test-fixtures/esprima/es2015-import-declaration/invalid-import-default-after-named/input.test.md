@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-after-named/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:12
-				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-after-named/input.js>
-				start: Position 1:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:0-1:12
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:0-1:12
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:8-1:11
 					imported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:8-1:11 (bar)
@@ -59,41 +21,71 @@ JSRoot {
 							name: "bar"
 							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:8-1:11 (bar)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:8-1:11
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:8-1:11
 				}
 			]
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:0-1:12
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:0-1:12
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:12-1:13
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:12-1:13
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:12-1:13
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:14-1:17
 			expression: JSReferenceIdentifier {
 				name: "foo"
 				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:14-1:17 (foo)
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:14-1:17
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:18-1:22
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:18-1:22 (from)
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:18-1:22
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:23-1:28
 			expression: JSStringLiteral {
 				value: "foo"
 				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:23-1:28
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:23-1:28
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected keyword <emphasis>"}, "from", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-after-named/input.js>
+				end: Position 1:12
+				start: Position 1:12
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-after-named/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named/input.js 1:0-2:0
 }
 ```
 

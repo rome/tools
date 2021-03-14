@@ -4,8 +4,8 @@ import {commandCategories} from "@internal/core/common/commands";
 import {ServerRequest} from "@internal/core";
 import {getVCSClient} from "@internal/vcs";
 import {
-	Diagnostics,
-	createSingleDiagnosticError,
+	Diagnostic,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {UnknownObject} from "@internal/typescript-helpers";
@@ -17,10 +17,10 @@ interface Flags extends UnknownObject {
 
 export type AutoConfig = {
 	lint?: {
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 		savedCount: number;
 	};
-	licenses?: Diagnostics;
+	licenses?: Diagnostic[];
 };
 
 export default createServerCommand<Flags>({
@@ -62,14 +62,14 @@ export default createServerCommand<Flags>({
 		if (checkVSC) {
 			const vcsClient = await getVCSClient(cwd);
 			if (vcsClient === undefined) {
-				throw createSingleDiagnosticError({
+				throw createSingleDiagnosticsError({
 					location: req.getDiagnosticLocationForClientCwd(),
 					description: descriptions.INIT_COMMAND.EXPECTED_REPO,
 				});
 			} else {
 				const uncommittedFiles = await vcsClient.getUncommittedFiles();
 				if (uncommittedFiles.length > 0) {
-					throw createSingleDiagnosticError({
+					throw createSingleDiagnosticsError({
 						location: req.getDiagnosticLocationForClientCwd(),
 						description: descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES,
 					});

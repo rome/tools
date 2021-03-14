@@ -8,43 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-identifier/valid_await/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "await"
 							loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:4-1:9 (await)
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:4-1:9
 					}
 				]
+				loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-1:10
 			}
+			loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-1:10
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:11-1:19
 			expression: JSReferenceIdentifier {
 				name: "await"
 				loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:12-1:17 (await)
 			}
+			loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:11-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-identifier/valid_await/input.js>
+	loc: SourceLocation esprima/es2015-identifier/valid_await/input.js 1:0-2:0
 }
 ```
 

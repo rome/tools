@@ -99,11 +99,11 @@ test(
 			foo = "two";
 			// creates a lock internally and releases it after running a callback
 			res = await locker.wrapLock(
-				"rome",
 				() => {
 					foo = "three";
 					return "result";
 				},
+				"rome",
 			);
 		}
 
@@ -139,11 +139,11 @@ test(
 			foo = "two";
 			// creates a lock internally and releases it after running a callback
 			await locker.wrapLock(
-				"rome",
 				async () => {
 					foo = "three";
 					throw new Error("oops!");
 				},
+				"rome",
 			);
 		}
 

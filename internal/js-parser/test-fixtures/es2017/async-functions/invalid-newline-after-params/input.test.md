@@ -8,65 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-3:0
-	path: UIDPath<es2017/async-functions/invalid-newline-after-params/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<es2017/async-functions/invalid-newline-after-params/input.js>
-				start: Position 2:0
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:9
 			expression: JSCallExpression {
-				loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:9
-				callee: JSReferenceIdentifier {
-					name: "async"
-					loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:5 (async)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:7-1:8 (x)
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "async"
+					loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:5 (async)
+				}
+				loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:9
 			}
+			loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 2:0-2:2
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 2:0-2:2
 			}
+			loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 2:0-2:2
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 2:3-2:5
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-newline-after-params/input.js>
+				end: Position 1:9
+				start: Position 2:0
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-newline-after-params/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-3:0
 }
 ```
 

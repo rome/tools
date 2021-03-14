@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Binding, Path, signals} from "@internal/compiler";
+import {Binding, CompilerPath, signals} from "@internal/compiler";
 import {inheritLoc} from "./inheritLoc";
 import {
 	AnyJSVariableIdentifier,
@@ -22,7 +22,7 @@ import {assertSingleOrMultipleNodes} from "./assertSingleOrMultipleNodes";
 // This methods allows either passing in Bindings that could be present within deep scopes,
 // or local names for the scope in the passed Path
 export function renameBindings(
-	path: Path,
+	path: CompilerPath,
 	oldToNewMapping: Map<Binding | string, string>,
 ): AnyNode | (AnyNode[]) {
 	if (oldToNewMapping.size === 0) {

@@ -8,37 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-default-class/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-default-class/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation esprima/es2015-export-declaration/export-default-class/input.js 1:0-1:23
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: SourceLocation esprima/es2015-export-declaration/export-default-class/input.js 1:15-1:23
 				}
-				loc: SourceLocation esprima/es2015-export-declaration/export-default-class/input.js 1:15-1:23
 				meta: JSClassHead {
-					body: Array []
-					implements: undefined
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
+					body: []
 					loc: SourceLocation esprima/es2015-export-declaration/export-default-class/input.js 1:15-1:23
 				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-class/input.js 1:15-1:23
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-class/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-default-class/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-class/input.js 1:0-2:0
 }
 ```
 

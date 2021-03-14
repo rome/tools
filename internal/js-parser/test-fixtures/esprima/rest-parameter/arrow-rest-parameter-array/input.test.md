@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:0-2:0
-	path: UIDPath<esprima/rest-parameter/arrow-rest-parameter-array/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:0-1:16
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:0-1:16
 				body: JSReferenceIdentifier {
 					name: "c"
 					loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:15-1:16 (c)
@@ -31,29 +18,37 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:0-1:14
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:1-1:2 (a)
 						}
 					]
 					rest: JSBindingArrayPattern {
-						rest: undefined
-						loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:7-1:10
-						elements: Array [
+						elements: [
 							JSBindingIdentifier {
 								name: "b"
 								loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:8-1:9 (b)
 							}
 						]
+						loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:7-1:10
 					}
+					loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:0-1:14
 				}
+				loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:0-1:16
 			}
+			loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/rest-parameter/arrow-rest-parameter-array/input.js>
+	loc: SourceLocation esprima/rest-parameter/arrow-rest-parameter-array/input.js 1:0-2:0
 }
 ```
 

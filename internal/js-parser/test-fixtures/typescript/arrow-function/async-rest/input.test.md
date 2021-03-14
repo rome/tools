@@ -8,50 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/async-rest/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:0-1:34
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:0-1:34
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:32-1:34
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					params: Array []
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:0-1:31
-					returnType: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:25-1:28}
+					params: []
 					rest: JSBindingIdentifier {
 						name: "args"
-						loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:32-1:31
 						meta: JSPatternMeta {
-							optional: undefined
-							loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:32-1:31
 							typeAnnotation: TSArrayType {
-								elementType: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:16-1:19}
+								elementType: TSAnyKeywordTypeAnnotation {
+									loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:16-1:19
+								}
 								loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:16-1:21
 							}
+							loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:32-1:31
 						}
+						loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:32-1:31
 					}
+					returnType: TSAnyKeywordTypeAnnotation {
+						loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:25-1:28
+					}
+					loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:0-1:31
 				}
+				loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:0-1:34
 			}
+			loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/async-rest/input.ts>
+	loc: SourceLocation typescript/arrow-function/async-rest/input.ts 1:0-2:0
 }
 ```
 

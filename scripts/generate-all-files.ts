@@ -44,9 +44,7 @@ export async function main(args: string[]) {
 		return 0;
 	}
 	reporter.info(markup`Modified uncommitted files:`);
-	reporter.list(
-		uncommittedFiles.trim().split("\n").map((filename) => markup`${filename}`),
-	);
+	reporter.list(new Set(uncommittedFiles.trim().split("\n")));
 	reporter.info(
 		markup`To fix this, run <code>./rome run scripts/generate-all-files</code> and commit the results`,
 	);

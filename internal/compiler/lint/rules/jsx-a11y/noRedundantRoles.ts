@@ -1,4 +1,4 @@
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
@@ -15,7 +15,7 @@ import {markup} from "@internal/markup";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 type CreateFixableDiagnostic = {
-	path: Path;
+	path: CompilerPath;
 	node: JSXElement;
 	mappedRole: ARIARoleDefinition | undefined;
 	roleAttribute: JSXAttribute;

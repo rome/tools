@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/340/input.js 1:0-3:5
-	path: UIDPath<core/uncategorised/340/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/340/input.js 1:0-1:6
 			expression: JSMemberExpression {
-				loc: SourceLocation core/uncategorised/340/input.js 1:0-1:6
 				object: JSReferenceIdentifier {
 					name: "foo"
 					loc: SourceLocation core/uncategorised/340/input.js 1:0-1:3 (foo)
@@ -35,15 +22,16 @@ JSRoot {
 					}
 					loc: SourceLocation core/uncategorised/340/input.js 1:4-1:6 (in)
 				}
+				loc: SourceLocation core/uncategorised/340/input.js 1:0-1:6
 			}
+			loc: SourceLocation core/uncategorised/340/input.js 1:0-1:6
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation core/uncategorised/340/input.js 2:0-2:2
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/340/input.js 3:0-3:5
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -51,10 +39,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation core/uncategorised/340/input.js 3:0-3:5
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation core/uncategorised/340/input.js 3:1-3:4
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "f"
 							loc: SourceLocation core/uncategorised/340/input.js 3:1-3:2
@@ -68,10 +54,22 @@ JSRoot {
 							loc: SourceLocation core/uncategorised/340/input.js 3:3-3:4
 						}
 					]
+					loc: SourceLocation core/uncategorised/340/input.js 3:1-3:4
 				}
+				loc: SourceLocation core/uncategorised/340/input.js 3:0-3:5
 			}
+			loc: SourceLocation core/uncategorised/340/input.js 3:0-3:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/340/input.js>
+	loc: SourceLocation core/uncategorised/340/input.js 1:0-3:5
 }
 ```
 

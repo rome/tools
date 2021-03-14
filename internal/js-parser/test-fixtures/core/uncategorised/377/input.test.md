@@ -8,59 +8,56 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/377/input.js 1:0-1:5
-	path: UIDPath<core/uncategorised/377/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/377/input.js 1:0-1:5
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: SourceLocation core/uncategorised/377/input.js 1:0-1:5
-				right: JSObjectExpression {
-					properties: Array []
-					loc: SourceLocation core/uncategorised/377/input.js 1:4-1:5
-				}
 				left: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation core/uncategorised/377/input.js 1:0-1:1
 				}
+				right: JSObjectExpression {
+					properties: []
+					loc: SourceLocation core/uncategorised/377/input.js 1:4-1:5
+				}
+				loc: SourceLocation core/uncategorised/377/input.js 1:0-1:5
 			}
+			loc: SourceLocation core/uncategorised/377/input.js 1:0-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<core/uncategorised/377/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed <emphasis>object</emphasis>"}
-				advice: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
+						text: [RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis> here"}]
 					}
-					frame {location: SourceLocation core/uncategorised/377/input.js 1:5-1:5}
+					frame {
+						location: SourceLocation core/uncategorised/377/input.js 1:5-1:5
+					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unclosed <emphasis>"}, "object", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/377/input.js>
+				end: Position 1:4
+				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/377/input.js>
+	loc: SourceLocation core/uncategorised/377/input.js 1:0-1:5
 }
 ```
 

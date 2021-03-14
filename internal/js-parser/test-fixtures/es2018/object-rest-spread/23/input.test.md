@@ -8,74 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/23/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/23/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<es2018/object-rest-spread/23/input.js>
-				start: Position 1:20
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: SourceLocation es2018/object-rest-spread/23/input.js 1:9-1:13 (test)
 			}
-			loc: SourceLocation es2018/object-rest-spread/23/input.js 1:0-1:28
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2018/object-rest-spread/23/input.js 1:26-1:28
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2018/object-rest-spread/23/input.js 1:13-1:25
-				params: Array [
+				params: [
 					JSBindingObjectPattern {
-						loc: SourceLocation es2018/object-rest-spread/23/input.js 1:14-1:24
-						rest: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation es2018/object-rest-spread/23/input.js 1:18-1:19 (x)
-						}
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation es2018/object-rest-spread/23/input.js 1:14-1:24
-						}
-						properties: Array [
+						properties: [
 							JSBindingObjectPatternProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
@@ -91,11 +41,46 @@ JSRoot {
 								loc: SourceLocation es2018/object-rest-spread/23/input.js 1:20-1:21
 							}
 						]
+						meta: JSPatternMeta {
+							loc: SourceLocation es2018/object-rest-spread/23/input.js 1:14-1:24
+						}
+						rest: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation es2018/object-rest-spread/23/input.js 1:18-1:19 (x)
+						}
+						loc: SourceLocation es2018/object-rest-spread/23/input.js 1:14-1:24
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/23/input.js 1:13-1:25
+			}
+			loc: SourceLocation es2018/object-rest-spread/23/input.js 1:0-1:28
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/object-rest-spread/23/input.js>
+				end: Position 1:21
+				start: Position 1:20
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/23/input.js>
+	loc: SourceLocation es2018/object-rest-spread/23/input.js 1:0-2:0
 }
 ```
 

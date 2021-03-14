@@ -1,13 +1,13 @@
 import {VERSION} from "@internal/core";
 import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
-import {FSStats, createReadStream, exists, lstat} from "@internal/fs";
+import {FSStats} from "@internal/fs";
 import Cache from "../common/Cache";
 import Worker from "./Worker";
 import {
 	RSERValue,
 	decodeSingleMessageRSERStream,
 	hashRSERValue,
-} from "@internal/codec-binary-serial";
+} from "@internal/binary-transport";
 import {FileReference} from "../common/types/files";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {sha256} from "@internal/string-utils";
@@ -126,11 +126,11 @@ export class CacheEntry<Value extends RSERValue = RSERValue> {
 		}
 
 		const {path} = this;
-		if (!(await exists(path))) {
+		if (await path.notExists()) {
 			return undefined;
 		}
 
-		const stream = createReadStream(path);
+		const stream = path.createReadStream();
 		const decoded = await decodeSingleMessageRSERStream(stream);
 
 		if (decoded.type === "INCOMPATIBLE") {
@@ -194,7 +194,7 @@ class CacheFile {
 		} else if (worker.virtualModules.isVirtualPath(path)) {
 			stats = worker.virtualModules.getFakeStats(path);
 		} else {
-			stats = await lstat(path);
+			stats = await path.lstat();
 		}
 
 		this.stats = stats;
@@ -319,15 +319,15 @@ class CacheFile {
 
 	private async createFreshPortableMetadata(): Promise<PortableCacheMetadataHashless> {
 		const {ref} = this;
-		const project = this.worker.getProject(ref.project);
+		const project = this.worker.getProject(ref);
 		const configCacheKeys: string[] = [];
 
 		for (const key of Object.keys(project.configCacheKeys).sort()) {
 			configCacheKeys.push(`${key}:${project.configCacheKeys[key]}`);
 		}
 
-		if (ref.manifest !== undefined) {
-			const manifest = this.worker.getPartialManifest(ref.manifest);
+		const manifest = this.worker.getPartialManifest(ref);
+		if (manifest !== undefined) {
 			configCacheKeys.push(`manifest:${manifest.hash}`);
 		}
 
@@ -387,6 +387,7 @@ export default class WorkerCache extends Cache {
 				writeDisabled: worker.options.cacheWriteDisabled,
 				readDisabled: worker.options.cacheReadDisabled,
 			},
+			worker.resources,
 		);
 		this.worker = worker;
 		this.loadedFiles = new AbsoluteFilePathMap();

@@ -8,44 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:15
-	path: UIDPath<es2015/array-rest-spread/comma-after-spread-nested/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:15
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:14
-				right: JSArrayExpression {
-					elements: Array []
-					loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:12-1:14
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:9
-					elements: Array [
+					elements: [
 						JSAssignmentArrayPattern {
-							elements: Array []
-							loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:1-1:8
+							elements: []
 							rest: JSAssignmentIdentifier {
 								name: "a"
 								loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:5-1:6 (a)
 							}
+							loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:1-1:8
 						}
 					]
+					loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:9
 				}
+				right: JSArrayExpression {
+					elements: []
+					loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:12-1:14
+				}
+				loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/array-rest-spread/comma-after-spread-nested/input.js>
+	loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:15
 }
 ```
 

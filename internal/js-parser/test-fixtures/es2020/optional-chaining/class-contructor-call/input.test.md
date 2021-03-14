@@ -8,51 +8,26 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
-	path: UIDPath<es2020/optional-chaining/class-contructor-call/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2020/optional-chaining/class-contructor-call/input.js>
-				start: Position 1:10
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Optional chain member responsible"}
-					}
-					frame {location: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:8}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
+				arguments: []
 				callee: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:10
+					object: JSMemberExpression {
+						object: JSReferenceIdentifier {
+							name: "C"
+							loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:5 (C)
+						}
+						property: JSStaticMemberProperty {
+							optional: true
+							value: JSIdentifier {
+								name: "b"
+								loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:7-1:8 (b)
+							}
+							loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:7-1:8 (b)
+						}
+						loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:8
+					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "d"
@@ -60,25 +35,46 @@ JSRoot {
 						}
 						loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:9-1:10 (d)
 					}
-					object: JSMemberExpression {
-						loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:8
-						object: JSReferenceIdentifier {
-							name: "C"
-							loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:5 (C)
-						}
-						property: JSStaticMemberProperty {
-							value: JSIdentifier {
-								name: "b"
-								loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:7-1:8 (b)
-							}
-							optional: true
-							loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:7-1:8 (b)
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:10
 				}
+				loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
+			}
+			loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Optional chain member responsible"}
+					}
+					frame {
+						location: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:8
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2020/optional-chaining/class-contructor-call/input.js>
+				end: Position 1:10
+				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/class-contructor-call/input.js>
+	loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
 }
 ```
 

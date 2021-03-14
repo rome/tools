@@ -8,57 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/293/input.js 1:0-1:14
-	path: UIDPath<es2015/uncategorised/293/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an if test"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<es2015/uncategorised/293/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation es2015/uncategorised/293/input.js 1:0-1:14
-			test: JSSequenceExpression {
-				loc: SourceLocation es2015/uncategorised/293/input.js 1:4-1:9
-				expressions: Array [
-					JSReferenceIdentifier {
-						name: "b"
-						loc: SourceLocation es2015/uncategorised/293/input.js 1:4-1:5 (b)
-					}
-					JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: SourceLocation es2015/uncategorised/293/input.js 1:6-1:9
-					}
-				]
-			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation es2015/uncategorised/293/input.js 1:9-1:14
 				expression: JSSequenceExpression {
-					loc: SourceLocation es2015/uncategorised/293/input.js 1:9-1:13
-					expressions: Array [
+					expressions: [
 						JSReferenceIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/uncategorised/293/input.js 1:9-1:10 (a)
@@ -68,10 +22,46 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/293/input.js 1:12-1:13
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/293/input.js 1:9-1:13
 				}
+				loc: SourceLocation es2015/uncategorised/293/input.js 1:9-1:14
+			}
+			test: JSSequenceExpression {
+				expressions: [
+					JSReferenceIdentifier {
+						name: "b"
+						loc: SourceLocation es2015/uncategorised/293/input.js 1:4-1:5 (b)
+					}
+					JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation es2015/uncategorised/293/input.js 1:6-1:9
+					}
+				]
+				loc: SourceLocation es2015/uncategorised/293/input.js 1:4-1:9
+			}
+			loc: SourceLocation es2015/uncategorised/293/input.js 1:0-1:14
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "if test"]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/293/input.js>
+				end: Position 1:6
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/293/input.js>
+	loc: SourceLocation es2015/uncategorised/293/input.js 1:0-1:14
 }
 ```
 

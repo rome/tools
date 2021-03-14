@@ -17,7 +17,7 @@ Prevent usage of unsafe `target="_blank"`
 **ESLint Equivalent:** [jsx-no-target-blank](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:0e64736a4aed285be464cc7569f794ee57a9473d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ef81b44bc798dfba0d17b0665210528a183d3519,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -41,6 +41,7 @@ Prevent usage of unsafe `target="_blank"`
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;a</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">href=&quot;http://external.link&quot;</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;a</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">href=&quot;http://external.link&quot;&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  <span style="opacity: 0.8;">&rarr; </span>child
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  &lt;/a&gt;
 
 </code></pre>{% endraw %}
 
@@ -65,6 +66,7 @@ Prevent usage of unsafe `target="_blank"`
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;a</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">href={dynamicLink}</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;a</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">href={dynamicLink}&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  <span style="opacity: 0.8;">&rarr; </span>child
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  &lt;/a&gt;
 
 </code></pre>{% endraw %}
 

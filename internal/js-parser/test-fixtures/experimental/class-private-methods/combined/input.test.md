@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-17:0
-	path: UIDPath<experimental/class-private-methods/combined/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-methods/combined/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-16:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-16:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -41,24 +24,19 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:3
 						}
-						value: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:6-2:7
-						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:8
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:3
 							start: Position 2:2
 						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 2:6-2:7
+						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 2:2-2:8
 					}
 					JSClassPrivateMethod {
 						kind: "method"
@@ -69,49 +47,43 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:3-4:5
 						}
-						loc: SourceLocation experimental/class-private-methods/combined/input.js 4:2-6:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:2-4:5
 							start: Position 4:2
+						}
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSYieldExpression {
+										delegate: false
+										argument: JSCallExpression {
+											arguments: []
+											callee: JSReferenceIdentifier {
+												name: "bar"
+												loc: SourceLocation experimental/class-private-methods/combined/input.js 5:10-5:13 (bar)
+											}
+											loc: SourceLocation experimental/class-private-methods/combined/input.js 5:10-5:15
+										}
+										loc: SourceLocation experimental/class-private-methods/combined/input.js 5:4-5:15
+									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 5:4-5:16
+								}
+							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:8-6:3
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:5-4:7
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 4:8-6:3
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation experimental/class-private-methods/combined/input.js 5:4-5:16
-									expression: JSYieldExpression {
-										delegate: false
-										loc: SourceLocation experimental/class-private-methods/combined/input.js 5:4-5:15
-										argument: JSCallExpression {
-											arguments: Array []
-											loc: SourceLocation experimental/class-private-methods/combined/input.js 5:10-5:15
-											callee: JSReferenceIdentifier {
-												name: "bar"
-												loc: SourceLocation experimental/class-private-methods/combined/input.js 5:10-5:13 (bar)
-											}
-										}
-									}
-								}
-							]
-						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 4:2-6:3
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -121,23 +93,19 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:4
 						}
-						value: JSNumericLiteral {
-							value: 2
-							format: undefined
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:7-8:8
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:4
 							start: Position 8:2
 						}
+						value: JSNumericLiteral {
+							value: 2
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 8:7-8:8
+						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 8:2-8:9
 					}
 					JSClassMethod {
 						kind: "get"
@@ -148,42 +116,35 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:6-10:7
 						}
-						loc: SourceLocation experimental/class-private-methods/combined/input.js 10:2-10:26
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:2-10:7
 							start: Position 10:2
+						}
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSNumericLiteral {
+										value: 9_999
+										loc: SourceLocation experimental/class-private-methods/combined/input.js 10:19-10:23
+									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 10:12-10:24
+								}
+							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:10-10:26
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:7-10:9
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 10:10-10:26
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-methods/combined/input.js 10:12-10:24
-									argument: JSNumericLiteral {
-										value: 9_999
-										format: undefined
-										loc: SourceLocation experimental/class-private-methods/combined/input.js 10:19-10:23
-									}
-								}
-							]
-						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 10:2-10:26
 					}
 					JSClassPrivateMethod {
 						kind: "set"
@@ -194,51 +155,43 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:6-11:8
 						}
-						loc: SourceLocation experimental/class-private-methods/combined/input.js 11:2-11:25
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:2-11:8
 							start: Position 11:2
 						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:12-11:25
-							body: Array [
+							body: [
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-methods/combined/input.js 11:14-11:23
 									argument: JSReferenceIdentifier {
 										name: "x"
 										loc: SourceLocation experimental/class-private-methods/combined/input.js 11:21-11:22 (x)
 									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 11:14-11:23
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:12-11:25
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:8-11:11
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "x"
-									loc: SourceLocation experimental/class-private-methods/combined/input.js 11:9-11:10 (x)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation experimental/class-private-methods/combined/input.js 11:9-11:10
 									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 11:9-11:10 (x)
 								}
 							]
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 11:8-11:11
 						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 11:2-11:25
 					}
 					JSClassPrivateMethod {
 						kind: "method"
@@ -249,39 +202,20 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-13:4
 						}
-						loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-15:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-13:4
 							start: Position 13:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:4-13:6
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:7-15:3
-							body: Array [
+							body: [
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-methods/combined/input.js 14:4-14:25
 									argument: JSCallExpression {
-										arguments: Array []
-										loc: SourceLocation experimental/class-private-methods/combined/input.js 14:11-14:24
+										arguments: []
 										callee: JSMemberExpression {
-											loc: SourceLocation experimental/class-private-methods/combined/input.js 14:11-14:22
 											object: JSReferenceIdentifier {
 												name: "Math"
 												loc: SourceLocation experimental/class-private-methods/combined/input.js 14:11-14:15 (Math)
@@ -293,16 +227,40 @@ JSRoot {
 												}
 												loc: SourceLocation experimental/class-private-methods/combined/input.js 14:16-14:22 (random)
 											}
+											loc: SourceLocation experimental/class-private-methods/combined/input.js 14:11-14:22
 										}
+										loc: SourceLocation experimental/class-private-methods/combined/input.js 14:11-14:24
 									}
+									loc: SourceLocation experimental/class-private-methods/combined/input.js 14:4-14:25
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:7-15:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/class-private-methods/combined/input.js 13:4-13:6
+						}
+						loc: SourceLocation experimental/class-private-methods/combined/input.js 13:2-15:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-16:1
 			}
+			loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-16:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-methods/combined/input.js>
+	loc: SourceLocation experimental/class-private-methods/combined/input.js 1:0-17:0
 }
 ```
 

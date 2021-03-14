@@ -8,36 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/export-extensions/default/input.js 1:0-2:0
-	path: UIDPath<experimental/export-extensions/default/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/export-extensions/default/input.js 1:0-1:21
-			source: JSStringLiteral {
-				value: "test"
-				loc: SourceLocation experimental/export-extensions/default/input.js 1:14-1:20
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/default/input.js 1:7-1:8
 				exported: JSIdentifier {
 					name: "A"
 					loc: SourceLocation experimental/export-extensions/default/input.js 1:7-1:8 (A)
 				}
+				loc: SourceLocation experimental/export-extensions/default/input.js 1:7-1:8
 			}
+			source: JSStringLiteral {
+				value: "test"
+				loc: SourceLocation experimental/export-extensions/default/input.js 1:14-1:20
+			}
+			loc: SourceLocation experimental/export-extensions/default/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/export-extensions/default/input.js>
+	loc: SourceLocation experimental/export-extensions/default/input.js 1:0-2:0
 }
 ```
 

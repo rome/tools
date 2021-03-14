@@ -8,34 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/366/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/366/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "await"
 				loc: SourceLocation es2015/uncategorised/366/input.js 1:6-1:11 (await)
 			}
-			loc: SourceLocation es2015/uncategorised/366/input.js 1:0-1:14
 			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
+				body: []
 				loc: SourceLocation es2015/uncategorised/366/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2015/uncategorised/366/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/366/input.js>
+	loc: SourceLocation es2015/uncategorised/366/input.js 1:0-2:0
 }
 ```
 

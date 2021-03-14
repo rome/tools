@@ -8,61 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:0-2:0
-	path: UIDPath<es2015/meta-properties/new-target-invalid-escaped-target/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "<emphasis>target</emphasis> can't contain a unicode escape"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:21
-				path: UIDPath<es2015/meta-properties/new-target-invalid-escaped-target/input.js>
-				start: Position 1:21
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:9-1:10 (f)
 			}
-			loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:0-1:33
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:13-1:33
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:15-1:31
 						expression: JSMetaProperty {
-							loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:15-1:30
 							meta: JSIdentifier {
 								name: "new"
 								loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:15-1:18 (new)
@@ -71,12 +26,49 @@ JSRoot {
 								name: "target"
 								loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:19-1:30 (target)
 							}
+							loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:15-1:30
 						}
+						loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:15-1:31
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:13-1:33
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:10-1:12
+			}
+			loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:0-1:33
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "<emphasis>"}, "target", RAW_MARKUP {value: "</emphasis> can't contain a unicode escape"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/meta-properties/new-target-invalid-escaped-target/input.js>
+				end: Position 1:21
+				start: Position 1:21
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/meta-properties/new-target-invalid-escaped-target/input.js>
+	loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:0-2:0
 }
 ```
 

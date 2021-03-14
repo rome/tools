@@ -8,40 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
-	path: UIDPath<es2015/uncategorised/220/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "+="
-				loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
-				right: JSReferenceIdentifier {
-					name: "ary"
-					loc: SourceLocation es2015/uncategorised/220/input.js 1:7-1:10 (ary)
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:3
-					elements: Array [
+					elements: [
 						JSAssignmentIdentifier {
 							name: "v"
 							loc: SourceLocation es2015/uncategorised/220/input.js 1:1-1:2 (v)
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:3
 				}
+				right: JSReferenceIdentifier {
+					name: "ary"
+					loc: SourceLocation es2015/uncategorised/220/input.js 1:7-1:10 (ary)
+				}
+				loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
 			}
+			loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/220/input.js>
+	loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
 }
 ```
 

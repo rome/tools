@@ -7,84 +7,17 @@
 ### `0`
 
 ```javascript
-Array [
-	Tag {
-		name: "filelink"
-		children: Array []
-		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
-			value: Object {target: "C:\\Users\\sebmck\\file.ts"}
-			declared: false
-			forceDiagnosticTarget: undefined
-			forkCache: Map [
-				target => ___R$project$rome$$internal$consume$Consumer_ts$default {
-					value: "C:\\Users\\sebmck\\file.ts"
-					declared: false
-					forceDiagnosticTarget: undefined
-					forkCache: Map []
-					handleUnexpected: undefined
-					hasHandledUnexpected: false
-					onDefinition: undefined
-					usedNames: Set ["target"]
-					keyPath: Array ["target"]
-					parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 2
-					path: UIDPath<unknown>
-					propertyMetadata: Object {getDiagnosticLocation: Function getDiagnosticLocation}
-					context: Object {
-						categoryValue: "romemarkup"
-						getDiagnosticLocation: Function getDiagnosticLocation
-						category: Array ["parse"]
-					}
-				}
-			]
-			handleUnexpected: undefined
-			hasHandledUnexpected: false
-			keyPath: Array []
-			onDefinition: undefined
-			parent: undefined
-			propertyMetadata: undefined
-			usedNames: Set ["target"]
-			path: UIDPath<unknown>
-			context: Object {
-				categoryValue: "romemarkup"
-				getDiagnosticLocation: Function getDiagnosticLocation
-				category: Array ["parse"]
-			}
-		}
-	}
-]
+RAW_MARKUP {value: "<filelink target=\"C:\\Users\\sebmck\\file.ts\" />"}
 ```
 
 ### `1`
 
 ```javascript
-Array [
+[
 	Tag {
 		name: "info"
-		children: Array [
-			Text {
-				value: "[MemoryFileSystem] Adding new project directory C:\\Users\\sebmck\\rome"
-				source: true
-			}
-		]
-		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
-			value: Object {}
-			declared: false
-			forceDiagnosticTarget: undefined
-			forkCache: Map []
-			handleUnexpected: undefined
-			hasHandledUnexpected: false
-			keyPath: Array []
-			onDefinition: undefined
-			parent: undefined
-			propertyMetadata: undefined
-			usedNames: Set []
-			path: UIDPath<unknown>
-			context: Object {
-				categoryValue: "romemarkup"
-				getDiagnosticLocation: Function getDiagnosticLocation
-				category: Array ["parse"]
-			}
-		}
+		children: [Text {value: "[MemoryFileSystem] Adding new project directory C:\\Users\\sebmck\\rome", source: true}]
+		attributes: Consumer<{}>
 	}
 ]
 ```
@@ -92,66 +25,19 @@ Array [
 ### `2`
 
 ```javascript
-Array [
-	Text {
-		value: "  <info>[MemoryFileSystem] Adding new project directory C:\\Users\\Sebastian\\rome\\</info>\n        "
-		source: true
-	}
+[
+	Text {value: "  <info>[MemoryFileSystem] Adding new project directory C:\\Users\\Sebastian\\rome\\</info>\n        ", source: true}
 	Tag {
 		name: "error"
-		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
-			value: Object {}
-			declared: false
-			forceDiagnosticTarget: undefined
-			forkCache: Map []
-			handleUnexpected: undefined
-			hasHandledUnexpected: false
-			keyPath: Array []
-			onDefinition: undefined
-			parent: undefined
-			propertyMetadata: undefined
-			usedNames: Set []
-			path: UIDPath<unknown>
-			context: Object {
-				categoryValue: "romemarkup"
-				getDiagnosticLocation: Function getDiagnosticLocation
-				category: Array ["parse"]
-			}
-		}
-		children: Array [
+		children: [
 			Tag {
 				name: "emphasis"
-				children: Array [
-					Text {
-						value: "^"
-						source: true
-					}
-				]
-				attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
-					value: Object {}
-					declared: false
-					forceDiagnosticTarget: undefined
-					forkCache: Map []
-					handleUnexpected: undefined
-					hasHandledUnexpected: false
-					keyPath: Array []
-					onDefinition: undefined
-					parent: undefined
-					propertyMetadata: undefined
-					usedNames: Set []
-					path: UIDPath<unknown>
-					context: Object {
-						categoryValue: "romemarkup"
-						getDiagnosticLocation: Function getDiagnosticLocation
-						category: Array ["parse"]
-					}
-				}
+				children: [Text {value: "^", source: true}]
+				attributes: Consumer<{}>
 			}
 		]
+		attributes: Consumer<{}>
 	}
-	Text {
-		value: " "
-		source: true
-	}
+	Text {value: " ", source: true}
 ]
 ```

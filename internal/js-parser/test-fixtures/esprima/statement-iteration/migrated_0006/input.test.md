@@ -8,37 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-iteration/migrated_0006/input.js>
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:0-1:26
-			test: JSBooleanLiteral {
-				value: true
-				loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:7-1:11
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:13-1:26
 				expression: JSCallExpression {
-					arguments: Array []
-					loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:13-1:26
+					arguments: []
 					callee: JSReferenceIdentifier {
 						name: "doSomething"
 						loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:13-1:24 (doSomething)
 					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:13-1:26
 				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:13-1:26
 			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:7-1:11
+			}
+			loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-iteration/migrated_0006/input.js>
+	loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:0-2:0
 }
 ```
 

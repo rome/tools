@@ -8,50 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:0-2:0
-	path: UIDPath<es2015/let/let-at-binding-list-fail-3/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:0-1:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:4-1:9
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "let"
-									loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:5-1:8 (let)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:5-1:8
 									}
+									loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:5-1:8 (let)
 								}
 							]
+							loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:4-1:9
 						}
-						loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:4-1:14
 						init: JSArrayExpression {
-							elements: Array []
+							elements: []
 							loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:12-1:14
 						}
+						loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:4-1:14
 					}
 				]
+				loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:0-1:15
 			}
+			loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-at-binding-list-fail-3/input.js>
+	loc: SourceLocation es2015/let/let-at-binding-list-fail-3/input.js 1:0-2:0
 }
 ```
 

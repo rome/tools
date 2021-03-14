@@ -8,28 +8,15 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/null-assertion-then-property-access/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:5
 			expression: JSMemberExpression {
-				loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:4
 				object: TSNonNullExpression {
-					loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:2
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:1 (x)
 					}
+					loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:2
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
@@ -38,9 +25,20 @@ JSRoot {
 					}
 					loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:3-1:4 (y)
 				}
+				loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:4
 			}
+			loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-1:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/null-assertion-then-property-access/input.ts>
+	loc: SourceLocation typescript/cast/null-assertion-then-property-access/input.ts 1:0-2:0
 }
 ```
 

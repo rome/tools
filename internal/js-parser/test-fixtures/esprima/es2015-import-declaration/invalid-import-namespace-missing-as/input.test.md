@@ -8,65 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword <emphasis>as</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
-			}
+			namedSpecifiers: []
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "from"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:9-1:13 (from)
 					}
-					importKind: undefined
 					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:9-1:13
 				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:14-1:19
 			expression: JSStringLiteral {
 				value: "foo"
 				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:14-1:19
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:14-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected keyword <emphasis>"}, "as", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js>
+				end: Position 1:8
+				start: Position 1:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-2:0
 }
 ```
 

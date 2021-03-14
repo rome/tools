@@ -8,137 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Binding member expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:28
-				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js>
-				start: Position 1:24
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-1:54
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-1:53
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:52-1:53
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-1:52
-					params: Array [
+					params: [
 						JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:1-1:49
-							elements: Array [
+							elements: [
 								JSBindingArrayPattern {
-									rest: undefined
-									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:2-1:48
-									elements: Array [
+									elements: [
 										JSBindingArrayPattern {
-											rest: undefined
-											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:3-1:47
-											elements: Array [
+											elements: [
 												JSBindingArrayPattern {
-													rest: undefined
-													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:4-1:46
-													elements: Array [
+													elements: [
 														JSBindingArrayPattern {
-															rest: undefined
-															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:5-1:45
-															elements: Array [
+															elements: [
 																JSBindingArrayPattern {
-																	rest: undefined
-																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:6-1:44
-																	elements: Array [
+																	elements: [
 																		JSBindingArrayPattern {
-																			rest: undefined
-																			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:7-1:43
-																			elements: Array [
+																			elements: [
 																				JSBindingArrayPattern {
-																					rest: undefined
-																					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:8-1:42
-																					elements: Array [
+																					elements: [
 																						JSBindingArrayPattern {
-																							rest: undefined
-																							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:9-1:41
-																							elements: Array [
+																							elements: [
 																								JSBindingArrayPattern {
-																									rest: undefined
-																									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:10-1:40
-																									elements: Array [
+																									elements: [
 																										JSBindingArrayPattern {
-																											rest: undefined
-																											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:11-1:39
-																											elements: Array [
+																											elements: [
 																												JSBindingArrayPattern {
-																													rest: undefined
-																													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:12-1:38
-																													elements: Array [
+																													elements: [
 																														JSBindingArrayPattern {
-																															rest: undefined
-																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:13-1:37
-																															elements: Array [
+																															elements: [
 																																JSBindingArrayPattern {
-																																	rest: undefined
-																																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:14-1:36
-																																	elements: Array [
+																																	elements: [
 																																		JSBindingArrayPattern {
-																																			rest: undefined
-																																			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:15-1:35
-																																			elements: Array [
+																																			elements: [
 																																				JSBindingArrayPattern {
-																																					rest: undefined
-																																					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:16-1:34
-																																					elements: Array [
+																																					elements: [
 																																						JSBindingArrayPattern {
-																																							rest: undefined
-																																							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:17-1:33
-																																							elements: Array [
+																																							elements: [
 																																								JSBindingArrayPattern {
-																																									rest: undefined
-																																									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:18-1:32
-																																									elements: Array [
+																																									elements: [
 																																										JSBindingArrayPattern {
-																																											rest: undefined
-																																											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:19-1:31
-																																											elements: Array [
+																																											elements: [
 																																												JSBindingArrayPattern {
-																																													rest: undefined
-																																													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:20-1:30
-																																													elements: Array [
+																																													elements: [
 																																														JSBindingObjectPattern {
-																																															rest: undefined
-																																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:21-1:29
-																																															properties: Array [
+																																															properties: [
 																																																JSBindingObjectPatternProperty {
 																																																	key: JSStaticPropertyKey {
 																																																		value: JSIdentifier {
@@ -154,52 +76,101 @@ JSRoot {
 																																																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:22-1:28
 																																																}
 																																															]
+																																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:21-1:29
 																																														}
 																																													]
+																																													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:20-1:30
 																																												}
 																																											]
+																																											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:19-1:31
 																																										}
 																																									]
+																																									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:18-1:32
 																																								}
 																																							]
+																																							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:17-1:33
 																																						}
 																																					]
+																																					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:16-1:34
 																																				}
 																																			]
+																																			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:15-1:35
 																																		}
 																																	]
+																																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:14-1:36
 																																}
 																															]
+																															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:13-1:37
 																														}
 																													]
+																													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:12-1:38
 																												}
 																											]
+																											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:11-1:39
 																										}
 																									]
+																									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:10-1:40
 																								}
 																							]
+																							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:9-1:41
 																						}
 																					]
+																					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:8-1:42
 																				}
 																			]
+																			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:7-1:43
 																		}
 																	]
+																	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:6-1:44
 																}
 															]
+															loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:5-1:45
 														}
 													]
+													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:4-1:46
 												}
 											]
+											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:3-1:47
 										}
 									]
+									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:2-1:48
 								}
 							]
+							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:1-1:49
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-1:52
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-1:53
+			}
+			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-1:54
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Binding member expression"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js>
+				end: Position 1:28
+				start: Position 1:24
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-2:0
 }
 ```
 

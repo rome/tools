@@ -10,9 +10,9 @@ export const tests = createDiagnosticsCategory({
 	},
 	UNDECLARED: {
 		message: markup`No tests declared in this file`,
-		category: DIAGNOSTIC_CATEGORIES["tests/noneDeclared"],
+		category: DIAGNOSTIC_CATEGORIES["tests/empty"],
 	},
-	LOGS: (advice: DiagnosticAdvice) => ({
+	LOGS: (advice: DiagnosticAdvice[]) => ({
 		message: markup`Test file produced console logs`,
 		category: DIAGNOSTIC_CATEGORIES["tests/logs"],
 		advice: [

@@ -55,5 +55,5 @@ export function getModuleId(
 	source: string,
 	opts: BundleCompileOptions,
 ): undefined | UIDPath {
-	return opts.relativeSourcesToModuleId[source];
+	return opts.relativeSourcesToModuleId.get(source);
 }

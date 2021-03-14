@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:0-1:24
-	path: UIDPath<es2015/yield/parameter-name-generator-method/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<es2015/yield/parameter-name-generator-method/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:0-1:24
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:1-1:22
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -52,38 +21,59 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:4-1:10
 						}
-						loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:3-1:20
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:18-1:20
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:10-1:17
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "yield"
-									loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:11-1:16 (yield)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:11-1:16
 									}
+									loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:11-1:16 (yield)
 								}
 							]
+							loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:10-1:17
 						}
+						loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:3-1:20
 					}
 				]
+				loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:1-1:22
+			}
+			loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:0-1:24
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/parameter-name-generator-method/input.js>
+				end: Position 1:16
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/parameter-name-generator-method/input.js>
+	loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:0-1:24
 }
 ```
 

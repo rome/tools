@@ -14,7 +14,6 @@ export type AnyNodes = AnyNode | (AnyNode[]);
 /* GENERATED:START(hash:9eef702433cee0c08a07e20ec338fa393db23c8d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
-export * from "./common/commit/CommitRoot";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
 export * from "./css/core/CSSBlock";
@@ -293,7 +292,6 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
-	| n.CommitRoot
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
 	| n.CSSBlock

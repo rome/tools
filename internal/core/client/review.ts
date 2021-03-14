@@ -13,13 +13,14 @@ import {
 	DiagnosticAdviceAction,
 	DiagnosticsProcessor,
 	derivePositionlessKeyFromDiagnostic,
+	getActionAdviceFromDiagnostic,
 } from "@internal/diagnostics";
-import {ClientRequestFlags, ServerQueryResponse} from "@internal/core";
-
+import {ClientQueryResponse, ClientRequestFlags} from "@internal/core";
 import {Dict} from "@internal/typescript-helpers";
 import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
 import {markup} from "@internal/markup";
 import {ExtendedMap} from "@internal/collections";
+import {MixedPathSet} from "@internal/path";
 
 type State = {
 	initial: boolean;
@@ -30,7 +31,7 @@ type State = {
 async function check(
 	req: ClientRequest,
 	state: State,
-): Promise<ServerQueryResponse> {
+): Promise<ClientQueryResponse> {
 	const {reporter} = req.client;
 
 	reporter.clearScreen();
@@ -82,36 +83,35 @@ async function ask(
 	state: State,
 	showMoreOptions: boolean,
 	totalDiagnostics: number,
-): Promise<ServerQueryResponse> {
+): Promise<ClientQueryResponse> {
 	const {client} = req;
 	const {reporter} = client;
 	reporter.clearScreen();
 
 	// Extract actions and remove them from the diagnostic
-	let {advice = []} = diag.description;
 	let hasExtraOptions = false;
 	const actions: DiagnosticAdviceAction[] = [];
-	for (const item of advice) {
-		if (item.type === "action") {
-			// Only show extra items and hide all non-extra items when `more === true`
-			if (item.extra === true) {
-				hasExtraOptions = true;
-				if (!showMoreOptions) {
-					continue;
-				}
-			} else if (showMoreOptions) {
+
+	for (const item of getActionAdviceFromDiagnostic(diag)) {
+		// Only show extra items and hide all non-extra items when `more === true`
+		if (item.secondary === true) {
+			hasExtraOptions = true;
+			if (!showMoreOptions) {
 				continue;
 			}
-
-			actions.push(item);
+		} else if (showMoreOptions) {
+			continue;
 		}
+
+		actions.push(item);
 	}
-	advice = advice.filter((item) => item.type !== "action");
+
+	const {description} = diag;
 	diag = {
 		...diag,
 		description: {
-			...diag.description,
-			advice,
+			...description,
+			advice: description.advice.filter((item) => item.type !== "action"),
 		},
 	};
 
@@ -125,13 +125,16 @@ async function ask(
 	let counter = 0;
 	for (const action of actions) {
 		const key = String(counter++);
+
+		const {suggestedKeyboardShortcut} = action;
 		let shortcut =
-			action.shortcut !== undefined && !chosenShortcuts.has(action.shortcut)
-				? action.shortcut
+			suggestedKeyboardShortcut !== undefined &&
+			!chosenShortcuts.has(suggestedKeyboardShortcut)
+				? suggestedKeyboardShortcut
 				: undefined;
 		optionToAction.set(key, action);
 		actionOptions[key] = {
-			label: action.noun,
+			label: action.description,
 			shortcut,
 		};
 	}
@@ -189,10 +192,12 @@ async function ask(
 
 	// Check if this diagnostic is now out of date
 	await printer.fetchFileSources([diag]);
-	const {outdatedPaths} = printer.getDiagnosticDependencyMeta(diag);
-	if (outdatedPaths.size > 0) {
+	const {outdatedPaths, missingPaths} = printer.getDiagnosticDependencyMeta(
+		diag,
+	);
+	if (outdatedPaths.size > 0 || missingPaths.size > 0) {
 		const files = Array.from(
-			outdatedPaths,
+			new MixedPathSet([...outdatedPaths, ...missingPaths]),
 			(path) => markup`<emphasis>${path}</emphasis>`,
 		);
 
@@ -242,7 +247,10 @@ async function ask(
 			commandName: action.command,
 			args: action.args,
 			commandFlags: action.commandFlags,
-			requestFlags,
+			requestFlags: {
+				...requestFlags,
+				programmatic: true,
+			},
 		},
 		"server",
 	);
@@ -256,7 +264,7 @@ async function ask(
 
 export default async function review(
 	req: ClientRequest,
-): Promise<ServerQueryResponse> {
+): Promise<ClientQueryResponse> {
 	const {reporter} = req.client;
 	const state: State = {
 		initial: true,
@@ -274,7 +282,6 @@ export default async function review(
 			await printDiagnostics({
 				diagnostics: res.diagnostics,
 				suppressions: [],
-				excludeFooter: true,
 				printerOptions: {
 					processor: new DiagnosticsProcessor(),
 					reporter,

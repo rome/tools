@@ -8,87 +8,80 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-array-binding-pattern/invalid-dup-param/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<esprima/es2015-array-binding-pattern/invalid-dup-param/input.js>
-				start: Position 1:5
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>b</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:5-1:6 (b)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:18
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:17
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:16-1:17
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:16
-					params: Array [
+					params: [
 						JSBindingArrayPattern {
-							loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:1-1:13
-							rest: JSBindingIdentifier {
-								name: "b"
-								loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:11-1:12 (b)
-							}
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
 									loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:2-1:3 (a)
 								}
 								JSBindingArrayPattern {
-									rest: undefined
-									loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:4-1:7
-									elements: Array [
+									elements: [
 										JSBindingIdentifier {
 											name: "b"
 											loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:5-1:6 (b)
 										}
 									]
+									loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:4-1:7
 								}
 							]
+							rest: JSBindingIdentifier {
+								name: "b"
+								loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:11-1:12 (b)
+							}
+							loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:1-1:13
 						}
 					]
+					loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:16
 				}
+				loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:17
+			}
+			loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-1:18
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:5-1:6 (b)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "b", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-array-binding-pattern/invalid-dup-param/input.js>
+				end: Position 1:6
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-array-binding-pattern/invalid-dup-param/input.js>
+	loc: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:0-2:0
 }
 ```
 

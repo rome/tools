@@ -1,4 +1,4 @@
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {WorkerBufferPatch} from "@internal/core";
 
 export function applyWorkerBufferPatch(

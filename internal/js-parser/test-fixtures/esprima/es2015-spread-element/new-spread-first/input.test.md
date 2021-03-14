@@ -8,35 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-spread-element/new-spread-first/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-1:18
 			expression: JSNewExpression {
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-1:17
-				callee: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:4-1:5 (f)
-				}
-				arguments: Array [
+				arguments: [
 					JSSpreadElement {
-						loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:6-1:10
 						argument: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:9-1:10 (x)
 						}
+						loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:6-1:10
 					}
 					JSReferenceIdentifier {
 						name: "y"
@@ -47,9 +28,24 @@ JSRoot {
 						loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:15-1:16 (z)
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:4-1:5 (f)
+				}
+				loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-1:17
 			}
+			loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-spread-element/new-spread-first/input.js>
+	loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-2:0
 }
 ```
 

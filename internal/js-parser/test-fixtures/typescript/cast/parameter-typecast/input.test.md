@@ -8,48 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/parameter-typecast/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:11
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:10
+				arguments: []
 				callee: JSReferenceIdentifier {
 					name: "func"
 					loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:4 (func)
 				}
+				loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:10
 			}
+			loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:11
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:9
 				path: UIDPath<typescript/cast/parameter-typecast/input.ts>
+				end: Position 1:9
 				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/parameter-typecast/input.ts>
+	loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-2:0
 }
 ```
 

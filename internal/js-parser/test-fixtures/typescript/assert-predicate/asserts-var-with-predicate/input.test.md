@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 1:0-4:0
-	path: UIDPath<typescript/assert-predicate/asserts-var-with-predicate/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,56 +25,65 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:2-2:16
 						}
-						loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:2-2:60
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:58-2:60
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:2-2:16
 							start: Position 2:2
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:58-2:60
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:16-2:57
+							params: [
+								JSBindingIdentifier {
+									name: "value"
+									meta: JSPatternMeta {
+										typeAnnotation: TSUnknownKeywordTypeAnnotation {
+											loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:24-2:31
+										}
+										loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:17-2:31
+									}
+									loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:17-2:22 (value)
+								}
+							]
 							returnType: TSTypePredicate {
 								asserts: true
-								loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:42-2:57
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:51-2:57}
 								parameterName: JSIdentifier {
 									name: "value"
 									loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:42-2:47 (value)
 								}
-							}
-							params: Array [
-								JSBindingIdentifier {
-									name: "value"
-									loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:17-2:22 (value)
-									meta: JSPatternMeta {
-										optional: undefined
-										loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:17-2:31
-										typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:24-2:31}
-									}
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:51-2:57
 								}
-							]
+								loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:42-2:57
+							}
+							loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:16-2:57
 						}
+						loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 2:2-2:60
 					}
 				]
+				loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 1:0-3:1
 			}
+			loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/assert-predicate/asserts-var-with-predicate/input.ts>
+	loc: SourceLocation typescript/assert-predicate/asserts-var-with-predicate/input.ts 1:0-4:0
 }
 ```
 

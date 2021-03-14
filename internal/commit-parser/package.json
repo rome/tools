@@ -1,6 +1,0 @@
-{
-	"name": "@internal/commit-parser",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

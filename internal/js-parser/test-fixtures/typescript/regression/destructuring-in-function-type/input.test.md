@@ -8,42 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:0-4:0
-	path: UIDPath<typescript/regression/destructuring-in-function-type/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "MyType"
 				loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:5-1:11 (MyType)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:0-1:37
 			right: TSFunctionType {
-				loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:14-1:37
-				typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:34-1:37}
 				meta: TSSignatureDeclarationMeta {
-					rest: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:14-1:37
-					parameters: Array [
+					parameters: [
 						JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:15-1:24
-							meta: JSPatternMeta {
-								optional: undefined
-								loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:15-1:29
-								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:26-1:29}
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -59,51 +34,70 @@ JSRoot {
 									loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:17-1:22
 								}
 							]
+							meta: JSPatternMeta {
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
+									loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:26-1:29
+								}
+								loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:15-1:29
+							}
+							loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:15-1:24
 						}
 					]
+					loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:14-1:37
 				}
+				typeAnnotation: TSAnyKeywordTypeAnnotation {
+					loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:34-1:37
+				}
+				loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:14-1:37
 			}
+			loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:0-1:37
 		}
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "AnotherType"
 				loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:5-3:16 (AnotherType)
 			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:0-3:36
 			right: TSFunctionType {
-				loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:19-3:36
-				typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:33-3:36}
 				meta: TSSignatureDeclarationMeta {
-					rest: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:19-3:36
-					parameters: Array [
+					parameters: [
 						JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:20-3:23
-							meta: JSPatternMeta {
-								optional: undefined
-								loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:20-3:28
-								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:25-3:28}
-							}
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:21-3:22 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:21-3:22
 									}
+									loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:21-3:22 (a)
 								}
 							]
+							meta: JSPatternMeta {
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
+									loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:25-3:28
+								}
+								loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:20-3:28
+							}
+							loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:20-3:23
 						}
 					]
+					loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:19-3:36
 				}
+				typeAnnotation: TSAnyKeywordTypeAnnotation {
+					loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:33-3:36
+				}
+				loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:19-3:36
 			}
+			loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 3:0-3:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/regression/destructuring-in-function-type/input.ts>
+	loc: SourceLocation typescript/regression/destructuring-in-function-type/input.ts 1:0-4:0
 }
 ```
 

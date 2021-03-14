@@ -8,62 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0175/input.js>
-	body: Array [
+	body: [
 		JSDoWhileStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:0-1:10
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:9-1:10
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:3-1:8
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:5-1:6
 						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:5-1:6 (x)
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:5-1:6
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:3-1:8
 			}
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:9-1:10
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:0-1:10
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, "while", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "*", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:10
 				path: UIDPath<esprima/invalid-syntax/migrated_0175/input.js>
+				end: Position 1:10
 				start: Position 1:9
 			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>*</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>while</emphasis>"}
-					}
-				]
-			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0175/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:0-2:0
 }
 ```
 

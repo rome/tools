@@ -8,36 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/12/input.js 1:0-3:0
-	path: UIDPath<es2018/object-rest-spread/12/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2018/object-rest-spread/12/input.js 1:0-1:35
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2018/object-rest-spread/12/input.js 1:7-1:35
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2018/object-rest-spread/12/input.js 1:7-1:35
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingObjectPattern {
-								loc: SourceLocation es2018/object-rest-spread/12/input.js 1:13-1:28
-								rest: JSBindingIdentifier {
-									name: "bar"
-									loc: SourceLocation es2018/object-rest-spread/12/input.js 1:23-1:26 (bar)
-								}
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -53,44 +33,59 @@ JSRoot {
 										loc: SourceLocation es2018/object-rest-spread/12/input.js 1:15-1:18
 									}
 								]
+								rest: JSBindingIdentifier {
+									name: "bar"
+									loc: SourceLocation es2018/object-rest-spread/12/input.js 1:23-1:26 (bar)
+								}
+								loc: SourceLocation es2018/object-rest-spread/12/input.js 1:13-1:28
 							}
-							loc: SourceLocation es2018/object-rest-spread/12/input.js 1:13-1:34
 							init: JSReferenceIdentifier {
 								name: "baz"
 								loc: SourceLocation es2018/object-rest-spread/12/input.js 1:31-1:34 (baz)
 							}
+							loc: SourceLocation es2018/object-rest-spread/12/input.js 1:13-1:34
 						}
 					]
+					loc: SourceLocation es2018/object-rest-spread/12/input.js 1:7-1:35
 				}
+				loc: SourceLocation es2018/object-rest-spread/12/input.js 1:7-1:35
 			}
+			loc: SourceLocation es2018/object-rest-spread/12/input.js 1:0-1:35
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2018/object-rest-spread/12/input.js 2:0-2:21
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2018/object-rest-spread/12/input.js 2:7-2:21
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2018/object-rest-spread/12/input.js 2:7-2:21
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "bar"
 								loc: SourceLocation es2018/object-rest-spread/12/input.js 2:13-2:16 (bar)
 							}
-							loc: SourceLocation es2018/object-rest-spread/12/input.js 2:13-2:20
 							init: JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation es2018/object-rest-spread/12/input.js 2:19-2:20
 							}
+							loc: SourceLocation es2018/object-rest-spread/12/input.js 2:13-2:20
 						}
 					]
+					loc: SourceLocation es2018/object-rest-spread/12/input.js 2:7-2:21
 				}
+				loc: SourceLocation es2018/object-rest-spread/12/input.js 2:7-2:21
 			}
+			loc: SourceLocation es2018/object-rest-spread/12/input.js 2:0-2:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/12/input.js>
+	loc: SourceLocation es2018/object-rest-spread/12/input.js 1:0-3:0
 }
 ```
 

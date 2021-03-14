@@ -11,23 +11,24 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-import {Mapping, Mappings, ParsedMappings, SourceMap} from "./types";
+import {Mapping, ParsedMappings, SourceMap} from "./types";
 import * as base64 from "./base64";
 import {compareByGeneratedPositionsInflated, toRelativeUrl} from "./util";
 import ArraySet from "./ArraySet";
 import MappingList from "./MappingList";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {ExtendedMap} from "@internal/collections";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
+import {encodeBase64} from "@internal/binary";
 
 type MaterializeCallback = VoidCallback;
 
 export default class SourceMapGenerator {
 	constructor(
 		args: {
-			path: AnyPath;
+			path: Path;
 			sourceRoot?: string;
 		},
 	) {
@@ -42,7 +43,7 @@ export default class SourceMapGenerator {
 		this.materializeCallbacks = [];
 	}
 
-	public path: AnyPath;
+	public path: Path;
 	private materializeCallbacks: MaterializeCallback[];
 	private sourceRoot: undefined | string;
 	private sources: ArraySet;
@@ -254,7 +255,7 @@ export default class SourceMapGenerator {
 
 	public toComment(): string {
 		const jsonMap = this.toJSON();
-		const base64Map = Buffer.from(jsonMap).toString("base64");
+		const base64Map = encodeBase64(jsonMap);
 		const comment = `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
 		return comment;
 	}
@@ -280,7 +281,7 @@ export default class SourceMapGenerator {
 		);
 	}
 
-	private getMappings(): Mappings {
+	private getMappings(): Mapping[] {
 		this.materialize();
 		return this.mappings.toArray();
 	}

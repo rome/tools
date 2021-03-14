@@ -8,34 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSExpressionStatement {
+			expression: JSImportCall {
+				argument: JSStringLiteral {
+					value: "test.js"
+					loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 3:7-3:16
+				}
+				loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 3:6-3:17
+			}
+			loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 3:0-3:18
+		}
+	]
+	comments: []
 	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 1:0-4:0
-	path: UIDPath<es2020/dynamic-import/parses-strict/input.js>
-	directives: Array [
+	diagnostics: []
+	directives: [
 		JSDirective {
 			value: "use strict"
 			loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 1:0-1:13
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 3:0-3:18
-			expression: JSImportCall {
-				loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 3:6-3:17
-				argument: JSStringLiteral {
-					value: "test.js"
-					loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 3:7-3:16
-				}
-			}
-		}
-	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/dynamic-import/parses-strict/input.js>
+	loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 1:0-4:0
 }
 ```
 

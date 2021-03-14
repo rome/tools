@@ -8,53 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-of/brackets-const/input.js 1:0-2:0
-	path: UIDPath<es2015/for-of/brackets-const/input.js>
-	body: Array [
+	body: [
 		JSForOfStatement {
 			await: false
-			loc: SourceLocation es2015/for-of/brackets-const/input.js 1:0-1:25
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/for-of/brackets-const/input.js 1:23-1:25
-			}
-			right: JSRegExpLiteral {
-				global: false
-				insensitive: false
-				multiline: false
-				noDotNewline: false
-				sticky: false
-				unicode: false
-				loc: SourceLocation es2015/for-of/brackets-const/input.js 1:18-1:21
-				expression: JSRegExpSubExpression {
-					loc: SourceLocation es2015/for-of/brackets-const/input.js 1:19-1:20
-					body: Array [
-						JSRegExpCharacter {
-							value: "b"
-							loc: SourceLocation es2015/for-of/brackets-const/input.js 1:19-1:20
-						}
-					]
-				}
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/for-of/brackets-const/input.js 1:5-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/for-of/brackets-const/input.js 1:11-1:14
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -70,14 +37,43 @@ JSRoot {
 									loc: SourceLocation es2015/for-of/brackets-const/input.js 1:12-1:13
 								}
 							]
+							loc: SourceLocation es2015/for-of/brackets-const/input.js 1:11-1:14
 						}
-						init: undefined
 						loc: SourceLocation es2015/for-of/brackets-const/input.js 1:11-1:14
 					}
 				]
+				loc: SourceLocation es2015/for-of/brackets-const/input.js 1:5-1:14
 			}
+			right: JSRegExpLiteral {
+				global: false
+				insensitive: false
+				multiline: false
+				noDotNewline: false
+				sticky: false
+				unicode: false
+				expression: JSRegExpSubExpression {
+					body: [
+						JSRegExpCharacter {
+							value: "b"
+							loc: SourceLocation es2015/for-of/brackets-const/input.js 1:19-1:20
+						}
+					]
+					loc: SourceLocation es2015/for-of/brackets-const/input.js 1:19-1:20
+				}
+				loc: SourceLocation es2015/for-of/brackets-const/input.js 1:18-1:21
+			}
+			loc: SourceLocation es2015/for-of/brackets-const/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-of/brackets-const/input.js>
+	loc: SourceLocation es2015/for-of/brackets-const/input.js 1:0-2:0
 }
 ```
 

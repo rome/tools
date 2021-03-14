@@ -8,62 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/function-in-generic/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/function-in-generic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/function-in-generic/input.ts 1:0-1:25
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/function-in-generic/input.ts 1:0-1:25
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/function-in-generic/input.ts 1:4-1:24
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/function-in-generic/input.ts 1:4-1:24
 								typeAnnotation: TSTypeReference {
-									loc: SourceLocation typescript/types/function-in-generic/input.ts 1:7-1:24
 									typeName: JSReferenceIdentifier {
 										name: "Array"
 										loc: SourceLocation typescript/types/function-in-generic/input.ts 1:7-1:12 (Array)
 									}
 									typeParameters: TSTypeParameterInstantiation {
-										loc: SourceLocation typescript/types/function-in-generic/input.ts 1:12-1:24
-										params: Array [
+										params: [
 											TSFunctionType {
-												loc: SourceLocation typescript/types/function-in-generic/input.ts 1:13-1:23
-												typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/types/function-in-generic/input.ts 1:19-1:23}
 												meta: TSSignatureDeclarationMeta {
-													parameters: Array []
-													rest: undefined
-													typeParameters: undefined
+													parameters: []
 													loc: SourceLocation typescript/types/function-in-generic/input.ts 1:13-1:23
 												}
+												typeAnnotation: TSVoidKeywordTypeAnnotation {
+													loc: SourceLocation typescript/types/function-in-generic/input.ts 1:19-1:23
+												}
+												loc: SourceLocation typescript/types/function-in-generic/input.ts 1:13-1:23
 											}
 										]
+										loc: SourceLocation typescript/types/function-in-generic/input.ts 1:12-1:24
 									}
+									loc: SourceLocation typescript/types/function-in-generic/input.ts 1:7-1:24
 								}
+								loc: SourceLocation typescript/types/function-in-generic/input.ts 1:4-1:24
 							}
+							loc: SourceLocation typescript/types/function-in-generic/input.ts 1:4-1:24
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/function-in-generic/input.ts 1:4-1:24
 					}
 				]
+				loc: SourceLocation typescript/types/function-in-generic/input.ts 1:0-1:25
 			}
+			loc: SourceLocation typescript/types/function-in-generic/input.ts 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/function-in-generic/input.ts>
+	loc: SourceLocation typescript/types/function-in-generic/input.ts 1:0-2:0
 }
 ```
 

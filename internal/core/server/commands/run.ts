@@ -7,21 +7,11 @@
 
 import {ServerRequest} from "@internal/core";
 import {ProjectDefinition} from "@internal/project";
-import {SourceMap} from "@internal/codec-source-map";
 import Bundler from "../bundler/Bundler";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {AbsoluteFilePath, createRelativePath} from "@internal/path";
 import {markup} from "@internal/markup";
-
-// This will be dispatched to the client where it has a special case for `executeCode`
-type RunResult = {
-	type: "executeCode";
-	args: string[];
-	path: AbsoluteFilePath;
-	code: string;
-	map: SourceMap;
-};
 
 export default createServerCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
@@ -32,22 +22,71 @@ export default createServerCommand({
 	defineFlags() {
 		return {};
 	},
-	async callback(req: ServerRequest): Promise<RunResult> {
+	async callback(req: ServerRequest): Promise<void> {
 		const {flags} = req.client;
 		const {server} = req;
 		req.expectArgumentLength(1, Infinity);
 		const [arg, ...args] = req.query.args;
 
-		async function executeCode(path: AbsoluteFilePath): Promise<RunResult> {
+		async function executeCode(path: AbsoluteFilePath): Promise<void> {
 			const bundler = Bundler.createFromServerRequest(req);
-			const {entry} = await bundler.bundle(path);
-			return {
-				type: "executeCode",
+			const workerPromise = server.workerManager.spawnWorkerUnsafe({
+				type: "script-runner",
+				pipeIO: false,
+				env: req.client.env,
+			});
+			workerPromise.then((worker) => {
+				req.resources.add(worker.thread);
+			});
+
+			const [bundle, workerContainer] = await Promise.all([
+				await bundler.bundle(path),
+				workerPromise,
+			]);
+
+			const {entry} = bundle;
+
+			const {worker} = workerContainer.thread;
+
+			worker.on(
+				"exit",
+				(exitCode) => {
+					req.teardown({
+						type: "EXIT",
+						code: Number(exitCode),
+						markers: [],
+					});
+				},
+			);
+
+			worker.stderr.on(
+				"data",
+				(data) => {
+					req.bridge.events.write.call([data, true]);
+				},
+			);
+
+			worker.stdout.on(
+				"data",
+				(data) => {
+					req.bridge.events.write.call([data, false]);
+				},
+			);
+
+			const {exitCode} = await workerContainer.bridge.events.executeScript.call({
+				contextDirectory: server.projectManager.getRootProjectForPath(path).directory,
+				cwd: req.client.flags.cwd,
 				args,
 				path,
-				code: entry.js.content(),
-				map: entry.sourceMap.map.serialize(),
-			};
+				code: await entry.js.content(),
+			});
+			if (exitCode !== undefined) {
+				req.teardown({
+					type: "EXIT",
+					code: exitCode,
+					markers: [],
+				});
+			}
 		}
 
 		// Get the current project

@@ -8,45 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/literal-number/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/literal-number/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/literal-number/input.ts 1:0-1:9
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/literal-number/input.ts 1:0-1:9
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/literal-number/input.ts 1:4-1:8
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/literal-number/input.ts 1:4-1:8
 								typeAnnotation: TSNumericLiteralTypeAnnotation {
 									value: 0
-									format: undefined
 									loc: SourceLocation typescript/types/literal-number/input.ts 1:7-1:8
 								}
+								loc: SourceLocation typescript/types/literal-number/input.ts 1:4-1:8
 							}
+							loc: SourceLocation typescript/types/literal-number/input.ts 1:4-1:8
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/literal-number/input.ts 1:4-1:8
 					}
 				]
+				loc: SourceLocation typescript/types/literal-number/input.ts 1:0-1:9
 			}
+			loc: SourceLocation typescript/types/literal-number/input.ts 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/literal-number/input.ts>
+	loc: SourceLocation typescript/types/literal-number/input.ts 1:0-2:0
 }
 ```
 

@@ -8,60 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-2:0
-	path: UIDPath<es2015/arrow-functions/comma-after-rest-param/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<es2015/arrow-functions/comma-after-rest-param/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:16
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:16
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:14-1:16
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					params: Array []
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:13
+					params: []
 					rest: JSBindingIdentifier {
 						name: "rest"
 						loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:4-1:8 (rest)
 					}
+					loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:13
 				}
+				loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:16
+			}
+			loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:16
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/arrow-functions/comma-after-rest-param/input.js>
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/arrow-functions/comma-after-rest-param/input.js>
+	loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-2:0
 }
 ```
 

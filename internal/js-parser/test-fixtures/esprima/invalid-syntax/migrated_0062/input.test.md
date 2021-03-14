@@ -8,55 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0062/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unterminated regular expression"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<esprima/invalid-syntax/migrated_0062/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:0-2:0
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:0-2:0
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:4-2:0
 						init: JSBinaryExpression {
 							operator: "/"
-							loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:8-2:0
-							right: JSReferenceIdentifier {
-								name: "INVALID_PLACEHOLDER"
-								loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 2:0-2:0
-							}
 							left: JSRegExpLiteral {
 								global: false
 								insensitive: false
@@ -64,18 +27,51 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:8-1:10
 								expression: JSRegExpSubExpression {
-									body: Array []
+									body: []
 									loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:9-1:9
 								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:8-1:10
 							}
+							right: JSReferenceIdentifier {
+								name: "INVALID_PLACEHOLDER"
+								loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 2:0-2:0
+							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:8-2:0
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:4-2:0
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:0-2:0
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:0-2:0
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unterminated regular expression"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0062/input.js>
+				end: Position 1:9
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0062/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0062/input.js 1:0-2:0
 }
 ```
 

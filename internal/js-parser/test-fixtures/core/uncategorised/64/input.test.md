@@ -8,53 +8,48 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/64/input.js 1:0-2:11
-	path: UIDPath<core/uncategorised/64/input.js>
-	comments: Array [
+	body: [
+		JSIfStatement {
+			consequent: JSBlockStatement {
+				body: [
+					JSExpressionStatement {
+						leadingComments: ["0"]
+						expression: JSCallExpression {
+							arguments: []
+							callee: JSReferenceIdentifier {
+								name: "doThat"
+								loc: SourceLocation core/uncategorised/64/input.js 2:0-2:6 (doThat)
+							}
+							loc: SourceLocation core/uncategorised/64/input.js 2:0-2:8
+						}
+						loc: SourceLocation core/uncategorised/64/input.js 2:0-2:9
+					}
+				]
+				directives: []
+				loc: SourceLocation core/uncategorised/64/input.js 1:7-2:11
+			}
+			test: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation core/uncategorised/64/input.js 1:4-1:5 (x)
+			}
+			loc: SourceLocation core/uncategorised/64/input.js 1:0-2:11
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Some comment"
 			loc: SourceLocation core/uncategorised/64/input.js 1:9-1:24
 		}
 	]
-	body: Array [
-		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation core/uncategorised/64/input.js 1:0-2:11
-			test: JSReferenceIdentifier {
-				name: "x"
-				loc: SourceLocation core/uncategorised/64/input.js 1:4-1:5 (x)
-			}
-			consequent: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/64/input.js 1:7-2:11
-				body: Array [
-					JSExpressionStatement {
-						leadingComments: Array ["0"]
-						loc: SourceLocation core/uncategorised/64/input.js 2:0-2:9
-						expression: JSCallExpression {
-							arguments: Array []
-							leadingComments: undefined
-							loc: SourceLocation core/uncategorised/64/input.js 2:0-2:8
-							callee: JSReferenceIdentifier {
-								name: "doThat"
-								leadingComments: undefined
-								loc: SourceLocation core/uncategorised/64/input.js 2:0-2:6 (doThat)
-							}
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/64/input.js>
+	loc: SourceLocation core/uncategorised/64/input.js 1:0-2:11
 }
 ```
 

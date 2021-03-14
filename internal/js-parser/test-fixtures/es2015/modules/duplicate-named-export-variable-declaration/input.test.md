@@ -8,25 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:0-3:0
-	path: UIDPath<es2015/modules/duplicate-named-export-variable-declaration/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:0-1:15
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:9-1:12 (foo)
@@ -35,35 +21,45 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:9-1:12 (foo)
 					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:9-1:12
 				}
 			]
+			loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:0-1:15
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:0-2:23
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:7-2:23
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:7-2:23
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:13-2:16 (foo)
 							}
-							loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:13-2:22
 							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:19-2:22 (bar)
 							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:13-2:22
 						}
 					]
+					loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:7-2:23
 				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:7-2:23
 			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:0-2:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-named-export-variable-declaration/input.js>
+	loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:0-3:0
 }
 ```
 

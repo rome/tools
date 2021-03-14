@@ -8,51 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
-	path: UIDPath<es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
 				body: JSBinaryExpression {
 					operator: "*"
-					loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:5-1:14
 					left: JSReferenceIdentifier {
 						name: "yield"
 						loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:5-1:10 (yield)
 					}
 					right: JSNumericLiteral {
 						value: 10
-						format: undefined
 						loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:12-1:14
 					}
+					loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:5-1:14
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:4
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "e"
 							loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:1 (e)
 						}
 					]
+					loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:4
 				}
+				loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
 			}
+			loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js>
+	loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
 }
 ```
 

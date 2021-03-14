@@ -2,7 +2,6 @@ import {HTMLElement} from "@internal/ast";
 import {
 	Builder,
 	Token,
-	Tokens,
 	concat,
 	indent,
 	join,
@@ -13,7 +12,7 @@ import {hasInnerComments} from "../../comments";
 
 export default function HTMLElement(builder: Builder, node: HTMLElement): Token {
 	const name = builder.tokenize(node.name, node);
-	const tokens: Tokens = ["<", name];
+	const tokens: Token[] = ["<", name];
 
 	for (const attr of node.attributes) {
 		tokens.push(space);
@@ -29,7 +28,7 @@ export default function HTMLElement(builder: Builder, node: HTMLElement): Token 
 	} else {
 		tokens.push(">");
 
-		const children: Tokens = [];
+		const children: Token[] = [];
 
 		children.push(builder.tokenizeInnerComments(node, true));
 

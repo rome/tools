@@ -8,57 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-2:0
-	path: UIDPath<es2015/destructuring/duplicate-proto-4/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:26
-				path: UIDPath<es2015/destructuring/duplicate-proto-4/input.js>
-				start: Position 1:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:53
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:52
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:50-1:52
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:49
-					params: Array [
+					params: [
 						JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:1-1:45
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -102,12 +65,41 @@ JSRoot {
 									loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:31-1:43
 								}
 							]
+							loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:1-1:45
 						}
 					]
+					loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:49
 				}
+				loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:52
+			}
+			loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-1:53
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/destructuring/duplicate-proto-4/input.js>
+				end: Position 1:26
+				start: Position 1:17
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/destructuring/duplicate-proto-4/input.js>
+	loc: SourceLocation es2015/destructuring/duplicate-proto-4/input.js 1:0-2:0
 }
 ```
 

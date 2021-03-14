@@ -1,5 +1,5 @@
-import {SemverVersionNode} from "@internal/codec-semver";
-import {CompilerProjects} from "@internal/compiler";
+import {SemverVersion} from "@internal/codec-semver";
+import {CompilerProject} from "@internal/compiler";
 import {ComplexNode, ParserOptions} from "@internal/parser-core";
 
 export type SPDXLicenseParserOptions = ParserOptions & {
@@ -9,8 +9,8 @@ export type SPDXLicenseParserOptions = ParserOptions & {
 
 export type SPDXLicenseParserExceptions = {
 	packageName: string;
-	packageVersion: SemverVersionNode;
-	projects: CompilerProjects;
+	packageVersion: SemverVersion;
+	projects: CompilerProject[];
 };
 
 export type SPDXLicenseDefinition = {

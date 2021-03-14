@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 1:0-5:0
-	path: UIDPath<experimental/class-private-methods/asi-failure-generator/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an class property value"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:3
-				path: UIDPath<experimental/class-private-methods/asi-failure-generator/input.js>
-				start: Position 3:3
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,9 +24,16 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:2-2:3
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:2-2:3
+							start: Position 2:2
+						}
 						value: JSBinaryExpression {
 							operator: "*"
-							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:6-3:4
 							left: JSReferenceIdentifier {
 								name: "x"
 								loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:6-2:7 (x)
@@ -70,20 +42,9 @@ JSRoot {
 								name: "INVALID_PLACEHOLDER"
 								loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:3-3:4
 							}
+							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:6-3:4
 						}
-						definite: undefined
-						typeAnnotation: undefined
 						loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:2-3:4
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 2:2-2:3
-							start: Position 2:2
-						}
 					}
 					JSClassMethod {
 						kind: "method"
@@ -94,38 +55,54 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:5
 						}
-						loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:11
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:9-3:11
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:5
 							start: Position 3:4
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:9-3:11
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:6-3:8
 						}
+						loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 3:4-3:11
 					}
 				]
+				loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 1:0-4:1
+			}
+			loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 1:0-4:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "class property value"]}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/class-private-methods/asi-failure-generator/input.js>
+				end: Position 3:3
+				start: Position 3:3
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-methods/asi-failure-generator/input.js>
+	loc: SourceLocation experimental/class-private-methods/asi-failure-generator/input.js 1:0-5:0
 }
 ```
 

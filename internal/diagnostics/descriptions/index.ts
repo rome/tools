@@ -26,7 +26,6 @@ import {suppressions} from "./suppressions";
 import {snapshots} from "./snapshots";
 import {bundler} from "./bundler";
 import {resolver} from "./resolver";
-import {commitParser} from "./commitParser";
 import {spdx} from "./parsers/spdx";
 import {jsParser} from "./parsers/jsParser";
 import {cssParser} from "./parsers/cssParser";
@@ -40,37 +39,30 @@ import {htmlParser} from "./parsers/htmlParser";
 import {recoveryStore} from "./commands/recoveryStore";
 import {markdownParser} from "./parsers/markdownParser";
 import {initCommand} from "./commands/initCommand";
-import {
-	StaticMarkup,
-	StaticMarkups,
-	concatMarkup,
-	markup,
-} from "@internal/markup";
+import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import {tomlParser} from "./parsers/tomlParser";
+import {browserquery} from "./parsers/browserquery";
 
-export function join(conjunction: string, items: StaticMarkups): StaticMarkup {
+export function join(conjunction: string, items: StaticMarkup[]): StaticMarkup {
 	if (items.length === 0) {
 		return markup``;
 	} else if (items.length === 1) {
 		return items[0];
 	} else {
 		const popped = items.pop()!;
-		return concatMarkup(
-			[...items, markup`${conjunction} ${popped}`],
-			markup`, `,
-		);
+		return joinMarkup([...items, markup`${conjunction} ${popped}`], markup`, `);
 	}
 }
 
-export function andJoin(items: StaticMarkups): StaticMarkup {
+export function andJoin(items: StaticMarkup[]): StaticMarkup {
 	return join("and", items);
 }
 
-export function orJoin(items: StaticMarkups): StaticMarkup {
+export function orJoin(items: StaticMarkup[]): StaticMarkup {
 	return join("or", items);
 }
 
-export function addEmphasis(items: StaticMarkups): StaticMarkups {
+export function addEmphasis(items: StaticMarkup[]): StaticMarkup[] {
 	return items.map((item) => markup`<emphasis>${item}</emphasis>`);
 }
 
@@ -85,7 +77,7 @@ type OuputMessagesFactoryReturn<Ret extends Partial<DiagnosticDescription>> = Om
 	Ret,
 	"message" | "advice"
 > & {
-	advice: DiagnosticAdvice;
+	advice: DiagnosticAdvice[];
 	message: StaticMarkup;
 };
 
@@ -96,7 +88,7 @@ type OutputMessagesFactory<Func extends InputMessagesFactory> = (
 type OutputMessagesValue<Value> = Value extends StaticMarkup
 	? {
 			message: StaticMarkup;
-			advice: DiagnosticAdvice;
+			advice: DiagnosticAdvice[];
 		}
 	: Value extends Partial<DiagnosticDescription>
 		? OuputMessagesFactoryReturn<Value>
@@ -145,7 +137,6 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 }
 
 export const descriptions = {
-	COMMIT_PARSER: commitParser,
 	FLAGS: flags,
 	PARSER_CORE: parserCore,
 	REGEX_PARSER: regexp,
@@ -180,4 +171,5 @@ export const descriptions = {
 	RECOVERY_STORE: recoveryStore,
 	INIT_COMMAND: initCommand,
 	TOML_PARSER: tomlParser,
+	BROWSERQUERY: browserquery,
 };

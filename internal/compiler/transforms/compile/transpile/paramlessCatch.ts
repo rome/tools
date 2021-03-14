@@ -17,7 +17,7 @@ export default createVisitor({
 			return signals.replace({
 				...node,
 				param: jsBindingIdentifier.create({
-					name: path.scope.generateUid(),
+					name: path.scope.generateUID(),
 				}),
 			});
 		}

@@ -8,52 +8,23 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:0-1:39
-	path: UIDPath<es2015/yield/basic-without-argument/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:10-1:13 (foo)
 			}
-			loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:0-1:39
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:16-1:39
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:37
 						expression: JSCallExpression {
-							loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:36
-							arguments: Array [
+							arguments: [
 								JSYieldExpression {
-									argument: undefined
 									delegate: false
 									loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:30-1:35
 								}
 							]
 							callee: JSMemberExpression {
-								loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:29
 								object: JSReferenceIdentifier {
 									name: "console"
 									loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:25 (console)
@@ -65,13 +36,35 @@ JSRoot {
 									}
 									loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:26-1:29 (log)
 								}
+								loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:29
 							}
+							loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:36
 						}
+						loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:37
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:16-1:39
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:13-1:15
+			}
+			loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:0-1:39
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/basic-without-argument/input.js>
+	loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:0-1:39
 }
 ```
 

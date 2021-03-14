@@ -8,36 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-identifier/escaped_math_dal_part/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-identifier/escaped_math_dal_part/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-identifier/escaped_math_dal_part/input.js 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-identifier/escaped_math_dal_part/input.js 1:0-1:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "_\u{1ee03}"
 							loc: SourceLocation esprima/es2015-identifier/escaped_math_dal_part/input.js 1:4-1:14 (_\u{1ee03})
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/escaped_math_dal_part/input.js 1:4-1:14
 					}
 				]
+				loc: SourceLocation esprima/es2015-identifier/escaped_math_dal_part/input.js 1:0-1:14
 			}
+			loc: SourceLocation esprima/es2015-identifier/escaped_math_dal_part/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-identifier/escaped_math_dal_part/input.js>
+	loc: SourceLocation esprima/es2015-identifier/escaped_math_dal_part/input.js 1:0-2:0
 }
 ```
 

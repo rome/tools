@@ -1,46 +1,20 @@
-import {
-	AbsoluteFilePath,
-	AbsoluteFilePathSet,
-	createAbsoluteFilePath,
-} from "@internal/path";
-import {
-	lstat,
-	readDirectory,
-	readFileText,
-	writeFile as writeFileReal,
-} from "@internal/fs";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
 import {createMockWorker} from "@internal/test-helpers";
 import {formatAST} from "@internal/formatter";
 import {valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {regex} from "@internal/string-escape";
+import {json} from "@internal/codec-config";
 import crypto = require("crypto");
 import child = require("child_process");
 
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();
 
-export const ROOT = findRoot();
+export const ROOT = createAbsoluteFilePath(__dirname).getParent();
 export const INTERNAL = ROOT.append("internal");
 export const PUBLIC_PACKAGES = ROOT.append("public-packages");
-
-// This is only necessary because we have poor support for __dirname in the bundler
-function findRoot(): AbsoluteFilePath {
-	let pickNext = false;
-
-	for (const path of createAbsoluteFilePath(__dirname).getChain()) {
-		if (pickNext) {
-			return path;
-		}
-
-		if (path.getBasename() === "scripts") {
-			pickNext = true;
-		}
-	}
-
-	throw new Error("Could not find the root");
-}
 
 let forceGenerated = false;
 
@@ -50,15 +24,16 @@ const COMMENT_END = /(?:\*\/|-->|#)/;
 export async function modifyGeneratedFile(
 	{path, scriptName, id = "main"}: {
 		path: AbsoluteFilePath;
-		scriptName: string;
+		scriptName?: string;
 		id?: string;
 	},
 	callback: () => Promise<{
 		lines: string[];
+		prepend?: boolean;
 		hash?: string;
 	}>,
 ): Promise<void> {
-	const {lines, hash: customHashContent} = await callback();
+	const {prepend, lines, hash: customHashContent} = await callback();
 
 	// Build expected inner generated
 	let generated = await formatFile(
@@ -68,7 +43,7 @@ export async function modifyGeneratedFile(
 	generated = generated.trim();
 
 	// Read file
-	let file = await readFileText(path);
+	let file = await path.readFileText();
 
 	const startRegex = regex`${COMMENT_START} GENERATED:START\(hash:(.*?),id:${id}\) ${createGeneratedCommentInstructions(
 		scriptName,
@@ -82,14 +57,18 @@ export async function modifyGeneratedFile(
 	const endInnerIndex = endMatch?.index ?? file.length;
 	const endIndex = endInnerIndex + (endMatch ? endMatch[0].length : 0);
 
-	const generatedInner = file.slice(startInnerIndex, endInnerIndex);
+	const existingGeneratedInner = file.slice(startInnerIndex, endInnerIndex);
 	let contentStart = file.slice(0, startIndex);
 	let contentEnd = file.slice(endIndex, file.length);
+
+	if (prepend) {
+		generated += existingGeneratedInner;
+	}
 
 	// Check if the generated file has the same hash
 	const commentHash = startMatch ? startMatch[1] : "";
 	const expectedHash = hash(customHashContent || generated);
-	const generatedHash = hash(generatedInner);
+	const generatedHash = hash(existingGeneratedInner);
 	let isSame = false;
 	if (expectedHash === commentHash && generatedHash === commentHash) {
 		isSame = true;
@@ -135,7 +114,7 @@ export function setForceGenerated(force: boolean) {
 }
 
 type CommentOptions = {
-	scriptName: string;
+	scriptName: undefined | string;
 	id: string;
 	hash: string;
 	delimiter: CommentDelimiter;
@@ -162,8 +141,14 @@ function determineDelimiter(path: AbsoluteFilePath): CommentDelimiter {
 	return "ARROW";
 }
 
-function createGeneratedCommentInstructions(scriptName: string): string {
-	return `Everything below is automatically generated. DO NOT MODIFY. Run \`./rome run scripts/${scriptName}\` to update.`;
+function createGeneratedCommentInstructions(
+	scriptName: undefined | string,
+): string {
+	let instructions = "Everything below is automatically generated. DO NOT MODIFY.";
+	if (scriptName !== undefined) {
+		instructions += ` Run \`./rome run scripts/${scriptName}\` to update.`;
+	}
+	return instructions;
 }
 
 function createGeneratedStartComment(opts: CommentOptions): string {
@@ -255,7 +240,7 @@ export async function writeFile(path: AbsoluteFilePath, sourceText: string) {
 	}
 
 	// Write
-	await writeFileReal(path, sourceText);
+	await path.writeFile(sourceText);
 	reporter.success(markup`Wrote <emphasis>${path}</emphasis>`);
 }
 
@@ -310,11 +295,27 @@ export async function execDev(args: string[]): Promise<void> {
 	);
 }
 
-async function getSubDirectories(files: AbsoluteFilePathSet): Promise<string[]> {
+export async function updateVersion(newVersion: string): Promise<void> {
+	const path = ROOT.append("package.json");
+
+	const manifest = json.consumeValue(await path.readFileTextMeta());
+	manifest.set("version", newVersion);
+
+	const formatted = json.stringify(manifest.asUnknown()) + "\n";
+	await path.writeFile(formatted);
+
+	reporter.success(
+		markup`Updated <code>version</code> to <emphasis>${newVersion}</emphasis> in ${path}`,
+	);
+}
+
+async function getSubDirectories(
+	files: Iterable<AbsoluteFilePath>,
+): Promise<string[]> {
 	const subDirs: string[] = [];
 
 	for await (const file of files) {
-		if ((await lstat(file)).isDirectory()) {
+		if ((await file.lstat()).isDirectory()) {
 			subDirs.push(file.getBasename());
 		}
 	}
@@ -324,14 +325,14 @@ async function getSubDirectories(files: AbsoluteFilePathSet): Promise<string[]> 
 
 export async function getLanguages(): Promise<string[]> {
 	const astPath = INTERNAL.append("ast");
-	const astDir = await readDirectory(astPath);
+	const astDir = await astPath.readDirectory();
 
 	return getSubDirectories(astDir);
 }
 
 export async function getLanguageCategories(language: string): Promise<string[]> {
 	const languagePath = INTERNAL.append("ast", language);
-	const languageDir = await readDirectory(languagePath);
+	const languageDir = await languagePath.readDirectory();
 
 	return getSubDirectories(languageDir);
 }

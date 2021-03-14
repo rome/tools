@@ -23,15 +23,13 @@
 
 import {test} from "rome";
 import {
-	DIFF_DELETE,
-	DIFF_EQUAL,
-	DIFF_INSERT,
-	Diffs,
+	Diff,
+	DiffTypes,
 	bisect,
 	cleanupMerge,
-	commonPrefix,
-	commonSuffix,
 	generateLineKey,
+	getCommonPrefix,
+	getCommonSuffix,
 	halfMatch,
 	main,
 } from ".";
@@ -48,9 +46,9 @@ test(
 test(
 	"common prefix",
 	async (t) => {
-		t.is(0, commonPrefix("abc", "xyz"));
-		t.is(4, commonPrefix("1234abcdef", "1234xyz"));
-		t.is(4, commonPrefix("1234", "1234xyz"));
+		t.is(0, getCommonPrefix("abc", "xyz"));
+		t.is(4, getCommonPrefix("1234abcdef", "1234xyz"));
+		t.is(4, getCommonPrefix("1234", "1234xyz"));
 	},
 );
 
@@ -62,28 +60,36 @@ test(
 		t.looksLike([], main("", "", false));
 
 		// Equality.
-		t.looksLike([[DIFF_EQUAL, "abc"]], main("abc", "abc", false));
+		t.looksLike([[DiffTypes.EQUAL, "abc"]], main("abc", "abc", false));
 
 		// Simple insertion.
 		t.looksLike(
-			[[DIFF_EQUAL, "ab"], [DIFF_INSERT, "123"], [DIFF_EQUAL, "c"]],
+			[
+				[DiffTypes.EQUAL, "ab"],
+				[DiffTypes.INSERT, "123"],
+				[DiffTypes.EQUAL, "c"],
+			],
 			main("abc", "ab123c", false),
 		);
 
 		// Simple deletion.
 		t.looksLike(
-			[[DIFF_EQUAL, "a"], [DIFF_DELETE, "123"], [DIFF_EQUAL, "bc"]],
+			[
+				[DiffTypes.EQUAL, "a"],
+				[DiffTypes.DELETE, "123"],
+				[DiffTypes.EQUAL, "bc"],
+			],
 			main("a123bc", "abc", false),
 		);
 
 		// Two insertions.
 		t.looksLike(
 			[
-				[DIFF_EQUAL, "a"],
-				[DIFF_INSERT, "123"],
-				[DIFF_EQUAL, "b"],
-				[DIFF_INSERT, "456"],
-				[DIFF_EQUAL, "c"],
+				[DiffTypes.EQUAL, "a"],
+				[DiffTypes.INSERT, "123"],
+				[DiffTypes.EQUAL, "b"],
+				[DiffTypes.INSERT, "456"],
+				[DiffTypes.EQUAL, "c"],
 			],
 			main("abc", "a123b456c", false),
 		);
@@ -91,37 +97,40 @@ test(
 		// Two deletions.
 		t.looksLike(
 			[
-				[DIFF_EQUAL, "a"],
-				[DIFF_DELETE, "123"],
-				[DIFF_EQUAL, "b"],
-				[DIFF_DELETE, "456"],
-				[DIFF_EQUAL, "c"],
+				[DiffTypes.EQUAL, "a"],
+				[DiffTypes.DELETE, "123"],
+				[DiffTypes.EQUAL, "b"],
+				[DiffTypes.DELETE, "456"],
+				[DiffTypes.EQUAL, "c"],
 			],
 			main("a123b456c", "abc", false),
 		);
 
 		// Perform a real diff.
 		// Simple cases.
-		t.looksLike([[DIFF_DELETE, "a"], [DIFF_INSERT, "b"]], main("a", "b", false));
+		t.looksLike(
+			[[DiffTypes.DELETE, "a"], [DiffTypes.INSERT, "b"]],
+			main("a", "b", false),
+		);
 
 		t.looksLike(
 			[
-				[DIFF_DELETE, "Apple"],
-				[DIFF_INSERT, "Banana"],
-				[DIFF_EQUAL, "s are a"],
-				[DIFF_INSERT, "lso"],
-				[DIFF_EQUAL, " fruit."],
+				[DiffTypes.DELETE, "Apple"],
+				[DiffTypes.INSERT, "Banana"],
+				[DiffTypes.EQUAL, "s are a"],
+				[DiffTypes.INSERT, "lso"],
+				[DiffTypes.EQUAL, " fruit."],
 			],
 			main("Apples are a fruit.", "Bananas are also fruit.", false),
 		);
 
 		t.looksLike(
 			[
-				[DIFF_DELETE, "a"],
-				[DIFF_INSERT, "\u0680"],
-				[DIFF_EQUAL, "x"],
-				[DIFF_DELETE, "\t"],
-				[DIFF_INSERT, "\0"],
+				[DiffTypes.DELETE, "a"],
+				[DiffTypes.INSERT, "\u0680"],
+				[DiffTypes.EQUAL, "x"],
+				[DiffTypes.DELETE, "\t"],
+				[DiffTypes.INSERT, "\0"],
 			],
 			main("ax\t", "\u0680x\0", false),
 		);
@@ -129,32 +138,36 @@ test(
 		// Overlaps.
 		t.looksLike(
 			[
-				[DIFF_DELETE, "1"],
-				[DIFF_EQUAL, "a"],
-				[DIFF_DELETE, "y"],
-				[DIFF_EQUAL, "b"],
-				[DIFF_DELETE, "2"],
-				[DIFF_INSERT, "xab"],
+				[DiffTypes.DELETE, "1"],
+				[DiffTypes.EQUAL, "a"],
+				[DiffTypes.DELETE, "y"],
+				[DiffTypes.EQUAL, "b"],
+				[DiffTypes.DELETE, "2"],
+				[DiffTypes.INSERT, "xab"],
 			],
 			main("1ayb2", "abxab", false),
 		);
 
 		t.looksLike(
-			[[DIFF_INSERT, "xaxcx"], [DIFF_EQUAL, "abc"], [DIFF_DELETE, "y"]],
+			[
+				[DiffTypes.INSERT, "xaxcx"],
+				[DiffTypes.EQUAL, "abc"],
+				[DiffTypes.DELETE, "y"],
+			],
 			main("abcy", "xaxcxabc", false),
 		);
 
 		t.looksLike(
 			[
-				[DIFF_DELETE, "ABCD"],
-				[DIFF_EQUAL, "a"],
-				[DIFF_DELETE, "="],
-				[DIFF_INSERT, "-"],
-				[DIFF_EQUAL, "bcd"],
-				[DIFF_DELETE, "="],
-				[DIFF_INSERT, "-"],
-				[DIFF_EQUAL, "efghijklmnopqrs"],
-				[DIFF_DELETE, "EFGHIJKLMNOefg"],
+				[DiffTypes.DELETE, "ABCD"],
+				[DiffTypes.EQUAL, "a"],
+				[DiffTypes.DELETE, "="],
+				[DiffTypes.INSERT, "-"],
+				[DiffTypes.EQUAL, "bcd"],
+				[DiffTypes.DELETE, "="],
+				[DiffTypes.INSERT, "-"],
+				[DiffTypes.EQUAL, "efghijklmnopqrs"],
+				[DiffTypes.DELETE, "EFGHIJKLMNOefg"],
 			],
 			main(
 				"ABCDa=bcd=efghijklmnopqrsEFGHIJKLMNOefg",
@@ -166,11 +179,11 @@ test(
 		// Large equality.
 		t.looksLike(
 			[
-				[DIFF_INSERT, " "],
-				[DIFF_EQUAL, "a"],
-				[DIFF_INSERT, "nd"],
-				[DIFF_EQUAL, " [[Pennsylvania]]"],
-				[DIFF_DELETE, " and [[New"],
+				[DiffTypes.INSERT, " "],
+				[DiffTypes.EQUAL, "a"],
+				[DiffTypes.INSERT, "nd"],
+				[DiffTypes.EQUAL, " [[Pennsylvania]]"],
+				[DiffTypes.DELETE, " and [[New"],
 			],
 			main("a [[Pennsylvania]] and [[New", " and [[Pennsylvania]]", false),
 		);
@@ -199,11 +212,11 @@ test(
 		// If the order changes, tweak this test as required.
 		t.looksLike(
 			[
-				[DIFF_DELETE, "c"],
-				[DIFF_INSERT, "m"],
-				[DIFF_EQUAL, "a"],
-				[DIFF_DELETE, "t"],
-				[DIFF_INSERT, "p"],
+				[DiffTypes.DELETE, "c"],
+				[DiffTypes.INSERT, "m"],
+				[DiffTypes.EQUAL, "a"],
+				[DiffTypes.DELETE, "t"],
+				[DiffTypes.INSERT, "p"],
 			],
 			bisect(a, b),
 		);
@@ -214,13 +227,13 @@ test(
 	"common sufix",
 	async (t) => {
 		// Null case.
-		t.is(0, commonSuffix("abc", "xyz"));
+		t.is(0, getCommonSuffix("abc", "xyz"));
 
 		// Non-null case.
-		t.is(4, commonSuffix("abcdef1234", "xyz1234"));
+		t.is(4, getCommonSuffix("abcdef1234", "xyz1234"));
 
 		// Whole case.
-		t.is(4, commonSuffix("1234", "xyz1234"));
+		t.is(4, getCommonSuffix("1234", "xyz1234"));
 	},
 );
 
@@ -282,120 +295,160 @@ test(
 	"cleanup merge",
 	async (t) => {
 		// Null case.
-		let diffs: Diffs = [];
+		let diffs: Diff[] = [];
 		cleanupMerge(diffs, false);
 		t.looksLike([], diffs);
 
 		// No change case.
-		diffs = [[DIFF_EQUAL, "a"], [DIFF_DELETE, "b"], [DIFF_INSERT, "c"]];
+		diffs = [
+			[DiffTypes.EQUAL, "a"],
+			[DiffTypes.DELETE, "b"],
+			[DiffTypes.INSERT, "c"],
+		];
 		cleanupMerge(diffs, false);
 		t.looksLike(
-			[[DIFF_EQUAL, "a"], [DIFF_DELETE, "b"], [DIFF_INSERT, "c"]],
+			[[DiffTypes.EQUAL, "a"], [DiffTypes.DELETE, "b"], [DiffTypes.INSERT, "c"]],
 			diffs,
 		);
 
 		// Merge equalities.
-		diffs = [[DIFF_EQUAL, "a"], [DIFF_EQUAL, "b"], [DIFF_EQUAL, "c"]];
+		diffs = [
+			[DiffTypes.EQUAL, "a"],
+			[DiffTypes.EQUAL, "b"],
+			[DiffTypes.EQUAL, "c"],
+		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_EQUAL, "abc"]], diffs);
+		t.looksLike([[DiffTypes.EQUAL, "abc"]], diffs);
 
 		// Merge deletions.
-		diffs = [[DIFF_DELETE, "a"], [DIFF_DELETE, "b"], [DIFF_DELETE, "c"]];
+		diffs = [
+			[DiffTypes.DELETE, "a"],
+			[DiffTypes.DELETE, "b"],
+			[DiffTypes.DELETE, "c"],
+		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_DELETE, "abc"]], diffs);
+		t.looksLike([[DiffTypes.DELETE, "abc"]], diffs);
 
 		// Merge insertions.
-		diffs = [[DIFF_INSERT, "a"], [DIFF_INSERT, "b"], [DIFF_INSERT, "c"]];
+		diffs = [
+			[DiffTypes.INSERT, "a"],
+			[DiffTypes.INSERT, "b"],
+			[DiffTypes.INSERT, "c"],
+		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_INSERT, "abc"]], diffs);
+		t.looksLike([[DiffTypes.INSERT, "abc"]], diffs);
 
 		// Merge interweave.
 		diffs = [
-			[DIFF_DELETE, "a"],
-			[DIFF_INSERT, "b"],
-			[DIFF_DELETE, "c"],
-			[DIFF_INSERT, "d"],
-			[DIFF_EQUAL, "e"],
-			[DIFF_EQUAL, "f"],
+			[DiffTypes.DELETE, "a"],
+			[DiffTypes.INSERT, "b"],
+			[DiffTypes.DELETE, "c"],
+			[DiffTypes.INSERT, "d"],
+			[DiffTypes.EQUAL, "e"],
+			[DiffTypes.EQUAL, "f"],
 		];
 		cleanupMerge(diffs, false);
 		t.looksLike(
-			[[DIFF_DELETE, "ac"], [DIFF_INSERT, "bd"], [DIFF_EQUAL, "ef"]],
+			[
+				[DiffTypes.DELETE, "ac"],
+				[DiffTypes.INSERT, "bd"],
+				[DiffTypes.EQUAL, "ef"],
+			],
 			diffs,
 		);
 
 		// Prefix and suffix detection.
-		diffs = [[DIFF_DELETE, "a"], [DIFF_INSERT, "abc"], [DIFF_DELETE, "dc"]];
+		diffs = [
+			[DiffTypes.DELETE, "a"],
+			[DiffTypes.INSERT, "abc"],
+			[DiffTypes.DELETE, "dc"],
+		];
 		cleanupMerge(diffs, false);
 		t.looksLike(
 			[
-				[DIFF_EQUAL, "a"],
-				[DIFF_DELETE, "d"],
-				[DIFF_INSERT, "b"],
-				[DIFF_EQUAL, "c"],
+				[DiffTypes.EQUAL, "a"],
+				[DiffTypes.DELETE, "d"],
+				[DiffTypes.INSERT, "b"],
+				[DiffTypes.EQUAL, "c"],
 			],
 			diffs,
 		);
 
 		// Prefix and suffix detection with equalities.
 		diffs = [
-			[DIFF_EQUAL, "x"],
-			[DIFF_DELETE, "a"],
-			[DIFF_INSERT, "abc"],
-			[DIFF_DELETE, "dc"],
-			[DIFF_EQUAL, "y"],
+			[DiffTypes.EQUAL, "x"],
+			[DiffTypes.DELETE, "a"],
+			[DiffTypes.INSERT, "abc"],
+			[DiffTypes.DELETE, "dc"],
+			[DiffTypes.EQUAL, "y"],
 		];
 		cleanupMerge(diffs, false);
 		t.looksLike(
 			[
-				[DIFF_EQUAL, "xa"],
-				[DIFF_DELETE, "d"],
-				[DIFF_INSERT, "b"],
-				[DIFF_EQUAL, "cy"],
+				[DiffTypes.EQUAL, "xa"],
+				[DiffTypes.DELETE, "d"],
+				[DiffTypes.INSERT, "b"],
+				[DiffTypes.EQUAL, "cy"],
 			],
 			diffs,
 		);
 
 		// Slide edit left.
-		diffs = [[DIFF_EQUAL, "a"], [DIFF_INSERT, "ba"], [DIFF_EQUAL, "c"]];
+		diffs = [
+			[DiffTypes.EQUAL, "a"],
+			[DiffTypes.INSERT, "ba"],
+			[DiffTypes.EQUAL, "c"],
+		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_INSERT, "ab"], [DIFF_EQUAL, "ac"]], diffs);
+		t.looksLike([[DiffTypes.INSERT, "ab"], [DiffTypes.EQUAL, "ac"]], diffs);
 
 		// Slide edit right.
-		diffs = [[DIFF_EQUAL, "c"], [DIFF_INSERT, "ab"], [DIFF_EQUAL, "a"]];
+		diffs = [
+			[DiffTypes.EQUAL, "c"],
+			[DiffTypes.INSERT, "ab"],
+			[DiffTypes.EQUAL, "a"],
+		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_EQUAL, "ca"], [DIFF_INSERT, "ba"]], diffs);
+		t.looksLike([[DiffTypes.EQUAL, "ca"], [DiffTypes.INSERT, "ba"]], diffs);
 
 		// Slide edit left recursive.
 		diffs = [
-			[DIFF_EQUAL, "a"],
-			[DIFF_DELETE, "b"],
-			[DIFF_EQUAL, "c"],
-			[DIFF_DELETE, "ac"],
-			[DIFF_EQUAL, "x"],
+			[DiffTypes.EQUAL, "a"],
+			[DiffTypes.DELETE, "b"],
+			[DiffTypes.EQUAL, "c"],
+			[DiffTypes.DELETE, "ac"],
+			[DiffTypes.EQUAL, "x"],
 		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_DELETE, "abc"], [DIFF_EQUAL, "acx"]], diffs);
+		t.looksLike([[DiffTypes.DELETE, "abc"], [DiffTypes.EQUAL, "acx"]], diffs);
 
 		// Slide edit right recursive.
 		diffs = [
-			[DIFF_EQUAL, "x"],
-			[DIFF_DELETE, "ca"],
-			[DIFF_EQUAL, "c"],
-			[DIFF_DELETE, "b"],
-			[DIFF_EQUAL, "a"],
+			[DiffTypes.EQUAL, "x"],
+			[DiffTypes.DELETE, "ca"],
+			[DiffTypes.EQUAL, "c"],
+			[DiffTypes.DELETE, "b"],
+			[DiffTypes.EQUAL, "a"],
 		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_EQUAL, "xca"], [DIFF_DELETE, "cba"]], diffs);
+		t.looksLike([[DiffTypes.EQUAL, "xca"], [DiffTypes.DELETE, "cba"]], diffs);
 
 		// Empty merge.
-		diffs = [[DIFF_DELETE, "b"], [DIFF_INSERT, "ab"], [DIFF_EQUAL, "c"]];
+		diffs = [
+			[DiffTypes.DELETE, "b"],
+			[DiffTypes.INSERT, "ab"],
+			[DiffTypes.EQUAL, "c"],
+		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_INSERT, "a"], [DIFF_EQUAL, "bc"]], diffs);
+		t.looksLike([[DiffTypes.INSERT, "a"], [DiffTypes.EQUAL, "bc"]], diffs);
 
 		// Empty equality.
-		diffs = [[DIFF_EQUAL, ""], [DIFF_INSERT, "a"], [DIFF_EQUAL, "b"]];
+		diffs = [
+			[DiffTypes.EQUAL, ""],
+			[DiffTypes.INSERT, "a"],
+			[DiffTypes.EQUAL, "b"],
+		];
 		cleanupMerge(diffs, false);
-		t.looksLike([[DIFF_INSERT, "a"], [DIFF_EQUAL, "b"]], diffs);
+		t.looksLike([[DiffTypes.INSERT, "a"], [DiffTypes.EQUAL, "b"]], diffs);
 	},
 );

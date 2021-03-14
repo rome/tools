@@ -8,41 +8,37 @@
 
 ```javascript
 JSRoot {
-	body: Array []
-	comments: Array []
+	body: []
+	comments: []
 	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/217/input.js 1:0-1:6
-	path: UIDPath<es2015/uncategorised/217/input.js>
-	directives: Array [
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Bad character escape sequence"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/217/input.js>
+				end: Position 1:4
+				start: Position 1:4
+			}
+		}
+	]
+	directives: [
 		JSDirective {
 			value: "\\u{}"
 			loc: SourceLocation es2015/uncategorised/217/input.js 1:0-1:6
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Bad character escape sequence"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<es2015/uncategorised/217/input.js>
-				start: Position 1:4
-			}
-		}
-	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/217/input.js>
+	loc: SourceLocation es2015/uncategorised/217/input.js 1:0-1:6
 }
 ```
 

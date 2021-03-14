@@ -6,7 +6,9 @@ import {
 	ParserCoreTypes,
 	ParserOptions,
 	Position,
+	PositionLike,
 	SourceLocation,
+	SourceLocationish,
 } from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {
@@ -14,8 +16,8 @@ import {
 	isPlainObject,
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
-import {AnyPath, UNKNOWN_PATH, isPath} from "@internal/path";
-import {isIndexedNumberish} from "@internal/math";
+import {Path, UNKNOWN_PATH, isPathish} from "@internal/path";
+import {isIndexedNumberish} from "@internal/numbers";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -170,8 +172,27 @@ export function comparePositions(
 	);
 }
 
+export function equalPositions(
+	a: undefined | PositionLike,
+	b: undefined | PositionLike,
+): boolean {
+	if (a === undefined || b === undefined) {
+		return false;
+	}
+
+	if (a.line !== b.line || a.column !== b.column) {
+		return false;
+	}
+
+	return true;
+}
+
 export function derivePositionKey(pos: Position): string {
 	return `${String(pos.line.valueOf())}:${String(pos.column.valueOf())}`;
+}
+
+export function deriveLocationKey({start, end}: SourceLocation): string {
+	return `${derivePositionKey(start)}-${derivePositionKey(end)}`;
 }
 
 export function addPositions(a: Position, b: Position): Position {
@@ -191,7 +212,7 @@ export function extractSourceLocationRangeFromNodes(
 		return undefined;
 	}
 
-	let path: AnyPath = UNKNOWN_PATH;
+	let path: Path = UNKNOWN_PATH;
 	let hasPath = false;
 	let start: undefined | Position = undefined;
 	let end: undefined | Position = undefined;
@@ -241,7 +262,7 @@ export function isPositionish(val: unknown): val is Position {
 	);
 }
 
-export function isSourceLocation(val: unknown): val is SourceLocation {
+export function isSourceLocationish(val: unknown): val is SourceLocationish {
 	if (!isPlainObject(val)) {
 		return false;
 	}
@@ -260,7 +281,7 @@ export function isSourceLocation(val: unknown): val is SourceLocation {
 
 	// Verify types
 	return (
-		(isPath(val) || typeof val.filename === "undefined") &&
+		isPathish(val.path) &&
 		(typeof val.identifierName === "string" ||
 		typeof val.identifierName === "undefined") &&
 		isPositionish(val.start) &&

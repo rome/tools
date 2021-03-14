@@ -1,6 +1,7 @@
 import {createFixtureTests} from "@internal/test-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {consumeConfig, stringifyConfig} from "@internal/codec-config/index";
+import {decodeUTF8} from "@internal/binary";
 
 const promise = createFixtureTests(
 	async (fixture, t) => {
@@ -9,7 +10,7 @@ const promise = createFixtureTests(
 		for (const file of fixture.files.values()) {
 			const path = file.absolute;
 			const filename = file.relative;
-			const inputContent = removeCarriageReturn(file.content.toString());
+			const inputContent = removeCarriageReturn(decodeUTF8(file.content));
 
 			const val = consumeConfig({
 				input: inputContent,

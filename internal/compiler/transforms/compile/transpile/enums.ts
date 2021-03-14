@@ -15,7 +15,7 @@ import {
 } from "@internal/ast";
 import {
 	CompilerContext,
-	Path,
+	CompilerPath,
 	Scope,
 	createVisitor,
 	signals,
@@ -28,7 +28,7 @@ import {EvalResult} from "@internal/js-ast-utils/tryStaticEvaluation";
 type PreviousEnumMembers = Map<string, EvalResult["value"]>;
 
 function buildEnumWrapper(
-	path: Path,
+	path: CompilerPath,
 	node: TSEnumDeclaration,
 	id: JSBindingIdentifier,
 	assignments: AnyJSExpression[],
@@ -99,7 +99,7 @@ function buildStringAssignment(
 }
 
 function enumFill(
-	path: Path,
+	path: CompilerPath,
 	node: TSEnumDeclaration,
 	scope: Scope,
 	context: CompilerContext,

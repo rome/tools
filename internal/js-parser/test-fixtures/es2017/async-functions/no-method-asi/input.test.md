@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/no-method-asi/input.js 1:0-4:1
-	path: UIDPath<es2017/async-functions/no-method-asi/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2017/async-functions/no-method-asi/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2017/async-functions/no-method-asi/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/async-functions/no-method-asi/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -41,20 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 2:2-2:7
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation es2017/async-functions/no-method-asi/input.js 2:2-2:7
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 2:2-2:7
 							start: Position 2:2
 						}
+						loc: SourceLocation es2017/async-functions/no-method-asi/input.js 2:2-2:7
 					}
 					JSClassMethod {
 						kind: "method"
@@ -65,38 +43,43 @@ JSRoot {
 							}
 							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:2-3:3
 						}
-						loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:2-3:7
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:5-3:7
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:2-3:3
 							start: Position 3:2
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:5-3:7
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:3-3:5
 						}
+						loc: SourceLocation es2017/async-functions/no-method-asi/input.js 3:2-3:7
 					}
 				]
+				loc: SourceLocation es2017/async-functions/no-method-asi/input.js 1:0-4:1
 			}
+			loc: SourceLocation es2017/async-functions/no-method-asi/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/no-method-asi/input.js>
+	loc: SourceLocation es2017/async-functions/no-method-asi/input.js 1:0-4:1
 }
 ```
 

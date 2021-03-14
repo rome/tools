@@ -8,62 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:0-2:0
-	path: UIDPath<experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:0-1:10
+			namedSpecifiers: []
 			source: JSStringLiteral {
 				value: "x"
 				loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:7-1:10
 			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:0-1:10
 		}
 		JSWithStatement {
-			loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:11-2:0
-			object: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:15-1:16
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 2:0-2:0
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 2:0-2:0
 				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 2:0-2:0
+			}
+			object: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:15-1:16
+			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:11-2:0
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js>
+				end: Position 1:10
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js>
+	loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:0-2:0
 }
 ```
 

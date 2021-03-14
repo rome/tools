@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {RangeNode} from "./types";
+import {SemverRange} from "./types";
 
 // Remove all
 function compactRight(
@@ -23,10 +23,10 @@ function compactRight(
 
 const WILDCARD = "*";
 
-export default function stringify(node: RangeNode): string {
+export default function stringify(node: SemverRange): string {
 	switch (node.type) {
-		case "WildcardVersion":
-		case "AbsoluteVersion": {
+		case "SemverWildcardVersion":
+		case "SemverAbsoluteVersion": {
 			// Build up x.x.x format
 			let str = compactRight([node.major, node.minor, node.patch]).map((part) =>
 				part ?? WILDCARD
@@ -42,19 +42,19 @@ export default function stringify(node: RangeNode): string {
 			return str;
 		}
 
-		case "Wildcard":
+		case "SemverWildcard":
 			return WILDCARD;
 
-		case "Comparator":
+		case "SemverComparator":
 			return `${node.operator}${stringify(node.version)}`;
 
-		case "LogicalAnd":
+		case "SemverLogicalAnd":
 			return `${stringify(node.left)} ${stringify(node.right)}`;
 
-		case "LogicalOr":
+		case "SemverLogicalOr":
 			return `${stringify(node.left)} || ${stringify(node.right)}`;
 
-		case "VersionRange":
+		case "SemverVersionRange":
 			return `${stringify(node.left)} - ${stringify(node.right)}`;
 	}
 }

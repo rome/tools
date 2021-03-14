@@ -15,25 +15,18 @@ import {
 	RelativePath,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {
-	exists,
-	lstat,
-	readDirectory,
-	readFile,
-	readFileText,
-} from "@internal/fs";
 import {ExtendedMap} from "@internal/collections";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 const dirname = testOptions.dirname ?? "";
 
 async function isFile(path: AbsoluteFilePath): Promise<boolean> {
-	return (await lstat(path)).isFile();
+	return (await path.lstat()).isFile();
 }
 
 async function getOptions(dir: AbsoluteFilePath): Promise<Consumer> {
 	const optionsLoc = dir.append("options.json");
-	const input = await readFileText(optionsLoc);
+	const input = await optionsLoc.readFileText();
 	return json.consumeValue({
 		input,
 		path: optionsLoc,
@@ -50,7 +43,7 @@ export type Fixture = {
 export type FixtureFile = {
 	relative: RelativePath;
 	absolute: AbsoluteFilePath;
-	content: Buffer;
+	content: ArrayBufferView;
 };
 
 async function _getFixtures(
@@ -65,7 +58,7 @@ async function _getFixtures(
 	const {name, dir, parts, options: inheritOptions} = opts;
 
 	// Check if directory even exists
-	if (!(await exists(dir))) {
+	if (await dir.notExists()) {
 		throw new Error(`The directory ${dir} doesn't exist`);
 	}
 
@@ -74,12 +67,11 @@ async function _getFixtures(
 		return [];
 	}
 
-	// Get all the filenames in the directory
-	const filenames: AbsoluteFilePathSet = await readDirectory(dir);
+	const paths: AbsoluteFilePathSet = await dir.readDirectory();
 
 	// Get options for this directory
 	let ownOptions;
-	if (filenames.has(dir.append("options.json"))) {
+	if (paths.has(dir.append("options.json"))) {
 		ownOptions = await getOptions(dir);
 	}
 
@@ -101,7 +93,7 @@ async function _getFixtures(
 	// Split up all files and directories
 	const directories: Set<AbsoluteFilePath> = new Set();
 	const files: Set<AbsoluteFilePath> = new Set();
-	for (const path of filenames) {
+	for (const path of paths) {
 		if (await isFile(path)) {
 			files.add(path);
 		} else {
@@ -138,7 +130,7 @@ async function _getFixtures(
 			{
 				relative: opts.root.relative(path).assertRelative(),
 				absolute: path,
-				content: await readFile(path),
+				content: await path.readFile(),
 			},
 		);
 	}

@@ -8,67 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0219/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Octal literal in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:38
-				path: UIDPath<esprima/invalid-syntax/migrated_0219/input.js>
-				start: Position 1:38
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:9-1:14 (hello)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:0-1:50
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:14-1:16
-			}
 			body: JSBlockStatement {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:17-1:50
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:19-1:32
-					}
-				]
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:33-1:48
 						expression: JSObjectExpression {
-							loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:34-1:46
-							properties: Array [
+							properties: [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSStringLiteral {
@@ -79,18 +29,59 @@ JSRoot {
 									}
 									value: JSNumericLiteral {
 										value: 42
-										format: undefined
 										loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:42-1:44
 									}
 									loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:36-1:44
 								}
 							]
+							loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:34-1:46
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:33-1:48
 					}
 				]
+				directives: [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:19-1:32
+					}
+				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:17-1:50
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:14-1:16
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:0-1:50
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Octal literal in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0219/input.js>
+				end: Position 1:38
+				start: Position 1:38
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0219/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0219/input.js 1:0-2:0
 }
 ```
 

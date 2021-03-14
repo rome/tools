@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
-	path: UIDPath<core/uncategorised/196/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/196/input.js 1:0-1:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: "^"
-					loc: SourceLocation core/uncategorised/196/input.js 1:5-1:10
 					left: JSReferenceIdentifier {
 						name: "y"
 						loc: SourceLocation core/uncategorised/196/input.js 1:5-1:6 (y)
@@ -40,10 +26,22 @@ JSRoot {
 						name: "z"
 						loc: SourceLocation core/uncategorised/196/input.js 1:9-1:10 (z)
 					}
+					loc: SourceLocation core/uncategorised/196/input.js 1:5-1:10
 				}
+				loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
 			}
+			loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/196/input.js>
+	loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
 }
 ```
 

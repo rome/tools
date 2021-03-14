@@ -8,38 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:13
-	path: UIDPath<es2015/array-rest-spread/comma-after-rest/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:12
-				right: JSArrayExpression {
-					elements: Array []
-					loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:10-1:12
-				}
 				left: JSAssignmentArrayPattern {
-					elements: Array []
-					loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:7
+					elements: []
 					rest: JSAssignmentIdentifier {
 						name: "a"
 						loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:4-1:5 (a)
 					}
+					loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:7
 				}
+				right: JSArrayExpression {
+					elements: []
+					loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:10-1:12
+				}
+				loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:12
 			}
+			loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/array-rest-spread/comma-after-rest/input.js>
+	loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:13
 }
 ```
 

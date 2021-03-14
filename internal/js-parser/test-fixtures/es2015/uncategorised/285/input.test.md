@@ -8,63 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/285/input.js 1:0-1:13
-	path: UIDPath<es2015/uncategorised/285/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>}</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<es2015/uncategorised/285/input.js>
-				start: Position 1:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/285/input.js 1:0-1:13
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/285/input.js 1:0-1:13
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/285/input.js 1:11-1:13
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/285/input.js 1:0-1:10
-					params: Array [
+					params: [
 						JSBindingObjectPattern {
-							properties: Array []
-							rest: undefined
+							properties: []
 							loc: SourceLocation es2015/uncategorised/285/input.js 1:1-1:6
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/285/input.js 1:0-1:10
 				}
+				loc: SourceLocation es2015/uncategorised/285/input.js 1:0-1:13
+			}
+			loc: SourceLocation es2015/uncategorised/285/input.js 1:0-1:13
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "}", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/285/input.js>
+				end: Position 1:6
+				start: Position 1:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/285/input.js>
+	loc: SourceLocation es2015/uncategorised/285/input.js 1:0-1:13
 }
 ```
 

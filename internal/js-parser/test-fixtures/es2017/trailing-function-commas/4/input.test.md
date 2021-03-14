@@ -8,35 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:14
-	path: UIDPath<es2017/trailing-function-commas/4/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:13
 				body: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:12-1:13
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:11
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:1-1:2 (x)
@@ -46,10 +28,22 @@ JSRoot {
 							loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:4-1:5 (y)
 						}
 					]
+					loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:11
 				}
+				loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:13
 			}
+			loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/trailing-function-commas/4/input.js>
+	loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:14
 }
 ```
 

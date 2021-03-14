@@ -8,62 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:0-3:0
-	path: UIDPath<es2015/modules/duplicate-named-export-destructuring13/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:0-1:25
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo4"
 					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:16-1:20 (foo4)
 				}
-				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:7-1:25
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:23-1:25
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:20-1:22
 				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:7-1:25
 			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:0-1:25
 		}
-		JSEmptyStatement {loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:25-1:26}
+		JSEmptyStatement {
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:25-1:26
+		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:0-2:76
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:7-2:76
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:7-2:76
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:13-2:69
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -73,18 +53,9 @@ JSRoot {
 											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:15-2:16
 										}
 										value: JSBindingArrayPattern {
-											rest: undefined
-											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:18-2:33
-											elements: Array [
+											elements: [
 												JSBindingObjectPattern {
-													rest: undefined
-													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:19-2:32
-													meta: JSPatternMeta {
-														optional: undefined
-														typeAnnotation: undefined
-														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:19-2:32
-													}
-													properties: Array [
+													properties: [
 														JSBindingObjectPatternProperty {
 															key: JSStaticPropertyKey {
 																value: JSIdentifier {
@@ -100,8 +71,13 @@ JSRoot {
 															loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:21-2:30
 														}
 													]
+													meta: JSPatternMeta {
+														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:19-2:32
+													}
+													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:19-2:32
 												}
 											]
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:18-2:33
 										}
 										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:15-2:33
 									}
@@ -128,9 +104,7 @@ JSRoot {
 											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:38-2:39
 										}
 										value: JSBindingObjectPattern {
-											rest: undefined
-											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:41-2:67
-											properties: Array [
+											properties: [
 												JSBindingObjectPatternProperty {
 													key: JSStaticPropertyKey {
 														value: JSIdentifier {
@@ -140,18 +114,9 @@ JSRoot {
 														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:43-2:47
 													}
 													value: JSBindingArrayPattern {
-														rest: undefined
-														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:49-2:65
-														elements: Array [
+														elements: [
 															JSBindingObjectPattern {
-																rest: undefined
-																loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:50-2:64
-																meta: JSPatternMeta {
-																	optional: undefined
-																	typeAnnotation: undefined
-																	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:50-2:64
-																}
-																properties: Array [
+																properties: [
 																	JSBindingObjectPatternProperty {
 																		key: JSStaticPropertyKey {
 																			value: JSIdentifier {
@@ -167,28 +132,47 @@ JSRoot {
 																		loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:52-2:62
 																	}
 																]
+																meta: JSPatternMeta {
+																	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:50-2:64
+																}
+																loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:50-2:64
 															}
 														]
+														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:49-2:65
 													}
 													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:43-2:65
 												}
 											]
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:41-2:67
 										}
 										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:38-2:67
 									}
 								]
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:13-2:69
 							}
-							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:13-2:75
 							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:72-2:75 (bar)
 							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:13-2:75
 						}
 					]
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:7-2:76
 				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:7-2:76
 			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 2:0-2:76
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/duplicate-named-export-destructuring13/input.js>
+	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring13/input.js 1:0-3:0
 }
 ```
 

@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/129/input.js 1:0-1:34
-	path: UIDPath<es2015/uncategorised/129/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/uncategorised/129/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/uncategorised/129/input.js 1:0-1:34
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/129/input.js 1:0-1:34
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,33 +25,27 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:9-1:12
 						}
-						loc: SourceLocation es2015/uncategorised/129/input.js 1:9-1:17
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation es2015/uncategorised/129/input.js 1:15-1:17
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:9-1:12
 							start: Position 1:9
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation es2015/uncategorised/129/input.js 1:15-1:17
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:12-1:14
 						}
+						loc: SourceLocation es2015/uncategorised/129/input.js 1:9-1:17
 					}
 					JSClassMethod {
 						kind: "method"
@@ -79,38 +56,43 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:25-1:28
 						}
-						loc: SourceLocation es2015/uncategorised/129/input.js 1:18-1:33
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation es2015/uncategorised/129/input.js 1:31-1:33
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:18-1:28
 							start: Position 1:18
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation es2015/uncategorised/129/input.js 1:31-1:33
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/129/input.js 1:28-1:30
 						}
+						loc: SourceLocation es2015/uncategorised/129/input.js 1:18-1:33
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/129/input.js 1:0-1:34
 			}
+			loc: SourceLocation es2015/uncategorised/129/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/129/input.js>
+	loc: SourceLocation es2015/uncategorised/129/input.js 1:0-1:34
 }
 ```
 

@@ -13,7 +13,6 @@ import {
 	Diagnostic,
 	DiagnosticIntegrity,
 	DiagnosticLocation,
-	Diagnostics,
 	descriptions,
 } from "@internal/diagnostics";
 import {ProjectDefinition} from "@internal/project";
@@ -82,7 +81,7 @@ function equalKind(
 }
 
 type ResolveImportsResult = {
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	resolved: BundleCompileResolvedImports;
 };
 
@@ -101,6 +100,7 @@ export default class DependencyNode {
 		this.ref = ref;
 		this.type = res.value.moduleType;
 
+		this.diagnostics = [];
 		this.usedAsync = false;
 		this.all = false;
 		this.relativeToAbsolutePath = new ExtendedMap("relativeToAbsolutePath");
@@ -112,6 +112,9 @@ export default class DependencyNode {
 		this.handler = handler;
 
 		this.shallow = false;
+
+		this.hadResolveImportsDiagnostics = undefined;
+		this.resolveImportsCache = undefined;
 	}
 
 	public uid: UIDPath;
@@ -124,14 +127,21 @@ export default class DependencyNode {
 	public usedAsync: boolean;
 	public relativeToAbsolutePath: ExtendedMap<string, AbsoluteFilePath>;
 	public shallow: boolean;
+	public diagnostics: Diagnostic[];
 
 	private graph: DependencyGraph;
 	private absoluteToAnalyzeDependency: AbsoluteFilePathMap<AnalyzeDependency>;
 	private project: ProjectDefinition;
+
 	private resolveImportsCache: undefined | ResolveImportsResult;
+	public hadResolveImportsDiagnostics: undefined | boolean;
 
 	public getIntegrity(): undefined | DiagnosticIntegrity {
 		return this.analyze.integrity;
+	}
+
+	public setDiagnostics(diagnostics: Diagnostic[]) {
+		this.diagnostics = diagnostics;
 	}
 
 	public setUsedAsync(usedAsync: boolean) {
@@ -152,6 +162,7 @@ export default class DependencyNode {
 	}
 
 	public getDependents(): DependencyNode[] {
+		// TODO This can be a lot of items... We should add a dedicated map on DependencyGraph
 		const dependents: DependencyNode[] = [];
 		for (const node of this.graph.getNodes()) {
 			if (node.absoluteToAnalyzeDependency.has(this.path)) {
@@ -354,7 +365,7 @@ export default class DependencyNode {
 		const resolvedImports: BundleCompileResolvedImports = new UIDPathMap();
 
 		// Diagnostics for unknown imports
-		const diagnostics: Diagnostics = [];
+		const diagnostics: Diagnostic[] = [];
 
 		// Go through all of our dependencies and check if they have any external exports to forward
 		for (const absolute of this.relativeToAbsolutePath.values()) {
@@ -405,6 +416,7 @@ export default class DependencyNode {
 			resolved: resolvedImports,
 			diagnostics,
 		};
+		this.hadResolveImportsDiagnostics = result.diagnostics.length > 0;
 		this.resolveImportsCache = result;
 		return result;
 	}

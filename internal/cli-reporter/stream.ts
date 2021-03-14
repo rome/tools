@@ -1,12 +1,12 @@
 import {
+	ActiveElement,
 	ReporterStream,
 	ReporterStreamAttached,
-	ReporterStreamLineSnapshot,
 	ReporterStreamState,
 } from "./types";
 import {LogOptions} from "./Reporter";
 import {ansiEscapes} from "@internal/cli-layout";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 export function getLeadingNewlineCount({state}: ReporterStreamAttached): number {
 	if (!state.leadingNewline) {
@@ -25,146 +25,76 @@ export function getLeadingNewlineCount({state}: ReporterStreamAttached): number 
 	return newlines;
 }
 
-function calculateBufferPosition(
-	{state}: ReporterStreamAttached,
-	targetLine: ZeroIndexed,
-): {
-	lineDiff: number;
-	bufferIndex: number;
-} {
-	let lineDiff = state.currentLine.subtract(targetLine).valueOf();
-	let bufferIndex = state.buffer.length - lineDiff;
-
-	if (!state.leadingNewline) {
-		bufferIndex--;
-	}
-
-	return {lineDiff, bufferIndex};
-}
-
-export function removeLine(
-	stream: ReporterStreamAttached,
-	snapshot: ReporterStreamLineSnapshot,
-	stderr: boolean = false,
-) {
-	// See if this stream is included in the snapshot
-	const targetLine = stream.state.lineSnapshots.get(snapshot);
-	if (targetLine === undefined) {
-		return;
-	}
-
-	// We only care about ansi streams with cursor support
-	if (!isANSICursorStream(stream)) {
-		return;
-	}
-
-	// Position from where we currently are to the target line
-	const {lineDiff, bufferIndex} = calculateBufferPosition(stream, targetLine);
-
-	// If the line to delete is the one we're on then just erase it
-	if (lineDiff === 0) {
-		stream.state.buffer[bufferIndex] = "";
-		clearCurrentLine(stream);
-		return;
-	}
-
-	// Remove line from the buffer
-	stream.state.buffer.splice(bufferIndex, 1);
-
-	// Update snapshots
-	for (const [snapshot, line] of stream.state.lineSnapshots) {
-		stream.state.lineSnapshots.set(snapshot, line.decrement());
-	}
-
-	// Update line since we've shifted at least one
-	stream.state.currentLine = stream.state.currentLine.decrement();
-
-	// Go to the line right above where we want to remove
-	stream.write(ansiEscapes.cursorUp(lineDiff + 1), stderr);
-	stream.write(ansiEscapes.cursorTo(0), stderr);
-
-	// Sweeping down, starting rendering the next line
-	for (let i = 1; i <= lineDiff; i++) {
-		const line = stream.state.buffer[stream.state.buffer.length - lineDiff + i];
-		stream.write(ansiEscapes.cursorDown(), stderr);
-		stream.write(ansiEscapes.cursorTo(0), stderr);
-		stream.write(ansiEscapes.eraseLine, stderr);
-		if (line !== undefined) {
-			stream.write(line, stderr);
-		}
-	}
-}
-
 export function createStreamState(): ReporterStreamState {
 	return {
-		lineSnapshots: new Map(),
 		currentLine: new ZeroIndexed(),
 		leadingNewline: false,
 		buffer: [],
-		nextLineInsertLeadingNewline: false,
+	};
+}
+
+export function createActiveElementToken(): ActiveElement {
+	return {
+		rendered: new Set(),
 	};
 }
 
 export function log(
 	stream: ReporterStreamAttached,
-	msg: string,
+	lines: string[],
 	opts: LogOptions = {},
-	lineOffset: number = 0,
+	activeElement?: ActiveElement,
 ) {
+	if (lines.length === 0) {
+		return;
+	}
+
 	const stderr = opts.stderr === true;
-	let pushBuffer = true; //stream.state.lineSnapshots.size >= 0;
+	let pushBuffer = activeElement === undefined;
 
-	const {replaceLineSnapshot} = opts;
-	if (replaceLineSnapshot !== undefined) {
-		let replaceLine = stream.state.lineSnapshots.get(replaceLineSnapshot);
-		if (replaceLine === undefined) {
-			// If we were given a replace line snapshot that we weren't a part of then the next line is considered
-			// the owner
-			stream.state.lineSnapshots.set(
-				replaceLineSnapshot,
-				stream.state.currentLine,
-			);
-			pushBuffer = true;
-		} else if (isANSICursorStream(stream)) {
-			replaceLine = replaceLine.add(lineOffset);
-			logReplace(stream, msg, replaceLine, stderr);
-			return;
+	let buff = "";
+
+	// Destroy all active elements
+	for (let i = 0; i < stream.activeElements.size; i++) {
+		// Current line contains an active element so don't go up for the first
+		if (i > 0) {
+			buff += ansiEscapes.cursorUp();
 		}
+		buff += ansiEscapes.cursorTo(0) + ansiEscapes.eraseLine;
 	}
+	stream.activeElements.clear();
 
-	// We only push to the buffer if we have active line snapshots
-	if (!pushBuffer && stream.state.buffer.length > 0) {
-		stream.state.buffer = [];
-	}
+	for (let i = 0; i < lines.length; i++) {
+		const line = lines[i];
 
-	if (stream.state.nextLineInsertLeadingNewline) {
-		stream.state.nextLineInsertLeadingNewline = false;
-		newline(stream, stderr);
-	}
-
-	if (stream.state.leadingNewline) {
 		if (pushBuffer) {
-			stream.state.buffer.push(msg);
+			if (stream.state.leadingNewline) {
+				stream.state.buffer.push(line);
+			} else {
+				// If we have no newline then we are a part of the previous line
+				const prev = stream.state.buffer.pop() || "";
+				const line = prev + lines[0];
+				stream.state.buffer.push(line);
+			}
 		}
-	} else {
-		// If we have no newline then we are a part of the previous line
-		const prev = stream.state.buffer.pop() || "";
-		const line = prev + msg;
-		if (pushBuffer) {
-			stream.state.buffer.push(line);
+
+		buff += line;
+
+		let noNewline = i === lines.length - 1 && opts.noNewline;
+		if (!noNewline) {
+			if (pushBuffer) {
+				stream.state.leadingNewline = true;
+				stream.state.currentLine = stream.state.currentLine.increment();
+			}
+			buff += "\n";
 		}
 	}
 
-	stream.write(msg, stderr);
-
-	if (opts.preferNoNewline) {
-		stream.state.nextLineInsertLeadingNewline = true;
+	if (activeElement !== undefined) {
+		stream.activeElements.add(activeElement);
 	}
 
-	// If a newline was requested consider us moved
-	if (!(opts.noNewline || opts.preferNoNewline)) {
-		newline(stream, stderr);
-	}
+	stream.write(buff, stderr);
 }
 
 export function isANSICursorStream(stream: ReporterStream): boolean {
@@ -178,44 +108,7 @@ export function clearScreen(stream: ReporterStreamAttached) {
 	}
 }
 
-function clearCurrentLine(stream: ReporterStreamAttached) {
+export function clearCurrentLine(stream: ReporterStreamAttached) {
 	stream.write(ansiEscapes.cursorTo(0), false);
 	stream.write(ansiEscapes.eraseLine, false);
-	stream.state.nextLineInsertLeadingNewline = false;
-}
-
-function newline(stream: ReporterStreamAttached, stderr: boolean) {
-	stream.state.leadingNewline = true;
-	stream.state.currentLine = stream.state.currentLine.increment();
-	stream.write("\n", stderr);
-}
-
-function logReplace(
-	stream: ReporterStreamAttached,
-	msg: string,
-	targetLine: ZeroIndexed,
-	stderr: boolean,
-) {
-	const {lineDiff, bufferIndex} = calculateBufferPosition(stream, targetLine);
-
-	// Easy modification when it's just the current line
-	if (lineDiff === 0) {
-		clearCurrentLine(stream);
-		stream.state.buffer[bufferIndex] = msg;
-		stream.write(msg, stderr);
-		return;
-	}
-
-	// Advance to and replace the target line
-	stream.state.buffer[bufferIndex] = msg;
-	stream.write(ansiEscapes.cursorUp(lineDiff), false);
-	stream.write(ansiEscapes.cursorTo(0), false);
-	stream.write(ansiEscapes.eraseLine, false);
-	stream.write(msg, false);
-
-	// Advance back to the bottom
-	if (lineDiff > 0) {
-		stream.write(ansiEscapes.cursorDown(lineDiff), false);
-		stream.write(ansiEscapes.cursorTo(0), false);
-	}
 }

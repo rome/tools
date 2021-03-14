@@ -1,8 +1,8 @@
 import {createDiagnosticsCategory} from "./index";
-import {AnyMarkups, StaticMarkup, markup} from "@internal/markup";
+import {Markup, StaticMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {SourceLocation} from "@internal/parser-core";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 // @internal/js-analysis
@@ -35,11 +35,7 @@ export const typeCheck = createDiagnosticsCategory({
 					},
 		],
 	}),
-	UNKNOWN_IMPORT: (
-		importedName: string,
-		source: AnyPath,
-		possibleNames: string[],
-	) => ({
+	UNKNOWN_IMPORT: (importedName: string, source: Path, possibleNames: string[]) => ({
 		category: DIAGNOSTIC_CATEGORIES["typeCheck/unknownImport"],
 		message: markup`Unknown import '${importedName}' in '${source}'`,
 		advice: buildSuggestionAdvice(importedName, possibleNames),
@@ -59,7 +55,7 @@ export const typeCheck = createDiagnosticsCategory({
 		//message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
 		message: markup`Expected only a ${only} but got ${target}`,
 	}),
-	MISSING_CONDITION: (missing: AnyMarkups) => ({
+	MISSING_CONDITION: (missing: Markup[]) => ({
 		category: DIAGNOSTIC_CATEGORIES["typeCheck/missingCondition"],
 		message: markup`Missing the conditions ${missing.join(", ")}`,
 	}),

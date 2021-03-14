@@ -21,7 +21,7 @@ import types from "./types/index";
 import evaluators from "./evaluators/index";
 import {ModuleSignatureType} from "./types";
 import {ExtendedMap} from "@internal/collections";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {pretty} from "@internal/pretty-format";
 
 export type HydrateTypeFactory = (id: unknown) => T;
@@ -30,7 +30,7 @@ export type HydrateData = JSONObject;
 
 export type GetModuleSignature = (
 	source: string,
-	relative: AnyPath,
+	relative: Path,
 ) => Promise<undefined | ModuleSignatureManager>;
 
 export class ModuleSignatureManager {
@@ -48,7 +48,7 @@ export class ModuleSignatureManager {
 		this.exportNamesToTypeId = new Map();
 	}
 
-	public path: AnyPath;
+	public path: Path;
 	private getModuleSignature: GetModuleSignature;
 	private topScope: Scope;
 	private exportNamesToTypeId: Map<string, string>;
@@ -194,7 +194,7 @@ type Export =
 		};
 
 export default class Evaluator {
-	constructor(hub: Hub, path: AnyPath) {
+	constructor(hub: Hub, path: Path) {
 		this.path = path;
 		this.nodeToType = new ExtendedMap("nodeToType");
 		this.exports = [];
@@ -208,13 +208,13 @@ export default class Evaluator {
 	}
 
 	public evaluatingType: undefined | string;
-	public path: AnyPath;
+	public path: Path;
 	private nodeToType: ExtendedMap<AnyNode, T>;
 	public hub: Hub;
 	public intrinsics: Intrinsics;
 	public exports: Export[];
 	public imports: {
-		origin: AnyPath;
+		origin: Path;
 		importedName: undefined | string;
 		source: string;
 		type: ImportT;
@@ -275,7 +275,7 @@ export default class Evaluator {
 		opts: {
 			importedName: undefined | string;
 			source: string;
-			originPath: AnyPath;
+			originPath: Path;
 		},
 	) {
 		this.imports.push({

@@ -8,35 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/property-computed/input.ts 1:0-5:0
-	path: UIDPath<typescript/class/property-computed/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/property-computed/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/property-computed/input.ts 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/property-computed/input.ts 1:0-4:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: SourceLocation typescript/class/property-computed/input.ts 2:5-2:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: SourceLocation typescript/class/property-computed/input.ts 2:5-2:11 (Symbol)
@@ -48,28 +30,26 @@ JSRoot {
 									}
 									loc: SourceLocation typescript/class/property-computed/input.ts 2:12-2:20 (iterator)
 								}
+								loc: SourceLocation typescript/class/property-computed/input.ts 2:5-2:20
 							}
 							loc: SourceLocation typescript/class/property-computed/input.ts 2:4-2:21
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation typescript/class/property-computed/input.ts 2:4-2:30
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/property-computed/input.ts 2:23-2:29}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/property-computed/input.ts 2:4-2:21
 							start: Position 2:4
 						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/property-computed/input.ts 2:23-2:29
+						}
+						loc: SourceLocation typescript/class/property-computed/input.ts 2:4-2:30
 					}
 					JSClassProperty {
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: SourceLocation typescript/class/property-computed/input.ts 3:5-3:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: SourceLocation typescript/class/property-computed/input.ts 3:5-3:11 (Symbol)
@@ -81,28 +61,38 @@ JSRoot {
 									}
 									loc: SourceLocation typescript/class/property-computed/input.ts 3:12-3:20 (iterator)
 								}
+								loc: SourceLocation typescript/class/property-computed/input.ts 3:5-3:20
 							}
 							loc: SourceLocation typescript/class/property-computed/input.ts 3:4-3:21
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation typescript/class/property-computed/input.ts 3:4-3:31
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/property-computed/input.ts 3:24-3:30}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: true
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/property-computed/input.ts 3:4-3:22
 							start: Position 3:4
 						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/property-computed/input.ts 3:24-3:30
+						}
+						loc: SourceLocation typescript/class/property-computed/input.ts 3:4-3:31
 					}
 				]
+				loc: SourceLocation typescript/class/property-computed/input.ts 1:0-4:1
 			}
+			loc: SourceLocation typescript/class/property-computed/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/property-computed/input.ts>
+	loc: SourceLocation typescript/class/property-computed/input.ts 1:0-5:0
 }
 ```
 

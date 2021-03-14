@@ -8,34 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/expression-implements/input.ts 1:0-3:0
-	path: UIDPath<typescript/class/expression-implements/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/class/expression-implements/input.ts 1:0-1:29
 			expression: JSClassExpression {
-				id: undefined
-				loc: SourceLocation typescript/class/expression-implements/input.ts 1:1-1:27
 				meta: JSClassHead {
-					body: Array []
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/class/expression-implements/input.ts 1:1-1:27
-					implements: Array [
+					body: []
+					implements: [
 						TSExpressionWithTypeArguments {
-							loc: SourceLocation typescript/class/expression-implements/input.ts 1:18-1:24
 							expression: TSQualifiedName {
-								loc: SourceLocation typescript/class/expression-implements/input.ts 1:18-1:21
 								left: JSReferenceIdentifier {
 									name: "X"
 									loc: SourceLocation typescript/class/expression-implements/input.ts 1:18-1:19 (X)
@@ -44,44 +24,40 @@ JSRoot {
 									name: "Y"
 									loc: SourceLocation typescript/class/expression-implements/input.ts 1:20-1:21 (Y)
 								}
+								loc: SourceLocation typescript/class/expression-implements/input.ts 1:18-1:21
 							}
 							typeParameters: TSTypeParameterInstantiation {
-								loc: SourceLocation typescript/class/expression-implements/input.ts 1:21-1:24
-								params: Array [
+								params: [
 									TSTypeReference {
-										typeParameters: undefined
-										loc: SourceLocation typescript/class/expression-implements/input.ts 1:22-1:23
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: SourceLocation typescript/class/expression-implements/input.ts 1:22-1:23 (T)
 										}
+										loc: SourceLocation typescript/class/expression-implements/input.ts 1:22-1:23
 									}
 								]
+								loc: SourceLocation typescript/class/expression-implements/input.ts 1:21-1:24
 							}
+							loc: SourceLocation typescript/class/expression-implements/input.ts 1:18-1:24
 						}
 					]
+					loc: SourceLocation typescript/class/expression-implements/input.ts 1:1-1:27
 				}
+				loc: SourceLocation typescript/class/expression-implements/input.ts 1:1-1:27
 			}
+			loc: SourceLocation typescript/class/expression-implements/input.ts 1:0-1:29
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/class/expression-implements/input.ts 2:0-2:31
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: SourceLocation typescript/class/expression-implements/input.ts 2:7-2:8 (C)
 				}
-				loc: SourceLocation typescript/class/expression-implements/input.ts 2:1-2:29
 				meta: JSClassHead {
-					body: Array []
-					superClass: undefined
-					superTypeParameters: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/class/expression-implements/input.ts 2:1-2:29
-					implements: Array [
+					body: []
+					implements: [
 						TSExpressionWithTypeArguments {
-							loc: SourceLocation typescript/class/expression-implements/input.ts 2:20-2:26
 							expression: TSQualifiedName {
-								loc: SourceLocation typescript/class/expression-implements/input.ts 2:20-2:23
 								left: JSReferenceIdentifier {
 									name: "X"
 									loc: SourceLocation typescript/class/expression-implements/input.ts 2:20-2:21 (X)
@@ -90,26 +66,39 @@ JSRoot {
 									name: "Y"
 									loc: SourceLocation typescript/class/expression-implements/input.ts 2:22-2:23 (Y)
 								}
+								loc: SourceLocation typescript/class/expression-implements/input.ts 2:20-2:23
 							}
 							typeParameters: TSTypeParameterInstantiation {
-								loc: SourceLocation typescript/class/expression-implements/input.ts 2:23-2:26
-								params: Array [
+								params: [
 									TSTypeReference {
-										typeParameters: undefined
-										loc: SourceLocation typescript/class/expression-implements/input.ts 2:24-2:25
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: SourceLocation typescript/class/expression-implements/input.ts 2:24-2:25 (T)
 										}
+										loc: SourceLocation typescript/class/expression-implements/input.ts 2:24-2:25
 									}
 								]
+								loc: SourceLocation typescript/class/expression-implements/input.ts 2:23-2:26
 							}
+							loc: SourceLocation typescript/class/expression-implements/input.ts 2:20-2:26
 						}
 					]
+					loc: SourceLocation typescript/class/expression-implements/input.ts 2:1-2:29
 				}
+				loc: SourceLocation typescript/class/expression-implements/input.ts 2:1-2:29
 			}
+			loc: SourceLocation typescript/class/expression-implements/input.ts 2:0-2:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/expression-implements/input.ts>
+	loc: SourceLocation typescript/class/expression-implements/input.ts 1:0-3:0
 }
 ```
 

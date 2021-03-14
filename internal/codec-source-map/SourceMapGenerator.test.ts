@@ -1,12 +1,9 @@
 import {test} from "rome";
 import {Mapping} from "@internal/codec-source-map/types";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
-import {
-	SourceMapConsumer,
-	SourceMapGenerator,
-} from "@internal/codec-source-map/index";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
+import {SourceMapGenerator} from "@internal/codec-source-map/index";
 import {dedent} from "@internal/string-utils";
-import {createAnyPath, createRelativePath} from "@internal/path";
+import {createPath, createRelativePath} from "@internal/path";
 
 // TODO: This should NOT be shared amongst tests
 let generator: SourceMapGenerator;
@@ -24,7 +21,7 @@ test(
 		): Mapping {
 			return {
 				name,
-				source: createAnyPath(source),
+				source: createPath(source),
 				original: {
 					line: new OneIndexed(originalLine),
 					column: new ZeroIndexed(originalColumn),
@@ -95,28 +92,5 @@ test(
 		);
 
 		t.true(materializeWasCalled);
-	},
-);
-
-test(
-	"Verify generator comment, json & consumer",
-	async (t) => {
-		function toBase64(input: string) {
-			return Buffer.from(input).toString("base64");
-		}
-
-		t.is(generator.toJSON(), JSON.stringify(generator.serialize()));
-
-		t.is(
-			generator.toComment(),
-			`//# sourceMappingURL=data:application/json;charset=utf-8;base64,${toBase64(
-				generator.toJSON(),
-			)}`,
-		);
-
-		t.looksLike(
-			generator.toConsumer(),
-			SourceMapConsumer.fromJSON(generator.serialize()),
-		);
 	},
 );

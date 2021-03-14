@@ -11,7 +11,7 @@ import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
 import ObjPropT from "./ObjPropT";
-import {StaticMarkup, concatMarkup, markup} from "@internal/markup";
+import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
 
 export default class ObjT extends T {
 	constructor(
@@ -112,7 +112,7 @@ export default class ObjT extends T {
 		if (this.props.length === 0) {
 			return markup`{}`;
 		} else {
-			return concatMarkup(
+			return joinMarkup(
 				[
 					markup`{`,
 					...this.props.map((prop) => {

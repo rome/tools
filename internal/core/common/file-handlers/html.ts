@@ -18,6 +18,7 @@ export const IMPLICIT_JS_EXTENSIONS = ["js", "ts", "tsx", "json"];
 
 export const htmlHandler: PartialExtensionHandler = {
 	language: "html",
+	mime: "text/html",
 	hasTabs: true,
 	capabilities: {
 		lint: true,

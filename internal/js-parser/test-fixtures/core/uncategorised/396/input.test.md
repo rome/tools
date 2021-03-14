@@ -8,78 +8,67 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/396/input.js 1:0-1:26
-	path: UIDPath<core/uncategorised/396/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<core/uncategorised/396/input.js>
-				start: Position 1:18
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "t"
 				loc: SourceLocation core/uncategorised/396/input.js 1:9-1:10 (t)
 			}
-			loc: SourceLocation core/uncategorised/396/input.js 1:0-1:26
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/396/input.js 1:23-1:26
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/396/input.js 1:10-1:22
-				rest: JSBindingIdentifier {
-					name: "rest"
-					loc: SourceLocation core/uncategorised/396/input.js 1:14-1:18 (rest)
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation core/uncategorised/396/input.js 1:14-1:18
-					}
-				}
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "b"
-						loc: SourceLocation core/uncategorised/396/input.js 1:20-1:21 (b)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation core/uncategorised/396/input.js 1:20-1:21
 						}
+						loc: SourceLocation core/uncategorised/396/input.js 1:20-1:21 (b)
 					}
 				]
+				rest: JSBindingIdentifier {
+					name: "rest"
+					meta: JSPatternMeta {
+						loc: SourceLocation core/uncategorised/396/input.js 1:14-1:18
+					}
+					loc: SourceLocation core/uncategorised/396/input.js 1:14-1:18 (rest)
+				}
+				loc: SourceLocation core/uncategorised/396/input.js 1:10-1:22
+			}
+			loc: SourceLocation core/uncategorised/396/input.js 1:0-1:26
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/396/input.js>
+				end: Position 1:18
+				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/396/input.js>
+	loc: SourceLocation core/uncategorised/396/input.js 1:0-1:26
 }
 ```
 

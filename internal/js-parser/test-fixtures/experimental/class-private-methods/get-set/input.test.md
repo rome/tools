@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-methods/get-set/input.js 1:0-9:0
-	path: UIDPath<experimental/class-private-methods/get-set/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Hotel"
 				loc: SourceLocation experimental/class-private-methods/get-set/input.js 1:6-1:11 (Hotel)
 			}
-			loc: SourceLocation experimental/class-private-methods/get-set/input.js 1:0-8:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-methods/get-set/input.js 1:0-8:1
-				body: Array [
+				body: [
 					JSClassPrivateMethod {
 						kind: "get"
 						key: JSPrivateName {
@@ -42,45 +25,39 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:6-2:11
 						}
-						loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:2-4:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:2-2:11
 							start: Position 2:2
+						}
+						body: JSBlockStatement {
+							body: [
+								JSReturnStatement {
+									argument: JSCallExpression {
+										arguments: []
+										callee: JSReferenceIdentifier {
+											name: "ohNo"
+											loc: SourceLocation experimental/class-private-methods/get-set/input.js 3:11-3:15 (ohNo)
+										}
+										loc: SourceLocation experimental/class-private-methods/get-set/input.js 3:11-3:17
+									}
+									loc: SourceLocation experimental/class-private-methods/get-set/input.js 3:4-3:18
+								}
+							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:14-4:3
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:11-2:13
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:14-4:3
-							body: Array [
-								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-methods/get-set/input.js 3:4-3:18
-									argument: JSCallExpression {
-										arguments: Array []
-										loc: SourceLocation experimental/class-private-methods/get-set/input.js 3:11-3:17
-										callee: JSReferenceIdentifier {
-											name: "ohNo"
-											loc: SourceLocation experimental/class-private-methods/get-set/input.js 3:11-3:15 (ohNo)
-										}
-									}
-								}
-							]
-						}
+						loc: SourceLocation experimental/class-private-methods/get-set/input.js 2:2-4:3
 					}
 					JSClassPrivateMethod {
 						kind: "set"
@@ -91,65 +68,68 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:6-5:11
 						}
-						loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:2-7:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:2-5:11
 							start: Position 5:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:11-5:14
-							params: Array [
-								JSBindingIdentifier {
-									name: "x"
-									loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:12-5:13 (x)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:12-5:13
-									}
-								}
-							]
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:15-7:3
-							body: Array [
+							body: [
 								JSReturnStatement {
-									loc: SourceLocation experimental/class-private-methods/get-set/input.js 6:4-6:23
 									argument: JSCallExpression {
-										loc: SourceLocation experimental/class-private-methods/get-set/input.js 6:11-6:22
-										callee: JSReferenceIdentifier {
-											name: "makeEvil"
-											loc: SourceLocation experimental/class-private-methods/get-set/input.js 6:11-6:19 (makeEvil)
-										}
-										arguments: Array [
+										arguments: [
 											JSReferenceIdentifier {
 												name: "x"
 												loc: SourceLocation experimental/class-private-methods/get-set/input.js 6:20-6:21 (x)
 											}
 										]
+										callee: JSReferenceIdentifier {
+											name: "makeEvil"
+											loc: SourceLocation experimental/class-private-methods/get-set/input.js 6:11-6:19 (makeEvil)
+										}
+										loc: SourceLocation experimental/class-private-methods/get-set/input.js 6:11-6:22
 									}
+									loc: SourceLocation experimental/class-private-methods/get-set/input.js 6:4-6:23
 								}
 							]
+							directives: []
+							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:15-7:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: [
+								JSBindingIdentifier {
+									name: "x"
+									meta: JSPatternMeta {
+										loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:12-5:13
+									}
+									loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:12-5:13 (x)
+								}
+							]
+							loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:11-5:14
+						}
+						loc: SourceLocation experimental/class-private-methods/get-set/input.js 5:2-7:3
 					}
 				]
+				loc: SourceLocation experimental/class-private-methods/get-set/input.js 1:0-8:1
 			}
+			loc: SourceLocation experimental/class-private-methods/get-set/input.js 1:0-8:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-methods/get-set/input.js>
+	loc: SourceLocation experimental/class-private-methods/get-set/input.js 1:0-9:0
 }
 ```
 

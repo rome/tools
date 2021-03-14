@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/annotated/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:25
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:24
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:23-1:24 (x)
@@ -31,25 +18,37 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:22
-					returnType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:13-1:19}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:23-1:22
 							meta: JSPatternMeta {
-								optional: undefined
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:4-1:10
+								}
 								loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:23-1:22
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:4-1:10}
 							}
+							loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:23-1:22
 						}
 					]
+					returnType: TSNumberKeywordTypeAnnotation {
+						loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:13-1:19
+					}
+					loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:22
 				}
+				loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:24
 			}
+			loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/annotated/input.ts>
+	loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-2:0
 }
 ```
 

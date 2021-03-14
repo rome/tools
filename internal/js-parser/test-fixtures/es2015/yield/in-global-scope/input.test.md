@@ -8,52 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:8
-	path: UIDPath<es2015/yield/in-global-scope/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:5
 			expression: JSReferenceIdentifier {
 				name: "yield"
 				loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:5 (yield)
 			}
+			loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:5
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/yield/in-global-scope/input.js 1:6-1:8
 			expression: JSNumericLiteral {
 				value: 10
-				format: undefined
 				loc: SourceLocation es2015/yield/in-global-scope/input.js 1:6-1:8
 			}
+			loc: SourceLocation es2015/yield/in-global-scope/input.js 1:6-1:8
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:5
 				path: UIDPath<es2015/yield/in-global-scope/input.js>
+				end: Position 1:5
 				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/in-global-scope/input.js>
+	loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:8
 }
 ```
 

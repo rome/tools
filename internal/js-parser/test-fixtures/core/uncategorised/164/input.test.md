@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/164/input.js 1:0-1:14
-	path: UIDPath<core/uncategorised/164/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/164/input.js 1:0-1:14
 			expression: JSBinaryExpression {
 				operator: "instanceof"
-				loc: SourceLocation core/uncategorised/164/input.js 1:0-1:14
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/164/input.js 1:0-1:1 (x)
@@ -33,9 +20,20 @@ JSRoot {
 					name: "y"
 					loc: SourceLocation core/uncategorised/164/input.js 1:13-1:14 (y)
 				}
+				loc: SourceLocation core/uncategorised/164/input.js 1:0-1:14
 			}
+			loc: SourceLocation core/uncategorised/164/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/164/input.js>
+	loc: SourceLocation core/uncategorised/164/input.js 1:0-1:14
 }
 ```
 

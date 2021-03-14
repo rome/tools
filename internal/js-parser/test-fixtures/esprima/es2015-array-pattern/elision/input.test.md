@@ -8,51 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-array-pattern/elision/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:0-1:13
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:0-1:13
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:4-1:8
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
-									loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:5-1:6 (a)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:5-1:6
 									}
+									loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:5-1:6 (a)
 								}
 							]
+							loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:4-1:8
 						}
-						loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:4-1:12
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:11-1:12
 						}
+						loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:4-1:12
 					}
 				]
+				loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:0-1:13
 			}
+			loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-array-pattern/elision/input.js>
+	loc: SourceLocation esprima/es2015-array-pattern/elision/input.js 1:0-2:0
 }
 ```
 

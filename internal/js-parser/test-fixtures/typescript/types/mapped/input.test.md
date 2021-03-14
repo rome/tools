@@ -8,151 +8,151 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/mapped/input.ts 1:0-5:0
-	path: UIDPath<typescript/types/mapped/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/mapped/input.ts 1:0-1:37
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/mapped/input.ts 1:0-1:37
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "map1"
-							loc: SourceLocation typescript/types/mapped/input.ts 1:4-1:36
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/mapped/input.ts 1:4-1:36
 								typeAnnotation: TSMappedType {
-									nameType: undefined
-									optional: undefined
-									readonly: undefined
-									loc: SourceLocation typescript/types/mapped/input.ts 1:10-1:36
-									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 1:27-1:33}
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/mapped/input.ts 1:27-1:33
+									}
 									typeParameter: TSTypeParameter {
 										name: "P"
-										constraint: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 1:18-1:24}
+										constraint: TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/mapped/input.ts 1:18-1:24
+										}
 										loc: SourceLocation typescript/types/mapped/input.ts 1:13-1:24
 									}
+									loc: SourceLocation typescript/types/mapped/input.ts 1:10-1:36
 								}
+								loc: SourceLocation typescript/types/mapped/input.ts 1:4-1:36
 							}
+							loc: SourceLocation typescript/types/mapped/input.ts 1:4-1:36
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/mapped/input.ts 1:4-1:36
 					}
 				]
+				loc: SourceLocation typescript/types/mapped/input.ts 1:0-1:37
 			}
+			loc: SourceLocation typescript/types/mapped/input.ts 1:0-1:37
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/mapped/input.ts 2:0-2:47
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/mapped/input.ts 2:0-2:47
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "map2"
-							loc: SourceLocation typescript/types/mapped/input.ts 2:4-2:46
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/mapped/input.ts 2:4-2:46
 								typeAnnotation: TSMappedType {
-									nameType: undefined
 									optional: true
 									readonly: true
-									loc: SourceLocation typescript/types/mapped/input.ts 2:10-2:46
-									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 2:37-2:43}
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/mapped/input.ts 2:37-2:43
+									}
 									typeParameter: TSTypeParameter {
 										name: "P"
-										constraint: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 2:27-2:33}
+										constraint: TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/mapped/input.ts 2:27-2:33
+										}
 										loc: SourceLocation typescript/types/mapped/input.ts 2:22-2:33
 									}
+									loc: SourceLocation typescript/types/mapped/input.ts 2:10-2:46
 								}
+								loc: SourceLocation typescript/types/mapped/input.ts 2:4-2:46
 							}
+							loc: SourceLocation typescript/types/mapped/input.ts 2:4-2:46
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/mapped/input.ts 2:4-2:46
 					}
 				]
+				loc: SourceLocation typescript/types/mapped/input.ts 2:0-2:47
 			}
+			loc: SourceLocation typescript/types/mapped/input.ts 2:0-2:47
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/mapped/input.ts 3:0-3:49
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/mapped/input.ts 3:0-3:49
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "map3"
-							loc: SourceLocation typescript/types/mapped/input.ts 3:4-3:48
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/mapped/input.ts 3:4-3:48
 								typeAnnotation: TSMappedType {
-									nameType: undefined
 									optional: "+"
 									readonly: "+"
-									loc: SourceLocation typescript/types/mapped/input.ts 3:10-3:48
-									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 3:39-3:45}
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/mapped/input.ts 3:39-3:45
+									}
 									typeParameter: TSTypeParameter {
 										name: "P"
-										constraint: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 3:28-3:34}
+										constraint: TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/mapped/input.ts 3:28-3:34
+										}
 										loc: SourceLocation typescript/types/mapped/input.ts 3:23-3:34
 									}
+									loc: SourceLocation typescript/types/mapped/input.ts 3:10-3:48
 								}
+								loc: SourceLocation typescript/types/mapped/input.ts 3:4-3:48
 							}
+							loc: SourceLocation typescript/types/mapped/input.ts 3:4-3:48
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/mapped/input.ts 3:4-3:48
 					}
 				]
+				loc: SourceLocation typescript/types/mapped/input.ts 3:0-3:49
 			}
+			loc: SourceLocation typescript/types/mapped/input.ts 3:0-3:49
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/mapped/input.ts 4:0-4:48
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/mapped/input.ts 4:0-4:48
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "map4"
-							loc: SourceLocation typescript/types/mapped/input.ts 4:4-4:47
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/mapped/input.ts 4:4-4:47
 								typeAnnotation: TSMappedType {
-									nameType: undefined
 									optional: "-"
 									readonly: "-"
-									loc: SourceLocation typescript/types/mapped/input.ts 4:10-4:47
-									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 4:39-4:45}
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/mapped/input.ts 4:39-4:45
+									}
 									typeParameter: TSTypeParameter {
 										name: "P"
-										constraint: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/mapped/input.ts 4:28-4:34}
+										constraint: TSStringKeywordTypeAnnotation {
+											loc: SourceLocation typescript/types/mapped/input.ts 4:28-4:34
+										}
 										loc: SourceLocation typescript/types/mapped/input.ts 4:23-4:34
 									}
+									loc: SourceLocation typescript/types/mapped/input.ts 4:10-4:47
 								}
+								loc: SourceLocation typescript/types/mapped/input.ts 4:4-4:47
 							}
+							loc: SourceLocation typescript/types/mapped/input.ts 4:4-4:47
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/mapped/input.ts 4:4-4:47
 					}
 				]
+				loc: SourceLocation typescript/types/mapped/input.ts 4:0-4:48
 			}
+			loc: SourceLocation typescript/types/mapped/input.ts 4:0-4:48
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/mapped/input.ts>
+	loc: SourceLocation typescript/types/mapped/input.ts 1:0-5:0
 }
 ```
 

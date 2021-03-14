@@ -8,70 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/386/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/386/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<es2015/uncategorised/386/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>t</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening export specifiers character <emphasis>{</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/uncategorised/386/input.js 1:0-1:18
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
+					exported: JSIdentifier {
+						name: "typeof"
+						loc: SourceLocation es2015/uncategorised/386/input.js 1:7-1:13 (typeof)
+					}
+					local: JSReferenceIdentifier {
+						name: "typeof"
+						loc: SourceLocation es2015/uncategorised/386/input.js 1:7-1:13 (typeof)
+					}
 					loc: SourceLocation es2015/uncategorised/386/input.js 1:7-1:13
-					exported: JSIdentifier {
-						name: "typeof"
-						loc: SourceLocation es2015/uncategorised/386/input.js 1:7-1:13 (typeof)
-					}
-					local: JSReferenceIdentifier {
-						name: "typeof"
-						loc: SourceLocation es2015/uncategorised/386/input.js 1:7-1:13 (typeof)
-					}
 				}
 				JSExportLocalSpecifier {
+					exported: JSIdentifier {
+						name: "foo"
+						loc: SourceLocation es2015/uncategorised/386/input.js 1:14-1:17 (foo)
+					}
+					local: JSReferenceIdentifier {
+						name: "foo"
+						loc: SourceLocation es2015/uncategorised/386/input.js 1:14-1:17 (foo)
+					}
 					loc: SourceLocation es2015/uncategorised/386/input.js 1:14-1:17
-					exported: JSIdentifier {
-						name: "foo"
-						loc: SourceLocation es2015/uncategorised/386/input.js 1:14-1:17 (foo)
-					}
-					local: JSReferenceIdentifier {
-						name: "foo"
-						loc: SourceLocation es2015/uncategorised/386/input.js 1:14-1:17 (foo)
-					}
 				}
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/uncategorised/386/input.js 1:17-1:18
 					exported: JSIdentifier {
 						name: ""
 						loc: SourceLocation es2015/uncategorised/386/input.js 1:17-1:18 ()
@@ -80,10 +43,48 @@ JSRoot {
 						name: ""
 						loc: SourceLocation es2015/uncategorised/386/input.js 1:17-1:18 ()
 					}
+					loc: SourceLocation es2015/uncategorised/386/input.js 1:17-1:18
 				}
 			]
+			loc: SourceLocation es2015/uncategorised/386/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"export specifiers"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"{"
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "t", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/386/input.js>
+				end: Position 1:6
+				start: Position 1:7
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/386/input.js>
+	loc: SourceLocation es2015/uncategorised/386/input.js 1:0-2:0
 }
 ```
 

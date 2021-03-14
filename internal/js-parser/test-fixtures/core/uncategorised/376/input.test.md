@@ -8,50 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/376/input.js 1:0-1:2
-	path: UIDPath<core/uncategorised/376/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/376/input.js 1:0-1:2
 			expression: JSArrayExpression {
-				loc: SourceLocation core/uncategorised/376/input.js 1:0-1:2
-				elements: Array [
-					JSArrayHole {loc: SourceLocation core/uncategorised/376/input.js 1:1-1:1}
+				elements: [
+					JSArrayHole {
+						loc: SourceLocation core/uncategorised/376/input.js 1:1-1:1
+					}
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: SourceLocation core/uncategorised/376/input.js 1:2-1:2
 					}
 				]
+				loc: SourceLocation core/uncategorised/376/input.js 1:0-1:2
 			}
+			loc: SourceLocation core/uncategorised/376/input.js 1:0-1:2
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an array element"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "array element"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:2
 				path: UIDPath<core/uncategorised/376/input.js>
+				end: Position 1:2
 				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/376/input.js>
+	loc: SourceLocation core/uncategorised/376/input.js 1:0-1:2
 }
 ```
 

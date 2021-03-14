@@ -1,15 +1,31 @@
-import {ParsedPath} from "../parse";
-import {BasePath, FilePathMemo} from "./BasePath";
+import {ParsedPath, ParsedPathUID} from "../types";
+import {BasePath, FilePathMemo} from "../bases";
 
-export default class UIDPath extends BasePath<UIDPath> {
+export default class UIDPath extends BasePath<ParsedPathUID, UIDPath> {
 	public [Symbol.toStringTag] = "UIDPath";
 
 	protected _assert(): UIDPath {
 		return this;
 	}
 
-	protected _fork(parsed: ParsedPath, opts: FilePathMemo<UIDPath>): UIDPath {
+	protected _equalAbsolute(parsed: ParsedPath): boolean {
+		return parsed.type === "uid";
+	}
+
+	protected _join(): string {
+		return `uid://${this.getDisplaySegments().join("/")}`;
+	}
+
+	protected _getUnique() {
+		return this;
+	}
+
+	protected _fork(parsed: ParsedPathUID, opts: FilePathMemo<UIDPath>): UIDPath {
 		return new UIDPath(parsed, opts);
+	}
+
+	protected _format(): string {
+		return this.relativeSegments.join("/");
 	}
 
 	public isUID(): this is UIDPath {
@@ -19,8 +35,6 @@ export default class UIDPath extends BasePath<UIDPath> {
 	public assertUID(): UIDPath {
 		return this;
 	}
-
-	public format(): string {
-		return this.segments.slice(2).join("/");
-	}
 }
+
+UIDPath.prototype[Symbol.toStringTag] = "UIDPath";

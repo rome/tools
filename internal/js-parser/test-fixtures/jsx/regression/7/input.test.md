@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/regression/7/input.jsx 1:0-4:0
-	path: UIDPath<jsx/regression/7/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/regression/7/input.jsx 1:0-3:17
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "path"
-					loc: SourceLocation jsx/regression/7/input.jsx 1:1-1:5
-				}
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
-				loc: SourceLocation jsx/regression/7/input.jsx 1:0-3:17
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "d"
@@ -44,9 +24,26 @@ JSRoot {
 						loc: SourceLocation jsx/regression/7/input.jsx 1:6-3:15
 					}
 				]
+				children: []
+				selfClosing: true
+				name: JSXIdentifier {
+					name: "path"
+					loc: SourceLocation jsx/regression/7/input.jsx 1:1-1:5
+				}
+				loc: SourceLocation jsx/regression/7/input.jsx 1:0-3:17
 			}
+			loc: SourceLocation jsx/regression/7/input.jsx 1:0-3:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/regression/7/input.jsx>
+	loc: SourceLocation jsx/regression/7/input.jsx 1:0-4:0
 }
 ```
 

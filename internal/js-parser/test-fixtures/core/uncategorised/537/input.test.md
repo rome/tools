@@ -8,43 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/537/input.js 1:0-1:19
-	path: UIDPath<core/uncategorised/537/input.js>
-	body: Array [
+	body: [
 		JSForStatement {
-			test: undefined
-			update: undefined
-			body: JSEmptyStatement {loc: SourceLocation core/uncategorised/537/input.js 1:18-1:19}
-			loc: SourceLocation core/uncategorised/537/input.js 1:0-1:19
+			body: JSEmptyStatement {
+				loc: SourceLocation core/uncategorised/537/input.js 1:18-1:19
+			}
 			init: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation core/uncategorised/537/input.js 1:4-1:15
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation core/uncategorised/537/input.js 1:10-1:11 (x)
 						}
-						loc: SourceLocation core/uncategorised/537/input.js 1:10-1:15
 						init: JSNumericLiteral {
 							value: 0
-							format: undefined
 							loc: SourceLocation core/uncategorised/537/input.js 1:14-1:15
 						}
+						loc: SourceLocation core/uncategorised/537/input.js 1:10-1:15
 					}
 				]
+				loc: SourceLocation core/uncategorised/537/input.js 1:4-1:15
 			}
+			loc: SourceLocation core/uncategorised/537/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/537/input.js>
+	loc: SourceLocation core/uncategorised/537/input.js 1:0-1:19
 }
 ```
 

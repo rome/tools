@@ -8,61 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/287/input.js 1:0-1:23
-	path: UIDPath<core/uncategorised/287/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: SourceLocation core/uncategorised/287/input.js 1:9-1:13 (test)
 			}
-			loc: SourceLocation core/uncategorised/287/input.js 1:0-1:23
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation core/uncategorised/287/input.js 1:20-1:23
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/287/input.js 1:13-1:19
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "t"
-						loc: SourceLocation core/uncategorised/287/input.js 1:14-1:15 (t)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation core/uncategorised/287/input.js 1:14-1:15
 						}
+						loc: SourceLocation core/uncategorised/287/input.js 1:14-1:15 (t)
 					}
 					JSBindingIdentifier {
 						name: "t"
-						loc: SourceLocation core/uncategorised/287/input.js 1:17-1:18 (t)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation core/uncategorised/287/input.js 1:17-1:18
 						}
+						loc: SourceLocation core/uncategorised/287/input.js 1:17-1:18 (t)
 					}
 				]
+				loc: SourceLocation core/uncategorised/287/input.js 1:13-1:19
 			}
+			loc: SourceLocation core/uncategorised/287/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/287/input.js>
+	loc: SourceLocation core/uncategorised/287/input.js 1:0-1:23
 }
 ```
 

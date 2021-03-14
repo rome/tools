@@ -8,64 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/288/input.js 1:0-1:25
-	path: UIDPath<core/uncategorised/288/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/288/input.js 1:0-1:25
 			expression: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "test"
 					loc: SourceLocation core/uncategorised/288/input.js 1:10-1:14 (test)
 				}
-				loc: SourceLocation core/uncategorised/288/input.js 1:1-1:24
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation core/uncategorised/288/input.js 1:21-1:24
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation core/uncategorised/288/input.js 1:14-1:20
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "t"
-							loc: SourceLocation core/uncategorised/288/input.js 1:15-1:16 (t)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation core/uncategorised/288/input.js 1:15-1:16
 							}
+							loc: SourceLocation core/uncategorised/288/input.js 1:15-1:16 (t)
 						}
 						JSBindingIdentifier {
 							name: "t"
-							loc: SourceLocation core/uncategorised/288/input.js 1:18-1:19 (t)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation core/uncategorised/288/input.js 1:18-1:19
 							}
+							loc: SourceLocation core/uncategorised/288/input.js 1:18-1:19 (t)
 						}
 					]
+					loc: SourceLocation core/uncategorised/288/input.js 1:14-1:20
 				}
+				loc: SourceLocation core/uncategorised/288/input.js 1:1-1:24
 			}
+			loc: SourceLocation core/uncategorised/288/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/288/input.js>
+	loc: SourceLocation core/uncategorised/288/input.js 1:0-1:25
 }
 ```
 

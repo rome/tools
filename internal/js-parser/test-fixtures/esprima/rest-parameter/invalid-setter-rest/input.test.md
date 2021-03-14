@@ -8,48 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-2:0
-	path: UIDPath<esprima/rest-parameter/invalid-setter-rest/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "setter function argument must not be a rest parameter"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:16
-				path: UIDPath<esprima/rest-parameter/invalid-setter-rest/input.js>
-				start: Position 1:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-1:22
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-1:22
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:4-1:22
-					properties: Array [
+					properties: [
 						JSObjectMethod {
 							kind: "set"
 							key: JSStaticPropertyKey {
@@ -59,37 +27,60 @@ JSRoot {
 								}
 								loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:10-1:11
 							}
-							loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:6-1:20
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:18-1:20
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:11-1:17
+								params: []
 								rest: JSBindingIdentifier {
 									name: "y"
-									loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:15-1:16 (y)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:15-1:16
 									}
+									loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:15-1:16 (y)
 								}
+								loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:11-1:17
 							}
+							loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:6-1:20
 						}
 					]
+					loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:4-1:22
 				}
+				loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-1:22
+			}
+			loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "setter function argument must not be a rest parameter"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/rest-parameter/invalid-setter-rest/input.js>
+				end: Position 1:16
+				start: Position 1:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/rest-parameter/invalid-setter-rest/input.js>
+	loc: SourceLocation esprima/rest-parameter/invalid-setter-rest/input.js 1:0-2:0
 }
 ```
 

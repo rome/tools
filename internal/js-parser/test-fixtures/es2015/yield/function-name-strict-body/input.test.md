@@ -8,65 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:0-1:34
-	path: UIDPath<es2015/yield/function-name-strict-body/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<es2015/yield/function-name-strict-body/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "yield"
 				loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:9-1:14 (yield)
 			}
-			loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:0-1:34
 			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:17-1:34
-				directives: Array [
+				body: []
+				directives: [
 					JSDirective {
 						value: "use strict"
 						loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:19-1:32
 					}
 				]
+				loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:17-1:34
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:14-1:16
+			}
+			loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:0-1:34
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/function-name-strict-body/input.js>
+				end: Position 1:14
+				start: Position 1:9
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/function-name-strict-body/input.js>
+	loc: SourceLocation es2015/yield/function-name-strict-body/input.js 1:0-1:34
 }
 ```
 

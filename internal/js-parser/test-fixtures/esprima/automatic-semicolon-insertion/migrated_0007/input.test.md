@@ -8,43 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:0-3:0
-	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0007/input.js>
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:0-2:8
-			test: JSBooleanLiteral {
-				value: true
-				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:7-1:11
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:13-2:8
-				body: Array [
+				body: [
 					JSBreakStatement {
-						label: undefined
 						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:15-1:20
 					}
 					JSExpressionStatement {
-						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 2:0-2:6
 						expression: JSReferenceIdentifier {
 							name: "there"
 							loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 2:0-2:5 (there)
 						}
+						loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 2:0-2:6
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:13-2:8
 			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:7-1:11
+			}
+			loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:0-2:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0007/input.js>
+	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0007/input.js 1:0-3:0
 }
 ```
 

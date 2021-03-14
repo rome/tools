@@ -8,87 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/172/input.js 1:0-1:56
-	path: UIDPath<es2015/uncategorised/172/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/172/input.js 1:0-1:56
 			expression: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/uncategorised/172/input.js 1:10-1:11 (x)
 				}
-				loc: SourceLocation es2015/uncategorised/172/input.js 1:1-1:55
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/172/input.js 1:53-1:55
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation es2015/uncategorised/172/input.js 1:11-1:53
-					rest: JSBindingArrayPattern {
-						rest: undefined
-						loc: SourceLocation es2015/uncategorised/172/input.js 1:43-1:52
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/uncategorised/172/input.js 1:43-1:52
-						}
-						elements: Array [
-							JSBindingIdentifier {
-								name: "a"
-								loc: SourceLocation es2015/uncategorised/172/input.js 1:44-1:45 (a)
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation es2015/uncategorised/172/input.js 1:44-1:45
-								}
-							}
-							JSBindingIdentifier {
-								name: "b"
-								loc: SourceLocation es2015/uncategorised/172/input.js 1:47-1:48 (b)
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation es2015/uncategorised/172/input.js 1:47-1:48
-								}
-							}
-							JSBindingIdentifier {
-								name: "c"
-								loc: SourceLocation es2015/uncategorised/172/input.js 1:50-1:51 (c)
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation es2015/uncategorised/172/input.js 1:50-1:51
-								}
-							}
-						]
-					}
-					params: Array [
+					params: [
 						JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/172/input.js 1:12-1:38
-							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
-								loc: SourceLocation es2015/uncategorised/172/input.js 1:12-1:38
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -98,9 +36,7 @@ JSRoot {
 										loc: SourceLocation es2015/uncategorised/172/input.js 1:14-1:15
 									}
 									value: JSBindingObjectPattern {
-										rest: undefined
-										loc: SourceLocation es2015/uncategorised/172/input.js 1:17-1:25
-										properties: Array [
+										properties: [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -130,6 +66,7 @@ JSRoot {
 												loc: SourceLocation es2015/uncategorised/172/input.js 1:22-1:23
 											}
 										]
+										loc: SourceLocation es2015/uncategorised/172/input.js 1:17-1:25
 									}
 									loc: SourceLocation es2015/uncategorised/172/input.js 1:14-1:25
 								}
@@ -142,38 +79,78 @@ JSRoot {
 										loc: SourceLocation es2015/uncategorised/172/input.js 1:27-1:28
 									}
 									value: JSBindingArrayPattern {
-										rest: undefined
-										loc: SourceLocation es2015/uncategorised/172/input.js 1:30-1:36
-										elements: Array [
+										elements: [
 											JSBindingIdentifier {
 												name: "y"
-												loc: SourceLocation es2015/uncategorised/172/input.js 1:31-1:32 (y)
 												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
 													loc: SourceLocation es2015/uncategorised/172/input.js 1:31-1:32
 												}
+												loc: SourceLocation es2015/uncategorised/172/input.js 1:31-1:32 (y)
 											}
 											JSBindingIdentifier {
 												name: "z"
-												loc: SourceLocation es2015/uncategorised/172/input.js 1:34-1:35 (z)
 												meta: JSPatternMeta {
-													optional: undefined
-													typeAnnotation: undefined
 													loc: SourceLocation es2015/uncategorised/172/input.js 1:34-1:35
 												}
+												loc: SourceLocation es2015/uncategorised/172/input.js 1:34-1:35 (z)
 											}
 										]
+										loc: SourceLocation es2015/uncategorised/172/input.js 1:30-1:36
 									}
 									loc: SourceLocation es2015/uncategorised/172/input.js 1:27-1:36
 								}
 							]
+							meta: JSPatternMeta {
+								loc: SourceLocation es2015/uncategorised/172/input.js 1:12-1:38
+							}
+							loc: SourceLocation es2015/uncategorised/172/input.js 1:12-1:38
 						}
 					]
+					rest: JSBindingArrayPattern {
+						elements: [
+							JSBindingIdentifier {
+								name: "a"
+								meta: JSPatternMeta {
+									loc: SourceLocation es2015/uncategorised/172/input.js 1:44-1:45
+								}
+								loc: SourceLocation es2015/uncategorised/172/input.js 1:44-1:45 (a)
+							}
+							JSBindingIdentifier {
+								name: "b"
+								meta: JSPatternMeta {
+									loc: SourceLocation es2015/uncategorised/172/input.js 1:47-1:48
+								}
+								loc: SourceLocation es2015/uncategorised/172/input.js 1:47-1:48 (b)
+							}
+							JSBindingIdentifier {
+								name: "c"
+								meta: JSPatternMeta {
+									loc: SourceLocation es2015/uncategorised/172/input.js 1:50-1:51
+								}
+								loc: SourceLocation es2015/uncategorised/172/input.js 1:50-1:51 (c)
+							}
+						]
+						meta: JSPatternMeta {
+							loc: SourceLocation es2015/uncategorised/172/input.js 1:43-1:52
+						}
+						loc: SourceLocation es2015/uncategorised/172/input.js 1:43-1:52
+					}
+					loc: SourceLocation es2015/uncategorised/172/input.js 1:11-1:53
 				}
+				loc: SourceLocation es2015/uncategorised/172/input.js 1:1-1:55
 			}
+			loc: SourceLocation es2015/uncategorised/172/input.js 1:0-1:56
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/172/input.js>
+	loc: SourceLocation es2015/uncategorised/172/input.js 1:0-1:56
 }
 ```
 

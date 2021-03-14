@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/shorthand/2/input.js 1:0-2:0
-	path: UIDPath<es2015/shorthand/2/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>this</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:12
-				path: UIDPath<es2015/shorthand/2/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/shorthand/2/input.js 1:0-1:20
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/shorthand/2/input.js 1:1-1:18
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -86,9 +55,36 @@ JSRoot {
 						loc: SourceLocation es2015/shorthand/2/input.js 1:14-1:16
 					}
 				]
+				loc: SourceLocation es2015/shorthand/2/input.js 1:1-1:18
+			}
+			loc: SourceLocation es2015/shorthand/2/input.js 1:0-1:20
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "this", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/shorthand/2/input.js>
+				end: Position 1:12
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/shorthand/2/input.js>
+	loc: SourceLocation es2015/shorthand/2/input.js 1:0-2:0
 }
 ```
 

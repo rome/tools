@@ -8,51 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0130/input.js>
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:0-2:0
-			test: JSBooleanLiteral {
-				value: false
-				loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:6-1:11
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 2:0-2:0
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 2:0-2:0
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 2:0-2:0
 			}
+			test: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:6-1:11
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:0-2:0
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an statement expression"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:12
 				path: UIDPath<esprima/invalid-syntax/migrated_0130/input.js>
+				end: Position 1:12
 				start: Position 2:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0130/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:0-2:0
 }
 ```
 

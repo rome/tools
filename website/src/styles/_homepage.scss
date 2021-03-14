@@ -89,7 +89,7 @@ ul.home-actions {
 		list-style: none;
 	}
 
-	@media only screen and (max-width: 1060px) {
+	@include small-screen-only {
 		flex-direction: column;
 	}
 
@@ -121,7 +121,7 @@ ul.home-actions {
 		border-right: 1px solid var(--soft-border-color);
 		white-space: nowrap;
 
-		@media only screen and (max-width: 1060px) {
+		@include small-screen-only {
 			border-right: none;
 		}
 
@@ -172,6 +172,165 @@ pre.collapsable {
 
 	code {
 		line-height: 0;
+	}
+}
+
+.new-hero {
+	margin-top: $unit;
+	margin-left: $unit;
+	border: 1px solid var(--soft-border-color);
+	@include pattern;
+	position: relative;
+
+	@include mobile-only() {
+		margin-left: 0;
+		border-left: none;
+
+		&::before {
+			display: none;
+		}
+	}
+
+	&::before {
+		position: absolute;
+		content: "";
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		box-shadow: inset 0 30px 30px -30px var(--container-color), inset 0 -30px 30px -30px var(--container-color);
+		z-index: 999;
+	}
+	
+	em {
+		font-family: "Libre Baskerville", serif;
+		font-weight: bold;
+	}
+
+	.desktop-scrollers {
+		display: none;
+		flex-direction: row;
+		
+		@include large-screen-only {
+			display: flex;
+		}
+	}
+
+	.mobile-scroller {
+		display: none;
+		text-align: center;
+
+		@include small-screen-only {
+			display: block;
+		}
+
+		&.scroller ul li .text {
+			font-size: 1em;
+			transition: none;
+		}
+	}
+
+	.heading {
+		justify-content: center;
+		font-size: 2.2em;
+		display: flex;
+		flex-direction: row;
+		line-height: 50px;
+		height: 150px;
+		align-items: center;
+
+		> span, .scroller {
+			flex-grow: 0;
+			margin: 0 8px;
+		}
+
+		@include small-screen-only {
+			flex-direction: column;
+			height: 150px;
+			
+			.scroller {
+				height: 50px;
+
+				&:first-child {
+					text-align: right;
+				}
+
+				ul {
+					padding: 0;
+				}
+			}
+		}
+	}
+}
+
+.scroller {
+	overflow: hidden;
+	align-items: top;
+	font-weight: bold;
+	height: 150px;
+	
+	ul {
+		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+		padding: 50px 0;
+		position: relative;
+		transition: all 500ms ease-in-out;
+	
+		&.reverse {
+			flex-direction: column-reverse;
+		}
+
+		.typescript {
+			color: #007acc;
+		}
+
+		.javascript {
+			color: #f0db4f;
+		}
+
+		.html {
+			color: #e34c26;
+		}
+
+		.css {
+			color: #2965f1;
+		}
+	
+		li {
+			opacity: 0.2;
+			transition: all 500ms ease-in-out;
+			position: relative;
+			width: 100%;
+
+			.text {
+				transition: all 500ms ease-in-out;
+				font-size: 0.8em;
+				position: absolute;
+				left: 0;
+				right: 0;
+			}
+
+			.big-text {
+				visibility: hidden;
+			}
+
+			&.active-sibling  {
+				opacity: 0.5;
+
+				.text {
+					font-size: 0.9em;
+				}
+			}
+	
+			&.active {
+				opacity: 1;
+
+				.text {
+					font-size: 1em;
+				}
+			}
+		}
 	}
 }
 

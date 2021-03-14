@@ -8,7 +8,7 @@
 import {DiagnosticLocation} from "@internal/diagnostics";
 import {toKebabCase} from "@internal/string-utils";
 import {ConsumeSourceLocationRequestTarget} from "@internal/consume";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {Dict, RequiredProps} from "@internal/typescript-helpers";
 import {FlagValue} from "./Parser";
 import {AbsoluteFilePath, createUIDPath} from "@internal/path";

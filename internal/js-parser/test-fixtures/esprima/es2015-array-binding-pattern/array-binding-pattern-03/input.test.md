@@ -8,53 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:0-1:13
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:12-1:13
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:0-1:12
-					params: Array [
+					params: [
 						JSBindingArrayPattern {
-							loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:1-1:9
-							rest: JSBindingIdentifier {
-								name: "b"
-								loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:7-1:8 (b)
-							}
-							elements: Array [
+							elements: [
 								JSBindingIdentifier {
 									name: "a"
 									loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:2-1:3 (a)
 								}
 							]
+							rest: JSBindingIdentifier {
+								name: "b"
+								loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:7-1:8 (b)
+							}
+							loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:1-1:9
 						}
 					]
+					loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:0-1:12
 				}
+				loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:0-1:13
 			}
+			loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:0-1:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js>
+	loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js 1:0-2:0
 }
 ```
 

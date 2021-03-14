@@ -8,47 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-multi-element/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElement"
 				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:9-1:21 (multiElement)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:0-1:47
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:45-1:47
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:21-1:44
+				params: []
 				rest: JSBindingObjectPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:25-1:43
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:25-1:43
-					}
-					properties: Array [
+					properties: [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -92,10 +69,25 @@ JSRoot {
 							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:38-1:42
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:25-1:43
+					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:25-1:43
 				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:21-1:44
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:0-1:47
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-multi-element/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element/input.js 1:0-2:0
 }
 ```
 

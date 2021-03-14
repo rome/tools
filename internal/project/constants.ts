@@ -31,6 +31,7 @@ for (const ext of CONFIG_EXTENSIONS) {
 	PROJECT_CONFIG_WARN_FILENAMES.push(`.romerc.${ext}`);
 	PROJECT_CONFIG_WARN_FILENAMES.push(`.romeconfig.${ext}`);
 }
+
 // Creating or loading projects from these folders is always a mistake
 // We also disallow any roots, check is in ProjectManager
 export const PROJECT_CONFIG_SENSITIVE_DIRECTORIES: AbsoluteFilePathSet = new AbsoluteFilePathSet([

@@ -9,7 +9,7 @@ import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {normalizeProjectConfig} from "@internal/project";
-import {AbsoluteFilePath, createAnyPath} from "@internal/path";
+import {AbsoluteFilePath, createPath} from "@internal/path";
 import {markup} from "@internal/markup";
 import {interceptDiagnostics} from "@internal/diagnostics";
 import {Consumer} from "@internal/consume";
@@ -18,7 +18,7 @@ import {
 	consumeConfig,
 	stringifyConfig,
 } from "@internal/codec-config";
-import {CachedFileReader, readFileText, writeFile} from "@internal/fs";
+import {CachedFileReader} from "@internal/fs";
 import {
 	loadUserConfig,
 	normalizeUserConfig,
@@ -71,7 +71,7 @@ async function runCommand(
 		validate: (res: ConsumeConfigResult, stringified: string) => Promise<void>,
 	) {
 		if (action === "location") {
-			reporter.log(markup`${configPath.join()}`);
+			reporter.log(configPath);
 			return;
 		}
 
@@ -90,7 +90,7 @@ async function runCommand(
 		}
 
 		// Load the config file again
-		const configFile = await readFileText(configPath);
+		const configFile = await configPath.readFileText();
 		const res = consumeConfig({
 			path: configPath,
 			input: configFile,
@@ -125,7 +125,7 @@ async function runCommand(
 		);
 
 		// Write it out
-		await writeFile(configPath, stringified);
+		await configPath.writeFile(stringified);
 	}
 
 	try {
@@ -135,7 +135,7 @@ async function runCommand(
 			let configPath: AbsoluteFilePath;
 			if (existingConfigPath === undefined) {
 				configPath = USER_CONFIG_DIRECTORY.append("rome.rjson");
-				await writeFile(configPath, "");
+				await configPath.writeFile("");
 				reporter.info(
 					markup`Created user config at <emphasis>${configPath}</emphasis> as it did not exist`,
 				);
@@ -226,7 +226,7 @@ export const setDirectory = createServerCommand<Flags>({
 		req.expectArgumentLength(2);
 
 		let value = req.query.args[1];
-		const path = createAnyPath(value);
+		const path = createPath(value);
 
 		// If the value is an absolute path, then make it relative to the project directory
 		if (path.isAbsolute()) {

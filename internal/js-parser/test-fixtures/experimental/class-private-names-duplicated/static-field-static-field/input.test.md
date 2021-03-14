@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 1:0-4:1
-	path: UIDPath<experimental/class-private-names-duplicated/static-field-static-field/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 1:0-4:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -41,23 +24,19 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 2:9-2:11
 						}
-						value: JSNumericLiteral {
-							value: 0
-							format: undefined
-							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 2:14-2:15
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 2:2-2:16
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 2:2-2:11
 							start: Position 2:2
 						}
+						value: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 2:14-2:15
+						}
+						loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 2:2-2:16
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -67,28 +46,35 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 3:9-3:11
 						}
-						value: JSNumericLiteral {
-							value: 0
-							format: undefined
-							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 3:14-3:15
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 3:2-3:16
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: true
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 3:2-3:11
 							start: Position 3:2
 						}
+						value: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 3:14-3:15
+						}
+						loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 3:2-3:16
 					}
 				]
+				loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 1:0-4:1
 			}
+			loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/class-private-names-duplicated/static-field-static-field/input.js>
+	loc: SourceLocation experimental/class-private-names-duplicated/static-field-static-field/input.js 1:0-4:1
 }
 ```
 

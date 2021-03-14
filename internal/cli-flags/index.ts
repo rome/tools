@@ -35,9 +35,10 @@ export function parseCLIFlagsFromProcess<T>(
 		args = opts.args;
 	}
 
+	const reporter = opts.reporter ?? Reporter.fromProcess();
 	return parseCLIFlags({
 		...opts,
-		reporter: opts.reporter ?? Reporter.fromProcess(),
+		reporter,
 		args,
 		cwd: opts.cwd ?? CWD_PATH,
 		programName: opts.programName ?? programName,

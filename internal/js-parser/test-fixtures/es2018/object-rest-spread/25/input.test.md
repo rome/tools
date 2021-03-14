@@ -8,50 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/25/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<es2018/object-rest-spread/25/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-1:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							loc: SourceLocation es2018/object-rest-spread/25/input.js 1:4-1:11
-							rest: JSBindingIdentifier {
-								name: ""
-								loc: SourceLocation es2018/object-rest-spread/25/input.js 1:8-1:9 ()
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -67,17 +31,49 @@ JSRoot {
 									loc: SourceLocation es2018/object-rest-spread/25/input.js 1:9-1:10
 								}
 							]
+							rest: JSBindingIdentifier {
+								name: ""
+								loc: SourceLocation es2018/object-rest-spread/25/input.js 1:8-1:9 ()
+							}
+							loc: SourceLocation es2018/object-rest-spread/25/input.js 1:4-1:11
 						}
-						loc: SourceLocation es2018/object-rest-spread/25/input.js 1:4-1:16
 						init: JSObjectExpression {
-							properties: Array []
+							properties: []
 							loc: SourceLocation es2018/object-rest-spread/25/input.js 1:14-1:16
 						}
+						loc: SourceLocation es2018/object-rest-spread/25/input.js 1:4-1:16
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-1:16
+			}
+			loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-1:16
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/object-rest-spread/25/input.js>
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/25/input.js>
+	loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-2:0
 }
 ```
 

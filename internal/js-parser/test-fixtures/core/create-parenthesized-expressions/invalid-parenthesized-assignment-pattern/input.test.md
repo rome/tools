@@ -8,45 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:0-2:0
-	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:0-1:15
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:0-1:14
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:1-1:4
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -62,10 +29,10 @@ JSRoot {
 							loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:2-1:3
 						}
 					]
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:1-1:4
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:8-1:14
-					properties: Array [
+					properties: [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -76,16 +43,43 @@ JSRoot {
 							}
 							value: JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:12-1:13
 							}
 							loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:9-1:13
 						}
 					]
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:8-1:14
 				}
+				loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:0-1:14
+			}
+			loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:0-1:15
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
+				end: Position 1:4
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
+	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:0-2:0
 }
 ```
 

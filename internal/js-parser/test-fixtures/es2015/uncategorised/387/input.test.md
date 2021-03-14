@@ -8,92 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/387/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/387/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<es2015/uncategorised/387/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>n</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening export specifiers character <emphasis>{</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/uncategorised/387/input.js 1:0-1:17
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
+					exported: JSIdentifier {
+						name: "new"
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:7-1:10 (new)
+					}
+					local: JSReferenceIdentifier {
+						name: "new"
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:7-1:10 (new)
+					}
 					loc: SourceLocation es2015/uncategorised/387/input.js 1:7-1:10
-					exported: JSIdentifier {
-						name: "new"
-						loc: SourceLocation es2015/uncategorised/387/input.js 1:7-1:10 (new)
-					}
-					local: JSReferenceIdentifier {
-						name: "new"
-						loc: SourceLocation es2015/uncategorised/387/input.js 1:7-1:10 (new)
-					}
 				}
 				JSExportLocalSpecifier {
+					exported: JSIdentifier {
+						name: "Foo"
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:11-1:14 (Foo)
+					}
+					local: JSReferenceIdentifier {
+						name: "Foo"
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:11-1:14 (Foo)
+					}
 					loc: SourceLocation es2015/uncategorised/387/input.js 1:11-1:14
-					exported: JSIdentifier {
-						name: "Foo"
-						loc: SourceLocation es2015/uncategorised/387/input.js 1:11-1:14 (Foo)
-					}
-					local: JSReferenceIdentifier {
-						name: "Foo"
-						loc: SourceLocation es2015/uncategorised/387/input.js 1:11-1:14 (Foo)
-					}
 				}
 				JSExportLocalSpecifier {
+					exported: JSIdentifier {
+						name: ""
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:14-1:15 ()
+					}
+					local: JSReferenceIdentifier {
+						name: ""
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:14-1:15 ()
+					}
 					loc: SourceLocation es2015/uncategorised/387/input.js 1:14-1:15
+				}
+				JSExportLocalSpecifier {
 					exported: JSIdentifier {
 						name: ""
-						loc: SourceLocation es2015/uncategorised/387/input.js 1:14-1:15 ()
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:15-1:16 ()
 					}
 					local: JSReferenceIdentifier {
 						name: ""
-						loc: SourceLocation es2015/uncategorised/387/input.js 1:14-1:15 ()
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:15-1:16 ()
 					}
-				}
-				JSExportLocalSpecifier {
 					loc: SourceLocation es2015/uncategorised/387/input.js 1:15-1:16
-					exported: JSIdentifier {
-						name: ""
-						loc: SourceLocation es2015/uncategorised/387/input.js 1:15-1:16 ()
-					}
-					local: JSReferenceIdentifier {
-						name: ""
-						loc: SourceLocation es2015/uncategorised/387/input.js 1:15-1:16 ()
-					}
 				}
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/uncategorised/387/input.js 1:16-1:17
 					exported: JSIdentifier {
 						name: ""
 						loc: SourceLocation es2015/uncategorised/387/input.js 1:16-1:17 ()
@@ -102,10 +65,48 @@ JSRoot {
 						name: ""
 						loc: SourceLocation es2015/uncategorised/387/input.js 1:16-1:17 ()
 					}
+					loc: SourceLocation es2015/uncategorised/387/input.js 1:16-1:17
 				}
 			]
+			loc: SourceLocation es2015/uncategorised/387/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "Expected the opening "}
+							"export specifiers"
+							RAW_MARKUP {value: " character <emphasis>"}
+							"{"
+							RAW_MARKUP {value: "</emphasis>"}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "n", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/387/input.js>
+				end: Position 1:6
+				start: Position 1:7
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/387/input.js>
+	loc: SourceLocation es2015/uncategorised/387/input.js 1:0-2:0
 }
 ```
 

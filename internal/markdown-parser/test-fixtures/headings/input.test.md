@@ -8,13 +8,7 @@
 
 ```javascript
 MarkdownRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation headings/input.md 1:0-7:32
-	path: UIDPath<headings/input.md>
-	body: Array [
+	body: [
 		MarkdownHeadingBlock {
 			value: "Title"
 			level: 1
@@ -46,15 +40,20 @@ MarkdownRoot {
 			loc: SourceLocation headings/input.md 6:0-6:12
 		}
 		MarkdownParagraph {
-			loc: SourceLocation headings/input.md 7:0-7:32
-			children: Array [
+			children: [
 				MarkdownText {
 					value: "####### this will be a paragraph"
 					loc: SourceLocation headings/input.md 7:0-7:0
 				}
 			]
+			loc: SourceLocation headings/input.md 7:0-7:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: UIDPath<headings/input.md>
+	loc: SourceLocation headings/input.md 1:0-7:32
 }
 ```
 

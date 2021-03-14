@@ -8,62 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:13
-	path: UIDPath<es2015/uncategorised/311/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2015/uncategorised/311/input.js>
-				start: Position 1:9
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:12
 				left: JSAssignmentIdentifier {
 					name: "obj"
 					loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:3 (obj)
 				}
 				right: JSAssignmentExpression {
 					operator: "="
-					loc: SourceLocation es2015/uncategorised/311/input.js 1:6-1:12
-					right: JSNumericLiteral {
-						value: 0
-						format: undefined
-						loc: SourceLocation es2015/uncategorised/311/input.js 1:11-1:12
-					}
 					left: JSAssignmentObjectPattern {
-						rest: undefined
-						loc: SourceLocation es2015/uncategorised/311/input.js 1:6-1:8
-						properties: Array [
+						properties: [
 							JSAssignmentObjectPatternProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
@@ -79,18 +35,51 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/311/input.js 1:7-1:8
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/311/input.js 1:6-1:8
 					}
+					right: JSNumericLiteral {
+						value: 0
+						loc: SourceLocation es2015/uncategorised/311/input.js 1:11-1:12
+					}
+					loc: SourceLocation es2015/uncategorised/311/input.js 1:6-1:12
 				}
+				loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:12
 			}
+			loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:12
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/311/input.js 1:12-1:13
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/311/input.js 1:12-1:13
 			}
+			loc: SourceLocation es2015/uncategorised/311/input.js 1:12-1:13
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/311/input.js>
+				end: Position 1:10
+				start: Position 1:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/311/input.js>
+	loc: SourceLocation es2015/uncategorised/311/input.js 1:0-1:13
 }
 ```
 

@@ -35,7 +35,8 @@ export default createServerCommand({
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
 		req.updateRequestFlags({
-			verboseDiagnostics: "NO_TRUNCATE",
+			truncateDiagnostics: false,
+			maxDiagnostics: Infinity,
 		});
 
 		await chainCommands(
@@ -43,7 +44,6 @@ export default createServerCommand({
 			[
 				{
 					title: markup`<code>rome check</code>`,
-					progress: markup`Running check`,
 					callback: async () => {
 						await check.callback(
 							req,
@@ -59,7 +59,6 @@ export default createServerCommand({
 				},
 				{
 					title: markup`<code>rome test</code>`,
-					progress: markup`Running tests`,
 					callback: async () => {
 						await test.callback(
 							req,

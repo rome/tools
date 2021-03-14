@@ -8,82 +8,80 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/465/input.js 1:0-1:39
-	path: UIDPath<core/uncategorised/465/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:19
-				path: UIDPath<core/uncategorised/465/input.js>
-				start: Position 1:18
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Label <emphasis>x</emphasis> is already declared"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation core/uncategorised/465/input.js 1:0-1:1 (x)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation core/uncategorised/465/input.js 1:0-1:39
-			label: JSIdentifier {
-				name: "x"
-				loc: SourceLocation core/uncategorised/465/input.js 1:0-1:1 (x)
-			}
 			body: JSWhileStatement {
-				loc: SourceLocation core/uncategorised/465/input.js 1:3-1:39
-				test: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation core/uncategorised/465/input.js 1:10-1:14
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation core/uncategorised/465/input.js 1:16-1:39
-					body: Array [
+					body: [
 						JSLabeledStatement {
-							loc: SourceLocation core/uncategorised/465/input.js 1:18-1:37
-							label: JSIdentifier {
-								name: "x"
-								loc: SourceLocation core/uncategorised/465/input.js 1:18-1:19 (x)
-							}
 							body: JSWhileStatement {
-								loc: SourceLocation core/uncategorised/465/input.js 1:21-1:37
+								body: JSBlockStatement {
+									body: []
+									directives: []
+									loc: SourceLocation core/uncategorised/465/input.js 1:34-1:37
+								}
 								test: JSBooleanLiteral {
 									value: true
 									loc: SourceLocation core/uncategorised/465/input.js 1:28-1:32
 								}
-								body: JSBlockStatement {
-									body: Array []
-									directives: Array []
-									loc: SourceLocation core/uncategorised/465/input.js 1:34-1:37
-								}
+								loc: SourceLocation core/uncategorised/465/input.js 1:21-1:37
 							}
+							label: JSIdentifier {
+								name: "x"
+								loc: SourceLocation core/uncategorised/465/input.js 1:18-1:19 (x)
+							}
+							loc: SourceLocation core/uncategorised/465/input.js 1:18-1:37
 						}
 					]
+					directives: []
+					loc: SourceLocation core/uncategorised/465/input.js 1:16-1:39
 				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation core/uncategorised/465/input.js 1:10-1:14
+				}
+				loc: SourceLocation core/uncategorised/465/input.js 1:3-1:39
+			}
+			label: JSIdentifier {
+				name: "x"
+				loc: SourceLocation core/uncategorised/465/input.js 1:0-1:1 (x)
+			}
+			loc: SourceLocation core/uncategorised/465/input.js 1:0-1:39
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation core/uncategorised/465/input.js 1:0-1:1 (x)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Label <emphasis>"}, "x", RAW_MARKUP {value: "</emphasis> is already declared"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/465/input.js>
+				end: Position 1:19
+				start: Position 1:18
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/465/input.js>
+	loc: SourceLocation core/uncategorised/465/input.js 1:0-1:39
 }
 ```
 

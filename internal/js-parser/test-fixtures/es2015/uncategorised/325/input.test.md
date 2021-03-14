@@ -8,65 +8,57 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
+							elements: [
+								JSBindingIdentifier {
+									name: "x"
+									meta: JSPatternMeta {
+										loc: SourceLocation es2015/uncategorised/325/input.js 1:5-1:6
+									}
+									loc: SourceLocation es2015/uncategorised/325/input.js 1:5-1:6 (x)
+								}
+							]
+							loc: SourceLocation es2015/uncategorised/325/input.js 1:4-1:7
+						}
+						loc: SourceLocation es2015/uncategorised/325/input.js 1:4-1:7
+					}
+				]
+				loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
+			}
+			loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
+		}
+	]
+	comments: []
 	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
-	path: UIDPath<es2015/uncategorised/325/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:7
 				path: UIDPath<es2015/uncategorised/325/input.js>
+				end: Position 1:7
 				start: Position 1:7
 			}
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/325/input.js 1:4-1:7
-							elements: Array [
-								JSBindingIdentifier {
-									name: "x"
-									loc: SourceLocation es2015/uncategorised/325/input.js 1:5-1:6 (x)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation es2015/uncategorised/325/input.js 1:5-1:6
-									}
-								}
-							]
-						}
-						init: undefined
-						loc: SourceLocation es2015/uncategorised/325/input.js 1:4-1:7
-					}
-				]
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/325/input.js>
+	loc: SourceLocation es2015/uncategorised/325/input.js 1:0-1:7
 }
 ```
 

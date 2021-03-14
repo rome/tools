@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/properties/input.ts 1:0-9:0
-	path: UIDPath<typescript/class/properties/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/properties/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/properties/input.ts 1:0-8:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/properties/input.ts 1:0-8:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -41,20 +24,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/properties/input.ts 2:4-2:5
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/properties/input.ts 2:4-2:6
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/properties/input.ts 2:4-2:5
 							start: Position 2:4
 						}
+						loc: SourceLocation typescript/class/properties/input.ts 2:4-2:6
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -64,20 +42,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/properties/input.ts 3:4-3:5
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/properties/input.ts 3:4-3:7
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: true
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/properties/input.ts 3:4-3:6
 							start: Position 3:4
 						}
+						loc: SourceLocation typescript/class/properties/input.ts 3:4-3:7
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -87,20 +60,18 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/properties/input.ts 4:4-4:5
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation typescript/class/properties/input.ts 4:4-4:14
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/properties/input.ts 4:7-4:13}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/properties/input.ts 4:4-4:5
 							start: Position 4:4
 						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/properties/input.ts 4:7-4:13
+						}
+						loc: SourceLocation typescript/class/properties/input.ts 4:4-4:14
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -110,26 +81,25 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/properties/input.ts 5:4-5:5
 						}
-						value: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation typescript/class/properties/input.ts 5:16-5:17
-						}
-						definite: undefined
-						loc: SourceLocation typescript/class/properties/input.ts 5:4-5:18
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/properties/input.ts 5:7-5:13}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/properties/input.ts 5:4-5:5
 							start: Position 5:4
 						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation typescript/class/properties/input.ts 5:16-5:17
+						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/properties/input.ts 5:7-5:13
+						}
+						loc: SourceLocation typescript/class/properties/input.ts 5:4-5:18
 					}
 					JSClassProperty {
+						definite: true
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
@@ -137,22 +107,18 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/properties/input.ts 6:4-6:5
 						}
-						value: undefined
-						definite: true
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/properties/input.ts 6:4-6:7
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/properties/input.ts 6:4-6:5
 							start: Position 6:4
 						}
+						loc: SourceLocation typescript/class/properties/input.ts 6:4-6:7
 					}
 					JSClassProperty {
+						definite: true
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
@@ -160,25 +126,34 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/properties/input.ts 7:4-7:5
 						}
-						value: undefined
-						definite: true
-						loc: SourceLocation typescript/class/properties/input.ts 7:4-7:15
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/properties/input.ts 7:8-7:14}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/properties/input.ts 7:4-7:5
 							start: Position 7:4
 						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/properties/input.ts 7:8-7:14
+						}
+						loc: SourceLocation typescript/class/properties/input.ts 7:4-7:15
 					}
 				]
+				loc: SourceLocation typescript/class/properties/input.ts 1:0-8:1
 			}
+			loc: SourceLocation typescript/class/properties/input.ts 1:0-8:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/properties/input.ts>
+	loc: SourceLocation typescript/class/properties/input.ts 1:0-9:0
 }
 ```
 

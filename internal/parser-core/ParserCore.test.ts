@@ -9,7 +9,7 @@ import {
 	createParser,
 	isDigit,
 } from "@internal/parser-core/index";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {dedent} from "@internal/string-utils";
 import {markup} from "@internal/markup";
 import {isNewline} from "@internal/css-parser/utils";

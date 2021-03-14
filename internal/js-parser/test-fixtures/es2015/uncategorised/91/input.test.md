@@ -8,30 +8,25 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/91/input.js 1:0-1:15
-	path: UIDPath<es2015/uncategorised/91/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/uncategorised/91/input.js 1:0-1:15
+			namedSpecifiers: []
 			source: JSStringLiteral {
 				value: "jquery"
 				loc: SourceLocation es2015/uncategorised/91/input.js 1:7-1:15
 			}
+			loc: SourceLocation es2015/uncategorised/91/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/91/input.js>
+	loc: SourceLocation es2015/uncategorised/91/input.js 1:0-1:15
 }
 ```
 

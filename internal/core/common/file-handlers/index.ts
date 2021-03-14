@@ -6,7 +6,7 @@
  */
 
 import {ProjectConfig} from "@internal/project";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {ExtensionHandler, PartialExtensionHandler} from "./types";
 import {
 	cjsHandler,
@@ -19,7 +19,7 @@ import {
 import {htmlHandler} from "./html";
 import {
 	DiagnosticLanguage,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {markdownHandler} from "@internal/core/common/file-handlers/markdown";
@@ -38,7 +38,7 @@ export type GetFileHandlerResult = {
 };
 
 export function inferDiagnosticLanguageFromPath(
-	path: undefined | AnyPath,
+	path: undefined | Path,
 	existing?: DiagnosticLanguage,
 ): DiagnosticLanguage {
 	if (existing !== undefined && existing !== "unknown") {
@@ -65,7 +65,7 @@ export function getFileHandlerExtensions(
 }
 
 export function getFileHandlerFromPath(
-	path: AnyPath,
+	path: Path,
 	projectConfig: undefined | ProjectConfig,
 ): GetFileHandlerResult {
 	const basename = path.getBasename();
@@ -91,13 +91,13 @@ export function getFileHandlerFromPath(
 }
 
 export function getFileHandlerFromPathAssert(
-	path: AnyPath,
+	path: Path,
 	projectConfig: undefined | ProjectConfig,
 ): Required<GetFileHandlerResult> {
 	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);
 
 	if (handler === undefined) {
-		throw createSingleDiagnosticError({
+		throw createSingleDiagnosticsError({
 			description: descriptions.FILES.NO_FILE_HANDLER(path),
 			location: {
 				path,
@@ -130,33 +130,39 @@ const DEFAULT_HANDLERS: ExtensionsMap = new Map();
 
 const DEFAULT_ASSET_EXTENSIONS = [
 	// Extra css types to be ignored while we don't have a proper integration
-	"scss",
-	"sass",
-	"less",
-	// Images
-	"png",
-	"jpg",
-	"jpeg",
-	"gif",
-	"svg",
-	// Video
-	"webm",
-	"mp4",
-	"m4v",
-	"avi",
-	"mkv",
-	// Audio
-	"mp3",
-	// Fonts
-	"woff",
-	"woff2",
-	"eot",
-	"ttf",
-	"otf",
+	["scss", "text/css"],
+	["sass", "text/css"],
+	["less", "text/css"],
+
+	["png", "image/png"],
+	["jpg", "image/jpeg"],
+	["jpeg", "image/jpeg"],
+	["gif", "image/gif"],
+	["svg", "image/svg+xml"],
+	["webp", "image/webp"],
+	["apng", "image/apng"],
+	["avif", "image/avif"],
+	["webm", "video/webm"],
+	["mp4", "video/mp4"],
+	["avi", "video/x-msvideo"],
+	["weba", "audio/webm"],
+	["mp3", "audio/mpeg"],
+	["wav", "audio/wav"],
+	["woff", "font/woff"],
+	["woff2", "font/woff2"],
+	["eot", "application/vnd.ms-fontobject"],
+	["ttf", "font/ttf"],
+	["otf", "font/otf"],
 ];
 
-for (const ext of DEFAULT_ASSET_EXTENSIONS) {
-	setHandler(ext, assetHandler);
+for (const [ext, mime] of DEFAULT_ASSET_EXTENSIONS) {
+	setHandler(
+		ext,
+		{
+			...assetHandler,
+			mime,
+		},
+	);
 }
 
 setHandler("js", jsHandler);

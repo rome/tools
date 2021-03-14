@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:a84121d08a825f38c8f1ccad3433756a29808fd7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:5ea1c826cf89348b0fa8f4488b6c78687b25279f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -416,6 +416,13 @@ non-interactive elements should not be assigned interactive roles
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noPositiveTabindex">
+	<a href="/docs/lint/rules/a11y/noPositiveTabindex">noPositiveTabindex</a>
+	<a class="header-anchor" href="#noPositiveTabindex"></a>
+</h3>
+enforce tabIndex value is not greater than zero
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noSvgWithoutTitle">
 	<a href="/docs/lint/rules/a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
 	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
@@ -442,6 +449,13 @@ enforce ARIA state and property values are valid
 	<a class="header-anchor" href="#useHtmlLang"></a>
 </h3>
 the `lang` attribute is mandatory
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useIframeTitle">
+	<a href="/docs/lint/rules/a11y/useIframeTitle">useIframeTitle</a>
+	<a class="header-anchor" href="#useIframeTitle"></a>
+</h3>
+enforce `iframe` elements have a title attribute
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useMediaCaption">
@@ -488,13 +502,6 @@ enforce scope prop is only used on `th` elements
 	<a class="header-anchor" href="#noOnChange"></a>
 </h3>
 discourage the usage of `onChange`
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noPositiveTabindex">
-	<a href="/docs/lint/rules/jsx-a11y/noPositiveTabindex">noPositiveTabindex</a>
-	<a class="header-anchor" href="#noPositiveTabindex"></a>
-</h3>
-enforce tabIndex value is not greater than zero
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noRedundantAlt">
@@ -544,13 +551,6 @@ enforce that elements with ARIA roles must have all required attributes for that
 	<a class="header-anchor" href="#useHeadingContent"></a>
 </h3>
 enforce heading (`h1`, `h2`, etc) elements contain accessible content
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useIframeTitle">
-	<a href="/docs/lint/rules/jsx-a11y/useIframeTitle">useIframeTitle</a>
-	<a class="header-anchor" href="#useIframeTitle"></a>
-</h3>
-enforce `iframe` elements have a title attribute
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useKeyWithClickEvents">

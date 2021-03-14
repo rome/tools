@@ -8,38 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/26/input.js 1:0-1:36
-	path: UIDPath<es2017/async-functions/26/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/26/input.js 1:0-1:36
 			expression: JSCallExpression {
-				loc: SourceLocation es2017/async-functions/26/input.js 1:0-1:36
-				callee: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation es2017/async-functions/26/input.js 1:0-1:1 (f)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2017/async-functions/26/input.js 1:2-1:3 (a)
 					}
 					JSArrowFunctionExpression {
-						loc: SourceLocation es2017/async-functions/26/input.js 1:5-1:32
 						body: JSAwaitExpression {
-							loc: SourceLocation es2017/async-functions/26/input.js 1:20-1:32
 							argument: JSArrayExpression {
-								loc: SourceLocation es2017/async-functions/26/input.js 1:26-1:32
-								elements: Array [
+								elements: [
 									JSReferenceIdentifier {
 										name: "x"
 										loc: SourceLocation es2017/async-functions/26/input.js 1:27-1:28 (x)
@@ -49,16 +29,14 @@ JSRoot {
 										loc: SourceLocation es2017/async-functions/26/input.js 1:30-1:31 (y)
 									}
 								]
+								loc: SourceLocation es2017/async-functions/26/input.js 1:26-1:32
 							}
+							loc: SourceLocation es2017/async-functions/26/input.js 1:20-1:32
 						}
 						head: JSFunctionHead {
 							async: true
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							loc: SourceLocation es2017/async-functions/26/input.js 1:5-1:19
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "x"
 									loc: SourceLocation es2017/async-functions/26/input.js 1:11-1:12 (x)
@@ -68,16 +46,33 @@ JSRoot {
 									loc: SourceLocation es2017/async-functions/26/input.js 1:14-1:15 (y)
 								}
 							]
+							loc: SourceLocation es2017/async-functions/26/input.js 1:5-1:19
 						}
+						loc: SourceLocation es2017/async-functions/26/input.js 1:5-1:32
 					}
 					JSReferenceIdentifier {
 						name: "b"
 						loc: SourceLocation es2017/async-functions/26/input.js 1:34-1:35 (b)
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation es2017/async-functions/26/input.js 1:0-1:1 (f)
+				}
+				loc: SourceLocation es2017/async-functions/26/input.js 1:0-1:36
 			}
+			loc: SourceLocation es2017/async-functions/26/input.js 1:0-1:36
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/26/input.js>
+	loc: SourceLocation es2017/async-functions/26/input.js 1:0-1:36
 }
 ```
 

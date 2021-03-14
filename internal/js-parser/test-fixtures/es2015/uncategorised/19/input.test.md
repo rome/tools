@@ -8,31 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
-	path: UIDPath<es2015/uncategorised/19/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
 			expression: JSTaggedTemplateExpression {
-				typeArguments: undefined
-				loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
-				tag: JSReferenceIdentifier {
-					name: "raw"
-					loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:3 (raw)
-				}
 				quasi: JSTemplateLiteral {
-					expressions: Array []
-					loc: SourceLocation es2015/uncategorised/19/input.js 1:3-1:7
-					quasis: Array [
+					expressions: []
+					quasis: [
 						JSTemplateElement {
 							cooked: "42"
 							raw: "42"
@@ -40,10 +21,26 @@ JSRoot {
 							loc: SourceLocation es2015/uncategorised/19/input.js 1:4-1:6
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/19/input.js 1:3-1:7
 				}
+				tag: JSReferenceIdentifier {
+					name: "raw"
+					loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:3 (raw)
+				}
+				loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
 			}
+			loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/19/input.js>
+	loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
 }
 ```
 

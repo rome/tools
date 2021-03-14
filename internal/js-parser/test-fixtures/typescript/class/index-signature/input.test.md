@@ -8,61 +8,63 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/index-signature/input.ts 1:0-5:0
-	path: UIDPath<typescript/class/index-signature/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/index-signature/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/index-signature/input.ts 1:0-4:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/index-signature/input.ts 1:0-4:1
-				body: Array [
+				body: [
 					TSIndexSignature {
+						readonly: false
 						key: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/class/index-signature/input.ts 2:5-2:14
 							meta: JSPatternMeta {
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/class/index-signature/input.ts 2:8-2:14
+								}
 								loc: SourceLocation typescript/class/index-signature/input.ts 2:5-2:14
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/index-signature/input.ts 2:8-2:14}
 							}
+							loc: SourceLocation typescript/class/index-signature/input.ts 2:5-2:14
 						}
-						readonly: false
+						typeAnnotation: TSAnyKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/index-signature/input.ts 2:17-2:20
+						}
 						loc: SourceLocation typescript/class/index-signature/input.ts 2:4-2:21
-						typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/index-signature/input.ts 2:17-2:20}
 					}
 					TSIndexSignature {
+						readonly: true
 						key: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/class/index-signature/input.ts 3:14-3:23
 							meta: JSPatternMeta {
+								typeAnnotation: TSStringKeywordTypeAnnotation {
+									loc: SourceLocation typescript/class/index-signature/input.ts 3:17-3:23
+								}
 								loc: SourceLocation typescript/class/index-signature/input.ts 3:14-3:23
-								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/index-signature/input.ts 3:17-3:23}
 							}
+							loc: SourceLocation typescript/class/index-signature/input.ts 3:14-3:23
 						}
-						readonly: true
+						typeAnnotation: TSAnyKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/index-signature/input.ts 3:26-3:29
+						}
 						loc: SourceLocation typescript/class/index-signature/input.ts 3:4-3:30
-						typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/class/index-signature/input.ts 3:26-3:29}
 					}
 				]
+				loc: SourceLocation typescript/class/index-signature/input.ts 1:0-4:1
 			}
+			loc: SourceLocation typescript/class/index-signature/input.ts 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/index-signature/input.ts>
+	loc: SourceLocation typescript/class/index-signature/input.ts 1:0-5:0
 }
 ```
 

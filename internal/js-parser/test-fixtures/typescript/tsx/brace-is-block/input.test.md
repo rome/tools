@@ -8,75 +8,64 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 1:0-4:0
-	path: UIDPath<typescript/tsx/brace-is-block/input.tsx>
-	syntax: Array [
-		"ts"
-		"jsx"
+	body: [
+		JSClassDeclaration {
+			leadingComments: ["0"]
+			id: JSBindingIdentifier {
+				name: "C"
+				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:6-2:7 (C)
+			}
+			meta: JSClassHead {
+				body: []
+				superClass: JSReferenceIdentifier {
+					name: "D"
+					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:16-2:17 (D)
+				}
+				superTypeParameters: TSTypeParameterInstantiation {
+					params: [
+						TSTypeReference {
+							typeName: JSReferenceIdentifier {
+								name: "T"
+								loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:18-2:19 (T)
+							}
+							loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:18-2:19
+						}
+					]
+					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:17-2:20
+				}
+				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:0-2:23
+			}
+			loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:0-2:23
+		}
+		JSExpressionStatement {
+			expression: JSXElement {
+				attributes: []
+				children: []
+				selfClosing: true
+				name: JSXReferenceIdentifier {
+					name: "C"
+					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:1-3:2
+				}
+				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:0-3:4
+			}
+			loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:0-3:4
+		}
 	]
-	comments: Array [
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation."
 			loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 1:0-1:98
 		}
 	]
-	body: Array [
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "C"
-				leadingComments: undefined
-				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:6-2:7 (C)
-			}
-			leadingComments: Array ["0"]
-			loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:0-2:23
-			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				leadingComments: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:0-2:23
-				superClass: JSReferenceIdentifier {
-					name: "D"
-					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:16-2:17 (D)
-				}
-				superTypeParameters: TSTypeParameterInstantiation {
-					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:17-2:20
-					params: Array [
-						TSTypeReference {
-							typeParameters: undefined
-							loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:18-2:19
-							typeName: JSReferenceIdentifier {
-								name: "T"
-								loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 2:18-2:19 (T)
-							}
-						}
-					]
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:0-3:4
-			expression: JSXElement {
-				name: JSXReferenceIdentifier {
-					name: "C"
-					loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:1-3:2
-				}
-				attributes: Array []
-				children: Array []
-				selfClosing: true
-				typeArguments: undefined
-				loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 3:0-3:4
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts", "jsx"]
+	path: UIDPath<typescript/tsx/brace-is-block/input.tsx>
+	loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 1:0-4:0
 }
 ```
 

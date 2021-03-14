@@ -1,10 +1,10 @@
 import {test} from "rome";
 import {assertMultipleNodes} from "./assertMultipleNodes";
-import {AnyNode, AnyNodes} from "@internal/ast";
+import {AnyNode} from "@internal/ast";
 import {template} from "@internal/js-ast-utils";
 
 const node: AnyNode = template.statement`let a;`;
-const nodeArray: AnyNodes = [node, node];
+const nodeArray: AnyNode[] = [node, node];
 
 test(
 	"returns back the same list of nodes",

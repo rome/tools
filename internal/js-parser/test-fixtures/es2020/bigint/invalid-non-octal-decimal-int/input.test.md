@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
-	path: UIDPath<es2020/bigint/invalid-non-octal-decimal-int/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
 			expression: JSBigIntLiteral {
 				value: "089"
 				loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
 			}
+			loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/bigint/invalid-non-octal-decimal-int/input.js>
+	loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
 }
 ```
 

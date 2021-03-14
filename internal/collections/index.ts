@@ -101,7 +101,6 @@ export class MappedSet<Real, Serial extends Primitive> implements Set<Real> {
 		this.map = new Map();
 		this.set = new Set();
 		this.serialize = serialize;
-		this[Symbol.toStringTag] = "MappedSet";
 
 		if (entries !== undefined) {
 			for (const path of entries) {
@@ -172,6 +171,8 @@ export class MappedSet<Real, Serial extends Primitive> implements Set<Real> {
 	}
 }
 
+MappedSet.prototype[Symbol.toStringTag] = "MappedSet";
+
 type MappedKeyMapSerializer<RealKey, SerialKey extends Primitive> = (
 	real: RealKey,
 ) => [SerialKey, RealKey];
@@ -187,7 +188,6 @@ export class MappedKeyMap<RealKey, SerialKey extends Primitive, Value>
 		this.serialToRealKey = new Map();
 
 		this.serialize = serialize;
-		this[Symbol.toStringTag] = "MappedMap";
 
 		if (entries !== undefined) {
 			for (const [key, value] of entries) {
@@ -202,6 +202,14 @@ export class MappedKeyMap<RealKey, SerialKey extends Primitive, Value>
 	private serialToRealKey: Map<SerialKey, RealKey>;
 
 	public [Symbol.toStringTag]: string;
+
+	// Given a key, if we are holding onto one matching it's serialized key, return it
+	// Otherwise return the input key
+	public normalizeKey(key: RealKey): RealKey {
+		const serialKey = this.serialize(key)[0];
+		const realKey = this.serialToRealKey.get(serialKey);
+		return realKey ?? key;
+	}
 
 	public get size(): number {
 		return this.serialToValue.size;
@@ -274,3 +282,5 @@ export class MappedKeyMap<RealKey, SerialKey extends Primitive, Value>
 		return this;
 	}
 }
+
+MappedKeyMap.prototype[Symbol.toStringTag] = "MappedKeyMap";

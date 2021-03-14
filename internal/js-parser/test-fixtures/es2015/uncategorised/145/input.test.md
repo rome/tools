@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/145/input.js 1:0-1:31
-	path: UIDPath<es2015/uncategorised/145/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/145/input.js 1:0-1:31
 			expression: JSObjectExpression {
-				loc: SourceLocation es2015/uncategorised/145/input.js 1:1-1:30
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "get"
 						key: JSComputedPropertyKey {
@@ -34,23 +21,19 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/145/input.js 1:6-1:9
 						}
-						loc: SourceLocation es2015/uncategorised/145/input.js 1:2-1:14
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/145/input.js 1:12-1:14
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/uncategorised/145/input.js 1:9-1:11
 						}
+						loc: SourceLocation es2015/uncategorised/145/input.js 1:2-1:14
 					}
 					JSObjectMethod {
 						kind: "set"
@@ -61,38 +44,43 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/uncategorised/145/input.js 1:20-1:23
 						}
-						loc: SourceLocation es2015/uncategorised/145/input.js 1:16-1:29
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation es2015/uncategorised/145/input.js 1:27-1:29
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2015/uncategorised/145/input.js 1:23-1:26
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "v"
-									loc: SourceLocation es2015/uncategorised/145/input.js 1:24-1:25 (v)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation es2015/uncategorised/145/input.js 1:24-1:25
 									}
+									loc: SourceLocation es2015/uncategorised/145/input.js 1:24-1:25 (v)
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/145/input.js 1:23-1:26
 						}
+						loc: SourceLocation es2015/uncategorised/145/input.js 1:16-1:29
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/145/input.js 1:1-1:30
 			}
+			loc: SourceLocation es2015/uncategorised/145/input.js 1:0-1:31
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/145/input.js>
+	loc: SourceLocation es2015/uncategorised/145/input.js 1:0-1:31
 }
 ```
 

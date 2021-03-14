@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/parameter-properties-binding-patterns/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A parameter property may not be declared using a binding pattern."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:16
-				path: UIDPath<typescript/class/parameter-properties-binding-patterns/input.ts>
-				start: Position 2:16
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
@@ -60,50 +25,69 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:15
 						}
-						loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:29
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:27-2:29
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:15
 							start: Position 2:4
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:27-2:29
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:15-2:26
-							params: Array [
+							params: [
 								JSBindingArrayPattern {
-									elements: Array []
-									rest: undefined
-									loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:16-2:25
+									elements: []
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
-										typeAnnotation: undefined
 										loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:16-2:25
 									}
+									loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:16-2:25
 								}
 							]
+							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:15-2:26
 						}
+						loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:29
 					}
 				]
+				loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-3:1
+			}
+			loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A parameter property may not be declared using a binding pattern."}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/parameter-properties-binding-patterns/input.ts>
+				end: Position 2:16
+				start: Position 2:16
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/parameter-properties-binding-patterns/input.ts>
+	loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-4:0
 }
 ```
 

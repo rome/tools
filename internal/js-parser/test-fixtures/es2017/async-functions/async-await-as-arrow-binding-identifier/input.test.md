@@ -8,43 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/async-await-as-arrow-binding-identifier/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:17
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:15-1:17
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:14
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "await"
 							loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:6-1:11 (await)
 						}
 					]
+					loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:14
 				}
+				loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:17
 			}
+			loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/async-await-as-arrow-binding-identifier/input.js>
+	loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-2:0
 }
 ```
 

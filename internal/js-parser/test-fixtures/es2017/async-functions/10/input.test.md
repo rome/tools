@@ -8,89 +8,84 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:13
-	path: UIDPath<es2017/async-functions/10/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:3
-				path: UIDPath<es2017/async-functions/10/input.js>
-				start: Position 2:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:3
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:3
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2017/async-functions/10/input.js 1:4-1:5 (x)
 						}
-						loc: SourceLocation es2017/async-functions/10/input.js 1:4-2:3
 						init: JSCallExpression {
-							loc: SourceLocation es2017/async-functions/10/input.js 1:8-2:3
-							callee: JSReferenceIdentifier {
-								name: "async"
-								loc: SourceLocation es2017/async-functions/10/input.js 1:8-1:13 (async)
-							}
-							arguments: Array [
+							arguments: [
 								JSReferenceIdentifier {
 									name: "x"
 									loc: SourceLocation es2017/async-functions/10/input.js 2:1-2:2 (x)
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "async"
+								loc: SourceLocation es2017/async-functions/10/input.js 1:8-1:13 (async)
+							}
+							loc: SourceLocation es2017/async-functions/10/input.js 1:8-2:3
 						}
+						loc: SourceLocation es2017/async-functions/10/input.js 1:4-2:3
 					}
 				]
+				loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:3
 			}
+			loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:3
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/10/input.js 2:4-2:6
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/10/input.js 2:4-2:6
 			}
+			loc: SourceLocation es2017/async-functions/10/input.js 2:4-2:6
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/10/input.js 2:7-2:13
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: SourceLocation es2017/async-functions/10/input.js 2:7-2:12
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation es2017/async-functions/10/input.js 2:7-2:8 (x)
 				}
 				right: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation es2017/async-functions/10/input.js 2:11-2:12
 				}
+				loc: SourceLocation es2017/async-functions/10/input.js 2:7-2:12
+			}
+			loc: SourceLocation es2017/async-functions/10/input.js 2:7-2:13
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/10/input.js>
+				end: Position 2:3
+				start: Position 2:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/10/input.js>
+	loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:13
 }
 ```
 

@@ -8,85 +8,78 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-comma/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-comma/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-1:10
-			source: JSStringLiteral {
-				value: ""
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-1:10
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:7-1:10 (foo)
 					}
-					importKind: undefined
 					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:7-1:10
 				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-1:10
 			}
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-1:10
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-1:10
 		}
 		JSBlockStatement {
-			directives: Array []
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:11-1:18
-			body: Array [
+			body: [
 				JSExpressionStatement {
-					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:13-1:16
 					expression: JSReferenceIdentifier {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:13-1:16 (bar)
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:13-1:16
 				}
 			]
+			directives: []
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:11-1:18
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:19-1:23
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:19-1:23 (from)
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:19-1:23
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:24-1:30
 			expression: JSStringLiteral {
 				value: "bar"
 				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:24-1:29
 			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:24-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Expected keyword <emphasis>"}, "from", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-comma/input.js>
+				end: Position 1:10
+				start: Position 1:11
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-comma/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-2:0
 }
 ```
 

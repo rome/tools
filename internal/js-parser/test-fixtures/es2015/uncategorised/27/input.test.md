@@ -8,63 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/27/input.js 1:0-1:47
-	path: UIDPath<es2015/uncategorised/27/input.js>
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			loc: SourceLocation es2015/uncategorised/27/input.js 1:0-1:47
-			discriminant: JSReferenceIdentifier {
-				name: "answer"
-				loc: SourceLocation es2015/uncategorised/27/input.js 1:8-1:14 (answer)
-			}
-			cases: Array [
+			cases: [
 				JSSwitchCase {
-					loc: SourceLocation es2015/uncategorised/27/input.js 1:18-1:45
-					test: JSNumericLiteral {
-						value: 42
-						format: undefined
-						loc: SourceLocation es2015/uncategorised/27/input.js 1:23-1:25
-					}
-					consequent: Array [
+					consequent: [
 						JSVariableDeclarationStatement {
-							loc: SourceLocation es2015/uncategorised/27/input.js 1:27-1:38
 							declaration: JSVariableDeclaration {
 								kind: "let"
-								loc: SourceLocation es2015/uncategorised/27/input.js 1:27-1:38
-								declarations: Array [
+								declarations: [
 									JSVariableDeclarator {
 										id: JSBindingIdentifier {
 											name: "t"
 											loc: SourceLocation es2015/uncategorised/27/input.js 1:31-1:32 (t)
 										}
-										loc: SourceLocation es2015/uncategorised/27/input.js 1:31-1:37
 										init: JSNumericLiteral {
 											value: 42
-											format: undefined
 											loc: SourceLocation es2015/uncategorised/27/input.js 1:35-1:37
 										}
+										loc: SourceLocation es2015/uncategorised/27/input.js 1:31-1:37
 									}
 								]
+								loc: SourceLocation es2015/uncategorised/27/input.js 1:27-1:38
 							}
+							loc: SourceLocation es2015/uncategorised/27/input.js 1:27-1:38
 						}
 						JSBreakStatement {
-							label: undefined
 							loc: SourceLocation es2015/uncategorised/27/input.js 1:39-1:45
 						}
 					]
+					test: JSNumericLiteral {
+						value: 42
+						loc: SourceLocation es2015/uncategorised/27/input.js 1:23-1:25
+					}
+					loc: SourceLocation es2015/uncategorised/27/input.js 1:18-1:45
 				}
 			]
+			discriminant: JSReferenceIdentifier {
+				name: "answer"
+				loc: SourceLocation es2015/uncategorised/27/input.js 1:8-1:14 (answer)
+			}
+			loc: SourceLocation es2015/uncategorised/27/input.js 1:0-1:47
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/27/input.js>
+	loc: SourceLocation es2015/uncategorised/27/input.js 1:0-1:47
 }
 ```
 

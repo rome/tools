@@ -8,23 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/13/input.js 1:0-1:6
-	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/13/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/13/input.js 1:0-1:6
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/13/input.js 1:0-1:6
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "\\xAg"
 						raw: "\\xAg"
@@ -32,28 +20,36 @@ JSRoot {
 						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/13/input.js 1:1-1:5
 					}
 				]
+				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/13/input.js 1:0-1:6
 			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/13/input.js 1:0-1:6
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:3
 				path: UIDPath<experimental/template-literal-invalid-escapes-untagged/13/input.js>
+				end: Position 1:3
 				start: Position 1:3
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/13/input.js>
+	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/13/input.js 1:0-1:6
 }
 ```
 

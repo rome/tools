@@ -8,57 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/306/input.js 1:0-1:35
-	path: UIDPath<es2015/uncategorised/306/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/306/input.js 1:0-1:35
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/uncategorised/306/input.js 1:0-1:35
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/306/input.js 1:4-1:29
-							elements: Array [
+							elements: [
 								JSBindingAssignmentPattern {
-									loc: SourceLocation es2015/uncategorised/306/input.js 1:5-1:28
+									left: JSBindingIdentifier {
+										name: "localVar"
+										meta: JSPatternMeta {
+											loc: SourceLocation es2015/uncategorised/306/input.js 1:5-1:13
+										}
+										loc: SourceLocation es2015/uncategorised/306/input.js 1:5-1:13 (localVar)
+									}
 									right: JSReferenceIdentifier {
 										name: "defaultValue"
 										loc: SourceLocation es2015/uncategorised/306/input.js 1:16-1:28 (defaultValue)
 									}
-									left: JSBindingIdentifier {
-										name: "localVar"
-										loc: SourceLocation es2015/uncategorised/306/input.js 1:5-1:13 (localVar)
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation es2015/uncategorised/306/input.js 1:5-1:13
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/306/input.js 1:5-1:28
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/306/input.js 1:4-1:29
 						}
-						loc: SourceLocation es2015/uncategorised/306/input.js 1:4-1:35
 						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: SourceLocation es2015/uncategorised/306/input.js 1:32-1:35 (obj)
 						}
+						loc: SourceLocation es2015/uncategorised/306/input.js 1:4-1:35
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/306/input.js 1:0-1:35
 			}
+			loc: SourceLocation es2015/uncategorised/306/input.js 1:0-1:35
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/306/input.js>
+	loc: SourceLocation es2015/uncategorised/306/input.js 1:0-1:35
 }
 ```
 

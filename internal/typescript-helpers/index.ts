@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
+// This file contains generic TypeScript types, and predicate methods
 type VoidReturn = void | undefined;
 
 export type VoidCallback<Args extends unknown[] = []> = Args extends []
@@ -78,10 +78,17 @@ export type UnknownObject = Dict<unknown>;
 
 export type UnknownFunction = (...args: unknown[]) => unknown;
 
-export function isPlainObject<T = UnknownObject>(
-	obj: unknown,
-): obj is UnknownObject & T {
+export function isObject(obj: unknown): obj is UnknownObject {
 	return typeof obj === "object" && obj !== null && !Array.isArray(obj);
+}
+
+export function isPlainObject(obj: unknown): obj is UnknownObject {
+	// Weird duck typing for cross-realm objects
+	return (
+		isObject(obj) &&
+		obj.constructor !== undefined &&
+		obj.constructor.name === "Object"
+	);
 }
 
 export function isIterable(obj: unknown): obj is Iterable<unknown> {
@@ -141,4 +148,12 @@ export function equalArray<A extends unknown[], B extends unknown[]>(
 	}
 
 	return true;
+}
+
+// Check if a value is instance of a class, disallowing inheritance
+// rome-ignore lint/ts/noExplicitAny: Necessary
+export function isSafeInstanceof<ClassType extends new (
+	...args: any
+) => any>(inst: unknown, Class: ClassType): inst is InstanceType<ClassType> {
+	return inst instanceof Class && inst.constructor === Class;
 }

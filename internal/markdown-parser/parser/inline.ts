@@ -10,7 +10,7 @@ import {
 	canBeRightFlankingDelimiter,
 	hasBlockTokens,
 } from "@internal/markdown-parser";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	AnyMarkdownInlineNode,
 	MarkdownBoldInline,

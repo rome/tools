@@ -8,41 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-4:0
-	path: UIDPath<es2017/async-functions/await-inside-class-methods/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-3:1
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-3:1
-				head: JSFunctionHead {
-					async: false
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-1:5
-				}
 				body: JSClassExpression {
-					id: undefined
-					loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:6-3:1
 					meta: JSClassHead {
-						implements: undefined
-						superClass: undefined
-						superTypeParameters: undefined
-						typeParameters: undefined
-						loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:6-3:1
-						body: Array [
+						body: [
 							JSClassMethod {
 								kind: "method"
 								key: JSStaticPropertyKey {
@@ -52,52 +23,64 @@ JSRoot {
 									}
 									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:8-2:9
 								}
-								loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:2-2:24
 								meta: JSClassPropertyMeta {
 									abstract: false
-									accessibility: undefined
 									optional: false
 									readonly: false
 									static: false
-									typeAnnotation: undefined
 									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:2-2:9
 									start: Position 2:2
+								}
+								body: JSBlockStatement {
+									body: [
+										JSExpressionStatement {
+											expression: JSAwaitExpression {
+												argument: JSNumericLiteral {
+													value: 42
+													loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:20-2:22
+												}
+												loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:14-2:22
+											}
+											loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:14-2:22
+										}
+									]
+									directives: []
+									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:12-2:24
 								}
 								head: JSFunctionHead {
 									async: true
 									generator: false
 									hasHoistedVars: false
-									params: Array []
-									rest: undefined
-									returnType: undefined
-									thisType: undefined
-									typeParameters: undefined
+									params: []
 									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:9-2:11
 								}
-								body: JSBlockStatement {
-									directives: Array []
-									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:12-2:24
-									body: Array [
-										JSExpressionStatement {
-											loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:14-2:22
-											expression: JSAwaitExpression {
-												loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:14-2:22
-												argument: JSNumericLiteral {
-													value: 42
-													format: undefined
-													loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:20-2:22
-												}
-											}
-										}
-									]
-								}
+								loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:2-2:24
 							}
 						]
+						loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:6-3:1
 					}
+					loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:6-3:1
 				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-1:5
+				}
+				loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-3:1
 			}
+			loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-class-methods/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-4:0
 }
 ```
 

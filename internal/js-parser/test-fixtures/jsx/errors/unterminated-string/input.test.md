@@ -8,48 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
-	path: UIDPath<jsx/errors/unterminated-string/input.jsx>
-	syntax: Array ["jsx"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unterminated string constant"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:0
-				path: UIDPath<jsx/errors/unterminated-string/input.jsx>
-				start: Position 2:0
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "foo"
-					loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:1-1:4
-				}
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "bar"
@@ -62,9 +24,42 @@ JSRoot {
 						loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:5-2:1
 					}
 				]
+				children: []
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "foo"
+					loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
+			}
+			loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unterminated string constant"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<jsx/errors/unterminated-string/input.jsx>
+				end: Position 2:0
+				start: Position 2:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/unterminated-string/input.jsx>
+	loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
 }
 ```
 

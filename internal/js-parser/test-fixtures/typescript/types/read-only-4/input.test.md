@@ -8,67 +8,66 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/read-only-4/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/read-only-4/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
+	body: [
+		TSTypeAlias {
+			trailingComments: ["0"]
+			id: JSBindingIdentifier {
+				name: "T33"
+				loc: SourceLocation typescript/types/read-only-4/input.ts 1:5-1:8 (T33)
+			}
+			right: TSTypeOperator {
+				operator: "readonly"
+				typeAnnotation: TSTypeReference {
+					typeName: JSReferenceIdentifier {
+						name: "Array"
+						loc: SourceLocation typescript/types/read-only-4/input.ts 1:20-1:25 (Array)
+					}
+					typeParameters: TSTypeParameterInstantiation {
+						params: [
+							TSStringKeywordTypeAnnotation {
+								loc: SourceLocation typescript/types/read-only-4/input.ts 1:26-1:32
+							}
+						]
+						loc: SourceLocation typescript/types/read-only-4/input.ts 1:25-1:33
+					}
+					loc: SourceLocation typescript/types/read-only-4/input.ts 1:20-1:33
+				}
+				loc: SourceLocation typescript/types/read-only-4/input.ts 1:11-1:33
+			}
+			loc: SourceLocation typescript/types/read-only-4/input.ts 1:0-1:34
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Error"
 			loc: SourceLocation typescript/types/read-only-4/input.ts 1:36-1:44
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:33
 				path: UIDPath<typescript/types/read-only-4/input.ts>
+				end: Position 1:33
 				start: Position 1:20
 			}
 		}
 	]
-	body: Array [
-		TSTypeAlias {
-			id: JSBindingIdentifier {
-				name: "T33"
-				loc: SourceLocation typescript/types/read-only-4/input.ts 1:5-1:8 (T33)
-			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/types/read-only-4/input.ts 1:0-1:34
-			trailingComments: Array ["0"]
-			right: TSTypeOperator {
-				operator: "readonly"
-				loc: SourceLocation typescript/types/read-only-4/input.ts 1:11-1:33
-				typeAnnotation: TSTypeReference {
-					loc: SourceLocation typescript/types/read-only-4/input.ts 1:20-1:33
-					typeName: JSReferenceIdentifier {
-						name: "Array"
-						loc: SourceLocation typescript/types/read-only-4/input.ts 1:20-1:25 (Array)
-					}
-					typeParameters: TSTypeParameterInstantiation {
-						loc: SourceLocation typescript/types/read-only-4/input.ts 1:25-1:33
-						params: Array [TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/read-only-4/input.ts 1:26-1:32}]
-					}
-				}
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/read-only-4/input.ts>
+	loc: SourceLocation typescript/types/read-only-4/input.ts 1:0-2:0
 }
 ```
 

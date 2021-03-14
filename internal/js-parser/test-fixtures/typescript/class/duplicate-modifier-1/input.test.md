@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/duplicate-modifier-1/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown class property start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:9
-				path: UIDPath<typescript/class/duplicate-modifier-1/input.ts>
-				start: Position 2:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:6-1:7 (A)
 			}
-			loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,25 +24,47 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:28
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:29
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:28
 							start: Position 2:25
 						}
+						loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:29
 					}
 				]
+				loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-3:1
+			}
+			loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/duplicate-modifier-1/input.ts>
+				end: Position 2:9
+				start: Position 2:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/duplicate-modifier-1/input.ts>
+	loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-4:0
 }
 ```
 

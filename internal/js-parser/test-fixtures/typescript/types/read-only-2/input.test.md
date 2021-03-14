@@ -8,64 +8,58 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/read-only-2/input.ts 1:0-1:32
-	path: UIDPath<typescript/types/read-only-2/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
+	body: [
+		TSTypeAlias {
+			trailingComments: ["0"]
+			id: JSBindingIdentifier {
+				name: "T31"
+				loc: SourceLocation typescript/types/read-only-2/input.ts 1:5-1:8 (T31)
+			}
+			right: TSTypeOperator {
+				operator: "readonly"
+				typeAnnotation: TSTypeReference {
+					typeName: JSReferenceIdentifier {
+						name: "T"
+						loc: SourceLocation typescript/types/read-only-2/input.ts 1:20-1:21 (T)
+					}
+					loc: SourceLocation typescript/types/read-only-2/input.ts 1:20-1:21
+				}
+				loc: SourceLocation typescript/types/read-only-2/input.ts 1:11-1:21
+			}
+			loc: SourceLocation typescript/types/read-only-2/input.ts 1:0-1:22
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Error"
 			loc: SourceLocation typescript/types/read-only-2/input.ts 1:24-1:32
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:21
 				path: UIDPath<typescript/types/read-only-2/input.ts>
+				end: Position 1:21
 				start: Position 1:20
 			}
 		}
 	]
-	body: Array [
-		TSTypeAlias {
-			id: JSBindingIdentifier {
-				name: "T31"
-				loc: SourceLocation typescript/types/read-only-2/input.ts 1:5-1:8 (T31)
-			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/types/read-only-2/input.ts 1:0-1:22
-			trailingComments: Array ["0"]
-			right: TSTypeOperator {
-				operator: "readonly"
-				loc: SourceLocation typescript/types/read-only-2/input.ts 1:11-1:21
-				typeAnnotation: TSTypeReference {
-					typeParameters: undefined
-					loc: SourceLocation typescript/types/read-only-2/input.ts 1:20-1:21
-					typeName: JSReferenceIdentifier {
-						name: "T"
-						loc: SourceLocation typescript/types/read-only-2/input.ts 1:20-1:21 (T)
-					}
-				}
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/read-only-2/input.ts>
+	loc: SourceLocation typescript/types/read-only-2/input.ts 1:0-1:32
 }
 ```
 

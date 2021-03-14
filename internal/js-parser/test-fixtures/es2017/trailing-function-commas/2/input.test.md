@@ -8,70 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:0-1:29
-	path: UIDPath<es2017/trailing-function-commas/2/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "log"
 				loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:9-1:12 (log)
 			}
-			loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:0-1:29
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:26-1:29
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:12-1:25
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "n"
-						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:13-1:14 (n)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:13-1:14
 						}
+						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:13-1:14 (n)
 					}
 					JSBindingIdentifier {
 						name: "op"
-						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:16-1:18 (op)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:16-1:18
 						}
+						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:16-1:18 (op)
 					}
 					JSBindingIdentifier {
 						name: "val"
-						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:20-1:23 (val)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:20-1:23
 						}
+						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:20-1:23 (val)
 					}
 				]
+				loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:12-1:25
 			}
+			loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/trailing-function-commas/2/input.js>
+	loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:0-1:29
 }
 ```
 

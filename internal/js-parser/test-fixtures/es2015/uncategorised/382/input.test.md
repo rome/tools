@@ -8,45 +8,41 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/382/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/382/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/uncategorised/382/input.js 1:0-1:19
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation es2015/uncategorised/382/input.js 1:7-1:19
 				declaration: JSVariableDeclaration {
 					kind: "let"
-					loc: SourceLocation es2015/uncategorised/382/input.js 1:7-1:19
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: SourceLocation es2015/uncategorised/382/input.js 1:11-1:14 (foo)
 							}
-							loc: SourceLocation es2015/uncategorised/382/input.js 1:11-1:18
 							init: JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation es2015/uncategorised/382/input.js 1:17-1:18
 							}
+							loc: SourceLocation es2015/uncategorised/382/input.js 1:11-1:18
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/382/input.js 1:7-1:19
 				}
+				loc: SourceLocation es2015/uncategorised/382/input.js 1:7-1:19
 			}
+			loc: SourceLocation es2015/uncategorised/382/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/382/input.js>
+	loc: SourceLocation es2015/uncategorised/382/input.js 1:0-2:0
 }
 ```
 

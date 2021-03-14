@@ -8,48 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0139/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A constant must have an initializer"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<esprima/invalid-syntax/migrated_0139/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:0-1:16
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:6-1:7 (x)
 						}
-						init: undefined
 						loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:6-1:7
 					}
 					JSVariableDeclarator {
@@ -57,17 +25,43 @@ JSRoot {
 							name: "y"
 							loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:9-1:10 (y)
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:9-1:15
 						init: JSNumericLiteral {
 							value: 12
-							format: undefined
 							loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:13-1:15
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:9-1:15
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:0-1:16
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:0-1:16
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A constant must have an initializer"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0139/input.js>
+				end: Position 1:7
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0139/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0139/input.js 1:0-2:0
 }
 ```
 

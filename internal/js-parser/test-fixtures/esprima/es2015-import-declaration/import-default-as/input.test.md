@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/import-default-as/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:0-1:35
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:29-1:34
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:8-1:22
 					imported: JSIdentifier {
 						name: "default"
 						loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:8-1:15 (default)
@@ -41,13 +21,27 @@ JSRoot {
 							name: "foo"
 							loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:19-1:22 (foo)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:8-1:22
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:8-1:22
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:29-1:34
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:0-1:35
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/import-default-as/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/import-default-as/input.js 1:0-2:0
 }
 ```
 

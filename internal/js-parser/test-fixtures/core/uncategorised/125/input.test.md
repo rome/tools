@@ -8,22 +8,22 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
-	path: UIDPath<core/uncategorised/125/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
 			expression: JSMemberExpression {
-				loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
+				object: JSCallExpression {
+					arguments: [
+						JSNumericLiteral {
+							value: 42
+							loc: SourceLocation core/uncategorised/125/input.js 1:9-1:11
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "universe"
+						loc: SourceLocation core/uncategorised/125/input.js 1:0-1:8 (universe)
+					}
+					loc: SourceLocation core/uncategorised/125/input.js 1:0-1:12
+				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "galaxies"
@@ -31,23 +31,20 @@ JSRoot {
 					}
 					loc: SourceLocation core/uncategorised/125/input.js 1:13-1:21 (galaxies)
 				}
-				object: JSCallExpression {
-					loc: SourceLocation core/uncategorised/125/input.js 1:0-1:12
-					callee: JSReferenceIdentifier {
-						name: "universe"
-						loc: SourceLocation core/uncategorised/125/input.js 1:0-1:8 (universe)
-					}
-					arguments: Array [
-						JSNumericLiteral {
-							value: 42
-							format: undefined
-							loc: SourceLocation core/uncategorised/125/input.js 1:9-1:11
-						}
-					]
-				}
+				loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
 			}
+			loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/125/input.js>
+	loc: SourceLocation core/uncategorised/125/input.js 1:0-1:21
 }
 ```
 

@@ -8,24 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-template-literals/dollar-sign/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-template-literals/dollar-sign/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-template-literals/dollar-sign/input.js 1:0-1:3
 			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: SourceLocation esprima/es2015-template-literals/dollar-sign/input.js 1:0-1:3
-				quasis: Array [
+				expressions: []
+				quasis: [
 					JSTemplateElement {
 						cooked: "$"
 						raw: "$"
@@ -33,9 +20,20 @@ JSRoot {
 						loc: SourceLocation esprima/es2015-template-literals/dollar-sign/input.js 1:1-1:2
 					}
 				]
+				loc: SourceLocation esprima/es2015-template-literals/dollar-sign/input.js 1:0-1:3
 			}
+			loc: SourceLocation esprima/es2015-template-literals/dollar-sign/input.js 1:0-1:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-template-literals/dollar-sign/input.js>
+	loc: SourceLocation esprima/es2015-template-literals/dollar-sign/input.js 1:0-2:0
 }
 ```
 

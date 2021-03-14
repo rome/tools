@@ -8,43 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/304/input.js 1:0-2:8
-	path: UIDPath<core/uncategorised/304/input.js>
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation core/uncategorised/304/input.js 1:0-2:8
-			test: JSBooleanLiteral {
-				value: true
-				loc: SourceLocation core/uncategorised/304/input.js 1:7-1:11
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/304/input.js 1:13-2:8
-				body: Array [
+				body: [
 					JSContinueStatement {
-						label: undefined
 						loc: SourceLocation core/uncategorised/304/input.js 1:15-1:23
 					}
 					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/304/input.js 2:0-2:6
 						expression: JSReferenceIdentifier {
 							name: "there"
 							loc: SourceLocation core/uncategorised/304/input.js 2:0-2:5 (there)
 						}
+						loc: SourceLocation core/uncategorised/304/input.js 2:0-2:6
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/304/input.js 1:13-2:8
 			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation core/uncategorised/304/input.js 1:7-1:11
+			}
+			loc: SourceLocation core/uncategorised/304/input.js 1:0-2:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/304/input.js>
+	loc: SourceLocation core/uncategorised/304/input.js 1:0-2:8
 }
 ```
 

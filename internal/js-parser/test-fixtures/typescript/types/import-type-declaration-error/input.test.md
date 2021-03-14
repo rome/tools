@@ -8,40 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:0-1:51
-	path: UIDPath<typescript/types/import-type-declaration-error/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSImportDeclaration {
 			importKind: "type"
-			namespaceSpecifier: undefined
-			loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:0-1:51
-			source: JSStringLiteral {
-				value: "module"
-				loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:42-1:50
-			}
-			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:0-1:22
-				local: JSImportSpecifierLocal {
-					name: JSBindingIdentifier {
-						name: "FooDefault"
-						loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:12-1:22 (FooDefault)
-					}
-					importKind: "type"
-					loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:12-1:22
-				}
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:26-1:29
 					imported: JSIdentifier {
 						name: "Bar"
 						loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:26-1:29 (Bar)
@@ -51,12 +22,11 @@ JSRoot {
 							name: "Bar"
 							loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:26-1:29 (Bar)
 						}
-						importKind: undefined
 						loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:26-1:29
 					}
+					loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:26-1:29
 				}
 				JSImportSpecifier {
-					loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:31-1:34
 					imported: JSIdentifier {
 						name: "Baz"
 						loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:31-1:34 (Baz)
@@ -66,13 +36,38 @@ JSRoot {
 							name: "Baz"
 							loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:31-1:34 (Baz)
 						}
-						importKind: undefined
 						loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:31-1:34
 					}
+					loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:31-1:34
 				}
 			]
+			defaultSpecifier: JSImportDefaultSpecifier {
+				local: JSImportSpecifierLocal {
+					importKind: "type"
+					name: JSBindingIdentifier {
+						name: "FooDefault"
+						loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:12-1:22 (FooDefault)
+					}
+					loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:12-1:22
+				}
+				loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:0-1:22
+			}
+			source: JSStringLiteral {
+				value: "module"
+				loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:42-1:50
+			}
+			loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:0-1:51
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/import-type-declaration-error/input.ts>
+	loc: SourceLocation typescript/types/import-type-declaration-error/input.ts 1:0-1:51
 }
 ```
 

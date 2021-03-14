@@ -8,38 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/null-assertion-2/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:6
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:6
-				right: JSNumericLiteral {
-					value: 2
-					format: undefined
-					loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:5-1:6
-				}
 				left: TSNonNullExpression {
-					loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:2
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:1 (x)
 					}
+					loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:2
 				}
+				right: JSNumericLiteral {
+					value: 2
+					loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:5-1:6
+				}
+				loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:6
 			}
+			loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-1:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/null-assertion-2/input.ts>
+	loc: SourceLocation typescript/cast/null-assertion-2/input.ts 1:0-2:0
 }
 ```
 

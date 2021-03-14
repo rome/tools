@@ -8,55 +8,44 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-3:0
-	path: UIDPath<typescript/class/extends-implements-empty/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "implements list cannot be empty"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:33
-				path: UIDPath<typescript/class/extends-implements-empty/input.ts>
-				start: Position 1:33
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-2:1
 			meta: JSClassHead {
-				body: Array []
-				implements: Array []
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-2:1
+				body: []
+				implements: []
 				superClass: JSReferenceIdentifier {
 					name: "Bar"
 					loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:18-1:21 (Bar)
 				}
+				loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-2:1
+			}
+			loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-2:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["implements", RAW_MARKUP {value: " list cannot be empty"}]}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/extends-implements-empty/input.ts>
+				end: Position 1:33
+				start: Position 1:33
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/extends-implements-empty/input.ts>
+	loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-3:0
 }
 ```
 

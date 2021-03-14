@@ -8,35 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/implements/input.ts 1:0-2:0
-	path: UIDPath<typescript/class/implements/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: SourceLocation typescript/class/implements/input.ts 1:6-1:7 (C)
 			}
-			loc: SourceLocation typescript/class/implements/input.ts 1:0-1:28
 			meta: JSClassHead {
-				body: Array []
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/implements/input.ts 1:0-1:28
-				implements: Array [
+				body: []
+				implements: [
 					TSExpressionWithTypeArguments {
-						loc: SourceLocation typescript/class/implements/input.ts 1:19-1:25
 						expression: TSQualifiedName {
-							loc: SourceLocation typescript/class/implements/input.ts 1:19-1:22
 							left: JSReferenceIdentifier {
 								name: "X"
 								loc: SourceLocation typescript/class/implements/input.ts 1:19-1:20 (X)
@@ -45,25 +27,37 @@ JSRoot {
 								name: "Y"
 								loc: SourceLocation typescript/class/implements/input.ts 1:21-1:22 (Y)
 							}
+							loc: SourceLocation typescript/class/implements/input.ts 1:19-1:22
 						}
 						typeParameters: TSTypeParameterInstantiation {
-							loc: SourceLocation typescript/class/implements/input.ts 1:22-1:25
-							params: Array [
+							params: [
 								TSTypeReference {
-									typeParameters: undefined
-									loc: SourceLocation typescript/class/implements/input.ts 1:23-1:24
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: SourceLocation typescript/class/implements/input.ts 1:23-1:24 (T)
 									}
+									loc: SourceLocation typescript/class/implements/input.ts 1:23-1:24
 								}
 							]
+							loc: SourceLocation typescript/class/implements/input.ts 1:22-1:25
 						}
+						loc: SourceLocation typescript/class/implements/input.ts 1:19-1:25
 					}
 				]
+				loc: SourceLocation typescript/class/implements/input.ts 1:0-1:28
 			}
+			loc: SourceLocation typescript/class/implements/input.ts 1:0-1:28
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/implements/input.ts>
+	loc: SourceLocation typescript/class/implements/input.ts 1:0-2:0
 }
 ```
 

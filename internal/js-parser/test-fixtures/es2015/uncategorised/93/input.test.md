@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/93/input.js 1:0-1:41
-	path: UIDPath<es2015/uncategorised/93/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			defaultSpecifier: undefined
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/uncategorised/93/input.js 1:0-1:41
-			source: JSStringLiteral {
-				value: "crypto"
-				loc: SourceLocation es2015/uncategorised/93/input.js 1:33-1:41
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16
 					imported: JSIdentifier {
 						name: "encrypt"
 						loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16 (encrypt)
@@ -41,12 +21,11 @@ JSRoot {
 							name: "encrypt"
 							loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16 (encrypt)
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16
 					}
+					loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16
 				}
 				JSImportSpecifier {
-					loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25
 					imported: JSIdentifier {
 						name: "decrypt"
 						loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25 (decrypt)
@@ -56,13 +35,27 @@ JSRoot {
 							name: "decrypt"
 							loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25 (decrypt)
 						}
-						importKind: undefined
 						loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25
 					}
+					loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25
 				}
 			]
+			source: JSStringLiteral {
+				value: "crypto"
+				loc: SourceLocation es2015/uncategorised/93/input.js 1:33-1:41
+			}
+			loc: SourceLocation es2015/uncategorised/93/input.js 1:0-1:41
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/93/input.js>
+	loc: SourceLocation es2015/uncategorised/93/input.js 1:0-1:41
 }
 ```
 

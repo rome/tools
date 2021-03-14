@@ -10,18 +10,26 @@ import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
 import {Profile} from "@internal/v8";
 import {ProfilingStartData, ServerBridgeLog} from "./ServerBridge";
-import {DiagnosticsError} from "@internal/diagnostics";
-import {BridgeErrorResponseDetails, createBridge} from "@internal/events";
+import {Diagnostic, DiagnosticsError} from "@internal/diagnostics";
+import {BridgeErrorDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
-import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
+import {
+	InlineSnapshotUpdate,
+	SnapshotEntry,
+} from "@internal/core/worker/test/SnapshotManager";
 import {
 	AbsoluteFilePath,
+	AbsoluteFilePathMap,
 	UIDPath,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {FileNotFound} from "@internal/fs";
 import {
+	TestRef,
+	TestWorkerPrepareTestOptions,
+	TestWorkerPrepareTestResult,
+	TestWorkerRunTestOptions,
 	WorkerAnalyzeDependencyResult,
 	WorkerBuffer,
 	WorkerBufferPatch,
@@ -32,20 +40,71 @@ import {
 	WorkerLintOptions,
 	WorkerLintResult,
 	WorkerParseOptions,
-	WorkerPartialManifests,
 	WorkerProjects,
 	WorkerStatus,
 	WorkerUpdateInlineSnapshotResult,
 } from "@internal/core";
+import {WorkerPartialManifest} from "@internal/core/worker/types";
+import {TestConsoleAdvice} from "@internal/core/worker/test/TestWorkerFile";
 
 export default createBridge({
-	debugName: "worker",
+	debugName: "Worker",
 
 	shared: {},
 
 	server: {
 		log: createBridgeEventDeclaration<Omit<ServerBridgeLog, "origin">, void>(),
-		fatalError: createBridgeEventDeclaration<BridgeErrorResponseDetails, void>(),
+
+		fatalError: createBridgeEventDeclaration<BridgeErrorDetails, void>(),
+
+		testInlineSnapshotUpdate: createBridgeEventDeclaration<
+			{
+				testPath: AbsoluteFilePath;
+				update: InlineSnapshotUpdate;
+			},
+			void
+		>(),
+
+		testSnapshotEntry: createBridgeEventDeclaration<
+			{
+				testPath: AbsoluteFilePath;
+				snapshotPath: AbsoluteFilePath;
+				entry: SnapshotEntry;
+			},
+			void
+		>(),
+
+		testDiskSnapshotDiscovered: createBridgeEventDeclaration<
+			{
+				testPath: AbsoluteFilePath;
+				snapshotPath: AbsoluteFilePath;
+			},
+			void
+		>(),
+
+		testStart: createBridgeEventDeclaration<
+			{
+				ref: TestRef;
+				timeout: undefined | number;
+			},
+			void
+		>(),
+
+		testDiagnostic: createBridgeEventDeclaration<
+			{
+				testPath: undefined | AbsoluteFilePath;
+				diagnostic: Diagnostic;
+			},
+			void
+		>(),
+
+		testFinish: createBridgeEventDeclaration<
+			{
+				success: boolean;
+				ref: TestRef;
+			},
+			void
+		>(),
 	},
 
 	client: {
@@ -57,7 +116,7 @@ export default createBridge({
 
 		updateManifests: createBridgeEventDeclaration<
 			{
-				manifests: WorkerPartialManifests;
+				manifests: Map<number, undefined | WorkerPartialManifest>;
 			},
 			void
 		>(),
@@ -113,7 +172,7 @@ export default createBridge({
 		updateInlineSnapshots: createBridgeEventDeclaration<
 			{
 				ref: FileReference;
-				updates: InlineSnapshotUpdates;
+				updates: InlineSnapshotUpdate[];
 				parseOptions: WorkerParseOptions;
 			},
 			WorkerUpdateInlineSnapshotResult
@@ -172,10 +231,58 @@ export default createBridge({
 			},
 			void
 		>(),
+
+		inspectorDetails: createBridgeEventDeclaration<
+			void,
+			{
+				inspectorUrl: undefined | string;
+			}
+		>(),
+
+		executeScript: createBridgeEventDeclaration<
+			{
+				contextDirectory: AbsoluteFilePath;
+				cwd: AbsoluteFilePath;
+				args: string[];
+				path: AbsoluteFilePath;
+				code: string;
+			},
+			{
+				exitCode: undefined | number;
+			}
+		>(),
+
+		testReceiveCompiledDependency: createBridgeEventDeclaration<
+			AbsoluteFilePathMap<string>,
+			void
+		>(),
+
+		testPrepare: createBridgeEventDeclaration<
+			TestWorkerPrepareTestOptions,
+			TestWorkerPrepareTestResult
+		>(),
+
+		testRun: createBridgeEventDeclaration<TestWorkerRunTestOptions, void>(),
+
+		testGetConsoleAdvice: createBridgeEventDeclaration<
+			AbsoluteFilePath,
+			TestConsoleAdvice
+		>(),
+
+		testGetRawSnapshot: createBridgeEventDeclaration<
+			{
+				path: AbsoluteFilePath;
+				snapshotPath: AbsoluteFilePath;
+			},
+			string
+		>(),
 	},
 
 	init(bridge) {
-		bridge.addErrorTransport(
+		bridge.addCustomErrorTransport<{
+			suffixMessage: undefined | string;
+			path: string;
+		}>(
 			"FileNotFound",
 			{
 				serialize(err: Error) {
@@ -197,7 +304,9 @@ export default createBridge({
 			},
 		);
 
-		bridge.addErrorTransport(
+		bridge.addCustomErrorTransport<{
+			diagnostics: Diagnostic[];
+		}>(
 			"DiagnosticsError",
 			{
 				serialize(err: Error) {

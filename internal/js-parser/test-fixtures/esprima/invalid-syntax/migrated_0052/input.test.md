@@ -8,32 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0052/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-1:3
 			expression: JSUpdateExpression {
 				operator: "++"
 				prefix: false
-				loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-1:3
 				argument: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-1:1
 				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-1:3
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-1:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0052/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0052/input.js 1:0-2:0
 }
 ```
 

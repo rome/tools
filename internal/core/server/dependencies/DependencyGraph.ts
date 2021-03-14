@@ -24,10 +24,13 @@ import {DependencyOrder} from "./DependencyOrderer";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	createAnyPath,
+	AbsoluteFilePathSet,
+	createPath,
 } from "@internal/path";
 import {markup} from "@internal/markup";
 import FileNotFound, {MissingFileReturn} from "@internal/fs/FileNotFound";
+import {areAnalyzeDependencyResultsEqual} from "@internal/compiler";
+import {promiseAllFrom} from "@internal/async";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;
@@ -35,7 +38,21 @@ export type DependencyGraphSeedResult = {
 	cached: boolean;
 };
 
+type ResolveOptions = {
+	all: boolean;
+	async: boolean;
+	ancestry: string[];
+	workerQueue: DependencyGraphWorkerQueue;
+	isRoot: boolean;
+	shallowUsedExports?: Set<string>;
+};
+
+type ResolveState = {
+	analyzeProgress?: ReporterProgress;
+};
+
 const NODE_BUILTINS = [
+	"async_hooks",
 	"electron",
 	"buffer",
 	"child_process",
@@ -110,6 +127,8 @@ export default class DependencyGraph {
 	private nodes: AbsoluteFilePathMap<DependencyNode>;
 	private locker: Locker<string>;
 
+	public close() {}
+
 	public getNodes(): Iterable<DependencyNode> {
 		return this.nodes.values();
 	}
@@ -163,6 +182,10 @@ export default class DependencyGraph {
 		return module;
 	}
 
+	public hasNode(path: AbsoluteFilePath): boolean {
+		return this.nodes.has(path);
+	}
+
 	public maybeGetNode(path: AbsoluteFilePath): undefined | DependencyNode {
 		return this.nodes.get(path);
 	}
@@ -178,18 +201,18 @@ export default class DependencyGraph {
 	public async seed(
 		{
 			paths,
-			diagnosticsProcessor,
 			analyzeProgress,
-			allowFileNotFound = false,
-			validate = false,
+			allowFileNotFound,
 		}: {
-			paths: AbsoluteFilePath[];
-			diagnosticsProcessor: DiagnosticsProcessor;
+			paths: Iterable<AbsoluteFilePath>;
+			allowFileNotFound: boolean;
 			analyzeProgress?: ReporterProgress;
-			allowFileNotFound?: boolean;
-			validate?: boolean;
 		},
 	): Promise<void> {
+		const state: ResolveState = {
+			analyzeProgress,
+		};
+
 		// Initialize sub dependency queue
 		const workerQueue: DependencyGraphWorkerQueue = this.server.createWorkerQueue({
 			callback: async ({path, item}) => {
@@ -203,8 +226,7 @@ export default class DependencyGraph {
 						shallowUsedExports: item.shallowUsedExports,
 						isRoot: false,
 					},
-					diagnosticsProcessor,
-					analyzeProgress,
+					state,
 				);
 			},
 		});
@@ -226,8 +248,7 @@ export default class DependencyGraph {
 								ancestry: [],
 								isRoot: true,
 							},
-							diagnosticsProcessor,
-							analyzeProgress,
+							state,
 						);
 					},
 				);
@@ -249,34 +270,81 @@ export default class DependencyGraph {
 
 		// Spin worker queue
 		await workerQueue.spin();
-
-		if (diagnosticsProcessor.hasDiagnostics()) {
-			return;
-		}
-
-		if (validate) {
-			for (const ret of roots) {
-				if (!ret.missing) {
-					const root = ret.value;
-					await FileNotFound.maybeAllowMissing(
-						allowFileNotFound,
-						root.path,
-						() => this.validateTransitive(root, diagnosticsProcessor),
-					);
-				}
-			}
-		}
 	}
 
 	public validate(
 		node: DependencyNode,
 		diagnosticsProcessor: DiagnosticsProcessor,
 	): void {
+		diagnosticsProcessor.addDiagnostics(node.diagnostics);
+
 		const resolvedImports = node.resolveImports();
 		diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
 	}
 
-	private validateTransitive(
+	public async evictNodes(
+		paths: AbsoluteFilePathSet,
+		reseed: (paths: AbsoluteFilePathSet, dependents: boolean) => Promise<void>,
+	): Promise<AbsoluteFilePathSet> {
+		// Get all the current dependency nodes for the evicted files, and invalidate their nodes
+		const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> = new AbsoluteFilePathMap();
+		for (const path of paths) {
+			const node = this.maybeGetNode(path);
+			if (node !== undefined) {
+				oldEvictedNodes.set(path, node);
+				this.deleteNode(path);
+			}
+		}
+
+		// Refresh only the evicted paths
+		await reseed(paths, false);
+
+		// Maintain a list of all the dependencies we revalidated
+		const validatedDependencyPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
+		// Maintain a list of all the dependents that need to be revalidated
+		const validatedDependencyPathDependents: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
+		// Build a list of dependents to recheck
+		for (const path of paths) {
+			const newNode = this.maybeGetNode(path);
+			if (newNode === undefined) {
+				continue;
+			}
+
+			validatedDependencyPaths.add(path);
+
+			// Get the previous node and see if the exports have actually changed
+			const oldNode = oldEvictedNodes.get(path);
+			const sameShape =
+				oldNode !== undefined &&
+				areAnalyzeDependencyResultsEqual(
+					oldNode.analyze.value,
+					newNode.analyze.value,
+				);
+
+			for (const depNode of newNode.getDependents()) {
+				// If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors
+				// NB: We might want to revalidate if it depended on an evictedPath that was deleted
+				if (sameShape && depNode.hadResolveImportsDiagnostics === false) {
+					continue;
+				}
+
+				validatedDependencyPaths.add(depNode.path);
+				validatedDependencyPathDependents.add(depNode.path);
+				this.deleteNode(depNode.path);
+			}
+		}
+
+		// Revalidate dependents
+		if (validatedDependencyPathDependents.size > 0) {
+			await reseed(validatedDependencyPathDependents, true);
+		}
+
+		return validatedDependencyPaths;
+	}
+
+	public validateTransitive(
 		node: DependencyNode,
 		diagnosticsProcessor: DiagnosticsProcessor,
 	) {
@@ -290,16 +358,8 @@ export default class DependencyGraph {
 
 	private async resolve(
 		path: AbsoluteFilePath,
-		opts: {
-			all: boolean;
-			async: boolean;
-			ancestry: string[];
-			workerQueue: DependencyGraphWorkerQueue;
-			isRoot: boolean;
-			shallowUsedExports?: Set<string>;
-		},
-		diagnosticsProcessor: DiagnosticsProcessor,
-		analyzeProgress?: ReporterProgress,
+		opts: ResolveOptions,
+		state: ResolveState,
 	): Promise<DependencyNode> {
 		const filename = path.join();
 		const {async, all, ancestry} = opts;
@@ -328,8 +388,8 @@ export default class DependencyGraph {
 		const progressText = markup`<filelink target="${filename}" />`;
 		let progressId;
 
-		if (analyzeProgress !== undefined) {
-			progressId = analyzeProgress.pushText(progressText);
+		if (state.analyzeProgress !== undefined) {
+			progressId = state.analyzeProgress.pushText(progressText);
 		}
 
 		try {
@@ -348,10 +408,7 @@ export default class DependencyGraph {
 		}
 
 		let {dependencies, diagnostics, exports} = res.value;
-
-		if (diagnostics.length > 0) {
-			diagnosticsProcessor.addDiagnostics(diagnostics);
-		}
+		let nodeDiagnostics = diagnostics;
 
 		// If we're a remote path then the origin should be the URL and not our local path
 		const remote = this.server.projectManager.getRemoteFromLocalPath(path);
@@ -402,42 +459,41 @@ export default class DependencyGraph {
 		node.setShallow(isShallowNode);
 
 		// Resolve full locations
-		await Promise.all(
-			dependencies.map(async (dep) => {
+		await promiseAllFrom(
+			dependencies,
+			async (dep) => {
 				const {source, optional} = dep;
 
 				const {diagnostics} = await catchDiagnostics(
 					async () => {
-						const resolved = await server.resolver.resolveAssert(
-							{
-								...this.resolverOpts,
-								origin,
-								source: createAnyPath(source),
-							},
-							dep.loc === undefined
+						const resolved = await server.resolver.resolveAssert({
+							...this.resolverOpts,
+							origin,
+							source: createPath(source),
+							location: dep.loc === undefined
 								? undefined
 								: {
-										location: {
-											...dep.loc,
-											sourceText: undefined,
-											integrity: undefined,
-										},
+										...dep.loc,
+										sourceText: undefined,
+										integrity: undefined,
 									},
-						);
+						});
 
 						node!.addDependency(source, resolved.path, dep);
 					},
 					{
-						category: "DependencyGraph",
+						entity: "DependencyGraph",
 						message: "Caught by resolve",
 					},
 				);
 
 				if (diagnostics !== undefined && !optional) {
-					diagnosticsProcessor.addDiagnostics(diagnostics);
+					nodeDiagnostics = [...nodeDiagnostics, ...diagnostics];
 				}
-			}),
+			},
 		);
+
+		node.setDiagnostics(nodeDiagnostics);
 
 		// Queue our dependencies...
 		const subAncestry = [...ancestry, filename];
@@ -463,6 +519,7 @@ export default class DependencyGraph {
 			);
 		}
 
+		const {analyzeProgress} = state;
 		if (analyzeProgress !== undefined && progressId !== undefined) {
 			analyzeProgress.popText(progressId);
 			analyzeProgress.tick();

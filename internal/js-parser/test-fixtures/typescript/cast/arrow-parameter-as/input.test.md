@@ -8,62 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:15
-	path: UIDPath<typescript/cast/arrow-parameter-as/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<typescript/cast/arrow-parameter-as/input.ts>
-				start: Position 1:1
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:15
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:14
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:12-1:14
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:11
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:12-1:11
 						}
 					]
+					loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:11
 				}
+				loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:14
+			}
+			loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:15
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/cast/arrow-parameter-as/input.ts>
+				end: Position 1:7
+				start: Position 1:1
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/arrow-parameter-as/input.ts>
+	loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:15
 }
 ```
 

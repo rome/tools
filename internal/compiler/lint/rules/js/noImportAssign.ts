@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
-function isAssignment(path: Path): boolean {
+function isAssignment(path: CompilerPath): boolean {
 	switch (path.parentPath.node.type) {
 		case "JSAssignmentExpression":
 		case "JSAssignmentArrayPattern":

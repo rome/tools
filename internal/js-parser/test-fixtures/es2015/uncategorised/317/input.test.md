@@ -8,23 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
-	path: UIDPath<es2015/uncategorised/317/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
 			expression: JSTemplateLiteral {
-				loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
-				quasis: Array [
+				expressions: [
+					JSMemberExpression {
+						object: JSCallExpression {
+							arguments: [
+								JSStringLiteral {
+									value: "1"
+									loc: SourceLocation es2015/uncategorised/317/input.js 1:13-1:16
+								}
+							]
+							callee: JSMemberExpression {
+								object: JSRegExpLiteral {
+									global: false
+									insensitive: false
+									multiline: false
+									noDotNewline: false
+									sticky: false
+									unicode: false
+									expression: JSRegExpSubExpression {
+										body: [
+											JSRegExpDigitCharacter {
+												loc: SourceLocation es2015/uncategorised/317/input.js 1:4-1:6
+											}
+										]
+										loc: SourceLocation es2015/uncategorised/317/input.js 1:4-1:6
+									}
+									loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:7
+								}
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
+										name: "exec"
+										loc: SourceLocation es2015/uncategorised/317/input.js 1:8-1:12 (exec)
+									}
+									loc: SourceLocation es2015/uncategorised/317/input.js 1:8-1:12 (exec)
+								}
+								loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:12
+							}
+							loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:17
+						}
+						property: JSComputedMemberProperty {
+							value: JSNumericLiteral {
+								value: 0
+								loc: SourceLocation es2015/uncategorised/317/input.js 1:18-1:19
+							}
+							loc: SourceLocation es2015/uncategorised/317/input.js 1:17-1:20
+						}
+						loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:20
+					}
+				]
+				quasis: [
 					JSTemplateElement {
 						cooked: ""
 						raw: ""
@@ -38,54 +73,20 @@ JSRoot {
 						loc: SourceLocation es2015/uncategorised/317/input.js 1:21-1:21
 					}
 				]
-				expressions: Array [
-					JSMemberExpression {
-						loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:20
-						property: JSComputedMemberProperty {
-							value: JSNumericLiteral {
-								value: 0
-								format: undefined
-								loc: SourceLocation es2015/uncategorised/317/input.js 1:18-1:19
-							}
-							loc: SourceLocation es2015/uncategorised/317/input.js 1:17-1:20
-						}
-						object: JSCallExpression {
-							loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:17
-							arguments: Array [
-								JSStringLiteral {
-									value: "1"
-									loc: SourceLocation es2015/uncategorised/317/input.js 1:13-1:16
-								}
-							]
-							callee: JSMemberExpression {
-								loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:12
-								property: JSStaticMemberProperty {
-									value: JSIdentifier {
-										name: "exec"
-										loc: SourceLocation es2015/uncategorised/317/input.js 1:8-1:12 (exec)
-									}
-									loc: SourceLocation es2015/uncategorised/317/input.js 1:8-1:12 (exec)
-								}
-								object: JSRegExpLiteral {
-									global: false
-									insensitive: false
-									multiline: false
-									noDotNewline: false
-									sticky: false
-									unicode: false
-									loc: SourceLocation es2015/uncategorised/317/input.js 1:3-1:7
-									expression: JSRegExpSubExpression {
-										body: Array [JSRegExpDigitCharacter {loc: SourceLocation es2015/uncategorised/317/input.js 1:4-1:6}]
-										loc: SourceLocation es2015/uncategorised/317/input.js 1:4-1:6
-									}
-								}
-							}
-						}
-					}
-				]
+				loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
 			}
+			loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/317/input.js>
+	loc: SourceLocation es2015/uncategorised/317/input.js 1:0-1:22
 }
 ```
 

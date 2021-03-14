@@ -8,39 +8,19 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/187/input.js 1:0-1:18
-	path: UIDPath<es2015/uncategorised/187/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/187/input.js 1:0-1:18
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2015/uncategorised/187/input.js 1:0-1:18
-				right: JSReferenceIdentifier {
-					name: "d"
-					loc: SourceLocation es2015/uncategorised/187/input.js 1:17-1:18 (d)
-				}
 				left: JSAssignmentArrayPattern {
-					loc: SourceLocation es2015/uncategorised/187/input.js 1:0-1:14
-					elements: Array [
+					elements: [
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/uncategorised/187/input.js 1:1-1:2 (a)
 						}
 					]
 					rest: JSAssignmentArrayPattern {
-						rest: undefined
-						loc: SourceLocation es2015/uncategorised/187/input.js 1:7-1:13
-						elements: Array [
+						elements: [
 							JSAssignmentIdentifier {
 								name: "b"
 								loc: SourceLocation es2015/uncategorised/187/input.js 1:8-1:9 (b)
@@ -50,11 +30,28 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/187/input.js 1:11-1:12 (c)
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/187/input.js 1:7-1:13
 					}
+					loc: SourceLocation es2015/uncategorised/187/input.js 1:0-1:14
 				}
+				right: JSReferenceIdentifier {
+					name: "d"
+					loc: SourceLocation es2015/uncategorised/187/input.js 1:17-1:18 (d)
+				}
+				loc: SourceLocation es2015/uncategorised/187/input.js 1:0-1:18
 			}
+			loc: SourceLocation es2015/uncategorised/187/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/187/input.js>
+	loc: SourceLocation es2015/uncategorised/187/input.js 1:0-1:18
 }
 ```
 

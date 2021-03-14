@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0275/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown class property start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<esprima/invalid-syntax/migrated_0275/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-1:22
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-1:22
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,37 +25,58 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:11-1:17 (static)
 						}
-						loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:11-1:21
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:19-1:21
-						}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:11-1:17
+						}
+						body: JSBlockStatement {
+							body: []
+							directives: []
+							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:19-1:21
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:17-1:19
 						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:11-1:21
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-1:22
+			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-1:22
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0275/input.js>
+				end: Position 1:10
+				start: Position 1:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0275/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0275/input.js 1:0-2:0
 }
 ```
 

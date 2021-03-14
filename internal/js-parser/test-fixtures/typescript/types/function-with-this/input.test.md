@@ -8,60 +8,57 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/function-with-this/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/function-with-this/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/function-with-this/input.ts 1:0-1:30
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/function-with-this/input.ts 1:0-1:30
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "f"
-							loc: SourceLocation typescript/types/function-with-this/input.ts 1:4-1:29
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/function-with-this/input.ts 1:4-1:29
 								typeAnnotation: TSFunctionType {
-									loc: SourceLocation typescript/types/function-with-this/input.ts 1:7-1:29
-									typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/types/function-with-this/input.ts 1:25-1:29}
 									meta: TSSignatureDeclarationMeta {
-										rest: undefined
-										typeParameters: undefined
-										loc: SourceLocation typescript/types/function-with-this/input.ts 1:7-1:29
-										parameters: Array [
+										parameters: [
 											JSBindingIdentifier {
 												name: "this"
-												loc: SourceLocation typescript/types/function-with-this/input.ts 1:8-1:12 (this)
 												meta: JSPatternMeta {
-													optional: undefined
+													typeAnnotation: TSNumberKeywordTypeAnnotation {
+														loc: SourceLocation typescript/types/function-with-this/input.ts 1:14-1:20
+													}
 													loc: SourceLocation typescript/types/function-with-this/input.ts 1:8-1:20
-													typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/function-with-this/input.ts 1:14-1:20}
 												}
+												loc: SourceLocation typescript/types/function-with-this/input.ts 1:8-1:12 (this)
 											}
 										]
+										loc: SourceLocation typescript/types/function-with-this/input.ts 1:7-1:29
 									}
+									typeAnnotation: TSVoidKeywordTypeAnnotation {
+										loc: SourceLocation typescript/types/function-with-this/input.ts 1:25-1:29
+									}
+									loc: SourceLocation typescript/types/function-with-this/input.ts 1:7-1:29
 								}
+								loc: SourceLocation typescript/types/function-with-this/input.ts 1:4-1:29
 							}
+							loc: SourceLocation typescript/types/function-with-this/input.ts 1:4-1:29
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/function-with-this/input.ts 1:4-1:29
 					}
 				]
+				loc: SourceLocation typescript/types/function-with-this/input.ts 1:0-1:30
 			}
+			loc: SourceLocation typescript/types/function-with-this/input.ts 1:0-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/function-with-this/input.ts>
+	loc: SourceLocation typescript/types/function-with-this/input.ts 1:0-2:0
 }
 ```
 

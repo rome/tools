@@ -8,30 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/180/input.js 1:0-1:9
-	path: UIDPath<core/uncategorised/180/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/180/input.js 1:0-1:9
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: SourceLocation core/uncategorised/180/input.js 1:0-1:9
-				right: JSReferenceIdentifier {
-					name: "z"
-					loc: SourceLocation core/uncategorised/180/input.js 1:8-1:9 (z)
-				}
 				left: JSBinaryExpression {
 					operator: "*"
-					loc: SourceLocation core/uncategorised/180/input.js 1:0-1:5
 					left: JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation core/uncategorised/180/input.js 1:0-1:1 (x)
@@ -40,10 +22,26 @@ JSRoot {
 						name: "y"
 						loc: SourceLocation core/uncategorised/180/input.js 1:4-1:5 (y)
 					}
+					loc: SourceLocation core/uncategorised/180/input.js 1:0-1:5
 				}
+				right: JSReferenceIdentifier {
+					name: "z"
+					loc: SourceLocation core/uncategorised/180/input.js 1:8-1:9 (z)
+				}
+				loc: SourceLocation core/uncategorised/180/input.js 1:0-1:9
 			}
+			loc: SourceLocation core/uncategorised/180/input.js 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/180/input.js>
+	loc: SourceLocation core/uncategorised/180/input.js 1:0-1:9
 }
 ```
 

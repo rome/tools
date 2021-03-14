@@ -1,16 +1,20 @@
 import stream = require("stream");
 import tty = require("tty");
 import {Event} from "@internal/events";
-import {VoidCallback, mergeObjects} from "@internal/typescript-helpers";
-import {OneIndexed} from "@internal/math";
+import {mergeObjects} from "@internal/typescript-helpers";
+import {OneIndexed} from "@internal/numbers";
+import {
+	Resource,
+	createResourceContainer,
+	createResourceFromCallback,
+} from "@internal/resources";
 
 export type Stdout = stream.Writable | tty.WriteStream;
 
 export type InferredTerminalFeatures = {
 	features: TerminalFeatures;
 	updateEvent: Event<TerminalFeatures, void>;
-	setupUpdateEvent: VoidCallback;
-	closeUpdateEvent: VoidCallback;
+	setupUpdateEvent: () => Resource;
 };
 
 export type TerminalFeatures = {
@@ -42,7 +46,11 @@ type EnvVarStatus =
 		}
 	| {
 			type: "ENABLED";
-			value: true | string;
+			value: true;
+		}
+	| {
+			type: "SET";
+			value: string;
 		}
 	| {
 			type: "UNDEFINED";
@@ -57,10 +65,15 @@ export function getEnvVar(key: string): EnvVarStatus {
 	if (value === "0" || value === "false") {
 		return {type: "DISABLED", value: false};
 	}
-	if (value === "1" || value === "true") {
+	if (value === "1" || value === "true" || value === "") {
 		return {type: "ENABLED", value: true};
 	}
-	return {type: "ENABLED", value};
+	return {type: "SET", value};
+}
+
+export function isEnvVarSet(key: string): boolean {
+	const envVar = getEnvVar(key);
+	return envVar.type === "ENABLED" || envVar.type === "SET";
 }
 
 export function inferTerminalFeatures(
@@ -71,12 +84,11 @@ export function inferTerminalFeatures(
 	let colorDepth: TerminalFeatures["colorDepth"] = 1;
 	let isTTY = force.isTTY === true;
 	let unicode = false;
-	let isCI = isCIEnv();
 	let background: TerminalFeatures["background"] = "unknown";
 
-	// Increase column size for CI
-	if (isCI) {
-		columns = new OneIndexed(200);
+	// Increase column size slightly for CI
+	if (IS_CI_ENV) {
+		columns = new OneIndexed(120);
 		colorDepth = 4;
 	}
 
@@ -104,7 +116,7 @@ export function inferTerminalFeatures(
 		}
 	}
 
-	const fancyAnsi = isTTY && !isCI;
+	const fancyAnsi = isTTY && !IS_CI_ENV;
 
 	const progress = fancyAnsi && getEnvVar("ROME_PROGRESS").type !== "DISABLED";
 
@@ -122,12 +134,13 @@ export function inferTerminalFeatures(
 		force,
 	);
 
-	const updateEvent: Event<TerminalFeatures, void> = new Event({
-		name: "update",
-	});
+	const updateEvent: Event<TerminalFeatures, void> = new Event(
+		"TerminalFeatures.update",
+	);
 
-	let closeUpdateEvent: InferredTerminalFeatures["closeUpdateEvent"] = () => {};
-	let setupUpdateEvent: InferredTerminalFeatures["setupUpdateEvent"] = () => {};
+	let setupUpdateEvent: InferredTerminalFeatures["setupUpdateEvent"] = () => {
+		return createResourceContainer("TerminalFeatures.update");
+	};
 
 	// Watch for resizing, unless force.columns has been set and we'll consider it to be fixed
 	if (stdout instanceof tty.WriteStream && force.columns === undefined) {
@@ -143,10 +156,13 @@ export function inferTerminalFeatures(
 
 		setupUpdateEvent = () => {
 			stdout.on("resize", onStdoutResize);
-		};
 
-		closeUpdateEvent = () => {
-			stdout.off("resize", onStdoutResize);
+			return createResourceFromCallback(
+				"TerminalFeatures.update",
+				() => {
+					stdout.off("resize", onStdoutResize);
+				},
+			);
 		};
 	}
 
@@ -154,7 +170,6 @@ export function inferTerminalFeatures(
 		updateEvent,
 		features,
 		setupUpdateEvent,
-		closeUpdateEvent,
 	};
 }
 
@@ -167,11 +182,12 @@ const CI_ENV_NAMES = [
 	"GITHUB_ACTIONS",
 ];
 
-export function isCIEnv(): boolean {
-	for (const key of CI_ENV_NAMES) {
-		if (getEnvVar(key).type === "ENABLED") {
-			return true;
-		}
+export let IS_CI_ENV = false;
+for (const key of CI_ENV_NAMES) {
+	if (getEnvVar(key).type === "ENABLED") {
+		IS_CI_ENV = true;
+		break;
 	}
-	return false;
 }
+
+export const IS_ROME_DEV_ENV = getEnvVar("ROME_DEV").type === "ENABLED";

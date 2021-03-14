@@ -8,52 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:0-3:0
-	path: UIDPath<es2015/meta-properties/new-target-inside-params/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:9-1:12 (Foo)
 			}
-			loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:0-1:31
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:29-1:31
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:12-1:28
-				params: Array [
+				params: [
 					JSBindingAssignmentPattern {
-						loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:13-1:27
 						left: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:13-1:14 (x)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:13-1:14
 							}
+							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:13-1:14 (x)
 						}
 						right: JSMetaProperty {
-							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:17-1:27
 							meta: JSIdentifier {
 								name: "new"
 								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:17-1:20 (new)
@@ -62,58 +41,40 @@ JSRoot {
 								name: "target"
 								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:21-1:27 (target)
 							}
+							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:17-1:27
 						}
+						loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:13-1:27
 					}
 				]
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:12-1:28
 			}
+			loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:0-1:31
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "Bar"
 				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:9-2:12 (Bar)
 			}
-			loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:0-2:41
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:12-2:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:15-2:41
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:39
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:39
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:37-2:39
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:36
-								params: Array [
+								params: [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:18-2:32
 										left: JSBindingIdentifier {
 											name: "x"
 											loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:18-2:19 (x)
 										}
 										right: JSMetaProperty {
-											loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:22-2:32
 											meta: JSIdentifier {
 												name: "new"
 												loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:22-2:25 (new)
@@ -122,16 +83,40 @@ JSRoot {
 												name: "target"
 												loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:26-2:32 (target)
 											}
+											loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:22-2:32
 										}
+										loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:18-2:32
 									}
 								]
+								loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:36
 							}
+							loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:39
 						}
+						loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:17-2:39
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:15-2:41
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:12-2:14
+			}
+			loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 2:0-2:41
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/meta-properties/new-target-inside-params/input.js>
+	loc: SourceLocation es2015/meta-properties/new-target-inside-params/input.js 1:0-3:0
 }
 ```
 

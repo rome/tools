@@ -8,31 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/145/input.js 1:0-1:2
-	path: UIDPath<core/uncategorised/145/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/145/input.js 1:0-1:2
 			expression: JSUnaryExpression {
 				operator: "-"
 				prefix: true
-				loc: SourceLocation core/uncategorised/145/input.js 1:0-1:2
 				argument: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/145/input.js 1:1-1:2 (x)
 				}
+				loc: SourceLocation core/uncategorised/145/input.js 1:0-1:2
 			}
+			loc: SourceLocation core/uncategorised/145/input.js 1:0-1:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/145/input.js>
+	loc: SourceLocation core/uncategorised/145/input.js 1:0-1:2
 }
 ```
 

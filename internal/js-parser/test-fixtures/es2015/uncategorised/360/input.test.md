@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/360/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/360/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/360/input.js 1:0-1:24
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/uncategorised/360/input.js 1:0-1:24
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/360/input.js 1:6-1:15
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -46,21 +31,33 @@ JSRoot {
 									loc: SourceLocation es2015/uncategorised/360/input.js 1:8-1:13
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/360/input.js 1:6-1:15
 						}
-						loc: SourceLocation es2015/uncategorised/360/input.js 1:6-1:23
 						init: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation es2015/uncategorised/360/input.js 1:18-1:23
+							arguments: []
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: SourceLocation es2015/uncategorised/360/input.js 1:18-1:21 (foo)
 							}
+							loc: SourceLocation es2015/uncategorised/360/input.js 1:18-1:23
 						}
+						loc: SourceLocation es2015/uncategorised/360/input.js 1:6-1:23
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/360/input.js 1:0-1:24
 			}
+			loc: SourceLocation es2015/uncategorised/360/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/360/input.js>
+	loc: SourceLocation es2015/uncategorised/360/input.js 1:0-2:0
 }
 ```
 

@@ -8,43 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-2:0
-	path: UIDPath<es2015/statements/label-valid-var/input.js>
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-1:13
-			label: JSIdentifier {
-				name: "foo"
-				loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-1:3 (foo)
-			}
 			body: JSVariableDeclarationStatement {
-				loc: SourceLocation es2015/statements/label-valid-var/input.js 1:5-1:13
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: SourceLocation es2015/statements/label-valid-var/input.js 1:5-1:13
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "bar"
 								loc: SourceLocation es2015/statements/label-valid-var/input.js 1:9-1:12 (bar)
 							}
-							init: undefined
 							loc: SourceLocation es2015/statements/label-valid-var/input.js 1:9-1:12
 						}
 					]
+					loc: SourceLocation es2015/statements/label-valid-var/input.js 1:5-1:13
 				}
+				loc: SourceLocation es2015/statements/label-valid-var/input.js 1:5-1:13
 			}
+			label: JSIdentifier {
+				name: "foo"
+				loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-1:3 (foo)
+			}
+			loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/statements/label-valid-var/input.js>
+	loc: SourceLocation es2015/statements/label-valid-var/input.js 1:0-2:0
 }
 ```
 

@@ -8,34 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-strict-binding-property/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:0-1:13
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:14-1:37
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:14-1:37
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:18-1:30
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -51,17 +31,34 @@ JSRoot {
 									loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:20-1:28
 								}
 							]
+							loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:18-1:30
 						}
-						loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:18-1:36
 						init: JSReferenceIdentifier {
 							name: "foo"
 							loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:33-1:36 (foo)
 						}
+						loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:18-1:36
 					}
 				]
+				loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:14-1:37
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:14-1:37
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-strict-binding-property/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-strict-binding-property/input.js 1:0-2:0
 }
 ```
 

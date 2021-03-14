@@ -8,115 +8,103 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/522/input.js 1:0-1:69
-	path: UIDPath<core/uncategorised/522/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation core/uncategorised/522/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:68
-				path: UIDPath<core/uncategorised/522/input.js>
-				start: Position 1:68
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation core/uncategorised/522/input.js 1:22-1:25 (foo)
 			}
-			loc: SourceLocation core/uncategorised/522/input.js 1:13-1:42
 			body: JSBlockStatement {
-				body: Array []
-				loc: SourceLocation core/uncategorised/522/input.js 1:27-1:42
-				directives: Array [
+				body: []
+				directives: [
 					JSDirective {
 						value: "use strict"
 						loc: SourceLocation core/uncategorised/522/input.js 1:28-1:41
 					}
 				]
+				loc: SourceLocation core/uncategorised/522/input.js 1:27-1:42
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation core/uncategorised/522/input.js 1:25-1:27
 			}
+			loc: SourceLocation core/uncategorised/522/input.js 1:13-1:42
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "bar"
 				loc: SourceLocation core/uncategorised/522/input.js 1:51-1:54 (bar)
 			}
-			loc: SourceLocation core/uncategorised/522/input.js 1:42-1:69
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: true
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/522/input.js 1:54-1:56
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/522/input.js 1:56-1:69
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation core/uncategorised/522/input.js 1:57-1:68
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: SourceLocation core/uncategorised/522/input.js 1:57-1:68
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "v"
 										loc: SourceLocation core/uncategorised/522/input.js 1:61-1:62 (v)
 									}
-									loc: SourceLocation core/uncategorised/522/input.js 1:61-1:68
 									init: JSNumericLiteral {
 										value: 13
 										format: "octal"
 										loc: SourceLocation core/uncategorised/522/input.js 1:65-1:68
 									}
+									loc: SourceLocation core/uncategorised/522/input.js 1:61-1:68
 								}
 							]
+							loc: SourceLocation core/uncategorised/522/input.js 1:57-1:68
 						}
+						loc: SourceLocation core/uncategorised/522/input.js 1:57-1:68
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/522/input.js 1:56-1:69
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: true
+				params: []
+				loc: SourceLocation core/uncategorised/522/input.js 1:54-1:56
+			}
+			loc: SourceLocation core/uncategorised/522/input.js 1:42-1:69
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/522/input.js>
+				end: Position 1:68
+				start: Position 1:68
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation core/uncategorised/522/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/522/input.js>
+	loc: SourceLocation core/uncategorised/522/input.js 1:0-1:69
 }
 ```
 

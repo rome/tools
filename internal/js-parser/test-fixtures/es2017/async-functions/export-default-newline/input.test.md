@@ -8,49 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/export-default-newline/input.js 1:0-3:0
-	path: UIDPath<es2017/async-functions/export-default-newline/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2017/async-functions/export-default-newline/input.js 1:0-1:20
 			declaration: JSReferenceIdentifier {
 				name: "async"
 				loc: SourceLocation es2017/async-functions/export-default-newline/input.js 1:15-1:20 (async)
 			}
+			loc: SourceLocation es2017/async-functions/export-default-newline/input.js 1:0-1:20
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "bar"
 				loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:9-2:12 (bar)
 			}
-			loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:0-2:17
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:15-2:17
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:12-2:14
 			}
+			loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:0-2:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2017/async-functions/export-default-newline/input.js>
+	loc: SourceLocation es2017/async-functions/export-default-newline/input.js 1:0-3:0
 }
 ```
 

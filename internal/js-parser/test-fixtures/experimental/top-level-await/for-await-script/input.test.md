@@ -8,43 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:0-1:25
-	path: UIDPath<experimental/top-level-await/for-await-script/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:3
-				path: UIDPath<experimental/top-level-await/for-await-script/input.js>
-				start: Position 1:4
+	body: [
+		JSForStatement {
+			body: JSExpressionStatement {
+				expression: JSReferenceIdentifier {
+					name: "b"
+					loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:22-1:23 (b)
+				}
+				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:22-1:23
 			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening for head character <emphasis>(</emphasis>"}
+			init: JSCallExpression {
+				arguments: [
+					JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:11-1:16
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "await"
+					loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:4-1:9 (await)
+				}
+				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:4-1:16
 			}
-		}
-	]
-	body: Array [
-		JSForStatement {
-			loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:0-1:23
 			test: JSReferenceIdentifier {
 				name: "a"
 				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:17-1:18 (a)
@@ -53,35 +38,46 @@ JSRoot {
 				name: "of"
 				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:19-1:21 (of)
 			}
-			body: JSExpressionStatement {
-				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:22-1:23
-				expression: JSReferenceIdentifier {
-					name: "b"
-					loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:22-1:23 (b)
-				}
-			}
-			init: JSCallExpression {
-				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:4-1:16
-				callee: JSReferenceIdentifier {
-					name: "await"
-					loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:4-1:9 (await)
-				}
-				arguments: Array [
-					JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:11-1:16
-					}
-				]
-			}
+			loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:0-1:23
 		}
 		JSExpressionStatement {
-			loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:23-1:25
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:23-1:24
 			}
+			loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:23-1:25
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "Expected the opening "}, "for head", RAW_MARKUP {value: " character <emphasis>"}, "(", RAW_MARKUP {value: "</emphasis>"}]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/top-level-await/for-await-script/input.js>
+				end: Position 1:3
+				start: Position 1:4
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/top-level-await/for-await-script/input.js>
+	loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:0-1:25
 }
 ```
 

@@ -8,28 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/yield-strict-method/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:0-1:13
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:14-1:30
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:15-1:29
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -39,28 +21,40 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:17-1:22
 						}
-						loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:17-1:27
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:25-1:27
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:22-1:24
 						}
+						loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:17-1:27
 					}
 				]
+				loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:15-1:29
 			}
+			loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:14-1:30
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/yield-strict-method/input.js>
+	loc: SourceLocation esprima/es2015-yield/yield-strict-method/input.js 1:0-2:0
 }
 ```
 

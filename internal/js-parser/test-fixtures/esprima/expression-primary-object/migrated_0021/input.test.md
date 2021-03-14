@@ -8,30 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:0-1:34
-	path: UIDPath<esprima/expression-primary-object/migrated_0021/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:0-1:34
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:0-1:34
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:4-1:34
-					properties: Array [
+					properties: [
 						JSObjectMethod {
 							kind: "set"
 							key: JSStaticPropertyKey {
@@ -41,16 +27,11 @@ JSRoot {
 								}
 								loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:10-1:14
 							}
-							loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:6-1:32
 							body: JSBlockStatement {
-								directives: Array []
-								loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:18-1:32
-								body: Array [
+								body: [
 									JSExpressionStatement {
-										loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:20-1:30
 										expression: JSAssignmentExpression {
 											operator: "="
-											loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:20-1:30
 											left: JSAssignmentIdentifier {
 												name: "m_null"
 												loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:20-1:26 (m_null)
@@ -59,37 +40,48 @@ JSRoot {
 												name: "w"
 												loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:29-1:30 (w)
 											}
+											loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:20-1:30
 										}
+										loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:20-1:30
 									}
 								]
+								directives: []
+								loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:18-1:32
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:14-1:17
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "w"
-										loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:15-1:16 (w)
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:15-1:16
 										}
+										loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:15-1:16 (w)
 									}
 								]
+								loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:14-1:17
 							}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:6-1:32
 						}
 					]
+					loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:4-1:34
 				}
+				loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:0-1:34
 			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:0-1:34
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-object/migrated_0021/input.js>
+	loc: SourceLocation esprima/expression-primary-object/migrated_0021/input.js 1:0-1:34
 }
 ```
 

@@ -8,58 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
-	path: UIDPath<core/uncategorised/382/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>if</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<core/uncategorised/382/input.js>
-				start: Position 1:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "if"
 							loc: SourceLocation core/uncategorised/382/input.js 1:4-1:6 (if)
 						}
-						loc: SourceLocation core/uncategorised/382/input.js 1:4-1:11
 						init: JSNumericLiteral {
 							value: 42
-							format: undefined
 							loc: SourceLocation core/uncategorised/382/input.js 1:9-1:11
 						}
+						loc: SourceLocation core/uncategorised/382/input.js 1:4-1:11
 					}
 				]
+				loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
+			}
+			loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected keyword <emphasis>"}, "if", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/382/input.js>
+				end: Position 1:6
+				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/382/input.js>
+	loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
 }
 ```
 

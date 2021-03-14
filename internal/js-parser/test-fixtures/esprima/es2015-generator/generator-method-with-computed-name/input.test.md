@@ -8,82 +8,71 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:0-4:0
-	path: UIDPath<esprima/es2015-generator/generator-method-with-computed-name/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:0-3:2
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:1-3:1
-				head: JSFunctionHead {
-					async: false
-					generator: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:10-1:12
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:13-3:1
-					body: Array [
+					body: [
 						JSReturnStatement {
-							loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:4-2:33
 							argument: JSObjectExpression {
-								loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:11-2:33
-								properties: Array [
+								properties: [
 									JSObjectMethod {
 										kind: "method"
 										key: JSComputedPropertyKey {
 											value: JSYieldExpression {
 												delegate: false
-												loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:15-2:25
 												argument: JSReferenceIdentifier {
 													name: "iter"
 													loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:21-2:25 (iter)
 												}
+												loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:15-2:25
 											}
 											loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:14-2:26
 										}
-										loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:13-2:31
 										body: JSBlockStatement {
-											body: Array []
-											directives: Array []
+											body: []
+											directives: []
 											loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:29-2:31
 										}
 										head: JSFunctionHead {
 											async: false
 											generator: true
 											hasHoistedVars: false
-											params: Array []
-											rest: undefined
-											returnType: undefined
-											thisType: undefined
-											typeParameters: undefined
+											params: []
 											loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:26-2:28
 										}
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:13-2:31
 									}
 								]
+								loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:11-2:33
 							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 2:4-2:33
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:13-3:1
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:10-1:12
+				}
+				loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:1-3:1
 			}
+			loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:0-3:2
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-method-with-computed-name/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-method-with-computed-name/input.js 1:0-4:0
 }
 ```
 

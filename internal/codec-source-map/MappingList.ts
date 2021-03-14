@@ -13,7 +13,7 @@
 
 import {Mapping} from "./types";
 import {compareByGeneratedPositionsInflated} from "./util";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 
 /**
  * Determine whether mappingB is after mappingA with respect to generated

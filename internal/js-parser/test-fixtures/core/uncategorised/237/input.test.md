@@ -8,65 +8,62 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/237/input.js 1:0-1:28
-	path: UIDPath<core/uncategorised/237/input.js>
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation core/uncategorised/237/input.js 1:0-1:28
+			body: JSBlockStatement {
+				body: [
+					JSExpressionStatement {
+						expression: JSUpdateExpression {
+							operator: "++"
+							prefix: false
+							argument: JSReferenceIdentifier {
+								name: "x"
+								loc: SourceLocation core/uncategorised/237/input.js 1:17-1:18 (x)
+							}
+							loc: SourceLocation core/uncategorised/237/input.js 1:17-1:20
+						}
+						loc: SourceLocation core/uncategorised/237/input.js 1:17-1:21
+					}
+					JSExpressionStatement {
+						expression: JSUpdateExpression {
+							operator: "--"
+							prefix: false
+							argument: JSReferenceIdentifier {
+								name: "y"
+								loc: SourceLocation core/uncategorised/237/input.js 1:22-1:23 (y)
+							}
+							loc: SourceLocation core/uncategorised/237/input.js 1:22-1:25
+						}
+						loc: SourceLocation core/uncategorised/237/input.js 1:22-1:26
+					}
+				]
+				directives: []
+				loc: SourceLocation core/uncategorised/237/input.js 1:15-1:28
+			}
 			test: JSBinaryExpression {
 				operator: "<"
-				loc: SourceLocation core/uncategorised/237/input.js 1:7-1:13
 				left: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/237/input.js 1:7-1:8 (x)
 				}
 				right: JSNumericLiteral {
 					value: 10
-					format: undefined
 					loc: SourceLocation core/uncategorised/237/input.js 1:11-1:13
 				}
+				loc: SourceLocation core/uncategorised/237/input.js 1:7-1:13
 			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/237/input.js 1:15-1:28
-				body: Array [
-					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/237/input.js 1:17-1:21
-						expression: JSUpdateExpression {
-							operator: "++"
-							prefix: false
-							loc: SourceLocation core/uncategorised/237/input.js 1:17-1:20
-							argument: JSReferenceIdentifier {
-								name: "x"
-								loc: SourceLocation core/uncategorised/237/input.js 1:17-1:18 (x)
-							}
-						}
-					}
-					JSExpressionStatement {
-						loc: SourceLocation core/uncategorised/237/input.js 1:22-1:26
-						expression: JSUpdateExpression {
-							operator: "--"
-							prefix: false
-							loc: SourceLocation core/uncategorised/237/input.js 1:22-1:25
-							argument: JSReferenceIdentifier {
-								name: "y"
-								loc: SourceLocation core/uncategorised/237/input.js 1:22-1:23 (y)
-							}
-						}
-					}
-				]
-			}
+			loc: SourceLocation core/uncategorised/237/input.js 1:0-1:28
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/237/input.js>
+	loc: SourceLocation core/uncategorised/237/input.js 1:0-1:28
 }
 ```
 

@@ -6,76 +6,65 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	integrity: undefined
-	loc: SourceLocation custom-properties/input.css 1:0-24:1
-	path: RelativePath<custom-properties/input.css>
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation custom-properties/input.css 1:0-24:1
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation custom-properties/input.css 1:0-1:7
-					patterns: Array [
+					patterns: [
 						CSSClassSelector {
 							value: "style"
 							loc: SourceLocation custom-properties/input.css 1:0-1:6
 						}
 					]
+					loc: SourceLocation custom-properties/input.css 1:0-1:7
 				}
 			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--foo"
-							loc: SourceLocation custom-properties/input.css 2:1-2:1
-						}
-						value: Array [
+						value: [
 							CSSString {
 								value: "bar"
 								loc: SourceLocation custom-properties/input.css 2:8-2:13
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--foo"
+							loc: SourceLocation custom-properties/input.css 2:1-2:1
+						}
 						loc: SourceLocation custom-properties/input.css 2:1-2:13
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--lore-ipsum"
-							loc: SourceLocation custom-properties/input.css 3:1-3:1
-						}
-						value: Array [
+						value: [
 							CSSString {
 								value: "foo"
 								loc: SourceLocation custom-properties/input.css 3:15-3:20
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--lore-ipsum"
+							loc: SourceLocation custom-properties/input.css 3:1-3:1
+						}
 						loc: SourceLocation custom-properties/input.css 3:1-3:20
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--FANCY"
-							loc: SourceLocation custom-properties/input.css 4:1-4:1
-						}
-						value: Array [
+						value: [
 							CSSString {
 								value: "abort"
 								loc: SourceLocation custom-properties/input.css 4:10-4:17
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--FANCY"
+							loc: SourceLocation custom-properties/input.css 4:1-4:1
+						}
 						loc: SourceLocation custom-properties/input.css 4:1-4:17
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--test"
-							loc: SourceLocation custom-properties/input.css 5:1-5:1
-						}
-						value: Array [
+						value: [
 							CSSNumber {
 								value: 1_987
 								raw: "1987"
@@ -83,28 +72,28 @@ CSSRoot {
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--test"
+							loc: SourceLocation custom-properties/input.css 5:1-5:1
+						}
 						loc: SourceLocation custom-properties/input.css 5:1-5:13
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--percentage"
-							loc: SourceLocation custom-properties/input.css 6:1-6:1
-						}
-						value: Array [
+						value: [
 							CSSPercentage {
 								value: 25
 								loc: SourceLocation custom-properties/input.css 6:15-6:18
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--percentage"
+							loc: SourceLocation custom-properties/input.css 6:1-6:1
+						}
 						loc: SourceLocation custom-properties/input.css 6:1-6:18
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--number"
-							loc: SourceLocation custom-properties/input.css 7:1-7:1
-						}
-						value: Array [
+						value: [
 							CSSNumber {
 								value: 37
 								raw: "37"
@@ -112,14 +101,14 @@ CSSRoot {
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--number"
+							loc: SourceLocation custom-properties/input.css 7:1-7:1
+						}
 						loc: SourceLocation custom-properties/input.css 7:1-7:13
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--length"
-							loc: SourceLocation custom-properties/input.css 8:1-8:1
-						}
-						value: Array [
+						value: [
 							CSSDimension {
 								value: 12
 								unit: "em"
@@ -127,14 +116,14 @@ CSSRoot {
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--length"
+							loc: SourceLocation custom-properties/input.css 8:1-8:1
+						}
 						loc: SourceLocation custom-properties/input.css 8:1-8:15
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--time"
-							loc: SourceLocation custom-properties/input.css 9:1-9:1
-						}
-						value: Array [
+						value: [
 							CSSDimension {
 								value: 75
 								unit: "ms"
@@ -142,193 +131,190 @@ CSSRoot {
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--time"
+							loc: SourceLocation custom-properties/input.css 9:1-9:1
+						}
 						loc: SourceLocation custom-properties/input.css 9:1-9:13
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--function"
-							loc: SourceLocation custom-properties/input.css 10:1-10:1
-						}
-						value: Array [
+						value: [
 							CSSFunction {
 								name: "foo"
-								params: Array []
+								params: []
 								loc: SourceLocation custom-properties/input.css 10:13-10:18
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--function"
+							loc: SourceLocation custom-properties/input.css 10:1-10:1
+						}
 						loc: SourceLocation custom-properties/input.css 10:1-10:18
 					}
 					CSSDeclaration {
+						value: [
+							CSSFunction {
+								name: "foo"
+								params: [
+									CSSFunction {
+										name: "bar"
+										params: []
+										loc: SourceLocation custom-properties/input.css 11:24-11:29
+									}
+								]
+								loc: SourceLocation custom-properties/input.css 11:20-11:30
+							}
+						]
+						important: false
 						name: CSSCustomProperty {
 							value: "--nested-function"
 							loc: SourceLocation custom-properties/input.css 11:1-11:1
 						}
-						value: Array [
-							CSSFunction {
-								name: "foo"
-								loc: SourceLocation custom-properties/input.css 11:20-11:30
-								params: Array [
-									CSSFunction {
-										name: "bar"
-										params: Array []
-										loc: SourceLocation custom-properties/input.css 11:24-11:29
-									}
-								]
-							}
-						]
-						important: false
 						loc: SourceLocation custom-properties/input.css 11:1-11:30
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--parentheses"
-							loc: SourceLocation custom-properties/input.css 12:1-12:1
-						}
-						value: Array [
+						value: [
 							CSSBlock {
-								value: Array []
+								value: []
 								startingTokenValue: "("
 								loc: SourceLocation custom-properties/input.css 12:16-12:19
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--parentheses"
+							loc: SourceLocation custom-properties/input.css 12:1-12:1
+						}
 						loc: SourceLocation custom-properties/input.css 12:1-12:19
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--braces"
-							loc: SourceLocation custom-properties/input.css 13:1-13:1
-						}
-						value: Array [
+						value: [
 							CSSBlock {
-								value: Array []
+								value: []
 								startingTokenValue: "{"
 								loc: SourceLocation custom-properties/input.css 13:11-13:14
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--braces"
+							loc: SourceLocation custom-properties/input.css 13:1-13:1
+						}
 						loc: SourceLocation custom-properties/input.css 13:1-13:14
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--brackets"
-							loc: SourceLocation custom-properties/input.css 14:1-14:1
-						}
-						value: Array [
+						value: [
 							CSSBlock {
-								value: Array []
+								value: []
 								startingTokenValue: "["
 								loc: SourceLocation custom-properties/input.css 14:13-14:16
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--brackets"
+							loc: SourceLocation custom-properties/input.css 14:1-14:1
+						}
 						loc: SourceLocation custom-properties/input.css 14:1-14:16
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--at-keyword-unknown"
-							loc: SourceLocation custom-properties/input.css 15:1-15:1
-						}
-						value: Array [
+						value: [
 							CSSRaw {
 								value: "foobar"
 								loc: SourceLocation custom-properties/input.css 15:23-15:30
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--at-keyword-unknown"
+							loc: SourceLocation custom-properties/input.css 15:1-15:1
+						}
 						loc: SourceLocation custom-properties/input.css 15:1-15:30
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--at-keyword-known"
-							loc: SourceLocation custom-properties/input.css 16:1-16:1
-						}
-						value: Array [
+						value: [
 							CSSRaw {
 								value: "media"
 								loc: SourceLocation custom-properties/input.css 16:21-16:27
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--at-keyword-known"
+							loc: SourceLocation custom-properties/input.css 16:1-16:1
+						}
 						loc: SourceLocation custom-properties/input.css 16:1-16:27
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--at-keyword-unknown-block"
-							loc: SourceLocation custom-properties/input.css 17:1-17:1
-						}
-						value: Array [
+						value: [
 							CSSRaw {
 								value: "foobar"
 								loc: SourceLocation custom-properties/input.css 17:29-17:36
 							}
 							CSSBlock {
-								value: Array []
+								value: []
 								startingTokenValue: "{"
 								loc: SourceLocation custom-properties/input.css 17:37-17:39
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--at-keyword-unknown-block"
+							loc: SourceLocation custom-properties/input.css 17:1-17:1
+						}
 						loc: SourceLocation custom-properties/input.css 17:1-17:39
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--at-keyword-known-block"
-							loc: SourceLocation custom-properties/input.css 18:1-18:1
-						}
-						value: Array [
+						value: [
 							CSSRaw {
 								value: "media"
 								loc: SourceLocation custom-properties/input.css 18:27-18:33
 							}
 							CSSBlock {
-								value: Array []
+								value: []
 								startingTokenValue: "{"
 								loc: SourceLocation custom-properties/input.css 18:34-18:36
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--at-keyword-known-block"
+							loc: SourceLocation custom-properties/input.css 18:1-18:1
+						}
 						loc: SourceLocation custom-properties/input.css 18:1-18:36
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--cdo-at-top-level"
-							loc: SourceLocation custom-properties/input.css 19:1-19:1
-						}
-						value: Array [
+						value: [
 							CSSRaw {
-								value: undefined
 								loc: SourceLocation custom-properties/input.css 19:21-19:25
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--cdo-at-top-level"
+							loc: SourceLocation custom-properties/input.css 19:1-19:1
+						}
 						loc: SourceLocation custom-properties/input.css 19:1-19:25
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--cdc-at-top-level"
-							loc: SourceLocation custom-properties/input.css 20:1-20:1
-						}
-						value: Array [
+						value: [
 							CSSRaw {
-								value: undefined
 								loc: SourceLocation custom-properties/input.css 20:21-20:24
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--cdc-at-top-level"
+							loc: SourceLocation custom-properties/input.css 20:1-20:1
+						}
 						loc: SourceLocation custom-properties/input.css 20:1-20:24
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--semicolon-not-top-level"
-							loc: SourceLocation custom-properties/input.css 21:1-21:1
-						}
-						value: Array [
+						value: [
 							CSSBlock {
-								value: Array [
+								value: [
 									CSSRaw {
-										value: undefined
 										loc: SourceLocation custom-properties/input.css 21:29-21:30
 									}
 								]
@@ -337,18 +323,17 @@ CSSRoot {
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--semicolon-not-top-level"
+							loc: SourceLocation custom-properties/input.css 21:1-21:1
+						}
 						loc: SourceLocation custom-properties/input.css 21:1-21:31
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--cdo-not-top-level"
-							loc: SourceLocation custom-properties/input.css 22:1-22:1
-						}
-						value: Array [
+						value: [
 							CSSBlock {
-								value: Array [
+								value: [
 									CSSRaw {
-										value: undefined
 										loc: SourceLocation custom-properties/input.css 22:23-22:27
 									}
 								]
@@ -357,18 +342,17 @@ CSSRoot {
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--cdo-not-top-level"
+							loc: SourceLocation custom-properties/input.css 22:1-22:1
+						}
 						loc: SourceLocation custom-properties/input.css 22:1-22:28
 					}
 					CSSDeclaration {
-						name: CSSCustomProperty {
-							value: "--cdc-not-top-level"
-							loc: SourceLocation custom-properties/input.css 23:1-23:1
-						}
-						value: Array [
+						value: [
 							CSSBlock {
-								value: Array [
+								value: [
 									CSSRaw {
-										value: undefined
 										loc: SourceLocation custom-properties/input.css 23:23-23:26
 									}
 								]
@@ -377,13 +361,23 @@ CSSRoot {
 							}
 						]
 						important: false
+						name: CSSCustomProperty {
+							value: "--cdc-not-top-level"
+							loc: SourceLocation custom-properties/input.css 23:1-23:1
+						}
 						loc: SourceLocation custom-properties/input.css 23:1-23:27
 					}
 				]
 				startingTokenValue: "{"
 				loc: SourceLocation custom-properties/input.css 1:7-24:1
 			}
+			loc: SourceLocation custom-properties/input.css 1:0-24:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	path: RelativePath<custom-properties/input.css>
+	loc: SourceLocation custom-properties/input.css 1:0-24:1
 }
 ```

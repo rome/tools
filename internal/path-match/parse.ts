@@ -14,7 +14,7 @@ import {
 	Tokens,
 } from "./types";
 import {ParserCore, ParserOptions, createParser} from "@internal/parser-core";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import {descriptions} from "@internal/diagnostics";
 
 function isntNewline(char: string): boolean {

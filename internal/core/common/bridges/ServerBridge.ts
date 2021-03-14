@@ -6,7 +6,7 @@
  */
 
 import {Profile} from "@internal/v8";
-import {Diagnostics} from "@internal/diagnostics";
+import {Diagnostic} from "@internal/diagnostics";
 import {
 	ClientFlags,
 	ClientLogsLevel,
@@ -17,7 +17,7 @@ import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {Dict} from "@internal/typescript-helpers";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
-import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
+import {RSERObject, RSERValue} from "@internal/binary-transport";
 import createBridge, {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {CommandName} from "../commands";
 
@@ -29,7 +29,6 @@ export type ServerQueryRequest = {
 	silent: boolean;
 	noData: boolean;
 	noFileWrites: boolean;
-	terminateWhenIdle: boolean;
 	cancelToken?: string;
 };
 
@@ -41,7 +40,7 @@ export type PartialServerQueryRequest = Partial<Omit<
 	commandName: CommandName;
 };
 
-type ServerQueryResponseBase = {
+export type ServerQueryResponseBase = {
 	markers: ServerMarker[];
 };
 
@@ -55,13 +54,13 @@ export type ServerQueryResponseSuccess = ServerQueryResponseBase & {
 export type ServerQueryResponseDiagnostics = ServerQueryResponseBase & {
 	type: "DIAGNOSTICS";
 	hasDiagnostics: boolean;
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	files: Dict<RecoverySaveFile>;
 };
 
 export type ServerQueryResponseInvalid = ServerQueryResponseBase & {
 	type: "INVALID_REQUEST";
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	showHelp: boolean;
 };
 
@@ -88,9 +87,8 @@ export type ProfilingStartData = {
 
 export type ServerBridgeInfo = {
 	version: string;
-	streamState: Omit<ReporterStreamState, "lineSnapshots"> & {
-		lineSnapshots: undefined;
-	};
+	env: Dict<undefined | string>;
+	streamState: ReporterStreamState;
 	outputSupport: TerminalFeatures;
 	outputFormat: ReporterStream["format"];
 	flags: ClientFlags;
@@ -102,8 +100,13 @@ export type ServerBridgeLog = {
 	chunk: string;
 };
 
+export type ServerProfileWorker = {
+	id: number;
+	displayName: string;
+};
+
 export default createBridge({
-	debugName: "server",
+	debugName: "Server",
 
 	shared: {},
 
@@ -130,7 +133,10 @@ export default createBridge({
 			ServerQueryResponse
 		>(),
 		cancelQuery: createBridgeEventDeclaration<string, void>(),
-		profilingGetWorkers: createBridgeEventDeclaration<void, number[]>(),
+		profilingGetWorkers: createBridgeEventDeclaration<
+			void,
+			ServerProfileWorker[]
+		>(),
 		profilingStart: createBridgeEventDeclaration<ProfilingStartData, void>(),
 		profilingStop: createBridgeEventDeclaration<void, Profile>(),
 		profilingStopWorker: createBridgeEventDeclaration<number, Profile>(),

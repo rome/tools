@@ -8,44 +8,38 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:21
-	path: UIDPath<es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:21
 			expression: JSUnaryExpression {
 				operator: "delete"
 				prefix: true
-				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:20
 				argument: JSArrowFunctionExpression {
-					loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:7-1:20
 					body: JSNumericLiteral {
 						value: 3
-						format: undefined
 						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:19-1:20
 					}
 					head: JSFunctionHead {
 						async: true
 						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
+						params: []
 						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:7-1:18
 					}
+					loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:7-1:20
 				}
+				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:20
 			}
+			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:21
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js>
+	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:21
 }
 ```
 

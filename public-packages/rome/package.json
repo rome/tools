@@ -1,6 +1,6 @@
 {
 	"name": "rome",
-	"version": "10.0.5-beta",
+	"version": "0.0.0",
 	"type": "module",
 	"license": "MIT",
 	"main": "index.ts",
@@ -15,6 +15,6 @@
 		"postinstall": "echo \"Thanks for using Rome! This space reserved for future sustainability announcements. See https://github.com/rome/tools/pull/198 for context.\""
 	},
 	"engines": {
-		"node": ">=12.8.1"
+		"node": ">=14.16.0"
 	}
 }

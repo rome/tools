@@ -8,40 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-1:29
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:23-1:28
-			}
-			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-1:10
-				local: JSImportSpecifierLocal {
-					name: JSBindingIdentifier {
-						name: "foo"
-						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:7-1:10 (foo)
-					}
-					importKind: undefined
-					loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:7-1:10
-				}
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSImportSpecifier {
-					loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16
 					imported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16 (bar)
@@ -51,13 +21,37 @@ JSRoot {
 							name: "bar"
 							loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16 (bar)
 						}
-						importKind: undefined
 						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16
 					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:13-1:16
 				}
 			]
+			defaultSpecifier: JSImportDefaultSpecifier {
+				local: JSImportSpecifierLocal {
+					name: JSBindingIdentifier {
+						name: "foo"
+						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:7-1:10 (foo)
+					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:7-1:10
+				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-1:10
+			}
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:23-1:28
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js 1:0-2:0
 }
 ```
 

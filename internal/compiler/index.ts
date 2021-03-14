@@ -8,8 +8,8 @@
 // lib
 export {default as CompilerContext} from "./lib/CompilerContext";
 
-export {PathOptions} from "./lib/Path";
-export {default as Path} from "./lib/Path";
+export {CompilerPathOptions} from "./lib/CompilerPath";
+export {default as CompilerPath} from "./lib/CompilerPath";
 
 export {default as Record} from "./lib/Record";
 export {default as Cache} from "./lib/Cache";

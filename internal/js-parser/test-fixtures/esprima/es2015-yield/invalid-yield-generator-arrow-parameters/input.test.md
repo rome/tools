@@ -8,74 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:30
-				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js>
-				start: Position 1:30
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:10-1:11 (g)
 			}
-			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:0-1:39
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:11-1:13
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:13-1:39
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:15-1:37
 						expression: JSArrowFunctionExpression {
-							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:15-1:37
 							body: JSNumericLiteral {
 								value: 42
-								format: undefined
 								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:35-1:37
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:15-1:34
-								params: Array [
+								params: [
 									JSBindingIdentifier {
 										name: "a"
 										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:16-1:17 (a)
@@ -93,13 +43,51 @@ JSRoot {
 										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:35-1:34
 									}
 								]
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:15-1:34
 							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:15-1:37
 						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:15-1:37
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:13-1:39
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:11-1:13
+			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:0-1:39
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js>
+				end: Position 1:30
+				start: Position 1:30
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js>
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameters/input.js 1:0-2:0
 }
 ```
 

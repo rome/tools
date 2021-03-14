@@ -9,7 +9,7 @@ import {SourceLocation} from "@internal/parser-core";
 import DependencyGraph from "./DependencyGraph";
 import DependencyNode from "./DependencyNode";
 import {AnalyzeDependencyImportUsageItem} from "@internal/core";
-import {Diagnostics, descriptions} from "@internal/diagnostics";
+import {Diagnostic, descriptions} from "@internal/diagnostics";
 import {AbsoluteFilePath} from "@internal/path";
 
 type FirstTopAwaitLocations = {
@@ -17,7 +17,7 @@ type FirstTopAwaitLocations = {
 }[];
 
 export type DependencyOrder = {
-	diagnostics: Diagnostics;
+	diagnostics: Diagnostic[];
 	firstTopAwaitLocations: FirstTopAwaitLocations;
 	files: AbsoluteFilePath[];
 };
@@ -36,7 +36,7 @@ export default class DependencyOrderer {
 	private orderedNodes: Set<DependencyNode>;
 	private visitedNodes: Set<DependencyNode>;
 	private possibleCyclePaths: Map<DependencyNode, string[]>;
-	private diagnostics: Diagnostics;
+	private diagnostics: Diagnostic[];
 	private graph: DependencyGraph;
 
 	private handleAlreadyVisitedFile(
@@ -131,7 +131,7 @@ export default class DependencyOrderer {
 		imp: AnalyzeDependencyImportUsageItem,
 	): void {
 		const path = this.possibleCyclePaths.get(dep);
-		if (!path) {
+		if (path === undefined) {
 			// idk??
 			return;
 		}

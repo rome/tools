@@ -9,12 +9,14 @@ import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
-import {createDirectory, writeFile} from "@internal/fs";
 import {Consumer} from "@internal/consume";
-import {markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
+import {getByteLength} from "@internal/binary";
+import {promiseAllFrom} from "@internal/async";
 
 type Flags = {
 	quiet: boolean;
+	setVersion: undefined | string;
 };
 
 export default createServerCommand<Flags>({
@@ -23,9 +25,11 @@ export default createServerCommand<Flags>({
 	usage: "",
 	examples: [],
 	hidden: true,
+	allowRequestFlags: ["watch"],
 	defineFlags(consumer: Consumer): Flags {
 		return {
 			quiet: consumer.get("quiet").asBoolean(false),
+			setVersion: consumer.get("setVersion").asStringOrVoid(),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
@@ -37,33 +41,72 @@ export default createServerCommand<Flags>({
 		const [entryFilename, outputDirectory] = args;
 		const bundler = Bundler.createFromServerRequest(req);
 
-		const resolution = await bundler.getResolvedEntry(entryFilename);
-		const {files: outFiles} = await bundler.bundleManifest(resolution);
+		const resolution = await bundler.getResolvedEntry(
+			entryFilename,
+			{
+				setVersion: commandFlags.setVersion,
+			},
+		);
 
-		const savedList = [];
-		const dir = flags.cwd.resolve(outputDirectory);
-		for (const [filename, {kind, content}] of outFiles) {
-			const buff = content();
-			const file = dir.append(filename);
-			const loc = file.join();
-			savedList.push(
-				markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${String(
-					Buffer.byteLength(buff),
-				)}</filesize> <inverse> ${kind} </inverse>`,
+		if (req.query.requestFlags.watch) {
+			const {diagnosticsEvent, filesEvent, changeEvent} = bundler.bundleManifestWatch(
+				resolution,
 			);
-			await createDirectory(file.getParent());
-			await writeFile(file, buff);
-		}
 
-		await req.flushFiles();
+			diagnosticsEvent.subscribe(async (diagnostics) => {
+				reporter.clearScreen();
+				const printer = req.createDiagnosticsPrinter();
+				printer.processor.addDiagnostics(diagnostics);
+				await printer.print();
+			});
 
-		if (commandFlags.quiet) {
-			reporter.success(markup`Saved to <emphasis>${dir}</emphasis>`);
+			filesEvent.subscribe(([name]) => {
+				// TODO write
+				name;
+			});
+
+			changeEvent.subscribe((paths) => {
+				if (paths.size === 1) {
+					reporter.info(markup`File change ${Array.from(paths)[0]}`);
+				} else {
+					reporter.info(markup`Multiple file changes`);
+					reporter.list(Array.from(paths));
+				}
+			});
+
+			await req.endEvent.wait();
 		} else {
-			reporter.success(
-				markup`Saved the following files to <emphasis>${dir}</emphasis>`,
+			const {files: outFiles} = await bundler.bundleManifest(resolution);
+
+			const savedList: Markup[] = [];
+			const dir = flags.cwd.resolve(outputDirectory);
+
+			await promiseAllFrom(
+				outFiles,
+				async ([filename, {kind, content}]) => {
+					const buff = await content();
+					const path = dir.append(filename);
+					await path.getParent().createDirectory();
+					await path.writeFile(buff);
+					const size = getByteLength(buff);
+
+					savedList.push(
+						markup`<filelink target="${path.join()}">${filename}</filelink> <filesize dim>${String(
+							size,
+						)}</filesize> <inverse> ${kind} </inverse>`,
+					);
+				},
 			);
-			reporter.list(savedList);
+
+			await req.flushFiles();
+
+			if (!commandFlags.quiet) {
+				reporter.success(
+					markup`Saved the following files to <emphasis>${dir}</emphasis>`,
+				);
+				// TODO sort this list so it's consistent
+				reporter.list(savedList);
+			}
 		}
 	},
 });

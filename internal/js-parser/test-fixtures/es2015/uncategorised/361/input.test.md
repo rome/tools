@@ -8,47 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/361/input.js 1:0-2:0
-	path: UIDPath<es2015/uncategorised/361/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:13
-				path: UIDPath<es2015/uncategorised/361/input.js>
-				start: Position 1:8
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/uncategorised/361/input.js 1:0-1:24
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/uncategorised/361/input.js 1:0-1:24
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation es2015/uncategorised/361/input.js 1:6-1:15
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -64,21 +31,49 @@ JSRoot {
 									loc: SourceLocation es2015/uncategorised/361/input.js 1:8-1:13
 								}
 							]
+							loc: SourceLocation es2015/uncategorised/361/input.js 1:6-1:15
 						}
-						loc: SourceLocation es2015/uncategorised/361/input.js 1:6-1:23
 						init: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation es2015/uncategorised/361/input.js 1:18-1:23
+							arguments: []
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: SourceLocation es2015/uncategorised/361/input.js 1:18-1:21 (foo)
 							}
+							loc: SourceLocation es2015/uncategorised/361/input.js 1:18-1:23
 						}
+						loc: SourceLocation es2015/uncategorised/361/input.js 1:6-1:23
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/361/input.js 1:0-1:24
+			}
+			loc: SourceLocation es2015/uncategorised/361/input.js 1:0-1:24
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/361/input.js>
+				end: Position 1:13
+				start: Position 1:8
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/361/input.js>
+	loc: SourceLocation es2015/uncategorised/361/input.js 1:0-2:0
 }
 ```
 

@@ -8,59 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-array-pattern/with-default-catch-param/input.js>
-	body: Array [
+	body: [
 		JSTryStatement {
-			finalizer: undefined
-			loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:0-1:27
 			block: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:4-1:7
 			}
 			handler: JSCatchClause {
-				loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:8-1:27
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:24-1:27
 				}
 				param: JSBindingArrayPattern {
-					rest: undefined
-					loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:15-1:22
-					elements: Array [
+					elements: [
 						JSBindingAssignmentPattern {
-							loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:16-1:21
-							right: JSNumericLiteral {
-								value: 0
-								format: undefined
-								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:20-1:21
-							}
 							left: JSBindingIdentifier {
 								name: "a"
-								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:16-1:17 (a)
 								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
 									loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:16-1:17
 								}
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:16-1:17 (a)
 							}
+							right: JSNumericLiteral {
+								value: 0
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:20-1:21
+							}
+							loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:16-1:21
 						}
 					]
+					loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:15-1:22
 				}
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:8-1:27
 			}
+			loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-array-pattern/with-default-catch-param/input.js>
+	loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:0-2:0
 }
 ```
 

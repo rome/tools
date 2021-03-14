@@ -8,53 +8,47 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-2:0
-	path: UIDPath<es2020/dynamic-import/invalid-new/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-1:18
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-1:17
+				arguments: []
 				callee: JSImportCall {
-					loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:10-1:17
 					argument: JSStringLiteral {
 						value: "foo"
 						loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:11-1:16
 					}
+					loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:10-1:17
 				}
+				loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-1:17
 			}
+			loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-1:18
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:17
 				path: UIDPath<es2020/dynamic-import/invalid-new/input.js>
+				end: Position 1:17
 				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/dynamic-import/invalid-new/input.js>
+	loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-2:0
 }
 ```
 

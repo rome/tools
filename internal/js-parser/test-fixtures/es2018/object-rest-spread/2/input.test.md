@@ -8,32 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/2/input.js 1:0-1:17
-	path: UIDPath<es2018/object-rest-spread/2/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2018/object-rest-spread/2/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation es2018/object-rest-spread/2/input.js 1:0-1:17
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							loc: SourceLocation es2018/object-rest-spread/2/input.js 1:4-1:13
-							rest: JSBindingIdentifier {
-								name: "y"
-								loc: SourceLocation es2018/object-rest-spread/2/input.js 1:11-1:12 (y)
-							}
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -49,17 +31,33 @@ JSRoot {
 									loc: SourceLocation es2018/object-rest-spread/2/input.js 1:5-1:6
 								}
 							]
+							rest: JSBindingIdentifier {
+								name: "y"
+								loc: SourceLocation es2018/object-rest-spread/2/input.js 1:11-1:12 (y)
+							}
+							loc: SourceLocation es2018/object-rest-spread/2/input.js 1:4-1:13
 						}
-						loc: SourceLocation es2018/object-rest-spread/2/input.js 1:4-1:17
 						init: JSReferenceIdentifier {
 							name: "z"
 							loc: SourceLocation es2018/object-rest-spread/2/input.js 1:16-1:17 (z)
 						}
+						loc: SourceLocation es2018/object-rest-spread/2/input.js 1:4-1:17
 					}
 				]
+				loc: SourceLocation es2018/object-rest-spread/2/input.js 1:0-1:17
 			}
+			loc: SourceLocation es2018/object-rest-spread/2/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/2/input.js>
+	loc: SourceLocation es2018/object-rest-spread/2/input.js 1:0-1:17
 }
 ```
 

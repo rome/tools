@@ -1,7 +1,6 @@
 import {INTERNAL, reporter} from "./_utils";
 import {main as generateAST} from "./generated-files/ast";
-import {removeFile} from "@internal/fs";
-import {createAnyPath} from "@internal/path";
+import {createRelativePath} from "@internal/path";
 import {markup} from "@internal/markup";
 
 export async function main([filename]: string[]) {
@@ -12,7 +11,7 @@ export async function main([filename]: string[]) {
 		return 1;
 	}
 
-	const segments = createAnyPath(filename).getSegments();
+	const segments = createRelativePath(filename).getSegments();
 	if (segments.length !== 3) {
 		reporter.error(markup`Expected three segments in filename argument`);
 		return 1;
@@ -21,11 +20,13 @@ export async function main([filename]: string[]) {
 	const [, category, nodeName] = segments;
 
 	// Remove files
-	await removeFile(INTERNAL.append("formatter", "builders", `${filename}.ts`));
-	await removeFile(
-		INTERNAL.append("js-analysis", "evaluators", `${category}/${nodeName}.ts`),
-	);
-	await removeFile(INTERNAL.append("ast", `${filename}.ts`));
+	await INTERNAL.append("formatter", "builders", `${filename}.ts`).removeFile();
+	await INTERNAL.append(
+		"js-analysis",
+		"evaluators",
+		`${category}/${nodeName}.ts`,
+	).removeFile();
+	await INTERNAL.append("ast", `${filename}.ts`).removeFile();
 
 	// Regenerate indexes
 	await generateAST();

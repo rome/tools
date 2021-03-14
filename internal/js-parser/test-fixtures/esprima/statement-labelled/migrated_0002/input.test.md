@@ -8,33 +8,31 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-labelled/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-1:15
-			label: JSIdentifier {
-				name: "__proto__"
-				loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-1:9 (__proto__)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:11-1:15
 				expression: JSReferenceIdentifier {
 					name: "test"
 					loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:11-1:15 (test)
 				}
+				loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:11-1:15
 			}
+			label: JSIdentifier {
+				name: "__proto__"
+				loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-1:9 (__proto__)
+			}
+			loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-labelled/migrated_0002/input.js>
+	loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-2:0
 }
 ```
 

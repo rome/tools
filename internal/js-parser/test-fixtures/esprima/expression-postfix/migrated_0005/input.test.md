@@ -8,31 +8,29 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-postfix/migrated_0005/input.js 1:0-2:0
-	path: UIDPath<esprima/expression-postfix/migrated_0005/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-postfix/migrated_0005/input.js 1:0-1:11
 			expression: JSUpdateExpression {
 				operator: "--"
 				prefix: false
-				loc: SourceLocation esprima/expression-postfix/migrated_0005/input.js 1:0-1:11
 				argument: JSReferenceIdentifier {
 					name: "arguments"
 					loc: SourceLocation esprima/expression-postfix/migrated_0005/input.js 1:0-1:9 (arguments)
 				}
+				loc: SourceLocation esprima/expression-postfix/migrated_0005/input.js 1:0-1:11
 			}
+			loc: SourceLocation esprima/expression-postfix/migrated_0005/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-postfix/migrated_0005/input.js>
+	loc: SourceLocation esprima/expression-postfix/migrated_0005/input.js 1:0-2:0
 }
 ```
 

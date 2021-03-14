@@ -8,84 +8,81 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/255/input.js 1:0-1:19
-	path: UIDPath<es2015/uncategorised/255/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<es2015/uncategorised/255/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed <emphasis>property name</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>]</emphasis> here"}
-					}
-					frame {location: SourceLocation es2015/uncategorised/255/input.js 1:9-1:9}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/255/input.js 1:0-1:12
 			expression: JSUnaryExpression {
 				operator: "void"
 				prefix: true
-				loc: SourceLocation es2015/uncategorised/255/input.js 1:0-1:12
 				argument: JSObjectExpression {
-					properties: Array []
+					properties: []
 					loc: SourceLocation es2015/uncategorised/255/input.js 1:5-1:12
 				}
+				loc: SourceLocation es2015/uncategorised/255/input.js 1:0-1:12
 			}
+			loc: SourceLocation es2015/uncategorised/255/input.js 1:0-1:12
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/255/input.js 1:12-1:13
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/255/input.js 1:12-1:13
 			}
+			loc: SourceLocation es2015/uncategorised/255/input.js 1:12-1:13
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/255/input.js 1:13-1:14
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/255/input.js 1:13-1:14
 			}
+			loc: SourceLocation es2015/uncategorised/255/input.js 1:13-1:14
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/255/input.js 1:15-1:16
 			expression: JSNumericLiteral {
 				value: 3
-				format: undefined
 				loc: SourceLocation es2015/uncategorised/255/input.js 1:15-1:16
 			}
+			loc: SourceLocation es2015/uncategorised/255/input.js 1:15-1:16
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/255/input.js 1:17-1:19
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2015/uncategorised/255/input.js 1:17-1:18
 			}
+			loc: SourceLocation es2015/uncategorised/255/input.js 1:17-1:19
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}, "]", RAW_MARKUP {value: "</emphasis> here"}]
+					}
+					frame {
+						location: SourceLocation es2015/uncategorised/255/input.js 1:9-1:9
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unclosed <emphasis>"}, "property name", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/255/input.js>
+				end: Position 1:7
+				start: Position 1:7
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/255/input.js>
+	loc: SourceLocation es2015/uncategorised/255/input.js 1:0-1:19
 }
 ```
 

@@ -8,57 +8,19 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Object pattern cannot contains methods"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-1:19
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-1:18
 				body: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:17-1:18
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-1:16
-					params: Array [
+					params: [
 						JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:1-1:12
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -74,12 +36,41 @@ JSRoot {
 									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:2-1:11
 								}
 							]
+							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:1-1:12
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-1:16
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-1:18
+			}
+			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-1:19
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Object pattern cannot contains methods"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js>
+				end: Position 1:7
+				start: Position 1:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-2:0
 }
 ```
 

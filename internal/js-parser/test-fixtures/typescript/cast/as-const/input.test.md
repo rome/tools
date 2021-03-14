@@ -8,17 +8,1337 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/as-const/input.ts 1:0-40:0
-	path: UIDPath<typescript/cast/as-const/input.ts>
-	syntax: Array ["ts"]
-	comments: Array [
+	body: [
+		JSVariableDeclarationStatement {
+			leadingComments: ["0", "1"]
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v1"
+							loc: SourceLocation typescript/cast/as-const/input.ts 3:4-3:6 (v1)
+						}
+						init: TSAsExpression {
+							expression: JSStringLiteral {
+								value: "abc"
+								loc: SourceLocation typescript/cast/as-const/input.ts 3:9-3:14
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 3:18-3:23 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 3:9-3:23
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 3:4-3:23
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 3:0-3:24
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 3:0-3:24
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v2"
+							loc: SourceLocation typescript/cast/as-const/input.ts 4:4-4:6 (v2)
+						}
+						init: TSAsExpression {
+							expression: JSTemplateLiteral {
+								expressions: []
+								quasis: [
+									JSTemplateElement {
+										cooked: "abc"
+										raw: "abc"
+										tail: true
+										loc: SourceLocation typescript/cast/as-const/input.ts 4:10-4:13
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 4:9-4:14
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 4:18-4:23 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 4:9-4:23
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 4:4-4:23
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 4:0-4:24
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 4:0-4:24
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v3"
+							loc: SourceLocation typescript/cast/as-const/input.ts 5:4-5:6 (v3)
+						}
+						init: TSAsExpression {
+							expression: JSNumericLiteral {
+								value: 10
+								loc: SourceLocation typescript/cast/as-const/input.ts 5:9-5:11
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 5:15-5:20 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 5:9-5:20
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 5:4-5:20
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 5:0-5:21
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 5:0-5:21
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v4"
+							loc: SourceLocation typescript/cast/as-const/input.ts 6:4-6:6 (v4)
+						}
+						init: TSAsExpression {
+							expression: JSUnaryExpression {
+								operator: "-"
+								prefix: true
+								argument: JSNumericLiteral {
+									value: 10
+									loc: SourceLocation typescript/cast/as-const/input.ts 6:10-6:12
+								}
+								loc: SourceLocation typescript/cast/as-const/input.ts 6:9-6:12
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 6:16-6:21 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 6:9-6:21
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 6:4-6:21
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 6:0-6:22
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 6:0-6:22
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v5"
+							loc: SourceLocation typescript/cast/as-const/input.ts 7:4-7:6 (v5)
+						}
+						init: TSAsExpression {
+							expression: JSUnaryExpression {
+								operator: "+"
+								prefix: true
+								argument: JSNumericLiteral {
+									value: 10
+									loc: SourceLocation typescript/cast/as-const/input.ts 7:10-7:12
+								}
+								loc: SourceLocation typescript/cast/as-const/input.ts 7:9-7:12
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 7:16-7:21 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 7:9-7:21
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 7:4-7:21
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 7:0-7:22
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 7:0-7:22
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v6"
+							loc: SourceLocation typescript/cast/as-const/input.ts 8:4-8:6 (v6)
+						}
+						init: TSAsExpression {
+							expression: JSNumericLiteral {
+								value: 10
+								loc: SourceLocation typescript/cast/as-const/input.ts 8:9-8:11
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 8:15-8:20 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 8:9-8:20
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 8:4-8:20
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 8:0-8:21
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 8:0-8:21
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v7"
+							loc: SourceLocation typescript/cast/as-const/input.ts 9:4-9:6 (v7)
+						}
+						init: TSAsExpression {
+							expression: JSUnaryExpression {
+								operator: "-"
+								prefix: true
+								argument: JSNumericLiteral {
+									value: 10
+									loc: SourceLocation typescript/cast/as-const/input.ts 9:10-9:12
+								}
+								loc: SourceLocation typescript/cast/as-const/input.ts 9:9-9:12
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 9:16-9:21 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 9:9-9:21
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 9:4-9:21
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 9:0-9:22
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 9:0-9:22
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v8"
+							loc: SourceLocation typescript/cast/as-const/input.ts 10:4-10:6 (v8)
+						}
+						init: TSAsExpression {
+							expression: JSBooleanLiteral {
+								value: true
+								loc: SourceLocation typescript/cast/as-const/input.ts 10:9-10:13
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 10:17-10:22 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 10:9-10:22
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 10:4-10:22
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 10:0-10:23
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 10:0-10:23
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "v9"
+							loc: SourceLocation typescript/cast/as-const/input.ts 11:4-11:6 (v9)
+						}
+						init: TSAsExpression {
+							expression: JSBooleanLiteral {
+								value: false
+								loc: SourceLocation typescript/cast/as-const/input.ts 11:9-11:14
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 11:18-11:23 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 11:9-11:23
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 11:4-11:23
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 11:0-11:24
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 11:0-11:24
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "a1"
+							loc: SourceLocation typescript/cast/as-const/input.ts 13:4-13:6 (a1)
+						}
+						init: TSAsExpression {
+							expression: JSArrayExpression {
+								elements: []
+								loc: SourceLocation typescript/cast/as-const/input.ts 13:9-13:11
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 13:15-13:20 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 13:9-13:20
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 13:4-13:20
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 13:0-13:21
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 13:0-13:21
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "a2"
+							loc: SourceLocation typescript/cast/as-const/input.ts 14:4-14:6 (a2)
+						}
+						init: TSAsExpression {
+							expression: JSArrayExpression {
+								elements: [
+									JSNumericLiteral {
+										value: 1
+										loc: SourceLocation typescript/cast/as-const/input.ts 14:10-14:11
+									}
+									JSNumericLiteral {
+										value: 2
+										loc: SourceLocation typescript/cast/as-const/input.ts 14:13-14:14
+									}
+									JSNumericLiteral {
+										value: 3
+										loc: SourceLocation typescript/cast/as-const/input.ts 14:16-14:17
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 14:9-14:18
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 14:22-14:27 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 14:9-14:27
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 14:4-14:27
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 14:0-14:28
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 14:0-14:28
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "a3"
+							loc: SourceLocation typescript/cast/as-const/input.ts 15:4-15:6 (a3)
+						}
+						init: TSAsExpression {
+							expression: JSArrayExpression {
+								elements: [
+									JSNumericLiteral {
+										value: 10
+										loc: SourceLocation typescript/cast/as-const/input.ts 15:10-15:12
+									}
+									JSStringLiteral {
+										value: "hello"
+										loc: SourceLocation typescript/cast/as-const/input.ts 15:14-15:21
+									}
+									JSBooleanLiteral {
+										value: true
+										loc: SourceLocation typescript/cast/as-const/input.ts 15:23-15:27
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 15:9-15:28
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 15:32-15:37 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 15:9-15:37
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 15:4-15:37
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 15:0-15:38
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 15:0-15:38
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "a4"
+							loc: SourceLocation typescript/cast/as-const/input.ts 16:4-16:6 (a4)
+						}
+						init: TSAsExpression {
+							expression: JSArrayExpression {
+								elements: [
+									JSSpreadElement {
+										argument: JSArrayExpression {
+											elements: [
+												JSNumericLiteral {
+													value: 1
+													loc: SourceLocation typescript/cast/as-const/input.ts 16:14-16:15
+												}
+												JSNumericLiteral {
+													value: 2
+													loc: SourceLocation typescript/cast/as-const/input.ts 16:17-16:18
+												}
+												JSNumericLiteral {
+													value: 3
+													loc: SourceLocation typescript/cast/as-const/input.ts 16:20-16:21
+												}
+											]
+											loc: SourceLocation typescript/cast/as-const/input.ts 16:13-16:22
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 16:10-16:22
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 16:9-16:23
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 16:27-16:32 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 16:9-16:32
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 16:4-16:32
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 16:0-16:33
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 16:0-16:33
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "a5"
+							loc: SourceLocation typescript/cast/as-const/input.ts 17:4-17:6 (a5)
+						}
+						init: JSArrayExpression {
+							elements: [
+								JSNumericLiteral {
+									value: 1
+									loc: SourceLocation typescript/cast/as-const/input.ts 17:10-17:11
+								}
+								JSNumericLiteral {
+									value: 2
+									loc: SourceLocation typescript/cast/as-const/input.ts 17:13-17:14
+								}
+								JSNumericLiteral {
+									value: 3
+									loc: SourceLocation typescript/cast/as-const/input.ts 17:16-17:17
+								}
+							]
+							loc: SourceLocation typescript/cast/as-const/input.ts 17:9-17:18
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 17:4-17:18
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 17:0-17:19
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 17:0-17:19
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "a6"
+							loc: SourceLocation typescript/cast/as-const/input.ts 18:4-18:6 (a6)
+						}
+						init: TSAsExpression {
+							expression: JSArrayExpression {
+								elements: [
+									JSSpreadElement {
+										argument: JSReferenceIdentifier {
+											name: "a5"
+											loc: SourceLocation typescript/cast/as-const/input.ts 18:13-18:15 (a5)
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 18:10-18:15
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 18:9-18:16
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 18:20-18:25 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 18:9-18:25
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 18:4-18:25
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 18:0-18:26
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 18:0-18:26
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "a8"
+							loc: SourceLocation typescript/cast/as-const/input.ts 19:4-19:6 (a8)
+						}
+						init: TSAsExpression {
+							expression: JSArrayExpression {
+								elements: [
+									JSStringLiteral {
+										value: "abc"
+										loc: SourceLocation typescript/cast/as-const/input.ts 19:10-19:15
+									}
+									JSSpreadElement {
+										argument: JSReferenceIdentifier {
+											name: "a7"
+											loc: SourceLocation typescript/cast/as-const/input.ts 19:20-19:22 (a7)
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 19:17-19:22
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 19:9-19:23
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 19:27-19:32 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 19:9-19:32
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 19:4-19:32
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 19:0-19:33
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 19:0-19:33
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "o1"
+							loc: SourceLocation typescript/cast/as-const/input.ts 21:4-21:6 (o1)
+						}
+						init: TSAsExpression {
+							expression: JSObjectExpression {
+								properties: [
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "x"
+												loc: SourceLocation typescript/cast/as-const/input.ts 21:11-21:12 (x)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 21:11-21:12
+										}
+										value: JSNumericLiteral {
+											value: 10
+											loc: SourceLocation typescript/cast/as-const/input.ts 21:14-21:16
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 21:11-21:16
+									}
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "y"
+												loc: SourceLocation typescript/cast/as-const/input.ts 21:18-21:19 (y)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 21:18-21:19
+										}
+										value: JSNumericLiteral {
+											value: 20
+											loc: SourceLocation typescript/cast/as-const/input.ts 21:21-21:23
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 21:18-21:23
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 21:9-21:25
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 21:29-21:34 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 21:9-21:34
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 21:4-21:34
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 21:0-21:35
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 21:0-21:35
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "o2"
+							loc: SourceLocation typescript/cast/as-const/input.ts 22:4-22:6 (o2)
+						}
+						init: TSAsExpression {
+							expression: JSObjectExpression {
+								properties: [
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "a"
+												loc: SourceLocation typescript/cast/as-const/input.ts 22:11-22:12 (a)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:11-22:12
+										}
+										value: JSNumericLiteral {
+											value: 1
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:14-22:15
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 22:11-22:15
+									}
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSStringLiteral {
+												value: "b"
+												loc: SourceLocation typescript/cast/as-const/input.ts 22:17-22:20
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:17-22:20
+										}
+										value: JSNumericLiteral {
+											value: 2
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:22-22:23
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 22:17-22:23
+									}
+									JSObjectProperty {
+										key: JSComputedPropertyKey {
+											value: JSStringLiteral {
+												value: "c"
+												loc: SourceLocation typescript/cast/as-const/input.ts 22:26-22:29
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:25-22:30
+										}
+										value: JSNumericLiteral {
+											value: 3
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:32-22:33
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 22:25-22:33
+									}
+									JSObjectMethod {
+										kind: "method"
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "d"
+												loc: SourceLocation typescript/cast/as-const/input.ts 22:35-22:36 (d)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:35-22:36
+										}
+										body: JSBlockStatement {
+											body: []
+											directives: []
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:39-22:41
+										}
+										head: JSFunctionHead {
+											async: false
+											generator: false
+											hasHoistedVars: false
+											params: []
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:36-22:38
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 22:35-22:41
+									}
+									JSObjectProperty {
+										key: JSComputedPropertyKey {
+											value: JSBinaryExpression {
+												operator: "+"
+												left: JSStringLiteral {
+													value: "e"
+													loc: SourceLocation typescript/cast/as-const/input.ts 22:44-22:47
+												}
+												right: JSStringLiteral {
+													value: ""
+													loc: SourceLocation typescript/cast/as-const/input.ts 22:50-22:52
+												}
+												loc: SourceLocation typescript/cast/as-const/input.ts 22:44-22:52
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:43-22:53
+										}
+										value: JSNumericLiteral {
+											value: 4
+											loc: SourceLocation typescript/cast/as-const/input.ts 22:55-22:56
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 22:43-22:56
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 22:9-22:58
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 22:62-22:67 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 22:9-22:67
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 22:4-22:67
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 22:0-22:68
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 22:0-22:68
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "o3"
+							loc: SourceLocation typescript/cast/as-const/input.ts 23:4-23:6 (o3)
+						}
+						init: TSAsExpression {
+							expression: JSObjectExpression {
+								properties: [
+									JSSpreadProperty {
+										argument: JSReferenceIdentifier {
+											name: "o1"
+											loc: SourceLocation typescript/cast/as-const/input.ts 23:14-23:16 (o1)
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 23:11-23:16
+									}
+									JSSpreadProperty {
+										argument: JSReferenceIdentifier {
+											name: "o2"
+											loc: SourceLocation typescript/cast/as-const/input.ts 23:21-23:23 (o2)
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 23:18-23:23
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 23:9-23:25
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 23:29-23:34 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 23:9-23:34
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 23:4-23:34
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 23:0-23:35
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 23:0-23:35
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "o5"
+							loc: SourceLocation typescript/cast/as-const/input.ts 24:4-24:6 (o5)
+						}
+						init: TSAsExpression {
+							expression: JSObjectExpression {
+								properties: [
+									JSSpreadProperty {
+										argument: JSReferenceIdentifier {
+											name: "o4"
+											loc: SourceLocation typescript/cast/as-const/input.ts 24:14-24:16 (o4)
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 24:11-24:16
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 24:9-24:18
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 24:22-24:27 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 24:9-24:27
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 24:4-24:27
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 24:0-24:28
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 24:0-24:28
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "o7"
+							loc: SourceLocation typescript/cast/as-const/input.ts 25:4-25:6 (o7)
+						}
+						init: TSAsExpression {
+							expression: JSObjectExpression {
+								properties: [
+									JSSpreadProperty {
+										argument: JSReferenceIdentifier {
+											name: "d"
+											loc: SourceLocation typescript/cast/as-const/input.ts 25:14-25:15 (d)
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 25:11-25:15
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 25:9-25:17
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 25:21-25:26 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 25:9-25:26
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 25:4-25:26
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 25:0-25:27
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 25:0-25:27
+		}
+		JSVariableDeclarationStatement {
+			trailingComments: ["2"]
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "o9"
+							loc: SourceLocation typescript/cast/as-const/input.ts 26:4-26:6 (o9)
+						}
+						init: TSAsExpression {
+							expression: JSObjectExpression {
+								properties: [
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "x"
+												loc: SourceLocation typescript/cast/as-const/input.ts 26:11-26:12 (x)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 26:11-26:12
+										}
+										value: JSNumericLiteral {
+											value: 10
+											loc: SourceLocation typescript/cast/as-const/input.ts 26:14-26:16
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 26:11-26:16
+									}
+									JSObjectMethod {
+										kind: "method"
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "foo"
+												loc: SourceLocation typescript/cast/as-const/input.ts 26:18-26:21 (foo)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 26:18-26:21
+										}
+										body: JSBlockStatement {
+											body: [
+												JSExpressionStatement {
+													expression: JSAssignmentExpression {
+														operator: "="
+														left: JSMemberExpression {
+															object: JSThisExpression {
+																loc: SourceLocation typescript/cast/as-const/input.ts 26:26-26:30
+															}
+															property: JSStaticMemberProperty {
+																value: JSIdentifier {
+																	name: "x"
+																	loc: SourceLocation typescript/cast/as-const/input.ts 26:31-26:32 (x)
+																}
+																loc: SourceLocation typescript/cast/as-const/input.ts 26:31-26:32 (x)
+															}
+															loc: SourceLocation typescript/cast/as-const/input.ts 26:26-26:32
+														}
+														right: JSNumericLiteral {
+															value: 20
+															loc: SourceLocation typescript/cast/as-const/input.ts 26:35-26:37
+														}
+														loc: SourceLocation typescript/cast/as-const/input.ts 26:26-26:37
+													}
+													loc: SourceLocation typescript/cast/as-const/input.ts 26:26-26:37
+												}
+											]
+											directives: []
+											loc: SourceLocation typescript/cast/as-const/input.ts 26:24-26:39
+										}
+										head: JSFunctionHead {
+											async: false
+											generator: false
+											hasHoistedVars: false
+											params: []
+											loc: SourceLocation typescript/cast/as-const/input.ts 26:21-26:23
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 26:18-26:39
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 26:9-26:41
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 26:45-26:50 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 26:9-26:50
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 26:4-26:50
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 26:0-26:51
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 26:0-26:51
+		}
+		JSVariableDeclarationStatement {
+			leadingComments: ["2"]
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "p1"
+							loc: SourceLocation typescript/cast/as-const/input.ts 28:4-28:6 (p1)
+						}
+						init: TSAsExpression {
+							expression: JSNumericLiteral {
+								value: 10
+								loc: SourceLocation typescript/cast/as-const/input.ts 28:10-28:12
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 28:17-28:22 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 28:9-28:22
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 28:4-28:22
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 28:0-28:23
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 28:0-28:23
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "p2"
+							loc: SourceLocation typescript/cast/as-const/input.ts 29:4-29:6 (p2)
+						}
+						init: TSAsExpression {
+							expression: JSUnaryExpression {
+								operator: "-"
+								prefix: true
+								argument: JSNumericLiteral {
+									value: 10
+									loc: SourceLocation typescript/cast/as-const/input.ts 29:12-29:14
+								}
+								loc: SourceLocation typescript/cast/as-const/input.ts 29:11-29:14
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 29:20-29:25 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 29:9-29:25
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 29:4-29:25
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 29:0-29:26
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 29:0-29:26
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "p3"
+							loc: SourceLocation typescript/cast/as-const/input.ts 30:4-30:6 (p3)
+						}
+						init: TSAsExpression {
+							expression: JSArrayExpression {
+								elements: [
+									JSNumericLiteral {
+										value: 10
+										loc: SourceLocation typescript/cast/as-const/input.ts 30:12-30:14
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 30:10-30:16
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 30:21-30:26 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 30:9-30:26
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 30:4-30:26
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 30:0-30:27
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 30:0-30:27
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "p4"
+							loc: SourceLocation typescript/cast/as-const/input.ts 31:4-31:6 (p4)
+						}
+						init: TSAsExpression {
+							expression: JSArrayExpression {
+								elements: [
+									JSArrayExpression {
+										elements: [
+											JSArrayExpression {
+												elements: [
+													JSArrayExpression {
+														elements: [
+															JSNumericLiteral {
+																value: 10
+																loc: SourceLocation typescript/cast/as-const/input.ts 31:13-31:15
+															}
+														]
+														loc: SourceLocation typescript/cast/as-const/input.ts 31:12-31:16
+													}
+												]
+												loc: SourceLocation typescript/cast/as-const/input.ts 31:11-31:17
+											}
+										]
+										loc: SourceLocation typescript/cast/as-const/input.ts 31:10-31:18
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 31:9-31:19
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 31:23-31:28 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 31:9-31:28
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 31:4-31:28
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 31:0-31:29
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 31:0-31:29
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x1"
+							loc: SourceLocation typescript/cast/as-const/input.ts 33:4-33:6 (x1)
+						}
+						init: TSAsExpression {
+							expression: JSObjectExpression {
+								properties: [
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "x"
+												loc: SourceLocation typescript/cast/as-const/input.ts 33:11-33:12 (x)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 33:11-33:12
+										}
+										value: JSNumericLiteral {
+											value: 10
+											loc: SourceLocation typescript/cast/as-const/input.ts 33:14-33:16
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 33:11-33:16
+									}
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "y"
+												loc: SourceLocation typescript/cast/as-const/input.ts 33:18-33:19 (y)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 33:18-33:19
+										}
+										value: JSArrayExpression {
+											elements: [
+												JSNumericLiteral {
+													value: 20
+													loc: SourceLocation typescript/cast/as-const/input.ts 33:22-33:24
+												}
+												JSNumericLiteral {
+													value: 30
+													loc: SourceLocation typescript/cast/as-const/input.ts 33:26-33:28
+												}
+											]
+											loc: SourceLocation typescript/cast/as-const/input.ts 33:21-33:29
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 33:18-33:29
+									}
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "z"
+												loc: SourceLocation typescript/cast/as-const/input.ts 33:31-33:32 (z)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 33:31-33:32
+										}
+										value: JSObjectExpression {
+											properties: [
+												JSObjectProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
+															name: "a"
+															loc: SourceLocation typescript/cast/as-const/input.ts 33:36-33:37 (a)
+														}
+														loc: SourceLocation typescript/cast/as-const/input.ts 33:36-33:37
+													}
+													value: JSObjectExpression {
+														properties: [
+															JSObjectProperty {
+																key: JSStaticPropertyKey {
+																	value: JSIdentifier {
+																		name: "b"
+																		loc: SourceLocation typescript/cast/as-const/input.ts 33:41-33:42 (b)
+																	}
+																	loc: SourceLocation typescript/cast/as-const/input.ts 33:41-33:42
+																}
+																value: JSNumericLiteral {
+																	value: 42
+																	loc: SourceLocation typescript/cast/as-const/input.ts 33:44-33:46
+																}
+																loc: SourceLocation typescript/cast/as-const/input.ts 33:41-33:46
+															}
+														]
+														loc: SourceLocation typescript/cast/as-const/input.ts 33:39-33:48
+													}
+													loc: SourceLocation typescript/cast/as-const/input.ts 33:36-33:48
+												}
+											]
+											loc: SourceLocation typescript/cast/as-const/input.ts 33:34-33:50
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 33:31-33:50
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 33:9-33:52
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 33:56-33:61 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 33:9-33:61
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 33:4-33:61
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 33:0-33:62
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 33:0-33:62
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "q1"
+							loc: SourceLocation typescript/cast/as-const/input.ts 35:4-35:6 (q1)
+						}
+						init: TSTypeAssertion {
+							expression: JSNumericLiteral {
+								value: 10
+								loc: SourceLocation typescript/cast/as-const/input.ts 35:17-35:19
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 35:10-35:15 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 35:9-35:19
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 35:4-35:19
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 35:0-35:20
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 35:0-35:20
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "q2"
+							loc: SourceLocation typescript/cast/as-const/input.ts 36:4-36:6 (q2)
+						}
+						init: TSTypeAssertion {
+							expression: JSStringLiteral {
+								value: "abc"
+								loc: SourceLocation typescript/cast/as-const/input.ts 36:17-36:22
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 36:10-36:15 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 36:9-36:22
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 36:4-36:22
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 36:0-36:23
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 36:0-36:23
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "q3"
+							loc: SourceLocation typescript/cast/as-const/input.ts 37:4-37:6 (q3)
+						}
+						init: TSTypeAssertion {
+							expression: JSBooleanLiteral {
+								value: true
+								loc: SourceLocation typescript/cast/as-const/input.ts 37:17-37:21
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 37:10-37:15 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 37:9-37:21
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 37:4-37:21
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 37:0-37:22
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 37:0-37:22
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "q4"
+							loc: SourceLocation typescript/cast/as-const/input.ts 38:4-38:6 (q4)
+						}
+						init: TSTypeAssertion {
+							expression: JSArrayExpression {
+								elements: [
+									JSNumericLiteral {
+										value: 1
+										loc: SourceLocation typescript/cast/as-const/input.ts 38:18-38:19
+									}
+									JSNumericLiteral {
+										value: 2
+										loc: SourceLocation typescript/cast/as-const/input.ts 38:21-38:22
+									}
+									JSNumericLiteral {
+										value: 3
+										loc: SourceLocation typescript/cast/as-const/input.ts 38:24-38:25
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 38:17-38:26
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 38:10-38:15 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 38:9-38:26
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 38:4-38:26
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 38:0-38:27
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 38:0-38:27
+		}
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "q5"
+							loc: SourceLocation typescript/cast/as-const/input.ts 39:4-39:6 (q5)
+						}
+						init: TSTypeAssertion {
+							expression: JSObjectExpression {
+								properties: [
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "x"
+												loc: SourceLocation typescript/cast/as-const/input.ts 39:19-39:20 (x)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 39:19-39:20
+										}
+										value: JSNumericLiteral {
+											value: 10
+											loc: SourceLocation typescript/cast/as-const/input.ts 39:22-39:24
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 39:19-39:24
+									}
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "y"
+												loc: SourceLocation typescript/cast/as-const/input.ts 39:26-39:27 (y)
+											}
+											loc: SourceLocation typescript/cast/as-const/input.ts 39:26-39:27
+										}
+										value: JSNumericLiteral {
+											value: 20
+											loc: SourceLocation typescript/cast/as-const/input.ts 39:29-39:31
+										}
+										loc: SourceLocation typescript/cast/as-const/input.ts 39:26-39:31
+									}
+								]
+								loc: SourceLocation typescript/cast/as-const/input.ts 39:17-39:33
+							}
+							typeAnnotation: TSConstKeyword {
+								name: "const"
+								loc: SourceLocation typescript/cast/as-const/input.ts 39:10-39:15 (const)
+							}
+							loc: SourceLocation typescript/cast/as-const/input.ts 39:9-39:33
+						}
+						loc: SourceLocation typescript/cast/as-const/input.ts 39:4-39:33
+					}
+				]
+				loc: SourceLocation typescript/cast/as-const/input.ts 39:0-39:34
+			}
+			loc: SourceLocation typescript/cast/as-const/input.ts 39:0-39:34
+		}
+	]
+	comments: [
 		CommentLine {
 			id: "0"
 			value: " Copied over from TypeScript's test case"
@@ -35,1389 +1355,14 @@ JSRoot {
 			loc: SourceLocation typescript/cast/as-const/input.ts 26:53-26:61
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 3:0-3:24
-			leadingComments: Array [
-				"0"
-				"1"
-			]
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				leadingComments: undefined
-				loc: SourceLocation typescript/cast/as-const/input.ts 3:0-3:24
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v1"
-							leadingComments: undefined
-							loc: SourceLocation typescript/cast/as-const/input.ts 3:4-3:6 (v1)
-						}
-						leadingComments: undefined
-						loc: SourceLocation typescript/cast/as-const/input.ts 3:4-3:23
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 3:9-3:23
-							expression: JSStringLiteral {
-								value: "abc"
-								loc: SourceLocation typescript/cast/as-const/input.ts 3:9-3:14
-							}
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 3:18-3:23 (const)
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 4:0-4:24
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 4:0-4:24
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v2"
-							loc: SourceLocation typescript/cast/as-const/input.ts 4:4-4:6 (v2)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 4:4-4:23
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 4:9-4:23
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 4:18-4:23 (const)
-							}
-							expression: JSTemplateLiteral {
-								expressions: Array []
-								loc: SourceLocation typescript/cast/as-const/input.ts 4:9-4:14
-								quasis: Array [
-									JSTemplateElement {
-										cooked: "abc"
-										raw: "abc"
-										tail: true
-										loc: SourceLocation typescript/cast/as-const/input.ts 4:10-4:13
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 5:0-5:21
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 5:0-5:21
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v3"
-							loc: SourceLocation typescript/cast/as-const/input.ts 5:4-5:6 (v3)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 5:4-5:20
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 5:9-5:20
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 5:15-5:20 (const)
-							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: SourceLocation typescript/cast/as-const/input.ts 5:9-5:11
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 6:0-6:22
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 6:0-6:22
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v4"
-							loc: SourceLocation typescript/cast/as-const/input.ts 6:4-6:6 (v4)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 6:4-6:21
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 6:9-6:21
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 6:16-6:21 (const)
-							}
-							expression: JSUnaryExpression {
-								operator: "-"
-								prefix: true
-								loc: SourceLocation typescript/cast/as-const/input.ts 6:9-6:12
-								argument: JSNumericLiteral {
-									value: 10
-									format: undefined
-									loc: SourceLocation typescript/cast/as-const/input.ts 6:10-6:12
-								}
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 7:0-7:22
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 7:0-7:22
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v5"
-							loc: SourceLocation typescript/cast/as-const/input.ts 7:4-7:6 (v5)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 7:4-7:21
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 7:9-7:21
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 7:16-7:21 (const)
-							}
-							expression: JSUnaryExpression {
-								operator: "+"
-								prefix: true
-								loc: SourceLocation typescript/cast/as-const/input.ts 7:9-7:12
-								argument: JSNumericLiteral {
-									value: 10
-									format: undefined
-									loc: SourceLocation typescript/cast/as-const/input.ts 7:10-7:12
-								}
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 8:0-8:21
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 8:0-8:21
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v6"
-							loc: SourceLocation typescript/cast/as-const/input.ts 8:4-8:6 (v6)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 8:4-8:20
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 8:9-8:20
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 8:15-8:20 (const)
-							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: SourceLocation typescript/cast/as-const/input.ts 8:9-8:11
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 9:0-9:22
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 9:0-9:22
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v7"
-							loc: SourceLocation typescript/cast/as-const/input.ts 9:4-9:6 (v7)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 9:4-9:21
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 9:9-9:21
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 9:16-9:21 (const)
-							}
-							expression: JSUnaryExpression {
-								operator: "-"
-								prefix: true
-								loc: SourceLocation typescript/cast/as-const/input.ts 9:9-9:12
-								argument: JSNumericLiteral {
-									value: 10
-									format: undefined
-									loc: SourceLocation typescript/cast/as-const/input.ts 9:10-9:12
-								}
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 10:0-10:23
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 10:0-10:23
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v8"
-							loc: SourceLocation typescript/cast/as-const/input.ts 10:4-10:6 (v8)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 10:4-10:22
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 10:9-10:22
-							expression: JSBooleanLiteral {
-								value: true
-								loc: SourceLocation typescript/cast/as-const/input.ts 10:9-10:13
-							}
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 10:17-10:22 (const)
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 11:0-11:24
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 11:0-11:24
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "v9"
-							loc: SourceLocation typescript/cast/as-const/input.ts 11:4-11:6 (v9)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 11:4-11:23
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 11:9-11:23
-							expression: JSBooleanLiteral {
-								value: false
-								loc: SourceLocation typescript/cast/as-const/input.ts 11:9-11:14
-							}
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 11:18-11:23 (const)
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 13:0-13:21
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 13:0-13:21
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a1"
-							loc: SourceLocation typescript/cast/as-const/input.ts 13:4-13:6 (a1)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 13:4-13:20
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 13:9-13:20
-							expression: JSArrayExpression {
-								elements: Array []
-								loc: SourceLocation typescript/cast/as-const/input.ts 13:9-13:11
-							}
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 13:15-13:20 (const)
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 14:0-14:28
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 14:0-14:28
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a2"
-							loc: SourceLocation typescript/cast/as-const/input.ts 14:4-14:6 (a2)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 14:4-14:27
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 14:9-14:27
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 14:22-14:27 (const)
-							}
-							expression: JSArrayExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 14:9-14:18
-								elements: Array [
-									JSNumericLiteral {
-										value: 1
-										format: undefined
-										loc: SourceLocation typescript/cast/as-const/input.ts 14:10-14:11
-									}
-									JSNumericLiteral {
-										value: 2
-										format: undefined
-										loc: SourceLocation typescript/cast/as-const/input.ts 14:13-14:14
-									}
-									JSNumericLiteral {
-										value: 3
-										format: undefined
-										loc: SourceLocation typescript/cast/as-const/input.ts 14:16-14:17
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 15:0-15:38
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 15:0-15:38
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a3"
-							loc: SourceLocation typescript/cast/as-const/input.ts 15:4-15:6 (a3)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 15:4-15:37
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 15:9-15:37
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 15:32-15:37 (const)
-							}
-							expression: JSArrayExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 15:9-15:28
-								elements: Array [
-									JSNumericLiteral {
-										value: 10
-										format: undefined
-										loc: SourceLocation typescript/cast/as-const/input.ts 15:10-15:12
-									}
-									JSStringLiteral {
-										value: "hello"
-										loc: SourceLocation typescript/cast/as-const/input.ts 15:14-15:21
-									}
-									JSBooleanLiteral {
-										value: true
-										loc: SourceLocation typescript/cast/as-const/input.ts 15:23-15:27
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 16:0-16:33
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 16:0-16:33
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a4"
-							loc: SourceLocation typescript/cast/as-const/input.ts 16:4-16:6 (a4)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 16:4-16:32
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 16:9-16:32
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 16:27-16:32 (const)
-							}
-							expression: JSArrayExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 16:9-16:23
-								elements: Array [
-									JSSpreadElement {
-										loc: SourceLocation typescript/cast/as-const/input.ts 16:10-16:22
-										argument: JSArrayExpression {
-											loc: SourceLocation typescript/cast/as-const/input.ts 16:13-16:22
-											elements: Array [
-												JSNumericLiteral {
-													value: 1
-													format: undefined
-													loc: SourceLocation typescript/cast/as-const/input.ts 16:14-16:15
-												}
-												JSNumericLiteral {
-													value: 2
-													format: undefined
-													loc: SourceLocation typescript/cast/as-const/input.ts 16:17-16:18
-												}
-												JSNumericLiteral {
-													value: 3
-													format: undefined
-													loc: SourceLocation typescript/cast/as-const/input.ts 16:20-16:21
-												}
-											]
-										}
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 17:0-17:19
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 17:0-17:19
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a5"
-							loc: SourceLocation typescript/cast/as-const/input.ts 17:4-17:6 (a5)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 17:4-17:18
-						init: JSArrayExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 17:9-17:18
-							elements: Array [
-								JSNumericLiteral {
-									value: 1
-									format: undefined
-									loc: SourceLocation typescript/cast/as-const/input.ts 17:10-17:11
-								}
-								JSNumericLiteral {
-									value: 2
-									format: undefined
-									loc: SourceLocation typescript/cast/as-const/input.ts 17:13-17:14
-								}
-								JSNumericLiteral {
-									value: 3
-									format: undefined
-									loc: SourceLocation typescript/cast/as-const/input.ts 17:16-17:17
-								}
-							]
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 18:0-18:26
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 18:0-18:26
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a6"
-							loc: SourceLocation typescript/cast/as-const/input.ts 18:4-18:6 (a6)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 18:4-18:25
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 18:9-18:25
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 18:20-18:25 (const)
-							}
-							expression: JSArrayExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 18:9-18:16
-								elements: Array [
-									JSSpreadElement {
-										loc: SourceLocation typescript/cast/as-const/input.ts 18:10-18:15
-										argument: JSReferenceIdentifier {
-											name: "a5"
-											loc: SourceLocation typescript/cast/as-const/input.ts 18:13-18:15 (a5)
-										}
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 19:0-19:33
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 19:0-19:33
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a8"
-							loc: SourceLocation typescript/cast/as-const/input.ts 19:4-19:6 (a8)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 19:4-19:32
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 19:9-19:32
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 19:27-19:32 (const)
-							}
-							expression: JSArrayExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 19:9-19:23
-								elements: Array [
-									JSStringLiteral {
-										value: "abc"
-										loc: SourceLocation typescript/cast/as-const/input.ts 19:10-19:15
-									}
-									JSSpreadElement {
-										loc: SourceLocation typescript/cast/as-const/input.ts 19:17-19:22
-										argument: JSReferenceIdentifier {
-											name: "a7"
-											loc: SourceLocation typescript/cast/as-const/input.ts 19:20-19:22 (a7)
-										}
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 21:0-21:35
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 21:0-21:35
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "o1"
-							loc: SourceLocation typescript/cast/as-const/input.ts 21:4-21:6 (o1)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 21:4-21:34
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 21:9-21:34
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 21:29-21:34 (const)
-							}
-							expression: JSObjectExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 21:9-21:25
-								properties: Array [
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "x"
-												loc: SourceLocation typescript/cast/as-const/input.ts 21:11-21:12 (x)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 21:11-21:12
-										}
-										value: JSNumericLiteral {
-											value: 10
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 21:14-21:16
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 21:11-21:16
-									}
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "y"
-												loc: SourceLocation typescript/cast/as-const/input.ts 21:18-21:19 (y)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 21:18-21:19
-										}
-										value: JSNumericLiteral {
-											value: 20
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 21:21-21:23
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 21:18-21:23
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 22:0-22:68
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 22:0-22:68
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "o2"
-							loc: SourceLocation typescript/cast/as-const/input.ts 22:4-22:6 (o2)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 22:4-22:67
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 22:9-22:67
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 22:62-22:67 (const)
-							}
-							expression: JSObjectExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 22:9-22:58
-								properties: Array [
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "a"
-												loc: SourceLocation typescript/cast/as-const/input.ts 22:11-22:12 (a)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:11-22:12
-										}
-										value: JSNumericLiteral {
-											value: 1
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:14-22:15
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 22:11-22:15
-									}
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSStringLiteral {
-												value: "b"
-												loc: SourceLocation typescript/cast/as-const/input.ts 22:17-22:20
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:17-22:20
-										}
-										value: JSNumericLiteral {
-											value: 2
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:22-22:23
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 22:17-22:23
-									}
-									JSObjectProperty {
-										key: JSComputedPropertyKey {
-											value: JSStringLiteral {
-												value: "c"
-												loc: SourceLocation typescript/cast/as-const/input.ts 22:26-22:29
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:25-22:30
-										}
-										value: JSNumericLiteral {
-											value: 3
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:32-22:33
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 22:25-22:33
-									}
-									JSObjectMethod {
-										kind: "method"
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "d"
-												loc: SourceLocation typescript/cast/as-const/input.ts 22:35-22:36 (d)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:35-22:36
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 22:35-22:41
-										body: JSBlockStatement {
-											body: Array []
-											directives: Array []
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:39-22:41
-										}
-										head: JSFunctionHead {
-											async: false
-											generator: false
-											hasHoistedVars: false
-											params: Array []
-											rest: undefined
-											returnType: undefined
-											thisType: undefined
-											typeParameters: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:36-22:38
-										}
-									}
-									JSObjectProperty {
-										key: JSComputedPropertyKey {
-											value: JSBinaryExpression {
-												operator: "+"
-												loc: SourceLocation typescript/cast/as-const/input.ts 22:44-22:52
-												left: JSStringLiteral {
-													value: "e"
-													loc: SourceLocation typescript/cast/as-const/input.ts 22:44-22:47
-												}
-												right: JSStringLiteral {
-													value: ""
-													loc: SourceLocation typescript/cast/as-const/input.ts 22:50-22:52
-												}
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:43-22:53
-										}
-										value: JSNumericLiteral {
-											value: 4
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 22:55-22:56
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 22:43-22:56
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 23:0-23:35
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 23:0-23:35
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "o3"
-							loc: SourceLocation typescript/cast/as-const/input.ts 23:4-23:6 (o3)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 23:4-23:34
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 23:9-23:34
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 23:29-23:34 (const)
-							}
-							expression: JSObjectExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 23:9-23:25
-								properties: Array [
-									JSSpreadProperty {
-										loc: SourceLocation typescript/cast/as-const/input.ts 23:11-23:16
-										argument: JSReferenceIdentifier {
-											name: "o1"
-											loc: SourceLocation typescript/cast/as-const/input.ts 23:14-23:16 (o1)
-										}
-									}
-									JSSpreadProperty {
-										loc: SourceLocation typescript/cast/as-const/input.ts 23:18-23:23
-										argument: JSReferenceIdentifier {
-											name: "o2"
-											loc: SourceLocation typescript/cast/as-const/input.ts 23:21-23:23 (o2)
-										}
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 24:0-24:28
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 24:0-24:28
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "o5"
-							loc: SourceLocation typescript/cast/as-const/input.ts 24:4-24:6 (o5)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 24:4-24:27
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 24:9-24:27
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 24:22-24:27 (const)
-							}
-							expression: JSObjectExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 24:9-24:18
-								properties: Array [
-									JSSpreadProperty {
-										loc: SourceLocation typescript/cast/as-const/input.ts 24:11-24:16
-										argument: JSReferenceIdentifier {
-											name: "o4"
-											loc: SourceLocation typescript/cast/as-const/input.ts 24:14-24:16 (o4)
-										}
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 25:0-25:27
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 25:0-25:27
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "o7"
-							loc: SourceLocation typescript/cast/as-const/input.ts 25:4-25:6 (o7)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 25:4-25:26
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 25:9-25:26
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 25:21-25:26 (const)
-							}
-							expression: JSObjectExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 25:9-25:17
-								properties: Array [
-									JSSpreadProperty {
-										loc: SourceLocation typescript/cast/as-const/input.ts 25:11-25:15
-										argument: JSReferenceIdentifier {
-											name: "d"
-											loc: SourceLocation typescript/cast/as-const/input.ts 25:14-25:15 (d)
-										}
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 26:0-26:51
-			trailingComments: Array ["2"]
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				trailingComments: undefined
-				loc: SourceLocation typescript/cast/as-const/input.ts 26:0-26:51
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "o9"
-							loc: SourceLocation typescript/cast/as-const/input.ts 26:4-26:6 (o9)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 26:4-26:50
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 26:9-26:50
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 26:45-26:50 (const)
-							}
-							expression: JSObjectExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 26:9-26:41
-								properties: Array [
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "x"
-												loc: SourceLocation typescript/cast/as-const/input.ts 26:11-26:12 (x)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 26:11-26:12
-										}
-										value: JSNumericLiteral {
-											value: 10
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 26:14-26:16
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 26:11-26:16
-									}
-									JSObjectMethod {
-										kind: "method"
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "foo"
-												loc: SourceLocation typescript/cast/as-const/input.ts 26:18-26:21 (foo)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 26:18-26:21
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 26:18-26:39
-										head: JSFunctionHead {
-											async: false
-											generator: false
-											hasHoistedVars: false
-											params: Array []
-											rest: undefined
-											returnType: undefined
-											thisType: undefined
-											typeParameters: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 26:21-26:23
-										}
-										body: JSBlockStatement {
-											directives: Array []
-											loc: SourceLocation typescript/cast/as-const/input.ts 26:24-26:39
-											body: Array [
-												JSExpressionStatement {
-													loc: SourceLocation typescript/cast/as-const/input.ts 26:26-26:37
-													expression: JSAssignmentExpression {
-														operator: "="
-														loc: SourceLocation typescript/cast/as-const/input.ts 26:26-26:37
-														right: JSNumericLiteral {
-															value: 20
-															format: undefined
-															loc: SourceLocation typescript/cast/as-const/input.ts 26:35-26:37
-														}
-														left: JSMemberExpression {
-															loc: SourceLocation typescript/cast/as-const/input.ts 26:26-26:32
-															object: JSThisExpression {loc: SourceLocation typescript/cast/as-const/input.ts 26:26-26:30}
-															property: JSStaticMemberProperty {
-																value: JSIdentifier {
-																	name: "x"
-																	loc: SourceLocation typescript/cast/as-const/input.ts 26:31-26:32 (x)
-																}
-																loc: SourceLocation typescript/cast/as-const/input.ts 26:31-26:32 (x)
-															}
-														}
-													}
-												}
-											]
-										}
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			leadingComments: Array ["2"]
-			loc: SourceLocation typescript/cast/as-const/input.ts 28:0-28:23
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				leadingComments: undefined
-				loc: SourceLocation typescript/cast/as-const/input.ts 28:0-28:23
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "p1"
-							leadingComments: undefined
-							loc: SourceLocation typescript/cast/as-const/input.ts 28:4-28:6 (p1)
-						}
-						leadingComments: undefined
-						loc: SourceLocation typescript/cast/as-const/input.ts 28:4-28:22
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 28:9-28:22
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 28:17-28:22 (const)
-							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: SourceLocation typescript/cast/as-const/input.ts 28:10-28:12
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 29:0-29:26
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 29:0-29:26
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "p2"
-							loc: SourceLocation typescript/cast/as-const/input.ts 29:4-29:6 (p2)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 29:4-29:25
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 29:9-29:25
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 29:20-29:25 (const)
-							}
-							expression: JSUnaryExpression {
-								operator: "-"
-								prefix: true
-								loc: SourceLocation typescript/cast/as-const/input.ts 29:11-29:14
-								argument: JSNumericLiteral {
-									value: 10
-									format: undefined
-									loc: SourceLocation typescript/cast/as-const/input.ts 29:12-29:14
-								}
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 30:0-30:27
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 30:0-30:27
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "p3"
-							loc: SourceLocation typescript/cast/as-const/input.ts 30:4-30:6 (p3)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 30:4-30:26
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 30:9-30:26
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 30:21-30:26 (const)
-							}
-							expression: JSArrayExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 30:10-30:16
-								elements: Array [
-									JSNumericLiteral {
-										value: 10
-										format: undefined
-										loc: SourceLocation typescript/cast/as-const/input.ts 30:12-30:14
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 31:0-31:29
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 31:0-31:29
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "p4"
-							loc: SourceLocation typescript/cast/as-const/input.ts 31:4-31:6 (p4)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 31:4-31:28
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 31:9-31:28
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 31:23-31:28 (const)
-							}
-							expression: JSArrayExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 31:9-31:19
-								elements: Array [
-									JSArrayExpression {
-										loc: SourceLocation typescript/cast/as-const/input.ts 31:10-31:18
-										elements: Array [
-											JSArrayExpression {
-												loc: SourceLocation typescript/cast/as-const/input.ts 31:11-31:17
-												elements: Array [
-													JSArrayExpression {
-														loc: SourceLocation typescript/cast/as-const/input.ts 31:12-31:16
-														elements: Array [
-															JSNumericLiteral {
-																value: 10
-																format: undefined
-																loc: SourceLocation typescript/cast/as-const/input.ts 31:13-31:15
-															}
-														]
-													}
-												]
-											}
-										]
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 33:0-33:62
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 33:0-33:62
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x1"
-							loc: SourceLocation typescript/cast/as-const/input.ts 33:4-33:6 (x1)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 33:4-33:61
-						init: TSAsExpression {
-							loc: SourceLocation typescript/cast/as-const/input.ts 33:9-33:61
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 33:56-33:61 (const)
-							}
-							expression: JSObjectExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 33:9-33:52
-								properties: Array [
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "x"
-												loc: SourceLocation typescript/cast/as-const/input.ts 33:11-33:12 (x)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 33:11-33:12
-										}
-										value: JSNumericLiteral {
-											value: 10
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 33:14-33:16
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 33:11-33:16
-									}
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "y"
-												loc: SourceLocation typescript/cast/as-const/input.ts 33:18-33:19 (y)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 33:18-33:19
-										}
-										value: JSArrayExpression {
-											loc: SourceLocation typescript/cast/as-const/input.ts 33:21-33:29
-											elements: Array [
-												JSNumericLiteral {
-													value: 20
-													format: undefined
-													loc: SourceLocation typescript/cast/as-const/input.ts 33:22-33:24
-												}
-												JSNumericLiteral {
-													value: 30
-													format: undefined
-													loc: SourceLocation typescript/cast/as-const/input.ts 33:26-33:28
-												}
-											]
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 33:18-33:29
-									}
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "z"
-												loc: SourceLocation typescript/cast/as-const/input.ts 33:31-33:32 (z)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 33:31-33:32
-										}
-										value: JSObjectExpression {
-											loc: SourceLocation typescript/cast/as-const/input.ts 33:34-33:50
-											properties: Array [
-												JSObjectProperty {
-													key: JSStaticPropertyKey {
-														value: JSIdentifier {
-															name: "a"
-															loc: SourceLocation typescript/cast/as-const/input.ts 33:36-33:37 (a)
-														}
-														loc: SourceLocation typescript/cast/as-const/input.ts 33:36-33:37
-													}
-													value: JSObjectExpression {
-														loc: SourceLocation typescript/cast/as-const/input.ts 33:39-33:48
-														properties: Array [
-															JSObjectProperty {
-																key: JSStaticPropertyKey {
-																	value: JSIdentifier {
-																		name: "b"
-																		loc: SourceLocation typescript/cast/as-const/input.ts 33:41-33:42 (b)
-																	}
-																	loc: SourceLocation typescript/cast/as-const/input.ts 33:41-33:42
-																}
-																value: JSNumericLiteral {
-																	value: 42
-																	format: undefined
-																	loc: SourceLocation typescript/cast/as-const/input.ts 33:44-33:46
-																}
-																loc: SourceLocation typescript/cast/as-const/input.ts 33:41-33:46
-															}
-														]
-													}
-													loc: SourceLocation typescript/cast/as-const/input.ts 33:36-33:48
-												}
-											]
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 33:31-33:50
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 35:0-35:20
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 35:0-35:20
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "q1"
-							loc: SourceLocation typescript/cast/as-const/input.ts 35:4-35:6 (q1)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 35:4-35:19
-						init: TSTypeAssertion {
-							loc: SourceLocation typescript/cast/as-const/input.ts 35:9-35:19
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 35:10-35:15 (const)
-							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: SourceLocation typescript/cast/as-const/input.ts 35:17-35:19
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 36:0-36:23
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 36:0-36:23
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "q2"
-							loc: SourceLocation typescript/cast/as-const/input.ts 36:4-36:6 (q2)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 36:4-36:22
-						init: TSTypeAssertion {
-							loc: SourceLocation typescript/cast/as-const/input.ts 36:9-36:22
-							expression: JSStringLiteral {
-								value: "abc"
-								loc: SourceLocation typescript/cast/as-const/input.ts 36:17-36:22
-							}
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 36:10-36:15 (const)
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 37:0-37:22
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 37:0-37:22
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "q3"
-							loc: SourceLocation typescript/cast/as-const/input.ts 37:4-37:6 (q3)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 37:4-37:21
-						init: TSTypeAssertion {
-							loc: SourceLocation typescript/cast/as-const/input.ts 37:9-37:21
-							expression: JSBooleanLiteral {
-								value: true
-								loc: SourceLocation typescript/cast/as-const/input.ts 37:17-37:21
-							}
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 37:10-37:15 (const)
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 38:0-38:27
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 38:0-38:27
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "q4"
-							loc: SourceLocation typescript/cast/as-const/input.ts 38:4-38:6 (q4)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 38:4-38:26
-						init: TSTypeAssertion {
-							loc: SourceLocation typescript/cast/as-const/input.ts 38:9-38:26
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 38:10-38:15 (const)
-							}
-							expression: JSArrayExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 38:17-38:26
-								elements: Array [
-									JSNumericLiteral {
-										value: 1
-										format: undefined
-										loc: SourceLocation typescript/cast/as-const/input.ts 38:18-38:19
-									}
-									JSNumericLiteral {
-										value: 2
-										format: undefined
-										loc: SourceLocation typescript/cast/as-const/input.ts 38:21-38:22
-									}
-									JSNumericLiteral {
-										value: 3
-										format: undefined
-										loc: SourceLocation typescript/cast/as-const/input.ts 38:24-38:25
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/cast/as-const/input.ts 39:0-39:34
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/cast/as-const/input.ts 39:0-39:34
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "q5"
-							loc: SourceLocation typescript/cast/as-const/input.ts 39:4-39:6 (q5)
-						}
-						loc: SourceLocation typescript/cast/as-const/input.ts 39:4-39:33
-						init: TSTypeAssertion {
-							loc: SourceLocation typescript/cast/as-const/input.ts 39:9-39:33
-							typeAnnotation: TSConstKeyword {
-								name: "const"
-								loc: SourceLocation typescript/cast/as-const/input.ts 39:10-39:15 (const)
-							}
-							expression: JSObjectExpression {
-								loc: SourceLocation typescript/cast/as-const/input.ts 39:17-39:33
-								properties: Array [
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "x"
-												loc: SourceLocation typescript/cast/as-const/input.ts 39:19-39:20 (x)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 39:19-39:20
-										}
-										value: JSNumericLiteral {
-											value: 10
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 39:22-39:24
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 39:19-39:24
-									}
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "y"
-												loc: SourceLocation typescript/cast/as-const/input.ts 39:26-39:27 (y)
-											}
-											loc: SourceLocation typescript/cast/as-const/input.ts 39:26-39:27
-										}
-										value: JSNumericLiteral {
-											value: 20
-											format: undefined
-											loc: SourceLocation typescript/cast/as-const/input.ts 39:29-39:31
-										}
-										loc: SourceLocation typescript/cast/as-const/input.ts 39:26-39:31
-									}
-								]
-							}
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/as-const/input.ts>
+	loc: SourceLocation typescript/cast/as-const/input.ts 1:0-40:0
 }
 ```
 

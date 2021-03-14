@@ -6,50 +6,47 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/selector4/input.css 1:0-3:1
-	path: RelativePath<invalid/selector4/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected to close attribute selector with a right square bracket <emphasis>]</emphasis>."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 1:14
-				path: RelativePath<invalid/selector4/input.css>
-				start: Position 1:13
-			}
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation invalid/selector4/input.css 1:0-3:1
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/selector4/input.css 1:13-3:1
-			}
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation invalid/selector4/input.css 1:0-1:13
-					patterns: Array [
+					patterns: [
 						CSSClassSelector {
 							value: "class"
 							loc: SourceLocation invalid/selector4/input.css 1:0-1:6
 						}
 					]
+					loc: SourceLocation invalid/selector4/input.css 1:0-1:13
 				}
 			]
+			block: CSSBlock {
+				value: []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector4/input.css 1:13-3:1
+			}
+			loc: SourceLocation invalid/selector4/input.css 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<css>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "Expected to close attribute selector with a right square bracket <emphasis>]</emphasis>."}
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/selector4/input.css>
+				end: Position 1:14
+				start: Position 1:13
+			}
+		}
+	]
+	path: RelativePath<invalid/selector4/input.css>
+	loc: SourceLocation invalid/selector4/input.css 1:0-3:1
 }
 ```

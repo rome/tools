@@ -8,67 +8,64 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:0-3:0
-	path: UIDPath<es2015/for-of/bare-initializer/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Not a valid assignment target"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:10
-				path: UIDPath<es2015/for-of/bare-initializer/input.js>
-				start: Position 2:5
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:0-1:6
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:0-1:6
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:4-1:5 (a)
 						}
-						init: undefined
 						loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:4-1:5
 					}
 				]
+				loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:0-1:6
 			}
+			loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:0-1:6
 		}
 		JSForOfStatement {
 			await: false
-			body: JSEmptyStatement {loc: SourceLocation es2015/for-of/bare-initializer/input.js 2:17-2:18}
-			loc: SourceLocation es2015/for-of/bare-initializer/input.js 2:0-2:18
+			body: JSEmptyStatement {
+				loc: SourceLocation es2015/for-of/bare-initializer/input.js 2:17-2:18
+			}
 			left: JSAssignmentIdentifier {
 				name: "X"
 				loc: SourceLocation es2015/for-of/bare-initializer/input.js 2:5-2:10
 			}
 			right: JSObjectExpression {
-				properties: Array []
+				properties: []
 				loc: SourceLocation es2015/for-of/bare-initializer/input.js 2:14-2:16
+			}
+			loc: SourceLocation es2015/for-of/bare-initializer/input.js 2:0-2:18
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Not a valid assignment target"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/for-of/bare-initializer/input.js>
+				end: Position 2:10
+				start: Position 2:5
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-of/bare-initializer/input.js>
+	loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:0-3:0
 }
 ```
 

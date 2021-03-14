@@ -1,4 +1,4 @@
-import {Path, Scope, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, Scope, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
 import {
@@ -8,7 +8,7 @@ import {
 } from "@internal/js-ast-utils";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
-function getKeyValue(path: Path): string | undefined {
+function getKeyValue(path: CompilerPath): string | undefined {
 	let keyValue = undefined;
 	let callExpression = undefined;
 
@@ -41,7 +41,10 @@ function getKeyValue(path: Path): string | undefined {
 	return keyValue;
 }
 
-function getReactChildrenArrayMethod(path: Path, scope: Scope): Path | undefined {
+function getReactChildrenArrayMethod(
+	path: CompilerPath,
+	scope: Scope,
+): CompilerPath | undefined {
 	return path.findAncestry(({node}) => {
 		if (
 			node.type === "JSExpressionStatement" &&
@@ -79,7 +82,7 @@ function getReactChildrenArrayMethod(path: Path, scope: Scope): Path | undefined
 	});
 }
 
-function hasArrayMethod(path: Path) {
+function hasArrayMethod(path: CompilerPath) {
 	return path.findAncestry(({node}) => {
 		if (
 			node.type === "JSExpressionStatement" &&

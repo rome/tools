@@ -8,30 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/properties/input.ts 1:0-6:0
-	path: UIDPath<typescript/interface/properties/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: SourceLocation typescript/interface/properties/input.ts 1:10-1:11 (I)
 			}
-			extends: undefined
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/properties/input.ts 1:0-5:1
 			body: TSInterfaceBody {
-				loc: SourceLocation typescript/interface/properties/input.ts 1:12-5:1
-				body: Array [
+				body: [
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
@@ -39,12 +26,11 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/properties/input.ts 2:4-2:5
 						}
-						optional: false
-						readonly: false
-						typeAnnotation: undefined
 						loc: SourceLocation typescript/interface/properties/input.ts 2:4-2:6
 					}
 					TSPropertySignature {
+						optional: false
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
@@ -52,12 +38,14 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/properties/input.ts 3:4-3:5
 						}
-						optional: false
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/properties/input.ts 3:7-3:13
+						}
 						loc: SourceLocation typescript/interface/properties/input.ts 3:4-3:14
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/properties/input.ts 3:7-3:13}
 					}
 					TSPropertySignature {
+						optional: true
+						readonly: false
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "z"
@@ -65,15 +53,26 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/interface/properties/input.ts 4:4-4:5
 						}
-						optional: true
-						readonly: false
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/interface/properties/input.ts 4:8-4:14
+						}
 						loc: SourceLocation typescript/interface/properties/input.ts 4:4-4:15
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/properties/input.ts 4:8-4:14}
 					}
 				]
+				loc: SourceLocation typescript/interface/properties/input.ts 1:12-5:1
 			}
+			loc: SourceLocation typescript/interface/properties/input.ts 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/properties/input.ts>
+	loc: SourceLocation typescript/interface/properties/input.ts 1:0-6:0
 }
 ```
 

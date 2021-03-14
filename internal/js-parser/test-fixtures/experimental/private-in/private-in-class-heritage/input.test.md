@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-7:0
-	path: UIDPath<experimental/private-in/private-in-class-heritage/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an class heritage"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 4:21
-				path: UIDPath<experimental/private-in/private-in-class-heritage/input.js>
-				start: Position 4:21
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:6-1:9 (Foo)
 			}
-			loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-6:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-6:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -59,23 +24,19 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:2-2:4
 						}
-						value: JSNumericLiteral {
-							value: 1
-							format: undefined
-							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:7-2:8
-						}
-						typeAnnotation: undefined
-						loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:2-2:4
 							start: Position 2:2
 						}
+						value: JSNumericLiteral {
+							value: 1
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:7-2:8
+						}
+						loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 2:2-2:9
 					}
 					JSClassMethod {
 						kind: "method"
@@ -86,48 +47,23 @@ JSRoot {
 							}
 							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:2-3:6
 						}
-						loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:2-5:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:2-3:6
 							start: Position 3:2
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:6-3:8
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:9-5:3
-							body: Array [
+							body: [
 								JSClassDeclaration {
 									id: JSBindingIdentifier {
 										name: "X"
 										loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:10-4:11 (X)
 									}
-									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:4-4:29
 									meta: JSClassHead {
-										implements: undefined
-										superTypeParameters: undefined
-										typeParameters: undefined
-										loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:4-4:29
-										superClass: JSReferenceIdentifier {
-											name: "INVALID_PLACEHOLDER"
-											loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:21-4:22
-										}
-										body: Array [
+										body: [
 											JSClassProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -136,44 +72,79 @@ JSRoot {
 													}
 													loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:27-4:28
 												}
-												value: undefined
-												definite: undefined
-												typeAnnotation: undefined
-												loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:27-4:28
 												meta: JSClassPropertyMeta {
 													abstract: false
-													accessibility: undefined
 													optional: false
 													readonly: false
 													static: false
-													typeAnnotation: undefined
 													loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:27-4:28
 													start: Position 4:27
 												}
+												loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:27-4:28
 											}
 										]
+										superClass: JSReferenceIdentifier {
+											name: "INVALID_PLACEHOLDER"
+											loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:21-4:22
+										}
+										loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:4-4:29
 									}
+									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:4-4:29
 								}
 								JSExpressionStatement {
-									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:29-4:30
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:29-4:30
 									}
+									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:29-4:30
 								}
 								JSBlockStatement {
-									body: Array []
-									directives: Array []
+									body: []
+									directives: []
 									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:31-4:33
 								}
-								JSEmptyStatement {loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:33-4:34}
+								JSEmptyStatement {
+									loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 4:33-4:34
+								}
 							]
+							directives: []
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:9-5:3
 						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: []
+							loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:6-3:8
+						}
+						loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 3:2-5:3
 					}
 				]
+				loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-6:1
+			}
+			loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-6:1
+		}
+	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "class heritage"]}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/private-in/private-in-class-heritage/input.js>
+				end: Position 4:21
+				start: Position 4:21
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/private-in/private-in-class-heritage/input.js>
+	loc: SourceLocation experimental/private-in/private-in-class-heritage/input.js 1:0-7:0
 }
 ```
 

@@ -8,69 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:0-3:1
-	path: UIDPath<es2015/yield/function-name-function-expression-inside-generator/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:10-1:12 (fn)
 			}
-			loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: true
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:12-1:14
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:15-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 2:2-2:24
 						expression: JSFunctionExpression {
 							id: JSBindingIdentifier {
 								name: "yield"
 								loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 2:12-2:17 (yield)
 							}
-							loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 2:3-2:22
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 2:20-2:22
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								params: Array []
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
+								params: []
 								loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 2:17-2:19
 							}
+							loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 2:3-2:22
 						}
+						loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 2:2-2:24
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:15-3:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:12-1:14
+			}
+			loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/function-name-function-expression-inside-generator/input.js>
+	loc: SourceLocation es2015/yield/function-name-function-expression-inside-generator/input.js 1:0-3:1
 }
 ```
 

@@ -7,8 +7,8 @@
 
 import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
 import {CompilerContext, signals} from "@internal/compiler";
-import {OneIndexed} from "@internal/math";
-import Path from "../lib/Path";
+import {OneIndexed} from "@internal/numbers";
+import CompilerPath from "../lib/CompilerPath";
 import {LintCompilerOptionsDecision} from "../types";
 import {injectComment} from "../transforms/helpers";
 import {SUPPRESSION_START} from "../suppressionsParser";
@@ -42,7 +42,7 @@ export function addSuppressions(
 	const visitedLines: Set<OneIndexed> = new Set();
 
 	function addComment(
-		path: Path,
+		path: CompilerPath,
 		node: AnyNode,
 		decisions: LintCompilerOptionsDecision[],
 	): AnyNode {

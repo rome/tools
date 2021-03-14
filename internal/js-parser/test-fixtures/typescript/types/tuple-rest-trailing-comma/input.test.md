@@ -8,81 +8,77 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
+	body: [
+		JSVariableDeclarationStatement {
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				declarations: [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							meta: JSPatternMeta {
+								typeAnnotation: TSTupleType {
+									elementTypes: [
+										TSTupleElement {
+											optional: false
+											typeAnnotation: TSStringKeywordTypeAnnotation {
+												loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:8-1:14
+											}
+											loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:8-1:14
+										}
+										TSTupleElement {
+											optional: false
+											typeAnnotation: TSRestType {
+												argument: TSArrayType {
+													elementType: TSStringKeywordTypeAnnotation {
+														loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:19-1:25
+													}
+													loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:19-1:27
+												}
+												loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:16-1:27
+											}
+											loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:16-1:27
+										}
+									]
+									loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:7-1:29
+								}
+								loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
+							}
+							loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
+						}
+						loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
+					}
+				]
+				loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-1:29
+			}
+			loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-1:29
+		}
+	]
+	comments: []
 	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/tuple-rest-trailing-comma/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:27
 				path: UIDPath<typescript/types/tuple-rest-trailing-comma/input.ts>
+				end: Position 1:27
 				start: Position 1:27
 			}
 		}
 	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-1:29
-			declaration: JSVariableDeclaration {
-				kind: "let"
-				loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-1:29
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
-							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
-								typeAnnotation: TSTupleType {
-									loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:7-1:29
-									elementTypes: Array [
-										TSTupleElement {
-											name: undefined
-											optional: false
-											loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:8-1:14
-											typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:8-1:14}
-										}
-										TSTupleElement {
-											name: undefined
-											optional: false
-											loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:16-1:27
-											typeAnnotation: TSRestType {
-												loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:16-1:27
-												argument: TSArrayType {
-													elementType: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:19-1:25}
-													loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:19-1:27
-												}
-											}
-										}
-									]
-								}
-							}
-						}
-						init: undefined
-						loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
-					}
-				]
-			}
-		}
-	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/tuple-rest-trailing-comma/input.ts>
+	loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-2:0
 }
 ```
 

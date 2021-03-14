@@ -6,58 +6,33 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/var/input.css 1:0-5:1
-	path: RelativePath<invalid/var/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 2:18
-				path: RelativePath<invalid/var/input.css>
-				start: Position 2:17
-			}
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation invalid/var/input.css 1:0-5:1
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation invalid/var/input.css 1:0-1:7
-					patterns: Array [
+					patterns: [
 						CSSClassSelector {
 							value: "style"
 							loc: SourceLocation invalid/var/input.css 1:0-1:6
 						}
 					]
+					loc: SourceLocation invalid/var/input.css 1:0-1:7
 				}
 			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "border"
-						value: Array [
+						value: [
 							CSSVarFunction {
 								name: "var"
-								loc: SourceLocation invalid/var/input.css 2:9-2:18
-								params: Array [
+								params: [
 									CSSHash {
 										value: "fff"
 										loc: SourceLocation invalid/var/input.css 2:13-2:17
 									}
 								]
+								loc: SourceLocation invalid/var/input.css 2:9-2:18
 							}
 						]
 						important: false
@@ -65,19 +40,17 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "border"
-						value: Array [
+						value: [
 							CSSVarFunction {
 								name: "var"
-								loc: SourceLocation invalid/var/input.css 3:9-3:31
-								params: Array [
+								params: [
 									CSSCalcFunction {
 										name: "calc"
-										loc: SourceLocation invalid/var/input.css 3:18-3:30
-										params: Array [
+										params: [
 											CSSCalcSum {
-												value: Array [
+												value: [
 													CSSCalcProduct {
-														value: Array [
+														value: [
 															CSSCalcValue {
 																value: CSSDimension {
 																	value: 10
@@ -94,7 +67,7 @@ CSSRoot {
 														loc: SourceLocation invalid/var/input.css 3:24-3:25
 													}
 													CSSCalcProduct {
-														value: Array [
+														value: [
 															CSSCalcValue {
 																value: CSSDimension {
 																	value: 10
@@ -110,8 +83,10 @@ CSSRoot {
 												loc: SourceLocation invalid/var/input.css 3:18-3:29
 											}
 										]
+										loc: SourceLocation invalid/var/input.css 3:18-3:30
 									}
 								]
+								loc: SourceLocation invalid/var/input.css 3:9-3:31
 							}
 						]
 						important: false
@@ -119,17 +94,17 @@ CSSRoot {
 					}
 					CSSDeclaration {
 						name: "border"
-						value: Array [
+						value: [
 							CSSVarFunction {
 								name: "var"
-								loc: SourceLocation invalid/var/input.css 4:9-4:19
-								params: Array [
+								params: [
 									CSSDimension {
 										value: 90
 										unit: "rem"
 										loc: SourceLocation invalid/var/input.css 4:13-4:18
 									}
 								]
+								loc: SourceLocation invalid/var/input.css 4:9-4:19
 							}
 						]
 						important: false
@@ -139,7 +114,29 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/var/input.css 1:7-5:1
 			}
+			loc: SourceLocation invalid/var/input.css 1:0-5:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<css>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function."}
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/var/input.css>
+				end: Position 2:18
+				start: Position 2:17
+			}
+		}
+	]
+	path: RelativePath<invalid/var/input.css>
+	loc: SourceLocation invalid/var/input.css 1:0-5:1
 }
 ```

@@ -27,15 +27,15 @@ export default createServerCommand({
 			query: {args},
 		} = req;
 
-		const files =
+		const paths =
 			args.length === 0 ? server.fileAllocator.getAllOwnedFilenames() : args;
 
-		for (const file of files) {
-			const path = client.flags.cwd.resolve(file);
-			await server.fileAllocator.evict(path, markup`client request`);
-			reporter.success(markup`Evicted ${path}`);
+		for (const path of paths) {
+			const resolved = client.flags.cwd.resolve(path);
+			await server.fileAllocator.evict(resolved, markup`client request`);
+			reporter.success(markup`Evicted ${resolved}`);
 		}
 
-		reporter.info(markup`Evicted ${String(files.length)} files`);
+		reporter.info(markup`Evicted ${String(paths.length)} files`);
 	},
 });

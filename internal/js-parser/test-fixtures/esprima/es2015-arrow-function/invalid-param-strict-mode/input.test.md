@@ -8,66 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/invalid-param-strict-mode/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "eval is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<esprima/es2015-arrow-function/invalid-param-strict-mode/input.js>
-				start: Position 1:0
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:23
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:22
 				body: JSBlockStatement {
-					body: Array []
-					loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:8-1:22
-					directives: Array [
+					body: []
+					directives: [
 						JSDirective {
 							value: "use strict"
 							loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:9-1:21
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:8-1:22
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:7
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "eval"
 							loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:4 (eval)
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:7
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:22
+			}
+			loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:23
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["eval", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-arrow-function/invalid-param-strict-mode/input.js>
+				end: Position 1:4
+				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/invalid-param-strict-mode/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-2:0
 }
 ```
 

@@ -3,7 +3,7 @@ import {
 	canBeLeftFlankingDelimiter,
 	canBeRightFlankingDelimiter,
 } from "@internal/markdown-parser/utils";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 test(
 	"correctly check the left-flanking delimiters",

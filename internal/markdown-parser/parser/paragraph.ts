@@ -4,6 +4,7 @@ import {parseInline} from "@internal/markdown-parser/parser/inline";
 import {descriptions} from "@internal/diagnostics";
 import {parseText} from "@internal/markdown-parser/parser/text";
 import {parseReference} from "@internal/markdown-parser/parser/reference";
+import {Position} from "@internal/parser-core";
 
 export function parseParagraph(
 	parser: MarkdownParser,
@@ -11,13 +12,34 @@ export function parseParagraph(
 ): MarkdownParagraph {
 	const start = parser.getPosition();
 	const children: AnyMarkdownInlineNode[] = [];
-	while (!(parser.matchToken("EOF") || isBlockToken(parser))) {
+	let endPos: Position | null = null;
+	while (!parser.matchToken("EOF")) {
 		const token = parser.getToken();
 
-		if (isList && token.type === "NewLine") {
-			parser.nextToken();
-			break;
+		if (token.type === "NewLine") {
+			if (isList) {
+				break;
+			}
+			const currentPos = parser.getPosition();
+			const next = parser.nextToken();
+			if (next.type === "NewLine" || next.type === "EOF" || isBlockToken(next)) {
+				// avoid including NewLine or EOF in paragraph
+				endPos = currentPos;
+				break;
+			} else {
+				children.push(
+					parser.finishNode(
+						currentPos,
+						{
+							type: "MarkdownText",
+							value: "\n",
+						},
+					),
+				);
+				continue;
+			}
 		}
+
 		switch (token.type) {
 			case "Strong":
 			case "Emphasis": {
@@ -45,20 +67,6 @@ export function parseParagraph(
 				parser.nextToken();
 				break;
 			}
-			case "NewLine": {
-				const pos = parser.getPosition();
-				children.push(
-					parser.finishNode(
-						pos,
-						{
-							type: "MarkdownText",
-							value: "\n",
-						},
-					),
-				);
-				parser.nextToken();
-				break;
-			}
 			case "OpenSquareBracket": {
 				const reference = parseReference(parser);
 				if (Array.isArray(reference)) {
@@ -73,14 +81,16 @@ export function parseParagraph(
 				// TODO: to remove once all cases are handled
 				parser.unexpectedDiagnostic({
 					description: descriptions.MARKDOWN_PARSER.INVALID_SEQUENCE,
+					token,
 				});
 				parser.nextToken();
 			}
 		}
 	}
 
-	return parser.finishNode(
+	return parser.finishNodeAt(
 		start,
+		endPos || parser.getLastEndPosition(),
 		{
 			type: "MarkdownParagraph",
 			children,

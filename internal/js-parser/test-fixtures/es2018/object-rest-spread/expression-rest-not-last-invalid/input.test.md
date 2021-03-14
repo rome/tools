@@ -8,34 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:0-2:0
-	path: UIDPath<es2018/object-rest-spread/expression-rest-not-last-invalid/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:0-1:19
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:1-1:18
-				right: JSObjectExpression {
-					properties: Array []
-					loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:16-1:18
-				}
 				left: JSAssignmentObjectPattern {
-					loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:1-1:13
-					rest: JSAssignmentIdentifier {
-						name: "rest"
-						loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:5-1:9 (rest)
-					}
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -51,10 +29,30 @@ JSRoot {
 							loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:11-1:12
 						}
 					]
+					rest: JSAssignmentIdentifier {
+						name: "rest"
+						loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:5-1:9 (rest)
+					}
+					loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:1-1:13
 				}
+				right: JSObjectExpression {
+					properties: []
+					loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:16-1:18
+				}
+				loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:1-1:18
 			}
+			loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:0-1:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/object-rest-spread/expression-rest-not-last-invalid/input.js>
+	loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:0-2:0
 }
 ```
 

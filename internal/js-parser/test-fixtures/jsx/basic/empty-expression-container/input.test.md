@@ -8,38 +8,37 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:0-1:9
-	path: UIDPath<jsx/basic/empty-expression-container/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:0-1:9
 			expression: JSXElement {
+				attributes: []
+				children: [
+					JSXExpressionContainer {
+						expression: JSXEmptyExpression {
+							loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:4-1:4
+						}
+						loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:3-1:5
+					}
+				]
+				selfClosing: false
 				name: JSXIdentifier {
 					name: "a"
 					loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:1-1:2
 				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
 				loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:0-1:9
-				children: Array [
-					JSXExpressionContainer {
-						expression: JSXEmptyExpression {loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:4-1:4}
-						loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:3-1:5
-					}
-				]
 			}
+			loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:0-1:9
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/empty-expression-container/input.jsx>
+	loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:0-1:9
 }
 ```
 

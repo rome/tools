@@ -8,77 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/281/input.js 1:0-1:56
-	path: UIDPath<es2015/uncategorised/281/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/uncategorised/281/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:48
-				path: UIDPath<es2015/uncategorised/281/input.js>
-				start: Position 1:47
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation es2015/uncategorised/281/input.js 1:47-1:48 (a)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: SourceLocation es2015/uncategorised/281/input.js 1:23-1:24 (x)
 			}
-			loc: SourceLocation es2015/uncategorised/281/input.js 1:14-1:56
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/uncategorised/281/input.js 1:54-1:56
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/281/input.js 1:24-1:54
-				params: Array [
+				params: [
 					JSBindingObjectPattern {
-						rest: undefined
-						loc: SourceLocation es2015/uncategorised/281/input.js 1:25-1:37
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/uncategorised/281/input.js 1:25-1:37
-						}
-						properties: Array [
+						properties: [
 							JSBindingObjectPatternProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
@@ -88,9 +35,7 @@ JSRoot {
 									loc: SourceLocation es2015/uncategorised/281/input.js 1:27-1:28
 								}
 								value: JSBindingObjectPattern {
-									rest: undefined
-									loc: SourceLocation es2015/uncategorised/281/input.js 1:30-1:35
-									properties: Array [
+									properties: [
 										JSBindingObjectPatternProperty {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
@@ -106,29 +51,20 @@ JSRoot {
 											loc: SourceLocation es2015/uncategorised/281/input.js 1:32-1:33
 										}
 									]
+									loc: SourceLocation es2015/uncategorised/281/input.js 1:30-1:35
 								}
 								loc: SourceLocation es2015/uncategorised/281/input.js 1:27-1:35
 							}
 						]
+						meta: JSPatternMeta {
+							loc: SourceLocation es2015/uncategorised/281/input.js 1:25-1:37
+						}
+						loc: SourceLocation es2015/uncategorised/281/input.js 1:25-1:37
 					}
 					JSBindingArrayPattern {
-						rest: undefined
-						loc: SourceLocation es2015/uncategorised/281/input.js 1:39-1:53
-						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
-							loc: SourceLocation es2015/uncategorised/281/input.js 1:39-1:53
-						}
-						elements: Array [
+						elements: [
 							JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation es2015/uncategorised/281/input.js 1:40-1:52
-								meta: JSPatternMeta {
-									optional: undefined
-									typeAnnotation: undefined
-									loc: SourceLocation es2015/uncategorised/281/input.js 1:40-1:52
-								}
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -138,9 +74,7 @@ JSRoot {
 											loc: SourceLocation es2015/uncategorised/281/input.js 1:42-1:43
 										}
 										value: JSBindingObjectPattern {
-											rest: undefined
-											loc: SourceLocation es2015/uncategorised/281/input.js 1:45-1:50
-											properties: Array [
+											properties: [
 												JSBindingObjectPatternProperty {
 													key: JSStaticPropertyKey {
 														value: JSIdentifier {
@@ -156,17 +90,66 @@ JSRoot {
 													loc: SourceLocation es2015/uncategorised/281/input.js 1:47-1:48
 												}
 											]
+											loc: SourceLocation es2015/uncategorised/281/input.js 1:45-1:50
 										}
 										loc: SourceLocation es2015/uncategorised/281/input.js 1:42-1:50
 									}
 								]
+								meta: JSPatternMeta {
+									loc: SourceLocation es2015/uncategorised/281/input.js 1:40-1:52
+								}
+								loc: SourceLocation es2015/uncategorised/281/input.js 1:40-1:52
 							}
 						]
+						meta: JSPatternMeta {
+							loc: SourceLocation es2015/uncategorised/281/input.js 1:39-1:53
+						}
+						loc: SourceLocation es2015/uncategorised/281/input.js 1:39-1:53
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/281/input.js 1:24-1:54
+			}
+			loc: SourceLocation es2015/uncategorised/281/input.js 1:14-1:56
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation es2015/uncategorised/281/input.js 1:47-1:48 (a)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "a", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/uncategorised/281/input.js>
+				end: Position 1:48
+				start: Position 1:47
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/uncategorised/281/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/281/input.js>
+	loc: SourceLocation es2015/uncategorised/281/input.js 1:0-1:56
 }
 ```
 

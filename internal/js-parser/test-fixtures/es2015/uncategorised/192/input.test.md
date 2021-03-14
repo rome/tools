@@ -8,38 +8,36 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/192/input.js 1:0-1:10
-	path: UIDPath<es2015/uncategorised/192/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/192/input.js 1:0-1:10
 			expression: JSCallExpression {
-				loc: SourceLocation es2015/uncategorised/192/input.js 1:0-1:10
-				callee: JSReferenceIdentifier {
-					name: "func"
-					loc: SourceLocation es2015/uncategorised/192/input.js 1:0-1:4 (func)
-				}
-				arguments: Array [
+				arguments: [
 					JSSpreadElement {
-						loc: SourceLocation es2015/uncategorised/192/input.js 1:5-1:9
 						argument: JSReferenceIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/uncategorised/192/input.js 1:8-1:9 (a)
 						}
+						loc: SourceLocation es2015/uncategorised/192/input.js 1:5-1:9
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "func"
+					loc: SourceLocation es2015/uncategorised/192/input.js 1:0-1:4 (func)
+				}
+				loc: SourceLocation es2015/uncategorised/192/input.js 1:0-1:10
 			}
+			loc: SourceLocation es2015/uncategorised/192/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/192/input.js>
+	loc: SourceLocation es2015/uncategorised/192/input.js 1:0-1:10
 }
 ```
 

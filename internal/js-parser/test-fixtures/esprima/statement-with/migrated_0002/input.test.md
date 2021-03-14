@@ -8,33 +8,13 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-with/migrated_0002/input.js>
-	body: Array [
+	body: [
 		JSWithStatement {
-			loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:0-1:22
-			object: JSReferenceIdentifier {
-				name: "x"
-				loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:6-1:7 (x)
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:9-1:22
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:11-1:20
 						expression: JSAssignmentExpression {
 							operator: "="
-							loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:11-1:20
 							left: JSAssignmentIdentifier {
 								name: "foo"
 								loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:11-1:14 (foo)
@@ -43,12 +23,30 @@ JSRoot {
 								name: "bar"
 								loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:17-1:20 (bar)
 							}
+							loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:11-1:20
 						}
+						loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:11-1:20
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:9-1:22
 			}
+			object: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:6-1:7 (x)
+			}
+			loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-with/migrated_0002/input.js>
+	loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:0-2:0
 }
 ```
 

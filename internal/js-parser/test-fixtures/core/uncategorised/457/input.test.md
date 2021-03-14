@@ -8,56 +8,50 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/457/input.js 1:0-1:33
-	path: UIDPath<core/uncategorised/457/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "No loop label found"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:22
-				path: UIDPath<core/uncategorised/457/input.js>
-				start: Position 1:22
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSSwitchStatement {
-			loc: SourceLocation core/uncategorised/457/input.js 1:0-1:33
+			cases: [
+				JSSwitchCase {
+					consequent: [
+						JSContinueStatement {
+							loc: SourceLocation core/uncategorised/457/input.js 1:22-1:31
+						}
+					]
+					loc: SourceLocation core/uncategorised/457/input.js 1:13-1:31
+				}
+			]
 			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation core/uncategorised/457/input.js 1:8-1:9 (x)
 			}
-			cases: Array [
-				JSSwitchCase {
-					test: undefined
-					loc: SourceLocation core/uncategorised/457/input.js 1:13-1:31
-					consequent: Array [
-						JSContinueStatement {
-							label: undefined
-							loc: SourceLocation core/uncategorised/457/input.js 1:22-1:31
-						}
-					]
-				}
-			]
+			loc: SourceLocation core/uncategorised/457/input.js 1:0-1:33
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "No loop label found"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/457/input.js>
+				end: Position 1:22
+				start: Position 1:22
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/457/input.js>
+	loc: SourceLocation core/uncategorised/457/input.js 1:0-1:33
 }
 ```
 

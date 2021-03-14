@@ -8,34 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:8
-	path: UIDPath<es2015/array-rest-spread/comma-after-spread/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:8
 			expression: JSArrayExpression {
-				loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:7
-				elements: Array [
+				elements: [
 					JSSpreadElement {
-						loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:1-1:5
 						argument: JSReferenceIdentifier {
 							name: "a"
 							loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:4-1:5 (a)
 						}
+						loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:1-1:5
 					}
 				]
+				loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:7
 			}
+			loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/array-rest-spread/comma-after-spread/input.js>
+	loc: SourceLocation es2015/array-rest-spread/comma-after-spread/input.js 1:0-1:8
 }
 ```
 

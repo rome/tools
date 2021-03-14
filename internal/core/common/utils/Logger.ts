@@ -6,20 +6,24 @@
  */
 
 import {Reporter, ReporterOptions} from "@internal/cli-reporter";
-import {AnyMarkup, markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
+import {Resource} from "@internal/resources";
 import workerThreads = require("worker_threads");
 
 export default class Logger extends Reporter {
-	constructor(opts: ReporterOptions, loggerType: string) {
-		super(opts);
+	constructor(resources: Resource, opts: ReporterOptions, loggerType: string) {
+		super(`Logger<${loggerType}>`, opts);
 		this.loggerType = loggerType;
+		resources.add(this);
 	}
 
 	private loggerType: string;
 
-	protected getMessagePrefix(): AnyMarkup {
-		const inner = `${this.loggerType} ${process.pid}:${workerThreads.threadId}`;
-		const timestamp = new Date().toISOString();
-		return markup`<dim>[${timestamp}] [${inner}]</dim> `;
+	protected getMessagePrefix(): Markup {
+		const inner = `${this.loggerType}:${workerThreads.threadId}`;
+		// TODO: Disable timestamp for the timebeing. It's way too noisy when displayed in the console.
+		//const timestamp = new Date().toISOString();
+		//return markup`<dim>[${timestamp}] [${inner}]</dim> `;
+		return markup`<dim>[${inner}]</dim> `;
 	}
 }

@@ -8,48 +8,46 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/231/input.js 1:0-1:42
-	path: UIDPath<core/uncategorised/231/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			loc: SourceLocation core/uncategorised/231/input.js 1:0-1:42
-			test: JSReferenceIdentifier {
-				name: "morning"
-				loc: SourceLocation core/uncategorised/231/input.js 1:4-1:11 (morning)
-			}
 			alternate: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/231/input.js 1:33-1:42
 				expression: JSCallExpression {
-					arguments: Array []
-					loc: SourceLocation core/uncategorised/231/input.js 1:33-1:42
+					arguments: []
 					callee: JSReferenceIdentifier {
 						name: "goodDay"
 						loc: SourceLocation core/uncategorised/231/input.js 1:33-1:40 (goodDay)
 					}
+					loc: SourceLocation core/uncategorised/231/input.js 1:33-1:42
 				}
+				loc: SourceLocation core/uncategorised/231/input.js 1:33-1:42
 			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/231/input.js 1:13-1:27
 				expression: JSCallExpression {
-					arguments: Array []
-					loc: SourceLocation core/uncategorised/231/input.js 1:13-1:26
+					arguments: []
 					callee: JSReferenceIdentifier {
 						name: "goodMorning"
 						loc: SourceLocation core/uncategorised/231/input.js 1:13-1:24 (goodMorning)
 					}
+					loc: SourceLocation core/uncategorised/231/input.js 1:13-1:26
 				}
+				loc: SourceLocation core/uncategorised/231/input.js 1:13-1:27
 			}
+			test: JSReferenceIdentifier {
+				name: "morning"
+				loc: SourceLocation core/uncategorised/231/input.js 1:4-1:11 (morning)
+			}
+			loc: SourceLocation core/uncategorised/231/input.js 1:0-1:42
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/231/input.js>
+	loc: SourceLocation core/uncategorised/231/input.js 1:0-1:42
 }
 ```
 

@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {DiagnosticLocation} from "../types";
+import {DiagnosticAdvice, DiagnosticLocation} from "../types";
 import {markup} from "@internal/markup";
 import {
 	buildSuggestionAdvice,
@@ -8,15 +8,16 @@ import {
 import {DiagnosticCategory} from "../categories";
 import {ResolverQueryResponseNotFound} from "@internal/core/server/fs/Resolver";
 import {SourceLocation} from "@internal/parser-core";
-import {AnyPath} from "@internal/path";
+import {Path} from "@internal/path";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 // @internal/path-match
 export const resolver = createDiagnosticsCategory({
 	NOT_FOUND: (
 		responseType: ResolverQueryResponseNotFound["type"],
-		source: string,
-		location: DiagnosticLocation,
+		origin: Path,
+		source: Path,
+		advice: DiagnosticAdvice[],
 	) => {
 		let messagePrefix = "";
 		let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["resolver/notFound"];
@@ -39,13 +40,14 @@ export const resolver = createDiagnosticsCategory({
 		}
 
 		return {
-			message: markup`${messagePrefix} <emphasis>${source}</emphasis> from <emphasis>${location.path}</emphasis>`,
+			message: markup`${messagePrefix} <emphasis>${source}</emphasis> from <emphasis>${origin}</emphasis>`,
 			category,
+			advice,
 		};
 	},
 	UNKNOWN_EXPORT: (
 		name: string,
-		source: AnyPath,
+		source: Path,
 		exportedNames: string[],
 		formatExportedName: (
 			name: string,
@@ -87,7 +89,7 @@ export const resolver = createDiagnosticsCategory({
 	}),
 	UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL: (
 		name: string,
-		source: AnyPath,
+		source: Path,
 		location: SourceLocation,
 	) => ({
 		message: markup`Couldn't find export <emphasis>${name}</emphasis> in <emphasis>${source}</emphasis>`,

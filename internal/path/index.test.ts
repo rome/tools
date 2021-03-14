@@ -7,7 +7,6 @@
 
 import {
 	createAbsoluteFilePath,
-	createAnyPath,
 	createFilePath,
 	createRelativePath,
 } from "@internal/path";
@@ -22,7 +21,7 @@ const relativeTests: [string, string, string][] = [
 	["c:/aaaa/bbbb", "c:/aaaa/cccc", "../cccc"],
 	["c:/aaaa/", "c:/aaaa/cccc", "cccc"],
 	["c:/", "c:\\aaaa\\bbbb", "aaaa/bbbb"],
-	["c:/aaaa/bbbb", "d:\\", "D:"],
+	["c:/aaaa/bbbb", "d:\\", "D:\\"],
 	["c:/aaaaa/", "c:/aaaa/cccc", "../aaaa/cccc"],
 	["C:\\foo\\bar\\baz\\quux", "C:\\", "../../../.."],
 	["C:\\foo\\test", "C:\\foo\\test\\bar\\package.json", "bar/package.json"],
@@ -101,7 +100,7 @@ for (let i = 0; i < segmentTests.length; i++) {
 	test(
 		`segments: ${i}: ${loc}`,
 		(t) => {
-			t.looksLike(createAnyPath(loc).parsed.segments, expectedSegments);
+			t.looksLike(createRelativePath(loc).getSegments(), expectedSegments);
 		},
 	);
 }
@@ -109,14 +108,11 @@ for (let i = 0; i < segmentTests.length; i++) {
 test(
 	"tilde doesn't expand with relative hint",
 	(t) => {
-		t.true(createAbsoluteFilePath("~/foo").parsed.segments[0] !== "~");
+		t.true(createAbsoluteFilePath("~/foo").getSegments()[0] !== "~");
+		t.inlineSnapshot(createRelativePath("~/foo").getSegments(), '["~", "foo"]');
 		t.inlineSnapshot(
-			createRelativePath("~/foo").parsed.segments,
-			'Array [\n\t"~"\n\t"foo"\n]',
-		);
-		t.inlineSnapshot(
-			createAbsoluteFilePath("/bar").append("~/foo").parsed.segments,
-			'Array [\n\t""\n\t"bar"\n\t"~"\n\t"foo"\n]',
+			createAbsoluteFilePath("/bar").append("~/foo").getSegments(),
+			'["bar", "~", "foo"]',
 		);
 	},
 );

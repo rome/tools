@@ -8,47 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/77/input.js 1:0-1:27
-	path: UIDPath<es2015/uncategorised/77/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation es2015/uncategorised/77/input.js 1:0-1:27
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "parse"
 					loc: SourceLocation es2015/uncategorised/77/input.js 1:16-1:21 (parse)
 				}
-				loc: SourceLocation es2015/uncategorised/77/input.js 1:7-1:27
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2015/uncategorised/77/input.js 1:24-1:27
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation es2015/uncategorised/77/input.js 1:21-1:23
 				}
+				loc: SourceLocation es2015/uncategorised/77/input.js 1:7-1:27
 			}
+			loc: SourceLocation es2015/uncategorised/77/input.js 1:0-1:27
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/77/input.js>
+	loc: SourceLocation es2015/uncategorised/77/input.js 1:0-1:27
 }
 ```
 

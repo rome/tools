@@ -8,47 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:0-2:0
-	path: UIDPath<es2020/dynamic-import/no-args/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:0-1:9
 			expression: JSImportCall {
-				loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:6-1:8
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:7-1:7
 				}
+				loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:6-1:8
 			}
+			loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:0-1:9
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "import() requires exactly one argument"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:7
 				path: UIDPath<es2020/dynamic-import/no-args/input.js>
+				end: Position 1:7
 				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/dynamic-import/no-args/input.js>
+	loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:0-2:0
 }
 ```
 

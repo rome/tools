@@ -27,7 +27,7 @@ export const spdx = createDiagnosticsCategory({
 			exceptions,
 		}: UnknownLicenseArg,
 	) => {
-		const advice: DiagnosticAdvice = [
+		const advice: DiagnosticAdvice[] = [
 			...buildSuggestionAdvice(id, knownLicenses, {ignoreCase: true}),
 			{
 				type: "log",
@@ -40,8 +40,7 @@ export const spdx = createDiagnosticsCategory({
 			advice.push({
 				type: "action",
 				command: "config set",
-				noun: markup`Add this license to the exceptions`,
-				instruction: markup`To automatically add an exception for this license, run:`,
+				description: markup`Add this license as an exception`,
 				args: [
 					`dependencies.exceptions.invalidLicenses.${id}`,
 					`${exceptions.packageName}@${exceptions.packageVersion}`,
@@ -72,8 +71,7 @@ export const spdx = createDiagnosticsCategory({
 			},
 			{
 				type: "action",
-				instruction: markup`To automatically add an exception for this license, run:`,
-				noun: markup`Fix invalid licenses`,
+				description: markup`Add an exception for this license`,
 				command: "config push",
 				args: [
 					`dependencies.exceptions.invalidLicenses.${id}`,

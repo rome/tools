@@ -6,16 +6,15 @@
  */
 
 import {
-	AnyVisitors,
+	AnyVisitor,
 	CompilerContext,
+	CompilerPath,
+	CompilerPathOptions,
 	ExitSignal,
-	Path,
-	PathOptions,
 	signals,
 } from "@internal/compiler";
 import {AnyNode, AnyNodes, visitorKeys as allVisitorKeys} from "@internal/ast";
 import {isNodeLike} from "@internal/js-ast-utils";
-import {AnyVisitor} from "../types";
 import {pretty} from "@internal/pretty-format";
 import {
 	EnterSignal,
@@ -29,7 +28,11 @@ import {AnyVisitorState} from "../lib/VisitorState";
 /**
  * Validate the return value of an enter or exit transform
  */
-function validateSignal(transformName: string, signal: ExitSignal, path: Path) {
+function validateSignal(
+	transformName: string,
+	signal: ExitSignal,
+	path: CompilerPath,
+) {
 	// Verify common mistake of forgetting to return something
 	if (typeof signal === "undefined") {
 		throw new Error(
@@ -83,7 +86,10 @@ function isRetainSignal(
 	}
 }
 
-function maybeFork(path: Path, signal: ReplaceSignal | RetainSignal): Path {
+function maybeFork(
+	path: CompilerPath,
+	signal: ReplaceSignal | RetainSignal,
+): CompilerPath {
 	if (isRetainSignal(path.node, signal)) {
 		return path;
 	} else {
@@ -140,9 +146,9 @@ function shouldBailReduce(
 
 export function reduceNode(
 	ast: AnyNode,
-	visitors: AnyVisitor | AnyVisitors,
+	visitors: AnyVisitor | AnyVisitor[],
 	context: CompilerContext,
-	pathOpts: PathOptions = {},
+	pathOpts: CompilerPathOptions = {},
 ): AnyNodes {
 	const res = _reduceSignal(
 		ast,
@@ -172,9 +178,9 @@ export function reduceNode(
 
 export function reduceSignal(
 	ast: AnyNode,
-	visitors: AnyVisitor | AnyVisitors,
+	visitors: AnyVisitor | AnyVisitor[],
 	context: CompilerContext,
-	pathOpts: PathOptions = {},
+	pathOpts: CompilerPathOptions = {},
 ): ExitSignal {
 	return _reduceSignal(
 		ast,
@@ -189,12 +195,12 @@ type PopState = Set<AnyVisitorState>;
 // This method is pretty gnarly and deeply nested but is very important from a performance perspective
 function _reduceSignal(
 	origNode: AnyNode,
-	visitors: AnyVisitors,
+	visitors: AnyVisitor[],
 	context: CompilerContext,
-	pathOpts: PathOptions,
+	pathOpts: CompilerPathOptions,
 ): ExitSignal {
 	// Initialize first path
-	let path: Path = new Path(origNode, context, pathOpts);
+	let path: CompilerPath = new CompilerPath(origNode, context, pathOpts);
 
 	const popState: PopState = new Set();
 
@@ -242,7 +248,7 @@ function _reduceSignal(
 		if (visitorKeys !== undefined) {
 			// Build the ancestry paths that we'll pass to each child path
 			const ancestryPaths = pathOpts.ancestryPaths || [];
-			let childAncestryPaths: Path[] = [path].concat(ancestryPaths);
+			let childAncestryPaths: CompilerPath[] = [path].concat(ancestryPaths);
 
 			// Reduce the children
 			for (const key of visitorKeys) {

@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-object-initialiser/proto-identifier-getter/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:0-1:40
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:1-1:39
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -33,7 +20,9 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:3-1:12
 						}
-						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:14-1:18}
+						value: JSNullLiteral {
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:14-1:18
+						}
 						loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:3-1:18
 					}
 					JSObjectMethod {
@@ -45,28 +34,35 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:24-1:33
 						}
-						loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:20-1:37
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:35-1:37
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:33-1:35
 						}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:20-1:37
 					}
 				]
+				loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:1-1:39
 			}
+			loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:0-1:40
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-object-initialiser/proto-identifier-getter/input.js>
+	loc: SourceLocation esprima/es2015-object-initialiser/proto-identifier-getter/input.js 1:0-2:0
 }
 ```
 

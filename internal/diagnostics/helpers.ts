@@ -12,10 +12,10 @@ import {
 	DiagnosticLocation,
 } from "./types";
 import {orderBySimilarity, splitLines} from "@internal/string-utils";
-import stringDiff from "@internal/string-diff";
 import {Position} from "@internal/parser-core";
-import {StaticMarkup, markup} from "@internal/markup";
+import {StaticMarkup, formatFileLinkInnerText, markup} from "@internal/markup";
 import {joinCategoryName} from "./categories";
+import {stringDiffCompressed} from "@internal/string-diff";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
@@ -27,8 +27,8 @@ export function buildSuggestionAdvice(
 	value: string,
 	items: string[],
 	{minRating = 0.5, ignoreCase, formatItem}: BuildSuggestionAdviceOptions = {},
-): DiagnosticAdvice {
-	const advice: DiagnosticAdvice = [];
+): DiagnosticAdvice[] {
+	const advice: DiagnosticAdvice[] = [];
 
 	const ratings = orderBySimilarity(
 		value,
@@ -77,7 +77,7 @@ export function buildSuggestionAdvice(
 		advice.push({
 			type: "diff",
 			language: "unknown",
-			diff: stringDiff(value, topRatingRaw),
+			diff: stringDiffCompressed(value, topRatingRaw),
 		});
 
 		if (strings.length > 0) {
@@ -129,8 +129,8 @@ export function truncateSourceText(
 
 export function buildDuplicateLocationAdvice(
 	locations: Array<undefined | DiagnosticLocation>,
-): DiagnosticAdvice {
-	const locationAdvice: DiagnosticAdvice = locations.map((location) => {
+): DiagnosticAdvice[] {
+	const locationAdvice: DiagnosticAdvice[] = locations.map((location) => {
 		if (location === undefined) {
 			return {
 				type: "log",
@@ -155,19 +155,51 @@ export function buildDuplicateLocationAdvice(
 	];
 }
 
-export function diagnosticLocationToMarkupFilelink(
+function nodeInternalDiagnosticLocationToMarkupFilelink(
 	loc: DiagnosticLocation,
-	innerText: string = "",
+	innerText?: string,
 ): StaticMarkup {
 	const {start, path} = loc;
 
+	// Properly escape segments and remove node: prefix
+	let filename = path.getSegments().map((seg) => encodeURIComponent(seg)).join(
+		"/",
+	).slice(5);
+	if (!filename.endsWith(".js")) {
+		filename += ".js";
+	}
+
+	let href = `https://github.com/nodejs/node/tree/${process.version}/lib/${filename}`;
+
+	if (innerText === undefined) {
+		innerText = formatFileLinkInnerText(path, {}, start);
+
+		if (start !== undefined) {
+			href += `#L${String(start.line.valueOf())}`;
+		}
+	}
+
+	return markup`<hyperlink target="${href}">${innerText}</hyperlink>`;
+}
+
+export function diagnosticLocationToMarkupFilelink(
+	loc: DiagnosticLocation,
+	innerText?: string,
+): StaticMarkup {
+	const {start, path} = loc;
+
+	// Link directly to GitHub for internal Node files
+	if (path.isUID() && path.format().startsWith("node:")) {
+		return nodeInternalDiagnosticLocationToMarkupFilelink(loc, innerText);
+	}
+
 	if (start === undefined) {
-		return markup`<filelink target="${path.join()}">${innerText}</filelink>`;
+		return markup`<filelink target="${path.join()}">${innerText ?? ""}</filelink>`;
 	}
 
 	return markup`<filelink target="${path.join()}" line="${String(
 		start.line.valueOf(),
-	)}" column="${String(start.column.valueOf())}">${innerText}</filelink>`;
+	)}" column="${String(start.column.valueOf())}">${innerText ?? ""}</filelink>`;
 }
 
 // Category value can allow arbitrary values so we need to escape bad characters
@@ -194,8 +226,12 @@ export function formatCategoryDescription(
 
 export function appendAdviceToDiagnostic(
 	diag: Diagnostic,
-	advice: DiagnosticAdvice,
+	advice: DiagnosticAdvice[],
 ): Diagnostic {
+	if (advice.length === 0) {
+		return diag;
+	}
+
 	return {
 		...diag,
 		description: {
@@ -207,8 +243,12 @@ export function appendAdviceToDiagnostic(
 
 export function prependAdviceToDiagnostic(
 	diag: Diagnostic,
-	advice: DiagnosticAdvice,
+	advice: DiagnosticAdvice[],
 ): Diagnostic {
+	if (advice.length === 0) {
+		return diag;
+	}
+
 	return {
 		...diag,
 		description: {

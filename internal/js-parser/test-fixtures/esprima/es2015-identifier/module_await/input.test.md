@@ -8,35 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-identifier/module_await/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-identifier/module_await/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-identifier/module_await/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-identifier/module_await/input.js 1:0-1:9
 				left: JSAssignmentIdentifier {
 					name: "await"
 					loc: SourceLocation esprima/es2015-identifier/module_await/input.js 1:0-1:5 (await)
 				}
 				right: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation esprima/es2015-identifier/module_await/input.js 1:8-1:9
 				}
+				loc: SourceLocation esprima/es2015-identifier/module_await/input.js 1:0-1:9
 			}
+			loc: SourceLocation esprima/es2015-identifier/module_await/input.js 1:0-1:10
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-identifier/module_await/input.js>
+	loc: SourceLocation esprima/es2015-identifier/module_await/input.js 1:0-2:0
 }
 ```
 

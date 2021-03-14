@@ -8,33 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/regression/186/input.js 1:0-2:0
-	path: UIDPath<es2015/regression/186/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation es2015/regression/186/input.js 1:0-1:23
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation es2015/regression/186/input.js 1:0-1:23
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/regression/186/input.js 1:6-1:7 (x)
 						}
-						loc: SourceLocation es2015/regression/186/input.js 1:6-1:22
 						init: JSObjectExpression {
-							loc: SourceLocation es2015/regression/186/input.js 1:10-1:22
-							properties: Array [
+							properties: [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -64,12 +49,25 @@ JSRoot {
 									loc: SourceLocation es2015/regression/186/input.js 1:18-1:21
 								}
 							]
+							loc: SourceLocation es2015/regression/186/input.js 1:10-1:22
 						}
+						loc: SourceLocation es2015/regression/186/input.js 1:6-1:22
 					}
 				]
+				loc: SourceLocation es2015/regression/186/input.js 1:0-1:23
 			}
+			loc: SourceLocation es2015/regression/186/input.js 1:0-1:23
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/regression/186/input.js>
+	loc: SourceLocation es2015/regression/186/input.js 1:0-2:0
 }
 ```
 

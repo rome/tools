@@ -5,29 +5,91 @@ social-image: social-logo.png
 
 {% assign post = collections.post | reverse | first %}
 
-<aside class="latest-post" aria-labelledby="latest-post">
+<div class="new-hero">
+	<div class="heading">
+		<span><em>Rome</em> is a</span>
+
+		<div class="mobile-scroller scroller">
+			<ul class="reverse">
+				<li>
+					<span class="text"><span class="typescript">TypeScript</span> Linter</span>
+					<span class="big-text">TypeScript Linter</span>
+				</li>
+				<li>
+					<span class="text"><span class="javascript">JavaScript</span> Compiler</span>
+					<span class="big-text">JavaScript Compiler</span>
+				</li>
+				<li>
+					<span class="text"><span class="html">HTML</span> Minifier</span>
+					<span class="big-text">HTML Minifier</span>
+				</li>
+				<li>
+					<span class="text"><span class="css">CSS</span> Formatter</span>
+					<span class="big-text">CSS Formatter</span>
+				</li>
+			</ul>
+		</div>
+
+		<div class="desktop-scrollers">
+			<div class="scroller">
+				<ul class="reverse">
+					<li class="typescript">
+						<span class="text">TypeScript</span>
+						<span class="big-text">TypeScript</span>
+					</li>
+					<li class="javascript">
+						<span class="text">JavaScript</span>
+						<span class="big-text">JavaScript</span>
+					</li>
+					<li class="html">
+						<span class="text">HTML</span>
+						<span class="big-text">HTML</span>
+					</li>
+					<li class="css">
+						<span class="text">CSS</span>
+						<span class="big-text">CSS</span>
+					</li>
+				</ul>
+			</div>
+			<div class="scroller">
+				<ul>
+					<li>
+						<span class="text">Linter</span>
+						<span class="big-text">Linter</span>
+					</li>
+					<li>
+						<span class="text">Formatter</span>
+						<span class="big-text">Formatter</span>
+					</li>
+					<li>
+						<span class="text">Compiler</span>
+						<span class="big-text">Compiler</span>
+					</li>
+					<li>
+						<span class="text">Bundler</span>
+						<span class="big-text">Bundler</span>
+					</li>
+					<li>
+						<span class="text">Minifier</span>
+						<span class="big-text">Minifier</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<aside hidden class="latest-post" aria-labelledby="latest-post">
 	<h2>Latest blog post</h2>
 	<div class="info">
 		<h3>
 		 <a href="{{ post.url }}">{{ post.data.title }}</a>
 		</h3>
 		<div class="author">
-			by <a href="{{ post.data.author_url }}">{{ post.data.author_name }}</a>
-			at {{ post.date | dateFormat }}
+			{{ post.date | dateFormat }}
 		</div>
 	</div>
 </aside>
-
-<header class="hero">
-	<h1>
-		<div>
-			<div class="left"></div>
-			Rome
-			<div class="right"></div>
-		</div>
-	</h1>
-	<h2>Unifying the frontend development toolchain</h2>
-</header>
 
 <main id="main-content" class="content split homepage">
 	{{ content | safe }}

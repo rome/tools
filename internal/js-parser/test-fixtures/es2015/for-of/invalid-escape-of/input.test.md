@@ -8,19 +8,13 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-2:0
-	path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
-	body: Array [
+	body: [
 		JSForStatement {
-			loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-1:20
+			body: JSBlockStatement {
+				body: []
+				directives: []
+				loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:18-1:20
+			}
 			init: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:5-1:6 (x)
@@ -33,37 +27,34 @@ JSRoot {
 				name: "y"
 				loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:15-1:16 (y)
 			}
-			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:18-1:20
-			}
+			loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-1:20
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ";", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "\\", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:14
 				path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
+				end: Position 1:14
 				start: Position 1:7
 			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>\\\\</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>;</emphasis>"}
-					}
-				]
-			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
+	loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-2:0
 }
 ```
 

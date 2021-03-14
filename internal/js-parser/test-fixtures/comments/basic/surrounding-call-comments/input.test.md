@@ -8,17 +8,42 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:0-6:0
-	path: UIDPath<comments/basic/surrounding-call-comments/input.js>
-	comments: Array [
+	body: [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "a"
+				loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:9-1:10 (a)
+			}
+			body: JSBlockStatement {
+				body: [
+					JSExpressionStatement {
+						leadingComments: ["0"]
+						trailingComments: ["1"]
+						expression: JSCallExpression {
+							arguments: []
+							callee: JSReferenceIdentifier {
+								name: "foo"
+								loc: SourceLocation comments/basic/surrounding-call-comments/input.js 3:4-3:7 (foo)
+							}
+							loc: SourceLocation comments/basic/surrounding-call-comments/input.js 3:4-3:9
+						}
+						loc: SourceLocation comments/basic/surrounding-call-comments/input.js 3:4-3:10
+					}
+				]
+				directives: []
+				loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:13-5:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:10-1:12
+			}
+			loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:0-5:1
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: " before "
@@ -30,47 +55,14 @@ JSRoot {
 			loc: SourceLocation comments/basic/surrounding-call-comments/input.js 4:4-4:15
 		}
 	]
-	body: Array [
-		JSFunctionDeclaration {
-			id: JSBindingIdentifier {
-				name: "a"
-				loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:9-1:10 (a)
-			}
-			loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:0-5:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:10-1:12
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:13-5:1
-				body: Array [
-					JSExpressionStatement {
-						leadingComments: Array ["0"]
-						loc: SourceLocation comments/basic/surrounding-call-comments/input.js 3:4-3:10
-						trailingComments: Array ["1"]
-						expression: JSCallExpression {
-							arguments: Array []
-							leadingComments: undefined
-							loc: SourceLocation comments/basic/surrounding-call-comments/input.js 3:4-3:9
-							callee: JSReferenceIdentifier {
-								name: "foo"
-								leadingComments: undefined
-								loc: SourceLocation comments/basic/surrounding-call-comments/input.js 3:4-3:7 (foo)
-							}
-						}
-					}
-				]
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<comments/basic/surrounding-call-comments/input.js>
+	loc: SourceLocation comments/basic/surrounding-call-comments/input.js 1:0-6:0
 }
 ```
 

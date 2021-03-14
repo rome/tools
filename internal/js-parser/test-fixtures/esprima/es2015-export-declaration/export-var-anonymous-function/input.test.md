@@ -8,60 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-export-declaration/export-var-anonymous-function/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:0-1:32
 			declaration: JSVariableDeclarationStatement {
-				loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:7-1:32
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:7-1:32
-					declarations: Array [
+					declarations: [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
 								loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:11-1:14 (foo)
 							}
-							loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:11-1:31
 							init: JSFunctionExpression {
-								id: undefined
-								loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:17-1:31
 								body: JSBlockStatement {
-									body: Array []
-									directives: Array []
+									body: []
+									directives: []
 									loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:29-1:31
 								}
 								head: JSFunctionHead {
 									async: false
 									generator: false
 									hasHoistedVars: false
-									params: Array []
-									rest: undefined
-									returnType: undefined
-									thisType: undefined
-									typeParameters: undefined
+									params: []
 									loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:26-1:28
 								}
+								loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:17-1:31
 							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:11-1:31
 						}
 					]
+					loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:7-1:32
 				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:7-1:32
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-var-anonymous-function/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-var-anonymous-function/input.js 1:0-2:0
 }
 ```
 

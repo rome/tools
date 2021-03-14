@@ -8,68 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
-	path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:9
-				path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
-				start: Position 1:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
-			test: JSNumericLiteral {
-				value: 1
-				format: undefined
-				loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:7-1:8
-			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:19-1:22 (foo)
 				}
-				loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:10-1:26
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:24-1:26
 				}
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
+					params: []
 					loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:22-1:24
 				}
+				loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:10-1:26
+			}
+			test: JSNumericLiteral {
+				value: 1
+				loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:7-1:8
+			}
+			loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {
+					value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"
+				}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
+				end: Position 1:9
+				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
+	loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
 }
 ```
 

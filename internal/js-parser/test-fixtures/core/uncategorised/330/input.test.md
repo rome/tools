@@ -8,25 +8,13 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/330/input.js 1:0-2:5
-	path: UIDPath<core/uncategorised/330/input.js>
-	body: Array [
+	body: [
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation core/uncategorised/330/input.js 1:0-1:2
 		}
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/330/input.js 2:0-2:5
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -34,10 +22,8 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: SourceLocation core/uncategorised/330/input.js 2:0-2:5
 				expression: JSRegExpSubExpression {
-					loc: SourceLocation core/uncategorised/330/input.js 2:1-2:4
-					body: Array [
+					body: [
 						JSRegExpCharacter {
 							value: "f"
 							loc: SourceLocation core/uncategorised/330/input.js 2:1-2:2
@@ -51,10 +37,22 @@ JSRoot {
 							loc: SourceLocation core/uncategorised/330/input.js 2:3-2:4
 						}
 					]
+					loc: SourceLocation core/uncategorised/330/input.js 2:1-2:4
 				}
+				loc: SourceLocation core/uncategorised/330/input.js 2:0-2:5
 			}
+			loc: SourceLocation core/uncategorised/330/input.js 2:0-2:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/330/input.js>
+	loc: SourceLocation core/uncategorised/330/input.js 1:0-2:5
 }
 ```
 

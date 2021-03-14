@@ -8,65 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/yield/function-name-strict/input.js 1:0-2:19
-	path: UIDPath<es2015/yield/function-name-strict/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/yield/function-name-strict/input.js 1:0-1:13
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "yield is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:14
-				path: UIDPath<es2015/yield/function-name-strict/input.js>
-				start: Position 2:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "yield"
 				loc: SourceLocation es2015/yield/function-name-strict/input.js 2:9-2:14 (yield)
 			}
-			loc: SourceLocation es2015/yield/function-name-strict/input.js 2:0-2:19
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/yield/function-name-strict/input.js 2:17-2:19
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2015/yield/function-name-strict/input.js 2:14-2:16
+			}
+			loc: SourceLocation es2015/yield/function-name-strict/input.js 2:0-2:19
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["yield", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/yield/function-name-strict/input.js>
+				end: Position 2:14
+				start: Position 2:9
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/yield/function-name-strict/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/yield/function-name-strict/input.js>
+	loc: SourceLocation es2015/yield/function-name-strict/input.js 1:0-2:19
 }
 ```
 

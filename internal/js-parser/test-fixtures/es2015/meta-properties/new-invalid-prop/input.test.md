@@ -8,61 +8,16 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:0-3:1
-	path: UIDPath<es2015/meta-properties/new-invalid-prop/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The only valid meta property for new is new.target"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:10
-				path: UIDPath<es2015/meta-properties/new-invalid-prop/input.js>
-				start: Position 2:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:9-1:10 (f)
 			}
-			loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:13-3:1
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:2-2:10
 						expression: JSMetaProperty {
-							loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:2-2:10
 							meta: JSIdentifier {
 								name: "new"
 								loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:2-2:5 (new)
@@ -71,12 +26,49 @@ JSRoot {
 								name: "prop"
 								loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:6-2:10 (prop)
 							}
+							loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:2-2:10
 						}
+						loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:2-2:10
 					}
 				]
+				directives: []
+				loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:13-3:1
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:10-1:12
+			}
+			loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "The only valid meta property for "}, "new", RAW_MARKUP {value: " is "}, "new", RAW_MARKUP {value: "."}, "target"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/meta-properties/new-invalid-prop/input.js>
+				end: Position 2:10
+				start: Position 2:6
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/meta-properties/new-invalid-prop/input.js>
+	loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:0-3:1
 }
 ```
 

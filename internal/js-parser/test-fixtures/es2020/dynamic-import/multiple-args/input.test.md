@@ -8,51 +8,20 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:0-2:0
-	path: UIDPath<es2020/dynamic-import/multiple-args/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<es2020/dynamic-import/multiple-args/input.js>
-				start: Position 1:14
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:0-1:15
 			expression: JSImportCall {
-				loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:6-1:15
 				argument: JSStringLiteral {
 					value: "hello"
 					loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:7-1:14
 				}
+				loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:6-1:15
 			}
+			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:0-1:15
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:16-1:28
 			expression: JSSequenceExpression {
-				loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:16-1:28
-				expressions: Array [
+				expressions: [
 					JSStringLiteral {
 						value: "world"
 						loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:16-1:23
@@ -62,16 +31,43 @@ JSRoot {
 						loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:25-1:28
 					}
 				]
+				loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:16-1:28
 			}
+			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:16-1:28
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:28-1:30
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:28-1:29
 			}
+			loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:28-1:30
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2020/dynamic-import/multiple-args/input.js>
+				end: Position 1:15
+				start: Position 1:14
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/dynamic-import/multiple-args/input.js>
+	loc: SourceLocation es2020/dynamic-import/multiple-args/input.js 1:0-2:0
 }
 ```
 

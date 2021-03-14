@@ -8,66 +8,62 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-2:0
-	path: UIDPath<jsx/errors/unclosed-jsx-element/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-1:13
 			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-1:13
-				children: Array [
+				attributes: []
+				children: [
 					JSXText {
 						value: "() => "
 						loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:5-1:11
 					}
 					JSXExpressionContainer {
-						expression: JSXEmptyExpression {loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:12-1:12}
+						expression: JSXEmptyExpression {
+							loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:12-1:12
+						}
 						loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:11-1:13
 					}
 				]
+				selfClosing: false
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4
+				}
+				loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-1:13
 			}
+			loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-1:13
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {category: "info", text: [RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}, "div", RAW_MARKUP {value: "</emphasis>"}]}
+					frame {
+						location: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unclosed JSX element"}
+			}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:13
 				path: UIDPath<jsx/errors/unclosed-jsx-element/input.jsx>
+				end: Position 1:13
 				start: Position 1:13
 			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed JSX element"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>div</emphasis>"}
-					}
-					frame {location: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4}
-				]
-			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/errors/unclosed-jsx-element/input.jsx>
+	loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-2:0
 }
 ```
 

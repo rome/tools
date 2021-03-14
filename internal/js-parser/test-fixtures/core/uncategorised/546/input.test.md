@@ -8,29 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/546/input.js 1:0-2:0
-	path: UIDPath<core/uncategorised/546/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/uncategorised/546/input.js 1:0-1:25
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: SourceLocation core/uncategorised/546/input.js 1:0-1:25
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							rest: undefined
-							loc: SourceLocation core/uncategorised/546/input.js 1:6-1:16
-							properties: Array [
+							properties: [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
@@ -46,21 +31,33 @@ JSRoot {
 									loc: SourceLocation core/uncategorised/546/input.js 1:8-1:14
 								}
 							]
+							loc: SourceLocation core/uncategorised/546/input.js 1:6-1:16
 						}
-						loc: SourceLocation core/uncategorised/546/input.js 1:6-1:24
 						init: JSCallExpression {
-							arguments: Array []
-							loc: SourceLocation core/uncategorised/546/input.js 1:19-1:24
+							arguments: []
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: SourceLocation core/uncategorised/546/input.js 1:19-1:22 (foo)
 							}
+							loc: SourceLocation core/uncategorised/546/input.js 1:19-1:24
 						}
+						loc: SourceLocation core/uncategorised/546/input.js 1:6-1:24
 					}
 				]
+				loc: SourceLocation core/uncategorised/546/input.js 1:0-1:25
 			}
+			loc: SourceLocation core/uncategorised/546/input.js 1:0-1:25
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/546/input.js>
+	loc: SourceLocation core/uncategorised/546/input.js 1:0-2:0
 }
 ```
 

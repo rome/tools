@@ -6,81 +6,83 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-3:19
-	path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 1:18
-				path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
-				start: Position 1:11
-			}
-			description: Object {
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The identifier <emphasis>initial</emphasis> can't be used here."}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "In this position, the words <emphasis>unset</emphasis>, <emphasis>initial</emphasis>, <emphasis>inherit</emphasis>,  are CSS-wide keywords, so they are reserved."}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		CSSAtRule {
 			name: "keyframes"
-			block: undefined
-			prelude: Array []
+			prelude: []
 			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-1:18
 		}
 		CSSRule {
-			prelude: Array []
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:19-1:21
+			prelude: []
 			block: CSSBlock {
-				value: Array []
+				value: []
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:19-1:21
 			}
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:19-1:21
 		}
 		CSSAtRule {
 			name: "keyframes"
-			block: undefined
-			prelude: Array []
+			prelude: []
 			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 2:0-2:18
 		}
 		CSSRule {
-			prelude: Array []
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 2:19-2:21
+			prelude: []
 			block: CSSBlock {
-				value: Array []
+				value: []
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 2:19-2:21
 			}
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 2:19-2:21
 		}
 		CSSAtRule {
 			name: "keyframes"
-			block: undefined
-			prelude: Array []
+			prelude: []
 			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 3:0-3:16
 		}
 		CSSRule {
-			prelude: Array []
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 3:17-3:19
+			prelude: []
 			block: CSSBlock {
-				value: Array []
+				value: []
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 3:17-3:19
 			}
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 3:17-3:19
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<css>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: [
+							RAW_MARKUP {value: "In this position, the words "}
+							[
+								[RAW_MARKUP {value: "<emphasis>"}, "unset", RAW_MARKUP {value: "</emphasis>, "}]
+								[RAW_MARKUP {value: "<emphasis>"}, "initial", RAW_MARKUP {value: "</emphasis>, "}]
+								[RAW_MARKUP {value: "<emphasis>"}, "inherit", RAW_MARKUP {value: "</emphasis>, "}]
+							]
+							RAW_MARKUP {value: " are CSS-wide keywords, so they are reserved."}
+						]
+					}
+				]
+				category: ["parse"]
+				categoryValue: "css"
+				message: [RAW_MARKUP {value: "The identifier <emphasis>"}, "initial", RAW_MARKUP {value: "</emphasis> can't be used here."}]
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
+				end: Position 1:18
+				start: Position 1:11
+			}
+		}
+	]
+	path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
+	loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-3:19
 }
 ```

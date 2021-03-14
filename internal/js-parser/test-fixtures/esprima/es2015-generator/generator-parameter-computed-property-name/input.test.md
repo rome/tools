@@ -8,86 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:0-4:0
-	path: UIDPath<esprima/es2015-generator/generator-parameter-computed-property-name/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected an identifier"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:12
-				path: UIDPath<esprima/es2015-generator/generator-parameter-computed-property-name/input.js>
-				start: Position 2:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:0-3:2
 			expression: JSFunctionExpression {
-				id: undefined
-				loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:1-3:1
-				head: JSFunctionHead {
-					async: false
-					generator: true
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:10-1:12
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:13-3:1
-					body: Array [
+					body: [
 						JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: ""
 								loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:12-2:13 ()
 							}
-							loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:4-2:31
 							body: JSBlockStatement {
-								body: Array []
-								directives: Array []
+								body: []
+								directives: []
 								loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:29-2:31
 							}
 							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
-								rest: undefined
-								returnType: undefined
-								thisType: undefined
-								typeParameters: undefined
-								loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:13-2:28
-								params: Array [
+								params: [
 									JSBindingObjectPattern {
-										rest: undefined
-										loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:13-2:27
-										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
-											loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:13-2:27
-										}
-										properties: Array [
+										properties: [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
@@ -103,15 +45,57 @@ JSRoot {
 												loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:22-2:26
 											}
 										]
+										meta: JSPatternMeta {
+											loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:13-2:27
+										}
+										loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:13-2:27
 									}
 								]
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:13-2:28
 							}
+							loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 2:4-2:31
 						}
 					]
+					directives: []
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:13-3:1
 				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:10-1:12
+				}
+				loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:1-3:1
+			}
+			loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:0-3:2
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-generator/generator-parameter-computed-property-name/input.js>
+				end: Position 2:12
+				start: Position 2:12
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-generator/generator-parameter-computed-property-name/input.js>
+	loc: SourceLocation esprima/es2015-generator/generator-parameter-computed-property-name/input.js 1:0-4:0
 }
 ```
 

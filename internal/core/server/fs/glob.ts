@@ -3,19 +3,19 @@ import {
 	ProjectConfigCategoriesWithIgnore,
 	ProjectDefinition,
 } from "@internal/project";
-import {Server} from "@internal/core";
-import {EventSubscription, mergeEventSubscriptions} from "@internal/events";
+import {Server, ServerRequest} from "@internal/core";
 import {
-	PathPatterns,
+	PathPattern,
 	matchPathPatterns,
 	parsePathPattern,
 } from "@internal/path-match";
 import MemoryFileSystem from "@internal/core/server/fs/MemoryFileSystem";
 import {GlobalLock} from "@internal/async";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 
-const GLOB_IGNORE: PathPatterns = [parsePathPattern({input: "node_modules"})];
+const GLOB_IGNORE: PathPattern[] = [parsePathPattern({input: "node_modules"})];
 
-function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
+function concatGlobIgnore(patterns: PathPattern[]): PathPattern[] {
 	// If there are any negate patterns then it'll never include GLOB_IGNORE
 	for (const pattern of patterns) {
 		if (pattern.type === "PathPattern" && pattern.negate) {
@@ -29,11 +29,12 @@ function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
 export interface GlobOptions {
 	args: Iterable<AbsoluteFilePath>;
 	extensions?: string[];
-	overrideIgnore?: PathPatterns;
+	overrideIgnore?: PathPattern[];
 	configCategory?: ProjectConfigCategoriesWithIgnore;
 	test?: (path: AbsoluteFilePath) => boolean;
-	onWatch?: (sub: EventSubscription) => void;
+	onWatch?: (resource: Resource) => void;
 	onSearchNoMatch?: (path: AbsoluteFilePath) => void;
+	request?: ServerRequest;
 }
 export type WatchFilesEvent = {
 	paths: AbsoluteFilePathSet;
@@ -49,19 +50,21 @@ export class Globber {
 		this.memoryFs = server.memoryFs;
 		this.ignoresByProject = new WeakMap();
 		this.args = new AbsoluteFilePathSet(opts.args);
+		this.request = opts.request;
 	}
 
-	private ignoresByProject: WeakMap<ProjectDefinition, PathPatterns>;
+	public request: undefined | ServerRequest;
+	private ignoresByProject: WeakMap<ProjectDefinition, PathPattern[]>;
 	private args: AbsoluteFilePathSet;
 	private server: Server;
 	private memoryFs: MemoryFileSystem;
 	private opts: GlobOptions;
 
-	private getIgnore(path: AbsoluteFilePath): PathPatterns {
+	private getIgnore(path: AbsoluteFilePath): PathPattern[] {
 		const {configCategory, overrideIgnore} = this.opts;
 		const project = this.server.projectManager.findLoadedProject(path);
 
-		let ignore: PathPatterns = overrideIgnore ?? [];
+		let ignore: PathPattern[] = overrideIgnore ?? [];
 		if (configCategory === undefined || project === undefined) {
 			return ignore;
 		}
@@ -160,7 +163,7 @@ export class Globber {
 		return paths;
 	}
 
-	public async watch(callback: WatchFilesCallback): Promise<EventSubscription> {
+	public async watch(callback: WatchFilesCallback): Promise<Resource> {
 		const watcher = new GlobberWatcher(this, this.server, this.args, callback);
 
 		const sub = await watcher.init();
@@ -200,7 +203,7 @@ class GlobberWatcher {
 	private callback: WatchFilesCallback;
 	private flushLock: GlobalLock;
 
-	isDependentPath(path: AbsoluteFilePath): boolean {
+	private isDependentPath(path: AbsoluteFilePath): boolean {
 		for (const arg of this.args) {
 			if (path.equal(arg) || path.isRelativeTo(arg)) {
 				return true;
@@ -209,7 +212,7 @@ class GlobberWatcher {
 		return false;
 	}
 
-	async flushPaths(paths: AbsoluteFilePath[]) {
+	private async flushPaths(paths: AbsoluteFilePath[]) {
 		let pendingPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		for (const path of paths) {
 			if (this.isDependentPath(path)) {
@@ -228,7 +231,7 @@ class GlobberWatcher {
 		}
 	}
 
-	async flush(paths: AbsoluteFilePathSet, initial: boolean = false) {
+	private async flush(paths: AbsoluteFilePathSet, initial: boolean = false) {
 		await this.flushLock.wrap(async () => {
 			// We could be evicting a project as the result of a modification made inside of the watch callback
 			// Ensure it's complete before we decide to flush
@@ -242,37 +245,26 @@ class GlobberWatcher {
 		});
 	}
 
-	setupEvents(): EventSubscription[] {
-		const {memoryFs, server} = this;
-		const subscriptions: EventSubscription[] = [];
-
-		// Emitted when a file appears for the first time
-		subscriptions.push(
-			memoryFs.newFileEvent.subscribe((paths) => {
-				this.flushPaths(paths);
-			}),
-		);
-
-		subscriptions.push(
-			server.refreshFileEvent.subscribe((paths) => {
-				this.flushPaths(paths);
-			}),
-		);
-
-		return subscriptions;
-	}
-
-	async init(): Promise<EventSubscription> {
+	public async init(): Promise<Resource> {
 		const {memoryFs} = this;
-		const subs = this.setupEvents();
-		const finalSubs = mergeEventSubscriptions([
-			...subs,
-			{
-				unsubscribe: async () => {
+
+		const refreshSub = this.server.refreshFileEvent.subscribe((events) => {
+			this.flushPaths(Array.from(events, ({path}) => path));
+		});
+
+		refreshSub.add(
+			createResourceFromCallback(
+				"GlobberWatcher.flushLock",
+				async () => {
 					await this.flushLock.wait();
 				},
-			},
-		]);
+			),
+		);
+
+		const {request} = this.globber;
+		if (request !== undefined) {
+			request.resources.add(refreshSub);
+		}
 
 		try {
 			const promises: Promise<unknown>[] = [];
@@ -294,9 +286,9 @@ class GlobberWatcher {
 			await this.flush(batchPaths, true);
 			await this.globber.get(true);
 
-			return finalSubs;
+			return refreshSub;
 		} catch (err) {
-			await finalSubs.unsubscribe();
+			await refreshSub.release();
 			throw err;
 		}
 	}

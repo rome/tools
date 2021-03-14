@@ -8,70 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-spread-element/invalid-call-spreads/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an spread argument"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<esprima/es2015-spread-element/invalid-call-spreads/input.js>
-				start: Position 1:6
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:9
 			expression: JSCallExpression {
-				loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:9
-				callee: JSReferenceIdentifier {
-					name: "f"
-					loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:1 (f)
-				}
-				arguments: Array [
+				arguments: [
 					JSSpreadElement {
-						loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:2-1:9
 						argument: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:6-1:9
 						}
+						loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:2-1:9
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:1 (f)
+				}
+				loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:9
 			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:9
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:10-1:11
 			expression: JSReferenceIdentifier {
 				name: "g"
 				loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:10-1:11 (g)
 			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:10-1:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:11-1:13
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:11-1:12
 			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:11-1:13
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "spread argument"]}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-spread-element/invalid-call-spreads/input.js>
+				end: Position 1:5
+				start: Position 1:6
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-spread-element/invalid-call-spreads/input.js>
+	loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-2:0
 }
 ```
 

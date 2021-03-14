@@ -8,69 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/300/input.js 1:0-1:29
-	path: UIDPath<es2015/uncategorised/300/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "normal"
 				loc: SourceLocation es2015/uncategorised/300/input.js 1:9-1:15 (normal)
 			}
-			loc: SourceLocation es2015/uncategorised/300/input.js 1:0-1:29
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2015/uncategorised/300/input.js 1:27-1:29
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/uncategorised/300/input.js 1:15-1:26
-				params: Array [
+				params: [
 					JSBindingIdentifier {
 						name: "x"
-						loc: SourceLocation es2015/uncategorised/300/input.js 1:16-1:17 (x)
 						meta: JSPatternMeta {
-							optional: undefined
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/uncategorised/300/input.js 1:16-1:17
 						}
+						loc: SourceLocation es2015/uncategorised/300/input.js 1:16-1:17 (x)
 					}
 					JSBindingAssignmentPattern {
-						loc: SourceLocation es2015/uncategorised/300/input.js 1:19-1:25
-						right: JSNumericLiteral {
-							value: 10
-							format: undefined
-							loc: SourceLocation es2015/uncategorised/300/input.js 1:23-1:25
-						}
 						left: JSBindingIdentifier {
 							name: "y"
-							loc: SourceLocation es2015/uncategorised/300/input.js 1:19-1:20 (y)
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation es2015/uncategorised/300/input.js 1:19-1:20
 							}
+							loc: SourceLocation es2015/uncategorised/300/input.js 1:19-1:20 (y)
 						}
+						right: JSNumericLiteral {
+							value: 10
+							loc: SourceLocation es2015/uncategorised/300/input.js 1:23-1:25
+						}
+						loc: SourceLocation es2015/uncategorised/300/input.js 1:19-1:25
 					}
 				]
+				loc: SourceLocation es2015/uncategorised/300/input.js 1:15-1:26
 			}
+			loc: SourceLocation es2015/uncategorised/300/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/300/input.js>
+	loc: SourceLocation es2015/uncategorised/300/input.js 1:0-1:29
 }
 ```
 

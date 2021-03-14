@@ -8,59 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-4:0
-	path: UIDPath<es2020/optional-chaining/conditional-decimal/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:9
 			expression: JSConditionalExpression {
-				loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:9
-				test: JSBooleanLiteral {
-					value: true
-					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:4
-				}
 				alternate: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:8-1:9
 				}
 				consequent: JSNumericLiteral {
 					value: 0.3
-					format: undefined
 					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:5-1:7
 				}
-			}
-		}
-		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:13
-			expression: JSConditionalExpression {
-				loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:13
 				test: JSBooleanLiteral {
 					value: true
-					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:4
+					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:4
 				}
+				loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:9
+			}
+			loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:9
+		}
+		JSExpressionStatement {
+			expression: JSConditionalExpression {
 				alternate: JSNumericLiteral {
 					value: 0
-					format: undefined
 					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:12-3:13
 				}
 				consequent: JSNumericLiteral {
 					value: 0.3
-					format: undefined
 					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:7-3:9
 				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:4
+				}
+				loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:13
 			}
+			loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/conditional-decimal/input.js>
+	loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-4:0
 }
 ```
 

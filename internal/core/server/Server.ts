@@ -5,39 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {ServerBridge, ServerQueryRequest, UserConfig} from "@internal/core";
 import {
-	ServerBridge,
-	ServerQueryRequest,
-	ServerQueryResponse,
-	UserConfig,
-	VERSION,
-} from "@internal/core";
-import {
-	DIAGNOSTIC_CATEGORIES,
+	Diagnostic,
 	DiagnosticOrigin,
-	Diagnostics,
 	DiagnosticsProcessor,
-	descriptions,
 } from "@internal/diagnostics";
-import {ServerCommand, serverCommands} from "./commands";
 import {
 	DiagnosticsFileHandler,
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
-import {ConsumePath, consume} from "@internal/consume";
-import {
-	BridgeServer,
-	Event,
-	EventQueue,
-	EventSubscription,
-} from "@internal/events";
-import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "./ServerRequest";
+import {BridgeServer, Event, EventQueue} from "@internal/events";
+import ServerRequest from "./ServerRequest";
 import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
 import Resolver from "./fs/Resolver";
 import FileAllocator from "./fs/FileAllocator";
 import Logger from "../common/utils/Logger";
-import MemoryFileSystem from "./fs/MemoryFileSystem";
+import MemoryFileSystem, {SimpleStats} from "./fs/MemoryFileSystem";
 import ServerCache from "./ServerCache";
 import {
 	Reporter,
@@ -46,48 +31,44 @@ import {
 	ReporterProgressOptions,
 	mergeProgresses,
 } from "@internal/cli-reporter";
-import {Profiler} from "@internal/v8";
 import {
 	PartialServerQueryRequest,
 	ProfilingStartData,
 	ServerBridgeLog,
 } from "../common/bridges/ServerBridge";
 import {
-	ClientFlags,
 	ClientLogsLevel,
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {AbsoluteFilePath, createUIDPath} from "@internal/path";
-import {Dict, mergeObjects} from "@internal/typescript-helpers";
+import {AbsoluteFilePath, HOME_PATH} from "@internal/path";
+import {mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
 import VirtualModules from "../common/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
-import {toKebabCase} from "@internal/string-utils";
-import {FilePathLocker} from "../../async/lockers";
-import {DEFAULT_TERMINAL_FEATURES, getEnvVar} from "@internal/cli-environment";
+import {PathLocker} from "../../async/lockers";
+import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import RecoveryStore from "./fs/RecoveryStore";
 import WorkerQueue, {WorkerQueueOptions} from "./WorkerQueue";
 import FatalErrorHandler from "../common/FatalErrorHandler";
-
-export type ServerClient = {
-	id: number;
-	reporter: Reporter;
-	bridge: BridgeServer<typeof ServerBridge>;
-	flags: ClientFlags;
-	version: string;
-	requestsInFlight: Set<ServerRequest>;
-};
+import {
+	Resource,
+	createResourceFromCallback,
+	createResourceRoot,
+} from "@internal/resources";
+import ServerClient from "./ServerClient";
+import {Profiler} from "@internal/v8";
+import {promiseAllFrom} from "@internal/async";
 
 export type ServerOptions = {
 	inbandOnly?: boolean;
 	forceCacheEnabled?: boolean;
 	userConfig: UserConfig;
 	dedicated: boolean;
-	globalErrorHandlers: boolean;
+	daemon: boolean;
 };
 
 export type ServerUnfinishedMarker = {
@@ -109,8 +90,6 @@ export type ServerMarker = ServerUnfinishedMarker & {
 	end: number;
 };
 
-const disallowedFlagsWhenReviewing: Array<keyof ClientRequestFlags> = ["watch"];
-
 export function partialServerQueryRequestToFull(
 	partialQuery: PartialServerQueryRequest,
 ): ServerQueryRequest {
@@ -126,7 +105,6 @@ export function partialServerQueryRequestToFull(
 		noFileWrites: partialQuery.noFileWrites === true,
 		requestFlags,
 		silent: partialQuery.silent === true || requestFlags.benchmark,
-		terminateWhenIdle: partialQuery.terminateWhenIdle === true,
 		commandFlags: partialQuery.commandFlags === undefined
 			? {}
 			: partialQuery.commandFlags,
@@ -134,82 +112,44 @@ export function partialServerQueryRequestToFull(
 	};
 }
 
-async function validateRequestFlags(
-	req: ServerRequest,
-	serverCommand: ServerCommand<Dict<unknown>>,
-) {
-	const {requestFlags} = req.query;
-
-	// Commands need to explicitly allow these flags
-	validateAllowedRequestFlag(req, "watch", serverCommand);
-	validateAllowedRequestFlag(req, "review", serverCommand);
-
-	// Don't allow review in combination with other flags
-	if (requestFlags.review) {
-		for (const key of disallowedFlagsWhenReviewing) {
-			if (requestFlags[key]) {
-				throw req.throwDiagnosticFlagError({
-					description: descriptions.FLAGS.DISALLOWED_REVIEW_FLAG(key),
-					target: {type: "flag", key},
-				});
-			}
+export type ServerRefreshFile =
+	| {
+			type: "DELETED";
+			path: AbsoluteFilePath;
 		}
-	}
-}
-
-function validateAllowedRequestFlag(
-	req: ServerRequest,
-	flagKey: NonNullable<ServerCommand<Dict<unknown>>["allowRequestFlags"]>[number],
-	serverCommand: ServerCommand<Dict<unknown>>,
-) {
-	const allowRequestFlags = serverCommand.allowRequestFlags || [];
-	if (req.query.requestFlags[flagKey] && !allowRequestFlags.includes(flagKey)) {
-		throw req.throwDiagnosticFlagError({
-			description: descriptions.FLAGS.DISALLOWED_REQUEST_FLAG(flagKey),
-			target: {type: "flag", key: flagKey},
-		});
-	}
-}
-
-function sendLog(
-	bridge: BridgeServer<typeof ServerBridge>,
-	level: ClientLogsLevel,
-	log: ServerBridgeLog,
-) {
-	// Sometimes the bridge hasn't completely been teardown and we still consider it connected
-	if (!bridge.alive) {
-		return;
-	}
-
-	if (log.isError || level === "all") {
-		bridge.events.log.send(log);
-	}
-}
+	| {
+			type: "CREATED";
+			path: AbsoluteFilePath;
+		}
+	| {
+			type: "DISK_UPDATE";
+			path: AbsoluteFilePath;
+			oldStats: undefined | SimpleStats;
+			newStats: SimpleStats;
+		}
+	| {
+			type: "BUFFER_UPDATE";
+			path: AbsoluteFilePath;
+		};
 
 export default class Server {
 	constructor(opts: ServerOptions) {
+		this.resources = createResourceRoot("Server");
+
 		this.profiling = undefined;
 		this.options = opts;
-
 		this.userConfig = opts.userConfig;
 
 		this.fatalErrorHandler = new FatalErrorHandler({
-			getOptions: () => {
-				// Ensure workers are properly ended as they could be hanging
-				this.workerManager.end();
-
-				return {
-					source: markup`server`,
-					reporter: this.getImportantReporter(),
-					exit: this.options.dedicated,
-				};
+			source: markup`server`,
+			exit: this.options.dedicated,
+			getReporter: () => {
+				return this.getImportantReporter();
 			},
 		});
 
-		this.requestFileLocker = new FilePathLocker();
-
+		this.requestFileLocker = new PathLocker();
 		this.connectedReporters = new ServerReporter(this);
-
 		this.connectedClientsListeningForWorkerLogs = new Set();
 		this.connectedClientsListeningForLogs = new Map();
 		this.connectedLSPServers = new Set();
@@ -219,28 +159,20 @@ export default class Server {
 		this.clientIdCounter = 0;
 
 		this.logInitBuffer = [];
-		this.requestRunningCounter = 0;
-		this.terminateWhenIdle = false;
 
-		this.clientStartEvent = new Event({
-			name: "Server.clientStart",
-		});
-
-		this.requestStartEvent = new Event({
-			name: "Server.requestStart",
-		});
-
-		this.refreshFileEvent = new EventQueue();
-
-		this.endEvent = new Event({
-			name: "Server.end",
-			serial: true,
-		});
+		this.clientStartEvent = new Event("Server.clientStart");
+		this.requestStartEvent = new Event("Server.requestStart");
+		this.refreshFileEvent = new EventQueue(
+			"Server.refreshFileEvent",
+			{toDedupeKey: ({path}) => path.join()},
+		);
 
 		this.logger = new Logger(
+			this.resources,
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
+					home: HOME_PATH,
 					humanizeFilename: (path) => {
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
@@ -253,7 +185,7 @@ export default class Server {
 						return undefined;
 					},
 					normalizePosition: (path, line, column) => {
-						const normalPath = this.projectManager.maybeGetFilePathFromUid(path);
+						const normalPath = this.projectManager.maybeGetFilePathFromUID(path);
 						if (normalPath === undefined) {
 							return {path, line, column};
 						} else {
@@ -262,7 +194,7 @@ export default class Server {
 					},
 				},
 			},
-			"server",
+			"Server",
 		);
 
 		this.loggerStream = this.logger.attachConditionalStream(
@@ -296,23 +228,29 @@ export default class Server {
 		this.logger.info(
 			markup`[Server] Created Server with options: ${prettyFormat(opts)}`,
 		);
+
+		this.resources.add(this.connectedReporters);
+
+		if (this.options.daemon) {
+			this.resources.add(this.fatalErrorHandler.setupGlobalHandlers());
+		}
 	}
 
 	public userConfig: UserConfig;
 	public fatalErrorHandler: FatalErrorHandler;
 	public options: ServerOptions;
+	public resources: Resource;
 
 	// Public events
 	public requestStartEvent: Event<ServerRequest, void>;
 	public clientStartEvent: Event<ServerClient, void>;
-	public endEvent: Event<void, void>;
 
 	// Event for when a file needs to be "refreshed". This could include:
 	// - Deleted
 	// - Created
 	// - Modified
 	// - Buffer updated
-	public refreshFileEvent: EventQueue<AbsoluteFilePath>;
+	public refreshFileEvent: EventQueue<ServerRefreshFile>;
 
 	// Public modules
 	public recoveryStore: RecoveryStore;
@@ -325,7 +263,7 @@ export default class Server {
 	public cache: ServerCache;
 	public connectedReporters: ServerReporter;
 	public logger: Logger;
-	public requestFileLocker: FilePathLocker;
+	public requestFileLocker: PathLocker;
 
 	private loggerStream: ReporterConditionalStream;
 
@@ -333,8 +271,6 @@ export default class Server {
 	// These __should__ be relatively cheap to retain since we don't do a lot
 	private logInitBuffer: [string, boolean][];
 
-	private requestRunningCounter: number;
-	private terminateWhenIdle: boolean;
 	private clientIdCounter: number;
 	private hadConnectedClient: boolean;
 	private profiling: undefined | ProfilingStartData;
@@ -359,18 +295,28 @@ export default class Server {
 	public async updateWorkerLogsSubscriptions() {
 		const enabled = this.hasWorkerLogsSubscriptions();
 
-		await Promise.all(
-			this.workerManager.getWorkers().map((worker) => {
+		await promiseAllFrom(
+			this.workerManager.getWorkers(),
+			(worker) => {
 				return worker.bridge.events.setLogs.call(enabled);
-			}),
+			},
 		);
 	}
 
 	// Derive a concatenated reporter from the logger and all connected clients
-	// This should only be used synchronously as the streams will not stay in sync
+	// This should only be used synchronously as new clients will not be added after creation
 	// Used for very important log messages
 	public getImportantReporter(): Reporter {
-		return Reporter.concat([this.logger, this.connectedReporters]);
+		const reporters: Reporter[] = [this.logger];
+		for (const client of this.connectedClients) {
+			if (!this.connectedClientsListeningForLogs.has(client)) {
+				reporters.push(client.reporter);
+			}
+		}
+		if (this.connectedClients.size === 0) {
+			reporters.push(Reporter.fromProcess());
+		}
+		return Reporter.concat(reporters);
 	}
 
 	public createWorkerQueue<M = void>(
@@ -398,7 +344,22 @@ export default class Server {
 				continue;
 			}
 
-			sendLog(client.bridge, level, log);
+			this.sendLog(client.bridge, level, log);
+		}
+	}
+
+	public sendLog(
+		bridge: BridgeServer<typeof ServerBridge>,
+		level: ClientLogsLevel,
+		log: ServerBridgeLog,
+	) {
+		// Sometimes the bridge hasn't completely been teardown and we still consider it connected
+		if (!bridge.open) {
+			return;
+		}
+
+		if (log.isError || level === "all") {
+			bridge.events.log.send(log);
 		}
 	}
 
@@ -421,20 +382,22 @@ export default class Server {
 		return mergeProgresses(progresses);
 	}
 
-	private async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
-		this.connectedReporters.error(
-			markup`Generated diagnostics without a current request`,
-		);
+	private async handleDisconnectedDiagnostics(diagnostics: Diagnostic[]) {
+		const reporter = this.getImportantReporter();
+
+		reporter.error(markup`Generated diagnostics without a current request`);
 
 		await printDiagnostics({
 			diagnostics,
 			suppressions: [],
 			printerOptions: {
 				processor: this.createDiagnosticsProcessor(),
-				reporter: this.connectedReporters,
+				reporter,
 				fileHandlers: [this.createDiagnosticsPrinterFileHandler()],
 			},
 		});
+
+		reporter.resources.release();
 	}
 
 	public createDiagnosticsPrinterFileHandler(): DiagnosticsFileHandler {
@@ -469,16 +432,15 @@ export default class Server {
 	}
 
 	public createDisconnectedDiagnosticsProcessor(
-		origins: DiagnosticOrigin[],
+		origin?: DiagnosticOrigin,
 	): DiagnosticsProcessor {
 		const processor = this.createDiagnosticsProcessor({
-			origins: [
-				...origins,
-				{
-					category: "server",
-					message: "Created disconnected diagnostics collector",
-				},
-			],
+			origin,
+		});
+
+		processor.normalizer.unshiftOrigin({
+			entity: "server",
+			message: "Created disconnected diagnostics collector",
 		});
 
 		processor.insertDiagnosticsEvent.subscribe(() => {
@@ -492,20 +454,7 @@ export default class Server {
 		return processor;
 	}
 
-	private maybeSetupGlobalErrorHandlers() {
-		if (!this.options.globalErrorHandlers) {
-			return;
-		}
-
-		const teardown = this.fatalErrorHandler.setupGlobalHandlers();
-
-		this.endEvent.subscribe(() => {
-			teardown();
-		});
-	}
-
 	public async init() {
-		this.maybeSetupGlobalErrorHandlers();
 		await this.recoveryStore.init();
 		await this.virtualModules.init();
 		await this.projectManager.init();
@@ -519,10 +468,6 @@ export default class Server {
 	public async end() {
 		this.logger.info(markup`[Server] Teardown triggered`);
 
-		// Unwatch all project directories
-		// We do this before anything else as we don't want events firing while we're in a teardown state
-		this.memoryFs.unwatchAll();
-
 		// Cancel all queries in flight
 		for (const client of this.connectedClients) {
 			for (const req of client.requestsInFlight) {
@@ -533,13 +478,11 @@ export default class Server {
 			await client.bridge.end();
 		}
 
-		// We should remove everything that has an external dependency like a socket or process
-		await this.endEvent.callOptional();
-		await this.workerManager.end();
+		// memoryFs will be ended as a result of the resources release but make sure it's done first anyway to avoid
+		// emitting events
+		await this.memoryFs.end();
 
-		if (this.options.dedicated) {
-			process.exit();
-		}
+		await this.resources.release();
 	}
 
 	public onLSPServer(req: ServerRequest, lsp: LSPServer) {
@@ -550,23 +493,20 @@ export default class Server {
 		});
 	}
 
-	public async attachToBridge(
+	public async createClient(
 		bridge: BridgeServer<typeof ServerBridge>,
 	): Promise<ServerClient> {
+		const id = this.clientIdCounter++;
+
 		if (!this.hadConnectedClient) {
 			this.hadConnectedClient = true;
 			this.loggerStream.update();
 		}
 
-		let profiler: undefined | Profiler;
+		const client = new ServerClient(this, id, bridge);
+		await client.init();
 
-		// If we aren't a dedicated process then we should only expect a single connection
-		// and when that ends. End the Server.
-		if (!this.options.dedicated) {
-			bridge.endEvent.subscribe(async () => {
-				await this.end();
-			});
-		}
+		let profiler: undefined | Profiler;
 
 		bridge.events.profilingStart.subscribe(async (data) => {
 			if (profiler !== undefined) {
@@ -590,117 +530,6 @@ export default class Server {
 			return serverProfile;
 		});
 
-		bridge.events.profilingGetWorkers.subscribe(async () => {
-			const ids: number[] = [];
-			for (const {id} of this.workerManager.getExternalWorkers()) {
-				ids.push(id);
-			}
-			return ids;
-		});
-
-		bridge.events.profilingStopWorker.subscribe(async (id) => {
-			const worker = this.workerManager.getWorkerAssert(id);
-			return await worker.bridge.events.profilingStop.call();
-		});
-
-		await bridge.handshake();
-
-		const client = await this.createClient(bridge);
-
-		if (client.version !== VERSION) {
-			// TODO this wont ever actually be printed?
-			client.reporter.error(
-				markup`Client version ${client.version} does not match server version ${VERSION}. Goodbye lol.`,
-			);
-			await client.bridge.end();
-			return client;
-		}
-
-		bridge.events.query.subscribe(async (request) => {
-			return await this.handleRequest(client, request);
-		});
-
-		bridge.events.cancelQuery.subscribe(async (token) => {
-			for (const req of client.requestsInFlight) {
-				if (req.query.cancelToken === token) {
-					await req.cancel("user requested");
-				}
-			}
-		});
-
-		bridge.events.endServer.subscribe(() => this.end());
-
-		await this.clientStartEvent.callOptional(client);
-		await bridge.events.serverReady.call();
-
-		return client;
-	}
-
-	private async createClient(
-		bridge: BridgeServer<typeof ServerBridge>,
-	): Promise<ServerClient> {
-		const {
-			flags,
-			streamState,
-			outputFormat,
-			outputSupport,
-			version,
-		} = await bridge.events.getClientInfo.call();
-
-		// Initialize the reporter
-		const reporter = new Reporter({
-			wrapperFactory: this.fatalErrorHandler.wrapBound,
-			markupOptions: {
-				...this.logger.markupOptions,
-				cwd: flags.cwd,
-			},
-		});
-
-		const streamHandle = reporter.addStream(
-			{
-				format: outputFormat,
-				features: outputSupport,
-				write(chunk: string, error: boolean) {
-					if (flags.silent && !error) {
-						return;
-					}
-
-					bridge.events.write.send([chunk, error]);
-				},
-			},
-			streamState,
-		);
-
-		bridge.events.updateFeatures.subscribe((features) => {
-			streamHandle.stream.updateFeatures(features);
-		});
-
-		// Streams to teardown on client disconnect
-		const streamHandles = [streamHandle];
-
-		// Add reporter to connected set, important logs may be output to these
-		streamHandles.push(
-			this.connectedReporters.addAttachedStream(streamHandle.stream),
-		);
-
-		// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
-		if (this.cache.writeDisabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
-			reporter.warn(
-				markup`Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable`,
-			);
-		}
-
-		const client: ServerClient = {
-			id: this.clientIdCounter++,
-			bridge,
-			reporter,
-			flags,
-			version,
-			requestsInFlight: new Set(),
-		};
-
-		this.connectedClients.add(client);
-
 		bridge.events.setLogLevel.subscribe(async ({level, includeWorker}) => {
 			let startWorkerLogsEnabled = this.hasWorkerLogsSubscriptions();
 
@@ -715,11 +544,11 @@ export default class Server {
 				if (!this.connectedClientsListeningForLogs.has(client)) {
 					// Send init logs
 					for (const [chunk, isError] of this.logInitBuffer) {
-						sendLog(bridge, level, {chunk, origin: "server", isError});
+						this.sendLog(bridge, level, {chunk, origin: "server", isError});
 					}
 
 					// Send separator
-					sendLog(
+					this.sendLog(
 						bridge,
 						level,
 						{chunk: ".".repeat(20) + "\n", origin: "server", isError: false},
@@ -737,239 +566,23 @@ export default class Server {
 			}
 		});
 
-		bridge.endEvent.subscribe(() => {
-			this.connectedClients.delete(client);
-			this.connectedClientsListeningForLogs.delete(client);
-			this.connectedClientsListeningForWorkerLogs.delete(client);
-			for (const handle of streamHandles) {
-				handle.remove();
-			}
-			this.loggerStream.update();
+		this.connectedClients.add(client);
 
-			// Cancel any requests still in flight
-			for (const req of client.requestsInFlight) {
-				req.cancel("bridge died");
-			}
+		client.resources.add(
+			createResourceFromCallback(
+				"ServerRegistration",
+				() => {
+					this.connectedClients.delete(client);
+					this.connectedClientsListeningForLogs.delete(client);
+					this.connectedClientsListeningForWorkerLogs.delete(client);
+					this.loggerStream.update();
+				},
+			),
+		);
 
-			// Teardown reporter
-			client.reporter.teardown();
-		});
+		await this.clientStartEvent.callOptional(client);
+		await bridge.events.serverReady.call();
 
 		return client;
-	}
-
-	public async handleRequestStart(req: ServerRequest) {
-		req.logger.info(markup`Start ${prettyFormat(req.query)}`);
-
-		// Hook used by the web server to track and collect server requests
-		await this.requestStartEvent.callOptional(req);
-
-		// Track the amount of running queries for terminateWhenIdle
-		this.requestRunningCounter++;
-
-		// Sometimes we'll want to terminate the process once all queries have finished
-		if (req.query.terminateWhenIdle) {
-			this.terminateWhenIdle = true;
-		}
-	}
-
-	public async handleRequestEnd(req: ServerRequest) {
-		this.requestRunningCounter--;
-		req.logger.info(markup`Request end`);
-
-		// If we're waiting to terminate ourselves when idle, then do so when there's no running requests
-		if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
-			await this.end();
-		}
-	}
-
-	public async handleRequest(
-		client: ServerClient,
-		partialQuery: PartialServerQueryRequest,
-	): Promise<ServerQueryResponse> {
-		const query: ServerQueryRequest = partialServerQueryRequestToFull(
-			partialQuery,
-		);
-
-		const {bridge} = client;
-
-		// Create a promise for the client dying so we can race it later
-		let bridgeEndEvent: undefined | EventSubscription;
-		const bridgeEndPromise: Promise<void> = new Promise((resolve, reject) => {
-			bridgeEndEvent = bridge.endEvent.subscribe((err) => {
-				reject(err);
-			});
-		});
-		if (bridgeEndEvent === undefined) {
-			throw new Error("Expected bridgeEndEvent to have been initialized");
-		}
-
-		const req = new ServerRequest({
-			client,
-			query,
-			server: this,
-		});
-
-		await req.init();
-
-		try {
-			let res: undefined | ServerQueryResponse = await this.dispatchRequest(
-				req,
-				bridgeEndPromise,
-				[],
-			);
-
-			res = await req.teardown(res);
-
-			if (res === undefined) {
-				throw new Error(
-					"teardown should have returned a normalized ServerQueryResponse",
-				);
-			}
-
-			return res;
-		} catch (err) {
-			await this.fatalErrorHandler.handleAsync(err);
-			throw new Error("Should never meet this condition");
-		} finally {
-			// We no longer care if the client dies
-			await bridgeEndEvent.unsubscribe();
-		}
-	}
-
-	private async dispatchBenchmarkRequest(
-		req: ServerRequest,
-		bridgeEndPromise: Promise<void>,
-	): Promise<ServerQueryResponse> {
-		const {client} = req;
-		const {reporter} = client;
-		const {benchmarkIterations} = req.query.requestFlags;
-
-		// Warmup
-		const warmupStart = Date.now();
-		const result = await this.dispatchRequest(
-			req,
-			bridgeEndPromise,
-			["benchmark"],
-		);
-		const warmupTook = Date.now() - warmupStart;
-
-		// Benchmark
-		const progress = req.reporter.progress({title: markup`Running benchmark`});
-		progress.setTotal(benchmarkIterations);
-		const benchmarkStart = Date.now();
-		for (let i = 0; i < benchmarkIterations; i++) {
-			await this.dispatchRequest(req, bridgeEndPromise, ["benchmark"]);
-			progress.tick();
-		}
-		progress.end();
-		const benchmarkTook = Date.now() - benchmarkStart;
-
-		await reporter.section(
-			markup`Benchmark results`,
-			() => {
-				reporter.info(
-					markup`Request artifacts may have been cached after the first run, artificially decreasing subsequent run time`,
-				);
-				reporter.heading(markup`Query`);
-				reporter.inspect(req.query);
-				reporter.heading(markup`Stats`);
-				reporter.list([
-					markup`Warmup took <duration emphasis>${String(warmupTook)}</duration>`,
-					markup`<number emphasis>${String(benchmarkIterations)}</number> runs`,
-					markup`<duration emphasis>${String(benchmarkTook)}</duration> total`,
-					markup`<duration emphasis approx>${String(
-						benchmarkTook / benchmarkIterations,
-					)}</duration> per run`,
-				]);
-			},
-		);
-
-		return result;
-	}
-
-	private async dispatchRequest(
-		req: ServerRequest,
-		bridgeEndPromise: Promise<void>,
-		origins: string[],
-	): Promise<ServerQueryResponse> {
-		const {query} = req;
-		const {requestFlags} = query;
-
-		if (requestFlags.benchmark && !origins.includes("benchmark")) {
-			return this.dispatchBenchmarkRequest(req, bridgeEndPromise);
-		}
-
-		try {
-			const defaultCommandFlags: Dict<unknown> = {};
-
-			// A type-safe wrapper for retrieving command flags
-			// TODO perhaps present this as JSON or something if this isn't a request from the CLI?
-			const flagsConsumer = consume({
-				path: createUIDPath("argv"),
-				parent: undefined,
-				value: query.commandFlags,
-				onDefinition(def) {
-					// objectPath should only have a depth of 1
-					defaultCommandFlags[def.objectPath[0]] = def.default;
-				},
-				objectPath: [],
-				context: {
-					category: DIAGNOSTIC_CATEGORIES["flags/invalid"],
-					getOriginalValue: () => {
-						return undefined;
-					},
-					normalizeKey: (key) => {
-						return toKebabCase(key);
-					},
-					getDiagnosticLocation: (keys: ConsumePath) => {
-						return req.getDiagnosticLocationFromFlags({
-							type: "flag",
-							key: String(keys[0]),
-							target: "value",
-						});
-					},
-				},
-			});
-
-			// An array of promises that we'll race, the only promise that will ever resolve will be the command one
-			let promises: Array<Promise<unknown> | undefined> = [bridgeEndPromise];
-
-			// Get command
-			const serverCommand: undefined | ServerCommand<Dict<unknown>> = serverCommands.get(
-				query.commandName,
-			);
-			if (serverCommand) {
-				await validateRequestFlags(req, serverCommand);
-
-				let commandFlags;
-				if (serverCommand.defineFlags !== undefined) {
-					commandFlags = serverCommand.defineFlags(flagsConsumer);
-				}
-
-				req.setNormalizedCommandFlags({
-					flags: commandFlags,
-					defaultFlags: defaultCommandFlags,
-				});
-
-				// @ts-ignore
-				const commandPromise = serverCommand.callback(req, commandFlags);
-				promises.push(commandPromise);
-
-				await Promise.race(promises);
-
-				// Only the command promise should have won the race with a resolve
-				const data = await commandPromise;
-				return {
-					...EMPTY_SUCCESS_RESPONSE,
-					hasData: data !== undefined,
-					data,
-				};
-			} else {
-				throw new Error(`Unknown command ${String(query.commandName)}`);
-			}
-		} catch (err) {
-			return await req.buildResponseFromError(err);
-		}
 	}
 }

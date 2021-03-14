@@ -8,50 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/function/export-default/input.ts 1:0-2:0
-	path: UIDPath<typescript/function/export-default/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation typescript/function/export-default/input.ts 1:0-1:42
 			declaration: TSDeclareFunction {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: SourceLocation typescript/function/export-default/input.ts 1:15-1:42
 				}
-				loc: SourceLocation typescript/function/export-default/input.ts 1:15-1:42
 				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					typeParameters: undefined
-					loc: SourceLocation typescript/function/export-default/input.ts 1:23-1:41
-					returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/function/export-default/input.ts 1:37-1:41}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/function/export-default/input.ts 1:24-1:25 (x)
 							meta: JSPatternMeta {
 								optional: true
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/function/export-default/input.ts 1:28-1:34
+								}
 								loc: SourceLocation typescript/function/export-default/input.ts 1:24-1:34
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/function/export-default/input.ts 1:28-1:34}
 							}
+							loc: SourceLocation typescript/function/export-default/input.ts 1:24-1:25 (x)
 						}
 					]
+					returnType: TSVoidKeywordTypeAnnotation {
+						loc: SourceLocation typescript/function/export-default/input.ts 1:37-1:41
+					}
+					loc: SourceLocation typescript/function/export-default/input.ts 1:23-1:41
 				}
+				loc: SourceLocation typescript/function/export-default/input.ts 1:15-1:42
 			}
+			loc: SourceLocation typescript/function/export-default/input.ts 1:0-1:42
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/function/export-default/input.ts>
+	loc: SourceLocation typescript/function/export-default/input.ts 1:0-2:0
 }
 ```
 

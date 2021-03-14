@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:0-1:16
-	path: UIDPath<esprima/expression-primary-object/migrated_0038/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:0-1:16
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:1-1:15
-				properties: Array [
+				properties: [
 					JSObjectMethod {
 						kind: "set"
 						key: JSStaticPropertyKey {
@@ -34,46 +21,50 @@ JSRoot {
 							}
 							loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:6-1:7
 						}
-						loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:2-1:14
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:12-1:14
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:7-1:12
-							params: Array [
+							params: [
 								JSBindingAssignmentPattern {
-									loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:8-1:11
-									right: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:10-1:11
-									}
 									left: JSBindingIdentifier {
 										name: "a"
-										loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:8-1:9 (a)
 										meta: JSPatternMeta {
-											optional: undefined
-											typeAnnotation: undefined
 											loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:8-1:9
 										}
+										loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:8-1:9 (a)
 									}
+									right: JSNumericLiteral {
+										value: 0
+										loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:10-1:11
+									}
+									loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:8-1:11
 								}
 							]
+							loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:7-1:12
 						}
+						loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:2-1:14
 					}
 				]
+				loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:1-1:15
 			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:0-1:16
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/expression-primary-object/migrated_0038/input.js>
+	loc: SourceLocation esprima/expression-primary-object/migrated_0038/input.js 1:0-1:16
 }
 ```
 

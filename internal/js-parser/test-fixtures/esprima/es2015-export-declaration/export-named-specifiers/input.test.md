@@ -8,42 +8,27 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 1:0-4:0
-	path: UIDPath<esprima/es2015-export-declaration/export-named-specifiers/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 1:0-1:8
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 1:0-1:8
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 1:4-1:7 (foo)
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 1:4-1:7
 					}
 				]
+				loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 1:0-1:8
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 1:0-1:8
 		}
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:0-2:18
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
-					loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:8-2:11
 					exported: JSIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:8-2:11 (foo)
@@ -52,9 +37,9 @@ JSRoot {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:8-2:11 (foo)
 					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:8-2:11
 				}
 				JSExportLocalSpecifier {
-					loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:13-2:16
 					exported: JSIdentifier {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:13-2:16 (bar)
@@ -63,27 +48,37 @@ JSRoot {
 						name: "bar"
 						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:13-2:16 (bar)
 					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:13-2:16
 				}
 			]
+			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 2:0-2:18
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 3:0-3:8
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 3:0-3:8
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "bar"
 							loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 3:4-3:7 (bar)
 						}
-						init: undefined
 						loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 3:4-3:7
 					}
 				]
+				loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 3:0-3:8
 			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 3:0-3:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-export-declaration/export-named-specifiers/input.js>
+	loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers/input.js 1:0-4:0
 }
 ```
 

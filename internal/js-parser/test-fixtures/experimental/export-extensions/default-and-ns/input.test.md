@@ -8,42 +8,39 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:0-2:0
-	path: UIDPath<experimental/export-extensions/default-and-ns/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:0-1:29
-			source: JSStringLiteral {
-				value: "test"
-				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:22-1:28
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:7-1:8
 				exported: JSIdentifier {
 					name: "B"
 					loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:7-1:8 (B)
 				}
+				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:7-1:8
 			}
 			namespaceSpecifier: JSExportNamespaceSpecifier {
-				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:10-1:16
 				exported: JSIdentifier {
 					name: "A"
 					loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:15-1:16 (A)
 				}
+				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:10-1:16
 			}
+			source: JSStringLiteral {
+				value: "test"
+				loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:22-1:28
+			}
+			loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<experimental/export-extensions/default-and-ns/input.js>
+	loc: SourceLocation experimental/export-extensions/default-and-ns/input.js 1:0-2:0
 }
 ```
 

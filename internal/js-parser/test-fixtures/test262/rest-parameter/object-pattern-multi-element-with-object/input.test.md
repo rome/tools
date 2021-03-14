@@ -8,47 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/object-pattern-multi-element-with-object/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElementWithObject"
 				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:9-1:31 (multiElementWithObject)
 			}
-			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:0-1:70
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:68-1:70
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:31-1:67
+				params: []
 				rest: JSBindingObjectPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:35-1:66
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:35-1:66
-					}
-					properties: Array [
+					properties: [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -58,9 +35,7 @@ JSRoot {
 								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:36-1:37
 							}
 							value: JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:39-1:45
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -76,6 +51,7 @@ JSRoot {
 										loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:40-1:44
 									}
 								]
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:39-1:45
 							}
 							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:36-1:45
 						}
@@ -88,9 +64,7 @@ JSRoot {
 								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:47-1:48
 							}
 							value: JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:50-1:53
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -106,6 +80,7 @@ JSRoot {
 										loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:51-1:52
 									}
 								]
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:50-1:53
 							}
 							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:47-1:53
 						}
@@ -118,9 +93,7 @@ JSRoot {
 								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:55-1:56
 							}
 							value: JSBindingObjectPattern {
-								rest: undefined
-								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:58-1:65
-								properties: Array [
+								properties: [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -130,28 +103,43 @@ JSRoot {
 											loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:59-1:60
 										}
 										value: JSBindingAssignmentPattern {
-											loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:59-1:64
 											left: JSBindingIdentifier {
 												name: "s"
 												loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:59-1:60 (s)
 											}
 											right: JSNumericLiteral {
 												value: 0
-												format: undefined
 												loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:63-1:64
 											}
+											loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:59-1:64
 										}
 										loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:59-1:64
 									}
 								]
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:58-1:65
 							}
 							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:55-1:65
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:35-1:66
+					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:35-1:66
 				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:31-1:67
 			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:0-1:70
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/object-pattern-multi-element-with-object/input.js>
+	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-object/input.js 1:0-2:0
 }
 ```
 

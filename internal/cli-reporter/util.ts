@@ -8,8 +8,9 @@
 import {ReporterProgress} from "./types";
 import Reporter from "./Reporter";
 import readline = require("readline");
-import {AnyMarkup, markup} from "@internal/markup";
+import {Markup, markup} from "@internal/markup";
 import {VoidCallback} from "@internal/typescript-helpers";
+import {safeProcessExit} from "@internal/resources";
 
 export function mergeProgresses(
 	progresses: ReporterProgress[],
@@ -34,12 +35,12 @@ export function mergeProgresses(
 				progress.setTotal(total, approximate);
 			}
 		},
-		setText: (text: AnyMarkup) => {
+		setText: (text: Markup) => {
 			for (const progress of progresses) {
 				progress.setText(text);
 			}
 		},
-		pushText: (text: AnyMarkup) => {
+		pushText: (text: Markup) => {
 			let id = "";
 			for (const progress of progresses) {
 				progress.pushText(text, id);
@@ -101,7 +102,7 @@ export function onKeypress(
 				if (key.ctrl) {
 					reporter.br({force: true});
 					reporter.warn(markup`Cancelled by user`);
-					process.exit(1);
+					safeProcessExit(1);
 				}
 				return;
 			}
@@ -109,7 +110,7 @@ export function onKeypress(
 			case "escape": {
 				reporter.br({force: true});
 				reporter.warn(markup`Cancelled by user`);
-				process.exit(1);
+				safeProcessExit(1);
 				return;
 			}
 		}

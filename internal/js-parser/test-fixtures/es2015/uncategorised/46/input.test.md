@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/46/input.js 1:0-1:8
-	path: UIDPath<es2015/uncategorised/46/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/46/input.js 1:0-1:8
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2015/uncategorised/46/input.js 1:1-1:7
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation es2015/uncategorised/46/input.js 1:6-1:7 (x)
@@ -31,19 +18,28 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation es2015/uncategorised/46/input.js 1:1-1:5
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation es2015/uncategorised/46/input.js 1:1-1:2 (x)
 						}
 					]
+					loc: SourceLocation es2015/uncategorised/46/input.js 1:1-1:5
 				}
+				loc: SourceLocation es2015/uncategorised/46/input.js 1:1-1:7
 			}
+			loc: SourceLocation es2015/uncategorised/46/input.js 1:0-1:8
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/46/input.js>
+	loc: SourceLocation es2015/uncategorised/46/input.js 1:0-1:8
 }
 ```
 

@@ -8,66 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/async-generators/for-await/input.js 1:0-4:0
-	path: UIDPath<es2018/async-generators/for-await/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation es2018/async-generators/for-await/input.js 1:15-1:16 (f)
 			}
-			loc: SourceLocation es2018/async-generators/for-await/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: true
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2018/async-generators/for-await/input.js 1:16-1:18
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2018/async-generators/for-await/input.js 1:19-3:1
-				body: Array [
+				body: [
 					JSForOfStatement {
 						await: true
-						body: JSEmptyStatement {loc: SourceLocation es2018/async-generators/for-await/input.js 2:24-2:25}
-						loc: SourceLocation es2018/async-generators/for-await/input.js 2:2-2:25
-						right: JSReferenceIdentifier {
-							name: "y"
-							loc: SourceLocation es2018/async-generators/for-await/input.js 2:22-2:23 (y)
+						body: JSEmptyStatement {
+							loc: SourceLocation es2018/async-generators/for-await/input.js 2:24-2:25
 						}
 						left: JSVariableDeclaration {
 							kind: "let"
-							loc: SourceLocation es2018/async-generators/for-await/input.js 2:13-2:18
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: SourceLocation es2018/async-generators/for-await/input.js 2:17-2:18 (x)
 									}
-									init: undefined
 									loc: SourceLocation es2018/async-generators/for-await/input.js 2:17-2:18
 								}
 							]
+							loc: SourceLocation es2018/async-generators/for-await/input.js 2:13-2:18
 						}
+						right: JSReferenceIdentifier {
+							name: "y"
+							loc: SourceLocation es2018/async-generators/for-await/input.js 2:22-2:23 (y)
+						}
+						loc: SourceLocation es2018/async-generators/for-await/input.js 2:2-2:25
 					}
 				]
+				directives: []
+				loc: SourceLocation es2018/async-generators/for-await/input.js 1:19-3:1
 			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2018/async-generators/for-await/input.js 1:16-1:18
+			}
+			loc: SourceLocation es2018/async-generators/for-await/input.js 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/async-generators/for-await/input.js>
+	loc: SourceLocation es2018/async-generators/for-await/input.js 1:0-4:0
 }
 ```
 

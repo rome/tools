@@ -8,53 +8,49 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/359/input.js 1:0-1:7
-	path: UIDPath<core/uncategorised/359/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/359/input.js 1:0-1:7
 			expression: JSBinaryExpression {
 				operator: "in"
-				loc: SourceLocation core/uncategorised/359/input.js 1:0-1:7
-				right: JSArrayExpression {
-					elements: Array []
-					loc: SourceLocation core/uncategorised/359/input.js 1:5-1:7
-				}
 				left: JSNumericLiteral {
 					value: 3
 					format: "hex"
 					loc: SourceLocation core/uncategorised/359/input.js 1:0-1:3
 				}
+				right: JSArrayExpression {
+					elements: []
+					loc: SourceLocation core/uncategorised/359/input.js 1:5-1:7
+				}
+				loc: SourceLocation core/uncategorised/359/input.js 1:0-1:7
 			}
+			loc: SourceLocation core/uncategorised/359/input.js 1:0-1:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Identifier directly after number"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:3
 				path: UIDPath<core/uncategorised/359/input.js>
+				end: Position 1:3
 				start: Position 1:3
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/359/input.js>
+	loc: SourceLocation core/uncategorised/359/input.js 1:0-1:7
 }
 ```
 

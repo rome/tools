@@ -4,7 +4,7 @@ import {parseDecisionStrings} from "@internal/compiler";
 import {createAbsoluteFilePath, createRelativePath} from "@internal/path";
 import lint from "./index";
 import {parseJS} from "@internal/js-parser";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 
 test(
 	"apply single autofix",

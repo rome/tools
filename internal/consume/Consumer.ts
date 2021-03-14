@@ -10,10 +10,9 @@ import {
 	DiagnosticAdvice,
 	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
-	Diagnostics,
 	DiagnosticsError,
 	catchDiagnosticsSync,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {
@@ -47,26 +46,29 @@ import {
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
-	AnyIndexedNumber,
+	IndexedNumber,
 	OneIndexed,
 	ZeroIndexed,
 	isIndexedNumberish,
-} from "@internal/math";
+} from "@internal/numbers";
 import {isValidIdentifierName} from "@internal/js-ast-utils";
 import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
-	AnyFilePath,
-	AnyPath,
+	FilePath,
+	Path,
 	RelativePath,
 	URLPath,
 	createAbsoluteFilePath,
-	createAnyPath,
+	createPath,
+	createRelativePath,
 	createURLPath,
 	isPath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";
+import {prettyFormatToString} from "@internal/pretty-format";
+import {enhanceNodeInspectClass} from "@internal/node";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -98,7 +100,7 @@ export default class Consumer {
 		this.handleUnexpected = opts.handleUnexpectedDiagnostic;
 	}
 
-	public path: AnyPath;
+	public path: Path;
 
 	private declared: boolean;
 	private handleUnexpected: undefined | ConsumerHandleUnexpected;
@@ -116,9 +118,9 @@ export default class Consumer {
 	public capture(): {
 		consumer: Consumer;
 		definitions: ConsumePropertyDefinition[];
-		diagnostics: Diagnostics;
+		diagnostics: Diagnostic[];
 	} {
-		let diagnostics: Diagnostics = [];
+		let diagnostics: Diagnostic[] = [];
 		const definitions: ConsumePropertyDefinition[] = [];
 
 		const consumer = this.cloneConsumer({
@@ -392,7 +394,7 @@ export default class Consumer {
 			message,
 		};
 
-		const advice: DiagnosticAdvice = [...(description.advice || [])];
+		const advice: DiagnosticAdvice[] = [...(description.advice || [])];
 
 		// Make the errors more descriptive
 		if (fromSource) {
@@ -451,7 +453,7 @@ export default class Consumer {
 			},
 		};
 
-		const err = createSingleDiagnosticError(diagnostic);
+		const err = createSingleDiagnosticsError(diagnostic);
 
 		if (this.handleUnexpected === undefined) {
 			throw err;
@@ -637,6 +639,18 @@ export default class Consumer {
 		return this.fork(key, value[valueKey], metadata);
 	}
 
+	public getPath(keys: (string | number)[]): Consumer {
+		let target: Consumer = this;
+		for (const key of keys) {
+			if (typeof key === "number") {
+				target = target.getIndex(key);
+			} else {
+				target = target.get(key);
+			}
+		}
+		return target;
+	}
+
 	public getIndex(index: number): Consumer {
 		const arr = this.asPlainArray();
 		return this.fork(index, arr[index]);
@@ -664,11 +678,7 @@ export default class Consumer {
 		for (const [key, value] of this.asMap(false, false)) {
 			if (!this.usedNames.has(key)) {
 				value.unexpected(
-					descriptions.CONSUME.UNUSED_PROPERTY(
-						this.getKeyPathString([key]),
-						type,
-						knownProperties,
-					),
+					descriptions.CONSUME.UNUSED_PROPERTY(key, type, knownProperties),
 					{
 						target: "key",
 						at: "suffix",
@@ -1146,7 +1156,7 @@ export default class Consumer {
 		}
 	}
 
-	public asAnyPath(def?: string): AnyPath {
+	public asAnyPath(def?: string): Path {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1163,10 +1173,10 @@ export default class Consumer {
 		}
 
 		// Otherwise expect a string
-		return createAnyPath(this.asString(def));
+		return createPath(this.asString(def));
 	}
 
-	public asAnyPathOrVoid(): undefined | AnyPath {
+	public asAnyPathOrVoid(): undefined | Path {
 		if (this.exists()) {
 			return this.asAnyPath();
 		} else {
@@ -1175,17 +1185,17 @@ export default class Consumer {
 		}
 	}
 
-	public asFilePath(def?: string): AnyFilePath {
+	public asFilePath(def?: string): FilePath {
 		const path = this.asAnyPath(def);
 		if (path.isFilePath()) {
 			return path.assertFilePath();
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_FILE_PATH);
-			return path.toExplicitRelative();
+			return createRelativePath("unknown");
 		}
 	}
 
-	public asFilePathOrVoid(): undefined | AnyFilePath {
+	public asFilePathOrVoid(): undefined | FilePath {
 		const path = this.asAnyPath();
 		if (path.isFilePath()) {
 			return path.assertFilePath();
@@ -1227,7 +1237,7 @@ export default class Consumer {
 			return path.assertRelative();
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_RELATIVE_PATH);
-			return path.toExplicitRelative();
+			return createRelativePath("unknown");
 		}
 	}
 
@@ -1336,11 +1346,11 @@ export default class Consumer {
 
 	public asNumberInRange(
 		opts: {
-			min?: number | AnyIndexedNumber;
-			max?: number | AnyIndexedNumber;
-			default?: number | AnyIndexedNumber;
+			min?: number | IndexedNumber;
+			max?: number | IndexedNumber;
+			default?: number | IndexedNumber;
 		},
-	): number | AnyIndexedNumber {
+	): number | IndexedNumber {
 		const min = opts.min === undefined ? undefined : opts.min.valueOf();
 		const max = opts.max === undefined ? undefined : opts.max.valueOf();
 		const def = opts.default === undefined ? undefined : opts.default.valueOf();
@@ -1437,3 +1447,10 @@ export default class Consumer {
 		return this.value;
 	}
 }
+
+enhanceNodeInspectClass(
+	Consumer,
+	(consumer) => {
+		return `Consumer<${prettyFormatToString(consumer.getValue())}>`;
+	},
+);

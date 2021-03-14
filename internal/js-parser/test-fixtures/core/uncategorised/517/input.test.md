@@ -8,115 +8,103 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/517/input.js 1:0-1:52
-	path: UIDPath<core/uncategorised/517/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:44
-				path: UIDPath<core/uncategorised/517/input.js>
-				start: Position 1:43
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>t</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation core/uncategorised/517/input.js 1:43-1:44 (t)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: SourceLocation core/uncategorised/517/input.js 1:9-1:10 (a)
 			}
-			loc: SourceLocation core/uncategorised/517/input.js 1:0-1:52
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation core/uncategorised/517/input.js 1:10-1:12
-			}
 			body: JSBlockStatement {
-				loc: SourceLocation core/uncategorised/517/input.js 1:13-1:52
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: SourceLocation core/uncategorised/517/input.js 1:15-1:28
-					}
-				]
-				body: Array [
+				body: [
 					JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "b"
 							loc: SourceLocation core/uncategorised/517/input.js 1:38-1:39 (b)
 						}
-						loc: SourceLocation core/uncategorised/517/input.js 1:29-1:49
 						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
+							body: []
+							directives: []
 							loc: SourceLocation core/uncategorised/517/input.js 1:46-1:49
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation core/uncategorised/517/input.js 1:39-1:45
-							params: Array [
+							params: [
 								JSBindingIdentifier {
 									name: "t"
-									loc: SourceLocation core/uncategorised/517/input.js 1:40-1:41 (t)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation core/uncategorised/517/input.js 1:40-1:41
 									}
+									loc: SourceLocation core/uncategorised/517/input.js 1:40-1:41 (t)
 								}
 								JSBindingIdentifier {
 									name: "t"
-									loc: SourceLocation core/uncategorised/517/input.js 1:43-1:44 (t)
 									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
 										loc: SourceLocation core/uncategorised/517/input.js 1:43-1:44
 									}
+									loc: SourceLocation core/uncategorised/517/input.js 1:43-1:44 (t)
 								}
 							]
+							loc: SourceLocation core/uncategorised/517/input.js 1:39-1:45
 						}
+						loc: SourceLocation core/uncategorised/517/input.js 1:29-1:49
 					}
-					JSEmptyStatement {loc: SourceLocation core/uncategorised/517/input.js 1:49-1:50}
+					JSEmptyStatement {
+						loc: SourceLocation core/uncategorised/517/input.js 1:49-1:50
+					}
 				]
+				directives: [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation core/uncategorised/517/input.js 1:15-1:28
+					}
+				]
+				loc: SourceLocation core/uncategorised/517/input.js 1:13-1:52
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation core/uncategorised/517/input.js 1:10-1:12
+			}
+			loc: SourceLocation core/uncategorised/517/input.js 1:0-1:52
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation core/uncategorised/517/input.js 1:43-1:44 (t)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "t", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/517/input.js>
+				end: Position 1:44
+				start: Position 1:43
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/517/input.js>
+	loc: SourceLocation core/uncategorised/517/input.js 1:0-1:52
 }
 ```
 

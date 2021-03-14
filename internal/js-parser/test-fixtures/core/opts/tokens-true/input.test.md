@@ -8,69 +8,65 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: true
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/opts/tokens-true/input.js 1:0-4:0
-	path: UIDPath<core/opts/tokens-true/input.js>
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/opts/tokens-true/input.js 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/opts/tokens-true/input.js 1:0-1:10
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: SourceLocation core/opts/tokens-true/input.js 1:4-1:5 (a)
 						}
-						loc: SourceLocation core/opts/tokens-true/input.js 1:4-1:9
 						init: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation core/opts/tokens-true/input.js 1:8-1:9
 						}
+						loc: SourceLocation core/opts/tokens-true/input.js 1:4-1:9
 					}
 				]
+				loc: SourceLocation core/opts/tokens-true/input.js 1:0-1:10
 			}
+			loc: SourceLocation core/opts/tokens-true/input.js 1:0-1:10
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation core/opts/tokens-true/input.js 3:0-3:14
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: SourceLocation core/opts/tokens-true/input.js 3:0-3:14
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "b"
 							loc: SourceLocation core/opts/tokens-true/input.js 3:4-3:5 (b)
 						}
-						loc: SourceLocation core/opts/tokens-true/input.js 3:4-3:13
 						init: JSBinaryExpression {
 							operator: "+"
-							loc: SourceLocation core/opts/tokens-true/input.js 3:8-3:13
 							left: JSReferenceIdentifier {
 								name: "a"
 								loc: SourceLocation core/opts/tokens-true/input.js 3:8-3:9 (a)
 							}
 							right: JSNumericLiteral {
 								value: 1
-								format: undefined
 								loc: SourceLocation core/opts/tokens-true/input.js 3:12-3:13
 							}
+							loc: SourceLocation core/opts/tokens-true/input.js 3:8-3:13
 						}
+						loc: SourceLocation core/opts/tokens-true/input.js 3:4-3:13
 					}
 				]
+				loc: SourceLocation core/opts/tokens-true/input.js 3:0-3:14
 			}
+			loc: SourceLocation core/opts/tokens-true/input.js 3:0-3:14
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: true
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/opts/tokens-true/input.js>
+	loc: SourceLocation core/opts/tokens-true/input.js 1:0-4:0
 }
 ```
 

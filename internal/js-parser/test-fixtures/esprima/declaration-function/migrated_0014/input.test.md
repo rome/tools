@@ -8,59 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:0-2:0
-	path: UIDPath<esprima/declaration-function/migrated_0014/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:9-1:13 (test)
 			}
-			loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:0-1:38
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:13-1:15
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:16-1:38
-				body: Array [
+				body: [
 					JSExpressionStatement {
-						loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:18-1:36
 						expression: JSBinaryExpression {
 							operator: "+"
-							loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:18-1:35
 							left: JSStringLiteral {
 								value: "use strict"
 								loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:18-1:30
 							}
 							right: JSNumericLiteral {
 								value: 42
-								format: undefined
 								loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:33-1:35
 							}
+							loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:18-1:35
 						}
+						loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:18-1:36
 					}
 				]
+				directives: []
+				loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:16-1:38
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:13-1:15
+			}
+			loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:0-1:38
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/declaration-function/migrated_0014/input.js>
+	loc: SourceLocation esprima/declaration-function/migrated_0014/input.js 1:0-2:0
 }
 ```
 

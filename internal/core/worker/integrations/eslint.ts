@@ -1,7 +1,8 @@
 import IntegrationLoader from "@internal/core/common/IntegrationLoader";
 import {FileReference} from "@internal/core/common/types/files";
-import {DIAGNOSTIC_CATEGORIES, Diagnostics} from "@internal/diagnostics";
+import {DIAGNOSTIC_CATEGORIES, Diagnostic} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
+import {Duration, DurationMeasurer} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 import {WorkerProject} from "../types";
 import Worker from "../Worker";
@@ -38,17 +39,17 @@ export async function maybeRunESLint(
 ): Promise<
 	| undefined
 	| {
-			timingNs: bigint;
-			diagnostics: Diagnostics;
+			timing: Duration;
+			diagnostics: Diagnostic[];
 		}
 > {
 	if (!project.config.integrations.eslint.enabled) {
 		return undefined;
 	}
 
-	const start = process.hrtime.bigint();
+	const timer = new DurationMeasurer();
 
-	const diagnostics: Diagnostics = [];
+	const diagnostics: Diagnostic[] = [];
 
 	const loader = await eslintLoader.load(project.configPath, project.directory);
 
@@ -97,10 +98,8 @@ export async function maybeRunESLint(
 		}
 	}
 
-	const end = process.hrtime.bigint();
-
 	return {
 		diagnostics,
-		timingNs: end - start,
+		timing: timer.since(),
 	};
 }

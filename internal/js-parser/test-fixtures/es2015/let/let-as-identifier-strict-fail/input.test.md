@@ -8,58 +8,48 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 1:0-3:0
-	path: UIDPath<es2015/let/let-as-identifier-strict-fail/input.js>
-	directives: Array [
-		JSDirective {
-			value: "use strict"
-			loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 1:0-1:13
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:0-2:7
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:0-2:7
 				left: JSReferenceIdentifier {
 					name: "let"
 					loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:0-2:3 (let)
 				}
 				right: JSNumericLiteral {
 					value: 1
-					format: undefined
 					loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:6-2:7
 				}
+				loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:0-2:7
 			}
+			loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 2:0-2:7
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "let is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["let", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 2:3
 				path: UIDPath<es2015/let/let-as-identifier-strict-fail/input.js>
+				end: Position 2:3
 				start: Position 2:0
 			}
 		}
 	]
+	directives: [
+		JSDirective {
+			value: "use strict"
+			loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 1:0-1:13
+		}
+	]
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/let/let-as-identifier-strict-fail/input.js>
+	loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 1:0-3:0
 }
 ```
 

@@ -8,70 +8,33 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/invalid-escape-export-as/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:18
-				path: UIDPath<es2015/modules/invalid-escape-export-as/input.js>
-				start: Position 1:11
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>\\\\</emphasis>"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
-			declaration: undefined
 			exportKind: "value"
-			loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:0-1:22
-			specifiers: Array [
+			specifiers: [
 				JSExportLocalSpecifier {
+					exported: JSIdentifier {
+						name: "X"
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:9-1:10 (X)
+					}
+					local: JSReferenceIdentifier {
+						name: "X"
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:9-1:10 (X)
+					}
 					loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:9-1:10
-					exported: JSIdentifier {
-						name: "X"
-						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:9-1:10 (X)
-					}
-					local: JSReferenceIdentifier {
-						name: "X"
-						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:9-1:10 (X)
-					}
 				}
 				JSExportLocalSpecifier {
+					exported: JSIdentifier {
+						name: "as"
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:11-1:18 (as)
+					}
+					local: JSReferenceIdentifier {
+						name: "as"
+						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:11-1:18 (as)
+					}
 					loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:11-1:18
-					exported: JSIdentifier {
-						name: "as"
-						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:11-1:18 (as)
-					}
-					local: JSReferenceIdentifier {
-						name: "as"
-						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:11-1:18 (as)
-					}
 				}
 				JSExportLocalSpecifier {
-					loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:19-1:20
 					exported: JSIdentifier {
 						name: "Y"
 						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:19-1:20 (Y)
@@ -80,10 +43,37 @@ JSRoot {
 						name: "Y"
 						loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:19-1:20 (Y)
 					}
+					loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:19-1:20
 				}
 			]
+			loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "\\", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/invalid-escape-export-as/input.js>
+				end: Position 1:18
+				start: Position 1:11
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/invalid-escape-export-as/input.js>
+	loc: SourceLocation es2015/modules/invalid-escape-export-as/input.js 1:0-2:0
 }
 ```
 

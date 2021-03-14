@@ -8,65 +8,61 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/invalid-parens-async-arrow/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<es2017/async-functions/invalid-parens-async-arrow/input.js>
-				start: Position 1:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-1:10
 			expression: JSCallExpression {
-				loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-1:10
-				callee: JSReferenceIdentifier {
-					name: "async"
-					loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:1-1:6 (async)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "a"
 						loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:8-1:9 (a)
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "async"
+					loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:1-1:6 (async)
+				}
+				loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-1:10
 			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-1:10
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:11-1:13
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:11-1:13
 			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:11-1:13
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:14-1:16
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/invalid-parens-async-arrow/input.js>
+				end: Position 1:10
+				start: Position 1:11
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/invalid-parens-async-arrow/input.js>
+	loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-2:0
 }
 ```
 

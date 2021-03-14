@@ -8,40 +8,35 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-import-declaration/import-default/input.js>
-	body: Array [
+	body: [
 		JSImportDeclaration {
-			importKind: undefined
-			namedSpecifiers: Array []
-			namespaceSpecifier: undefined
-			loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:0-1:22
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:16-1:21
-			}
+			namedSpecifiers: []
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:7-1:10 (foo)
 					}
-					importKind: undefined
 					loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:7-1:10
 				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:0-1:10
 			}
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:16-1:21
+			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:0-1:22
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<esprima/es2015-import-declaration/import-default/input.js>
+	loc: SourceLocation esprima/es2015-import-declaration/import-default/input.js 1:0-2:0
 }
 ```
 

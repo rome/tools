@@ -8,35 +8,31 @@
 
 ```javascript
 JSRoot {
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/49/input.js 1:0-5:13
-	path: UIDPath<core/uncategorised/49/input.js>
-	comments: Array [
+	body: [
+		JSExpressionStatement {
+			leadingComments: ["0"]
+			expression: JSNumericLiteral {
+				value: 42
+				loc: SourceLocation core/uncategorised/49/input.js 5:11-5:13
+			}
+			loc: SourceLocation core/uncategorised/49/input.js 5:11-5:13
+		}
+	]
+	comments: [
 		CommentBlock {
 			id: "0"
 			value: " multiline\ncomment\nshould\nbe\nignored "
 			loc: SourceLocation core/uncategorised/49/input.js 1:0-5:10
 		}
 	]
-	body: Array [
-		JSExpressionStatement {
-			leadingComments: Array ["0"]
-			loc: SourceLocation core/uncategorised/49/input.js 5:11-5:13
-			expression: JSNumericLiteral {
-				value: 42
-				format: undefined
-				leadingComments: undefined
-				loc: SourceLocation core/uncategorised/49/input.js 5:11-5:13
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/49/input.js>
+	loc: SourceLocation core/uncategorised/49/input.js 1:0-5:13
 }
 ```
 

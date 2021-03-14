@@ -1,9 +1,10 @@
 import {
+	NodeSystemError,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
 	setErrorFrames,
 	setNodeErrorProps,
-} from "@internal/v8";
+} from "@internal/errors";
 import {StaticMarkup, markup} from "@internal/markup";
 import {
 	DIAGNOSTIC_CATEGORIES,
@@ -12,13 +13,11 @@ import {
 	DiagnosticCategory,
 	DiagnosticLocation,
 	DiagnosticsError,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
 import {prettyFormatEager} from "@internal/pretty-format";
 import {UNKNOWN_PATH, createAbsoluteFilePath} from "@internal/path";
-import {lstatSync} from "@internal/fs";
-import {NodeSystemError} from "@internal/node";
 
 function getPathFromNodeError(err: NodeSystemError): undefined | string {
 	return err.path ?? err.address;
@@ -28,7 +27,7 @@ function getMessageFromNodeError(
 	err: NodeSystemError,
 ): {
 	message: StaticMarkup;
-	advice?: DiagnosticAdvice;
+	advice?: DiagnosticAdvice[];
 } {
 	const path = getPathFromNodeError(err);
 
@@ -99,18 +98,10 @@ export function convertPossibleNodeErrorToDiagnostic(
 	};
 
 	if (err.path !== undefined && struct.frames.length === 0) {
-		// If we are an fs error with no frames then recommend adding the envvar so the @internal/fs module will
-		// manually capture and set stacktraces
 		advice.push({
 			type: "log",
 			category: "warn",
 			text: markup`No stacktrace available for this error. This is a Node.js limitation: <hyperlink target="https://github.com/nodejs/node/issues/30944" />`,
-		});
-
-		advice.push({
-			type: "log",
-			category: "info",
-			text: markup`Try setting the <code>ROME_FS_ERRORS=1</code> envvar to capture stacktraces for fs calls.`,
 		});
 	} else {
 		advice = getErrorStackAdvice(struct);
@@ -132,7 +123,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 
 			for (const parent of path.getChain()) {
 				try {
-					const stat = lstatSync(parent);
+					const stat = parent.lstatSync();
 
 					advice.push({
 						type: "group",
@@ -177,7 +168,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 	};
 
 	// Create diagnostic error
-	const diagErr: NodeSystemError = createSingleDiagnosticError(diag);
+	const diagErr: NodeSystemError = createSingleDiagnosticsError(diag);
 
 	// Add on remaining regular error props so it can be treated as a normal error if necessary
 

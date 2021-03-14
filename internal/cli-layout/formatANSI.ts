@@ -24,8 +24,8 @@ export function ansiFormatText(
 		case "hyperlink": {
 			if (features.hyperlinks) {
 				return formatAnsi.hyperlink(
-					attributes.get("target").asString(value),
 					value,
+					attributes.get("target").asString(value),
 				);
 			} else {
 				return value;

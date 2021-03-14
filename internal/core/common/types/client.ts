@@ -13,6 +13,14 @@ import {Platform} from "./platform";
 import {AbsoluteFilePath, CWD_PATH} from "@internal/path";
 import {ReporterStream} from "@internal/cli-reporter";
 import {TerminalFeatures} from "@internal/cli-environment";
+import {
+	ServerQueryResponse,
+	ServerQueryResponseBase,
+} from "../bridges/ServerBridge";
+import {
+	DEFAULT_PROCESSOR_FILTER_FLAGS,
+	DiagnosticsProcessorFilterOptions,
+} from "@internal/diagnostics";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",
@@ -23,8 +31,9 @@ export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 
 export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 	...DEFAULT_PRINTER_FLAGS,
+	...DEFAULT_PROCESSOR_FILTER_FLAGS,
+	programmatic: true,
 	unsafeWrites: false,
-	showAllDiagnostics: false,
 	collectMarkers: false,
 	timing: false,
 	benchmark: false,
@@ -36,22 +45,24 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 	resolverMocks: false,
 };
 
-export type ClientRequestFlags = DiagnosticsPrinterFlags & {
-	watch: boolean;
-	review: boolean;
-	unsafeWrites: boolean;
+export type ClientRequestFlags = DiagnosticsPrinterFlags &
+	DiagnosticsProcessorFilterOptions & {
+		watch: boolean;
+		review: boolean;
+		programmatic: boolean;
+		unsafeWrites: boolean;
 
-	// Debugging
-	timing: boolean;
-	collectMarkers: boolean;
-	benchmark: boolean;
-	benchmarkIterations: number;
+		// Debugging
+		timing: boolean;
+		collectMarkers: boolean;
+		benchmark: boolean;
+		benchmarkIterations: number;
 
-	// Bundler flags
-	resolverPlatform: undefined | Platform;
-	resolverScale: undefined | number;
-	resolverMocks: boolean;
-};
+		// Bundler flags
+		resolverPlatform: undefined | Platform;
+		resolverScale: undefined | number;
+		resolverMocks: boolean;
+	};
 
 export type ClientTerminalFeatures = Partial<TerminalFeatures> & {
 	redirectError?: boolean;
@@ -66,3 +77,10 @@ export type ClientFlags = {
 };
 
 export type ClientLogsLevel = "all" | "error";
+
+export type ClientQueryErrorResponse = ServerQueryResponseBase & {
+	type: "CLIENT_ERROR";
+	message: string;
+};
+
+export type ClientQueryResponse = ServerQueryResponse | ClientQueryErrorResponse;

@@ -8,55 +8,13 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-2:0
-	path: UIDPath<es2015/duplicate-proto/in-new-expression/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:33
-				path: UIDPath<es2015/duplicate-proto/in-new-expression/input.js>
-				start: Position 1:24
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-1:53
 			expression: JSNewExpression {
-				arguments: Array []
-				optional: undefined
-				typeArguments: undefined
-				loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-1:52
+				arguments: []
 				callee: JSMemberExpression {
-					loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:4-1:52
-					property: JSStaticMemberProperty {
-						value: JSIdentifier {
-							name: "__proto__"
-							loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:43-1:52 (__proto__)
-						}
-						loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:43-1:52 (__proto__)
-					}
 					object: JSObjectExpression {
-						loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:4-1:42
-						properties: Array [
+						properties: [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
@@ -86,11 +44,47 @@ JSRoot {
 								loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:24-1:41
 							}
 						]
+						loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:4-1:42
 					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "__proto__"
+							loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:43-1:52 (__proto__)
+						}
+						loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:43-1:52 (__proto__)
+					}
+					loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:4-1:52
 				}
+				loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-1:52
+			}
+			loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-1:53
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/duplicate-proto/in-new-expression/input.js>
+				end: Position 1:33
+				start: Position 1:24
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/duplicate-proto/in-new-expression/input.js>
+	loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-2:0
 }
 ```
 

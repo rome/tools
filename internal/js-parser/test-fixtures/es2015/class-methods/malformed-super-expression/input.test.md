@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
-	path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid super suffix operator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 3:9
-				path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
-				start: Position 3:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:6-1:7 (A)
 			}
-			loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -60,52 +25,74 @@ JSRoot {
 							}
 							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-2:3
 						}
-						loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-4:3
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-2:3
 							start: Position 2:2
+						}
+						body: JSBlockStatement {
+							body: [
+								JSExpressionStatement {
+									expression: JSBinaryExpression {
+										operator: "-"
+										left: JSSuper {
+											loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:9
+										}
+										right: JSNumericLiteral {
+											value: 1
+											loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:12-3:13
+										}
+										loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:13
+									}
+									loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:14
+								}
+							]
+							directives: []
+							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:7-4:3
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
+							params: []
 							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:4-2:6
 						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:7-4:3
-							body: Array [
-								JSExpressionStatement {
-									loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:14
-									expression: JSBinaryExpression {
-										operator: "-"
-										left: JSSuper {loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:9}
-										loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:13
-										right: JSNumericLiteral {
-											value: 1
-											format: undefined
-											loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:12-3:13
-										}
-									}
-								}
-							]
-						}
+						loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-4:3
 					}
 				]
+				loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
+			}
+			loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid super suffix operator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
+				end: Position 3:9
+				start: Position 3:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
+	loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
 }
 ```
 

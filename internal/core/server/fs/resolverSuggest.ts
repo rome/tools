@@ -8,31 +8,30 @@
 import Resolver, {
 	ResolverLocalQuery,
 	ResolverQueryResponseNotFound,
-	ResolverQuerySource,
 	ResolverRemoteQuery,
-	isPathLike,
 } from "./Resolver";
 import {
 	DiagnosticAdvice,
 	buildSuggestionAdvice,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {orderBySimilarity} from "@internal/string-utils";
-import {AbsoluteFilePath, AnyFilePath, createAnyPath} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathSet, FilePath} from "@internal/path";
 import {PLATFORMS, Server} from "@internal/core";
-import {StaticMarkups, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import {ExtendedMap} from "@internal/collections";
 
 export default function resolverSuggest(
-	{resolver, query, resolved, origQuerySource, server}: {
+	{resolver, rootQuery, resolved, server}: {
 		resolver: Resolver;
 		server: Server;
-		query: ResolverRemoteQuery;
+		rootQuery: ResolverRemoteQuery;
 		resolved: ResolverQueryResponseNotFound;
-		origQuerySource?: ResolverQuerySource;
 	},
 ): Error {
+	const query = resolved.query ?? rootQuery;
+
 	let errMsg = "";
 	if (resolved.type === "UNSUPPORTED") {
 		errMsg = "Unsupported path format";
@@ -44,17 +43,15 @@ export default function resolverSuggest(
 
 	errMsg += ` "${query.source.join()}" from "${query.origin.join()}"`;
 
-	// Use the querySource returned by the resolution which will be the one that actually triggered this error, otherwise use the query source provided to us
-	const querySource =
-		resolved.source === undefined ? origQuerySource : resolved.source;
-	if (querySource === undefined || querySource.location === undefined) {
+	// Cannot produce a diagnostic location without a query location
+	// NB: Actually we can, just point it at query.origin but that doesn't feel right?
+	const {location} = query;
+	if (location === undefined) {
 		// TODO do something about the `advice` on some `resolved` that may contain metadata?
 		throw new Error(errMsg);
 	}
 
-	const {location} = querySource;
-
-	let advice: DiagnosticAdvice = [];
+	let advice: DiagnosticAdvice[] = [];
 
 	if (query.origin.isAbsolute()) {
 		const localQuery: ResolverLocalQuery = {
@@ -90,7 +87,7 @@ export default function resolverSuggest(
 		let skipSimilaritySuggestions = false;
 
 		// Try other platforms
-		const validPlatforms: StaticMarkups = [];
+		const validPlatforms: StaticMarkup[] = [];
 		for (const PLATFORM of PLATFORMS) {
 			if (PLATFORM === query.platform) {
 				continue;
@@ -130,22 +127,6 @@ export default function resolverSuggest(
 			});
 		}
 
-		// Hint on any indirection
-		if (origQuerySource?.location !== undefined && resolved.source !== undefined) {
-			advice.push({
-				type: "log",
-				category: "info",
-				text: markup`Found while resolving <emphasis>${query.source}</emphasis> from <emphasis>${query.origin}</emphasis>`,
-			});
-
-			const origPointer = origQuerySource.location;
-
-			advice.push({
-				type: "frame",
-				location: origPointer,
-			});
-		}
-
 		// Suggestions based on similarity to paths and packages on disk
 		if (!skipSimilaritySuggestions) {
 			const suggestions = getSuggestions(server, resolver, localQuery);
@@ -153,31 +134,37 @@ export default function resolverSuggest(
 				const originDirectory = resolver.getOriginDirectory(localQuery);
 
 				// Some suggestions may not be absolute paths
-				const humanToPath: ExtendedMap<string, AnyFilePath> = new ExtendedMap(
+				const humanToPath: ExtendedMap<string, FilePath> = new ExtendedMap(
 					"humanToPath",
 				);
 
 				const humanSuggestions = Array.from(
 					suggestions,
 					([human, absolute]) => {
-						if (human !== absolute.join()) {
-							humanToPath.set(human, absolute);
-							return human;
+						if (human === absolute.join()) {
+							let relativePath = originDirectory.relative(absolute);
+
+							// If the user didn't use extensions, then neither should we
+							if (!query.source.hasAnyExtensions()) {
+								// TODO only do this if it's an implicit extension
+								relativePath = relativePath.changeBasename(
+									relativePath.getExtensionlessBasename(),
+								);
+							}
+
+							if (relativePath.isRelative()) {
+								if (query.source.isExplicitRelative()) {
+									relativePath = relativePath.toExplicitRelative();
+								}
+
+								const human = relativePath.join();
+								humanToPath.set(human, absolute);
+								return human;
+							}
 						}
 
-						let relativePath = originDirectory.relative(absolute);
-
-						// If the user didn't use extensions, then neither should we
-						if (!query.source.hasAnyExtensions()) {
-							// TODO only do this if it's an implicit extension
-							relativePath = relativePath.changeBasename(
-								relativePath.getExtensionlessBasename(),
-							);
-						}
-
-						const explicitRelative = relativePath.toExplicitRelative().join();
-						humanToPath.set(explicitRelative, absolute);
-						return explicitRelative;
+						humanToPath.set(human, absolute);
+						return human;
 					},
 				);
 
@@ -189,7 +176,7 @@ export default function resolverSuggest(
 						{
 							formatItem: (relative) => {
 								const absolute = humanToPath.assert(relative);
-								return markup`<filelink target="${absolute}">${relative}</filelink>`;
+								return markup`<filelink target="${absolute.join()}">${relative}</filelink>`;
 							},
 						},
 					),
@@ -210,20 +197,42 @@ export default function resolverSuggest(
 		}
 	}
 
+	// Hint on any indirection
+	if (query !== rootQuery) {
+		if (rootQuery.location === undefined) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`Found while resolving <emphasis>${rootQuery.source}</emphasis> from <emphasis>${rootQuery.origin}</emphasis>`,
+			});
+		} else {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`Found while resolving <emphasis>${rootQuery.source}</emphasis> from <emphasis>${rootQuery.location.path}</emphasis>`,
+			});
+
+			advice.push({
+				type: "frame",
+				location: rootQuery.location,
+			});
+		}
+	}
+
 	// TODO check if this would have been successful if not for exports access control
-	const source =
-		querySource.source === undefined ? query.source.join() : querySource.source;
 
 	if (resolved.advice !== undefined) {
 		advice = advice.concat(resolved.advice);
 	}
 
-	throw createSingleDiagnosticError({
+	throw createSingleDiagnosticsError({
 		location,
-		description: {
-			...descriptions.RESOLVER.NOT_FOUND(resolved.type, source, location),
+		description: descriptions.RESOLVER.NOT_FOUND(
+			resolved.type,
+			query.origin,
+			query.source,
 			advice,
-		},
+		),
 	});
 }
 
@@ -236,25 +245,19 @@ function getPathSuggestions(
 ): Suggestions {
 	const suggestions: Suggestions = new Map();
 	const {source} = query;
-	if (!source.isFilePath()) {
+	if (!source.isRelative()) {
 		return suggestions;
 	}
 
 	const originDirectory = resolver.getOriginDirectory(query);
 
-	// Try normal resolved
-	tryPathSuggestions({
-		server,
-		resolver,
-		suggestions,
-		path: originDirectory.resolve(source),
-	});
-
-	// Remove . and .. entries from beginning
+	// Remove .. segments from beginning
 	const sourceParts = [...source.getSegments()];
-	while (sourceParts[0] === "." || sourceParts[0] === "..") {
+	while (sourceParts[0] === "..") {
 		sourceParts.shift();
 	}
+
+	const seen: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
 	// Try parent directories of the origin
 	for (const path of originDirectory.getChain()) {
@@ -262,6 +265,7 @@ function getPathSuggestions(
 			server,
 			resolver,
 			suggestions,
+			seen,
 			path: path.append(...sourceParts),
 		});
 	}
@@ -272,61 +276,85 @@ function getPathSuggestions(
 const MIN_SIMILARITY = 0.8;
 
 function tryPathSuggestions(
-	{server, resolver, suggestions, path}: {
+	{server, resolver, suggestions, seen, path}: {
 		server: Server;
 		resolver: Resolver;
 		suggestions: Suggestions;
 		path: AbsoluteFilePath;
+		seen: AbsoluteFilePathSet;
 	},
 ) {
+	if (seen.has(path)) {
+		return;
+	} else {
+		seen.add(path);
+	}
+
 	const {memoryFs} = server;
+	if (memoryFs.exists(path)) {
+		// Found an absolute match
+		suggestions.set(path.join(), path);
+		return;
+	}
 
-	const segments = path.getSegments();
-	const chain = path.getChain();
+	const search: [AbsoluteFilePath, string[]][] = [];
 
-	// Get all segments that are unknown
-	for (let i = chain.length - 1; i >= 0; i--) {
-		const path = chain[i];
-
-		if (memoryFs.exists(path)) {
-			// If this is an absolute match then we should be a suggestion
-			if (i === chain.length) {
-				suggestions.set(path.join(), path);
-			}
-
-			// Otherwise this segment exists and should have been dealt with previously in the loop
+	// Build up directories we need to search and the segments to append after
+	let target = path;
+	let segments: string[] = [];
+	while (true) {
+		if (target.hasParent()) {
+			search.push([target, segments]);
+			segments = [...segments, target.getBasename()];
+			target = target.getParent();
+		} else {
 			break;
 		}
+	}
 
+	// Traverse up directory chain from the root
+	for (const [path, segments] of search.reverse()) {
 		const parentPath = path.getParent();
 
-		// Our basename isn't valid, but our parent exists
+		// If our parent exists, but we do not, then we are the first step of the problem
 		if (!memoryFs.exists(path) && memoryFs.exists(parentPath)) {
-			const entries = Array.from(
-				memoryFs.readdir(parentPath),
-				(path) => path.join(),
-			);
-			if (entries.length === 0) {
+			const basenames: string[] = [];
+			const basenameToExtensions: Map<string, string[]> = new Map();
+			for (const path of memoryFs.readdir(parentPath)) {
+				const basename = path.getExtensionlessBasename();
+				basenames.push(basename);
+
+				let withExts = basenameToExtensions.get(basename);
+				if (withExts === undefined) {
+					withExts = [];
+					basenameToExtensions.set(basename, withExts);
+				}
+				withExts.push(path.getBasename());
+			}
+			if (basenames.length === 0) {
 				continue;
 			}
 
+			// Try to find similar files in this directory that match our basename
 			const ratings = orderBySimilarity(
 				path.getExtensionlessBasename(),
-				entries.map((target) => {
-					return createAnyPath(target).getExtensionlessBasename();
-				}),
+				basenames,
 				{
 					minRating: MIN_SIMILARITY,
 				},
 			);
 
 			for (const rating of ratings) {
-				tryPathSuggestions({
-					server,
-					resolver,
-					suggestions,
-					path: createAnyPath(rating.target).append(...segments.slice(1)).assertAbsolute(),
-				});
+				const basenames = basenameToExtensions.get(rating.target)!;
+				for (const basename of basenames) {
+					tryPathSuggestions({
+						server,
+						resolver,
+						suggestions,
+						path: parentPath.append(basename, ...segments),
+						seen,
+					});
+				}
 			}
 		}
 	}
@@ -374,7 +402,7 @@ function getSuggestions(
 			...getPathSuggestions(server, resolver, query),
 			...getPackageSuggestions(server, query),
 		]);
-	} else if (isPathLike(query.source)) {
+	} else if (query.source.isFilePath()) {
 		return getPathSuggestions(server, resolver, query);
 	} else {
 		return getPackageSuggestions(server, query);

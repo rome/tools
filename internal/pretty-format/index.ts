@@ -8,58 +8,55 @@
 import {
 	UnknownObject,
 	isIterable,
-	mergeObjects,
+	isObject,
+	isPlainObject,
 } from "@internal/typescript-helpers";
 import {escapeJSString} from "@internal/string-escape";
 import {naturalCompare} from "@internal/string-utils";
 import {
-	AnyMarkup,
 	LazyMarkupFactory,
+	Markup,
 	StaticMarkup,
-	concatMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
-	readMarkup,
-	serializeLazyMarkup,
 } from "@internal/markup";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
-import {Position, isPositionish, isSourceLocation} from "@internal/parser-core";
+import {
+	Positionish,
+	isPositionish,
+	isSourceLocationish,
+} from "@internal/parser-core";
+import util = require("util");
 
 type RecursiveStack = unknown[];
 
 type FormatOptions = {
-	allowCustom: boolean;
 	stack: RecursiveStack;
 	depth: number;
 	maxDepth: number;
-	compact: boolean;
 	path: (number | string)[];
 	insertLocator: undefined | (number | string)[];
+	accurate: boolean;
+	referencedStack: Set<unknown>;
 };
 
 type FormatPartialOptions = {
-	allowCustom?: boolean;
 	maxDepth?: number;
 	path?: FormatOptions["path"];
 	stack?: RecursiveStack;
-	compact?: boolean;
+	referencedStack?: Set<unknown>;
 	insertLocator?: FormatOptions["insertLocator"];
-};
-
-const DEFAULT_OPTIONS: FormatOptions = {
-	allowCustom: true,
-	maxDepth: Infinity,
-	depth: 0,
-	stack: [],
-	path: [],
-	compact: false,
-	insertLocator: undefined,
+	accurate?: boolean;
 };
 
 const NODE_UTIL_INSPECT_CUSTOM = Symbol.for("nodejs.util.inspect.custom");
 
-export function prettyFormatToString(value: unknown): string {
-	return markupToJoinedPlainText(markup`${prettyFormat(value)}`);
+export function prettyFormatToString(
+	value: unknown,
+	opts?: FormatPartialOptions,
+): string {
+	return markupToJoinedPlainText(prettyFormat(value, opts));
 }
 
 export function pretty(strs: TemplateStringsArray, ...values: unknown[]): string {
@@ -81,28 +78,42 @@ export function pretty(strs: TemplateStringsArray, ...values: unknown[]): string
 
 export function prettyFormatEager(
 	obj: unknown,
-	opts?: FormatPartialOptions,
+	{
+		maxDepth = Infinity,
+		referencedStack = new Set(),
+		stack = [],
+		path = [],
+		insertLocator = undefined,
+		accurate = false,
+	}: FormatPartialOptions = {},
 ): StaticMarkup {
-	return serializeLazyMarkup(prettyFormat(obj, opts));
+	const opts: FormatOptions = {
+		maxDepth,
+		depth: 0,
+		referencedStack,
+		stack,
+		path,
+		insertLocator,
+		accurate,
+	};
+	const value = formatValue(obj, opts);
+
+	if (needsLocator(opts)) {
+		return markup`<locator>${value}</locator>`;
+	} else {
+		return value;
+	}
 }
 
+// By default we return lazy markup to avoid prettifying expensive values that never end up being printed
 export default function prettyFormat(
 	obj: unknown,
-	rawOpts: FormatPartialOptions = {},
+	opts: FormatPartialOptions = {},
 ): LazyMarkupFactory {
-	return () => {
-		const opts: FormatOptions = mergeObjects(DEFAULT_OPTIONS, rawOpts);
-		const value = formatValue(obj, opts);
-
-		if (needsLocator(opts)) {
-			return markup`<locator>${value}</locator>`;
-		} else {
-			return value;
-		}
-	};
+	return () => prettyFormatEager(obj, opts);
 }
 
-function formatValue(obj: unknown, opts: FormatOptions): AnyMarkup {
+function formatValue(obj: unknown, opts: FormatOptions): StaticMarkup {
 	if (opts.maxDepth === opts.depth) {
 		return markup`[depth exceeded]`;
 	}
@@ -217,30 +228,32 @@ function formatBoolean(val: boolean): StaticMarkup {
 	return val ? markup`true` : markup`false`;
 }
 
-function formatFunction(val: Function, opts: FormatOptions): AnyMarkup {
+function formatFunction(val: Function, opts: FormatOptions): StaticMarkup {
 	const name = val.name === "" ? "anonymous" : val.name;
-	let label = markup`Function ${name}`;
+	let type = "Function";
 
 	if (isNativeFunction(val)) {
-		label = markup`Native${label}`;
+		type = "NativeFunction";
 	}
+
+	let label = markup`${formatLabel(type)} ${name}`;
 
 	if (Object.keys(val).length === 0) {
 		return label;
 	}
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	return formatObject(label, val as any, opts, []);
+	return markup`${label} ${formatObject(undefined, val as any, opts, [])}`;
 }
 
 function getExtraObjectProps(
 	obj: Objectish,
 	opts: FormatOptions,
 ): {
-	props: AnyMarkup[];
+	props: Markup[];
 	ignoreKeys: UnknownObject;
 } {
-	const props: AnyMarkup[] = [];
+	const props: Markup[] = [];
 	const ignoreKeys: UnknownObject = {};
 
 	if (isIterable(obj)) {
@@ -259,7 +272,9 @@ function getExtraObjectProps(
 				if (Array.isArray(item) && item.length === 2) {
 					const [key, val] = item;
 					const formattedKey =
-						typeof key === "string" ? formatKey(key) : prettyFormat(key, opts);
+						typeof key === "string"
+							? formatKey(key, true)
+							: prettyFormat(key, opts);
 					props.push(markup`${formattedKey} => ${prettyFormat(val, elemOpts)}`);
 				} else {
 					props.push(prettyFormat(item, elemOpts));
@@ -286,10 +301,10 @@ function getExtraObjectProps(
 	return {ignoreKeys, props};
 }
 
-function formatKey(rawKey: string): StaticMarkup {
+function formatKey(rawKey: string, forceString: boolean = false): StaticMarkup {
 	// Format as a string if it contains any special characters
-	if (/[^A-Za-z0-9_$]/g.test(rawKey)) {
-		return formatString(rawKey);
+	if (forceString || /[^A-Za-z0-9_$]/g.test(rawKey)) {
+		return markupTag("token", formatString(rawKey), {type: "string"});
 	} else {
 		return markup`${rawKey}`;
 	}
@@ -297,134 +312,128 @@ function formatKey(rawKey: string): StaticMarkup {
 
 // These are object keys that should always go at the top and ignore any alphabetization
 // This is fairly arbitrary but should include generic identifier keys
-export const PRIORITIZE_KEYS = ["id", "type", "kind", "key", "name", "value"];
+const PRIORITIZE_KEYS = new Set([
+	"id",
+	"type",
+	"kind",
+	"key",
+	"name",
+	"details",
+	"metadata",
+	"meta",
+	"value",
+]);
 
-type KeyInfo = {
-	key: string;
-	object: boolean;
-};
+// Same, but we put them at the bottom
+const DEPRIORITIZE_KEYS = new Set([
+	"loc",
+	"pos",
+	"start",
+	"end",
+	"location",
+	"position",
+]);
 
-function sortKeys(obj: Objectish): KeyInfo[] {
-	const sortedKeys: Set<string> = new Set(Object.keys(obj).sort(naturalCompare));
+export function sortKeys(keys: string[]): string[] {
+	const sortedKeys: Set<string> = new Set(keys.sort(naturalCompare));
 
-	const priorityKeys: KeyInfo[] = [];
-	const otherKeys: KeyInfo[] = [];
-	const objectKeys: KeyInfo[] = [];
-
-	for (const key of PRIORITIZE_KEYS) {
-		if (sortedKeys.has(key)) {
-			priorityKeys.push({key, object: false});
-			sortedKeys.delete(key);
-		}
-	}
+	const topKeys: string[] = [];
+	const middleKeys: string[] = [];
+	const bottomKeys: string[] = [];
 
 	for (const key of sortedKeys) {
-		const val = obj[key];
-
-		// Objects with properties should be at the bottom
-		let isObject = false;
-		if (typeof val === "object" && val != null && Object.keys(val).length > 0) {
-			isObject = true;
-		}
-		if (Array.isArray(val) && val.length > 0) {
-			isObject = true;
-		}
-		if (isObject) {
-			objectKeys.push({key, object: true});
+		if (PRIORITIZE_KEYS.has(key)) {
+			topKeys.push(key);
+		} else if (DEPRIORITIZE_KEYS.has(key)) {
+			bottomKeys.push(key);
 		} else {
-			otherKeys.push({key, object: false});
+			middleKeys.push(key);
 		}
 	}
 
-	return [...priorityKeys, ...otherKeys, ...objectKeys];
+	return [...topKeys, ...middleKeys, ...bottomKeys];
 }
 
-function lineCount(str: string): number {
-	return str.split("\n").length;
-}
-
-function lineCountCompare(a: string, b: string): number {
-	return lineCount(a) - lineCount(b);
-}
-
-function formatObjectLabel(label: StaticMarkup): StaticMarkup {
+function formatLabel(label: StaticMarkup): StaticMarkup {
 	return markupTag("color", label, {fg: "cyan"});
 }
 
-function formatPositionValue(val: Position): StaticMarkup {
+function formatPositionValue(val: Positionish): StaticMarkup {
 	return markup`<token type="number">${String(val.line.valueOf())}:${String(
 		val.column.valueOf(),
 	)}</token>`;
 }
 
 function formatObject(
-	label: StaticMarkup,
+	label: undefined | string,
 	obj: Objectish,
 	opts: FormatOptions,
 	labelKeys: string[],
-): AnyMarkup {
+): StaticMarkup {
 	// Detect circular references, and create a pointer to the specific value
-	const {stack} = opts;
-	if (stack.length > 0 && stack.includes(obj)) {
-		label = markup`Circular ${label} ${String(stack.indexOf(obj))}`;
-		return formatObjectLabel(label);
+	const {stack, referencedStack} = opts;
+
+	const existingIndex = stack.indexOf(obj);
+	if (existingIndex >= 0) {
+		referencedStack.add(obj);
+		return formatLabel(`Circular ${String(existingIndex)}`);
 	}
 
-	const customFormat = obj[NODE_UTIL_INSPECT_CUSTOM];
-	if (opts.allowCustom && typeof customFormat === "function") {
-		const customValue = customFormat.call(obj, opts.depth, {});
-		let inner;
-		if (typeof customValue === "string") {
-			inner = markup`${customValue}`;
-		} else {
-			inner = prettyFormat(
-				customValue,
-				{
-					compact: opts.compact,
-					allowCustom: true,
-					stack: opts.stack,
-				},
-			);
-		}
-		return markupTag("dim", inner);
-	}
-
-	if (isPositionish(obj)) {
-		const label = formatObjectLabel(markup`Position`);
-		return markup`${label} ${formatPositionValue(obj)}`;
-	}
-
-	if (isSourceLocation(obj)) {
-		let inner = markup`<token type="string">${obj.path.format()}</token> ${formatPositionValue(
-			obj.start,
-		)}<dim>-</dim>${formatPositionValue(obj.end)}`;
-		if (obj.identifierName !== undefined) {
-			inner = markup`${inner} (${escapeJSString(obj.identifierName)})`;
+	if (!opts.accurate) {
+		const customFormat = obj[NODE_UTIL_INSPECT_CUSTOM];
+		if (typeof customFormat === "function") {
+			const customValue = customFormat.call(obj, opts.depth, {});
+			let inner;
+			if (typeof customValue === "string") {
+				inner = markup`${customValue}`;
+			} else {
+				inner = prettyFormatEager(
+					customValue,
+					{
+						stack: opts.stack,
+					},
+				);
+			}
+			return markupTag("italic", inner);
 		}
 
-		const label = formatObjectLabel(markup`SourceLocation`);
-		return markup`${label} ${inner}`;
+		if (isPositionish(obj)) {
+			const label = formatLabel(markup`Position`);
+			return markup`${label} ${formatPositionValue(obj)}`;
+		}
+
+		if (isSourceLocationish(obj)) {
+			let inner = markup`<token type="string">${obj.path.format()}</token> ${formatPositionValue(
+				obj.start,
+			)}<dim>-</dim>${formatPositionValue(obj.end)}`;
+			if (obj.identifierName !== undefined) {
+				inner = markup`${inner} (${escapeJSString(obj.identifierName)})`;
+			}
+
+			const label = formatLabel(markup`SourceLocation`);
+			return markup`${label} ${inner}`;
+		}
 	}
 
-	//
 	const nextOpts: FormatOptions = {
 		...opts,
 		stack: [...stack, obj],
 		depth: opts.depth + 1,
 	};
-	const {ignoreKeys, props} = getExtraObjectProps(obj, nextOpts);
+	const {ignoreKeys, props: extraProps} = getExtraObjectProps(obj, nextOpts);
 
-	// For props that have object values, we always put them at the end, sorted by line count
-	const objProps: AnyMarkup[] = [];
+	let props: Markup[] = [...extraProps];
+	let objProps: Markup[] = [];
+	let hasObjectProp = false;
 
 	// Get string props
-	for (const {key, object} of sortKeys(obj)) {
+	for (const key of sortKeys(Object.keys(obj))) {
 		const val = obj[key];
 		if (key in ignoreKeys && ignoreKeys[key] === val) {
 			continue;
 		}
 
-		if (opts.compact && val === undefined) {
+		if (!opts.accurate && val === undefined) {
 			continue;
 		}
 
@@ -439,23 +448,25 @@ function formatObject(
 		};
 
 		const prop = markup`${formatKey(key)}: ${prettyFormat(val, propOpts)}`;
-		if (object) {
+
+		if (isObject(val)) {
+			hasObjectProp = true;
 			objProps.push(prop);
 		} else {
 			props.push(prop);
 		}
 	}
 
-	// Sort object props by line count and push them on
-	for (const prop of objProps.sort((a, b) =>
-		lineCountCompare(readMarkup(a), readMarkup(b))
-	)) {
-		props.push(prop);
-	}
+	props = props.concat(objProps);
 
-	// Get symbol props
+	// Get symbol props. Should always be at the end
 	for (const sym of Object.getOwnPropertySymbols(obj)) {
 		const val: unknown = Reflect.get(obj, sym);
+
+		if (isObject(val)) {
+			hasObjectProp = true;
+		}
+
 		props.push(
 			markup`${prettyFormat(sym, opts)}: ${prettyFormat(val, nextOpts)}`,
 		);
@@ -469,13 +480,41 @@ function formatObject(
 		close = "]";
 	}
 
-	//
-	let inner = concatMarkup(props, markup`\n`);
-	if (props.length > 1 || readMarkup(inner).includes("\n")) {
-		inner = markup`\n<indent>${inner}</indent>\n`;
+	const parts: Markup[] = [];
+
+	// Hide labels for arrays and objects in compact mode
+	let includeLabel = true;
+	if (!opts.accurate) {
+		if (Array.isArray(obj) && label === "Array") {
+			includeLabel = false;
+		} else if (isPlainObject(obj) && label === "Object") {
+			includeLabel = false;
+		}
+	}
+	if (includeLabel && label !== undefined) {
+		parts.push(markup`${formatLabel(label)} `);
 	}
 
-	return markup`${formatObjectLabel(label)} ${open}${inner}${close}`;
+	// Check if we were referenced circularly
+	if (referencedStack.has(obj)) {
+		parts.push(`<Ref ${String(stack.length)}>`);
+	}
+
+	parts.push(open);
+
+	if (props.length > 0) {
+		if (opts.accurate || hasObjectProp) {
+			const inner = joinMarkup(props, "\n");
+			parts.push(markup`\n<indent>${inner}</indent>\n`);
+		} else {
+			const inner = joinMarkup(props.map((prop) => markup`<li>${prop}</li>`));
+			parts.push(markup`<ul joinSameLine=", ">${inner}</ul>`);
+		}
+	}
+
+	parts.push(close);
+
+	return joinMarkup(parts);
 }
 
 function formatRegExp(val: RegExp): StaticMarkup {
@@ -497,16 +536,19 @@ type Objectish = {
 	[Symbol.toStringTag]?: unknown;
 };
 
-function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup {
+function formatObjectish(
+	val: null | Objectish,
+	opts: FormatOptions,
+): StaticMarkup {
 	if (val === null) {
 		return markupTag("emphasis", formatNull());
 	}
 
-	if (val instanceof RegExp) {
+	if (util.types.isRegExp(val)) {
 		return markupTag("color", formatRegExp(val), {fg: "red"});
 	}
 
-	if (val instanceof Date) {
+	if (util.types.isDate(val)) {
 		const str = formatDate(val);
 		return markupTag("color", str, {fg: "magenta"});
 	}
@@ -516,22 +558,23 @@ function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup 
 	// TODO WeakSet/WeakMap
 	// TODO prototypes that differ from constructor
 	// TODO promise
+	// TODO proxies
 
 	let labelKeys: string[] = [];
 
-	let label = markup`null`;
+	let label = "null";
 
 	if (typeof val[Symbol.toStringTag] === "string") {
-		label = markup`${String(val[Symbol.toStringTag])}`;
+		label = String(val[Symbol.toStringTag]);
 	} else if (val.constructor !== undefined) {
-		label = markup`${val.constructor.name}`;
+		label = String(val.constructor.name);
 
-		if (val.constructor.name === "Object") {
+		if (val.constructor.name === "Object" && !opts.accurate) {
 			if (typeof val.type === "string") {
-				label = markup`${val.type}`;
+				label = val.type;
 				labelKeys.push("type");
 			} else if (typeof val.kind === "string") {
-				label = markup`${val.kind}`;
+				label = val.kind;
 				labelKeys.push("kind");
 			}
 		}

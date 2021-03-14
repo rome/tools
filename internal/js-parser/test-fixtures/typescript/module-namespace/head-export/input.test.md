@@ -8,58 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:0-3:0
-	path: UIDPath<typescript/module-namespace/head-export/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:0-1:23
 			declaration: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "X"
 					loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:17-1:18 (X)
 				}
-				loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:7-1:23
 				body: TSModuleDeclaration {
 					id: JSBindingIdentifier {
 						name: "Y"
 						loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:19-1:20 (Y)
 					}
-					loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:19-1:23
 					body: TSModuleBlock {
-						body: Array []
+						body: []
 						loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:21-1:23
 					}
+					loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:19-1:23
 				}
+				loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:7-1:23
 			}
+			loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:0-1:23
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
-			specifiers: undefined
-			loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:0-2:18
 			declaration: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "X"
 					loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:14-2:15 (X)
 				}
-				loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:7-2:18
 				body: TSModuleBlock {
-					body: Array []
+					body: []
 					loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:16-2:18
 				}
+				loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:7-2:18
 			}
+			loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:0-2:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/module-namespace/head-export/input.ts>
+	loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:0-3:0
 }
 ```
 

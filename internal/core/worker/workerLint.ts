@@ -1,6 +1,7 @@
-import {LintResult, lint} from "@internal/compiler";
+import {lint} from "@internal/compiler";
 import {
-	Diagnostics,
+	Diagnostic,
+	DiagnosticSuppression,
 	catchDiagnostics,
 	descriptions,
 } from "@internal/diagnostics";
@@ -25,7 +26,7 @@ import {formatAST} from "@internal/formatter";
 import {maybeRunESLint} from "./integrations/eslint";
 
 const EMPTY_LINT_RESULT: WorkerLintResult = {
-	timingsNs: new Map(),
+	timings: new Map(),
 	save: undefined,
 	diagnostics: [],
 	suppressions: [],
@@ -76,7 +77,7 @@ async function lintOrFormat(
 		diagnostics: result.diagnostics,
 		formatted: result.formatted,
 		suppressions: result.suppressions,
-		timingsNs: new Map(),
+		timings: new Map(),
 	};
 }
 
@@ -86,7 +87,7 @@ export async function uncachedLint(
 	const {worker, ref, options} = param;
 	worker.logger.info(markup`Linting: ${ref.real}`);
 
-	const project = worker.getProject(ref.project);
+	const project = worker.getProject(ref);
 
 	// Get the extension handler
 	const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
@@ -99,8 +100,8 @@ export async function uncachedLint(
 	const res = await catchDiagnostics(
 		() => lintOrFormat(handler, param),
 		{
-			category: "lint",
-			message: "Caught by WorkerAPI.lint",
+			entity: "WorkerAPI.lint",
+			message: "Caught thrown error",
 		},
 	);
 
@@ -123,13 +124,9 @@ export async function uncachedLint(
 		diagnostics,
 		suppressions,
 		mtimeNs,
-		timingsNs,
+		timings,
+		formatted,
 	}: ExtensionLintResult = res.value;
-
-	const formatted = normalizeFormattedLineEndings(
-		sourceText,
-		res.value.formatted,
-	);
 
 	// If the file has pending fixes
 	const needsSave = project.config.format.enabled && formatted !== sourceText;
@@ -137,7 +134,7 @@ export async function uncachedLint(
 	// Autofix if necessary
 	if (options.save && needsSave) {
 		return {
-			timingsNs,
+			timings,
 			save: {
 				type: "WRITE",
 				mtimeNs,
@@ -151,7 +148,7 @@ export async function uncachedLint(
 	// If there's no pending fix then no need for diagnostics
 	if (!needsSave) {
 		return {
-			timingsNs,
+			timings,
 			save: undefined,
 			diagnostics,
 			suppressions,
@@ -160,7 +157,7 @@ export async function uncachedLint(
 
 	// Add pending autofix diagnostic
 	return {
-		timingsNs,
+		timings,
 		save: undefined,
 		suppressions,
 		diagnostics: [
@@ -171,7 +168,7 @@ export async function uncachedLint(
 					path: ref.uid,
 				},
 				description: descriptions.LINT.PENDING_FIXES(
-					ref.relative.join(),
+					project.directory.relativeForce(ref.real).join(),
 					handler.language,
 					sourceText,
 					formatted,
@@ -184,21 +181,22 @@ export async function uncachedLint(
 export async function compilerLint(
 	{worker, ref, options, parseOptions}: Param<WorkerLintOptions>,
 ): Promise<ExtensionLintResult> {
-	const project = worker.getProject(ref.project);
+	const project = worker.getProject(ref);
 	let sourceText: string;
 	let mtimeNs: bigint;
 	let astModifiedFromSource: boolean = false;
-	let res: LintResult;
-	let diagnostics: Diagnostics = [];
+	let formatted: string;
+	let suppressions: DiagnosticSuppression[] = [];
+	let diagnostics: Diagnostic[] = [];
 
 	// If lint and format are disabled then we could just be a glorified ESLint runner and there's no point running the compiler
 	if (project.config.lint.enabled || project.config.format.enabled) {
 		const parsed = await worker.parse(ref, parseOptions);
-
 		const {ast} = parsed;
+
 		({mtimeNs, sourceText, astModifiedFromSource} = parsed);
 
-		res = await lint({
+		({diagnostics, suppressions, formatted} = await lint({
 			applySafeFixes: options.applySafeFixes,
 			suppressionExplanation: options.suppressionExplanation,
 			ref,
@@ -208,9 +206,9 @@ export async function compilerLint(
 			ast,
 			project,
 			sourceText,
-		});
+		}));
 
-		diagnostics = res.diagnostics;
+		formatted = normalizeFormattedLineEndings(sourceText, formatted);
 
 		// Only enable typechecking if enabled in .romeconfig
 		let typeCheckingEnabled = project.config.typeCheck.enabled;
@@ -222,7 +220,7 @@ export async function compilerLint(
 		// Run type checking if necessary
 		if (typeCheckingEnabled && ast.type === "JSRoot") {
 			const typeCheckProvider = await worker.getTypeCheckProvider(
-				ref.project,
+				ref,
 				options.prefetchedModuleSignatures,
 				parseOptions,
 			);
@@ -235,27 +233,22 @@ export async function compilerLint(
 		}
 	} else {
 		sourceText = await worker.readFileText(ref);
+		formatted = sourceText;
 
 		const cacheFile = await worker.cache.getFile(ref);
 		({mtimeNs} = await cacheFile.getStats());
-
-		res = {
-			diagnostics: [],
-			suppressions: [],
-			formatted: sourceText,
-		};
 	}
 
-	let timingsNs: WorkerIntegrationTimings = new Map();
+	let timings: WorkerIntegrationTimings = new Map();
 
 	const eslintResult = await maybeRunESLint({worker, ref, project});
 	if (eslintResult !== undefined) {
-		timingsNs.set(
+		timings.set(
 			"eslint",
 			{
 				type: "official",
 				displayName: "ESLint",
-				took: eslintResult.timingNs,
+				took: eslintResult.timing,
 			},
 		);
 
@@ -264,11 +257,11 @@ export async function compilerLint(
 
 	return worker.api.interceptDiagnostics(
 		{
-			timingsNs,
-			suppressions: res.suppressions,
+			timings,
+			suppressions,
 			diagnostics,
 			sourceText,
-			formatted: res.formatted,
+			formatted,
 			mtimeNs,
 		},
 		{astModifiedFromSource},
@@ -284,7 +277,7 @@ export async function uncachedFormat(
 			result: WorkerFormatResult;
 		}
 > {
-	const project = worker.getProject(ref.project);
+	const project = worker.getProject(ref);
 
 	worker.logger.info(markup`Formatting: ${ref.real}`);
 
@@ -317,7 +310,7 @@ export async function uncachedFormat(
 			mtimeNs: res.mtimeNs,
 			result: {
 				original: res.sourceText,
-				formatted: res.formatted,
+				formatted: normalizeFormattedLineEndings(res.sourceText, res.formatted),
 				diagnostics: res.diagnostics,
 				suppressions: res.suppressions,
 			},

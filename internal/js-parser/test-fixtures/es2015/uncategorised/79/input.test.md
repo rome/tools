@@ -8,27 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/79/input.js 1:0-1:17
-	path: UIDPath<es2015/uncategorised/79/input.js>
-	body: Array [
+	body: [
 		JSExportDefaultDeclaration {
-			loc: SourceLocation es2015/uncategorised/79/input.js 1:0-1:17
 			declaration: JSNumericLiteral {
 				value: 42
-				format: undefined
 				loc: SourceLocation es2015/uncategorised/79/input.js 1:15-1:17
 			}
+			loc: SourceLocation es2015/uncategorised/79/input.js 1:0-1:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/79/input.js>
+	loc: SourceLocation es2015/uncategorised/79/input.js 1:0-1:17
 }
 ```
 

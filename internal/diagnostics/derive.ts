@@ -8,247 +8,155 @@
 import {
 	Diagnostic,
 	DiagnosticAdvice,
+	DiagnosticAdviceAction,
 	DiagnosticAdviceStacktrace,
 	DiagnosticDescription,
 	DiagnosticOrigin,
 	DiagnosticTags,
-	Diagnostics,
 } from "./types";
 import {
-	ErrorFrames,
+	ErrorFrame,
 	StructuredError,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
-} from "@internal/v8";
+} from "@internal/errors";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
-import {
-	appendAdviceToDiagnostic,
-	diagnosticLocationToMarkupFilelink,
-	formatCategoryDescription,
-	prependAdviceToDiagnostic,
-} from "./helpers";
-import {RequiredProps} from "@internal/typescript-helpers";
+import {appendAdviceToDiagnostic, prependAdviceToDiagnostic} from "./helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
 import {
 	DiagnosticsError,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
 	getDiagnosticsFromError,
-	isUserDiagnosticError,
+	isUserDiagnostic,
+	isUserDiagnosticsError,
 } from "./error-wrappers";
-import {AnyPath, MixedPathSet, UNKNOWN_PATH, equalPaths} from "@internal/path";
-
-function normalizeArray<T>(val: undefined | (T[])): T[] {
-	if (Array.isArray(val)) {
-		return val;
-	} else {
-		return [];
-	}
-}
-
-export function mergeDiagnostics(
-	rootDiag: Diagnostic,
-	...diags: Diagnostic[]
-): Diagnostic {
-	let mergedAdvice: DiagnosticAdvice = [
-		...normalizeArray(rootDiag.description.advice),
-	];
-
-	for (const diag of diags) {
-		const derived = deriveRootAdviceFromDiagnostic(diag);
-		mergedAdvice = [
-			...mergedAdvice,
-			...derived.advice,
-			...normalizeArray(diag.description.advice),
-			...derived.lastAdvice,
-		];
-	}
-
-	return {
-		...rootDiag,
-		description: {
-			...rootDiag.description,
-			advice: mergedAdvice,
-		},
-	};
-}
+import {MixedPathSet, Path, UNKNOWN_PATH, equalPaths} from "@internal/path";
+import {RequiredProps} from "@internal/typescript-helpers";
+import {hashRSERValue} from "@internal/binary-transport";
 
 export function derivePositionlessKeyFromDiagnostic(diag: Diagnostic): string {
-	const normalizer = new DiagnosticsNormalizer(
-		{},
-		{
+	const normalizer = new DiagnosticsNormalizer({
+		markupOptions: {
 			stripPositions: true,
 		},
-	);
+	});
 
-	return JSON.stringify(normalizer.normalizeDiagnostic(diag));
+	return hashRSERValue(normalizer.normalizeDiagnostic(diag));
 }
 
-export function deriveRootAdviceFromDiagnostic(
+export function getActionAdviceFromDiagnostic(
 	diag: Diagnostic,
-	{
-		skipFrame = false,
-		includeHeaderInAdvice = true,
-		outdated = false,
-	}: {
-		skipFrame?: boolean;
-		includeHeaderInAdvice?: boolean;
-		outdated?: boolean;
-	} = {},
-): {
-	advice: DiagnosticAdvice;
-	lastAdvice: DiagnosticAdvice;
-	header: StaticMarkup;
-} {
-	const advice: DiagnosticAdvice = [];
-	const {description, tags = {}, location} = diag;
+): DiagnosticAdviceAction[] {
+	return [
+		...filterActionAdvice(diag.description.advice),
+		...filterActionAdvice(diag.description.verboseAdvice),
+	];
+}
 
-	let header = diagnosticLocationToMarkupFilelink(location);
-
-	if (diag.label !== undefined) {
-		header = markup`<emphasis>${diag.label}</emphasis> ${header}`;
-	}
-
-	header = markup`${header} <emphasis>${formatCategoryDescription(description)}</emphasis>`;
-
-	if (tags.internal) {
-		header = markup`${header} <inverse><error> INTERNAL </error></inverse>`;
-	}
-
-	if (tags.fixable) {
-		header = markup`${header} <inverse> FIXABLE </inverse>`;
-	}
-
-	if (outdated) {
-		header = markup`${header} <inverse><warn> OUTDATED </warn></inverse>`;
-	}
-
-	if (tags.fatal) {
-		header = markup`${header} <inverse><error> FATAL </error></inverse>`;
-	}
-
-	if (includeHeaderInAdvice) {
-		advice.push({
-			type: "log",
-			category: "none",
-			text: header,
-		});
-	}
-
-	const message = description.message;
-
-	if (isEmptyMarkup(message)) {
-		advice.push({
-			type: "log",
-			category: "none",
-			text: markup`<dim>no diagnostic message specified</dim>`,
-		});
+function filterActionAdvice(
+	advice: undefined | DiagnosticAdvice[],
+): DiagnosticAdviceAction[] {
+	if (advice === undefined) {
+		return [];
 	} else {
-		advice.push({
-			type: "log",
-			category: "error",
-			text: message,
-		});
-	}
-
-	if (!skipFrame) {
-		if (location.start !== undefined && location.end !== undefined) {
-			advice.push({
-				type: "frame",
-				location: diag.location,
-			});
-		} else if (location.marker !== undefined) {
-			// If we have no start/end, but we do have a marker then output is a log error
-			advice.push({
-				type: "log",
-				category: "error",
-				text: location.marker,
-			});
+		const actions: DiagnosticAdviceAction[] = [];
+		for (const item of advice) {
+			if (item.type === "action") {
+				actions.push(item);
+			}
 		}
+		return actions;
 	}
-
-	const lastAdvice: DiagnosticAdvice = [];
-
-	if (tags.fatal) {
-		lastAdvice.push({
-			type: "log",
-			category: "warn",
-			text: markup`Rome exited as this error could not be handled and resulted in a fatal error. Please report if necessary.`,
-		});
-	} else if (tags.internal) {
-		lastAdvice.push({
-			type: "log",
-			category: "warn",
-			text: markup`This diagnostic was derived from an internal Rome error. Potential bug, please report if necessary.`,
-		});
-	}
-
-	return {header, advice, lastAdvice};
 }
 
 export type DeriveErrorDiagnosticOptions = {
 	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
 	label?: StaticMarkup;
-	// Passing in `internal: true` is redundant
-	tags?: Omit<DiagnosticTags, "internal"> & {
-		internal?: false;
-	};
-	path?: AnyPath;
+	// Use `internal` as it's always on by default
+	tags?: Omit<DiagnosticTags, "internal">;
+	internal?: false;
+	path?: Path;
 	cleanRelativeError?: Error;
-	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
+	cleanFrames?: (frames: ErrorFrame[]) => ErrorFrame[];
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
 };
 
-export function provideDiagnosticAdviceForError(
+export function decorateErrorWithDiagnostics(
 	error: Error,
 	opts: DeriveErrorDiagnosticOptions,
 ): Error {
-	if (isUserDiagnosticError(error)) {
+	if (isUserDiagnosticsError(error)) {
 		return error;
-	} else {
-		let diagnostics = getDiagnosticsFromError(error);
-
-		if (diagnostics === undefined) {
-			let diag = deriveDiagnosticFromError(error, opts);
-
-			if (opts.description.message !== undefined) {
-				diag = prependAdviceToDiagnostic(
-					diag,
-					[
-						{
-							type: "log",
-							category: "none",
-							text: markup`${getErrorStructure(error).message}`,
-						},
-					],
-				);
-			}
-
-			return createSingleDiagnosticError(diag);
-		} else {
-			return new DiagnosticsError(
-				error.message,
-				diagnostics.map((diag) => {
-					return appendAdviceToDiagnostic(
-						diag,
-						[
-							{
-								type: "log",
-								category: "info",
-								text: markup`${getErrorStructure(error).message}`,
-							},
-						],
-					);
-				}),
-			);
-		}
 	}
+
+	let diagnostics = getDiagnosticsFromError(error);
+	if (diagnostics !== undefined) {
+		// This is a diagnostics error so add on our intended advice (if any)
+		let addAdvice: DiagnosticAdvice[] = [...(opts.description.advice || [])];
+		if (opts.description.message !== undefined) {
+			addAdvice.unshift({
+				type: "log",
+				category: "info",
+				text: opts.description.message,
+			});
+		}
+
+		return new DiagnosticsError(
+			error.message,
+			diagnostics.map((diag) => {
+				// Could be mixed user and runtime diagnostics
+				if (isUserDiagnostic(diag)) {
+					return diag;
+				}
+
+				diag = appendAdviceToDiagnostic(diag, addAdvice);
+
+				if (opts.tags !== undefined) {
+					diag = {
+						...diag,
+						tags: {
+							...diag.tags,
+							...opts.tags,
+						},
+					};
+				}
+
+				if (opts.label !== undefined && diag.label === undefined) {
+					diag = {
+						...diag,
+						label: opts.label,
+					};
+				}
+
+				return diag;
+			}),
+		);
+	}
+
+	let diag = deriveDiagnosticFromError(error, opts);
+
+	// If we specified a custom message then push on the original
+	if (opts.description.message !== undefined) {
+		diag = prependAdviceToDiagnostic(
+			diag,
+			[
+				{
+					type: "log",
+					category: "none",
+					text: markup`${getErrorStructure(error).message}`,
+				},
+			],
+		);
+	}
+
+	return createSingleDiagnosticsError(diag);
 }
 
 export function deriveDiagnosticFromErrorStructure(
 	struct: Partial<StructuredError>,
 	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
-	let targetPath: AnyPath = opts.path ?? UNKNOWN_PATH;
+	let targetPath: Path = opts.path ?? UNKNOWN_PATH;
 	let targetLoc = undefined;
 
 	let {frames = [], message = "Unknown error"} = struct;
@@ -307,7 +215,7 @@ export function deriveDiagnosticFromErrorStructure(
 		},
 		label: opts.label,
 		tags: {
-			internal: true,
+			internal: opts.internal !== false,
 			...opts.tags,
 		},
 	};
@@ -328,8 +236,8 @@ export type DeriveErrorStackAdviceOptions = {
 export function getErrorStackAdvice(
 	error: Partial<StructuredError>,
 	{title, importantPaths}: DeriveErrorStackAdviceOptions = {},
-): DiagnosticAdvice {
-	const advice: DiagnosticAdvice = [];
+): DiagnosticAdvice[] {
+	const advice: DiagnosticAdvice[] = [];
 	const {frames = [], stack} = error;
 
 	if (frames.length === 0 && stack !== undefined) {
@@ -402,7 +310,7 @@ export function getErrorStackAdvice(
 			const prefix = prefixes.length === 0 ? undefined : prefixes.join(" ");
 
 			let object = typeName;
-			let property = "<anonymous>";
+			let property: undefined | string;
 			if (functionName !== undefined) {
 				property = functionName;
 			}
@@ -440,29 +348,18 @@ export function getErrorStackAdvice(
 
 export function addOriginsToDiagnostics(
 	origins: DiagnosticOrigin[],
-	diagnostics: Diagnostics,
-): Diagnostics {
+	diagnostics: Diagnostic[],
+): Diagnostic[] {
 	if (origins.length === 0) {
 		return diagnostics;
 	}
 
 	return diagnostics.map((diag) => {
-		return addOriginsToDiagnostic(origins, diag);
+		const newOrigins =
+			diag.origins === undefined ? origins : [...origins, ...diag.origins];
+		return {
+			...diag,
+			origins: newOrigins,
+		};
 	});
-}
-
-export function addOriginsToDiagnostic(
-	origins: DiagnosticOrigin[],
-	diag: Diagnostic,
-): Diagnostic {
-	if (origins.length === 0) {
-		return diag;
-	}
-
-	const newOrigins =
-		diag.origins === undefined ? origins : [...origins, ...diag.origins];
-	return {
-		...diag,
-		origins: newOrigins,
-	};
 }

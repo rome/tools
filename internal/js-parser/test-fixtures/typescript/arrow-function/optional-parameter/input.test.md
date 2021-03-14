@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-3:0
-	path: UIDPath<typescript/arrow-function/optional-parameter/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:23
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:22
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:21-1:22 (x)
@@ -31,67 +18,75 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:20
-					returnType: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:14-1:17}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:21-1:20
 							meta: JSPatternMeta {
 								optional: true
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:5-1:11
+								}
 								loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:21-1:20
-								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:5-1:11}
 							}
+							loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:21-1:20
 						}
 					]
+					returnType: TSAnyKeywordTypeAnnotation {
+						loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:14-1:17
+					}
+					loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:20
 				}
+				loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:22
 			}
+			loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:23
 		}
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:0-2:18
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:0-2:17
+				arguments: []
 				callee: JSArrowFunctionExpression {
-					loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:1-2:14
 					body: JSBinaryExpression {
 						operator: "+"
-						loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:14
 						left: JSReferenceIdentifier {
 							name: "k"
 							loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:10 (k)
 						}
 						right: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:13-2:14
 						}
+						loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:14
 					}
 					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:1-2:8
-						params: Array [
+						params: [
 							JSBindingIdentifier {
 								name: "k"
-								loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:8
 								meta: JSPatternMeta {
 									optional: true
-									typeAnnotation: undefined
 									loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:8
 								}
+								loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:8
 							}
 						]
+						loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:1-2:8
 					}
+					loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:1-2:14
 				}
+				loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:0-2:17
 			}
+			loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:0-2:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/optional-parameter/input.ts>
+	loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-3:0
 }
 ```
 

@@ -8,34 +8,11 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/interface/extends/input.ts 1:0-2:0
-	path: UIDPath<typescript/interface/extends/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
-			id: JSBindingIdentifier {
-				name: "I"
-				loc: SourceLocation typescript/interface/extends/input.ts 1:10-1:11 (I)
-			}
-			typeParameters: undefined
-			loc: SourceLocation typescript/interface/extends/input.ts 1:0-1:29
-			body: TSInterfaceBody {
-				body: Array []
-				loc: SourceLocation typescript/interface/extends/input.ts 1:27-1:29
-			}
-			extends: Array [
+			extends: [
 				TSExpressionWithTypeArguments {
-					loc: SourceLocation typescript/interface/extends/input.ts 1:20-1:26
 					expression: TSQualifiedName {
-						loc: SourceLocation typescript/interface/extends/input.ts 1:20-1:23
 						left: JSReferenceIdentifier {
 							name: "X"
 							loc: SourceLocation typescript/interface/extends/input.ts 1:20-1:21 (X)
@@ -44,24 +21,43 @@ JSRoot {
 							name: "Y"
 							loc: SourceLocation typescript/interface/extends/input.ts 1:22-1:23 (Y)
 						}
+						loc: SourceLocation typescript/interface/extends/input.ts 1:20-1:23
 					}
 					typeParameters: TSTypeParameterInstantiation {
-						loc: SourceLocation typescript/interface/extends/input.ts 1:23-1:26
-						params: Array [
+						params: [
 							TSTypeReference {
-								typeParameters: undefined
-								loc: SourceLocation typescript/interface/extends/input.ts 1:24-1:25
 								typeName: JSReferenceIdentifier {
 									name: "Z"
 									loc: SourceLocation typescript/interface/extends/input.ts 1:24-1:25 (Z)
 								}
+								loc: SourceLocation typescript/interface/extends/input.ts 1:24-1:25
 							}
 						]
+						loc: SourceLocation typescript/interface/extends/input.ts 1:23-1:26
 					}
+					loc: SourceLocation typescript/interface/extends/input.ts 1:20-1:26
 				}
 			]
+			id: JSBindingIdentifier {
+				name: "I"
+				loc: SourceLocation typescript/interface/extends/input.ts 1:10-1:11 (I)
+			}
+			body: TSInterfaceBody {
+				body: []
+				loc: SourceLocation typescript/interface/extends/input.ts 1:27-1:29
+			}
+			loc: SourceLocation typescript/interface/extends/input.ts 1:0-1:29
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/interface/extends/input.ts>
+	loc: SourceLocation typescript/interface/extends/input.ts 1:0-2:0
 }
 ```
 

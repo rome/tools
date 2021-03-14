@@ -10,6 +10,7 @@ import {JSONValue} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {ErrorCallback} from "@internal/typescript-helpers";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {Resource, createResourceFromCallback} from "@internal/resources";
 
 type InspectorSubscription = {
 	once: boolean;
@@ -27,6 +28,18 @@ export default class InspectorClient {
 		this.socket = socket;
 		this.id = 0;
 
+		this.resources = createResourceFromCallback(
+			"InspectorClient",
+			() => {
+				this.alive = false;
+				for (const {reject} of this.callbacks.values()) {
+					reject(new InspectorClientCloseError());
+				}
+				this.callbacks.clear();
+			},
+		);
+		this.resources.bind(socket);
+
 		this.subscriptions = new Map();
 		this.callbacks = new Map();
 
@@ -36,6 +49,7 @@ export default class InspectorClient {
 	}
 
 	public alive: boolean;
+	public resources: Resource;
 	private id: number;
 	private callbacks: Map<
 		number,
@@ -47,28 +61,15 @@ export default class InspectorClient {
 	private subscriptions: Map<string, Set<InspectorSubscription>>;
 	private socket: WebSocketInterface;
 
-	public end() {
-		this.socket.end();
-	}
-
 	private init() {
 		const {socket} = this;
 
 		socket.errorEvent.subscribe((err) => {
-			this.alive = false;
 			for (const [, {reject}] of this.callbacks) {
 				reject(err);
 			}
 			this.callbacks.clear();
-			this.end();
-		});
-
-		socket.endEvent.subscribe(() => {
-			this.alive = false;
-			for (const [, {reject}] of this.callbacks) {
-				reject(new InspectorClientCloseError());
-			}
-			this.callbacks.clear();
+			this.resources.release();
 		});
 
 		socket.completeFrameEvent.subscribe((frame) => {
@@ -85,7 +86,7 @@ export default class InspectorClient {
 				const handler = this.callbacks.get(id);
 				if (handler !== undefined) {
 					if (data.has("error")) {
-						const errorMessage = data.get("error").get("message").asString();
+						const errorMessage = data.getPath(["error", "message"]).asString();
 						handler.reject(new Error(errorMessage));
 					} else {
 						handler.resolve(data.get("result"));

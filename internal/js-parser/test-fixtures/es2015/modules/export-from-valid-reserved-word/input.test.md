@@ -8,30 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:0-2:0
-	path: UIDPath<es2015/modules/export-from-valid-reserved-word/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			defaultSpecifier: undefined
-			exportKind: undefined
-			namespaceSpecifier: undefined
-			loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:0-1:24
-			source: JSStringLiteral {
-				value: "foo"
-				loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:19-1:24
-			}
-			namedSpecifiers: Array [
+			namedSpecifiers: [
 				JSExportExternalSpecifier {
-					loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:9-1:11
 					exported: JSIdentifier {
 						name: "if"
 						loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:9-1:11 (if)
@@ -40,10 +20,25 @@ JSRoot {
 						name: "if"
 						loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:9-1:11 (if)
 					}
+					loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:9-1:11
 				}
 			]
+			source: JSStringLiteral {
+				value: "foo"
+				loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:19-1:24
+			}
+			loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:0-1:24
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2015/modules/export-from-valid-reserved-word/input.js>
+	loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:0-2:0
 }
 ```
 

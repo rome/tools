@@ -17,6 +17,9 @@ export type DiagnosticCategory =
 	| ["args", "invalid"]
 	| ["bundler", "moduleCycle"]
 	| ["bundler", "topLevelAwait"]
+	| ["bridge", "closed"]
+	| ["bridge", "disconnected"]
+	| ["bridge", "timeout"]
 	| ["childProcess", "failure"]
 	| ["commands", "auto-config", "uncommittedChanges"]
 	| ["commands", "auto-config", "expectedRepo"]
@@ -69,7 +72,7 @@ export type DiagnosticCategory =
 	| ["tests", "failure"]
 	| ["tests", "fixtureOptions"]
 	| ["tests", "logs"]
-	| ["tests", "noneDeclared"]
+	| ["tests", "empty"]
 	| ["tests", "snapshots", "frozen"]
 	| ["tests", "snapshots", "inlineMissingReceived"]
 	| ["tests", "snapshots", "inlineCollision"]
@@ -100,16 +103,18 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:73d4d80f2f19e5e0af1a581d3749fd5ac177d9ac,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:4f4c6f05654a410de3809c640ddfef9dd1508743,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
 	| ["lint", "a11y", "noDistractingElements"]
 	| ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"]
 	| ["lint", "a11y", "noNoninteractiveTabindex"]
+	| ["lint", "a11y", "noPositiveTabindex"]
 	| ["lint", "a11y", "noSvgWithoutTitle"]
 	| ["lint", "a11y", "useAltText"]
 	| ["lint", "a11y", "useAriaProptypes"]
 	| ["lint", "a11y", "useHtmlLang"]
+	| ["lint", "a11y", "useIframeTitle"]
 	| ["lint", "a11y", "useMediaCaption"]
 	| ["lint", "a11y", "useValidLang"]
 	| ["lint", "html", "useClosingNonVoid"]
@@ -165,7 +170,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "jsx-a11y", "noAutofocus"]
 	| ["lint", "jsx-a11y", "noHeaderScope"]
 	| ["lint", "jsx-a11y", "noOnChange"]
-	| ["lint", "jsx-a11y", "noPositiveTabindex"]
 	| ["lint", "jsx-a11y", "noRedundantAlt"]
 	| ["lint", "jsx-a11y", "noRedundantRoles"]
 	| ["lint", "jsx-a11y", "noTargetBlank"]
@@ -173,7 +177,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "jsx-a11y", "useAriaProps"]
 	| ["lint", "jsx-a11y", "useAriaPropsForRole"]
 	| ["lint", "jsx-a11y", "useHeadingContent"]
-	| ["lint", "jsx-a11y", "useIframeTitle"]
 	| ["lint", "jsx-a11y", "useKeyWithClickEvents"]
 	| ["lint", "jsx-a11y", "useKeyWithMouseEvents"]
 	| ["lint", "jsx-a11y", "useValidAnchor"]
@@ -236,10 +239,12 @@ const lintCategoryNameMap: {
 		"a11y",
 		"noNoninteractiveTabindex",
 	],
+	"lint/a11y/noPositiveTabindex": ["lint", "a11y", "noPositiveTabindex"],
 	"lint/a11y/noSvgWithoutTitle": ["lint", "a11y", "noSvgWithoutTitle"],
 	"lint/a11y/useAltText": ["lint", "a11y", "useAltText"],
 	"lint/a11y/useAriaProptypes": ["lint", "a11y", "useAriaProptypes"],
 	"lint/a11y/useHtmlLang": ["lint", "a11y", "useHtmlLang"],
+	"lint/a11y/useIframeTitle": ["lint", "a11y", "useIframeTitle"],
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
 	"lint/html/useClosingNonVoid": ["lint", "html", "useClosingNonVoid"],
@@ -303,7 +308,6 @@ const lintCategoryNameMap: {
 	"lint/jsx-a11y/noAutofocus": ["lint", "jsx-a11y", "noAutofocus"],
 	"lint/jsx-a11y/noHeaderScope": ["lint", "jsx-a11y", "noHeaderScope"],
 	"lint/jsx-a11y/noOnChange": ["lint", "jsx-a11y", "noOnChange"],
-	"lint/jsx-a11y/noPositiveTabindex": ["lint", "jsx-a11y", "noPositiveTabindex"],
 	"lint/jsx-a11y/noRedundantAlt": ["lint", "jsx-a11y", "noRedundantAlt"],
 	"lint/jsx-a11y/noRedundantRoles": ["lint", "jsx-a11y", "noRedundantRoles"],
 	"lint/jsx-a11y/noTargetBlank": ["lint", "jsx-a11y", "noTargetBlank"],
@@ -315,7 +319,6 @@ const lintCategoryNameMap: {
 		"useAriaPropsForRole",
 	],
 	"lint/jsx-a11y/useHeadingContent": ["lint", "jsx-a11y", "useHeadingContent"],
-	"lint/jsx-a11y/useIframeTitle": ["lint", "jsx-a11y", "useIframeTitle"],
 	"lint/jsx-a11y/useKeyWithClickEvents": [
 		"lint",
 		"jsx-a11y",
@@ -409,6 +412,9 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"analyzeDependencies/cjsExportInES": ["analyzeDependencies", "cjsExportInES"],
 	"args/fileNotFound": ["args", "fileNotFound"],
 	"args/invalid": ["args", "invalid"],
+	"bridge/disconnected": ["bridge", "disconnected"],
+	"bridge/closed": ["bridge", "closed"],
+	"bridge/timeout": ["bridge", "timeout"],
 	"bundler/moduleCycle": ["bundler", "moduleCycle"],
 	"bundler/topLevelAwait": ["bundler", "topLevelAwait"],
 	"childProcess/failure": ["childProcess", "failure"],
@@ -477,7 +483,7 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"tests/failure": ["tests", "failure"],
 	"tests/fixtureOptions": ["tests", "fixtureOptions"],
 	"tests/logs": ["tests", "logs"],
-	"tests/noneDeclared": ["tests", "noneDeclared"],
+	"tests/empty": ["tests", "empty"],
 	"tests/snapshots/frozen": ["tests", "snapshots", "frozen"],
 	"tests/snapshots/inlineMissingReceived": [
 		"tests",
@@ -504,6 +510,7 @@ export const DIAGNOSTIC_CATEGORIES: {
 export const categoryPrefixMap: {[name in DiagnosticCategoryPrefix]: true} = {
 	analyzeDependencies: true,
 	args: true,
+	bridge: true,
 	bundler: true,
 	childProcess: true,
 	commands: true,

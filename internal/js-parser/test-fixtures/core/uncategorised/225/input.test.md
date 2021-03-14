@@ -8,23 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
-	path: UIDPath<core/uncategorised/225/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
 			expression: JSSequenceExpression {
-				loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
-				expressions: Array [
+				expressions: [
 					JSReferenceIdentifier {
 						name: "x"
 						loc: SourceLocation core/uncategorised/225/input.js 1:0-1:1 (x)
@@ -34,9 +21,20 @@ JSRoot {
 						loc: SourceLocation core/uncategorised/225/input.js 1:3-1:4 (y)
 					}
 				]
+				loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
 			}
+			loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/225/input.js>
+	loc: SourceLocation core/uncategorised/225/input.js 1:0-1:4
 }
 ```
 

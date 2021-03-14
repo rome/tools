@@ -8,46 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-arrow-function/invalid-duplicated-params/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<esprima/es2015-arrow-function/invalid-duplicated-params/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>x</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {location: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:4-1:5 (x)}
-				]
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:12
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:11
 				body: JSReferenceIdentifier {
 					name: "y"
 					loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:10-1:11 (y)
@@ -55,11 +18,7 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:9
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:1-1:2 (x)
@@ -69,10 +28,46 @@ JSRoot {
 							loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:4-1:5 (x)
 						}
 					]
+					loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:9
 				}
+				loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:11
+			}
+			loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-1:12
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {
+						location: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:4-1:5 (x)
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Argument <emphasis>"}, "x", RAW_MARKUP {value: "</emphasis> name clash in strict mode"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/es2015-arrow-function/invalid-duplicated-params/input.js>
+				end: Position 1:5
+				start: Position 1:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-arrow-function/invalid-duplicated-params/input.js>
+	loc: SourceLocation esprima/es2015-arrow-function/invalid-duplicated-params/input.js 1:0-2:0
 }
 ```
 

@@ -79,7 +79,7 @@ test(
 			gitInitialize: true,
 		},
 		async (t, {client, writeFile}) => {
-			await writeFile("foo", "bar");
+			await "foo".writeFile("bar");
 			await client.query({commandName: "init"});
 		},
 	),

@@ -8,44 +8,26 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/literal-string-2/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-1:20
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 							meta: JSPatternMeta {
-								definite: undefined
-								loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 								typeAnnotation: TSTemplateLiteralTypeAnnotation {
-									loc: SourceLocation typescript/types/literal-string-2/input.ts 1:7-1:19
-									expressions: Array [
+									expressions: [
 										TSTypeReference {
-											typeParameters: undefined
-											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:14-1:17
 											typeName: JSReferenceIdentifier {
 												name: "bar"
 												loc: SourceLocation typescript/types/literal-string-2/input.ts 1:14-1:17 (bar)
 											}
+											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:14-1:17
 										}
 									]
-									quasis: Array [
+									quasis: [
 										TSTemplateElement {
 											cooked: "foo-"
 											raw: "foo-"
@@ -59,16 +41,29 @@ JSRoot {
 											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:18-1:18
 										}
 									]
+									loc: SourceLocation typescript/types/literal-string-2/input.ts 1:7-1:19
 								}
+								loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 							}
+							loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 						}
-						init: undefined
 						loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 					}
 				]
+				loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-1:20
 			}
+			loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-1:20
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/literal-string-2/input.ts>
+	loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-2:0
 }
 ```
 

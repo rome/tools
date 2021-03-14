@@ -8,57 +8,53 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/459/input.js 1:0-1:25
-	path: UIDPath<core/uncategorised/459/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<core/uncategorised/459/input.js>
-				start: Position 1:15
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSWhileStatement {
-			loc: SourceLocation core/uncategorised/459/input.js 1:0-1:25
-			test: JSBooleanLiteral {
-				value: true
-				loc: SourceLocation core/uncategorised/459/input.js 1:7-1:11
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation core/uncategorised/459/input.js 1:13-1:25
-				body: Array [
+				body: [
 					JSBreakStatement {
-						loc: SourceLocation core/uncategorised/459/input.js 1:15-1:23
 						label: JSIdentifier {
 							name: "x"
 							loc: SourceLocation core/uncategorised/459/input.js 1:21-1:22 (x)
 						}
+						loc: SourceLocation core/uncategorised/459/input.js 1:15-1:23
 					}
 				]
+				directives: []
+				loc: SourceLocation core/uncategorised/459/input.js 1:13-1:25
+			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation core/uncategorised/459/input.js 1:7-1:11
+			}
+			loc: SourceLocation core/uncategorised/459/input.js 1:0-1:25
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unknown label <emphasis>"}, "x", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/459/input.js>
+				end: Position 1:15
+				start: Position 1:15
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/459/input.js>
+	loc: SourceLocation core/uncategorised/459/input.js 1:0-1:25
 }
 ```
 

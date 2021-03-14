@@ -9,7 +9,7 @@ import {
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
 import {DIAGNOSTIC_CATEGORIES, descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 import convertToTomlFromConsumer from "@internal/codec-config/toml/convertToTomlFromConsumer";
 
 function isSingleStringValueChar(

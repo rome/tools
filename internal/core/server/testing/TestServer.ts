@@ -9,17 +9,16 @@ import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
-	DiagnosticsError,
 	deriveDiagnosticFromError,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
+	equalCategoryNames,
 	getDiagnosticsFromError,
 } from "@internal/diagnostics";
-import {TestRef} from "../../common/bridges/TestWorkerBridge";
-import {Server, ServerRequest} from "@internal/core";
+import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
-import {humanizeNumber} from "@internal/string-utils";
-import {AnyBridge, BridgeError} from "@internal/events";
+import {humanizeNumber} from "@internal/numbers";
+import {AnyBridge, isBridgeEndDiagnosticsError} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {
@@ -32,16 +31,10 @@ import {
 	percentInsideCoverageDirectory,
 	sortMapKeys,
 } from "./utils";
-import {
-	AnyMarkups,
-	StaticMarkup,
-	concatMarkup,
-	markup,
-	readMarkup,
-} from "@internal/markup";
+import {Markup, StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import {MAX_WORKER_COUNT} from "@internal/core/common/constants";
 import net = require("net");
-import {FocusedTest} from "@internal/core/test-worker/TestWorkerFile";
+import {FocusedTest} from "@internal/core/worker/test/TestWorkerFile";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import {VoidCallback} from "@internal/typescript-helpers";
 import Bundler from "@internal/core/server/bundler/Bundler";
@@ -53,15 +46,7 @@ import {
 import TestServerWorker from "@internal/core/server/testing/TestServerWorker";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {ExtendedMap} from "@internal/collections";
-
-export class BridgeDiagnosticsError extends DiagnosticsError {
-	constructor(diag: Diagnostic, bridge: AnyBridge) {
-		super(readMarkup(diag.description.message), [diag]);
-		this.bridge = bridge;
-	}
-
-	public bridge: AnyBridge;
-}
+import {promiseAllFrom} from "@internal/async";
 
 function grammarNumberTests(num: number): StaticMarkup {
 	return markup`<grammarNumber plural="tests" singular="test">${String(num)}</grammarNumber>`;
@@ -116,6 +101,7 @@ export default class TestServer {
 
 		this.progress = {
 			totalTests: 0,
+			passedTests: 0,
 			startedTests: 0,
 			finishedTests: 0,
 			updatedSnapshots: 0,
@@ -128,19 +114,23 @@ export default class TestServer {
 		this.focusedTests = [];
 		this.testFilesStack = [];
 		this.runningTests = new ExtendedMap("runningTests");
+		this.needsSnapshotUpdate = false;
 
 		this.sourceMaps = new SourceMapConsumerCollection();
-		this.printer = opts.request.createDiagnosticsPrinter(
-			this.request.createDiagnosticsProcessor({
-				origins: [
-					{
-						category: "test",
-						message: "Run initiated",
-					},
-				],
+		this.printer = opts.request.createDiagnosticsPrinter({
+			processor: this.request.createDiagnosticsProcessor({
+				origin: {
+					entity: "TestServer",
+				},
 				sourceMaps: this.sourceMaps,
 			}),
-		);
+		});
+
+		this.printer.processor.guaranteedTruncationEvent.subscribe(() => {
+			// TODO: Notify all test workers that they should no longer send us diagnostics
+			// We will however still need to receive an event that a diagnostic was created so we can increment
+			// our own truncated count. We should also send over the filter to mark those correctly too.
+		});
 	}
 
 	public sourceMaps: SourceMapConsumerCollection;
@@ -159,6 +149,7 @@ export default class TestServer {
 
 	public testFilesStack: AbsoluteFilePath[];
 
+	private needsSnapshotUpdate: boolean;
 	private runningTests: ExtendedMap<
 		string,
 		{
@@ -168,6 +159,7 @@ export default class TestServer {
 	>;
 
 	public progress: {
+		passedTests: number;
 		totalTests: number;
 		startedTests: number;
 		finishedTests: number;
@@ -177,45 +169,50 @@ export default class TestServer {
 		createdSnapshots: number;
 	};
 
-	public handlePossibleBridgeError(err: Error) {
-		let diagnostics = getDiagnosticsFromError(err);
-		let bridge: undefined | AnyBridge;
-
-		if (err instanceof BridgeDiagnosticsError) {
-			bridge = err.bridge;
-		}
-
-		if (err instanceof BridgeError) {
-			bridge = err.bridge;
-			diagnostics = [
-				deriveDiagnosticFromError(
-					err,
-					{
-						description: {
-							category: DIAGNOSTIC_CATEGORIES["tests/failure"],
-						},
-					},
-				),
-			];
-		}
-
-		if (diagnostics === undefined || bridge === undefined) {
+	public handlePossibleBridgeError(err: Error, bridge: AnyBridge) {
+		const diagnostics = getDiagnosticsFromError(err);
+		if (diagnostics === undefined) {
 			throw err;
-		} else {
-			if (!this.ignoreBridgeEndError.has(bridge)) {
-				this.printer.processor.addDiagnostics(diagnostics);
-			}
 		}
+
+		if (
+			isBridgeEndDiagnosticsError(err) &&
+			this.ignoreBridgeEndError.has(bridge)
+		) {
+			return;
+		}
+
+		this.printer.processor.addDiagnostics(diagnostics);
+	}
+
+	public addDiagnostic(diagnostic: Diagnostic) {
+		if (
+			equalCategoryNames(
+				diagnostic.description.category,
+				DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"],
+			)
+		) {
+			this.needsSnapshotUpdate = true;
+		}
+
+		this.printer.processor.addDiagnostic(diagnostic);
 	}
 
 	private async setupWorkers(): Promise<TestServerWorker[]> {
-		// TODO some smarter logic. we may not need all these workers
 		const workers: Promise<TestServerWorker>[] = [];
 		for (let i = 0; i < MAX_WORKER_COUNT; i++) {
 			const inspectorPort = await findAvailablePort();
+
+			const container = await this.server.workerManager.spawnWorkerUnsafe({
+				type: "test-runner",
+				ghost: true,
+				inspectorPort,
+				env: this.request.client.env,
+			});
+
 			const worker = new TestServerWorker({
 				runner: this,
-				flags: {inspectorPort},
+				container,
 				server: this.server,
 				request: this.request,
 			});
@@ -225,90 +222,89 @@ export default class TestServer {
 	}
 
 	public async init() {
-		const fileQueue: TestServerFile[] = [];
 		const workers = await this.setupWorkers();
-
-		await this.reporter.steps([
-			{
-				message: markup`Bundling test files`,
-				callback: async () => {
-					const bundler = new Bundler(
-						this.request,
-						this.request.getBundlerConfigFromFlags({
-							mocks: true,
-						}),
-					);
-					for (const [path, bundle] of await bundler.bundleMultiple(
-						Array.from(this.paths),
-						{
-							deferredSourceMaps: true,
-						},
-					)) {
-						if (this.options.sourceMaps) {
-							const sourceMap = bundle.entry.sourceMap.map;
-							const consumer = sourceMap.toConsumer();
-							//this.coverageCollector.addSourceMap(path.join(), code, consumer);
-							this.sourceMaps.add(path, consumer);
-						}
-
-						const ref = this.server.projectManager.getFileReference(path);
-						const file = new TestServerFile({
-							ref,
-							bundle,
-							runner: this,
-							request: this.request,
-						});
-						this.files.set(path, file);
-						fileQueue.push(file);
-						this.testFilesStack.push(path);
-					}
-				},
-			},
-			{
-				message: markup`Loading test files`,
-				callback: async () => {
-					const progress = this.reporter.progress({
-						title: markup`Preparing`,
-					});
-					progress.setTotal(this.paths.size);
-					await Promise.all(
-						workers.map((worker) => worker.prepareAll(progress, fileQueue)),
-					);
-					progress.end();
-
-					// If we have focused tests, clear the pending queues and populate it with only ours
-					if (this.focusedTests.length > 0) {
-						for (const file of this.files.values()) {
-							file.clearPendingTests();
-						}
-
-						for (const {ref} of this.focusedTests) {
-							this.files.assert(ref.path).addPendingTest(ref.testName);
-						}
-					}
-				},
-			},
-			{
-				message: markup`Running tests`,
-				callback: async () => {
-					const runProgress = this.setupRunProgress(workers);
-					await Promise.all(workers.map((worker) => worker.run()));
-					runProgress.teardown();
-				},
-			},
-		]);
-
-		if (this.focusedTests.length === 0) {
-			for (const file of this.files.values()) {
-				await file.finish();
-			}
-		}
-		await this.request.flushFiles();
+		const fileQueue = await this.bundleTests();
+		await this.prepareTests(workers, fileQueue);
+		await this.runTests(workers);
 		this.throwPrinter();
 	}
 
+	private async bundleTests(): Promise<TestServerFile[]> {
+		const fileQueue: TestServerFile[] = [];
+
+		const bundler = new Bundler(
+			this.request,
+			this.request.getBundlerConfigFromFlags({
+				mocks: true,
+			}),
+		);
+		for (const [path, bundle] of await bundler.bundleMultiple(
+			Array.from(this.paths),
+			{
+				deferredSourceMaps: true,
+			},
+		)) {
+			if (this.options.sourceMaps) {
+				const sourceMap = bundle.entry.sourceMap.map;
+				const consumer = sourceMap.toConsumer();
+				//this.coverageCollector.addSourceMap(path.join(), code, consumer);
+				this.sourceMaps.add(path, consumer);
+			}
+
+			const ref = this.server.projectManager.getFileReference(path);
+			const file = new TestServerFile({
+				ref,
+				bundle,
+				runner: this,
+				request: this.request,
+			});
+			this.files.set(path, file);
+			fileQueue.push(file);
+			this.testFilesStack.push(path);
+		}
+
+		return fileQueue;
+	}
+
+	private async prepareTests(
+		workers: TestServerWorker[],
+		fileQueue: TestServerFile[],
+	) {
+		const progress = this.reporter.progress({
+			title: markup`Preparing test files`,
+		});
+		progress.setTotal(this.paths.size);
+		await promiseAllFrom(
+			workers,
+			(worker) => worker.prepareAll(progress, fileQueue),
+		);
+		progress.end();
+
+		// If we have focused tests, clear the pending queues and populate it with only ours
+		if (this.hasFocusedTests()) {
+			for (const file of this.files.values()) {
+				file.clearPendingTests();
+			}
+
+			for (const {ref} of this.focusedTests) {
+				this.files.assert(ref.path).addPendingTest(ref.testName);
+			}
+		}
+	}
+
+	private async runTests(workers: TestServerWorker[]) {
+		const runProgress = this.setupRunProgress(workers);
+		await promiseAllFrom(workers, (worker) => worker.run());
+		await promiseAllFrom(workers, (worker) => worker.thread.worker.terminate());
+		runProgress.teardown();
+	}
+
+	public hasFocusedTests(): boolean {
+		return this.focusedTests.length > 0;
+	}
+
 	private getTotalTests(): number {
-		if (this.focusedTests.length > 0) {
+		if (this.hasFocusedTests()) {
 			return this.focusedTests.length;
 		} else {
 			return this.progress.totalTests;
@@ -352,7 +348,7 @@ export default class TestServer {
 		this.progress.totalTests++;
 	}
 
-	private onTestFinished(ref: TestRef) {
+	private onTestFinished(ref: TestRef, success: boolean) {
 		const key = refToKey(ref);
 		const running = this.runningTests.assert(key);
 
@@ -362,12 +358,15 @@ export default class TestServer {
 		}
 		this.runningTests.delete(key);
 		this.progress.finishedTests++;
+		if (success) {
+			this.progress.passedTests++;
+		}
 	}
 
 	private setupRunProgress(workers: TestServerWorker[]): TestProgress {
 		const progress = this.request.reporter.progress({
 			persistent: true,
-			title: markup`Running`,
+			title: markup`Running tests`,
 		});
 		progress.setTotal(this.getTotalTests());
 
@@ -387,7 +386,7 @@ export default class TestServer {
 				}
 
 				for (const ref of cancelTests) {
-					this.onTestFinished(ref);
+					this.onTestFinished(ref, false);
 
 					if (cancelTests.length === 1) {
 						// If we only have one test to cancel then let's only point the bridge error to this test
@@ -401,9 +400,7 @@ export default class TestServer {
 								description: {
 									category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 								},
-								tags: {
-									internal: false,
-								},
+								internal: false,
 							},
 						);
 
@@ -441,7 +438,7 @@ export default class TestServer {
 			});
 
 			bridge.events.testFinish.subscribe((data) => {
-				this.onTestFinished(data.ref);
+				this.onTestFinished(data.ref, data.success);
 				progress.popText(refToKey(data.ref));
 				progress.tick();
 			});
@@ -495,7 +492,7 @@ export default class TestServer {
 			const {path} = file;
 
 			// Get the absolute filename
-			const absolute = server.projectManager.maybeGetFilePathFromUid(path);
+			const absolute = server.projectManager.maybeGetFilePathFromUID(path);
 			if (absolute === undefined) {
 				continue;
 			}
@@ -548,7 +545,7 @@ export default class TestServer {
 			};
 		}
 
-		const rows: AnyMarkups[] = [];
+		const rows: Markup[][] = [];
 
 		// If there's more than 15 files to show, and we don't have the explicit showAllCoverage flag
 		// then truncate the output
@@ -576,7 +573,7 @@ export default class TestServer {
 				let absolute = file.path;
 
 				// Exchange any UIDs
-				const absolutePath = server.projectManager.maybeGetFilePathFromUid(
+				const absolutePath = server.projectManager.maybeGetFilePathFromUID(
 					file.path,
 				);
 				if (absolutePath !== undefined) {
@@ -615,7 +612,7 @@ export default class TestServer {
 
 	private printFocusedTestWarning(reporter: Reporter) {
 		const {focusedTests} = this;
-		if (focusedTests.length === 0) {
+		if (!this.hasFocusedTests()) {
 			return;
 		}
 
@@ -687,10 +684,18 @@ export default class TestServer {
 				);
 			}
 			words.push(markup`${noun}`);
-			return concatMarkup(words, markup` `);
+			return joinMarkup(words, markup` `);
 		});
 		for (const msg of formatted) {
 			reporter.info(msg);
+		}
+	}
+
+	private printSnapshotSuggestion(reporter: Reporter) {
+		if (this.needsSnapshotUpdate) {
+			reporter.info(markup`Outdated snapshots found. To update run`);
+			reporter.command("rome test --update-snapshots");
+			reporter.br();
 		}
 	}
 
@@ -699,15 +704,16 @@ export default class TestServer {
 
 		printer.onFooterPrint(async (reporter, isError) => {
 			this.printCoverageReport(isError);
+			this.printSnapshotSuggestion(reporter);
 			this.printSnapshotCounts(reporter);
 			this.printFocusedTestWarning(reporter);
 
-			const totalCount = this.getTotalTests();
-			if (totalCount > 0 || !isError) {
+			const passedCount = this.progress.passedTests;
+			if (passedCount > 0 || !isError) {
 				reporter.success(
-					markup`<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(
-						totalCount,
-					)} passed!`,
+					markup`<emphasis>${humanizeNumber(passedCount)}</emphasis> ${grammarNumberTests(
+						passedCount,
+					)} passed${isError ? "" : "!"}`,
 				);
 				if (!isError) {
 					printer.disableDefaultFooter();

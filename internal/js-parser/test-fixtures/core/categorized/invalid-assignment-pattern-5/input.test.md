@@ -8,64 +8,58 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:12
-	path: UIDPath<core/categorized/invalid-assignment-pattern-5/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<core/categorized/invalid-assignment-pattern-5/input.js>
-				start: Position 1:2
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:11
-				right: JSReferenceIdentifier {
-					name: "t"
-					loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:10-1:11 (t)
-				}
 				left: JSAssignmentArrayPattern {
-					rest: undefined
-					loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:7
-					elements: Array [
+					elements: [
 						JSAssignmentArrayPattern {
-							rest: undefined
-							loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:2-1:5
-							elements: Array [
+							elements: [
 								JSAssignmentIdentifier {
 									name: "x"
 									loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:3-1:4 (x)
 								}
 							]
+							loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:2-1:5
 						}
 					]
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:7
 				}
+				right: JSReferenceIdentifier {
+					name: "t"
+					loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:10-1:11 (t)
+				}
+				loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:11
+			}
+			loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:12
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/categorized/invalid-assignment-pattern-5/input.js>
+				end: Position 1:5
+				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/categorized/invalid-assignment-pattern-5/input.js>
+	loc: SourceLocation core/categorized/invalid-assignment-pattern-5/input.js 1:0-1:12
 }
 ```
 

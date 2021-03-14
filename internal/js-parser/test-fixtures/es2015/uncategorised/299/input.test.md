@@ -8,30 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/uncategorised/299/input.js 1:0-1:32
-	path: UIDPath<es2015/uncategorised/299/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/uncategorised/299/input.js 1:0-1:32
 			expression: JSCallExpression {
-				loc: SourceLocation es2015/uncategorised/299/input.js 1:0-1:32
-				callee: JSReferenceIdentifier {
-					name: "doSmth"
-					loc: SourceLocation es2015/uncategorised/299/input.js 1:0-1:6 (doSmth)
-				}
-				arguments: Array [
+				arguments: [
 					JSTemplateLiteral {
-						loc: SourceLocation es2015/uncategorised/299/input.js 1:7-1:31
-						expressions: Array [
+						expressions: [
 							JSReferenceIdentifier {
 								name: "x"
 								loc: SourceLocation es2015/uncategorised/299/input.js 1:10-1:11 (x)
@@ -42,7 +24,6 @@ JSRoot {
 							}
 							JSBinaryExpression {
 								operator: "+"
-								loc: SourceLocation es2015/uncategorised/299/input.js 1:24-1:29
 								left: JSReferenceIdentifier {
 									name: "x"
 									loc: SourceLocation es2015/uncategorised/299/input.js 1:24-1:25 (x)
@@ -51,9 +32,10 @@ JSRoot {
 									name: "y"
 									loc: SourceLocation es2015/uncategorised/299/input.js 1:28-1:29 (y)
 								}
+								loc: SourceLocation es2015/uncategorised/299/input.js 1:24-1:29
 							}
 						]
-						quasis: Array [
+						quasis: [
 							JSTemplateElement {
 								cooked: ""
 								raw: ""
@@ -79,11 +61,27 @@ JSRoot {
 								loc: SourceLocation es2015/uncategorised/299/input.js 1:30-1:30
 							}
 						]
+						loc: SourceLocation es2015/uncategorised/299/input.js 1:7-1:31
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "doSmth"
+					loc: SourceLocation es2015/uncategorised/299/input.js 1:0-1:6 (doSmth)
+				}
+				loc: SourceLocation es2015/uncategorised/299/input.js 1:0-1:32
 			}
+			loc: SourceLocation es2015/uncategorised/299/input.js 1:0-1:32
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/uncategorised/299/input.js>
+	loc: SourceLocation es2015/uncategorised/299/input.js 1:0-1:32
 }
 ```
 

@@ -1,4 +1,4 @@
-import {printDiagnostics} from "@internal/cli-diagnostics";
+import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {Reporter, WrapperFactory} from "@internal/cli-reporter";
 import {StaticMarkup} from "@internal/markup";
 import {
@@ -6,20 +6,20 @@ import {
 	DiagnosticsProcessor,
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
-import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
-
-import workerThreads = require("worker_threads");
+import {ErrorCallback} from "@internal/typescript-helpers";
+import {
+	Resource,
+	createResourceFromCallback,
+	safeProcessExit,
+} from "@internal/resources";
+import util = require("util");
+import {GlobalLock} from "@internal/async";
 
 type FatalErrorHandlerOptions = {
-	getOptions: (
-		err: Error,
-	) =>
-		| false
-		| {
-				source: StaticMarkup;
-				reporter: Reporter;
-				exit?: boolean;
-			};
+	exit?: boolean;
+	source?: StaticMarkup;
+	overrideHandle?: (err: Error) => boolean;
+	getReporter?: () => Reporter;
 };
 
 export default class FatalErrorHandler {
@@ -27,18 +27,16 @@ export default class FatalErrorHandler {
 		this.options = opts;
 		this.handleBound = this.handle.bind(this);
 		this.wrapBound = this.wrap.bind(this);
+		this.handleQueue = new GlobalLock();
 	}
 
-	private options: FatalErrorHandlerOptions;
 	public handleBound: ErrorCallback;
 	public wrapBound: WrapperFactory;
 
-	public handle(err: Error, overrideSource?: StaticMarkup) {
-		// Swallow promise. Should never throw an error.
-		this.handleAsync(err, overrideSource).then();
-	}
+	private handleQueue: GlobalLock;
+	private options: FatalErrorHandlerOptions;
 
-	public wrapPromise(promise: Promise<unknown>) {
+	public wrapPromise(promise: Promise<unknown>): void {
 		promise.catch(this.handleBound);
 	}
 
@@ -58,89 +56,86 @@ export default class FatalErrorHandler {
 		}) as T;
 	}
 
-	public setupGlobalHandlers(): VoidCallback {
-		const onUncaughtException: NodeJS.UncaughtExceptionListener = (err: Error) => {
-			this.handle(err);
-		};
-		process.on("uncaughtException", onUncaughtException);
+	public setupGlobalHandlers(): Resource {
+		process.on("uncaughtException", this.handleBound);
+		process.on("unhandledRejection", this.handleBound);
 
-		const onUnhandledRejection: NodeJS.UnhandledRejectionListener = (
-			reason: unknown,
-			promise: Promise<unknown>,
-		) => {
-			promise.then(() => {
-				throw new Error(
-					"Promise is rejected so should never hit this condition",
-				);
-			}).catch((err) => {
-				this.handle(err);
-			});
-		};
-		process.on("unhandledRejection", onUnhandledRejection);
-
-		return () => {
-			process.removeListener("uncaughtException", onUncaughtException);
-			process.removeListener("unhandledRejection", onUnhandledRejection);
-		};
+		return createResourceFromCallback(
+			"FatalErrorHandlerEvents",
+			() => {
+				process.removeListener("uncaughtException", this.handleBound);
+				process.removeListener("unhandledRejection", this.handleBound);
+			},
+		);
 	}
 
-	public async handleAsync(error: Error, overrideSource?: StaticMarkup) {
-		const {getOptions} = this.options;
-		const options = getOptions(error);
-		if (options === false) {
-			return;
-		}
+	public handle(raw: Error, overrideSource?: StaticMarkup): Promise<void> {
+		return this.handleQueue.series(async () => {
+			let error: Error;
+			if (util.types.isNativeError(raw)) {
+				error = raw;
+			} else {
+				error = new Error(String(raw));
+			}
 
-		const {reporter, exit = true} = options;
-		const source = overrideSource ?? options.source;
+			try {
+				const {getReporter, overrideHandle} = this.options;
+				if (overrideHandle !== undefined) {
+					const handled = overrideHandle(error);
+					if (handled) {
+						return;
+					}
+				}
 
-		try {
-			const diagnostics = getOrDeriveDiagnosticsFromError(
-				error,
-				{
-					description: {
-						category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
-					},
-					label: source,
-					tags: {
-						fatal: true,
-					},
-				},
-			);
-
-			await printDiagnostics({
-				diagnostics,
-				suppressions: [],
-				excludeFooter: true,
-				printerOptions: {
-					reporter,
-					processor: new DiagnosticsProcessor(),
-				},
-			});
-		} catch (logErr) {
-			console.error(
-				"Failed to output detailed fatal error information. Original error:",
-			);
-			console.error(error.stack);
-			console.error("Log error:");
-			console.error(logErr.stack);
-		} finally {
-			if (exit) {
-				if (workerThreads.isMainThread) {
-					process.exit(1);
+				let reporter: Reporter;
+				if (getReporter === undefined) {
+					reporter = Reporter.fromProcess();
 				} else {
-					// Get around an annoying bug(?) in worker_threads where the output streams wont be flushed if
-					// we immediately exit
-					setTimeout(
-						() => {
-							process.exit(1);
-						},
-						0,
-					);
+					reporter = getReporter();
+				}
 
-					await new Promise(() => {});
+				const diagnostics = getOrDeriveDiagnosticsFromError(
+					error,
+					{
+						description: {
+							category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
+						},
+						label: overrideSource ?? this.options.source,
+						tags: {
+							fatal: true,
+						},
+					},
+				);
+
+				const processor = new DiagnosticsProcessor({
+					normalizeOptions: {
+						defaultTags: {
+							fatal: true,
+						},
+					},
+				});
+				processor.addDiagnostics(diagnostics);
+
+				const printer = new DiagnosticsPrinter({
+					reporter,
+					processor,
+					flags: {
+						truncateDiagnostics: false,
+					},
+				});
+				await printer.print({
+					showFooter: false,
+				});
+			} catch (logErr) {
+				console.error("Failed to handle fatal error. Original error:");
+				console.error(error.stack);
+				console.error("Log error:");
+				console.error(logErr.stack);
+			} finally {
+				if (this.options.exit !== false) {
+					await safeProcessExit(70);
 				}
 			}
-		}
+		});
 	}
 }

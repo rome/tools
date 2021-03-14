@@ -14,9 +14,13 @@ import {
 } from "@internal/core";
 import {Reporter} from "@internal/cli-reporter";
 import {
+	BundleCompileResult,
 	BundleResult,
 	BundleResultBundle,
+	BundleWatcher,
+	BundleWatcherFiles,
 	BundlerConfig,
+	BundlerEntryResolution,
 	BundlerFiles,
 } from "../../common/types/bundler";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -24,35 +28,30 @@ import BundleRequest, {BundleOptions} from "./BundleRequest";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
+	AbsoluteFilePathSet,
+	Path,
+	RelativePath,
+	RelativePathMap,
+	RelativePathSet,
 	UIDPath,
-	createAnyPath,
+	createPath,
+	createRelativePath,
 } from "@internal/path";
 import {
 	JSONManifest,
 	ManifestDefinition,
 	convertManifestToJSON,
 } from "@internal/codec-js-manifest";
-
 import {Dict} from "@internal/typescript-helpers";
-import {readFile} from "@internal/fs";
 import {flipPathPatterns} from "@internal/path-match";
 import {json} from "@internal/codec-config";
 import {markup} from "@internal/markup";
 import {BundleCompileResolvedImports} from "@internal/compiler";
 import {serializeAssembled} from "./utils";
-import crypto = require("crypto");
-
-export type BundlerEntryResoluton = {
-	manifestDef: undefined | ManifestDefinition;
-	resolvedEntry: AbsoluteFilePath;
-};
-
-type BundleCompileResult = WorkerCompileResult & {
-	asset?: {
-		path: string;
-		buffer: Buffer;
-	};
-};
+import {Event} from "@internal/events";
+import {getDiagnosticsFromError} from "@internal/diagnostics";
+import {GlobalLock} from "@internal/async";
+import {sha256} from "@internal/string-utils";
 
 export default class Bundler {
 	constructor(req: ServerRequest, config: BundlerConfig) {
@@ -75,20 +74,27 @@ export default class Bundler {
 	private reporter: Reporter;
 	private entries: AbsoluteFilePath[];
 
+	public close() {
+		this.graph.close();
+	}
+
 	public static createFromServerRequest(req: ServerRequest): Bundler {
 		return new Bundler(req, req.getBundlerConfigFromFlags());
 	}
 
 	public async getResolvedEntry(
 		unresolvedEntry: string,
-	): Promise<BundlerEntryResoluton> {
+		{setVersion}: {
+			setVersion?: string;
+		} = {},
+	): Promise<BundlerEntryResolution> {
 		const {cwd} = this.config;
 
 		const res = await this.server.resolver.resolveEntryAssert({
 			...this.config.resolver,
 			allowPartial: false,
 			origin: cwd,
-			source: createAnyPath(unresolvedEntry),
+			source: createPath(unresolvedEntry),
 		});
 
 		const {server} = this;
@@ -99,7 +105,7 @@ export default class Bundler {
 			...this.config.resolver,
 			origin: cwd,
 			requestedType: "package",
-			source: createAnyPath(unresolvedEntry),
+			source: createPath(unresolvedEntry),
 		});
 		const manifestRoot: undefined | AbsoluteFilePath =
 			manifestRootResolved.type === "FOUND"
@@ -113,7 +119,11 @@ export default class Bundler {
 			}
 		}
 
-		return {manifestDef, resolvedEntry};
+		const project = this.server.projectManager.assertProjectExisting(
+			resolvedEntry,
+		);
+
+		return {manifestDef, resolvedEntry, project, setVersion};
 	}
 
 	private createBundleRequest(
@@ -157,10 +167,10 @@ export default class Bundler {
 		const mod = graph.getNode(path);
 
 		// Build a map of relative module sources to module id
-		const relativeSourcesToModuleId: Dict<UIDPath> = {};
+		const relativeSourcesToModuleId: Map<string, UIDPath> = new Map();
 		for (const [relative, absolute] of mod.relativeToAbsolutePath) {
 			const moduleId = graph.getNode(absolute).uid;
-			relativeSourcesToModuleId[relative] = moduleId;
+			relativeSourcesToModuleId.set(relative, moduleId);
 		}
 
 		// Diagnostics would have already been added during the initial DependencyGraph.seed
@@ -168,23 +178,30 @@ export default class Bundler {
 		const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
 
 		let asset: undefined | BundleCompileResult["asset"];
-		let assetPath: undefined | string;
+		let assetPath: undefined | Path;
 		if (mod.handler?.isAsset) {
-			const buffer = await readFile(mod.path);
-
-			// Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS
-			const hash = crypto.createHash("sha1").update(buffer).digest("hex");
+			// TODO: Maybe add option to allow keeping the contents in memory rather than having a double-read
+			// TODO: Also investigate reusing worker cache hashes
+			// Asset path in the form of: BASENAME-HASH.EXTENSIONS
+			const hash = await sha256.async(mod.path.createReadStream());
 			const basename = mod.path.getExtensionlessBasename();
 			const exts = mod.path.getExtensions();
 
-			assetPath = `${basename}-${hash}${exts}`;
+			const relativeAssetPath = createRelativePath(`${basename}-${hash}${exts}`);
+			assetPath = this.config.basePath.append(relativeAssetPath);
 			asset = {
-				path: assetPath,
-				buffer,
+				path: relativeAssetPath,
+				value: {
+					etag: hash,
+					content: async () => mod.path.createReadStream(),
+				},
 			};
 		}
 
 		const opts: WorkerBundleCompileOptions = {
+			__filename: this.server.projectManager.getRootProjectForPath(path).directory.relativeForce(
+				path,
+			),
 			moduleAll: mod.all,
 			moduleId: mod.uid,
 			relativeSourcesToModuleId,
@@ -228,26 +245,23 @@ export default class Bundler {
 
 		// Seed the dependency graph with all the entries at the same time
 		const processor = this.request.createDiagnosticsProcessor({
-			origins: [
-				{
-					category: "Bundler",
-					message: "Analyzing dependencies for bundleMultiple",
-				},
-			],
+			origin: {
+				entity: "Bundler.bundleMultiple",
+				message: "Analyzing dependencies for bundleMultiple",
+			},
 		});
-		const entryUids = entries.map((entry) =>
-			this.server.projectManager.getUid(entry)
+		const entryUIDs = entries.map((entry) =>
+			this.server.projectManager.getUID(entry)
 		);
 		const analyzeProgress = this.reporter.progress({
-			name: `bundler:analyze:${entryUids.join(",")}`,
+			name: `bundler:analyze:${entryUIDs.join(",")}`,
 			title: markup`Analyzing`,
 		});
 		processor.setThrowAfter(100);
 		await this.graph.seed({
 			paths: entries,
-			diagnosticsProcessor: processor,
 			analyzeProgress,
-			validate: false,
+			allowFileNotFound: false,
 		});
 		analyzeProgress.end();
 		processor.maybeThrowDiagnosticsError();
@@ -268,41 +282,111 @@ export default class Bundler {
 			streams: [],
 		});
 
-		const promises: Set<Promise<void>> = new Set();
-
-		// Could maybe do some of this in parallel?
-		while (entries.length > 0) {
-			const entry = entries.shift()!;
-
-			const promise = (async () => {
-				const progressId = progress.pushText(markup`${entry}`);
-
-				map.set(entry, await this.bundle(entry, options, silentReporter));
-				progress.popText(progressId);
-				progress.tick();
-			})();
-			promise.then(() => {
-				promises.delete(promise);
-			});
-			promises.add(promise);
-
-			if (promises.size > 5) {
-				await Promise.race(Array.from(promises));
+		const bundle = async () => {
+			if (entries.length === 0) {
+				return;
 			}
-		}
 
-		await Promise.all(Array.from(promises));
+			const entry = entries.shift()!;
+			const progressId = progress.pushText(entry);
+
+			map.set(entry, await this.bundle(entry, options, silentReporter));
+			progress.popText(progressId);
+			progress.tick();
+			await bundle();
+		};
+
+		// TODO better parallelization model
+		await Promise.all([bundle(), bundle(), bundle(), bundle(), bundle()]);
 
 		progress.end();
 
 		return map;
 	}
 
+	public bundleManifestWatch(resolution: BundlerEntryResolution): BundleWatcher {
+		const refreshSub = this.server.refreshFileEvent.subscribe(async (paths) => {
+			const graphPaths = new AbsoluteFilePathSet();
+			for (const {type, path} of paths) {
+				if (type !== "CREATED" && this.graph.hasNode(path)) {
+					this.compiles.delete(path);
+					graphPaths.add(path);
+				}
+			}
+			if (graphPaths.size > 0) {
+				watcher.changeEvent.send(graphPaths);
+				await runLock.wrap(async () => {
+					await this.graph.evictNodes(
+						graphPaths,
+						async (paths) => {
+							await this.graph.seed({
+								allowFileNotFound: true,
+								paths,
+							});
+						},
+					);
+					run();
+				});
+			}
+		});
+		this.request.resources.add(refreshSub);
+
+		const watcher: BundleWatcher = {
+			subscription: refreshSub,
+			diagnosticsEvent: new Event("diagnosticsEvent"),
+			changeEvent: new Event("changeEvent"),
+			filesEvent: new Event("filesEvent"),
+		};
+
+		const knownFiles: RelativePathSet = new RelativePathSet();
+		const runLock: GlobalLock = new GlobalLock();
+
+		const run = async () => {
+			try {
+				await runLock.wrap(async () => {
+					const {files} = await this.bundleManifest(resolution);
+
+					const changes: BundleWatcherFiles = new RelativePathMap();
+
+					// Add deleted files
+					for (const path of knownFiles) {
+						if (!files.has(path)) {
+							changes.set(path, undefined);
+						}
+					}
+
+					// Add new/updated files
+					for (const [path, def] of files) {
+						knownFiles.add(path);
+						changes.set(path, def);
+					}
+
+					watcher.filesEvent.send(changes);
+				});
+			} catch (err) {
+				const diagnostics = getDiagnosticsFromError(err);
+				if (diagnostics === undefined) {
+					this.request.handleOutboundError(err);
+				} else {
+					watcher.diagnosticsEvent.send(diagnostics);
+				}
+			}
+		};
+
+		run();
+
+		return watcher;
+	}
+
 	public async bundleManifest(
-		{resolvedEntry, manifestDef}: BundlerEntryResoluton,
-	) {
+		{resolvedEntry, manifestDef, setVersion}: BundlerEntryResolution,
+	): Promise<{
+		files: BundlerFiles;
+		bundles: BundleResultBundle[];
+		entry: BundleResultBundle;
+	}> {
 		let bundles: BundleResultBundle[] = [];
-		const files: BundlerFiles = new Map();
+		const files: BundlerFiles = new RelativePathMap();
 
 		const createBundle = async (
 			resolvedSegment: AbsoluteFilePath,
@@ -321,10 +405,11 @@ export default class Bundler {
 		//
 		const bundleBuddyStats = this.graph.getBundleBuddyStats(this.entries);
 		files.set(
-			"bundlebuddy.json",
+			createRelativePath("bundlebuddy.json"),
 			{
 				kind: "stats",
-				content: () => json.stringify(bundleBuddyStats),
+				etag: entryBundle.etag,
+				content: async () => json.stringify(bundleBuddyStats),
 			},
 		);
 
@@ -334,31 +419,37 @@ export default class Bundler {
 				manifestDef,
 				entryBundle,
 				createBundle,
-				(relative, buffer) => {
+				(relative, view) => {
 					if (!files.has(relative)) {
 						files.set(
 							relative,
 							{
 								kind: "file",
-								content: () => buffer,
+								etag: "TODO",
+								content: async () => view,
 							},
 						);
 					}
 				},
 			);
 
+			if (setVersion !== undefined) {
+				newManifest.version = setVersion;
+			}
+
 			// If we have a `files` array then set it to all the newly added files
 			// This will have included files already there that we copied
 			if (newManifest.files !== undefined) {
-				newManifest.files = Array.from(files.keys());
+				newManifest.files = Array.from(files.keys(), (path) => path.join());
 			}
 
 			// Add a package.json with updated values
 			files.set(
-				"package.json",
+				createRelativePath("package.json"),
 				{
 					kind: "manifest",
-					content: () => json.stringify(newManifest),
+					etag: "TODO",
+					content: async () => json.stringify(newManifest),
 				},
 			);
 		}
@@ -377,14 +468,14 @@ export default class Bundler {
 			resolvedSegment: AbsoluteFilePath,
 			options: BundleOptions,
 		) => Promise<BundleResultBundle>,
-		addFile: (relative: string, buffer: Buffer | string) => void,
+		addFile: (relative: RelativePath, buff: DataView | string) => void,
 	): Promise<JSONManifest> {
 		// TODO figure out some way to use bundleMultiple here
 		const manifest = manifestDef.manifest;
 
 		const newManifest: JSONManifest = {
 			...convertManifestToJSON(manifest),
-			main: entryBundle.js.path,
+			main: entryBundle.js.path.join(),
 		};
 
 		// TODO inherit some manifest properties from project configs
@@ -411,8 +502,8 @@ export default class Bundler {
 			);
 
 			for (const path of paths) {
-				const relative = manifestDef.directory.relative(path).join();
-				const buffer = await readFile(path);
+				const relative = manifestDef.directory.relativeForce(path);
+				const buffer = await path.readFile();
 				addFile(relative, buffer);
 			}
 		}
@@ -431,16 +522,12 @@ export default class Bundler {
 					? binConsumer
 					: binConsumer.get(binName)).getDiagnosticLocation("inner-value");
 
-				const absolute = await this.server.resolver.resolveAssert(
-					{
-						...this.config.resolver,
-						origin: manifestDef.directory,
-						source: createAnyPath(relative).toExplicitRelative(),
-					},
-					{
-						location,
-					},
-				);
+				const absolute = await this.server.resolver.resolveAssert({
+					...this.config.resolver,
+					origin: manifestDef.directory,
+					source: createRelativePath(relative).toExplicitRelative(),
+					location,
+				});
 
 				const res = await createBundle(
 					absolute.path,
@@ -449,7 +536,7 @@ export default class Bundler {
 						interpreter: "/usr/bin/env node",
 					},
 				);
-				newBin[binName] = res.js.path;
+				newBin[binName] = res.js.path.join();
 			}
 		}
 
@@ -482,22 +569,23 @@ export default class Bundler {
 		}
 
 		const prefix = options.prefix === undefined ? "" : `${options.prefix}/`;
-		const jsPath = `${prefix}index.js`;
-		const mapPath = `${jsPath}.map`;
+		const jsPath = createRelativePath(`${prefix}index.js`);
+		const mapPath = jsPath.addExtension(".map");
 
 		let serialized: undefined | string;
-		const serializeAssembled = () => {
+		const serializeAssembled = async () => {
 			if (serialized === undefined) {
 				serialized = this.serializeAssembled(res.assembled);
 			}
 			return serialized;
 		};
 
-		const files: BundlerFiles = new Map();
+		const files: BundlerFiles = new RelativePathMap();
 		files.set(
 			jsPath,
 			{
 				kind: "entry",
+				etag: res.etag,
 				content: serializeAssembled,
 			},
 		);
@@ -506,21 +594,23 @@ export default class Bundler {
 			mapPath,
 			{
 				kind: "sourcemap",
-				content: () => res.sourceMap.toJSON(),
+				etag: res.etag,
+				content: async () => res.sourceMap.toJSON(),
 			},
 		);
 
-		for (const [relative, buffer] of res.assets) {
+		for (const [path, asset] of res.assets) {
 			files.set(
-				relative,
+				path,
 				{
 					kind: "asset",
-					content: () => buffer,
+					...asset,
 				},
 			);
 		}
 
 		const bundle: BundleResultBundle = {
+			etag: res.etag,
 			js: {
 				path: jsPath,
 				assembled: res.assembled,

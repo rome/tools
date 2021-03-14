@@ -8,29 +8,27 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-2:0
-	path: UIDPath<typescript/cast/null-assertion/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-1:3
 			expression: TSNonNullExpression {
-				loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-1:2
 				expression: JSReferenceIdentifier {
 					name: "x"
 					loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-1:1 (x)
 				}
+				loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-1:2
 			}
+			loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-1:3
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/cast/null-assertion/input.ts>
+	loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-2:0
 }
 ```
 

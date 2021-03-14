@@ -8,126 +8,104 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:0-11:13
-	path: UIDPath<es2020/optional-chaining/member-access-bracket/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:0-1:11
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:0-1:11
 				object: JSReferenceIdentifier {
 					name: "obj"
 					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:0-1:3 (obj)
 				}
 				property: JSComputedMemberProperty {
+					optional: true
 					value: JSReferenceIdentifier {
 						name: "expr"
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:6-1:10 (expr)
 					}
-					optional: true
 					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:5-1:11
 				}
+				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:0-1:11
 			}
+			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:0-1:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:0-3:20
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:0-3:20
-				property: JSComputedMemberProperty {
-					value: JSReferenceIdentifier {
-						name: "other"
-						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:14-3:19 (other)
-					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:13-3:20
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:0-3:11
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:0-3:3 (obj)
 					}
 					property: JSComputedMemberProperty {
+						optional: true
 						value: JSReferenceIdentifier {
 							name: "expr"
 							loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:6-3:10 (expr)
 						}
-						optional: true
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:5-3:11
 					}
+					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:0-3:11
 				}
+				property: JSComputedMemberProperty {
+					optional: true
+					value: JSReferenceIdentifier {
+						name: "other"
+						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:14-3:19 (other)
+					}
+					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:13-3:20
+				}
+				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:0-3:20
 			}
+			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 3:0-3:20
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 5:0-5:11
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 5:0-5:11
 				object: JSReferenceIdentifier {
 					name: "obj"
 					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 5:0-5:3 (obj)
 				}
 				property: JSComputedMemberProperty {
+					optional: true
 					value: JSBooleanLiteral {
 						value: true
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 5:6-5:10
 					}
-					optional: true
 					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 5:5-5:11
 				}
+				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 5:0-5:11
 			}
+			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 5:0-5:11
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:0-7:19
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:0-7:19
-				property: JSComputedMemberProperty {
-					value: JSBooleanLiteral {
-						value: true
-						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:14-7:18
-					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:13-7:19
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:0-7:11
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:0-7:3 (obj)
 					}
 					property: JSComputedMemberProperty {
+						optional: true
 						value: JSBooleanLiteral {
 							value: true
 							loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:6-7:10
 						}
-						optional: true
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:5-7:11
 					}
+					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:0-7:11
 				}
+				property: JSComputedMemberProperty {
+					optional: true
+					value: JSBooleanLiteral {
+						value: true
+						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:14-7:18
+					}
+					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:13-7:19
+				}
+				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:0-7:19
 			}
+			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 7:0-7:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:0-9:13
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:0-9:13
-				property: JSComputedMemberProperty {
-					value: JSReferenceIdentifier {
-						name: "expr"
-						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:8-9:12 (expr)
-					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:7-9:13
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:0-9:5
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:0-9:3 (obj)
@@ -139,23 +117,23 @@ JSRoot {
 						}
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:4-9:5 (a)
 					}
+					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:0-9:5
 				}
+				property: JSComputedMemberProperty {
+					optional: true
+					value: JSReferenceIdentifier {
+						name: "expr"
+						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:8-9:12 (expr)
+					}
+					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:7-9:13
+				}
+				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:0-9:13
 			}
+			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 9:0-9:13
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:0-11:13
 			expression: JSMemberExpression {
-				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:0-11:13
-				property: JSComputedMemberProperty {
-					value: JSBooleanLiteral {
-						value: true
-						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:8-11:12
-					}
-					optional: true
-					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:7-11:13
-				}
 				object: JSMemberExpression {
-					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:0-11:5
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:0-11:3 (obj)
@@ -167,10 +145,30 @@ JSRoot {
 						}
 						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:4-11:5 (a)
 					}
+					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:0-11:5
 				}
+				property: JSComputedMemberProperty {
+					optional: true
+					value: JSBooleanLiteral {
+						value: true
+						loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:8-11:12
+					}
+					loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:7-11:13
+				}
+				loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:0-11:13
 			}
+			loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 11:0-11:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2020/optional-chaining/member-access-bracket/input.js>
+	loc: SourceLocation es2020/optional-chaining/member-access-bracket/input.js 1:0-11:13
 }
 ```
 

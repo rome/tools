@@ -1,7 +1,7 @@
 import {normalizeManifest} from "@internal/codec-js-manifest";
 import {
-	SemverRangeNode,
-	SemverVersionNode,
+	SemverRange,
+	SemverVersion,
 	parseSemverRange,
 	satisfiesSemver,
 	stringifySemver,
@@ -13,12 +13,11 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {json} from "@internal/codec-config";
-import {readFileTextMeta} from "@internal/fs";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	createSingleDiagnosticError,
+	createSingleDiagnosticsError,
+	decorateErrorWithDiagnostics,
 	descriptions,
-	provideDiagnosticAdviceForError,
 } from "@internal/diagnostics";
 
 import internalModule = require("module");
@@ -41,11 +40,11 @@ export function getRequire(path: AbsoluteFilePath): NodeRequire {
 type IntegrationLoaderNormalize<Value> = (
 	consumer: Consumer,
 	path: AbsoluteFilePath,
-	version: undefined | SemverVersionNode,
+	version: undefined | SemverVersion,
 ) => Value;
 
 type IntegrationLoaderEntry<Value> = {
-	version: undefined | SemverVersionNode;
+	version: undefined | SemverVersion;
 	module: Value;
 };
 
@@ -67,7 +66,7 @@ export default class IntegrationLoader<Value> {
 	private loaded: AbsoluteFilePathMap<IntegrationLoaderEntry<Value>>;
 	private normalize: IntegrationLoaderNormalize<Value>;
 	private name: string;
-	private range: undefined | SemverRangeNode;
+	private range: undefined | SemverRange;
 
 	private resolve(
 		id: string,
@@ -78,7 +77,7 @@ export default class IntegrationLoader<Value> {
 			return require.resolve(id);
 		} catch (err) {
 			if (err.code === "MODULE_NOT_FOUND") {
-				throw createSingleDiagnosticError({
+				throw createSingleDiagnosticsError({
 					description: descriptions.INTEGRATIONS.NOT_FOUND(this.name),
 					location: {
 						path,
@@ -95,7 +94,7 @@ export default class IntegrationLoader<Value> {
 		try {
 			return await callback();
 		} catch (err) {
-			throw provideDiagnosticAdviceForError(
+			throw decorateErrorWithDiagnostics(
 				err,
 				{
 					description: descriptions.INTEGRATIONS.LOAD(this.name),
@@ -117,7 +116,7 @@ export default class IntegrationLoader<Value> {
 		// Try to resolve
 		const require = getRequire(path);
 
-		let version: undefined | SemverVersionNode = undefined;
+		let version: undefined | SemverVersion = undefined;
 
 		// Validate range against the package version field
 		const expectedRange = this.range;
@@ -127,7 +126,7 @@ export default class IntegrationLoader<Value> {
 			);
 
 			const jsonConsumer = json.consumeValue(
-				await readFileTextMeta(manifestPath),
+				await manifestPath.readFileTextMeta(),
 			);
 			const versionProp = jsonConsumer.get("version");
 

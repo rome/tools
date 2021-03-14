@@ -8,31 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-8:0
-	path: UIDPath<es2018/async-generators/class-method/input.js>
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Query"
 				loc: SourceLocation es2018/async-generators/class-method/input.js 1:6-1:11 (Query)
 			}
-			loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-7:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-7:1
-				body: Array [
+				body: [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
@@ -42,85 +25,35 @@ JSRoot {
 							}
 							loc: SourceLocation es2018/async-generators/class-method/input.js 2:11-2:19
 						}
-						loc: SourceLocation es2018/async-generators/class-method/input.js 2:4-6:5
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation es2018/async-generators/class-method/input.js 2:4-2:19
 							start: Position 2:4
 						}
-						head: JSFunctionHead {
-							async: true
-							generator: true
-							hasHoistedVars: false
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: SourceLocation es2018/async-generators/class-method/input.js 2:19-2:24
-							params: Array [
-								JSBindingIdentifier {
-									name: "ids"
-									loc: SourceLocation es2018/async-generators/class-method/input.js 2:20-2:23 (ids)
-									meta: JSPatternMeta {
-										optional: undefined
-										typeAnnotation: undefined
-										loc: SourceLocation es2018/async-generators/class-method/input.js 2:20-2:23
-									}
-								}
-							]
-						}
 						body: JSBlockStatement {
-							directives: Array []
-							loc: SourceLocation es2018/async-generators/class-method/input.js 2:25-6:5
-							body: Array [
+							body: [
 								JSForOfStatement {
 									await: false
-									loc: SourceLocation es2018/async-generators/class-method/input.js 3:8-5:9
-									right: JSReferenceIdentifier {
-										name: "ids"
-										loc: SourceLocation es2018/async-generators/class-method/input.js 3:25-3:28 (ids)
-									}
-									left: JSVariableDeclaration {
-										kind: "const"
-										loc: SourceLocation es2018/async-generators/class-method/input.js 3:13-3:21
-										declarations: Array [
-											JSVariableDeclarator {
-												id: JSBindingIdentifier {
-													name: "id"
-													loc: SourceLocation es2018/async-generators/class-method/input.js 3:19-3:21 (id)
-												}
-												init: undefined
-												loc: SourceLocation es2018/async-generators/class-method/input.js 3:19-3:21
-											}
-										]
-									}
 									body: JSBlockStatement {
-										directives: Array []
-										loc: SourceLocation es2018/async-generators/class-method/input.js 3:30-5:9
-										body: Array [
+										body: [
 											JSExpressionStatement {
-												loc: SourceLocation es2018/async-generators/class-method/input.js 4:12-4:39
 												expression: JSYieldExpression {
 													delegate: false
-													loc: SourceLocation es2018/async-generators/class-method/input.js 4:12-4:38
 													argument: JSAwaitExpression {
-														loc: SourceLocation es2018/async-generators/class-method/input.js 4:18-4:38
 														argument: JSCallExpression {
-															loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:38
-															arguments: Array [
+															arguments: [
 																JSReferenceIdentifier {
 																	name: "id"
 																	loc: SourceLocation es2018/async-generators/class-method/input.js 4:35-4:37 (id)
 																}
 															]
 															callee: JSMemberExpression {
-																loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:34
-																object: JSThisExpression {loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:28}
+																object: JSThisExpression {
+																	loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:28
+																}
 																property: JSStaticMemberProperty {
 																	value: JSIdentifier {
 																		name: "query"
@@ -128,21 +61,75 @@ JSRoot {
 																	}
 																	loc: SourceLocation es2018/async-generators/class-method/input.js 4:29-4:34 (query)
 																}
+																loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:34
 															}
+															loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:38
 														}
+														loc: SourceLocation es2018/async-generators/class-method/input.js 4:18-4:38
 													}
+													loc: SourceLocation es2018/async-generators/class-method/input.js 4:12-4:38
 												}
+												loc: SourceLocation es2018/async-generators/class-method/input.js 4:12-4:39
 											}
 										]
+										directives: []
+										loc: SourceLocation es2018/async-generators/class-method/input.js 3:30-5:9
 									}
+									left: JSVariableDeclaration {
+										kind: "const"
+										declarations: [
+											JSVariableDeclarator {
+												id: JSBindingIdentifier {
+													name: "id"
+													loc: SourceLocation es2018/async-generators/class-method/input.js 3:19-3:21 (id)
+												}
+												loc: SourceLocation es2018/async-generators/class-method/input.js 3:19-3:21
+											}
+										]
+										loc: SourceLocation es2018/async-generators/class-method/input.js 3:13-3:21
+									}
+									right: JSReferenceIdentifier {
+										name: "ids"
+										loc: SourceLocation es2018/async-generators/class-method/input.js 3:25-3:28 (ids)
+									}
+									loc: SourceLocation es2018/async-generators/class-method/input.js 3:8-5:9
 								}
 							]
+							directives: []
+							loc: SourceLocation es2018/async-generators/class-method/input.js 2:25-6:5
 						}
+						head: JSFunctionHead {
+							async: true
+							generator: true
+							hasHoistedVars: false
+							params: [
+								JSBindingIdentifier {
+									name: "ids"
+									meta: JSPatternMeta {
+										loc: SourceLocation es2018/async-generators/class-method/input.js 2:20-2:23
+									}
+									loc: SourceLocation es2018/async-generators/class-method/input.js 2:20-2:23 (ids)
+								}
+							]
+							loc: SourceLocation es2018/async-generators/class-method/input.js 2:19-2:24
+						}
+						loc: SourceLocation es2018/async-generators/class-method/input.js 2:4-6:5
 					}
 				]
+				loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-7:1
 			}
+			loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-7:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/async-generators/class-method/input.js>
+	loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-8:0
 }
 ```
 

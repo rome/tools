@@ -8,58 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:0-2:0
-	path: UIDPath<es2015/statements/label-invalid-let/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<es2015/statements/label-invalid-let/input.js>
-				start: Position 1:9
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSLabeledStatement {
-			loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:0-1:8
-			label: JSIdentifier {
-				name: "foo"
-				loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:0-1:3 (foo)
-			}
 			body: JSExpressionStatement {
-				loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:5-1:8
 				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:5-1:8 (let)
 				}
+				loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:5-1:8
 			}
+			label: JSIdentifier {
+				name: "foo"
+				loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:0-1:3 (foo)
+			}
+			loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:0-1:8
 		}
 		JSExpressionStatement {
-			loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:9-1:13
 			expression: JSReferenceIdentifier {
 				name: "bar"
 				loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:9-1:12 (bar)
 			}
+			loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:9-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/statements/label-invalid-let/input.js>
+				end: Position 1:8
+				start: Position 1:9
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/statements/label-invalid-let/input.js>
+	loc: SourceLocation es2015/statements/label-invalid-let/input.js 1:0-2:0
 }
 ```
 

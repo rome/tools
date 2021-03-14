@@ -6,49 +6,24 @@
 
 ```javascript
 CSSRoot {
-	comments: Array []
-	corrupt: false
-	integrity: undefined
-	loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
-	path: RelativePath<invalid/url-not-string/input.css>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "css"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The function <emphasis>url()</emphasis> can only accept strings."}
-			}
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 2:20
-				path: RelativePath<invalid/url-not-string/input.css>
-				start: Position 2:13
-			}
-		}
-	]
-	body: Array [
+	body: [
 		CSSRule {
-			loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
-			prelude: Array [
+			prelude: [
 				CSSSelector {
-					loc: SourceLocation invalid/url-not-string/input.css 1:0-1:5
-					patterns: Array [
+					patterns: [
 						CSSClassSelector {
 							value: "foo"
 							loc: SourceLocation invalid/url-not-string/input.css 1:0-1:4
 						}
 					]
+					loc: SourceLocation invalid/url-not-string/input.css 1:0-1:5
 				}
 			]
 			block: CSSBlock {
-				value: Array [
+				value: [
 					CSSDeclaration {
 						name: "background"
-						value: Array []
+						value: []
 						important: false
 						loc: SourceLocation invalid/url-not-string/input.css 2:1-2:20
 					}
@@ -56,7 +31,29 @@ CSSRoot {
 				startingTokenValue: "{"
 				loc: SourceLocation invalid/url-not-string/input.css 1:5-3:1
 			}
+			loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<css>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "The function <emphasis>url()</emphasis> can only accept strings."}
+			}
+			location: {
+				language: "css"
+				path: RelativePath<invalid/url-not-string/input.css>
+				end: Position 2:20
+				start: Position 2:13
+			}
+		}
+	]
+	path: RelativePath<invalid/url-not-string/input.css>
+	loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
 }
 ```

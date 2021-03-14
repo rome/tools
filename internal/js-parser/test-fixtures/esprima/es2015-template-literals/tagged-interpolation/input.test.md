@@ -8,36 +8,17 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-2:0
-	path: UIDPath<esprima/es2015-template-literals/tagged-interpolation/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:18
 			expression: JSTaggedTemplateExpression {
-				typeArguments: undefined
-				loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:18
-				tag: JSReferenceIdentifier {
-					name: "raw"
-					loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:3 (raw)
-				}
 				quasi: JSTemplateLiteral {
-					loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:3-1:18
-					expressions: Array [
+					expressions: [
 						JSReferenceIdentifier {
 							name: "name"
 							loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:12-1:16 (name)
 						}
 					]
-					quasis: Array [
+					quasis: [
 						JSTemplateElement {
 							cooked: "hello "
 							raw: "hello "
@@ -51,10 +32,26 @@ JSRoot {
 							loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:17-1:17
 						}
 					]
+					loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:3-1:18
 				}
+				tag: JSReferenceIdentifier {
+					name: "raw"
+					loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:3 (raw)
+				}
+				loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:18
 			}
+			loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-template-literals/tagged-interpolation/input.js>
+	loc: SourceLocation esprima/es2015-template-literals/tagged-interpolation/input.js 1:0-2:0
 }
 ```
 

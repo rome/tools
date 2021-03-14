@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/private-fields/input.ts 1:0-8:0
-	path: UIDPath<typescript/class/private-fields/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 5:4
-				path: UIDPath<typescript/class/private-fields/input.ts>
-				start: Position 5:4
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/private-fields/input.ts 1:6-1:7 (A)
 			}
-			loc: SourceLocation typescript/class/private-fields/input.ts 1:0-7:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/private-fields/input.ts 1:0-7:1
-				body: Array [
+				body: [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
@@ -59,19 +24,18 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/private-fields/input.ts 2:2-2:4
 						}
-						value: undefined
-						loc: SourceLocation typescript/class/private-fields/input.ts 2:2-2:13
-						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/private-fields/input.ts 2:6-2:12}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/private-fields/input.ts 2:2-2:4
 							start: Position 2:2
 						}
+						typeAnnotation: TSStringKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/private-fields/input.ts 2:6-2:12
+						}
+						loc: SourceLocation typescript/class/private-fields/input.ts 2:2-2:13
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -81,19 +45,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/private-fields/input.ts 3:2-3:4
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/private-fields/input.ts 3:2-3:6
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: true
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/private-fields/input.ts 3:2-3:5
 							start: Position 3:2
 						}
+						loc: SourceLocation typescript/class/private-fields/input.ts 3:2-3:6
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -103,19 +63,18 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/private-fields/input.ts 4:2-4:4
 						}
-						value: undefined
-						loc: SourceLocation typescript/class/private-fields/input.ts 4:2-4:14
-						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/private-fields/input.ts 4:7-4:13}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: true
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/private-fields/input.ts 4:2-4:5
 							start: Position 4:2
 						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/private-fields/input.ts 4:7-4:13
+						}
+						loc: SourceLocation typescript/class/private-fields/input.ts 4:2-4:14
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -125,19 +84,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/private-fields/input.ts 5:2-5:4
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/private-fields/input.ts 5:2-5:4
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/private-fields/input.ts 5:2-5:4
 							start: Position 5:2
 						}
+						loc: SourceLocation typescript/class/private-fields/input.ts 5:2-5:4
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -147,20 +102,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/private-fields/input.ts 5:4-5:5
 						}
-						value: undefined
-						definite: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/private-fields/input.ts 5:4-5:6
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/private-fields/input.ts 5:4-5:5
 							start: Position 5:4
 						}
+						loc: SourceLocation typescript/class/private-fields/input.ts 5:4-5:6
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
@@ -170,19 +120,15 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/private-fields/input.ts 6:2-6:4
 						}
-						value: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation typescript/class/private-fields/input.ts 6:2-6:4
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/private-fields/input.ts 6:2-6:4
 							start: Position 6:2
 						}
+						loc: SourceLocation typescript/class/private-fields/input.ts 6:2-6:4
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
@@ -192,25 +138,50 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/private-fields/input.ts 6:4-6:5
 						}
-						value: undefined
-						definite: undefined
-						loc: SourceLocation typescript/class/private-fields/input.ts 6:4-6:15
-						typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/class/private-fields/input.ts 6:7-6:14}
 						meta: JSClassPropertyMeta {
 							abstract: false
-							accessibility: undefined
 							optional: false
 							readonly: false
 							static: false
-							typeAnnotation: undefined
 							loc: SourceLocation typescript/class/private-fields/input.ts 6:4-6:5
 							start: Position 6:4
 						}
+						typeAnnotation: TSBooleanKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/private-fields/input.ts 6:7-6:14
+						}
+						loc: SourceLocation typescript/class/private-fields/input.ts 6:4-6:15
 					}
 				]
+				loc: SourceLocation typescript/class/private-fields/input.ts 1:0-7:1
+			}
+			loc: SourceLocation typescript/class/private-fields/input.ts 1:0-7:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/private-fields/input.ts>
+				end: Position 5:4
+				start: Position 5:4
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/private-fields/input.ts>
+	loc: SourceLocation typescript/class/private-fields/input.ts 1:0-8:0
 }
 ```
 

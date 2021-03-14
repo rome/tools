@@ -8,29 +8,28 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/type-alias/declare/input.ts 1:0-2:0
-	path: UIDPath<typescript/type-alias/declare/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
+			declare: true
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: SourceLocation typescript/type-alias/declare/input.ts 1:13-1:14 (T)
 			}
-			declare: true
-			typeParameters: undefined
+			right: TSNumberKeywordTypeAnnotation {
+				loc: SourceLocation typescript/type-alias/declare/input.ts 1:17-1:23
+			}
 			loc: SourceLocation typescript/type-alias/declare/input.ts 1:0-1:24
-			right: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/declare/input.ts 1:17-1:23}
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/type-alias/declare/input.ts>
+	loc: SourceLocation typescript/type-alias/declare/input.ts 1:0-2:0
 }
 ```
 

@@ -12,21 +12,21 @@ import {
 	MAX_PATCH_LINES,
 } from "./constants";
 import {showInvisibles} from "./utils";
-import {Diffs, diffConstants, stringDiffUnified} from "@internal/string-diff";
+import {Diff, DiffTypes, stringDiffUnified} from "@internal/string-diff";
 import {
-	AnyMarkups,
+	Markup,
 	StaticMarkup,
-	concatMarkup,
+	joinMarkup,
 	markup,
 	markupTag,
 	readMarkup,
 } from "@internal/markup";
 import {DiagnosticAdviceDiff} from "@internal/diagnostics";
 
-function formatDiffLine(diffs: Diffs) {
+function formatDiffLine(diffs: Diff[]) {
 	let atLineStart = true;
 
-	return concatMarkup(
+	return joinMarkup(
 		diffs.map(([type, text], i) => {
 			const escapedText = markup`${text}`;
 
@@ -35,15 +35,17 @@ function formatDiffLine(diffs: Diffs) {
 				{
 					ignoreLeadingTabs: false,
 					ignoreLoneSpaces: false,
+					ignoreTrailingCarriageReturn: type !== DiffTypes.EQUAL,
 					atLineStart,
 					atLineEnd: i === diffs.length - 1,
+					nextText: diffs[i + 1]?.[1],
 				},
 			);
 			if (hadNonWhitespace) {
 				atLineStart = false;
 			}
 
-			if (type === diffConstants.EQUAL) {
+			if (type === DiffTypes.EQUAL) {
 				return value;
 			} else {
 				return markupTag("emphasis", value);
@@ -78,7 +80,7 @@ export default function buildPatchCodeFrame(
 		if (beforeLine === undefined || afterLine === undefined) {
 			for (
 				let visible = i - CODE_FRAME_CONTEXT_LINES;
-				visible < i + CODE_FRAME_CONTEXT_LINES;
+				visible <= i + CODE_FRAME_CONTEXT_LINES;
 				visible++
 			) {
 				shownLineIndexes.add(visible);
@@ -93,7 +95,7 @@ export default function buildPatchCodeFrame(
 	const singleLine = beforeLineCount === 1 && afterLineCount === 1;
 
 	const {legend} = item;
-	const frame: AnyMarkups = [];
+	const frame: Markup[] = [];
 	let displayedLines = 0;
 	let truncated = false;
 	let lastDisplayedLine = -1;
@@ -107,7 +109,7 @@ export default function buildPatchCodeFrame(
 		beforeLine?: string | number,
 		afterLine?: string | number,
 	): StaticMarkup {
-		let parts: AnyMarkups = [];
+		let parts: Markup[] = [];
 		parts.push(
 			markup`<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${String(
 				beforeNoLength,
@@ -123,7 +125,7 @@ export default function buildPatchCodeFrame(
 			parts.push(markup`${String(afterLine)}`);
 		}
 		parts.push(markup`</pad></emphasis>`);
-		return concatMarkup(parts);
+		return joinMarkup(parts);
 	}
 
 	// Build the actual frame
@@ -185,7 +187,7 @@ export default function buildPatchCodeFrame(
 				);
 			}
 		} else {
-			let prefixes = concatMarkup([
+			let prefixes = joinMarkup([
 				markup`<viewLinePrefix type="first">${createLineNos(
 					beforeLine,
 					afterLine,
@@ -226,6 +228,6 @@ export default function buildPatchCodeFrame(
 
 	return {
 		truncated,
-		frame: concatMarkup(frame, markup`\n`),
+		frame: joinMarkup(frame, markup`\n`),
 	};
 }

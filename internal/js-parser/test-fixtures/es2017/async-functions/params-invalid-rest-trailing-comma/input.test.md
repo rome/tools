@@ -8,60 +8,54 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-2:0
-	path: UIDPath<es2017/async-functions/params-invalid-rest-trailing-comma/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:12
-				path: UIDPath<es2017/async-functions/params-invalid-rest-trailing-comma/input.js>
-				start: Position 1:12
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:20
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:19
 				body: JSBlockStatement {
-					body: Array []
-					directives: Array []
+					body: []
+					directives: []
 					loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:17-1:19
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
-					params: Array []
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:16
+					params: []
 					rest: JSBindingIdentifier {
 						name: "a"
 						loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:10-1:11 (a)
 					}
+					loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:16
 				}
+				loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:19
+			}
+			loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:20
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2017/async-functions/params-invalid-rest-trailing-comma/input.js>
+				end: Position 1:12
+				start: Position 1:12
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/params-invalid-rest-trailing-comma/input.js>
+	loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-2:0
 }
 ```
 

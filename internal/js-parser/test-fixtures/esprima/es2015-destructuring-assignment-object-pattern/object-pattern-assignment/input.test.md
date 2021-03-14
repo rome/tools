@@ -8,32 +8,12 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 1:0-9:0
-	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 1:0-8:7
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 1:1-8:5
-				right: JSNumericLiteral {
-					value: 0
-					format: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 8:4-8:5
-				}
 				left: JSAssignmentObjectPattern {
-					rest: undefined
-					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 1:1-8:1
-					properties: Array [
+					properties: [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
@@ -72,7 +52,6 @@ JSRoot {
 							}
 							value: JSAssignmentAssignmentPattern {
 								operator: "="
-								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 4:6-4:9
 								left: JSAssignmentIdentifier {
 									name: "a"
 									loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 4:6-4:7 (a)
@@ -81,6 +60,7 @@ JSRoot {
 									name: "a"
 									loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 4:8-4:9 (a)
 								}
+								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 4:6-4:9
 							}
 							loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 4:4-4:9
 						}
@@ -93,9 +73,7 @@ JSRoot {
 								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 5:4-5:7
 							}
 							value: JSAssignmentObjectPattern {
-								rest: undefined
-								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 5:8-5:11
-								properties: Array [
+								properties: [
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
@@ -111,6 +89,7 @@ JSRoot {
 										loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 5:9-5:10
 									}
 								]
+								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 5:8-5:11
 							}
 							loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 5:4-5:11
 						}
@@ -123,7 +102,14 @@ JSRoot {
 								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:4-6:5
 							}
 							value: JSMemberExpression {
-								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:6-6:20
+								object: JSCallExpression {
+									arguments: []
+									callee: JSReferenceIdentifier {
+										name: "some_call"
+										loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:6-6:15 (some_call)
+									}
+									loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:6-6:17
+								}
 								property: JSComputedMemberProperty {
 									value: JSReferenceIdentifier {
 										name: "a"
@@ -131,14 +117,7 @@ JSRoot {
 									}
 									loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:17-6:20
 								}
-								object: JSCallExpression {
-									arguments: Array []
-									loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:6-6:17
-									callee: JSReferenceIdentifier {
-										name: "some_call"
-										loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:6-6:15 (some_call)
-									}
-								}
+								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:6-6:20
 							}
 							loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 6:4-6:20
 						}
@@ -151,8 +130,9 @@ JSRoot {
 								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 7:4-7:5
 							}
 							value: JSMemberExpression {
-								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 7:6-7:12
-								object: JSThisExpression {loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 7:6-7:10}
+								object: JSThisExpression {
+									loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 7:6-7:10
+								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "a"
@@ -160,14 +140,31 @@ JSRoot {
 									}
 									loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 7:11-7:12 (a)
 								}
+								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 7:6-7:12
 							}
 							loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 7:4-7:12
 						}
 					]
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 1:1-8:1
 				}
+				right: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 8:4-8:5
+				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 1:1-8:5
 			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 1:0-8:7
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js>
+	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/object-pattern-assignment/input.js 1:0-9:0
 }
 ```
 

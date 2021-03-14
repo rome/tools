@@ -8,50 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/extends-empty/input.ts 1:0-3:0
-	path: UIDPath<typescript/class/extends-empty/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSInterfaceDeclaration {
+			extends: []
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation typescript/class/extends-empty/input.ts 1:10-1:13 (foo)
 			}
-			extends: Array []
-			typeParameters: undefined
-			loc: SourceLocation typescript/class/extends-empty/input.ts 1:0-2:1
 			body: TSInterfaceBody {
-				body: Array []
+				body: []
 				loc: SourceLocation typescript/class/extends-empty/input.ts 1:22-2:1
 			}
+			loc: SourceLocation typescript/class/extends-empty/input.ts 1:0-2:1
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "extends list cannot be empty"}
-			}
-			location: Object {
-				integrity: undefined
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["extends", RAW_MARKUP {value: " list cannot be empty"}]}
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:22
 				path: UIDPath<typescript/class/extends-empty/input.ts>
+				end: Position 1:22
 				start: Position 1:22
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/extends-empty/input.ts>
+	loc: SourceLocation typescript/class/extends-empty/input.ts 1:0-3:0
 }
 ```
 

@@ -1,0 +1,6 @@
+{
+	"name": "@internal/binary-transport",
+	"type": "module",
+	"private": true,
+	"main": "index.ts"
+}

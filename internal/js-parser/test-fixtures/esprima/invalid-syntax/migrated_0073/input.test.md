@@ -8,41 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:0-2:0
-	path: UIDPath<esprima/invalid-syntax/migrated_0073/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown start to an call expression argument"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:10
-				path: UIDPath<esprima/invalid-syntax/migrated_0073/input.js>
-				start: Position 1:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:0-1:13
 			expression: JSObjectExpression {
-				loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:1-1:13
-				properties: Array [
+				properties: [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -52,43 +21,70 @@ JSRoot {
 							loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:3-1:6
 						}
 						value: JSCallExpression {
-							loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:8-1:13
-							callee: JSReferenceIdentifier {
-								name: "s"
-								loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:8-1:9 (s)
-							}
-							arguments: Array [
+							arguments: [
 								JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
 									loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:10-1:12
 								}
 							]
+							callee: JSReferenceIdentifier {
+								name: "s"
+								loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:8-1:9 (s)
+							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:8-1:13
 						}
 						loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:3-1:13
 					}
 				]
+				loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:1-1:13
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:0-1:13
 		}
 		JSBlockStatement {
-			body: Array []
-			directives: Array []
+			body: []
+			directives: []
 			loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:14-1:17
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:18-1:19
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:18-1:19
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:18-1:19
 		}
 		JSExpressionStatement {
-			loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:19-1:20
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:19-1:20
 			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:19-1:20
 		}
 	]
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unknown start to an "}, "call expression argument"]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<esprima/invalid-syntax/migrated_0073/input.js>
+				end: Position 1:10
+				start: Position 1:10
+			}
+		}
+	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/invalid-syntax/migrated_0073/input.js>
+	loc: SourceLocation esprima/invalid-syntax/migrated_0073/input.js 1:0-2:0
 }
 ```
 

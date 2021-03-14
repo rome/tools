@@ -8,35 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/199/input.js 1:0-1:6
-	path: UIDPath<core/uncategorised/199/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/199/input.js 1:0-1:6
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: SourceLocation core/uncategorised/199/input.js 1:0-1:6
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: SourceLocation core/uncategorised/199/input.js 1:0-1:1 (x)
 				}
 				right: JSNumericLiteral {
 					value: 42
-					format: undefined
 					loc: SourceLocation core/uncategorised/199/input.js 1:4-1:6
 				}
+				loc: SourceLocation core/uncategorised/199/input.js 1:0-1:6
 			}
+			loc: SourceLocation core/uncategorised/199/input.js 1:0-1:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/199/input.js>
+	loc: SourceLocation core/uncategorised/199/input.js 1:0-1:6
 }
 ```
 

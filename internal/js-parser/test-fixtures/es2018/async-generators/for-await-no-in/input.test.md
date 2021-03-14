@@ -8,83 +8,76 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:0-4:0
-	path: UIDPath<es2018/async-generators/for-await-no-in/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Can't have an await on a regular for loop"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:11
-				path: UIDPath<es2018/async-generators/for-await-no-in/input.js>
-				start: Position 2:11
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:15-1:16 (f)
 			}
-			loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:0-3:1
-			head: JSFunctionHead {
-				async: true
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:16-1:18
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:19-3:1
-				body: Array [
+				body: [
 					JSForInStatement {
-						body: JSEmptyStatement {loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:24-2:25}
-						loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:2-2:25
-						right: JSReferenceIdentifier {
-							name: "y"
-							loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:22-2:23 (y)
+						body: JSEmptyStatement {
+							loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:24-2:25
 						}
 						left: JSVariableDeclaration {
 							kind: "let"
-							loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:13-2:18
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:17-2:18 (x)
 									}
-									init: undefined
 									loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:17-2:18
 								}
 							]
+							loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:13-2:18
 						}
+						right: JSReferenceIdentifier {
+							name: "y"
+							loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:22-2:23 (y)
+						}
+						loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 2:2-2:25
 					}
 				]
+				directives: []
+				loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:19-3:1
+			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:16-1:18
+			}
+			loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can't have an await on a regular for loop"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2018/async-generators/for-await-no-in/input.js>
+				end: Position 2:11
+				start: Position 2:11
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2018/async-generators/for-await-no-in/input.js>
+	loc: SourceLocation es2018/async-generators/for-await-no-in/input.js 1:0-4:0
 }
 ```
 

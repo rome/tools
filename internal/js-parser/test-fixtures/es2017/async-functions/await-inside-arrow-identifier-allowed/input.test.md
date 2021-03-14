@@ -8,47 +8,42 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
-	path: UIDPath<es2017/async-functions/await-inside-arrow-identifier-allowed/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
-				head: JSFunctionHead {
-					async: false
-					hasHoistedVars: false
-					params: Array []
-					rest: undefined
-					returnType: undefined
-					thisType: undefined
-					loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:5
-				}
 				body: JSBlockStatement {
-					directives: Array []
-					loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:6-1:15
-					body: Array [
+					body: [
 						JSExpressionStatement {
-							loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:8-1:13
 							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:8-1:13 (await)
 							}
+							loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:8-1:13
 						}
 					]
+					directives: []
+					loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:6-1:15
 				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					params: []
+					loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:5
+				}
+				loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
 			}
+			loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/await-inside-arrow-identifier-allowed/input.js>
+	loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
 }
 ```
 

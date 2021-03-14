@@ -8,27 +8,10 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
-	path: UIDPath<core/uncategorised/117/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
 			expression: JSCallExpression {
-				loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
-				callee: JSReferenceIdentifier {
-					name: "foo"
-					loc: SourceLocation core/uncategorised/117/input.js 1:0-1:3 (foo)
-				}
-				arguments: Array [
+				arguments: [
 					JSReferenceIdentifier {
 						name: "bar"
 						loc: SourceLocation core/uncategorised/117/input.js 1:4-1:7 (bar)
@@ -38,9 +21,24 @@ JSRoot {
 						loc: SourceLocation core/uncategorised/117/input.js 1:9-1:12 (baz)
 					}
 				]
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: SourceLocation core/uncategorised/117/input.js 1:0-1:3 (foo)
+				}
+				loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
 			}
+			loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/117/input.js>
+	loc: SourceLocation core/uncategorised/117/input.js 1:0-1:13
 }
 ```
 

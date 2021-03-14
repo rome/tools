@@ -8,62 +8,51 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:0-2:0
-	path: UIDPath<test262/rest-parameter/array-pattern-empty-with-array/input.js>
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "emptyWithArray"
 				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:9-1:23 (emptyWithArray)
 			}
-			loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:0-1:35
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:33-1:35
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:23-1:32
+				params: []
 				rest: JSBindingArrayPattern {
-					rest: undefined
-					loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:27-1:31
-					meta: JSPatternMeta {
-						optional: undefined
-						typeAnnotation: undefined
-						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:27-1:31
-					}
-					elements: Array [
+					elements: [
 						JSBindingArrayPattern {
-							elements: Array []
-							rest: undefined
-							loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:28-1:30
+							elements: []
 							meta: JSPatternMeta {
-								optional: undefined
-								typeAnnotation: undefined
 								loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:28-1:30
 							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:28-1:30
 						}
 					]
+					meta: JSPatternMeta {
+						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:27-1:31
+					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:27-1:31
 				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:23-1:32
 			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:0-1:35
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<test262/rest-parameter/array-pattern-empty-with-array/input.js>
+	loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-array/input.js 1:0-2:0
 }
 ```
 

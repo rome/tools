@@ -8,22 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-2:0
-	path: UIDPath<typescript/arrow-function/generic/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:18
 			expression: JSArrowFunctionExpression {
-				loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:17
 				body: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation typescript/arrow-function/generic/input.ts 1:16-1:17 (a)
@@ -31,50 +18,54 @@ JSRoot {
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
-					rest: undefined
-					thisType: undefined
-					loc: SourceLocation typescript/arrow-function/generic/input.ts 1:3-1:15
-					returnType: TSTypeReference {
-						typeParameters: undefined
-						loc: SourceLocation typescript/arrow-function/generic/input.ts 1:11-1:12
-						typeName: JSReferenceIdentifier {
-							name: "T"
-							loc: SourceLocation typescript/arrow-function/generic/input.ts 1:11-1:12 (T)
-						}
-					}
-					typeParameters: TSTypeParameterDeclaration {
-						loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:3
-						params: Array [
-							TSTypeParameter {
-								name: "T"
-								constraint: undefined
-								default: undefined
-								loc: SourceLocation typescript/arrow-function/generic/input.ts 1:1-1:2
-							}
-						]
-					}
-					params: Array [
+					params: [
 						JSBindingIdentifier {
 							name: "a"
-							loc: SourceLocation typescript/arrow-function/generic/input.ts 1:16-1:15
 							meta: JSPatternMeta {
-								optional: undefined
-								loc: SourceLocation typescript/arrow-function/generic/input.ts 1:16-1:15
 								typeAnnotation: TSTypeReference {
-									typeParameters: undefined
-									loc: SourceLocation typescript/arrow-function/generic/input.ts 1:7-1:8
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: SourceLocation typescript/arrow-function/generic/input.ts 1:7-1:8 (T)
 									}
+									loc: SourceLocation typescript/arrow-function/generic/input.ts 1:7-1:8
 								}
+								loc: SourceLocation typescript/arrow-function/generic/input.ts 1:16-1:15
 							}
+							loc: SourceLocation typescript/arrow-function/generic/input.ts 1:16-1:15
 						}
 					]
+					returnType: TSTypeReference {
+						typeName: JSReferenceIdentifier {
+							name: "T"
+							loc: SourceLocation typescript/arrow-function/generic/input.ts 1:11-1:12 (T)
+						}
+						loc: SourceLocation typescript/arrow-function/generic/input.ts 1:11-1:12
+					}
+					typeParameters: TSTypeParameterDeclaration {
+						params: [
+							TSTypeParameter {
+								name: "T"
+								loc: SourceLocation typescript/arrow-function/generic/input.ts 1:1-1:2
+							}
+						]
+						loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:3
+					}
+					loc: SourceLocation typescript/arrow-function/generic/input.ts 1:3-1:15
 				}
+				loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:17
 			}
+			loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-1:18
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/arrow-function/generic/input.ts>
+	loc: SourceLocation typescript/arrow-function/generic/input.ts 1:0-2:0
 }
 ```
 

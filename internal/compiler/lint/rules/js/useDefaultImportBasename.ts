@@ -7,7 +7,7 @@
 
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
-import {createAnyPath} from "@internal/path";
+import {createPath} from "@internal/path";
 import {filenameToId} from "./useDefaultExportBasename";
 
 export default createVisitor({
@@ -21,7 +21,11 @@ export default createVisitor({
 				return signals.retain;
 			}
 
-			const filePath = createAnyPath(node.source.value);
+			const filePath = createPath(node.source.value);
+			if (!filePath.isExplicitRelative()) {
+				return signals.retain;
+			}
+
 			const expectedName = filenameToId(filePath, false);
 			const expectedNameCapital = filenameToId(filePath, true);
 			if (expectedName === undefined || expectedNameCapital === undefined) {

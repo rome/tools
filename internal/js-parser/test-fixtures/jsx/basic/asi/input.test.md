@@ -8,74 +8,66 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/asi/input.jsx 1:0-5:0
-	path: UIDPath<jsx/basic/asi/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
 				loc: SourceLocation jsx/basic/asi/input.jsx 1:9-1:10 (x)
 			}
-			loc: SourceLocation jsx/basic/asi/input.jsx 1:0-4:1
-			head: JSFunctionHead {
-				async: false
-				generator: false
-				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
-				loc: SourceLocation jsx/basic/asi/input.jsx 1:10-1:12
-			}
 			body: JSBlockStatement {
-				directives: Array []
-				loc: SourceLocation jsx/basic/asi/input.jsx 1:13-4:1
-				body: Array [
+				body: [
 					JSVariableDeclarationStatement {
-						loc: SourceLocation jsx/basic/asi/input.jsx 2:2-2:7
 						declaration: JSVariableDeclaration {
 							kind: "let"
-							loc: SourceLocation jsx/basic/asi/input.jsx 2:2-2:7
-							declarations: Array [
+							declarations: [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: SourceLocation jsx/basic/asi/input.jsx 2:6-2:7 (x)
 									}
-									init: undefined
 									loc: SourceLocation jsx/basic/asi/input.jsx 2:6-2:7
 								}
 							]
+							loc: SourceLocation jsx/basic/asi/input.jsx 2:2-2:7
 						}
+						loc: SourceLocation jsx/basic/asi/input.jsx 2:2-2:7
 					}
 					JSExpressionStatement {
-						loc: SourceLocation jsx/basic/asi/input.jsx 3:2-3:9
 						expression: JSXElement {
+							attributes: []
+							children: []
+							selfClosing: true
 							name: JSXIdentifier {
 								name: "div"
 								loc: SourceLocation jsx/basic/asi/input.jsx 3:3-3:6
 							}
-							attributes: Array []
-							children: Array []
-							selfClosing: true
-							typeArguments: undefined
 							loc: SourceLocation jsx/basic/asi/input.jsx 3:2-3:9
 						}
+						loc: SourceLocation jsx/basic/asi/input.jsx 3:2-3:9
 					}
 				]
+				directives: []
+				loc: SourceLocation jsx/basic/asi/input.jsx 1:13-4:1
 			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: []
+				loc: SourceLocation jsx/basic/asi/input.jsx 1:10-1:12
+			}
+			loc: SourceLocation jsx/basic/asi/input.jsx 1:0-4:1
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/asi/input.jsx>
+	loc: SourceLocation jsx/basic/asi/input.jsx 1:0-5:0
 }
 ```
 

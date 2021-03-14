@@ -8,57 +8,52 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: true
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/406/input.js 1:0-1:5
-	path: UIDPath<core/uncategorised/406/input.js>
-	body: Array [
+	body: [
 		JSIfStatement {
-			alternate: undefined
-			loc: SourceLocation core/uncategorised/406/input.js 1:0-1:5
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation core/uncategorised/406/input.js 1:2-1:3
-			}
 			consequent: JSExpressionStatement {
-				loc: SourceLocation core/uncategorised/406/input.js 1:3-1:5
 				expression: JSReferenceIdentifier {
 					name: "a"
 					loc: SourceLocation core/uncategorised/406/input.js 1:3-1:4 (a)
 				}
+				loc: SourceLocation core/uncategorised/406/input.js 1:3-1:5
 			}
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/406/input.js 1:2-1:3
+			}
+			loc: SourceLocation core/uncategorised/406/input.js 1:0-1:5
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:2
-				path: UIDPath<core/uncategorised/406/input.js>
-				start: Position 1:2
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
-				advice: Array [
+	comments: []
+	corrupt: true
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Expected the opening if test character <emphasis>(</emphasis>"}
+						text: [RAW_MARKUP {value: "Expected the opening "}, "if test", RAW_MARKUP {value: " character <emphasis>"}, "(", RAW_MARKUP {value: "</emphasis>"}]
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, ".", RAW_MARKUP {value: "</emphasis>"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/406/input.js>
+				end: Position 1:2
+				start: Position 1:2
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/406/input.js>
+	loc: SourceLocation core/uncategorised/406/input.js 1:0-1:5
 }
 ```
 

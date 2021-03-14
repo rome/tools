@@ -8,26 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
-	path: UIDPath<experimental/numeric-separator/invalid-non-octal-decimal-int/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
 			expression: JSBigIntLiteral {
 				value: "080"
 				loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
 			}
+			loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<experimental/numeric-separator/invalid-non-octal-decimal-int/input.js>
+	loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
 }
 ```
 

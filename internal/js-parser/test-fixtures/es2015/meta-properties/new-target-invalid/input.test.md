@@ -8,21 +8,9 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
-	path: UIDPath<es2015/meta-properties/new-target-invalid/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
 			expression: JSMetaProperty {
-				loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
 				meta: JSIdentifier {
 					name: "new"
 					loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:3 (new)
@@ -31,28 +19,36 @@ JSRoot {
 					name: "target"
 					loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:4-1:10 (target)
 				}
+				loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
 			}
+			loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
 				categoryValue: "js"
-				category: Array ["parse"]
 				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
-			location: Object {
-				integrity: undefined
+			location: {
 				language: "js"
-				sourceText: undefined
-				end: Position 1:10
 				path: UIDPath<es2015/meta-properties/new-target-invalid/input.js>
+				end: Position 1:10
 				start: Position 1:0
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2015/meta-properties/new-target-invalid/input.js>
+	loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
 }
 ```
 

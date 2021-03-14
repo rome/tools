@@ -8,78 +8,18 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
-	path: UIDPath<jsx/basic/20/input.jsx>
-	syntax: Array ["jsx"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
 			expression: JSXElement {
-				name: JSXReferenceIdentifier {
-					name: "A"
-					loc: SourceLocation jsx/basic/20/input.jsx 1:1-1:2
-				}
-				selfClosing: false
-				typeArguments: undefined
-				loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
-				children: Array [
-					JSXElement {
-						name: JSXIdentifier {
-							name: "div"
-							loc: SourceLocation jsx/basic/20/input.jsx 1:32-1:35
-						}
-						attributes: Array []
-						selfClosing: false
-						typeArguments: undefined
-						loc: SourceLocation jsx/basic/20/input.jsx 1:31-1:48
-						children: Array [
-							JSXExpressionContainer {
-								loc: SourceLocation jsx/basic/20/input.jsx 1:36-1:42
-								expression: JSMemberExpression {
-									loc: SourceLocation jsx/basic/20/input.jsx 1:37-1:41
-									object: JSReferenceIdentifier {
-										name: "aa"
-										loc: SourceLocation jsx/basic/20/input.jsx 1:37-1:39 (aa)
-									}
-									property: JSStaticMemberProperty {
-										value: JSIdentifier {
-											name: "b"
-											loc: SourceLocation jsx/basic/20/input.jsx 1:40-1:41 (b)
-										}
-										loc: SourceLocation jsx/basic/20/input.jsx 1:40-1:41 (b)
-									}
-								}
-							}
-						]
-					}
-				]
-				attributes: Array [
+				attributes: [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "aa"
 							loc: SourceLocation jsx/basic/20/input.jsx 1:3-1:5
 						}
 						value: JSXExpressionContainer {
-							loc: SourceLocation jsx/basic/20/input.jsx 1:6-1:16
 							expression: JSMemberExpression {
-								loc: SourceLocation jsx/basic/20/input.jsx 1:7-1:15
-								property: JSStaticMemberProperty {
-									value: JSIdentifier {
-										name: "cc"
-										loc: SourceLocation jsx/basic/20/input.jsx 1:13-1:15 (cc)
-									}
-									loc: SourceLocation jsx/basic/20/input.jsx 1:13-1:15 (cc)
-								}
 								object: JSMemberExpression {
-									loc: SourceLocation jsx/basic/20/input.jsx 1:7-1:12
 									object: JSReferenceIdentifier {
 										name: "aa"
 										loc: SourceLocation jsx/basic/20/input.jsx 1:7-1:9 (aa)
@@ -91,8 +31,18 @@ JSRoot {
 										}
 										loc: SourceLocation jsx/basic/20/input.jsx 1:10-1:12 (bb)
 									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:7-1:12
 								}
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
+										name: "cc"
+										loc: SourceLocation jsx/basic/20/input.jsx 1:13-1:15 (cc)
+									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:13-1:15 (cc)
+								}
+								loc: SourceLocation jsx/basic/20/input.jsx 1:7-1:15
 							}
+							loc: SourceLocation jsx/basic/20/input.jsx 1:6-1:16
 						}
 						loc: SourceLocation jsx/basic/20/input.jsx 1:3-1:16
 					}
@@ -102,18 +52,8 @@ JSRoot {
 							loc: SourceLocation jsx/basic/20/input.jsx 1:17-1:19
 						}
 						value: JSXExpressionContainer {
-							loc: SourceLocation jsx/basic/20/input.jsx 1:20-1:30
 							expression: JSMemberExpression {
-								loc: SourceLocation jsx/basic/20/input.jsx 1:21-1:29
-								property: JSStaticMemberProperty {
-									value: JSIdentifier {
-										name: "dd"
-										loc: SourceLocation jsx/basic/20/input.jsx 1:27-1:29 (dd)
-									}
-									loc: SourceLocation jsx/basic/20/input.jsx 1:27-1:29 (dd)
-								}
 								object: JSMemberExpression {
-									loc: SourceLocation jsx/basic/20/input.jsx 1:21-1:26
 									object: JSReferenceIdentifier {
 										name: "bb"
 										loc: SourceLocation jsx/basic/20/input.jsx 1:21-1:23 (bb)
@@ -125,15 +65,71 @@ JSRoot {
 										}
 										loc: SourceLocation jsx/basic/20/input.jsx 1:24-1:26 (cc)
 									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:21-1:26
 								}
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
+										name: "dd"
+										loc: SourceLocation jsx/basic/20/input.jsx 1:27-1:29 (dd)
+									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:27-1:29 (dd)
+								}
+								loc: SourceLocation jsx/basic/20/input.jsx 1:21-1:29
 							}
+							loc: SourceLocation jsx/basic/20/input.jsx 1:20-1:30
 						}
 						loc: SourceLocation jsx/basic/20/input.jsx 1:17-1:30
 					}
 				]
+				children: [
+					JSXElement {
+						attributes: []
+						children: [
+							JSXExpressionContainer {
+								expression: JSMemberExpression {
+									object: JSReferenceIdentifier {
+										name: "aa"
+										loc: SourceLocation jsx/basic/20/input.jsx 1:37-1:39 (aa)
+									}
+									property: JSStaticMemberProperty {
+										value: JSIdentifier {
+											name: "b"
+											loc: SourceLocation jsx/basic/20/input.jsx 1:40-1:41 (b)
+										}
+										loc: SourceLocation jsx/basic/20/input.jsx 1:40-1:41 (b)
+									}
+									loc: SourceLocation jsx/basic/20/input.jsx 1:37-1:41
+								}
+								loc: SourceLocation jsx/basic/20/input.jsx 1:36-1:42
+							}
+						]
+						selfClosing: false
+						name: JSXIdentifier {
+							name: "div"
+							loc: SourceLocation jsx/basic/20/input.jsx 1:32-1:35
+						}
+						loc: SourceLocation jsx/basic/20/input.jsx 1:31-1:48
+					}
+				]
+				selfClosing: false
+				name: JSXReferenceIdentifier {
+					name: "A"
+					loc: SourceLocation jsx/basic/20/input.jsx 1:1-1:2
+				}
+				loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
 			}
+			loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: ["jsx"]
+	path: UIDPath<jsx/basic/20/input.jsx>
+	loc: SourceLocation jsx/basic/20/input.jsx 1:0-1:52
 }
 ```
 

@@ -8,72 +8,59 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation core/uncategorised/491/input.js 1:0-1:39
-	path: UIDPath<core/uncategorised/491/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "package is a reserved word"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:17
-				path: UIDPath<core/uncategorised/491/input.js>
-				start: Position 1:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation core/uncategorised/491/input.js 1:0-1:39
 			expression: JSCallExpression {
-				arguments: Array []
-				loc: SourceLocation core/uncategorised/491/input.js 1:0-1:39
+				arguments: []
 				callee: JSFunctionExpression {
 					id: JSBindingIdentifier {
 						name: "package"
 						loc: SourceLocation core/uncategorised/491/input.js 1:10-1:17 (package)
 					}
-					loc: SourceLocation core/uncategorised/491/input.js 1:1-1:36
 					body: JSBlockStatement {
-						body: Array []
-						loc: SourceLocation core/uncategorised/491/input.js 1:20-1:36
-						directives: Array [
+						body: []
+						directives: [
 							JSDirective {
 								value: "use strict"
 								loc: SourceLocation core/uncategorised/491/input.js 1:21-1:34
 							}
 						]
+						loc: SourceLocation core/uncategorised/491/input.js 1:20-1:36
 					}
 					head: JSFunctionHead {
 						async: false
 						generator: false
 						hasHoistedVars: false
-						params: Array []
-						rest: undefined
-						returnType: undefined
-						thisType: undefined
-						typeParameters: undefined
+						params: []
 						loc: SourceLocation core/uncategorised/491/input.js 1:17-1:19
 					}
+					loc: SourceLocation core/uncategorised/491/input.js 1:1-1:36
 				}
+				loc: SourceLocation core/uncategorised/491/input.js 1:0-1:39
+			}
+			loc: SourceLocation core/uncategorised/491/input.js 1:0-1:39
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["package", RAW_MARKUP {value: " is a reserved word"}]}
+			location: {
+				language: "js"
+				path: UIDPath<core/uncategorised/491/input.js>
+				end: Position 1:17
+				start: Position 1:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<core/uncategorised/491/input.js>
+	loc: SourceLocation core/uncategorised/491/input.js 1:0-1:39
 }
 ```
 

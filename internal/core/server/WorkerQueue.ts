@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WorkerContainer} from "./WorkerManager";
+import {WorkerContainer} from "@internal/core";
 import Server from "./Server";
 import {AbsoluteFilePath} from "@internal/path";
 import {FileNotFound} from "@internal/fs";
-import {Queue, QueueOptions} from "@internal/async";
+import {Queue, QueueOptions, promiseAllFrom} from "@internal/async";
 
 export type WorkerQueueOptions<M> = QueueOptions<
 	{
@@ -36,16 +36,14 @@ export default class WorkerQueue<M>
 
 	// Prematurely fetch the owners so we don't waterfall worker creation
 	public async prepare(paths: Iterable<AbsoluteFilePath>) {
-		await Promise.all(
-			Array.from(
-				paths,
-				async (path) => {
-					return FileNotFound.allowMissing(
-						path,
-						() => this.server.fileAllocator.getOrAssignOwner(path),
-					);
-				},
-			),
+		await promiseAllFrom(
+			paths,
+			async (path) => {
+				return FileNotFound.allowMissing(
+					path,
+					() => this.server.fileAllocator.getOrAssignOwner(path),
+				);
+			},
 		);
 	}
 

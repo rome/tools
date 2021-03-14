@@ -8,35 +8,32 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation es2020/export-ns-from/ns/input.js 1:0-2:0
-	path: UIDPath<es2020/export-ns-from/ns/input.js>
-	body: Array [
+	body: [
 		JSExportExternalDeclaration {
-			exportKind: undefined
-			namedSpecifiers: Array []
-			loc: SourceLocation es2020/export-ns-from/ns/input.js 1:0-1:26
-			source: JSStringLiteral {
-				value: "test"
-				loc: SourceLocation es2020/export-ns-from/ns/input.js 1:19-1:25
-			}
+			namedSpecifiers: []
 			namespaceSpecifier: JSExportNamespaceSpecifier {
-				loc: SourceLocation es2020/export-ns-from/ns/input.js 1:7-1:13
 				exported: JSIdentifier {
 					name: "A"
 					loc: SourceLocation es2020/export-ns-from/ns/input.js 1:12-1:13 (A)
 				}
+				loc: SourceLocation es2020/export-ns-from/ns/input.js 1:7-1:13
 			}
+			source: JSStringLiteral {
+				value: "test"
+				loc: SourceLocation es2020/export-ns-from/ns/input.js 1:19-1:25
+			}
+			loc: SourceLocation es2020/export-ns-from/ns/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<es2020/export-ns-from/ns/input.js>
+	loc: SourceLocation es2020/export-ns-from/ns/input.js 1:0-2:0
 }
 ```
 

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ZeroIndexed} from "@internal/math";
+import {ZeroIndexed} from "@internal/numbers";
 
 export function isEscaped(index: ZeroIndexed, input: string): boolean {
 	const prevChar = input[index.valueOf() - 1];

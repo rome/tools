@@ -25,7 +25,7 @@ export default createVisitor({
 				...node,
 				declaration: {
 					...node.declaration,
-					value: options.moduleId.join(),
+					value: options.assetPath.join(),
 				},
 			});
 		}

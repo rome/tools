@@ -8,77 +8,70 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/types/conditional-infer/input.ts 1:0-2:0
-	path: UIDPath<typescript/types/conditional-infer/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "Element"
 				loc: SourceLocation typescript/types/conditional-infer/input.ts 1:5-1:12 (Element)
 			}
-			loc: SourceLocation typescript/types/conditional-infer/input.ts 1:0-1:48
-			typeParameters: TSTypeParameterDeclaration {
-				loc: SourceLocation typescript/types/conditional-infer/input.ts 1:12-1:15
-				params: Array [
-					TSTypeParameter {
-						name: "T"
-						constraint: undefined
-						default: undefined
-						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:13-1:14
-					}
-				]
-			}
 			right: TSConditionalType {
-				loc: SourceLocation typescript/types/conditional-infer/input.ts 1:18-1:47
 				checkType: TSTypeReference {
-					typeParameters: undefined
-					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:18-1:19
 					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:18-1:19 (T)
 					}
-				}
-				falseType: TSTypeReference {
-					typeParameters: undefined
-					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:46-1:47
-					typeName: JSReferenceIdentifier {
-						name: "T"
-						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:46-1:47 (T)
-					}
-				}
-				trueType: TSTypeReference {
-					typeParameters: undefined
-					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:42-1:43
-					typeName: JSReferenceIdentifier {
-						name: "U"
-						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:42-1:43 (U)
-					}
+					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:18-1:19
 				}
 				extendsType: TSArrayType {
-					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:28-1:39
 					elementType: TSParenthesizedType {
-						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:28-1:37
 						typeAnnotation: TSInferType {
-							loc: SourceLocation typescript/types/conditional-infer/input.ts 1:29-1:36
 							typeParameter: TSTypeParameter {
 								name: "U"
 								loc: SourceLocation typescript/types/conditional-infer/input.ts 1:35-1:36
 							}
+							loc: SourceLocation typescript/types/conditional-infer/input.ts 1:29-1:36
 						}
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:28-1:37
 					}
+					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:28-1:39
 				}
+				falseType: TSTypeReference {
+					typeName: JSReferenceIdentifier {
+						name: "T"
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:46-1:47 (T)
+					}
+					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:46-1:47
+				}
+				trueType: TSTypeReference {
+					typeName: JSReferenceIdentifier {
+						name: "U"
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:42-1:43 (U)
+					}
+					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:42-1:43
+				}
+				loc: SourceLocation typescript/types/conditional-infer/input.ts 1:18-1:47
 			}
+			typeParameters: TSTypeParameterDeclaration {
+				params: [
+					TSTypeParameter {
+						name: "T"
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:13-1:14
+					}
+				]
+				loc: SourceLocation typescript/types/conditional-infer/input.ts 1:12-1:15
+			}
+			loc: SourceLocation typescript/types/conditional-infer/input.ts 1:0-1:48
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/types/conditional-infer/input.ts>
+	loc: SourceLocation typescript/types/conditional-infer/input.ts 1:0-2:0
 }
 ```
 

@@ -15,14 +15,14 @@ test(
 	"comments",
 	(t) => {
 		// comment at beginning
-		t.true(rjson.parse({input: "// comment\ntrue"}));
-		t.true(rjson.parse({input: "/* comment */\ntrue"}));
-		t.true(rjson.parse({input: "/* comment */ true"}));
+		t.true(rjson.parse({input: "// comment\ntrue"}) === true);
+		t.true(rjson.parse({input: "/* comment */\ntrue"}) === true);
+		t.true(rjson.parse({input: "/* comment */ true"}) === true);
 
 		// comment at end
-		t.true(rjson.parse({input: "true\n// comment"}));
-		t.true(rjson.parse({input: "true\n/* comment */"}));
-		t.true(rjson.parse({input: "true/* comment */"}));
+		t.true(rjson.parse({input: "true\n// comment"}) === true);
+		t.true(rjson.parse({input: "true\n/* comment */"}) === true);
+		t.true(rjson.parse({input: "true/* comment */"}) === true);
 
 		// comment before object property
 		t.looksLike(

@@ -8,49 +8,43 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2017/async-functions/11/input.js 1:0-2:17
-	path: UIDPath<es2017/async-functions/11/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2017/async-functions/11/input.js 1:0-1:5
 			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: SourceLocation es2017/async-functions/11/input.js 1:0-1:5 (async)
 			}
+			loc: SourceLocation es2017/async-functions/11/input.js 1:0-1:5
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: SourceLocation es2017/async-functions/11/input.js 2:9-2:12 (foo)
 			}
-			loc: SourceLocation es2017/async-functions/11/input.js 2:0-2:17
 			body: JSBlockStatement {
-				body: Array []
-				directives: Array []
+				body: []
+				directives: []
 				loc: SourceLocation es2017/async-functions/11/input.js 2:15-2:17
 			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
-				params: Array []
-				rest: undefined
-				returnType: undefined
-				thisType: undefined
-				typeParameters: undefined
+				params: []
 				loc: SourceLocation es2017/async-functions/11/input.js 2:12-2:14
 			}
+			loc: SourceLocation es2017/async-functions/11/input.js 2:0-2:17
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2017/async-functions/11/input.js>
+	loc: SourceLocation es2017/async-functions/11/input.js 1:0-2:17
 }
 ```
 

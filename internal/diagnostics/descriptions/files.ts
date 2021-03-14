@@ -1,18 +1,17 @@
 import {createDiagnosticsCategory} from "./index";
 import {markup} from "@internal/markup";
-import {AbsoluteFilePath, AnyPath} from "@internal/path";
+import {AbsoluteFilePath, Path} from "@internal/path";
 import {DiagnosticAdvice} from "../types";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export const files = createDiagnosticsCategory({
-	NO_FILE_HANDLER: (path: AnyPath) => {
-		let advice: DiagnosticAdvice = [];
+	NO_FILE_HANDLER: (path: Path) => {
+		let advice: DiagnosticAdvice[] = [];
 
 		if (path.hasAnyExtensions()) {
 			advice.push({
 				type: "action",
-				instruction: markup`You can treat this file extension as a binary asset by running`,
-				noun: markup`Treat this file extension as a binary asset`,
+				description: markup`Treat this file extension as a binary asset`,
 				command: "config push",
 				args: ["files.assetExtensions", path.getDotlessExtensions()],
 			});
@@ -47,24 +46,21 @@ export const files = createDiagnosticsCategory({
 				},
 				{
 					type: "action",
-					instruction: markup`You can ignore this file from linting by running`,
-					noun: markup`Ignore this file from linting`,
+					description: markup`Ignore this file from linting`,
 					command: "config push",
 					args: ["lint.ignore", relative],
 				},
 				{
 					type: "action",
-					instruction: markup`Or can allow this specific file to exceed the size limit with`,
-					noun: markup`Allow only this specific file to exceed the limit`,
+					description: markup`Allow only this specific file to exceed the size limit`,
 					command: "config push",
 					args: ["files.maxSizeIgnore", relative],
 				},
 				{
 					type: "action",
-					instruction: markup`Or just increase the size limit for all files to <filesize>${String(
+					description: markup`Increase the project size limit for all files to <filesize>${String(
 						size,
 					)}</filesize>`,
-					noun: markup`Increase project max file size limit`,
 					command: "config set",
 					args: ["files.maxSize", String(size)],
 				},

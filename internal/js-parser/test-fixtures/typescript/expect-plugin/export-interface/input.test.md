@@ -8,60 +8,55 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	syntax: Array []
-	loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:0-2:0
-	path: UIDPath<typescript/expect-plugin/export-interface/input.js>
-	body: Array [
+	body: [
 		JSExportLocalDeclaration {
 			exportKind: "type"
-			specifiers: undefined
-			loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:0-1:23
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:17-1:20 (Foo)
 				}
-				extends: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:7-1:23
 				body: TSInterfaceBody {
-					body: Array []
+					body: []
 					loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:21-1:23
 				}
+				loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:7-1:23
 			}
+			loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:0-1:23
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:7
-				path: UIDPath<typescript/expect-plugin/export-interface/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "A interface declaration is only valid inside of a TypeScript file"}
-				advice: Array [
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}
+						text: RAW_MARKUP {
+							value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"
+						}
 					}
 				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: [RAW_MARKUP {value: "A "}, "interface declaration", RAW_MARKUP {value: " is only valid inside of a TypeScript file"}]
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/expect-plugin/export-interface/input.js>
+				end: Position 1:7
+				start: Position 1:7
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: []
+	path: UIDPath<typescript/expect-plugin/export-interface/input.js>
+	loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:0-2:0
 }
 ```
 

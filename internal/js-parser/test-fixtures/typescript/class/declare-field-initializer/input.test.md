@@ -8,49 +8,14 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-4:0
-	path: UIDPath<typescript/class/declare-field-initializer/input.ts>
-	syntax: Array ["ts"]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unknown class property start"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 2:9
-				path: UIDPath<typescript/class/declare-field-initializer/input.ts>
-				start: Position 2:10
-			}
-		}
-	]
-	body: Array [
+	body: [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:6-1:7 (A)
 			}
-			loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-3:1
 			meta: JSClassHead {
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-3:1
-				body: Array [
+				body: [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
@@ -59,28 +24,54 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:13
 						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:13
+							start: Position 2:10
+						}
 						value: JSStringLiteral {
 							value: "test"
 							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:24-2:30
 						}
-						definite: undefined
-						loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:31
-						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:15-2:21}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:13
-							start: Position 2:10
+						typeAnnotation: TSStringKeywordTypeAnnotation {
+							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:15-2:21
 						}
+						loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:31
 					}
 				]
+				loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-3:1
+			}
+			loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-3:1
+		}
+	]
+	comments: []
+	corrupt: false
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<typescript/class/declare-field-initializer/input.ts>
+				end: Position 2:9
+				start: Position 2:10
 			}
 		}
 	]
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/class/declare-field-initializer/input.ts>
+	loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-4:0
 }
 ```
 

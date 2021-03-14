@@ -8,43 +8,40 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "module"
-	loc: SourceLocation typescript/declare/let-new-line/input.ts 1:0-3:0
-	path: UIDPath<typescript/declare/let-new-line/input.ts>
-	syntax: Array ["ts"]
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation typescript/declare/let-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: SourceLocation typescript/declare/let-new-line/input.ts 1:0-1:7 (declare)
 			}
+			loc: SourceLocation typescript/declare/let-new-line/input.ts 1:0-1:7
 		}
 		JSVariableDeclarationStatement {
-			loc: SourceLocation typescript/declare/let-new-line/input.ts 2:0-2:6
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: SourceLocation typescript/declare/let-new-line/input.ts 2:0-2:6
-				declarations: Array [
+				declarations: [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: SourceLocation typescript/declare/let-new-line/input.ts 2:4-2:5 (x)
 						}
-						init: undefined
 						loc: SourceLocation typescript/declare/let-new-line/input.ts 2:4-2:5
 					}
 				]
+				loc: SourceLocation typescript/declare/let-new-line/input.ts 2:0-2:6
 			}
+			loc: SourceLocation typescript/declare/let-new-line/input.ts 2:0-2:6
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "module"
+	syntax: ["ts"]
+	path: UIDPath<typescript/declare/let-new-line/input.ts>
+	loc: SourceLocation typescript/declare/let-new-line/input.ts 1:0-3:0
 }
 ```
 

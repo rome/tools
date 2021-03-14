@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
+import {Diagnostic, DiagnosticSuppression} from "@internal/diagnostics";
 import {AnyVisitor, LintRequest} from "../types";
 import {Cache, CompilerContext} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
@@ -14,8 +14,8 @@ import {lintTransforms} from "./rules/index";
 import {ProjectConfig} from "@internal/project";
 
 export type LintResult = {
-	diagnostics: Diagnostics;
-	suppressions: DiagnosticSuppressions;
+	diagnostics: Diagnostic[];
+	suppressions: DiagnosticSuppression[];
 	formatted: string;
 };
 
@@ -74,7 +74,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 			project,
 			frozen: false,
 			origin: {
-				category: "check",
+				entity: "compiler.lint",
 			},
 		});
 
@@ -103,7 +103,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		project,
 		options,
 		origin: {
-			category: "check",
+			entity: "compiler.lint",
 		},
 		frozen: true,
 	});

@@ -1,4 +1,4 @@
-import {Path} from "@internal/compiler";
+import {CompilerPath} from "@internal/compiler";
 import {
 	EvalOptions,
 	EvalResult,
@@ -6,7 +6,7 @@ import {
 } from "./tryStaticEvaluation";
 
 export function tryStaticEvaluationPath(
-	path: Path,
+	path: CompilerPath,
 	opts?: EvalOptions,
 ): EvalResult {
 	return tryStaticEvaluation(path.node, path.scope, opts);

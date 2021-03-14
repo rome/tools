@@ -8,20 +8,24 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:0-2:0
-	path: UIDPath<esprima/statement-iteration/migrated_0017/input.js>
-	body: Array [
+	body: [
 		JSForInStatement {
-			loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:0-1:26
+			body: JSExpressionStatement {
+				expression: JSCallExpression {
+					arguments: [
+						JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:23-1:24 (x)
+						}
+					]
+					callee: JSReferenceIdentifier {
+						name: "process"
+						loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:15-1:22 (process)
+					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:15-1:25
+				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:15-1:26
+			}
 			left: JSAssignmentIdentifier {
 				name: "x"
 				loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:4-1:5 (x)
@@ -30,24 +34,18 @@ JSRoot {
 				name: "list"
 				loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:9-1:13 (list)
 			}
-			body: JSExpressionStatement {
-				loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:15-1:26
-				expression: JSCallExpression {
-					loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:15-1:25
-					callee: JSReferenceIdentifier {
-						name: "process"
-						loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:15-1:22 (process)
-					}
-					arguments: Array [
-						JSReferenceIdentifier {
-							name: "x"
-							loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:23-1:24 (x)
-						}
-					]
-				}
-			}
+			loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:0-1:26
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<esprima/statement-iteration/migrated_0017/input.js>
+	loc: SourceLocation esprima/statement-iteration/migrated_0017/input.js 1:0-2:0
 }
 ```
 

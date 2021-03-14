@@ -1,10 +1,10 @@
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
-import {humanizeNumber} from "@internal/string-utils";
-import {AnyPath, createAnyPath} from "@internal/path";
+import {humanizeNumber} from "@internal/numbers";
+import {Path, createPath} from "@internal/path";
 import {StaticMarkup} from "./escape";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
-import {OneIndexed, ZeroIndexed} from "@internal/math";
+import {Position} from "@internal/parser-core";
 
 export function createEmptyAttributes(): Consumer {
 	return consumeUnknown({}, DIAGNOSTIC_CATEGORIES.parse, "romemarkup");
@@ -19,7 +19,7 @@ export function isSingleEscaped(markup: StaticMarkup): markup is [string] {
 }
 
 export function humanizeMarkupFilename(
-	path: AnyPath,
+	path: Path,
 	opts: MarkupFormatOptions = {},
 ): string {
 	if (opts.humanizeFilename !== undefined) {
@@ -29,7 +29,10 @@ export function humanizeMarkupFilename(
 		}
 	}
 
-	return path.format(opts.cwd);
+	return path.format({
+		cwd: opts.cwd,
+		home: opts.home,
+	});
 }
 
 export function buildFileLink(
@@ -37,48 +40,56 @@ export function buildFileLink(
 	opts: MarkupFormatOptions,
 ): {
 	text: string;
-	path: AnyPath;
+	path: Path;
 	line: undefined | string;
 	column: undefined | string;
 } {
-	let path: AnyPath = createAnyPath(attributes.get("target").asString(""));
-	let line = attributes.get("line").asNumberOrVoid();
-	let column = attributes.get("column").asNumberOrVoid();
+	let path: Path = createPath(attributes.get("target").asString(""));
+	let line = attributes.get("line").asOneIndexedNumberOrVoid();
+	let column = attributes.get("column").asZeroIndexedNumberOrVoid();
 
 	if (opts.normalizePosition !== undefined) {
-		const pos = opts.normalizePosition(
-			path,
-			line === undefined ? undefined : new OneIndexed(line),
-			column === undefined ? undefined : new ZeroIndexed(column),
-		);
+		const pos = opts.normalizePosition(path, line, column);
 		if (pos !== undefined) {
 			path = pos.path;
 			if (pos.line !== undefined) {
-				line = pos.line.valueOf();
+				line = pos.line;
 			}
 			if (pos.column !== undefined) {
-				column = pos.column.valueOf();
+				column = pos.column;
 			}
-		}
-	}
-
-	let text = humanizeMarkupFilename(path, opts);
-
-	if (line !== undefined) {
-		text += `:${line}`;
-
-		// Ignore a 0 column and just target the line
-		if (column !== undefined && column !== 0) {
-			text += `:${column}`;
 		}
 	}
 
 	return {
 		path,
-		text,
-		line: line === undefined ? undefined : String(line),
-		column: column === undefined ? undefined : String(column),
+		text: formatFileLinkInnerText(path, opts, {line, column}),
+		line: line === undefined ? undefined : String(line.valueOf()),
+		column: column === undefined ? undefined : String(column.valueOf()),
 	};
+}
+
+export function formatFileLinkInnerText(
+	path: Path,
+	opts: MarkupFormatOptions,
+	pos?: Partial<Position>,
+): string {
+	let text = humanizeMarkupFilename(path, opts);
+	if (pos === undefined) {
+		return text;
+	}
+
+	const {line, column} = pos;
+	if (line !== undefined) {
+		text += `:${line.valueOf()}`;
+
+		// Ignore a 0 column and just target the line
+		if (column !== undefined && column.valueOf() !== 0) {
+			text += `:${column.valueOf()}`;
+		}
+	}
+
+	return text;
 }
 
 export function formatApprox(attributes: MarkupParsedAttributes, value: string) {

@@ -8,50 +8,45 @@
 
 ```javascript
 JSRoot {
-	comments: Array []
-	corrupt: false
-	diagnostics: Array []
-	directives: Array []
-	hasHoistedVars: false
-	integrity: undefined
-	interpreter: undefined
-	sourceType: "script"
-	syntax: Array []
-	loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:11
-	path: UIDPath<es2016/exponentiation-operator/8/input.js>
-	body: Array [
+	body: [
 		JSExpressionStatement {
-			loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:11
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:11
-				right: JSNumericLiteral {
-					value: 2
-					format: undefined
-					loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:10-1:11
-				}
 				left: JSBinaryExpression {
 					operator: "**"
-					loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:7
 					left: JSNumericLiteral {
 						value: 2
-						format: undefined
 						loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:1
 					}
 					right: JSUnaryExpression {
 						operator: "-"
 						prefix: true
-						loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:5-1:7
 						argument: JSNumericLiteral {
 							value: 1
-							format: undefined
 							loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:6-1:7
 						}
+						loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:5-1:7
 					}
+					loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:7
 				}
+				right: JSNumericLiteral {
+					value: 2
+					loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:10-1:11
+				}
+				loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:11
 			}
+			loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:11
 		}
 	]
+	comments: []
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<es2016/exponentiation-operator/8/input.js>
+	loc: SourceLocation es2016/exponentiation-operator/8/input.js 1:0-1:11
 }
 ```
 
