@@ -25,7 +25,6 @@ export function parseMediaInParens(
 					readToken(parser, "Whitespace");
 				}
 				const maybeRightParenToken = parser.getToken();
-				// TODO: to handle when we don't have right parenthesis
 				if (maybeRightParenToken.type === "RightParen") {
 					parser.nextToken();
 					return parser.finishNode(
@@ -38,7 +37,6 @@ export function parseMediaInParens(
 				}
 			}
 		} else {
-			// TODO: refactor here to understand boolean or not
 			const feature = parseMediaFeature(parser);
 			if (feature) {
 				// we now remove possible white spaces
@@ -46,7 +44,6 @@ export function parseMediaInParens(
 					readToken(parser, "Whitespace");
 				}
 				const maybeRightParenToken = parser.getToken();
-				// TODO: to handle when we don't have right parenthesis
 				if (maybeRightParenToken.type === "RightParen") {
 					parser.nextToken();
 					return parser.finishNode(

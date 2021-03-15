@@ -108,45 +108,8 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 		}
 	}
 
-
 	// it doesn't have the not word, so we can safely start parsing the media type
-	if (!hasNot) {
-		const token = parser.getToken();
-		if (token.type === "LeftParen") {
-			const mediaCondition = parseMediaCondition(parser);
-			if (mediaCondition) {
-				return parser.finishNode(start, {
-						type: "CSSMediaQuery",
-						value: mediaCondition,
-				})
-			}
-		} else {
-
-			const mediaType = parseMediaType(parser);
-
-			if (mediaType) {
-				// moving forward and removing white spaces
-				while (matchToken(parser, "Whitespace")) {
-					readToken(parser, "Whitespace");
-				}
-				const token = parser.getToken();
-				if (token.type === "Ident" && token.value === "and") {
-					conditionWithoutOr = tryParseConditionWithoutOr(parser);
-				}
-
-				return parser.finishNode(
-					start,
-					{
-						type: "CSSMediaQuery",
-						condition,
-						conditionWithoutOr,
-						value: mediaType,
-					},
-				);
-			}
-		}
-
-	} else {
+	if (hasNot) {
 		// let's remove spaces
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
@@ -168,7 +131,6 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 				);
 			}
 		} else {
-
 			const mediaType = parseMediaType(parser);
 
 			if (mediaType) {
@@ -190,7 +152,45 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 						value: mediaType,
 					},
 				);
-			}		}
+			}
+		}
+	} else {
+		const token = parser.getToken();
+		if (token.type === "LeftParen") {
+			const mediaCondition = parseMediaCondition(parser);
+			if (mediaCondition) {
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSMediaQuery",
+						value: mediaCondition,
+					},
+				);
+			}
+		} else {
+			const mediaType = parseMediaType(parser);
+
+			if (mediaType) {
+				// moving forward and removing white spaces
+				while (matchToken(parser, "Whitespace")) {
+					readToken(parser, "Whitespace");
+				}
+				const token = parser.getToken();
+				if (token.type === "Ident" && token.value === "and") {
+					conditionWithoutOr = tryParseConditionWithoutOr(parser);
+				}
+
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSMediaQuery",
+						condition,
+						conditionWithoutOr,
+						value: mediaType,
+					},
+				);
+			}
+		}
 	}
 
 	// } else if (token.type === "LeftParen") {
@@ -203,7 +203,6 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 export function parseMediaList(parser: CSSParser): CSSMediaQueryList | undefined {
 	const start = parser.getPosition();
 	const list: CSSMediaQuery[] = [];
-	// TODO: implement loop
 	const media = parseMedia(parser);
 	if (media) {
 		list.push(media);

@@ -5,5 +5,7 @@ export default function CSSMediaFeatureEQ(
 	builder: Builder,
 	node: CSSMediaFeatureEQ,
 ): Token {
+	node;
+	builder;
 	return "=";
 }

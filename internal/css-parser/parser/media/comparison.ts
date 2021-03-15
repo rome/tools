@@ -4,10 +4,16 @@ import {
 	CSSMediaFeatureComparison,
 	CSSMediaFeatureEQ,
 	CSSMediaFeatureGT,
-	CSSMediaFeatureLT, CSSMediaInParens, MediaAndOr,
+	CSSMediaFeatureLT,
+	CSSMediaInParens,
+	MediaAndOr,
 } from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
-import {parseMediaAnd, parseMediaNot, parseMediaOr} from "@internal/css-parser/parser/media/conditions";
+import {
+	parseMediaAnd,
+	parseMediaNot,
+	parseMediaOr,
+} from "@internal/css-parser/parser/media/conditions";
 import {Position} from "@internal/parser-core";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
@@ -113,37 +119,38 @@ export function parseMediaFeatureComparison(
 
 export function parseMediaCondition(
 	parser: CSSParser,
-	startOfNotToken?: Position
+	startOfNotToken?: Position,
 ): CSSMediaCondition | undefined {
 	const start = startOfNotToken ?? parser.getPosition();
 	const token = parser.getToken();
 
 	if (startOfNotToken) {
-
 		const value = parseMediaNot(parser, startOfNotToken);
 		if (value) {
-			return parser.finishNode(start, {
-				type: "CSSMediaCondition",
-				value
-			})
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSMediaCondition",
+					value,
+				},
+			);
 		}
 	}
 
 	if (token.type === "LeftParen") {
-		let value: [CSSMediaInParens, ...MediaAndOr[]] | undefined = undefined
+		let value: [CSSMediaInParens, ...MediaAndOr[]] | undefined = undefined;
 		const mediaInParens = parseMediaInParens(parser);
 		if (mediaInParens) {
 			value = [mediaInParens];
 			while (matchToken(parser, "Whitespace")) {
 				readToken(parser, "Whitespace");
 			}
-			console.log('current token', parser.getToken())
 			while (!parser.matchToken("EOF")) {
 				while (matchToken(parser, "Whitespace")) {
 					readToken(parser, "Whitespace");
 				}
 
-				if (parser.matchToken( "LeftCurlyBracket")) {
+				if (parser.matchToken("LeftCurlyBracket")) {
 					break;
 				}
 				const token = parser.getToken();
@@ -152,27 +159,26 @@ export function parseMediaCondition(
 					if (token.value === "and") {
 						const mediaAnd = parseMediaAnd(parser);
 						if (mediaAnd) {
-							value.push(mediaAnd)
+							value.push(mediaAnd);
 						}
 					} else if (token.value === "or") {
 						const mediaOr = parseMediaOr(parser);
 						if (mediaOr) {
-							value.push(mediaOr)
+							value.push(mediaOr);
 						}
 					}
 				}
-
 			}
 
-			return parser.finishNode(start, {
-				type: "CSSMediaCondition",
-				value
-			})
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSMediaCondition",
+					value,
+				},
+			);
 		}
 	}
-
-
-
 
 	return undefined;
 }

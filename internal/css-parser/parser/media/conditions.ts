@@ -19,10 +19,11 @@ export function isCondition(value: string) {
 function parseCondition(
 	parser: CSSParser,
 	keyword: "not" | "and" | "or",
-	keywordIsPast?: boolean
+	keywordIsPast?: boolean,
 ): CSSMediaInParens | undefined {
 	const token = parser.getToken();
-
+	// there are cases where sometime we already past the check of the keyword
+	// in these cases, we go straight parsing the the media
 	if (keywordIsPast) {
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
@@ -49,7 +50,10 @@ function parseCondition(
 	return undefined;
 }
 
-export function parseMediaNot(parser: CSSParser, 	startOfNotToken?: Position): CSSMediaNot | undefined {
+export function parseMediaNot(
+	parser: CSSParser,
+	startOfNotToken?: Position,
+): CSSMediaNot | undefined {
 	const start = startOfNotToken ?? parser.getPosition();
 
 	const value = parseCondition(parser, "not", !!startOfNotToken);

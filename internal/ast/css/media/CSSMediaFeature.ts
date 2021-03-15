@@ -1,6 +1,7 @@
 import {
 	CSSMediaFeatureBoolean,
 	CSSMediaFeaturePlain,
+	CSSMediaFeatureRange,
 	NodeBaseWithComments,
 } from "@internal/ast";
 import {createBuilder} from "../../utils";
@@ -23,7 +24,10 @@ export type ValidFeatures =
 export interface CSSMediaFeature extends NodeBaseWithComments {
 	readonly type: "CSSMediaFeature";
 	// TODO: this is going to be funny
-	readonly value: CSSMediaFeaturePlain | CSSMediaFeatureBoolean;
+	readonly value:
+		| CSSMediaFeaturePlain
+		| CSSMediaFeatureBoolean
+		| CSSMediaFeatureRange;
 }
 
 export const cssMediaFeature = createBuilder<CSSMediaFeature>(

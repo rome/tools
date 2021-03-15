@@ -75,7 +75,6 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 
 export function parseAtRule(parser: CSSParser): CSSAtRule {
 	const start = parser.getPosition();
-	// TODO: review error
 	const previousToken = parser.getToken() as Tokens["AtKeyword"];
 	const token = parser.expectToken("AtKeyword");
 	const prelude: AnyCSSValue[] = [];

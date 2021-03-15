@@ -11,16 +11,28 @@ import {
 } from "@internal/ast";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
-// import {isCondition} from "@internal/css-parser/parser/media/conditions";
 
 export function parseMediaFeatureName(
 	parser: CSSParser,
 ): CSSMediaFeatureName | undefined {
+	// skip possible comments and spaces
+	while (matchToken(parser, "Whitespace")) {
+		readToken(parser, "Whitespace");
+	}
+	const token = parser.getToken();
 	const ident = parser.eatToken("Ident");
+	// skip possible comments and spaces
+	while (matchToken(parser, "Whitespace")) {
+		readToken(parser, "Whitespace");
+	}
 	const namePosition = parser.getPosition();
 	const colon = parser.eatToken("Colon");
 	if (!(ident && colon)) {
-		//	 TODO: error
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.MEDIA_QUERY_FEATURE_MALFORMED_PLAN,
+			token,
+		});
+		parser.nextToken();
 		return undefined;
 	}
 
@@ -114,23 +126,26 @@ export function parseMediaFeaturePlain(
 			},
 		);
 	}
-	//	 TODO: error
 	return undefined;
 }
 
 export function parseMediaFeature(
 	parser: CSSParser,
 ): CSSMediaFeature | undefined {
-	// TODO: implement me
 	const start = parser.getPosition();
 	let value: CSSMediaFeatureBoolean | CSSMediaFeaturePlain | undefined = undefined;
 
+	/**
+	 * At the moment we don't support media ranges, which means that every media
+	 * feature must start with an ident token.
+	 *
+	 * When we will implement the ranges, this will change
+	 */
 	// in every case, the first token must but an Ident
 	const startToken = readToken(parser, "Ident") as Tokens["Ident"];
 	// the value of the feature can be a:
 	// - plain: "(max-width: 600px)", "(hover: hover)"
 	// - boolean: "(color)"
-	//
 	// we now remove possible white spaces
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
@@ -167,12 +182,7 @@ export function parseMediaFeature(
 			);
 		}
 	}
-
-	// if (isCondition(token.value)) {
-	//
-	// } else {
-	// 	const value =
-	// }
+	// TODO: to implement range features once we have the logic and it's more widely supported
 
 	if (value) {
 		return parser.finishNode(

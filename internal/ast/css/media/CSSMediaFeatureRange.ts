@@ -1,5 +1,9 @@
 import {
-	NodeBaseWithComments, RangeNameAndValue, RangeValueAndName, RangeValueGTValue, RangeValueLTValue,
+	NodeBaseWithComments,
+	RangeNameAndValue,
+	RangeValueAndName,
+	RangeValueGTValue,
+	RangeValueLTValue,
 } from "@internal/ast";
 import {createBuilder} from "../../utils";
 

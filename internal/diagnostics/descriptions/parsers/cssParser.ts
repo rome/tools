@@ -158,4 +158,8 @@ export const cssParser = createDiagnosticsCategory({
 	MEDIA_QUERY_FEATURE_EXPECTED_KEYWORD: (keyword: string) => ({
 		message: markup`The keyword <emphasis>${keyword}</emphasis> is expected in this position.`,
 	}),
+
+	MEDIA_QUERY_FEATURE_MALFORMED_PLAN: {
+		message: markup`The media feature is not grammatically correct`,
+	},
 });

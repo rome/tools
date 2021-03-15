@@ -1,5 +1,5 @@
 import {CSSMediaFeatureGT} from "@internal/ast";
-import {Builder, concat, Token} from "@internal/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function CSSMediaFeatureGT(
 	builder: Builder,
@@ -9,4 +9,5 @@ export default function CSSMediaFeatureGT(
 	if (node.hasEqual) {
 		tokens.push("=");
 	}
-	return concat(tokens)}
+	return concat(tokens);
+}
