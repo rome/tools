@@ -90,17 +90,25 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
 	}
+	let hasNot = false;
 	const token = parser.getToken();
 
+	// both AST nodes media-condition
+	// and token before media-type can start
+	// with the word "not"
+	// this means we need to make some checks ahead
 	if (token.type === "Ident") {
 		if (token.value === "not") {
 			condition = "not";
 			parser.nextToken();
+			hasNot = true;
 		} else if (token.value === "only") {
 			condition = "only";
 			parser.nextToken();
 		}
+	}
 
+	function goAndParseMediaType() {
 		const mediaType = parseMediaType(parser);
 
 		if (mediaType) {
@@ -123,21 +131,49 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 				},
 			);
 		}
-	} else if (token.type === "LeftParen") {
-		const mediaCondition = parseMediaCondition(parser);
+		return undefined
+	}
 
-		if (mediaCondition) {
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSMediaQuery",
-					condition,
-					conditionWithoutOr,
-					value: mediaCondition,
-				},
-			);
+	// it doesn't have the not word, so we can safely start parsing the media type
+	if (!hasNot) {
+		const mediaType = parseMediaType(parser);
+
+		if (mediaType) {
+			return goAndParseMediaType();
+		}
+	} else {
+		// let's remove spaces
+		while (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
+		}
+
+		const token = parser.nextToken();
+
+		// if current token is a parenthesis, it means we have a media condition
+		// else, we go and parse everything as a media type
+		if (token.type === "LeftParen") {
+			const mediaCondition = parseMediaCondition(parser);
+
+			if (mediaCondition) {
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSMediaQuery",
+						condition,
+						conditionWithoutOr,
+						value: mediaCondition,
+					},
+				);
+			}
+		} else {
+
+			return goAndParseMediaType();
 		}
 	}
+
+	// } else if (token.type === "LeftParen") {
+
+	// }
 
 	return undefined;
 }

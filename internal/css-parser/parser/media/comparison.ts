@@ -7,6 +7,7 @@ import {
 	CSSMediaFeatureLT,
 } from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
+import {parseMediaNot} from "@internal/css-parser/parser/media/conditions";
 
 export function parseMediaFeatureGT(
 	parser: CSSParser,
@@ -110,5 +111,21 @@ export function parseMediaFeatureComparison(
 export function parseMediaCondition(
 	parser: CSSParser,
 ): CSSMediaCondition | undefined {
+	const start = parser.getPosition();
+	const token = parser.getToken();
+
+	if (token.type === "LeftParen") {
+		parser.nextToken();
+		const token = parser.getToken();
+		if (token.type === "Ident") {
+			if (token.value === "not") {
+				parseMediaNot(parser)
+			}
+		}
+	}
+
+
+
+
 	return undefined;
 }
