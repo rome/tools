@@ -5,5 +5,5 @@ export default function CSSMediaFeatureEQ(
 	builder: Builder,
 	node: CSSMediaFeatureEQ,
 ): Token {
-	throw new Error("unimplemented");
+	return "=";
 }

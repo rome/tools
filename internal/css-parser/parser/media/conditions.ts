@@ -8,6 +8,7 @@ import {
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
 import {descriptions} from "@internal/diagnostics";
+import {Position} from "@internal/parser-core";
 
 const CONDITIONS = ["not", "and", "or"];
 
@@ -18,10 +19,16 @@ export function isCondition(value: string) {
 function parseCondition(
 	parser: CSSParser,
 	keyword: "not" | "and" | "or",
+	keywordIsPast?: boolean
 ): CSSMediaInParens | undefined {
 	const token = parser.getToken();
 
-	if (token.type === "Ident" && token.value === keyword) {
+	if (keywordIsPast) {
+		while (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
+		}
+		return parseMediaInParens(parser);
+	} else if (token.type === "Ident" && token.value === keyword) {
 		// move forward
 		parser.nextToken();
 		// remove white spaces between keyword and next important token
@@ -42,10 +49,10 @@ function parseCondition(
 	return undefined;
 }
 
-export function parseMediaNot(parser: CSSParser): CSSMediaNot | undefined {
-	const start = parser.getPosition();
+export function parseMediaNot(parser: CSSParser, 	startOfNotToken?: Position): CSSMediaNot | undefined {
+	const start = startOfNotToken ?? parser.getPosition();
 
-	const value = parseCondition(parser, "not");
+	const value = parseCondition(parser, "not", !!startOfNotToken);
 
 	if (value) {
 		return parser.finishNode(

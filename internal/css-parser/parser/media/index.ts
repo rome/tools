@@ -48,7 +48,7 @@ function tryParseConditionWithoutOr(
 		const feature = parseMediaInParens(parser);
 		if (feature) {
 			value = [feature];
-			while (true) {
+			while (!parser.matchToken("EOF")) {
 				while (matchToken(parser, "Whitespace")) {
 					readToken(parser, "Whitespace");
 				}
@@ -93,9 +93,9 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 	let hasNot = false;
 	const token = parser.getToken();
 
-	// both AST nodes media-condition
-	// and token before media-type can start
+	// both AST nodes media-condition and token before media-type can start
 	// with the word "not"
+	//
 	// this means we need to make some checks ahead
 	if (token.type === "Ident") {
 		if (token.value === "not") {
@@ -108,67 +108,89 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 		}
 	}
 
-	function goAndParseMediaType() {
-		const mediaType = parseMediaType(parser);
-
-		if (mediaType) {
-			// moving forward and removing white spaces
-			while (matchToken(parser, "Whitespace")) {
-				readToken(parser, "Whitespace");
-			}
-			const token = parser.getToken();
-			if (token.type === "Ident" && token.value === "and") {
-				conditionWithoutOr = tryParseConditionWithoutOr(parser);
-			}
-
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSMediaQuery",
-					condition,
-					conditionWithoutOr,
-					value: mediaType,
-				},
-			);
-		}
-		return undefined
-	}
 
 	// it doesn't have the not word, so we can safely start parsing the media type
 	if (!hasNot) {
-		const mediaType = parseMediaType(parser);
-
-		if (mediaType) {
-			return goAndParseMediaType();
-		}
-	} else {
-		// let's remove spaces
-		while (matchToken(parser, "Whitespace")) {
-			readToken(parser, "Whitespace");
-		}
-
-		const token = parser.nextToken();
-
-		// if current token is a parenthesis, it means we have a media condition
-		// else, we go and parse everything as a media type
+		const token = parser.getToken();
 		if (token.type === "LeftParen") {
 			const mediaCondition = parseMediaCondition(parser);
-
 			if (mediaCondition) {
+				return parser.finishNode(start, {
+						type: "CSSMediaQuery",
+						value: mediaCondition,
+				})
+			}
+		} else {
+
+			const mediaType = parseMediaType(parser);
+
+			if (mediaType) {
+				// moving forward and removing white spaces
+				while (matchToken(parser, "Whitespace")) {
+					readToken(parser, "Whitespace");
+				}
+				const token = parser.getToken();
+				if (token.type === "Ident" && token.value === "and") {
+					conditionWithoutOr = tryParseConditionWithoutOr(parser);
+				}
+
 				return parser.finishNode(
 					start,
 					{
 						type: "CSSMediaQuery",
 						condition,
 						conditionWithoutOr,
+						value: mediaType,
+					},
+				);
+			}
+		}
+
+	} else {
+		// let's remove spaces
+		while (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
+		}
+
+		const token = parser.getToken();
+		// if current token is a parenthesis, it means we have a media condition
+		// else, we go and parse everything as a media type
+		if (token.type === "LeftParen") {
+			const mediaCondition = parseMediaCondition(parser, start);
+
+			if (mediaCondition) {
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSMediaQuery",
 						value: mediaCondition,
 					},
 				);
 			}
 		} else {
 
-			return goAndParseMediaType();
-		}
+			const mediaType = parseMediaType(parser);
+
+			if (mediaType) {
+				// moving forward and removing white spaces
+				while (matchToken(parser, "Whitespace")) {
+					readToken(parser, "Whitespace");
+				}
+				const token = parser.getToken();
+				if (token.type === "Ident" && token.value === "and") {
+					conditionWithoutOr = tryParseConditionWithoutOr(parser);
+				}
+
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSMediaQuery",
+						condition,
+						conditionWithoutOr,
+						value: mediaType,
+					},
+				);
+			}		}
 	}
 
 	// } else if (token.type === "LeftParen") {

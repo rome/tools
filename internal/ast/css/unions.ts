@@ -9,6 +9,11 @@ import {
 	CSSFunction,
 	CSSHash,
 	CSSIdentifier,
+	CSSMediaFeatureComparison,
+	CSSMediaFeatureGT,
+	CSSMediaFeatureLT,
+	CSSMediaFeatureName,
+	CSSMediaFeatureValue,
 	CSSMediaQueryList,
 	CSSNumber,
 	CSSPercentage,
@@ -49,3 +54,28 @@ export type AnyCSSValue =
 	| CSSRaw;
 
 export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;
+
+export type RangeNameAndValue = [
+	CSSMediaFeatureName,
+	CSSMediaFeatureComparison,
+	CSSMediaFeatureValue
+];
+export type RangeValueAndName = [
+	CSSMediaFeatureValue,
+	CSSMediaFeatureComparison,
+	CSSMediaFeatureName
+];
+export type RangeValueGTValue = [
+	CSSMediaFeatureValue,
+	CSSMediaFeatureLT,
+	CSSMediaFeatureName,
+	CSSMediaFeatureLT,
+	CSSMediaFeatureName
+];
+export type RangeValueLTValue = [
+	CSSMediaFeatureValue,
+	CSSMediaFeatureGT,
+	CSSMediaFeatureName,
+	CSSMediaFeatureGT,
+	CSSMediaFeatureName
+];

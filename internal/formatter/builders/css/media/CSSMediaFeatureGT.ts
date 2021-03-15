@@ -1,9 +1,12 @@
 import {CSSMediaFeatureGT} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, concat, Token} from "@internal/formatter";
 
 export default function CSSMediaFeatureGT(
 	builder: Builder,
 	node: CSSMediaFeatureGT,
 ): Token {
-	throw new Error("unimplemented");
-}
+	const tokens: Token[] = [">"];
+	if (node.hasEqual) {
+		tokens.push("=");
+	}
+	return concat(tokens)}

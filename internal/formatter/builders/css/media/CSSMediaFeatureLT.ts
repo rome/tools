@@ -1,9 +1,13 @@
 import {CSSMediaFeatureLT} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, concat, Token} from "@internal/formatter";
 
 export default function CSSMediaFeatureLT(
 	builder: Builder,
 	node: CSSMediaFeatureLT,
 ): Token {
-	throw new Error("unimplemented");
+	const tokens: Token[] = ["<"];
+	if (node.hasEqual) {
+		tokens.push("=");
+	}
+	return concat(tokens)
 }

@@ -5,5 +5,5 @@ export default function CSSMediaFeatureComparison(
 	builder: Builder,
 	node: CSSMediaFeatureComparison,
 ): Token {
-	throw new Error("unimplemented");
+	return builder.tokenize(node.value, node);
 }
