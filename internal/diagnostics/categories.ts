@@ -113,6 +113,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noPositiveTabindex"]
 	| ["lint", "a11y", "noSvgWithoutTitle"]
 	| ["lint", "a11y", "useAltText"]
+	| ["lint", "a11y", "useAriaProps"]
 	| ["lint", "a11y", "useAriaProptypes"]
 	| ["lint", "a11y", "useHtmlLang"]
 	| ["lint", "a11y", "useIframeTitle"]
@@ -243,6 +244,7 @@ const lintCategoryNameMap: {
 	"lint/a11y/noPositiveTabindex": ["lint", "a11y", "noPositiveTabindex"],
 	"lint/a11y/noSvgWithoutTitle": ["lint", "a11y", "noSvgWithoutTitle"],
 	"lint/a11y/useAltText": ["lint", "a11y", "useAltText"],
+	"lint/a11y/useAriaProps": ["lint", "a11y", "useAriaProps"],
 	"lint/a11y/useAriaProptypes": ["lint", "a11y", "useAriaProptypes"],
 	"lint/a11y/useHtmlLang": ["lint", "a11y", "useHtmlLang"],
 	"lint/a11y/useIframeTitle": ["lint", "a11y", "useIframeTitle"],

@@ -444,6 +444,13 @@ MISSING DOCUMENTATION
 Checks that images have a valid alternative text
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useAriaProps">
+	<a href="/docs/lint/rules/a11y/useAriaProps">useAriaProps</a>
+	<a class="header-anchor" href="#useAriaProps"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useAriaProptypes">
 	<a href="/docs/lint/rules/a11y/useAriaProptypes">useAriaProptypes</a>
 	<a class="header-anchor" href="#useAriaProptypes"></a>

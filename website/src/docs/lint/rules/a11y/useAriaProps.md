@@ -1,15 +1,15 @@
 ---
-title: Lint Rule jsx-a11y/useAriaProps
+title: Lint Rule a11y/useAriaProps
 layout: layouts/rule.liquid
 description: enforce all `aria-*` props are valid
 eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-props.md
 eleventyNavigation:
-	key: lint-rules/jsx-a11y/useAriaProps
+	key: lint-rules/a11y/useAriaProps
 	parent: lint-rules
-	title: jsx-a11y/useAriaProps
+	title: a11y/useAriaProps
 ---
 
-# jsx-a11y/useAriaProps
+# a11y/useAriaProps
 
 <!-- GENERATED:START(hash:c0d23fea100203fb8d3e212c4e8559688dba9f84,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 enforce all `aria-*` props are valid

@@ -30,6 +30,8 @@ import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
 import useAltText from "./a11y/useAltText.test.rjson";
 // @ts-ignore
+import useAriaProps from "./a11y/useAriaProps.test.rjson";
+// @ts-ignore
 import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
 // @ts-ignore
 import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
@@ -150,8 +152,6 @@ import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
 // @ts-ignore
 import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
 // @ts-ignore
-import useAriaProps from "./jsx-a11y/useAriaProps.test.rjson";
-// @ts-ignore
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
 import useHeadingContent from "./jsx-a11y/useHeadingContent.test.rjson";
@@ -266,6 +266,10 @@ export const tests: Tests = {
 	"a11y/useAltText": {
 		category: ["lint", "a11y", "useAltText"],
 		cases: useAltText,
+	},
+	"a11y/useAriaProps": {
+		category: ["lint", "a11y", "useAriaProps"],
+		cases: useAriaProps,
 	},
 	"a11y/useAriaProptypes": {
 		category: ["lint", "a11y", "useAriaProptypes"],
@@ -506,10 +510,6 @@ export const tests: Tests = {
 	"jsx-a11y/useAnchorContent": {
 		category: ["lint", "jsx-a11y", "useAnchorContent"],
 		cases: useAnchorContent,
-	},
-	"jsx-a11y/useAriaProps": {
-		category: ["lint", "jsx-a11y", "useAriaProps"],
-		cases: useAriaProps,
 	},
 	"jsx-a11y/useAriaPropsForRole": {
 		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],

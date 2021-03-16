@@ -17,6 +17,10 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_USE_ARIA_PROPS: (attribute: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAriaProps"],
+		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
+	}),
 	A11_Y_NO_NONINTERACTIVE_TABINDEX: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noNoninteractiveTabindex"],
 		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
@@ -285,10 +289,6 @@ export const lint = createDiagnosticsCategory({
 				text: markup`Anchor elements should only be used for default section or page navigation.`,
 			},
 		],
-	}),
-	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAriaProps"],
-		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
 	}),
 	JSX_A11Y_CLICK_EVENTS_HAVE_KEY_EVENTS: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithClickEvents"],
