@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:63637b036d8a4908008a466c3fb9f49e22d82fad,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:56af266e1ab1240d4b087d1f1404f6ba7c80a6ec,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -430,6 +430,13 @@ MISSING DOCUMENTATION
 enforce tabIndex value is not greater than zero
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noRedundantAlt">
+	<a href="/docs/lint/rules/a11y/noRedundantAlt">noRedundantAlt</a>
+	<a class="header-anchor" href="#noRedundantAlt"></a>
+</h3>
+enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noSvgWithoutTitle">
 	<a href="/docs/lint/rules/a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
 	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
@@ -448,7 +455,7 @@ Checks that images have a valid alternative text
 	<a href="/docs/lint/rules/a11y/useAriaProps">useAriaProps</a>
 	<a class="header-anchor" href="#useAriaProps"></a>
 </h3>
-MISSING DOCUMENTATION
+enforce all `aria-*` props are valid
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAriaProptypes">
@@ -511,13 +518,6 @@ enforce scope prop is only used on `th` elements
 discourage the usage of `onChange`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noRedundantAlt">
-	<a href="/docs/lint/rules/jsx-a11y/noRedundantAlt">noRedundantAlt</a>
-	<a class="header-anchor" href="#noRedundantAlt"></a>
-</h3>
-enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noRedundantRoles">
 	<a href="/docs/lint/rules/jsx-a11y/noRedundantRoles">noRedundantRoles</a>
 	<a class="header-anchor" href="#noRedundantRoles"></a>
@@ -537,13 +537,6 @@ Prevent usage of unsafe `target=&quot;_blank&quot;`
 	<a class="header-anchor" href="#useAnchorContent"></a>
 </h3>
 enforce that anchors have content and that the content is accessible to screen readers
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useAriaProps">
-	<a href="/docs/lint/rules/jsx-a11y/useAriaProps">useAriaProps</a>
-	<a class="header-anchor" href="#useAriaProps"></a>
-</h3>
-enforce all `aria-*` props are valid
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAriaPropsForRole">

@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:8bb7cdcac9b4d6a27b44aad5306a4ad5aba25c27,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:124fbbcd7e0f60c464ad722c48a0b4ba6a5b3465,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -25,6 +25,8 @@ import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveEle
 import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex.test.rjson";
 // @ts-ignore
 import noPositiveTabindex from "./a11y/noPositiveTabindex.test.rjson";
+// @ts-ignore
+import noRedundantAlt from "./a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
@@ -144,8 +146,6 @@ import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
 // @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
-import noRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
-// @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
 // @ts-ignore
 import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
@@ -258,6 +258,10 @@ export const tests: Tests = {
 	"a11y/noPositiveTabindex": {
 		category: ["lint", "a11y", "noPositiveTabindex"],
 		cases: noPositiveTabindex,
+	},
+	"a11y/noRedundantAlt": {
+		category: ["lint", "a11y", "noRedundantAlt"],
+		cases: noRedundantAlt,
 	},
 	"a11y/noSvgWithoutTitle": {
 		category: ["lint", "a11y", "noSvgWithoutTitle"],
@@ -494,10 +498,6 @@ export const tests: Tests = {
 	"jsx-a11y/noOnChange": {
 		category: ["lint", "jsx-a11y", "noOnChange"],
 		cases: noOnChange,
-	},
-	"jsx-a11y/noRedundantAlt": {
-		category: ["lint", "jsx-a11y", "noRedundantAlt"],
-		cases: noRedundantAlt,
 	},
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],
