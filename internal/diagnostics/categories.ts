@@ -103,9 +103,10 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:4f4c6f05654a410de3809c640ddfef9dd1508743,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:6c2cc6c8ac6075684c8c6f38fe329f46693cf6a5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
+	| ["lint", "a11y", "noAutofocus"]
 	| ["lint", "a11y", "noDistractingElements"]
 	| ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"]
 	| ["lint", "a11y", "noNoninteractiveTabindex"]
@@ -167,7 +168,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useTemplate"]
 	| ["lint", "js", "useWhile"]
 	| ["lint", "jsx-a11y", "noAccessKey"]
-	| ["lint", "jsx-a11y", "noAutofocus"]
 	| ["lint", "jsx-a11y", "noHeaderScope"]
 	| ["lint", "jsx-a11y", "noOnChange"]
 	| ["lint", "jsx-a11y", "noRedundantAlt"]
@@ -228,6 +228,7 @@ const lintCategoryNameMap: {
 		"a11y",
 		"noAriaUnsupportedElements",
 	],
+	"lint/a11y/noAutofocus": ["lint", "a11y", "noAutofocus"],
 	"lint/a11y/noDistractingElements": ["lint", "a11y", "noDistractingElements"],
 	"lint/a11y/noNoninteractiveElementToInteractiveRole": [
 		"lint",
@@ -305,7 +306,6 @@ const lintCategoryNameMap: {
 	"lint/js/useTemplate": ["lint", "js", "useTemplate"],
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
 	"lint/jsx-a11y/noAccessKey": ["lint", "jsx-a11y", "noAccessKey"],
-	"lint/jsx-a11y/noAutofocus": ["lint", "jsx-a11y", "noAutofocus"],
 	"lint/jsx-a11y/noHeaderScope": ["lint", "jsx-a11y", "noHeaderScope"],
 	"lint/jsx-a11y/noOnChange": ["lint", "jsx-a11y", "noOnChange"],
 	"lint/jsx-a11y/noRedundantAlt": ["lint", "jsx-a11y", "noRedundantAlt"],
