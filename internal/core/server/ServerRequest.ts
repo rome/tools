@@ -824,7 +824,9 @@ export default class ServerRequest {
 			inlineSourceMap: false,
 			cwd: this.client.flags.cwd,
 			resolver: mergeObjects(this.getResolverOptionsFromFlags(), resolverOpts),
-			target: this.normalizedCommandFlags.flags != null ? this.normalizedCommandFlags.flags["target"] as string : undefined,
+			target: this.normalizedCommandFlags.flags != null
+				? this.normalizedCommandFlags.flags.target as string
+				: undefined,
 		};
 	}
 

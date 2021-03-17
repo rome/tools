@@ -40,7 +40,12 @@ export default createServerCommand({
 			const bundler = Bundler.createFromServerRequest(req);
 			res = await bundler.compileSingle(resolved);
 		} else {
-			res = await req.requestWorkerCompile(resolved, "compile", {target: commandFlags.target}, {});
+			res = await req.requestWorkerCompile(
+				resolved,
+				"compile",
+				{target: commandFlags.target},
+				{},
+			);
 		}
 
 		const {compiledCode, diagnostics} = res.value;

@@ -440,7 +440,10 @@ export async function normalizeProjectConfig(
 	if (categoryExists(targets)) {
 		for (const [name, object] of targets.asMap()) {
 			object.enforceUsedProperties("target config property");
-			config.targets.set(name, resolveBrowsers(object.asImplicitMappedArray((item) => item.asString())));
+			config.targets.set(
+				name,
+				resolveBrowsers(object.asImplicitMappedArray((item) => item.asString())),
+			);
 		}
 	}
 

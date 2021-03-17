@@ -3,12 +3,14 @@ import {
 	createMockWorker,
 	findFixtureInput,
 } from "@internal/test-helpers";
-import {removeCarriageReturn} from "@internal/string-utils";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
+import {createDefaultProjectConfig} from "@internal/project";
+import {resolveBrowsers} from "@internal/codec-browsers";
+import {removeCarriageReturn} from "@internal/string-utils";
 import {decodeUTF8} from "@internal/binary";
 
 const promise = createFixtureTests(async (fixture, t) => {
-	const {worker, performFileOperation} = createMockWorker();
+	const {worker, performFileOperation, addProject} = createMockWorker();
 	const {input, handler} = findFixtureInput(fixture, undefined);
 
 	const filename = input.relative;
@@ -18,6 +20,10 @@ const promise = createFixtureTests(async (fixture, t) => {
 		{
 			uid: filename.join(),
 			sourceText: content,
+			project: addProject({
+				...createDefaultProjectConfig(),
+				targets: new Map([["default", resolveBrowsers(">0%")]]),
+			}),
 		},
 		async (ref) => {
 			return await worker.api.compile(ref, "compile", {target: "default"}, {});

@@ -6,14 +6,14 @@ import {
 // https://github.com/Fyrd/caniuse/blob/main/features-json/css-transitions.json
 export default [
 	createPrefixVisitor({
-	name: "transition",
-	enter(path, targets) {
-		return prefixCSSProperty({
-			path,
-			propertyName: "transition",
-			browserFeaturesKey: "css-transitions",
-			targets,
-		});
-	},
-})
+		name: "transition",
+		enter(path, targets) {
+			return prefixCSSProperty({
+				path,
+				propertyName: "transition",
+				browserFeaturesKey: "css-transitions",
+				targets,
+			});
+		},
+	}),
 ];
