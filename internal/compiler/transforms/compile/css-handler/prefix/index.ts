@@ -10,6 +10,7 @@ import {CompilerOptions} from "@internal/compiler";
 import display from "./prefixes/display";
 import transform from "./prefixes/transform";
 import transition from "./prefixes/transition";
+import {getBrowser} from "@internal/browser-features";
 
 const prefixVisitors: PrefixVisitor<UnknownObject>[] = [
 	...display,
@@ -22,7 +23,7 @@ export default (projectConfig: ProjectConfig, options: CompilerOptions) =>
 	prefixVisitors.map((prefixVisitor) =>
 		wrapPrefixVisitor(
 			prefixVisitor,
-			projectConfig.targets.get(options.target ?? "default") ?? [],
+			projectConfig.targets.get(options.target ?? "default")?.map((browserProps) => getBrowser(browserProps)) ?? [],
 		)
 	)
 ;

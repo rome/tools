@@ -442,7 +442,9 @@ export async function normalizeProjectConfig(
 			object.enforceUsedProperties("target config property");
 			config.targets.set(
 				name,
-				resolveBrowsers(object.asImplicitMappedArray((item) => item.asString())),
+				resolveBrowsers(object.asImplicitMappedArray((item) => item.asString())).map((
+					browser,
+				) => ({name: browser.getId(), version: browser.getVersion()})),
 			);
 		}
 	}
