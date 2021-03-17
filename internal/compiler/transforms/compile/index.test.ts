@@ -22,7 +22,15 @@ const promise = createFixtureTests(async (fixture, t) => {
 			sourceText: content,
 			project: addProject({
 				...createDefaultProjectConfig(),
-				targets: new Map([["default", resolveBrowsers(">0%")]]),
+				targets: new Map([
+					[
+						"default",
+						resolveBrowsers(">0%").map((browser) => ({
+							name: browser.getId(),
+							version: browser.getVersion(),
+						})),
+					],
+				]),
 			}),
 		},
 		async (ref) => {
