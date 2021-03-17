@@ -115,6 +115,7 @@ export type WorkerPartialManifest = {
 // Omit analyze value as the worker will fetch it itself, skips sending over a large payload that it already has in memory
 export type WorkerCompilerOptions = {
 	bundle?: WorkerBundleCompileOptions;
+	target?: string;
 };
 
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, "analyze">;

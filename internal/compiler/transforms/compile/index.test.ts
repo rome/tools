@@ -20,7 +20,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 			sourceText: content,
 		},
 		async (ref) => {
-			return await worker.api.compile(ref, "compile", {}, {});
+			return await worker.api.compile(ref, "compile", {target: "default"}, {});
 		},
 	);
 	if (res === undefined) {

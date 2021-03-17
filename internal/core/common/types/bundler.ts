@@ -29,6 +29,7 @@ export type BundlerConfig = {
 	inlineSourceMap: boolean;
 	cwd: AbsoluteFilePath;
 	resolver: ResolverOptions;
+	target?: string;
 };
 
 export type AssembledBundle = Array<[0, string] | [1, AbsoluteFilePath]>;

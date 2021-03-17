@@ -52,7 +52,7 @@ export const helperVisitors: AnyVisitor[] = [
 export const stageTransforms: TransformStageFactories = {
 	// These may effect dependency analysis
 	pre: () => [optimizeImports, optimizeExports, jsx],
-	compile: (projectConfig: ProjectConfig) => [
+	compile: (projectConfig: ProjectConfig, options: CompilerOptions) => [
 		paramlessCatch,
 		optionalChaining,
 		nullishCoalescing,
@@ -61,7 +61,7 @@ export const stageTransforms: TransformStageFactories = {
 		templateLiterals,
 		callSpread,
 		enums,
-		...cssPrefix(projectConfig),
+		...cssPrefix(projectConfig, options),
 	],
 	compileForBundle: (projectConfig: ProjectConfig, options: CompilerOptions) => {
 		const opts = options.bundle;

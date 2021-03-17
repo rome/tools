@@ -18,6 +18,7 @@ import {DeepPartial, Dict} from "@internal/typescript-helpers";
 import {SemverRange} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {Browser} from "@internal/browser-features/Browser";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
@@ -99,7 +100,7 @@ export type ProjectConfigObjects = {
 	dependencies: Enableable & {
 		exceptions: DependenciesExceptions;
 	};
-	targets: Map<string, ProjectConfigTarget>;
+	targets: Map<string, Browser[]>;
 };
 
 export type ProjectConfigIntegrations = {
@@ -109,10 +110,6 @@ export type ProjectConfigIntegrations = {
 };
 
 export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
-
-export type ProjectConfigTarget = {
-	constraints: string[];
-};
 
 // Base of a project config without any objects
 type ProjectConfigBase = {
