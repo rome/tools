@@ -118,6 +118,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
+	A11Y_NO_AUTOFOCUS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAutofocus"],
+		message: markup`Avoid the <emphasis>autoFocus</emphasis> attribute.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Automatically focusing elements overrides natural page content focus order, causing issues for keyboard-only navigation.`,
+			},
+		],
+	},
 	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
 		category: DIAGNOSTIC_CATEGORIES["lint/js/noSingleCharRegexAlternatives"],
 		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
@@ -467,17 +478,7 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_AUTOFOCUS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAutofocus"],
-		message: markup`Avoid the <emphasis>autoFocus</emphasis> attribute.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Automatically focusing elements overrides natural page content focus order, causing issues for keyboard-only navigation.`,
-			},
-		],
-	},
+
 	JSX_A11Y_NO_ON_CHANGE: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noOnChange"],
 		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,

@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:5ea1c826cf89348b0fa8f4488b6c78687b25279f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:63637b036d8a4908008a466c3fb9f49e22d82fad,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -395,6 +395,13 @@ and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule 
 enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noAutofocus">
+	<a href="/docs/lint/rules/a11y/noAutofocus">noAutofocus</a>
+	<a class="header-anchor" href="#noAutofocus"></a>
+</h3>
+discourage the usage of `autoFocus`
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDistractingElements">
 	<a href="/docs/lint/rules/a11y/noDistractingElements">noDistractingElements</a>
 	<a class="header-anchor" href="#noDistractingElements"></a>
@@ -481,13 +488,6 @@ check if `lang` attribute is valid
 	<a class="header-anchor" href="#noAccessKey"></a>
 </h3>
 enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noAutofocus">
-	<a href="/docs/lint/rules/jsx-a11y/noAutofocus">noAutofocus</a>
-	<a class="header-anchor" href="#noAutofocus"></a>
-</h3>
-discourage the usage of `autoFocus`
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noHeaderScope">

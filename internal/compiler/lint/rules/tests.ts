@@ -9,12 +9,14 @@ type Test = {
 
 type Tests = Dict<{
 	category: DiagnosticCategory;
-	cases: Test | (Test[]) | (Test[][]);
+	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:9ecc92d1d80cfbf0d79865bac7312cde13141a66,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:8bb7cdcac9b4d6a27b44aad5306a4ad5aba25c27,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
+// @ts-ignore
+import noAutofocus from "./a11y/noAutofocus.test.rjson";
 // @ts-ignore
 import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
 // @ts-ignore
@@ -136,8 +138,6 @@ import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
 import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
 // @ts-ignore
-import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
-// @ts-ignore
 import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
 // @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
@@ -238,6 +238,10 @@ export const tests: Tests = {
 	"a11y/noAriaUnsupportedElements": {
 		category: ["lint", "a11y", "noAriaUnsupportedElements"],
 		cases: noAriaUnsupportedElements,
+	},
+	"a11y/noAutofocus": {
+		category: ["lint", "a11y", "noAutofocus"],
+		cases: noAutofocus,
 	},
 	"a11y/noDistractingElements": {
 		category: ["lint", "a11y", "noDistractingElements"],
@@ -478,10 +482,6 @@ export const tests: Tests = {
 	"jsx-a11y/noAccessKey": {
 		category: ["lint", "jsx-a11y", "noAccessKey"],
 		cases: noAccessKey,
-	},
-	"jsx-a11y/noAutofocus": {
-		category: ["lint", "jsx-a11y", "noAutofocus"],
-		cases: noAutofocus,
 	},
 	"jsx-a11y/noHeaderScope": {
 		category: ["lint", "jsx-a11y", "noHeaderScope"],
