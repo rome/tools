@@ -214,6 +214,7 @@ export default class Bundler {
 			"compileForBundle",
 			{
 				bundle: opts,
+				target: this.config.target,
 			},
 			{},
 		);

@@ -16,6 +16,7 @@ import {markup} from "@internal/markup";
 
 type Flags = {
 	bundle: boolean;
+	target: string;
 };
 
 export default createServerCommand({
@@ -27,6 +28,7 @@ export default createServerCommand({
 	defineFlags(c: Consumer): Flags {
 		return {
 			bundle: c.get("bundle").asBoolean(false),
+			target: c.get("target").asString("default"),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
@@ -38,7 +40,7 @@ export default createServerCommand({
 			const bundler = Bundler.createFromServerRequest(req);
 			res = await bundler.compileSingle(resolved);
 		} else {
-			res = await req.requestWorkerCompile(resolved, "compile", {}, {});
+			res = await req.requestWorkerCompile(resolved, "compile", {target: commandFlags.target}, {});
 		}
 
 		const {compiledCode, diagnostics} = res.value;

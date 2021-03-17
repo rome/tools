@@ -16,7 +16,8 @@ import {promiseAllFrom} from "@internal/async";
 
 type Flags = {
 	quiet: boolean;
-	setVersion: undefined | string;
+	setVersion?: string;
+	target: string;
 };
 
 export default createServerCommand<Flags>({
@@ -30,6 +31,7 @@ export default createServerCommand<Flags>({
 		return {
 			quiet: consumer.get("quiet").asBoolean(false),
 			setVersion: consumer.get("setVersion").asStringOrVoid(),
+			target: consumer.get("target").asString("default"),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
