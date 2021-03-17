@@ -23,7 +23,9 @@ export default (projectConfig: ProjectConfig, options: CompilerOptions) =>
 	prefixVisitors.map((prefixVisitor) =>
 		wrapPrefixVisitor(
 			prefixVisitor,
-			projectConfig.targets.get(options.target ?? "default")?.map((browserProps) => getBrowser(browserProps)) ?? [],
+			projectConfig.targets.get(options.target ?? "default")?.map((browserProps) =>
+				getBrowser(browserProps)
+			) ?? [],
 		)
 	)
 ;

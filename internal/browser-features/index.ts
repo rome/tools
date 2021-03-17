@@ -22,10 +22,10 @@ import {data} from "@internal/browsers-db";
 import {consumeUnknown} from "@internal/consume";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
-export type GetBrowserProps  = {
+export type GetBrowserProps = {
 	name: BrowserIds | string;
 	version?: number;
-}
+};
 
 type BrowserIds =
 	| "android"
