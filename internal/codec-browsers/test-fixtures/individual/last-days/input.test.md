@@ -14,12 +14,17 @@
 	"safari:14"
 	"opera:73"
 	"ios_saf:14"
+	"op_mini:1"
 	"android:81"
+	"bb:10"
 	"op_mob:59"
 	"and_chr:88"
 	"and_ff:85"
+	"and_uc:12.12"
 	"samsung:13"
 	"and_qq:10.4"
+	"baidu:7.12"
+	"kaios:2.5"
 ]
 ```
 

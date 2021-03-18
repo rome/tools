@@ -7,7 +7,22 @@
 ### `result`
 
 ```javascript
-["edge:88", "firefox:85", "chrome:88", "opera:73", "and_chr:88", "and_ff:85"]
+[
+	"edge:88"
+	"firefox:85"
+	"chrome:88"
+	"safari:14"
+	"opera:73"
+	"ios_saf:14"
+	"android:81"
+	"op_mob:59"
+	"and_chr:88"
+	"and_ff:85"
+	"samsung:13"
+	"and_qq:10.4"
+	"baidu:7.12"
+	"kaios:2.5"
+]
 ```
 
 ### `targets`
