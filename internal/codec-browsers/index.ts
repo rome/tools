@@ -1,10 +1,11 @@
 import {Browser} from "@internal/browser-features/Browser";
-import {resolveTargets} from "@internal/codec-browsers/resolve";
+import {ResolveOptions, resolveTargets} from "@internal/codec-browsers/resolve";
 import {parseBrowserQuery} from "@internal/codec-browsers/parse";
 import {ParserOptions} from "@internal/parser-core";
 
 export function resolveBrowsers(
 	queries: string | string[] | ParserOptions,
+	resolveOptions?: ResolveOptions,
 ): Browser[] {
 	let opt: ParserOptions;
 
@@ -16,5 +17,5 @@ export function resolveBrowsers(
 		opt = queries;
 	}
 
-	return Array.from(resolveTargets(parseBrowserQuery(opt)));
+	return Array.from(resolveTargets(parseBrowserQuery(opt), resolveOptions));
 }
