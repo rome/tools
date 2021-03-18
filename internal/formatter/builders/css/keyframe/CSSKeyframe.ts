@@ -11,8 +11,6 @@ import {
 
 export default function CSSKeyframe(builder: Builder, node: CSSKeyframe): Token {
 	return concat([
-		"@keyframes",
-		space,
 		builder.tokenize(node.name, node),
 		space,
 		"{",

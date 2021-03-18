@@ -121,9 +121,45 @@ export const cssParser = createDiagnosticsCategory({
 	},
 
 	CALC_INCORRECT_NUMBER_VALUE: {
-		message: markup`Incorrect character, expected a number or a parenthesis`,
+		message: markup`Incorrect character, expected a number or a parenthesis.`,
 	},
 	EXPECTED_ID_HASH: {
 		message: markup`Expected to use identifier after <emphasis>#</emphasis>.`,
+	},
+
+	MEDIA_QUERY_UNKNOWN_MEDIA_TYPES: (
+		wrongValue: string,
+		supportedFeatures: string[],
+	) => ({
+		message: markup`Unknown media type provided to the media query.`,
+		advice: buildSuggestionAdvice(wrongValue, supportedFeatures, {minRating: 0}),
+	}),
+
+	MEDIA_QUERY_DEPRECATED_MEDIA_TYPE: (wrongValue: string) => ({
+		message: markup`The media type <emphasis>${wrongValue}</emphasis> is deprecated.`,
+	}),
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURES: {},
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: {},
+	MALFORMED_MEDIA_QUERY: {},
+	MEDIA_QUERY_EXPECTED_PARENTHESIS: {
+		message: markup`A left parenthesis is expected in this position.`,
+	},
+	MEDIA_QUERY_EXPECTED_COMPARISON: {
+		message: markup`The comparison is not correct, only <emphasis> \<, \> and = </emphasis> are valid.`,
+	},
+	MEDIA_QUERY_EXPECTED_NOT_OR_PARENTHESIS: {
+		message: markup`A left parenthesis or the keyword <emphasis>not</emphasis> are expected in this position.`,
+	},
+
+	MEDIA_QUERY_FEATURE_UNEXPECTED_VALUE: {
+		message: markup`The value provided inside the media feature is not correct.`,
+	},
+
+	MEDIA_QUERY_FEATURE_EXPECTED_KEYWORD: (keyword: string) => ({
+		message: markup`The keyword <emphasis>${keyword}</emphasis> is expected in this position.`,
+	}),
+
+	MEDIA_QUERY_FEATURE_MALFORMED_PLAN: {
+		message: markup`The media feature is not grammatically correct`,
 	},
 });

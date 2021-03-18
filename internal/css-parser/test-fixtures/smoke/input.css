@@ -4,9 +4,9 @@ body {
     width: calc(1px + 2%);
 }
 
-@media screen and (min-width: 1337px) {
-    body {
-        background: blue;
-        width: calc(2px + 3%);
-    }
-}
+/*@media screen and (min-width: 1337px) {*/
+/*    body {*/
+/*        background: blue;*/
+/*        width: calc(2px + 3%);*/
+/*    }*/
+/*}*/

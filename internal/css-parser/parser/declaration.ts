@@ -1,5 +1,6 @@
-import {AnyCSSValue, CSSParser, Tokens} from "@internal/css-parser/types";
+import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
+	AnyCSSValue,
 	CSSAtRule,
 	CSSBlock,
 	CSSCustomProperty,

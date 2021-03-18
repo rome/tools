@@ -71,7 +71,7 @@ CSSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Incorrect character, expected a number or a parenthesis"}
+				message: RAW_MARKUP {value: "Incorrect character, expected a number or a parenthesis."}
 			}
 			location: {
 				language: "css"

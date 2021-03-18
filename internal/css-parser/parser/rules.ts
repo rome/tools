@@ -1,5 +1,5 @@
-import {AnyCSSValue, CSSParser, Tokens} from "@internal/css-parser/types";
-import {CSSAtRule, CSSRule, CSSSelector} from "@internal/ast";
+import {CSSParser, Tokens} from "@internal/css-parser/types";
+import {AnyCSSValue, CSSAtRule, CSSRule, CSSSelector} from "@internal/ast";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseSelectors} from "@internal/css-parser/parser/selectors";
 import {descriptions} from "@internal/diagnostics";
@@ -7,6 +7,7 @@ import {parseKeyframe} from "@internal/css-parser/parser/keyframe";
 import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
 import {parseComplexBlock} from "@internal/css-parser/parser/block";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
+import {parseMediaList} from "@internal/css-parser/parser/media";
 
 export function parseRules(
 	parser: CSSParser,
@@ -74,7 +75,6 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 
 export function parseAtRule(parser: CSSParser): CSSAtRule {
 	const start = parser.getPosition();
-	// TODO: review error
 	const previousToken = parser.getToken() as Tokens["AtKeyword"];
 	const token = parser.expectToken("AtKeyword");
 	const prelude: AnyCSSValue[] = [];
@@ -91,6 +91,12 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 			});
 			break;
 		}
+		if (previousToken.value === "media") {
+			const value = parseMediaList(parser);
+			if (value) {
+				prelude.push(value);
+			}
+		}
 		if (previousToken.value === "keyframes") {
 			block = parseKeyframe(parser);
 			break;
@@ -100,7 +106,9 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 			break;
 		}
 		const parsedValue = parseComponentValue(parser);
-		parsedValue && prelude.push(parsedValue);
+		if (parsedValue) {
+			prelude.push(parsedValue);
+		}
 	}
 	return parser.finishNode(
 		start,
