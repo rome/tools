@@ -1,3 +1,4 @@
+import {TokenBase} from "@internal/parser-core";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -195,6 +196,14 @@ export default createBridge({
 			},
 			// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
 			AnyRoot
+		>(),
+
+		tokenize: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				options: WorkerParseOptions;
+			},
+			TokenBase[]
 		>(),
 
 		getFileBuffers: createBridgeEventDeclaration<

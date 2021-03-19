@@ -7,7 +7,7 @@
 
 import {ConstJSProgramSyntax, ConstJSSourceType} from "@internal/ast";
 import {PartialExtensionHandler} from "./types";
-import {parseJS} from "@internal/js-parser";
+import {parseJS, tokenizeJS} from "@internal/js-parser";
 
 // These are extensions that be implicitly tried when a file is referenced
 // This is mostly for compatibility with Node.js projects. This list should not
@@ -59,6 +59,15 @@ function buildJSHandler(
 				sourceText,
 				ast,
 				astModifiedFromSource: false,
+			};
+		},
+
+		async tokenize({integrity, path, file, worker}) {
+			const sourceText = await worker.readFileText(file);
+			const tokens = tokenizeJS({input: sourceText, integrity, path});
+			return {
+				sourceText,
+				tokens,
 			};
 		},
 	};
