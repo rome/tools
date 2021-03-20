@@ -95,8 +95,10 @@ export function parseInline(
 			},
 		);
 	}
+	const pos = parser.getPosition();
+	parser.nextToken();
 	return parser.finishNode(
-		parser.getPosition(),
+		pos,
 		{
 			type: "MarkdownText",
 			value: token.value,

@@ -10,9 +10,11 @@ import {parseText} from "@internal/markdown-parser/parser/text";
 
 export function parseReference(
 	parser: MarkdownParser,
-): MarkdownReferenceInline | (AnyMarkdownInlineNode[]) {
+): MarkdownReferenceInline | AnyMarkdownInlineNode[] {
+	parser.expectToken("OpenSquareBracket");
+
 	const pos = parser.getPosition();
-	let reference: MarkdownReference | (AnyMarkdownInlineNode[]) = [];
+	let reference: MarkdownReference | AnyMarkdownInlineNode[] = [];
 	let unwantedTokens = false;
 
 	while (!parser.matchToken("EOF")) {
@@ -55,7 +57,6 @@ export function parseReference(
 				reference.push(inline);
 			}
 		}
-		parser.nextToken();
 	}
 
 	return [
