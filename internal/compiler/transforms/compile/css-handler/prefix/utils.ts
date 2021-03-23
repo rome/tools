@@ -1,14 +1,11 @@
 import {
-	AnyCSSValue,
-	CSSAtRule,
 	CSSBlock,
 	CSSDeclaration,
-	CSSRule,
 	cssBlock,
 	cssDeclaration,
 	cssIdentifier,
 } from "@internal/ast";
-import {UnknownObject} from "@internal/typescript-helpers";
+import {RequiredProps, UnknownObject} from "@internal/typescript-helpers";
 import {
 	CompilerPath,
 	EnterSignal,
@@ -24,72 +21,48 @@ import {
 	VisitorStateExit,
 } from "@internal/compiler/lib/VisitorState";
 
-export function nodeHasPrefixedProperty(
+export function findPropertyIndex(
 	node: CSSBlock,
 	property: string,
-	prefix: string,
-	rename: (propertyName: string) => string = (propertyName) => propertyName,
-): boolean {
-	if (node.value) {
-		return node.value.some((n) =>
-			n.type === "CSSDeclaration" && n.name === rename(`-${prefix}-${property}`)
-		);
-	}
-	return false;
-}
-
-export function nodeHasPrefixedPropertyValue(
-	node: CSSBlock,
-	property: string,
-	value: string,
-	prefix: string,
-	rename: (value: string) => string = (value) => value,
-): boolean {
-	if (node.value) {
-		return node.value.some((n) =>
-			n.type === "CSSDeclaration" &&
-			n.name === property &&
-			n.value.length === 1 &&
-			n.value[0]?.type === "CSSIdentifier" &&
-			n.value[0].value === rename(`-${prefix}-${value}`)
-		);
-	}
-	return false;
-}
-
-export function findPropertyIndex(node: CSSBlock, property: string): number {
+): [number, CSSDeclaration | undefined] {
 	if (node.value !== undefined) {
-		return node.value.findIndex((n) =>
+		const index = node.value.findIndex((n) =>
 			n.type === "CSSDeclaration" && n.name === property
 		);
-	} else {
-		return -1;
+		return [index, node.value[index] as CSSDeclaration | undefined];
 	}
+	return [-1, undefined];
 }
 
 export function findPropertyValueIndex(
 	node: CSSBlock,
 	property: string,
 	value: string,
-): number {
+): [number, CSSDeclaration | undefined] {
 	if (node.value !== undefined) {
-		return node.value.findIndex((n) =>
+		const index = node.value.findIndex((n) =>
 			n.type === "CSSDeclaration" &&
 			n.name === property &&
 			n.value.length === 1 &&
 			n.value[0]?.type === "CSSIdentifier" &&
 			n.value[0].value === value
 		);
-	} else {
-		return -1;
+		return [index, node.value[index] as CSSDeclaration | undefined];
 	}
+	return [-1, undefined];
 }
 
 type PrefixCompilerPath = CompilerPath & {
-	node: CSSBlock & {
-		value: Array<AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration>;
-	};
+	node: RequiredProps<CSSBlock, "value">;
 };
+
+function isCssBlockAndHasValue(path: CompilerPath): path is PrefixCompilerPath {
+	return (
+		path.node.type === "CSSBlock" &&
+		path.node.value !== undefined &&
+		path.node.value.length > 0
+	);
+}
 
 export interface PrefixVisitor<State extends UnknownObject> {
 	name: string;
@@ -109,24 +82,14 @@ export function createPrefixVisitor<State extends UnknownObject>(
 	return {
 		name: `css-handler/prefix/${visitor.name}`,
 		enter: (path: CompilerPath, state: VisitorStateEnter<State>) => {
-			if (
-				visitor.enter !== undefined &&
-				path.node.type === "CSSBlock" &&
-				path.node.value &&
-				path.node.value.length > 0
-			) {
+			if (visitor.enter !== undefined && isCssBlockAndHasValue(path)) {
 				return visitor.enter(path as PrefixCompilerPath, state);
 			} else {
 				return signals.retain;
 			}
 		},
 		exit: (path: CompilerPath, state: VisitorStateExit<State>) => {
-			if (
-				visitor.exit !== undefined &&
-				path.node.type === "CSSBlock" &&
-				path.node.value &&
-				path.node.value.length > 0
-			) {
+			if (visitor.exit !== undefined && isCssBlockAndHasValue(path)) {
 				return visitor.exit(path as PrefixCompilerPath, state);
 			} else {
 				return signals.retain;
@@ -176,18 +139,13 @@ export function prefixCSSProperty(
 	}: PrefixCSSPropertyProps,
 ) {
 	const {node} = path;
-	const propertyIndex = findPropertyIndex(node, propertyName);
-	if (propertyIndex > -1) {
-		const property = node.value[propertyIndex] as CSSDeclaration;
+	const [propertyIndex, property] = findPropertyIndex(node, propertyName);
+	if (property !== undefined) {
 		const newDeclarations = [];
 
 		for (const prefix of getPrefixes(getTargets(path), browserFeaturesKey)) {
-			const hasPrefix = nodeHasPrefixedProperty(
-				node,
-				propertyName,
-				prefix,
-				rename,
-			);
+			const hasPrefix =
+				findPropertyIndex(node, rename(`-${prefix}-${propertyName}`))[0] !== -1;
 			if (!hasPrefix) {
 				newDeclarations.push(
 					cssDeclaration.create({
@@ -226,18 +184,21 @@ export function prefixCSSValue(
 ) {
 	const {node} = path;
 
-	const propertyIndex = findPropertyValueIndex(node, propertyName, value);
-	if (propertyIndex > -1) {
-		const property = node.value[propertyIndex] as CSSDeclaration;
+	const [propertyIndex, property] = findPropertyValueIndex(
+		node,
+		propertyName,
+		value,
+	);
+
+	if (property !== undefined) {
 		const newDeclarations = [];
 		for (const prefix of getPrefixes(getTargets(path), browserFeaturesKey)) {
-			const hasPrefix = nodeHasPrefixedPropertyValue(
-				node,
-				propertyName,
-				value,
-				prefix,
-				rename,
-			);
+			const hasPrefix =
+				findPropertyValueIndex(
+					node,
+					propertyName,
+					rename(`-${prefix}-${value}`),
+				)[0] !== -1;
 			if (!hasPrefix) {
 				newDeclarations.push(
 					cssDeclaration.create({
@@ -271,14 +232,14 @@ const projectConfigToTargets: WeakMap<ProjectConfig, Browser[]> = new WeakMap();
 
 function getTargets(path: CompilerPath): Browser[] {
 	const projectConfig = path.context.project.config;
-	const existing = projectConfigToTargets.get(projectConfig);
-	if (existing !== undefined) {
-		return existing;
+
+	if (!projectConfigToTargets.has(projectConfig)) {
+		const propsTargets =
+			projectConfig.targets.get(path.context.options.target ?? "default") ?? [];
+		const targets = propsTargets.map((props) => getBrowser(props));
+
+		projectConfigToTargets.set(projectConfig, targets);
 	}
 
-	const propsTargets =
-		projectConfig.targets.get(path.context.options.target ?? "default") ?? [];
-	const targets = propsTargets.map((props) => getBrowser(props));
-	projectConfigToTargets.set(projectConfig, targets);
-	return targets;
+	return projectConfigToTargets.get(projectConfig)!;
 }

@@ -2,16 +2,14 @@ import {test} from "rome";
 import {
 	findPropertyIndex,
 	findPropertyValueIndex,
-	nodeHasPrefixedProperty,
-	nodeHasPrefixedPropertyValue,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 import {cssBlock, cssDeclaration, cssIdentifier} from "@internal/ast";
 
 test(
 	"css prefix utils",
 	(t) => {
-		t.false(
-			nodeHasPrefixedProperty(
+		t.inlineSnapshot(
+			findPropertyIndex(
 				cssBlock.create({
 					value: [
 						cssDeclaration.create({
@@ -31,33 +29,12 @@ test(
 						}),
 					],
 				}),
-				"transition",
-				"webkit",
+				"-webkit-transition",
 			),
+			"[-1, undefined]",
 		);
 
-		t.true(
-			nodeHasPrefixedProperty(
-				cssBlock.create({
-					value: [
-						cssDeclaration.create({
-							important: false,
-							name: "transition",
-							value: [],
-						}),
-						cssDeclaration.create({
-							important: false,
-							name: "-webkit-transition",
-							value: [],
-						}),
-					],
-				}),
-				"transition",
-				"webkit",
-			),
-		);
-
-		t.is(
+		t.inlineSnapshot(
 			findPropertyIndex(
 				cssBlock.create({
 					value: [
@@ -80,11 +57,11 @@ test(
 				}),
 				"transition",
 			),
-			2,
+			'[2, CSSDeclaration {name: "transition", value: [], important: false}]',
 		);
 
-		t.false(
-			nodeHasPrefixedPropertyValue(
+		t.inlineSnapshot(
+			findPropertyValueIndex(
 				cssBlock.create({
 					value: [
 						cssDeclaration.create({
@@ -117,42 +94,12 @@ test(
 					],
 				}),
 				"display",
-				"flex",
-				"webkit",
+				"-webkit-flex",
 			),
+			"[-1, undefined]",
 		);
 
-		t.true(
-			nodeHasPrefixedPropertyValue(
-				cssBlock.create({
-					value: [
-						cssDeclaration.create({
-							important: false,
-							name: "display",
-							value: [
-								cssIdentifier.create({
-									value: "flex",
-								}),
-							],
-						}),
-						cssDeclaration.create({
-							important: false,
-							name: "display",
-							value: [
-								cssIdentifier.create({
-									value: "-webkit-flex",
-								}),
-							],
-						}),
-					],
-				}),
-				"display",
-				"flex",
-				"webkit",
-			),
-		);
-
-		t.is(
+		t.inlineSnapshot(
 			findPropertyValueIndex(
 				cssBlock.create({
 					value: [
@@ -184,7 +131,7 @@ test(
 				"display",
 				"flex",
 			),
-			2,
+			'[2, CSSDeclaration {name: "display", value: [CSSIdentifier {value: "flex"}], important: false}]',
 		);
 	},
 );
