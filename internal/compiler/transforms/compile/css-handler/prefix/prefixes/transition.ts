@@ -7,12 +7,11 @@ import {
 export default [
 	createPrefixVisitor({
 		name: "transition",
-		enter(path, targets) {
+		enter(path) {
 			return prefixCSSProperty({
 				path,
 				propertyName: "transition",
 				browserFeaturesKey: "css-transitions",
-				targets,
 			});
 		},
 	}),

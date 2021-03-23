@@ -44,7 +44,7 @@ export async function main() {
 				lines.push(`import ${basename} from "./prefixes/${basename}";`);
 			}
 			lines.push("");
-			lines.push("const prefixVisitors: PrefixVisitor<UnknownObject>[] = [");
+			lines.push("export default [");
 			for (const {basename} of defs) {
 				lines.push(`\t...${basename},`);
 			}

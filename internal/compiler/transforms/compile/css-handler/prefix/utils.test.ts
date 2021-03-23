@@ -1,9 +1,9 @@
 import {test} from "rome";
 import {
+	findPropertyIndex,
+	findPropertyValueIndex,
 	nodeHasPrefixedProperty,
 	nodeHasPrefixedPropertyValue,
-	nodePropertyIndex,
-	nodePropertyValueIndex,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 import {cssBlock, cssDeclaration, cssIdentifier} from "@internal/ast";
 
@@ -58,7 +58,7 @@ test(
 		);
 
 		t.is(
-			nodePropertyIndex(
+			findPropertyIndex(
 				cssBlock.create({
 					value: [
 						cssDeclaration.create({
@@ -153,7 +153,7 @@ test(
 		);
 
 		t.is(
-			nodePropertyValueIndex(
+			findPropertyValueIndex(
 				cssBlock.create({
 					value: [
 						cssDeclaration.create({

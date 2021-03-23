@@ -67,7 +67,7 @@ export abstract class Browser {
 	}
 
 	public getPrefix(): string {
-		if (this.prefix == null) {
+		if (this.prefix === undefined) {
 			this.prefix =
 				this.getVersionConsumer().get("p").asStringOrVoid() ??
 				this.getDefaultPrefix();
