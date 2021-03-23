@@ -78,8 +78,14 @@ export default class Bundler {
 		this.graph.close();
 	}
 
-	public static createFromServerRequest(req: ServerRequest): Bundler {
-		return new Bundler(req, req.getBundlerConfigFromFlags());
+	public static createFromServerRequest(
+		req: ServerRequest,
+		bundlerConfig?: Partial<BundlerConfig>,
+	): Bundler {
+		return new Bundler(
+			req,
+			{...req.getBundlerConfigFromFlags(), ...bundlerConfig},
+		);
 	}
 
 	public async getResolvedEntry(

@@ -41,7 +41,12 @@ export default createServerCommand<Flags>({
 		req.expectArgumentLength(2);
 
 		const [entryFilename, outputDirectory] = args;
-		const bundler = Bundler.createFromServerRequest(req);
+		const bundler = Bundler.createFromServerRequest(
+			req,
+			{
+				target: commandFlags.target,
+			},
+		);
 
 		const resolution = await bundler.getResolvedEntry(
 			entryFilename,

@@ -37,6 +37,7 @@ import {
 import {lintRuleNames} from "@internal/compiler";
 import {sha256} from "@internal/string-utils";
 import {resolveBrowsers} from "@internal/codec-browsers";
+import {ParserOptions} from "@internal/parser-core";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -440,11 +441,18 @@ export async function normalizeProjectConfig(
 	if (categoryExists(targets)) {
 		for (const [name, object] of targets.asMap()) {
 			object.enforceUsedProperties("target config property");
+			const options: ParserOptions = {
+				input: object.asImplicitMappedArray((item) => item.asString()).join(
+					", ",
+				),
+				// TODO: set source
+			};
 			config.targets.set(
 				name,
-				resolveBrowsers(object.asImplicitMappedArray((item) => item.asString())).map((
-					browser,
-				) => ({name: browser.getId(), version: browser.getVersion()})),
+				resolveBrowsers(options).map((browser) => ({
+					name: browser.getId(),
+					version: browser.getVersion(),
+				})),
 			);
 		}
 	}
