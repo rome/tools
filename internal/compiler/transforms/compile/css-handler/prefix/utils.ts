@@ -1,4 +1,5 @@
 import {
+	AnyCSSValue,
 	CSSAtRule,
 	CSSBlock,
 	CSSDeclaration,
@@ -22,7 +23,6 @@ import {
 	VisitorStateEnter,
 	VisitorStateExit,
 } from "@internal/compiler/lib/VisitorState";
-import {AnyCSSValue} from "@internal/css-parser/types";
 
 export function nodeHasPrefixedProperty(
 	node: CSSBlock,
