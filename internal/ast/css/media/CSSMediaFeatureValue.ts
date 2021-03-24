@@ -1,7 +1,7 @@
 import {
 	CSSDimension,
-	CSSNumber,
 	CSSIdentifier,
+	CSSNumber,
 	NodeBaseWithComments,
 } from "@internal/ast";
 import {createBuilder} from "../../utils";

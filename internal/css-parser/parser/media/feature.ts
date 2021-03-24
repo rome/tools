@@ -1,13 +1,13 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
 	CSSDimension,
+	CSSIdentifier,
 	CSSMediaFeature,
 	CSSMediaFeatureBoolean,
 	CSSMediaFeatureName,
 	CSSMediaFeaturePlain,
 	CSSMediaFeatureValue,
 	CSSNumber,
-	CSSIdentifier,
 } from "@internal/ast";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
