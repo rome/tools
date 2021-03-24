@@ -17,6 +17,21 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_REDUNDANT_ALT: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noRedundantAlt"],
+		message: markup`Avoid the words "image", "picture", or "photo" in <emphasis>img</emphasis> element alt text.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.`,
+			},
+		],
+	},
+	A11_Y_USE_ARIA_PROPS: (attribute: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAriaProps"],
+		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
+	}),
 	A11_Y_NO_NONINTERACTIVE_TABINDEX: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noNoninteractiveTabindex"],
 		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
@@ -118,6 +133,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
+	A11Y_NO_AUTOFOCUS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAutofocus"],
+		message: markup`Avoid the <emphasis>autoFocus</emphasis> attribute.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Automatically focusing elements overrides natural page content focus order, causing issues for keyboard-only navigation.`,
+			},
+		],
+	},
 	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
 		category: DIAGNOSTIC_CATEGORIES["lint/js/noSingleCharRegexAlternatives"],
 		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
@@ -274,10 +300,6 @@ export const lint = createDiagnosticsCategory({
 				text: markup`Anchor elements should only be used for default section or page navigation.`,
 			},
 		],
-	}),
-	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAriaProps"],
-		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
 	}),
 	JSX_A11Y_CLICK_EVENTS_HAVE_KEY_EVENTS: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithClickEvents"],
@@ -445,17 +467,7 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_IMG_REDUNDANT_ALT: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noRedundantAlt"],
-		message: markup`Avoid the words "image", "picture", or "photo" in <emphasis>img</emphasis> element alt text.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.`,
-			},
-		],
-	},
+
 	JSX_A11Y_NO_ACCESS_KEY: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAccessKey"],
 		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
@@ -467,17 +479,7 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_AUTOFOCUS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAutofocus"],
-		message: markup`Avoid the <emphasis>autoFocus</emphasis> attribute.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Automatically focusing elements overrides natural page content focus order, causing issues for keyboard-only navigation.`,
-			},
-		],
-	},
+
 	JSX_A11Y_NO_ON_CHANGE: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noOnChange"],
 		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,

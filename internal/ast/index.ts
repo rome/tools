@@ -6,12 +6,13 @@ export * from "./js/constants";
 export * from "./html/unions";
 export * from "./js/unions";
 export * from "./markdown/unions";
+export * from "./css/unions";
 export * from "./unions";
 
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:b3abf61fbeed6fcaf698c2059c2f32732c8de052,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:55dcf11030d7ccdabdc90cb01a22f83922f1494c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./css/core/CSSAtRule";
@@ -39,6 +40,25 @@ export * from "./css/keyframe/CSSKeyframe";
 export * from "./css/keyframe/CSSKeyframeBlock";
 export * from "./css/keyframe/CSSKeyframeName";
 export * from "./css/keyframe/CSSKeyframeSelector";
+export * from "./css/media/CSSMediaAnd";
+export * from "./css/media/CSSMediaCondition";
+export * from "./css/media/CSSMediaConditionWithoutOr";
+export * from "./css/media/CSSMediaFeature";
+export * from "./css/media/CSSMediaFeatureBoolean";
+export * from "./css/media/CSSMediaFeatureComparison";
+export * from "./css/media/CSSMediaFeatureEQ";
+export * from "./css/media/CSSMediaFeatureGT";
+export * from "./css/media/CSSMediaFeatureLT";
+export * from "./css/media/CSSMediaFeatureName";
+export * from "./css/media/CSSMediaFeaturePlain";
+export * from "./css/media/CSSMediaFeatureRange";
+export * from "./css/media/CSSMediaFeatureValue";
+export * from "./css/media/CSSMediaInParens";
+export * from "./css/media/CSSMediaNot";
+export * from "./css/media/CSSMediaOr";
+export * from "./css/media/CSSMediaQuery";
+export * from "./css/media/CSSMediaQueryList";
+export * from "./css/media/CSSMediaType";
 export * from "./css/core/CSSNumber";
 export * from "./css/core/CSSPercentage";
 export * from "./css/selectors/CSSPseudoClassSelector";
@@ -317,6 +337,25 @@ export type AnyNode =
 	| n.CSSKeyframeBlock
 	| n.CSSKeyframeName
 	| n.CSSKeyframeSelector
+	| n.CSSMediaAnd
+	| n.CSSMediaCondition
+	| n.CSSMediaConditionWithoutOr
+	| n.CSSMediaFeature
+	| n.CSSMediaFeatureBoolean
+	| n.CSSMediaFeatureComparison
+	| n.CSSMediaFeatureEQ
+	| n.CSSMediaFeatureGT
+	| n.CSSMediaFeatureLT
+	| n.CSSMediaFeatureName
+	| n.CSSMediaFeaturePlain
+	| n.CSSMediaFeatureRange
+	| n.CSSMediaFeatureValue
+	| n.CSSMediaInParens
+	| n.CSSMediaNot
+	| n.CSSMediaOr
+	| n.CSSMediaQuery
+	| n.CSSMediaQueryList
+	| n.CSSMediaType
 	| n.CSSNumber
 	| n.CSSPercentage
 	| n.CSSPseudoClassSelector

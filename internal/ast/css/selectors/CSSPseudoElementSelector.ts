@@ -1,5 +1,4 @@
-import {NodeBaseWithComments} from "@internal/ast";
-import {AnyCSSValue} from "@internal/css-parser/types";
+import {AnyCSSValue, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSPseudoElementSelector extends NodeBaseWithComments {

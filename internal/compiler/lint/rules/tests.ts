@@ -9,12 +9,14 @@ type Test = {
 
 type Tests = Dict<{
 	category: DiagnosticCategory;
-	cases: Test | (Test[]) | (Test[][]);
+	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:9ecc92d1d80cfbf0d79865bac7312cde13141a66,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:124fbbcd7e0f60c464ad722c48a0b4ba6a5b3465,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
+// @ts-ignore
+import noAutofocus from "./a11y/noAutofocus.test.rjson";
 // @ts-ignore
 import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
 // @ts-ignore
@@ -24,9 +26,13 @@ import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex.test.rjson
 // @ts-ignore
 import noPositiveTabindex from "./a11y/noPositiveTabindex.test.rjson";
 // @ts-ignore
+import noRedundantAlt from "./a11y/noRedundantAlt.test.rjson";
+// @ts-ignore
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
 import useAltText from "./a11y/useAltText.test.rjson";
+// @ts-ignore
+import useAriaProps from "./a11y/useAriaProps.test.rjson";
 // @ts-ignore
 import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
 // @ts-ignore
@@ -136,21 +142,15 @@ import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
 import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
 // @ts-ignore
-import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
-// @ts-ignore
 import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
 // @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
-// @ts-ignore
-import noRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
 // @ts-ignore
 import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
 // @ts-ignore
 import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
-// @ts-ignore
-import useAriaProps from "./jsx-a11y/useAriaProps.test.rjson";
 // @ts-ignore
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
@@ -239,6 +239,10 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "noAriaUnsupportedElements"],
 		cases: noAriaUnsupportedElements,
 	},
+	"a11y/noAutofocus": {
+		category: ["lint", "a11y", "noAutofocus"],
+		cases: noAutofocus,
+	},
 	"a11y/noDistractingElements": {
 		category: ["lint", "a11y", "noDistractingElements"],
 		cases: noDistractingElements,
@@ -255,6 +259,10 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "noPositiveTabindex"],
 		cases: noPositiveTabindex,
 	},
+	"a11y/noRedundantAlt": {
+		category: ["lint", "a11y", "noRedundantAlt"],
+		cases: noRedundantAlt,
+	},
 	"a11y/noSvgWithoutTitle": {
 		category: ["lint", "a11y", "noSvgWithoutTitle"],
 		cases: noSvgWithoutTitle,
@@ -262,6 +270,10 @@ export const tests: Tests = {
 	"a11y/useAltText": {
 		category: ["lint", "a11y", "useAltText"],
 		cases: useAltText,
+	},
+	"a11y/useAriaProps": {
+		category: ["lint", "a11y", "useAriaProps"],
+		cases: useAriaProps,
 	},
 	"a11y/useAriaProptypes": {
 		category: ["lint", "a11y", "useAriaProptypes"],
@@ -479,10 +491,6 @@ export const tests: Tests = {
 		category: ["lint", "jsx-a11y", "noAccessKey"],
 		cases: noAccessKey,
 	},
-	"jsx-a11y/noAutofocus": {
-		category: ["lint", "jsx-a11y", "noAutofocus"],
-		cases: noAutofocus,
-	},
 	"jsx-a11y/noHeaderScope": {
 		category: ["lint", "jsx-a11y", "noHeaderScope"],
 		cases: noHeaderScope,
@@ -490,10 +498,6 @@ export const tests: Tests = {
 	"jsx-a11y/noOnChange": {
 		category: ["lint", "jsx-a11y", "noOnChange"],
 		cases: noOnChange,
-	},
-	"jsx-a11y/noRedundantAlt": {
-		category: ["lint", "jsx-a11y", "noRedundantAlt"],
-		cases: noRedundantAlt,
 	},
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],
@@ -506,10 +510,6 @@ export const tests: Tests = {
 	"jsx-a11y/useAnchorContent": {
 		category: ["lint", "jsx-a11y", "useAnchorContent"],
 		cases: useAnchorContent,
-	},
-	"jsx-a11y/useAriaProps": {
-		category: ["lint", "jsx-a11y", "useAriaProps"],
-		cases: useAriaProps,
 	},
 	"jsx-a11y/useAriaPropsForRole": {
 		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],

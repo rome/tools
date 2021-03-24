@@ -6,6 +6,7 @@ export function parseText(parser: MarkdownParser): MarkdownText {
 	const token = parser.getToken();
 	const pos = parser.getPosition();
 	if (token.type === "Text") {
+		parser.nextToken();
 		return parser.finishNode(
 			pos,
 			{

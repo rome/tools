@@ -59,12 +59,10 @@ export function parseParagraph(
 					children.push(nodes);
 				}
 
-				parser.nextToken();
 				break;
 			}
 			case "Text": {
 				children.push(parseText(parser));
-				parser.nextToken();
 				break;
 			}
 			case "OpenSquareBracket": {

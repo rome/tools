@@ -7,24 +7,6 @@ import {
 	SimpleToken,
 	StringToken,
 } from "@internal/parser-core";
-import {
-	CSSBlock,
-	CSSCalcFunction,
-	CSSCalcSum,
-	CSSComma,
-	CSSCustomProperty,
-	CSSDimension,
-	CSSFunction,
-	CSSHash,
-	CSSIdentifier,
-	CSSNumber,
-	CSSPercentage,
-	CSSRaw,
-	CSSString,
-	CSSUrlFunction,
-	CSSVarFunction,
-	CSSWhitespace,
-} from "@internal/ast";
 
 export interface CSSParserOptions extends Omit<
 	ParserOptions,
@@ -77,26 +59,6 @@ export type Tokens = BaseTokens & {
 };
 
 export type AnyCSSToken = Tokens[keyof Tokens];
-
-export type AnyCSSValue =
-	| CSSFunction
-	| CSSVarFunction
-	| CSSBlock
-	| CSSDimension
-	| CSSPercentage
-	| CSSIdentifier
-	| CSSNumber
-	| CSSHash
-	| CSSWhitespace
-	| CSSString
-	| CSSComma
-	| CSSCustomProperty
-	| CSSUrlFunction
-	| CSSCalcFunction
-	| CSSCalcSum
-	| CSSRaw;
-
-export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;
 
 export type CSSParserTypes = {
 	tokens: Tokens;

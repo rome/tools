@@ -1,3 +1,4 @@
+import {TokenBase} from "@internal/parser-core";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -1001,6 +1002,19 @@ export default class ServerRequest {
 			"parse",
 			path,
 			(bridge, ref) => bridge.events.parse.call({ref, options: opts}),
+		);
+	}
+
+	public async requestWorkerTokenize(
+		path: AbsoluteFilePath,
+		opts: WorkerParseOptions,
+	): Promise<TokenBase[]> {
+		this.checkCancelled();
+
+		return this.wrapRequestDiagnostic(
+			"tokenize",
+			path,
+			(bridge, ref) => bridge.events.tokenize.call({ref, options: opts}),
 		);
 	}
 

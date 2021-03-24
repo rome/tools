@@ -40,9 +40,9 @@ const promise = createFixtureTests(async (fixture, t) => {
 			includeSourceTextInDiagnostics: true,
 		});
 
-		const result = Array.from(resolveTargets(parsed)).map((browser) =>
-			`${browser.getId()}:${browser.getVersion()}`
-		);
+		const result = Array.from(
+			resolveTargets(parsed, {fixedDate: new Date(1_616_056_455_400)}),
+		).map((browser) => `${browser.getId()}:${browser.getVersion()}`);
 
 		t.namedSnapshot("targets", parsed, undefined, {filename: outputFile});
 

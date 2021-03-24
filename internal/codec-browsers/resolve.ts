@@ -99,8 +99,13 @@ export interface TargetBrowserInversion {
 	>;
 }
 
+export interface ResolveOptions {
+	fixedDate?: Date;
+}
+
 export function resolveTargets(
 	targets: AnyTargetBrowser | AnyTargetBrowser[],
+	resolveOptions?: ResolveOptions,
 ): Set<Browser> {
 	const browsers: Set<Browser> = new Set([]);
 	const toRemove: Set<Browser> = new Set([]);
@@ -219,6 +224,7 @@ export function resolveTargets(
 							parseBrowserQuery({
 								input: modern,
 							}),
+							resolveOptions,
 						).forEach((b) => browsers.add(b));
 						break;
 					}
@@ -227,6 +233,7 @@ export function resolveTargets(
 							parseBrowserQuery({
 								input: dead,
 							}),
+							resolveOptions,
 						).forEach((b) => browsers.add(b));
 						break;
 					}
@@ -314,7 +321,7 @@ export function resolveTargets(
 						case "months":
 						case "days": {
 							const releaseDate = getBrowser({name}).getRawReleaseDate();
-							const date = new Date();
+							const date = resolveOptions?.fixedDate ?? new Date();
 
 							switch (target.unit) {
 								case "years": {

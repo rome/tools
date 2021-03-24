@@ -103,15 +103,18 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:4f4c6f05654a410de3809c640ddfef9dd1508743,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:8c79eca77e24f506913417658216274b69da26bc,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
+	| ["lint", "a11y", "noAutofocus"]
 	| ["lint", "a11y", "noDistractingElements"]
 	| ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"]
 	| ["lint", "a11y", "noNoninteractiveTabindex"]
 	| ["lint", "a11y", "noPositiveTabindex"]
+	| ["lint", "a11y", "noRedundantAlt"]
 	| ["lint", "a11y", "noSvgWithoutTitle"]
 	| ["lint", "a11y", "useAltText"]
+	| ["lint", "a11y", "useAriaProps"]
 	| ["lint", "a11y", "useAriaProptypes"]
 	| ["lint", "a11y", "useHtmlLang"]
 	| ["lint", "a11y", "useIframeTitle"]
@@ -167,14 +170,11 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useTemplate"]
 	| ["lint", "js", "useWhile"]
 	| ["lint", "jsx-a11y", "noAccessKey"]
-	| ["lint", "jsx-a11y", "noAutofocus"]
 	| ["lint", "jsx-a11y", "noHeaderScope"]
 	| ["lint", "jsx-a11y", "noOnChange"]
-	| ["lint", "jsx-a11y", "noRedundantAlt"]
 	| ["lint", "jsx-a11y", "noRedundantRoles"]
 	| ["lint", "jsx-a11y", "noTargetBlank"]
 	| ["lint", "jsx-a11y", "useAnchorContent"]
-	| ["lint", "jsx-a11y", "useAriaProps"]
 	| ["lint", "jsx-a11y", "useAriaPropsForRole"]
 	| ["lint", "jsx-a11y", "useHeadingContent"]
 	| ["lint", "jsx-a11y", "useKeyWithClickEvents"]
@@ -228,6 +228,7 @@ const lintCategoryNameMap: {
 		"a11y",
 		"noAriaUnsupportedElements",
 	],
+	"lint/a11y/noAutofocus": ["lint", "a11y", "noAutofocus"],
 	"lint/a11y/noDistractingElements": ["lint", "a11y", "noDistractingElements"],
 	"lint/a11y/noNoninteractiveElementToInteractiveRole": [
 		"lint",
@@ -240,8 +241,10 @@ const lintCategoryNameMap: {
 		"noNoninteractiveTabindex",
 	],
 	"lint/a11y/noPositiveTabindex": ["lint", "a11y", "noPositiveTabindex"],
+	"lint/a11y/noRedundantAlt": ["lint", "a11y", "noRedundantAlt"],
 	"lint/a11y/noSvgWithoutTitle": ["lint", "a11y", "noSvgWithoutTitle"],
 	"lint/a11y/useAltText": ["lint", "a11y", "useAltText"],
+	"lint/a11y/useAriaProps": ["lint", "a11y", "useAriaProps"],
 	"lint/a11y/useAriaProptypes": ["lint", "a11y", "useAriaProptypes"],
 	"lint/a11y/useHtmlLang": ["lint", "a11y", "useHtmlLang"],
 	"lint/a11y/useIframeTitle": ["lint", "a11y", "useIframeTitle"],
@@ -305,14 +308,11 @@ const lintCategoryNameMap: {
 	"lint/js/useTemplate": ["lint", "js", "useTemplate"],
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
 	"lint/jsx-a11y/noAccessKey": ["lint", "jsx-a11y", "noAccessKey"],
-	"lint/jsx-a11y/noAutofocus": ["lint", "jsx-a11y", "noAutofocus"],
 	"lint/jsx-a11y/noHeaderScope": ["lint", "jsx-a11y", "noHeaderScope"],
 	"lint/jsx-a11y/noOnChange": ["lint", "jsx-a11y", "noOnChange"],
-	"lint/jsx-a11y/noRedundantAlt": ["lint", "jsx-a11y", "noRedundantAlt"],
 	"lint/jsx-a11y/noRedundantRoles": ["lint", "jsx-a11y", "noRedundantRoles"],
 	"lint/jsx-a11y/noTargetBlank": ["lint", "jsx-a11y", "noTargetBlank"],
 	"lint/jsx-a11y/useAnchorContent": ["lint", "jsx-a11y", "useAnchorContent"],
-	"lint/jsx-a11y/useAriaProps": ["lint", "jsx-a11y", "useAriaProps"],
 	"lint/jsx-a11y/useAriaPropsForRole": [
 		"lint",
 		"jsx-a11y",

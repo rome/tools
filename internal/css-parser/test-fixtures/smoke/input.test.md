@@ -89,6 +89,7 @@ CSSRoot {
 			}
 			loc: SourceLocation smoke/input.css 2:0-5:1
 		}
+<<<<<<< HEAD
 		CSSAtRule {
 			name: "media"
 			prelude: [
@@ -209,6 +210,8 @@ CSSRoot {
 			}
 			loc: SourceLocation smoke/input.css 7:0-12:1
 		}
+=======
+>>>>>>> main
 	]
 	comments: [
 		CommentBlock {
@@ -216,10 +219,40 @@ CSSRoot {
 			value: "This is a comment"
 			loc: SourceLocation smoke/input.css 1:0-1:21
 		}
+		CommentBlock {
+			id: "1"
+			value: "@media screen and (min-width: 1337px) {"
+			loc: SourceLocation smoke/input.css 7:0-7:43
+		}
+		CommentBlock {
+			id: "2"
+			value: "    body {"
+			loc: SourceLocation smoke/input.css 8:0-8:14
+		}
+		CommentBlock {
+			id: "3"
+			value: "        background: blue;"
+			loc: SourceLocation smoke/input.css 9:0-9:29
+		}
+		CommentBlock {
+			id: "4"
+			value: "        width: calc(2px + 3%);"
+			loc: SourceLocation smoke/input.css 10:0-10:34
+		}
+		CommentBlock {
+			id: "5"
+			value: "    }"
+			loc: SourceLocation smoke/input.css 11:0-11:9
+		}
+		CommentBlock {
+			id: "6"
+			value: "}"
+			loc: SourceLocation smoke/input.css 12:0-12:5
+		}
 	]
 	corrupt: false
 	diagnostics: []
 	path: RelativePath<smoke/input.css>
-	loc: SourceLocation smoke/input.css 1:0-12:1
+	loc: SourceLocation smoke/input.css 1:0-12:5
 }
 ```

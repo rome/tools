@@ -1,0 +1,13 @@
+Script started on Wed Mar 24 23:52:17 2021
+[?1034hbash-3.2$ s[K
+bash-3.2$ git push origin yeonjuan/css-qualified-name
+bash-3.2$ git push origin yeonjuan/css-qualified-names
+error: src refspec yeonjuan/css-qualified-names does not match any.
+[31merror: failed to push some refs to 'https://github.com/rome/tools.git'
+[mbash-3.2$ git push origin yeonjuan/css-qualified-namess
+error: src refspec yeonjuan/css-qualified-namess does not match any.
+[31merror: failed to push some refs to 'https://github.com/rome/tools.git'
+[mbash-3.2$ exit
+exit
+
+Script done on Wed Mar 24 23:52:28 2021

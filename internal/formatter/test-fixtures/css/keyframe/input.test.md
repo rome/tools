@@ -33,7 +33,7 @@
 ### `Output`
 
 ```css
- @keyframes foo {
+@keyframes foo {
 	from {
 		opacity: 0;
 	}
@@ -46,5 +46,6 @@
 		background-color: red;
 	}
 }
+
 
 ```

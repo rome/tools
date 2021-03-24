@@ -1,5 +1,5 @@
 import {CSSQualifiedName, NodeBaseWithComments} from "@internal/ast";
-import {AnyCSSValue} from "@internal/css-parser/types";
+import {AnyCSSValue} from "../unions";
 import {createBuilder} from "../../utils";
 
 export interface CSSAttributeSelector extends NodeBaseWithComments {
