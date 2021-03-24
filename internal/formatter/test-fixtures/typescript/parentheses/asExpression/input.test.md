@@ -24,6 +24,7 @@ class Foo extends (Bar as any) {}
 const bar = () => ({} as any);
 (foo as any) as any;
 const baz = async () => { await (foo as any); }
+const qux = (foo || bar) as any;
 
 ```
 
@@ -43,5 +44,6 @@ const bar = () => ({} as any);
 const baz = async () => {
 	await (foo as any);
 };
+const qux = (foo || bar) as any;
 
 ```
