@@ -83,14 +83,14 @@ export function createPrefixVisitor<State extends UnknownObject>(
 		name: `css-handler/prefix/${visitor.name}`,
 		enter: (path: CompilerPath, state: VisitorStateEnter<State>) => {
 			if (visitor.enter !== undefined && isCssBlockAndHasValue(path)) {
-				return visitor.enter(path as PrefixCompilerPath, state);
+				return visitor.enter(path, state);
 			} else {
 				return signals.retain;
 			}
 		},
 		exit: (path: CompilerPath, state: VisitorStateExit<State>) => {
 			if (visitor.exit !== undefined && isCssBlockAndHasValue(path)) {
-				return visitor.exit(path as PrefixCompilerPath, state);
+				return visitor.exit(path, state);
 			} else {
 				return signals.retain;
 			}
