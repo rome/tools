@@ -7,7 +7,7 @@ import {
 	CSSMediaFeaturePlain,
 	CSSMediaFeatureValue,
 	CSSNumber,
-	CSSString,
+	CSSIdentifier,
 } from "@internal/ast";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
@@ -55,14 +55,14 @@ export function parseMediaFeatureValue(
 	}
 	const token = parser.getToken();
 	const start = parser.getPosition();
-	let value: CSSDimension | CSSString | CSSNumber | undefined = undefined;
+	let value: CSSDimension | CSSIdentifier | CSSNumber | undefined = undefined;
 
 	if (token.type === "Ident") {
 		parser.nextToken();
 		value = parser.finishNode(
 			start,
 			{
-				type: "CSSString",
+				type: "CSSIdentifier",
 				value: token.value,
 			},
 		);
