@@ -35,11 +35,16 @@
 }
 
 
-@supports (box-shadow: 0 0 2px black inset) or (-moz-box-shadow: 0 0 2px black inset) or (-webkit-box-shadow: 0 0 2px black inset) or (-o-box-shadow: 0 0 2px black inset) {
+@supports (box-shadow: 0 0 2px black inset)
+	or (-moz-box-shadow: 0 0 2px black inset)
+	or (-webkit-box-shadow: 0 0 2px black inset)
+	or (-o-box-shadow: 0 0 2px black inset) {
 }
 
 
-@supports ((transition-property: color) or (animation-name: foo)) and (transform: rotate(10deg)) {
+@supports ((transition-property: color)
+	or (animation-name: foo))
+	and (transform: rotate(10deg)) {
 }
 
 
