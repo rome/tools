@@ -22,7 +22,7 @@ export default function CSSDeclaration(
 		tokens.push(space);
 		tokens.push("!important");
 	}
-	tokens.push(";");
+	// tokens.push(";");
 
 	return concat(tokens);
 }

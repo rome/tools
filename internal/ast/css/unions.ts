@@ -9,6 +9,7 @@ import {
 	CSSFunction,
 	CSSHash,
 	CSSIdentifier,
+	CSSKeyframe,
 	CSSMediaFeatureComparison,
 	CSSMediaFeatureGT,
 	CSSMediaFeatureLT,
@@ -19,6 +20,7 @@ import {
 	CSSPercentage,
 	CSSRaw,
 	CSSString,
+	CSSSupportsCondition,
 	CSSUrlFunction,
 	CSSVarFunction,
 	CSSWhitespace,
@@ -51,6 +53,7 @@ export type AnyCSSValue =
 	| CSSCalcFunction
 	| CSSCalcSum
 	| CSSMediaQueryList
+	| CSSSupportsCondition
 	| CSSRaw;
 
 export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;
@@ -79,3 +82,5 @@ export type RangeValueLTValue = [
 	CSSMediaFeatureGT,
 	CSSMediaFeatureName
 ];
+
+export type CSSAtRuleValue = CSSBlock | CSSKeyframe | CSSMediaQueryList;

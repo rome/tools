@@ -173,3 +173,13 @@ export function isCustomIdent(token: Tokens["Ident"]) {
 	}
 	return true;
 }
+
+export const NOT = "not";
+export const AND = "and";
+export const OR = "or";
+
+export type NOT = typeof NOT;
+export type AND = typeof AND;
+export type OR = typeof OR;
+
+export const CONDITIONS = [NOT, AND, OR];

@@ -9,8 +9,7 @@ import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
 import {descriptions} from "@internal/diagnostics";
 import {Position} from "@internal/parser-core";
-
-const CONDITIONS = ["not", "and", "or"];
+import {AND, CONDITIONS, NOT, OR} from "@internal/css-parser/utils";
 
 export function isCondition(value: string) {
 	return CONDITIONS.includes(value);
@@ -18,7 +17,7 @@ export function isCondition(value: string) {
 
 function parseCondition(
 	parser: CSSParser,
-	keyword: "not" | "and" | "or",
+	keyword: NOT | AND | OR,
 	keywordIsPast?: boolean,
 ): CSSMediaInParens | undefined {
 	const token = parser.getToken();
@@ -56,7 +55,7 @@ export function parseMediaNot(
 ): CSSMediaNot | undefined {
 	const start = startOfNotToken ?? parser.getPosition();
 
-	const value = parseCondition(parser, "not", !!startOfNotToken);
+	const value = parseCondition(parser, NOT, !!startOfNotToken);
 
 	if (value) {
 		return parser.finishNode(
@@ -73,7 +72,7 @@ export function parseMediaNot(
 export function parseMediaAnd(parser: CSSParser): CSSMediaAnd | undefined {
 	const start = parser.getPosition();
 
-	const value = parseCondition(parser, "and");
+	const value = parseCondition(parser, AND);
 
 	if (value) {
 		return parser.finishNode(
@@ -90,7 +89,7 @@ export function parseMediaAnd(parser: CSSParser): CSSMediaAnd | undefined {
 export function parseMediaOr(parser: CSSParser): CSSMediaOr | undefined {
 	const start = parser.getPosition();
 
-	const value = parseCondition(parser, "or");
+	const value = parseCondition(parser, OR);
 
 	if (value) {
 		return parser.finishNode(

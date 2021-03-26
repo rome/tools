@@ -3,6 +3,7 @@ import {CSSMediaInParens} from "@internal/ast";
 import {parseMediaFeature} from "@internal/css-parser/parser/media/feature";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaCondition} from "@internal/css-parser/parser/media/comparison";
+import {NOT} from "@internal/css-parser/utils";
 
 export function parseMediaInParens(
 	parser: CSSParser,
@@ -16,7 +17,7 @@ export function parseMediaInParens(
 	if (token.type === "LeftParen") {
 		const start = parser.getPosition();
 		const maybeIdent = parser.nextToken();
-		if (maybeIdent.type === "Ident" && maybeIdent.value === "not") {
+		if (maybeIdent.type === "Ident" && maybeIdent.value === NOT) {
 			// TODO: refactor here to understand boolean or not
 			const mediaCondition = parseMediaCondition(parser);
 			if (mediaCondition) {

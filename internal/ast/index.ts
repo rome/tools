@@ -12,7 +12,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:45978eebb8e1a29d666b3135b4e1bfb09ed70238,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:48235210905e08e9607d191d07f7ee16bf683916,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./css/core/CSSAtRule";
@@ -68,6 +68,10 @@ export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
 export * from "./css/selectors/CSSSelector";
 export * from "./css/core/CSSString";
+export * from "./css/supports/CSSSupportsCondition";
+export * from "./css/supports/CSSSupportsDeclaration";
+export * from "./css/supports/CSSSupportsFeature";
+export * from "./css/supports/CSSSupportsInParens";
 export * from "./css/selectors/CSSTypeSelector";
 export * from "./css/selectors/CSSUniversalSelector";
 export * from "./css/function/CSSUrlFunction";
@@ -364,6 +368,10 @@ export type AnyNode =
 	| n.CSSRule
 	| n.CSSSelector
 	| n.CSSString
+	| n.CSSSupportsCondition
+	| n.CSSSupportsDeclaration
+	| n.CSSSupportsFeature
+	| n.CSSSupportsInParens
 	| n.CSSTypeSelector
 	| n.CSSUniversalSelector
 	| n.CSSUrlFunction

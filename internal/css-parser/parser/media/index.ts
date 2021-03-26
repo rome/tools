@@ -15,11 +15,12 @@ import {
 } from "@internal/css-parser/parser/media/conditions";
 import {descriptions} from "@internal/diagnostics";
 import {parseMediaCondition} from "@internal/css-parser/parser/media/comparison";
+import {AND, NOT} from "@internal/css-parser/utils";
 
 function tryParseConditionWithoutOr(
 	parser: CSSParser,
 ): CSSMediaConditionWithoutOr | undefined {
-	// the start should be from "and" keyword
+	// the start should be from AND keyword
 	const start = parser.getPosition();
 
 	parser.nextToken();
@@ -31,7 +32,7 @@ function tryParseConditionWithoutOr(
 	const token = parser.getToken();
 
 	if (token.type === "Ident") {
-		if (token.value === "not") {
+		if (token.value === NOT) {
 			const mediaNot = parseMediaNot(parser);
 			if (mediaNot) {
 				return parser.finishNode(
@@ -55,7 +56,7 @@ function tryParseConditionWithoutOr(
 
 				const token = parser.getToken();
 
-				if (token.type === "Ident" && token.value === "and") {
+				if (token.type === "Ident" && token.value === AND) {
 					const mediaAnd = parseMediaAnd(parser);
 					if (mediaAnd) {
 						value.push(mediaAnd);
@@ -94,12 +95,12 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 	const token = parser.getToken();
 
 	// both AST nodes media-condition and token before media-type can start
-	// with the word "not"
+	// with the word NOT
 	//
 	// this means we need to make some checks ahead
 	if (token.type === "Ident") {
-		if (token.value === "not") {
-			condition = "not";
+		if (token.value === NOT) {
+			condition = NOT;
 			parser.nextToken();
 			hasNot = true;
 		} else if (token.value === "only") {
@@ -139,7 +140,7 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 					readToken(parser, "Whitespace");
 				}
 				const token = parser.getToken();
-				if (token.type === "Ident" && token.value === "and") {
+				if (token.type === "Ident" && token.value === AND) {
 					conditionWithoutOr = tryParseConditionWithoutOr(parser);
 				}
 
@@ -176,7 +177,7 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 					readToken(parser, "Whitespace");
 				}
 				const token = parser.getToken();
-				if (token.type === "Ident" && token.value === "and") {
+				if (token.type === "Ident" && token.value === AND) {
 					conditionWithoutOr = tryParseConditionWithoutOr(parser);
 				}
 
