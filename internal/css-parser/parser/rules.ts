@@ -8,6 +8,7 @@ import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
 import {parseComplexBlock} from "@internal/css-parser/parser/block";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseMediaList} from "@internal/css-parser/parser/media";
+import {parseAtSupports} from "@internal/css-parser/parser/supports";
 
 export function parseRules(
 	parser: CSSParser,
@@ -100,6 +101,12 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 		if (previousToken.value === "keyframes") {
 			block = parseKeyframe(parser);
 			break;
+		}
+		if (previousToken.value === "supports") {
+			const value = parseAtSupports(parser);
+			if (value) {
+				prelude.push(value);
+			}
 		}
 		if (matchToken(parser, "LeftCurlyBracket")) {
 			block = parseComplexBlock(parser);

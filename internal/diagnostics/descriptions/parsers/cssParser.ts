@@ -124,7 +124,7 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`Incorrect character, expected a number or a parenthesis.`,
 	},
 	EXPECTED_ID_HASH: {
-		message: markup`Expected to use identifier after <emphasis>#</emphasis>.`,
+		message: markup`Expected the use of an identifier after <emphasis>#</emphasis>.`,
 	},
 
 	MEDIA_QUERY_UNKNOWN_MEDIA_TYPES: (
@@ -161,5 +161,16 @@ export const cssParser = createDiagnosticsCategory({
 
 	MEDIA_QUERY_FEATURE_MALFORMED_PLAN: {
 		message: markup`The media feature is not grammatically correct`,
+	},
+
+	AT_SUPPORTS_MALFORMED: {
+		message: markup`The rule @supports is not syntactically correct`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`At this position, it's expected a <emphasis>parenthesis</emphasis> or a <emphasis>condition ("or", "and" or "not")</emphasis>`,
+			},
+		],
 	},
 });

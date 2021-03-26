@@ -17,6 +17,7 @@ import {
 import {Position} from "@internal/parser-core";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {AND, OR} from "@internal/css-parser/utils";
 
 export function parseMediaFeatureGT(
 	parser: CSSParser,
@@ -156,12 +157,12 @@ export function parseMediaCondition(
 				const token = parser.getToken();
 
 				if (token.type === "Ident") {
-					if (token.value === "and") {
+					if (token.value === AND) {
 						const mediaAnd = parseMediaAnd(parser);
 						if (mediaAnd) {
 							value.push(mediaAnd);
 						}
-					} else if (token.value === "or") {
+					} else if (token.value === OR) {
 						const mediaOr = parseMediaOr(parser);
 						if (mediaOr) {
 							value.push(mediaOr);

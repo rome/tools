@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:ebdbf693fd44714b2322bbbe9f70576cd38794e9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:1e5cf35eff15de570c07db3b0ef5e94c8cce3ecd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -125,6 +125,14 @@ import CSSSelector from "./css/selectors/CSSSelector";
 builders.set("CSSSelector", CSSSelector);
 import CSSString from "./css/core/CSSString";
 builders.set("CSSString", CSSString);
+import CSSSupportsCondition from "./css/supports/CSSSupportsCondition";
+builders.set("CSSSupportsCondition", CSSSupportsCondition);
+import CSSSupportsDeclaration from "./css/supports/CSSSupportsDeclaration";
+builders.set("CSSSupportsDeclaration", CSSSupportsDeclaration);
+import CSSSupportsFeature from "./css/supports/CSSSupportsFeature";
+builders.set("CSSSupportsFeature", CSSSupportsFeature);
+import CSSSupportsInParens from "./css/supports/CSSSupportsInParens";
+builders.set("CSSSupportsInParens", CSSSupportsInParens);
 import CSSTypeSelector from "./css/selectors/CSSTypeSelector";
 builders.set("CSSTypeSelector", CSSTypeSelector);
 import CSSUniversalSelector from "./css/selectors/CSSUniversalSelector";

@@ -31,7 +31,7 @@ CSSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Expected to use identifier after <emphasis>#</emphasis>."}
+				message: RAW_MARKUP {value: "Expected the use of an identifier after <emphasis>#</emphasis>."}
 			}
 			location: {
 				language: "css"
