@@ -47,7 +47,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 1
 															unit: "px"
-															loc: SourceLocation smoke/input.css 4:16-4:16
+															loc: SourceLocation smoke/input.css 4:16-4:19
 														}
 														loc: SourceLocation smoke/input.css 4:16-4:19
 													}
@@ -63,7 +63,7 @@ CSSRoot {
 													CSSCalcValue {
 														value: CSSPercentage {
 															value: 2
-															loc: SourceLocation smoke/input.css 4:22-4:22
+															loc: SourceLocation smoke/input.css 4:22-4:24
 														}
 														loc: SourceLocation smoke/input.css 4:22-4:24
 													}

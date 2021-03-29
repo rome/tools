@@ -290,7 +290,6 @@ export default class CompilerPath {
 		const {context} = this;
 		const {fixed: defaultFixed, suggestions} = nodes;
 		const target = nodes.target ?? old;
-
 		const {category, categoryValue} = description;
 		const advice = [...description.advice];
 		const verboseAdvice = [...(description.verboseAdvice ?? [])];

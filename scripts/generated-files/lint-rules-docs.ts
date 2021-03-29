@@ -47,7 +47,7 @@ function highlightPre(filename: string, code: string): string {
 // Extract the description field from the docs frontmatter
 export function extractLintRuleInfo(
 	content: string,
-	type: "eslint" | "tslint" = "eslint",
+	type: "eslint" | "tslint" | "stylelint" = "eslint",
 ):
 	| undefined
 	| {
@@ -151,6 +151,7 @@ export async function main() {
 				const content = await docs.readFileText();
 				const eslintInfo = extractLintRuleInfo(content, "eslint");
 				const tslintInfo = extractLintRuleInfo(content, "tslint");
+				const styleLintInfo = extractLintRuleInfo(content, "stylelint");
 
 				const lines = [];
 
@@ -168,6 +169,12 @@ export async function main() {
 				if (tslintInfo !== undefined) {
 					lines.push(
 						`**TSLint Equivalent:** [${tslintInfo.name}](${tslintInfo.url})`,
+					);
+				}
+
+				if (styleLintInfo !== undefined) {
+					lines.push(
+						`**Stylelint Equivalent:** [${styleLintInfo.name}](${styleLintInfo.url})`,
 					);
 				}
 

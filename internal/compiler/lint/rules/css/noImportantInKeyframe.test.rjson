@@ -1,0 +1,24 @@
+filename: "filename.css"
+invalid: [
+	"
+	@keyframes important1 {
+    from {
+      margin-top: 50px;
+    }
+    to {
+      margin-top: 100px !important;
+    }
+  }
+	"
+]
+valid: [
+	"
+@keyframes important1 {
+  from {
+    margin-top: 50px;
+  }
+  to {
+    margin-top: 100px;
+  }
+}	"
+]

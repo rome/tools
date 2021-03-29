@@ -55,7 +55,7 @@ CSSRoot {
 																value: CSSDimension {
 																	value: 10
 																	unit: "px"
-																	loc: SourceLocation invalid/var/input.css 3:18-3:18
+																	loc: SourceLocation invalid/var/input.css 3:18-3:22
 																}
 																loc: SourceLocation invalid/var/input.css 3:18-3:22
 															}
@@ -72,7 +72,7 @@ CSSRoot {
 																value: CSSDimension {
 																	value: 10
 																	unit: "px"
-																	loc: SourceLocation invalid/var/input.css 3:25-3:25
+																	loc: SourceLocation invalid/var/input.css 3:25-3:29
 																}
 																loc: SourceLocation invalid/var/input.css 3:25-3:29
 															}
