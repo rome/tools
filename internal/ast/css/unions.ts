@@ -6,6 +6,7 @@ import {
 	CSSComma,
 	CSSCustomProperty,
 	CSSDimension,
+	CSSFontFace,
 	CSSFunction,
 	CSSHash,
 	CSSIdentifier,
@@ -83,4 +84,8 @@ export type RangeValueLTValue = [
 	CSSMediaFeatureName
 ];
 
-export type CSSAtRuleValue = CSSBlock | CSSKeyframe | CSSMediaQueryList;
+export type CSSAtRuleValue =
+	| CSSBlock
+	| CSSKeyframe
+	| CSSMediaQueryList
+	| CSSFontFace;

@@ -5,10 +5,10 @@ import {parseSelectors} from "@internal/css-parser/parser/selectors";
 import {descriptions} from "@internal/diagnostics";
 import {parseKeyframe} from "@internal/css-parser/parser/keyframe";
 import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
-import {parseComplexBlock} from "@internal/css-parser/parser/block";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseMediaList} from "@internal/css-parser/parser/media";
 import {parseAtSupports} from "@internal/css-parser/parser/supports";
+import {parseFontFace} from "@internal/css-parser/parser/font";
 
 export function parseRules(
 	parser: CSSParser,
@@ -102,6 +102,12 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 			block = parseKeyframe(parser);
 			break;
 		}
+
+		if (previousToken.value === "font-face") {
+			block = parseFontFace(parser);
+			break;
+		}
+
 		if (previousToken.value === "supports") {
 			const value = parseAtSupports(parser);
 			if (value) {
@@ -109,7 +115,7 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 			}
 		}
 		if (matchToken(parser, "LeftCurlyBracket")) {
-			block = parseComplexBlock(parser);
+			block = parseDeclarationBlock(parser);
 			break;
 		}
 		const parsedValue = parseComponentValue(parser);
