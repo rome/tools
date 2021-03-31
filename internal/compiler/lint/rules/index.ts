@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:3774c59c86fc021085c0b4397097fb4e97ef3077,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:051673e89d8790440e569d16719bc6c1d066e64b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
 import noDistractingElements from "./a11y/noDistractingElements";
@@ -15,7 +15,7 @@ import useHtmlLang from "./a11y/useHtmlLang";
 import useIframeTitle from "./a11y/useIframeTitle";
 import useMediaCaption from "./a11y/useMediaCaption";
 import useValidLang from "./a11y/useValidLang";
-import noImportantInKeyframe from "./css/noImportantInKeyframe";
+import noImportantInKeyframes from "./css/noImportantInKeyframes";
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -137,7 +137,7 @@ lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
 lintTransforms.set("a11y/useIframeTitle", useIframeTitle);
 lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidLang", useValidLang);
-lintTransforms.set("css/noImportantInKeyframe", noImportantInKeyframe);
+lintTransforms.set("css/noImportantInKeyframes", noImportantInKeyframes);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
 lintTransforms.set("js/noArguments", noArguments);
 lintTransforms.set("js/noAsyncPromiseExecutor", noAsyncPromiseExecutor);
@@ -282,7 +282,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/useIframeTitle",
 	"a11y/useMediaCaption",
 	"a11y/useValidLang",
-	"css/noImportantInKeyframe",
+	"css/noImportantInKeyframes",
 	"html/useClosingNonVoid",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
@@ -401,7 +401,7 @@ export type LintRuleName =
 	| "a11y/useIframeTitle"
 	| "a11y/useMediaCaption"
 	| "a11y/useValidLang"
-	| "css/noImportantInKeyframe"
+	| "css/noImportantInKeyframes"
 	| "html/useClosingNonVoid"
 	| "js/noArguments"
 	| "js/noAsyncPromiseExecutor"

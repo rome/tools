@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:124fbbcd7e0f60c464ad722c48a0b4ba6a5b3465,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:3a27a9220461dd89f6c94a0e30e3e620b0b5b633,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -46,7 +46,7 @@ import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-ignore
 import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-ignore
-import noImportantInKeyframe from "./css/noImportantInKeyframe.test.rjson";
+import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -301,9 +301,9 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "useValidLang"],
 		cases: useValidLang,
 	},
-	"css/noImportantInKeyframe": {
-		category: ["lint", "css", "noImportantInKeyframe"],
-		cases: noImportantInKeyframe,
+	"css/noImportantInKeyframes": {
+		category: ["lint", "css", "noImportantInKeyframes"],
+		cases: noImportantInKeyframes,
 	},
 	"html/useClosingNonVoid": {
 		category: ["lint", "html", "useClosingNonVoid"],

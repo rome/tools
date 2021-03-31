@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:43a8f24833994b557234b82319cf660b8d0909e5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:096e4e28c862092fb9ea67a2c049b04571517e55,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
 	| ["lint", "a11y", "noAutofocus"]
@@ -121,7 +121,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useIframeTitle"]
 	| ["lint", "a11y", "useMediaCaption"]
 	| ["lint", "a11y", "useValidLang"]
-	| ["lint", "css", "noImportantInKeyframe"]
+	| ["lint", "css", "noImportantInKeyframes"]
 	| ["lint", "html", "useClosingNonVoid"]
 	| ["lint", "js", "noArguments"]
 	| ["lint", "js", "noAsyncPromiseExecutor"]
@@ -252,7 +252,7 @@ const lintCategoryNameMap: {
 	"lint/a11y/useIframeTitle": ["lint", "a11y", "useIframeTitle"],
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
-	"lint/css/noImportantInKeyframe": ["lint", "css", "noImportantInKeyframe"],
+	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
 	"lint/html/useClosingNonVoid": ["lint", "html", "useClosingNonVoid"],
 	"lint/js/noArguments": ["lint", "js", "noArguments"],
 	"lint/js/noAsyncPromiseExecutor": ["lint", "js", "noAsyncPromiseExecutor"],

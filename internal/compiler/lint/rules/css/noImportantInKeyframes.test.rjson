@@ -1,0 +1,27 @@
+filename: "filename.css"
+invalid: [
+	"
+@keyframes foo {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1 !important;
+  }
+}
+	"
+]
+valid: [
+	"
+@keyframes foo {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+	"
+]

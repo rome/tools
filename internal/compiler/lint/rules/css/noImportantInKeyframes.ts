@@ -2,7 +2,7 @@ import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 export default createVisitor({
-	name: "css/noImportantInKeyframe",
+	name: "css/noImportantInKeyframes",
 	enter(path) {
 		const {node} = path;
 
