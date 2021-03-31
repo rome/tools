@@ -13,8 +13,8 @@ eleventyNavigation:
 
 Disallow `!important` in `@keyframe` rules.
 
-<!-- GENERATED:START(hash:5e596dc63f41892dd79021290840107d843657df,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-**Stylelint Equivalent:** [keyframe-declaration-no-important](https://stylelint.io/user-guide/rules/keyframe-declaration-no-important)
+<!-- GENERATED:START(hash:0094121294949d6adeae81bbbd4799e0eb090fce,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+**stylelint Equivalent:** [keyframe-declaration-no-important](https://stylelint.io/user-guide/rules/keyframe-declaration-no-important)
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:8507aa7f60f9adc190e9c161a3da075f448d1d2e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->

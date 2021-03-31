@@ -174,7 +174,7 @@ export async function main() {
 
 				if (styleLintInfo !== undefined) {
 					lines.push(
-						`**Stylelint Equivalent:** [${styleLintInfo.name}](${styleLintInfo.url})`,
+						`**stylelint Equivalent:** [${styleLintInfo.name}](${styleLintInfo.url})`,
 					);
 				}
 

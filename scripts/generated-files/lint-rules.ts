@@ -197,6 +197,10 @@ export async function main() {
 			title: "React",
 			credits: `<a href="https://github.com/yannickcr/eslint-plugin-react">eslint-plugin-react</a>`,
 		},
+		css: {
+			title: "CSS",
+			credits: `<a href="https://stylelint.io/">stylelint</a>`,
+		},
 	};
 
 	// Order we want to display the categories
@@ -206,6 +210,7 @@ export async function main() {
 		"a11y",
 		"jsx-a11y",
 		"react",
+		"css",
 	];
 
 	// Generate lint docs index
