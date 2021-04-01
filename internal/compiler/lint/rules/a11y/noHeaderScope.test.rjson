@@ -9,7 +9,7 @@
 			"<th scope={scope}></th>"
 			"<th scope='col'></th>"
 	]
-}	
+}
 	{
 		filename: "file.html"
 		invalid: [
@@ -18,5 +18,5 @@
 		valid: [
 			"<th scope=\"col\"></th>"
 	]
-}	
+}
 ]
