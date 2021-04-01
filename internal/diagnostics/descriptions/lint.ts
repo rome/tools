@@ -144,6 +144,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	A11Y_NO_SCOPE: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noHeaderScope"],
+		message: markup`Avoid using the <emphasis>scope</emphasis> attribute on elements other than <emphasis>th</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Using the scope attribute incorrectly on tables makes them difficult to navigate using the keyboard.`,
+			},
+		],
+	},
 	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
 		category: DIAGNOSTIC_CATEGORIES["lint/js/noSingleCharRegexAlternatives"],
 		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
@@ -499,17 +510,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Opening external links in new tabs without rel="noreferrer" is a security risk. See <hyperlink target="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" /> for more details.`,
-			},
-		],
-	},
-	JSX_A11Y_NO_SCOPE: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noHeaderScope"],
-		message: markup`Avoid using the <emphasis>scope</emphasis> attribute on elements other than <emphasis>th</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Using the scope attribute incorrectly on tables makes them difficult to navigate using the keyboard.`,
 			},
 		],
 	},

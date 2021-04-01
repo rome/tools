@@ -12,13 +12,15 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:124fbbcd7e0f60c464ad722c48a0b4ba6a5b3465,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:12f8b3c328bfa10b4414b90b0090964a6b3670ba,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
 import noAutofocus from "./a11y/noAutofocus.test.rjson";
 // @ts-ignore
 import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
+// @ts-ignore
+import noHeaderScope from "./a11y/noHeaderScope.test.rjson";
 // @ts-ignore
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
 // @ts-ignore
@@ -142,8 +144,6 @@ import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
 import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
 // @ts-ignore
-import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
-// @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
@@ -246,6 +246,10 @@ export const tests: Tests = {
 	"a11y/noDistractingElements": {
 		category: ["lint", "a11y", "noDistractingElements"],
 		cases: noDistractingElements,
+	},
+	"a11y/noHeaderScope": {
+		category: ["lint", "a11y", "noHeaderScope"],
+		cases: noHeaderScope,
 	},
 	"a11y/noNoninteractiveElementToInteractiveRole": {
 		category: ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"],
@@ -490,10 +494,6 @@ export const tests: Tests = {
 	"jsx-a11y/noAccessKey": {
 		category: ["lint", "jsx-a11y", "noAccessKey"],
 		cases: noAccessKey,
-	},
-	"jsx-a11y/noHeaderScope": {
-		category: ["lint", "jsx-a11y", "noHeaderScope"],
-		cases: noHeaderScope,
 	},
 	"jsx-a11y/noOnChange": {
 		category: ["lint", "jsx-a11y", "noOnChange"],

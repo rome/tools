@@ -103,11 +103,12 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:8c79eca77e24f506913417658216274b69da26bc,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:8d18d4384d752827b06477907c1ebae9e61b5c78,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
 	| ["lint", "a11y", "noAutofocus"]
 	| ["lint", "a11y", "noDistractingElements"]
+	| ["lint", "a11y", "noHeaderScope"]
 	| ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"]
 	| ["lint", "a11y", "noNoninteractiveTabindex"]
 	| ["lint", "a11y", "noPositiveTabindex"]
@@ -170,7 +171,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useTemplate"]
 	| ["lint", "js", "useWhile"]
 	| ["lint", "jsx-a11y", "noAccessKey"]
-	| ["lint", "jsx-a11y", "noHeaderScope"]
 	| ["lint", "jsx-a11y", "noOnChange"]
 	| ["lint", "jsx-a11y", "noRedundantRoles"]
 	| ["lint", "jsx-a11y", "noTargetBlank"]
@@ -230,6 +230,7 @@ const lintCategoryNameMap: {
 	],
 	"lint/a11y/noAutofocus": ["lint", "a11y", "noAutofocus"],
 	"lint/a11y/noDistractingElements": ["lint", "a11y", "noDistractingElements"],
+	"lint/a11y/noHeaderScope": ["lint", "a11y", "noHeaderScope"],
 	"lint/a11y/noNoninteractiveElementToInteractiveRole": [
 		"lint",
 		"a11y",
@@ -308,7 +309,6 @@ const lintCategoryNameMap: {
 	"lint/js/useTemplate": ["lint", "js", "useTemplate"],
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
 	"lint/jsx-a11y/noAccessKey": ["lint", "jsx-a11y", "noAccessKey"],
-	"lint/jsx-a11y/noHeaderScope": ["lint", "jsx-a11y", "noHeaderScope"],
 	"lint/jsx-a11y/noOnChange": ["lint", "jsx-a11y", "noOnChange"],
 	"lint/jsx-a11y/noRedundantRoles": ["lint", "jsx-a11y", "noRedundantRoles"],
 	"lint/jsx-a11y/noTargetBlank": ["lint", "jsx-a11y", "noTargetBlank"],
