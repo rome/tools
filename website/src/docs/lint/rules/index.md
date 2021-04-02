@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:56af266e1ab1240d4b087d1f1404f6ba7c80a6ec,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:00a7f027d25ef616d877c04665d6d5d3efae7d25,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -409,6 +409,13 @@ discourage the usage of `autoFocus`
 enforce distracting elements are not used
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noHeaderScope">
+	<a href="/docs/lint/rules/a11y/noHeaderScope">noHeaderScope</a>
+	<a class="header-anchor" href="#noHeaderScope"></a>
+</h3>
+enforce scope prop is only used on `th` elements
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
 	<a href="/docs/lint/rules/a11y/noNoninteractiveElementToInteractiveRole">noNoninteractiveElementToInteractiveRole</a>
 	<a class="header-anchor" href="#noNoninteractiveElementToInteractiveRole"></a>
@@ -502,13 +509,6 @@ check if `lang` attribute is valid
 	<a class="header-anchor" href="#noAccessKey"></a>
 </h3>
 enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noHeaderScope">
-	<a href="/docs/lint/rules/jsx-a11y/noHeaderScope">noHeaderScope</a>
-	<a class="header-anchor" href="#noHeaderScope"></a>
-</h3>
-enforce scope prop is only used on `th` elements
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noOnChange">
