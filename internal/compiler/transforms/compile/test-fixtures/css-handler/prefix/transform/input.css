@@ -1,0 +1,16 @@
+.style {
+	text-align: center;
+	transform: none;
+	align-content: center;
+}
+
+.style {
+	transform: none;
+}
+
+.style {
+	text-align: center;
+	transform: none;
+	-moz-transform: none;
+	align-content: center;
+}

@@ -22,10 +22,10 @@ import {data} from "@internal/browsers-db";
 import {consumeUnknown} from "@internal/consume";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
-interface GetBrowserOptions {
+export type GetBrowserProps = {
 	name: BrowserIds | string;
 	version?: number;
-}
+};
 
 type BrowserIds =
 	| "android"
@@ -68,7 +68,7 @@ function loadAliases(): Map<string, BrowserIds> {
 	return abbr;
 }
 
-export function getBrowser({name, version}: GetBrowserOptions): Browser {
+export function getBrowser({name, version}: GetBrowserProps): Browser {
 	if (!aliases) {
 		aliases = loadAliases();
 	}

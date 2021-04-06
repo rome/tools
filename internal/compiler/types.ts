@@ -110,4 +110,5 @@ export type LintCompilerOptionsDecision = {
 export type CompilerOptions = {
 	bundle?: BundleCompileOptions;
 	lint?: LintCompilerOptions;
+	target?: string;
 };

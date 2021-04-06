@@ -36,6 +36,7 @@ import scopedRomeTransform from "./compileForBundle/scopedRomeTransform";
 import asyncImportTransform from "./compileForBundle/asyncImportTransform";
 import inlineEnv from "./compileForBundle/inlineEnv";
 import {commentInjectorVisitor, variableInjectorVisitor} from "./helpers";
+import {default as cssPrefixes} from "@internal/compiler/transforms/compile/css-handler/prefix";
 
 export const stageOrder: TransformStageName[] = [
 	"pre",
@@ -60,6 +61,7 @@ export const stageTransforms: TransformStageFactories = {
 		templateLiterals,
 		callSpread,
 		enums,
+		...cssPrefixes,
 	],
 	compileForBundle: (projectConfig: ProjectConfig, options: CompilerOptions) => {
 		const opts = options.bundle;
