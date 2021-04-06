@@ -17,12 +17,12 @@ disallow comparing against `-0`
 **ESLint Equivalent:** [no-compare-neg-zero](https://eslint.org/docs/rules/no-compare-neg-zero)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:de9c337ef203c6412c0d0ee6838cca36edc6d27c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:1b43140b3b390b6760d65c3153c086325461ca56,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&gt;=</span> <span class="token operator">-</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&gt;=</span> <span class="token operator">-</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/js/noCompareNegZero</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -35,5 +35,5 @@ disallow comparing against `-0`
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

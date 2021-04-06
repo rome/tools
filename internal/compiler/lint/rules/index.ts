@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:9c388925bca49f9173be3730919424147c234a36,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:a89fe3228dc278f23598d2f5d0d0971ebc4040ef,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
 import noDistractingElements from "./a11y/noDistractingElements";
@@ -15,6 +15,7 @@ import useHtmlLang from "./a11y/useHtmlLang";
 import useIframeTitle from "./a11y/useIframeTitle";
 import useMediaCaption from "./a11y/useMediaCaption";
 import useValidLang from "./a11y/useValidLang";
+import noImportantInKeyframes from "./css/noImportantInKeyframes";
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -136,6 +137,7 @@ lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
 lintTransforms.set("a11y/useIframeTitle", useIframeTitle);
 lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidLang", useValidLang);
+lintTransforms.set("css/noImportantInKeyframes", noImportantInKeyframes);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
 lintTransforms.set("js/noArguments", noArguments);
 lintTransforms.set("js/noAsyncPromiseExecutor", noAsyncPromiseExecutor);
@@ -280,6 +282,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/useIframeTitle",
 	"a11y/useMediaCaption",
 	"a11y/useValidLang",
+	"css/noImportantInKeyframes",
 	"html/useClosingNonVoid",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
@@ -398,6 +401,7 @@ export type LintRuleName =
 	| "a11y/useIframeTitle"
 	| "a11y/useMediaCaption"
 	| "a11y/useValidLang"
+	| "css/noImportantInKeyframes"
 	| "html/useClosingNonVoid"
 	| "js/noArguments"
 	| "js/noAsyncPromiseExecutor"

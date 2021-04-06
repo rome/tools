@@ -17,6 +17,10 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	CSS_NO_IMPORTANT_IN_KEYFRAME: {
+		category: DIAGNOSTIC_CATEGORIES["lint/css/noImportantInKeyframes"],
+		message: markup`Using <emphasis>!important</emphasis> within keyframes declarations is completely ignored in some browsers.`,
+	},
 	A11_Y_NO_REDUNDANT_ALT: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noRedundantAlt"],
 		message: markup`Avoid the words "image", "picture", or "photo" in <emphasis>img</emphasis> element alt text.`,

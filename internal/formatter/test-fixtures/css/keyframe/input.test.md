@@ -37,11 +37,9 @@
 	from {
 		opacity: 0;
 	}
-
 	15% {
 		opacity: 0.23;
 	}
-
 	to {
 		background-color: red;
 	}

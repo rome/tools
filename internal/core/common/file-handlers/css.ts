@@ -6,7 +6,7 @@ export const cssHandler: PartialExtensionHandler = {
 	hasTabs: true,
 	mime: "text/css",
 	capabilities: {
-		lint: false,
+		lint: true,
 		format: true,
 	},
 

@@ -35,7 +35,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "px"
-															loc: SourceLocation invalid/calc-space/input.css 2:13-2:13
+															loc: SourceLocation invalid/calc-space/input.css 2:13-2:16
 														}
 														loc: SourceLocation invalid/calc-space/input.css 2:13-2:16
 													}

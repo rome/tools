@@ -67,7 +67,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 10
 															unit: "px"
-															loc: SourceLocation functions/input.css 4:17-4:17
+															loc: SourceLocation functions/input.css 4:17-4:21
 														}
 														loc: SourceLocation functions/input.css 4:17-4:21
 													}
@@ -84,7 +84,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 5
 															unit: "rem"
-															loc: SourceLocation functions/input.css 4:24-4:24
+															loc: SourceLocation functions/input.css 4:24-4:28
 														}
 														loc: SourceLocation functions/input.css 4:24-4:28
 													}

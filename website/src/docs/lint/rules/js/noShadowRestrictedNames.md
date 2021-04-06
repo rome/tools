@@ -17,12 +17,12 @@ disallow identifiers from shadowing restricted names
 **ESLint Equivalent:** [no-shadow-restricted-names](https://eslint.org/docs/rules/no-shadow-restricted-names)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:19df3dfa5ed1ce4e9a7fb2eb578284d77a69713a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3ebe99d727f7c430b40365ff01adcd796d2a131a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:9</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,7 +38,7 @@ disallow identifiers from shadowing restricted names
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">Set</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">Set</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -54,7 +54,7 @@ disallow identifiers from shadowing restricted names
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span>  <span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">Object</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">try</span> <span class="token punctuation">{</span>  <span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">Object</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:15</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -70,7 +70,7 @@ disallow identifiers from shadowing restricted names
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token keyword">function</span> <span class="token function">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token operator">!</span><span class="token keyword">function</span> <span class="token function">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:10</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -86,7 +86,7 @@ disallow identifiers from shadowing restricted names
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:14</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

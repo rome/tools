@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:00a7f027d25ef616d877c04665d6d5d3efae7d25,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:7dabac07385724d2e48a0352a8ecba14e6c4c199,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -737,6 +737,17 @@ enforce component methods order
 	<a class="header-anchor" href="#useStylePropObject"></a>
 </h3>
 enforce style prop value is an object
+</div>
+</section>
+<section>
+<h2>CSS</h2>
+<p>Rule semantics and descriptions taken from <a href="https://stylelint.io/">stylelint</a>. See individual rule docs for direct references.</p>
+<div class="rule">
+<h3 data-toc-exclude id="noImportantInKeyframes">
+	<a href="/docs/lint/rules/css/noImportantInKeyframes">noImportantInKeyframes</a>
+	<a class="header-anchor" href="#noImportantInKeyframes"></a>
+</h3>
+disallow `!important` in `@keyframe` rules
 </div>
 </section>
 <!-- GENERATED:END(id:main) -->
