@@ -3,7 +3,7 @@ import {MarkdownParser, isBlockToken} from "@internal/markdown-parser";
 import {parseInline} from "@internal/markdown-parser/parser/inline";
 import {descriptions} from "@internal/diagnostics";
 import {parseText} from "@internal/markdown-parser/parser/text";
-import {parseReference} from "@internal/markdown-parser/parser/reference";
+import {parseLink} from "@internal/markdown-parser/parser/link";
 import {Position} from "@internal/parser-core";
 
 export function parseParagraph(
@@ -49,7 +49,7 @@ export function parseParagraph(
 					// TODO: to add support for more inline tokens: link, code inline block
 					(unknownToken) => {
 						if (unknownToken.type === "OpenSquareBracket") {
-							return parseReference(parser);
+							return parseLink(parser);
 						}
 
 						return parseText(parser);
@@ -66,7 +66,7 @@ export function parseParagraph(
 				break;
 			}
 			case "OpenSquareBracket": {
-				const reference = parseReference(parser);
+				const reference = parseLink(parser);
 				if (Array.isArray(reference)) {
 					children.push(...reference);
 				} else {

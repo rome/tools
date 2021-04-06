@@ -184,9 +184,12 @@ MarkdownRoot {
 					children: [
 						MarkdownParagraph {
 							children: [
-								MarkdownReferenceInline {
-									value: ""
-									reference: []
+								MarkdownText {
+									value: "["
+									loc: SourceLocation lists/input.md 11:3-11:4
+								}
+								MarkdownText {
+									value: "]"
 									loc: SourceLocation lists/input.md 11:3-11:4
 								}
 								MarkdownText {

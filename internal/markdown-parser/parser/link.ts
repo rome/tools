@@ -1,16 +1,16 @@
 import {MarkdownParser} from "@internal/markdown-parser";
 import {
 	AnyMarkdownInlineNode,
+	MarkdownLink,
 	MarkdownReference,
-	MarkdownReferenceInline,
 } from "@internal/ast";
 import {parseInline} from "@internal/markdown-parser/parser/inline";
 import {descriptions} from "@internal/diagnostics";
 import {parseText} from "@internal/markdown-parser/parser/text";
 
-export function parseReference(
+export function parseLink(
 	parser: MarkdownParser,
-): MarkdownReferenceInline | AnyMarkdownInlineNode[] {
+): MarkdownLink | AnyMarkdownInlineNode[] {
 	parser.expectToken("OpenSquareBracket");
 
 	const pos = parser.getPosition();
@@ -24,15 +24,53 @@ export function parseReference(
 					description: descriptions.MARKDOWN_PARSER.ONLY_TEXT_INSIDE_DEFINITIONS,
 				});
 			}
+
+			const closeSquarePos = parser.getPosition();
 			parser.eatToken("CloseSquareBracket");
-			return parser.finishNode(
-				pos,
-				{
-					type: "MarkdownReferenceInline",
-					value: "",
-					reference: reference as MarkdownReference,
-				},
-			);
+			if (parser.getToken().type === "OpenBracket") {
+				parser.eatToken("OpenBracket");
+				const link = parser.eatToken("Text");
+				const closeBracket = parser.eatToken("CloseBracket");
+				if (link && closeBracket) {
+					return parser.finishNode(
+						pos,
+						{
+							type: "MarkdownLink",
+							text: reference as MarkdownReference,
+							link: link.value,
+						},
+					);
+				} else {
+					reference.push(
+						parser.finishNode(
+							pos,
+							{
+								type: "MarkdownText",
+								value: `(${link?.value}`,
+							},
+						),
+					);
+					return [...(reference as AnyMarkdownInlineNode[])];
+				}
+			} else {
+				return [
+					parser.finishNode(
+						pos,
+						{
+							type: "MarkdownText",
+							value: "[",
+						},
+					),
+					...(reference as AnyMarkdownInlineNode[]),
+					parser.finishNode(
+						closeSquarePos,
+						{
+							type: "MarkdownText",
+							value: "]",
+						},
+					),
+				];
+			}
 		}
 		const token = parser.getToken();
 		if (token.type === "Text") {
