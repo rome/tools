@@ -17,35 +17,35 @@ Disallow `!important` in `@keyframe` rules.
 **stylelint Equivalent:** [keyframe-declaration-no-important](https://stylelint.io/user-guide/rules/keyframe-declaration-no-important)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a37e59a63b6f171d9b57ad8460b2d87af65f5c52,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a1039ea3f9ddf1b2da2a99ef671bb8cca08225ba,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text">@keyframes foo {
-  from {
-    opacity: 0;
-    width: 0;
-  }
+{% raw %}<pre class="language-css"><code class="language-css"><span class="token atrule">@keyframes</span> <span class="token string">foo</span> <span class="token punctuation">{</span>
+  <span class="token string">from</span> <span class="token punctuation">{</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 
-  to {
-    opacity: 1 !important;
-    width: 100px !important;
-  }
-}</code></pre>{% endraw %}
+  <span class="token string">to</span> <span class="token punctuation">{</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">1</span> !<span class="token string">important</span><span class="token punctuation">;</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> 100px !<span class="token string">important</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.css:8:4</span> <strong>lint/css/noImportantInKeyframes</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using </span><span style="color: Tomato;"><strong>!important</strong></span><span style="color: Tomato;"> within keyframes declarations is completely ignored</span>
     <span style="color: Tomato;">in some browsers.</span>
 
-   <strong>  7</strong><strong> │ </strong>  to {
-   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 8</strong><strong> │ </strong>    opacity: 1 !important;
+   <strong>  7</strong><strong> │ </strong>  <span class="token string">to</span> <span class="token punctuation">{</span>
+   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 8</strong><strong> │ </strong>    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">1</span> !<span class="token string">important</span><span class="token punctuation">;</span>
       <strong> │ </strong>    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 9</strong><strong> │ </strong>    width: 100px !important;
+   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 9</strong><strong> │ </strong>    <span class="token property">width</span><span class="token punctuation">:</span> 100px !<span class="token string">important</span><span class="token punctuation">;</span>
       <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  10</strong><strong> │ </strong>  }
-  <strong>  11</strong><strong> │ </strong>}
+  <strong>  10</strong><strong> │ </strong>  <span class="token punctuation">}</span>
+  <strong>  11</strong><strong> │ </strong><span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
@@ -60,13 +60,13 @@ Disallow `!important` in `@keyframe` rules.
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text">@keyframes foo {
-  from {
-    opacity: 0;
-  }
+{% raw %}<pre class="language-css"><code class="language-css"><span class="token atrule">@keyframes</span> <span class="token string">foo</span> <span class="token punctuation">{</span>
+  <span class="token string">from</span> <span class="token punctuation">{</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 
-  to {
-    opacity: 1;
-  }
-}</code></pre>{% endraw %}
+  <span class="token string">to</span> <span class="token punctuation">{</span>
+    <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

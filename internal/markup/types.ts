@@ -126,6 +126,10 @@ export type MarkupTokenType =
 	| "attr-value"
 	| "attr-equals"
 	| "tag"
+	| "selector"
+	| "property"
+	| "atrule"
+	| "rule"
 	| "function"
 	| "boolean"
 	| "important";

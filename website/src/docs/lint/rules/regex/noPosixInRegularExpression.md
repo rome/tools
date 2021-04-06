@@ -14,12 +14,12 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:857f6a82bf80886c8f05c52cc81d461df4b89ffd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:b7af904174f3b1aa77190ff645938d6c4e417d59,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[:alpha:]]/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[:alpha:]]/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:18</span> <strong>lint/regex/noPosixInRegularExpression</strong> ━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -35,7 +35,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[.ch.]]/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[.ch.]]/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:18</span> <strong>lint/regex/noPosixInRegularExpression</strong> ━━━━━━━━━━━━━━━━━━━━━━━
 

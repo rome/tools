@@ -17,12 +17,12 @@ enforce scope prop is only used on `th` elements
 **ESLint Equivalent:** [scope](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ffc0fccbff426fa5401fbbdf6cd15784b91fb547,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:fe602f6ff95532f3c5e40a9d3204ffc79f7f6b33,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">scope</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">scope</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/noHeaderScope</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -43,7 +43,7 @@ enforce scope prop is only used on `th` elements
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;col&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;col&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/noHeaderScope</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -61,7 +61,7 @@ enforce scope prop is only used on `th` elements
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;div</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
 
 </code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">scope</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;col&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">scope</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;col&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/noHeaderScope</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -82,7 +82,7 @@ enforce scope prop is only used on `th` elements
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">scope</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">th</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;col&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">th</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">th</span> <span class="token attr-name">scope</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;col&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">th</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">scope</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">th</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;col&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">th</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">th</span> <span class="token attr-name">scope</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;col&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">th</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

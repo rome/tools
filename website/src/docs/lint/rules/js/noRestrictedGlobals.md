@@ -17,12 +17,12 @@ disallow certain global variables
 **ESLint Equivalent:** [no-restricted-globals](https://eslint.org/docs/rules/no-restricted-globals)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ca2aead01be4a57aeef12bb91ac62a2d509a6015,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:35790bd7541a247b881cd99844be63143014609d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/noRestrictedGlobals</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -37,7 +37,7 @@ disallow certain global variables
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token function">foo</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token function">foo</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noRestrictedGlobals</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -52,7 +52,7 @@ disallow certain global variables
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

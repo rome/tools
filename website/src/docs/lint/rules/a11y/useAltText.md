@@ -19,12 +19,12 @@ readers to understand the purpose and the context of the image.
 **ESLint Equivalent:** [alt-text](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/alt-text.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:6500cb494364f2f46ee31e8e288da0e8b8adfee8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:d9350cb6d8d0fe66fea17c675b13a4c60a704eae,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -41,7 +41,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -58,7 +58,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -75,7 +75,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&quot;presentation&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&quot;presentation&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -92,7 +92,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&quot;none&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&quot;none&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -109,7 +109,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">object</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">object</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -126,7 +126,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">object</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">object</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -143,7 +143,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">area</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">area</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -160,7 +160,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">area</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">area</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -177,7 +177,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -194,7 +194,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -208,7 +208,7 @@ readers to understand the purpose and the context of the image.
     <span style="color: rgb(38, 148, 255);">readers to understand content&apos;s purpose within a page.</span>
 
 </code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">src</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">src</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -225,7 +225,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">alt</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">alt</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -242,7 +242,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">src</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token attr-name">role</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;presentation&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">src</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token attr-name">role</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;presentation&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -259,7 +259,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">src</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token attr-name">role</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;none&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">src</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token attr-name">role</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;none&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -276,7 +276,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">object</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">object</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">object</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">object</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -293,7 +293,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">area</span>  <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">area</span>  <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -310,7 +310,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token attr-name">alt</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token attr-name">alt</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -327,7 +327,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -344,7 +344,7 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token attr-name">alt</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token attr-name">alt</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -361,34 +361,34 @@ readers to understand the purpose and the context of the image.
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&quot;Foo eating a sandwich.&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;Foo eating a sandwich.&quot;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">altText</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">`</span><span class="token punctuation">${</span><span class="token variable">person</span><span class="token punctuation">}</span><span class="token string"> smiling</span><span class="token string">`</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&quot;&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">object</span> <span class="token attr-name">aria-label</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">object</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">object</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&quot;id1&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">object</span>&gt;Meaningful description&lt;<span class="token operator">/</span><span class="token variable">object</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">object</span>&gt;<span class="token punctuation">{</span><span class="token variable">hello</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">object</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">object</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&quot;An object&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">area</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">area</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">area</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&quot;id1&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">area</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&quot;This is descriptive!&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&quot;This is descriptive!&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&quot;id1&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">src</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;Foo eating a sandwich.&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">object</span> <span class="token attr-name">aria-label</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">object</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">object</span> <span class="token attr-name">aria-labelledby</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;id1&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">object</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">object</span> <span class="token attr-name">title</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;An object&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">object</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token attr-name">aria-label</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token attr-name">aria-labelledby</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;id1&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token attr-name">alt</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;This is descriptive!&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token attr-name">alt</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;This is descriptive!&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token attr-name">aria-label</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token attr-name">aria-labelledby</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;id1&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&quot;Foo eating a sandwich.&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;Foo eating a sandwich.&quot;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">altText</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">`</span><span class="token punctuation">${</span><span class="token variable">person</span><span class="token punctuation">}</span><span class="token string"> smiling</span><span class="token string">`</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&quot;&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">object</span> <span class="token attr-name">aria-label</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">object</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">object</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&quot;id1&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">object</span>&gt;Meaningful description&lt;<span class="token operator">/</span><span class="token variable">object</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">object</span>&gt;<span class="token punctuation">{</span><span class="token variable">hello</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">object</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">object</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&quot;An object&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">area</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">area</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">area</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&quot;id1&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">area</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&quot;This is descriptive!&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&quot;This is descriptive!&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&quot;foo&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&quot;image&quot;</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&quot;id1&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">img</span> <span class="token attr-name">src</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token attr-name">alt</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;Foo eating a sandwich.&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">object</span> <span class="token attr-name">aria-label</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">object</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">object</span> <span class="token attr-name">aria-labelledby</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;id1&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">object</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">object</span> <span class="token attr-name">title</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;An object&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">object</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token attr-name">aria-label</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token attr-name">aria-labelledby</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;id1&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token attr-name">alt</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;This is descriptive!&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token attr-name">alt</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;This is descriptive!&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token attr-name">aria-label</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token attr-name">type</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;image&quot;</span> <span class="token attr-name">aria-labelledby</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;id1&quot;</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

@@ -17,12 +17,12 @@ prevent JSX prop spreading
 **ESLint Equivalent:** [jsx-props-no-spreading](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e2b63a9fae374c1106ad94a228e78d86e5b6b7c4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e1f9c417882af6cd3d34f379e0a6386e2061b61e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">App</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">App</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx/noPropSpreading</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,7 +38,7 @@ prevent JSX prop spreading
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">MyCustomComponent</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">MyCustomComponent</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/jsx/noPropSpreading</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -54,7 +54,7 @@ prevent JSX prop spreading
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">MyCustomComponent</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">MyCustomComponent</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:53</span> <strong>lint/jsx/noPropSpreading</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -70,7 +70,7 @@ prevent JSX prop spreading
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx/noPropSpreading</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -86,6 +86,6 @@ prevent JSX prop spreading
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">MyCustomComponent</span> <span class="token attr-name">one_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">one_prop</span><span class="token punctuation">}</span> <span class="token attr-name">two_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">two_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">src</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">alt</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">MyCustomComponent</span> <span class="token attr-name">one_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">one_prop</span><span class="token punctuation">}</span> <span class="token attr-name">two_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">two_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">src</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">alt</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

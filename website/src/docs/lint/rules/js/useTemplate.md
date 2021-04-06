@@ -17,12 +17,12 @@ require template literals instead of string concatenation
 **ESLint Equivalent:** [prefer-template](https://eslint.org/docs/rules/prefer-template)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:d521e83d750bd9c2d76fd91d0e9204f213b54376,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5ca84352712ff154f6695363afa3da0d624fa4ab,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">;</span> <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">;</span> <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:31</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -40,7 +40,7 @@ require template literals instead of string concatenation
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -58,7 +58,7 @@ require template literals instead of string concatenation
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -76,7 +76,7 @@ require template literals instead of string concatenation
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:13</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -94,7 +94,7 @@ require template literals instead of string concatenation
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -124,7 +124,7 @@ require template literals instead of string concatenation
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -142,7 +142,7 @@ require template literals instead of string concatenation
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">`</span><span class="token string">bar</span><span class="token punctuation">${</span><span class="token string">`</span><span class="token string">baz</span><span class="token punctuation">${</span><span class="token string">&apos;bat&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bam&apos;</span><span class="token punctuation">}</span><span class="token string">`</span><span class="token punctuation">}</span><span class="token string">`</span> <span class="token operator">+</span> <span class="token string">&apos;boo&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">`</span><span class="token string">bar</span><span class="token punctuation">${</span><span class="token string">`</span><span class="token string">baz</span><span class="token punctuation">${</span><span class="token string">&apos;bat&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bam&apos;</span><span class="token punctuation">}</span><span class="token string">`</span><span class="token punctuation">}</span><span class="token string">`</span> <span class="token operator">+</span> <span class="token string">&apos;boo&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -160,7 +160,7 @@ require template literals instead of string concatenation
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -178,6 +178,6 @@ require template literals instead of string concatenation
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

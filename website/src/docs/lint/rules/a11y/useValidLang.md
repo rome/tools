@@ -18,12 +18,12 @@ This rule is applied to HTML and JSX files.
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a17122600dd09e8cd2b9b2c8ed27f474bd2f5484,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:76a73ada5da9c8e29f0fffbb033186fe21e8c6ee,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:11</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -36,7 +36,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;ex&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;ex&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:11</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -49,7 +49,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo-bar&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;foo-bar&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:11</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -62,7 +62,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;aa-zz&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;aa-zz&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:11</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -94,7 +94,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;zz-AA&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;zz-AA&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:11</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -126,7 +126,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;en2&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;en2&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:11</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -136,7 +136,7 @@ This rule is applied to HTML and JSX files.
                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -149,7 +149,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;ex&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;ex&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -162,7 +162,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo-bar&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo-bar&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -175,7 +175,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;aa-zz&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;aa-zz&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -207,7 +207,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;zz-AA&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;zz-AA&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/a11y/useValidLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -239,7 +239,7 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en2&gt;&lt;/html&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en2&gt;&lt;/html&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:23</span> <strong>parse(js)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -252,9 +252,9 @@ This rule is applied to HTML and JSX files.
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;en-US&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;en&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en-US&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">lang</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;en-US&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">html</span> <span class="token attr-name">lang</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;en&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en-US&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">lang</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
