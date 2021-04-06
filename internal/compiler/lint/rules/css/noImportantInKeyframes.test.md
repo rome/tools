@@ -8,15 +8,27 @@
 
 ```
 
- lint/css/noImportantInKeyframes/reject/1/filename.css:7:4 lint/css/noImportantInKeyframes ━━━━━━━━━
+ lint/css/noImportantInKeyframes/reject/1/filename.css:8:4 lint/css/noImportantInKeyframes  FIXABLE
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using !important within keyframes declarations is completely ignored in some browsers.
 
-    6 │   to {
-  > 7 │     opacity: 1 !important;
-      │     ^^^^^^^^^^^^^^^^^^^^^
-    8 │   }
-    9 │ }
+     7 │   to {
+   > 8 │     opacity: 1 !important;
+       │     ^^^^^^^^^^^^^^^^^^^^^^
+   > 9 │     width: 100px !important;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │   }
+    11 │ }
+
+  ℹ Safe fix
+
+    1 1 │   to·{
+    2   │ - → opacity:·1·!important;
+    3   │ - → width:·100px·!important;
+      2 │ + → opacity:·1;
+      3 │ + → width:·100px;
+    4 4 │   }
 
 
 ```
@@ -27,9 +39,11 @@
 @keyframes foo {
 	from {
 		opacity: 0;
+		width: 0;
 	}
 	to {
-		opacity: 1 !important;
+		opacity: 1;
+		width: 100px;
 	}
 }
 
