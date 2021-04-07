@@ -1,0 +1,18 @@
+@page MyPage:blank {
+
+	@top-center { content: none }
+
+
+
+	margin-left: 4cm;
+}
+
+@page      :blank {
+	@top-center { content: none }
+	margin-left: 4cm;
+}
+
+@page      {
+	@top-center { content: none }
+	margin-left: 4cm;
+}

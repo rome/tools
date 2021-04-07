@@ -1,5 +1,6 @@
 import * as n from "@internal/ast";
 import {
+	CSSAtPage,
 	CSSBlock,
 	CSSCalcFunction,
 	CSSCalcSum,
@@ -88,4 +89,5 @@ export type CSSAtRuleValue =
 	| CSSBlock
 	| CSSKeyframe
 	| CSSMediaQueryList
+	| CSSAtPage
 	| CSSFontFace;

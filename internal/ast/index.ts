@@ -12,9 +12,10 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:120ed13bebb310f3482e342f82be74b1a0a8eeff,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:47f3274dc1afbb79b39d6d2c678490d88fa9c2a5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
+export * from "./css/page/CSSAtPage";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
 export * from "./css/core/CSSBlock";
@@ -61,9 +62,12 @@ export * from "./css/media/CSSMediaQuery";
 export * from "./css/media/CSSMediaQueryList";
 export * from "./css/media/CSSMediaType";
 export * from "./css/core/CSSNumber";
+export * from "./css/page/CSSPageSelector";
+export * from "./css/page/CSSPageSelectorList";
 export * from "./css/core/CSSPercentage";
 export * from "./css/selectors/CSSPseudoClassSelector";
 export * from "./css/selectors/CSSPseudoElementSelector";
+export * from "./css/page/CSSPseudoPage";
 export * from "./css/core/CSSRaw";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
@@ -316,6 +320,7 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
+	| n.CSSAtPage
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
 	| n.CSSBlock
@@ -362,9 +367,12 @@ export type AnyNode =
 	| n.CSSMediaQueryList
 	| n.CSSMediaType
 	| n.CSSNumber
+	| n.CSSPageSelector
+	| n.CSSPageSelectorList
 	| n.CSSPercentage
 	| n.CSSPseudoClassSelector
 	| n.CSSPseudoElementSelector
+	| n.CSSPseudoPage
 	| n.CSSRaw
 	| n.CSSRoot
 	| n.CSSRule

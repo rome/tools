@@ -9,6 +9,7 @@ import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseMediaList} from "@internal/css-parser/parser/media";
 import {parseAtSupports} from "@internal/css-parser/parser/supports";
 import {parseFontFace} from "@internal/css-parser/parser/font";
+import {parseAtPage} from "@internal/css-parser/parser/page";
 
 export function parseRules(
 	parser: CSSParser,
@@ -105,6 +106,11 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 
 		if (previousToken.value === "font-face") {
 			block = parseFontFace(parser);
+			break;
+		}
+
+		if (previousToken.value === "page") {
+			block = parseAtPage(parser);
 			break;
 		}
 

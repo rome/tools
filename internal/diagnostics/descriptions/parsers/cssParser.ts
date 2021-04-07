@@ -173,4 +173,11 @@ export const cssParser = createDiagnosticsCategory({
 			},
 		],
 	},
+
+	AT_PAGE_MALFORMED: {
+		message: markup`No whitespace is allowed between selector and pseudo page.`,
+	},
+	AT_PAGE_INVALID_PSEUDO_PAGE: {
+		message: markup`Pseudo page can accept only <emphasis>left, right, first or blank</emphasis> and there can't be spaces in between`,
+	},
 });
