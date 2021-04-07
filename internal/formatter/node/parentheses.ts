@@ -192,6 +192,11 @@ function needsParenLogicalExpression(
 		}
 	}
 
+	// (a || b) as type
+	if (parent.type === "TSAsExpression") {
+		return true;
+	}
+
 	if (isBinary(parent)) {
 		const parentOp = parent.operator;
 		const parentPos = getPrecedence(parentOp);
