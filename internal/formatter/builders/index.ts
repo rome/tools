@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:7a8ec38bd9c62bb0b3bc19e881f1f3f2f1096159,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:02bf1b74e6c258a579b043c22390fc7de5a1d7fa,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -464,6 +464,8 @@ import MarkdownHeadingBlock from "./markdown/blocks/MarkdownHeadingBlock";
 builders.set("MarkdownHeadingBlock", MarkdownHeadingBlock);
 import MarkdownImageInline from "./markdown/inline/MarkdownImageInline";
 builders.set("MarkdownImageInline", MarkdownImageInline);
+import MarkdownLink from "./markdown/inline/MarkdownLink";
+builders.set("MarkdownLink", MarkdownLink);
 import MarkdownListBlock from "./markdown/blocks/MarkdownListBlock";
 builders.set("MarkdownListBlock", MarkdownListBlock);
 import MarkdownListItem from "./markdown/core/MarkdownListItem";
@@ -472,8 +474,6 @@ import MarkdownParagraph from "./markdown/core/MarkdownParagraph";
 builders.set("MarkdownParagraph", MarkdownParagraph);
 import MarkdownQuoteBlock from "./markdown/blocks/MarkdownQuoteBlock";
 builders.set("MarkdownQuoteBlock", MarkdownQuoteBlock);
-import MarkdownReferenceInline from "./markdown/inline/MarkdownReferenceInline";
-builders.set("MarkdownReferenceInline", MarkdownReferenceInline);
 import MarkdownRoot from "./markdown/core/MarkdownRoot";
 builders.set("MarkdownRoot", MarkdownRoot);
 import MarkdownText from "./markdown/core/MarkdownText";

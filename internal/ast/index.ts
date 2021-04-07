@@ -12,7 +12,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:6451ba35633a1ebbf85e8a824f4a8a29cbd05309,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:120ed13bebb310f3482e342f82be74b1a0a8eeff,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./css/core/CSSAtRule";
@@ -233,11 +233,11 @@ export * from "./markdown/blocks/MarkdownDividerBlock";
 export * from "./markdown/inline/MarkdownEmphasisInline";
 export * from "./markdown/blocks/MarkdownHeadingBlock";
 export * from "./markdown/inline/MarkdownImageInline";
+export * from "./markdown/inline/MarkdownLink";
 export * from "./markdown/blocks/MarkdownListBlock";
 export * from "./markdown/core/MarkdownListItem";
 export * from "./markdown/core/MarkdownParagraph";
 export * from "./markdown/blocks/MarkdownQuoteBlock";
-export * from "./markdown/inline/MarkdownReferenceInline";
 export * from "./markdown/core/MarkdownRoot";
 export * from "./markdown/core/MarkdownText";
 export * from "./common/core/MockParent";
@@ -534,11 +534,11 @@ export type AnyNode =
 	| n.MarkdownEmphasisInline
 	| n.MarkdownHeadingBlock
 	| n.MarkdownImageInline
+	| n.MarkdownLink
 	| n.MarkdownListBlock
 	| n.MarkdownListItem
 	| n.MarkdownParagraph
 	| n.MarkdownQuoteBlock
-	| n.MarkdownReferenceInline
 	| n.MarkdownRoot
 	| n.MarkdownText
 	| n.MockParent
