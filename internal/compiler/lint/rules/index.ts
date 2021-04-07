@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:a89fe3228dc278f23598d2f5d0d0971ebc4040ef,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:cbdd144ad35350b9a2f9b4864c8e217f28ce8a7c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
 import noDistractingElements from "./a11y/noDistractingElements";
@@ -16,6 +16,7 @@ import useIframeTitle from "./a11y/useIframeTitle";
 import useMediaCaption from "./a11y/useMediaCaption";
 import useValidLang from "./a11y/useValidLang";
 import noImportantInKeyframes from "./css/noImportantInKeyframes";
+import noInvalidGridTemplateAreas from "./css/noInvalidGridTemplateAreas";
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -138,6 +139,7 @@ lintTransforms.set("a11y/useIframeTitle", useIframeTitle);
 lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidLang", useValidLang);
 lintTransforms.set("css/noImportantInKeyframes", noImportantInKeyframes);
+lintTransforms.set("css/noInvalidGridTemplateAreas", noInvalidGridTemplateAreas);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
 lintTransforms.set("js/noArguments", noArguments);
 lintTransforms.set("js/noAsyncPromiseExecutor", noAsyncPromiseExecutor);
@@ -283,6 +285,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/useMediaCaption",
 	"a11y/useValidLang",
 	"css/noImportantInKeyframes",
+	"css/noInvalidGridTemplateAreas",
 	"html/useClosingNonVoid",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
@@ -402,6 +405,7 @@ export type LintRuleName =
 	| "a11y/useMediaCaption"
 	| "a11y/useValidLang"
 	| "css/noImportantInKeyframes"
+	| "css/noInvalidGridTemplateAreas"
 	| "html/useClosingNonVoid"
 	| "js/noArguments"
 	| "js/noAsyncPromiseExecutor"

@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:76e2abea0885f8ec89a6807c0ea8a62d46899879,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:29617e7b360b4bd3bcfbacd81e8f7fa09ee42291,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
 	| ["lint", "a11y", "noAutofocus"]
@@ -122,6 +122,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useMediaCaption"]
 	| ["lint", "a11y", "useValidLang"]
 	| ["lint", "css", "noImportantInKeyframes"]
+	| ["lint", "css", "noInvalidGridTemplateAreas"]
 	| ["lint", "html", "useClosingNonVoid"]
 	| ["lint", "js", "noArguments"]
 	| ["lint", "js", "noAsyncPromiseExecutor"]
@@ -253,6 +254,11 @@ const lintCategoryNameMap: {
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
 	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
+	"lint/css/noInvalidGridTemplateAreas": [
+		"lint",
+		"css",
+		"noInvalidGridTemplateAreas",
+	],
 	"lint/html/useClosingNonVoid": ["lint", "html", "useClosingNonVoid"],
 	"lint/js/noArguments": ["lint", "js", "noArguments"],
 	"lint/js/noAsyncPromiseExecutor": ["lint", "js", "noAsyncPromiseExecutor"],

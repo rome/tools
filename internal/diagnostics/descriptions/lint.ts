@@ -17,6 +17,10 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	CSS_NO_INVALID_GRID_TEMPLATE_AREAS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/css/noInvalidGridTemplateAreas"],
+		message: markup`All strings must have the same number of cell tokens`,
+	},
 	CSS_NO_IMPORTANT_IN_KEYFRAME: {
 		category: DIAGNOSTIC_CATEGORIES["lint/css/noImportantInKeyframes"],
 		message: markup`Using <emphasis>!important</emphasis> within keyframes declarations is completely ignored in some browsers.`,
