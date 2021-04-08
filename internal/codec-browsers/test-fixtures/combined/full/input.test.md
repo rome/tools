@@ -41,13 +41,13 @@
 [
 	TargetBrowserPreset {preset: "modern"}
 	TargetBrowserCombination {
-		and: TargetBrowserRange {browser: "Firefox", to: 85, version: 80}
-		target: TargetBrowserUsage {operator: "GT", usage: 5}
+		left: TargetBrowserUsage {operator: "GT", usage: 5}
+		right: TargetBrowserRange {browser: "Firefox", to: 85, version: 80}
 	}
 	TargetBrowserLast {browser: "Chrome", qty: 2, unit: "versions"}
 	TargetBrowserCombination {
-		and: TargetBrowserUsage {operator: "GT", region: "BE", usage: 20}
-		target: TargetBrowserSince {since: 1_525_132_800_000}
+		left: TargetBrowserSince {since: 1_525_132_800_000}
+		right: TargetBrowserUsage {operator: "GT", region: "BE", usage: 20}
 	}
 ]
 ```

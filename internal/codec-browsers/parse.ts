@@ -175,20 +175,23 @@ export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 
 		const char = tokenizer.get();
 		if (isDigit(char) || char === ".") {
-			const value = tokenizer.read((readChar) =>
-				isDigit(readChar) || readChar === "."
+			const value = tokenizer.read(
+				(readChar) => isDigit(readChar) || readChar === ".",
 			);
 
 			if (tokenizer.consume("%")) {
-				return tokenizer.finishValueToken("Percentage", parseFloat(value));
+				return tokenizer.finishValueToken(
+					"Percentage",
+					parseFloat(value),
+				);
 			}
 
 			return tokenizer.finishValueToken("Number", parseFloat(value));
 		}
 
 		if (isAlpha(char)) {
-			const value = tokenizer.read((readChar) =>
-				isAlpha(readChar) || readChar === "_"
+			const value = tokenizer.read(
+				(readChar) => isAlpha(readChar) || readChar === "_",
 			);
 
 			return tokenizer.finishValueToken("String", value);
@@ -308,8 +311,8 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				} else {
 					newTarget = {
 						type: "TargetBrowserCombination",
-						target: targets.pop()!,
-						and: newTarget,
+						left: targets.pop()!,
+						right: newTarget,
 					};
 				}
 			}
