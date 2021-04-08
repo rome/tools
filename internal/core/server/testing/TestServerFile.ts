@@ -18,6 +18,7 @@ import {
 import {pretty} from "@internal/pretty-format";
 import TestServerWorker from "./TestServerWorker";
 import {promiseAllFrom} from "@internal/async";
+import {ExtendedMap} from "@internal/collections";
 
 type SnapshotWriteOptions = {
 	path: AbsoluteFilePath;
@@ -51,6 +52,7 @@ export default class TestServerFile {
 		this.finishedTests = 0;
 		this.totalTests = 0;
 		this.pendingTests = new Set();
+		this.foundTests = new ExtendedMap("TestServerFile#foundTests");
 		this.snapshots = new AbsoluteFilePathMap();
 		this.diskSnapshotsToWorker = new AbsoluteFilePathMap();
 		this.inlineSnapshotUpdates = [];
@@ -67,6 +69,9 @@ export default class TestServerFile {
 	private relative: RelativePath;
 	private hasDiagnostics: boolean;
 	private pendingTests: Set<string>;
+	private foundTests: ExtendedMap<string, {
+		callsiteLocation: DiagnosticLocation;
+	}>;
 	private request: ServerRequest;
 	private runner: TestServer;
 	private inlineSnapshotUpdates: InlineSnapshotUpdate[];
@@ -84,6 +89,14 @@ export default class TestServerFile {
 	public removePendingTest(testName: string, worker: TestServerWorker) {
 		this.pendingTests.delete(testName);
 		this.workers.add(worker);
+	}
+
+	public getTestCallsiteLocation(testName: string): DiagnosticLocation {
+		return this.foundTests.assert(testName).callsiteLocation;
+	}
+
+	public addFoundTest(testName: string, callsiteLocation: DiagnosticLocation) {
+		this.foundTests.set(testName, {callsiteLocation});
 	}
 
 	public addPendingTest(testName: string) {

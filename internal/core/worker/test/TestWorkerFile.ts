@@ -17,7 +17,6 @@ import {
 	createSingleDiagnosticsError,
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
-	diagnosticLocationToMarkupFilelink,
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
 import {
@@ -114,6 +113,7 @@ export type TestDetails = {
 	name: string;
 	options: TestOptions;
 	callback: TestCallback;
+	testPath: AbsoluteFilePath;
 	callsiteLocation: DiagnosticLocation;
 };
 
@@ -145,14 +145,14 @@ export default class TestWorkerFile {
 		this.snapshotManager = new SnapshotManager(this, opts.path);
 
 		this.onlyFocusedTests = false;
-		this.hasFailedTests = false;
+		this.hasDiagnostics = false;
 		this.consoleAdvice = [];
 		this.focusedTests = [];
 		this.foundTests = new ExtendedMap("foundTests");
 		this.failedTests = new Set();
 	}
 
-	public hasFailedTests: boolean;
+	public hasDiagnostics: boolean;
 	public onlyFocusedTests: boolean;
 	public path: AbsoluteFilePath;
 	public contextDirectory: AbsoluteFilePath;
@@ -160,6 +160,7 @@ export default class TestWorkerFile {
 	public globalOptions: TestServerRunnerOptions;
 	public options: TestWorkerPrepareTestOptions;
 	public snapshotManager: SnapshotManager;
+	public runningSyncTest: undefined | TestAPI;
 
 	private worker: Worker;
 	private tests: TestWorker;
@@ -192,7 +193,7 @@ export default class TestWorkerFile {
 					text = markup`${args[0]}`;
 				} else {
 					text = joinMarkup(
-						args.map((arg) => serializeLazyMarkup(prettyFormat(arg))),
+						args.map((arg) => serializeLazyMarkup(prettyFormat(arg, {accurate: true}))),
 						markup` `,
 					);
 				}
@@ -211,7 +212,12 @@ export default class TestWorkerFile {
 				];
 			}
 
-			this.consoleAdvice.push([adviceFactory, Date.now()]);
+			const {runningSyncTest} = this;
+			if (runningSyncTest === undefined) {
+				this.consoleAdvice.push([adviceFactory, Date.now()]);
+			} else {
+				runningSyncTest.addToLogAdvice(adviceFactory);
+			}
 		};
 
 		function log(...args: unknown[]): void {
@@ -329,7 +335,7 @@ export default class TestWorkerFile {
 
 		// Emit error about no found tests. If we already have diagnostics then there was an issue
 		// during initialization.
-		if (this.foundTests.size === 0 && !this.hasFailedTests) {
+		if (this.foundTests.size === 0 && !this.hasDiagnostics) {
 			await this.emitDiagnostic({
 				location: {
 					path: this.path,
@@ -377,6 +383,7 @@ export default class TestWorkerFile {
 		);
 
 		const foundTest: TestDetails = {
+			testPath: this.path,
 			callsiteLocation,
 			name: testName,
 			callback,
@@ -406,28 +413,15 @@ export default class TestWorkerFile {
 	}
 
 	public async emitDiagnostic(diag: Diagnostic, test?: TestDetails) {
-		let label = diag.label;
-		if (label === undefined && test !== undefined) {
-			label = markup`${test.name}`;
-		}
-
-		diag = {
-			...diag,
-			label,
-			tags: {
-				...diag.tags,
-				unique: true,
-			},
-		};
+		this.hasDiagnostics = true;
 
 		if (test !== undefined) {
-			this.hasFailedTests = true;
 			this.failedTests.add(test.name);
 		}
 
 		await this.bridge.events.testDiagnostic.call({
 			diagnostic: diag,
-			testPath: this.path,
+			ref: test === undefined ? {path: this.path} : this.createTestRef(test),
 		});
 	}
 
@@ -441,6 +435,7 @@ export default class TestWorkerFile {
 				description: {
 					category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 				},
+				removeNodeFrames: true,
 				internal: false,
 				path: this.path,
 				cleanFrames,
@@ -491,10 +486,6 @@ export default class TestWorkerFile {
 						type: "TEST";
 						test: TestDetails;
 					}
-				| {
-						type: "TEARDOWN";
-						test: TestDetails;
-					};
 			trailingAdvice?: DiagnosticAdvice[];
 		},
 	): Promise<void> {
@@ -505,49 +496,10 @@ export default class TestWorkerFile {
 		);
 		let {location} = diagnostic;
 		let {advice} = diagnostic.description;
+
 		let test: undefined | TestDetails;
-
-		switch (origin.type) {
-			case "EXECUTING": {
-				advice.push({
-					type: "log",
-					category: "info",
-					text: markup`Error occured while executing test file <emphasis>${this.path}</emphasis>`,
-				});
-				break;
-			}
-
-			case "TEST": {
-				advice.push({
-					type: "log",
-					category: "info",
-					text: markup`Test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
-						origin.test.callsiteLocation,
-					)}:</emphasis>`,
-				});
-				advice.push({
-					type: "frame",
-					location: origin.test.callsiteLocation,
-				});
-				test = origin.test;
-				break;
-			}
-
-			case "TEARDOWN": {
-				advice.push({
-					type: "log",
-					category: "info",
-					text: markup`Error occured while running <emphasis>teardown</emphasis> for test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
-						origin.test.callsiteLocation,
-					)}:</emphasis>`,
-				});
-				advice.push({
-					type: "frame",
-					location: origin.test.callsiteLocation,
-				});
-				test = origin.test;
-				break;
-			}
+		if (origin.type === "TEST") {
+			test = origin.test;
 		}
 
 		advice = [...advice, ...trailingAdvice];
@@ -585,7 +537,7 @@ export default class TestWorkerFile {
 			await api.teardownEvent.callOptional();
 		} catch (err) {
 			await this.emitError({
-				origin: {type: "TEARDOWN", test},
+				origin: {type: "TEST", test},
 				error: err,
 				trailingAdvice: api.getAdvice(),
 			});
@@ -606,10 +558,13 @@ export default class TestWorkerFile {
 		});
 
 		const api = new TestAPI(this, test, onTimeout);
+		const helper = api.getUserSafeHelper();
 
 		try {
 			const {diagnostics} = await catchDiagnostics(async () => {
-				const res = callback(api);
+				this.runningSyncTest = api;
+				const res = callback(helper);
+				this.runningSyncTest = undefined;
 
 				if (res !== undefined && typeof res.then === "function") {
 					await Promise.race([timeoutPromise, res]);
@@ -682,8 +637,14 @@ export default class TestWorkerFile {
 			this.lockTests();
 		});
 
+		const foundTests: TestWorkerPrepareTestResult["foundTests"] = new Map();
+
+		for (const [key, {callsiteLocation}] of this.foundTests) {
+			foundTests.set(key, callsiteLocation);
+		}
+
 		return {
-			foundTests: Array.from(this.foundTests.keys()),
+			foundTests,
 			focusedTests: this.focusedTests,
 		};
 	}

@@ -14,6 +14,8 @@ import {
 	diagnosticLocationToMarkupFilelink,
 	equalCategoryNames,
 	getDiagnosticsFromError,
+	appendAdviceToDiagnostic,
+	DiagnosticLocation,
 } from "@internal/diagnostics";
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
@@ -42,11 +44,14 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	createPath,
 } from "@internal/path";
 import TestServerWorker from "@internal/core/server/testing/TestServerWorker";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {ExtendedMap} from "@internal/collections";
 import {promiseAllFrom} from "@internal/async";
+import {TestFileRef} from "@internal/core/worker/types";
+import {getExecuteMainFilename} from "@internal/core/worker/utils/executeMain";
 
 function grammarNumberTests(num: number): StaticMarkup {
 	return markup`<grammarNumber plural="tests" singular="test">${String(num)}</grammarNumber>`;
@@ -101,6 +106,7 @@ export default class TestServer {
 
 		this.progress = {
 			totalTests: 0,
+			failedTests: 0,
 			passedTests: 0,
 			startedTests: 0,
 			finishedTests: 0,
@@ -123,6 +129,12 @@ export default class TestServer {
 					entity: "TestServer",
 				},
 				sourceMaps: this.sourceMaps,
+				normalizeOptions: {
+					defaultTags: {
+						// All test diagnostics are important and cannot risk being deduped
+						unique: true,
+					},
+				},
 			}),
 		});
 
@@ -160,6 +172,7 @@ export default class TestServer {
 
 	public progress: {
 		passedTests: number;
+		failedTests: number;
 		totalTests: number;
 		startedTests: number;
 		finishedTests: number;
@@ -185,7 +198,14 @@ export default class TestServer {
 		this.printer.processor.addDiagnostics(diagnostics);
 	}
 
-	public addDiagnostic(diagnostic: Diagnostic) {
+	public addDiagnostic(diagnostic: Diagnostic, ref?: TestFileRef) {
+		if (diagnostic.label === undefined && ref !== undefined && ref.testName !== undefined) {
+			diagnostic = {
+				...diagnostic,
+				label: markup`${ref.testName}`,
+			};
+		}
+
 		if (
 			equalCategoryNames(
 				diagnostic.description.category,
@@ -193,6 +213,66 @@ export default class TestServer {
 			)
 		) {
 			this.needsSnapshotUpdate = true;
+		}
+
+		// For test diagnostics that don't explicitly refer to the test file it's a part of, push on some clarifying advice to make it obvious
+		// how to find the originating test
+		if (ref !== undefined) {
+			// Normalize diagnostic to resolve source maps for stacktrace advice
+			diagnostic = this.printer.processor.normalizer.normalizeDiagnostic(diagnostic);
+
+			let includeTestDeclaration = true;
+
+			// If there's a stacktrace and the first frame points to the test file itself then don't show the
+			// test declaration or else it's just noise
+			const {advice} = diagnostic.description;
+			if (advice.length > 0 && advice[0].type === "stacktrace" && advice[0].frames?.[0].path?.equal(ref.path)) {
+				includeTestDeclaration = false;
+			}
+
+			if (includeTestDeclaration) {
+				let callsiteLocation: undefined | DiagnosticLocation;
+
+				if (ref.testName !== undefined) {
+					callsiteLocation = this.files.assert(ref.path).getTestCallsiteLocation(ref.testName);
+
+					// Resolve source maps
+					callsiteLocation = this.printer.processor.normalizer.normalizeLocation(callsiteLocation);
+				}
+
+				if (callsiteLocation === undefined) {
+					diagnostic = appendAdviceToDiagnostic(diagnostic, [
+						{
+							type: "log",
+							category: "info",
+							text: markup`Originated from test file <emphasis>${ref.path}</emphasis>`,
+						},
+					]);
+				} else {
+					let text = markup`Test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
+						callsiteLocation,
+					)}</emphasis>`;
+
+					if (!callsiteLocation.path.equal(ref.path)) {
+						// Add original test path if the actual test() declaration callsite wasn't in the test file
+						// This will occur when using helpers
+						text = markup`${text} from test file <emphasis>${ref.path}</emphasis>`;
+					}
+
+					diagnostic = appendAdviceToDiagnostic(diagnostic, [
+						{
+							type: "log",
+							category: "info",
+							text,
+						},
+						// TODO: Decide if we might want a frame? It's pretty noisy
+						/*{
+							type: "frame",
+							location: callsiteLocation,
+						},*/
+					]);
+				}
+			}
 		}
 
 		this.printer.processor.addDiagnostic(diagnostic);
@@ -248,7 +328,7 @@ export default class TestServer {
 				const sourceMap = bundle.entry.sourceMap.map;
 				const consumer = sourceMap.toConsumer();
 				//this.coverageCollector.addSourceMap(path.join(), code, consumer);
-				this.sourceMaps.add(path, consumer);
+				this.sourceMaps.add(createPath(getExecuteMainFilename(path)), consumer);
 			}
 
 			const ref = this.server.projectManager.getFileReference(path);
@@ -342,8 +422,9 @@ export default class TestServer {
 		);
 	}
 
-	public onTestFound(ref: TestRef) {
+	public onTestFound(ref: TestRef, callsiteLocation: DiagnosticLocation) {
 		const file = this.files.assert(ref.path);
+		file.addFoundTest(ref.testName, callsiteLocation);
 		file.addPendingTest(ref.testName);
 		this.progress.totalTests++;
 	}
@@ -358,8 +439,11 @@ export default class TestServer {
 		}
 		this.runningTests.delete(key);
 		this.progress.finishedTests++;
+
 		if (success) {
 			this.progress.passedTests++;
+		} else {
+			this.progress.failedTests++;
 		}
 	}
 
@@ -693,7 +777,7 @@ export default class TestServer {
 
 	private printSnapshotSuggestion(reporter: Reporter) {
 		if (this.needsSnapshotUpdate) {
-			reporter.info(markup`Outdated snapshots found. To update run`);
+			reporter.info(markup`Outdated snapshots found. To update these if correct, run`);
 			reporter.command("rome test --update-snapshots");
 			reporter.br();
 		}
@@ -702,22 +786,42 @@ export default class TestServer {
 	private throwPrinter() {
 		const {printer} = this;
 
+		printer.disableDefaultFooter();
+
 		printer.onFooterPrint(async (reporter, isError) => {
 			this.printCoverageReport(isError);
 			this.printSnapshotSuggestion(reporter);
 			this.printSnapshotCounts(reporter);
 			this.printFocusedTestWarning(reporter);
 
-			const passedCount = this.progress.passedTests;
-			if (passedCount > 0 || !isError) {
+			const {passedTests, failedTests} = this.progress;
+			const otherErrorCount = printer.processor.calculateVisibile().total;
+
+			if (passedTests > 0 || !isError) {
 				reporter.success(
-					markup`<emphasis>${humanizeNumber(passedCount)}</emphasis> ${grammarNumberTests(
-						passedCount,
+					markup`<emphasis>${humanizeNumber(passedTests)}</emphasis> ${grammarNumberTests(
+						passedTests,
 					)} passed${isError ? "" : "!"}`,
 				);
-				if (!isError) {
-					printer.disableDefaultFooter();
+			}
+
+			if (failedTests > 0) {
+				let message = markup`<emphasis>${humanizeNumber(failedTests)}</emphasis> ${grammarNumberTests(failedTests)} failed`;
+
+				// Don't output the total error count if it's equal to the failed test count as it's redundant and doesn't provide any
+				// additional information
+				if (otherErrorCount > failedTests) {
+					message = markup`${message} with <emphasis>${humanizeNumber(otherErrorCount)}</emphasis> errors`;
 				}
+
+				reporter.error(message);
+			}
+
+			// Output dedicated failure log if we only had errors unassociated with a test
+			if (otherErrorCount > 0 && failedTests === 0) {
+				reporter.error(
+					markup`<emphasis>${humanizeNumber(otherErrorCount)}</emphasis> failures`,
+				);
 			}
 		});
 
