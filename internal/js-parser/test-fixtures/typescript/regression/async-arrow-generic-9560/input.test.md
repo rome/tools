@@ -88,7 +88,7 @@ JSRoot {
 							body: JSBlockStatement {
 								body: []
 								directives: []
-								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:20-7:3
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:20-6:22
 							}
 							head: JSFunctionHead {
 								async: true
@@ -105,14 +105,14 @@ JSRoot {
 								}
 								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-6:19
 							}
-							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-7:3
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-6:22
 						}
-						loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-7:4
+						loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:23
 					}
 				]
-				loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
+				loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-7:1
 			}
-			loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
+			loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-7:1
 		}
 	]
 	comments: []
@@ -123,7 +123,7 @@ JSRoot {
 	sourceType: "module"
 	syntax: ["ts"]
 	path: UIDPath<typescript/regression/async-arrow-generic-9560/input.ts>
-	loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
+	loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:0
 }
 ```
 

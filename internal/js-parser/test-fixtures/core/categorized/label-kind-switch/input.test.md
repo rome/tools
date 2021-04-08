@@ -18,17 +18,17 @@ JSRoot {
 							name: "i"
 							loc: SourceLocation core/categorized/label-kind-switch/input.js 2:13-2:14 (i)
 						}
-						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:5-3:3
+						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:5-2:18
 					}
 					label: JSIdentifier {
 						name: "a"
 						loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-2:3 (a)
 					}
-					loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-3:3
+					loc: SourceLocation core/categorized/label-kind-switch/input.js 2:2-2:18
 				}
 			]
 			directives: []
-			loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
+			loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-3:1
 		}
 	]
 	comments: []
@@ -39,7 +39,7 @@ JSRoot {
 	sourceType: "script"
 	syntax: []
 	path: UIDPath<core/categorized/label-kind-switch/input.js>
-	loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
+	loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:0
 }
 ```
 

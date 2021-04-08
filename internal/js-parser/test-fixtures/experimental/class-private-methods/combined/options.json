@@ -1,7 +1,2 @@
 {
-  "plugins": [
-    "classProperties",
-    "classPrivateProperties",
-    "classPrivateMethods"
-  ]
 }

@@ -1,6 +1,3 @@
 {
-	"sourceTypeJS": "module",
-	"plugins": [
-		"flow"
-	]
+	"sourceTypeJS": "module"
 }

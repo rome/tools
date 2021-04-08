@@ -36,7 +36,7 @@ JSRoot {
 						body: JSBlockStatement {
 							body: []
 							directives: []
-							loc: SourceLocation typescript/class/predicate-types/input.ts 2:26-3:3
+							loc: SourceLocation typescript/class/predicate-types/input.ts 2:26-2:28
 						}
 						head: JSFunctionHead {
 							async: false
@@ -55,29 +55,29 @@ JSRoot {
 							}
 							loc: SourceLocation typescript/class/predicate-types/input.ts 2:7-2:25
 						}
-						loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-3:3
+						loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:28
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "isBaz"
-								loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7 (isBaz)
+								loc: SourceLocation typescript/class/predicate-types/input.ts 3:2-3:7 (isBaz)
 							}
-							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
+							loc: SourceLocation typescript/class/predicate-types/input.ts 3:2-3:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							optional: false
 							readonly: false
 							static: false
-							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
-							start: Position 4:2
+							loc: SourceLocation typescript/class/predicate-types/input.ts 3:2-3:7
+							start: Position 3:2
 						}
 						value: JSArrowFunctionExpression {
 							body: JSBlockStatement {
 								body: []
 								directives: []
-								loc: SourceLocation typescript/class/predicate-types/input.ts 4:32-5:3
+								loc: SourceLocation typescript/class/predicate-types/input.ts 3:32-3:34
 							}
 							head: JSFunctionHead {
 								async: false
@@ -86,23 +86,23 @@ JSRoot {
 								returnType: TSTypePredicate {
 									asserts: false
 									parameterName: TSThisType {
-										loc: SourceLocation typescript/class/predicate-types/input.ts 4:14-4:18
+										loc: SourceLocation typescript/class/predicate-types/input.ts 3:14-3:18
 									}
 									typeAnnotation: TSStringKeywordTypeAnnotation {
-										loc: SourceLocation typescript/class/predicate-types/input.ts 4:22-4:28
+										loc: SourceLocation typescript/class/predicate-types/input.ts 3:22-3:28
 									}
-									loc: SourceLocation typescript/class/predicate-types/input.ts 4:14-4:28
+									loc: SourceLocation typescript/class/predicate-types/input.ts 3:14-3:28
 								}
-								loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-4:31
+								loc: SourceLocation typescript/class/predicate-types/input.ts 3:10-3:31
 							}
-							loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-5:3
+							loc: SourceLocation typescript/class/predicate-types/input.ts 3:10-3:34
 						}
-						loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-5:3
+						loc: SourceLocation typescript/class/predicate-types/input.ts 3:2-3:34
 					}
 				]
-				loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-6:1
+				loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-4:1
 			}
-			loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-6:1
+			loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-4:1
 		}
 	]
 	comments: []
@@ -113,7 +113,7 @@ JSRoot {
 	sourceType: "module"
 	syntax: ["ts"]
 	path: UIDPath<typescript/class/predicate-types/input.ts>
-	loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-7:0
+	loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-5:0
 }
 ```
 
