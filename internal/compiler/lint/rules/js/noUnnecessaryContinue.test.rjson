@@ -1,40 +1,41 @@
-filename: "file.ts"
-invalid: [
-	"
+filename = "file.ts"
+invalid = [
+	"""
 	loop: for (let i = 0; i < 5; i++) {
 		continue loop;
 	}
-	"
-	"
-	while (i--) {
+	""",
+	"""
+	while (i--)
  		continue;
-	}
-	"
-	"
+	""",
+	"""
 	while (1) {
 		continue;
 	}
-	"
-	"
+	""",
+	"""
 	for (let i = 0; i < 10; i++) {
-    	if (i > 5) {
-        	console.log('foo');
-        	continue;
-    	} else if (i >= 5 && i < 8) {
-        	console.log('test');
-    	} else {
-        	console.log('test');
-    	}
+			if (i > 5) {
+					console.log('foo');
+					continue;
+			}
+			else if (i >= 5 && i < 8) {
+					console.log('test');
+			}
+			else {
+					console.log('test');
+			}
 	}
-	"
-	"
+	""",
+	"""
 	for (let i = 0; i < 9; i++) {
 		continue;
 	}
-	"
+	""",
 ]
-valid: [
-	"
+valid = [
+	"""
 	while (i) {
 		if (i > 5) {
 			continue;
@@ -42,14 +43,14 @@ valid: [
 		console.log(i);
 		i--;
 	}
-	"
-	"
+	""",
+	"""
 	while (i) {
 		continue;
 		console.log(i);
 	}
-	"
-	"
+	""",
+	"""
 	while (condition) {
 		if (conditionZ) {
 			if (conditionX) {
@@ -62,8 +63,8 @@ valid: [
 			}
 		}
 	}
-	"
-	"
+	""",
+	"""
 	loop: while (1) {
 		forLoop: for (let i = 0; i < 5; i++) {
 			if(someCondition) {
@@ -71,8 +72,8 @@ valid: [
 			}
 		}
 	}
-	"
-	"
+	""",
+	"""
 	loop: for (let i = 0; i < 10; i++) {
 		for (let j = 0; j < byteLength; j++) {
 			if (condition) {
@@ -80,5 +81,5 @@ valid: [
 			}
 		}
 	}
-	"
+	""",
 ]

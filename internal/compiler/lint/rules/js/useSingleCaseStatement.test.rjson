@@ -1,36 +1,36 @@
-filename: "file.ts"
-invalid: [
-	// Multiple statements
-	"
+filename = "file.ts"
+invalid = [
+	# Multiple statements
+	"""
 		switch (foo) {
 			case true:
 			case false:
 				let foo = '';
 				foo;
 		}
-	"
+	""",
 ]
-valid: [
-	// Single statement
-	// Single block
-	// Nothing
-	"
+valid = [
+	# Single statement
+	"""
 		switch (foo) {
 			case true:
 			case false:
 				'yes';
 		}
-	"
-	"
+	""",
+	# Single block
+	"""
 		switch (foo) {
 			case true: {
 				// empty
 			}
 		}
-	"
-	"
+	""",
+	# Nothing
+	"""
 		switch (foo) {
 			case true:
 		}
-	"
+	""",
 ]

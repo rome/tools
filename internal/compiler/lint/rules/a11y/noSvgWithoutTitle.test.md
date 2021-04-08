@@ -39,8 +39,8 @@
 
   > 1 │ <svg>
       │ ^^^^^
-  > 2 │     <title></title>
-  > 3 │     <circle />
+  > 2 │   <title></title>
+  > 3 │   <circle />
   > 4 │ </svg>
       │ ^^^^^^
 
@@ -140,8 +140,8 @@
 
   > 1 │ <svg>
       │ ^^^^^
-  > 2 │     <title></title>
-  > 3 │     <circle />
+  > 2 │   <title></title>
+  > 3 │   <circle />
   > 4 │ </svg>
       │ ^^^^^
 

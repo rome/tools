@@ -1,10 +1,10 @@
-filename: "file.ts"
-invalid: [
-	"debugger;"
+filename = "file.ts"
+invalid = [
+	"debugger;",
 ]
-valid: [
-	"
+valid = [
+	"""
 		const test = { debugger: 1 };
 		test.debugger;
-	"
+	""",
 ]

@@ -1,23 +1,43 @@
-filename: "file.ts"
-invalid: [
-	"import x from 'y';
-x=1;"
-	"import x from 'y';
-[x]=1;"
-	"import x from 'y';
-({x}=1);"
-	"import x from 'y';
-x++"
-	"import x from 'y';
-[...x]=1;"
-	"import x from 'y';
-({...x}=1);"
-	"import x from 'y';
-for (x in y);"
-	"import x from 'y';
-x+=1"
-	"import * as x from 'y';
-x=1;"
-	"import {x} from 'y';
-x=1;"
+filename = "file.ts"
+invalid = [
+	"""
+		import x from 'y';
+		x=1;
+	""",
+	"""
+		import x from 'y';
+		[x]=1;
+	""",
+	"""
+		import x from 'y';
+		({x}=1);
+	""",
+	"""
+		import x from 'y';
+		x++
+	""",
+	"""
+		import x from 'y';
+		[...x]=1;
+	""",
+	"""
+		import x from 'y';
+		({...x}=1);
+	""",
+	"""
+		import x from 'y';
+		for (x in y);
+	""",
+	"""
+		import x from 'y';
+		x+=1
+	""",
+	"""
+		import * as x from 'y';
+		x=1;
+	""",
+	"""
+		import {x} from 'y';
+		x=1;
+	""",
 ]

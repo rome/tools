@@ -66,7 +66,7 @@ const foo = "bar ";
 
 ```ts
 const foo = `bar
-`;
+has newline`;
 
 ```
 

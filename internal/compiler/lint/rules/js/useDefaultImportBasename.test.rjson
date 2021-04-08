@@ -1,7 +1,7 @@
-filename: "file.ts"
-invalid: [
-	"import foo from './bar';"
+filename = "file.ts"
+invalid = [
+	"import foo from './bar';",
 ]
-valid: [
-	"import foo from './foo';"
+valid = [
+	"import foo from './foo';",
 ]

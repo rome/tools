@@ -1,5 +1,7 @@
-filename: "file.ts"
-invalid: [
-	"var foobar;
-foobar"
+filename = "file.ts"
+invalid = [
+	"""
+		var foobar;
+		foobar;
+	""",
 ]

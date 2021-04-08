@@ -1,13 +1,13 @@
-filename: "file.ts"
-invalid: [
-	"
+filename = "file.ts"
+invalid = [
+	"""
 		const x = 'test';
 		x: expr;
-	"
+	""",
 ]
-valid: [
-	"
+valid = [
+	"""
 		const x = 'test';
 		z: expr;
-	"
+	""",
 ]

@@ -56,7 +56,7 @@ let Set;
 
 ```
 
- lint/js/noShadowRestrictedNames/reject/3/file.ts:1:15 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
+ lint/js/noShadowRestrictedNames/reject/3/file.ts:1:14 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
 
   ✖ Do not shadow the global Object property.
 

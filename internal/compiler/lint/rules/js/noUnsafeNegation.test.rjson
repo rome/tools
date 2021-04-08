@@ -1,4 +1,4 @@
-filename: "file.ts"
-invalid: [
-	"!1 in [1,2]"
+filename = "file.ts"
+invalid = [
+	"!1 in [1,2]",
 ]
