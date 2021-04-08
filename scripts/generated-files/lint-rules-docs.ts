@@ -12,7 +12,6 @@ import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handle
 import {joinMarkup, joinMarkupLines, markup} from "@internal/markup";
 import {markupToHtml} from "@internal/cli-layout";
 import {createPath} from "@internal/path";
-import {dedent} from "@internal/string-utils";
 import {tests} from "@internal/compiler/lint/rules/tests";
 import {ROOT, modifyGeneratedFile} from "../_utils";
 import {getDocRuleDescription, getLintDefs} from "./lint-rules";
@@ -178,8 +177,7 @@ export async function main() {
 
 	for (const ruleName in tests) {
 		const def = tests[ruleName];
-		const rawCases = def.cases;
-		const cases = Array.isArray(rawCases) ? rawCases : [rawCases];
+		const {cases} = def;
 
 		await modifyGeneratedFile(
 			{
@@ -195,15 +193,12 @@ export async function main() {
 
 				let hasInvalid = false;
 				let hasValid = false;
-				for (const elem of cases) {
-					const cases = Array.isArray(elem) ? elem : [elem];
-					for (const {invalid, valid} of cases) {
-						if (invalid && invalid.length > 0) {
-							hasInvalid = true;
-						}
-						if (valid && valid.length > 0) {
-							hasValid = true;
-						}
+				for (const {invalid, valid} of cases) {
+					if (invalid && invalid.length > 0) {
+						hasInvalid = true;
+					}
+					if (valid && valid.length > 0) {
+						hasValid = true;
 					}
 				}
 
@@ -211,35 +206,17 @@ export async function main() {
 					lines.push("### Invalid");
 					lines.push("\n");
 
-					for (const singleCase of cases) {
-						if (Array.isArray(singleCase)) {
-							for (const {filename, invalid} of singleCase) {
-								if (invalid) {
-									for (let i = 0; i < invalid.length; i++) {
-										if (i > 0) {
-											lines.push("\n");
-											lines.push("---");
-											lines.push("\n");
-										}
-										lines.push(
-											await run(def.category, i, filename, dedent(invalid[i])),
-										);
-									}
+					for (const {filename, invalid} of cases) {
+						if (invalid) {
+							for (let i = 0; i < invalid.length; i++) {
+								if (i > 0) {
+									lines.push("\n");
+									lines.push("---");
+									lines.push("\n");
 								}
-							}
-						} else {
-							const {filename, invalid} = singleCase;
-							if (invalid) {
-								for (let i = 0; i < invalid.length; i++) {
-									if (i > 0) {
-										lines.push("\n");
-										lines.push("---");
-										lines.push("\n");
-									}
-									lines.push(
-										await run(def.category, i, filename, dedent(invalid[i])),
-									);
-								}
+								lines.push(
+									await run(def.category, i, filename, invalid[i]),
+								);
 							}
 						}
 					}
@@ -249,21 +226,10 @@ export async function main() {
 					lines.push("\n");
 					lines.push("### Valid");
 					lines.push("\n");
-					for (const singleCase of cases) {
-						if (Array.isArray(singleCase)) {
-							for (const {filename, valid} of singleCase) {
-								if (valid) {
-									for (const code of valid) {
-										lines.push(highlightPre(filename, dedent(code)));
-									}
-								}
-							}
-						} else {
-							const {filename, valid} = singleCase;
-							if (valid) {
-								for (const code of valid) {
-									lines.push(highlightPre(filename, dedent(code)));
-								}
+					for (const {filename, valid} of cases) {
+						if (valid) {
+							for (const code of valid) {
+								lines.push(highlightPre(filename, code));
 							}
 						}
 					}

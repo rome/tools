@@ -1,4 +1,5 @@
 import {DiagnosticCategory} from "@internal/diagnostics";
+import {dedent} from "@internal/string-utils";
 import {Dict} from "@internal/typescript-helpers";
 
 type Test = {
@@ -9,8 +10,28 @@ type Test = {
 
 type Tests = Dict<{
 	category: DiagnosticCategory;
-	cases: Test | (Test[]) | (Test[][]);
+	cases: Test[];
 }>;
+
+function normalizeCase({invalid, valid, filename}: Test): Test {
+	if (valid) {
+		valid = valid.map(str => dedent(str));
+	}
+
+	if (invalid) {
+		invalid = invalid.map(str => dedent(str));
+	}
+
+	return {filename, invalid, valid};
+}
+
+function normalizeCases(raw: Test | {cases: Test[]}): Test[] {
+	if ("cases" in raw) {
+		return raw.cases.map(test => normalizeCase(test));
+	} else {
+		return [normalizeCase(raw)];
+	}
+}
 
 /* GENERATED:START(hash:7c338129a77fa5641ec09fc8d7de4672265d412c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
@@ -237,443 +258,443 @@ import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.toml";
 export const tests: Tests = {
 	"a11y/noAriaUnsupportedElements": {
 		category: ["lint", "a11y", "noAriaUnsupportedElements"],
-		cases: noAriaUnsupportedElements,
+		cases: normalizeCases(noAriaUnsupportedElements),
 	},
 	"a11y/noDistractingElements": {
 		category: ["lint", "a11y", "noDistractingElements"],
-		cases: noDistractingElements,
+		cases: normalizeCases(noDistractingElements),
 	},
 	"a11y/noNoninteractiveElementToInteractiveRole": {
 		category: ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"],
-		cases: noNoninteractiveElementToInteractiveRole,
+		cases: normalizeCases(noNoninteractiveElementToInteractiveRole),
 	},
 	"a11y/noNoninteractiveTabindex": {
 		category: ["lint", "a11y", "noNoninteractiveTabindex"],
-		cases: noNoninteractiveTabindex,
+		cases: normalizeCases(noNoninteractiveTabindex),
 	},
 	"a11y/noSvgWithoutTitle": {
 		category: ["lint", "a11y", "noSvgWithoutTitle"],
-		cases: noSvgWithoutTitle,
+		cases: normalizeCases(noSvgWithoutTitle),
 	},
 	"a11y/useAltText": {
 		category: ["lint", "a11y", "useAltText"],
-		cases: useAltText,
+		cases: normalizeCases(useAltText),
 	},
 	"a11y/useAriaProptypes": {
 		category: ["lint", "a11y", "useAriaProptypes"],
-		cases: useAriaProptypes,
+		cases: normalizeCases(useAriaProptypes),
 	},
 	"a11y/useHtmlLang": {
 		category: ["lint", "a11y", "useHtmlLang"],
-		cases: useHtmlLang,
+		cases: normalizeCases(useHtmlLang),
 	},
 	"a11y/useIframeTitle": {
 		category: ["lint", "a11y", "useIframeTitle"],
-		cases: useIframeTitle,
+		cases: normalizeCases(useIframeTitle),
 	},
 	"a11y/useMediaCaption": {
 		category: ["lint", "a11y", "useMediaCaption"],
-		cases: useMediaCaption,
+		cases: normalizeCases(useMediaCaption),
 	},
 	"a11y/useValidLang": {
 		category: ["lint", "a11y", "useValidLang"],
-		cases: useValidLang,
+		cases: normalizeCases(useValidLang),
 	},
 	"html/useClosingNonVoid": {
 		category: ["lint", "html", "useClosingNonVoid"],
-		cases: useClosingNonVoid,
+		cases: normalizeCases(useClosingNonVoid),
 	},
 	"js/noArguments": {
 		category: ["lint", "js", "noArguments"],
-		cases: noArguments,
+		cases: normalizeCases(noArguments),
 	},
 	"js/noAsyncPromiseExecutor": {
 		category: ["lint", "js", "noAsyncPromiseExecutor"],
-		cases: noAsyncPromiseExecutor,
+		cases: normalizeCases(noAsyncPromiseExecutor),
 	},
 	"js/noCatchAssign": {
 		category: ["lint", "js", "noCatchAssign"],
-		cases: noCatchAssign,
+		cases: normalizeCases(noCatchAssign),
 	},
 	"js/noCommaOperator": {
 		category: ["lint", "js", "noCommaOperator"],
-		cases: noCommaOperator,
+		cases: normalizeCases(noCommaOperator),
 	},
 	"js/noCompareNegZero": {
 		category: ["lint", "js", "noCompareNegZero"],
-		cases: noCompareNegZero,
+		cases: normalizeCases(noCompareNegZero),
 	},
 	"js/noCondAssign": {
 		category: ["lint", "js", "noCondAssign"],
-		cases: noCondAssign,
+		cases: normalizeCases(noCondAssign),
 	},
 	"js/noDebugger": {
 		category: ["lint", "js", "noDebugger"],
-		cases: noDebugger,
+		cases: normalizeCases(noDebugger),
 	},
 	"js/noDelete": {
 		category: ["lint", "js", "noDelete"],
-		cases: noDelete,
+		cases: normalizeCases(noDelete),
 	},
 	"js/noDeleteVars": {
 		category: ["lint", "js", "noDeleteVars"],
-		cases: noDeleteVars,
+		cases: normalizeCases(noDeleteVars),
 	},
 	"js/noDoubleEquals": {
 		category: ["lint", "js", "noDoubleEquals"],
-		cases: noDoubleEquals,
+		cases: normalizeCases(noDoubleEquals),
 	},
 	"js/noDupeArgs": {
 		category: ["lint", "js", "noDupeArgs"],
-		cases: noDupeArgs,
+		cases: normalizeCases(noDupeArgs),
 	},
 	"js/noDuplicateCase": {
 		category: ["lint", "js", "noDuplicateCase"],
-		cases: noDuplicateCase,
+		cases: normalizeCases(noDuplicateCase),
 	},
 	"js/noDuplicateImportSource": {
 		category: ["lint", "js", "noDuplicateImportSource"],
-		cases: noDuplicateImportSource,
+		cases: normalizeCases(noDuplicateImportSource),
 	},
 	"js/noDuplicateKeys": {
 		category: ["lint", "js", "noDuplicateKeys"],
-		cases: noDuplicateKeys,
+		cases: normalizeCases(noDuplicateKeys),
 	},
 	"js/noEmptyBlocks": {
 		category: ["lint", "js", "noEmptyBlocks"],
-		cases: noEmptyBlocks,
+		cases: normalizeCases(noEmptyBlocks),
 	},
 	"js/noExtraBooleanCast": {
 		category: ["lint", "js", "noExtraBooleanCast"],
-		cases: noExtraBooleanCast,
+		cases: normalizeCases(noExtraBooleanCast),
 	},
 	"js/noFunctionAssign": {
 		category: ["lint", "js", "noFunctionAssign"],
-		cases: noFunctionAssign,
+		cases: normalizeCases(noFunctionAssign),
 	},
 	"js/noGetterReturn": {
 		category: ["lint", "js", "noGetterReturn"],
-		cases: noGetterReturn,
+		cases: normalizeCases(noGetterReturn),
 	},
 	"js/noImportAssign": {
 		category: ["lint", "js", "noImportAssign"],
-		cases: noImportAssign,
+		cases: normalizeCases(noImportAssign),
 	},
 	"js/noLabelVar": {
 		category: ["lint", "js", "noLabelVar"],
-		cases: noLabelVar,
+		cases: normalizeCases(noLabelVar),
 	},
 	"js/noNegationElse": {
 		category: ["lint", "js", "noNegationElse"],
-		cases: noNegationElse,
+		cases: normalizeCases(noNegationElse),
 	},
 	"js/noNestedTernary": {
 		category: ["lint", "js", "noNestedTernary"],
-		cases: noNestedTernary,
+		cases: normalizeCases(noNestedTernary),
 	},
 	"js/noRestrictedGlobals": {
 		category: ["lint", "js", "noRestrictedGlobals"],
-		cases: noRestrictedGlobals,
+		cases: normalizeCases(noRestrictedGlobals),
 	},
 	"js/noSetterReturn": {
 		category: ["lint", "js", "noSetterReturn"],
-		cases: noSetterReturn,
+		cases: normalizeCases(noSetterReturn),
 	},
 	"js/noShadowRestrictedNames": {
 		category: ["lint", "js", "noShadowRestrictedNames"],
-		cases: noShadowRestrictedNames,
+		cases: normalizeCases(noShadowRestrictedNames),
 	},
 	"js/noShoutyConstants": {
 		category: ["lint", "js", "noShoutyConstants"],
-		cases: noShoutyConstants,
+		cases: normalizeCases(noShoutyConstants),
 	},
 	"js/noSingleCharRegexAlternatives": {
 		category: ["lint", "js", "noSingleCharRegexAlternatives"],
-		cases: noSingleCharRegexAlternatives,
+		cases: normalizeCases(noSingleCharRegexAlternatives),
 	},
 	"js/noSparseArray": {
 		category: ["lint", "js", "noSparseArray"],
-		cases: noSparseArray,
+		cases: normalizeCases(noSparseArray),
 	},
 	"js/noTemplateCurlyInString": {
 		category: ["lint", "js", "noTemplateCurlyInString"],
-		cases: noTemplateCurlyInString,
+		cases: normalizeCases(noTemplateCurlyInString),
 	},
 	"js/noUndeclaredVariables": {
 		category: ["lint", "js", "noUndeclaredVariables"],
-		cases: noUndeclaredVariables,
+		cases: normalizeCases(noUndeclaredVariables),
 	},
 	"js/noUnnecessaryContinue": {
 		category: ["lint", "js", "noUnnecessaryContinue"],
-		cases: noUnnecessaryContinue,
+		cases: normalizeCases(noUnnecessaryContinue),
 	},
 	"js/noUnsafeFinally": {
 		category: ["lint", "js", "noUnsafeFinally"],
-		cases: noUnsafeFinally,
+		cases: normalizeCases(noUnsafeFinally),
 	},
 	"js/noUnsafeNegation": {
 		category: ["lint", "js", "noUnsafeNegation"],
-		cases: noUnsafeNegation,
+		cases: normalizeCases(noUnsafeNegation),
 	},
 	"js/noUnusedTemplateLiteral": {
 		category: ["lint", "js", "noUnusedTemplateLiteral"],
-		cases: noUnusedTemplateLiteral,
+		cases: normalizeCases(noUnusedTemplateLiteral),
 	},
 	"js/noUnusedVariables": {
 		category: ["lint", "js", "noUnusedVariables"],
-		cases: noUnusedVariables,
+		cases: normalizeCases(noUnusedVariables),
 	},
 	"js/noVar": {
 		category: ["lint", "js", "noVar"],
-		cases: noVar,
+		cases: normalizeCases(noVar),
 	},
 	"js/preferOptionalChaining": {
 		category: ["lint", "js", "preferOptionalChaining"],
-		cases: preferOptionalChaining,
+		cases: normalizeCases(preferOptionalChaining),
 	},
 	"js/useBlockStatements": {
 		category: ["lint", "js", "useBlockStatements"],
-		cases: useBlockStatements,
+		cases: normalizeCases(useBlockStatements),
 	},
 	"js/useDefaultExportBasename": {
 		category: ["lint", "js", "useDefaultExportBasename"],
-		cases: useDefaultExportBasename,
+		cases: normalizeCases(useDefaultExportBasename),
 	},
 	"js/useDefaultImportBasename": {
 		category: ["lint", "js", "useDefaultImportBasename"],
-		cases: useDefaultImportBasename,
+		cases: normalizeCases(useDefaultImportBasename),
 	},
 	"js/useFunctionDeclarations": {
 		category: ["lint", "js", "useFunctionDeclarations"],
-		cases: useFunctionDeclarations,
+		cases: normalizeCases(useFunctionDeclarations),
 	},
 	"js/useSimplifiedLogicalExpression": {
 		category: ["lint", "js", "useSimplifiedLogicalExpression"],
-		cases: useSimplifiedLogicalExpression,
+		cases: normalizeCases(useSimplifiedLogicalExpression),
 	},
 	"js/useSingleCaseStatement": {
 		category: ["lint", "js", "useSingleCaseStatement"],
-		cases: useSingleCaseStatement,
+		cases: normalizeCases(useSingleCaseStatement),
 	},
 	"js/useSingleVarDeclarator": {
 		category: ["lint", "js", "useSingleVarDeclarator"],
-		cases: useSingleVarDeclarator,
+		cases: normalizeCases(useSingleVarDeclarator),
 	},
 	"js/useSortedSpecifiers": {
 		category: ["lint", "js", "useSortedSpecifiers"],
-		cases: useSortedSpecifiers,
+		cases: normalizeCases(useSortedSpecifiers),
 	},
 	"js/useTemplate": {
 		category: ["lint", "js", "useTemplate"],
-		cases: useTemplate,
+		cases: normalizeCases(useTemplate),
 	},
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
-		cases: useWhile,
+		cases: normalizeCases(useWhile),
 	},
 	"jsx-a11y/noAccessKey": {
 		category: ["lint", "jsx-a11y", "noAccessKey"],
-		cases: noAccessKey,
+		cases: normalizeCases(noAccessKey),
 	},
 	"jsx-a11y/noAutofocus": {
 		category: ["lint", "jsx-a11y", "noAutofocus"],
-		cases: noAutofocus,
+		cases: normalizeCases(noAutofocus),
 	},
 	"jsx-a11y/noHeaderScope": {
 		category: ["lint", "jsx-a11y", "noHeaderScope"],
-		cases: noHeaderScope,
+		cases: normalizeCases(noHeaderScope),
 	},
 	"jsx-a11y/noOnChange": {
 		category: ["lint", "jsx-a11y", "noOnChange"],
-		cases: noOnChange,
+		cases: normalizeCases(noOnChange),
 	},
 	"jsx-a11y/noPositiveTabindex": {
 		category: ["lint", "jsx-a11y", "noPositiveTabindex"],
-		cases: noPositiveTabindex,
+		cases: normalizeCases(noPositiveTabindex),
 	},
 	"jsx-a11y/noRedundantAlt": {
 		category: ["lint", "jsx-a11y", "noRedundantAlt"],
-		cases: noRedundantAlt,
+		cases: normalizeCases(noRedundantAlt),
 	},
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],
-		cases: noRedundantRoles,
+		cases: normalizeCases(noRedundantRoles),
 	},
 	"jsx-a11y/noTargetBlank": {
 		category: ["lint", "jsx-a11y", "noTargetBlank"],
-		cases: noTargetBlank,
+		cases: normalizeCases(noTargetBlank),
 	},
 	"jsx-a11y/useAnchorContent": {
 		category: ["lint", "jsx-a11y", "useAnchorContent"],
-		cases: useAnchorContent,
+		cases: normalizeCases(useAnchorContent),
 	},
 	"jsx-a11y/useAriaProps": {
 		category: ["lint", "jsx-a11y", "useAriaProps"],
-		cases: useAriaProps,
+		cases: normalizeCases(useAriaProps),
 	},
 	"jsx-a11y/useAriaPropsForRole": {
 		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],
-		cases: useAriaPropsForRole,
+		cases: normalizeCases(useAriaPropsForRole),
 	},
 	"jsx-a11y/useHeadingContent": {
 		category: ["lint", "jsx-a11y", "useHeadingContent"],
-		cases: useHeadingContent,
+		cases: normalizeCases(useHeadingContent),
 	},
 	"jsx-a11y/useKeyWithClickEvents": {
 		category: ["lint", "jsx-a11y", "useKeyWithClickEvents"],
-		cases: useKeyWithClickEvents,
+		cases: normalizeCases(useKeyWithClickEvents),
 	},
 	"jsx-a11y/useKeyWithMouseEvents": {
 		category: ["lint", "jsx-a11y", "useKeyWithMouseEvents"],
-		cases: useKeyWithMouseEvents,
+		cases: normalizeCases(useKeyWithMouseEvents),
 	},
 	"jsx-a11y/useValidAnchor": {
 		category: ["lint", "jsx-a11y", "useValidAnchor"],
-		cases: useValidAnchor,
+		cases: normalizeCases(useValidAnchor),
 	},
 	"jsx/noCommentText": {
 		category: ["lint", "jsx", "noCommentText"],
-		cases: noCommentText,
+		cases: normalizeCases(noCommentText),
 	},
 	"jsx/noDuplicateProps": {
 		category: ["lint", "jsx", "noDuplicateProps"],
-		cases: noDuplicateProps,
+		cases: normalizeCases(noDuplicateProps),
 	},
 	"jsx/noImplicitBoolean": {
 		category: ["lint", "jsx", "noImplicitBoolean"],
-		cases: noImplicitBoolean,
+		cases: normalizeCases(noImplicitBoolean),
 	},
 	"jsx/noPropSpreading": {
 		category: ["lint", "jsx", "noPropSpreading"],
-		cases: noPropSpreading,
+		cases: normalizeCases(noPropSpreading),
 	},
 	"jsx/useJSXFileExtension": {
 		category: ["lint", "jsx", "useJSXFileExtension"],
-		cases: useJSXFileExtension,
+		cases: normalizeCases(useJSXFileExtension),
 	},
 	"jsx/usePascalCase": {
 		category: ["lint", "jsx", "usePascalCase"],
-		cases: usePascalCase,
+		cases: normalizeCases(usePascalCase),
 	},
 	"jsx/useSelfClosingElements": {
 		category: ["lint", "jsx", "useSelfClosingElements"],
-		cases: useSelfClosingElements,
+		cases: normalizeCases(useSelfClosingElements),
 	},
 	"react/noAccessStateInSetState": {
 		category: ["lint", "react", "noAccessStateInSetState"],
-		cases: noAccessStateInSetState,
+		cases: normalizeCases(noAccessStateInSetState),
 	},
 	"react/noArrayIndexKey": {
 		category: ["lint", "react", "noArrayIndexKey"],
-		cases: noArrayIndexKey,
+		cases: normalizeCases(noArrayIndexKey),
 	},
 	"react/noChildrenProp": {
 		category: ["lint", "react", "noChildrenProp"],
-		cases: noChildrenProp,
+		cases: normalizeCases(noChildrenProp),
 	},
 	"react/noDanger": {
 		category: ["lint", "react", "noDanger"],
-		cases: noDanger,
+		cases: normalizeCases(noDanger),
 	},
 	"react/noDangerWithChildren": {
 		category: ["lint", "react", "noDangerWithChildren"],
-		cases: noDangerWithChildren,
+		cases: normalizeCases(noDangerWithChildren),
 	},
 	"react/noDidMountSetState": {
 		category: ["lint", "react", "noDidMountSetState"],
-		cases: noDidMountSetState,
+		cases: normalizeCases(noDidMountSetState),
 	},
 	"react/noDidUpdateSetState": {
 		category: ["lint", "react", "noDidUpdateSetState"],
-		cases: noDidUpdateSetState,
+		cases: normalizeCases(noDidUpdateSetState),
 	},
 	"react/noDirectMutationState": {
 		category: ["lint", "react", "noDirectMutationState"],
-		cases: noDirectMutationState,
+		cases: normalizeCases(noDirectMutationState),
 	},
 	"react/noFindDOMNode": {
 		category: ["lint", "react", "noFindDOMNode"],
-		cases: noFindDOMNode,
+		cases: normalizeCases(noFindDOMNode),
 	},
 	"react/noRedundantShouldComponentUpdate": {
 		category: ["lint", "react", "noRedundantShouldComponentUpdate"],
-		cases: noRedundantShouldComponentUpdate,
+		cases: normalizeCases(noRedundantShouldComponentUpdate),
 	},
 	"react/noRenderReturnValue": {
 		category: ["lint", "react", "noRenderReturnValue"],
-		cases: noRenderReturnValue,
+		cases: normalizeCases(noRenderReturnValue),
 	},
 	"react/noStringRefs": {
 		category: ["lint", "react", "noStringRefs"],
-		cases: noStringRefs,
+		cases: normalizeCases(noStringRefs),
 	},
 	"react/noThisInSFC": {
 		category: ["lint", "react", "noThisInSFC"],
-		cases: noThisInSFC,
+		cases: normalizeCases(noThisInSFC),
 	},
 	"react/noUnsafe": {
 		category: ["lint", "react", "noUnsafe"],
-		cases: noUnsafe,
+		cases: normalizeCases(noUnsafe),
 	},
 	"react/noUselessFragment": {
 		category: ["lint", "react", "noUselessFragment"],
-		cases: noUselessFragment,
+		cases: normalizeCases(noUselessFragment),
 	},
 	"react/noVoidElementsWithChildren": {
 		category: ["lint", "react", "noVoidElementsWithChildren"],
-		cases: noVoidElementsWithChildren,
+		cases: normalizeCases(noVoidElementsWithChildren),
 	},
 	"react/noWillUpdateSetState": {
 		category: ["lint", "react", "noWillUpdateSetState"],
-		cases: noWillUpdateSetState,
+		cases: normalizeCases(noWillUpdateSetState),
 	},
 	"react/useButtonType": {
 		category: ["lint", "react", "useButtonType"],
-		cases: useButtonType,
+		cases: normalizeCases(useButtonType),
 	},
 	"react/useFragmentSyntax": {
 		category: ["lint", "react", "useFragmentSyntax"],
-		cases: useFragmentSyntax,
+		cases: normalizeCases(useFragmentSyntax),
 	},
 	"react/useKey": {
 		category: ["lint", "react", "useKey"],
-		cases: useKey,
+		cases: normalizeCases(useKey),
 	},
 	"react/useRenderReturn": {
 		category: ["lint", "react", "useRenderReturn"],
-		cases: useRenderReturn,
+		cases: normalizeCases(useRenderReturn),
 	},
 	"react/useSortComp": {
 		category: ["lint", "react", "useSortComp"],
-		cases: useSortComp,
+		cases: normalizeCases(useSortComp),
 	},
 	"react/useStylePropObject": {
 		category: ["lint", "react", "useStylePropObject"],
-		cases: useStylePropObject,
+		cases: normalizeCases(useStylePropObject),
 	},
 	"regex/noDuplicateGroupNamesInRegularExpressions": {
 		category: ["lint", "regex", "noDuplicateGroupNamesInRegularExpressions"],
-		cases: noDuplicateGroupNamesInRegularExpressions,
+		cases: normalizeCases(noDuplicateGroupNamesInRegularExpressions),
 	},
 	"regex/noEmptyCharacterClass": {
 		category: ["lint", "regex", "noEmptyCharacterClass"],
-		cases: noEmptyCharacterClass,
+		cases: normalizeCases(noEmptyCharacterClass),
 	},
 	"regex/noEmptyMatches": {
 		category: ["lint", "regex", "noEmptyMatches"],
-		cases: noEmptyMatches,
+		cases: normalizeCases(noEmptyMatches),
 	},
 	"regex/noMultipleSpacesInRegularExpressionLiterals": {
 		category: ["lint", "regex", "noMultipleSpacesInRegularExpressionLiterals"],
-		cases: noMultipleSpacesInRegularExpressionLiterals,
+		cases: normalizeCases(noMultipleSpacesInRegularExpressionLiterals),
 	},
 	"regex/noPosixInRegularExpression": {
 		category: ["lint", "regex", "noPosixInRegularExpression"],
-		cases: noPosixInRegularExpression,
+		cases: normalizeCases(noPosixInRegularExpression),
 	},
 	"ts/preferShorthandArrayType": {
 		category: ["lint", "ts", "preferShorthandArrayType"],
-		cases: preferShorthandArrayType,
+		cases: normalizeCases(preferShorthandArrayType),
 	},
 };
 /* GENERATED:END(id:main) */

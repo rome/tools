@@ -48,16 +48,16 @@ export async function main([ruleName]: string[]): Promise<number> {
 	await writeFile(
 		rulesPath.append(`${ruleName}.test.toml`),
 		dedent`
-			filename: "filename.ts"
-			invalid: [
-				"
+			filename = "filename.ts"
+			invalid = [
+				"""
 					// insert invalid examples here
-				"
+				"""
 			]
-			valid: [
-				"
+			valid = [
+				"""
 					// insert valid examples here
-				"
+				"""
 			]
 		`,
 	);

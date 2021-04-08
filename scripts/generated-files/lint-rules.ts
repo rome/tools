@@ -163,7 +163,7 @@ export async function main() {
 				if (hasRJSON) {
 					lines.push(`	"${ruleName}": {`);
 					lines.push(`    category: ["lint", "${category}", "${basename}"],`);
-					lines.push(`    cases: ${basename},`);
+					lines.push(`    cases: normalizeCases(${basename}),`);
 					lines.push("  },");
 				}
 			}
