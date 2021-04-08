@@ -1,7 +1,6 @@
 try {
 } catch (foo) {
-  try {
-  } catch (_) {
+  try {} catch (_) {
     var foo;
   }
 }

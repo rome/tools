@@ -3,6 +3,5 @@ class Cl {
     await 0;
   };
 
-  b = async<T>() => {
-  };
+  b = async<T>() => {};
 }

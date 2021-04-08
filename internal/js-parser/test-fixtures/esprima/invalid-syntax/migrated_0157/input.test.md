@@ -26,11 +26,10 @@ JSRoot {
 								loc: SourceLocation esprima/invalid-syntax/migrated_0157/input.js 1:1-1:2
 							}
 							JSRegExpCharacter {
-								value: ""
 								loc: SourceLocation esprima/invalid-syntax/migrated_0157/input.js 1:2-1:3
 							}
 						]
-						loc: SourceLocation esprima/invalid-syntax/migrated_0157/input.js 1:1-1:2
+						loc: SourceLocation esprima/invalid-syntax/migrated_0157/input.js 1:1-1:3
 					}
 					loc: SourceLocation esprima/invalid-syntax/migrated_0157/input.js 1:0-1:4
 				}

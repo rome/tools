@@ -7,6 +7,5 @@
 			}
 		]
 	],
-	"sourceTypeJS": "module",
-	"throws": true
+	"sourceTypeJS": "module"
 }

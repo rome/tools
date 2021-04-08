@@ -1,6 +1,5 @@
 {
 	"plugins": [
 		"classPrivateMethods"
-	],
-	"throws": true
+	]
 }

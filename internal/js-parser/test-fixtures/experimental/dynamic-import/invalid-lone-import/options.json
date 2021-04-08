@@ -1,6 +1,5 @@
 {
 	"plugins": [
 		"dynamicImport"
-	],
-	"throws": true
+	]
 }

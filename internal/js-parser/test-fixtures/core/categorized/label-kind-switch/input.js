@@ -1,4 +1,3 @@
 {
-  a: switch (i) {
-  }
+  a: switch (i) {}
 }
