@@ -305,24 +305,31 @@ export default class CompilerContext {
 
 	public getLintDecisions(
 		key: undefined | string,
+		allowGlobalDecisions: boolean = true,
 	): LintCompilerOptionsDecision[] {
 		const {lint} = this.options;
 		if (lint === undefined) {
 			return [];
 		}
 
-		const {globalDecisions = []} = lint;
+		const {globalDecisions = [], decisionsByPosition} = lint;
 
-		if (key === undefined) {
-			return globalDecisions;
+		if (key !== undefined && decisionsByPosition !== undefined) {
+			const keyDecisions = decisionsByPosition[key];
+			if (keyDecisions !== undefined) {
+				if (allowGlobalDecisions) {
+					return [...globalDecisions, ...keyDecisions];
+				} else {
+					return keyDecisions;
+				}
+			}
 		}
 
-		const {decisionsByPosition} = lint;
-		if (decisionsByPosition === undefined) {
+		if (allowGlobalDecisions) {
 			return globalDecisions;
+		} else {
+			return [];
 		}
-
-		return [...globalDecisions, ...(decisionsByPosition[key] || [])];
 	}
 
 	public addLocDiagnostic(

@@ -135,7 +135,7 @@ test(
 	"should add a new suppression on an existing suppression",
 	async (t) => {
 		const code = dedent`
-			// rome-ignore lint/js/noUnusedVariables: suppressed via --review
+			// rome-ignore lint/js/noUnusedVariables
 			var foo = 5;
 		`;
 		const res = await lint(
@@ -157,7 +157,7 @@ test(
 
 		t.true(
 			res.formatted.includes(
-				"rome-ignore lint/js/noVar lint/js/noUnusedVariables: suppressed via --review",
+				"rome-ignore lint/js/noUnusedVariables lint/js/noVar: test suppression",
 			),
 		);
 	},
