@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import "@internal/core";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {json} from "@internal/codec-config";
 import {TestHelper, test, testOptions} from "rome";
-
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
@@ -16,7 +16,11 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {ExtendedMap} from "@internal/collections";
-import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {catchDiagnostics, DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {decodeUTF8} from "@internal/binary";
+import {removeCarriageReturn} from "@internal/string-utils";
+import {AsyncVoidCallback} from "@internal/typescript-helpers";
+import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 
 const dirname = testOptions.dirname ?? "";
 
@@ -44,6 +48,7 @@ export type FixtureFile = {
 	relative: RelativePath;
 	absolute: AbsoluteFilePath;
 	content: ArrayBufferView;
+	contentAsText: () => string;
 };
 
 async function _getFixtures(
@@ -125,12 +130,17 @@ async function _getFixtures(
 		"fileContents",
 	);
 	for (const path of files) {
+		const content = await path.readFile();
+
 		fileContents.set(
 			path.getBasename(),
 			{
 				relative: opts.root.relative(path).assertRelative(),
 				absolute: path,
-				content: await path.readFile(),
+				content,
+				contentAsText() {
+					return removeCarriageReturn(decodeUTF8(content));
+				},
 			},
 		);
 	}
@@ -146,7 +156,7 @@ async function _getFixtures(
 	];
 }
 
-export async function getFixtures(dir: string): Promise<Fixture[]> {
+export async function getFixtures(dir: string = dirname): Promise<Fixture[]> {
 	const root = createAbsoluteFilePath(dir).append("test-fixtures");
 	return _getFixtures({
 		root,
@@ -179,7 +189,7 @@ export async function createFixtureTests(
 
 				t.addToAdvice({
 					type: "inspect",
-					data: fixture.options.asJSONPropertyValue(),
+					data: fixture.options.asUnknown(),
 				});
 
 				t.addToAdvice({
@@ -202,3 +212,18 @@ export async function createFixtureTests(
 }
 
 export * from "./integration";
+
+export async function assertDiagnostics(t: TestHelper, callback: AsyncVoidCallback): Promise<void> {
+	const {diagnostics} = await catchDiagnostics(callback);
+
+	if (diagnostics === undefined) {
+		throw new Error("Expected thrown diagnostics");
+	} else {
+		t.snapshot(
+			await printDiagnosticsToString({
+				diagnostics,
+				suppressions: [],
+			}),
+		);
+	}
+}
