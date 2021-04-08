@@ -108,12 +108,12 @@ export default class TestServerWorker {
 			this.runner.files.assert(testPath).addInlineSnapshotUpdate(update);
 		});
 
-		bridge.events.testDiagnostic.subscribe(({testPath, diagnostic}) => {
-			if (testPath !== undefined) {
-				this.runner.files.assert(testPath).onDiagnostics();
+		bridge.events.testDiagnostic.subscribe(({ref, diagnostic}) => {
+			if (ref !== undefined) {
+				this.runner.files.assert(ref.path).onDiagnostics();
 			}
 
-			runner.addDiagnostic(diagnostic);
+			runner.addDiagnostic(diagnostic, ref);
 		});
 	}
 
@@ -159,7 +159,7 @@ export default class TestServerWorker {
 
 	private async _handleTimeout(duration: string): Promise<void> {
 		const {inspector, bridge} = this;
-		if (inspector === undefined) {
+		if (inspector === undefined || !inspector.alive) {
 			await bridge.end(
 				`Test worker was unresponsive for ${duration}. There was no inspector connected so we were unable to capture stack frames before it was terminated.`,
 				false,
@@ -186,9 +186,7 @@ export default class TestServerWorker {
 				loc.get("columnNumber").asZeroIndexedNumber(),
 			);
 
-			const name = callFrame.get("scopeChain").getIndex(0).get("name").asString(
-				"",
-			).split("$").pop();
+			const name = callFrame.get("scopeChain").getIndex(0).get("name").required("").asString().split("$").pop();
 
 			frames.push({
 				resolvedLocation: resolved.found,
@@ -317,8 +315,8 @@ export default class TestServerWorker {
 			});
 
 			if (!partial) {
-				for (const testName of foundTests) {
-					runner.onTestFound({testName, path});
+				for (const [testName, callsiteLocation] of foundTests) {
+					runner.onTestFound({testName, path}, callsiteLocation);
 				}
 
 				for (const test of focusedTests) {

@@ -124,7 +124,7 @@ export default class Worker {
 
 				if (opts.type === "test-runner") {
 					bridge.events.testDiagnostic.send({
-						testPath: undefined,
+						ref: undefined,
 						diagnostic: deriveDiagnosticFromError(
 							err,
 							{
