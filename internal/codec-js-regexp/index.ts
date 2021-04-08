@@ -31,7 +31,6 @@ import {
 	JSRegExpSubExpression,
 } from "@internal/ast";
 import {Diagnostic, descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/numbers";
 
 type Operator =
 	| "^"
@@ -111,17 +110,16 @@ function getCodePoint(char: string): number {
 	throw new Error("Input was not 1 character long");
 }
 
+function isBackReferenceCharacter(char: string): boolean {
+	return char !== ">";
+}
+
 function readOctalCode(
-	input: string,
-	index: ZeroIndexed,
-	nextChar: string,
-): {
-	octalValue: number | undefined;
-	end: ZeroIndexed;
-} {
-	let char = nextChar;
+	tokenizer: RegExpParser["tokenizer"],
+): number | undefined {
+	let char = tokenizer.get();
 	let octal = "";
-	let nextIndex: ZeroIndexed = index.add(1);
+
 	while (isDigit(char)) {
 		octal += char;
 		// stop at max octal ascii in case of octal escape
@@ -129,14 +127,16 @@ function readOctalCode(
 			octal = octal.slice(0, octal.length - 1);
 			break;
 		}
-		nextIndex = nextIndex.add(1);
-		char = input[nextIndex.valueOf()];
+
+		tokenizer.take(1);
+		char = tokenizer.get();
 	}
+
 	if (octal === "") {
-		return {octalValue: undefined, end: nextIndex};
+		return undefined;
 	}
-	const octalValue = parseInt(octal, 10);
-	return {octalValue, end: nextIndex};
+
+	return parseInt(octal, 10);
 }
 
 type RegExpParserTypes = {
@@ -147,319 +147,288 @@ type RegExpParserTypes = {
 };
 type RegExpParser = ParserCore<RegExpParserTypes>;
 
+function tokenizeEscaped(parser: RegExpParser, tokenizer: RegExpParser["tokenizer"]) {
+	const char = tokenizer.get();
+	switch (char) {
+		case "d":
+		case "D":
+		case "b":
+		case "B":
+		case "s":
+		case "S":
+		case "w":
+		case "W": {
+			tokenizer.take(1);
+			return tokenizer.finishValueToken("EscapedCharacter", char);
+		}
+	}
+
+	if (tokenizer.eat("t")) {
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				escaped: false,
+				value: "\t",
+			},
+		);
+	}
+
+	if (tokenizer.eat("n")) {
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				escaped: false,
+				value: "\n",
+			},
+		);
+	}
+
+	if (tokenizer.eat("r")) {
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				escaped: false,
+				value: "\r",
+			},
+		);
+	}
+
+	if (tokenizer.eat("v")) {
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				escaped: false,
+				value: "\x0b",
+			},
+		);
+	}
+
+	if (tokenizer.eat("f")) {
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				escaped: false,
+				value: "\f",
+			},
+		);
+	}
+
+	if (tokenizer.eat("k")) {
+		if (parser.options.unicode) {
+			// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
+			if (tokenizer.eat("<")) {
+				const value = tokenizer.read(isBackReferenceCharacter);
+				tokenizer.assert(">");
+
+				return tokenizer.finishComplexToken(
+					"NamedBackReferenceCharacter",
+					{
+						value,
+						escaped: true,
+					},
+				);
+			}
+		}
+
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				value: "k",
+				escaped: true,
+			},
+		);
+	}
+
+	if (tokenizer.eat("p")) {
+		if (parser.options.unicode) {
+			// TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
+		}
+
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				value: "p",
+				escaped: true,
+			},
+		);
+	}
+
+	if (tokenizer.eat("P")) {
+		if (parser.options.unicode) {
+			// TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
+		}
+
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				value: "P",
+				escaped: true,
+			},
+		);
+	}
+
+	if (tokenizer.eat("c")) {
+		// TODO???
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				value: "c",
+				escaped: true,
+			},
+		);
+	}
+
+	if (tokenizer.eat("0")) {
+		const octalValue = readOctalCode(tokenizer);
+		if (octalValue !== undefined && isOct(octalValue.toString())) {
+			const octal = parseInt(octalValue.toString(), 8);
+			return tokenizer.finishComplexToken(
+				"Character",
+				{
+					value: String.fromCharCode(octal),
+					escaped: true,
+				},
+			);
+		}
+
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				value: String.fromCharCode(0),
+				escaped: true,
+			},
+		);
+	}
+
+	if (tokenizer.eat("x")) {
+		const possibleHex = tokenizer.getRange(2);
+
+		// \xhh
+		if (possibleHex.length === 2 && isHex(possibleHex)) {
+			tokenizer.take(2);
+			return tokenizer.finishComplexToken(
+				"Character",
+				{
+					value: String.fromCharCode(parseInt(possibleHex, 16)),
+					escaped: true,
+				},
+			);
+		}
+
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				value: "x",
+				escaped: true,
+			},
+		);
+	}
+
+	if (tokenizer.eat("u")) {
+		// Get the next 4 characters after \u
+		const possibleHex = tokenizer.getRange(4);
+
+		// \uhhhh
+		if (possibleHex.length === 4 && isHex(possibleHex)) {
+			tokenizer.take(4);
+
+			return tokenizer.finishComplexToken(
+				"Character",
+				{
+					value: String.fromCharCode(parseInt(possibleHex, 16)),
+					escaped: true,
+				},
+			);
+		}
+
+		if (parser.options.unicode) {
+			// TODO \u{hhhh} or \u{hhhhh}
+		}
+
+		return tokenizer.finishComplexToken(
+			"Character",
+			{
+				value: "u",
+				escaped: true,
+			},
+		);
+	}
+
+	// Redundant escaping
+	let referenceValue = readOctalCode(tokenizer);
+	if (referenceValue !== undefined) {
+		let backReference = referenceValue.toString();
+
+		// \8 \9 are treated as escape char
+		if (referenceValue === 8 || referenceValue === 9) {
+			return tokenizer.finishComplexToken(
+				"Character",
+				{
+					value: backReference,
+					escaped: true,
+				},
+			);
+		}
+
+		if (isOct(backReference)) {
+			const octal = parseInt(backReference, 8);
+			return tokenizer.finishComplexToken(
+				"Character",
+				{
+					value: String.fromCharCode(octal),
+					escaped: true,
+				},
+			);
+		}
+
+		// back reference allowed are 1 - 99
+		if (referenceValue >= 1 && referenceValue <= 99) {
+			return tokenizer.finishComplexToken(
+				"NumericBackReferenceCharacter",
+				{
+					value: parseInt(backReference, 10),
+					escaped: true,
+				},
+			);
+		} else {
+			backReference = backReference.slice(0, backReference.length - 1);
+			tokenizer.reverse(1);
+
+			if (isOct(backReference)) {
+				return tokenizer.finishComplexToken(
+					"Character",
+					{
+						value: String.fromCharCode(parseInt(backReference, 8)),
+						escaped: true,
+					},
+				);
+			} else {
+				return tokenizer.finishComplexToken(
+					"NumericBackReferenceCharacter",
+					{
+						value: parseInt(backReference, 10),
+						escaped: true,
+					},
+				);
+			}
+		}
+	}
+
+	tokenizer.take(1);
+	return tokenizer.finishComplexToken(
+		"Character",
+		{
+			value: char,
+			escaped: true,
+		},
+	);
+}
+
 const regExpParser = createParser<RegExpParserTypes>({
 	diagnosticLanguage: "regex",
 
-	tokenize(parser, index) {
-		const char = parser.getInputCharOnly(index);
-
-		if (char === "\\") {
-			let end = index.add(2);
-
-			const nextChar = parser.getInputCharOnly(index.increment());
-			switch (nextChar) {
-				case "t":
-					return parser.finishComplexToken(
-						"Character",
-						{
-							escaped: false,
-							value: "\t",
-						},
-						end,
-					);
-
-				case "n":
-					return parser.finishComplexToken(
-						"Character",
-						{
-							escaped: false,
-							value: "\n",
-						},
-						end,
-					);
-
-				case "r":
-					return parser.finishComplexToken(
-						"Character",
-						{
-							escaped: false,
-							value: "\r",
-						},
-						end,
-					);
-
-				case "v":
-					return parser.finishComplexToken(
-						"Character",
-						{
-							escaped: false,
-							value: "\x0b",
-						},
-						end,
-					);
-
-				case "f":
-					return parser.finishComplexToken(
-						"Character",
-						{
-							escaped: false,
-							value: "\f",
-						},
-						end,
-					);
-
-				case "d":
-				case "D":
-				case "b":
-				case "B":
-				case "s":
-				case "S":
-				case "w":
-				case "W":
-					return parser.finishValueToken("EscapedCharacter", nextChar, end);
-
-				case "k": {
-					if (parser.options.unicode) {
-						// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
-						let value = "";
-						let [char, next] = parser.getInputChar(index.add(2));
-
-						if (char === "<") {
-							while (!parser.isEOF(next)) {
-								value += char;
-								[char, next] = parser.getInputChar(index.increment());
-
-								if (char === ">") {
-									break;
-								}
-							}
-
-							return parser.finishComplexToken(
-								"NamedBackReferenceCharacter",
-								{
-									value,
-									escaped: true,
-								},
-								index,
-							);
-						}
-					}
-
-					return parser.finishComplexToken(
-						"Character",
-						{
-							value: "k",
-							escaped: true,
-						},
-						end,
-					);
-				}
-
-				case "p": {
-					if (parser.options.unicode) {
-						// TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
-					}
-
-					return parser.finishComplexToken(
-						"Character",
-						{
-							value: "p",
-							escaped: true,
-						},
-						end,
-					);
-				}
-
-				case "P": {
-					if (parser.options.unicode) {
-						// TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
-					}
-
-					return parser.finishComplexToken(
-						"Character",
-						{
-							value: "P",
-							escaped: true,
-						},
-						end,
-					);
-				}
-
-				case "c":
-					// TODO???
-					return parser.finishComplexToken(
-						"Character",
-						{
-							value: "c",
-							escaped: true,
-						},
-						end,
-					);
-
-				case "0": {
-					const {octalValue, end: octalEnd} = readOctalCode(
-						parser.input,
-						index,
-						nextChar,
-					);
-					if (octalValue !== undefined && isOct(octalValue.toString())) {
-						const octal = parseInt(octalValue.toString(), 8);
-						return parser.finishComplexToken(
-							"Character",
-							{
-								value: String.fromCharCode(octal),
-								escaped: true,
-							},
-							octalEnd,
-						);
-					}
-					return parser.finishComplexToken(
-						"Character",
-						{
-							value: String.fromCharCode(0),
-							escaped: true,
-						},
-						end,
-					);
-				}
-
-				case "x": {
-					const possibleHex = parser.getInputRangeOnly(index.increment(), 3);
-
-					// \xhh
-					if (possibleHex.length === 2 && isHex(possibleHex)) {
-						end = end.add(2);
-
-						return parser.finishComplexToken(
-							"Character",
-							{
-								value: String.fromCharCode(parseInt(possibleHex, 16)),
-								escaped: true,
-							},
-							end,
-						);
-					}
-
-					return parser.finishComplexToken(
-						"Character",
-						{
-							value: "x",
-							escaped: true,
-						},
-						end,
-					);
-				}
-
-				case "u": {
-					// Get the next 4 characters after \u
-					const possibleHex = parser.getInputRangeOnly(index.add(2), 4);
-
-					// \uhhhh
-					if (possibleHex.length === 4 && isHex(possibleHex)) {
-						end = end.add(4);
-
-						return parser.finishComplexToken(
-							"Character",
-							{
-								value: String.fromCharCode(parseInt(possibleHex, 16)),
-								escaped: true,
-							},
-							end,
-						);
-					}
-
-					if (parser.options.unicode) {
-						// TODO \u{hhhh} or \u{hhhhh}
-					}
-
-					return parser.finishComplexToken(
-						"Character",
-						{
-							value: "u",
-							escaped: true,
-						},
-						end,
-					);
-				}
-
-				// Redundant escaping
-				default: {
-					let {
-						octalValue: referenceValue,
-						end: referenceEnd,
-					} = readOctalCode(parser.input, index, nextChar);
-					if (referenceValue !== undefined) {
-						let backReference = referenceValue.toString();
-						// \8 \9 are treated as escape char
-						if (referenceValue === 8 || referenceValue === 9) {
-							return parser.finishComplexToken(
-								"Character",
-								{
-									value: backReference,
-									escaped: true,
-								},
-								referenceEnd,
-							);
-						}
-
-						if (isOct(backReference)) {
-							const octal = parseInt(backReference, 8);
-							return parser.finishComplexToken(
-								"Character",
-								{
-									value: String.fromCharCode(octal),
-									escaped: true,
-								},
-								referenceEnd,
-							);
-						}
-
-						// back reference allowed are 1 - 99
-						if (referenceValue >= 1 && referenceValue <= 99) {
-							return parser.finishComplexToken(
-								"NumericBackReferenceCharacter",
-								{
-									value: parseInt(backReference, 10),
-									escaped: true,
-								},
-								referenceEnd,
-							);
-						} else {
-							backReference = backReference.slice(0, backReference.length - 1);
-							referenceEnd = referenceEnd.decrement();
-							if (isOct(backReference)) {
-								return parser.finishComplexToken(
-									"Character",
-									{
-										value: String.fromCharCode(parseInt(backReference, 8)),
-										escaped: true,
-									},
-									referenceEnd,
-								);
-							} else {
-								return parser.finishComplexToken(
-									"NumericBackReferenceCharacter",
-									{
-										value: parseInt(backReference, 10),
-										escaped: true,
-									},
-									referenceEnd,
-								);
-							}
-						}
-					}
-
-					return parser.finishComplexToken(
-						"Character",
-						{
-							value: nextChar,
-							escaped: true,
-						},
-						end,
-					);
-				}
-			}
-		}
+	tokenize(parser, tokenizer) {
+		const char = tokenizer.get();
 
 		switch (char) {
 			case "$":
@@ -475,10 +444,14 @@ const regExpParser = createParser<RegExpParserTypes>({
 			case "]":
 			case "(":
 			case ")":
-				return parser.finishValueToken("Operator", char);
+				return tokenizer.finishValueToken("Operator", char);
 		}
 
-		return parser.finishComplexToken(
+		if (tokenizer.consume("\\")) {
+			return tokenizeEscaped(parser, tokenizer);
+		}
+
+		return tokenizer.finishComplexToken(
 			"Character",
 			{
 				value: char,
@@ -1162,8 +1135,12 @@ export function parseRegExp(
 	diagnostics: Diagnostic[];
 } {
 	const parser = regExpParser.create(opts);
+	const expression = parseExpression(parser);
+
+	parser.finalize(false);
+
 	return {
-		expression: parseExpression(parser),
+		expression,
 		diagnostics: parser.getDiagnostics(),
 	};
 }

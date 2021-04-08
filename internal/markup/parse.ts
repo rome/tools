@@ -82,77 +82,71 @@ const stringMarkupParser = createParser<MarkupParserTypes>({
 		internal: true,
 	},
 	getInitialState: () => ({inTagHead: false}),
-	tokenizeWithState(parser, index, state) {
-		const escaped = isEscaped(index, parser.input);
-		const char = parser.getInputCharOnly(index);
+	tokenizeWithState(parser, tokenizer, state) {
+		const escaped = isEscaped(tokenizer.index, parser.input);
+		const char = tokenizer.get();
 
 		if (!escaped && state.inTagHead) {
-			if (char === " ") {
-				return parser.lookahead(index.increment());
+			if (tokenizer.consume(" ")) {
+				return parser.lookahead(tokenizer.index);
 			}
 
-			if (char === "=") {
-				return [state, parser.finishToken("Equals")];
+			if (tokenizer.consume("=")) {
+				return tokenizer.finishToken("Equals");
 			}
 
-			if (char === "/") {
-				return [state, parser.finishToken("Slash")];
+			if (tokenizer.consume("/")) {
+				return tokenizer.finishToken("Slash");
 			}
 
 			if (isAlpha(char)) {
-				const [value, end] = parser.readInputFrom(index, isAlpha);
-				return [state, parser.finishValueToken("Word", value, end)];
+				const value = tokenizer.read(isAlpha);
+				return tokenizer.finishValueToken("Word", value);
 			}
 
-			if (char === '"') {
-				const [value, stringValueEnd, unclosed] = parser.readInputFrom(
-					index.increment(),
-					isStringValueChar,
-				);
+			if (tokenizer.consume('"')) {
+				const value = tokenizer.read(isStringValueChar);
 
-				if (unclosed) {
+				if (tokenizer.isEOF()) {
 					throw parser.unexpected({
 						description: descriptions.STRING_MARKUP.UNCLOSED_STRING,
-						start: parser.getPositionFromIndex(stringValueEnd),
+						start: parser.getPosition(),
 					});
 				}
 
-				const end = stringValueEnd.add(1);
+				tokenizer.assert('"');
+
 				return [
 					state,
-					parser.finishValueToken("String", unescapeTextValue(value), end),
+					tokenizer.finishValueToken("String", unescapeTextValue(value)),
 				];
 			}
 
-			if (char === ">") {
+			if (tokenizer.consume(">")) {
 				return [
 					{
 						inTagHead: false,
 					},
-					parser.finishToken("Greater"),
+					tokenizer.finishToken("Greater"),
 				];
 			}
 		}
 
-		if (isTagStartChar(index, parser.input)) {
+		if (isTagStartChar(tokenizer.index, parser.input)) {
+			tokenizer.take(1);
 			return [
 				{
 					inTagHead: true,
 				},
-				parser.finishToken("Less"),
+				tokenizer.finishToken("Less"),
 			];
 		}
 
 		// Keep eating text until we hit a <
-		const [value, end] = parser.readInputFrom(index, isTextChar);
+		const value = tokenizer.read(isTextChar);
 		return [
 			state,
-			{
-				type: "Text",
-				value: unescapeTextValue(value),
-				start: index,
-				end,
-			},
+			tokenizer.finishValueToken("Text", unescapeTextValue(value)),
 		];
 	},
 });
@@ -269,6 +263,7 @@ function parseTag(
 				});
 			}
 
+			// TODO move this...
 			attributes.get(
 				key,
 				{
@@ -305,6 +300,7 @@ function parseTag(
 			parser.nextToken();
 			selfClosing = true;
 		} else {
+			console.log(keyToken);
 			throw parser.unexpected({
 				description: descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
 			});

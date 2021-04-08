@@ -77,98 +77,74 @@ const htmlParser = createParser<HTMLParserTypes>({
 
 	tokenizeWithState(
 		parser,
-		index,
+		tokenizer,
 		state,
 	): ParserCoreTokenizeState<HTMLParserTypes> {
-		const escaped = isEscaped(index, parser.input);
-		const char = parser.getInputCharOnly(index);
+		const escaped = isEscaped(tokenizer.index, parser.input);
+		const char = tokenizer.get();
 
 		if (!escaped && state.inTagHead) {
-			if (char === "=") {
-				return [state, parser.finishToken("Equals")];
+			if (tokenizer.eat("=")) {
+				return tokenizer.finishToken("Equals");
 			}
 
-			if (char === "/" && parser.getInputCharOnly(index.increment())) {
-				return [state, parser.finishToken("TagSelfClosing", index.add(2))];
+			if (tokenizer.eat("/>")) {
+				return tokenizer.finishToken("TagSelfClosing");
 			}
 
 			if (isIdentifierChar(char)) {
-				const [value, end] = parser.readInputFrom(index, isIdentifierChar);
-				return [state, parser.finishValueToken("Identifier", value, end)];
+				const value = tokenizer.read(isIdentifierChar);
+				return tokenizer.finishValueToken("Identifier", value);
 			}
 
-			if (char === '"') {
-				const [value, stringValueEnd, unclosed] = parser.readInputFrom(
-					index.increment(),
-					isStringValueChar,
-				);
-
-				if (unclosed) {
-					// TODO
-				}
-
-				const end = stringValueEnd.add(1);
-				return [state, parser.finishValueToken("String", value, end)];
+			if (tokenizer.eat('"')) {
+				const value = tokenizer.read(isStringValueChar);
+				tokenizer.assert('"');
+				return tokenizer.finishValueToken("String", value);
 			}
 
-			if (char === ">") {
+			if (tokenizer.eat(">")) {
 				return [
 					{
 						inTagHead: false,
 					},
-					parser.finishToken("TagEnd"),
+					tokenizer.finishToken("TagEnd"),
 				];
 			}
 		}
 
-		if (parser.getInputCharOnly(index) === "!") {
-			const [isDoctype, value, endIndex] = consumeDOCTYPE(parser, index);
-			if (isDoctype && value && endIndex) {
-				return [state, parser.finishValueToken("Doctype", value, endIndex)];
+		if (tokenizer.eat("!")) {
+			const [isDoctype, value] = consumeDOCTYPE(tokenizer);
+			if (isDoctype && value) {
+				return tokenizer.finishValueToken("Doctype", value);
 			} else {
-				const [isCdata, value, endIndex] = consumeCDATA(parser, index);
-				if (isCdata && value && endIndex) {
-					return [state, parser.finishValueToken("Cdata", value, endIndex)];
+				const cdata = consumeCDATA(tokenizer);
+				if (cdata !== undefined) {
+					return tokenizer.finishValueToken("Cdata", cdata);
 				}
 			}
 		}
 
-		if (
-			parser.getInputCharOnly(index) === "<" &&
-			parser.getInputCharOnly(index.increment()) === "!" &&
-			parser.getInputCharOnly(index.add(2)) === "-" &&
-			parser.getInputCharOnly(index.add(3)) === "-"
-		) {
-			// Skip <!--
-			const start = index.add(4);
-			const [value, valueEnd, overflow] = parser.readInputFrom(
-				start,
-				isntCommentEnd,
-			);
-
-			// Check for unclosed comment
-			if (overflow) {
-				// TODO
-			}
-
-			// Skip -->
-			const end = valueEnd.add(3);
+		if (tokenizer.eat("<!--")) {
+			const value = tokenizer.read(isntCommentEnd);
+			tokenizer.assert("-->");
 
 			return [
 				{
 					inTagHead: false,
 				},
-				parser.finishValueToken("Comment", value, end),
+				tokenizer.finishValueToken("Comment", value),
 			];
 		}
 
-		if (isTagStartChar(index, parser.input)) {
-			let token;
+		if (isTagStartChar(tokenizer.index, parser.input)) {
+			tokenizer.take(1);
 
-			if (parser.getInputCharOnly(index.increment()) === "/") {
-				token = parser.finishToken("TagEndOpen", index.add(2));
+			let token;
+			if (tokenizer.eat("/")) {
+				token = tokenizer.finishToken("TagEndOpen");
 			} else {
-				token = parser.finishToken("TagStartOpen");
+				token = tokenizer.finishToken("TagStartOpen");
 			}
 
 			return [
@@ -180,15 +156,10 @@ const htmlParser = createParser<HTMLParserTypes>({
 		}
 
 		// Keep eating text until we hit a <
-		const [value, end] = parser.readInputFrom(index, isTextChar);
+		const value = tokenizer.read(isTextChar);
 		return [
 			state,
-			{
-				type: "Text",
-				value,
-				start: index,
-				end,
-			},
+			tokenizer.finishValueToken("Text", value),
 		];
 	},
 });
@@ -551,48 +522,44 @@ function parseChild(parser: HTMLParser): undefined | AnyHTMLChildNode {
 	}
 }
 
+function isntDoctypeEnd(char: string): boolean {
+	return char !== ">";
+}
+
 function consumeDOCTYPE(
-	parser: HTMLParser,
-	index: ZeroIndexed,
-): [boolean, string | undefined, ZeroIndexed | undefined] {
+	tokenizer: HTMLParser["tokenizer"]
+): [boolean, string | undefined] {
 	// doc requires a token like this
 	if (
-		parser.getInputRangeOnly(index.increment(), 7) === "DOCTYPE" &&
-		!isDigit(parser.getInputCharOnly(index.add(8))) &&
-		!isAlpha(parser.getInputCharOnly(index.add(8)))
+		tokenizer.startsWith("DOCTYPE") &&
+		!isDigit(tokenizer.get(8)) &&
+		!isAlpha(tokenizer.get(8))
 	) {
-		const [value, endIndex] = parser.readInputFrom(
-			index.add(9),
-			(char) => {
-				return char !== ">";
-			},
-		);
-		// we skip the greater sign
-		return [true, value.trim(), endIndex.add(1)];
+		tokenizer.assert("DOCTYPE");
+		const inner = tokenizer.read(isntDoctypeEnd);
+		tokenizer.assert(">");
+		return [true, inner.trim()];
 	}
 
-	return [false, undefined, undefined];
+	return [false, undefined];
 }
 
 function consumeCDATA(
-	parser: HTMLParser,
-	index: ZeroIndexed,
-): [boolean, string | undefined, ZeroIndexed | undefined] {
-	// doc requires a token like this
-	if (parser.getInputRangeOnly(index.increment(), 7) === "[CDATA[") {
-		const [value, endIndex] = parser.readInputFrom(
-			index.add(8),
+	tokenizer: HTMLParser["tokenizer"]
+): string | undefined {
+	if (tokenizer.consume("[CDATA[")) {
+		const value = tokenizer.read(
 			(char, index, input) => {
 				return !(char === "]" &&
 				input[index.valueOf() + 1] === "]" &&
 				input[index.valueOf() + 2] === ">");
 			},
 		);
-		// we skip the greater sign
-		return [true, value.trim(), endIndex.add(3)];
+		tokenizer.assert("]]>");
+		return value.trim();
 	}
 
-	return [false, undefined, undefined];
+	return undefined;
 }
 
 export function parseHTML(opts: ParserOptions): HTMLRoot {
@@ -607,7 +574,7 @@ export function parseHTML(opts: ParserOptions): HTMLRoot {
 		}
 	}
 
-	parser.finalize();
+	parser.finalize(false);
 
 	return parser.finishNode(
 		start,

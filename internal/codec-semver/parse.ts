@@ -47,18 +47,12 @@ type SemverParser = ParserCore<SemverParserTypes>;
 const semverParser = createParser<SemverParserTypes>({
 	diagnosticLanguage: "semver",
 	normalizeInput: (input) => input.trimRight(),
-	tokenize(parser, index) {
-		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index.increment());
+	tokenize(parser, tokenizer) {
+		const char = tokenizer.get();
 
-		if (
-			(char === "<" && nextChar === "=") ||
-			(char === ">" && nextChar === "=") ||
-			(char === "~" && nextChar === ">")
-		) {
-			// @ts-expect-error: TS doesn't infer the possible combinations
-			const value: SemverComparatorOperator = char + nextChar;
-			return parser.finishValueToken("Operator", value, index.add(2));
+		let semverComparator = tokenizer.eat("<=") || tokenizer.eat(">=") || tokenizer.eat("~>")
+		if (semverComparator !== undefined) {
+			return tokenizer.finishValueToken("Operator", semverComparator);
 		}
 
 		if (
@@ -69,53 +63,45 @@ const semverParser = createParser<SemverParserTypes>({
 			char === "="
 		) {
 			const op: SemverComparatorOperator = char;
-			return parser.finishValueToken("Operator", op);
+			return tokenizer.finishValueToken("Operator", op);
 		}
 
-		if (char === "|" && nextChar === "|") {
-			return parser.finishToken("Pipe", index.add(2));
+		if (tokenizer.consume("||")) {
+			return tokenizer.finishToken("Pipe");
 		}
 
-		if (char === "*") {
-			return parser.finishToken("Star");
+		if (tokenizer.consume("*")) {
+			return tokenizer.finishToken("Star");
 		}
 
-		if (
-			parser.getInputCharOnly(index.decrement()) === " " &&
-			char === "-" &&
-			nextChar === " "
-		) {
-			return parser.finishToken("RangeDash");
+		if (tokenizer.get(-1) === " " && tokenizer.consume("- ")) {
+			return tokenizer.finishToken("RangeDash");
 		}
 
-		if (char === "-") {
-			return parser.finishToken("Dash");
+		if (tokenizer.consume("-")) {
+			return tokenizer.finishToken("Dash");
 		}
 
-		if (char === "+") {
-			return parser.finishToken("Plus");
+		if (tokenizer.consume("+")) {
+			return tokenizer.finishToken("Plus");
 		}
 
-		if (char === ".") {
-			return parser.finishToken("Dot");
+		if (tokenizer.consume(".")) {
+			return tokenizer.finishToken("Dot");
 		}
 
 		if (isDigit(char)) {
-			const [value] = parser.readInputFrom(index, isDigit);
-			return parser.finishValueToken(
-				"Number",
-				Number(value),
-				index.add(value.length),
-			);
+			const value = tokenizer.read(isDigit);
+			return tokenizer.finishValueToken("Number", Number(value));
 		}
 
 		if (isAlpha(char)) {
-			const [value] = parser.readInputFrom(index, isAlpha);
-			return parser.finishValueToken("Word", value, index.add(value.length));
+			const value = tokenizer.read(isAlpha);
+			return tokenizer.finishValueToken("Word", value);
 		}
 
-		if (char === " " || char === "\t") {
-			return parser.finishToken("Space");
+		if (tokenizer.consume(" ") || tokenizer.consume("\t")) {
+			return tokenizer.finishToken("Space");
 		}
 
 		// Unknown character

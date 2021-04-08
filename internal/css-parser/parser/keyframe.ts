@@ -148,9 +148,11 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 		}
 		const pos = parser.getPosition();
 		const name = parseKeyframeSelector(parser);
+
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
 		}
+
 		if (!matchToken(parser, "LeftCurlyBracket")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
@@ -166,7 +168,7 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 			endingTokenType: "RightCurlyBracket",
 		});
 
-		if (name && value) {
+		if (name !== undefined && value !== undefined) {
 			nextToken(parser);
 			const block = parser.finishNode(
 				pos,
@@ -188,6 +190,7 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 export function parseKeyframe(parser: CSSParser): CSSKeyframe | undefined {
 	const start = parser.getPosition();
 	nextToken(parser);
+
 	const name = parseKeyframeName(parser);
 	if (!name) {
 		return undefined;
@@ -207,10 +210,10 @@ export function parseKeyframe(parser: CSSParser): CSSKeyframe | undefined {
 	nextToken(parser);
 
 	const value = parseKeyframeBlocks(parser);
-
-	if (!value) {
+	if (value === undefined) {
 		return undefined;
 	}
+
 	return parser.finishNode(
 		start,
 		{
