@@ -14,7 +14,6 @@ import {
 	MarkdownListItem,
 	MarkdownRoot,
 } from "@internal/ast";
-import {ZeroIndexed} from "@internal/numbers";
 import {isEscaped} from "@internal/string-utils";
 import {CodeProperties, MarkdownParserTypes} from "./types";
 import {hasThematicBreak, isntInlineCharacter} from "./utils";
@@ -35,9 +34,9 @@ const markdownParser = createParser<MarkdownParserTypes>({
 	ignoreWhitespaceTokens: false,
 	getInitialState: () => createMarkdownInitialState(),
 
-	tokenizeWithState(parser, index, state) {
-		const char = parser.getInputCharOnly(index);
-		const escaped = isEscaped(index, parser.input);
+	tokenizeWithState(parser, tokenizer, state) {
+		const char = tokenizer.get();
+		const escaped = isEscaped(tokenizer.index, parser.input);
 
 		if (!escaped) {
 			if (char === "\n") {
@@ -45,39 +44,39 @@ const markdownParser = createParser<MarkdownParserTypes>({
 					{
 						isParagraph: false,
 					},
-					parser.finishToken("NewLine"),
+					tokenizer.finishToken("NewLine"),
 				];
 			}
 
-			if (char === "[") {
-				return [state, parser.finishToken("OpenSquareBracket")];
+			if (tokenizer.consume("[")) {
+				return tokenizer.finishToken("OpenSquareBracket");
 			}
 
-			if (char === "]") {
-				return [state, parser.finishToken("CloseSquareBracket")];
+			if (tokenizer.consume("]")) {
+				return tokenizer.finishToken("CloseSquareBracket");
 			}
 
-			if (char === "(") {
-				return [state, parser.finishToken("OpenBracket")];
+			if (tokenizer.consume("(")) {
+				return tokenizer.finishToken("OpenBracket");
 			}
 
-			if (char === ")") {
-				return [state, parser.finishToken("CloseBracket")];
+			if (tokenizer.consume(")")) {
+				return tokenizer.finishToken("CloseBracket");
 			}
 		}
 
 		if (!(escaped || state.isParagraph)) {
 			if (char === "#") {
-				return [state, consumeHeading(parser, index)];
+				return consumeHeading(parser, tokenizer);
 			}
 
 			if (char === "-") {
-				const block = tokenizeBlock(parser, "-", index, char);
+				const block = tokenizeBlock(parser, "-", tokenizer, char);
 				if (block) {
-					return [state, block];
+					return block;
 				}
 
-				const listItemToken = tokenizeListItem(parser, index, "-");
+				const listItemToken = tokenizeListItem(parser, tokenizer, "-");
 				if (listItemToken) {
 					return [
 						{
@@ -89,24 +88,24 @@ const markdownParser = createParser<MarkdownParserTypes>({
 			}
 
 			if (char === "_") {
-				const block = tokenizeBlock(parser, "_", index, char);
+				const block = tokenizeBlock(parser, "_", tokenizer, char);
 				if (block) {
-					return [state, block];
+					return block;
 				}
 
-				const result = tokenizeInline(parser, state, "_", index);
+				const result = tokenizeInline(parser, state, "_", tokenizer);
 				if (result) {
 					return result;
 				}
 			}
 
 			if (char === "*") {
-				const block = tokenizeBlock(parser, "*", index, char);
+				const block = tokenizeBlock(parser, "*", tokenizer, char);
 				if (block) {
-					return [state, block];
+					return block;
 				}
 
-				const listItemToken = tokenizeListItem(parser, index, "*");
+				const listItemToken = tokenizeListItem(parser, tokenizer, "*");
 				if (listItemToken) {
 					return [
 						{
@@ -116,21 +115,21 @@ const markdownParser = createParser<MarkdownParserTypes>({
 					];
 				}
 
-				const result = tokenizeInline(parser, state, "*", index);
+				const result = tokenizeInline(parser, state, "*", tokenizer);
 				if (result) {
 					return result;
 				}
 			}
 
 			if (char === "`") {
-				const token = consumeCode(parser, index);
+				const token = consumeCode(parser, tokenizer);
 				if (token) {
-					return [state, token];
+					return token;
 				}
 			}
 
 			if (isDigit(char)) {
-				const listItemToken = tokenizeListItem(parser, index);
+				const listItemToken = tokenizeListItem(parser, tokenizer);
 
 				if (listItemToken) {
 					return [
@@ -145,14 +144,14 @@ const markdownParser = createParser<MarkdownParserTypes>({
 
 		if (!escaped && state.isParagraph) {
 			if (char === "*") {
-				const result = tokenizeInline(parser, state, "*", index);
+				const result = tokenizeInline(parser, state, "*", tokenizer);
 				if (result) {
 					return result;
 				}
 			}
 
 			if (char === "_") {
-				const result = tokenizeInline(parser, state, "_", index);
+				const result = tokenizeInline(parser, state, "_", tokenizer);
 				if (result) {
 					return result;
 				}
@@ -163,62 +162,60 @@ const markdownParser = createParser<MarkdownParserTypes>({
 					{
 						isParagraph: false,
 					},
-					parser.finishToken("NewLine"),
+					tokenizer.finishToken("NewLine"),
 				];
 			}
 
-			const [value, endIndex] = parser.readInputFrom(index, isntInlineCharacter);
+			const value = tokenizer.read(isntInlineCharacter);
 
 			return [
 				{
-					isParagraph: parser.getInputCharOnly(endIndex) !== "\n",
+					isParagraph: tokenizer.get() !== "\n",
 				},
-				parser.finishValueToken("Text", value, endIndex),
+				tokenizer.finishValueToken("Text", value),
 			];
 		}
 
-		const [value, endIndex] = parser.readInputFrom(index, isntInlineCharacter);
+		const value = tokenizer.read(isntInlineCharacter);
 
 		return [
 			{
-				isParagraph: parser.getInputCharOnly(endIndex) !== "\n",
+				isParagraph: tokenizer.get() !== "\n",
 			},
-			parser.finishValueToken("Text", value, endIndex),
+			tokenizer.finishValueToken("Text", value),
 		];
 	},
 });
 
-function consumeHeading(parser: MarkdownParser, index: ZeroIndexed) {
-	const [value, end] = parser.readInputFrom(
-		index,
-		(char1) => {
-			return char1 === "#";
-		},
-	);
+function isHash(char: string): boolean {
+	return char === "#";
+}
+
+function consumeHeading(parser: MarkdownParser, tokenizer: MarkdownParser["tokenizer"]) {
+	const value = tokenizer.read(isHash);
 	if (value.length > 6) {
-		const [textValue, endText] = parser.readInputFrom(end, isntLineBreak);
-		return parser.finishValueToken("Text", value + textValue, endText);
+		const textValue = tokenizer.read(isntLineBreak);
+		return tokenizer.finishValueToken("Text", value + textValue);
 	}
-	return parser.finishValueToken("HeadingLevel", value.length, end);
+	return tokenizer.finishValueToken("HeadingLevel", value.length);
 }
 
 function tokenizeBlock(
 	parser: MarkdownParser,
 	blockChar: string,
-	index: ZeroIndexed,
+	tokenizer: MarkdownParser["tokenizer"],
 	currentChar: string,
 ) {
-	const nextChar = parser.getInputCharOnly(index.increment());
-	const nextNextChar = parser.getInputCharOnly(index.add(2));
+	const nextChar = tokenizer.get(1);
+	const nextNextChar = tokenizer.get(2);
 	if (hasThematicBreak([currentChar, nextChar, nextNextChar].join(""))) {
 		// by spec, should be at least 3, with an infinite number
-		const [value, endIndex] = parser.readInputFrom(
-			index,
+		const value = tokenizer.read(
 			(char) => {
 				return char === blockChar;
 			},
 		);
-		return parser.finishValueToken("Break", value, endIndex);
+		return tokenizer.finishValueToken("Break", value);
 	}
 	return undefined;
 }
@@ -306,9 +303,11 @@ function parseBlock(
 			parser.nextToken();
 			return undefined;
 		}
+
 		case "OpenSquareBracket": {
 			return parseReference(parser);
 		}
+
 		case "HeadingLevel":
 			return parseHeading(parser);
 
@@ -318,6 +317,8 @@ function parseBlock(
 		case "Break":
 			return parseBreak(parser);
 
+		case "Strong":
+		case "Emphasis":
 		case "Text":
 			return parseParagraph(parser);
 
@@ -346,7 +347,7 @@ export function parseMarkdown(opts: ParserOptions): MarkdownRoot {
 		}
 	}
 
-	parser.finalize();
+	parser.finalize(false);
 
 	return parser.finishNode(
 		start,
@@ -357,33 +358,29 @@ export function parseMarkdown(opts: ParserOptions): MarkdownRoot {
 	);
 }
 
-function consumeCode(parser: MarkdownParser, index: ZeroIndexed) {
-	const nextChar = parser.getInputCharOnly(index.increment());
-	const nextNextChar = parser.getInputCharOnly(index.add(2));
-	if (nextChar === "`" && nextNextChar === "`") {
-		const [languageValue, languageIndex] = parser.readInputFrom(
-			index.add(3),
+function consumeCode(parser: MarkdownParser, tokenizer: MarkdownParser["tokenizer"]) {
+	if (tokenizer.consume("```")) {
+		const languageValue = tokenizer.read(
 			isntLineBreak,
 		);
 
-		const [value, endIndex] = parser.readInputFrom(
-			languageIndex,
+		const value = tokenizer.read(
 			(_, index) => {
-				const firstChar = parser.getInputCharOnly(index.increment());
-				const secondChar = parser.getInputCharOnly(index.add(2));
-				const thirdChar = parser.getInputCharOnly(index.add(3));
+				const firstChar = tokenizer.get(1);
+				const secondChar = tokenizer.get(2);
+				const thirdChar = tokenizer.get(3);
 				return !(firstChar === "`" && secondChar === "`" && thirdChar === "`");
 			},
 		);
 
-		return parser.finishComplexToken<"Code", CodeProperties>(
+		tokenizer.assert("```");
+
+		return tokenizer.finishComplexToken<"Code", CodeProperties>(
 			"Code",
 			{
 				language: languageValue || "unknown",
 				value,
 			},
-			// skip the three back ticks and let's point to their next char
-			endIndex.add(4),
 		);
 	}
 

@@ -27,257 +27,215 @@ import {
 import {CSSRoot} from "@internal/ast";
 import {parseRules} from "@internal/css-parser/parser/rules";
 
+function isntBlockCommentEnd(
+	char: string,
+	index: ZeroIndexed,
+	input: string,
+): boolean {
+	const nextChar = input[index.valueOf() + 1];
+	return !(char === "*" && nextChar === "/");
+}
+
 export const cssParser = createParser<CSSParserTypes>({
 	diagnosticLanguage: "css",
 	ignoreWhitespaceTokens: false,
-	tokenize(parser: CSSParser, index: ZeroIndexed): AnyCSSToken {
-		const char = parser.getInputCharOnly(index);
+	tokenize(parser: CSSParser, tokenizer): AnyCSSToken {
+		const char = tokenizer.get();
 
-		if (char === "/" && parser.getInputCharOnly(index.increment()) === "*") {
-			index = index.add(2);
-			let value = "";
-			while (
-				!((parser.getInputCharOnly(index) === "*" &&
-				parser.getInputCharOnly(index.increment()) === "/") ||
-				parser.isEOF(index))
-			) {
-				value += parser.getInputCharOnly(index);
-				index = index.add(1);
-			}
-			return parser.finishValueToken("Comment", value, index.add(2));
+		if (tokenizer.eat("/*")) {
+			const value = tokenizer.read(isntBlockCommentEnd);
+			tokenizer.assert("*/");
+			return tokenizer.finishValueToken("Comment", value);
 		}
 
 		if (isWhitespace(char)) {
-			const endIndex = parser.readInputFrom(index, isWhitespace)[1];
-			return parser.finishToken("Whitespace", endIndex);
+			tokenizer.read(isWhitespace);
+			return tokenizer.finishToken("Whitespace");
 		}
 
-		if (char === '"') {
-			return consumeStringToken(parser, index);
+		if (tokenizer.eat('"')) {
+			return consumeStringToken(parser, tokenizer, '"');
 		}
 
-		if (char === "#") {
-			const nextChar = parser.getInputCharOnly(index.increment());
+		if (tokenizer.eat("'")) {
+			return consumeStringToken(parser, tokenizer, "'");
+		}
+
+		if (tokenizer.startsWith("#")) {
+			const nextChar = tokenizer.get(1);
 			if (
 				isName(nextChar) ||
-				isValidEscape(nextChar, parser.getInputCharOnly(index.add(2)))
+				isValidEscape(nextChar, tokenizer.get(2))
 			) {
-				const [value, endIndex] = consumeName(parser, index.increment());
+				tokenizer.assert("#");
+
 				const isIdent = isIdentifierStart(
-					parser.getInputCharOnly(index.increment()),
-					parser.getInputCharOnly(index.add(2)),
-					parser.getInputCharOnly(index.add(3)),
+					tokenizer.get(),
+					tokenizer.get(1),
+					tokenizer.get(2),
 				);
-				return parser.finishComplexToken(
+				const value = consumeName(parser, tokenizer);
+				return tokenizer.finishComplexToken(
 					"Hash",
 					{
 						hashType: isIdent ? "id" : undefined,
 						value,
 					},
-					endIndex,
 				);
 			}
-			return parser.finishValueToken("Delim", char);
 		}
 
-		if (char === "'") {
-			return consumeStringToken(parser, index);
+		if (tokenizer.eat("(")) {
+			return tokenizer.finishToken("LeftParen");
 		}
 
-		if (char === "(") {
-			return parser.finishToken("LeftParen");
+		if (tokenizer.eat(")")) {
+			return tokenizer.finishToken("RightParen");
 		}
 
-		if (char === ")") {
-			return parser.finishToken("RightParen");
+		if (tokenizer.startsWith("+") && isNumberStart("+", tokenizer.get(1), tokenizer.get(2))) {
+			return consumeNumberToken(parser, tokenizer);
 		}
 
-		if (char === "+") {
+		if (tokenizer.eat(",")) {
+			return tokenizer.finishToken("Comma");
+		}
+
+		if (tokenizer.eat("-->")) {
+			return tokenizer.finishToken("CDC");
+		}
+
+		if (tokenizer.startsWith("-")) {
 			if (
 				isNumberStart(
-					char,
-					parser.getInputCharOnly(index.increment()),
-					parser.getInputCharOnly(index.add(2)),
+					"-",
+					tokenizer.get(1),
+					tokenizer.get(2),
 				)
 			) {
-				return consumeNumberToken(parser, index);
-			}
-
-			return parser.finishValueToken("Delim", char);
-		}
-
-		if (char === ",") {
-			return parser.finishToken("Comma");
-		}
-
-		if (char === "-") {
-			if (
-				isNumberStart(
-					char,
-					parser.getInputCharOnly(index.increment()),
-					parser.getInputCharOnly(index.add(2)),
-				)
-			) {
-				return consumeNumberToken(parser, index);
-			}
-
-			if (
-				parser.getInputCharOnly(index.increment()) === "-" &&
-				parser.getInputCharOnly(index.add(2)) === ">"
-			) {
-				return parser.finishToken("CDC", index.add(3));
+				return consumeNumberToken(parser, tokenizer);
 			}
 
 			if (
 				isIdentifierStart(
-					char,
-					parser.getInputCharOnly(index.increment()),
-					parser.getInputCharOnly(index.add(2)),
+					"-",
+					tokenizer.get(1),
+					tokenizer.get(2),
 				)
 			) {
-				return consumeIdentLikeToken(parser, index);
+				return consumeIdentLikeToken(parser, tokenizer);
 			}
-
-			return parser.finishValueToken("Delim", char);
 		}
 
-		if (char === ".") {
-			if (
-				isNumberStart(
-					char,
-					parser.getInputCharOnly(index.increment()),
-					parser.getInputCharOnly(index.add(2)),
-				)
-			) {
-				return consumeNumberToken(parser, index);
-			}
-
-			return parser.finishValueToken("Delim", char);
+		if (tokenizer.startsWith(".") && isNumberStart(".", tokenizer.get(1), tokenizer.get(2))) {
+			return consumeNumberToken(parser, tokenizer);
 		}
 
-		if (char === ":") {
-			return parser.finishToken("Colon");
+		if (tokenizer.eat(":")) {
+			return tokenizer.finishToken("Colon");
 		}
 
-		if (char === ";") {
-			return parser.finishToken("Semi");
+		if (tokenizer.eat(";")) {
+			return tokenizer.finishToken("Semi");
 		}
 
-		if (char === "<") {
-			if (
-				parser.getInputCharOnly(index.increment()) === "!" &&
-				parser.getInputCharOnly(index.add(2)) === "-" &&
-				parser.getInputCharOnly(index.add(3)) === "-"
-			) {
-				return parser.finishToken("CDO", index.add(4));
-			}
-			return parser.finishValueToken("Delim", char);
+		if (tokenizer.eat("<!--")) {
+			return tokenizer.finishToken("CDO");
 		}
 
-		if (char === "@") {
-			if (
-				isIdentifierStart(
-					parser.getInputCharOnly(index.increment()),
-					parser.getInputCharOnly(index.add(2)),
-					parser.getInputCharOnly(index.add(3)),
-				)
-			) {
-				const [value, endIndex] = consumeName(parser, index.increment());
-				return parser.finishValueToken("AtKeyword", value, endIndex);
-			}
-			return parser.finishValueToken("Delim", char);
+		if (tokenizer.startsWith("@") && isIdentifierStart(tokenizer.get(1), tokenizer.get(2), tokenizer.get(3))) {
+			tokenizer.assert("@");
+			const value = consumeName(parser, tokenizer);
+			return tokenizer.finishValueToken("AtKeyword", value);
 		}
 
-		if (char === "[") {
-			return parser.finishToken("LeftSquareBracket");
+		if (tokenizer.eat("[")) {
+			return tokenizer.finishToken("LeftSquareBracket");
 		}
 
-		if (char === "\\") {
-			if (isValidEscape(char, parser.getInputCharOnly(index.increment()))) {
-				return consumeIdentLikeToken(parser, index);
+		if (tokenizer.eat("\\")) {
+			if (isValidEscape("\\", tokenizer.get())) {
+				return consumeIdentLikeToken(parser, tokenizer);
 			}
 
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.INVALID_ESCAPE,
 			});
-			return parser.finishValueToken("Delim", char);
+			return tokenizer.finishValueToken("Delim", "\\");
 		}
 
-		if (char === "]") {
-			return parser.finishToken("RightSquareBracket");
+		if (tokenizer.eat("]")) {
+			return tokenizer.finishToken("RightSquareBracket");
 		}
 
-		if (char === "{") {
-			return parser.finishToken("LeftCurlyBracket");
+		if (tokenizer.eat("{")) {
+			return tokenizer.finishToken("LeftCurlyBracket");
 		}
 
-		if (char === "}") {
-			return parser.finishToken("RightCurlyBracket");
+		if (tokenizer.eat("}")) {
+			return tokenizer.finishToken("RightCurlyBracket");
 		}
 
 		if (isDigit(char)) {
-			return consumeNumberToken(parser, index);
+			return consumeNumberToken(parser, tokenizer);
 		}
 
 		if (isNameStart(char)) {
-			return consumeIdentLikeToken(parser, index);
+			return consumeIdentLikeToken(parser, tokenizer);
 		}
 
-		return parser.finishValueToken("Delim", char);
+		tokenizer.take(1);
+		return tokenizer.finishValueToken("Delim", char);
 	},
 });
 
-function getNewlineLength(parser: CSSParser, index: ZeroIndexed): number {
-	if (
-		parser.getInputCharOnly(index) === Symbols.CarriageReturn &&
-		parser.getInputCharOnly(index.increment()) === Symbols.LineFeed
-	) {
+function getNewlineLength(parser: CSSParser, tokenizer: CSSParser["tokenizer"]): number {
+	if (tokenizer.startsWith(`${Symbols.CarriageReturn}${Symbols.LineFeed}`)) {
 		return 2;
 	}
 
 	return 1;
 }
 
-function consumeBadURL(parser: CSSParser, index: ZeroIndexed): ZeroIndexed {
-	while (!parser.isEOF(index)) {
-		if (parser.getInputCharOnly(index) === ")") {
-			return index.increment();
+function consumeBadURL(parser: CSSParser, tokenizer: CSSParser["tokenizer"]) {
+	while (!tokenizer.isEOF()) {
+		if (tokenizer.consume(")")) {
+			return;
 		}
 
 		if (
 			isValidEscape(
-				parser.getInputCharOnly(index),
-				parser.getInputCharOnly(index.increment()),
+				tokenizer.get(),
+				tokenizer.get(1),
 			)
 		) {
-			index = consumeEscaped(parser, index)[1];
+			consumeEscaped(parser, tokenizer);
 		} else {
-			index = index.increment();
+			tokenizer.take(1);
 		}
 	}
-	return index;
 }
 
 function consumeEscaped(
 	parser: CSSParser,
-	index: ZeroIndexed,
-): [string, ZeroIndexed] {
+	tokenizer: CSSParser["tokenizer"],
+): string {
+	tokenizer.assert("\\");
+	const lastChar = tokenizer.take(1);
 	let value = "";
-	index = index.add(2);
-	const lastChar = parser.getInputCharOnly(index.decrement());
 
 	if (isHexDigit(lastChar)) {
 		let hexString = lastChar;
 		let utf8Value = "";
 
-		const possibleHex = parser.getRawInput(index, index.add(5));
+		const possibleHex = tokenizer.getRange(5);
 		for (const char of possibleHex) {
 			if (!isHexDigit(char)) {
 				break;
 			}
 
 			hexString += char;
-			index = index.increment();
+			tokenizer.take(1);
 		}
 
 		const hexNumber = parseInt(hexString, 16);
@@ -292,304 +250,261 @@ function consumeEscaped(
 		}
 		value += utf8Value;
 
-		if (isWhitespace(parser.getInputCharOnly(index))) {
-			index = index.add(getNewlineLength(parser, index));
+		if (isWhitespace(tokenizer.get())) {
+			tokenizer.take(getNewlineLength(parser, tokenizer));
 		}
 	}
 
-	return [value, index];
+	return value;
 }
 
 function consumeName(
 	parser: CSSParser,
-	index: ZeroIndexed,
-): [string, ZeroIndexed] {
+	tokenizer: CSSParser["tokenizer"],
+): string {
 	let value = "";
 
-	while (!parser.isEOF(index)) {
-		const char1 = parser.getInputCharOnly(index);
-		const char2 = parser.getInputCharOnly(index.increment());
+	while (!tokenizer.isEOF()) {
+		const char1 = tokenizer.get();
+		const char2 = tokenizer.get(1);
 
 		if (isName(char1)) {
 			value += char1;
-			index = index.increment();
+			tokenizer.take(1);
 			continue;
 		}
 
 		if (isValidEscape(char1, char2)) {
-			const [newValue, newIndex] = consumeEscaped(parser, index);
+			const newValue = consumeEscaped(parser, tokenizer);
 			value += newValue;
-			index = newIndex;
 			continue;
 		}
 
 		break;
 	}
 
-	return [value, index];
+	return value;
 }
 
 function consumeNumber(
 	parser: CSSParser,
-	index: ZeroIndexed,
-): [ZeroIndexed, number, string, string] {
-	const char = parser.getInputCharOnly(index);
+	tokenizer: CSSParser["tokenizer"],
+): [number, string, string] {
+	const char = tokenizer.get();
 	let value = "";
 	let type = "integer";
 
-	if (char === "+" || char === "-") {
+	if (tokenizer.consume("+") || tokenizer.consume("-")) {
 		value += char;
-		index = index.increment();
 	}
 
-	while (isDigit(parser.getInputCharOnly(index))) {
-		value += parser.getInputCharOnly(index);
-		index = index.increment();
-	}
+	value += tokenizer.read(isDigit);
 
 	if (
-		parser.getInputCharOnly(index) === "." &&
-		isDigit(parser.getInputCharOnly(index.increment()))
+		tokenizer.startsWith(".") &&
+		isDigit(tokenizer.get(1))
 	) {
-		value += parser.getInputCharOnly(index);
-		index = index.increment();
-
-		value += parser.getInputCharOnly(index);
-		index = index.increment();
-
+		value += tokenizer.take(2);
 		type = "number";
-
-		while (isDigit(parser.getInputCharOnly(index))) {
-			value += parser.getInputCharOnly(index);
-			index = index.increment();
-		}
+		value += tokenizer.read(isDigit);
 	}
 
-	const char1 = parser.getInputCharOnly(index);
-	const char2 = parser.getInputCharOnly(index.increment());
-	const char3 = parser.getInputCharOnly(index.add(2));
+	const char1 = tokenizer.get();
+	const char2 = tokenizer.get(1);
+	const char3 = tokenizer.get(2);
 
 	if (char1 === "E" || char1 === "e") {
 		if (isDigit(char2)) {
-			value += parser.getInputCharOnly(index);
-			index = index.increment();
-
-			value += parser.getInputCharOnly(index);
-			index = index.increment();
+			value += tokenizer.take(2);
 		} else if ((char2 === "-" || char2 === "+") && isDigit(char3)) {
-			value += parser.getInputCharOnly(index);
-			index = index.increment();
+			value += tokenizer.take(3);
 
-			value += parser.getInputCharOnly(index);
-			index = index.increment();
-
-			value += parser.getInputCharOnly(index);
-			index = index.increment();
-
-			while (isDigit(parser.getInputCharOnly(index))) {
-				value += parser.getInputCharOnly(index);
-				index = index.increment();
-			}
+			const digits = tokenizer.read(isDigit);
+			value += digits;
 		}
 	}
 
-	return [index, parseFloat(value), type, value];
+	return [parseFloat(value), type, value];
 }
 
 function consumeIdentLikeToken(
 	parser: CSSParser,
-	index: ZeroIndexed,
+	tokenizer: CSSParser["tokenizer"],
 ): Tokens["Function"] | Tokens["Ident"] | Tokens["URL"] | Tokens["BadURL"] {
-	const [name, newIndex] = consumeName(parser, index);
-	index = newIndex;
+	const name = consumeName(parser, tokenizer);
 	let value = name;
 
-	if (/url/gi.test(value) && parser.getInputCharOnly(index) === "(") {
-		index = index.increment();
-
+	if (/url/gi.test(value) && tokenizer.eat("(")) {
 		while (
-			isWhitespace(parser.getInputCharOnly(index)) &&
-			isWhitespace(parser.getInputCharOnly(index.increment()))
+			isWhitespace(tokenizer.get()) &&
+			isWhitespace(tokenizer.get(1))
 		) {
-			index = index.increment();
+			tokenizer.take(1);
+		}
+
+		if (tokenizer.startsWith("'") || tokenizer.startsWith('"')) {
+			return tokenizer.finishValueToken("Function", value);
 		}
 
 		if (
-			parser.getInputCharOnly(index) === '"' ||
-			parser.getInputCharOnly(index) === "'"
+			isWhitespace(tokenizer.get()) &&
+			(tokenizer.startsWith("'") || tokenizer.startsWith('"'))
 		) {
-			return parser.finishValueToken("Function", value, index);
+			return tokenizer.finishValueToken("Function", value);
 		}
 
-		if (
-			isWhitespace(parser.getInputCharOnly(index)) &&
-			(parser.getInputCharOnly(index.increment()) === '"' ||
-			parser.getInputCharOnly(index.increment()) === "'")
-		) {
-			return parser.finishValueToken("Function", value, index.add(1));
-		}
-
-		return consumeURLToken(parser, index);
+		return consumeURLToken(parser, tokenizer);
 	}
 
-	if (parser.getInputCharOnly(index) === "(") {
-		return parser.finishValueToken("Function", value, index.increment());
+	if (tokenizer.consume("(")) {
+		return tokenizer.finishValueToken("Function", value);
 	}
 
-	return parser.finishValueToken("Ident", value, index);
+	return tokenizer.finishValueToken("Ident", value);
 }
 
 function consumeStringToken(
 	parser: CSSParser,
-	index: ZeroIndexed,
-	endChar?: string,
+	tokenizer: CSSParser["tokenizer"],
+	endChar: string,
 ): Tokens["String"] | Tokens["BadString"] {
 	let value = "";
 
-	if (!endChar) {
-		[endChar, index] = parser.getInputChar(index);
-	}
+	while (!tokenizer.isEOF() && !tokenizer.startsWith(endChar)) {
+		const char = tokenizer.get();
+		const nextChar = tokenizer.get(1);
 
-	while (!parser.isEOF(index)) {
-		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index.increment());
-
-		if (char === endChar) {
-			return parser.finishValueToken("String", value, index.increment());
-		} else if (parser.isEOF(index)) {
+		if (isNewline(char)) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_STRING,
 			});
-			return parser.finishValueToken("String", value, index.increment());
-		} else if (isNewline(char)) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.UNTERMINATED_STRING,
-			});
-			return parser.finishToken("BadString", index);
-		} else if (char === "\\") {
-			if (parser.isEOF(index.increment())) {
+			return tokenizer.finishToken("BadString");
+		}
+
+		if (char === "\\") {
+			if (parser.isEOF(tokenizer.index.increment())) {
 				continue;
 			}
+
 			if (isNewline(nextChar)) {
-				index = index.add(getNewlineLength(parser, index.increment()));
+				tokenizer.take(getNewlineLength(parser, tokenizer));
 			} else if (isValidEscape(char, nextChar)) {
-				const [newValue, newIndex] = consumeEscaped(parser, index);
+				const newValue = consumeEscaped(parser, tokenizer);
 				value += newValue;
-				index = newIndex;
 			}
 		} else {
 			value += char;
-			index = index.increment();
+			tokenizer.take(1);
 		}
 	}
 
-	return parser.finishValueToken("String", value, index);
+	if (tokenizer.isEOF()) {
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.UNTERMINATED_STRING,
+		});
+	} else {
+		tokenizer.assert(endChar);
+	}
+
+	return tokenizer.finishValueToken("String", value);
 }
 
 function consumeNumberToken(
 	parser: CSSParser,
-	index: ZeroIndexed,
+	tokenizer: CSSParser["tokenizer"],
 ): Tokens["Percentage"] | Tokens["Dimension"] | Tokens["Number"] {
-	const [newIndex, numberValue, numberType, raw] = consumeNumber(parser, index);
-	index = newIndex;
+	const [numberValue, numberType, raw] = consumeNumber(parser, tokenizer);
 
 	if (
 		isIdentifierStart(
-			parser.getInputCharOnly(index),
-			parser.getInputCharOnly(index.increment()),
-			parser.getInputCharOnly(index.add(2)),
+			tokenizer.get(),
+			tokenizer.get(1),
+			tokenizer.get(2),
 		)
 	) {
-		const [unit, endIndex] = consumeName(parser, index);
-		return parser.finishComplexToken(
+		const unit = consumeName(parser, tokenizer);
+		return tokenizer.finishComplexToken(
 			"Dimension",
 			{
 				numberType,
 				unit,
 				value: numberValue,
 			},
-			endIndex,
 		);
 	}
 
-	if (parser.getInputCharOnly(index) === "%") {
-		return parser.finishValueToken("Percentage", numberValue, index.add(1));
+	if (tokenizer.consume("%")) {
+		return tokenizer.finishValueToken("Percentage", numberValue);
 	}
 
-	return parser.finishComplexToken(
+	return tokenizer.finishComplexToken(
 		"Number",
 		{
 			numberType,
 			value: numberValue,
 			raw,
 		},
-		index,
 	);
 }
 
 function consumeURLToken(
 	parser: CSSParser,
-	index: ZeroIndexed,
+	tokenizer: CSSParser["tokenizer"],
 ): Tokens["URL"] | Tokens["BadURL"] {
 	let value = "";
 
-	while (isWhitespace(parser.getInputCharOnly(index))) {
-		index = index.increment();
+	while (isWhitespace(tokenizer.get())) {
+		tokenizer.take(1);
 	}
 
-	while (!parser.isEOF(index)) {
-		if (parser.getInputCharOnly(index) === ")") {
-			return parser.finishValueToken("URL", value, index.increment());
+	while (!tokenizer.isEOF()) {
+		if (tokenizer.consume(")")) {
+			return tokenizer.finishValueToken("URL", value);
 		}
 
-		if (parser.isEOF(index)) {
+		if (tokenizer.isEOF()) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 			});
-			return parser.finishValueToken("URL", value);
+			return tokenizer.finishValueToken("URL", value);
 		}
 
-		if (isWhitespace(parser.getInputCharOnly(index))) {
-			while (isWhitespace(parser.getInputCharOnly(index))) {
-				index = index.increment();
+		if (isWhitespace(tokenizer.get())) {
+			while (isWhitespace(tokenizer.get())) {
+				tokenizer.take(1);
 			}
 
-			if (parser.getInputCharOnly(index) === ")") {
-				return parser.finishValueToken("URL", value, index.increment());
+			if (tokenizer.consume(")")) {
+				return tokenizer.finishValueToken("URL", value);
 			}
 
-			if (parser.isEOF(index)) {
+			if (tokenizer.isEOF()) {
 				parser.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 				});
-				return parser.finishValueToken("URL", value);
+				return tokenizer.finishValueToken("URL", value);
 			}
 
-			index = consumeBadURL(parser, index);
-			return parser.finishToken("BadURL", index);
+			consumeBadURL(parser, tokenizer);
+			return tokenizer.finishToken("BadURL");
 		}
 
-		if (
-			parser.getInputCharOnly(index) === '"' ||
-			parser.getInputCharOnly(index) === "'" ||
-			parser.getInputCharOnly(index) === "("
-		) {
+		if (tokenizer.startsWith('"') || tokenizer.startsWith("'", ) || tokenizer.startsWith("(")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 			});
-			index = consumeBadURL(parser, index);
-			return parser.finishToken("BadURL", index);
+			consumeBadURL(parser, tokenizer);
+			return tokenizer.finishToken("BadURL");
 		}
 
-		if (parser.getInputCharOnly(index) === "\\") {
+		if (tokenizer.eat("\\")) {
 			if (
 				isValidEscape(
-					parser.getInputCharOnly(index),
-					parser.getInputCharOnly(index),
+					tokenizer.get(),
+					tokenizer.get(),
 				)
 			) {
-				const [newValue, newIndex] = consumeEscaped(parser, index);
-				index = newIndex;
+				const newValue = consumeEscaped(parser, tokenizer);
 				value += newValue;
 				continue;
 			}
@@ -597,12 +512,11 @@ function consumeURLToken(
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 			});
-			index = consumeBadURL(parser, index);
-			return parser.finishToken("BadURL", index);
+			consumeBadURL(parser, tokenizer);
+			return tokenizer.finishToken("BadURL");
 		}
 
-		value += parser.getInputCharOnly(index);
-		index = index.increment();
+		value += tokenizer.take(1);
 	}
 
 	throw new Error("Unrecoverable state due to bad URL");
@@ -617,7 +531,7 @@ export function parseCSS(opts: CSSParserOptions): CSSRoot {
 	const start = parser.getPosition();
 	const rules = parseRules(parser, true);
 
-	parser.finalize();
+	parser.finalize(false);
 
 	return parser.finishNode(
 		start,

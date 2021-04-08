@@ -17,6 +17,9 @@ import {
 import {default as ParserCore} from "./ParserCore";
 import {Dict} from "@internal/typescript-helpers";
 import {AnyNode} from "@internal/ast";
+import TokenizerCore from "./TokenizerCore";
+
+export type ParserCoreReadCallback = (char: string, index: ZeroIndexed, input: string) => boolean;
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyParserCore = ParserCore<{
@@ -52,17 +55,18 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 	diagnosticCategory?: DiagnosticCategory;
 	diagnosticTags?: DiagnosticTags;
 	diagnosticCategoryValue?: string;
+	caseInsensitiveTokenMatches?: boolean;
 	ignoreWhitespaceTokens?: boolean;
 	retainCarriageReturn?: boolean;
 	getInitialState?: (parser: ParserCore<Types>) => Types["state"];
 	tokenize?: (
 		parser: ParserCore<Types>,
-		index: ZeroIndexed,
+		tokenizer: TokenizerCore<Types>,
 	) => undefined | TokenValues<Types["tokens"]>;
 	normalizeInput?: (input: string) => string;
 	tokenizeWithState?: (
 		parser: ParserCore<Types>,
-		index: ZeroIndexed,
+		tokenizer: TokenizerCore<Types>,
 		state: Types["state"],
 	) => undefined | ParserCoreTokenizeState<Types>;
 	overrides?: {
@@ -73,7 +77,7 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 	parseTemplate?: (opts: ParserOptions) => unknown;
 };
 
-export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = [
+export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = TokenValues<Types["tokens"]> | [
 	Partial<Types["state"]>,
 	TokenValues<Types["tokens"]>
 ];

@@ -1,7 +1,5 @@
 import {parseCSS} from "@internal/css-parser";
 import {createFixtureTests} from "@internal/test-helpers";
-import {removeCarriageReturn} from "@internal/string-utils";
-import {decodeUTF8} from "@internal/binary";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;
@@ -9,7 +7,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 
 	const filename = inputFile.relative;
 
-	const inputContent = removeCarriageReturn(decodeUTF8(inputFile.content));
+	const inputContent = inputFile.contentAsText();
 
 	const ast = parseCSS({
 		input: inputContent,
@@ -20,7 +18,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 		inputFile.absolute.getExtensionlessBasename(),
 	).join();
 
-	t.snapshot(ast, undefined, {filename: outputFile});
+	t.customSnapshot(outputFile).snapshot(ast);
 });
 
 // @ts-ignore Doesn't support top-level await

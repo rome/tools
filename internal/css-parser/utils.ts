@@ -138,10 +138,13 @@ export function getBlockEndTokenType(
 	switch (token.type) {
 		case "LeftCurlyBracket":
 			return "RightCurlyBracket";
+
 		case "LeftParen":
 			return "RightParen";
+
 		case "LeftSquareBracket":
 			return "RightSquareBracket";
+
 		default: {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.INVALID_BLOCK_START,

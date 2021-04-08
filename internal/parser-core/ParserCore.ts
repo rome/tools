@@ -1,5 +1,4 @@
 import {
-	ComplexToken,
 	EOFToken,
 	NodeBase,
 	ParserCoreImplementation,
@@ -9,11 +8,9 @@ import {
 	ParserUnexpectedOptions,
 	Position,
 	SOFToken,
-	SimpleToken,
 	SourceLocation,
 	TokenBase,
 	TokenValues,
-	ValueToken,
 } from "./types";
 import {
 	DIAGNOSTIC_CATEGORIES,
@@ -40,6 +37,7 @@ import {RequiredProps} from "@internal/typescript-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {attachComments} from "./comments";
 import {pretty} from "@internal/pretty-format";
+import ParserCoreTokenize from "./TokenizerCore";
 
 export type ParserCoreState = {
 	comments: AnyComment[];
@@ -51,6 +49,8 @@ export type ParserCoreState = {
 	diagnosticFilters: DiagnosticEliminationFilter[];
 	corrupt: boolean;
 };
+
+type TokenNames<Types extends ParserCoreTypes> = keyof Types["tokens"];
 
 export default class ParserCore<Types extends ParserCoreTypes> {
 	constructor(
@@ -105,20 +105,25 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		// Parser/tokenizer state
 		this.tokenizing = false;
 
-		this.indexTracker = new PositionTracker({
+		const indexTracker = new PositionTracker({
 			path: this.path,
 			input: this.input,
 			offsetPosition,
 			getPosition: this.getPosition.bind(this),
 		});
 
+		this.indexTracker = indexTracker;
+
+		this.tokenizer = new ParserCoreTokenize(this.input, indexTracker, this);
+
 		this.reset();
 	}
 
 	public options: Types["options"];
 	public meta: Types["meta"];
+	public tokenizer: ParserCoreTokenize<Types>;
 	public indexTracker: PositionTracker;
-	private impl: ParserCoreImplementation<Types>;
+	public impl: ParserCoreImplementation<Types>;
 	private tokenizing: boolean;
 	private eofToken: EOFToken;
 	public path: Path;
@@ -130,6 +135,12 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private diagnosticCategory: DiagnosticCategory;
 	private diagnosticCategoryValue: string;
 
+	private cachedDiagnostics: undefined | {
+		diagnostics: Diagnostic[];
+		filters: DiagnosticEliminationFilter[];
+		rawDiagnostics: Diagnostic[];
+	};
+
 	// Internal mutable state
 	public comments!: CommentsConsumer;
 	private nextTokenIndex!: ZeroIndexed;
@@ -138,6 +149,10 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private currentToken!: TokenValues<Types["tokens"]>;
 	private currLine!: OneIndexed;
 	private currColumn!: ZeroIndexed;
+
+	public getInputCharOnly(index: ZeroIndexed): string {
+		return this.input[index.valueOf()] ?? "";
+	}
 
 	// Reset the parser and it's initial positions to the initial state
 	public reset() {
@@ -211,49 +226,45 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return tokens;
 	}
 
-	// Tokenize method that must be implemented by subclasses
-	public tokenize(index: ZeroIndexed): undefined | TokenValues<Types["tokens"]> {
-		const {tokenize} = this.impl;
-		if (tokenize === undefined) {
-			throw new Error("No tokenize implementation defined");
-		} else {
-			return tokenize(this, index);
-		}
-	}
-
 	// Alternate tokenize method to allow that allows the use of state
-	public tokenizeWithState(
+	public tokenize(
 		index: ZeroIndexed,
 		state: Types["state"],
 	): undefined | ParserCoreTokenizeState<Types> {
-		const {tokenizeWithState} = this.impl;
-		if (tokenizeWithState !== undefined) {
-			return tokenizeWithState(this, index, state);
-		}
+		const {tokenizer} = this;
+		tokenizer.setTokenStart(index);
 
-		const token = this.tokenize(index);
-		if (token !== undefined) {
-			return [state, token];
-		}
-
-		return undefined;
-	}
-
-	private _tokenizeWithState(
-		index: ZeroIndexed,
-		state: Types["state"],
-	): undefined | ParserCoreTokenizeState<Types> {
 		if (this.impl.ignoreWhitespaceTokens) {
-			switch (this.getInputCharOnly(index)) {
+			switch (tokenizer.get()) {
 				case " ":
 				case "\t":
-				case "\r":
 				case "\n":
 					return this.lookahead(index.increment());
+
+				case "\r": {
+					if (tokenizer.eat("\r\n")) {
+						return this.lookahead(index.add(2));
+					}
+					break;
+				}
 			}
 		}
 
-		return this.tokenizeWithState(index, state);
+		const {tokenizeWithState, tokenize} = this.impl;
+		if (tokenizeWithState !== undefined) {
+			return tokenizeWithState(this, tokenizer, state);
+		}
+
+		if (tokenize === undefined) {
+			throw new Error("No tokenize or tokenizeWithState implementation defined");
+		}
+
+		const token = tokenize(this, tokenizer);
+		if (token !== undefined) {
+			return token;
+		}
+
+		return undefined;
 	}
 
 	public getToken(): TokenValues<Types["tokens"]> {
@@ -325,6 +336,13 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return nextToken;
 	}
 
+	public setState(state: Partial<Types["state"]>): void {
+		this.state = {
+			...this.state,
+			...state,
+		};
+	}
+
 	// Get the start index of the current token
 	public getIndex(): ZeroIndexed {
 		const {overrides} = this.impl;
@@ -389,7 +407,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		// Tokenize and do some validation
 		const beforeState = this.state;
-		const next = this._tokenizeWithState(index, beforeState);
+		let next = this.tokenize(index, beforeState);
 		if (next === undefined) {
 			throw this.unexpected({
 				start: this.getPositionFromIndex(index),
@@ -400,13 +418,17 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.tokenizing = wasTokenizing;
 		this.nextTokenIndex = prevNextTokenIndex;
 
-		return [
-			{
-				...beforeState,
-				...next[0],
-			},
-			next[1],
-		];
+		if (Array.isArray(next)) {
+			return [
+				beforeState === next[0] ? beforeState : {
+					...beforeState,
+					...next[0],
+				},
+				next[1],
+			];
+		} else {
+			return [beforeState, next];
+		}
 	}
 
 	public getPositionFromIndex(index: number | ZeroIndexed): Position {
@@ -425,15 +447,16 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
 		if (description === undefined) {
+			let tokenType;
 			if (start.equal(currentToken?.start)) {
-				description = descriptions.PARSER_CORE.UNEXPECTED(currentToken.type);
+				tokenType = currentToken.type;
+			}
+
+			if (this.isEOF(start)) {
+				description = descriptions.PARSER_CORE.UNEXPECTED_EOF;
 			} else {
-				if (this.isEOF(start)) {
-					description = descriptions.PARSER_CORE.UNEXPECTED_EOF;
-				} else {
-					const char = this.input[start.valueOf()];
-					description = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char);
-				}
+				const char = this.input[start.valueOf()];
+				description = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char, tokenType);
 			}
 		}
 
@@ -555,19 +578,18 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return index.valueOf() >= this.input.length;
 	}
 
-	// Check if the current token matches the input type
-	public matchToken(type: keyof Types["tokens"]): boolean {
+	// Assert that the current token matches the input type
+	public matchToken(type: TokenNames<Types>): boolean {
 		return this.getToken().type === type;
 	}
 
-	// Get the current token and assert that it's of the specified type, the token stream will also be advanced
-	public expectToken<Type extends keyof Types["tokens"]>(
+	// Check if the current token matches the input type
+	public assertToken<Type extends TokenNames<Types>>(
 		type: Type,
 		_metadata?: DiagnosticDescriptionOptional,
 	): Types["tokens"][Type] {
 		const token = this.getToken();
 		if (token.type === type) {
-			this.nextToken();
 			// @ts-ignore
 			return token;
 		} else {
@@ -579,6 +601,21 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		}
 	}
 
+	// Get the current token and assert that it's of the specified type, the token stream will also be advanced
+	public expectToken<Type extends TokenNames<Types>>(
+		type: Type,
+		_metadata?: DiagnosticDescriptionOptional,
+	): Types["tokens"][Type] {
+		const token = this.assertToken(type, _metadata);
+		this.nextToken();
+		return token;
+	}
+
+	// Check if there was no gaps between the current token and the previous
+	public areTokensInputSiblings(): boolean {
+		return this.getPreviousToken().end === this.getToken().start;
+	}
+
 	public getInputRange(start: ZeroIndexed, count: number): [string, ZeroIndexed] {
 		const sub = this.getInputRangeOnly(start, count);
 		const end = new ZeroIndexed(start.valueOf() + sub.length + 1);
@@ -587,49 +624,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getInputRangeOnly(start: ZeroIndexed, count: number): string {
 		return this.getRawInput(start, start.add(count));
-	}
-
-	public getInputCharOnly(index: ZeroIndexed): string {
-		const {input} = this;
-		const i = index.valueOf();
-
-		// Allow an overflow since we call this method to check for trailing characters
-		if (i >= input.length || i < 0) {
-			return "";
-		} else {
-			return input[i];
-		}
-	}
-
-	public getInputChar(index: ZeroIndexed): [string, ZeroIndexed] {
-		return [this.getInputCharOnly(index), index.increment()];
-	}
-
-	// Read from the input starting at the specified index, until the callback returns false
-	public readInputFrom(
-		index: ZeroIndexed,
-		callback?: (char: string, index: ZeroIndexed, input: string) => boolean,
-	): [string, ZeroIndexed, boolean] {
-		const {input} = this;
-		let value = "";
-
-		while (true) {
-			if (index.valueOf() >= input.length) {
-				return [value, index, true];
-			}
-
-			if (
-				callback === undefined ||
-				callback(input[index.valueOf()], index, input)
-			) {
-				value += input[index.valueOf()];
-				index = index.increment();
-			} else {
-				break;
-			}
-		}
-
-		return [value, index, false];
 	}
 
 	// Get the string between the specified range
@@ -662,45 +656,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			}
 			return loc;
 		}
-	}
-
-	//# Token finalization
-
-	public finishToken<Type extends string>(
-		type: Type,
-		end: ZeroIndexed = this.nextTokenIndex.increment(),
-	): SimpleToken<Type> {
-		return {
-			type,
-			start: this.nextTokenIndex,
-			end,
-		};
-	}
-
-	public finishValueToken<Type extends string, Value>(
-		type: Type,
-		value: Value,
-		end: ZeroIndexed = this.nextTokenIndex.increment(),
-	): ValueToken<Type, Value> {
-		return {
-			type,
-			value,
-			start: this.nextTokenIndex,
-			end,
-		};
-	}
-
-	public finishComplexToken<Type extends string, Data>(
-		type: Type,
-		data: Data,
-		end: ZeroIndexed = this.nextTokenIndex.increment(),
-	): ComplexToken<Type, Data> {
-		return {
-			type,
-			...data,
-			start: this.nextTokenIndex,
-			end,
-		};
 	}
 
 	//# SourceLocation finalization
@@ -777,31 +732,55 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		};
 	}
 
-	public finalize(): void {
+	public finalize(shouldThrow: boolean = true): void {
 		if (!this.eatToken("EOF")) {
-			throw this.unexpected({
-				description: descriptions.PARSER_CORE.EXPECTED_EOF,
-			});
+			if (shouldThrow) {
+				this.unexpectedDiagnostic({
+					description: descriptions.PARSER_CORE.EXPECTED_EOF,
+				});
+			} else {
+				throw this.unexpected({
+					description: descriptions.PARSER_CORE.EXPECTED_EOF,
+				});
+			}
+		}
+
+		if (shouldThrow) {
+			const diagnostics = this.getDiagnostics();
+			if (diagnostics.length > 0) {
+				throw new DiagnosticsError("ParserCore#finalize", diagnostics);
+			}
 		}
 	}
 
 	//# Diagnostics
 
 	public getDiagnostics(): Diagnostic[] {
+		const {cachedDiagnostics, state} = this;
+		if (cachedDiagnostics !== undefined && cachedDiagnostics.filters === state.diagnosticFilters && cachedDiagnostics.rawDiagnostics === state.diagnostics) {
+			return cachedDiagnostics.diagnostics;
+		}
+
 		const processor = new DiagnosticsProcessor({
 			origin: {
 				entity: `ParserCore<${this.language}>`,
 			},
 		});
 
-		for (const filter of this.state.diagnosticFilters) {
+		for (const filter of state.diagnosticFilters) {
 			processor.addEliminationFilter(filter);
 		}
 
 		// TODO remove any trailing "eof" diagnostic
-		processor.addDiagnostics(this.state.diagnostics);
+		processor.addDiagnostics(state.diagnostics);
 
-		return processor.getDiagnostics().slice(0, 1);
+		const diagnostics = processor.getDiagnostics().slice(0, 1);
+		this.cachedDiagnostics = {
+			filters: state.diagnosticFilters,
+			rawDiagnostics: state.diagnostics,
+			diagnostics,
+		};
+		return diagnostics;
 	}
 
 	public addDiagnostic(diag: Diagnostic) {
