@@ -28,7 +28,6 @@ import {partialServerQueryRequestToFull} from "../core/server/Server";
 import {PartialServerQueryRequest} from "../core/common/bridges/ServerBridge";
 import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 import {Fixture, FixtureFile, createFixtureTests} from "@internal/test-helpers";
-import {removeCarriageReturn} from "@internal/string-utils";
 import {
 	getFileHandlerExtensions,
 	getFileHandlerFromPathAssert,
@@ -51,7 +50,6 @@ import child = require("child_process");
 import util = require("util");
 import {Reporter} from "@internal/cli-reporter";
 import {BridgeClient} from "@internal/events";
-import {decodeUTF8} from "@internal/binary";
 
 const exec = util.promisify(child.exec);
 
@@ -260,7 +258,7 @@ export async function declareParserTests() {
 			"script",
 			"module",
 		]);
-		const inputContent = removeCarriageReturn(decodeUTF8(input.content));
+		const inputContent = input.contentAsText();
 
 		const {ast} = await performFileOperation(
 			{
@@ -288,18 +286,15 @@ export async function declareParserTests() {
 		const outputFile = input.absolute.getParent().append(
 			input.absolute.getExtensionlessBasename(),
 		).join();
-		t.namedSnapshot("ast", ast, undefined, {filename: outputFile});
+		const snapshot = t.customSnapshot(outputFile);
+
+		snapshot.named("ast", ast);
 
 		const printedDiagnostics = await printDiagnosticsToString({
 			diagnostics,
 			suppressions: [],
 		});
-		t.namedSnapshot(
-			"diagnostics",
-			printedDiagnostics,
-			undefined,
-			{filename: outputFile},
-		);
+		snapshot.named("diagnostics", printedDiagnostics);
 
 		if (diagnostics.length === 0) {
 			if (options.has("throws")) {
