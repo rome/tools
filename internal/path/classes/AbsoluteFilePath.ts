@@ -362,12 +362,14 @@ export default class AbsoluteFilePath
 	}
 
 	public async createDirectory(): Promise<void> {
-		await fs.promises.mkdir(
-			this.join(),
-			{
-				recursive: true,
-			},
-		);
+		if (await this.notExists()) {
+			await fs.promises.mkdir(
+				this.join(),
+				{
+					recursive: true,
+				},
+			);
+		}
 	}
 
 	public openFile(
