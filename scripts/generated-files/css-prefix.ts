@@ -1,4 +1,5 @@
 import {INTERNAL, modifyGeneratedFile} from "../_utils";
+import {toCamelCase} from "@internal/string-utils";
 
 const cssPrefixFolder = INTERNAL.append(
 	"compiler",
@@ -36,17 +37,19 @@ export async function main() {
 	await modifyGeneratedFile(
 		{
 			path: cssPrefixFolder.append("index.ts"),
-			scriptName: "generated-files/lint-rules",
+			scriptName: "generated-files/css-prefix",
 		},
 		async () => {
 			let lines = [];
 			for (const {basename} of defs) {
-				lines.push(`import ${basename} from "./prefixes/${basename}";`);
+				lines.push(
+					`import ${toCamelCase(basename)} from "./prefixes/${basename}";`,
+				);
 			}
 			lines.push("");
 			lines.push("export default [");
 			for (const {basename} of defs) {
-				lines.push(`\t...${basename},`);
+				lines.push(`\t...${toCamelCase(basename)},`);
 			}
 			lines.push("];");
 
