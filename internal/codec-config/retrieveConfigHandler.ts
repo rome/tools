@@ -7,7 +7,7 @@ export default function retrieveConfigHandler(
 	let manifestHandler: ConfigHandler | undefined = undefined;
 
 	if (extension === "toml") {
-	 	manifestHandler = toml;
+		manifestHandler = toml;
 	}
 
 	if (extension === "json") {

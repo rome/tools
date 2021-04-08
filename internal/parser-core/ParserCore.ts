@@ -135,11 +135,13 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private diagnosticCategory: DiagnosticCategory;
 	private diagnosticCategoryValue: string;
 
-	private cachedDiagnostics: undefined | {
-		diagnostics: Diagnostic[];
-		filters: DiagnosticEliminationFilter[];
-		rawDiagnostics: Diagnostic[];
-	};
+	private cachedDiagnostics:
+		| undefined
+		| {
+				diagnostics: Diagnostic[];
+				filters: DiagnosticEliminationFilter[];
+				rawDiagnostics: Diagnostic[];
+			};
 
 	// Internal mutable state
 	public comments!: CommentsConsumer;
@@ -420,10 +422,12 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		if (Array.isArray(next)) {
 			return [
-				beforeState === next[0] ? beforeState : {
-					...beforeState,
-					...next[0],
-				},
+				beforeState === next[0]
+					? beforeState
+					: {
+							...beforeState,
+							...next[0],
+						},
 				next[1],
 			];
 		} else {
@@ -456,7 +460,10 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 				description = descriptions.PARSER_CORE.UNEXPECTED_EOF;
 			} else {
 				const char = this.input[start.valueOf()];
-				description = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char, tokenType);
+				description = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(
+					char,
+					tokenType,
+				);
 			}
 		}
 
@@ -757,7 +764,10 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getDiagnostics(): Diagnostic[] {
 		const {cachedDiagnostics, state} = this;
-		if (cachedDiagnostics !== undefined && cachedDiagnostics.filters === state.diagnosticFilters && cachedDiagnostics.rawDiagnostics === state.diagnostics) {
+		if (
+			cachedDiagnostics?.filters === state.diagnosticFilters &&
+			cachedDiagnostics.rawDiagnostics === state.diagnostics
+		) {
 			return cachedDiagnostics.diagnostics;
 		}
 

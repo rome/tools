@@ -69,7 +69,11 @@ export default class FatalErrorHandler {
 		);
 	}
 
-	private async printErrorAsDiagnostics(reporter: Reporter, error: Error, overrideSource?: StaticMarkup): Promise<void> {
+	private async printErrorAsDiagnostics(
+		reporter: Reporter,
+		error: Error,
+		overrideSource?: StaticMarkup,
+	): Promise<void> {
 		const diagnostics = getOrDeriveDiagnosticsFromError(
 			error,
 			{

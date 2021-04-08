@@ -118,10 +118,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 			// Check for prefix typos
 			for (const possiblePrefixTypo of INCORRECT_SUPPRESSION_START) {
 				if (firstWord === possiblePrefixTypo) {
-					return [
-						state,
-						tokenizer.finishValueToken("BadPrefixTypo", firstWord),
-					];
+					return [state, tokenizer.finishValueToken("BadPrefixTypo", firstWord)];
 				}
 			}
 
@@ -133,10 +130,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 
 			// Missing space after suppression prefix
 			if (firstWord !== SUPPRESSION_START) {
-				return [
-					state,
-					tokenizer.finishToken("BadPrefixMissingSpace"),
-				];
+				return [state, tokenizer.finishToken("BadPrefixMissingSpace")];
 			}
 
 			return [
@@ -148,7 +142,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 		} else {
 			// If the current character is a colon then we're an explanation
 			if (tokenizer.eat(":")) {
-				const rawExplanation = tokenizer.read(isntLineBreak,);
+				const rawExplanation = tokenizer.read(isntLineBreak);
 				const explanation = rawExplanation.trim();
 
 				// Handle the developer being cheeky and having a colon but an empty explanation, it's the same thing mate!
@@ -171,7 +165,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 				if (tokenizer.eat('"')) {
 					// String value we need to escape
 					const valueStart = tokenizer.index;
-					const rawValue = tokenizer.read(isStringValueChar,);
+					const rawValue = tokenizer.read(isStringValueChar);
 
 					// Ensure next character is a closing quote
 					tokenizer.assert('"');

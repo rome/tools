@@ -299,12 +299,15 @@ export abstract class BasePath<
 		let path: Super = this._assert();
 
 		if (this.parsed.explicitDirectory) {
-			path = this._fork({
-				...this.parsed,
-				explicitDirectory: false,
-			}, {
-				parent: this.memo.parent,
-			}).getUnique() as Super;
+			path = this._fork(
+				{
+					...this.parsed,
+					explicitDirectory: false,
+				},
+				{
+					parent: this.memo.parent,
+				},
+			).getUnique() as Super;
 		} else {
 			path = this._getUnique();
 		}

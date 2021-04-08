@@ -114,9 +114,7 @@ function isBackReferenceCharacter(char: string): boolean {
 	return char !== ">";
 }
 
-function readOctalCode(
-	tokenizer: RegExpParser["tokenizer"],
-): number | undefined {
+function readOctalCode(tokenizer: RegExpParser["tokenizer"]): number | undefined {
 	let char = tokenizer.get();
 	let octal = "";
 
@@ -147,7 +145,10 @@ type RegExpParserTypes = {
 };
 type RegExpParser = ParserCore<RegExpParserTypes>;
 
-function tokenizeEscaped(parser: RegExpParser, tokenizer: RegExpParser["tokenizer"]) {
+function tokenizeEscaped(
+	parser: RegExpParser,
+	tokenizer: RegExpParser["tokenizer"],
+) {
 	const char = tokenizer.get();
 	switch (char) {
 		case "d":

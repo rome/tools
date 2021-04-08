@@ -1,21 +1,35 @@
 import {ZeroIndexed} from "@internal/numbers";
 import {ParserCore, PositionTracker} from ".";
-import {ComplexToken, ParserCoreReadCallback, ParserCoreTypes, SimpleToken, ValueToken, Position} from "./types";
+import {
+	ComplexToken,
+	ParserCoreReadCallback,
+	ParserCoreTypes,
+	Position,
+	SimpleToken,
+	ValueToken,
+} from "./types";
 
-type StringTokenNames<Types extends ParserCoreTypes> = Extract<keyof Types["tokens"], string>;
+type StringTokenNames<Types extends ParserCoreTypes> = Extract<
+	keyof Types["tokens"],
+	string
+>;
 
 export default class TokenizerCore<Types extends ParserCoreTypes> {
-  constructor(input: string, indexTracker?: PositionTracker, parser?: ParserCore<Types>) {
-    this.parser = parser;
+	constructor(
+		input: string,
+		indexTracker?: PositionTracker,
+		parser?: ParserCore<Types>,
+	) {
+		this.parser = parser;
 		this.input = input;
 		this.indexTracker = indexTracker ?? new PositionTracker({input});
-    this.start = new ZeroIndexed(0);
+		this.start = new ZeroIndexed(0);
 		this.index = new ZeroIndexed(0);
 		this.indexChar = input[0];
-  }
+	}
 
-  private parser: undefined | ParserCore<Types>;
-  private input: string;
+	private parser: undefined | ParserCore<Types>;
+	private input: string;
 	private start: ZeroIndexed;
 	private indexTracker: PositionTracker;
 
@@ -26,7 +40,7 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 		return this.index.valueOf() >= this.input.length;
 	}
 
-  public setTokenStart(index: ZeroIndexed) {
+	public setTokenStart(index: ZeroIndexed) {
 		this.start = index;
 		this.setIndex(index);
 	}
@@ -59,36 +73,36 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 	}
 
 	public reverse(count: number): string {
-    const i = this.index.valueOf();
-    const str = this.input.slice(i - count, i);
-    this.setIndex(this.index.subtract(str.length));
-    return str;
-  }
+		const i = this.index.valueOf();
+		const str = this.input.slice(i - count, i);
+		this.setIndex(this.index.subtract(str.length));
+		return str;
+	}
 
-  public take(count: number): string {
-    const i = this.index.valueOf();
-    const str = this.input.slice(i, i + count);
-    this.setIndex(this.index.add(str.length));
-    return str;
-  }
+	public take(count: number): string {
+		const i = this.index.valueOf();
+		const str = this.input.slice(i, i + count);
+		this.setIndex(this.index.add(str.length));
+		return str;
+	}
 
-  public eat<T extends string>(str: T): undefined | T {
-    if (this.startsWith(str)) {
-      this.setIndex(this.index.add(str.length));
-      return str;
+	public eat<T extends string>(str: T): undefined | T {
+		if (this.startsWith(str)) {
+			this.setIndex(this.index.add(str.length));
+			return str;
 		} else {
-      return undefined;
+			return undefined;
 		}
-  }
+	}
 
-  public consume(str: string): boolean {
-    if (this.startsWith(str)) {
-      this.setIndex(this.index.add(str.length));
-      return true;
+	public consume(str: string): boolean {
+		if (this.startsWith(str)) {
+			this.setIndex(this.index.add(str.length));
+			return true;
 		} else {
-      return false;
+			return false;
 		}
-  }
+	}
 
 	public assert(str: string): void {
 		if (!this.consume(str)) {
@@ -133,7 +147,7 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 			return "";
 		}
 
-    const {input} = this;
+		const {input} = this;
 		let value = "";
 
 		// Skip running the callback for the first character as we already did it above
@@ -145,7 +159,7 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 		while (true) {
 			// Stop when we get to the end of the file
 			if (i >= input.length) {
-        this.setIndex(index);
+				this.setIndex(index);
 				return value;
 			}
 
@@ -172,7 +186,9 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 		}
 	}
 
-	public finishToken<Type extends StringTokenNames<Types>>(type: Type): SimpleToken<Type> {
+	public finishToken<Type extends StringTokenNames<Types>>(
+		type: Type,
+	): SimpleToken<Type> {
 		return {
 			type,
 			start: this.start,
@@ -192,10 +208,10 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 		};
 	}
 
-	public finishComplexToken<Type extends StringTokenNames<Types>, Data extends Omit<Types["tokens"][Type], "type" | "start" | "end">>(
-		type: Type,
-		data: Data,
-	): ComplexToken<Type, Data> {
+	public finishComplexToken<
+		Type extends StringTokenNames<Types>,
+		Data extends Omit<Types["tokens"][Type], "type" | "start" | "end">
+	>(type: Type, data: Data): ComplexToken<Type, Data> {
 		return {
 			type,
 			...data,

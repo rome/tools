@@ -13,14 +13,17 @@ test(
 	"should produce syntax errors",
 	async (t) => {
 		for (const input of SYNTAX_ERROR_TESTS) {
-			await assertDiagnostics(t, () => {
-				markupToPlainText(
-					input,
-					{
-						columns: new OneIndexed(400),
-					},
-				);
-			});
+			await assertDiagnostics(
+				t,
+				() => {
+					markupToPlainText(
+						input,
+						{
+							columns: new OneIndexed(400),
+						},
+					);
+				},
+			);
 		}
 	},
 );

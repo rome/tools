@@ -66,7 +66,12 @@ export const consume = createDiagnosticsCategory({
 			},
 		],
 	}),
-	UNUSED_PROPERTY: (key: string, type: string, knownProperties: string[], path?: string) => {
+	UNUSED_PROPERTY: (
+		key: string,
+		type: string,
+		knownProperties: string[],
+		path?: string,
+	) => {
 		let message = markup`Unknown <emphasis>${key}</emphasis> ${type}`;
 
 		if (path !== undefined) {

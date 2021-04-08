@@ -11,7 +11,10 @@ import {stringifyJSON5RootConsumer} from "./stringify-json5";
 
 function createJSONParserMethods(
 	type: ConfigType,
-): Omit<PartialConfigHandler, "extensions" | "language" | "stringifyFromConsumer"> {
+): Omit<
+	PartialConfigHandler,
+	"extensions" | "language" | "stringifyFromConsumer"
+> {
 	return {
 		type,
 		jsonSuperset: true,

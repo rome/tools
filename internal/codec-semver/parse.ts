@@ -50,7 +50,8 @@ const semverParser = createParser<SemverParserTypes>({
 	tokenize(parser, tokenizer) {
 		const char = tokenizer.get();
 
-		let semverComparator = tokenizer.eat("<=") || tokenizer.eat(">=") || tokenizer.eat("~>")
+		let semverComparator =
+			tokenizer.eat("<=") || tokenizer.eat(">=") || tokenizer.eat("~>");
 		if (semverComparator !== undefined) {
 			return tokenizer.finishValueToken("Operator", semverComparator);
 		}

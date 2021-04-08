@@ -3,5 +3,5 @@ import {markup} from "@internal/markup";
 
 // @internal/codec-config
 export const toml = createDiagnosticsCategory({
-  UNCLOSED_STRING: {message: markup`Unclosed string`}
+	UNCLOSED_STRING: {message: markup`Unclosed string`},
 });

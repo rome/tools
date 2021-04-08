@@ -35,8 +35,8 @@
  */
 
 import {
-	EscapeStringQuoteChar,
 	DOUBLE_QUOTE,
+	EscapeStringQuoteChar,
 	SINGLE_QUOTE,
 	TICK_QUOTE,
 } from "./constants";

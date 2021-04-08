@@ -12,7 +12,7 @@ export const parserCore = createDiagnosticsCategory({
 	UNEXPECTED_CHARACTER: (char: string, tokenType?: string) => {
 		let message = markup`Unexpected character <emphasis>${char}</emphasis>`;
 		if (tokenType !== undefined) {
-			message = markup`${message} <dim>(${tokenType})</dim>`
+			message = markup`${message} <dim>(${tokenType})</dim>`;
 		}
 		return {message};
 	},

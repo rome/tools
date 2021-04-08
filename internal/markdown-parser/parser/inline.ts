@@ -110,12 +110,10 @@ export function tokenizeInline(
 	parser: MarkdownParser,
 	state: MarkdownParserState,
 	charToCheck: "*" | "_",
-	tokenizer: MarkdownParser["tokenizer"]
+	tokenizer: MarkdownParser["tokenizer"],
 ): ParserCoreTokenizeState<MarkdownParserTypes> | undefined {
 	const index = tokenizer.index;
-	const valueOfInlineToken = tokenizer.read(
-		(char1) => char1 === charToCheck,
-	);
+	const valueOfInlineToken = tokenizer.read((char1) => char1 === charToCheck);
 	const endIndexOfDelimiter = tokenizer.index;
 
 	const leftFlankingDelimiter = canBeLeftFlankingDelimiter({
@@ -133,42 +131,40 @@ export function tokenizeInline(
 	if (leftFlankingDelimiter) {
 		let rightFlankingDelimiterFound = false;
 		let isEndOfParagraph = false;
-		tokenizer.read(
-			(char, indexToCheck, input) => {
-				if (hasBlockTokens(char, indexToCheck, input)) {
-					// found list item ahead, let's exit
-					isEndOfParagraph = true;
-					return false;
-				}
+		tokenizer.read((char, indexToCheck, input) => {
+			if (hasBlockTokens(char, indexToCheck, input)) {
+				// found list item ahead, let's exit
+				isEndOfParagraph = true;
+				return false;
+			}
 
-				// the right flanking check should be done only when there's a
-				// ending character that matches the starting character
-				if (char !== charToCheck || indexToCheck.equal(index)) {
-					// continue, no need to do further checks
+			// the right flanking check should be done only when there's a
+			// ending character that matches the starting character
+			if (char !== charToCheck || indexToCheck.equal(index)) {
+				// continue, no need to do further checks
+				return true;
+			}
+
+			let endIndex = indexToCheck;
+
+			const nextChar = input[indexToCheck.valueOf() + 1];
+			if (valueOfInlineToken.length > 1) {
+				// we found a character that matches but we need to make sure that also the next character
+				// is the same
+				if (nextChar !== charToCheck) {
 					return true;
 				}
+			}
 
-				let endIndex = indexToCheck;
+			rightFlankingDelimiterFound = canBeRightFlankingDelimiter({
+				startIndex: indexToCheck,
+				endIndex,
+				input: parser.input,
+			});
 
-				const nextChar = input[indexToCheck.valueOf() + 1];
-				if (valueOfInlineToken.length > 1) {
-					// we found a character that matches but we need to make sure that also the next character
-					// is the same
-					if (nextChar !== charToCheck) {
-						return true;
-					}
-				}
-
-				rightFlankingDelimiterFound = canBeRightFlankingDelimiter({
-					startIndex: indexToCheck,
-					endIndex,
-					input: parser.input,
-				});
-
-				// we should stop only if the characters that we found are a right flanking delimiter
-				return !rightFlankingDelimiterFound;
-			},
-		);
+			// we should stop only if the characters that we found are a right flanking delimiter
+			return !rightFlankingDelimiterFound;
+		});
 
 		if (!rightFlankingDelimiterFound) {
 			tokenizer.setIndex(endIndexOfDelimiter);
@@ -183,12 +179,10 @@ export function tokenizeInline(
 		}
 
 		const nextChar = tokenizer.get();
-		tokenizer.read(
-			(char1, index, input) => {
-				const prevChar = input[index.valueOf() - 1];
-				return !(prevChar !== " " && char1 === charToCheck);
-			},
-		);
+		tokenizer.read((char1, index, input) => {
+			const prevChar = input[index.valueOf() - 1];
+			return !(prevChar !== " " && char1 === charToCheck);
+		});
 		const closingIndexOfDelimiter = tokenizer.index;
 		tokenizer.setIndex(endIndexOfDelimiter);
 

@@ -5,10 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	Comments,
-	ConfigCommentMap,
-} from "../types";
+import {Comments, ConfigCommentMap} from "../types";
 import {Consumer} from "@internal/consume";
 import {sortKeys} from "@internal/pretty-format";
 import {escapeJSString} from "@internal/string-escape";
@@ -155,10 +152,7 @@ function stringifyPlainObject(
 
 		// Add the actual property line
 		const propKey = stringifyKey(key);
-		const propValue = stringifyValue(
-			consumer,
-			propHelper,
-		);
+		const propValue = stringifyValue(consumer, propHelper);
 		buff.push(`${propKey}: ${propValue},`);
 	}
 
@@ -182,8 +176,8 @@ function stringifyObject(
 		if (Array.isArray(value)) {
 			return stringifyArray(consumer, helper);
 		} else {
-      return stringifyPlainObject(consumer, helper);
-    }
+			return stringifyPlainObject(consumer, helper);
+		}
 	} finally {
 		stack.delete(value);
 	}

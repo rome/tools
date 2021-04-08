@@ -11,4 +11,9 @@ export const TRIPLE_SINGLE_QUOTE = "'''" as const;
 export const SINGLE_QUOTE = "'" as const;
 export const TICK_QUOTE = "`" as const;
 
-export type EscapeStringQuoteChar = typeof TRIPLE_DOUBLE_QUOTE | typeof DOUBLE_QUOTE | typeof TRIPLE_SINGLE_QUOTE | typeof SINGLE_QUOTE | typeof TICK_QUOTE;
+export type EscapeStringQuoteChar =
+	| typeof TRIPLE_DOUBLE_QUOTE
+	| typeof DOUBLE_QUOTE
+	| typeof TRIPLE_SINGLE_QUOTE
+	| typeof SINGLE_QUOTE
+	| typeof TICK_QUOTE;

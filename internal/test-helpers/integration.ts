@@ -356,10 +356,7 @@ export function createIntegrationTest(
 
 			// Add serialized project config. We skip this if there's already a project config files entry to allow
 			// some flexibility if we want invalid project config tests.
-			if (
-				!opts.disableProjectConfig &&
-				files[".config/rome.json"] === undefined
-			) {
+			if (!opts.disableProjectConfig && files[".config/rome.json"] === undefined) {
 				files[".config/rome.json"] = json.stringify(projectConfig) + "\n";
 			}
 

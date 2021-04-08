@@ -91,8 +91,15 @@ export interface TestHelper {
 	notRegex(contents: string, regex: RegExp, message?: string): void;
 	snapshot(expected: unknown, opts?: TestSnapshotOptions): string;
 	inlineSnapshot(received: unknown, expected?: string | boolean | number): void;
-	namedSnapshot(name: string, expected: unknown, opts?: TestSnapshotOptions): string;
-	customSnapshot(filename?: string, opts?: TestSnapshotOptions): TestSnapshotHelper;
+	namedSnapshot(
+		name: string,
+		expected: unknown,
+		opts?: TestSnapshotOptions,
+	): string;
+	customSnapshot(
+		filename?: string,
+		opts?: TestSnapshotOptions,
+	): TestSnapshotHelper;
 }
 
 export interface TestSnapshotHelper {

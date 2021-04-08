@@ -26,18 +26,18 @@ import {
 	ConsumeKey,
 	ConsumePath,
 	ConsumePropertyDefinition,
+	ConsumePropertyDefinitionBase,
 	ConsumePropertyMetadata,
 	ConsumePropertyNumberDefinition,
 	ConsumePropertyPrimitiveDefinition,
 	ConsumePropertyStringDefinition,
-	ConsumePropertyDefinitionBase,
 	ConsumeProtectedFunction,
 	ConsumeSourceLocationRequestTarget,
+	ConsumeUnexpectedDescription,
 	ConsumerHandleUnexpected,
 	ConsumerMapCallback,
 	ConsumerOnDefinition,
 	ConsumerOptions,
-	ConsumeUnexpectedDescription,
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
@@ -64,7 +64,12 @@ import {markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {enhanceNodeInspectClass} from "@internal/node";
-import {JSONArray, JSONObject, JSONPropertyValue, JSONValue} from "@internal/codec-config";
+import {
+	JSONArray,
+	JSONObject,
+	JSONPropertyValue,
+	JSONValue,
+} from "@internal/codec-config";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -170,9 +175,18 @@ export default class Consumer {
 
 	public declareDefinition(
 		partialDef:
-			| Omit<ConsumePropertyStringDefinition, keyof ConsumePropertyDefinitionBase>
-			| Omit<ConsumePropertyPrimitiveDefinition, keyof ConsumePropertyDefinitionBase>
-			| Omit<ConsumePropertyNumberDefinition, keyof ConsumePropertyDefinitionBase>,
+			| Omit<
+					ConsumePropertyStringDefinition,
+					keyof ConsumePropertyDefinitionBase
+				>
+			| Omit<
+					ConsumePropertyPrimitiveDefinition,
+					keyof ConsumePropertyDefinitionBase
+				>
+			| Omit<
+					ConsumePropertyNumberDefinition,
+					keyof ConsumePropertyDefinitionBase
+				>,
 		inputName?: string,
 	) {
 		if (this.declared) {
@@ -650,7 +664,12 @@ export default class Consumer {
 		for (const [key, value] of this.asMap(false)) {
 			if (!this.usedNames.has(key)) {
 				value.unexpected(
-					descriptions.CONSUME.UNUSED_PROPERTY(key, type, knownProperties, this.parent?.getKeyPathString()),
+					descriptions.CONSUME.UNUSED_PROPERTY(
+						key,
+						type,
+						knownProperties,
+						this.parent?.getKeyPathString(),
+					),
 					{
 						target: "key",
 						suffix: false,

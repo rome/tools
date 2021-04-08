@@ -11,7 +11,11 @@ import {isEscaped} from "@internal/string-utils";
 import {ZeroIndexed} from "@internal/numbers";
 import {readMarkup} from "@internal/markup";
 
-function unescapeChar(modifier: string, index: number, opts: UnescapeStringOptions): string {
+function unescapeChar(
+	modifier: string,
+	index: number,
+	opts: UnescapeStringOptions,
+): string {
 	// Allowed in JSON and TOML
 	switch (modifier) {
 		case "b":
@@ -63,14 +67,19 @@ const UNEXPECTED_DEFAULT_THROWER: UnescapeStringUnexpected = (
 	metadata: Omit<DiagnosticDescription, "category">,
 	index: number,
 ) => {
-	throw new TypeError(`${readMarkup(metadata.message)} at index ${String(index)}`);
+	throw new TypeError(
+		`${readMarkup(metadata.message)} at index ${String(index)}`,
+	);
 };
 
 export default function unescapeString(
 	input: string,
 	rawOpts: UnescapeStringOptions | Omit<UnescapeStringOptions, "unexpected">,
 ): string {
-	const opts: UnescapeStringOptions = "unexpected" in rawOpts ? rawOpts : {unexpected: UNEXPECTED_DEFAULT_THROWER, mode: rawOpts.mode};
+	const opts: UnescapeStringOptions =
+		"unexpected" in rawOpts
+			? rawOpts
+			: {unexpected: UNEXPECTED_DEFAULT_THROWER, mode: rawOpts.mode};
 	const {unexpected, mode} = opts;
 
 	let buffer = "";
@@ -87,7 +96,10 @@ export default function unescapeString(
 			}
 
 			if (char === "\n" && opts.mode === "toml-singleline") {
-				unexpected(descriptions.STRING_ESCAPE.TOML_NEWLINE_IN_SINGLE_QUOTE_STRING, index);
+				unexpected(
+					descriptions.STRING_ESCAPE.TOML_NEWLINE_IN_SINGLE_QUOTE_STRING,
+					index,
+				);
 			}
 
 			if (char === "\n" || char === "\t") {
@@ -106,10 +118,7 @@ export default function unescapeString(
 			// Validate that this is a valid character
 			const codePoint = char.codePointAt(0)!;
 			if (codePoint >= 0 && codePoint <= 31) {
-				unexpected(
-					descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER,
-					index,
-				);
+				unexpected(descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER, index);
 				index++;
 				continue;
 			}

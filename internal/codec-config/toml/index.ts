@@ -17,9 +17,12 @@ export const toml: PartialConfigHandler = {
 	jsonSuperset: false,
 
 	parseExtra(opts: ParserOptions): ConfigParserResult {
-		const parser = tomlParser.create(opts, {
-			root: {},
-		});
+		const parser = tomlParser.create(
+			opts,
+			{
+				root: {},
+			},
+		);
 
 		const root = parseRoot(parser);
 

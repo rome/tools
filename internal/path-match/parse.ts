@@ -56,7 +56,11 @@ const pathMatchParser = createParser<PatchMatchParserTypes>({
 			}
 		}
 
-		if (tokenizer.startsWith("#") && tokenizer.getPosition().column.equal(0) && tokenizer.consume("#")) {
+		if (
+			tokenizer.startsWith("#") &&
+			tokenizer.getPosition().column.equal(0) &&
+			tokenizer.consume("#")
+		) {
 			const value = tokenizer.read(isntNewline);
 			return tokenizer.finishValueToken("Comment", value);
 		}

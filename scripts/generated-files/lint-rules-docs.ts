@@ -214,9 +214,7 @@ export async function main() {
 									lines.push("---");
 									lines.push("\n");
 								}
-								lines.push(
-									await run(def.category, i, filename, invalid[i]),
-								);
+								lines.push(await run(def.category, i, filename, invalid[i]));
 							}
 						}
 					}

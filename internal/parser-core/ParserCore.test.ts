@@ -36,15 +36,16 @@ test(
 			diagnosticLanguage: "unknown",
 			ignoreWhitespaceTokens: true,
 
-			tokenize(parser, tokenizer): TokenValues<TestParserTypes["tokens"]> | undefined {
+			tokenize(
+				parser,
+				tokenizer,
+			): TokenValues<TestParserTypes["tokens"]> | undefined {
 				const char = tokenizer.get();
 
 				if (tokenizer.consume("//")) {
 					let value = "";
 
-					while (
-						!(isNewline(tokenizer.get()) || tokenizer.isEOF())
-					) {
+					while (!(isNewline(tokenizer.get()) || tokenizer.isEOF())) {
 						value += tokenizer.take(1);
 					}
 

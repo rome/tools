@@ -261,7 +261,7 @@ export default class DiagnosticsNormalizer {
 		// Inline sourceText. We keep track of filenames we've already inlined to avoid duplicating sourceText
 		// During printing we'll fill it back in
 		let {sourceText} = location;
-		if (!this.inlinedSourceTextPaths.has(path) && !UNKNOWN_PATH.equal(path)) {
+		if (!(this.inlinedSourceTextPaths.has(path) || UNKNOWN_PATH.equal(path))) {
 			sourceText =
 				sourceText ??
 				this.inlineSourceText.get(path) ??

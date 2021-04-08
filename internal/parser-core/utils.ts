@@ -18,7 +18,7 @@ import {
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
 import {Path, UNKNOWN_PATH, isPathish} from "@internal/path";
-import {isIndexedNumberish, ZeroIndexed} from "@internal/numbers";
+import {ZeroIndexed, isIndexedNumberish} from "@internal/numbers";
 import {isEscaped} from "@internal/string-utils";
 
 export function isDigit(char: undefined | string): boolean {
@@ -49,7 +49,10 @@ export function isntWhitespace(char: string): boolean {
 	return char !== "\n" && char !== " " && char !== "\t";
 }
 
-export function createReadCallback(str: string, checkEscape: boolean = true): ParserCoreReadCallback {
+export function createReadCallback(
+	str: string,
+	checkEscape: boolean = true,
+): ParserCoreReadCallback {
 	if (str.length === 1) {
 		if (checkEscape) {
 			return (char: string, index: ZeroIndexed, input: string) => {

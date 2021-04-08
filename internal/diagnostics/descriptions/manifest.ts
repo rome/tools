@@ -16,12 +16,18 @@ export const manifest = createDiagnosticsCategory({
 	MIXED_EXPORTS_PATHS: {
 		message: markup`Cannot mix a root conditional export with relative paths`,
 	},
-	NAME_EXCEEDS: (path: string = "name") => ({message: markup`<emphasis>${path}</emphasis> cannot exceed 214 characters`}),
-	INVALID_NAME_START: (path: string = "name") => ({message: markup`<emphasis>${path}</emphasis> cannot start with a dot or underscore`}),
+	NAME_EXCEEDS: (path: string = "name") => ({
+		message: markup`<emphasis>${path}</emphasis> cannot exceed 214 characters`,
+	}),
+	INVALID_NAME_START: (path: string = "name") => ({
+		message: markup`<emphasis>${path}</emphasis> cannot start with a dot or underscore`,
+	}),
 	ORG_WITH_NO_PACKAGE_NAME: (path: string = "name") => ({
 		message: markup`<emphasis>${path}</emphasis> contains an org but no package name`,
 	}),
-	ORG_TOO_MANY_PARTS: (path: string = "name") => ({message: markup`<emphasis>${path}</emphasis> contains too many name separators`}),
+	ORG_TOO_MANY_PARTS: (path: string = "name") => ({
+		message: markup`<emphasis>${path}</emphasis> contains too many name separators`,
+	}),
 	REDUNDANT_ORG_NAME_START: {
 		message: markup`Redundant <emphasis>@</emphasis> in org name`,
 	},

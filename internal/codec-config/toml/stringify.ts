@@ -1,11 +1,11 @@
 import {Consumer} from "@internal/consume";
 import {ConfigCommentMap} from "@internal/codec-config";
-import {escapeJSString, EscapeStringQuoteChar} from "@internal/string-escape";
+import {EscapeStringQuoteChar, escapeJSString} from "@internal/string-escape";
 import {isValidWordKey} from "./tokenizer";
 import StringifyHelper, {createStringifyHelper} from "../StringifyHelper";
 
 function stringifyArray(consumer: Consumer, helper: StringifyHelper): string {
-	const buff: Array<string> = [];
+	const buff: string[] = [];
 
 	for (const elem of consumer.asIterable()) {
 		buff.push(`${stringifyValue(elem, helper)},`);
@@ -30,9 +30,7 @@ function stringifyKey(key: string): string {
 	}
 }
 
-function stringifyPrimitives(
-	consumer: Consumer,
-): undefined | string {
+function stringifyPrimitives(consumer: Consumer): undefined | string {
 	const value = consumer.asUnknown();
 
 	// Basic primitive types
@@ -81,7 +79,10 @@ function stringifyValue(consumer: Consumer, helper: StringifyHelper): string {
 	return stringifyObject(consumer, helper);
 }
 
-function stringifyPlainObject(consumer: Consumer, helper: StringifyHelper): string {
+function stringifyPlainObject(
+	consumer: Consumer,
+	helper: StringifyHelper,
+): string {
 	const map = consumer.asMap();
 	let buff: string[] = [];
 

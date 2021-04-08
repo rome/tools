@@ -15,19 +15,25 @@ type Tests = Dict<{
 
 function normalizeCase({invalid, valid, filename}: Test): Test {
 	if (valid) {
-		valid = valid.map(str => dedent(str));
+		valid = valid.map((str) => dedent(str));
 	}
 
 	if (invalid) {
-		invalid = invalid.map(str => dedent(str));
+		invalid = invalid.map((str) => dedent(str));
 	}
 
 	return {filename, invalid, valid};
 }
 
-function normalizeCases(raw: Test | {cases: Test[]}): Test[] {
+function normalizeCases(
+	raw:
+		| Test
+		| {
+				cases: Test[];
+			},
+): Test[] {
 	if ("cases" in raw) {
-		return raw.cases.map(test => normalizeCase(test));
+		return raw.cases.map((test) => normalizeCase(test));
 	} else {
 		return [normalizeCase(raw)];
 	}

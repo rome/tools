@@ -63,10 +63,7 @@ export const cssParser = createParser<CSSParserTypes>({
 
 		if (tokenizer.startsWith("#")) {
 			const nextChar = tokenizer.get(1);
-			if (
-				isName(nextChar) ||
-				isValidEscape(nextChar, tokenizer.get(2))
-			) {
+			if (isName(nextChar) || isValidEscape(nextChar, tokenizer.get(2))) {
 				tokenizer.assert("#");
 
 				const isIdent = isIdentifierStart(
@@ -93,7 +90,10 @@ export const cssParser = createParser<CSSParserTypes>({
 			return tokenizer.finishToken("RightParen");
 		}
 
-		if (tokenizer.startsWith("+") && isNumberStart("+", tokenizer.get(1), tokenizer.get(2))) {
+		if (
+			tokenizer.startsWith("+") &&
+			isNumberStart("+", tokenizer.get(1), tokenizer.get(2))
+		) {
 			return consumeNumberToken(parser, tokenizer);
 		}
 
@@ -106,28 +106,19 @@ export const cssParser = createParser<CSSParserTypes>({
 		}
 
 		if (tokenizer.startsWith("-")) {
-			if (
-				isNumberStart(
-					"-",
-					tokenizer.get(1),
-					tokenizer.get(2),
-				)
-			) {
+			if (isNumberStart("-", tokenizer.get(1), tokenizer.get(2))) {
 				return consumeNumberToken(parser, tokenizer);
 			}
 
-			if (
-				isIdentifierStart(
-					"-",
-					tokenizer.get(1),
-					tokenizer.get(2),
-				)
-			) {
+			if (isIdentifierStart("-", tokenizer.get(1), tokenizer.get(2))) {
 				return consumeIdentLikeToken(parser, tokenizer);
 			}
 		}
 
-		if (tokenizer.startsWith(".") && isNumberStart(".", tokenizer.get(1), tokenizer.get(2))) {
+		if (
+			tokenizer.startsWith(".") &&
+			isNumberStart(".", tokenizer.get(1), tokenizer.get(2))
+		) {
 			return consumeNumberToken(parser, tokenizer);
 		}
 
@@ -143,7 +134,10 @@ export const cssParser = createParser<CSSParserTypes>({
 			return tokenizer.finishToken("CDO");
 		}
 
-		if (tokenizer.startsWith("@") && isIdentifierStart(tokenizer.get(1), tokenizer.get(2), tokenizer.get(3))) {
+		if (
+			tokenizer.startsWith("@") &&
+			isIdentifierStart(tokenizer.get(1), tokenizer.get(2), tokenizer.get(3))
+		) {
 			tokenizer.assert("@");
 			const value = consumeName(parser, tokenizer);
 			return tokenizer.finishValueToken("AtKeyword", value);
@@ -189,7 +183,10 @@ export const cssParser = createParser<CSSParserTypes>({
 	},
 });
 
-function getNewlineLength(parser: CSSParser, tokenizer: CSSParser["tokenizer"]): number {
+function getNewlineLength(
+	parser: CSSParser,
+	tokenizer: CSSParser["tokenizer"],
+): number {
 	if (tokenizer.startsWith(`${Symbols.CarriageReturn}${Symbols.LineFeed}`)) {
 		return 2;
 	}
@@ -203,12 +200,7 @@ function consumeBadURL(parser: CSSParser, tokenizer: CSSParser["tokenizer"]) {
 			return;
 		}
 
-		if (
-			isValidEscape(
-				tokenizer.get(),
-				tokenizer.get(1),
-			)
-		) {
+		if (isValidEscape(tokenizer.get(), tokenizer.get(1))) {
 			consumeEscaped(parser, tokenizer);
 		} else {
 			tokenizer.take(1);
@@ -300,10 +292,7 @@ function consumeNumber(
 
 	value += tokenizer.read(isDigit);
 
-	if (
-		tokenizer.startsWith(".") &&
-		isDigit(tokenizer.get(1))
-	) {
+	if (tokenizer.startsWith(".") && isDigit(tokenizer.get(1))) {
 		value += tokenizer.take(2);
 		type = "number";
 		value += tokenizer.read(isDigit);
@@ -335,10 +324,7 @@ function consumeIdentLikeToken(
 	let value = name;
 
 	if (/url/gi.test(value) && tokenizer.eat("(")) {
-		while (
-			isWhitespace(tokenizer.get()) &&
-			isWhitespace(tokenizer.get(1))
-		) {
+		while (isWhitespace(tokenizer.get()) && isWhitespace(tokenizer.get(1))) {
 			tokenizer.take(1);
 		}
 
@@ -370,7 +356,7 @@ function consumeStringToken(
 ): Tokens["String"] | Tokens["BadString"] {
 	let value = "";
 
-	while (!tokenizer.isEOF() && !tokenizer.startsWith(endChar)) {
+	while (!(tokenizer.isEOF() || tokenizer.startsWith(endChar))) {
 		const char = tokenizer.get();
 		const nextChar = tokenizer.get(1);
 
@@ -415,13 +401,7 @@ function consumeNumberToken(
 ): Tokens["Percentage"] | Tokens["Dimension"] | Tokens["Number"] {
 	const [numberValue, numberType, raw] = consumeNumber(parser, tokenizer);
 
-	if (
-		isIdentifierStart(
-			tokenizer.get(),
-			tokenizer.get(1),
-			tokenizer.get(2),
-		)
-	) {
+	if (isIdentifierStart(tokenizer.get(), tokenizer.get(1), tokenizer.get(2))) {
 		const unit = consumeName(parser, tokenizer);
 		return tokenizer.finishComplexToken(
 			"Dimension",
@@ -489,7 +469,11 @@ function consumeURLToken(
 			return tokenizer.finishToken("BadURL");
 		}
 
-		if (tokenizer.startsWith('"') || tokenizer.startsWith("'", ) || tokenizer.startsWith("(")) {
+		if (
+			tokenizer.startsWith('"') ||
+			tokenizer.startsWith("'") ||
+			tokenizer.startsWith("(")
+		) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_URL,
 			});
@@ -498,12 +482,7 @@ function consumeURLToken(
 		}
 
 		if (tokenizer.eat("\\")) {
-			if (
-				isValidEscape(
-					tokenizer.get(),
-					tokenizer.get(),
-				)
-			) {
+			if (isValidEscape(tokenizer.get(), tokenizer.get())) {
 				const newValue = consumeEscaped(parser, tokenizer);
 				value += newValue;
 				continue;

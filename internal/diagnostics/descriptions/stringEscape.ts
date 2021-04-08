@@ -15,5 +15,5 @@ export const stringEscape = createDiagnosticsCategory({
 	},
 	TOML_NEWLINE_IN_SINGLE_QUOTE_STRING: {
 		message: markup`Cannot have newlines in a single quote string`,
-	}
+	},
 });

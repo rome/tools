@@ -11,25 +11,34 @@ export type Tokens = BaseTokens & {
 	Word: StringToken<"Word">;
 	Int: StringToken<"Int">;
 	Float: StringToken<"Float">;
-	Date: ComplexToken<"Date", {
-		year: number;
-		month: number;
-		day: number;
-	}>;
-	Time: ComplexToken<"Time", {
-		hours: number;
-		minutes: number;
-		seconds: number;
-	}>;
-	DateTime: ComplexToken<"DateTime", {
-		year: number;
-		month: number;
-		day: number;
-		hours: number;
-		minutes: number;
-		seconds: number;
-		offset?: number;
-	}>;
+	Date: ComplexToken<
+		"Date",
+		{
+			year: number;
+			month: number;
+			day: number;
+		}
+	>;
+	Time: ComplexToken<
+		"Time",
+		{
+			hours: number;
+			minutes: number;
+			seconds: number;
+		}
+	>;
+	DateTime: ComplexToken<
+		"DateTime",
+		{
+			year: number;
+			month: number;
+			day: number;
+			hours: number;
+			minutes: number;
+			seconds: number;
+			offset?: number;
+		}
+	>;
 	// [
 	OpenSquareBracket: SimpleToken<"OpenSquareBracket">;
 	// ]

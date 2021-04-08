@@ -69,9 +69,12 @@ export default class TestServerFile {
 	private relative: RelativePath;
 	private hasDiagnostics: boolean;
 	private pendingTests: Set<string>;
-	private foundTests: ExtendedMap<string, {
-		callsiteLocation: DiagnosticLocation;
-	}>;
+	private foundTests: ExtendedMap<
+		string,
+		{
+			callsiteLocation: DiagnosticLocation;
+		}
+	>;
 	private request: ServerRequest;
 	private runner: TestServer;
 	private inlineSnapshotUpdates: InlineSnapshotUpdate[];

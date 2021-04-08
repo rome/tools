@@ -15,12 +15,12 @@ import {showInvisibles} from "./utils";
 import {Diff, DiffTypes, stringDiffUnified} from "@internal/string-diff";
 import {
 	Markup,
+	MarkupTagName,
 	StaticMarkup,
 	joinMarkup,
 	markup,
 	markupTag,
 	readMarkup,
-	MarkupTagName,
 } from "@internal/markup";
 import {DiagnosticAdviceDiff} from "@internal/diagnostics";
 
