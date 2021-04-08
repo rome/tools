@@ -1,64 +1,74 @@
-[
-	{
-		filename: "file.tsx"
-		invalid: [
-			"<svg>foo</svg>"
-			"<svg>
-        <title></title>
-        <circle />
-    </svg>"
-	]
-		valid: [
-			"<svg>
-		<rect />
-		<rect />
-		<g>
+[[cases]]
+filename = "file.tsx"
+invalid = [
+	"<svg>foo</svg>",
+	"""
+		<svg>
+			<title></title>
 			<circle />
-			<circle />
+		</svg>
+	""",
+]
+valid = [
+	"""
+		<svg>
+			<rect />
+			<rect />
 			<g>
-				<title>
-					Pass
-				</title>
 				<circle />
 				<circle />
+				<g>
+					<title>
+						Pass
+					</title>
+					<circle />
+					<circle />
+				</g>
 			</g>
-		</g>
-	</svg>"
-			"<svg>
-        <title>Pass</title>
-        <circle />
-    </svg>"
-	]
-}
-	{
-		filename: "file.html"
-		invalid: [
-			"<svg>foo</svg>"
-			"<svg>
-        <title></title>
-        <circle />
-    </svg>"
-	]
-		valid: [
-			"<svg>
-		<rect />
-		<rect />
-		<g>
+		</svg>
+	""",
+	"""
+		<svg>
+			<title>Pass</title>
 			<circle />
+		</svg>
+	""",
+]
+
+
+[[cases]]
+filename = "file.html"
+invalid = [
+	"<svg>foo</svg>",
+	"""
+		<svg>
+			<title></title>
 			<circle />
+		</svg>
+	""",
+]
+valid = [
+	"""
+		<svg>
+			<rect />
+			<rect />
 			<g>
-				<title>
-					Pass
-				</title>
 				<circle />
 				<circle />
+				<g>
+					<title>
+						Pass
+					</title>
+					<circle />
+					<circle />
+				</g>
 			</g>
-		</g>
-	</svg>"
-			"<svg>
-        <title>Pass</title>
-        <circle />
-    </svg>"
-	]
-}
+		</svg>
+	""",
+	"""
+		<svg>
+			<title>Pass</title>
+			<circle />
+		</svg>
+	""",
 ]

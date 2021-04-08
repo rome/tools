@@ -84,16 +84,16 @@ while (1) {}
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/4/file.ts:4:8 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint/js/noUnnecessaryContinue/reject/4/file.ts:4:4 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
 
-    2 │      if (i > 5) {
-    3 │          console.log('foo');
-  > 4 │          continue;
-      │          ^^^^^^^^^
-    5 │      }
-    6 │      else if (i >= 5 && i < 8) {
+    2 │     if (i > 5) {
+    3 │         console.log('foo');
+  > 4 │         continue;
+      │         ^^^^^^^^^
+    5 │     }
+    6 │     else if (i >= 5 && i < 8) {
 
   ℹ Safe fix
 

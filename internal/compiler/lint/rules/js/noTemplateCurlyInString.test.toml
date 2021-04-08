@@ -1,7 +1,7 @@
-filename: "file.ts"
-invalid: [
-	"
-					const user = 'Faustina';
-                    const helloUser = 'Hello, ${user}';
-				"
+filename = "file.ts"
+invalid = [
+	"""
+		const user = 'Faustina';
+		const helloUser = 'Hello, ${user}';
+	""",
 ]

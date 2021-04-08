@@ -1,10 +1,10 @@
-filename: "foo.ts"
-invalid: [
-	"export default function test() {}"
-	"export default class Test {}"
+filename = "foo.ts"
+invalid = [
+	"export default function test() {}",
+	"export default class Test {}",
 ]
-valid: [
-	"export default function foo() {}"
-	"export default class Foo {}"
-	"export default 'rome';"
+valid = [
+	"export default function foo() {}",
+	"export default class Foo {}",
+	"export default 'rome';",
 ]

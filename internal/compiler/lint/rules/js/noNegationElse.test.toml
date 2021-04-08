@@ -1,9 +1,9 @@
-filename: "file.ts"
-invalid: [
-	"if (!true) {consequent;} else {alternate;}"
-	"!true ? consequent : alternate"
+filename = "file.ts"
+invalid = [
+	"if (!true) {consequent;} else {alternate;}",
+	"!true ? consequent : alternate",
 ]
-valid: [
-	"if (!true) {consequent;}"
-	"true ? consequent : alternate"
+valid = [
+	"if (!true) {consequent;}",
+	"true ? consequent : alternate",
 ]

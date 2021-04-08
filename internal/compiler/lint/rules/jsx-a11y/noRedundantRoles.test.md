@@ -153,7 +153,7 @@
 
 ```
 
- lint/jsx-a11y/noRedundantRoles/reject/6/file.tsx:1:24 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━
+ lint/jsx-a11y/noRedundantRoles/reject/6/file.tsx:1:23 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━
 
   ✖ Using the role attribute checkbox on the input element is redundant.
 
@@ -181,7 +181,7 @@
 
 ```
 
- lint/jsx-a11y/noRedundantRoles/reject/7/file.tsx:1:9 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━
+ lint/jsx-a11y/noRedundantRoles/reject/7/file.tsx:1:8 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━
 
   ✖ Using the role attribute figure on the figure element is redundant.
 
@@ -210,7 +210,7 @@
 
 ```
 
- lint/jsx-a11y/noRedundantRoles/reject/8/file.tsx:1:7 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━
+ lint/jsx-a11y/noRedundantRoles/reject/8/file.tsx:1:6 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━
 
   ✖ Using the role attribute form on the form element is redundant.
 
@@ -239,7 +239,7 @@
 
 ```
 
- lint/jsx-a11y/noRedundantRoles/reject/9/file.tsx:1:8 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━
+ lint/jsx-a11y/noRedundantRoles/reject/9/file.tsx:1:7 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━━
 
   ✖ Using the role attribute grid on the table element is redundant.
 
@@ -268,7 +268,7 @@
 
 ```
 
- lint/jsx-a11y/noRedundantRoles/reject/10/file.tsx:1:5 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━
+ lint/jsx-a11y/noRedundantRoles/reject/10/file.tsx:1:4 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━
 
   ✖ Using the role attribute gridcell on the td element is redundant.
 
@@ -294,7 +294,7 @@
 
 ```
 
- lint/jsx-a11y/noRedundantRoles/reject/11/file.tsx:1:11 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━
+ lint/jsx-a11y/noRedundantRoles/reject/11/file.tsx:1:10 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━
 
   ✖ Using the role attribute group on the fieldset element is redundant.
 
@@ -323,7 +323,7 @@
 
 ```
 
- lint/jsx-a11y/noRedundantRoles/reject/12/file.tsx:1:26 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━
+ lint/jsx-a11y/noRedundantRoles/reject/12/file.tsx:1:25 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━
 
   ✖ Using the role attribute img on the img element is redundant.
 

@@ -1,6 +1,6 @@
-filename: "file.ts"
-invalid: [
-	"
+filename = "file.ts"
+invalid = [
+	"""
 		const expr = 'a';
 		switch (expr) {
 			case 'a':
@@ -16,8 +16,8 @@ invalid: [
 			default:
 				break;
 		}
-	"
-	"
+	""",
+	"""
 		const expr = 3;
 		switch (expr) {
 			case 1:
@@ -31,8 +31,8 @@ invalid: [
 			default:
 				break;
 		}
-	"
-	"
+	""",
+	"""
 		const expr = 3;
 		switch (expr) {
 			case 1:
@@ -46,8 +46,8 @@ invalid: [
 			default:
 				break;
 		}
-	"
-	"
+	""",
+	"""
 		const foo = 'a';
 		switch ('a') {
 			case foo:
@@ -57,8 +57,8 @@ invalid: [
 			default:
 				break;
 		}
-	"
-	"
+	""",
+	"""
 		const foo = 'a';
 		switch ('a') {
 			case 'foo':
@@ -68,8 +68,8 @@ invalid: [
 			default:
 				break;
 		}
-	"
-	"
+	""",
+	"""
 		const foo = 'a';
 		switch ('a') {
 			case null:
@@ -79,10 +79,10 @@ invalid: [
 			default:
 				break;
 		}
-	"
+	""",
 ]
-valid: [
-	"
+valid = [
+	"""
 		const expr = 'a';
 		switch (expr) {
 			case 'a':
@@ -96,8 +96,8 @@ valid: [
 			default:
 				break;
 		}
-	"
-	"
+	""",
+	"""
 		const expr = 3;
 		switch (expr) {
 			case 1:
@@ -111,8 +111,8 @@ valid: [
 			default:
 				break;
 		}
-	"
-	"
+	""",
+	"""
 		const expr = 3;
 		switch (expr) {
 			case 1:
@@ -132,5 +132,5 @@ valid: [
 			default:
 				break;
 		}
-	"
+	""",
 ]

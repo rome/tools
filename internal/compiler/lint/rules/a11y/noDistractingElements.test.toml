@@ -1,24 +1,21 @@
-[
-	{
-		filename: "file.tsx"
-		invalid: [
-			"<blink />"
-			"<marquee />"
-	]
-		valid: [
-			"<div />"
-			"<Marquee />"
-	]
-}
-	{
-		filename: "file.html"
-		invalid: [
-			"<blink />"
-			"<marquee />"
-	]
-		valid: [
-			"<div />"
-			"<Marquee />"
-	]
-}
+[[cases]]
+filename = "file.tsx"
+invalid = [
+	"<blink />",
+	"<marquee />",
+]
+valid = [
+	"<div />",
+	"<Marquee />",
+]
+
+[[cases]]
+filename = "file.html"
+invalid = [
+	"<blink />",
+	"<marquee />",
+]
+valid = [
+	"<div />",
+	"<Marquee />",
 ]

@@ -1,23 +1,23 @@
-filename: "filename.ts"
-invalid: [
-	"
+filename = "filename.ts"
+invalid = [
+	"""
 		/a|b/
-	"
-	"
+	""",
+	"""
 		/a|b|c/
-	"
+	""",
 ]
-valid: [
-	"
+valid = [
+	"""
 		/[ab]/
-	"
-	"
+	""",
+	"""
 		/ab|ba/
-	"
-	"
+	""",
+	"""
 		/a/
-	"
-	"
+	""",
+	"""
 		/ab|ba|a/
-	"
+	""",
 ]
