@@ -71,7 +71,7 @@ export function normalizePersonField(
 		}
 
 		const person: ManifestPersonField = {
-			name: consumer.get("name").asString(loose ? "" : undefined),
+			name: consumer.get("name").required(loose ? "" : undefined).asString(),
 			email: consumer.get("email").asStringOrVoid(),
 			twitter: consumer.get("twitter").asStringOrVoid(),
 			github,
@@ -139,7 +139,7 @@ export function normalizeRepoField(
 
 		if (loose) {
 			// A lot of packages omit the "type"
-			type = consumer.get("type").asString("git");
+			type = consumer.get("type").required("git").asString();
 
 			// thanks i hate it
 			consumer.markUsedProperty("web");
@@ -323,11 +323,10 @@ export function normalizeNameField(
 	return normalizeName({
 		name: prop.asString(),
 		loose,
-		unexpected: ({description, at, start, end}) => {
+		unexpected: ({description, start, end}) => {
 			prop.unexpected(
 				description,
 				{
-					at,
 					loc: start === undefined
 						? undefined
 						: prop.getLocationRange(start, end, "inner-value"),

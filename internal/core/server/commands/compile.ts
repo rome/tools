@@ -27,8 +27,8 @@ export default createServerCommand({
 	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
-			bundle: c.get("bundle").asBoolean(false),
-			target: c.get("target").asString("default"),
+			bundle: c.get("bundle").required(false).asBoolean(),
+			target: c.get("target").required("default").asString(),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {

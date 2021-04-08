@@ -15,7 +15,7 @@ export async function main(args: string[]) {
 		args,
 		defineFlags(c) {
 			return {
-				force: c.get("force").asBoolean(false),
+				force: c.get("force").required(false).asBoolean(),
 			};
 		},
 	}).init();
