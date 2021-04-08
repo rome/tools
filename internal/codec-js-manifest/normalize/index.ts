@@ -295,7 +295,7 @@ function normalizeManifestMetadata(
 		metadata: {
 			name,
 			version,
-			private: consumer.get("private").asBoolean(false),
+			private: consumer.get("private").required(false).asBoolean(),
 			description: consumer.get("description").asStringOrVoid(),
 			license: parsedLicense?.license,
 			keywords: normalizeStringArray(consumer.get("keywords"), loose),
@@ -367,7 +367,7 @@ function normalizeManifestPeople(
 
 	let author;
 	if (!authorProp.isEmpty()) {
-		if (loose && Array.isArray(authorProp.getValue())) {
+		if (loose && Array.isArray(authorProp.asUnknown())) {
 			maintainersProp = authorProp;
 		} else {
 			author = normalizePersonField(authorProp, loose);

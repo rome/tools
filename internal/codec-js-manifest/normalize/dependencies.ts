@@ -375,11 +375,10 @@ function parseNpm(
 	const name = normalizeName({
 		name: nameRaw,
 		loose,
-		unexpected({description, at, start, end}) {
+		unexpected({description, start, end}) {
 			consumer.unexpected(
 				description,
 				{
-					at,
 					loc: start === undefined
 						? undefined
 						: consumer.getLocationRange(
@@ -530,11 +529,10 @@ export function normalizeDependencies(
 		const nameObj = normalizeName({
 			name: rawName,
 			loose,
-			unexpected: ({description, at}) => {
+			unexpected: ({description}) => {
 				value.unexpected(
 					description,
 					{
-						at,
 						target: "key",
 					},
 				);

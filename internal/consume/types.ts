@@ -8,6 +8,7 @@
 import {
 	Diagnostic,
 	DiagnosticCategory,
+	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import Consumer from "./Consumer";
@@ -27,6 +28,8 @@ export type ConsumeSourceLocationRequestTarget =
 	| "key"
 	| "value"
 	| "inner-value";
+
+export type ConsumeUnexpectedDescription = DiagnosticDescriptionOptional | ((path?: string) => DiagnosticDescriptionOptional)
 
 export type ConsumeContext = {
 	category: DiagnosticCategory;
@@ -48,7 +51,7 @@ export type ConsumePropertyMetadata = {
 	) => undefined | DiagnosticLocation;
 };
 
-type ConsumePropertyDefinitionBase = {
+export type ConsumePropertyDefinitionBase = {
 	objectPath: ConsumePath;
 	default: unknown;
 	required: boolean;

@@ -84,7 +84,7 @@ export async function loadCompleteProjectConfig(
 		},
 	};
 
-	const name = consumer.get("name").asString(projectDirectory.getBasename());
+	const name = consumer.get("name").required(projectDirectory.getBasename()).asString();
 
 	const config: ProjectConfig = {
 		...defaultConfig,

@@ -272,7 +272,7 @@ export default class Parser<T> {
 				// Automatically convert number strings
 				if (def.type === "number" && typeof value !== "number") {
 					if (valueConsumer.exists() || def.required) {
-						valueConsumer.setValue(valueConsumer.asNumberString());
+						valueConsumer.setValue(valueConsumer.deriveNumberString().asNumber());
 					}
 				}
 
@@ -504,7 +504,7 @@ export default class Parser<T> {
 				{
 					description: markup`Show the version`,
 				},
-			).asBoolean(false);
+			).required(false).asBoolean();
 			if (shouldDisplayVersion) {
 				this.reporter.log(version);
 				await this.exit(0);
@@ -546,7 +546,7 @@ export default class Parser<T> {
 				description: markup`Show this help screen`,
 				alternateName: "h",
 			},
-		).asBoolean(false);
+		).required(false).asBoolean();
 
 		let definedCommand: undefined | DefinedCommand;
 

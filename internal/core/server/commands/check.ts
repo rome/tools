@@ -48,13 +48,13 @@ export default createServerCommand<Flags>({
 				{
 					description: markup`apply safe fixes and formatting`,
 				},
-			).asBoolean(false),
+			).required(false).asBoolean(),
 			formatOnly: consumer.get(
 				"formatOnly",
 				{
 					description: markup`only formatting is applied`,
 				},
-			).asBoolean(false),
+			).required(false).asBoolean(),
 			changed: consumer.get(
 				"changed",
 				{

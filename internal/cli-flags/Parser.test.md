@@ -376,7 +376,7 @@
 
  argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unknown f flag at
+  ✖ Unknown f flag
 
     test -f
          ^^
