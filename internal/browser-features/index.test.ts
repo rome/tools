@@ -1,10 +1,11 @@
 import {test} from "rome";
+import "@internal/core";
 import {
 	getAllBrowserNames,
 	getAllBrowserUsages,
 	getBrowser,
-} from "@internal/browser-features/index";
-import {Chrome} from "@internal/browser-features/Browser";
+	Chrome,
+} from "@internal/browser-features";
 
 test(
 	"test browser querying",

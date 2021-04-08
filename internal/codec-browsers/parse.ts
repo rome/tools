@@ -24,7 +24,6 @@ import {
 	TargetUnit,
 } from "@internal/codec-browsers/resolve";
 import {descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/numbers";
 
 type BrowserQueryTokens = BaseTokens & {
 	String: ValueToken<"String", string>;
@@ -65,155 +64,140 @@ type BrowserQueryParserTypes = {
 export const browserQueryParser = createParser<BrowserQueryParserTypes>({
 	diagnosticLanguage: "browserquery",
 	ignoreWhitespaceTokens: true,
+	caseInsensitiveTokenMatches: true,
 
-	tokenize(
-		parser: ParserCore<BrowserQueryParserTypes>,
-		index: ZeroIndexed,
-	): TokenValues<BrowserQueryTokens> | undefined {
-		const char = parser.getInputCharOnly(index);
-
-		if (char === "-") {
-			return parser.finishToken("Hyphen");
+	tokenize(parser, tokenizer): TokenValues<BrowserQueryTokens> | undefined {
+		if (tokenizer.consume("-")) {
+			return tokenizer.finishToken("Hyphen");
 		}
-		if (char === ">") {
-			if (parser.getInputCharOnly(index.increment()) === "=") {
-				return parser.finishToken("GE", index.add(2));
+
+		if (tokenizer.consume(">")) {
+			if (tokenizer.consume("=")) {
+				return tokenizer.finishToken("GE");
+			} else {
+				return tokenizer.finishToken("GT");
 			}
-			return parser.finishToken("GT");
 		}
-		if (char === "<") {
-			if (parser.getInputCharOnly(index.increment()) === "=") {
-				return parser.finishToken("LE", index.add(2));
+
+		if (tokenizer.consume("<")) {
+			if (tokenizer.consume("=")) {
+				return tokenizer.finishToken("LE");
+			} else {
+				return tokenizer.finishToken("LT");
 			}
-			return parser.finishToken("LT");
-		}
-		if (char === ",") {
-			return parser.finishToken("Or");
 		}
 
-		const twoCharWord = parser.getInputRange(index, 2)[0].toLowerCase();
-		if (twoCharWord === "or") {
-			return parser.finishToken("Or", index.add(2));
-		}
-		if (twoCharWord === "in") {
-			return parser.finishToken("In", index.add(2));
+		if (tokenizer.consume(",")) {
+			return tokenizer.finishToken("Or");
 		}
 
-		const threeCharWord = parser.getInputRange(index, 3)[0].toLowerCase();
-		if (threeCharWord === "all") {
-			return parser.finishToken("All", index.add(3));
-		}
-		if (threeCharWord === "day") {
-			index = index.add(3);
-			if (parser.getInputCharOnly(index) === "s") {
-				index = index.increment();
-			}
-			return parser.finishToken("Days", index);
-		}
-		if (threeCharWord === "not") {
-			return parser.finishToken("Not", index.add(3));
-		}
-		if (threeCharWord === "and") {
-			return parser.finishToken("And", index.add(3));
+		if (tokenizer.consume("or")) {
+			return tokenizer.finishToken("Or");
 		}
 
-		const fourCharWord = parser.getInputRange(index, 4)[0].toLowerCase();
-		if (fourCharWord === "year") {
-			index = index.add(4);
-			if (parser.getInputCharOnly(index) === "s") {
-				index = index.increment();
-			}
-			return parser.finishToken("Years", index);
-		}
-		if (fourCharWord === "dead") {
-			return parser.finishToken("Dead", index.add(4));
-		}
-		if (fourCharWord === "last") {
-			return parser.finishToken("Last", index.add(4));
+		if (tokenizer.consume("in")) {
+			return tokenizer.finishToken("In");
 		}
 
-		const fiveCharWord = parser.getInputRange(index, 5)[0].toLowerCase();
-		if (fiveCharWord === "cover") {
-			return parser.finishToken("Cover", index.add(5));
-		}
-		if (fiveCharWord === "since") {
-			return parser.finishToken("Since", index.add(5));
-		}
-		if (fiveCharWord === "month") {
-			index = index.add(5);
-			if (parser.getInputCharOnly(index) === "s") {
-				index = index.increment();
-			}
-			return parser.finishToken("Months", index);
+		if (tokenizer.consume("all")) {
+			return tokenizer.finishToken("All");
 		}
 
-		if (parser.getInputRange(index, 6)[0].toLowerCase() === "modern") {
-			return parser.finishToken("Modern", index.add(6));
+		if (tokenizer.consume("day")) {
+			tokenizer.consume("s");
+			return tokenizer.finishToken("Days");
 		}
 
-		const sevenCharWord = parser.getInputRange(index, 7)[0].toLowerCase();
-		if (sevenCharWord === "default") {
-			index = index.add(7);
-			if (parser.getInputCharOnly(index) === "s") {
-				index = index.increment();
-			}
-			return parser.finishToken("Modern", index.add(7));
-		}
-		if (sevenCharWord === "version") {
-			index = index.add(7);
-			if (parser.getInputCharOnly(index) === "s") {
-				index = index.increment();
-			}
-			return parser.finishToken("Versions", index);
-		}
-		if (sevenCharWord === "current") {
-			return parser.finishToken("Current", index.add(7));
+		if (tokenizer.consume("year")) {
+			tokenizer.consume("s");
+			return tokenizer.finishToken("Years");
 		}
 
-		const tenCharWord = parser.getInputRange(index, 10)[0].toLowerCase();
-		if (tenCharWord === "maintained") {
-			return parser.finishToken("Maintained", index.add(10));
-		}
-		if (tenCharWord === "unreleased") {
-			return parser.finishToken("Unreleased", index.add(10));
+		if (tokenizer.consume("not")) {
+			return tokenizer.finishToken("Not");
 		}
 
-		if (parser.getInputRange(index, 13)[0].toLowerCase() === "major version") {
-			index = index.add(13);
-			if (parser.getInputCharOnly(index) === "s") {
-				index = index.increment();
-			}
-
-			return parser.finishToken("MajorVersions", index);
+		if (tokenizer.consume("and")) {
+			return tokenizer.finishToken("And");
 		}
 
+		if (tokenizer.consume("dead")) {
+			return tokenizer.finishToken("Dead");
+		}
+
+		if (tokenizer.consume("last")) {
+			return tokenizer.finishToken("Last");
+		}
+
+		if (tokenizer.consume("cover")) {
+			return tokenizer.finishToken("Cover");
+		}
+
+		if (tokenizer.consume("since")) {
+			return tokenizer.finishToken("Since");
+		}
+
+		if (tokenizer.consume("month")) {
+			tokenizer.consume("s");
+			return tokenizer.finishToken("Months");
+		}
+
+		if (tokenizer.consume("modern")) {
+			return tokenizer.finishToken("Modern");
+		}
+
+		if (tokenizer.consume("default")) {
+			tokenizer.consume("s");
+			return tokenizer.finishToken("Modern");
+		}
+
+		if (tokenizer.consume("version")) {
+			tokenizer.consume("s");
+			return tokenizer.finishToken("Versions");
+		}
+
+		if (tokenizer.consume("current")) {
+			return tokenizer.finishToken("Current");
+		}
+
+		if (tokenizer.consume("maintained")) {
+			return tokenizer.finishToken("Maintained");
+		}
+
+		if (tokenizer.consume("unreleased")) {
+			return tokenizer.finishToken("Unreleased");
+		}
+
+		if (tokenizer.consume("major version")) {
+			tokenizer.consume("s");
+			return tokenizer.finishToken("MajorVersions");
+		}
+
+		const char = tokenizer.get();
 		if (isDigit(char) || char === ".") {
-			const [value, endIndex] = parser.readInputFrom(
-				index,
+			const value = tokenizer.read(
 				(readChar) => isDigit(readChar) || readChar === ".",
 			);
 
-			if (parser.getInputCharOnly(endIndex) === "%") {
-				return parser.finishValueToken(
+			if (tokenizer.consume("%")) {
+				return tokenizer.finishValueToken(
 					"Percentage",
 					parseFloat(value),
-					endIndex.increment(),
 				);
 			}
 
-			return parser.finishValueToken("Number", parseFloat(value), endIndex);
+			return tokenizer.finishValueToken("Number", parseFloat(value));
 		}
 
 		if (isAlpha(char)) {
-			const [value, endIndex] = parser.readInputFrom(
-				index,
+			const value = tokenizer.read(
 				(readChar) => isAlpha(readChar) || readChar === "_",
 			);
 
-			return parser.finishValueToken("String", value, endIndex);
+			return tokenizer.finishValueToken("String", value);
 		}
 
-		return parser.finishValueToken("Invalid", char);
+		return tokenizer.finishValueToken("Invalid", char);
 	},
 });
 
@@ -310,7 +294,7 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 		}
 
 		// Invert / combine if required
-		if (newTarget != null) {
+		if (newTarget !== undefined) {
 			if (inverted) {
 				newTarget = {
 					type: "TargetBrowserInversion",
@@ -327,8 +311,8 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				} else {
 					newTarget = {
 						type: "TargetBrowserCombination",
-						target: targets.pop()!,
-						and: newTarget,
+						left: targets.pop()!,
+						right: newTarget,
 					};
 				}
 			}

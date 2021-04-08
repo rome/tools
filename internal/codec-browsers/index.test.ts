@@ -3,11 +3,9 @@ import {
 	parseBrowserQuery,
 } from "@internal/codec-browsers/parse";
 import {createFixtureTests} from "@internal/test-helpers";
-import {removeCarriageReturn} from "@internal/string-utils";
 import {resolveTargets} from "@internal/codec-browsers/resolve";
 import {getDiagnosticsFromError} from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
-import {decodeUTF8} from "@internal/binary";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;
@@ -15,7 +13,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 
 	const filename = inputFile.relative;
 
-	const inputContent = removeCarriageReturn(decodeUTF8(inputFile.content));
+	const inputContent = inputFile.contentAsText();
 
 	const parser = browserQueryParser.create({
 		input: inputContent,
@@ -26,12 +24,9 @@ const promise = createFixtureTests(async (fixture, t) => {
 		inputFile.absolute.getExtensionlessBasename(),
 	).join();
 
-	t.namedSnapshot(
-		"tokens",
-		parser.getAllTokens(),
-		undefined,
-		{filename: outputFile},
-	);
+	const snapshot = t.customSnapshot(outputFile);
+
+	snapshot.named("tokens", parser.getAllTokens());
 
 	try {
 		const parsed = parseBrowserQuery({
@@ -40,23 +35,23 @@ const promise = createFixtureTests(async (fixture, t) => {
 			includeSourceTextInDiagnostics: true,
 		});
 
-		const result = Array.from(resolveTargets(parsed)).map((browser) =>
-			`${browser.getId()}:${browser.getVersion()}`
-		);
+		const result = Array.from(
+			resolveTargets(parsed, {fixedDate: new Date(1_616_056_455_400)}),
+		).map((browser) => `${browser.getId()}:${browser.getVersion()}`);
 
-		t.namedSnapshot("targets", parsed, undefined, {filename: outputFile});
+		snapshot.named("targets", parsed);
 
-		t.namedSnapshot("result", result, undefined, {filename: outputFile});
+		snapshot.named("result", result);
 	} catch (err) {
 		const diagnostics = getDiagnosticsFromError(err);
 		if (diagnostics === undefined) {
-			t.namedSnapshot("error", err, undefined, {filename: outputFile});
+			snapshot.named("error", err);
 		} else {
 			const printed = await printDiagnosticsToString({
 				diagnostics,
 				suppressions: [],
 			});
-			t.namedSnapshot("diagnostics", printed, undefined, {filename: outputFile});
+			snapshot.named("diagnostics", printed);
 		}
 	}
 });
