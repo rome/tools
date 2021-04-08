@@ -9,12 +9,13 @@ import {ConsumeContext, Consumer} from "@internal/consume";
 import {ParserOptions, TokenBase} from "@internal/parser-core";
 import {DiagnosticLanguage} from "@internal/diagnostics";
 import {JSONValue} from "@internal/codec-config/json/types";
+import {TOMLValue} from "./toml/types";
 
 export type ConfigParserOptions = Omit<ParserOptions, "retainCarriageReturn"> & {
 	consumeDiagnosticCategoryValue?: string;
 };
 
-export type ConfigType = "json" | "toml";
+export type ConfigType = "json" | "toml" | "json5";
 
 export type PartialConsumeConfigResult = {
 	consumer: Consumer;
@@ -46,7 +47,7 @@ export type Comments = Array<BlockComment | LineComment>;
 
 export type ConfigParserResult = {
 	type: ConfigType;
-	value: JSONValue;
+	value: JSONValue | TOMLValue;
 	context: Required<ConsumeContext>;
 	comments: ConfigCommentMap;
 };
