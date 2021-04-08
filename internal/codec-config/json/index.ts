@@ -7,6 +7,7 @@ import {
 	PartialConfigHandler,
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
+import {stringifyJSON5RootConsumer} from "./stringify-json5";
 
 function createJSONParserMethods(
 	type: ConfigType,
@@ -38,5 +39,15 @@ export const json: PartialConfigHandler = {
 		} else {
 			return serial;
 		}
+	},
+};
+
+export const json5: PartialConfigHandler = {
+	extensions: ["json5"],
+	language: "json5",
+	...createJSONParserMethods("json5"),
+
+	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {
+		return stringifyJSON5RootConsumer(opts.consumer, opts.comments);
 	},
 };

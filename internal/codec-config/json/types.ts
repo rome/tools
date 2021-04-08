@@ -6,8 +6,6 @@ import {
 } from "@internal/parser-core";
 
 export type Tokens = BaseTokens & {
-	BlockComment: StringToken<"BlockComment">;
-	LineComment: StringToken<"LineComment">;
 	String: StringToken<"String">;
 	Number: NumberToken<"Number">;
 	Word: StringToken<"Word">;
