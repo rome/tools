@@ -8,10 +8,11 @@
 import {isHexDigit} from "@internal/parser-core";
 import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
 import {isEscaped} from "@internal/string-utils";
-import {readMarkup} from "@internal/markup";
 import {ZeroIndexed} from "@internal/numbers";
+import {readMarkup} from "@internal/markup";
 
-function unescapeChar(modifier: string): string {
+function unescapeChar(modifier: string, index: number, opts: UnescapeStringOptions): string {
+	// Allowed in JSON and TOML
 	switch (modifier) {
 		case "b":
 			return "\b";
@@ -27,7 +28,19 @@ function unescapeChar(modifier: string): string {
 
 		case "t":
 			return "\t";
+	}
 
+	if (opts.mode === "toml-singleline" || opts.mode === "toml-multiline") {
+		// Only additional escape allowed is a double quote or backslash
+		if (modifier === '"' || modifier === "\\") {
+			return modifier;
+		}
+
+		opts.unexpected(descriptions.STRING_ESCAPE.TOML_INVALID_ESCAPE, index);
+	}
+
+	// Allowed in JSON
+	switch (modifier) {
 		case "v":
 			return "\x0b";
 
@@ -41,30 +54,40 @@ type UnescapeStringUnexpected = (
 	index: number,
 ) => void;
 
+type UnescapeStringOptions = {
+	mode: "json" | "toml-singleline" | "toml-multiline";
+	unexpected: UnescapeStringUnexpected;
+};
+
 const UNEXPECTED_DEFAULT_THROWER: UnescapeStringUnexpected = (
 	metadata: Omit<DiagnosticDescription, "category">,
 	index: number,
 ) => {
-	throw new TypeError(`${readMarkup(metadata.message)} (${String(index)})`);
+	throw new TypeError(`${readMarkup(metadata.message)} at index ${String(index)}`);
 };
 
-export default function unescapeJSONString(
+export default function unescapeString(
 	input: string,
-	unexpected: UnescapeStringUnexpected = UNEXPECTED_DEFAULT_THROWER,
-	allowWhitespace: boolean = false,
+	rawOpts: UnescapeStringOptions | Omit<UnescapeStringOptions, "unexpected">,
 ): string {
-	let buffer = "";
+	const opts: UnescapeStringOptions = "unexpected" in rawOpts ? rawOpts : {unexpected: UNEXPECTED_DEFAULT_THROWER, mode: rawOpts.mode};
+	const {unexpected, mode} = opts;
 
+	let buffer = "";
 	let index = 0;
 
 	while (index < input.length) {
 		const char = input[index];
 
-		if (allowWhitespace) {
+		if (mode === "toml-singleline" || mode === "toml-multiline") {
 			if (char === "\r") {
 				// Ignore it
 				index++;
 				continue;
+			}
+
+			if (char === "\n" && opts.mode === "toml-singleline") {
+				unexpected(descriptions.STRING_ESCAPE.TOML_NEWLINE_IN_SINGLE_QUOTE_STRING, index);
 			}
 
 			if (char === "\n" || char === "\t") {
@@ -81,15 +104,14 @@ export default function unescapeJSONString(
 			char !== "\\"
 		) {
 			// Validate that this is a valid character
-			const codePoint = char.codePointAt(0);
-			if (codePoint === undefined) {
-				throw new Error("Already validated that this index exists");
-			}
+			const codePoint = char.codePointAt(0)!;
 			if (codePoint >= 0 && codePoint <= 31) {
-				throw unexpected(
+				unexpected(
 					descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER,
 					index,
 				);
+				index++;
+				continue;
 			}
 
 			// Add it verbatim
@@ -111,7 +133,7 @@ export default function unescapeJSONString(
 			if (rawCode.length < 4) {
 				// (index of the point start + total point digits)
 				const lastDigitIndex = codeStartIndex + rawCode.length - 1;
-				throw unexpected(
+				unexpected(
 					descriptions.STRING_ESCAPE.NOT_ENOUGH_CODE_POINTS,
 					lastDigitIndex,
 				);
@@ -124,7 +146,7 @@ export default function unescapeJSONString(
 					// Get the current source index for this character
 					// (code start index + digit index)
 					const pos = codeStartIndex + i;
-					throw unexpected(
+					unexpected(
 						descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE,
 						pos,
 					);
@@ -141,7 +163,7 @@ export default function unescapeJSONString(
 			index += 6;
 		} else {
 			// Unescape a basic modifier like \t
-			buffer += unescapeChar(modifier);
+			buffer += unescapeChar(modifier, index, opts);
 
 			// Skip ahead two indexes to also take along the modifier
 			index += 2;

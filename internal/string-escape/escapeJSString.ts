@@ -34,7 +34,12 @@
  *   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {DOUBLE_QUOTE, SINGLE_QUOTE, TICK_QUOTE} from "./constants";
+import {
+	EscapeStringQuoteChar,
+	DOUBLE_QUOTE,
+	SINGLE_QUOTE,
+	TICK_QUOTE,
+} from "./constants";
 import {isDigit} from "@internal/parser-core";
 
 // This regex represents printable ASCII characters, except the characters: '"\`
@@ -75,16 +80,14 @@ function escapeChar(
 	return undefined;
 }
 
-type QuoteChar = "" | '"' | "'" | "`";
-
-type EscapeStringOptions = {
-	quote?: QuoteChar;
+export type EscapeStringOptions = {
+	quote?: EscapeStringQuoteChar;
 	json?: boolean;
 	ignoreWhitespaceEscapes?: boolean;
 	unicodeOnly?: boolean;
 };
 
-export default function escapeJSString(
+export function escapeJSString(
 	str: string,
 	opts: EscapeStringOptions = {},
 ): string {
@@ -134,19 +137,21 @@ export default function escapeJSString(
 
 		// Escape double quotes
 		if (char === DOUBLE_QUOTE) {
-			result += quote === char ? '\\"' : char;
+			// TODO This will unnecessarily escape single quotes in triple quoted strings
+			result += char === quote[0] ? '\\"' : char;
 			continue;
 		}
 
 		// Escape single quotes
 		if (char === SINGLE_QUOTE) {
-			result += quote === char ? "\\'" : char;
+			// TODO ^^
+			result += char === quote[0] ? "\\'" : char;
 			continue;
 		}
 
 		// Escape back tick
 		if (char === TICK_QUOTE) {
-			result += quote === char ? "\\`" : char;
+			result += char === quote ? "\\`" : char;
 			continue;
 		}
 
