@@ -24,19 +24,20 @@ import {
 import {AnyVisitor} from "./types";
 import {createVisitor} from "./utils";
 
-function extractSuppressionsFromComment(
+export function extractSuppressionsFromComment({context, comment, targetNode, overrideRequireExplanations}: {
 	context: CompilerContext,
 	comment: AnyComment,
 	targetNode: undefined | AnyNode,
-): undefined | ExtractedSuppressions {
+	overrideRequireExplanations?: boolean;
+}): undefined | ExtractedSuppressions {
 	const commentLocation = comment.loc;
 	if (commentLocation === undefined) {
 		return undefined;
 	}
 
-	const {diagnostics, suppressions} = parseCommentSuppressions({
+	const {diagnostics, suppressions, explanation} = parseCommentSuppressions({
 		input: comment.value,
-		requireExplanations: context.project.config.lint.requireSuppressionExplanations,
+		requireExplanations: overrideRequireExplanations ?? context.project.config.lint.requireSuppressionExplanations,
 		targetNode,
 		path: context.path,
 		offsetPosition: comment.loc === undefined
@@ -50,7 +51,7 @@ function extractSuppressionsFromComment(
 	if (suppressions.length === 0 && diagnostics.length === 0) {
 		return undefined;
 	} else {
-		return {diagnostics, suppressions};
+		return {diagnostics, suppressions, explanation};
 	}
 }
 
@@ -72,7 +73,7 @@ export function createSuppressionsVisitor(): AnyVisitor {
 					}
 
 					visitedComments.add(comment);
-					const result = extractSuppressionsFromComment(context, comment, node);
+					const result = extractSuppressionsFromComment({context, comment, targetNode: node});
 					if (result !== undefined) {
 						context.diagnostics.addDiagnostics(result.diagnostics);
 						context.suppressions = context.suppressions.concat(

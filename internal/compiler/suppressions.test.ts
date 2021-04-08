@@ -6,6 +6,7 @@
  */
 
 import {test} from "rome";
+import "@internal/core";
 import CompilerContext from "./lib/CompilerContext";
 import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
