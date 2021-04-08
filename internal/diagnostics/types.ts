@@ -49,6 +49,8 @@ export type DiagnosticLocation = {
 	path: Path;
 	start?: Position;
 	end?: Position;
+	// Set to `true` when we have normalized the positions from a source map. This prevents double resolving paths.
+	resolved?: boolean;
 };
 
 export type DiagnosticOrigin = {
@@ -67,6 +69,7 @@ export type DiagnosticLanguage =
 	| "binary"
 	| "rser"
 	| "json"
+	| "json5"
 	| "js"
 	| "url"
 	| "urlquery"

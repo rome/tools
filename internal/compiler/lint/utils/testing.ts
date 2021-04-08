@@ -98,7 +98,7 @@ async function testLintExpect(
 	t.addToAdvice({
 		type: "log",
 		category: "info",
-		text: "Response",
+		text: "Result",
 	});
 
 	t.addToAdvice({
@@ -124,7 +124,9 @@ async function testLintExpect(
 		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
 	}
 
-	const snapshotName = t.snapshot(
+	const snapshot = t.customSnapshot(snapshotFilename);
+
+	const snapshotName = snapshot.snapshot(
 		await printDiagnosticsToString({
 			diagnostics,
 			suppressions: res.suppressions,
@@ -138,15 +140,12 @@ async function testLintExpect(
 				],
 			},
 		}),
-		undefined,
-		{filename: snapshotFilename},
 	);
 
-	t.namedSnapshot(
+	snapshot.named(
 		`${snapshotName}: formatted`,
 		res.save?.content,
-		undefined,
-		{filename: snapshotFilename, language: path.getExtensions().slice(1)},
+		{language: path.getExtensions().slice(1)},
 	);
 
 	t.clearAdvice();

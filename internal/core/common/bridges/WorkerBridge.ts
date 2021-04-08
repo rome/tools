@@ -44,7 +44,7 @@ import {
 	WorkerStatus,
 	WorkerUpdateInlineSnapshotResult,
 } from "@internal/core";
-import {WorkerPartialManifest} from "@internal/core/worker/types";
+import {TestFileRef, WorkerPartialManifest} from "@internal/core/worker/types";
 import {TestConsoleAdvice} from "@internal/core/worker/test/TestWorkerFile";
 
 export default createBridge({
@@ -92,7 +92,7 @@ export default createBridge({
 
 		testDiagnostic: createBridgeEventDeclaration<
 			{
-				testPath: undefined | AbsoluteFilePath;
+				ref: undefined | TestFileRef;
 				diagnostic: Diagnostic;
 			},
 			void

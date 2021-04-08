@@ -102,6 +102,10 @@ type DiagnosticVisibility = {
 type SeenKeys = Set<string>;
 
 function isDuplicate(diag: Diagnostic, seenKeys: SeenKeys): boolean {
+	if (diag.tags?.unique) {
+		return false;
+	}
+
 	const parts: string[] = [
 		`label:${diag.label === undefined ? "" : readMarkup(diag.label)}`,
 		`category:${formatCategoryDescription(diag.description)}`,
@@ -453,9 +457,6 @@ export default class DiagnosticsProcessor {
 		this.cachedCalculate = undefined;
 		this.cachedDiagnostics = undefined;
 
-		// Normalize
-		diags = diags.map((diag) => this.normalizer.normalizeDiagnostic(diag));
-
 		let guaranteed: undefined | Diagnostic[];
 		if (
 			this.guaranteedDiagnosticsEvent.hasSubscriptions() &&
@@ -465,6 +466,8 @@ export default class DiagnosticsProcessor {
 		}
 
 		for (let diag of diags) {
+			diag = this.normalizer.normalizeDiagnostic(diag);
+
 			const {category} = diag.description;
 			const {path} = diag.location;
 

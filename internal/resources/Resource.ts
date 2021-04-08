@@ -1,11 +1,11 @@
 import {enhanceNodeInspectClass} from "@internal/node";
 import {ResourceOptions, ResourceTree, ResourcesContainer, ResourceTreeEntry, ResourceGetDetails} from "./types";
 import {extractResource} from "./index";
-import {isEnvVarSet} from "@internal/cli-environment";
+import {getEnvVarBoolean} from "@internal/cli-environment";
 import { createResourceContainer } from "./factories";
 import { AsyncVoidCallback } from "@internal/typescript-helpers";
 
-const isDebugStack = isEnvVarSet("ROME_RESOURCE_STACKS");
+let isDebugStack: undefined | boolean;
 
 export default class Resource {
   constructor(opts: ResourceOptions) {
@@ -26,6 +26,9 @@ export default class Resource {
     if (!opts.optional && this.resources.size === 0) {
       let timeoutError: undefined | Error;
       let timeoutMessage = `The resource ${opts.name} is not correctly managed as it has not been attached to a parent resource`;
+
+      isDebugStack = isDebugStack ?? getEnvVarBoolean("ROME_RESOURCE_STACKS");
+
       if (isDebugStack) {
         timeoutError = new Error(timeoutMessage);
       }
@@ -71,7 +74,7 @@ export default class Resource {
     };
 
     seen.set(this, entry);
-    
+
     for (const resource of this.resources) {
       const cached = seen.get(resource);
       if (cached === undefined) {
@@ -116,7 +119,7 @@ export default class Resource {
     seen.add(this);
 
     const promises = [];
-    
+
     // Release all sub resources
     for (const resource of this.resources) {
       if (seen.has(resource)) {
@@ -131,7 +134,7 @@ export default class Resource {
     if (release !== undefined) {
       promises.push(callRelease(this, release))
     }
-    
+
     try {
       await Promise.all(promises);
     } finally {
@@ -146,7 +149,7 @@ export default class Resource {
       if (finalize !== undefined) {
         await callRelease(this, finalize);
       }
-      
+
       this._releasing = undefined;
     }
 

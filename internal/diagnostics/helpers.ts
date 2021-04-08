@@ -16,6 +16,7 @@ import {Position} from "@internal/parser-core";
 import {StaticMarkup, formatFileLinkInnerText, markup} from "@internal/markup";
 import {joinCategoryName} from "./categories";
 import {stringDiffCompressed} from "@internal/string-diff";
+import {isNodeInternalPath} from "@internal/path";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
@@ -189,7 +190,7 @@ export function diagnosticLocationToMarkupFilelink(
 	const {start, path} = loc;
 
 	// Link directly to GitHub for internal Node files
-	if (path.isUID() && path.format().startsWith("node:")) {
+	if (isNodeInternalPath(path)) {
 		return nodeInternalDiagnosticLocationToMarkupFilelink(loc, innerText);
 	}
 
