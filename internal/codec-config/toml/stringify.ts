@@ -4,11 +4,11 @@ import {EscapeStringQuoteChar, escapeJSString} from "@internal/string-escape";
 import {isValidWordKey} from "./tokenizer";
 import StringifyHelper, {createStringifyHelper} from "../StringifyHelper";
 
-function stringifyArray(consumer: Consumer, helper: StringifyHelper): string {
+function stringifyArray(consumer: Consumer, helper: StringifyHelper, inline: boolean): string {
 	const buff: string[] = [];
 
 	for (const elem of consumer.asIterable()) {
-		buff.push(`${stringifyValue(elem, helper)},`);
+		buff.push(`${stringifyValue(elem, helper, true)},`);
 	}
 
 	return helper.wrap("[", buff, "]");
@@ -70,18 +70,19 @@ function stringifyPrimitives(consumer: Consumer): undefined | string {
 	return undefined;
 }
 
-function stringifyValue(consumer: Consumer, helper: StringifyHelper): string {
+function stringifyValue(consumer: Consumer, helper: StringifyHelper, inline: boolean): string {
 	const asPrim = stringifyPrimitives(consumer);
 	if (asPrim !== undefined) {
 		return asPrim;
 	}
 
-	return stringifyObject(consumer, helper);
+	return stringifyObject(consumer, helper, inline);
 }
 
 function stringifyPlainObject(
 	consumer: Consumer,
 	helper: StringifyHelper,
+	inline: boolean,
 ): string {
 	const map = consumer.asMap();
 	let buff: string[] = [];
@@ -98,30 +99,36 @@ function stringifyPlainObject(
 		}
 	}
 
+	const innerHelper = inline ? helper.fork() : helper;
+
 	for (const [key, consumer] of map) {
 		const propKey = stringifyKey(key);
 		const possibleValue = consumer.asUnknown();
 		if (typeof possibleValue === "object" && !Array.isArray(possibleValue)) {
 			buff.push(`[${propKey}]`);
-			const element = stringifyValue(consumer, helper);
+			const element = stringifyValue(consumer, innerHelper, true);
 			buff.push(`${element}`);
 		} else {
-			const propValue = stringifyValue(consumer, helper);
+			const propValue = stringifyValue(consumer, innerHelper, true);
 			buff.push(`${propKey} = ${propValue}`);
 		}
 	}
 
-	return `${buff.join("\n")}`;
+	if (inline) {
+		return helper.wrap(`{`, buff, `}`);
+	} else {
+		return `${buff.join("\n")}`;
+	}
 }
 
-function stringifyObject(consumer: Consumer, helper: StringifyHelper): string {
+function stringifyObject(consumer: Consumer, helper: StringifyHelper, inline: boolean): string {
 	const value = consumer.asUnknown();
 
 	if (Array.isArray(value)) {
-		return stringifyArray(consumer, helper);
+		return stringifyArray(consumer, helper, inline);
 	}
 
-	return stringifyPlainObject(consumer, helper);
+	return stringifyPlainObject(consumer, helper, inline);
 }
 
 export function stringifyTOMLFromConsumer(
@@ -129,5 +136,5 @@ export function stringifyTOMLFromConsumer(
 	pathToComments: ConfigCommentMap,
 ): string {
 	const helper = createStringifyHelper(pathToComments);
-	return stringifyValue(consumer, helper);
+	return stringifyValue(consumer, helper, false);
 }
