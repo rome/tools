@@ -17,8 +17,8 @@ test(
 			{firstInput: "romeTest", secondInput: "123", expected: "romeTest"},
 		];
 
-		testCases.forEach((td) => {
+		for (const td of testCases) {
 			t.is(removeSuffix(td.firstInput, td.secondInput), td.expected);
-		});
+		}
 	},
 );
