@@ -9,7 +9,8 @@ import {DiagnosticAdvice, DiagnosticDescription} from "../types";
 import {flags} from "./flags";
 import {parserCore} from "./parsers/parserCore";
 import {regexp} from "./parsers/regexp";
-import {json} from "./json";
+import {json} from "./parsers/json";
+import {toml} from "./parsers/toml";
 import {semver} from "./semver";
 import {v8} from "./v8";
 import {lintCommand} from "./commands/lintCommand";
@@ -141,6 +142,7 @@ export const descriptions = {
 	PARSER_CORE: parserCore,
 	REGEX_PARSER: regexp,
 	JSON: json,
+	TOML: toml,
 	SEMVER: semver,
 	V8: v8,
 	LINT_COMMAND: lintCommand,

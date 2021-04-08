@@ -8,6 +8,7 @@ export const consume = createDiagnosticsCategory({
 	SET_PROPERTY_NON_OBJECT: {
 		message: markup`Attempted to set a property on a non-object`,
 	},
+	REQUIRED: {message: markup`Expected a property but none was set`},
 	EXPECTED_JSON_VALUE: {message: markup`Expected a JSON value`},
 	EXPECTED_OBJECT: {message: markup`Expected object`},
 	EXPECTED_ARRAY: {message: markup`Expected array`},
@@ -65,14 +66,22 @@ export const consume = createDiagnosticsCategory({
 			},
 		],
 	}),
-	UNUSED_PROPERTY: (key: string, type: string, knownProperties: string[]) => ({
-		message: markup`Unknown <emphasis>${key}</emphasis> ${type}`,
-		advice: buildSuggestionAdvice(
-			key,
-			knownProperties,
-			{
-				ignoreCase: true,
-			},
-		),
-	}),
+	UNUSED_PROPERTY: (key: string, type: string, knownProperties: string[], path?: string) => {
+		let message = markup`Unknown <emphasis>${key}</emphasis> ${type}`;
+
+		if (path !== undefined) {
+			message = markup`${message} at <emphasis>${path}</emphasis>`;
+		}
+
+		return {
+			message,
+			advice: buildSuggestionAdvice(
+				key,
+				knownProperties,
+				{
+					ignoreCase: true,
+				},
+			),
+		};
+	},
 });

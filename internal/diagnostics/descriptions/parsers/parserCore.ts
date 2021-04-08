@@ -9,9 +9,13 @@ export const parserCore = createDiagnosticsCategory({
 	UNEXPECTED: (type: string) => ({
 		message: markup`Unexpected ${type}`,
 	}),
-	UNEXPECTED_CHARACTER: (char: string) => ({
-		message: markup`Unexpected character <emphasis>${char}</emphasis>`,
-	}),
+	UNEXPECTED_CHARACTER: (char: string, tokenType?: string) => {
+		let message = markup`Unexpected character <emphasis>${char}</emphasis>`;
+		if (tokenType !== undefined) {
+			message = markup`${message} <dim>(${tokenType})</dim>`
+		}
+		return {message};
+	},
 	EXPECTED_TOKEN: (got: string, expected: string) => {
 		return {
 			message: markup`Expected token ${expected} but got ${got}`,

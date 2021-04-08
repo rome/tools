@@ -1,4 +1,4 @@
-import {createDiagnosticsCategory} from "./index";
+import {createDiagnosticsCategory} from "../index";
 import {markup} from "@internal/markup";
 
 // @internal/codec-config

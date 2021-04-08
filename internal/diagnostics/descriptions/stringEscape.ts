@@ -10,4 +10,10 @@ export const stringEscape = createDiagnosticsCategory({
 	INVALID_HEX_DIGIT_FOR_ESCAPE: {
 		message: markup`Invalid hex digit for unicode escape`,
 	},
+	TOML_INVALID_ESCAPE: {
+		message: markup`Unknown character escape`,
+	},
+	TOML_NEWLINE_IN_SINGLE_QUOTE_STRING: {
+		message: markup`Cannot have newlines in a single quote string`,
+	}
 });
