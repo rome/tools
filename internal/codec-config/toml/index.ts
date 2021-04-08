@@ -1,169 +1,14 @@
-import {ParserOptions, TokenBase, createParser} from "@internal/parser-core";
-// import {isEscaped} from "@internal/string-utils";
-import {TOMLParser, TOMLParserTypes, TOMLValue} from "./types";
-import {JSONObject} from "@internal/codec-config";
+import {ParserOptions, TokenBase} from "@internal/parser-core";
 import {
 	ConfigParserOptions,
 	ConfigParserResult,
 	PartialConfigHandler,
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
-import {DIAGNOSTIC_CATEGORIES, descriptions} from "@internal/diagnostics";
-import convertToTomlFromConsumer from "@internal/codec-config/toml/convertToTomlFromConsumer";
-
-// function isSingleStringValueChar(
-// 	char: string,
-// 	index: ZeroIndexed,
-// 	input: string,
-// ): boolean {
-// 	return !(char === "'" && !isEscaped(index, input));
-// }
-// function isDoubleStringValueChar(
-// 	char: string,
-// 	index: ZeroIndexed,
-// 	input: string,
-// ): boolean {
-// 	return !(char === "'" && !isEscaped(index, input));
-// }
-
-function allowedCharacterForKey(char: string) {
-	return char !== undefined && /^[A-Za-z0-9_\-]+$/.test(char);
-}
-
-const tomlParser = createParser<TOMLParserTypes>({
-	diagnosticLanguage: "toml",
-	ignoreWhitespaceTokens: true,
-	getInitialState: () => ({
-		inValue: undefined,
-	}),
-	tokenize(parser, tokenizer) {
-		const char = tokenizer.get();
-
-		switch (char) {
-			case "'":
-			// case '"': {
-			// 	const [value, end] = tokenizer.read(
-			// 		index.increment(),
-			// 		char === '"' ? isDoubleStringValueChar : isSingleStringValueChar,
-			// 	);
-			//
-			// 	// TODO check overflow
-			//
-			// 	// TODO string unescaping
-			// 	return tokenizer.finishValueToken("String", value, end.increment());
-			// }
-
-			case "[":
-				return tokenizer.finishToken("OpenSquareBracket");
-
-			case "]":
-				return tokenizer.finishToken("CloseSquareBracket");
-
-			case "=":
-				return tokenizer.finishToken("Equals");
-
-			case "{":
-				return tokenizer.finishToken("OpenCurlyBracket");
-
-			case "}":
-				return tokenizer.finishToken("CloseCurlyBracket");
-		}
-
-		// if (allowedCharacterForKey(char)) {
-		// 	const [value, endIndex] = parser.readInputFrom(
-		// 		index,
-		// 		allowedCharacterForKey,
-		// 	);
-		//
-		// 	return parser.finishValueToken("Text", value, endIndex);
-		// } else {
-			// Invalid but we'll reverify it wqith allowedCharacterForKey later
-			return tokenizer.finishValueToken("Text", char);
-		// }
-	},
-});
-
-function parseObject(parser: TOMLParser): JSONObject {
-	const obj: JSONObject = {};
-
-	while (!parser.matchToken("EOF")) {
-		const prop = parseKeyValue(parser);
-		if (prop !== undefined) {
-			const [key, value] = prop;
-			obj[key] = value;
-		}
-	}
-
-	return obj;
-}
-
-function parseValue(parser: TOMLParser): undefined | TOMLValue {
-	const valueToken = parser.getToken();
-
-	switch (valueToken.type) {
-		case "String": {
-			parser.nextToken();
-			return valueToken.value;
-		}
-
-		default: {
-			parser.unexpectedDiagnostic();
-			parser.nextToken();
-			return undefined;
-		}
-	}
-}
-
-function parseKeyValue(parser: TOMLParser): [string, TOMLValue] | undefined {
-	const key = parseKeyAndEquals(parser);
-	if (key === undefined) {
-		return undefined;
-	}
-
-	const value = parseValue(parser);
-	if (value === undefined) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.TOML_PARSER.VALUE_NOT_RECOGNISED(key),
-		});
-		parser.nextToken();
-		return undefined;
-	}
-
-	return [key, value];
-}
-
-function parseKeyAndEquals(parser: TOMLParser): string | undefined {
-	const token = parser.getToken();
-
-	if (token.type === "Text") {
-		const key = token.value;
-
-		if (!allowedCharacterForKey(key)) {
-			parser.unexpectedDiagnostic({
-				token,
-				description: descriptions.TOML_PARSER.INVALID_KEY_CHAR(key),
-			});
-			parser.nextToken();
-			return undefined;
-		}
-
-		if (!parser.eatToken("Equals")) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.TOML_PARSER.NO_VALUE_FOR_KEY(key),
-			});
-			parser.nextToken();
-			return undefined;
-		}
-
-		parser.nextToken();
-		return key;
-	}
-
-	// TODO
-	parser.unexpected();
-	parser.nextToken();
-	return undefined;
-}
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {tomlParser} from "./tokenizer";
+import {parseRoot} from "./parse";
+import {stringifyTOMLFromConsumer} from "./stringify";
 
 export const toml: PartialConfigHandler = {
 	type: "toml",
@@ -172,9 +17,11 @@ export const toml: PartialConfigHandler = {
 	jsonSuperset: false,
 
 	parseExtra(opts: ParserOptions): ConfigParserResult {
-		const parser = tomlParser.create(opts);
+		const parser = tomlParser.create(opts, {
+			root: {},
+		});
 
-		const root = parseObject(parser);
+		const root = parseRoot(parser);
 
 		parser.finalize();
 
@@ -197,10 +44,10 @@ export const toml: PartialConfigHandler = {
 	},
 
 	tokenize(opts: ConfigParserOptions): TokenBase[] {
-		return tomlParser.create(opts).getAllTokens();
+		return tomlParser.create(opts, {root: {}}).getAllTokens();
 	},
 
 	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {
-		return convertToTomlFromConsumer(opts.consumer, opts.comments);
+		return stringifyTOMLFromConsumer(opts.consumer, opts.comments);
 	},
 };
