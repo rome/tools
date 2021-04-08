@@ -143,18 +143,16 @@ export default class IntegrationLoader<
 
 			if (manifest.version === undefined) {
 				throw versionProp.unexpected(
-					descriptions.INTEGRATIONS.MISSING_VERSION(this.name),
-					{at: "none"},
+					() => descriptions.INTEGRATIONS.MISSING_VERSION(this.name),
 				);
 			}
 
 			if (!satisfiesSemver(manifest.version, expectedRange)) {
 				throw versionProp.unexpected(
-					descriptions.INTEGRATIONS.UNSUPPORTED_VERSION(
+					() => descriptions.INTEGRATIONS.UNSUPPORTED_VERSION(
 						this.name,
 						stringifySemver(expectedRange),
 					),
-					{at: "none"},
 				);
 			}
 

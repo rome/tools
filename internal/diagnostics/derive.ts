@@ -30,7 +30,7 @@ import {
 	isUserDiagnostic,
 	isUserDiagnosticsError,
 } from "./error-wrappers";
-import {MixedPathSet, Path, UNKNOWN_PATH, equalPaths} from "@internal/path";
+import {MixedPathSet, Path, UNKNOWN_PATH, equalPaths, isNodeInternalPath} from "@internal/path";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {hashRSERValue} from "@internal/binary-transport";
 
@@ -77,6 +77,7 @@ export type DeriveErrorDiagnosticOptions = {
 	internal?: false;
 	path?: Path;
 	cleanRelativeError?: Error;
+	removeNodeFrames?: boolean;
 	cleanFrames?: (frames: ErrorFrame[]) => ErrorFrame[];
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
 };
@@ -183,6 +184,13 @@ export function deriveDiagnosticFromErrorStructure(
 		}
 	}
 
+	// Remove all frames that reference Node internal modules or look like internal calls
+	if (opts.removeNodeFrames) {
+		frames = frames.filter(({path}) => {
+			return path === undefined || !isNodeInternalPath(path);
+		});
+	}
+
 	// Point the target to the closest frame with a filename
 	for (const frame of frames) {
 		if (frame.path === undefined) {
@@ -204,7 +212,7 @@ export function deriveDiagnosticFromErrorStructure(
 
 	return {
 		description: {
-			message: markup`${message}`,
+			message: markup`${message.trim()}`,
 			...opts.description,
 			advice: [...advice, ...(opts.description?.advice || [])],
 		},

@@ -14,11 +14,11 @@ export type VoidCallback<Args extends unknown[] = []> = Args extends []
 export type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
 
 export type AsyncVoidCallback<Args extends unknown[] = []> = AsyncCallback<
-	VoidReturn,
-	Args
+	Args,
+	VoidReturn
 >;
 
-export type AsyncCallback<Return, Args extends unknown[] = []> = Args extends []
+export type AsyncCallback<Args extends unknown[], Return> = Args extends []
 	? (() => Return | Promise<Return>)
 	: ((...args: Args) => Return | Promise<Return>);
 
