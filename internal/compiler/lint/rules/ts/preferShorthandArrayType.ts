@@ -30,7 +30,7 @@ function convertToArrayType(
 	if (typeParameters.params.length > 0) {
 		const arrayTypes: AnyTSPrimary[] = [];
 
-		typeParameters.params.forEach((param) => {
+		for (const param of typeParameters.params) {
 			if (
 				param.type !== "TSUnionTypeAnnotation" &&
 				param.type !== "TSTypeOperator"
@@ -47,7 +47,7 @@ function convertToArrayType(
 					);
 				}
 			}
-		});
+		}
 		if (arrayTypes.length > 0) {
 			return tsUnionTypeAnnotation.create({
 				types: arrayTypes,
