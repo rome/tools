@@ -20,10 +20,11 @@ import {
 	markup,
 	markupTag,
 	readMarkup,
+	MarkupTagName,
 } from "@internal/markup";
 import {DiagnosticAdviceDiff} from "@internal/diagnostics";
 
-function formatDiffLine(diffs: Diff[]) {
+function formatDiffLine(diffs: Diff[], wrapChangesInTag?: MarkupTagName) {
 	let atLineStart = true;
 
 	return joinMarkup(
@@ -48,7 +49,11 @@ function formatDiffLine(diffs: Diff[]) {
 			if (type === DiffTypes.EQUAL) {
 				return value;
 			} else {
-				return markupTag("emphasis", value);
+				let tag = markupTag("emphasis", value);
+				if (wrapChangesInTag !== undefined) {
+					tag = markupTag("emphasis", tag);
+				}
+				return tag;
 			}
 		}),
 	);
@@ -223,7 +228,6 @@ export default function buildPatchCodeFrame(
 		frame.push(markup``);
 		frame.push(markup`<error>- ${legend.delete}</error>`);
 		frame.push(markup`<success>+ ${legend.add}</success>`);
-		frame.push(markup``);
 	}
 
 	return {
