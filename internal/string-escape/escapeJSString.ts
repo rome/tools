@@ -47,6 +47,7 @@ const PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;
 
 function escapeChar(
 	char: string,
+	lineStart: boolean,
 	ignoreWhitespaceEscapes: boolean,
 ): undefined | string {
 	switch (char) {
@@ -74,7 +75,7 @@ function escapeChar(
 			return ignoreWhitespaceEscapes ? char : "\\r";
 
 		case "\t":
-			return ignoreWhitespaceEscapes ? char : "\\t";
+			return ignoreWhitespaceEscapes && lineStart ? char : "\\t";
 	}
 
 	return undefined;
@@ -101,9 +102,17 @@ export function escapeJSString(
 		unicodeOnly = false,
 	} = opts;
 
+	let lineStart = true;
+
 	// Loop over each code unit in the string and escape it
 	while (++index < str.length) {
 		const char = str[index];
+
+		if (char === "\n") {
+			lineStart = true;
+		} else if (char !== "\t") {
+			lineStart = false;
+		}
 
 		// Handle surrogate pairs in non-JSON mode
 		if (!json) {
@@ -137,15 +146,13 @@ export function escapeJSString(
 
 		// Escape double quotes
 		if (char === DOUBLE_QUOTE) {
-			// TODO This will unnecessarily escape single quotes in triple quoted strings
-			result += char === quote[0] ? '\\"' : char;
+			result += char === quote ? '\\"' : char;
 			continue;
 		}
 
 		// Escape single quotes
 		if (char === SINGLE_QUOTE) {
-			// TODO ^^
-			result += char === quote[0] ? "\\'" : char;
+			result += char === quote ? "\\'" : char;
 			continue;
 		}
 
@@ -163,7 +170,7 @@ export function escapeJSString(
 
 		// Simple escapes
 		if (!unicodeOnly) {
-			const replacement = escapeChar(char, ignoreWhitespaceEscapes);
+			const replacement = escapeChar(char, lineStart, ignoreWhitespaceEscapes);
 			if (replacement !== undefined) {
 				result += replacement;
 				continue;

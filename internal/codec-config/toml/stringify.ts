@@ -2,13 +2,19 @@ import {Consumer} from "@internal/consume";
 import {ConfigCommentMap} from "@internal/codec-config";
 import {EscapeStringQuoteChar, escapeJSString} from "@internal/string-escape";
 import {isValidWordKey} from "./tokenizer";
+import {Comments, PathComments} from "../types";
 import StringifyHelper, {createStringifyHelper} from "../StringifyHelper";
+import {isObject} from "@internal/typescript-helpers";
 
-function stringifyArray(consumer: Consumer, helper: StringifyHelper, inline: boolean): string {
+function stringifyArray(consumer: Consumer, helper: StringifyHelper): string {
 	const buff: string[] = [];
+	stringifyComments(helper.getComments(consumer).inner, buff);
+
+	const innerHelper = helper.fork();
 
 	for (const elem of consumer.asIterable()) {
-		buff.push(`${stringifyValue(elem, helper, true)},`);
+		stringifyPropComments(helper.getComments(elem), buff, elem.asUnknown());
+		buff.push(`${stringifyValue(elem, innerHelper, true)},`);
 	}
 
 	return helper.wrap("[", buff, "]");
@@ -49,7 +55,7 @@ function stringifyPrimitives(consumer: Consumer): undefined | string {
 
 		case "string": {
 			let quote: EscapeStringQuoteChar = value.includes('"') ? "'" : '"';
-			if (value.includes("\n")) {
+			if (value.includes("\n") || value.includes(quote)) {
 				quote = quote === '"' ? '"""' : "'''";
 			}
 			return escapeJSString(
@@ -70,13 +76,37 @@ function stringifyPrimitives(consumer: Consumer): undefined | string {
 	return undefined;
 }
 
-function stringifyValue(consumer: Consumer, helper: StringifyHelper, inline: boolean): string {
+function stringifyValue(
+	consumer: Consumer,
+	helper: StringifyHelper,
+	inline: boolean,
+): string {
 	const asPrim = stringifyPrimitives(consumer);
 	if (asPrim !== undefined) {
 		return asPrim;
 	}
 
 	return stringifyObject(consumer, helper, inline);
+}
+
+function stringifyComments(comments: Comments, buff: string[]): void {
+	for (const comment of comments) {
+		for (const line of comment.value.split("\n")) {
+			buff.push(`#${line}`);
+		}
+	}
+}
+
+function stringifyPropComments(
+	comments: PathComments,
+	buff: string[],
+	value: unknown,
+): void {
+	stringifyComments(comments.outer, buff);
+
+	if (!(isObject(value) || Array.isArray(value))) {
+		stringifyComments(comments.inner, buff);
+	}
 }
 
 function stringifyPlainObject(
@@ -86,6 +116,7 @@ function stringifyPlainObject(
 ): string {
 	const map = consumer.asMap();
 	let buff: string[] = [];
+	stringifyComments(helper.getComments(consumer).inner, buff);
 
 	for (const [key, consumer] of map) {
 		const value = consumer.asUnknown();
@@ -104,6 +135,9 @@ function stringifyPlainObject(
 	for (const [key, consumer] of map) {
 		const propKey = stringifyKey(key);
 		const possibleValue = consumer.asUnknown();
+
+		stringifyPropComments(helper.getComments(consumer), buff, possibleValue);
+
 		if (typeof possibleValue === "object" && !Array.isArray(possibleValue)) {
 			buff.push(`[${propKey}]`);
 			const element = stringifyValue(consumer, innerHelper, true);
@@ -115,17 +149,21 @@ function stringifyPlainObject(
 	}
 
 	if (inline) {
-		return helper.wrap(`{`, buff, `}`);
+		return helper.wrap("{", buff, "}");
 	} else {
 		return `${buff.join("\n")}`;
 	}
 }
 
-function stringifyObject(consumer: Consumer, helper: StringifyHelper, inline: boolean): string {
+function stringifyObject(
+	consumer: Consumer,
+	helper: StringifyHelper,
+	inline: boolean,
+): string {
 	const value = consumer.asUnknown();
 
 	if (Array.isArray(value)) {
-		return stringifyArray(consumer, helper, inline);
+		return stringifyArray(consumer, helper);
 	}
 
 	return stringifyPlainObject(consumer, helper, inline);

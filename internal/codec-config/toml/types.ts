@@ -1,3 +1,4 @@
+import {ConsumePath} from "@internal/consume";
 import {
 	BaseTokens,
 	ComplexToken,
@@ -6,11 +7,13 @@ import {
 	SimpleToken,
 	StringToken,
 } from "@internal/parser-core";
+import {PathComments} from "../types";
 
 export type Tokens = BaseTokens & {
 	Word: StringToken<"Word">;
 	Int: StringToken<"Int">;
 	Float: StringToken<"Float">;
+	Comment: StringToken<"Comment">;
 	Date: ComplexToken<
 		"Date",
 		{
@@ -73,12 +76,14 @@ export type TOMLParserTypes = {
 	options: ParserOptions;
 	state: State;
 	meta: {
+		comments: PathComments;
 		root: TOMLObject;
 	};
 };
 
 export type State = {
 	target: TOMLObject;
+	path: ConsumePath;
 };
 
 export type TOMLParser = ParserCore<TOMLParserTypes>;

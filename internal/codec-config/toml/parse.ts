@@ -1,7 +1,33 @@
 import {TOMLArray, TOMLObject, TOMLParser, TOMLValue, Tokens} from "./types";
+import {Comments, PathComments} from "../types";
 import {descriptions} from "@internal/diagnostics";
 import {isPlainObject} from "@internal/typescript-helpers";
 import {isValidWordKey} from "./tokenizer";
+import {ConsumePath} from "@internal/consume";
+
+function parseComments(parser: TOMLParser): Comments {
+	const comments: Comments = [];
+
+	while (parser.matchToken("Comment")) {
+		comments.push({
+			type: "LineComment",
+			value: parser.expectToken("Comment").value,
+		});
+	}
+
+	return comments;
+}
+
+function setComments(
+	parser: TOMLParser,
+	inlinePath: ConsumePath,
+	comments: PathComments,
+): void {
+	parser.meta.comments.set(
+		[...parser.state.path, ...inlinePath].join("."),
+		comments,
+	);
+}
 
 function parseTableHeader(parser: TOMLParser) {
 	parser.expectToken("OpenSquareBracket");
@@ -31,7 +57,8 @@ function parseTableHeader(parser: TOMLParser) {
 	} else {
 		obj[key] = newTarget;
 	}
-	parser.setState({target: newTarget});
+	// TODO isArrayElement add index to path
+	parser.setState({target: newTarget, path: keys});
 
 	if (isArrayElement) {
 		parser.expectToken("CloseSquareBracket");
@@ -41,8 +68,23 @@ function parseTableHeader(parser: TOMLParser) {
 
 export function parseRoot(parser: TOMLParser): TOMLObject {
 	while (true) {
+		let propComments = parseComments(parser);
+
 		while (parser.matchToken("OpenSquareBracket")) {
 			parseTableHeader(parser);
+
+			if (propComments.length > 0) {
+				setComments(
+					parser,
+					parser.state.path,
+					{
+						inner: [],
+						outer: propComments,
+					},
+				);
+			}
+
+			propComments = parseComments(parser);
 		}
 
 		if (parser.matchToken("EOF")) {
@@ -53,13 +95,24 @@ export function parseRoot(parser: TOMLParser): TOMLObject {
 
 		const keys = parseKeys(parser);
 
+		if (propComments.length > 0) {
+			setComments(
+				parser,
+				[...parser.state.path, ...keys],
+				{
+					inner: [],
+					outer: propComments,
+				},
+			);
+		}
+
 		if (!parser.eatToken("Equals")) {
 			throw parser.unexpected({
 				description: descriptions.TOML_PARSER.NO_VALUE_FOR_KEY(keys.join(".")),
 			});
 		}
 
-		const value = parseValue(parser);
+		const value = parseValue(parser, keys);
 		setObjectValue(parser.state.target, keys, value);
 	}
 
@@ -99,17 +152,49 @@ function setObjectValue(obj: TOMLObject, keys: string[], value: TOMLValue) {
 	}
 }
 
-function parseInlineTable(parser: TOMLParser): TOMLObject {
+function parseInlineTable(
+	parser: TOMLParser,
+	inlinePath: ConsumePath,
+): TOMLObject {
 	const obj: TOMLObject = {};
 
 	let trailingComma: undefined | Tokens["Comma"];
 
-	while (!(parser.matchToken("EOF") || parser.matchToken("CloseCurlyBrace"))) {
+	while (true) {
+		const propComments = parseComments(parser);
+
+		if (parser.matchToken("EOF") || parser.matchToken("CloseCurlyBrace")) {
+			if (propComments.length > 0) {
+				setComments(
+					parser,
+					inlinePath,
+					{
+						inner: propComments,
+						outer: [],
+					},
+				);
+			}
+			break;
+		}
+
 		const keys = parseKeys(parser);
+
+		const propPath = [...inlinePath, ...keys];
+
+		if (propComments.length > 0) {
+			setComments(
+				parser,
+				propPath,
+				{
+					inner: [],
+					outer: propComments,
+				},
+			);
+		}
 
 		parser.expectToken("Equals");
 
-		const value = parseValue(parser);
+		const value = parseValue(parser, propPath);
 
 		setObjectValue(obj, keys, value);
 
@@ -140,11 +225,39 @@ function isArrayElementSeparator(parser: TOMLParser): boolean {
 	return false;
 }
 
-function parseArray(parser: TOMLParser): TOMLArray {
+function parseArray(parser: TOMLParser, inlinePath: ConsumePath): TOMLArray {
 	const arr: TOMLArray = [];
 
-	while (!(parser.matchToken("EOF") || parser.matchToken("CloseSquareBracket"))) {
-		const value = parseValue(parser);
+	while (true) {
+		const propPath = [...inlinePath, arr.length];
+		const propComments = parseComments(parser);
+
+		if (parser.matchToken("EOF") || parser.matchToken("CloseSquareBracket")) {
+			if (propComments.length > 0) {
+				setComments(
+					parser,
+					inlinePath,
+					{
+						inner: propComments,
+						outer: [],
+					},
+				);
+			}
+			break;
+		}
+
+		if (propComments.length > 0) {
+			setComments(
+				parser,
+				propPath,
+				{
+					inner: [],
+					outer: propComments,
+				},
+			);
+		}
+
+		const value = parseValue(parser, propPath);
 		arr.push(value);
 
 		if (!isArrayElementSeparator(parser)) {
@@ -216,7 +329,7 @@ function parseNumber(parser: TOMLParser): number {
 	}
 }
 
-function parseValue(parser: TOMLParser): TOMLValue {
+function parseValue(parser: TOMLParser, inlinePath: ConsumePath): TOMLValue {
 	const token = parser.getToken();
 
 	switch (token.type) {
@@ -227,12 +340,12 @@ function parseValue(parser: TOMLParser): TOMLValue {
 
 		case "OpenSquareBracket": {
 			parser.nextToken();
-			return parseArray(parser);
+			return parseArray(parser, inlinePath);
 		}
 
 		case "OpenCurlyBrace": {
 			parser.nextToken();
-			return parseInlineTable(parser);
+			return parseInlineTable(parser, inlinePath);
 		}
 
 		case "Word":

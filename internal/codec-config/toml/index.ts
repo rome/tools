@@ -20,6 +20,7 @@ export const toml: PartialConfigHandler = {
 		const parser = tomlParser.create(
 			opts,
 			{
+				comments: new Map(),
 				root: {},
 			},
 		);
@@ -41,13 +42,18 @@ export const toml: PartialConfigHandler = {
 				}),
 				getOriginalValue: () => undefined,
 			},
-			// TODO comments
-			comments: new Map(),
+			comments: parser.meta.comments,
 		};
 	},
 
 	tokenize(opts: ConfigParserOptions): TokenBase[] {
-		return tomlParser.create(opts, {root: {}}).getAllTokens();
+		return tomlParser.create(
+			opts,
+			{
+				root: {},
+				comments: new Map(),
+			},
+		).getAllTokens();
 	},
 
 	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {

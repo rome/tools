@@ -40,7 +40,7 @@ function unescapeChar(
 			return modifier;
 		}
 
-		opts.unexpected(descriptions.STRING_ESCAPE.TOML_INVALID_ESCAPE, index);
+		opts.unexpected(descriptions.STRING_ESCAPE.TOML_INVALID_ESCAPE, index + 1);
 	}
 
 	// Allowed in JSON

@@ -233,15 +233,18 @@ function parseTag(
 	parser: HTMLParser,
 ): HTMLElement | HTMLDoctypeTag | HTMLCdataTag | undefined {
 	const headStart = parser.getPosition();
+
 	if (!parser.eatToken("TagStartOpen")) {
 		parser.unexpectedDiagnostic({
 			description: descriptions.HTML_PARSER.UNKNOWN_START,
 		});
 		return undefined;
 	}
+
 	if (parser.matchToken("Doctype")) {
 		return parseDoctype(parser);
 	}
+
 	if (parser.matchToken("Cdata")) {
 		return parseCdata(parser);
 	}
@@ -526,11 +529,10 @@ function isntDoctypeEnd(char: string): boolean {
 function consumeDOCTYPE(
 	tokenizer: HTMLParser["tokenizer"],
 ): [boolean, string | undefined] {
-	// doc requires a token like this
 	if (
 		tokenizer.startsWith("DOCTYPE") &&
-		!isDigit(tokenizer.get(8)) &&
-		!isAlpha(tokenizer.get(8))
+		!isDigit(tokenizer.get(7)) &&
+		!isAlpha(tokenizer.get(7))
 	) {
 		tokenizer.assert("DOCTYPE");
 		const inner = tokenizer.read(isntDoctypeEnd);

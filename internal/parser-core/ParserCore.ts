@@ -37,7 +37,7 @@ import {RequiredProps} from "@internal/typescript-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {attachComments} from "./comments";
 import {pretty} from "@internal/pretty-format";
-import ParserCoreTokenize from "./TokenizerCore";
+import TokenizerCore from "./TokenizerCore";
 
 export type ParserCoreState = {
 	comments: AnyComment[];
@@ -114,14 +114,14 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		this.indexTracker = indexTracker;
 
-		this.tokenizer = new ParserCoreTokenize(this.input, indexTracker, this);
+		this.tokenizer = new TokenizerCore(this.input, indexTracker, this);
 
 		this.reset();
 	}
 
 	public options: Types["options"];
 	public meta: Types["meta"];
-	public tokenizer: ParserCoreTokenize<Types>;
+	public tokenizer: TokenizerCore<Types>;
 	public indexTracker: PositionTracker;
 	public impl: ParserCoreImplementation<Types>;
 	private tokenizing: boolean;

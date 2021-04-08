@@ -43,7 +43,9 @@ export type BlockComment = {
 	value: string;
 };
 
-export type Comments = Array<BlockComment | LineComment>;
+export type Comment = BlockComment | LineComment;
+
+export type Comments = Comment[];
 
 export type ConfigParserResult = {
 	type: ConfigType;

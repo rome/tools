@@ -20,8 +20,7 @@ function removeUnderscores(
 	for (let i = 0; i < raw.length; i++) {
 		const char = raw[i];
 
-		if (char === "_") {
-		} else {
+		if (char !== "_") {
 			str += char;
 		}
 	}
@@ -47,17 +46,17 @@ export const tomlParser = createParser<TOMLParserTypes>({
 	diagnosticLanguage: "toml",
 	ignoreWhitespaceTokens: true,
 	getInitialState: (parser) => ({
+		path: [],
 		target: parser.meta.root,
 	}),
 	tokenize(parser, tokenizer) {
 		const char = tokenizer.get();
 
 		switch (char) {
-			// Skip comments completely from tokenization
-			// TODO we will need to track these at some point for serialization
 			case "#": {
-				tokenizer.read(isntLineBreak);
-				return parser.lookaheadToken(tokenizer.index);
+				tokenizer.assert("#");
+				const value = tokenizer.read(isntLineBreak);
+				return tokenizer.finishValueToken("Comment", value);
 			}
 
 			case "'":
