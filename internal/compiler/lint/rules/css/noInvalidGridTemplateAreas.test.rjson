@@ -1,0 +1,18 @@
+filename: "filename.css"
+invalid: [
+	"
+	a { grid-template-areas: \"a a a\"
+													 \"b b\"; }
+	"
+	"
+	a { grid-template-areas: \"a\" \"b b\"; }
+	"
+]
+valid: [
+	"
+	a { grid-template-areas: \"a a a\"
+													 \"b b b\"; }	"
+	"
+	a { grid-template-areas: none; }
+ 	"
+]

@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:f6dacea8b47c0c2b4a91664233f25f3076faeafb,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:379956f6eedd25af39a14faa3aaad5c35838a6a9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -47,6 +47,8 @@ import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-ignore
 import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
+// @ts-ignore
+import noInvalidGridTemplateAreas from "./css/noInvalidGridTemplateAreas.test.rjson";
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -304,6 +306,10 @@ export const tests: Tests = {
 	"css/noImportantInKeyframes": {
 		category: ["lint", "css", "noImportantInKeyframes"],
 		cases: noImportantInKeyframes,
+	},
+	"css/noInvalidGridTemplateAreas": {
+		category: ["lint", "css", "noInvalidGridTemplateAreas"],
+		cases: noInvalidGridTemplateAreas,
 	},
 	"html/useClosingNonVoid": {
 		category: ["lint", "html", "useClosingNonVoid"],

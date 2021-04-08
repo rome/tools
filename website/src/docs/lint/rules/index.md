@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:7dabac07385724d2e48a0352a8ecba14e6c4c199,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:7d439f5d88279866e2e455a537db46efca81646d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -748,6 +748,13 @@ enforce style prop value is an object
 	<a class="header-anchor" href="#noImportantInKeyframes"></a>
 </h3>
 disallow `!important` in `@keyframe` rules
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noInvalidGridTemplateAreas">
+	<a href="/docs/lint/rules/css/noInvalidGridTemplateAreas">noInvalidGridTemplateAreas</a>
+	<a class="header-anchor" href="#noInvalidGridTemplateAreas"></a>
+</h3>
+checks that `grid-template-areas` have valid names
 </div>
 </section>
 <!-- GENERATED:END(id:main) -->
