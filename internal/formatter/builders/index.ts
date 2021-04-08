@@ -14,11 +14,13 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:02bf1b74e6c258a579b043c22390fc7de5a1d7fa,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:6daa229af34e4d524f9dff506187807e2f62444a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
 builders.set("CommentLine", CommentLine);
+import CSSAtPage from "./css/page/CSSAtPage";
+builders.set("CSSAtPage", CSSAtPage);
 import CSSAtRule from "./css/core/CSSAtRule";
 builders.set("CSSAtRule", CSSAtRule);
 import CSSAttributeSelector from "./css/selectors/CSSAttributeSelector";
@@ -111,12 +113,18 @@ import CSSMediaType from "./css/media/CSSMediaType";
 builders.set("CSSMediaType", CSSMediaType);
 import CSSNumber from "./css/core/CSSNumber";
 builders.set("CSSNumber", CSSNumber);
+import CSSPageSelector from "./css/page/CSSPageSelector";
+builders.set("CSSPageSelector", CSSPageSelector);
+import CSSPageSelectorList from "./css/page/CSSPageSelectorList";
+builders.set("CSSPageSelectorList", CSSPageSelectorList);
 import CSSPercentage from "./css/core/CSSPercentage";
 builders.set("CSSPercentage", CSSPercentage);
 import CSSPseudoClassSelector from "./css/selectors/CSSPseudoClassSelector";
 builders.set("CSSPseudoClassSelector", CSSPseudoClassSelector);
 import CSSPseudoElementSelector from "./css/selectors/CSSPseudoElementSelector";
 builders.set("CSSPseudoElementSelector", CSSPseudoElementSelector);
+import CSSPseudoPage from "./css/page/CSSPseudoPage";
+builders.set("CSSPseudoPage", CSSPseudoPage);
 import CSSRaw from "./css/core/CSSRaw";
 builders.set("CSSRaw", CSSRaw);
 import CSSRoot from "./css/core/CSSRoot";
