@@ -35,10 +35,11 @@ type FormatOptions = {
 	stack: RecursiveStack;
 	depth: number;
 	maxDepth: number;
-	path: (number | string)[];
+	path: (number | string | symbol)[];
 	insertLocator: undefined | (number | string)[];
 	accurate: boolean;
 	referencedStack: Set<unknown>;
+	limitProperties: undefined | unknown[];
 };
 
 type FormatPartialOptions = {
@@ -48,9 +49,66 @@ type FormatPartialOptions = {
 	referencedStack?: Set<unknown>;
 	insertLocator?: FormatOptions["insertLocator"];
 	accurate?: boolean;
+	limitProperties?: unknown[];
 };
 
 const NODE_UTIL_INSPECT_CUSTOM = Symbol.for("nodejs.util.inspect.custom");
+
+function getLimitProperties(key: string | number | symbol, {limitProperties}: FormatOptions): undefined | unknown[] {
+	if (limitProperties === undefined || limitProperties.length === 0) {
+		return undefined;
+	}
+
+	let arr: unknown[] = [];
+
+	for (const val of limitProperties) {
+		if (Array.isArray(val) || isObject(val)) {
+			arr = arr.concat(normalizeLimitProperties(Reflect.get(val, key)));
+		}
+	}
+
+	if (arr.length === 0) {
+		return undefined;
+	}
+
+	return arr;
+}
+
+export function normalizeLimitProperties(val: unknown): unknown[] {
+	if (val === undefined) {
+		return [];
+	} else if (isIterable(val) && !Array.isArray(val)) {
+		return [Array.from(val), val];
+	} else {
+		return [val];
+	}
+}
+
+type Key = string | number | symbol;
+
+function isPropertyVisible(key: Key, {limitProperties}: FormatOptions): boolean {
+	if (limitProperties === undefined || limitProperties.length === 0) {
+		return true;
+	}
+
+	for (const val of limitProperties) {
+		if (Array.isArray(val) || isObject(val)) {
+			if (key in val) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+function forkPropOpts(key: Key, opts: FormatOptions): FormatOptions {
+	return {
+		...opts,
+		limitProperties: getLimitProperties(key, opts),
+		path: [...opts.path, key],
+	};
+}
 
 export function prettyFormatToString(
 	value: unknown,
@@ -85,6 +143,7 @@ export function prettyFormatEager(
 		path = [],
 		insertLocator = undefined,
 		accurate = false,
+		limitProperties,
 	}: FormatPartialOptions = {},
 ): StaticMarkup {
 	const opts: FormatOptions = {
@@ -95,6 +154,7 @@ export function prettyFormatEager(
 		path,
 		insertLocator,
 		accurate,
+		limitProperties,
 	};
 	const value = formatValue(obj, opts);
 
@@ -265,10 +325,13 @@ function getExtraObjectProps(
 		) {
 			let i = 0;
 			for (const item of obj) {
-				const elemOpts: FormatOptions = {
-					...opts,
-					path: [...opts.path, i],
-				};
+				if (!isPropertyVisible(i, opts)) {
+					i++;
+					continue;
+				}
+
+				const elemOpts = forkPropOpts(i, opts);
+
 				if (Array.isArray(item) && item.length === 2) {
 					const [key, val] = item;
 					const formattedKey =
@@ -284,13 +347,15 @@ function getExtraObjectProps(
 		} else {
 			let i = 0;
 			for (const val of obj) {
+				if (!isPropertyVisible(i, opts)) {
+					i++;
+					continue;
+				}
+
 				props.push(
 					prettyFormat(
 						val,
-						{
-							...opts,
-							path: [...opts.path, i],
-						},
+						forkPropOpts(i, opts),
 					),
 				);
 				ignoreKeys[String(i++)] = val;
@@ -364,6 +429,28 @@ function formatPositionValue(val: Positionish): StaticMarkup {
 	)}</token>`;
 }
 
+function isObjectProp(val: unknown, stack?: RecursiveStack): boolean {
+	if (isObject(val)) {
+		return true;
+	}
+
+	if (stack !== undefined && stack.includes(val)) {
+		return false;
+	}
+
+	if (Array.isArray(val)) {
+		stack = [...stack ?? [], val];
+
+		for (const elem of val) {
+			if (isObjectProp(elem, stack)) {
+				//return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 function formatObject(
 	label: undefined | string,
 	obj: Objectish,
@@ -426,10 +513,13 @@ function formatObject(
 	let objProps: Markup[] = [];
 	let hasObjectProp = false;
 
-	// Get string props
 	for (const key of sortKeys(Object.keys(obj))) {
 		const val = obj[key];
 		if (key in ignoreKeys && ignoreKeys[key] === val) {
+			continue;
+		}
+
+		if (!isPropertyVisible(key, opts)) {
 			continue;
 		}
 
@@ -442,14 +532,9 @@ function formatObject(
 			continue;
 		}
 
-		const propOpts: FormatOptions = {
-			...nextOpts,
-			path: [...nextOpts.path, key],
-		};
+		const prop = markup`${formatKey(key)}: ${prettyFormat(val, forkPropOpts(key, nextOpts))}`;
 
-		const prop = markup`${formatKey(key)}: ${prettyFormat(val, propOpts)}`;
-
-		if (isObject(val)) {
+		if (isObjectProp(val)) {
 			hasObjectProp = true;
 			objProps.push(prop);
 		} else {
@@ -461,14 +546,20 @@ function formatObject(
 
 	// Get symbol props. Should always be at the end
 	for (const sym of Object.getOwnPropertySymbols(obj)) {
+		if (!isPropertyVisible(sym, opts)) {
+			continue;
+		}
+
 		const val: unknown = Reflect.get(obj, sym);
 
 		if (isObject(val)) {
 			hasObjectProp = true;
 		}
 
+		const propOpts = forkPropOpts(sym, nextOpts);
+
 		props.push(
-			markup`${prettyFormat(sym, opts)}: ${prettyFormat(val, nextOpts)}`,
+			markup`${prettyFormat(sym, opts)}: ${prettyFormat(val, propOpts)}`,
 		);
 	}
 
