@@ -7,15 +7,15 @@ const basePath = INTERNAL.append("compiler", "transforms", "compile");
 const compilerPath = basePath.append("css-handler", "prefix", "prefixes");
 const testPath = basePath.append("test-fixtures", "css-handler", "prefix");
 
-export async function main([prefixName]: string[]): Promise<number> {
-	if (prefixName === undefined) {
+export async function main([propertyName]: string[]): Promise<number> {
+	if (propertyName === undefined) {
 		reporter.error(markup`./script compiler-create-prefix [prefixName]`);
 		return 1;
 	}
 
 	// Write rule
 	await writeFile(
-		compilerPath.append(`${prefixName}.ts`),
+		compilerPath.append(`${propertyName}.ts`),
 		dedent`
 			import {
 				createPrefixVisitor,
@@ -24,11 +24,11 @@ export async function main([prefixName]: string[]): Promise<number> {
 
 			export default [
 				createPrefixVisitor({
-					name: "${prefixName}",
+					name: "${propertyName}",
 					enter(path) {
 						return prefixCSSProperty({
 							path,
-							propertyName: "${prefixName}",
+							propertyName: "${propertyName}",
 							browserFeaturesKey: "",
 						});
 					},
@@ -37,7 +37,7 @@ export async function main([prefixName]: string[]): Promise<number> {
 		`,
 	);
 
-	const fileName = testPath.append(prefixName);
+	const fileName = testPath.append(propertyName);
 	await createDirectory(fileName);
 
 	// Write test fixture
@@ -45,7 +45,7 @@ export async function main([prefixName]: string[]): Promise<number> {
 		fileName.append("input.css"),
 		dedent`
 			.style {
-				${prefixName}: none;
+				${propertyName}: none;
 			}
 		`,
 	);
@@ -58,21 +58,21 @@ export async function main([prefixName]: string[]): Promise<number> {
 			"docs",
 			"css-handler",
 			"prefix",
-			`${prefixName}.md`,
+			`${propertyName}.md`,
 		),
 		dedent`
 			---
-			title: Prefix ${prefixName}
+			title: Prefix ${propertyName}
 			layout: layouts/prefix.liquid
 			showHero: false
 			description: MISSING DOCUMENTATION
 			eleventyNavigation:
-				key: css-handler/prefix/${prefixName}
+				key: css-handler/prefix/${propertyName}
 				parent: css-handler
-				title: ${prefixName}
+				title: ${propertyName}
 			---
 
-			# ${prefixName}
+			# ${propertyName}
 
 			MISSING DOCUMENTATION
 		`,
