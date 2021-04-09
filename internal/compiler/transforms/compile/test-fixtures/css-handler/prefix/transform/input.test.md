@@ -30,6 +30,22 @@
 	align-content: center;
 }
 
+.style {
+	perspective: 1rem;
+}
+
+.style {
+	perspective-origin: center;
+}
+
+.style {
+	transform-style: preserve-3d;
+}
+
+.style {
+	backface-visibility: visible;
+}
+
 ```
 
 ### `Output`
@@ -58,6 +74,30 @@
 	transform: none;
 	-moz-transform: none;
 	align-content: center;
+}
+
+.style {
+	-moz-perspective: 1rem;
+	-webkit-perspective: 1rem;
+	perspective: 1rem;
+}
+
+.style {
+	-moz-perspective-origin: center;
+	-webkit-perspective-origin: center;
+	perspective-origin: center;
+}
+
+.style {
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.style {
+	-moz-backface-visibility: visible;
+	-webkit-backface-visibility: visible;
+	backface-visibility: visible;
 }
 
 ```

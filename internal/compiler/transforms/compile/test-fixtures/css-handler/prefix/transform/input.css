@@ -14,3 +14,19 @@
 	-moz-transform: none;
 	align-content: center;
 }
+
+.style {
+	perspective: 1rem;
+}
+
+.style {
+	perspective-origin: center;
+}
+
+.style {
+	transform-style: preserve-3d;
+}
+
+.style {
+	backface-visibility: visible;
+}

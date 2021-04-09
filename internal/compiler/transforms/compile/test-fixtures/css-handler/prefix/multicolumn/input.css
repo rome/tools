@@ -1,0 +1,52 @@
+.style {
+	break-before: auto;
+}
+
+.style {
+	break-after: auto;
+}
+
+.style {
+	break-inside: auto;
+}
+
+.style {
+	columns: fill-available;
+}
+
+.style {
+	column-width: 4rem;
+}
+
+.style {
+	column-gap: normal;
+}
+
+.style {
+	column-rule: #2965f1 1rem;
+}
+
+.style {
+	column-rule-color: #efefef;
+}
+
+.style {
+	column-rule-width: 4rem;
+}
+
+.style {
+	column-count: 4;
+}
+
+.style {
+	column-rule-style: dashed;
+}
+
+.style {
+	column-span: all;
+}
+
+.style {
+	column-fill: auto;
+}
+
