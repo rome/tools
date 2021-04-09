@@ -30,6 +30,22 @@
 	align-content: center;
 }
 
+.style {
+	transition-property: all;
+}
+
+.style {
+	transition-duration: 0.25s;
+}
+
+.style {
+	transition-delay: .5s;
+}
+
+.style {
+	transition-timing-function: cubic-bezier(0.4, 1, 0.75, 0.3);
+}
+
 ```
 
 ### `Output`
@@ -58,6 +74,34 @@
 	transition: body 0.3s;
 	-webkit-transition: body 0.3s;
 	align-content: center;
+}
+
+.style {
+	-moz-transition-property: all;
+	-webkit-transition-property: all;
+	-o-transition-property: all;
+	transition-property: all;
+}
+
+.style {
+	-moz-transition-duration: 0.25s;
+	-webkit-transition-duration: 0.25s;
+	-o-transition-duration: 0.25s;
+	transition-duration: 0.25s;
+}
+
+.style {
+	-moz-transition-delay: 0.5s;
+	-webkit-transition-delay: 0.5s;
+	-o-transition-delay: 0.5s;
+	transition-delay: 0.5s;
+}
+
+.style {
+	-moz-transition-timing-function: cubic-bezier(0.4, 1, 0.75, 0.3);
+	-webkit-transition-timing-function: cubic-bezier(0.4, 1, 0.75, 0.3);
+	-o-transition-timing-function: cubic-bezier(0.4, 1, 0.75, 0.3);
+	transition-timing-function: cubic-bezier(0.4, 1, 0.75, 0.3);
 }
 
 ```

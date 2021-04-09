@@ -14,3 +14,19 @@
 	-webkit-transition: body 0.3s;
 	align-content: center;
 }
+
+.style {
+	transition-property: all;
+}
+
+.style {
+	transition-duration: 0.25s;
+}
+
+.style {
+	transition-delay: .5s;
+}
+
+.style {
+	transition-timing-function: cubic-bezier(0.4, 1, 0.75, 0.3);
+}

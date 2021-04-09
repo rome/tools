@@ -10,7 +10,7 @@ function flexRenamer(value: string) {
 // https://github.com/Fyrd/caniuse/blob/main/features-json/flexbox.json
 export default ["flex", "inline-flex"].map((value) =>
 	createPrefixVisitor({
-		name: "display/flex",
+		name: `display/${value}`,
 		enter(path) {
 			return prefixCSSValue({
 				path,

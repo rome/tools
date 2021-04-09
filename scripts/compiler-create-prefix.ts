@@ -9,7 +9,7 @@ const testPath = basePath.append("test-fixtures", "css-handler", "prefix");
 
 export async function main([propertyName]: string[]): Promise<number> {
 	if (propertyName === undefined) {
-		reporter.error(markup`./script compiler-create-prefix [prefixName]`);
+		reporter.error(markup`./script compiler-create-prefix [propertyName]`);
 		return 1;
 	}
 
