@@ -180,4 +180,26 @@ export const cssParser = createDiagnosticsCategory({
 	AT_PAGE_INVALID_PSEUDO_PAGE: {
 		message: markup`Pseudo page can accept only <emphasis>left, right, first or blank</emphasis> and there can't be spaces in between`,
 	},
+
+	AT_PAGE_INVALID_DECLARATION: (wrongIdent, validProperties) => ({
+		message: markup`The at-rule <emphasis>@page</emphasis> accepts only a certain number of properties and <emphasis>${wrongIdent}</emphasis> is not one of them.`,
+		advice: buildSuggestionAdvice(
+			wrongIdent,
+			validProperties,
+			{minRating: 0, ignoreCase: false},
+		),
+	}),
+
+	AT_PAGE_AT_RULE_INVALID_DECLARATION: (
+		currentAtRule,
+		wrongIdent,
+		validProperties,
+	) => ({
+		message: markup`The at-rule <emphasis>@${currentAtRule}</emphasis> accepts only a certain number of properties and <emphasis>${wrongIdent}</emphasis> is not one of them.`,
+		advice: buildSuggestionAdvice(
+			wrongIdent,
+			validProperties,
+			{minRating: 0, ignoreCase: false},
+		),
+	}),
 });

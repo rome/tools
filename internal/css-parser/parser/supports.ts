@@ -48,7 +48,10 @@ function parseAtSupportsInParens(
 				}
 				return undefined;
 			}
-			const declaration = parseDeclaration(parser, "RightParen");
+			const declaration = parseDeclaration({
+				parser,
+				endingTokenType: "RightParen",
+			});
 			if (declaration) {
 				const feature = parser.finishNode(
 					start,
