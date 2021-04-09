@@ -1,0 +1,17 @@
+.style {
+	text-align: center;
+	box-shadow: 10px 5px 5px red;
+	align-content: center;
+}
+
+.style {
+	box-shadow: 10px 5px 5px red;
+}
+
+.style {
+	text-align: center;
+	box-shadow: 10px 5px 5px red;
+	-moz-box-shadow: 10px 5px 5px red;
+	-webkit-box-shadow: 10px 5px 5px red;
+	align-content: center;
+}
