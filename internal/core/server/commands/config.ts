@@ -32,7 +32,7 @@ type Flags = {
 
 function defineFlags(c: Consumer): Flags {
 	return {
-		user: c.get("user").required(false).asBoolean(),
+		user: c.get("user").default(false).asBoolean(),
 	};
 }
 
@@ -58,7 +58,7 @@ async function runCommand(
 		if (action === "push") {
 			keyConsumer.setValue([
 				...Array.from(
-					keyConsumer.required([]).asIterable(),
+					keyConsumer.default([]).asIterable(),
 					(c) => c.asUnknown(),
 				),
 				...(Array.isArray(value) ? value : []),

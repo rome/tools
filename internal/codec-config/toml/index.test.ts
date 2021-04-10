@@ -72,7 +72,6 @@ async function declareTests() {
 			test(
 				[flatName, basename],
 				(t) => {
-					return;
 					if (flatName === "invalid") {
 						t.throws(
 							() => {
@@ -99,6 +98,8 @@ async function declareTests() {
 							input: tomlFile.contentAsText(),
 							includeSourceTextInDiagnostics: true,
 						});
+
+						t.looksLike(tomlValue, jsonStruct);
 
 						return;
 					}

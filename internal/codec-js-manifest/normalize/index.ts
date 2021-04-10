@@ -295,7 +295,7 @@ function normalizeManifestMetadata(
 		metadata: {
 			name,
 			version,
-			private: consumer.get("private").required(false).asBoolean(),
+			private: consumer.get("private").default(false).asBoolean(),
 			description: consumer.get("description").asStringOrVoid(),
 			license: parsedLicense?.license,
 			keywords: normalizeStringArray(consumer.get("keywords"), loose),

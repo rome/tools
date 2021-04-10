@@ -19,7 +19,7 @@ export default createServerCommand({
 	hidden: true,
 	defineFlags(c) {
 		return {
-			complete: c.get("complete").required(false).asBoolean(),
+			complete: c.get("complete").default(false).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, flags): Promise<void> {

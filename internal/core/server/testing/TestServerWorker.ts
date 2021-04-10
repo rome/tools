@@ -186,7 +186,7 @@ export default class TestServerWorker {
 				loc.get("columnNumber").asZeroIndexedNumber(),
 			);
 
-			const name = callFrame.get("scopeChain").getIndex(0).get("name").required(
+			const name = callFrame.get("scopeChain").getIndex(0).get("name").default(
 				"",
 			).asString().split("$").pop();
 

@@ -506,7 +506,7 @@ export default class Parser<T> {
 				{
 					description: markup`Show the version`,
 				},
-			).required(false).asBoolean();
+			).default(false).asBoolean();
 			if (shouldDisplayVersion) {
 				this.reporter.log(version);
 				await this.exit(0);
@@ -548,7 +548,7 @@ export default class Parser<T> {
 				description: markup`Show this help screen`,
 				alternateName: "h",
 			},
-		).required(false).asBoolean();
+		).default(false).asBoolean();
 
 		let definedCommand: undefined | DefinedCommand;
 

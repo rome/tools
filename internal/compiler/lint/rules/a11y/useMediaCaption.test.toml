@@ -7,13 +7,12 @@ invalid = [
 	"<video>child</video>",
 ]
 valid = [
-	"<audio><track kind=\"captions\" {...props} /></audio>",
-	"<video><track kind=\"captions\" {...props} /></video>",
+	'<audio><track kind="captions" {...props} /></audio>',
+	'<video><track kind="captions" {...props} /></video>',
 	"<video muted {...props} ></video>",
 	"<Audio>child</Audio>",
 	"<Video>child</Video>",
 ]
-
 [[cases]]
 filename = "file.html"
 invalid = [
@@ -21,7 +20,7 @@ invalid = [
 	"<video>child</video>",
 ]
 valid = [
-	"<audio><track kind=\"captions\" /></audio>",
-	"<video><track kind=\"captions\" /></video>",
+	'<audio><track kind="captions" /></audio>',
+	'<video><track kind="captions" /></video>',
 	"<video muted ></video>",
 ]

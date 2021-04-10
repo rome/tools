@@ -253,6 +253,7 @@ export default class Client {
 		}
 
 		const stopProfile = async (isTimeout: boolean) => {
+			return;
 			// This is to prevent stopping the profile multiple times via the timeout and then at the end
 			// It's a promise so that the final stopProfile call will block until the first has finished
 			if (hasProfiled) {
@@ -330,7 +331,8 @@ export default class Client {
 			}
 		};
 
-		this.endEvent.subscribe(() => {
+		bridge.endEvent.subscribe(() => {
+			console.log("STOP PROFILE");
 			return stopProfile(false);
 		});
 	}

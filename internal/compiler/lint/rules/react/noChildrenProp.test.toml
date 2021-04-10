@@ -5,7 +5,7 @@ invalid = [
 	"createElement('div', {children: 'foo'})",
 ]
 valid = [
-	"<MyComponent><AnotherComponent /></MyComponent	>",
+	"<MyComponent><AnotherComponent /></MyComponent\t>",
 	"React.createElement('div', {}, 'children')",
 	"React.createElement('div', child1, 'child2')",
 ]

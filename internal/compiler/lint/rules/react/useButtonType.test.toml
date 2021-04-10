@@ -7,10 +7,10 @@ invalid = [
 ]
 valid = [
 	"<div>child</div>",
-	"<div type=\"type\">child</div>",
-	"<button type=\"button\">child</button>",
-	"<button type=\"submit\">child</button>",
-	"<button type=\"reset\">child</button>",
+	'<div type="type">child</div>',
+	'<button type="button">child</button>',
+	'<button type="submit">child</button>',
+	'<button type="reset">child</button>',
 	"React.createElement('div', ['child'])",
 	"React.createElement('div', {type: 'type'}, ['child'])",
 	"React.createElement('button', {type: 'button'}, ['child'])",

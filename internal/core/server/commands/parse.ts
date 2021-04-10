@@ -28,8 +28,8 @@ export default createServerCommand({
 	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
-			allowDiagnostics: c.get("allowDiagnostics").required(false).asBoolean(),
-			compact: c.get("compact").required(true).asBoolean(),
+			allowDiagnostics: c.get("allowDiagnostics").default(false).asBoolean(),
+			compact: c.get("compact").default(true).asBoolean(),
 			sourceType: c.get("sourceType").asStringSetOrVoid(["module", "script"]),
 		};
 	},

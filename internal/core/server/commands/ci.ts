@@ -30,7 +30,7 @@ export default createServerCommand({
 				{
 					description: markup`enables --update-snapshots for test, and --apply for the lint command`,
 				},
-			).required(false).asBoolean(),
+			).default(false).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {

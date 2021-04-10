@@ -71,7 +71,7 @@ export function normalizePersonField(
 		}
 
 		const person: ManifestPersonField = {
-			name: consumer.get("name").required(loose ? "" : undefined).asString(),
+			name: consumer.get("name").default(loose ? "" : undefined).asString(),
 			email: consumer.get("email").asStringOrVoid(),
 			twitter: consumer.get("twitter").asStringOrVoid(),
 			github,
@@ -139,7 +139,7 @@ export function normalizeRepoField(
 
 		if (loose) {
 			// A lot of packages omit the "type"
-			type = consumer.get("type").required("git").asString();
+			type = consumer.get("type").default("git").asString();
 
 			// thanks i hate it
 			consumer.markUsedProperty("web");

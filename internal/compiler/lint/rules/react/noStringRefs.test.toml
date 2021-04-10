@@ -19,13 +19,13 @@ invalid = [
 			}
 		}
 	""",
-	"""
+	'''
 		class Hello extends React.Component {
 			render() {
-				return <div ref={${\"`\"}hello${\"`\"}}>Hello {this.props.name}</div>;
+				return <div ref={${"`"}hello${"`"}}>Hello {this.props.name}</div>;
 			}
 		}
-	""",
+	''',
 	"""
 		class Hello extends React.Component {
 			render() {
@@ -33,13 +33,13 @@ invalid = [
 			}
 		}
 	""",
-	"""
+	'''
 		class Hello extends React.Component {
 			render() {
-				return <div ref={${\"`\"}hello${\"$\"}{index}${\"`\"}>Hello {this.props.name}</div>;
+				return <div ref={${"`"}hello${"$"}{index}${"`"}>Hello {this.props.name}</div>;
 			}
 		}
-	""",
+	''',
 	"""
 		class Hello extends React.Component {
 			componentDidMount() {

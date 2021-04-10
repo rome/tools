@@ -21,7 +21,7 @@ export default createLocalCommand({
 				{
 					description: markup`Allows running auto-config command by skipping the check on uncommitted files.`,
 				},
-			).required(false).asBoolean(),
+			).default(false).asBoolean(),
 		};
 	},
 	async callback(req: ClientRequest, flags: Flags) {

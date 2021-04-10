@@ -49,19 +49,19 @@ export default createServerCommand<Flags>({
 				{
 					description: markup``,
 				},
-			).required("json").asStringSet<ConfigType>(["json", "toml"]),
+			).default("json").asStringSet<ConfigType>(["json", "toml"]),
 			indentStyle: c.get(
 				"indentStyle",
 				{
 					description: markup``,
 				},
-			).required("tab").asStringSet<IndentStyle>(["tab", "space"]),
+			).default("tab").asStringSet<IndentStyle>(["tab", "space"]),
 			indentSize: c.get(
 				"indentSize",
 				{
 					description: markup``,
 				},
-			).required(1).asNumber(),
+			).default(1).asNumber(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags) {

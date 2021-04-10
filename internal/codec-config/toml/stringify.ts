@@ -109,6 +109,42 @@ function stringifyPropComments(
 	}
 }
 
+function isArrayOfObjects(arr: unknown): arr is unknown[] {
+	if (!Array.isArray(arr)) {
+		return false;
+	}
+
+	if (arr.length === 0) {
+		return false;
+	}
+
+	for (const elem of arr) {
+		if (!isObject(elem)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function printSingleObjects(val: unknown): undefined | [string, unknown] {
+	if (isObject(val)) {
+		const keys = Object.keys(val);
+		if (keys.length === 1) {
+			const key = keys[0];
+			const prop = val[key];
+			const converted = printSingleObjects(prop);
+			if (converted === undefined) {
+				return [key, prop];
+			} else {
+				return [`${key}.${converted[0]}`, converted[1]];
+			}
+		}
+	}
+
+	return undefined;
+}
+
 function stringifyPlainObject(
 	consumer: Consumer,
 	helper: StringifyHelper,
@@ -117,6 +153,8 @@ function stringifyPlainObject(
 	const map = consumer.asMap();
 	let buff: string[] = [];
 	stringifyComments(helper.getComments(consumer).inner, buff);
+
+	let buffTables: string[] = [];
 
 	for (const [key, consumer] of map) {
 		const value = consumer.asUnknown();
@@ -133,25 +171,48 @@ function stringifyPlainObject(
 	const innerHelper = inline ? helper.fork() : helper;
 
 	for (const [key, consumer] of map) {
-		const propKey = stringifyKey(key);
+		let propKey = stringifyKey(key);
 		const possibleValue = consumer.asUnknown();
+		const comments = helper.getComments(consumer);
 
-		stringifyPropComments(helper.getComments(consumer), buff, possibleValue);
+		const single = printSingleObjects(possibleValue);
 
-		if (typeof possibleValue === "object" && !Array.isArray(possibleValue)) {
-			buff.push(`[${propKey}]`);
-			const element = stringifyValue(consumer, innerHelper, true);
-			buff.push(`${element}`);
-		} else {
-			const propValue = stringifyValue(consumer, innerHelper, true);
-			buff.push(`${propKey} = ${propValue}`);
+		if (single === undefined && !inline) {
+			if (isObject(possibleValue)) {
+				stringifyPropComments(comments, buffTables, possibleValue);
+
+				buffTables.push(`[${propKey}]`);
+				buffTables.push(stringifyPlainObject(consumer, helper, false));
+				continue;
+			} else if (isArrayOfObjects(possibleValue)) {
+				stringifyPropComments(comments, buffTables, possibleValue);
+				for (const elem of consumer.asIterable()) {
+					buffTables.push(`[[${propKey}]]`);
+					buffTables.push(stringifyPlainObject(elem, helper, false));
+				}
+				continue;
+			}
 		}
+
+		let propValue;
+		if (single === undefined) {
+			propValue = stringifyValue(consumer, innerHelper, true);
+		} else {
+			propKey = `${propKey}.${single[0]}`;
+			propValue = single[1];
+		}
+
+		let item = `${propKey} = ${propValue}`;
+		if (inline) {
+			item += ",";
+		}
+		buff.push(item);
 	}
 
 	if (inline) {
 		return helper.wrap("{", buff, "}");
 	} else {
-		return `${buff.join("\n")}`;
+		return [...buff, ...buffTables].join("\n");
 	}
 }
 
@@ -174,5 +235,5 @@ export function stringifyTOMLFromConsumer(
 	pathToComments: ConfigCommentMap,
 ): string {
 	const helper = createStringifyHelper(pathToComments);
-	return stringifyValue(consumer, helper, false);
+	return stringifyPlainObject(consumer, helper, false);
 }

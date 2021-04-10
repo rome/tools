@@ -7,7 +7,7 @@ invalid = [
 	""",
 	"""
 	while (i--)
- 		continue;
+ \t\tcontinue;
 	""",
 	"""
 	while (1) {

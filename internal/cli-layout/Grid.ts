@@ -745,7 +745,7 @@ export default class Grid {
 	}
 
 	private drawLocatorTag(tag: MarkupParsedTag, ancestry: Ancestry) {
-		const id = tag.attributes.get("id").required("default").asString();
+		const id = tag.attributes.get("id").default("default").asString();
 		const start = cursorToPosition(this.getCursor());
 		this.drawChildren(tag.children, ancestry);
 		const end = cursorToPosition(this.getCursor());
@@ -766,8 +766,8 @@ export default class Grid {
 		const ordered = tag.name === "ol";
 
 		if (ordered) {
-			const reversed = tag.attributes.get("reversed").required(false).asBoolean();
-			const startOffset: number = tag.attributes.get("start").required(0).asNumber();
+			const reversed = tag.attributes.get("reversed").default(false).asBoolean();
+			const startOffset: number = tag.attributes.get("start").default(0).asNumber();
 
 			const highestNumSize = humanizeNumber(items.length + startOffset).length;
 
@@ -1054,15 +1054,15 @@ export default class Grid {
 		return {
 			char: this.parse(
 				convertToMarkupFromRandomString(
-					attributes.get("char").required("").asString(),
+					attributes.get("char").default("").asString(),
 				),
 				attributes.get("char").getDiagnosticLocation("inner-value").start,
 				false,
 			),
 			message: children,
-			line: attributes.get("line").required(0).asOneIndexedNumber(),
-			columnStart: attributes.get("start").required(0).asOneIndexedNumber(),
-			columnEnd: attributes.get("end").required(0).asOneIndexedNumber(),
+			line: attributes.get("line").default(0).asOneIndexedNumber(),
+			columnStart: attributes.get("start").default(0).asOneIndexedNumber(),
+			columnEnd: attributes.get("end").default(0).asOneIndexedNumber(),
 		};
 	}
 
@@ -1467,7 +1467,7 @@ export default class Grid {
 
 		let attributesWithoutEmphasis = tag.attributes;
 		if (attributesWithoutEmphasis.has("emphasis")) {
-			const emphasis = attributesWithoutEmphasis.get("emphasis").required(false).asBoolean();
+			const emphasis = attributesWithoutEmphasis.get("emphasis").default(false).asBoolean();
 			attributesWithoutEmphasis = attributesWithoutEmphasis.copy({
 				emphasis: undefined,
 			});
@@ -1489,7 +1489,7 @@ export default class Grid {
 
 		let attributes = attributesWithoutEmphasis;
 		if (attributes.has("dim")) {
-			const dim = attributes.get("dim").required(false).asBoolean();
+			const dim = attributes.get("dim").default(false).asBoolean();
 			attributes = attributes.copy({dim: undefined});
 			if (dim) {
 				return this.normalizeChild(
@@ -1509,7 +1509,7 @@ export default class Grid {
 
 		// Insert padding
 		if (tag.name === "pad") {
-			const width = attributes.get("width").required(0).asNumber();
+			const width = attributes.get("width").default(0).asNumber();
 			const paddingSize = width - textLength;
 			if (paddingSize > 0) {
 				const paddingTextNode: MarkupParsedText = {
@@ -1530,9 +1530,9 @@ export default class Grid {
 		// Insert highlight legend
 		if (
 			tag.name === "highlight" &&
-			attributes.get("legend").required(false).asBoolean()
+			attributes.get("legend").default(false).asBoolean()
 		) {
-			const index = Math.min(0, attributes.get("i").required(0).asNumber());
+			const index = Math.min(0, attributes.get("i").default(0).asNumber());
 			return [
 				{
 					...tag,
@@ -1595,7 +1595,7 @@ export default class Grid {
 							{
 								type: "Text",
 								source: false,
-								value: tag.attributes.get("target").required("").asString(),
+								value: tag.attributes.get("target").default("").asString(),
 							},
 						],
 					},

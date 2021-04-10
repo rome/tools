@@ -162,7 +162,7 @@ export default async function cli() {
 					{
 						description: markup`Don't write anything to the console`,
 					},
-				).required(DEFAULT_CLIENT_FLAGS.silent).asBoolean(),
+				).default(DEFAULT_CLIENT_FLAGS.silent).asBoolean(),
 			};
 
 			const cliFlags: CLIFlags = {
@@ -171,7 +171,7 @@ export default async function cli() {
 					{
 						description: markup`Display all diagnostics ignoring caps`,
 					},
-				).required(false).asBoolean(),
+				).default(false).asBoolean(),
 				markersPath: c.get(
 					"markersPath",
 					{
@@ -183,7 +183,7 @@ export default async function cli() {
 					{
 						description: markup`Collect and write profile to disk. Includes profiles for all processes.`,
 					},
-				).required(false).asBoolean(),
+				).default(false).asBoolean(),
 				profilePath: c.get(
 					"profilePath",
 					{
@@ -202,26 +202,26 @@ export default async function cli() {
 					{
 						description: markup`Exclude workers from profile`,
 					},
-				).required(true).asBoolean(),
+				).default(true).asBoolean(),
 				profileSampling: c.get(
 					"profileSampling",
 					{
 						description: markup`Profiler sampling interval in microseconds`,
 						inputName: "microsec",
 					},
-				).required(100).asNumber(),
+				).default(100).asNumber(),
 				temporaryDaemon: c.get(
 					"temporaryDaemon",
 					{
 						description: markup`Start a daemon, if one isn't already running, for the lifetime of this command`,
 					},
-				).required(false).asBoolean(),
+				).default(false).asBoolean(),
 				rage: c.get(
 					"rage",
 					{
 						description: markup`Create a rage tarball of debug information`,
 					},
-				).required(false).asBoolean(),
+				).default(false).asBoolean(),
 				ragePath: c.get(
 					"ragePath",
 					{
@@ -255,7 +255,7 @@ export default async function cli() {
 					{
 						description: markup`When writing files, don't verify mtime or existence. Potentially dangerous and could lead to unintended data loss`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.unsafeWrites).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.unsafeWrites).asBoolean(),
 				auxiliaryDiagnosticFormat: c.get(
 					"auxiliaryDiagnosticFormat",
 					{
@@ -267,73 +267,73 @@ export default async function cli() {
 					{
 						description: markup`Run a command multiple times, calculating average`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.benchmark).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.benchmark).asBoolean(),
 				benchmarkIterations: c.get(
 					"benchmarkIterations",
 					{
 						description: markup`The amount of benchmark iterations to perform`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.benchmarkIterations).asNumber(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.benchmarkIterations).asNumber(),
 				collectMarkers: c.get(
 					"collectMarkers",
 					{
 						description: markup`Collect and write performance markers to disk`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers).asBoolean(),
 				timing: c.get(
 					"timing",
 					{
 						description: markup`Dump timing information after running the command`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.timing).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.timing).asBoolean(),
 				review: c.get(
 					"review",
 					{
 						description: markup`Display and perform actions on diagnostics. Only some commands support this.`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.review).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.review).asBoolean(),
 				watch: c.get(
 					"watch",
 					{
 						description: markup`Keep running command and update on file changes. Only some commands support this.`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.watch).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.watch).asBoolean(),
 				fieri: c.get(
 					"fieri",
 					{
 						description: markup`Head to flavortown`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.fieri).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.fieri).asBoolean(),
 				grep: c.get(
 					"grep",
 					{
 						description: markup`Only display diagnostics with messages containing this string`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.grep).asString(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.grep).asString(),
 				inverseGrep: c.get(
 					"inverseGrep",
 					{
 						description: markup`Flip grep match. Only display diagnostics with messages that do NOT contain the grep string`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.inverseGrep).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.inverseGrep).asBoolean(),
 				maxDiagnostics: c.get(
 					"maxDiagnostics",
 					{
 						description: markup`Cap the amount of diagnostics displayed`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics).asNumber(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics).asNumber(),
 				verboseDiagnostics: c.get(
 					"verboseDiagnostics",
 					{
 						description: markup`Display additional hidden diagnostic information`,
 					},
-				).required(false).asBoolean(),
+				).default(false).asBoolean(),
 				truncateDiagnostics: c.get(
 					"truncateDiagnostics",
 					{
 						description: markup`Display truncated diagnostic information`,
 					},
-				).required(true).asBoolean(),
+				).default(true).asBoolean(),
 				resolverPlatform: c.get(
 					"resolverPlatform",
 					{
@@ -352,7 +352,7 @@ export default async function cli() {
 					{
 						description: markup`Enable mocks for module resolution`,
 					},
-				).required(DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks).asBoolean(),
+				).default(DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks).asBoolean(),
 			};
 
 			return {terminalFeatures, clientFlags, requestFlags, cliFlags};
@@ -417,7 +417,7 @@ export default async function cli() {
 		description: markup`create a rage archive for debugging`,
 		defineFlags(c) {
 			return {
-				summary: c.get("summary").required(false).asBoolean(),
+				summary: c.get("summary").default(false).asBoolean(),
 			};
 		},
 		callback(_commandFlags) {

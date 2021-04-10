@@ -188,7 +188,7 @@ export const apply = createServerCommand<ApplyFlags>({
 				{
 					description: markup`When applying a patch show an interactive prompt to select specific files`,
 				},
-			).required(false).asBoolean(),
+			).default(false).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, flags: ApplyFlags) {

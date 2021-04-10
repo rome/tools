@@ -114,17 +114,17 @@ export function inferTerminalFeatures(
 		{
 			isTTY,
 			progress: getEnvVarBoolean("ROME_CLI_PROGRESS") ?? fancyAnsi,
-			background: consumeEnvVar("ROME_CLI_BACKGROUND").required(background).asStringSet([
+			background: consumeEnvVar("ROME_CLI_BACKGROUND").default(background).asStringSet([
 				"unknown",
 				"dark",
 				"light",
 			]),
-			columns: consumeEnvVar("ROME_CLI_COLUMNS").deriveNumberString().required(
+			columns: consumeEnvVar("ROME_CLI_COLUMNS").deriveNumberString().default(
 				columns,
 			).asOneIndexedNumber(),
 			cursor: getEnvVarBoolean("ROME_CLI_CURSOR") ?? fancyAnsi,
 			hyperlinks: getEnvVarBoolean("ROME_CLI_HYPERLINKS") ?? fancyAnsi,
-			colorDepth: consumeEnvVar("ROME_CLI_COLOR_DEPTH").deriveNumberString().required(
+			colorDepth: consumeEnvVar("ROME_CLI_COLOR_DEPTH").deriveNumberString().default(
 				colorDepth,
 			).asNumberSet([1, 4, 8, 24]),
 			unicode: getEnvVarBoolean("ROME_CLI_UNICODE") ?? unicode,

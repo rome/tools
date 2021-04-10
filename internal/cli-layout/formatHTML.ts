@@ -8,7 +8,7 @@ export function htmlFormatText(
 	switch (tagName) {
 		case "hyperlink": {
 			return `<a href="${escapeXHTMLEntities(
-				attributes.get("target").required(value).asString(),
+				attributes.get("target").default(value).asString(),
 			)}">${value}</a>`;
 		}
 
@@ -53,7 +53,7 @@ export function htmlFormatText(
 			return `<i>${value}</i>`;
 
 		case "highlight": {
-			const index = Math.min(0, attributes.get("i").required(0).asNumber());
+			const index = Math.min(0, attributes.get("i").default(0).asNumber());
 			const color = highlightColors[index % highlightColors.length];
 			return `<span style="color: ${color};">${value}</span>`;
 		}
@@ -75,7 +75,7 @@ export function htmlFormatText(
 		}
 
 		case "token":
-			return `<span class="token ${attributes.get("type").required("").asString()}">${value}</span>`;
+			return `<span class="token ${attributes.get("type").default("").asString()}">${value}</span>`;
 
 		default:
 			return value;

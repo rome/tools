@@ -25,13 +25,13 @@ export default createServerCommand({
 	defineFlags(c: Consumer): Flags {
 		return {
 			filter: c.get("filter").asStringOrVoid(),
-			coverage: c.get("coverage").required(false).asBoolean(),
-			showAllCoverage: c.get("showAllCoverage").required(false).asBoolean(),
-			updateSnapshots: c.get("updateSnapshots").required(false).asBoolean(),
-			freezeSnapshots: c.get("freezeSnapshots").required(false).asBoolean(),
-			focusAllowed: c.get("focusAllowed").required(true).asBoolean(),
-			syncTests: c.get("syncTests").required(false).asBoolean(),
-			sourceMaps: c.get("sourceMaps").required(true).asBoolean(),
+			coverage: c.get("coverage").default(false).asBoolean(),
+			showAllCoverage: c.get("showAllCoverage").default(false).asBoolean(),
+			updateSnapshots: c.get("updateSnapshots").default(false).asBoolean(),
+			freezeSnapshots: c.get("freezeSnapshots").default(false).asBoolean(),
+			focusAllowed: c.get("focusAllowed").default(true).asBoolean(),
+			syncTests: c.get("syncTests").default(false).asBoolean(),
+			sourceMaps: c.get("sourceMaps").default(true).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {

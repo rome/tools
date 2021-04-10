@@ -39,21 +39,14 @@ function parseTableHeader(parser: TOMLParser) {
 	const newTarget = {};
 
 	if (isArrayElement) {
-		// TODO subtables
-		let arr: TOMLArray;
-
 		let existing = obj[key];
 		if (existing === undefined) {
-			arr = [];
+			obj[key] = newTarget;
 		} else if (Array.isArray(existing)) {
-			arr = existing;
+			existing.push(newTarget);
 		} else {
-			// TODO?
-			throw parser.unexpected();
+			obj[key] = [existing, newTarget];
 		}
-
-		arr.push(newTarget);
-		obj[key] = arr;
 	} else {
 		obj[key] = newTarget;
 	}

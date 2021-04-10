@@ -28,7 +28,7 @@ export default createServerCommand<Flags>({
 	allowRequestFlags: ["watch"],
 	defineFlags(consumer: Consumer): Flags {
 		return {
-			quiet: consumer.get("quiet").required(false).asBoolean(),
+			quiet: consumer.get("quiet").default(false).asBoolean(),
 			setVersion: consumer.get("setVersion").asStringOrVoid(),
 		};
 	},

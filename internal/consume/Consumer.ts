@@ -564,13 +564,16 @@ export default class Consumer {
 		}
 	}
 
-	public required(def?: unknown): this {
-		this.defaultValue = def;
-
-		if (!this.exists() && def === undefined) {
+	public required(): this {
+		if (!this.exists()) {
 			this.unexpected(descriptions.CONSUME.REQUIRED);
 		}
 
+		return this;
+	}
+
+	public default(def: unknown): this {
+		this.defaultValue = def;
 		return this;
 	}
 

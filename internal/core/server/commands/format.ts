@@ -22,7 +22,7 @@ export default createServerCommand({
 	examples: [],
 	defineFlags(c: Consumer): Flags {
 		return {
-			allowDiagnostics: c.get("allowDiagnostics").required(false).asBoolean(),
+			allowDiagnostics: c.get("allowDiagnostics").default(false).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<undefined | string> {

@@ -24,7 +24,7 @@ export default createServerCommand<Flags>({
 			hang: c.get(
 				"hang",
 				{description: markup`Hang rather than instantly quitting`},
-			).required(false).asBoolean(),
+			).default(false).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {

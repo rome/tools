@@ -8,7 +8,7 @@ invalid = [
 valid = [
 	"<div onMouseOver={ () => void 0 } onFocus={() => void 0} />",
 	"<div onMouseOut={ () => void 0 } onBlur={() => void 0} />",
-	"<div onMouseOver={ () => void 0 }	onFocus={() => void 0} >{props}</div>",
-	"<div onMouseOut={ () => void 0 }	onBlur={() => void 0} >{props}</div>",
+	"<div onMouseOver={ () => void 0 }\tonFocus={() => void 0} >{props}</div>",
+	"<div onMouseOut={ () => void 0 }\tonBlur={() => void 0} >{props}</div>",
 	"<Div onMouseOut={ () => void 0 } >{props}</Div>",
 ]

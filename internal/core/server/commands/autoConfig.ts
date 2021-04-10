@@ -35,7 +35,7 @@ export default createServerCommand<Flags>({
 				{
 					description: markup`Check the existence of uncommitted files inside the repository.`,
 				},
-			).required(false).asBoolean(),
+			).default(false).asBoolean(),
 		};
 	},
 	async callback(
