@@ -16,7 +16,8 @@ import {promiseAllFrom} from "@internal/async";
 
 type Flags = {
 	quiet: boolean;
-	setVersion: undefined | string;
+	setVersion?: string;
+	target: string;
 };
 
 export default createServerCommand<Flags>({
@@ -30,6 +31,7 @@ export default createServerCommand<Flags>({
 		return {
 			quiet: consumer.get("quiet").default(false).asBoolean(),
 			setVersion: consumer.get("setVersion").asStringOrVoid(),
+			target: consumer.get("target").asString("default"),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
@@ -39,7 +41,12 @@ export default createServerCommand<Flags>({
 		req.expectArgumentLength(2);
 
 		const [entryFilename, outputDirectory] = args;
-		const bundler = Bundler.createFromServerRequest(req);
+		const bundler = Bundler.createFromServerRequest(
+			req,
+			{
+				target: commandFlags.target,
+			},
+		);
 
 		const resolution = await bundler.getResolvedEntry(
 			entryFilename,

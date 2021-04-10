@@ -17,6 +17,29 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	CSS_NO_INVALID_GRID_TEMPLATE_AREAS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/css/noInvalidGridTemplateAreas"],
+		message: markup`All strings must have the same number of cell tokens`,
+	},
+	CSS_NO_IMPORTANT_IN_KEYFRAME: {
+		category: DIAGNOSTIC_CATEGORIES["lint/css/noImportantInKeyframes"],
+		message: markup`Using <emphasis>!important</emphasis> within keyframes declarations is completely ignored in some browsers.`,
+	},
+	A11_Y_NO_REDUNDANT_ALT: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noRedundantAlt"],
+		message: markup`Avoid the words "image", "picture", or "photo" in <emphasis>img</emphasis> element alt text.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.`,
+			},
+		],
+	},
+	A11_Y_USE_ARIA_PROPS: (attribute: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAriaProps"],
+		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
+	}),
 	A11_Y_NO_NONINTERACTIVE_TABINDEX: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noNoninteractiveTabindex"],
 		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
@@ -25,6 +48,17 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Adding non-interactive elements to the keyboard navigation flow can confuse users.`,
+			},
+		],
+	},
+	A11_Y_NO_POSITIVE_TABINDEX: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noPositiveTabindex"],
+		message: markup`Avoid positive integer values for the <emphasis>tabIndex</emphasis> attribute.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.`,
 			},
 		],
 	},
@@ -107,6 +141,28 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
+	A11Y_NO_AUTOFOCUS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAutofocus"],
+		message: markup`Avoid the <emphasis>autoFocus</emphasis> attribute.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Automatically focusing elements overrides natural page content focus order, causing issues for keyboard-only navigation.`,
+			},
+		],
+	},
+	A11Y_NO_SCOPE: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noHeaderScope"],
+		message: markup`Avoid using the <emphasis>scope</emphasis> attribute on elements other than <emphasis>th</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Using the scope attribute incorrectly on tables makes them difficult to navigate using the keyboard.`,
+			},
+		],
+	},
 	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
 		category: DIAGNOSTIC_CATEGORIES["lint/js/noSingleCharRegexAlternatives"],
 		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
@@ -264,10 +320,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAriaProps"],
-		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
-	}),
 	JSX_A11Y_CLICK_EVENTS_HAVE_KEY_EVENTS: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithClickEvents"],
 		message: markup`Pair the <emphasis>onClick</emphasis> mouse event with the <emphasis>onKeyUp</emphasis>, the <emphasis>onKeyDown</emphasis>, or the <emphasis>onKeyPress</emphasis> keyboard event.`,
@@ -346,17 +398,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`The default button type of "submit" causes page reloads and is not typical behavior in a React application.`,
-			},
-		],
-	},
-	JSX_A11Y_TABINDEX_NO_POSITIVE: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noPositiveTabindex"],
-		message: markup`Avoid positive integer values for the <emphasis>tabIndex</emphasis> attribute.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.`,
 			},
 		],
 	},
@@ -445,17 +486,7 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_IMG_REDUNDANT_ALT: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noRedundantAlt"],
-		message: markup`Avoid the words "image", "picture", or "photo" in <emphasis>img</emphasis> element alt text.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.`,
-			},
-		],
-	},
+
 	JSX_A11Y_NO_ACCESS_KEY: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAccessKey"],
 		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
@@ -467,17 +498,7 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_AUTOFOCUS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAutofocus"],
-		message: markup`Avoid the <emphasis>autoFocus</emphasis> attribute.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Automatically focusing elements overrides natural page content focus order, causing issues for keyboard-only navigation.`,
-			},
-		],
-	},
+
 	JSX_A11Y_NO_ON_CHANGE: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noOnChange"],
 		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,
@@ -497,17 +518,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Opening external links in new tabs without rel="noreferrer" is a security risk. See <hyperlink target="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" /> for more details.`,
-			},
-		],
-	},
-	JSX_A11Y_NO_SCOPE: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noHeaderScope"],
-		message: markup`Avoid using the <emphasis>scope</emphasis> attribute on elements other than <emphasis>th</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Using the scope attribute incorrectly on tables makes them difficult to navigate using the keyboard.`,
 			},
 		],
 	},

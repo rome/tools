@@ -15,7 +15,7 @@ CSSRoot {
 				name: CSSKeyframeName {
 					value: CSSRaw {
 						value: "foo"
-						loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:11
+						loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:14
 					}
 					loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:14
 				}

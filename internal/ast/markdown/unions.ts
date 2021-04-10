@@ -19,7 +19,7 @@ export type AnyMarkdownInlineNode =
 	| n.MarkdownBoldInline
 	| n.MarkdownCodeInline
 	| n.MarkdownAutomaticLinkInline
-	| n.MarkdownReferenceInline
+	| n.MarkdownLink
 	| n.MarkdownImageInline
 	| n.MarkdownEmphasisInline;
 
@@ -35,6 +35,6 @@ export type AnyMarkdownNode =
 	| n.MarkdownBoldInline
 	| n.MarkdownCodeInline
 	| n.MarkdownAutomaticLinkInline
-	| n.MarkdownReferenceInline
+	| n.MarkdownLink
 	| n.MarkdownImageInline
 	| n.MarkdownEmphasisInline;

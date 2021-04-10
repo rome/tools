@@ -605,7 +605,11 @@ export default class Consumer {
 		return this;
 	}
 
-	public has(key: string): boolean {
+	public has(key: string, optional: boolean = false): boolean {
+		if (optional && !this.exists()) {
+			return false;
+		}
+
 		const value = this.asOriginalUnknownObject();
 		return value[key] != null;
 	}

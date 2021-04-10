@@ -1,5 +1,11 @@
-import {AnyCSSValue, CSSParser} from "@internal/css-parser/types";
-import {CSSAtRule, CSSBlock, CSSDeclaration, CSSRule} from "@internal/ast";
+import {CSSParser} from "@internal/css-parser/types";
+import {
+	AnyCSSValue,
+	CSSAtRule,
+	CSSBlock,
+	CSSDeclaration,
+	CSSRule,
+} from "@internal/ast";
 import {
 	getBlockEndTokenType,
 	getBlockStartTokenValue,

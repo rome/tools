@@ -121,9 +121,85 @@ export const cssParser = createDiagnosticsCategory({
 	},
 
 	CALC_INCORRECT_NUMBER_VALUE: {
-		message: markup`Incorrect character, expected a number or a parenthesis`,
+		message: markup`Incorrect character, expected a number or a parenthesis.`,
 	},
 	EXPECTED_ID_HASH: {
-		message: markup`Expected to use identifier after <emphasis>#</emphasis>.`,
+		message: markup`Expected the use of an identifier after <emphasis>#</emphasis>.`,
 	},
+
+	MEDIA_QUERY_UNKNOWN_MEDIA_TYPES: (
+		wrongValue: string,
+		supportedFeatures: string[],
+	) => ({
+		message: markup`Unknown media type provided to the media query.`,
+		advice: buildSuggestionAdvice(wrongValue, supportedFeatures, {minRating: 0}),
+	}),
+
+	MEDIA_QUERY_DEPRECATED_MEDIA_TYPE: (wrongValue: string) => ({
+		message: markup`The media type <emphasis>${wrongValue}</emphasis> is deprecated.`,
+	}),
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURES: {},
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: {},
+	MALFORMED_MEDIA_QUERY: {},
+	MEDIA_QUERY_EXPECTED_PARENTHESIS: {
+		message: markup`A left parenthesis is expected in this position.`,
+	},
+	MEDIA_QUERY_EXPECTED_COMPARISON: {
+		message: markup`The comparison is not correct, only <emphasis> \<, \> and = </emphasis> are valid.`,
+	},
+	MEDIA_QUERY_EXPECTED_NOT_OR_PARENTHESIS: {
+		message: markup`A left parenthesis or the keyword <emphasis>not</emphasis> are expected in this position.`,
+	},
+
+	MEDIA_QUERY_FEATURE_UNEXPECTED_VALUE: {
+		message: markup`The value provided inside the media feature is not correct.`,
+	},
+
+	MEDIA_QUERY_FEATURE_EXPECTED_KEYWORD: (keyword: string) => ({
+		message: markup`The keyword <emphasis>${keyword}</emphasis> is expected in this position.`,
+	}),
+
+	MEDIA_QUERY_FEATURE_MALFORMED_PLAN: {
+		message: markup`The media feature is not grammatically correct`,
+	},
+
+	AT_SUPPORTS_MALFORMED: {
+		message: markup`The rule @supports is not syntactically correct`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`At this position, it's expected a <emphasis>parenthesis</emphasis> or a <emphasis>condition ("or", "and" or "not")</emphasis>`,
+			},
+		],
+	},
+
+	AT_PAGE_MALFORMED: {
+		message: markup`No whitespace is allowed between selector and pseudo page.`,
+	},
+	AT_PAGE_INVALID_PSEUDO_PAGE: {
+		message: markup`Pseudo page can accept only <emphasis>left, right, first or blank</emphasis> and there can't be spaces in between`,
+	},
+
+	AT_PAGE_INVALID_DECLARATION: (wrongIdent, validProperties) => ({
+		message: markup`The at-rule <emphasis>@page</emphasis> accepts only a certain number of properties and <emphasis>${wrongIdent}</emphasis> is not one of them.`,
+		advice: buildSuggestionAdvice(
+			wrongIdent,
+			validProperties,
+			{minRating: 0, ignoreCase: false},
+		),
+	}),
+
+	AT_PAGE_AT_RULE_INVALID_DECLARATION: (
+		currentAtRule,
+		wrongIdent,
+		validProperties,
+	) => ({
+		message: markup`The at-rule <emphasis>@${currentAtRule}</emphasis> accepts only a certain number of properties and <emphasis>${wrongIdent}</emphasis> is not one of them.`,
+		advice: buildSuggestionAdvice(
+			wrongIdent,
+			validProperties,
+			{minRating: 0, ignoreCase: false},
+		),
+	}),
 });

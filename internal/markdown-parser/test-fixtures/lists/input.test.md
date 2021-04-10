@@ -18,7 +18,7 @@ MarkdownRoot {
 							children: [
 								MarkdownText {
 									value: "foo"
-									loc: SourceLocation lists/input.md 1:2-1:2
+									loc: SourceLocation lists/input.md 1:2-1:5
 								}
 							]
 							loc: SourceLocation lists/input.md 1:2-1:5
@@ -39,7 +39,7 @@ MarkdownRoot {
 							children: [
 								MarkdownText {
 									value: "bar"
-									loc: SourceLocation lists/input.md 2:2-2:2
+									loc: SourceLocation lists/input.md 2:2-2:5
 								}
 							]
 							loc: SourceLocation lists/input.md 2:2-2:5
@@ -59,7 +59,7 @@ MarkdownRoot {
 							children: [
 								MarkdownText {
 									value: "foo"
-									loc: SourceLocation lists/input.md 4:3-4:3
+									loc: SourceLocation lists/input.md 4:3-4:6
 								}
 							]
 							loc: SourceLocation lists/input.md 4:3-4:6
@@ -79,7 +79,7 @@ MarkdownRoot {
 							children: [
 								MarkdownText {
 									value: "bar"
-									loc: SourceLocation lists/input.md 5:3-5:3
+									loc: SourceLocation lists/input.md 5:3-5:6
 								}
 							]
 							loc: SourceLocation lists/input.md 5:3-5:6
@@ -99,7 +99,7 @@ MarkdownRoot {
 							children: [
 								MarkdownText {
 									value: "example"
-									loc: SourceLocation lists/input.md 6:3-6:3
+									loc: SourceLocation lists/input.md 6:3-6:10
 								}
 							]
 							loc: SourceLocation lists/input.md 6:3-6:10
@@ -121,7 +121,7 @@ MarkdownRoot {
 							children: [
 								MarkdownText {
 									value: "foo"
-									loc: SourceLocation lists/input.md 8:6-8:6
+									loc: SourceLocation lists/input.md 8:6-8:9
 								}
 							]
 							loc: SourceLocation lists/input.md 8:6-8:9
@@ -143,7 +143,7 @@ MarkdownRoot {
 							children: [
 								MarkdownText {
 									value: "bar"
-									loc: SourceLocation lists/input.md 9:6-9:6
+									loc: SourceLocation lists/input.md 9:6-9:9
 								}
 							]
 							loc: SourceLocation lists/input.md 9:6-9:9
@@ -165,7 +165,7 @@ MarkdownRoot {
 							children: [
 								MarkdownText {
 									value: "lorem"
-									loc: SourceLocation lists/input.md 10:6-10:6
+									loc: SourceLocation lists/input.md 10:6-10:11
 								}
 							]
 							loc: SourceLocation lists/input.md 10:6-10:11
@@ -184,14 +184,17 @@ MarkdownRoot {
 					children: [
 						MarkdownParagraph {
 							children: [
-								MarkdownReferenceInline {
-									value: ""
-									reference: []
-									loc: SourceLocation lists/input.md 11:2-11:4
+								MarkdownText {
+									value: "["
+									loc: SourceLocation lists/input.md 11:3-11:4
+								}
+								MarkdownText {
+									value: "]"
+									loc: SourceLocation lists/input.md 11:3-11:4
 								}
 								MarkdownText {
 									value: " something"
-									loc: SourceLocation lists/input.md 11:4-11:4
+									loc: SourceLocation lists/input.md 11:4-11:14
 								}
 							]
 							loc: SourceLocation lists/input.md 11:2-11:14

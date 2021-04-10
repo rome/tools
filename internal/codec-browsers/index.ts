@@ -1,4 +1,4 @@
-import {Browser} from "@internal/browser-features/Browser";
+import {Browser} from "@internal/browser-features";
 import {ResolveOptions, resolveTargets} from "./resolve";
 import {parseBrowserQuery} from "./parse";
 import {ParserOptions} from "@internal/parser-core";

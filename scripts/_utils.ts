@@ -227,17 +227,26 @@ async function formatFile(
 	);
 }
 
+export async function createDirectory(path: AbsoluteFilePath) {
+	await path.createDirectory();
+	reporter.success(markup`Wrote directory <emphasis>${path}</emphasis>`);
+}
+
 export async function writeFile(path: AbsoluteFilePath, sourceText: string) {
-	sourceText = await formatFile(path, sourceText);
+	try {
+		sourceText = await formatFile(path, sourceText);
 
-	// Windows: `content` will always have `\r` stripped so add it back
-	if (process.platform === "win32") {
-		sourceText = sourceText.replace(/\n/g, "\r\n");
+		// Windows: `content` will always have `\r` stripped so add it back
+		if (process.platform === "win32") {
+			sourceText = sourceText.replace(/\n/g, "\r\n");
+		}
+
+		// Write
+		await path.writeFile(sourceText);
+		reporter.success(markup`Wrote <emphasis>${path}</emphasis>`);
+	} catch (e) {
+		reporter.error(e.message);
 	}
-
-	// Write
-	await path.writeFile(sourceText);
-	reporter.success(markup`Wrote <emphasis>${path}</emphasis>`);
 }
 
 export function waitChildProcess(

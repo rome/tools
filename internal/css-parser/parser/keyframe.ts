@@ -11,7 +11,7 @@ import {
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {CSS_WIDE_KEYWORDS, isCustomIdent} from "@internal/css-parser/utils";
-import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
+import {parseDeclarations} from "@internal/css-parser/parser/declaration";
 
 const VALID_IDENTS = ["from", "to"];
 
@@ -33,6 +33,8 @@ function parseKeyframeName(parser: CSSParser): CSSKeyframeName | undefined {
 
 	if (parser.matchToken("String")) {
 		const token = parser.getToken() as Tokens["String"];
+		nextToken(parser);
+
 		value = parser.finishNode(
 			start,
 			{
@@ -53,6 +55,7 @@ function parseKeyframeName(parser: CSSParser): CSSKeyframeName | undefined {
 			nextToken(parser);
 			return undefined;
 		}
+		nextToken(parser);
 
 		value = parser.finishNode(
 			start,
@@ -62,7 +65,6 @@ function parseKeyframeName(parser: CSSParser): CSSKeyframeName | undefined {
 			},
 		);
 	}
-	nextToken(parser);
 
 	return parser.finishNode(
 		start,
@@ -77,14 +79,16 @@ function parseKeyframeSelector(
 	parser: CSSParser,
 ): CSSKeyframeSelector | undefined {
 	let value: CSSRaw | CSSPercentage;
+	const start = parser.getPosition();
 
 	if (matchToken(parser, "Percentage")) {
-		const pos = parser.getPosition();
+		const percentage = (parser.getToken() as Tokens["Percentage"]).value;
+		nextToken(parser);
 		value = parser.finishNode(
-			pos,
+			start,
 			{
 				type: "CSSPercentage",
-				value: (parser.getToken() as Tokens["Percentage"]).value,
+				value: percentage,
 			},
 		);
 	} else if (matchToken(parser, "Ident")) {
@@ -100,8 +104,9 @@ function parseKeyframeSelector(
 			nextToken(parser);
 			return undefined;
 		}
+		nextToken(parser);
 		value = parser.finishNode(
-			parser.getPosition(),
+			start,
 			{
 				type: "CSSRaw",
 				value: token.value,
@@ -116,8 +121,6 @@ function parseKeyframeSelector(
 		return undefined;
 	}
 
-	const start = parser.getPosition();
-	nextToken(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -140,7 +143,7 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 			readToken(parser, "Whitespace");
 			continue;
 		}
-
+		const pos = parser.getPosition();
 		const name = parseKeyframeSelector(parser);
 
 		while (matchToken(parser, "Whitespace")) {
@@ -156,10 +159,16 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 			return undefined;
 		}
 
-		const value = parseDeclarationBlock(parser);
-		if (name !== undefined && value !== undefined) {
-			const block: CSSKeyframeBlock = parser.finishNode(
-				parser.getPosition(),
+		nextToken(parser);
+		const value = parseDeclarations({
+			parser,
+			endingTokenType: "RightCurlyBracket",
+		});
+
+		if (name && value) {
+			nextToken(parser);
+			const block = parser.finishNode(
+				pos,
 				{
 					type: "CSSKeyframeBlock",
 					name,
@@ -167,9 +176,9 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 				},
 			);
 			blocks.push(block);
+		} else {
+			nextToken(parser);
 		}
-
-		nextToken(parser);
 	}
 
 	return blocks;

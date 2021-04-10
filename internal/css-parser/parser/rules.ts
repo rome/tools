@@ -1,12 +1,19 @@
-import {AnyCSSValue, CSSParser, Tokens} from "@internal/css-parser/types";
-import {CSSAtRule, CSSRule, CSSSelector} from "@internal/ast";
+import {CSSParser, Tokens} from "@internal/css-parser/types";
+import {AnyCSSValue, CSSAtRule, CSSRule, CSSSelector} from "@internal/ast";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseSelectors} from "@internal/css-parser/parser/selectors";
 import {descriptions} from "@internal/diagnostics";
 import {parseKeyframe} from "@internal/css-parser/parser/keyframe";
-import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
-import {parseComplexBlock} from "@internal/css-parser/parser/block";
+import {
+	OnAtDeclaration,
+	OnAtKeyword,
+	parseDeclarationBlock,
+} from "@internal/css-parser/parser/declaration";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
+import {parseMediaList} from "@internal/css-parser/parser/media";
+import {parseAtSupports} from "@internal/css-parser/parser/supports";
+import {parseFontFace} from "@internal/css-parser/parser/font";
+import {parseAtPage} from "@internal/css-parser/parser/page";
 
 export function parseRules(
 	parser: CSSParser,
@@ -36,7 +43,7 @@ export function parseRules(
 		}
 
 		if (matchToken(parser, "AtKeyword")) {
-			rules.push(parseAtRule(parser));
+			rules.push(parseAtRule({parser}));
 			continue;
 		}
 
@@ -59,7 +66,7 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 				{
 					type: "CSSRule",
 					prelude,
-					block: parseDeclarationBlock(parser),
+					block: parseDeclarationBlock({parser}),
 				},
 			);
 		}
@@ -72,9 +79,16 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 	return undefined;
 }
 
-export function parseAtRule(parser: CSSParser): CSSAtRule {
+interface ParseAtRule {
+	parser: CSSParser;
+	onAtKeyword?: OnAtKeyword;
+	onAtDeclaration?: OnAtDeclaration;
+}
+
+export function parseAtRule(
+	{parser, onAtDeclaration, onAtKeyword}: ParseAtRule,
+): CSSAtRule {
 	const start = parser.getPosition();
-	// TODO: review error
 	const previousToken = parser.getToken() as Tokens["AtKeyword"];
 	const token = parser.expectToken("AtKeyword");
 	const prelude: AnyCSSValue[] = [];
@@ -91,16 +105,46 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 			});
 			break;
 		}
+		if (previousToken.value === "media") {
+			const value = parseMediaList(parser);
+			if (value) {
+				prelude.push(value);
+			}
+		}
 		if (previousToken.value === "keyframes") {
 			block = parseKeyframe(parser);
 			break;
 		}
+
+		if (previousToken.value === "font-face") {
+			block = parseFontFace(parser);
+			break;
+		}
+
+		if (previousToken.value === "page") {
+			block = parseAtPage(parser);
+			break;
+		}
+
+		if (previousToken.value === "supports") {
+			const value = parseAtSupports(parser);
+			if (value) {
+				prelude.push(value);
+			}
+		}
 		if (matchToken(parser, "LeftCurlyBracket")) {
-			block = parseComplexBlock(parser);
+			block = parseDeclarationBlock({
+				parser,
+				parentAtKeywordToken: previousToken,
+				onAtDeclaration,
+				onAtKeyword,
+			});
 			break;
 		}
 		const parsedValue = parseComponentValue(parser);
-		parsedValue && prelude.push(parsedValue);
+		if (parsedValue) {
+			prelude.push(parsedValue);
+		}
 	}
 	return parser.finishNode(
 		start,

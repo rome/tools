@@ -18,6 +18,7 @@ type Flags = {
 	allowDiagnostics: boolean;
 	compact: boolean;
 	sourceType: undefined | ConstJSSourceType;
+	tokenize: boolean;
 };
 
 export default createServerCommand({
@@ -31,24 +32,36 @@ export default createServerCommand({
 			allowDiagnostics: c.get("allowDiagnostics").default(false).asBoolean(),
 			compact: c.get("compact").default(true).asBoolean(),
 			sourceType: c.get("sourceType").asStringSetOrVoid(["module", "script"]),
+			tokenize: c.get("tokenize").asBoolean(false),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
 		const {reporter} = req;
 		const filename = await req.resolveEntryAssertPathArg(0);
 
-		let ast = await req.requestWorkerParse(
-			filename,
-			{
-				sourceTypeJS: flags.sourceType,
-				allowParserDiagnostics: flags.allowDiagnostics,
-			},
-		);
+		if (flags.tokenize) {
+			const tokens = await req.requestWorkerTokenize(
+				filename,
+				{
+					sourceTypeJS: flags.sourceType,
+				},
+			);
 
-		if (flags.compact) {
-			ast = assertRoot(assertSingleNode(removeLoc(ast)));
+			reporter.inspect(tokens);
+		} else {
+			let ast = await req.requestWorkerParse(
+				filename,
+				{
+					sourceTypeJS: flags.sourceType,
+					allowParserDiagnostics: flags.allowDiagnostics,
+				},
+			);
+
+			if (flags.compact) {
+				ast = assertRoot(assertSingleNode(removeLoc(ast)));
+			}
+
+			reporter.inspect(ast);
 		}
-
-		reporter.inspect(ast);
 	},
 });

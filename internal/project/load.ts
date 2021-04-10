@@ -15,7 +15,6 @@ import {
 	ProjectConfig,
 	ProjectConfigMeta,
 	ProjectConfigObjects,
-	ProjectConfigTarget,
 	createDefaultProjectConfig,
 } from "./types";
 import {parsePathPatternsFile} from "@internal/path-match";
@@ -37,6 +36,8 @@ import {
 } from "./constants";
 import {lintRuleNames} from "@internal/compiler";
 import {sha256} from "@internal/string-utils";
+import {resolveBrowsers} from "@internal/codec-browsers";
+import {ParserOptions} from "@internal/parser-core";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -439,13 +440,20 @@ export async function normalizeProjectConfig(
 	const targets = consumer.get("targets");
 	if (categoryExists(targets)) {
 		for (const [name, object] of targets.asMap()) {
-			const target: ProjectConfigTarget = {
-				constraints: object.get("constraints").asImplicitMappedArray((item) =>
-					item.asString()
-				),
-			};
 			object.enforceUsedProperties("target config property");
-			config.targets.set(name, target);
+			const options: ParserOptions = {
+				input: object.asImplicitMappedArray((item) => item.asString()).join(
+					", ",
+				),
+				// TODO: set source
+			};
+			config.targets.set(
+				name,
+				resolveBrowsers(options).map((browser) => ({
+					name: browser.getId(),
+					version: browser.getVersion(),
+				})),
+			);
 		}
 	}
 

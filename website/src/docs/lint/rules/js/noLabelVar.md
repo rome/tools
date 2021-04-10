@@ -17,12 +17,12 @@ disallow labels that share a name with a variable
 **ESLint Equivalent:** [no-label-var](https://eslint.org/docs/rules/no-label-var)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e7560116b3e89cc4dd88a71f5c3ec861bebf7c4f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:262aa67da0da54f946dc1075a1e3021b2ca0173c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">x</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">x</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span>
 <span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">expr</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/noLabelVar</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -40,6 +40,6 @@ disallow labels that share a name with a variable
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">x</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">x</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span>
 <span class="token variable">z</span><span class="token punctuation">:</span> <span class="token variable">expr</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

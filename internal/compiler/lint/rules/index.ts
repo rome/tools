@@ -1,15 +1,22 @@
-/* GENERATED:START(hash:faf4e375ca7405d0bb228c8feccf6b11a88eff8f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:cbdd144ad35350b9a2f9b4864c8e217f28ce8a7c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
+import noAutofocus from "./a11y/noAutofocus";
 import noDistractingElements from "./a11y/noDistractingElements";
+import noHeaderScope from "./a11y/noHeaderScope";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole";
 import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex";
+import noPositiveTabindex from "./a11y/noPositiveTabindex";
+import noRedundantAlt from "./a11y/noRedundantAlt";
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle";
 import useAltText from "./a11y/useAltText";
+import useAriaProps from "./a11y/useAriaProps";
 import useAriaProptypes from "./a11y/useAriaProptypes";
 import useHtmlLang from "./a11y/useHtmlLang";
 import useIframeTitle from "./a11y/useIframeTitle";
 import useMediaCaption from "./a11y/useMediaCaption";
 import useValidLang from "./a11y/useValidLang";
+import noImportantInKeyframes from "./css/noImportantInKeyframes";
+import noInvalidGridTemplateAreas from "./css/noInvalidGridTemplateAreas";
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -60,15 +67,10 @@ import useSortedSpecifiers from "./js/useSortedSpecifiers";
 import useTemplate from "./js/useTemplate";
 import useWhile from "./js/useWhile";
 import noAccessKey from "./jsx-a11y/noAccessKey";
-import noAutofocus from "./jsx-a11y/noAutofocus";
-import noHeaderScope from "./jsx-a11y/noHeaderScope";
 import noOnChange from "./jsx-a11y/noOnChange";
-import noPositiveTabindex from "./jsx-a11y/noPositiveTabindex";
-import noRedundantAlt from "./jsx-a11y/noRedundantAlt";
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import useAnchorContent from "./jsx-a11y/useAnchorContent";
-import useAriaProps from "./jsx-a11y/useAriaProps";
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
 import useHeadingContent from "./jsx-a11y/useHeadingContent";
 import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents";
@@ -118,19 +120,26 @@ import {AnyVisitor} from "@internal/compiler";
 
 export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();
 lintTransforms.set("a11y/noAriaUnsupportedElements", noAriaUnsupportedElements);
+lintTransforms.set("a11y/noAutofocus", noAutofocus);
 lintTransforms.set("a11y/noDistractingElements", noDistractingElements);
+lintTransforms.set("a11y/noHeaderScope", noHeaderScope);
 lintTransforms.set(
 	"a11y/noNoninteractiveElementToInteractiveRole",
 	noNoninteractiveElementToInteractiveRole,
 );
 lintTransforms.set("a11y/noNoninteractiveTabindex", noNoninteractiveTabindex);
+lintTransforms.set("a11y/noPositiveTabindex", noPositiveTabindex);
+lintTransforms.set("a11y/noRedundantAlt", noRedundantAlt);
 lintTransforms.set("a11y/noSvgWithoutTitle", noSvgWithoutTitle);
 lintTransforms.set("a11y/useAltText", useAltText);
+lintTransforms.set("a11y/useAriaProps", useAriaProps);
 lintTransforms.set("a11y/useAriaProptypes", useAriaProptypes);
 lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
 lintTransforms.set("a11y/useIframeTitle", useIframeTitle);
 lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidLang", useValidLang);
+lintTransforms.set("css/noImportantInKeyframes", noImportantInKeyframes);
+lintTransforms.set("css/noInvalidGridTemplateAreas", noInvalidGridTemplateAreas);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
 lintTransforms.set("js/noArguments", noArguments);
 lintTransforms.set("js/noAsyncPromiseExecutor", noAsyncPromiseExecutor);
@@ -187,15 +196,10 @@ lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
 lintTransforms.set("js/useTemplate", useTemplate);
 lintTransforms.set("js/useWhile", useWhile);
 lintTransforms.set("jsx-a11y/noAccessKey", noAccessKey);
-lintTransforms.set("jsx-a11y/noAutofocus", noAutofocus);
-lintTransforms.set("jsx-a11y/noHeaderScope", noHeaderScope);
 lintTransforms.set("jsx-a11y/noOnChange", noOnChange);
-lintTransforms.set("jsx-a11y/noPositiveTabindex", noPositiveTabindex);
-lintTransforms.set("jsx-a11y/noRedundantAlt", noRedundantAlt);
 lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
 lintTransforms.set("jsx-a11y/noTargetBlank", noTargetBlank);
 lintTransforms.set("jsx-a11y/useAnchorContent", useAnchorContent);
-lintTransforms.set("jsx-a11y/useAriaProps", useAriaProps);
 lintTransforms.set("jsx-a11y/useAriaPropsForRole", useAriaPropsForRole);
 lintTransforms.set("jsx-a11y/useHeadingContent", useHeadingContent);
 lintTransforms.set("jsx-a11y/useKeyWithClickEvents", useKeyWithClickEvents);
@@ -265,16 +269,23 @@ lintTransforms.set(
 
 export const lintRuleNames: LintRuleName[] = [
 	"a11y/noAriaUnsupportedElements",
+	"a11y/noAutofocus",
 	"a11y/noDistractingElements",
+	"a11y/noHeaderScope",
 	"a11y/noNoninteractiveElementToInteractiveRole",
 	"a11y/noNoninteractiveTabindex",
+	"a11y/noPositiveTabindex",
+	"a11y/noRedundantAlt",
 	"a11y/noSvgWithoutTitle",
 	"a11y/useAltText",
+	"a11y/useAriaProps",
 	"a11y/useAriaProptypes",
 	"a11y/useHtmlLang",
 	"a11y/useIframeTitle",
 	"a11y/useMediaCaption",
 	"a11y/useValidLang",
+	"css/noImportantInKeyframes",
+	"css/noInvalidGridTemplateAreas",
 	"html/useClosingNonVoid",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
@@ -325,15 +336,10 @@ export const lintRuleNames: LintRuleName[] = [
 	"js/useTemplate",
 	"js/useWhile",
 	"jsx-a11y/noAccessKey",
-	"jsx-a11y/noAutofocus",
-	"jsx-a11y/noHeaderScope",
 	"jsx-a11y/noOnChange",
-	"jsx-a11y/noPositiveTabindex",
-	"jsx-a11y/noRedundantAlt",
 	"jsx-a11y/noRedundantRoles",
 	"jsx-a11y/noTargetBlank",
 	"jsx-a11y/useAnchorContent",
-	"jsx-a11y/useAriaProps",
 	"jsx-a11y/useAriaPropsForRole",
 	"jsx-a11y/useHeadingContent",
 	"jsx-a11y/useKeyWithClickEvents",
@@ -383,16 +389,23 @@ export const lintRuleNames: LintRuleName[] = [
 
 export type LintRuleName =
 	| "a11y/noAriaUnsupportedElements"
+	| "a11y/noAutofocus"
 	| "a11y/noDistractingElements"
+	| "a11y/noHeaderScope"
 	| "a11y/noNoninteractiveElementToInteractiveRole"
 	| "a11y/noNoninteractiveTabindex"
+	| "a11y/noPositiveTabindex"
+	| "a11y/noRedundantAlt"
 	| "a11y/noSvgWithoutTitle"
 	| "a11y/useAltText"
+	| "a11y/useAriaProps"
 	| "a11y/useAriaProptypes"
 	| "a11y/useHtmlLang"
 	| "a11y/useIframeTitle"
 	| "a11y/useMediaCaption"
 	| "a11y/useValidLang"
+	| "css/noImportantInKeyframes"
+	| "css/noInvalidGridTemplateAreas"
 	| "html/useClosingNonVoid"
 	| "js/noArguments"
 	| "js/noAsyncPromiseExecutor"
@@ -443,15 +456,10 @@ export type LintRuleName =
 	| "js/useTemplate"
 	| "js/useWhile"
 	| "jsx-a11y/noAccessKey"
-	| "jsx-a11y/noAutofocus"
-	| "jsx-a11y/noHeaderScope"
 	| "jsx-a11y/noOnChange"
-	| "jsx-a11y/noPositiveTabindex"
-	| "jsx-a11y/noRedundantAlt"
 	| "jsx-a11y/noRedundantRoles"
 	| "jsx-a11y/noTargetBlank"
 	| "jsx-a11y/useAnchorContent"
-	| "jsx-a11y/useAriaProps"
 	| "jsx-a11y/useAriaPropsForRole"
 	| "jsx-a11y/useHeadingContent"
 	| "jsx-a11y/useKeyWithClickEvents"

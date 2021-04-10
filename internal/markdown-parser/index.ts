@@ -25,7 +25,7 @@ import {
 } from "@internal/markdown-parser/parser/listItem";
 import {tokenizeInline} from "@internal/markdown-parser/parser/inline";
 import {parseParagraph} from "@internal/markdown-parser/parser/paragraph";
-import {parseReference} from "@internal/markdown-parser/parser/reference";
+import {parseLink} from "@internal/markdown-parser/parser/link";
 
 export type MarkdownParser = ParserCore<MarkdownParserTypes>;
 
@@ -306,7 +306,7 @@ function parseBlock(
 		}
 
 		case "OpenSquareBracket": {
-			return parseReference(parser);
+			return parseLink(parser);
 		}
 
 		case "HeadingLevel":

@@ -1,5 +1,4 @@
-import {CSSIdentifier, NodeBaseWithComments} from "@internal/ast";
-import {AnyCSSValue} from "@internal/css-parser/types";
+import {AnyCSSValue, CSSIdentifier, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSAttributeSelector extends NodeBaseWithComments {

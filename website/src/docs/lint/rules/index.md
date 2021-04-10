@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:8afb883d7e5f4ac1d4377e4b2d08f0475a1bf947,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:7d439f5d88279866e2e455a537db46efca81646d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -395,11 +395,25 @@ and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule 
 enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noAutofocus">
+	<a href="/docs/lint/rules/a11y/noAutofocus">noAutofocus</a>
+	<a class="header-anchor" href="#noAutofocus"></a>
+</h3>
+discourage the usage of `autoFocus`
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDistractingElements">
 	<a href="/docs/lint/rules/a11y/noDistractingElements">noDistractingElements</a>
 	<a class="header-anchor" href="#noDistractingElements"></a>
 </h3>
 enforce distracting elements are not used
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noHeaderScope">
+	<a href="/docs/lint/rules/a11y/noHeaderScope">noHeaderScope</a>
+	<a class="header-anchor" href="#noHeaderScope"></a>
+</h3>
+enforce scope prop is only used on `th` elements
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
@@ -416,6 +430,20 @@ non-interactive elements should not be assigned interactive roles
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noPositiveTabindex">
+	<a href="/docs/lint/rules/a11y/noPositiveTabindex">noPositiveTabindex</a>
+	<a class="header-anchor" href="#noPositiveTabindex"></a>
+</h3>
+enforce tabIndex value is not greater than zero
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noRedundantAlt">
+	<a href="/docs/lint/rules/a11y/noRedundantAlt">noRedundantAlt</a>
+	<a class="header-anchor" href="#noRedundantAlt"></a>
+</h3>
+enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noSvgWithoutTitle">
 	<a href="/docs/lint/rules/a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
 	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
@@ -428,6 +456,13 @@ MISSING DOCUMENTATION
 	<a class="header-anchor" href="#useAltText"></a>
 </h3>
 Checks that images have a valid alternative text
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useAriaProps">
+	<a href="/docs/lint/rules/a11y/useAriaProps">useAriaProps</a>
+	<a class="header-anchor" href="#useAriaProps"></a>
+</h3>
+enforce all `aria-*` props are valid
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAriaProptypes">
@@ -476,39 +511,11 @@ check if `lang` attribute is valid
 enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noAutofocus">
-	<a href="/docs/lint/rules/jsx-a11y/noAutofocus">noAutofocus</a>
-	<a class="header-anchor" href="#noAutofocus"></a>
-</h3>
-discourage the usage of `autoFocus`
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noHeaderScope">
-	<a href="/docs/lint/rules/jsx-a11y/noHeaderScope">noHeaderScope</a>
-	<a class="header-anchor" href="#noHeaderScope"></a>
-</h3>
-enforce scope prop is only used on `th` elements
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noOnChange">
 	<a href="/docs/lint/rules/jsx-a11y/noOnChange">noOnChange</a>
 	<a class="header-anchor" href="#noOnChange"></a>
 </h3>
 discourage the usage of `onChange`
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noPositiveTabindex">
-	<a href="/docs/lint/rules/jsx-a11y/noPositiveTabindex">noPositiveTabindex</a>
-	<a class="header-anchor" href="#noPositiveTabindex"></a>
-</h3>
-enforce tabIndex value is not greater than zero
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noRedundantAlt">
-	<a href="/docs/lint/rules/jsx-a11y/noRedundantAlt">noRedundantAlt</a>
-	<a class="header-anchor" href="#noRedundantAlt"></a>
-</h3>
-enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noRedundantRoles">
@@ -530,13 +537,6 @@ Prevent usage of unsafe `target=&quot;_blank&quot;`
 	<a class="header-anchor" href="#useAnchorContent"></a>
 </h3>
 enforce that anchors have content and that the content is accessible to screen readers
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useAriaProps">
-	<a href="/docs/lint/rules/jsx-a11y/useAriaProps">useAriaProps</a>
-	<a class="header-anchor" href="#useAriaProps"></a>
-</h3>
-enforce all `aria-*` props are valid
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAriaPropsForRole">
@@ -737,6 +737,24 @@ enforce component methods order
 	<a class="header-anchor" href="#useStylePropObject"></a>
 </h3>
 enforce style prop value is an object
+</div>
+</section>
+<section>
+<h2>CSS</h2>
+<p>Rule semantics and descriptions taken from <a href="https://stylelint.io/">stylelint</a>. See individual rule docs for direct references.</p>
+<div class="rule">
+<h3 data-toc-exclude id="noImportantInKeyframes">
+	<a href="/docs/lint/rules/css/noImportantInKeyframes">noImportantInKeyframes</a>
+	<a class="header-anchor" href="#noImportantInKeyframes"></a>
+</h3>
+disallow `!important` in `@keyframe` rules
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noInvalidGridTemplateAreas">
+	<a href="/docs/lint/rules/css/noInvalidGridTemplateAreas">noInvalidGridTemplateAreas</a>
+	<a class="header-anchor" href="#noInvalidGridTemplateAreas"></a>
+</h3>
+checks that `grid-template-areas` have valid names
 </div>
 </section>
 <!-- GENERATED:END(id:main) -->

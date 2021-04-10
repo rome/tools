@@ -1,3 +1,4 @@
+import {TokenBase} from "@internal/parser-core";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {Manifest} from "@internal/codec-js-manifest";
 import {
@@ -40,6 +41,15 @@ export type WorkerParseResult = {
 	lastAccessed: number;
 	sourceText: string;
 	astModifiedFromSource: boolean;
+};
+
+export type WorkerTokenizeResult = {
+	tokens: TokenBase[];
+	integrity: undefined | DiagnosticIntegrity;
+	mtimeNs: bigint;
+	project: WorkerProject;
+	path: AbsoluteFilePath;
+	sourceText: string;
 };
 
 export type WorkerBuffer = {
@@ -106,6 +116,7 @@ export type WorkerPartialManifest = {
 // Omit analyze value as the worker will fetch it itself, skips sending over a large payload that it already has in memory
 export type WorkerCompilerOptions = {
 	bundle?: WorkerBundleCompileOptions;
+	target?: string;
 };
 
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, "analyze">;

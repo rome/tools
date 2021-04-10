@@ -162,6 +162,10 @@ export function validateTokenType(
 		case "comment":
 		case "operator":
 		case "punctuation":
+		case "selector":
+		case "property":
+		case "atrule":
+		case "rule":
 		case "variable":
 		case "attr-name":
 		case "function":

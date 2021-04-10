@@ -1,5 +1,6 @@
-import {AnyCSSValue, CSSParser, Tokens} from "@internal/css-parser/types";
+import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
+	AnyCSSValue,
 	CSSAtRule,
 	CSSBlock,
 	CSSCustomProperty,
@@ -16,9 +17,22 @@ import {
 import {parseAtRule} from "@internal/css-parser/parser/rules";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 
+interface ParseDeclarations {
+	parser: CSSParser;
+	endingTokenType: keyof Tokens;
+	onAtKeyword?: OnAtKeyword;
+	onAtDeclaration?: OnAtDeclaration;
+	parentAtKeywordToken?: Tokens["AtKeyword"];
+}
+
 export function parseDeclarations(
-	parser: CSSParser,
-	endingTokenType: keyof Tokens,
+	{
+		parser,
+		endingTokenType,
+		onAtKeyword,
+		onAtDeclaration,
+		parentAtKeywordToken,
+	}: ParseDeclarations,
 ): Array<CSSAtRule | CSSDeclaration> {
 	const declarations: Array<CSSAtRule | CSSDeclaration> = [];
 
@@ -31,12 +45,25 @@ export function parseDeclarations(
 			break;
 		}
 		if (matchToken(parser, "AtKeyword")) {
-			declarations.push(parseAtRule(parser));
+			const token = parser.getToken() as Tokens["AtKeyword"];
+			if (onAtKeyword) {
+				const allowed = onAtKeyword(token);
+				if (!allowed) {
+					nextToken(parser);
+					continue;
+				}
+			}
+			declarations.push(parseAtRule({parser, onAtDeclaration, onAtKeyword}));
 			continue;
 		}
 		if (matchToken(parser, "Ident")) {
 			while (!matchEndOfDeclaration(parser, endingTokenType)) {
-				const declaration = parseDeclaration(parser, endingTokenType);
+				const declaration = parseDeclaration({
+					parser,
+					endingTokenType,
+					onAtDeclaration,
+					parentAtKeywordToken,
+				});
 				declaration && declarations.push(declaration);
 			}
 			continue;
@@ -53,9 +80,15 @@ export function parseDeclarations(
 	return declarations;
 }
 
+interface ParseDeclaration {
+	parser: CSSParser;
+	endingTokenType: keyof Tokens;
+	onAtDeclaration?: OnAtDeclaration;
+	parentAtKeywordToken?: Tokens["AtKeyword"];
+}
+
 export function parseDeclaration(
-	parser: CSSParser,
-	endingTokenType: keyof Tokens,
+	{onAtDeclaration, parentAtKeywordToken, endingTokenType, parser}: ParseDeclaration,
 ): CSSDeclaration | undefined {
 	while (!matchEndOfDeclaration(parser, endingTokenType)) {
 		const currentToken = parser.getToken();
@@ -65,6 +98,9 @@ export function parseDeclaration(
 				token: parser.getToken(),
 			});
 			return undefined;
+		}
+		if (onAtDeclaration) {
+			onAtDeclaration(currentToken, parentAtKeywordToken);
 		}
 		let name: string | CSSCustomProperty;
 		if (isCustomProperty(currentToken.value)) {
@@ -128,7 +164,22 @@ export function parseDeclaration(
 	return undefined;
 }
 
-export function parseDeclarationBlock(parser: CSSParser): CSSBlock | undefined {
+export type OnAtKeyword = (token: Tokens["AtKeyword"]) => boolean;
+export type OnAtDeclaration = (
+	token: Tokens["Ident"],
+	previousAtKeywordToken?: Tokens["AtKeyword"],
+) => boolean;
+
+interface ParseDeclarationBlock {
+	parser: CSSParser;
+	onAtKeyword?: OnAtKeyword;
+	onAtDeclaration?: OnAtDeclaration;
+	parentAtKeywordToken?: Tokens["AtKeyword"];
+}
+
+export function parseDeclarationBlock(
+	{parser, onAtKeyword, onAtDeclaration, parentAtKeywordToken}: ParseDeclarationBlock,
+): CSSBlock | undefined {
 	const start = parser.getPosition();
 	const startingToken = parser.getToken();
 	const startingTokenValue = getBlockStartTokenValue(parser, startingToken);
@@ -141,7 +192,13 @@ export function parseDeclarationBlock(parser: CSSParser): CSSBlock | undefined {
 
 	nextToken(parser);
 
-	value = parseDeclarations(parser, endingTokenType);
+	value = parseDeclarations({
+		parser,
+		endingTokenType,
+		onAtKeyword,
+		onAtDeclaration,
+		parentAtKeywordToken,
+	});
 
 	return parser.finishNode(
 		start,

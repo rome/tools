@@ -183,4 +183,4 @@ cats/babies/orion
 cats/babies/nev
 ```
 
-And you only wanted to ignore the folder `babies` that contains `juniper`. If you wrote just `babies` then it would match both directories. However, if you prefix it with a black slash, as in `/babies`, then it will only match the folder at the base.
+And you only wanted to ignore the folder `babies` that contains `juniper`. If you wrote just `babies` then it would match both directories. However, if you prefix it with a back slash, as in `/babies`, then it will only match the folder at the base.

@@ -1,10 +1,11 @@
-import {AnyCSSValue, CSSParser, Tokens} from "@internal/css-parser/types";
+import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {isCustomProperty} from "@internal/css-parser/utils";
 import {ValueToken} from "@internal/parser-core";
 import {parseSimpleBlock} from "@internal/css-parser/parser/block";
 import {parseFunction} from "@internal/css-parser/parser/function";
 import {parseUrl} from "@internal/css-parser/parser/url";
+import {AnyCSSValue} from "@internal/ast";
 
 export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
 	if (

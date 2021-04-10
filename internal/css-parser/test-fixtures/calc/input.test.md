@@ -35,7 +35,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "px"
-															loc: SourceLocation calc/input.css 2:13-2:13
+															loc: SourceLocation calc/input.css 2:13-2:16
 														}
 														loc: SourceLocation calc/input.css 2:13-2:16
 													}
@@ -66,7 +66,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "px"
-															loc: SourceLocation calc/input.css 3:13-3:13
+															loc: SourceLocation calc/input.css 3:13-3:16
 														}
 														loc: SourceLocation calc/input.css 3:13-3:16
 													}
@@ -83,7 +83,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 1
 															unit: "px"
-															loc: SourceLocation calc/input.css 3:19-3:19
+															loc: SourceLocation calc/input.css 3:19-3:22
 														}
 														loc: SourceLocation calc/input.css 3:19-3:22
 													}
@@ -114,7 +114,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "em"
-															loc: SourceLocation calc/input.css 4:13-4:13
+															loc: SourceLocation calc/input.css 4:13-4:16
 														}
 														loc: SourceLocation calc/input.css 4:13-4:16
 													}
@@ -130,7 +130,7 @@ CSSRoot {
 													CSSCalcValue {
 														value: CSSPercentage {
 															value: 1
-															loc: SourceLocation calc/input.css 4:19-4:19
+															loc: SourceLocation calc/input.css 4:19-4:21
 														}
 														loc: SourceLocation calc/input.css 4:19-4:21
 													}
@@ -161,7 +161,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "em"
-															loc: SourceLocation calc/input.css 5:13-5:13
+															loc: SourceLocation calc/input.css 5:13-5:16
 														}
 														loc: SourceLocation calc/input.css 5:13-5:16
 													}
@@ -172,7 +172,7 @@ CSSRoot {
 													CSSCalcValue {
 														value: CSSPercentage {
 															value: 2
-															loc: SourceLocation calc/input.css 5:19-5:19
+															loc: SourceLocation calc/input.css 5:19-5:21
 														}
 														loc: SourceLocation calc/input.css 5:19-5:21
 													}
@@ -184,7 +184,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 3
 															unit: "px"
-															loc: SourceLocation calc/input.css 5:24-5:24
+															loc: SourceLocation calc/input.css 5:24-5:27
 														}
 														loc: SourceLocation calc/input.css 5:24-5:27
 													}
@@ -215,7 +215,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "em"
-															loc: SourceLocation calc/input.css 6:13-6:13
+															loc: SourceLocation calc/input.css 6:13-6:16
 														}
 														loc: SourceLocation calc/input.css 6:13-6:16
 													}
@@ -270,7 +270,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "em"
-															loc: SourceLocation calc/input.css 7:13-7:13
+															loc: SourceLocation calc/input.css 7:13-7:16
 														}
 														loc: SourceLocation calc/input.css 7:13-7:16
 													}
@@ -385,7 +385,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "em"
-															loc: SourceLocation calc/input.css 8:13-8:13
+															loc: SourceLocation calc/input.css 8:13-8:16
 														}
 														loc: SourceLocation calc/input.css 8:13-8:16
 													}
@@ -397,7 +397,7 @@ CSSRoot {
 														value: CSSNumber {
 															value: 2
 															raw: "2"
-															loc: SourceLocation calc/input.css 8:19-8:19
+															loc: SourceLocation calc/input.css 8:19-8:20
 														}
 														loc: SourceLocation calc/input.css 8:19-8:20
 													}
@@ -414,7 +414,7 @@ CSSRoot {
 														value: CSSNumber {
 															value: 3
 															raw: "3"
-															loc: SourceLocation calc/input.css 8:23-8:23
+															loc: SourceLocation calc/input.css 8:23-8:24
 														}
 														loc: SourceLocation calc/input.css 8:23-8:24
 													}
@@ -445,7 +445,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "em"
-															loc: SourceLocation calc/input.css 9:13-9:13
+															loc: SourceLocation calc/input.css 9:13-9:16
 														}
 														loc: SourceLocation calc/input.css 9:13-9:16
 													}
@@ -457,7 +457,7 @@ CSSRoot {
 														value: CSSNumber {
 															value: 2
 															raw: "2"
-															loc: SourceLocation calc/input.css 9:19-9:19
+															loc: SourceLocation calc/input.css 9:19-9:20
 														}
 														loc: SourceLocation calc/input.css 9:19-9:20
 													}
@@ -474,7 +474,7 @@ CSSRoot {
 														value: CSSNumber {
 															value: 3
 															raw: "3"
-															loc: SourceLocation calc/input.css 9:23-9:23
+															loc: SourceLocation calc/input.css 9:23-9:24
 														}
 														loc: SourceLocation calc/input.css 9:23-9:24
 													}
@@ -491,7 +491,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 3
 															unit: "em"
-															loc: SourceLocation calc/input.css 9:27-9:27
+															loc: SourceLocation calc/input.css 9:27-9:30
 														}
 														loc: SourceLocation calc/input.css 9:27-9:30
 													}

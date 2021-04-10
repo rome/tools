@@ -176,3 +176,125 @@ export function isCustomIdent(token: Tokens["Ident"]) {
 	}
 	return true;
 }
+
+export const NOT = "not";
+export const AND = "and";
+export const OR = "or";
+
+export type NOT = typeof NOT;
+export type AND = typeof AND;
+export type OR = typeof OR;
+
+export const CONDITIONS = [NOT, AND, OR];
+
+const BACKGROUND_PROPERTIES = [
+	"background-color",
+	"background-image",
+	"background-repeat",
+	"background-attachment",
+	"background-position",
+	"background",
+];
+const BORDER_PROPERTIES = [
+	"border-top-width",
+	"border-right-width",
+	"border-bottom-width",
+	"border-left-width",
+	"border-width",
+	"border-top-color",
+	"border-right-color",
+	"border-bottom-color",
+	"border-left-color",
+	"border-color",
+	"border-top-style",
+	"border-right-style",
+	"border-bottom-style",
+	"border-left-style",
+	"border-short-style",
+	"border-top",
+	"border-right",
+	"border-bottom",
+	"border-left",
+	"border",
+];
+const COUNTER_PROPERTIES = ["counter-reset", "counter-increment"];
+const FONT_PROPERTIES = [
+	"font-family",
+	"font-size",
+	"font-style",
+	"font-variant",
+	"font-weight",
+	"font",
+];
+const HEIGTH_PROPERTIES = ["height", "min-height", "max-height"];
+const MARGIN_PROPERTIES = [
+	"margin-top",
+	"margin-right",
+	"margin-bottom",
+	"margin-left",
+	"margin",
+];
+const OUTLINE_PROPERTIES = [
+	"outline-width",
+	"outline-style",
+	"outline-color",
+	"outline",
+];
+const PADDING_PROPERTIES = [
+	"padding-top",
+	"padding-right",
+	"padding-bottom",
+	"padding-left",
+	"padding",
+];
+const TEXT_PROPERTIES = [
+	"letter-spacing",
+	"text-align",
+	"text-decoration",
+	"text-indent",
+	"text-transform",
+	"white-space",
+	"word-spacing",
+];
+const WIDTH_PROPERTIES = ["width", "min-width", "max-width"];
+
+// https://www.w3.org/TR/css-page-3/#page-property-list
+export const ALLOWED_PAGE_PROPERTIES: string[] = [
+	...BACKGROUND_PROPERTIES,
+	...BORDER_PROPERTIES,
+	...COUNTER_PROPERTIES,
+	...FONT_PROPERTIES,
+	...HEIGTH_PROPERTIES,
+	...MARGIN_PROPERTIES,
+	...OUTLINE_PROPERTIES,
+	...PADDING_PROPERTIES,
+	...TEXT_PROPERTIES,
+	...WIDTH_PROPERTIES,
+	"direction",
+	"color",
+	"quotes",
+	"visibility",
+];
+
+// https://www.w3.org/TR/css-page-3/#margin-property-list
+export const ALLOWED_PAGE_MARGIN_PROPERTIES: string[] = [
+	...BACKGROUND_PROPERTIES,
+	...BORDER_PROPERTIES,
+	...COUNTER_PROPERTIES,
+	...FONT_PROPERTIES,
+	...HEIGTH_PROPERTIES,
+	...MARGIN_PROPERTIES,
+	...OUTLINE_PROPERTIES,
+	...PADDING_PROPERTIES,
+	...TEXT_PROPERTIES,
+	...WIDTH_PROPERTIES,
+	"direction",
+	"unicode-bidi",
+	"content",
+	"color",
+	"line-height",
+	"quotes",
+	"vertical-align",
+	"visibility",
+	"z-index",
+];

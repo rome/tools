@@ -17,12 +17,12 @@ report `this` being used in stateless components
 **ESLint Equivalent:** [no-this-in-sfc](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-this-in-sfc.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:fbdd26756037ff880fee4a9548d5b95f41b90f50,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:8d9051f9332bf72c29ce0dc278a38d327475a89e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token operator">&lt;</span><span class="token regex">/div&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token operator">&lt;</span><span class="token regex">/div&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:44</span> <strong>parse(js)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -35,7 +35,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -59,7 +59,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
@@ -83,7 +83,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -107,7 +107,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;
@@ -133,7 +133,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;
 			<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">context</span><span class="token punctuation">.</span><span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">}</span>
@@ -173,7 +173,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">context</span><span class="token punctuation">;</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
@@ -214,7 +214,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">state</span><span class="token punctuation">.</span><span class="token variable">loading</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">return</span> &lt;<span class="token variable">Loader</span> <span class="token operator">/</span>&gt;<span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
@@ -256,7 +256,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">loading</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">state</span><span class="token punctuation">;</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">;</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">loading</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -300,7 +300,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span>
 	<span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">return</span> <span class="token punctuation">(</span>
 			&lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
@@ -326,7 +326,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	&lt;<span class="token variable">div</span>&gt;
 		<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
 	&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
@@ -350,7 +350,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	&lt;<span class="token variable">div</span>&gt;
 		<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
 	&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
@@ -374,7 +374,7 @@ report `this` being used in stateless components
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;
 			<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
 		&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
@@ -399,31 +399,31 @@ report `this` being used in stateless components
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">bar</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">bar</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token variable">props</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">return</span> <span class="token punctuation">(</span>
 			&lt;<span class="token variable">div</span>&gt;
 				<span class="token punctuation">{</span><span class="token variable">context</span><span class="token punctuation">.</span><span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">}</span>
 			&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 		<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token variable">context</span><span class="token punctuation">;</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token variable">props</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
@@ -432,14 +432,14 @@ report `this` being used in stateless components
 		&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;
 			<span class="token punctuation">{</span><span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">}</span>
 		&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">MyComponent</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">MyComponent</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 			<span class="token keyword">return</span> &lt;<span class="token variable">div</span>&gt;some jsx&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 	<span class="token punctuation">}</span>
@@ -448,24 +448,24 @@ report `this` being used in stateless components
 		<span class="token keyword">return</span> <span class="token string">&apos;content&apos;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span>
 	<span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">return</span> <span class="token punctuation">(</span>
 			&lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 		<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">)</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	&lt;<span class="token variable">div</span>&gt;
 		<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
 	&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	&lt;<span class="token variable">div</span>&gt;
 		<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
 	&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;
 			<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
 		&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;

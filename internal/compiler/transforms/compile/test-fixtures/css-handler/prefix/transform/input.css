@@ -1,0 +1,32 @@
+.style {
+	text-align: center;
+	transform: none;
+	align-content: center;
+}
+
+.style {
+	transform: none;
+}
+
+.style {
+	text-align: center;
+	transform: none;
+	-moz-transform: none;
+	align-content: center;
+}
+
+.style {
+	perspective: 1rem;
+}
+
+.style {
+	perspective-origin: center;
+}
+
+.style {
+	transform-style: preserve-3d;
+}
+
+.style {
+	backface-visibility: visible;
+}

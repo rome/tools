@@ -1,6 +1,9 @@
-import {CSSCustomProperty, NodeBaseWithComments} from "@internal/ast";
+import {
+	AnyCSSValue,
+	CSSCustomProperty,
+	NodeBaseWithComments,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSDeclaration extends NodeBaseWithComments {
 	readonly type: "CSSDeclaration";

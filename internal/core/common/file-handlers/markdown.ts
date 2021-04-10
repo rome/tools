@@ -1,5 +1,5 @@
 import {PartialExtensionHandler} from "./types";
-import {parseMarkdown} from "@internal/markdown-parser";
+import {parseMarkdown, tokenizeMarkdown} from "@internal/markdown-parser";
 
 export const markdownHandler: PartialExtensionHandler = {
 	language: "markdown",
@@ -21,6 +21,15 @@ export const markdownHandler: PartialExtensionHandler = {
 			sourceText,
 			ast,
 			astModifiedFromSource: false,
+		};
+	},
+
+	async tokenize({integrity, path, file, worker}) {
+		const sourceText = await worker.readFileText(file);
+		const tokens = tokenizeMarkdown({input: sourceText, integrity, path});
+		return {
+			sourceText,
+			tokens,
 		};
 	},
 };

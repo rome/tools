@@ -2,6 +2,7 @@ import {createMockWorker} from "@internal/test-helpers";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	DiagnosticCategory,
+	DiagnosticLanguage,
 	DiagnosticsProcessor,
 	equalCategoryNames,
 	joinCategoryName,
@@ -19,12 +20,13 @@ import {OneIndexed} from "@internal/numbers";
 
 const {worker, performFileOperation} = createMockWorker();
 
-function pre(inner: string): string {
-	return `{% raw %}<pre class="language-text"><code class="language-text">${inner}</code></pre>{% endraw %}`;
+function pre(inner: string, language: DiagnosticLanguage = "text"): string {
+	return `{% raw %}<pre class="language-${language}"><code class="language-${language}">${inner}</code></pre>{% endraw %}`;
 }
 
 function highlightPre(filename: string, code: string): string {
 	const path = createPath(filename);
+	const language = inferDiagnosticLanguageFromPath(path);
 	return pre(
 		joinMarkupLines(
 			markupToHtml(
@@ -33,20 +35,21 @@ function highlightPre(filename: string, code: string): string {
 						path,
 						input: code,
 						sourceTypeJS: undefined,
-						language: inferDiagnosticLanguageFromPath(path),
+						language,
 						highlight: true,
 					}),
 					markup`\n`,
 				),
 			),
 		),
+		language,
 	);
 }
 
 // Extract the description field from the docs frontmatter
 export function extractLintRuleInfo(
 	content: string,
-	type: "eslint" | "tslint" = "eslint",
+	type: "eslint" | "tslint" | "stylelint" = "eslint",
 ):
 	| undefined
 	| {
@@ -150,6 +153,7 @@ export async function main() {
 				const content = await docs.readFileText();
 				const eslintInfo = extractLintRuleInfo(content, "eslint");
 				const tslintInfo = extractLintRuleInfo(content, "tslint");
+				const styleLintInfo = extractLintRuleInfo(content, "stylelint");
 
 				const lines = [];
 
@@ -167,6 +171,12 @@ export async function main() {
 				if (tslintInfo !== undefined) {
 					lines.push(
 						`**TSLint Equivalent:** [${tslintInfo.name}](${tslintInfo.url})`,
+					);
+				}
+
+				if (styleLintInfo !== undefined) {
+					lines.push(
+						`**stylelint Equivalent:** [${styleLintInfo.name}](${styleLintInfo.url})`,
 					);
 				}
 

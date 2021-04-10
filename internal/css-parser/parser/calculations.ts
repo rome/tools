@@ -14,7 +14,7 @@ import {
 	CSSNumber,
 	CSSPercentage,
 } from "@internal/ast";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 /**
@@ -157,6 +157,7 @@ function tryParseCalcValue(parser: CSSParser): CSSCalcValue | undefined {
 		const token = parser.getToken();
 		let value: CSSNumber | CSSPercentage | CSSDimension;
 		if (token.type === "Number") {
+			nextToken(parser);
 			value = parser.finishNode(
 				start,
 				{
@@ -166,6 +167,7 @@ function tryParseCalcValue(parser: CSSParser): CSSCalcValue | undefined {
 				},
 			);
 		} else if (token.type === "Dimension") {
+			nextToken(parser);
 			value = parser.finishNode(
 				start,
 				{
@@ -175,6 +177,7 @@ function tryParseCalcValue(parser: CSSParser): CSSCalcValue | undefined {
 				},
 			);
 		} else {
+			nextToken(parser);
 			value = parser.finishNode(
 				start,
 				{
@@ -183,7 +186,6 @@ function tryParseCalcValue(parser: CSSParser): CSSCalcValue | undefined {
 				},
 			);
 		}
-		parser.nextToken();
 		return parser.finishNode(
 			start,
 			{

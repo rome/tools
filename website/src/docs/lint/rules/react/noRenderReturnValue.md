@@ -17,12 +17,12 @@ prevent usage of the return value of `React.render`
 **ESLint Equivalent:** [no-render-return-value](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-render-return-value.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:5f7f74d41a5297dcf31d47209f1a2a8e791c0721,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:402cb358fdc4b3a79750e4bd0e0385ee051fc306,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:12</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -35,7 +35,7 @@ prevent usage of the return value of `React.render`
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -48,7 +48,7 @@ prevent usage of the return value of `React.render`
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token boolean">null</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token boolean">null</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:18</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -61,7 +61,7 @@ prevent usage of the return value of `React.render`
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:18</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -74,7 +74,7 @@ prevent usage of the return value of `React.render`
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
 	<span class="token variable">react</span><span class="token punctuation">:</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -91,7 +91,7 @@ prevent usage of the return value of `React.render`
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:6</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -106,7 +106,7 @@ prevent usage of the return value of `React.render`
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">render</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">render</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -123,11 +123,11 @@ prevent usage of the return value of `React.render`
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">render</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">render</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token function">render</span><span class="token punctuation">(</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

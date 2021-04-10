@@ -17,12 +17,12 @@ disallow the use of `debugger`
 **ESLint Equivalent:** [no-debugger](https://eslint.org/docs/rules/no-debugger)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:7ea609f4affaa94d61fda960465b655b385b9885,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:09a7fca4f046b10629b84b290ce64fe84a48e4bd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">debugger</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">debugger</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noDebugger</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -39,6 +39,6 @@ disallow the use of `debugger`
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">test</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token keyword">debugger</span><span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">test</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token keyword">debugger</span><span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">test</span><span class="token punctuation">.</span><span class="token keyword">debugger</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

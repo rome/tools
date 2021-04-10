@@ -180,3 +180,13 @@ The `category` is one of the category folders inside the `language` folders.
 ```
 
 The created files will be displayed in the console output.
+
+### `compiler-create-prefix`
+
+This is used to generate a new prefix boilerplate
+
+```bash
+./script compiler-create-prefix [prefixName]
+```
+
+Prefix names with dashes are preferable.

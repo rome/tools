@@ -1,3 +1,4 @@
+import {TokenBase} from "@internal/parser-core";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -50,6 +51,11 @@ export type ExtensionHandlerParseResult<ParseRoot extends AnyRoot = AnyRoot> = {
 	ast: ParseRoot;
 };
 
+export interface ExtensionHandlerTokenizeResult {
+	sourceText: string;
+	tokens: TokenBase[];
+}
+
 export type PartialExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = {
 	sourceTypeJS?: ConstJSSourceType;
 	isAsset?: boolean;
@@ -70,6 +76,10 @@ export type PartialExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = {
 	parse: (
 		opts: ExtensionParseInfo,
 	) => Promise<ExtensionHandlerParseResult<ParseRoot>>;
+
+	tokenize?: (
+		info: ExtensionParseInfo,
+	) => Promise<ExtensionHandlerTokenizeResult>;
 };
 
 export type ExtensionHandler<ParseRoot extends AnyRoot = AnyRoot> = PartialExtensionHandler<ParseRoot> & {

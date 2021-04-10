@@ -17,12 +17,12 @@ MISSING DOCUMENTATION
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:621a626b94385bdac3a5d75a69f3eda6b632e829,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:73f5fc3c26ce7fa350191f94437f31b080d69b5a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">svg</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">svg</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/noSvgWithoutTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,7 +38,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">svg</span>&gt;
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">svg</span>&gt;
     &lt;<span class="token variable">title</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">title</span>&gt;
     &lt;<span class="token variable">circle</span> <span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
@@ -58,7 +58,7 @@ MISSING DOCUMENTATION
     <span style="color: rgb(38, 148, 255);">provided via </span><span style="color: rgb(38, 148, 255);"><strong>title</strong></span><span style="color: rgb(38, 148, 255);"> element.</span>
 
 </code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">svg</span><span class="token punctuation">&gt;</span>foo<span class="token punctuation">&lt;/</span><span class="token attr-name">svg</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">svg</span><span class="token punctuation">&gt;</span>foo<span class="token punctuation">&lt;/</span><span class="token attr-name">svg</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/noSvgWithoutTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -74,7 +74,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">svg</span><span class="token punctuation">&gt;</span>
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">svg</span><span class="token punctuation">&gt;</span>
     <span class="token punctuation">&lt;</span><span class="token tag">title</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">title</span><span class="token punctuation">&gt;</span>
     <span class="token punctuation">&lt;</span><span class="token tag">circle</span> <span class="token punctuation">/&gt;</span>
 <span class="token punctuation">&lt;/</span><span class="token attr-name">svg</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
@@ -97,7 +97,7 @@ MISSING DOCUMENTATION
 
 ### Valid
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">svg</span>&gt;
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">svg</span>&gt;
 	&lt;<span class="token variable">rect</span> <span class="token operator">/</span>&gt;
 	&lt;<span class="token variable">rect</span> <span class="token operator">/</span>&gt;
 	&lt;<span class="token variable">g</span>&gt;
@@ -112,11 +112,11 @@ MISSING DOCUMENTATION
 		&lt;<span class="token operator">/</span><span class="token variable">g</span>&gt;
 	&lt;<span class="token operator">/</span><span class="token variable">g</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">svg</span>&gt;
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">svg</span>&gt;
     &lt;<span class="token variable">title</span>&gt;Pass&lt;<span class="token operator">/</span><span class="token variable">title</span>&gt;
     &lt;<span class="token variable">circle</span> <span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">svg</span><span class="token punctuation">&gt;</span>
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">svg</span><span class="token punctuation">&gt;</span>
 	<span class="token punctuation">&lt;</span><span class="token tag">rect</span> <span class="token punctuation">/&gt;</span>
 	<span class="token punctuation">&lt;</span><span class="token tag">rect</span> <span class="token punctuation">/&gt;</span>
 	<span class="token punctuation">&lt;</span><span class="token tag">g</span><span class="token punctuation">&gt;</span>
@@ -131,7 +131,7 @@ MISSING DOCUMENTATION
 		<span class="token punctuation">&lt;/</span><span class="token attr-name">g</span><span class="token punctuation">&gt;</span>
 	<span class="token punctuation">&lt;/</span><span class="token attr-name">g</span><span class="token punctuation">&gt;</span>
 <span class="token punctuation">&lt;/</span><span class="token attr-name">svg</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">svg</span><span class="token punctuation">&gt;</span>
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">svg</span><span class="token punctuation">&gt;</span>
     <span class="token punctuation">&lt;</span><span class="token tag">title</span><span class="token punctuation">&gt;</span>Pass<span class="token punctuation">&lt;/</span><span class="token attr-name">title</span><span class="token punctuation">&gt;</span>
     <span class="token punctuation">&lt;</span><span class="token tag">circle</span> <span class="token punctuation">/&gt;</span>
 <span class="token punctuation">&lt;/</span><span class="token attr-name">svg</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}

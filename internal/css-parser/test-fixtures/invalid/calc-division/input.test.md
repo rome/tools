@@ -35,7 +35,7 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "px"
-															loc: SourceLocation invalid/calc-division/input.css 2:13-2:13
+															loc: SourceLocation invalid/calc-division/input.css 2:13-2:16
 														}
 														loc: SourceLocation invalid/calc-division/input.css 2:13-2:16
 													}
@@ -71,7 +71,7 @@ CSSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Incorrect character, expected a number or a parenthesis"}
+				message: RAW_MARKUP {value: "Incorrect character, expected a number or a parenthesis."}
 			}
 			location: {
 				language: "css"

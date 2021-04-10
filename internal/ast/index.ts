@@ -6,14 +6,16 @@ export * from "./js/constants";
 export * from "./html/unions";
 export * from "./js/unions";
 export * from "./markdown/unions";
+export * from "./css/unions";
 export * from "./unions";
 
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:15c5464073a967f4fb4a952323dc34b080a4be2a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:47f3274dc1afbb79b39d6d2c678490d88fa9c2a5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
+export * from "./css/page/CSSAtPage";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
 export * from "./css/core/CSSBlock";
@@ -31,6 +33,7 @@ export * from "./css/core/CSSComma";
 export * from "./css/core/CSSCustomProperty";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
+export * from "./css/font/CSSFontFace";
 export * from "./css/core/CSSFunction";
 export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
@@ -39,15 +42,41 @@ export * from "./css/keyframe/CSSKeyframe";
 export * from "./css/keyframe/CSSKeyframeBlock";
 export * from "./css/keyframe/CSSKeyframeName";
 export * from "./css/keyframe/CSSKeyframeSelector";
+export * from "./css/media/CSSMediaAnd";
+export * from "./css/media/CSSMediaCondition";
+export * from "./css/media/CSSMediaConditionWithoutOr";
+export * from "./css/media/CSSMediaFeature";
+export * from "./css/media/CSSMediaFeatureBoolean";
+export * from "./css/media/CSSMediaFeatureComparison";
+export * from "./css/media/CSSMediaFeatureEQ";
+export * from "./css/media/CSSMediaFeatureGT";
+export * from "./css/media/CSSMediaFeatureLT";
+export * from "./css/media/CSSMediaFeatureName";
+export * from "./css/media/CSSMediaFeaturePlain";
+export * from "./css/media/CSSMediaFeatureRange";
+export * from "./css/media/CSSMediaFeatureValue";
+export * from "./css/media/CSSMediaInParens";
+export * from "./css/media/CSSMediaNot";
+export * from "./css/media/CSSMediaOr";
+export * from "./css/media/CSSMediaQuery";
+export * from "./css/media/CSSMediaQueryList";
+export * from "./css/media/CSSMediaType";
 export * from "./css/core/CSSNumber";
+export * from "./css/page/CSSPageSelector";
+export * from "./css/page/CSSPageSelectorList";
 export * from "./css/core/CSSPercentage";
 export * from "./css/selectors/CSSPseudoClassSelector";
 export * from "./css/selectors/CSSPseudoElementSelector";
+export * from "./css/page/CSSPseudoPage";
 export * from "./css/core/CSSRaw";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
 export * from "./css/selectors/CSSSelector";
 export * from "./css/core/CSSString";
+export * from "./css/supports/CSSSupportsCondition";
+export * from "./css/supports/CSSSupportsDeclaration";
+export * from "./css/supports/CSSSupportsFeature";
+export * from "./css/supports/CSSSupportsInParens";
 export * from "./css/selectors/CSSTypeSelector";
 export * from "./css/selectors/CSSUniversalSelector";
 export * from "./css/function/CSSUrlFunction";
@@ -208,11 +237,11 @@ export * from "./markdown/blocks/MarkdownDividerBlock";
 export * from "./markdown/inline/MarkdownEmphasisInline";
 export * from "./markdown/blocks/MarkdownHeadingBlock";
 export * from "./markdown/inline/MarkdownImageInline";
+export * from "./markdown/inline/MarkdownLink";
 export * from "./markdown/blocks/MarkdownListBlock";
 export * from "./markdown/core/MarkdownListItem";
 export * from "./markdown/core/MarkdownParagraph";
 export * from "./markdown/blocks/MarkdownQuoteBlock";
-export * from "./markdown/inline/MarkdownReferenceInline";
 export * from "./markdown/core/MarkdownRoot";
 export * from "./markdown/core/MarkdownText";
 export * from "./common/core/MockParent";
@@ -291,6 +320,7 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
+	| n.CSSAtPage
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
 	| n.CSSBlock
@@ -308,6 +338,7 @@ export type AnyNode =
 	| n.CSSCustomProperty
 	| n.CSSDeclaration
 	| n.CSSDimension
+	| n.CSSFontFace
 	| n.CSSFunction
 	| n.CSSHash
 	| n.CSSIdentifier
@@ -316,15 +347,41 @@ export type AnyNode =
 	| n.CSSKeyframeBlock
 	| n.CSSKeyframeName
 	| n.CSSKeyframeSelector
+	| n.CSSMediaAnd
+	| n.CSSMediaCondition
+	| n.CSSMediaConditionWithoutOr
+	| n.CSSMediaFeature
+	| n.CSSMediaFeatureBoolean
+	| n.CSSMediaFeatureComparison
+	| n.CSSMediaFeatureEQ
+	| n.CSSMediaFeatureGT
+	| n.CSSMediaFeatureLT
+	| n.CSSMediaFeatureName
+	| n.CSSMediaFeaturePlain
+	| n.CSSMediaFeatureRange
+	| n.CSSMediaFeatureValue
+	| n.CSSMediaInParens
+	| n.CSSMediaNot
+	| n.CSSMediaOr
+	| n.CSSMediaQuery
+	| n.CSSMediaQueryList
+	| n.CSSMediaType
 	| n.CSSNumber
+	| n.CSSPageSelector
+	| n.CSSPageSelectorList
 	| n.CSSPercentage
 	| n.CSSPseudoClassSelector
 	| n.CSSPseudoElementSelector
+	| n.CSSPseudoPage
 	| n.CSSRaw
 	| n.CSSRoot
 	| n.CSSRule
 	| n.CSSSelector
 	| n.CSSString
+	| n.CSSSupportsCondition
+	| n.CSSSupportsDeclaration
+	| n.CSSSupportsFeature
+	| n.CSSSupportsInParens
 	| n.CSSTypeSelector
 	| n.CSSUniversalSelector
 	| n.CSSUrlFunction
@@ -485,11 +542,11 @@ export type AnyNode =
 	| n.MarkdownEmphasisInline
 	| n.MarkdownHeadingBlock
 	| n.MarkdownImageInline
+	| n.MarkdownLink
 	| n.MarkdownListBlock
 	| n.MarkdownListItem
 	| n.MarkdownParagraph
 	| n.MarkdownQuoteBlock
-	| n.MarkdownReferenceInline
 	| n.MarkdownRoot
 	| n.MarkdownText
 	| n.MockParent
