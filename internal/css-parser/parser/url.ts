@@ -1,6 +1,6 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {CSSString, CSSUrlFunction} from "@internal/ast";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 export function parseUrl(parser: CSSParser): CSSUrlFunction | undefined {
@@ -22,7 +22,7 @@ export function parseUrl(parser: CSSParser): CSSUrlFunction | undefined {
 						value: token.value,
 					},
 				);
-				parser.nextToken();
+				nextToken(parser);
 				return parser.finishNode(
 					start,
 					{
@@ -36,13 +36,13 @@ export function parseUrl(parser: CSSParser): CSSUrlFunction | undefined {
 					description: descriptions.CSS_PARSER.URL_FUNCTION_INVALID_VALUE,
 					token,
 				});
-				parser.nextToken();
+				nextToken(parser);
 				return undefined;
 			}
 		}
 	}
 
-	parser.nextToken();
+	nextToken(parser);
 
 	return undefined;
 }

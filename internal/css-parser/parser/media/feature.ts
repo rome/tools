@@ -9,7 +9,7 @@ import {
 	CSSMediaFeatureValue,
 	CSSNumber,
 } from "@internal/ast";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 export function parseMediaFeatureName(
@@ -32,7 +32,7 @@ export function parseMediaFeatureName(
 			description: descriptions.CSS_PARSER.MEDIA_QUERY_FEATURE_MALFORMED_PLAN,
 			token,
 		});
-		parser.nextToken();
+		nextToken(parser);
 		return undefined;
 	}
 
@@ -49,7 +49,7 @@ export function parseMediaFeatureValue(
 	parser: CSSParser,
 ): CSSMediaFeatureValue | undefined {
 	// move forward and get rid of all the white spaces
-	parser.nextToken();
+	nextToken(parser);
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
 	}
@@ -58,7 +58,7 @@ export function parseMediaFeatureValue(
 	let value: CSSDimension | CSSIdentifier | CSSNumber | undefined = undefined;
 
 	if (token.type === "Ident") {
-		parser.nextToken();
+		nextToken(parser);
 		value = parser.finishNode(
 			start,
 			{
@@ -67,7 +67,7 @@ export function parseMediaFeatureValue(
 			},
 		);
 	} else if (token.type === "Dimension") {
-		parser.nextToken();
+		nextToken(parser);
 		value = parser.finishNode(
 			start,
 			{
@@ -77,7 +77,7 @@ export function parseMediaFeatureValue(
 			},
 		);
 	} else if (token.type === "Number") {
-		parser.nextToken();
+		nextToken(parser);
 		value = parser.finishNode(
 			start,
 			{
@@ -92,7 +92,7 @@ export function parseMediaFeatureValue(
 
 			token,
 		});
-		parser.nextToken();
+		nextToken(parser);
 		return undefined;
 	}
 

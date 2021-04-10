@@ -176,11 +176,59 @@ CSSRoot {
 			}
 			loc: SourceLocation at-page/input.css 11:0-14:1
 		}
+		CSSAtRule {
+			name: "page"
+			prelude: []
+			block: CSSAtPage {
+				block: CSSBlock {
+					value: [
+						CSSAtRule {
+							name: "top-center"
+							prelude: []
+							block: CSSBlock {
+								value: [
+									CSSDeclaration {
+										name: "CONTENT"
+										value: [
+											CSSIdentifier {
+												value: "none"
+												loc: SourceLocation at-page/input.css 17:24-17:28
+											}
+										]
+										important: false
+										loc: SourceLocation at-page/input.css 17:15-17:29
+									}
+								]
+								startingTokenValue: "{"
+								loc: SourceLocation at-page/input.css 17:13-17:30
+							}
+							loc: SourceLocation at-page/input.css 17:1-17:30
+						}
+						CSSDeclaration {
+							name: "MARGIN-LEFT"
+							value: [
+								CSSDimension {
+									value: 4
+									unit: "cm"
+									loc: SourceLocation at-page/input.css 18:14-18:17
+								}
+							]
+							important: false
+							loc: SourceLocation at-page/input.css 18:1-18:17
+						}
+					]
+					startingTokenValue: "{"
+					loc: SourceLocation at-page/input.css 16:6-19:1
+				}
+				loc: SourceLocation at-page/input.css 16:5-19:1
+			}
+			loc: SourceLocation at-page/input.css 16:0-19:1
+		}
 	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	path: RelativePath<at-page/input.css>
-	loc: SourceLocation at-page/input.css 1:0-14:1
+	loc: SourceLocation at-page/input.css 1:0-19:1
 }
 ```

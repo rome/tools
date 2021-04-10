@@ -22,7 +22,7 @@ export function parseFunction(
 	const isVarFunction = name === "var";
 	const isUrlFunction = name === "url";
 	const isCalcFunction = name === "calc";
-	parser.nextToken();
+	nextToken(parser);
 
 	if (isCalcFunction) {
 		const value = parseCalcFunction(parser);
@@ -93,7 +93,7 @@ export function parseFunction(
 				description: descriptions.CSS_PARSER.URL_FUNCTION_INVALID_VALUE,
 				token,
 			});
-			parser.nextToken();
+			nextToken(parser);
 			return undefined;
 		}
 	}

@@ -6,7 +6,7 @@ import {
 	CSSMediaQueryList,
 } from "@internal/ast";
 import {CSSParser} from "@internal/css-parser/types";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaType} from "@internal/css-parser/parser/media/type";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
 import {
@@ -23,7 +23,7 @@ function tryParseConditionWithoutOr(
 	// the start should be from AND keyword
 	const start = parser.getPosition();
 
-	parser.nextToken();
+	nextToken(parser);
 
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
@@ -101,11 +101,11 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 	if (token.type === "Ident") {
 		if (token.value === NOT) {
 			condition = NOT;
-			parser.nextToken();
+			nextToken(parser);
 			hasNot = true;
 		} else if (token.value === "only") {
 			condition = "only";
-			parser.nextToken();
+			nextToken(parser);
 		}
 	}
 
@@ -213,7 +213,7 @@ export function parseMediaList(parser: CSSParser): CSSMediaQueryList | undefined
 	}
 	while (!(parser.matchToken("EOF") && parser.matchToken("LeftCurlyBracket"))) {
 		if (parser.matchToken("Comma")) {
-			parser.nextToken();
+			nextToken(parser);
 		}
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
