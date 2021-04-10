@@ -4,7 +4,11 @@ import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseSelectors} from "@internal/css-parser/parser/selectors";
 import {descriptions} from "@internal/diagnostics";
 import {parseKeyframe} from "@internal/css-parser/parser/keyframe";
-import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
+import {
+	OnAtDeclaration,
+	OnAtKeyword,
+	parseDeclarationBlock,
+} from "@internal/css-parser/parser/declaration";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseMediaList} from "@internal/css-parser/parser/media";
 import {parseAtSupports} from "@internal/css-parser/parser/supports";
@@ -39,7 +43,7 @@ export function parseRules(
 		}
 
 		if (matchToken(parser, "AtKeyword")) {
-			rules.push(parseAtRule(parser));
+			rules.push(parseAtRule({parser}));
 			continue;
 		}
 
@@ -62,7 +66,7 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 				{
 					type: "CSSRule",
 					prelude,
-					block: parseDeclarationBlock(parser),
+					block: parseDeclarationBlock({parser}),
 				},
 			);
 		}
@@ -75,7 +79,15 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 	return undefined;
 }
 
-export function parseAtRule(parser: CSSParser): CSSAtRule {
+interface ParseAtRule {
+	parser: CSSParser;
+	onAtKeyword?: OnAtKeyword;
+	onAtDeclaration?: OnAtDeclaration;
+}
+
+export function parseAtRule(
+	{parser, onAtDeclaration, onAtKeyword}: ParseAtRule,
+): CSSAtRule {
 	const start = parser.getPosition();
 	const previousToken = parser.getToken() as Tokens["AtKeyword"];
 	const token = parser.expectToken("AtKeyword");
@@ -121,7 +133,12 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 			}
 		}
 		if (matchToken(parser, "LeftCurlyBracket")) {
-			block = parseDeclarationBlock(parser);
+			block = parseDeclarationBlock({
+				parser,
+				parentAtKeywordToken: previousToken,
+				onAtDeclaration,
+				onAtKeyword,
+			});
 			break;
 		}
 		const parsedValue = parseComponentValue(parser);

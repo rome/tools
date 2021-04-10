@@ -10,7 +10,7 @@ export function parseFontFace(parser: CSSParser): CSSFontFace | undefined {
 		readToken(parser, "Whitespace");
 	}
 
-	const block = parseDeclarationBlock(parser);
+	const block = parseDeclarationBlock({parser});
 
 	if (block) {
 		return parser.finishNode(

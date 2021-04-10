@@ -158,7 +158,10 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 		}
 
 		nextToken(parser);
-		const value = parseDeclarations(parser, "RightCurlyBracket");
+		const value = parseDeclarations({
+			parser,
+			endingTokenType: "RightCurlyBracket",
+		});
 
 		if (name && value) {
 			nextToken(parser);
