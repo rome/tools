@@ -1,0 +1,23 @@
+[
+	{
+		filename: "file.tsx"
+		invalid: [
+			"<input accessKey='key />"
+			"<input accessKey={key} />"
+	]
+		valid: [
+			"<input />"
+			"<input accessKey={undefined} />"
+			"<Input accessKey={key} />"
+	]
+}
+	{
+		filename: "file.html"
+		invalid: [
+			"<input accesskey=\"h\" />"
+	]
+		valid: [
+			"<input />"
+	]
+}
+]

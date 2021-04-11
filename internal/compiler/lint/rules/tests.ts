@@ -12,7 +12,9 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:379956f6eedd25af39a14faa3aaad5c35838a6a9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:a192f0dce4bfbb2bc18f5fa1632f468802c6ba28,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+// @ts-ignore
+import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -146,8 +148,6 @@ import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-ignore
 import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
-import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
-// @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
@@ -239,6 +239,10 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
+	"a11y/noAccessKey": {
+		category: ["lint", "a11y", "noAccessKey"],
+		cases: noAccessKey,
+	},
 	"a11y/noAriaUnsupportedElements": {
 		category: ["lint", "a11y", "noAriaUnsupportedElements"],
 		cases: noAriaUnsupportedElements,
@@ -502,10 +506,6 @@ export const tests: Tests = {
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
 		cases: useWhile,
-	},
-	"jsx-a11y/noAccessKey": {
-		category: ["lint", "jsx-a11y", "noAccessKey"],
-		cases: noAccessKey,
 	},
 	"jsx-a11y/noOnChange": {
 		category: ["lint", "jsx-a11y", "noOnChange"],
