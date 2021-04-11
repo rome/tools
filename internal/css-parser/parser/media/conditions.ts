@@ -5,7 +5,7 @@ import {
 	CSSMediaNot,
 	CSSMediaOr,
 } from "@internal/ast";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
 import {descriptions} from "@internal/diagnostics";
 import {Position} from "@internal/parser-core";
@@ -30,7 +30,7 @@ function parseCondition(
 		return parseMediaInParens(parser);
 	} else if (token.type === "Ident" && token.value === keyword) {
 		// move forward
-		parser.nextToken();
+		nextToken(parser);
 		// remove white spaces between keyword and next important token
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
@@ -44,7 +44,7 @@ function parseCondition(
 		),
 		token,
 	});
-	parser.nextToken();
+	nextToken(parser);
 
 	return undefined;
 }

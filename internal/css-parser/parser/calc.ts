@@ -1,6 +1,7 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {CSSCalcFunction} from "@internal/ast";
 import {parseCalcSum} from "@internal/css-parser/parser/calculations";
+import {nextToken} from "@internal/css-parser/tokenizer";
 
 export function parseCalcFunction(
 	parser: CSSParser,
@@ -9,7 +10,7 @@ export function parseCalcFunction(
 	const value = parseCalcSum(parser);
 
 	if (value) {
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{

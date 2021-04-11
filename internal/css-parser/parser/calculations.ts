@@ -113,7 +113,7 @@ function tryParseNumberValue(parser: CSSParser): CSSCalcNumberValue | undefined 
 	const token = parser.getToken();
 
 	if (token.type === "Number") {
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
@@ -201,7 +201,7 @@ function tryParseCalcValue(parser: CSSParser): CSSCalcValue | undefined {
 				description: descriptions.CSS_PARSER.CALC_UNTERMITED_SUM,
 				token: parser.getToken(),
 			});
-			parser.nextToken();
+			nextToken(parser);
 			return undefined;
 		}
 		if (result) {
@@ -272,7 +272,7 @@ function tryParseOperator(
 		if (token.type === "Delim") {
 			if (token.value === "*" || token.value === "/") {
 				// advance and remove all the whitespaces
-				parser.nextToken();
+				nextToken(parser);
 				while (matchToken(parser, "Whitespace")) {
 					readToken(parser, "Whitespace");
 				}

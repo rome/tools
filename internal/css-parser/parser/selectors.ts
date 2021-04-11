@@ -16,7 +16,7 @@ import {
 } from "@internal/ast";
 import {AnyCSSPattern} from "@internal/ast/css/unions";
 import {CSSParser, Tokens} from "../types";
-import {matchToken, readToken} from "../tokenizer";
+import {matchToken, nextToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseFunction} from "@internal/css-parser/parser/function";
 
@@ -207,7 +207,7 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 			ATTRIBUTE_SELECTOR_MATCHERS.some((valid) => valid.startsWith(first))
 		) {
 			matcher = first;
-			parser.nextToken();
+			nextToken(parser);
 
 			const second = parser.getToken();
 			if (second.type === "Delim" && second.value === "=") {
@@ -218,7 +218,7 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 
 	if (matcher) {
 		if (isAttributeMatcher(matcher)) {
-			parser.nextToken();
+			nextToken(parser);
 			return matcher;
 		}
 
@@ -269,7 +269,7 @@ function parseAttributeSelector(
 	}
 
 	const start = parser.getPosition();
-	parser.nextToken();
+	nextToken(parser);
 	readToken(parser, "Whitespace");
 
 	if (!matchToken(parser, "Ident")) {
@@ -282,7 +282,7 @@ function parseAttributeSelector(
 
 	const ident = parser.getToken() as Tokens["Ident"];
 	const idStart = parser.getPosition();
-	parser.nextToken();
+	nextToken(parser);
 	const attribute = parser.finishNode(
 		idStart,
 		{
@@ -304,7 +304,7 @@ function parseAttributeSelector(
 		const identValue = (parser.getToken() as Tokens["Ident"]).value.toLocaleLowerCase();
 		if (identValue === "i" || identValue === "s") {
 			modifier = identValue;
-			parser.nextToken();
+			nextToken(parser);
 		} else {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MODIFIER,
@@ -323,7 +323,7 @@ function parseAttributeSelector(
 		});
 		return undefined;
 	}
-	parser.nextToken();
+	nextToken(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -401,7 +401,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 				start: selectorStart,
 				token: parser.getToken(),
 			});
-			parser.nextToken();
+			nextToken(parser);
 			break;
 		}
 	}

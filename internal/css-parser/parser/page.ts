@@ -5,7 +5,7 @@ import {
 	CSSPseudoPage,
 	CSSPseudoPageValue,
 } from "@internal/ast";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
 import {descriptions} from "@internal/diagnostics";
 import {
@@ -41,7 +41,7 @@ function parsePseudoPage(parser: CSSParser): CSSPseudoPage | undefined {
 		VALID_PSEUDO_PAGE.has(possibleIdent.value)
 	) {
 		const pos = parser.getPosition();
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			pos,
 			{
@@ -54,7 +54,7 @@ function parsePseudoPage(parser: CSSParser): CSSPseudoPage | undefined {
 		description: descriptions.CSS_PARSER.AT_PAGE_INVALID_PSEUDO_PAGE,
 		token: parser.getToken(),
 	});
-	parser.nextToken();
+	nextToken(parser);
 	return undefined;
 }
 
@@ -65,9 +65,9 @@ function parsePageSelector(parser: CSSParser): CSSPageSelector | undefined {
 	let pseudo: CSSPseudoPage | undefined = undefined;
 	if (token.type === "Ident") {
 		ident = token.value;
-		parser.nextToken();
+		nextToken(parser);
 		if (parser.getToken().type === "Colon") {
-			parser.nextToken();
+			nextToken(parser);
 			pseudo = parsePseudoPage(parser);
 		}
 		return parser.finishNode(
@@ -79,7 +79,7 @@ function parsePageSelector(parser: CSSParser): CSSPageSelector | undefined {
 			},
 		);
 	} else if (token.type === "Colon") {
-		parser.nextToken();
+		nextToken(parser);
 		pseudo = parsePseudoPage(parser);
 		return parser.finishNode(
 			start,
@@ -95,7 +95,7 @@ function parsePageSelector(parser: CSSParser): CSSPageSelector | undefined {
 		description: descriptions.CSS_PARSER.AT_PAGE_MALFORMED,
 		token: parser.getToken(),
 	});
-	parser.nextToken();
+	nextToken(parser);
 	return undefined;
 }
 
@@ -132,7 +132,11 @@ export function parseAtPage(parser: CSSParser): CSSAtPage | undefined {
 					previousAtKeywordToken &&
 					ALLOWED_AT_RULES.includes(previousAtKeywordToken.value)
 				) {
-					if (!ALLOWED_PAGE_MARGIN_PROPERTIES.includes(declaration.value)) {
+					if (
+						!ALLOWED_PAGE_MARGIN_PROPERTIES.includes(
+							declaration.value.toLowerCase(),
+						)
+					) {
 						parser.unexpectedDiagnostic({
 							description: descriptions.CSS_PARSER.AT_PAGE_AT_RULE_INVALID_DECLARATION(
 								previousAtKeywordToken.value,
@@ -143,7 +147,9 @@ export function parseAtPage(parser: CSSParser): CSSAtPage | undefined {
 						});
 						return false;
 					}
-				} else if (!ALLOWED_PAGE_PROPERTIES.includes(declaration.value)) {
+				} else if (
+					!ALLOWED_PAGE_PROPERTIES.includes(declaration.value.toLowerCase())
+				) {
 					parser.unexpectedDiagnostic({
 						description: descriptions.CSS_PARSER.AT_PAGE_INVALID_DECLARATION(
 							declaration.value,
@@ -178,7 +184,7 @@ export function parseAtPage(parser: CSSParser): CSSAtPage | undefined {
 		}
 
 		if (parser.getToken().type === "Comma") {
-			parser.nextToken();
+			nextToken(parser);
 			while (true) {
 				while (matchToken(parser, "Whitespace")) {
 					readToken(parser, "Whitespace");
