@@ -202,4 +202,8 @@ export const cssParser = createDiagnosticsCategory({
 			{minRating: 0, ignoreCase: false},
 		),
 	}),
+
+	AT_FONT_FACE_MISSING_SRC: {
+		message: markup`The rule <emphasis>@font-face</emphasis> needs the property <emphasis>src</emphasis> in order to be valid.`,
+	},
 });
