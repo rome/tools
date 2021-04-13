@@ -17,6 +17,17 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_ACCESS_KEY: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAccessKey"],
+		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
+			},
+		],
+	},
 	CSS_NO_INVALID_GRID_TEMPLATE_AREAS: {
 		category: DIAGNOSTIC_CATEGORIES["lint/css/noInvalidGridTemplateAreas"],
 		message: markup`All strings must have the same number of cell tokens`,
@@ -483,18 +494,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Screen readers rely on the title set on an iframe to describe the content being displayed.`,
-			},
-		],
-	},
-
-	JSX_A11Y_NO_ACCESS_KEY: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAccessKey"],
-		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
 			},
 		],
 	},

@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:7d439f5d88279866e2e455a537db46efca81646d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:a15b06d7208a510b63b27b9c377a353c1b734613,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -388,6 +388,13 @@ discard redundant terms or operators in boolean expressions
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>
 and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule docs for direct references.</p>
 <div class="rule">
+<h3 data-toc-exclude id="noAccessKey">
+	<a href="/docs/lint/rules/a11y/noAccessKey">noAccessKey</a>
+	<a class="header-anchor" href="#noAccessKey"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noAriaUnsupportedElements">
 	<a href="/docs/lint/rules/a11y/noAriaUnsupportedElements">noAriaUnsupportedElements</a>
 	<a class="header-anchor" href="#noAriaUnsupportedElements"></a>
@@ -503,13 +510,6 @@ check if `lang` attribute is valid
 <section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="noAccessKey">
-	<a href="/docs/lint/rules/jsx-a11y/noAccessKey">noAccessKey</a>
-	<a class="header-anchor" href="#noAccessKey"></a>
-</h3>
-enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
-</div>
 <div class="rule">
 <h3 data-toc-exclude id="noOnChange">
 	<a href="/docs/lint/rules/jsx-a11y/noOnChange">noOnChange</a>
