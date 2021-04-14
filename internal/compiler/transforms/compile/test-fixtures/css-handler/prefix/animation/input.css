@@ -1,0 +1,16 @@
+.style {
+	text-align: center;
+	animation: 4s linear 0s infinite alternate move_eye;
+}
+
+.style {
+	animation-name: move_eye;
+	animation-duration: 4s;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: 0;
+	animation-direction: normal;
+	animation-fill-mode: none;
+	animation-delay: 1s;
+	animation-play-state: paused;
+}
