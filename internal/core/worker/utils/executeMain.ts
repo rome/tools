@@ -26,10 +26,11 @@ type ExecuteMainOptions = {
 	cwd: AbsoluteFilePath;
 	args: string[];
 	globals?: UnknownObject;
+	initSourceMap?: () => void;
 };
 
 export function getExecuteMainFilename(path: AbsoluteFilePath): string {
-	return `executeMain:${path.join()}`;
+	return path.addExtension(".bundle").join();
 }
 
 export default async function executeMain(

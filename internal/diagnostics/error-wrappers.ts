@@ -94,8 +94,11 @@ export function createRuntimeDiagnosticsError(
 	return createSingleDiagnosticsError(diag);
 }
 
-export function createSingleDiagnosticsError(diag: Diagnostic): DiagnosticsError {
-	return new DiagnosticsError(undefined, [diag]);
+export function createSingleDiagnosticsError(
+	diag: Diagnostic,
+	message?: string,
+): DiagnosticsError {
+	return new DiagnosticsError(message, [diag]);
 }
 
 export function getDiagnosticsFromError(err: Error): undefined | Diagnostic[] {

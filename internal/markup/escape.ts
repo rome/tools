@@ -14,6 +14,7 @@ import {
 	UnknownNumber,
 	ZeroIndexed,
 } from "@internal/numbers";
+import {hasEscapes} from "@internal/string-utils";
 
 type LazyMarkupPart = StaticMarkup | LazyMarkup;
 
@@ -103,6 +104,10 @@ export function markup(
 	...values: Array<LazyMarkupPart | InterpolatedValue>
 ): Markup {
 	if (values.length === 0) {
+		if (strs.length === 1) {
+			return toRawMarkupCached(strs[0]);
+		}
+
 		const cached = markupTemplateCache.get(strs);
 		if (cached !== undefined) {
 			return cached;
@@ -114,10 +119,7 @@ export function markup(
 	for (let i = 0; i < strs.length; i++) {
 		const str = strs[i];
 		if (str !== "") {
-			parts.push({
-				type: "RAW_MARKUP",
-				value: str,
-			});
+			parts.push(toRawMarkupCached(str));
 		}
 
 		// Last string is not followed by an interpolated value
@@ -140,7 +142,7 @@ export function markup(
 
 function normalizeInterpolatedValue(value: Markup | InterpolatedValue): Markup {
 	if (typeof value === "undefined") {
-		return toRawMarkup("<dim>undefined</dim>");
+		return toRawMarkupCached("<dim>undefined</dim>");
 	} else {
 		return value;
 	}
@@ -348,6 +350,20 @@ function toRawMarkup(value: string): RawMarkup {
 	};
 }
 
+// This cache lives forever. Should only be called on static segments (ie. nothing dynamic).
+const rawMarkupCache: Map<string, RawMarkup> = new Map();
+
+function toRawMarkupCached(value: string): RawMarkup {
+	const cached = rawMarkupCache.get(value);
+	if (cached !== undefined) {
+		return cached;
+	}
+
+	const obj = toRawMarkup(value);
+	rawMarkupCache.set(value, obj);
+	return obj;
+}
+
 // Escape all \ and >
 function escapeMarkup(input: string): string {
 	let escaped = "";
@@ -417,6 +433,10 @@ export function markupTag(
 }
 
 export function unescapeTextValue(str: string): string {
+	if (!hasEscapes(str)) {
+		return str;
+	}
+
 	let unescaped = "";
 
 	for (let i = 0; i < str.length; i++) {

@@ -4,6 +4,7 @@ import {test} from "rome";
 import {json, toml} from "@internal/codec-config";
 import {dedent} from "@internal/string-utils";
 import {DiagnosticsError} from "@internal/diagnostics";
+import {isObject} from "@internal/typescript-helpers";
 
 test(
 	"should convert a plain key/value",
@@ -71,12 +72,12 @@ async function declareTests() {
 		for (const basename of basenames) {
 			test(
 				[flatName, basename],
-				(t) => {
+				async (t) => {
 					if (flatName === "invalid") {
-						t.throws(
-							() => {
+						await t.throwsAsync(
+							async () => {
 								const file = fixture.files.assert(`${basename}.toml`);
-								const input = file.contentAsText();
+								const input = await file.readAsText();
 								toml.parse({
 									path: file.relative,
 									input,
@@ -91,15 +92,41 @@ async function declareTests() {
 						const tomlFile = fixture.files.assert(`${basename}.toml`);
 						const jsonFile = fixture.files.assert(`${basename}.json`);
 
-						const jsonStruct = JSON.parse(jsonFile.contentAsText());
+						const jsonStruct = JSON.parse(
+							await jsonFile.readAsText(),
+							(key, obj) => {
+								if (isObject(obj) && typeof obj.type === "string") {
+									switch (obj.type) {
+										case "integer":
+										case "float":
+											return Number(obj.value);
+
+										case "bool":
+											return obj.value === "true";
+
+										case "datetime": {
+											if (typeof obj.value === "string") {
+												return new Date(obj.value);
+											}
+											break;
+										}
+
+										case "array":
+										case "string":
+											return obj.value;
+									}
+								}
+								return obj;
+							},
+						);
 
 						const tomlValue = toml.parse({
 							path: tomlFile.relative,
-							input: tomlFile.contentAsText(),
+							input: await tomlFile.readAsText(),
 							includeSourceTextInDiagnostics: true,
 						});
 
-						t.looksLike(tomlValue, jsonStruct);
+						t.deepEquals(tomlValue, jsonStruct);
 
 						return;
 					}

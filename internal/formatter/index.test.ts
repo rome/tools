@@ -40,7 +40,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 
 	const filename = input.relative;
 	const format = options.get("format").asStringSetOrVoid(["pretty", "compact"]);
-	const content = input.contentAsText();
+	const content = await input.readAsText();
 
 	const res = await performFileOperation(
 		{

@@ -123,6 +123,7 @@ export default class DiagnosticsPrinter extends Error {
 		// Ensure we print sequentially
 		this.printLock = new GlobalLock();
 
+		this.diagnosticsCounter = 0;
 		this.seenDiagnostics = new Set();
 		this.streaming = opts.streaming ?? false;
 		this.defaultFooterEnabled = true;
@@ -150,6 +151,7 @@ export default class DiagnosticsPrinter extends Error {
 	public defaultFooterEnabled: boolean;
 
 	private streaming: boolean;
+	private diagnosticsCounter: number;
 	private seenDiagnostics: Set<Diagnostic>;
 	private printLock: GlobalLock;
 	private options: DiagnosticsPrinterOptions;
@@ -619,6 +621,7 @@ export default class DiagnosticsPrinter extends Error {
 			missingPaths = new MixedPathSet();
 		}
 		const {advice, header} = buildDisplayDiagnostic({
+			index: ++this.diagnosticsCounter,
 			diagnostic: diag,
 			flags: this.flags,
 			outdatedPaths,

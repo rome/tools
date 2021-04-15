@@ -118,6 +118,7 @@ export type DiagnosticDescriptionOptional = {
 	categoryValue?: string;
 	message: StaticMarkup;
 	advice?: DiagnosticAdvice[];
+	verboseAdvice?: DiagnosticAdvice[];
 };
 
 export type DiagnosticAdvice =

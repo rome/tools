@@ -7,7 +7,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 
 	const filename = inputFile.relative;
 
-	const inputContent = inputFile.contentAsText();
+	const inputContent = await inputFile.readAsText();
 
 	const ast = parseCSS({
 		input: inputContent,

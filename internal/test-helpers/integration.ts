@@ -258,7 +258,7 @@ export async function declareParserTests() {
 			"script",
 			"module",
 		]);
-		const inputContent = input.contentAsText();
+		const inputContent = await input.readAsText();
 
 		const {ast} = await performFileOperation(
 			{

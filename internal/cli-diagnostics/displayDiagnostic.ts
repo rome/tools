@@ -16,6 +16,7 @@ import {MixedPathSet, equalPaths} from "@internal/path";
 import {DiagnosticsPrinterFlags} from "./types";
 
 type BuildOptions = {
+	index: number;
 	diagnostic: Diagnostic;
 	flags: DiagnosticsPrinterFlags;
 	outdatedPaths: MixedPathSet;
@@ -35,11 +36,15 @@ export function buildDisplayDiagnostic(
 }
 
 function buildDisplayHeader(
-	{diagnostic, missingPaths, outdatedPaths}: BuildOptions,
+	{index, diagnostic, missingPaths, outdatedPaths, flags}: BuildOptions,
 ): StaticMarkup {
 	const {description, location, label, tags = {}} = diagnostic;
 
 	const headerParts: Markup[] = [];
+
+	if (flags.verboseDiagnostics) {
+		headerParts.push(markup`#${index}.`);
+	}
 
 	if (label !== undefined) {
 		headerParts.push(markup`<emphasis>${label}</emphasis>`);

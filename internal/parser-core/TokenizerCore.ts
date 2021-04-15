@@ -1,9 +1,16 @@
+import {
+	DiagnosticDescriptionOptional,
+	descriptions,
+} from "@internal/diagnostics";
+import {readMarkup} from "@internal/markup";
 import {ZeroIndexed} from "@internal/numbers";
 import {ParserCore, PositionTracker} from ".";
 import {
+	BaseTokens,
 	ComplexToken,
 	ParserCoreReadCallback,
 	ParserCoreTypes,
+	ParserOptions,
 	Position,
 	SimpleToken,
 	ValueToken,
@@ -14,11 +21,28 @@ type StringTokenNames<Types extends ParserCoreTypes> = Extract<
 	string
 >;
 
-export default class TokenizerCore<Types extends ParserCoreTypes> {
+type EmptyTypes = {
+	tokens: BaseTokens;
+	state: {};
+	options: ParserOptions;
+	meta: object | void;
+};
+
+type TokenizerOptions<Types extends ParserCoreTypes> = {
+	input: string;
+	unexpected?: TokenizerUnexpected;
+	indexTracker?: PositionTracker;
+	parser?: ParserCore<Types>;
+};
+
+export type TokenizerUnexpected = (
+	metadata: DiagnosticDescriptionOptional,
+	index: ZeroIndexed,
+) => void;
+
+export default class TokenizerCore<Types extends ParserCoreTypes = EmptyTypes> {
 	constructor(
-		input: string,
-		indexTracker?: PositionTracker,
-		parser?: ParserCore<Types>,
+		{input, indexTracker, parser, unexpected}: TokenizerOptions<Types>,
 	) {
 		this.parser = parser;
 		this.input = input;
@@ -26,15 +50,39 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 		this.start = new ZeroIndexed(0);
 		this.index = new ZeroIndexed(0);
 		this.indexChar = input[0];
+		this._unexpected = unexpected;
 	}
 
+	public index: ZeroIndexed;
+
+	private _unexpected: undefined | TokenizerUnexpected;
 	private parser: undefined | ParserCore<Types>;
 	private input: string;
 	private start: ZeroIndexed;
 	private indexTracker: PositionTracker;
-
-	public index: ZeroIndexed;
 	private indexChar: string;
+
+	public unexpected(
+		description: DiagnosticDescriptionOptional,
+		index: ZeroIndexed = this.index,
+	) {
+		const unexpected = this._unexpected;
+		if (unexpected !== undefined) {
+			return unexpected(description, index);
+		}
+
+		const {parser} = this;
+		if (parser === undefined) {
+			throw new TypeError(
+				`${readMarkup(description.message)} at index ${String(index.valueOf())}`,
+			);
+		} else {
+			parser.unexpectedDiagnostic({
+				description,
+				index,
+			});
+		}
+	}
 
 	public isEOF(): boolean {
 		return this.index.valueOf() >= this.input.length;
@@ -80,6 +128,12 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 	}
 
 	public take(count: number): string {
+		if (count === 1) {
+			const char = this.input[this.index.valueOf()];
+			this.setIndex(this.index.increment());
+			return char;
+		}
+
 		const i = this.index.valueOf();
 		const str = this.input.slice(i, i + count);
 		this.setIndex(this.index.add(str.length));
@@ -138,6 +192,35 @@ export default class TokenizerCore<Types extends ParserCoreTypes> {
 		const start = index.valueOf() + offset;
 		const end = start + count;
 		return input.slice(start, end);
+	}
+
+	public readAssertCount(
+		name: string,
+		count: number,
+		callback: ParserCoreReadCallback,
+	): string {
+		const start = this.index;
+		const str = this.take(count);
+
+		if (str.length !== count) {
+			this.unexpected(
+				descriptions.PARSER_CORE.EXPECTED_COUNT(name, count, str.length),
+				this.index,
+			);
+		}
+
+		for (let i = 0; i < str.length - 1; i++) {
+			const char = str[i];
+			const index = start.add(i);
+			if (!callback(char, index, this.input)) {
+				this.unexpected(
+					descriptions.PARSER_CORE.INVALID_COUNT_CHAR(name),
+					index,
+				);
+			}
+		}
+
+		return str;
 	}
 
 	// Read from the input until the callback returns false

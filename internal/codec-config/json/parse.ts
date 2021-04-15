@@ -21,6 +21,7 @@ import {
 	ConsumeContext,
 	ConsumePath,
 	ConsumeSourceLocationRequestTarget,
+	serializeConsumePath,
 } from "@internal/consume";
 import {unescapeString} from "@internal/string-escape";
 import {
@@ -46,13 +47,6 @@ function isJSONStringValueChar(
 	}
 
 	return !(char === '"' && !isEscaped(index, input));
-}
-
-// Turn a path into a string key we can use
-export function toPathKey(parts: string[]) {
-	// Right now this could conflict weirdly with properties with dots in them if they cause collisions
-	// We have this method abstracted so we can make changes later if it's necessary (probably not worth it)
-	return parts.join(".");
 }
 
 type PathInfo = {
@@ -207,11 +201,11 @@ function getPathInfo(
 	parser: JSONParser,
 	path: ConsumePath,
 ): undefined | PathInfo {
-	return parser.state.paths.get(path.join("."));
+	return parser.state.paths.get(serializeConsumePath(path));
 }
 
 function setPath({state}: JSONParser, info: PathInfo) {
-	state.paths.set(state.pathKeys.join("."), info);
+	state.paths.set(serializeConsumePath(state.pathKeys), info);
 	state.pathKeys.pop();
 }
 

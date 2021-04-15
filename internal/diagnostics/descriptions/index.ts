@@ -41,7 +41,6 @@ import {recoveryStore} from "./commands/recoveryStore";
 import {markdownParser} from "./parsers/markdownParser";
 import {initCommand} from "./commands/initCommand";
 import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
-import {tomlParser} from "./parsers/tomlParser";
 import {browserquery} from "./parsers/browserquery";
 
 export function join(conjunction: string, items: StaticMarkup[]): StaticMarkup {
@@ -172,6 +171,5 @@ export const descriptions = {
 	MARKDOWN_PARSER: markdownParser,
 	RECOVERY_STORE: recoveryStore,
 	INIT_COMMAND: initCommand,
-	TOML_PARSER: tomlParser,
 	BROWSERQUERY: browserquery,
 };

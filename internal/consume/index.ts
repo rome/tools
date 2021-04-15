@@ -14,6 +14,8 @@ import {markupToPlainText} from "@internal/cli-layout";
 import {joinMarkupLines} from "@internal/markup";
 import {UNKNOWN_PATH} from "@internal/path";
 
+export * from "./util";
+
 const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 	propertyMetadata: undefined,
 	value: undefined,

@@ -41,12 +41,16 @@ export function isESIdentifierStart(char: undefined | string): boolean {
 	return char !== undefined && /[A-Fa-z_$]/.test(char);
 }
 
+export function isWhitespace(char: undefined | string): boolean {
+	return char === " " || char === "\n" || char === "\t";
+}
+
 export function isntLineBreak(char: string): boolean {
 	return char !== "\n";
 }
 
 export function isntWhitespace(char: string): boolean {
-	return char !== "\n" && char !== " " && char !== "\t";
+	return !isWhitespace(char);
 }
 
 export function createReadCallback(

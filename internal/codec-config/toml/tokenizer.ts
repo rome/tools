@@ -4,7 +4,7 @@ import {
 	isDigit,
 	isntLineBreak,
 } from "@internal/parser-core";
-import {TOMLParser, TOMLParserTypes} from "./types";
+import {TOMLParser, TOMLParserTypes, Tokens} from "./types";
 import {descriptions} from "@internal/diagnostics";
 import {ZeroIndexed} from "@internal/numbers";
 import {unescapeString} from "@internal/string-escape";
@@ -20,7 +20,24 @@ function removeUnderscores(
 	for (let i = 0; i < raw.length; i++) {
 		const char = raw[i];
 
-		if (char !== "_") {
+		if (char === "_") {
+			if (i === 0) {
+				throw parser.unexpected({
+					description: descriptions.TOML.LEADING_NUMBER_UNDERSCORE,
+					startIndex: index.add(i),
+				});
+			} else if (i === raw.length - 1) {
+				throw parser.unexpected({
+					description: descriptions.TOML.TRAILING_NUMBER_UNDERSCORE,
+					startIndex: index.add(i),
+				});
+			} else if (raw[i + 1] === "_") {
+				throw parser.unexpected({
+					description: descriptions.TOML.DOUBLE_NUMBER_UNDERSCORE,
+					startIndex: index.add(i),
+				});
+			}
+		} else {
 			str += char;
 		}
 	}
@@ -45,9 +62,10 @@ export function isValidWordKey(char: string) {
 export const tomlParser = createParser<TOMLParserTypes>({
 	diagnosticLanguage: "toml",
 	ignoreWhitespaceTokens: true,
-	getInitialState: (parser) => ({
+	getInitialState: () => ({
 		path: [],
-		target: parser.meta.root,
+		explicitDefinedPaths: new Set(),
+		pathComments: new Map(),
 	}),
 	tokenize(parser, tokenizer) {
 		const char = tokenizer.get();
@@ -136,6 +154,9 @@ function tokenizeString(
 			char === '"'
 				? isMultilineDoubleStringValueChar
 				: isMultilineSingleStringValueChar;
+
+		// Trailing newline for opening delimeter is ignored
+		tokenizer.eat("\n");
 	}
 
 	const valueStart = tokenizer.index;
@@ -148,18 +169,22 @@ function tokenizeString(
 		});
 	}
 
-	value = unescapeString(
-		value,
-		{
-			mode: isMultiline ? "toml-multiline" : "toml-singleline",
-			unexpected(metadata, strIndex) {
-				throw parser.unexpected({
-					description: metadata,
-					start: parser.getPositionFromIndex(valueStart.add(strIndex)),
-				});
+	if (char === '"') {
+		value = unescapeString(
+			value,
+			{
+				mode: isMultiline ? "toml-multiline" : "toml-singleline",
+				unexpected(metadata, strIndex) {
+					throw parser.unexpected({
+						description: metadata,
+						start: parser.getPositionFromIndex(valueStart.add(strIndex)),
+					});
+				},
 			},
-		},
-	);
+		);
+	} else {
+		// Single quotes are literal strings
+	}
 
 	if (isMultiline) {
 		tokenizer.assert(char.repeat(3));
@@ -174,36 +199,74 @@ function tokenizeDate(
 	parser: TOMLParser,
 	tokenizer: TOMLParser["tokenizer"],
 	year: number,
-) {
+): Tokens["Date"] | Tokens["DateTime"] {
 	tokenizer.assert("-");
 
 	// Get month
-	const monthStart = tokenizer.index;
-	const month = tokenizer.read(isDigit);
-	if (month.length !== 2) {
-		throw parser.unexpected({
-			startIndex: monthStart,
-			endIndex: tokenizer.index,
-		});
-	}
+	const month = tokenizer.readAssertCount("month", 2, isDigit);
 	tokenizer.assert("-");
 
 	// Get day
-	const dayStart = tokenizer.index;
-	const day = tokenizer.read(isDigit);
-	if (day.length !== 2) {
-		throw parser.unexpected({
-			startIndex: dayStart,
-			endIndex: tokenizer.index,
-		});
-	}
+	const day = tokenizer.readAssertCount("day", 2, isDigit);
 
-	return tokenizer.finishComplexToken(
+	const date = tokenizer.finishComplexToken(
 		"Date",
 		{
 			year,
 			month: Number(month),
 			day: Number(day),
+		},
+	);
+
+	if (tokenizer.consume(" ") || tokenizer.consume("T")) {
+		return tokenizeDateTime(parser, tokenizer, date);
+	}
+
+	return date;
+}
+
+function tokenizeDateTime(
+	parser: TOMLParser,
+	tokenizer: TOMLParser["tokenizer"],
+	date: Tokens["Date"],
+): Tokens["DateTime"] {
+	const hoursStr = tokenizer.readAssertCount("hour", 2, isDigit);
+
+	const {hours, minutes, seconds} = tokenizeTime(
+		parser,
+		tokenizer,
+		Number(hoursStr),
+	);
+	let utc = false;
+	let offset: Tokens["DateTime"]["offset"];
+
+	if (tokenizer.consume("Z")) {
+		utc = true;
+	} else if (tokenizer.startsWith("-") || tokenizer.startsWith("+")) {
+		const negativeOffset = tokenizer.take(1) === "-";
+
+		const hoursOffset = tokenizer.readAssertCount("hour", 2, isDigit);
+		tokenizer.assert(":");
+		const minutesOffset = tokenizer.readAssertCount("minute", 2, isDigit);
+
+		offset = {
+			negative: negativeOffset,
+			hours: Number(hoursOffset),
+			minutes: Number(minutesOffset),
+		};
+	}
+
+	return tokenizer.finishComplexToken(
+		"DateTime",
+		{
+			year: date.year,
+			month: date.month,
+			day: date.day,
+			hours,
+			minutes,
+			seconds,
+			utc,
+			offset,
 		},
 	);
 }
@@ -212,29 +275,13 @@ function tokenizeTime(
 	parser: TOMLParser,
 	tokenizer: TOMLParser["tokenizer"],
 	hours: number,
-) {
+): Tokens["Time"] {
 	tokenizer.assert(":");
 
-	// Get minutes
-	const minutesStart = tokenizer.index;
-	const minutes = tokenizer.read(isDigit);
-	if (minutes.length !== 2) {
-		throw parser.unexpected({
-			startIndex: minutesStart,
-			endIndex: tokenizer.index,
-		});
-	}
+	const minutes = tokenizer.readAssertCount("minute", 2, isDigit);
 	tokenizer.assert(":");
 
-	// Get seconds
-	const secondsStart = tokenizer.index;
-	let seconds = tokenizer.read(isDigit);
-	if (seconds.length !== 2) {
-		throw parser.unexpected({
-			startIndex: secondsStart,
-			endIndex: tokenizer.index,
-		});
-	}
+	let seconds = tokenizer.readAssertCount("second", 2, isDigit);
 
 	// Get fractional seconds
 	if (tokenizer.consume(".")) {
@@ -242,6 +289,7 @@ function tokenizeTime(
 
 		let fractionalSeconds = tokenizer.read(isDigit);
 		if (fractionalSeconds.length === 0) {
+			// TODO custom error
 			throw parser.unexpected({
 				index: tokenizer.index,
 			});
@@ -270,8 +318,21 @@ function tokenizeDigit(parser: TOMLParser, tokenizer: TOMLParser["tokenizer"]) {
 		return tokenizeDate(parser, tokenizer, Number(num));
 	}
 
-	if (raw.length === 2 && raw.length === 2 && tokenizer.startsWith(":")) {
+	if (raw.length === 2 && num.length === 2 && tokenizer.startsWith(":")) {
 		return tokenizeTime(parser, tokenizer, Number(num));
+	}
+
+	if (num === "0") {
+		// TODO octal
+		// TODO hex
+		// TODO binary
+	}
+
+	if (num.length > 1 && num[0] === "0") {
+		// TODO custom error: leading zero
+		throw parser.unexpected({
+			index: start,
+		});
 	}
 
 	if (tokenizer.consume(".")) {

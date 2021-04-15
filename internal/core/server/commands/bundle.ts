@@ -31,7 +31,7 @@ export default createServerCommand<Flags>({
 		return {
 			quiet: consumer.get("quiet").default(false).asBoolean(),
 			setVersion: consumer.get("setVersion").asStringOrVoid(),
-			target: consumer.get("target").asString("default"),
+			target: consumer.get("target").default("default").asString(),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {

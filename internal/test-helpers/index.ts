@@ -47,8 +47,8 @@ export type Fixture = {
 export type FixtureFile = {
 	relative: RelativePath;
 	absolute: AbsoluteFilePath;
-	content: ArrayBufferView;
-	contentAsText: () => string;
+	read: () => Promise<ArrayBufferView>;
+	readAsText: () => Promise<string>;
 };
 
 async function _getFixtures(
@@ -130,15 +130,16 @@ async function _getFixtures(
 		"fileContents",
 	);
 	for (const path of files) {
-		const content = await path.readFile();
-
 		fileContents.set(
 			path.getBasename(),
 			{
 				relative: opts.root.relative(path).assertRelative(),
 				absolute: path,
-				content,
-				contentAsText() {
+				async read() {
+					return path.readFile();
+				},
+				async readAsText() {
+					const content = await path.readFile();
 					return removeCarriageReturn(decodeUTF8(content));
 				},
 			},

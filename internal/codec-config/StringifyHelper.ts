@@ -1,4 +1,4 @@
-import {Consumer} from "@internal/consume";
+import {Consumer, serializeConsumePath} from "@internal/consume";
 import {ConfigCommentMap, PathComments} from "./types";
 
 type StringifyOptions = {
@@ -31,7 +31,9 @@ export default class StringifyHelper {
 	public options: StringifyOptions;
 
 	public getComments(consumer: Consumer): PathComments {
-		const comments = this.options.comments.get(consumer.keyPath.join("."));
+		const comments = this.options.comments.get(
+			serializeConsumePath(consumer.keyPath),
+		);
 		if (comments === undefined) {
 			return {
 				inner: [],

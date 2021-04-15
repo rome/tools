@@ -471,15 +471,18 @@ export default class TestAPI {
 	}
 
 	private fail(
-		message: string = "Test failure triggered by t.fail()",
-		advice: DiagnosticAdvice[] = [],
-		framesToShift: number = 0,
+		{message, methodName, advice = []}: {
+			message: string;
+			methodName: string;
+			advice?: DiagnosticAdvice[];
+		},
 	): never {
 		const diag = this.file.deriveDiagnosticFromErrorStructure(
-			getErrorStructure(new Error(), framesToShift + 1),
+			getErrorStructure(new Error(), 2),
 			{
 				description: {
 					category: DIAGNOSTIC_CATEGORIES["tests/failure"],
+					categoryValue: methodName,
 					message: markup`${message}`,
 					advice,
 				},
@@ -493,9 +496,10 @@ export default class TestAPI {
 		message: string = "Expected value to be truthy",
 	): void {
 		if (Boolean(value) === false) {
-			this.fail(
+			this.fail({
+				methodName: "truthy",
 				message,
-				[
+				advice: [
 					{
 						type: "log",
 						category: "info",
@@ -507,8 +511,7 @@ export default class TestAPI {
 						sourceText: prettyFormatToString(value),
 					},
 				],
-				1,
-			);
+			});
 		}
 	}
 
@@ -517,9 +520,10 @@ export default class TestAPI {
 		message: string = "Expected value to be falsy",
 	): void {
 		if (Boolean(value) === true) {
-			this.fail(
+			this.fail({
 				message,
-				[
+				methodName: "falsy",
+				advice: [
 					{
 						type: "log",
 						category: "info",
@@ -531,8 +535,7 @@ export default class TestAPI {
 						sourceText: prettyFormatUntrusted(value),
 					},
 				],
-				1,
-			);
+			});
 		}
 	}
 
@@ -541,9 +544,10 @@ export default class TestAPI {
 		message: string = "Expected value to be true",
 	): void {
 		if (!value) {
-			this.fail(
+			this.fail({
 				message,
-				[
+				methodName: "truthy",
+				advice: [
 					{
 						type: "log",
 						category: "info",
@@ -555,8 +559,7 @@ export default class TestAPI {
 						sourceText: prettyFormatUntrusted(value),
 					},
 				],
-				1,
-			);
+			});
 		}
 	}
 
@@ -565,9 +568,10 @@ export default class TestAPI {
 		message: string = "Expected value to be false",
 	): void {
 		if (value) {
-			this.fail(
+			this.fail({
 				message,
-				[
+				methodName: "false",
+				advice: [
 					{
 						type: "log",
 						category: "info",
@@ -579,81 +583,88 @@ export default class TestAPI {
 						sourceText: prettyFormatUntrusted(value),
 					},
 				],
-				1,
-			);
+			});
 		}
 	}
 
 	private is<T extends unknown>(
 		received: T,
 		expected: T,
-		message: string = "t.is() failed, using Object.is semantics",
+		message: string = "Expected values to match with Object.is() semantics",
 	): void {
 		if (Object.is(received, expected) !== true) {
-			this.fail(
+			this.fail({
 				message,
-				this.buildMatchAdvice(
+				methodName: "is",
+				advice: this.buildMatchAdvice(
 					received,
 					expected,
 					{
 						visualMethod: "looksLike",
 					},
 				),
-				1,
-			);
+			});
 		}
 	}
 
 	private not(
 		received: unknown,
 		expected: unknown,
-		message: string = "t.not() failed, using !Object.is semantics",
+		message: string = "Expected values to be different but were the same with Object.is() semantics",
 	): void {
 		if (Object.is(received, expected) === true) {
-			this.fail(
+			this.fail({
 				message,
-				this.buildMatchAdvice(
+				methodName: "not",
+				advice: this.buildMatchAdvice(
 					received,
 					expected,
 					{
 						visualMethod: "notLooksLike",
 					},
 				),
-				1,
-			);
+			});
 		}
 	}
 
 	private deepEquals<T extends unknown>(
 		received: T,
 		expected: T,
-		message: string = "t.deepEquals() failed, using prettyFormat semantics",
+		message: string = "Expected values to match deeply",
 	): void {
 		const actualInspect = prettyFormatToString(received);
 		const expectedInspect = prettyFormatToString(expected);
 
 		if (actualInspect !== expectedInspect) {
-			this.fail(message, this.buildMatchAdvice(received, expected), 1);
+			this.fail({
+				methodName: "deepEquals",
+				message,
+				advice: this.buildMatchAdvice(received, expected),
+			});
 		}
 	}
 
 	private notDeepEquals(
 		received: unknown,
 		expected: unknown,
-		message: string = "t.notDeepEquals() failed, using !prettyFormat semantics",
+		message: string = "Expected values not to match deeply",
 	): void {
 		const actualInspect = prettyFormatToString(received);
 		const expectedInspect = prettyFormatToString(expected);
 
 		if (actualInspect === expectedInspect) {
-			this.fail(message, this.buildMatchAdvice(received, expected), 1);
+			this.fail({
+				methodName: "notDeepEquals",
+				message,
+				advice: this.buildMatchAdvice(received, expected),
+			});
 		}
 	}
 
 	private looksLike<T extends unknown>(
 		received: T,
 		expected: T,
-		message: string = "t.looksLike() failed, using prettyFormat semantics",
+		message: string = "Expected values to look-alike but they do not",
 	): void {
 		const receivedFormat = prettyFormatToString(
 			received,
@@ -662,9 +673,10 @@ export default class TestAPI {
 		const expectedFormat = prettyFormatToString(expected);
 
 		if (receivedFormat !== expectedFormat) {
-			this.fail(
+			this.fail({
+				methodName: "looksLike",
 				message,
-				this.buildMatchAdvice(
+				advice: this.buildMatchAdvice(
 					received,
 					expected,
 					{
@@ -672,15 +684,14 @@ export default class TestAPI {
 						receivedFormat,
 					},
 				),
-				1,
-			);
+			});
 		}
 	}
 
 	private notLooksLike(
 		received: unknown,
 		expected: unknown,
-		message: string = "t.notLooksLike() failed, using !prettyFormat semantics",
+		message: string = "Expected values to look different but they look-alike",
 	): void {
 		const receivedFormat = prettyFormatToString(
 			received,
@@ -689,9 +700,10 @@ export default class TestAPI {
 		const expectedFormat = prettyFormatToString(expected);
 
 		if (receivedFormat === expectedFormat) {
-			this.fail(
+			this.fail({
 				message,
-				this.buildMatchAdvice(
+				methodName: "notLooksLike",
+				advice: this.buildMatchAdvice(
 					received,
 					expected,
 					{
@@ -699,15 +711,14 @@ export default class TestAPI {
 						receivedFormat,
 					},
 				),
-				1,
-			);
+			});
 		}
 	}
 
 	private throws(
 		thrower: VoidCallback,
 		expected?: ExpectedError,
-		message: string = "t.throws() failed, callback did not throw an error",
+		message: string = "Expected an error to be thrown but none were",
 	): void {
 		try {
 			thrower();
@@ -715,28 +726,28 @@ export default class TestAPI {
 			if (matchExpectedError(err, expected)) {
 				return undefined;
 			} else {
-				this.fail(
-					`t.throws() expected an error to be thrown that matches ${formatExpectedError(
+				this.fail({
+					message: `Expected an error to be thrown that matches ${formatExpectedError(
 						expected,
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
-					getErrorStackAdvice(
+					methodName: "throws",
+					advice: getErrorStackAdvice(
 						getErrorStructure(err),
 						{
 							title: markup`Incorrect error stack trace`,
 						},
 					),
-					1,
-				);
+				});
 			}
 		}
 
-		this.fail(message, undefined, 1);
+		this.fail({message, methodName: "throws"});
 	}
 
 	private async throwsAsync(
 		thrower: AsyncVoidCallback,
 		expected?: ExpectedError,
-		message: string = "t.throwsAsync() failed, callback did not throw an error",
+		message: string = "Expected an error to be thrown but none were",
 	): Promise<void> {
 		try {
 			await thrower();
@@ -744,26 +755,26 @@ export default class TestAPI {
 			if (matchExpectedError(err, expected)) {
 				return undefined;
 			} else {
-				this.fail(
-					`t.throwsAsync() expected an error to be thrown that matches ${formatExpectedError(
+				this.fail({
+					message: `Expected an error to be thrown that matches ${formatExpectedError(
 						expected,
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
-					getErrorStackAdvice(
+					methodName: "throws",
+					advice: getErrorStackAdvice(
 						getErrorStructure(err),
 						{
 							title: markup`Incorrect error stack trace`,
 						},
 					),
-					1,
-				);
+				});
 			}
 		}
-		this.fail(message, undefined, 1);
+		this.fail({message, methodName: "throws"});
 	}
 
 	private notThrows(
 		nonThrower: VoidCallback,
-		message: string = "t.notThrows() failed, callback threw an error",
+		message: string = "Did not expect an error to be thrown but one was",
 	): void {
 		try {
 			nonThrower();
@@ -771,18 +782,16 @@ export default class TestAPI {
 			const advice = getErrorStackAdvice(
 				getErrorStructure(err),
 				{
-					title: markup`t.notThrows() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
-						err.message,
-					)}`,
+					title: markup`Thrown error ${err.name}: ${JSON.stringify(err.message)}`,
 				},
 			);
-			this.fail(message, advice, 1);
+			this.fail({message, methodName: "notThrows", advice});
 		}
 	}
 
 	private async notThrowsAsync(
 		nonThrower: AsyncVoidCallback,
-		message: string = "t.notThrowsAsync() failed, callback threw an error",
+		message: string = "Did not expect an error to be thrown but one was",
 	): Promise<void> {
 		try {
 			await nonThrower();
@@ -790,24 +799,23 @@ export default class TestAPI {
 			const advice = getErrorStackAdvice(
 				getErrorStructure(err),
 				{
-					title: markup`t.notThrowsAsync() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
-						err.message,
-					)}`,
+					title: markup`Thrown error ${err.name}: ${JSON.stringify(err.message)}`,
 				},
 			);
-			this.fail(message, advice, 1);
+			this.fail({message, methodName: "notThrows", advice});
 		}
 	}
 
 	private regex(
 		contents: string,
 		regex: RegExp,
-		message: string = "t.regex() failed, using RegExp.test semantics",
+		message: string = "Expected string to match regex",
 	): void {
 		if (!regex.test(contents)) {
-			this.fail(
+			this.fail({
 				message,
-				[
+				methodName: "regex",
+				advice: [
 					{
 						type: "log",
 						category: "info",
@@ -829,20 +837,20 @@ export default class TestAPI {
 						sourceText: prettyFormatUntrusted(regex.source),
 					},
 				],
-				1,
-			);
+			});
 		}
 	}
 
 	private notRegex(
 		contents: string,
 		regex: RegExp,
-		message: string = "t.notRegex() failed, using !RegExp.test semantics",
+		message: string = "Expected string not to match regex",
 	): void {
 		if (regex.test(contents)) {
-			this.fail(
+			this.fail({
 				message,
-				[
+				methodName: "notRegex",
+				advice: [
 					{
 						type: "log",
 						category: "info",
@@ -864,8 +872,7 @@ export default class TestAPI {
 						sourceText: prettyFormatUntrusted(regex.source),
 					},
 				],
-				1,
-			);
+			});
 		}
 	}
 

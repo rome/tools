@@ -5,7 +5,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;
 	const inputFile = files.assert("input.txt");
 
-	const inputContent = inputFile.contentAsText();
+	const inputContent = await inputFile.readAsText();
 
 	const commit = parseCommit(inputContent);
 

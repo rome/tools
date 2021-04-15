@@ -234,7 +234,7 @@ export default function buildCodeFrame(
 
 		let gutter = markup`${String(i.toOneIndexed().valueOf())}`;
 		if (shouldHighlight) {
-			gutter = markup`${CODE_FRAME_SELECTED_INDENT}${gutter}`;
+			gutter = markup`${CODE_FRAME_SELECTED_INDENT()}${gutter}`;
 		} else {
 			gutter = markup`${CODE_FRAME_INDENT}${gutter}`;
 		}

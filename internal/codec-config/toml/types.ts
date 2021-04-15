@@ -1,4 +1,4 @@
-import {ConsumePath} from "@internal/consume";
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	BaseTokens,
 	ComplexToken,
@@ -39,7 +39,12 @@ export type Tokens = BaseTokens & {
 			hours: number;
 			minutes: number;
 			seconds: number;
-			offset?: number;
+			utc: boolean;
+			offset?: {
+				negative: boolean;
+				hours: number;
+				minutes: number;
+			};
 		}
 	>;
 	// [
@@ -75,15 +80,20 @@ export type TOMLParserTypes = {
 	tokens: Tokens;
 	options: ParserOptions;
 	state: State;
-	meta: {
-		comments: PathComments;
-		root: TOMLObject;
-	};
+	meta: void;
+};
+
+export type TOMLKeys = TOMLKey[];
+
+export type TOMLKey = {
+	key: string;
+	start?: ZeroIndexed;
+	end?: ZeroIndexed;
 };
 
 export type State = {
-	target: TOMLObject;
-	path: ConsumePath;
+	explicitDefinedPaths: Set<string>;
+	pathComments: Map<string, PathComments>;
 };
 
 export type TOMLParser = ParserCore<TOMLParserTypes>;

@@ -12,7 +12,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 	const {input, handler} = findFixtureInput(fixture, undefined);
 
 	const filename = input.relative;
-	const content = input.contentAsText();
+	const content = await input.readAsText();
 
 	const res = await performFileOperation(
 		{

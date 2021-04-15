@@ -7,10 +7,14 @@
 
 import {markup} from "@internal/markup";
 
-export const GUTTER = markup`<emphasis> \u2502 </emphasis>`;
+export function GUTTER() {
+	return markup`<emphasis> \u2502 </emphasis>`;
+}
 
 export const CODE_FRAME_INDENT = "  ";
-export const CODE_FRAME_SELECTED_INDENT = markup`<error>></error> `;
+export function CODE_FRAME_SELECTED_INDENT() {
+	return markup`<error>></error> `;
+}
 
 export const MAX_CODE_FRAME_LINES = 8;
 export const HALF_MAX_CODE_FRAME_LINES = MAX_CODE_FRAME_LINES / 2;

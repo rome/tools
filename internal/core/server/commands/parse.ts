@@ -32,7 +32,7 @@ export default createServerCommand({
 			allowDiagnostics: c.get("allowDiagnostics").default(false).asBoolean(),
 			compact: c.get("compact").default(true).asBoolean(),
 			sourceType: c.get("sourceType").asStringSetOrVoid(["module", "script"]),
-			tokenize: c.get("tokenize").asBoolean(false),
+			tokenize: c.get("tokenize").default(false).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {

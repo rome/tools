@@ -1,10 +1,11 @@
-import {Consumer} from "@internal/consume";
+import {ConsumePath, Consumer} from "@internal/consume";
 import {ConfigCommentMap} from "@internal/codec-config";
 import {EscapeStringQuoteChar, escapeJSString} from "@internal/string-escape";
 import {isValidWordKey} from "./tokenizer";
 import {Comments, PathComments} from "../types";
 import StringifyHelper, {createStringifyHelper} from "../StringifyHelper";
 import {isObject} from "@internal/typescript-helpers";
+import {humanizeNumber} from "@internal/numbers";
 
 function stringifyArray(consumer: Consumer, helper: StringifyHelper): string {
 	const buff: string[] = [];
@@ -36,6 +37,10 @@ function stringifyKey(key: string): string {
 	}
 }
 
+function stringifyKeys(keys: ConsumePath): string {
+	return keys.map((key) => stringifyKey(String(key))).join(".");
+}
+
 function stringifyPrimitives(consumer: Consumer): undefined | string {
 	const value = consumer.asUnknown();
 
@@ -49,14 +54,14 @@ function stringifyPrimitives(consumer: Consumer): undefined | string {
 		case "boolean":
 			return String(value);
 
-		// TODO
 		case "number":
-			return String(value);
+			return humanizeNumber(value);
 
 		case "string": {
-			let quote: EscapeStringQuoteChar = value.includes('"') ? "'" : '"';
-			if (value.includes("\n") || value.includes(quote)) {
-				quote = quote === '"' ? '"""' : "'''";
+			// TODO heuristics for when to use literal strings
+			let quote: EscapeStringQuoteChar = '"';
+			if (value.includes("\n")) {
+				quote = '"""';
 			}
 			return escapeJSString(
 				value,
@@ -145,11 +150,7 @@ function printSingleObjects(val: unknown): undefined | [string, unknown] {
 	return undefined;
 }
 
-function stringifyPlainObject(
-	consumer: Consumer,
-	helper: StringifyHelper,
-	inline: boolean,
-): string {
+function stringifyRoot(consumer: Consumer, helper: StringifyHelper): string {
 	const map = consumer.asMap();
 	let buff: string[] = [];
 	stringifyComments(helper.getComments(consumer).inner, buff);
@@ -168,66 +169,54 @@ function stringifyPlainObject(
 		}
 	}
 
-	const innerHelper = inline ? helper.fork() : helper;
-
 	for (const [key, consumer] of map) {
 		let propKey = stringifyKey(key);
 		const possibleValue = consumer.asUnknown();
 		const comments = helper.getComments(consumer);
 
-		const single = printSingleObjects(possibleValue);
+		const reducedProp = printSingleObjects(possibleValue);
 
-		if (single === undefined && !inline) {
+		if (reducedProp === undefined) {
 			if (isObject(possibleValue)) {
 				stringifyPropComments(comments, buffTables, possibleValue);
 
-				buffTables.push(`[${propKey}]`);
-				buffTables.push(stringifyPlainObject(consumer, helper, false));
+				buffTables.push(`[${stringifyKeys(consumer.keyPath)}]`);
+				buffTables.push(stringifyRoot(consumer, helper));
+				buffTables.push("");
 				continue;
 			} else if (isArrayOfObjects(possibleValue)) {
 				stringifyPropComments(comments, buffTables, possibleValue);
 				for (const elem of consumer.asIterable()) {
-					buffTables.push(`[[${propKey}]]`);
-					buffTables.push(stringifyPlainObject(elem, helper, false));
+					buffTables.push(`[[${stringifyKeys(consumer.keyPath)}]]`);
+					buffTables.push(stringifyRoot(elem, helper));
+					buffTables.push("");
 				}
 				continue;
 			}
 		}
 
 		let propValue;
-		if (single === undefined) {
-			propValue = stringifyValue(consumer, innerHelper, true);
+		if (reducedProp === undefined) {
+			propValue = stringifyValue(consumer, helper, true);
 		} else {
-			propKey = `${propKey}.${single[0]}`;
-			propValue = single[1];
+			propKey = `${propKey}.${reducedProp[0]}`;
+			propValue = reducedProp[1];
 		}
 
-		let item = `${propKey} = ${propValue}`;
-		if (inline) {
-			item += ",";
-		}
-		buff.push(item);
+		buff.push(`${propKey} = ${propValue}`);
 	}
 
-	if (inline) {
-		return helper.wrap("{", buff, "}");
-	} else {
-		return [...buff, ...buffTables].join("\n");
-	}
+	return [...buff, ...buffTables].join("\n");
 }
 
-function stringifyObject(
-	consumer: Consumer,
-	helper: StringifyHelper,
-	inline: boolean,
-): string {
+function stringifyObject(consumer: Consumer, helper: StringifyHelper): string {
 	const value = consumer.asUnknown();
 
 	if (Array.isArray(value)) {
 		return stringifyArray(consumer, helper);
 	}
 
-	return stringifyPlainObject(consumer, helper, inline);
+	throw new Error("Regular objects should have been printed as tables");
 }
 
 export function stringifyTOMLFromConsumer(
@@ -235,5 +224,5 @@ export function stringifyTOMLFromConsumer(
 	pathToComments: ConfigCommentMap,
 ): string {
 	const helper = createStringifyHelper(pathToComments);
-	return stringifyPlainObject(consumer, helper, false);
+	return stringifyRoot(consumer, helper);
 }

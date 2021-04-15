@@ -164,9 +164,7 @@ export function stringDiffUnified(rawDiffs: CompressedDiff[]): UnifiedDiff {
 		const [currentLine, ...futureLines] = parts;
 
 		// The first chunk belongs to the current line
-		if (currentLine !== "") {
-			pushToLine([type, currentLine]);
-		}
+		pushToLine([type, currentLine]);
 
 		// Create unique lines for each other chunk
 		for (const newLine of futureLines) {
