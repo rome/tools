@@ -23,6 +23,7 @@ export default class LSPProgress extends ReporterProgressBase {
 		this.lastRenderKey = "";
 
 		transport.write({
+			jsonrpc: "2.0",
 			method: "$/progress",
 			params: {
 				token: this.token,
@@ -52,6 +53,7 @@ export default class LSPProgress extends ReporterProgressBase {
 
 		this.lastRenderKey = renderKey;
 		this.transport.write({
+			jsonrpc: "2.0",
 			method: "$/progress",
 			params: {
 				token: this.token,
@@ -69,6 +71,7 @@ export default class LSPProgress extends ReporterProgressBase {
 
 	public end() {
 		this.transport.write({
+			jsonrpc: "2.0",
 			method: "$/progress",
 			params: {
 				token: this.token,
