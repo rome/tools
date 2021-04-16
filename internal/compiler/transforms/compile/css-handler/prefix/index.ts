@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:60579f9e847f6d8718049a94adab44348f2e6bad,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:44fa10c83c1933e066127255038cbce06cd6327a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import backdropFilter from "./prefixes/backdrop-filter";
 import borderRadius from "./prefixes/border-radius";
@@ -9,6 +9,7 @@ import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
 import transform from "./prefixes/transform";
 import transition from "./prefixes/transition";
+import userSelect from "./prefixes/user-select";
 
 export default [
 	...animation,
@@ -21,5 +22,6 @@ export default [
 	...position,
 	...transform,
 	...transition,
+	...userSelect,
 ];
 /* GENERATED:END(id:main) */
