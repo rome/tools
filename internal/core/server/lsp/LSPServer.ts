@@ -121,6 +121,7 @@ export default class LSPServer {
 		this.transport.write({
 			method: "window/logMessage",
 			params: {
+				type: 4,
 				uri: `file://${path.join()}`,
 				message,
 			},
