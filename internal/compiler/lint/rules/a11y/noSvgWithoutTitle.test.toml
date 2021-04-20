@@ -34,6 +34,7 @@ valid = [
 		</svg>
 	""",
 ]
+
 [[cases]]
 filename = "file.html"
 invalid = [
@@ -70,3 +71,4 @@ valid = [
 		</svg>
 	""",
 ]
+

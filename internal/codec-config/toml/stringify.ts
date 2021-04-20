@@ -60,11 +60,13 @@ function stringifyPrimitives(consumer: Consumer): undefined | string {
 		case "string": {
 			// TODO heuristics for when to use literal strings
 			let quote: EscapeStringQuoteChar = '"';
+			let str = value;
 			if (value.includes("\n")) {
 				quote = '"""';
+				str = `\n${value}`;
 			}
 			return escapeJSString(
-				value,
+				str,
 				{
 					quote,
 					json: true,

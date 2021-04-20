@@ -3,8 +3,8 @@ filename = "file.tsx"
 invalid = [
 	"<iframe />",
 	"<iframe {...props} />",
-	'<iframe title="" />',
-	'<iframe title={""} />',
+	"<iframe title=\"\" />",
+	"<iframe title={\"\"} />",
 	"<iframe title={``} />",
 	"<iframe title={undefined} />",
 	"<iframe title={false} />",
@@ -15,13 +15,15 @@ valid = [
 	"<iframe title='title' />",
 	"<Iframe title='title' />",
 ]
+
 [[cases]]
 filename = "file.html"
 invalid = [
 	"<iframe></iframe>",
-	'<iframe title=""></iframe>',
+	"<iframe title=\"\"></iframe>",
 ]
 valid = [
-	'<iframe title="Tour"></iframe>',
-	'<iframe title="Camping"></iframe>',
+	"<iframe title=\"Tour\"></iframe>",
+	"<iframe title=\"Camping\"></iframe>",
 ]
+

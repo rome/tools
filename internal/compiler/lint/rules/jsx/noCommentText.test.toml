@@ -7,5 +7,5 @@ invalid = [
 valid = [
 	"const a = <div>{/* comment */}</div>",
 	"const a = <div>{/** comment */}</div>",
-	'const a = <div className={"cls" /* comment */}></div>',
+	"const a = <div className={\"cls\" /* comment */}></div>",
 ]

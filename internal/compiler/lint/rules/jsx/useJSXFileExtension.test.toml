@@ -21,6 +21,7 @@ invalid = [
 valid = [
 	"'<div></div>'",
 ]
+
 [[cases]]
 filename = "test.jsx"
 valid = [
@@ -41,6 +42,7 @@ valid = [
 		<React.Fragment></React.Fragment>
 	""",
 ]
+
 [[cases]]
 filename = "test.tsx"
 valid = [
@@ -61,3 +63,4 @@ valid = [
 		<React.Fragment></React.Fragment>
 	""",
 ]
+

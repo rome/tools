@@ -8,6 +8,6 @@ valid = [
 		const foo = `bar
 		has newline`;
 	""",
-	'const foo = `"bar"`',
+	"const foo = `\"bar\"`",
 	"const foo = `'bar'`",
 ]

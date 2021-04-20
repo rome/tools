@@ -8,6 +8,7 @@ valid = [
 	"<div />",
 	"<Marquee />",
 ]
+
 [[cases]]
 filename = "file.html"
 invalid = [
@@ -18,3 +19,4 @@ valid = [
 	"<div />",
 	"<Marquee />",
 ]
+
