@@ -122,6 +122,7 @@ export default class LSPServer {
 			jsonrpc: "2.0",
 			method: "window/logMessage",
 			params: {
+				type: 4,
 				uri: `file://${path.join()}`,
 				message,
 			},
