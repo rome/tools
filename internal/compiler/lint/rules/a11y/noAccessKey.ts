@@ -3,7 +3,6 @@ import {createVisitor, signals} from "@internal/compiler";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
-import hasHTMLAttribute from "@internal/js-ast-utils/hasHTMLAttribute";
 import getHTMLAttribute from "@internal/js-ast-utils/getHTMLAttribute";
 
 export default createVisitor({
@@ -12,21 +11,7 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 
-		if (isHTMLElement(node) && hasHTMLAttribute(node, "accesskey")) {
-			return path.addFixableDiagnostic(
-				{
-					target: getHTMLAttribute(node, "accesskey"),
-					fixed: signals.replace({
-						...node,
-						attributes: node.attributes.filter((attribute) =>
-							attribute.type !== "HTMLAttribute" ||
-							attribute.name.name !== "accesskey"
-						),
-					}),
-				},
-				descriptions.LINT.A11_Y_NO_ACCESS_KEY,
-			);
-		} else if (isJSXDOMElement(node) && hasJSXAttribute(node, "accessKey")) {
+		if (isJSXDOMElement(node) && hasJSXAttribute(node, "accessKey")) {
 			return path.addFixableDiagnostic(
 				{
 					target: getJSXAttribute(node, "accessKey"),
@@ -38,8 +23,25 @@ export default createVisitor({
 						),
 					}),
 				},
-				descriptions.LINT.A11_Y_NO_ACCESS_KEY,
+				descriptions.LINT.A11Y_NO_ACCESS_KEY,
 			);
+		} else if (isHTMLElement(node)) {
+			const accessKeyAttribute = getHTMLAttribute(node, "accesskey");
+			if (accessKeyAttribute) {
+				return path.addFixableDiagnostic(
+					{
+						target: accessKeyAttribute,
+						fixed: signals.replace({
+							...node,
+							attributes: node.attributes.filter((attribute) =>
+								attribute.type !== "HTMLAttribute" ||
+								attribute.name.name !== "accesskey"
+							),
+						}),
+					},
+					descriptions.LINT.A11Y_NO_ACCESS_KEY,
+				);
+			}
 		}
 
 		return signals.retain;

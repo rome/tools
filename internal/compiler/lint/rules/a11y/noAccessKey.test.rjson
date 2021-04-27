@@ -2,7 +2,7 @@
 	{
 		filename: "file.tsx"
 		invalid: [
-			"<input accessKey='key' />"
+			"<input accessKey=\"key\" />"
 			"<input accessKey={key} />"
 	]
 		valid: [
@@ -14,7 +14,7 @@
 	{
 		filename: "file.html"
 		invalid: [
-			"<input accesskey=\"h\" />"
+			"<input accesskey=\"key\" />"
 	]
 		valid: [
 			"<input />"

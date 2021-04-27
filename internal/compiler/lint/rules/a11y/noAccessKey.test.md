@@ -13,7 +13,7 @@
   ✖ Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen
     reader keyboard comments.
 
-    <input accessKey='key' />
+    <input accessKey="key" />
            ^^^^^^^^^^^^^^^
 
   ℹ Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard
@@ -112,15 +112,15 @@
   ✖ Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen
     reader keyboard comments.
 
-    <input accesskey="h" />
-           ^^^^^^^^^^^^^
+    <input accesskey="key" />
+           ^^^^^^^^^^^^^^^
 
   ℹ Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard
     actions across applications.
 
   ℹ Safe fix
 
-  - <input·accesskey="h"·/>
+  - <input·accesskey="key"·/>
   + <input·/>
 
 

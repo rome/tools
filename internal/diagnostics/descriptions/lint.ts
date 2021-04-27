@@ -497,7 +497,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-
+	A11Y_NO_ACCESS_KEY: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAccessKey"],
+		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
+			},
+		],
+	},
 	JSX_A11Y_NO_ON_CHANGE: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noOnChange"],
 		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,
