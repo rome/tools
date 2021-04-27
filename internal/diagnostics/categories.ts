@@ -173,8 +173,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useSortedSpecifiers"]
 	| ["lint", "js", "useTemplate"]
 	| ["lint", "js", "useWhile"]
-	| ["lint", "jsx-a11y", "noAutofocus"]
-	| ["lint", "jsx-a11y", "noHeaderScope"]
 	| ["lint", "jsx-a11y", "noOnChange"]
 	| ["lint", "jsx-a11y", "noRedundantRoles"]
 	| ["lint", "jsx-a11y", "noTargetBlank"]
@@ -319,8 +317,6 @@ const lintCategoryNameMap: {
 	"lint/js/useSortedSpecifiers": ["lint", "js", "useSortedSpecifiers"],
 	"lint/js/useTemplate": ["lint", "js", "useTemplate"],
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
-	"lint/jsx-a11y/noAutofocus": ["lint", "jsx-a11y", "noAutofocus"],
-	"lint/jsx-a11y/noHeaderScope": ["lint", "jsx-a11y", "noHeaderScope"],
 	"lint/jsx-a11y/noOnChange": ["lint", "jsx-a11y", "noOnChange"],
 	"lint/jsx-a11y/noRedundantRoles": ["lint", "jsx-a11y", "noRedundantRoles"],
 	"lint/jsx-a11y/noTargetBlank": ["lint", "jsx-a11y", "noTargetBlank"],

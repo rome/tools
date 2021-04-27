@@ -6,7 +6,7 @@ import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
 import getHTMLAttribute from "@internal/js-ast-utils/getHTMLAttribute";
 
 export default createVisitor({
-	name: "jsx-a11y/noAccessKey",
+	name: "a11y/noAccessKey",
 
 	enter(path) {
 		const {node} = path;
@@ -23,13 +23,22 @@ export default createVisitor({
 						),
 					}),
 				},
-				descriptions.LINT.JSX_A11Y_NO_ACCESS_KEY,
+				descriptions.LINT.A11Y_NO_ACCESS_KEY,
 			);
-		} else if (isHTMLElement(node) && node.name.name === "input") {
+		} else if (isHTMLElement(node)) {
 			const accessKeyAttribute = getHTMLAttribute(node, "accesskey");
 			if (accessKeyAttribute) {
-				path.context.addNodeDiagnostic(
-					node,
+				return path.addFixableDiagnostic(
+					{
+						target: accessKeyAttribute,
+						fixed: signals.replace({
+							...node,
+							attributes: node.attributes.filter((attribute) =>
+								attribute.type !== "HTMLAttribute" ||
+								attribute.name.name !== "accesskey"
+							),
+						}),
+					},
 					descriptions.LINT.A11Y_NO_ACCESS_KEY,
 				);
 			}

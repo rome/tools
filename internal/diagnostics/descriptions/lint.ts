@@ -508,39 +508,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_IMG_REDUNDANT_ALT: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noRedundantAlt"],
-		message: markup`Avoid the words "image", "picture", or "photo" in <emphasis>img</emphasis> element alt text.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.`,
-			},
-		],
-	},
-	A11Y_NO_ACCESS_KEY: {
-		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAccessKey"],
-		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
-			},
-		],
-	},
-	JSX_A11Y_NO_AUTOFOCUS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAutofocus"],
-		message: markup`Avoid the <emphasis>autoFocus</emphasis> attribute.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Automatically focusing elements overrides natural page content focus order, causing issues for keyboard-only navigation.`,
-			},
-		],
-	},
 	JSX_A11Y_NO_ON_CHANGE: {
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noOnChange"],
 		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,

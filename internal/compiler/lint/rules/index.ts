@@ -67,8 +67,6 @@ import useSingleVarDeclarator from "./js/useSingleVarDeclarator";
 import useSortedSpecifiers from "./js/useSortedSpecifiers";
 import useTemplate from "./js/useTemplate";
 import useWhile from "./js/useWhile";
-import noAutofocus from "./jsx-a11y/noAutofocus";
-import noHeaderScope from "./jsx-a11y/noHeaderScope";
 import noOnChange from "./jsx-a11y/noOnChange";
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
@@ -198,8 +196,6 @@ lintTransforms.set("js/useSingleVarDeclarator", useSingleVarDeclarator);
 lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
 lintTransforms.set("js/useTemplate", useTemplate);
 lintTransforms.set("js/useWhile", useWhile);
-lintTransforms.set("jsx-a11y/noAutofocus", noAutofocus);
-lintTransforms.set("jsx-a11y/noHeaderScope", noHeaderScope);
 lintTransforms.set("jsx-a11y/noOnChange", noOnChange);
 lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
 lintTransforms.set("jsx-a11y/noTargetBlank", noTargetBlank);
@@ -340,8 +336,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"js/useSortedSpecifiers",
 	"js/useTemplate",
 	"js/useWhile",
-	"jsx-a11y/noAutofocus",
-	"jsx-a11y/noHeaderScope",
 	"jsx-a11y/noOnChange",
 	"jsx-a11y/noRedundantRoles",
 	"jsx-a11y/noTargetBlank",
@@ -462,8 +456,6 @@ export type LintRuleName =
 	| "js/useSortedSpecifiers"
 	| "js/useTemplate"
 	| "js/useWhile"
-	| "jsx-a11y/noAutofocus"
-	| "jsx-a11y/noHeaderScope"
 	| "jsx-a11y/noOnChange"
 	| "jsx-a11y/noRedundantRoles"
 	| "jsx-a11y/noTargetBlank"

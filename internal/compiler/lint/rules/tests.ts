@@ -148,10 +148,6 @@ import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-ignore
 import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
-import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
-// @ts-ignore
-import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
-// @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
@@ -510,14 +506,6 @@ export const tests: Tests = {
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
 		cases: useWhile,
-	},
-	"jsx-a11y/noAutofocus": {
-		category: ["lint", "jsx-a11y", "noAutofocus"],
-		cases: noAutofocus,
-	},
-	"jsx-a11y/noHeaderScope": {
-		category: ["lint", "jsx-a11y", "noHeaderScope"],
-		cases: noHeaderScope,
 	},
 	"jsx-a11y/noOnChange": {
 		category: ["lint", "jsx-a11y", "noOnChange"],

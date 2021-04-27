@@ -7,7 +7,7 @@
 	]
 		valid: [
 			"<input />"
-			"<input accessKey={undefined}"
+			"<input accessKey={undefined} />"
 			"<Input accessKey={key} />"
 	]
 }
