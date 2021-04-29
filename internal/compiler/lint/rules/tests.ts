@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:d1cbe4d867d1e592c0c1d92d8ee23f1f75db7a6a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:f219f922b6bf61596597d9a79eed71f7ba9b1517,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -47,6 +47,10 @@ import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
 import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
 // @ts-ignore
 import useIframeTitle from "./a11y/useIframeTitle.test.rjson";
+// @ts-ignore
+import useKeyWithClickEvents from "./a11y/useKeyWithClickEvents.test.rjson";
+// @ts-ignore
+import useKeyWithMouseEvents from "./a11y/useKeyWithMouseEvents.test.rjson";
 // @ts-ignore
 import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-ignore
@@ -159,10 +163,6 @@ import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
 import useHeadingContent from "./jsx-a11y/useHeadingContent.test.rjson";
-// @ts-ignore
-import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents.test.rjson";
-// @ts-ignore
-import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents.test.rjson";
 // @ts-ignore
 import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
 // @ts-ignore
@@ -306,6 +306,14 @@ export const tests: Tests = {
 	"a11y/useIframeTitle": {
 		category: ["lint", "a11y", "useIframeTitle"],
 		cases: useIframeTitle,
+	},
+	"a11y/useKeyWithClickEvents": {
+		category: ["lint", "a11y", "useKeyWithClickEvents"],
+		cases: useKeyWithClickEvents,
+	},
+	"a11y/useKeyWithMouseEvents": {
+		category: ["lint", "a11y", "useKeyWithMouseEvents"],
+		cases: useKeyWithMouseEvents,
 	},
 	"a11y/useMediaCaption": {
 		category: ["lint", "a11y", "useMediaCaption"],
@@ -530,14 +538,6 @@ export const tests: Tests = {
 	"jsx-a11y/useHeadingContent": {
 		category: ["lint", "jsx-a11y", "useHeadingContent"],
 		cases: useHeadingContent,
-	},
-	"jsx-a11y/useKeyWithClickEvents": {
-		category: ["lint", "jsx-a11y", "useKeyWithClickEvents"],
-		cases: useKeyWithClickEvents,
-	},
-	"jsx-a11y/useKeyWithMouseEvents": {
-		category: ["lint", "jsx-a11y", "useKeyWithMouseEvents"],
-		cases: useKeyWithMouseEvents,
 	},
 	"jsx-a11y/useValidAnchor": {
 		category: ["lint", "jsx-a11y", "useValidAnchor"],

@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:65d9f976508bd6c81aee870aca199c3a09b45b8f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:ce8f3a3096381559b41f1e2f59e0069a7072914c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -122,6 +122,8 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useAriaProptypes"]
 	| ["lint", "a11y", "useHtmlLang"]
 	| ["lint", "a11y", "useIframeTitle"]
+	| ["lint", "a11y", "useKeyWithClickEvents"]
+	| ["lint", "a11y", "useKeyWithMouseEvents"]
 	| ["lint", "a11y", "useMediaCaption"]
 	| ["lint", "a11y", "useValidLang"]
 	| ["lint", "css", "noImportantInKeyframes"]
@@ -179,8 +181,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "jsx-a11y", "noRedundantRoles"]
 	| ["lint", "jsx-a11y", "useAriaPropsForRole"]
 	| ["lint", "jsx-a11y", "useHeadingContent"]
-	| ["lint", "jsx-a11y", "useKeyWithClickEvents"]
-	| ["lint", "jsx-a11y", "useKeyWithMouseEvents"]
 	| ["lint", "jsx-a11y", "useValidAnchor"]
 	| ["lint", "jsx", "noCommentText"]
 	| ["lint", "jsx", "noDuplicateProps"]
@@ -254,6 +254,8 @@ const lintCategoryNameMap: {
 	"lint/a11y/useAriaProptypes": ["lint", "a11y", "useAriaProptypes"],
 	"lint/a11y/useHtmlLang": ["lint", "a11y", "useHtmlLang"],
 	"lint/a11y/useIframeTitle": ["lint", "a11y", "useIframeTitle"],
+	"lint/a11y/useKeyWithClickEvents": ["lint", "a11y", "useKeyWithClickEvents"],
+	"lint/a11y/useKeyWithMouseEvents": ["lint", "a11y", "useKeyWithMouseEvents"],
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
 	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
@@ -327,16 +329,6 @@ const lintCategoryNameMap: {
 		"useAriaPropsForRole",
 	],
 	"lint/jsx-a11y/useHeadingContent": ["lint", "jsx-a11y", "useHeadingContent"],
-	"lint/jsx-a11y/useKeyWithClickEvents": [
-		"lint",
-		"jsx-a11y",
-		"useKeyWithClickEvents",
-	],
-	"lint/jsx-a11y/useKeyWithMouseEvents": [
-		"lint",
-		"jsx-a11y",
-		"useKeyWithMouseEvents",
-	],
 	"lint/jsx-a11y/useValidAnchor": ["lint", "jsx-a11y", "useValidAnchor"],
 	"lint/jsx/noCommentText": ["lint", "jsx", "noCommentText"],
 	"lint/jsx/noDuplicateProps": ["lint", "jsx", "noDuplicateProps"],

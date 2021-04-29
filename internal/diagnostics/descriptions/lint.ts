@@ -17,6 +17,28 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_USE_KEY_WITH_MOUSE_EVENTS: (mouseEvent: string, keyboardEvent: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useKeyWithMouseEvents"],
+		message: markup`Pair the <emphasis>${mouseEvent}</emphasis> mouse event with the <emphasis>${keyboardEvent}</emphasis> keyboard event.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.`,
+			},
+		],
+	}),
+	A11_Y_USE_KEY_WITH_CLICK_EVENTS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useKeyWithClickEvents"],
+		message: markup`Pair the <emphasis>onClick</emphasis> mouse event with the <emphasis>onKeyUp</emphasis>, the <emphasis>onKeyDown</emphasis>, or the <emphasis>onKeyPress</emphasis> keyboard event.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.`,
+			},
+		],
+	},
 	A11_Y_USE_ANCHOR_CONTENT: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAnchorContent"],
 		message: markup`Provide screen reader accessible content when using <emphasis>anchor</emphasis> elements.`,
@@ -353,17 +375,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JSX_A11Y_CLICK_EVENTS_HAVE_KEY_EVENTS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithClickEvents"],
-		message: markup`Pair the <emphasis>onClick</emphasis> mouse event with the <emphasis>onKeyUp</emphasis>, the <emphasis>onKeyDown</emphasis>, or the <emphasis>onKeyPress</emphasis> keyboard event.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.`,
-			},
-		],
-	},
 	JSX_NO_DUPLICATE_PROPS: (key: string) => ({
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx/noDuplicateProps"],
 		message: markup`Avoid duplicate component props. Check the <emphasis>${key}</emphasis> prop.`,
@@ -434,20 +445,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_MOUSE_EVENTS_HAVE_KEY_EVENTS: (
-		mouseEvent: string,
-		keyboardEvent: string,
-	) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithMouseEvents"],
-		message: markup`Pair the <emphasis>${mouseEvent}</emphasis> mouse event with the <emphasis>${keyboardEvent}</emphasis> keyboard event.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.`,
-			},
-		],
-	}),
 	REACT_NO_WILL_UPDATE_SET_STATE: {
 		category: DIAGNOSTIC_CATEGORIES["lint/react/noWillUpdateSetState"],
 		message: markup`Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentWillUpdate</emphasis> method.`,

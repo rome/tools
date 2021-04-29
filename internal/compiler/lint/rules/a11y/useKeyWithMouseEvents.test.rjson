@@ -1,0 +1,33 @@
+[
+	{
+		filename: "file.tsx"
+		invalid: [
+			"<div onMouseOver={ () => void 0 } />"
+			"<div onMouseOut={ () => void 0 } />"
+			"<div onMouseOver={ () => void 0 } >{props}</div>"
+			"<div onMouseOut={ () => void 0 } >{props}</div>"
+	]
+		valid: [
+			"<div onMouseOver={ () => void 0 } onFocus={() => void 0} />"
+			"<div onMouseOut={ () => void 0 } onBlur={() => void 0} />"
+			"<div onMouseOver={ () => void 0 }  onFocus={() => void 0} >{props}</div>"
+			"<div onMouseOut={ () => void 0 }  onBlur={() => void 0} >{props}</div>"
+			"<Div onMouseOut={ () => void 0 } >{props}</Div>"
+	]
+}
+	{
+		filename: "file.html"
+		invalid: [
+			"<div onmouseover=\"() => void 0\" ></div>"
+			"<div onmouseout=\"() => void 0\" ></div>"
+			"<div onmouseover=\"() => void 0\" >lorem ipsum</div>"
+			"<div onmouseout=\"() => void 0\" >lorem ipsum</div>"
+	]
+		valid: [
+			"<div onmouseover=\"() => void 0\" onfocus=\"() => void 0\" ></div>"
+			"<div onmouseout=\"() => void 0\" onblur=\"() => void 0\" ></div>"
+			"<div onmouseover=\"() => void 0\"  onfocus=\"() => void 0\" >lorem ipsum</div>"
+			"<div onmouseout=\"() => void 0\"  onblur=\"() => void 0\" >lorem ipsum</div>"
+	]
+}
+]
