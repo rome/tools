@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:5cb998bcabdf0276ce28aa305c2d8ed6d059f2bb,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:65d9f976508bd6c81aee870aca199c3a09b45b8f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -117,6 +117,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noSvgWithoutTitle"]
 	| ["lint", "a11y", "noTargetBlank"]
 	| ["lint", "a11y", "useAltText"]
+	| ["lint", "a11y", "useAnchorContent"]
 	| ["lint", "a11y", "useAriaProps"]
 	| ["lint", "a11y", "useAriaProptypes"]
 	| ["lint", "a11y", "useHtmlLang"]
@@ -176,7 +177,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useWhile"]
 	| ["lint", "jsx-a11y", "noOnChange"]
 	| ["lint", "jsx-a11y", "noRedundantRoles"]
-	| ["lint", "jsx-a11y", "useAnchorContent"]
 	| ["lint", "jsx-a11y", "useAriaPropsForRole"]
 	| ["lint", "jsx-a11y", "useHeadingContent"]
 	| ["lint", "jsx-a11y", "useKeyWithClickEvents"]
@@ -249,6 +249,7 @@ const lintCategoryNameMap: {
 	"lint/a11y/noSvgWithoutTitle": ["lint", "a11y", "noSvgWithoutTitle"],
 	"lint/a11y/noTargetBlank": ["lint", "a11y", "noTargetBlank"],
 	"lint/a11y/useAltText": ["lint", "a11y", "useAltText"],
+	"lint/a11y/useAnchorContent": ["lint", "a11y", "useAnchorContent"],
 	"lint/a11y/useAriaProps": ["lint", "a11y", "useAriaProps"],
 	"lint/a11y/useAriaProptypes": ["lint", "a11y", "useAriaProptypes"],
 	"lint/a11y/useHtmlLang": ["lint", "a11y", "useHtmlLang"],
@@ -320,7 +321,6 @@ const lintCategoryNameMap: {
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
 	"lint/jsx-a11y/noOnChange": ["lint", "jsx-a11y", "noOnChange"],
 	"lint/jsx-a11y/noRedundantRoles": ["lint", "jsx-a11y", "noRedundantRoles"],
-	"lint/jsx-a11y/useAnchorContent": ["lint", "jsx-a11y", "useAnchorContent"],
 	"lint/jsx-a11y/useAriaPropsForRole": [
 		"lint",
 		"jsx-a11y",

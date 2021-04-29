@@ -12,7 +12,7 @@ invalid: [
 	"<td  role='gridcell'></td>"
 	"<fieldset  role='group'></fieldset>"
 	"<img src='foo' alt='bar'  role='img' />"
-	"<a role='link'></a>"
+	"<a role='link'>something</a>"
 	"<link role='link' />"
 	"<ol role='list' ></ol>"
 	"<ul role='list' ></ul>"

@@ -355,14 +355,15 @@
 
   ✖ Using the role attribute link on the a element is redundant.
 
-    <a role='link'></a>
+    <a role='link'>something</a>
        ^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute.
 
     1   │ - <a·role="link">
       1 │ + <a>
-    2 2 │   </a>
+    2 2 │   → something
+    3 3 │   </a>
 
   ℹ
 
@@ -372,7 +373,9 @@
 ### `12: formatted`
 
 ```tsx
-<a role="link" />;
+<a role="link">
+	something
+</a>;
 
 ```
 
