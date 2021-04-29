@@ -17,6 +17,17 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_TARGET_BLANK: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noTargetBlank"],
+		message: markup`Avoid using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Opening external links in new tabs without rel="noreferrer" is a security risk. See <hyperlink target="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" /> for more details.`,
+			},
+		],
+	},
 	A11_Y_NO_ACCESS_KEY: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAccessKey"],
 		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
@@ -516,17 +527,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`The onBlur event is more declarative and reliable for indicating input changes when using keyboard navigation.`,
-			},
-		],
-	},
-	JSX_A11Y_NO_TARGET_BLANK: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noTargetBlank"],
-		message: markup`Avoid using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis>.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Opening external links in new tabs without rel="noreferrer" is a security risk. See <hyperlink target="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" /> for more details.`,
 			},
 		],
 	},
