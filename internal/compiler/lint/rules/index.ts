@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:63a3051e3b0702d483cf8272db0037c8f21a4f33,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:16cbac848efd4603c87f0868b93ae6e7ebc0ec58,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -6,6 +6,7 @@ import noDistractingElements from "./a11y/noDistractingElements";
 import noHeaderScope from "./a11y/noHeaderScope";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole";
 import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex";
+import noOnChange from "./a11y/noOnChange";
 import noPositiveTabindex from "./a11y/noPositiveTabindex";
 import noRedundantAlt from "./a11y/noRedundantAlt";
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle";
@@ -16,6 +17,8 @@ import useAriaProps from "./a11y/useAriaProps";
 import useAriaProptypes from "./a11y/useAriaProptypes";
 import useHtmlLang from "./a11y/useHtmlLang";
 import useIframeTitle from "./a11y/useIframeTitle";
+import useKeyWithClickEvents from "./a11y/useKeyWithClickEvents";
+import useKeyWithMouseEvents from "./a11y/useKeyWithMouseEvents";
 import useMediaCaption from "./a11y/useMediaCaption";
 import useValidLang from "./a11y/useValidLang";
 import noImportantInKeyframes from "./css/noImportantInKeyframes";
@@ -69,12 +72,9 @@ import useSingleVarDeclarator from "./js/useSingleVarDeclarator";
 import useSortedSpecifiers from "./js/useSortedSpecifiers";
 import useTemplate from "./js/useTemplate";
 import useWhile from "./js/useWhile";
-import noOnChange from "./jsx-a11y/noOnChange";
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
 import useHeadingContent from "./jsx-a11y/useHeadingContent";
-import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents";
-import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents";
 import useValidAnchor from "./jsx-a11y/useValidAnchor";
 import noCommentText from "./jsx/noCommentText";
 import noDuplicateProps from "./jsx/noDuplicateProps";
@@ -129,6 +129,7 @@ lintTransforms.set(
 	noNoninteractiveElementToInteractiveRole,
 );
 lintTransforms.set("a11y/noNoninteractiveTabindex", noNoninteractiveTabindex);
+lintTransforms.set("a11y/noOnChange", noOnChange);
 lintTransforms.set("a11y/noPositiveTabindex", noPositiveTabindex);
 lintTransforms.set("a11y/noRedundantAlt", noRedundantAlt);
 lintTransforms.set("a11y/noSvgWithoutTitle", noSvgWithoutTitle);
@@ -139,6 +140,8 @@ lintTransforms.set("a11y/useAriaProps", useAriaProps);
 lintTransforms.set("a11y/useAriaProptypes", useAriaProptypes);
 lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
 lintTransforms.set("a11y/useIframeTitle", useIframeTitle);
+lintTransforms.set("a11y/useKeyWithClickEvents", useKeyWithClickEvents);
+lintTransforms.set("a11y/useKeyWithMouseEvents", useKeyWithMouseEvents);
 lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidLang", useValidLang);
 lintTransforms.set("css/noImportantInKeyframes", noImportantInKeyframes);
@@ -198,12 +201,9 @@ lintTransforms.set("js/useSingleVarDeclarator", useSingleVarDeclarator);
 lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
 lintTransforms.set("js/useTemplate", useTemplate);
 lintTransforms.set("js/useWhile", useWhile);
-lintTransforms.set("jsx-a11y/noOnChange", noOnChange);
 lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
 lintTransforms.set("jsx-a11y/useAriaPropsForRole", useAriaPropsForRole);
 lintTransforms.set("jsx-a11y/useHeadingContent", useHeadingContent);
-lintTransforms.set("jsx-a11y/useKeyWithClickEvents", useKeyWithClickEvents);
-lintTransforms.set("jsx-a11y/useKeyWithMouseEvents", useKeyWithMouseEvents);
 lintTransforms.set("jsx-a11y/useValidAnchor", useValidAnchor);
 lintTransforms.set("jsx/noCommentText", noCommentText);
 lintTransforms.set("jsx/noDuplicateProps", noDuplicateProps);
@@ -275,6 +275,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/noHeaderScope",
 	"a11y/noNoninteractiveElementToInteractiveRole",
 	"a11y/noNoninteractiveTabindex",
+	"a11y/noOnChange",
 	"a11y/noPositiveTabindex",
 	"a11y/noRedundantAlt",
 	"a11y/noSvgWithoutTitle",
@@ -285,6 +286,8 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/useAriaProptypes",
 	"a11y/useHtmlLang",
 	"a11y/useIframeTitle",
+	"a11y/useKeyWithClickEvents",
+	"a11y/useKeyWithMouseEvents",
 	"a11y/useMediaCaption",
 	"a11y/useValidLang",
 	"css/noImportantInKeyframes",
@@ -338,12 +341,9 @@ export const lintRuleNames: LintRuleName[] = [
 	"js/useSortedSpecifiers",
 	"js/useTemplate",
 	"js/useWhile",
-	"jsx-a11y/noOnChange",
 	"jsx-a11y/noRedundantRoles",
 	"jsx-a11y/useAriaPropsForRole",
 	"jsx-a11y/useHeadingContent",
-	"jsx-a11y/useKeyWithClickEvents",
-	"jsx-a11y/useKeyWithMouseEvents",
 	"jsx-a11y/useValidAnchor",
 	"jsx/noCommentText",
 	"jsx/noDuplicateProps",
@@ -395,6 +395,7 @@ export type LintRuleName =
 	| "a11y/noHeaderScope"
 	| "a11y/noNoninteractiveElementToInteractiveRole"
 	| "a11y/noNoninteractiveTabindex"
+	| "a11y/noOnChange"
 	| "a11y/noPositiveTabindex"
 	| "a11y/noRedundantAlt"
 	| "a11y/noSvgWithoutTitle"
@@ -405,6 +406,8 @@ export type LintRuleName =
 	| "a11y/useAriaProptypes"
 	| "a11y/useHtmlLang"
 	| "a11y/useIframeTitle"
+	| "a11y/useKeyWithClickEvents"
+	| "a11y/useKeyWithMouseEvents"
 	| "a11y/useMediaCaption"
 	| "a11y/useValidLang"
 	| "css/noImportantInKeyframes"
@@ -458,12 +461,9 @@ export type LintRuleName =
 	| "js/useSortedSpecifiers"
 	| "js/useTemplate"
 	| "js/useWhile"
-	| "jsx-a11y/noOnChange"
 	| "jsx-a11y/noRedundantRoles"
 	| "jsx-a11y/useAriaPropsForRole"
 	| "jsx-a11y/useHeadingContent"
-	| "jsx-a11y/useKeyWithClickEvents"
-	| "jsx-a11y/useKeyWithMouseEvents"
 	| "jsx-a11y/useValidAnchor"
 	| "jsx/noCommentText"
 	| "jsx/noDuplicateProps"

@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:4e7bf9f2dfa22db7b67605fb4b988223d35242d0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:5942555258e3e3b0b1cbf08824683f0338e1efaf,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -437,6 +437,13 @@ non-interactive elements should not be assigned interactive roles
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noOnChange">
+	<a href="/docs/lint/rules/a11y/noOnChange">noOnChange</a>
+	<a class="header-anchor" href="#noOnChange"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noPositiveTabindex">
 	<a href="/docs/lint/rules/a11y/noPositiveTabindex">noPositiveTabindex</a>
 	<a class="header-anchor" href="#noPositiveTabindex"></a>
@@ -507,6 +514,20 @@ the `lang` attribute is mandatory
 enforce `iframe` elements have a title attribute
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useKeyWithClickEvents">
+	<a href="/docs/lint/rules/a11y/useKeyWithClickEvents">useKeyWithClickEvents</a>
+	<a class="header-anchor" href="#useKeyWithClickEvents"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKeyWithMouseEvents">
+	<a href="/docs/lint/rules/a11y/useKeyWithMouseEvents">useKeyWithMouseEvents</a>
+	<a class="header-anchor" href="#useKeyWithMouseEvents"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useMediaCaption">
 	<a href="/docs/lint/rules/a11y/useMediaCaption">useMediaCaption</a>
 	<a class="header-anchor" href="#useMediaCaption"></a>
@@ -524,13 +545,6 @@ check if `lang` attribute is valid
 <section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="noOnChange">
-	<a href="/docs/lint/rules/jsx-a11y/noOnChange">noOnChange</a>
-	<a class="header-anchor" href="#noOnChange"></a>
-</h3>
-discourage the usage of `onChange`
-</div>
 <div class="rule">
 <h3 data-toc-exclude id="noRedundantRoles">
 	<a href="/docs/lint/rules/jsx-a11y/noRedundantRoles">noRedundantRoles</a>
@@ -551,20 +565,6 @@ enforce that elements with ARIA roles must have all required attributes for that
 	<a class="header-anchor" href="#useHeadingContent"></a>
 </h3>
 enforce heading (`h1`, `h2`, etc) elements contain accessible content
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useKeyWithClickEvents">
-	<a href="/docs/lint/rules/jsx-a11y/useKeyWithClickEvents">useKeyWithClickEvents</a>
-	<a class="header-anchor" href="#useKeyWithClickEvents"></a>
-</h3>
-enforce a clickable non-interactive element has at least one keyboard event listener.
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useKeyWithMouseEvents">
-	<a href="/docs/lint/rules/jsx-a11y/useKeyWithMouseEvents">useKeyWithMouseEvents</a>
-	<a class="header-anchor" href="#useKeyWithMouseEvents"></a>
-</h3>
-enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useValidAnchor">

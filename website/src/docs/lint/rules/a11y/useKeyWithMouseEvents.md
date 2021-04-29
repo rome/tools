@@ -1,30 +1,30 @@
 ---
-title: Lint Rule jsx-a11y/useKeyWithMouseEvents
+title: Lint Rule a11y/useKeyWithMouseEvents
 layout: layouts/rule.liquid
-description: enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users
-eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/mouse-events-have-key-events.md
+showHero: false
+description: MISSING DOCUMENTATION
 eleventyNavigation:
-	key: lint-rules/jsx-a11y/useKeyWithMouseEvents
+	key: lint-rules/a11y/useKeyWithMouseEvents
 	parent: lint-rules
-	title: jsx-a11y/useKeyWithMouseEvents
+	title: a11y/useKeyWithMouseEvents
 ---
 
-# jsx-a11y/useKeyWithMouseEvents
+# a11y/useKeyWithMouseEvents
 
-<!-- GENERATED:START(hash:a50e71ae1167e19a63ace7e9f30f456a4db94abd,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users
+MISSING DOCUMENTATION
 
-**ESLint Equivalent:** [mouse-events-have-key-events](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/mouse-events-have-key-events.md)
+<!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e401d56c17e799fefd940a4aea5f86b51720889e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:255d4c86663fbd8bdc15153e79944bbdf76570bb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
 {% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">onMouseOver</span><span class="token operator">=</span><span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx-a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Pair the </span><span style="color: Tomato;"><strong>onMouseOver</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onFocus</strong></span><span style="color: Tomato;"> keyboard event.</span>
 
@@ -40,7 +40,7 @@ enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` fo
 
 {% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">onMouseOut</span><span class="token operator">=</span><span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx-a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Pair the </span><span style="color: Tomato;"><strong>onMouseOut</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onBlur</strong></span><span style="color: Tomato;"> keyboard event.</span>
 
@@ -56,7 +56,7 @@ enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` fo
 
 {% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">onMouseOver</span><span class="token operator">=</span><span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token punctuation">}</span> &gt;<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx-a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Pair the </span><span style="color: Tomato;"><strong>onMouseOver</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onFocus</strong></span><span style="color: Tomato;"> keyboard event.</span>
 
@@ -72,12 +72,73 @@ enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` fo
 
 {% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">onMouseOut</span><span class="token operator">=</span><span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token punctuation">}</span> &gt;<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx-a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Pair the </span><span style="color: Tomato;"><strong>onMouseOut</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onBlur</strong></span><span style="color: Tomato;"> keyboard event.</span>
 
     &lt;<span class="token variable">div</span> <span class="token attr-name">onMouseOut</span><span class="token operator">=</span><span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token punctuation">}</span> &gt;<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Actions triggered using mouse events should have corresponding</span>
+    <span style="color: rgb(38, 148, 255);">keyboard events to account for keyboard-only navigation.</span>
+
+</code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseover</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:5</span> <strong>lint/a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Pair the </span><span style="color: Tomato;"><strong>onmouseover</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onfocus</strong></span><span style="color: Tomato;"> keyboard event.</span>
+
+    <span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseover</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span>
+         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Actions triggered using mouse events should have corresponding</span>
+    <span style="color: rgb(38, 148, 255);">keyboard events to account for keyboard-only navigation.</span>
+
+</code></pre>{% endraw %}
+
+---
+
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseout</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:5</span> <strong>lint/a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Pair the </span><span style="color: Tomato;"><strong>onmouseout</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onblur</strong></span><span style="color: Tomato;"> keyboard event.</span>
+
+    <span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseout</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span>
+         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Actions triggered using mouse events should have corresponding</span>
+    <span style="color: rgb(38, 148, 255);">keyboard events to account for keyboard-only navigation.</span>
+
+</code></pre>{% endraw %}
+
+---
+
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseover</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span>lorem ipsum<span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:5</span> <strong>lint/a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Pair the </span><span style="color: Tomato;"><strong>onmouseover</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onfocus</strong></span><span style="color: Tomato;"> keyboard event.</span>
+
+    <span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseover</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span>lorem ipsum<span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span>
+         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Actions triggered using mouse events should have corresponding</span>
+    <span style="color: rgb(38, 148, 255);">keyboard events to account for keyboard-only navigation.</span>
+
+</code></pre>{% endraw %}
+
+---
+
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseout</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span>lorem ipsum<span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:5</span> <strong>lint/a11y/useKeyWithMouseEvents</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Pair the </span><span style="color: Tomato;"><strong>onmouseout</strong></span><span style="color: Tomato;"> mouse event with the </span><span style="color: Tomato;"><strong>onblur</strong></span><span style="color: Tomato;"> keyboard event.</span>
+
+    <span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseout</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span>lorem ipsum<span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span>
+         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Actions triggered using mouse events should have corresponding</span>
     <span style="color: rgb(38, 148, 255);">keyboard events to account for keyboard-only navigation.</span>
@@ -91,4 +152,8 @@ enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` fo
 {% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">onMouseOver</span><span class="token operator">=</span><span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token punctuation">}</span>  <span class="token attr-name">onFocus</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span><span class="token punctuation">}</span> &gt;<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">onMouseOut</span><span class="token operator">=</span><span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token punctuation">}</span>  <span class="token attr-name">onBlur</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span><span class="token punctuation">}</span> &gt;<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">Div</span> <span class="token attr-name">onMouseOut</span><span class="token operator">=</span><span class="token punctuation">{</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token number">0</span> <span class="token punctuation">}</span> &gt;<span class="token punctuation">{</span><span class="token variable">props</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">Div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseover</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token attr-name">onfocus</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseout</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token attr-name">onblur</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseover</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span>  <span class="token attr-name">onfocus</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span>lorem ipsum<span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">onmouseout</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span>  <span class="token attr-name">onblur</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;() =&gt; void 0&quot;</span> <span class="token punctuation">&gt;</span>lorem ipsum<span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
