@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:a15b06d7208a510b63b27b9c377a353c1b734613,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:33cb81b4e653bf1b8a9dfbd6cf9da19374103493,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -458,6 +458,13 @@ enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;pictur
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noTargetBlank">
+	<a href="/docs/lint/rules/a11y/noTargetBlank">noTargetBlank</a>
+	<a class="header-anchor" href="#noTargetBlank"></a>
+</h3>
+Prevent usage of unsafe `target=&quot;_blank&quot;`
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useAltText">
 	<a href="/docs/lint/rules/a11y/useAltText">useAltText</a>
 	<a class="header-anchor" href="#useAltText"></a>
@@ -523,13 +530,6 @@ discourage the usage of `onChange`
 	<a class="header-anchor" href="#noRedundantRoles"></a>
 </h3>
 enforce explicit role property is not the same as implicit/default role property on element
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noTargetBlank">
-	<a href="/docs/lint/rules/jsx-a11y/noTargetBlank">noTargetBlank</a>
-	<a class="header-anchor" href="#noTargetBlank"></a>
-</h3>
-Prevent usage of unsafe `target=&quot;_blank&quot;`
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAnchorContent">

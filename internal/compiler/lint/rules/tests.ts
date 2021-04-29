@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:a192f0dce4bfbb2bc18f5fa1632f468802c6ba28,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:ddbc9902ac1dfe455aa1bc9779e45a3fd0038c8c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -33,6 +33,8 @@ import noPositiveTabindex from "./a11y/noPositiveTabindex.test.rjson";
 import noRedundantAlt from "./a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
+// @ts-ignore
+import noTargetBlank from "./a11y/noTargetBlank.test.rjson";
 // @ts-ignore
 import useAltText from "./a11y/useAltText.test.rjson";
 // @ts-ignore
@@ -151,8 +153,6 @@ import useWhile from "./js/useWhile.test.rjson";
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
-// @ts-ignore
-import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
 // @ts-ignore
 import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
 // @ts-ignore
@@ -278,6 +278,10 @@ export const tests: Tests = {
 	"a11y/noSvgWithoutTitle": {
 		category: ["lint", "a11y", "noSvgWithoutTitle"],
 		cases: noSvgWithoutTitle,
+	},
+	"a11y/noTargetBlank": {
+		category: ["lint", "a11y", "noTargetBlank"],
+		cases: noTargetBlank,
 	},
 	"a11y/useAltText": {
 		category: ["lint", "a11y", "useAltText"],
@@ -514,10 +518,6 @@ export const tests: Tests = {
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],
 		cases: noRedundantRoles,
-	},
-	"jsx-a11y/noTargetBlank": {
-		category: ["lint", "jsx-a11y", "noTargetBlank"],
-		cases: noTargetBlank,
 	},
 	"jsx-a11y/useAnchorContent": {
 		category: ["lint", "jsx-a11y", "useAnchorContent"],
