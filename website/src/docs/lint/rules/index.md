@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:33cb81b4e653bf1b8a9dfbd6cf9da19374103493,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:4e7bf9f2dfa22db7b67605fb4b988223d35242d0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -472,6 +472,13 @@ Prevent usage of unsafe `target=&quot;_blank&quot;`
 Checks that images have a valid alternative text
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useAnchorContent">
+	<a href="/docs/lint/rules/a11y/useAnchorContent">useAnchorContent</a>
+	<a class="header-anchor" href="#useAnchorContent"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useAriaProps">
 	<a href="/docs/lint/rules/a11y/useAriaProps">useAriaProps</a>
 	<a class="header-anchor" href="#useAriaProps"></a>
@@ -530,13 +537,6 @@ discourage the usage of `onChange`
 	<a class="header-anchor" href="#noRedundantRoles"></a>
 </h3>
 enforce explicit role property is not the same as implicit/default role property on element
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useAnchorContent">
-	<a href="/docs/lint/rules/jsx-a11y/useAnchorContent">useAnchorContent</a>
-	<a class="header-anchor" href="#useAnchorContent"></a>
-</h3>
-enforce that anchors have content and that the content is accessible to screen readers
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAriaPropsForRole">

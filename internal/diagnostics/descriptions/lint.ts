@@ -17,6 +17,17 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_USE_ANCHOR_CONTENT: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAnchorContent"],
+		message: markup`Provide screen reader accessible content when using <emphasis>anchor</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`All links on a page should have content that is accessible to screen readers.`,
+			},
+		],
+	},
 	A11_Y_NO_TARGET_BLANK: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noTargetBlank"],
 		message: markup`Avoid using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis>.`,
@@ -445,17 +456,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Updating state immediately before a scheduled render causes a second render that can cause visual layout thrashing.`,
-			},
-		],
-	},
-	JSX_A11Y_ANCHOR_HAS_CONTENT: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAnchorContent"],
-		message: markup`Provide screen reader accessible content when using <emphasis>anchor</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`All links on a page should have content that is accessible to screen readers.`,
 			},
 		],
 	},

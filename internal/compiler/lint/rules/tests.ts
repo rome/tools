@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:ddbc9902ac1dfe455aa1bc9779e45a3fd0038c8c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:d1cbe4d867d1e592c0c1d92d8ee23f1f75db7a6a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -37,6 +37,8 @@ import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 import noTargetBlank from "./a11y/noTargetBlank.test.rjson";
 // @ts-ignore
 import useAltText from "./a11y/useAltText.test.rjson";
+// @ts-ignore
+import useAnchorContent from "./a11y/useAnchorContent.test.rjson";
 // @ts-ignore
 import useAriaProps from "./a11y/useAriaProps.test.rjson";
 // @ts-ignore
@@ -153,8 +155,6 @@ import useWhile from "./js/useWhile.test.rjson";
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
-// @ts-ignore
-import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
 // @ts-ignore
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
@@ -286,6 +286,10 @@ export const tests: Tests = {
 	"a11y/useAltText": {
 		category: ["lint", "a11y", "useAltText"],
 		cases: useAltText,
+	},
+	"a11y/useAnchorContent": {
+		category: ["lint", "a11y", "useAnchorContent"],
+		cases: useAnchorContent,
 	},
 	"a11y/useAriaProps": {
 		category: ["lint", "a11y", "useAriaProps"],
@@ -518,10 +522,6 @@ export const tests: Tests = {
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],
 		cases: noRedundantRoles,
-	},
-	"jsx-a11y/useAnchorContent": {
-		category: ["lint", "jsx-a11y", "useAnchorContent"],
-		cases: useAnchorContent,
 	},
 	"jsx-a11y/useAriaPropsForRole": {
 		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],

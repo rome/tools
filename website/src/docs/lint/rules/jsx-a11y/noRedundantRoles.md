@@ -17,7 +17,7 @@ enforce explicit role property is not the same as implicit/default role property
 **ESLint Equivalent:** [no-redundant-roles](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-redundant-roles.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:2223953cb20d13e746c05f992e68c5a1db353ae1,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:96e8e75647fe82d8e1454904125430e6aac7a4ca,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -272,20 +272,21 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;something&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:3</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>link</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token variable">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;
+    &lt;<span class="token variable">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;something&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;
        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;a</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>role=&quot;link&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;a&gt;</span>
-  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/a&gt;
+  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  <span style="opacity: 0.8;">&rarr; </span>something
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  &lt;/a&gt;
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
