@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:ce8f3a3096381559b41f1e2f59e0069a7072914c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:1dceb67feb310036105512830eb9f1d09faf1bb6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -112,6 +112,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noHeaderScope"]
 	| ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"]
 	| ["lint", "a11y", "noNoninteractiveTabindex"]
+	| ["lint", "a11y", "noOnChange"]
 	| ["lint", "a11y", "noPositiveTabindex"]
 	| ["lint", "a11y", "noRedundantAlt"]
 	| ["lint", "a11y", "noSvgWithoutTitle"]
@@ -177,7 +178,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useSortedSpecifiers"]
 	| ["lint", "js", "useTemplate"]
 	| ["lint", "js", "useWhile"]
-	| ["lint", "jsx-a11y", "noOnChange"]
 	| ["lint", "jsx-a11y", "noRedundantRoles"]
 	| ["lint", "jsx-a11y", "useAriaPropsForRole"]
 	| ["lint", "jsx-a11y", "useHeadingContent"]
@@ -244,6 +244,7 @@ const lintCategoryNameMap: {
 		"a11y",
 		"noNoninteractiveTabindex",
 	],
+	"lint/a11y/noOnChange": ["lint", "a11y", "noOnChange"],
 	"lint/a11y/noPositiveTabindex": ["lint", "a11y", "noPositiveTabindex"],
 	"lint/a11y/noRedundantAlt": ["lint", "a11y", "noRedundantAlt"],
 	"lint/a11y/noSvgWithoutTitle": ["lint", "a11y", "noSvgWithoutTitle"],
@@ -321,7 +322,6 @@ const lintCategoryNameMap: {
 	"lint/js/useSortedSpecifiers": ["lint", "js", "useSortedSpecifiers"],
 	"lint/js/useTemplate": ["lint", "js", "useTemplate"],
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
-	"lint/jsx-a11y/noOnChange": ["lint", "jsx-a11y", "noOnChange"],
 	"lint/jsx-a11y/noRedundantRoles": ["lint", "jsx-a11y", "noRedundantRoles"],
 	"lint/jsx-a11y/useAriaPropsForRole": [
 		"lint",

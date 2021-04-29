@@ -17,6 +17,17 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_ON_CHANGE: (goodEventName: string, badEventName: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noOnChange"],
+		message: markup`Provide an <emphasis>${goodEventName}</emphasis> event instead of an <emphasis>${badEventName}</emphasis> event unless absolutely necessary.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The ${goodEventName} event is more declarative and reliable for indicating input changes when using keyboard navigation.`,
+			},
+		],
+	}),
 	A11_Y_USE_KEY_WITH_MOUSE_EVENTS: (mouseEvent: string, keyboardEvent: string) => ({
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useKeyWithMouseEvents"],
 		message: markup`Pair the <emphasis>${mouseEvent}</emphasis> mouse event with the <emphasis>${keyboardEvent}</emphasis> keyboard event.`,
@@ -513,17 +524,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
-			},
-		],
-	},
-	JSX_A11Y_NO_ON_CHANGE: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noOnChange"],
-		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`The onBlur event is more declarative and reliable for indicating input changes when using keyboard navigation.`,
 			},
 		],
 	},

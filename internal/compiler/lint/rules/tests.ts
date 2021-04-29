@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:f219f922b6bf61596597d9a79eed71f7ba9b1517,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:01ad0c80f33dc931c1316888270304754d8dad2e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -27,6 +27,8 @@ import noHeaderScope from "./a11y/noHeaderScope.test.rjson";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
 // @ts-ignore
 import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex.test.rjson";
+// @ts-ignore
+import noOnChange from "./a11y/noOnChange.test.rjson";
 // @ts-ignore
 import noPositiveTabindex from "./a11y/noPositiveTabindex.test.rjson";
 // @ts-ignore
@@ -156,8 +158,6 @@ import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-ignore
 import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
-import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
-// @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
 // @ts-ignore
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
@@ -266,6 +266,10 @@ export const tests: Tests = {
 	"a11y/noNoninteractiveTabindex": {
 		category: ["lint", "a11y", "noNoninteractiveTabindex"],
 		cases: noNoninteractiveTabindex,
+	},
+	"a11y/noOnChange": {
+		category: ["lint", "a11y", "noOnChange"],
+		cases: noOnChange,
 	},
 	"a11y/noPositiveTabindex": {
 		category: ["lint", "a11y", "noPositiveTabindex"],
@@ -522,10 +526,6 @@ export const tests: Tests = {
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
 		cases: useWhile,
-	},
-	"jsx-a11y/noOnChange": {
-		category: ["lint", "jsx-a11y", "noOnChange"],
-		cases: noOnChange,
 	},
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],

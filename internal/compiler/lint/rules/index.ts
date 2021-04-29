@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:1f96c289bfdfd37132dc5c94b0a374eef4e75aa3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:16cbac848efd4603c87f0868b93ae6e7ebc0ec58,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -6,6 +6,7 @@ import noDistractingElements from "./a11y/noDistractingElements";
 import noHeaderScope from "./a11y/noHeaderScope";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole";
 import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex";
+import noOnChange from "./a11y/noOnChange";
 import noPositiveTabindex from "./a11y/noPositiveTabindex";
 import noRedundantAlt from "./a11y/noRedundantAlt";
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle";
@@ -71,7 +72,6 @@ import useSingleVarDeclarator from "./js/useSingleVarDeclarator";
 import useSortedSpecifiers from "./js/useSortedSpecifiers";
 import useTemplate from "./js/useTemplate";
 import useWhile from "./js/useWhile";
-import noOnChange from "./jsx-a11y/noOnChange";
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
 import useHeadingContent from "./jsx-a11y/useHeadingContent";
@@ -129,6 +129,7 @@ lintTransforms.set(
 	noNoninteractiveElementToInteractiveRole,
 );
 lintTransforms.set("a11y/noNoninteractiveTabindex", noNoninteractiveTabindex);
+lintTransforms.set("a11y/noOnChange", noOnChange);
 lintTransforms.set("a11y/noPositiveTabindex", noPositiveTabindex);
 lintTransforms.set("a11y/noRedundantAlt", noRedundantAlt);
 lintTransforms.set("a11y/noSvgWithoutTitle", noSvgWithoutTitle);
@@ -200,7 +201,6 @@ lintTransforms.set("js/useSingleVarDeclarator", useSingleVarDeclarator);
 lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
 lintTransforms.set("js/useTemplate", useTemplate);
 lintTransforms.set("js/useWhile", useWhile);
-lintTransforms.set("jsx-a11y/noOnChange", noOnChange);
 lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
 lintTransforms.set("jsx-a11y/useAriaPropsForRole", useAriaPropsForRole);
 lintTransforms.set("jsx-a11y/useHeadingContent", useHeadingContent);
@@ -275,6 +275,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/noHeaderScope",
 	"a11y/noNoninteractiveElementToInteractiveRole",
 	"a11y/noNoninteractiveTabindex",
+	"a11y/noOnChange",
 	"a11y/noPositiveTabindex",
 	"a11y/noRedundantAlt",
 	"a11y/noSvgWithoutTitle",
@@ -340,7 +341,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"js/useSortedSpecifiers",
 	"js/useTemplate",
 	"js/useWhile",
-	"jsx-a11y/noOnChange",
 	"jsx-a11y/noRedundantRoles",
 	"jsx-a11y/useAriaPropsForRole",
 	"jsx-a11y/useHeadingContent",
@@ -395,6 +395,7 @@ export type LintRuleName =
 	| "a11y/noHeaderScope"
 	| "a11y/noNoninteractiveElementToInteractiveRole"
 	| "a11y/noNoninteractiveTabindex"
+	| "a11y/noOnChange"
 	| "a11y/noPositiveTabindex"
 	| "a11y/noRedundantAlt"
 	| "a11y/noSvgWithoutTitle"
@@ -460,7 +461,6 @@ export type LintRuleName =
 	| "js/useSortedSpecifiers"
 	| "js/useTemplate"
 	| "js/useWhile"
-	| "jsx-a11y/noOnChange"
 	| "jsx-a11y/noRedundantRoles"
 	| "jsx-a11y/useAriaPropsForRole"
 	| "jsx-a11y/useHeadingContent"

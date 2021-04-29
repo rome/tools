@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:4c622b38d569adb37658bbe8dcebf18402b6c379,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:5942555258e3e3b0b1cbf08824683f0338e1efaf,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -437,6 +437,13 @@ non-interactive elements should not be assigned interactive roles
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noOnChange">
+	<a href="/docs/lint/rules/a11y/noOnChange">noOnChange</a>
+	<a class="header-anchor" href="#noOnChange"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noPositiveTabindex">
 	<a href="/docs/lint/rules/a11y/noPositiveTabindex">noPositiveTabindex</a>
 	<a class="header-anchor" href="#noPositiveTabindex"></a>
@@ -538,13 +545,6 @@ check if `lang` attribute is valid
 <section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="noOnChange">
-	<a href="/docs/lint/rules/jsx-a11y/noOnChange">noOnChange</a>
-	<a class="header-anchor" href="#noOnChange"></a>
-</h3>
-discourage the usage of `onChange`
-</div>
 <div class="rule">
 <h3 data-toc-exclude id="noRedundantRoles">
 	<a href="/docs/lint/rules/jsx-a11y/noRedundantRoles">noRedundantRoles</a>
