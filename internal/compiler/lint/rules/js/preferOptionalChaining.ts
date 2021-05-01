@@ -3,6 +3,8 @@ import {
 	AnyNode,
 	JSBinaryExpression,
 	JSCallExpression,
+	JSConditionalExpression,
+	JSIfStatement,
 	JSMemberExpression,
 	JSNullLiteral,
 	JSReferenceIdentifier,
@@ -232,6 +234,76 @@ function getVerifiedConsequent(node: AnyNode): null | JSCallExpression {
 	return null;
 }
 
+function extractIfStatementComments(node: JSIfStatement): string[] {
+	const result: string[] = [];
+
+	if (node.leadingComments) {
+		result.push(...node.leadingComments);
+	}
+
+	if (node.test.leadingComments) {
+		result.push(...node.test.leadingComments);
+	}
+
+	if (node.consequent.type === "JSBlockStatement") {
+		if (node.consequent.leadingComments) {
+			result.push(...node.consequent.leadingComments);
+		}
+
+		const head = node.consequent.body[0];
+
+		if (head?.leadingComments) {
+			result.push(...head.leadingComments);
+		}
+	}
+
+	return result;
+}
+
+type NodeComments = {
+	leadingComments: string[];
+	trailingComments: string[];
+};
+function extractTernaryComments(node: JSConditionalExpression): NodeComments {
+	const result: NodeComments = {
+		leadingComments: [],
+		trailingComments: [],
+	};
+
+	// ternary leading comments should remain leading
+	if (node.leadingComments) {
+		result.leadingComments.push(...node.leadingComments);
+	}
+
+	if (node.test.leadingComments) {
+		result.leadingComments.push(...node.test.leadingComments);
+	}
+	if (node.test.trailingComments) {
+		result.leadingComments.push(...node.test.trailingComments);
+	}
+
+	if (node.consequent.leadingComments) {
+		result.leadingComments.push(...node.consequent.leadingComments);
+	}
+	if (node.consequent.trailingComments) {
+		result.leadingComments.push(...node.consequent.trailingComments);
+	}
+
+	if (node.alternate.leadingComments) {
+		result.trailingComments.push(...node.alternate.leadingComments);
+	}
+	if (node.alternate.trailingComments) {
+		result.trailingComments.push(...node.alternate.trailingComments);
+	}
+
+	// ternary trailing comments should remain trailing
+	if (node.trailingComments) {
+		result.trailingComments.push(...node.trailingComments);
+	}
+
+	return result;
+}
+
 export default createVisitor({
 	name: "js/preferOptionalChaining",
 	enter(path) {
@@ -255,25 +327,24 @@ export default createVisitor({
 					{inclusive: true},
 				);
 				if (newCallee) {
-					const callExpression = {
-						...consequent,
-						callee: newCallee.node,
-					};
 					return path.addFixableDiagnostic(
 						{
 							fixed: signals.replace(
-								newCallee.sameLength
-									? jsOptionalCallExpression.create({
-											...callExpression,
-											optional: true,
-										})
-									: callExpression,
+								jsOptionalCallExpression.create({
+									...consequent,
+									callee: newCallee.node,
+									leadingComments: extractIfStatementComments(node),
+									trailingComments: node.trailingComments || [],
+									optional: newCallee.sameLength,
+								}),
 							),
 						},
 						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
 					);
 				}
 			}
+
+			return signals.retain;
 		}
 
 		/**
@@ -298,19 +369,15 @@ export default createVisitor({
 					{inclusive: true},
 				);
 				if (newCallee) {
-					const callExpression = {
-						...node.consequent,
-						callee: newCallee.node,
-					};
 					return path.addFixableDiagnostic(
 						{
 							fixed: signals.replace(
-								newCallee.sameLength
-									? jsOptionalCallExpression.create({
-											...callExpression,
-											optional: true,
-										})
-									: callExpression,
+								jsOptionalCallExpression.create({
+									...node.consequent,
+									...extractTernaryComments(node),
+									callee: newCallee.node,
+									optional: newCallee.sameLength,
+								}),
 							),
 						},
 						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
@@ -337,7 +404,10 @@ export default createVisitor({
 					) {
 						return path.addFixableDiagnostic(
 							{
-								fixed: signals.replace(right.build(newMemberExpression.node)),
+								fixed: signals.replace({
+									...right.build(newMemberExpression.node),
+									...extractTernaryComments(node),
+								}),
 							},
 							descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
 						);
@@ -367,19 +437,16 @@ export default createVisitor({
 					{inclusive: true},
 				);
 				if (newCallee) {
-					const callExpression = {
-						...node.right,
-						callee: newCallee.node,
-					};
 					return path.addFixableDiagnostic(
 						{
 							fixed: signals.replace(
-								newCallee.sameLength
-									? jsOptionalCallExpression.create({
-											...callExpression,
-											optional: true,
-										})
-									: callExpression,
+								jsOptionalCallExpression.create({
+									...node.right,
+									leadingComments: node.leadingComments || [],
+									trailingComments: node.trailingComments || [],
+									callee: newCallee.node,
+									optional: newCallee.sameLength,
+								}),
 							),
 						},
 						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
@@ -406,7 +473,11 @@ export default createVisitor({
 
 			return path.addFixableDiagnostic(
 				{
-					fixed: signals.replace(right.build(newMemberExpression.node)),
+					fixed: signals.replace({
+						...right.build(newMemberExpression.node),
+						leadingComments: node.leadingComments || [],
+						trailingComments: node.trailingComments || [],
+					}),
 				},
 				descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
 			);
