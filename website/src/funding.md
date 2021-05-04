@@ -24,6 +24,8 @@ It's been three months since we announced our initial [beta release](/blog/2020/
 
 **I need your help to make it a reality.**
 
+<!-- DESCRIPTION_END -->
+
 ## Funding
 
 I have left my job so I can work independently and focus on what the community needs. This includes a [plugin system](#allow-users-to-extend-functionality-with-plugins), [more configuration](#add-more-configuration-and-have-less-opinions), and [dedicated integrations for existing tools](#integrate-with-existing-tools).
@@ -106,7 +108,7 @@ We should aim to reduce the functional differences between Rome and other tools 
 - Code formatting options
 - Ability to customize expected filenames and directories
 - Support for other configuration languages such as YAML and TOML
-- More CLI flags 
+- More CLI flags
 - Public JavaScript API
 - Dynamic configuration (as opposed to static JSON-only configuration files)
 - [Allow extending functionality with plugins](#allow-users-to-extend-functionality-with-plugins)

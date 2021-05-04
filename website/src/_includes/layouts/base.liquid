@@ -9,10 +9,10 @@
 		<link rel="alternate icon" type="image/png" href="/img/favicon.png">
 		<link rel="icon" type="image/svg+xml" href="{{ "static/img/favicon.svg" | includeraw | toBase64: "svg" | safe }}">
 
-		<meta name="description" content="Unifying the frontend development toolchain">
+		<meta name="description" content="End-to-end developer tools">
 		<meta name="theme-color" content="#FFC905">
 		<meta property="og:title" content="{{ title | titlify }}">
-		<meta property="og:description" content="Unifying the frontend development toolchain">
+		<meta property="og:description" content="End-to-end developer tools">
 		<meta property="og:image" content="{{ env.WEBSITE_URL }}/img/{{ social-image }}">
 		<meta property="twitter:image" content="{{ env.WEBSITE_URL }}/img/{{ social-image }}">
 		<meta property="twitter:site" content="@rometools">
@@ -44,8 +44,8 @@
 		</script>
 	</head>
 
-	<body>
-		<div class="container">
+	<body class="{{ body-class }}">
+		<div class="container {% if no-sidebar %}no-sidebar{% endif %}">
 			<div class="skip-to-content" id="top">
 				<a href="#main-content">Skip to main content</a>
 			</div>
@@ -59,89 +59,92 @@
 				</a>
 				<div class="stretch"></div>
 
-				<a href="#" class="mobile-handle">
-					{% include svg/mobile-nav-handle.svg %}
-					{% include svg/close-icon.svg %}
-				</a>
+				{% if no-sidebar %}
+				{% else %}
+					<a href="#" class="mobile-handle">
+						{% include svg/mobile-nav-handle.svg %}
+						{% include svg/close-icon.svg %}
+					</a>
+				{% endif %}
 			</div>
 
-			<div class="sidebar-container">
-				<div class="sidebar-stripe"></div>
+			{% if no-sidebar %}
+				<div class="header-desktop-sidebarless">
+					<a class="logo" href="/">
 
-				<aside class="sidebar">
-					<div class="header-desktop">
-						<a class="logo" href="/">
-							{% include svg/rome-logo.svg %}
-							<h1 class="logo-text sr-only">Rome</h1>
-						</a>
-					</div>
+						{% include svg/rome-logo.svg %}
 
-					<div class="docsearch-container">
-						{% include svg/search-icon.svg %}
-						<label class="docsearch-label" for="docsearch">Search</label>
-						<input type="text" id="docsearch" class="docsearch" placeholder="Search" />
-					</div>
+						<span class="logo-text sr-only">Rome</span>
+					</a>
+				</div>
+			{% else %}
+				<div class="sidebar-container">
+					<div class="sidebar-stripe"></div>
 
-					<div class="sidebar-scroller">
-						<div class="site-navigation-container">
-							<nav aria-labelledby="site-navigation" class="menu site-navigation">
-								<h2 id="site-navigation" class="sr-only">Site Navigation</h2>
-								{% if page.url != "/funding/" %}
-									<div class="content">
-										<a href="/funding/" class="primary button">Fundraising</a>
-									</div>
-								{% endif %}
-								<ul>
-									<li>
-										<a href="/blog">Blog</a>
-									</li>
-									<li>
-										<a href="/credits">Credits</a>
-									</li>
-									<li>
-										<a href="/changelog">Changelog</a>
-									</li>
-								</ul>
-							</nav>
+					<aside class="sidebar">
+						<div class="header-desktop">
+							<a class="logo" href="/">
+								{% include svg/rome-logo.svg %}
+								<h1 class="logo-text sr-only">Rome</h1>
+							</a>
+						</div>
 
-							{% if simple-sidebar %}
-							{% else %}
-								<nav aria-labelledby="quick-links" class="menu site-navigation">
-									<h2 id="quick-links">Quick Links</h2>
+						<div class="docsearch-container">
+							{% include svg/search-icon.svg %}
+							<label class="docsearch-label" for="docsearch">Search</label>
+							<input type="text" id="docsearch" class="docsearch" placeholder="Search" />
+						</div>
+
+						<div class="sidebar-scroller">
+							<div class="site-navigation-container">
+								<nav aria-labelledby="site-navigation" class="menu site-navigation">
+									<h2 id="site-navigation" class="sr-only">Site Navigation</h2>
 									<ul>
 										<li>
-											<a href="/#linting">Linting</a>
+											<a href="/blog">Blog</a>
 										</li>
 										<li>
-											<a href="/docs/lint/rules">Lint Rules</a>
+											<a href="/credits">Credits</a>
 										</li>
 										<li>
-											<a href="/#cli">CLI</a>
-										</li>
-										<li>
-											<a href="/#project-configuration">Project Configuration</a>
+											<a href="/changelog">Changelog</a>
 										</li>
 									</ul>
 								</nav>
-							{% endif %}
+
+								{% if simple-sidebar %}
+								{% else %}
+									<nav aria-labelledby="quick-links" class="menu site-navigation">
+										<h2 id="quick-links">Quick Links</h2>
+										<ul>
+											<li>
+												<a href="/#linting">Linting</a>
+											</li>
+											<li>
+												<a href="/docs/lint/rules">Lint Rules</a>
+											</li>
+											<li>
+												<a href="/#cli">CLI</a>
+											</li>
+											<li>
+												<a href="/#project-configuration">Project Configuration</a>
+											</li>
+										</ul>
+									</nav>
+								{% endif %}
+							</div>
+
+							<nav aria-labelledby="site-navigation-documentation" class="toc-menu menu">
+								<h2 id="site-navigation-documentation">Table of Contents</h2>
+
+								{{ content | toc | safe }}
+							</nav>
 						</div>
 
-						<nav aria-labelledby="site-navigation-documentation" class="toc-menu menu">
-							<h2 id="site-navigation-documentation">Table of Contents</h2>
-
-							{{ content | toc | safe }}
-						</nav>
-					</div>
-
-					<div class="color-scheme-switch-container">
-						<button aria-label="Toggle theme" title="Toggle theme" role="switch" aria-checked="true" class="color-scheme-switch">
-							<div class="selector"></div>
-							{% include svg/moon.svg %}
-							{% include svg/sun.svg %}
-						</button>
-					</div>
-				</aside>
-			</div>
+    				{% include color-scheme-switcher %}
+					</aside>
+				</div>
+			{% endif %}
 
 			<div class="main">
 				{{ content | safe }}

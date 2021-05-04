@@ -476,14 +476,16 @@ class Manager {
 	}
 }
 
-const manager = new Manager();
+if (siteNavigation != null) {
+	const manager = new Manager();
 
-window.addEventListener(
-	"DOMContentLoaded",
-	() => {
-		manager.attach();
-	},
-);
+	window.addEventListener(
+		"DOMContentLoaded",
+		() => {
+			manager.attach();
+		},
+	);
+}
 
 //# Team list shuffle
 
@@ -542,7 +544,9 @@ function toggleColorSchemeSwitch(evt) {
 }
 
 const colorSchemeSwitcher = document.querySelector(".color-scheme-switch");
-colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
+if (colorSchemeSwitcher != null) {
+	colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
+}
 
 //# Mobile navigation
 
@@ -555,49 +559,53 @@ function toggleMobileSidebar() {
 	sidebar.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
 }
-mobileSidebarHandle.addEventListener(
-	"click",
-	(event) => {
-		event.preventDefault();
-		toggleMobileSidebar();
-	},
-	false,
-);
+if (mobileSidebarHandle != null) {
+	mobileSidebarHandle.addEventListener(
+		"click",
+		(event) => {
+			event.preventDefault();
+			toggleMobileSidebar();
+		},
+		false,
+	);
+}
 
 //# Docsearch
 // Only initialize on focus
 
 const docsearchInput = document.querySelector("#docsearch");
-docsearchInput.addEventListener(
-	"focus",
-	() => {
-		// Stylesheet
-		const link = document.createElement("link");
-		link.href = "/docsearch.css";
-		link.rel = "stylesheet";
-		document.body.appendChild(link);
+if (docsearchInput != null) {
+	docsearchInput.addEventListener(
+		"focus",
+		() => {
+			// Stylesheet
+			const link = document.createElement("link");
+			link.href = "/docsearch.css";
+			link.rel = "stylesheet";
+			document.body.appendChild(link);
 
-		// Script
-		const script = document.createElement("script");
-		script.src = "/docsearch.js";
-		script.async = true;
-		script.defer = true;
-		script.addEventListener(
-			"load",
-			() => {
-				// @ts-ignore
-				return window.docsearch({
-					apiKey: "66db1ad366d458c6acded7cbc23dba7e",
-					indexName: "romefrontend",
-					inputSelector: "#docsearch",
-					debug: false, // Set debug to true if you want to inspect the dropdown
-				});
-			},
-		);
-		document.body.appendChild(script);
-	},
-	{once: true},
-);
+			// Script
+			const script = document.createElement("script");
+			script.src = "/docsearch.js";
+			script.async = true;
+			script.defer = true;
+			script.addEventListener(
+				"load",
+				() => {
+					// @ts-ignore
+					return window.docsearch({
+						apiKey: "66db1ad366d458c6acded7cbc23dba7e",
+						indexName: "romefrontend",
+						inputSelector: "#docsearch",
+						debug: false, // Set debug to true if you want to inspect the dropdown
+					});
+				},
+			);
+			document.body.appendChild(script);
+		},
+		{once: true},
+	);
+}
 
 //# Header scrolls to top
 let topAnchors = Array.from(document.querySelectorAll("[href='#top']"));
@@ -611,7 +619,10 @@ for (const elem of topAnchors) {
 			if (window.scrollY > 0) {
 				e.preventDefault();
 
-				sidebarScroller.scrollTop = 0;
+				if (sidebarScroller != null) {
+					sidebarScroller.scrollTop = 0;
+				}
+
 				window.scrollTo(0, 0);
 
 				// Remove the hash
