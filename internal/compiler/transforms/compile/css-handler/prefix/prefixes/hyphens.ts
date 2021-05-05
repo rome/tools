@@ -11,7 +11,6 @@ export default [
 			return prefixCSSProperty({
 				path,
 				propertyName: "hyphens",
-				value: "none",
 				browserFeaturesKey: "css-hyphens",
 			});
 		},
