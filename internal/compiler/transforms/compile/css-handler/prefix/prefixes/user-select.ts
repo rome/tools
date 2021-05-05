@@ -6,12 +6,12 @@ import {
 // https://github.com/Fyrd/caniuse/blob/main/features-json/user-select-none.json
 export default [
 	createPrefixVisitor({
-		name: 'user-select/none',
+		name: "user-select/none",
 		enter(path) {
 			return prefixCSSProperty({
 				path,
 				propertyName: "user-select",
-				value: 'none',
+				value: "none",
 				browserFeaturesKey: "css-none",
 			});
 		},
