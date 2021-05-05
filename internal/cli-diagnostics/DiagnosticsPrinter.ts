@@ -576,7 +576,7 @@ export default class DiagnosticsPrinter extends Error {
 			case "github-actions": {
 				const parts = [];
 
-				if (path !== undefined && path.isAbsolute()) {
+				if (path?.isAbsolute()) {
 					parts.push(`file=${this.cwd.relative(path).join()}`);
 
 					if (start !== undefined) {

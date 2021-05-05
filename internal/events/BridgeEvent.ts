@@ -134,9 +134,7 @@ export class BridgeEvent<
 
 		callbacks.resource.release();
 
-		if (callbacks.completed !== undefined) {
-			callbacks.completed();
-		}
+		callbacks.completed?.();
 	}
 
 	public hasSubscriptions(): boolean {

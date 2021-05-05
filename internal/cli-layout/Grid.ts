@@ -1349,9 +1349,7 @@ export default class Grid {
 
 		const subAncestry: Ancestry = [...ancestry, tag];
 
-		if (hook?.before !== undefined) {
-			hook.before(tag, this, ancestry);
-		}
+		hook?.before?.(tag, this, ancestry);
 
 		switch (tag.name) {
 			case "locator": {
@@ -1386,9 +1384,7 @@ export default class Grid {
 			}
 		}
 
-		if (hook?.after !== undefined) {
-			hook.after(tag, this, ancestry);
-		}
+		hook?.after?.(tag, this, ancestry);
 	}
 
 	private drawChild(child: MarkupParsedChild, ancestry: Ancestry) {

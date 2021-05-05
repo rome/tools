@@ -330,7 +330,7 @@ export default class DiagnosticsProcessor {
 				continue;
 			}
 
-			if (filter.test !== undefined && filter.test(diag)) {
+			if (filter.test?.(diag)) {
 				continue;
 			}
 
@@ -380,9 +380,8 @@ export default class DiagnosticsProcessor {
 						suppression,
 					)
 				) {
-					if (unusedSuppressions !== undefined) {
-						unusedSuppressions.delete(suppression);
-					}
+					unusedSuppressions?.delete(suppression);
+
 					if (!ignoreSuppressionsAndFilter) {
 						visibility.suppressed = true;
 					}
@@ -510,9 +509,8 @@ export default class DiagnosticsProcessor {
 				entry.guaranteedDiagnostics.push(diag);
 				this.setGuaranteedCount(this.guaranteedCount + 1);
 				entry.guaranteedCount++;
-				if (guaranteed !== undefined) {
-					guaranteed.push(diag);
-				}
+
+				guaranteed?.push(diag);
 			} else if (visibility.maybe) {
 				entry.maybeDiagnostics.push(diag);
 			} else if (visibility.suppressed) {

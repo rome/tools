@@ -482,8 +482,7 @@ function printStacktrace(
 			// refers to the diagnostic
 			const isImportantStackFrame =
 				path !== undefined &&
-				(path.equal(diagnostic.location.path) ||
-				(item.importantPaths !== undefined && item.importantPaths.has(path)));
+				(path.equal(diagnostic.location.path) || item.importantPaths?.has(path));
 			const shouldShowCodeFrame = isImportantStackFrame || shownCodeFrames < 2;
 
 			if (
