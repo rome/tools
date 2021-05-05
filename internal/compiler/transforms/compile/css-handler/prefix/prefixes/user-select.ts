@@ -12,7 +12,7 @@ export default [
 				path,
 				propertyName: "user-select",
 				value: "none",
-				browserFeaturesKey: "css-none",
+				browserFeaturesKey: "user-select-none",
 			});
 		},
 	}),
