@@ -814,3 +814,43 @@
 
 
 ```
+
+## `use normalized flags`
+
+### `help`
+
+```
+
+ Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  test [flags]
+
+ Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                         --help, -h Show this help screen
+    --log-shell-completions <shell> Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
+
+ Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ℹ To view help for a specific command run
+  $ test command_name --help
+
+
+```
+
+### `output`
+
+```
+
+ argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unknown foo-bar flag at
+
+    test --foo-bar
+         ^^^^^^^^^
+
+
+```
