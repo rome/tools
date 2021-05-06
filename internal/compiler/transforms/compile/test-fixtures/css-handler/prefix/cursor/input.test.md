@@ -14,7 +14,23 @@
 
 ```css
 .style {
-	cursor: none;
+    cursor: none
+}
+
+.style {
+    cursor: zoom-in;
+}
+
+.style {
+    cursor: zoom-out;
+}
+
+.style {
+    cursor: grab;
+}
+
+.style {
+    cursor: grabbing;
 }
 
 ```
@@ -23,7 +39,27 @@
 
 ```css
 .style {
-	cursor: none;
+    cursor: none
+}
+
+.style {
+    cursor: -webkit-zoom-in;
+    cursor: zoom-in;
+}
+
+.style {
+    cursor: -webkit-zoom-out;
+    cursor: zoom-out;
+}
+
+.style {
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.style {
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
 }
 
 ```

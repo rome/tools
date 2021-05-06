@@ -1,6 +1,5 @@
 import {
 	createPrefixVisitor,
-	prefixCSSProperty,
 	prefixCSSValue,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -33,15 +32,4 @@ export default [
 			},
 		})
 	),
-	// https://github.com/Fyrd/caniuse/blob/main/features-json/css3-cursors.json
-	createPrefixVisitor({
-		name: "cursor",
-		enter(path) {
-			return prefixCSSProperty({
-				path,
-				propertyName: "cursor",
-				browserFeaturesKey: "css3-cursors",
-			});
-		},
-	}),
 ];
