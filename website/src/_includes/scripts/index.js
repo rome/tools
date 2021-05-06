@@ -345,6 +345,7 @@ class Manager {
 			return false;
 		}
 
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (callback !== undefined) {
 			callback();
 		}
@@ -370,11 +371,13 @@ class Manager {
 		const hash = target.getAttribute("href");
 		window.location.hash = hash;
 		this.scrollToHeading(hash);
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (navigator.clipboard !== undefined) {
 			navigator.clipboard.writeText(window.location.href);
 		}
 
 		// Only another copied text can appear here so delete it if it exists
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (target.nextElementSibling != null) {
 			target.nextElementSibling.remove();
 		}
@@ -544,6 +547,7 @@ function toggleColorSchemeSwitch(evt) {
 }
 
 const colorSchemeSwitcher = document.querySelector(".color-scheme-switch");
+// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 if (colorSchemeSwitcher != null) {
 	colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
 }
@@ -559,6 +563,7 @@ function toggleMobileSidebar() {
 	sidebar.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
 }
+// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 if (mobileSidebarHandle != null) {
 	mobileSidebarHandle.addEventListener(
 		"click",
@@ -574,6 +579,7 @@ if (mobileSidebarHandle != null) {
 // Only initialize on focus
 
 const docsearchInput = document.querySelector("#docsearch");
+// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 if (docsearchInput != null) {
 	docsearchInput.addEventListener(
 		"focus",
@@ -690,6 +696,7 @@ for (const scroller of heroScrollers) {
 
 	function addActiveClasses(activeIndex) {
 		const beforeItem = items[activeIndex - 1];
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (beforeItem !== undefined) {
 			beforeItem.classList.add("active-sibling");
 		}
@@ -697,6 +704,7 @@ for (const scroller of heroScrollers) {
 		items[activeIndex].classList.add("active");
 
 		const afterItem = items[activeIndex + 1];
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (afterItem !== undefined) {
 			afterItem.classList.add("active-sibling");
 		}
@@ -704,6 +712,7 @@ for (const scroller of heroScrollers) {
 
 	function removeActiveClasses(activeIndex) {
 		const beforeItem = items[activeIndex - 1];
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (beforeItem !== undefined) {
 			beforeItem.classList.remove("active-sibling");
 		}
@@ -711,6 +720,7 @@ for (const scroller of heroScrollers) {
 		items[activeIndex].classList.remove("active");
 
 		const afterItem = items[activeIndex + 1];
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (afterItem !== undefined) {
 			afterItem.classList.remove("active-sibling");
 		}

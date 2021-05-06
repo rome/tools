@@ -31,23 +31,19 @@ export class ChildProcess {
 
 		const {stdout, stderr} = this.process;
 
-		if (stdout != null) {
-			stdout.on(
-				"data",
-				(chunk) => {
-					this.output.push([0, chunk]);
-				},
-			);
-		}
+		stdout?.on(
+			"data",
+			(chunk) => {
+				this.output.push([0, chunk]);
+			},
+		);
 
-		if (stderr != null) {
-			stderr.on(
-				"data",
-				(chunk) => {
-					this.output.push([1, chunk]);
-				},
-			);
-		}
+		stderr?.on(
+			"data",
+			(chunk) => {
+				this.output.push([1, chunk]);
+			},
+		);
 	}
 
 	public process: childProcess.ChildProcess;

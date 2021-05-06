@@ -157,7 +157,7 @@ export default createVisitor({
 					isIdentifierish(node.object)
 				) {
 					const wildcardInfo = wildcardImports.get(node.object.name);
-					if (wildcardInfo !== undefined && wildcardInfo.references.has(node)) {
+					if (wildcardInfo?.references.has(node)) {
 						const name = getName(node);
 						if (name === undefined) {
 							throw new Error("Expected name");

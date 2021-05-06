@@ -262,9 +262,8 @@ class GlobberWatcher {
 		);
 
 		const {request} = this.globber;
-		if (request !== undefined) {
-			request.resources.add(refreshSub);
-		}
+
+		request?.resources.add(refreshSub);
 
 		try {
 			const promises: Promise<unknown>[] = [];

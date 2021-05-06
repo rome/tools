@@ -585,9 +585,7 @@ export default class ProjectManager {
 		this.projects.set(project.id, project);
 		this.projectDirectoryToProject.set(projectDirectory, project);
 
-		if (parentProject !== undefined) {
-			parentProject.children.add(project);
-		}
+		parentProject?.children.add(project);
 
 		// Add all project config dependencies so changes invalidate the whole project
 		if (meta.configPath !== undefined) {

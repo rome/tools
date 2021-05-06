@@ -202,15 +202,11 @@ export default class Reporter implements ReporterNamespace {
 			features,
 			write: (chunk, error) => {
 				if (error) {
-					if (stderr !== undefined) {
-						// @ts-ignore
-						stderr.write(chunk);
-					}
+					// @ts-ignore
+					stderr?.write(chunk);
 				} else {
-					if (stdout !== undefined) {
-						// @ts-ignore
-						stdout.write(chunk);
-					}
+					// @ts-ignore
+					stdout?.write(chunk);
 				}
 			},
 		});
