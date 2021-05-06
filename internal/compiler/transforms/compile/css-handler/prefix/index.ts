@@ -1,9 +1,10 @@
-/* GENERATED:START(hash:0ed7a412acb9745694bd9288b8560b676a685fae,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:3811b15212678674c4e09bff8eb708b958844262,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import backdropFilter from "./prefixes/backdrop-filter";
 import borderRadius from "./prefixes/border-radius";
 import boxShadow from "./prefixes/box-shadow";
 import boxSizing from "./prefixes/box-sizing";
+import cursor from "./prefixes/cursor";
 import display from "./prefixes/display";
 import hyphens from "./prefixes/hyphens";
 import multicolumn from "./prefixes/multicolumn";
@@ -19,6 +20,7 @@ export default [
 	...borderRadius,
 	...boxShadow,
 	...boxSizing,
+	...cursor,
 	...display,
 	...hyphens,
 	...multicolumn,
