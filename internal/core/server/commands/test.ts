@@ -14,7 +14,9 @@ import {JS_EXTENSIONS} from "../../common/file-handlers/javascript";
 import {TestServerRunnerOptions} from "../testing/types";
 import {markup} from "@internal/markup";
 
-type Flags = Omit<TestServerRunnerOptions, "verboseDiagnostics">;
+type Flags = Omit<TestServerRunnerOptions, "verboseDiagnostics"> & {
+	suppressLogs: boolean;
+};
 
 export default createServerCommand({
 	category: commandCategories.CODE_QUALITY,
@@ -32,6 +34,7 @@ export default createServerCommand({
 			focusAllowed: c.get("focusAllowed").asBoolean(true),
 			syncTests: c.get("syncTests").asBoolean(false),
 			sourceMaps: c.get("sourceMaps").asBoolean(true),
+			suppressLogs: c.get("suppressLogs").asBoolean(true),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {

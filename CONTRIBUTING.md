@@ -99,6 +99,12 @@ And to update snapshots:
 ./rome test --update-snapshots
 ```
 
+To enable logging:
+
+```bash
+./rome test --no-suppress-logs
+```
+
 ### Generated files
 
 If you are adding a new lint rule, or modifying some core code, you might need to regenerate some files. We have generated files to avoid having to write a lot of boilerplate and automate common tasks.

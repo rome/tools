@@ -26,6 +26,7 @@ export type TestServerRunnerOptions = {
 	verboseDiagnostics: DiagnosticsPrinterFlags["verboseDiagnostics"];
 	syncTests: boolean;
 	sourceMaps: boolean;
+	suppressLogs: boolean;
 };
 
 export type CoverageDirectory = {

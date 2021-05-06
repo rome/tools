@@ -179,6 +179,10 @@ export default class TestWorkerFile {
 	}
 
 	private createConsole(): Partial<Console> {
+		if (!this.globalOptions.suppressLogs) {
+			return console;
+		}
+
 		const addDiagnostic = (category: DiagnosticLogCategory, args: unknown[]) => {
 			const err = new Error();
 
