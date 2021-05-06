@@ -419,3 +419,16 @@ test(
 		);
 	},
 );
+
+test(
+	"use normalized flags",
+	async (t) => {
+		await testParser(
+			t,
+			{
+				defineFlags: () => {},
+				args: ["--foo-bar"],
+			},
+		);
+	},
+);
