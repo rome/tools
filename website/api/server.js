@@ -513,6 +513,7 @@ app.post(
 );
 
 app.use(function(err, req, res, next) {
+	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 	if (Sentry !== undefined) {
 		Sentry.captureException(err);
 	}
@@ -536,6 +537,7 @@ async function main() {
 }
 
 main().catch((err) => {
+	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 	if (Sentry !== undefined) {
 		Sentry.captureException(err);
 	}

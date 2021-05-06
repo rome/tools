@@ -940,9 +940,8 @@ export default class Parser<T> {
 			} else {
 				if (commandToFlags.has(meta.command)) {
 					const flags = commandToFlags.get(meta.command);
-					if (flags) {
-						flags.add(meta);
-					}
+
+					flags?.add(meta);
 				} else {
 					const flags: Set<ArgDeclaration> = new Set();
 					flags.add(meta);

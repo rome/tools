@@ -16,9 +16,8 @@ export default createScopeEvaluator({
 		scope.injectEvaluate(node.declaration, node);
 		for (const id of getBindingIdentifiers(node)) {
 			const binding = scope.getBinding(id.name);
-			if (binding !== undefined) {
-				binding.setExported(true);
-			}
+
+			binding?.setExported(true);
 		}
 	},
 });

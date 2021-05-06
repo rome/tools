@@ -99,9 +99,9 @@ export function parseDeclaration(
 			});
 			return undefined;
 		}
-		if (onAtDeclaration) {
-			onAtDeclaration(currentToken, parentAtKeywordToken);
-		}
+
+		onAtDeclaration?.(currentToken, parentAtKeywordToken);
+
 		let name: string | CSSCustomProperty;
 		if (isCustomProperty(currentToken.value)) {
 			name = parser.finishNode(

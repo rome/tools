@@ -496,9 +496,8 @@ export default class MemoryFileSystem {
 		// Remove from 'parent directory listing
 		const dirname = path.getParent();
 		const parentListing = this.directoryListings.get(dirname);
-		if (parentListing !== undefined) {
-			parentListing.delete(path);
-		}
+
+		parentListing?.delete(path);
 	}
 
 	private handleDeletedManifest(path: AbsoluteFilePath): void {
@@ -843,16 +842,12 @@ export default class MemoryFileSystem {
 			return false;
 		}
 
-		if (opts.tick !== undefined) {
-			opts.tick(directoryPath);
-		}
+		opts.tick?.(directoryPath);
 
 		this.addFileToDirectoryListing(directoryPath);
 		this.directories.set(directoryPath, stats);
 
-		if (opts.onFoundDirectory !== undefined) {
-			opts.onFoundDirectory(directoryPath);
-		}
+		opts.onFoundDirectory?.(directoryPath);
 
 		// Crawl the directory
 		const paths = await directoryPath.readDirectory();
@@ -1001,9 +996,7 @@ export default class MemoryFileSystem {
 			return false;
 		}
 
-		if (opts.tick !== undefined) {
-			opts.tick(path);
-		}
+		opts.tick?.(path);
 
 		const isNew = !this.files.has(path);
 		this.files.set(path, stats);

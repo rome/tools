@@ -89,10 +89,7 @@ export function getParentConfigDependencies(
 			basenames = basenames.concat(ESLINT_CONFIG_FILENAMES);
 		}
 
-		if (
-			partialConfig.vcs.root !== undefined &&
-			partialConfig.vcs.root.equal(directory)
-		) {
+		if (partialConfig.vcs.root?.equal(directory)) {
 			basenames = basenames.concat(VCS_IGNORE_FILENAMES);
 		}
 

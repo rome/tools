@@ -18,6 +18,7 @@ invalid: [
 	"
 	"
 		let foo = {};
+		// leading binary comment
 		foo != null && foo.bar;
 	"
 	"
@@ -42,11 +43,32 @@ invalid: [
 	"
 	"
 		let foo = {};
+		// leading ternary comment
 		foo ? foo.bar.baz : undefined
 	"
 	"
+	let foo = {}
+	// leading binary comment
+	foo && foo()
+	"
+	"
+	let foo = {}
+	// leading binary comment
+	foo && foo.bar()
+	"
+	"
+	let foo = {}
+	// leading ternary comment
+	foo ? foo.bar() : undefined
+	"
+	"
 		let foo = {};
-		if (foo != undefined && foo.bar != null) {
+		// leading if statement comment
+		if (
+			// leading if condtion comment
+			foo != undefined && foo.bar != null
+		) {
+			// leading call expression comment comment
 			foo.bar('baz');
 		}
 	"
