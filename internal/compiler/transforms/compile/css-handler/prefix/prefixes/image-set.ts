@@ -5,27 +5,25 @@ import {
 
 // https://github.com/Fyrd/caniuse/blob/main/features-json/css-image-set.json
 export default [
-	[
-		"background",
-		"background-image",
-		"border-image",
-		"cursor",
-		"mask",
-		"mask-image",
-		"list-style",
-		"list-style-image",
-		"content",
-	].map((value) =>
-		createPrefixVisitor({
-			name: `image-set/${value}`,
-			enter(path) {
-				return prefixCSSValue({
-					path,
-					propertyName: "image-set",
-					value,
-					browserFeaturesKey: "css-image-set",
-				});
-			},
-		})
-	),
-];
+	"background",
+	"background-image",
+	"border-image",
+	"cursor",
+	"mask",
+	"mask-image",
+	"list-style",
+	"list-style-image",
+	"content",
+].map((value) =>
+	createPrefixVisitor({
+		name: `image-set/${value}`,
+		enter(path) {
+			return prefixCSSValue({
+				path,
+				propertyName: "image-set",
+				value,
+				browserFeaturesKey: "css-image-set",
+			});
+		},
+	})
+);

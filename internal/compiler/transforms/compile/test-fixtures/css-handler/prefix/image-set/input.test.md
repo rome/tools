@@ -17,6 +17,38 @@
 	content: image-set;
 }
 
+.style {
+	background: image-set;
+}
+
+.style {
+	background-image: image-set;
+}
+
+.style {
+	border-image: image-set;
+}
+
+.style {
+	cursor: image-set;
+}
+
+.style {
+	mask: image-set;
+}
+
+.style {
+	mask-image: image-set;
+}
+
+.style {
+	list-style: image-set;
+}
+
+.style {
+	list-style-image: image-set;
+}
+
 ```
 
 ### `Output`
@@ -24,6 +56,38 @@
 ```css
 .style {
 	content: image-set;
+}
+
+.style {
+	background: image-set;
+}
+
+.style {
+	background-image: image-set;
+}
+
+.style {
+	border-image: image-set;
+}
+
+.style {
+	cursor: image-set;
+}
+
+.style {
+	mask: image-set;
+}
+
+.style {
+	mask-image: image-set;
+}
+
+.style {
+	list-style: image-set;
+}
+
+.style {
+	list-style-image: image-set;
 }
 
 ```
