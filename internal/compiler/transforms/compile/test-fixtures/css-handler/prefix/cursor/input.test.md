@@ -14,23 +14,23 @@
 
 ```css
 .style {
-    cursor: none
+  cursor: none
 }
 
 .style {
-    cursor: zoom-in;
+  cursor: zoom-in;
 }
 
 .style {
-    cursor: zoom-out;
+  cursor: zoom-out;
 }
 
 .style {
-    cursor: grab;
+  cursor: grab;
 }
 
 .style {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 ```
@@ -39,27 +39,31 @@
 
 ```css
 .style {
-    cursor: none
+	cursor: none;
 }
 
 .style {
-    cursor: -webkit-zoom-in;
-    cursor: zoom-in;
+	cursor: -moz-zoom-in;
+	cursor: -webkit-zoom-in;
+	cursor: zoom-in;
 }
 
 .style {
-    cursor: -webkit-zoom-out;
-    cursor: zoom-out;
+	cursor: -moz-zoom-out;
+	cursor: -webkit-zoom-out;
+	cursor: zoom-out;
 }
 
 .style {
-    cursor: -webkit-grab;
-    cursor: grab;
+	cursor: -moz-grab;
+	cursor: -webkit-grab;
+	cursor: grab;
 }
 
 .style {
-    cursor: -webkit-grabbing;
-    cursor: grabbing;
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing;
+	cursor: grabbing;
 }
 
 ```
