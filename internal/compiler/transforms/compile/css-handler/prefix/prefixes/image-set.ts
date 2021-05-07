@@ -3,6 +3,7 @@ import {
 	prefixCSSValue,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
+// https://github.com/Fyrd/caniuse/blob/main/features-json/css-image-set.json
 export default [
 	[
 		"background",

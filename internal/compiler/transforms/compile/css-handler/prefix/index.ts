@@ -5,7 +5,6 @@ import backdropFilter from "./prefixes/backdrop-filter";
 import borderRadius from "./prefixes/border-radius";
 import boxShadow from "./prefixes/box-shadow";
 import boxSizing from "./prefixes/box-sizing";
-import content from "./prefixes/content";
 import cursor from "./prefixes/cursor";
 import display from "./prefixes/display";
 import hyphens from "./prefixes/hyphens";
@@ -26,7 +25,6 @@ export default [
 	...borderRadius,
 	...boxShadow,
 	...boxSizing,
-	...content,
 	...cursor,
 	...display,
 	...hyphens,
