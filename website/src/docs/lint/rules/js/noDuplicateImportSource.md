@@ -17,12 +17,12 @@ disallow several import statements for a module
 **ESLint Equivalent:** [no-duplicate-imports](https://eslint.org/docs/rules/no-duplicate-imports)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:11319c0c1472e70608bd8ed36f55fba90c7df073,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:615195f22162d1a588b61f2177ca4a4dda7ca9e4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span>	<span class="token variable">foo</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span>	<span class="token variable">foo</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span>	<span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span>	<span class="token variable">type</span>	<span class="token punctuation">{</span><span class="token variable">fooType</span><span class="token punctuation">}</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
 

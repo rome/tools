@@ -17,12 +17,12 @@ disallow unnecessary fragments
 **ESLint Equivalent:** [jsx-no-useless-fragment](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:0f4cdc9e745c8631cab4d7d71d3141ed29e5ede2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:725ab9fc744b3b4db3ac25c1d87dbce9e5b7ecaf,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;&gt;<span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;&gt;<span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noUselessFragment</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -45,7 +45,7 @@ disallow unnecessary fragments
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">p</span>&gt;&lt;&gt;foo&lt;<span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">p</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">p</span>&gt;&lt;&gt;foo&lt;<span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">p</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:3</span> <strong>lint/react/noUselessFragment</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
 
@@ -68,7 +68,7 @@ disallow unnecessary fragments
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;&gt;&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;&gt;&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noUselessFragment</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -88,7 +88,7 @@ disallow unnecessary fragments
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noUselessFragment</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -111,7 +111,7 @@ disallow unnecessary fragments
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">Fragment</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">Fragment</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noUselessFragment</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -134,7 +134,7 @@ disallow unnecessary fragments
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">section</span>&gt;
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">section</span>&gt;
 	&lt;&gt;
 		&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
 		&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
@@ -170,27 +170,27 @@ disallow unnecessary fragments
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;&gt;
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;&gt;
 	&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;
 	&lt;<span class="token variable">Bar</span> <span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;&gt;foo <span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;&gt; <span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">cat</span> <span class="token operator">=</span> &lt;&gt;meow&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">cat</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;&gt;meow&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;&gt;foo <span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;&gt; <span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token keyword">const</span> <span class="token variable">cat</span> <span class="token operator">=</span> &lt;&gt;meow&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token keyword">const</span> <span class="token variable">cat</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;&gt;meow&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token keyword">function</span> <span class="token function">cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> &lt;&gt;meow&lt;<span class="token operator">/</span>&gt;<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token keyword">function</span> <span class="token function">cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> &lt;&gt;meow&lt;<span class="token operator">/</span>&gt;<span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">SomeComponent</span>&gt;
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">SomeComponent</span>&gt;
 	&lt;&gt;
 		&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
 		&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
 	&lt;<span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">SomeComponent</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">Fragment</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">item</span><span class="token punctuation">.</span><span class="token variable">id</span><span class="token punctuation">}</span>&gt;<span class="token punctuation">{</span><span class="token variable">item</span><span class="token punctuation">.</span><span class="token variable">value</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token boolean">true</span> <span class="token punctuation">?</span> &lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt; <span class="token punctuation">:</span> &lt;&gt;&lt;<span class="token operator">/</span>&gt;<span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">Fragment</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">item</span><span class="token punctuation">.</span><span class="token variable">id</span><span class="token punctuation">}</span>&gt;<span class="token punctuation">{</span><span class="token variable">item</span><span class="token punctuation">.</span><span class="token variable">value</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token boolean">true</span> <span class="token punctuation">?</span> &lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt; <span class="token punctuation">:</span> &lt;&gt;&lt;<span class="token operator">/</span>&gt;<span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

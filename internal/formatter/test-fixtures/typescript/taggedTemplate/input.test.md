@@ -12,13 +12,13 @@
 
 ### `Input`
 
-```js
+```ts
 f<T>`foo`;
 ```
 
 ### `Output`
 
-```js
+```ts
 f<T>`foo`;
 
 ```

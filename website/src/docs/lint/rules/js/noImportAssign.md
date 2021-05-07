@@ -17,12 +17,12 @@ disallow assigning to imported bindings
 **ESLint Equivalent:** [no-import-assign](https://eslint.org/docs/rules/no-import-assign)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:b3daee51020656848e2df4189740588948815664,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:46f980bdbfd577d46f6bddf6d63267433ef8002c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -39,7 +39,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token punctuation">[</span><span class="token variable">x</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:1</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -56,7 +56,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:2</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -73,7 +73,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token variable">x</span><span class="token operator">++</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -90,7 +90,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token punctuation">[</span><span class="token operator">...</span><span class="token variable">x</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:4</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -107,7 +107,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">x</span><span class="token punctuation">}</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:5</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -124,7 +124,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">x</span> <span class="token keyword">in</span> <span class="token variable">y</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:5</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -141,7 +141,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token variable">x</span><span class="token operator">+=</span><span class="token number">1</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -158,7 +158,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token variable">as</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token variable">as</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -175,7 +175,7 @@ disallow assigning to imported bindings
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
 <span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/noImportAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

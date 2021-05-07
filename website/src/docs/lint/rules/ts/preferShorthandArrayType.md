@@ -15,12 +15,12 @@ MISSING DOCUMENTATION
 When expressing array types, this rule promotes the usage of `[]` shorthand instead
 of `Array<>`.
 
-<!-- GENERATED:START(hash:c86b6c3ad00d0e8a39d21aba6f7c914a2ef66b90,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f92d399b7ed754a1bfec0823e6c676d4ddcd5c76,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
 <span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">bar</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:11</span> <strong>lint/ts/preferShorthandArrayType</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
@@ -40,7 +40,7 @@ of `Array<>`.
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span><span class="token punctuation">,</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">string</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span><span class="token punctuation">,</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">string</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:13</span> <strong>lint/ts/preferShorthandArrayType</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
@@ -70,7 +70,7 @@ of `Array<>`.
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">Promise</span><span class="token operator">&lt;</span><span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">string</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">Promise</span><span class="token operator">&lt;</span><span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">string</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:21</span> <strong>lint/ts/preferShorthandArrayType</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
@@ -88,7 +88,7 @@ of `Array<>`.
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">Foo</span><span class="token operator">&lt;</span><span class="token variable">Bar</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">invalid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">Foo</span><span class="token operator">&lt;</span><span class="token variable">Bar</span><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:13</span> <strong>lint/ts/preferShorthandArrayType</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
@@ -106,9 +106,9 @@ of `Array<>`.
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span> <span class="token operator">|</span> <span class="token variable">bar</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">Foo</span> <span class="token operator">|</span> <span class="token variable">Bar</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">keyof</span> <span class="token variable">Bar</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span> <span class="token operator">|</span> <span class="token variable">bar</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">Foo</span> <span class="token operator">|</span> <span class="token variable">Bar</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">keyof</span> <span class="token variable">Bar</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
 
 <!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
