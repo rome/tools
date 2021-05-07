@@ -55,38 +55,47 @@
 
 ```css
 .style {
+	content: -webkit-image-set;
 	content: image-set;
 }
 
 .style {
+	background: -webkit-image-set;
 	background: image-set;
 }
 
 .style {
+	background-image: -webkit-image-set;
 	background-image: image-set;
 }
 
 .style {
+	border-image: -webkit-image-set;
 	border-image: image-set;
 }
 
 .style {
+	cursor: -webkit-image-set;
 	cursor: image-set;
 }
 
 .style {
+	mask: -webkit-image-set;
 	mask: image-set;
 }
 
 .style {
+	mask-image: -webkit-image-set;
 	mask-image: image-set;
 }
 
 .style {
+	list-style: -webkit-image-set;
 	list-style: image-set;
 }
 
 .style {
+	list-style-image: -webkit-image-set;
 	list-style-image: image-set;
 }
 

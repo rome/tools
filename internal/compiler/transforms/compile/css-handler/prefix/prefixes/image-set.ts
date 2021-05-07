@@ -14,14 +14,14 @@ export default [
 	"list-style",
 	"list-style-image",
 	"content",
-].map((value) =>
+].map((propertyName) =>
 	createPrefixVisitor({
-		name: `image-set/${value}`,
+		name: `${propertyName}/image-set`,
 		enter(path) {
 			return prefixCSSValue({
 				path,
-				propertyName: "image-set",
-				value,
+				propertyName,
+				value: "image-set",
 				browserFeaturesKey: "css-image-set",
 			});
 		},
