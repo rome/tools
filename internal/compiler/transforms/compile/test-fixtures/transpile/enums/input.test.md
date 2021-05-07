@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 enum Input {
 	FOO,
 	BAR
@@ -27,7 +27,7 @@ enum Input2 {
 
 ### `Output`
 
-```js
+```ts
 const Input = function() {
 	const Input = {};
 	Input[Input.FOO = 0] = "FOO";

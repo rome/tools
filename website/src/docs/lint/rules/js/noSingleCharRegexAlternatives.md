@@ -14,12 +14,12 @@ eleventyNavigation:
 disallow the use of single character alternations in regular expressions
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:71b588e93abc219d32a9a978930daf4dca5c7bd6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f28627073d9e961eeeab0a345c9a73a8dc928a14,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/a|b/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/a|b/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:1:1</span> <strong>lint/js/noSingleCharRegexAlternatives</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
@@ -38,7 +38,7 @@ disallow the use of single character alternations in regular expressions
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/a|b|c/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/a|b|c/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:1:1</span> <strong>lint/js/noSingleCharRegexAlternatives</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━
 
@@ -57,8 +57,8 @@ disallow the use of single character alternations in regular expressions
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/[ab]/</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/ab|ba/</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/a/</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/ab|ba|a/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/[ab]/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/ab|ba/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/a/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/ab|ba|a/</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

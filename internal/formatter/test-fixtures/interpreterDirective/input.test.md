@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 #!/usr/bin/env babel-node
 console.log("hello world");
 
@@ -20,7 +20,7 @@ console.log("hello world");
 
 ### `Output`
 
-```js
+```ts
 #!/usr/bin/env babel-node
 
 console.log("hello world");

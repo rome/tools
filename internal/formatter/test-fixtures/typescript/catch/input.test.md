@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 try {}
 catch (e: unknown) {}
 
@@ -20,7 +20,7 @@ catch (e: unknown) {}
 
 ### `Output`
 
-```js
+```ts
 try {
 } catch (e: unknown) {
 }

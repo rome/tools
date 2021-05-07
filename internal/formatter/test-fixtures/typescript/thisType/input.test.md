@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 function bound(this: ToBind) {};
 type Buond = (this: ToBind) => void;
 
@@ -28,7 +28,7 @@ class ToBind {
 
 ### `Output`
 
-```js
+```ts
 function bound(this: ToBind) {}
 type Buond = (this: ToBind) => void;
 
