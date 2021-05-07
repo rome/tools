@@ -106,10 +106,8 @@ export function parseAtRule(
 			break;
 		}
 		if (previousToken.value === "media") {
-			const value = parseMediaList(parser);
-			if (value) {
-				prelude.push(value);
-			}
+			block = parseMediaList(parser);
+			break;
 		}
 		if (previousToken.value === "keyframes") {
 			block = parseKeyframe(parser);

@@ -9,24 +9,23 @@ CSSRoot {
 	body: [
 		CSSAtRule {
 			name: "media"
-			prelude: [
-				CSSMediaQueryList {
-					value: [
-						CSSMediaQuery {
-							value: CSSMediaType {
-								value: "screen"
-								loc: SourceLocation invalid/media/feature-value-missing/input.css 1:7-1:13
-							}
-							loc: SourceLocation invalid/media/feature-value-missing/input.css 1:6-1:31
+			prelude: []
+			block: CSSMediaQueryList {
+				prelude: [
+					CSSMediaQuery {
+						value: CSSMediaType {
+							value: "screen"
+							loc: SourceLocation invalid/media/feature-value-missing/input.css 1:7-1:13
 						}
-					]
-					loc: SourceLocation invalid/media/feature-value-missing/input.css 1:6-1:32
+						loc: SourceLocation invalid/media/feature-value-missing/input.css 1:6-1:31
+					}
+				]
+				block: CSSBlock {
+					value: []
+					startingTokenValue: "{"
+					loc: SourceLocation invalid/media/feature-value-missing/input.css 1:32-1:34
 				}
-			]
-			block: CSSBlock {
-				value: []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/media/feature-value-missing/input.css 1:32-1:34
+				loc: SourceLocation invalid/media/feature-value-missing/input.css 1:6-1:34
 			}
 			loc: SourceLocation invalid/media/feature-value-missing/input.css 1:0-1:34
 		}

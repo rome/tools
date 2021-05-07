@@ -9,16 +9,15 @@ CSSRoot {
 	body: [
 		CSSAtRule {
 			name: "media"
-			prelude: [
-				CSSMediaQueryList {
+			prelude: []
+			block: CSSMediaQueryList {
+				prelude: []
+				block: CSSBlock {
 					value: []
-					loc: SourceLocation invalid/media/type/input.css 1:6-1:11
+					startingTokenValue: "{"
+					loc: SourceLocation invalid/media/type/input.css 1:11-1:13
 				}
-			]
-			block: CSSBlock {
-				value: []
-				startingTokenValue: "{"
-				loc: SourceLocation invalid/media/type/input.css 1:11-1:13
+				loc: SourceLocation invalid/media/type/input.css 1:6-1:13
 			}
 			loc: SourceLocation invalid/media/type/input.css 1:0-1:13
 		}
