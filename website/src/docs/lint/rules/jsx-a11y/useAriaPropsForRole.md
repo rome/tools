@@ -17,12 +17,12 @@ enforce that elements with ARIA roles must have all required attributes for that
 **ESLint Equivalent:** [role-has-required-aria-props](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-has-required-aria-props.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:70b0ababc19c14d46da6d7895db2acc57dbed7d9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:6d37df56b55c22c3087ec0ba88a84617d4c612b7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,7 +38,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;switch&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;switch&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -54,7 +54,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -74,7 +74,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -92,7 +92,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -110,7 +110,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -127,7 +127,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -145,7 +145,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -163,7 +163,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -179,7 +179,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -197,7 +197,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -215,7 +215,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -231,7 +231,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -253,7 +253,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -275,7 +275,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -295,7 +295,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-orientation</span><span class="token operator">=</span><span class="token string">&apos;horizontal&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-orientation</span><span class="token operator">=</span><span class="token string">&apos;horizontal&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -314,7 +314,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;radio&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;radio&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -330,7 +330,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -346,7 +346,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -362,7 +362,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -380,7 +380,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-expanded</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-expanded</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -396,7 +396,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -412,7 +412,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemcheckbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemcheckbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -428,7 +428,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useAriaPropsForRole</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -444,17 +444,17 @@ enforce that elements with ARIA roles must have all required attributes for that
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;switch&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuenow</span><span class="token operator">=</span><span class="token string">&apos;50&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuenow</span><span class="token operator">=</span><span class="token string">&apos;50&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuenow</span><span class="token operator">=</span><span class="token string">&apos;50&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuenow</span><span class="token operator">=</span><span class="token string">&apos;50&apos;</span> <span class="token attr-name">aria-orientation</span><span class="token operator">=</span><span class="token string">&apos;horizontal&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;123&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;radio&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span> <span class="token attr-name">aria-selected</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span> <span class="token attr-name">aria-expanded</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemcheckbox&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">Span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">Span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;switch&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuenow</span><span class="token operator">=</span><span class="token string">&apos;50&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuenow</span><span class="token operator">=</span><span class="token string">&apos;50&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuenow</span><span class="token operator">=</span><span class="token string">&apos;50&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuenow</span><span class="token operator">=</span><span class="token string">&apos;50&apos;</span> <span class="token attr-name">aria-orientation</span><span class="token operator">=</span><span class="token string">&apos;horizontal&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;123&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;radio&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span> <span class="token attr-name">aria-selected</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span> <span class="token attr-name">aria-expanded</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemcheckbox&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">Span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">Span</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

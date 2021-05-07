@@ -12,14 +12,14 @@
 
 ### `Input`
 
-```js
+```ts
 let x:`foo`;
 
 ```
 
 ### `Output`
 
-```js
+```ts
 let x: `foo`;
 
 ```

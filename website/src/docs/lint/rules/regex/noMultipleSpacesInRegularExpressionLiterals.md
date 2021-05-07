@@ -14,12 +14,12 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:b741d0e62090f51bb3a8e8ccf0f9b253b2a3928f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:11202fd72c756d2730efc98dc3c2f3e6bf3d3efd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/   /</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/   /</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
 <span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -41,7 +41,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/  foo/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/  foo/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
 <span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -63,7 +63,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/foo   /</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo   /</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
 <span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -85,7 +85,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/foo  bar/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo  bar/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
 <span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -107,7 +107,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/foo   bar    baz/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo   bar    baz/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
 <span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -129,7 +129,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/foo [ba]r  b(a|z)/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo [ba]r  b(a|z)/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:10</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
 <span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -151,7 +151,7 @@ MISSING DOCUMENTATION
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/foo {2}bar/</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/foo bar baz/</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token regex">/foo /</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo {2}bar/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo bar baz/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo /</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

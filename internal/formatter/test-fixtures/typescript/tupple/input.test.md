@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 type T1 = [
 	...T2,
 	T3
@@ -22,7 +22,7 @@ type T1 = [
 
 ### `Output`
 
-```js
+```ts
 type T1 = [...T2, T3];
 
 ```

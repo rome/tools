@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 (foo++)?.();
 async () => {
   (await foo)?.();
@@ -27,7 +27,7 @@ const foo = class extends (Bar ?? Baz) {}
 
 ### `Output`
 
-```js
+```ts
 (foo++)?.();
 async () => {
 	(await foo)?.();

@@ -17,12 +17,12 @@ disallow duplicate case labels
 **ESLint Equivalent:** [no-duplicate-case](https://eslint.org/docs/rules/no-duplicate-case)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:b371f4ea11feef08bd6b927bf07efa33a9c8a4ff,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:73bd98ae29ddee0b8c0a57ddbeccc85b247c5897,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -64,7 +64,7 @@ disallow duplicate case labels
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -104,7 +104,7 @@ disallow duplicate case labels
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -144,7 +144,7 @@ disallow duplicate case labels
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -180,7 +180,7 @@ disallow duplicate case labels
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -216,7 +216,7 @@ disallow duplicate case labels
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -252,7 +252,7 @@ disallow duplicate case labels
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -265,7 +265,7 @@ disallow duplicate case labels
 	<span class="token keyword">default</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -278,7 +278,7 @@ disallow duplicate case labels
 	<span class="token keyword">default</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>

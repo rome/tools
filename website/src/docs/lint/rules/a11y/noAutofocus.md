@@ -27,12 +27,12 @@ General best practice (reference resources)
 **ESLint Equivalent:** [no-autofocus](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-autofocus.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:071b17aaa536c3b4b776ea79bc175f1f019d5924,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:0ad4dc7eef0750ac2add93e0af451f865fb67fa1,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">autoFocus</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">input</span> <span class="token attr-name">autoFocus</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/a11y/noAutofocus</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -53,7 +53,7 @@ General best practice (reference resources)
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/a11y/noAutofocus</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -74,7 +74,7 @@ General best practice (reference resources)
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;false&quot;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;false&quot;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/a11y/noAutofocus</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -113,8 +113,8 @@ General best practice (reference resources)
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">Input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;false&quot;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">input</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">Input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;false&quot;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">input</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

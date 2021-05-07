@@ -21,12 +21,12 @@ It is generally bad practice to use `==` for comparison instead of `===`. Double
 
 For ergonomic reasons, this rule makes an exception for `== null` for comparing to both `null` and `undefined`.
 
-<!-- GENERATED:START(hash:10d74355cac8d40f53dfbdf8eb3427bc01684909,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:194556e6ca23dfd902d8c66797da7418932fe2e3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token variable">bar</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token variable">bar</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noDoubleEquals</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -48,8 +48,8 @@ For ergonomic reasons, this rule makes an exception for `== null` for comparing 
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token boolean">null</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">foo</span> <span class="token operator">!=</span> <span class="token boolean">null</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token boolean">null</span> <span class="token operator">==</span> <span class="token variable">foo</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token boolean">null</span> <span class="token operator">!=</span> <span class="token variable">foo</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token boolean">null</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token variable">foo</span> <span class="token operator">!=</span> <span class="token boolean">null</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token boolean">null</span> <span class="token operator">==</span> <span class="token variable">foo</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token boolean">null</span> <span class="token operator">!=</span> <span class="token variable">foo</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

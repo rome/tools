@@ -17,12 +17,12 @@ non-interactive elements should not be assigned interactive roles
 **ESLint Equivalent:** [no-noninteractive-element-to-interactive-role](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-noninteractive-element-to-interactive-role.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:fadaa2916d302f4165b612214d87ce388b3d542d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:d28a802740a6f8ecb87631943612785f3982fc93,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&quot;checkbox&quot;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&quot;checkbox&quot;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/a11y/noNoninteractiveElementToInteractiveRole</strong> ━━━━━━━━━━
 
@@ -51,6 +51,6 @@ non-interactive elements should not be assigned interactive roles
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&quot;article&quot;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&quot;article&quot;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">h1</span> <span class="token attr-name">role</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;article&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">h1</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

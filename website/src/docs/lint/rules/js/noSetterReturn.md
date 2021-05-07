@@ -17,12 +17,12 @@ disallow returning values from setters
 **ESLint Equivalent:** [no-setter-return](https://eslint.org/docs/rules/no-setter-return)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:77a091ac86f81df3afac33adade0f5595f5e22eb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:87b1a5260da30bb6a041979bf3c0da9ebb6ebbe3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
 	<span class="token variable">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 			<span class="token keyword">return</span> <span class="token string">&apos;wrong&apos;</span><span class="token punctuation">;</span>
@@ -47,7 +47,7 @@ disallow returning values from setters
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
 	<span class="token variable">static</span> <span class="token variable">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 			<span class="token keyword">return</span> <span class="token string">&apos;wrong&apos;</span><span class="token punctuation">;</span>
@@ -72,7 +72,7 @@ disallow returning values from setters
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">p</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">p</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
 	<span class="token variable">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 			<span class="token keyword">return</span> <span class="token string">&apos;wrong&apos;</span><span class="token punctuation">;</span>
@@ -97,7 +97,7 @@ disallow returning values from setters
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
 	<span class="token variable">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 			<span class="token keyword">return</span><span class="token punctuation">;</span>

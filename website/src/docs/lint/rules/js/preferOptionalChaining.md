@@ -17,12 +17,12 @@ MISSING DOCUMENTATION
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:f5cb13ffce542bf4fc5c5c4a91f2bde5adecd65e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:dc40d70590cdd07f6f1d7f260835124627139f8d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -42,7 +42,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token operator">!==</span> <span class="token variable">undefined</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -62,7 +62,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token operator">!==</span> <span class="token boolean">null</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -82,7 +82,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token operator">!=</span> <span class="token variable">undefined</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -102,7 +102,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token comment">// leading binary comment</span>
 <span class="token variable">foo</span> <span class="token operator">!=</span> <span class="token boolean">null</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -124,7 +124,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token operator">!=</span> <span class="token boolean">null</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span> <span class="token operator">===</span> <span class="token string">&quot;baz&quot;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -144,7 +144,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">undefined</span> <span class="token operator">!==</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -164,7 +164,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token boolean">null</span> <span class="token operator">!==</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -184,7 +184,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">undefined</span> <span class="token operator">!=</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -204,7 +204,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token boolean">null</span> <span class="token operator">!=</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:2</span> <strong>lint/js/preferOptionalChaining</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
@@ -224,7 +224,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token comment">// leading ternary comment</span>
 <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">.</span><span class="token variable">baz</span> <span class="token punctuation">:</span> <span class="token variable">undefined</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -246,7 +246,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token comment">// leading binary comment</span>
 <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -268,7 +268,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token comment">// leading binary comment</span>
 <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -290,7 +290,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token comment">// leading ternary comment</span>
 <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token variable">undefined</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -312,7 +312,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token comment">// leading if statement comment</span>
 <span class="token keyword">if</span> <span class="token punctuation">(</span>
 	<span class="token comment">// leading if condtion comment</span>
@@ -342,16 +342,16 @@ MISSING DOCUMENTATION
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span><span class="token punctuation">?.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token variable">bar</span> <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token variable">bar</span> <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">bar</span><span class="token punctuation">.</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token variable">bar</span> <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token variable">bar</span> <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
 <span class="token variable">bar</span> <span class="token keyword">in</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span><span class="token punctuation">?.</span><span class="token punctuation">[</span><span class="token variable">bar</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">.</span><span class="token variable">baz</span> <span class="token punctuation">:</span> <span class="token boolean">null</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">.</span><span class="token variable">baz</span> <span class="token punctuation">:</span> <span class="token string">&quot;anything else&quot;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
