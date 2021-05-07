@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:1dceb67feb310036105512830eb9f1d09faf1bb6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:74f0d309f1c69b69d915843a8b2ba7a7509c9d94,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -121,6 +121,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useAnchorContent"]
 	| ["lint", "a11y", "useAriaProps"]
 	| ["lint", "a11y", "useAriaProptypes"]
+	| ["lint", "a11y", "useHeadingContent"]
 	| ["lint", "a11y", "useHtmlLang"]
 	| ["lint", "a11y", "useIframeTitle"]
 	| ["lint", "a11y", "useKeyWithClickEvents"]
@@ -180,7 +181,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useWhile"]
 	| ["lint", "jsx-a11y", "noRedundantRoles"]
 	| ["lint", "jsx-a11y", "useAriaPropsForRole"]
-	| ["lint", "jsx-a11y", "useHeadingContent"]
 	| ["lint", "jsx-a11y", "useValidAnchor"]
 	| ["lint", "jsx", "noCommentText"]
 	| ["lint", "jsx", "noDuplicateProps"]
@@ -253,6 +253,7 @@ const lintCategoryNameMap: {
 	"lint/a11y/useAnchorContent": ["lint", "a11y", "useAnchorContent"],
 	"lint/a11y/useAriaProps": ["lint", "a11y", "useAriaProps"],
 	"lint/a11y/useAriaProptypes": ["lint", "a11y", "useAriaProptypes"],
+	"lint/a11y/useHeadingContent": ["lint", "a11y", "useHeadingContent"],
 	"lint/a11y/useHtmlLang": ["lint", "a11y", "useHtmlLang"],
 	"lint/a11y/useIframeTitle": ["lint", "a11y", "useIframeTitle"],
 	"lint/a11y/useKeyWithClickEvents": ["lint", "a11y", "useKeyWithClickEvents"],
@@ -328,7 +329,6 @@ const lintCategoryNameMap: {
 		"jsx-a11y",
 		"useAriaPropsForRole",
 	],
-	"lint/jsx-a11y/useHeadingContent": ["lint", "jsx-a11y", "useHeadingContent"],
 	"lint/jsx-a11y/useValidAnchor": ["lint", "jsx-a11y", "useValidAnchor"],
 	"lint/jsx/noCommentText": ["lint", "jsx", "noCommentText"],
 	"lint/jsx/noDuplicateProps": ["lint", "jsx", "noDuplicateProps"],
