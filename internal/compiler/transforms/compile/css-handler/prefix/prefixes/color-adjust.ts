@@ -4,7 +4,9 @@ import {
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
 function printRenamer(value: string) {
-	return value.startsWith("-webkit-") ? value.replace("-webkit-", "-webkit-print-") : value;
+	return value.startsWith("-webkit-")
+		? value.replace("-webkit-", "-webkit-print-")
+		: value;
 }
 
 // https://github.com/Fyrd/caniuse/blob/main/features-json/css-color-adjust.json
