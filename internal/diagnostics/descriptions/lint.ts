@@ -17,6 +17,17 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_USE_HEADING_CONTENT: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useHeadingContent"],
+		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`All headings on a page should have content that is accessible to screen readers.`,
+			},
+		],
+	},
 	A11_Y_NO_ON_CHANGE: (goodEventName: string, badEventName: string) => ({
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noOnChange"],
 		message: markup`Provide an <emphasis>${goodEventName}</emphasis> event instead of an <emphasis>${badEventName}</emphasis> event unless absolutely necessary.`,
@@ -480,17 +491,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.`,
-			},
-		],
-	},
-	JSX_A11Y_HEADING_USE_CONTENT: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useHeadingContent"],
-		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`All headings on a page should have content that is accessible to screen readers.`,
 			},
 		],
 	},

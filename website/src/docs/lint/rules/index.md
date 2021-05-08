@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:5942555258e3e3b0b1cbf08824683f0338e1efaf,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:25ad3a6dc25d79c2f904f880a5d7dc2118a5c47c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -500,6 +500,13 @@ enforce all `aria-*` props are valid
 enforce ARIA state and property values are valid
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useHeadingContent">
+	<a href="/docs/lint/rules/a11y/useHeadingContent">useHeadingContent</a>
+	<a class="header-anchor" href="#useHeadingContent"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useHtmlLang">
 	<a href="/docs/lint/rules/a11y/useHtmlLang">useHtmlLang</a>
 	<a class="header-anchor" href="#useHtmlLang"></a>
@@ -558,13 +565,6 @@ enforce explicit role property is not the same as implicit/default role property
 	<a class="header-anchor" href="#useAriaPropsForRole"></a>
 </h3>
 enforce that elements with ARIA roles must have all required attributes for that role
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useHeadingContent">
-	<a href="/docs/lint/rules/jsx-a11y/useHeadingContent">useHeadingContent</a>
-	<a class="header-anchor" href="#useHeadingContent"></a>
-</h3>
-enforce heading (`h1`, `h2`, etc) elements contain accessible content
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useValidAnchor">

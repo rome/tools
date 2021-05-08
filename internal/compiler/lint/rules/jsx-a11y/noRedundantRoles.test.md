@@ -70,14 +70,15 @@
 
   ✖ Using the role attribute heading on the h1 element is redundant.
 
-    <h1 role='heading' aria-level='1'></h1>
+    <h1 role='heading' aria-level='1'>title</h1>
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute and ARIA attributes.
 
     1   │ - <h1·role="heading"·aria-level="1">
       1 │ + <h1>
-    2 2 │   </h1>
+    2 2 │   → title
+    3 3 │   </h1>
 
   ℹ
 
@@ -87,7 +88,9 @@
 ### `2: formatted`
 
 ```tsx
-<h1 role="heading" aria-level="1" />;
+<h1 role="heading" aria-level="1">
+	title
+</h1>;
 
 ```
 
@@ -99,14 +102,15 @@
 
   ✖ Using the role attribute heading on the h1 element is redundant.
 
-    <h1 role='heading'></h1>
+    <h1 role='heading'>title</h1>
         ^^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute.
 
     1   │ - <h1·role="heading">
       1 │ + <h1>
-    2 2 │   </h1>
+    2 2 │   → title
+    3 3 │   </h1>
 
   ℹ
 
@@ -116,7 +120,9 @@
 ### `3: formatted`
 
 ```tsx
-<h1 role="heading" />;
+<h1 role="heading">
+	title
+</h1>;
 
 ```
 
