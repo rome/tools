@@ -5,7 +5,7 @@ import {
 
 // https://github.com/Fyrd/caniuse/blob/main/features-json/css-gradients.json
 export default [
-	[
+	...[
 		"background",
 		"background-image",
 		"border-image",
@@ -28,7 +28,7 @@ export default [
 		});
 	}),
 
-	[
+	...[
 		"background",
 		"background-image",
 		"border-image",
@@ -51,7 +51,7 @@ export default [
 		});
 	}),
 
-	[
+	...[
 		"background",
 		"background-image",
 		"border-image",
@@ -74,7 +74,7 @@ export default [
 		});
 	}),
 
-	[
+	...[
 		"background",
 		"background-image",
 		"border-image",
