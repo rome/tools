@@ -71,6 +71,7 @@ export default createServerCommand({
 								showAllCoverage: false,
 								syncTests: false,
 								sourceMaps: true,
+								suppressLogs: true,
 							},
 						);
 					},
