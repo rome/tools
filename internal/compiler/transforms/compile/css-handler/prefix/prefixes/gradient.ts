@@ -5,95 +5,31 @@ import {
 
 // https://github.com/Fyrd/caniuse/blob/main/features-json/css-gradients.json
 export default [
-	...[
-		"background",
-		"background-image",
-		"border-image",
-		"mask",
-		"list-style",
-		"list-style-image",
-		"content",
-		"mask-image",
-	].map((propertyName) => {
-		return createPrefixVisitor({
-			name: `${propertyName}/linear-gradient`,
+	"background",
+	"background-image",
+	"border-image",
+	"mask",
+	"list-style",
+	"list-style-image",
+	"content",
+	"mask-image",
+].flatMap((propertyName) =>
+	[
+		"linear-gradient",
+		"repeating-linear-gradient",
+		"radial-gradient",
+		"repeating-radial-gradient",
+	].map((value) =>
+		createPrefixVisitor({
+			name: `${propertyName}/${value}`,
 			enter(path) {
 				return prefixCSSValue({
 					path,
 					propertyName,
-					value: "linear-gradient",
+					value,
 					browserFeaturesKey: "css-gradients",
 				});
 			},
-		});
-	}),
-
-	...[
-		"background",
-		"background-image",
-		"border-image",
-		"mask",
-		"list-style",
-		"list-style-image",
-		"content",
-		"mask-image",
-	].map((propertyName) => {
-		return createPrefixVisitor({
-			name: `${propertyName}/repeating-linear-gradient`,
-			enter(path) {
-				return prefixCSSValue({
-					path,
-					propertyName,
-					value: "repeating-linear-gradient",
-					browserFeaturesKey: "css-gradients",
-				});
-			},
-		});
-	}),
-
-	...[
-		"background",
-		"background-image",
-		"border-image",
-		"mask",
-		"list-style",
-		"list-style-image",
-		"content",
-		"mask-image",
-	].map((propertyName) => {
-		return createPrefixVisitor({
-			name: `${propertyName}/radial-gradient`,
-			enter(path) {
-				return prefixCSSValue({
-					path,
-					propertyName,
-					value: "radial-gradient",
-					browserFeaturesKey: "css-gradients",
-				});
-			},
-		});
-	}),
-
-	...[
-		"background",
-		"background-image",
-		"border-image",
-		"mask",
-		"list-style",
-		"list-style-image",
-		"content",
-		"mask-image",
-	].map((propertyName) => {
-		return createPrefixVisitor({
-			name: `${propertyName}/repeating-radial-gradient`,
-			enter(path) {
-				return prefixCSSValue({
-					path,
-					propertyName,
-					value: "repeating-radial-gradient",
-					browserFeaturesKey: "css-gradients",
-				});
-			},
-		});
-	}),
-];
+		})
+	)
+);

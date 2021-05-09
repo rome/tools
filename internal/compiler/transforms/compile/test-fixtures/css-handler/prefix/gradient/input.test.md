@@ -14,7 +14,131 @@
 
 ```css
 .style {
-	gradient: none;
+	background: linear-gradient;
+}
+
+.style {
+	background-image: linear-gradient;
+}
+
+.style {
+	border-image: linear-gradient;
+}
+
+.style {
+	mask: linear-gradient;
+}
+
+.style {
+	list-style: linear-gradient;
+}
+
+.style {
+	list-style-image: linear-gradient;
+}
+
+.style {
+	content: linear-gradient;
+}
+
+.style {
+	mask-image: linear-gradient;
+}
+
+.style {
+	background: repeating-linear-gradient;
+}
+
+.style {
+	background-image: repeating-linear-gradient;
+}
+
+.style {
+	border-image: repeating-linear-gradient;
+}
+
+.style {
+	mask: repeating-linear-gradient;
+}
+
+.style {
+	list-style: repeating-linear-gradient;
+}
+
+.style {
+	list-style-image: repeating-linear-gradient;
+}
+
+.style {
+	content: repeating-linear-gradient;
+}
+
+.style {
+	mask-image: repeating-linear-gradient;
+}
+
+.style {
+	background: radial-gradient;
+}
+
+.style {
+	background-image: radial-gradient;
+}
+
+.style {
+	border-image: radial-gradient;
+}
+
+.style {
+	mask: radial-gradient;
+}
+
+.style {
+	list-style: radial-gradient;
+}
+
+.style {
+	list-style-image: radial-gradient;
+}
+
+.style {
+	content: radial-gradient;
+}
+
+.style {
+	mask-image: radial-gradient;
+}
+
+.style {
+	background: repeating-radial-gradient;
+}
+
+.style {
+	background-image: repeating-radial-gradient;
+}
+
+.style {
+	border-image: repeating-radial-gradient;
+}
+
+.style {
+	mask: repeating-radial-gradient;
+}
+
+.style {
+	list-style: repeating-radial-gradient;
+}
+
+.style {
+	list-style-image: repeating-radial-gradient;
+}
+
+.style {
+	content: repeating-radial-gradient;
+}
+
+.style {
+	mask-image: repeating-radial-gradient;
 }
 
 ```
@@ -23,7 +147,227 @@
 
 ```css
 .style {
-	gradient: none;
+	background: -moz-linear-gradient;
+	background: -webkit-linear-gradient;
+	background: -o-linear-gradient;
+	background: linear-gradient;
+}
+
+.style {
+	background-image: -moz-linear-gradient;
+	background-image: -webkit-linear-gradient;
+	background-image: -o-linear-gradient;
+	background-image: linear-gradient;
+}
+
+.style {
+	border-image: -moz-linear-gradient;
+	border-image: -webkit-linear-gradient;
+	border-image: -o-linear-gradient;
+	border-image: linear-gradient;
+}
+
+.style {
+	mask: -moz-linear-gradient;
+	mask: -webkit-linear-gradient;
+	mask: -o-linear-gradient;
+	mask: linear-gradient;
+}
+
+.style {
+	list-style: -moz-linear-gradient;
+	list-style: -webkit-linear-gradient;
+	list-style: -o-linear-gradient;
+	list-style: linear-gradient;
+}
+
+.style {
+	list-style-image: -moz-linear-gradient;
+	list-style-image: -webkit-linear-gradient;
+	list-style-image: -o-linear-gradient;
+	list-style-image: linear-gradient;
+}
+
+.style {
+	content: -moz-linear-gradient;
+	content: -webkit-linear-gradient;
+	content: -o-linear-gradient;
+	content: linear-gradient;
+}
+
+.style {
+	mask-image: -moz-linear-gradient;
+	mask-image: -webkit-linear-gradient;
+	mask-image: -o-linear-gradient;
+	mask-image: linear-gradient;
+}
+
+.style {
+	background: -moz-repeating-linear-gradient;
+	background: -webkit-repeating-linear-gradient;
+	background: -o-repeating-linear-gradient;
+	background: repeating-linear-gradient;
+}
+
+.style {
+	background-image: -moz-repeating-linear-gradient;
+	background-image: -webkit-repeating-linear-gradient;
+	background-image: -o-repeating-linear-gradient;
+	background-image: repeating-linear-gradient;
+}
+
+.style {
+	border-image: -moz-repeating-linear-gradient;
+	border-image: -webkit-repeating-linear-gradient;
+	border-image: -o-repeating-linear-gradient;
+	border-image: repeating-linear-gradient;
+}
+
+.style {
+	mask: -moz-repeating-linear-gradient;
+	mask: -webkit-repeating-linear-gradient;
+	mask: -o-repeating-linear-gradient;
+	mask: repeating-linear-gradient;
+}
+
+.style {
+	list-style: -moz-repeating-linear-gradient;
+	list-style: -webkit-repeating-linear-gradient;
+	list-style: -o-repeating-linear-gradient;
+	list-style: repeating-linear-gradient;
+}
+
+.style {
+	list-style-image: -moz-repeating-linear-gradient;
+	list-style-image: -webkit-repeating-linear-gradient;
+	list-style-image: -o-repeating-linear-gradient;
+	list-style-image: repeating-linear-gradient;
+}
+
+.style {
+	content: -moz-repeating-linear-gradient;
+	content: -webkit-repeating-linear-gradient;
+	content: -o-repeating-linear-gradient;
+	content: repeating-linear-gradient;
+}
+
+.style {
+	mask-image: -moz-repeating-linear-gradient;
+	mask-image: -webkit-repeating-linear-gradient;
+	mask-image: -o-repeating-linear-gradient;
+	mask-image: repeating-linear-gradient;
+}
+
+.style {
+	background: -moz-radial-gradient;
+	background: -webkit-radial-gradient;
+	background: -o-radial-gradient;
+	background: radial-gradient;
+}
+
+.style {
+	background-image: -moz-radial-gradient;
+	background-image: -webkit-radial-gradient;
+	background-image: -o-radial-gradient;
+	background-image: radial-gradient;
+}
+
+.style {
+	border-image: -moz-radial-gradient;
+	border-image: -webkit-radial-gradient;
+	border-image: -o-radial-gradient;
+	border-image: radial-gradient;
+}
+
+.style {
+	mask: -moz-radial-gradient;
+	mask: -webkit-radial-gradient;
+	mask: -o-radial-gradient;
+	mask: radial-gradient;
+}
+
+.style {
+	list-style: -moz-radial-gradient;
+	list-style: -webkit-radial-gradient;
+	list-style: -o-radial-gradient;
+	list-style: radial-gradient;
+}
+
+.style {
+	list-style-image: -moz-radial-gradient;
+	list-style-image: -webkit-radial-gradient;
+	list-style-image: -o-radial-gradient;
+	list-style-image: radial-gradient;
+}
+
+.style {
+	content: -moz-radial-gradient;
+	content: -webkit-radial-gradient;
+	content: -o-radial-gradient;
+	content: radial-gradient;
+}
+
+.style {
+	mask-image: -moz-radial-gradient;
+	mask-image: -webkit-radial-gradient;
+	mask-image: -o-radial-gradient;
+	mask-image: radial-gradient;
+}
+
+.style {
+	background: -moz-repeating-radial-gradient;
+	background: -webkit-repeating-radial-gradient;
+	background: -o-repeating-radial-gradient;
+	background: repeating-radial-gradient;
+}
+
+.style {
+	background-image: -moz-repeating-radial-gradient;
+	background-image: -webkit-repeating-radial-gradient;
+	background-image: -o-repeating-radial-gradient;
+	background-image: repeating-radial-gradient;
+}
+
+.style {
+	border-image: -moz-repeating-radial-gradient;
+	border-image: -webkit-repeating-radial-gradient;
+	border-image: -o-repeating-radial-gradient;
+	border-image: repeating-radial-gradient;
+}
+
+.style {
+	mask: -moz-repeating-radial-gradient;
+	mask: -webkit-repeating-radial-gradient;
+	mask: -o-repeating-radial-gradient;
+	mask: repeating-radial-gradient;
+}
+
+.style {
+	list-style: -moz-repeating-radial-gradient;
+	list-style: -webkit-repeating-radial-gradient;
+	list-style: -o-repeating-radial-gradient;
+	list-style: repeating-radial-gradient;
+}
+
+.style {
+	list-style-image: -moz-repeating-radial-gradient;
+	list-style-image: -webkit-repeating-radial-gradient;
+	list-style-image: -o-repeating-radial-gradient;
+	list-style-image: repeating-radial-gradient;
+}
+
+.style {
+	content: -moz-repeating-radial-gradient;
+	content: -webkit-repeating-radial-gradient;
+	content: -o-repeating-radial-gradient;
+	content: repeating-radial-gradient;
+}
+
+.style {
+	mask-image: -moz-repeating-radial-gradient;
+	mask-image: -webkit-repeating-radial-gradient;
+	mask-image: -o-repeating-radial-gradient;
+	mask-image: repeating-radial-gradient;
 }
 
 ```

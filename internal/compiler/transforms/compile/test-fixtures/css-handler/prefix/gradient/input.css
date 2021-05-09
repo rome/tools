@@ -1,3 +1,127 @@
 .style {
-	gradient: none;
+	background: linear-gradient;
+}
+
+.style {
+	background-image: linear-gradient;
+}
+
+.style {
+	border-image: linear-gradient;
+}
+
+.style {
+	mask: linear-gradient;
+}
+
+.style {
+	list-style: linear-gradient;
+}
+
+.style {
+	list-style-image: linear-gradient;
+}
+
+.style {
+	content: linear-gradient;
+}
+
+.style {
+	mask-image: linear-gradient;
+}
+
+.style {
+	background: repeating-linear-gradient;
+}
+
+.style {
+	background-image: repeating-linear-gradient;
+}
+
+.style {
+	border-image: repeating-linear-gradient;
+}
+
+.style {
+	mask: repeating-linear-gradient;
+}
+
+.style {
+	list-style: repeating-linear-gradient;
+}
+
+.style {
+	list-style-image: repeating-linear-gradient;
+}
+
+.style {
+	content: repeating-linear-gradient;
+}
+
+.style {
+	mask-image: repeating-linear-gradient;
+}
+
+.style {
+	background: radial-gradient;
+}
+
+.style {
+	background-image: radial-gradient;
+}
+
+.style {
+	border-image: radial-gradient;
+}
+
+.style {
+	mask: radial-gradient;
+}
+
+.style {
+	list-style: radial-gradient;
+}
+
+.style {
+	list-style-image: radial-gradient;
+}
+
+.style {
+	content: radial-gradient;
+}
+
+.style {
+	mask-image: radial-gradient;
+}
+
+.style {
+	background: repeating-radial-gradient;
+}
+
+.style {
+	background-image: repeating-radial-gradient;
+}
+
+.style {
+	border-image: repeating-radial-gradient;
+}
+
+.style {
+	mask: repeating-radial-gradient;
+}
+
+.style {
+	list-style: repeating-radial-gradient;
+}
+
+.style {
+	list-style-image: repeating-radial-gradient;
+}
+
+.style {
+	content: repeating-radial-gradient;
+}
+
+.style {
+	mask-image: repeating-radial-gradient;
 }
