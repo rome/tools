@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:1e7ee1bcd338286eb881f6d6bc738b39890e2617,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:25cbc0174a887b5e1bf0e107a2953ee817a4002f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -237,6 +237,8 @@ import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpace
 import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.rjson";
 // @ts-ignore
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
+// @ts-ignore
+import preferTsExpectError from "./ts/preferTsExpectError.test.rjson";
 
 export const tests: Tests = {
 	"a11y/noAccessKey": {
@@ -686,6 +688,10 @@ export const tests: Tests = {
 	"ts/preferShorthandArrayType": {
 		category: ["lint", "ts", "preferShorthandArrayType"],
 		cases: preferShorthandArrayType,
+	},
+	"ts/preferTsExpectError": {
+		category: ["lint", "ts", "preferTsExpectError"],
+		cases: preferTsExpectError,
 	},
 };
 /* GENERATED:END(id:main) */

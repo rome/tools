@@ -17,6 +17,10 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	TS_PREFER_TS_EXPECT_ERROR: {
+		category: DIAGNOSTIC_CATEGORIES["lint/ts/preferTsExpectError"],
+		message: markup`Prefer @ts-expect-error to get notified when suppression is no longer necessary.`,
+	},
 	A11_Y_USE_HEADING_CONTENT: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useHeadingContent"],
 		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,

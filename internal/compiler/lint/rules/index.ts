@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:bf542a4bd5d87134d9ccf43918f6537fa9dbad88,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:e140157c1993acf1bb44d87b093f1aa0365cea20,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -114,6 +114,7 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression";
 import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
 import noExplicitAny from "./ts/noExplicitAny";
 import preferShorthandArrayType from "./ts/preferShorthandArrayType";
+import preferTsExpectError from "./ts/preferTsExpectError";
 import useInterfaces from "./ts/useInterfaces";
 import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression";
 import {AnyVisitor} from "@internal/compiler";
@@ -261,6 +262,7 @@ lintTransforms.set(
 );
 lintTransforms.set("ts/noExplicitAny", noExplicitAny);
 lintTransforms.set("ts/preferShorthandArrayType", preferShorthandArrayType);
+lintTransforms.set("ts/preferTsExpectError", preferTsExpectError);
 lintTransforms.set("ts/useInterfaces", useInterfaces);
 lintTransforms.set(
 	"ts/useSimplifiedBooleanExpression",
@@ -383,6 +385,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"regex/noReferenceToNonExistingGroup",
 	"ts/noExplicitAny",
 	"ts/preferShorthandArrayType",
+	"ts/preferTsExpectError",
 	"ts/useInterfaces",
 	"ts/useSimplifiedBooleanExpression",
 ];
@@ -503,6 +506,7 @@ export type LintRuleName =
 	| "regex/noReferenceToNonExistingGroup"
 	| "ts/noExplicitAny"
 	| "ts/preferShorthandArrayType"
+	| "ts/preferTsExpectError"
 	| "ts/useInterfaces"
 	| "ts/useSimplifiedBooleanExpression";
 /* GENERATED:END(id:main) */
