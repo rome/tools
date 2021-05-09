@@ -99,7 +99,7 @@ function isIndexedNumberInstance(
 ): value is IndexedNumberish {
 	return (
 		isObject(value) &&
-		// @ts-ignore: TS does not support generic symbol indexes...
+		// @ts-expect-error: TS does not support generic symbol indexes...
 		value[Symbol.toStringTag] === tagName &&
 		typeof value.valueOf === "function" &&
 		typeof value.valueOf() === "number"

@@ -282,7 +282,7 @@ export default class Worker {
 		});
 
 		bridge.events.parse.subscribe((payload) => {
-			// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
+			// @ts-expect-error: AST is a bunch of interfaces which we cannot match with an object index
 			return this.api.parse(payload.ref, payload.options) as RSERObject;
 		});
 

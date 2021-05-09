@@ -56,7 +56,7 @@ const semverParser = createParser<SemverParserTypes>({
 			(char === ">" && nextChar === "=") ||
 			(char === "~" && nextChar === ">")
 		) {
-			// @ts-ignore: TS doesn't infer the possible combinations
+			// @ts-expect-error: TS doesn't infer the possible combinations
 			const value: SemverComparatorOperator = char + nextChar;
 			return parser.finishValueToken("Operator", value, index.add(2));
 		}

@@ -106,7 +106,7 @@ export class BridgeEvent<
 
 		switch (msg[0]) {
 			case BridgeMessageCodes.RESPONSE_SUCCESS: {
-				// @ts-ignore
+				// @ts-expect-error
 				callbacks.resolve(msg[2]);
 				break;
 			}

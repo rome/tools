@@ -1433,7 +1433,7 @@ function readCodePoint(
 		);
 		++parser.state.index;
 		if (code === undefined) {
-			// @ts-ignore
+			// @ts-expect-error
 			parser.state.invalidTemplateEscapePosition--; // to point to the '\'' instead of the 'u'
 		} else if (code > 1_114_111) {
 			if (throwOnInvalid) {
@@ -1783,7 +1783,7 @@ function readWord1(parser: JSParser): string {
 function readWord(parser: JSParser): void {
 	const word = readWord1(parser);
 
-	// @ts-ignore: The value of keywordTypes has a generic parameter of `string` instead of the labels that we would actually find in keywordTypes
+	// @ts-expect-error: The value of keywordTypes has a generic parameter of `string` instead of the labels that we would actually find in keywordTypes
 	let type: TokenTypes = keywordTypes.get(word) || tt.name;
 
 	if (type.keyword !== undefined && parser.state.escapePosition !== undefined) {

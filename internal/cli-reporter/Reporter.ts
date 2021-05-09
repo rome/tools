@@ -202,10 +202,10 @@ export default class Reporter implements ReporterNamespace {
 			features,
 			write: (chunk, error) => {
 				if (error) {
-					// @ts-ignore
+					// @ts-expect-error
 					stderr?.write(chunk);
 				} else {
-					// @ts-ignore
+					// @ts-expect-error
 					stdout?.write(chunk);
 				}
 			},

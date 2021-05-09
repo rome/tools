@@ -23,5 +23,5 @@ const promise = createFixtureTests(async (fixture, t) => {
 	t.snapshot(ast, undefined, {filename: outputFile});
 });
 
-// @ts-ignore Doesn't support top-level await
+// @ts-expect-error Doesn't support top-level await
 await promise;

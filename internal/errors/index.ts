@@ -88,7 +88,7 @@ export function getErrorStructure(
 		}
 
 		if (Array.isArray(err[ERROR_FRAMES_PROP])) {
-			// @ts-ignore
+			// @ts-expect-error
 			frames = err[ERROR_FRAMES_PROP];
 		}
 	}
