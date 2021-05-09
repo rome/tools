@@ -495,7 +495,6 @@ export function ambiguousTypeCastToParameter(
 		start,
 		{
 			...expr,
-			// @ts-expect-error
 			meta,
 		},
 	);

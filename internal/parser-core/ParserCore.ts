@@ -165,7 +165,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			initialState = impl.getInitialState(this);
 		}
 
-		// @ts-expect-error
 		this.state = {
 			...initialState,
 			...ParserCore.createInitialState(),
