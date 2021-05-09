@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:1e7ee1bcd338286eb881f6d6bc738b39890e2617,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:60f7abdfa5ac5a4ac92845f56385b2579b7ae5f3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -43,6 +43,8 @@ import useAltText from "./a11y/useAltText.test.rjson";
 import useAnchorContent from "./a11y/useAnchorContent.test.rjson";
 // @ts-ignore
 import useAriaProps from "./a11y/useAriaProps.test.rjson";
+// @ts-ignore
+import useAriaPropsForRole from "./a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
 import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
 // @ts-ignore
@@ -161,8 +163,6 @@ import useTemplate from "./js/useTemplate.test.rjson";
 import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
-// @ts-ignore
-import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
 import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
 // @ts-ignore
@@ -298,6 +298,10 @@ export const tests: Tests = {
 	"a11y/useAriaProps": {
 		category: ["lint", "a11y", "useAriaProps"],
 		cases: useAriaProps,
+	},
+	"a11y/useAriaPropsForRole": {
+		category: ["lint", "a11y", "useAriaPropsForRole"],
+		cases: useAriaPropsForRole,
 	},
 	"a11y/useAriaProptypes": {
 		category: ["lint", "a11y", "useAriaProptypes"],
@@ -534,10 +538,6 @@ export const tests: Tests = {
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],
 		cases: noRedundantRoles,
-	},
-	"jsx-a11y/useAriaPropsForRole": {
-		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],
-		cases: useAriaPropsForRole,
 	},
 	"jsx-a11y/useValidAnchor": {
 		category: ["lint", "jsx-a11y", "useValidAnchor"],

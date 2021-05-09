@@ -102,9 +102,6 @@
 
   ✖ Using the role attribute heading on the h1 element is redundant.
 
-    <h1 role='heading'>title</h1>
-        ^^^^^^^^^^^^^^
-
   Suggested fix: Remove the role attribute.
 
     1   │ - <h1·role="heading">
@@ -162,9 +159,6 @@
  lint/jsx-a11y/noRedundantRoles/reject/6/file.tsx:1:24 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━
 
   ✖ Using the role attribute checkbox on the input element is redundant.
-
-    <input  type='checkbox' role='checkbox' />
-                            ^^^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute.
 
@@ -565,9 +559,6 @@
  lint/jsx-a11y/noRedundantRoles/reject/20/file.tsx:1:8 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━
 
   ✖ Using the role attribute option on the option element is redundant.
-
-    <option role='option' ></option>
-            ^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute.
 
