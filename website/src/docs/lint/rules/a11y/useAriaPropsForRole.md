@@ -4,9 +4,9 @@ layout: layouts/rule.liquid
 description: enforce that elements with ARIA roles must have all required attributes for that role
 eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-has-required-aria-props.md
 eleventyNavigation:
-key: lint-rules/a11y/useAriaPropsForRole
-parent: lint-rules
-title: a11y/useAriaPropsForRole
+	key: lint-rules/a11y/useAriaPropsForRole
+	parent: lint-rules
+	title: a11y/useAriaPropsForRole
 ---
 
 # a11y/useAriaPropsForRole
