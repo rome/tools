@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:f3859718dd73aa3d9f4361b524e0bfabd9a44cb4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:95b957a3071ccfdf1f610353175de6a682c8ebe4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -549,6 +549,13 @@ MISSING DOCUMENTATION
 enforces that `audio` and `video` elements must have a `track` for captions
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useValidAnchor">
+	<a href="/docs/lint/rules/a11y/useValidAnchor">useValidAnchor</a>
+	<a class="header-anchor" href="#useValidAnchor"></a>
+</h3>
+enforce all anchors are valid, navigable elements
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useValidLang">
 	<a href="/docs/lint/rules/a11y/useValidLang">useValidLang</a>
 	<a class="header-anchor" href="#useValidLang"></a>
@@ -565,13 +572,6 @@ check if `lang` attribute is valid
 	<a class="header-anchor" href="#noRedundantRoles"></a>
 </h3>
 enforce explicit role property is not the same as implicit/default role property on element
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useValidAnchor">
-	<a href="/docs/lint/rules/jsx-a11y/useValidAnchor">useValidAnchor</a>
-	<a class="header-anchor" href="#useValidAnchor"></a>
-</h3>
-enforce all anchors are valid, navigable elements
 </div>
 </section>
 <section>
