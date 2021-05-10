@@ -18,12 +18,10 @@
 }
 
 .style {
-	-moz-text-align-last: right;
 	text-align-last: right;
 }
 
 .style {
-	text-align: center;
 	text-align-last: left;
 }
 
@@ -43,7 +41,6 @@
 }
 
 .style {
-	text-align: center;
 	-moz-text-align-last: left;
 	text-align-last: left;
 }
