@@ -355,9 +355,6 @@
 
   ✖ Using the role attribute link on the a element is redundant.
 
-    <a role='link'>something</a>
-       ^^^^^^^^^^^
-
   Suggested fix: Remove the role attribute.
 
     1   │ - <a·role="link">

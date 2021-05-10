@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:95406572621e688fc05cec9e98b106aa8d6e71b0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:bde32bd2ef9e8af883112977d488ace27edef0f3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -59,6 +59,8 @@ import useKeyWithClickEvents from "./a11y/useKeyWithClickEvents.test.rjson";
 import useKeyWithMouseEvents from "./a11y/useKeyWithMouseEvents.test.rjson";
 // @ts-ignore
 import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
+// @ts-ignore
+import useValidAnchor from "./a11y/useValidAnchor.test.rjson";
 // @ts-ignore
 import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-ignore
@@ -163,8 +165,6 @@ import useTemplate from "./js/useTemplate.test.rjson";
 import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
-// @ts-ignore
-import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
 // @ts-ignore
 import noCommentText from "./jsx/noCommentText.test.rjson";
 // @ts-ignore
@@ -330,6 +330,10 @@ export const tests: Tests = {
 	"a11y/useMediaCaption": {
 		category: ["lint", "a11y", "useMediaCaption"],
 		cases: useMediaCaption,
+	},
+	"a11y/useValidAnchor": {
+		category: ["lint", "a11y", "useValidAnchor"],
+		cases: useValidAnchor,
 	},
 	"a11y/useValidLang": {
 		category: ["lint", "a11y", "useValidLang"],
@@ -538,10 +542,6 @@ export const tests: Tests = {
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],
 		cases: noRedundantRoles,
-	},
-	"jsx-a11y/useValidAnchor": {
-		category: ["lint", "jsx-a11y", "useValidAnchor"],
-		cases: useValidAnchor,
 	},
 	"jsx/noCommentText": {
 		category: ["lint", "jsx", "noCommentText"],
