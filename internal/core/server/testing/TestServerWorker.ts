@@ -221,7 +221,7 @@ export default class TestServerWorker {
 								{
 									type: "log",
 									category: "info",
-									text: markup`You can find the specific test that caused this by running <code>rome test --sync-tests</code>`,
+									text: markup`You can find the specific test that caused this by running <code>rome test --run-in-sync</code>`,
 								},
 							],
 						},

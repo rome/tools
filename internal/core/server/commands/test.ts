@@ -50,7 +50,7 @@ export default createServerCommand({
 				"focusAllowed",
 				{description: markup`prevent tests from being focused`},
 			).asBoolean(true),
-			syncTests: c.get("syncTests", {description: markup`run tests in sync`}).asBoolean(
+			runInSync: c.get("runInSync", {description: markup`run tests in sync`}).asBoolean(
 				false,
 			),
 			sourceMaps: c.get(
