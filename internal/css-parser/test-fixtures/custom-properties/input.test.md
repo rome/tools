@@ -31,7 +31,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--foo"
-							loc: SourceLocation custom-properties/input.css 2:1-2:1
+							loc: SourceLocation custom-properties/input.css 2:1-2:6
 						}
 						loc: SourceLocation custom-properties/input.css 2:1-2:13
 					}
@@ -45,7 +45,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--lore-ipsum"
-							loc: SourceLocation custom-properties/input.css 3:1-3:1
+							loc: SourceLocation custom-properties/input.css 3:1-3:13
 						}
 						loc: SourceLocation custom-properties/input.css 3:1-3:20
 					}
@@ -59,7 +59,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--FANCY"
-							loc: SourceLocation custom-properties/input.css 4:1-4:1
+							loc: SourceLocation custom-properties/input.css 4:1-4:8
 						}
 						loc: SourceLocation custom-properties/input.css 4:1-4:17
 					}
@@ -74,7 +74,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--test"
-							loc: SourceLocation custom-properties/input.css 5:1-5:1
+							loc: SourceLocation custom-properties/input.css 5:1-5:7
 						}
 						loc: SourceLocation custom-properties/input.css 5:1-5:13
 					}
@@ -88,7 +88,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--percentage"
-							loc: SourceLocation custom-properties/input.css 6:1-6:1
+							loc: SourceLocation custom-properties/input.css 6:1-6:13
 						}
 						loc: SourceLocation custom-properties/input.css 6:1-6:18
 					}
@@ -103,7 +103,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--number"
-							loc: SourceLocation custom-properties/input.css 7:1-7:1
+							loc: SourceLocation custom-properties/input.css 7:1-7:9
 						}
 						loc: SourceLocation custom-properties/input.css 7:1-7:13
 					}
@@ -118,7 +118,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--length"
-							loc: SourceLocation custom-properties/input.css 8:1-8:1
+							loc: SourceLocation custom-properties/input.css 8:1-8:9
 						}
 						loc: SourceLocation custom-properties/input.css 8:1-8:15
 					}
@@ -133,7 +133,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--time"
-							loc: SourceLocation custom-properties/input.css 9:1-9:1
+							loc: SourceLocation custom-properties/input.css 9:1-9:7
 						}
 						loc: SourceLocation custom-properties/input.css 9:1-9:13
 					}
@@ -148,7 +148,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--function"
-							loc: SourceLocation custom-properties/input.css 10:1-10:1
+							loc: SourceLocation custom-properties/input.css 10:1-10:11
 						}
 						loc: SourceLocation custom-properties/input.css 10:1-10:18
 					}
@@ -169,7 +169,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--nested-function"
-							loc: SourceLocation custom-properties/input.css 11:1-11:1
+							loc: SourceLocation custom-properties/input.css 11:1-11:18
 						}
 						loc: SourceLocation custom-properties/input.css 11:1-11:30
 					}
@@ -184,7 +184,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--parentheses"
-							loc: SourceLocation custom-properties/input.css 12:1-12:1
+							loc: SourceLocation custom-properties/input.css 12:1-12:14
 						}
 						loc: SourceLocation custom-properties/input.css 12:1-12:19
 					}
@@ -199,7 +199,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--braces"
-							loc: SourceLocation custom-properties/input.css 13:1-13:1
+							loc: SourceLocation custom-properties/input.css 13:1-13:9
 						}
 						loc: SourceLocation custom-properties/input.css 13:1-13:14
 					}
@@ -214,7 +214,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--brackets"
-							loc: SourceLocation custom-properties/input.css 14:1-14:1
+							loc: SourceLocation custom-properties/input.css 14:1-14:11
 						}
 						loc: SourceLocation custom-properties/input.css 14:1-14:16
 					}
@@ -228,7 +228,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--at-keyword-unknown"
-							loc: SourceLocation custom-properties/input.css 15:1-15:1
+							loc: SourceLocation custom-properties/input.css 15:1-15:21
 						}
 						loc: SourceLocation custom-properties/input.css 15:1-15:30
 					}
@@ -242,7 +242,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--at-keyword-known"
-							loc: SourceLocation custom-properties/input.css 16:1-16:1
+							loc: SourceLocation custom-properties/input.css 16:1-16:19
 						}
 						loc: SourceLocation custom-properties/input.css 16:1-16:27
 					}
@@ -261,7 +261,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--at-keyword-unknown-block"
-							loc: SourceLocation custom-properties/input.css 17:1-17:1
+							loc: SourceLocation custom-properties/input.css 17:1-17:27
 						}
 						loc: SourceLocation custom-properties/input.css 17:1-17:39
 					}
@@ -280,7 +280,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--at-keyword-known-block"
-							loc: SourceLocation custom-properties/input.css 18:1-18:1
+							loc: SourceLocation custom-properties/input.css 18:1-18:25
 						}
 						loc: SourceLocation custom-properties/input.css 18:1-18:36
 					}
@@ -293,7 +293,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--cdo-at-top-level"
-							loc: SourceLocation custom-properties/input.css 19:1-19:1
+							loc: SourceLocation custom-properties/input.css 19:1-19:19
 						}
 						loc: SourceLocation custom-properties/input.css 19:1-19:25
 					}
@@ -306,7 +306,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--cdc-at-top-level"
-							loc: SourceLocation custom-properties/input.css 20:1-20:1
+							loc: SourceLocation custom-properties/input.css 20:1-20:19
 						}
 						loc: SourceLocation custom-properties/input.css 20:1-20:24
 					}
@@ -325,7 +325,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--semicolon-not-top-level"
-							loc: SourceLocation custom-properties/input.css 21:1-21:1
+							loc: SourceLocation custom-properties/input.css 21:1-21:26
 						}
 						loc: SourceLocation custom-properties/input.css 21:1-21:31
 					}
@@ -344,7 +344,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--cdo-not-top-level"
-							loc: SourceLocation custom-properties/input.css 22:1-22:1
+							loc: SourceLocation custom-properties/input.css 22:1-22:20
 						}
 						loc: SourceLocation custom-properties/input.css 22:1-22:28
 					}
@@ -363,7 +363,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--cdc-not-top-level"
-							loc: SourceLocation custom-properties/input.css 23:1-23:1
+							loc: SourceLocation custom-properties/input.css 23:1-23:20
 						}
 						loc: SourceLocation custom-properties/input.css 23:1-23:27
 					}

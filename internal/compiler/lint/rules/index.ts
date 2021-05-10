@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:3dbc76180bac8e2addaf9f29cdfb124edb8ab836,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:4de995fa3fdedbab46afed7386fbceb5fb1418eb,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -23,8 +23,8 @@ import useKeyWithClickEvents from "./a11y/useKeyWithClickEvents";
 import useKeyWithMouseEvents from "./a11y/useKeyWithMouseEvents";
 import useMediaCaption from "./a11y/useMediaCaption";
 import useValidLang from "./a11y/useValidLang";
+import noDuplicateCustomProperties from "./css/noDuplicateCustomProperties";
 import noImportantInKeyframes from "./css/noImportantInKeyframes";
-import noInvalidGridTemplateAreas from "./css/noInvalidGridTemplateAreas";
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -146,8 +146,11 @@ lintTransforms.set("a11y/useKeyWithClickEvents", useKeyWithClickEvents);
 lintTransforms.set("a11y/useKeyWithMouseEvents", useKeyWithMouseEvents);
 lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidLang", useValidLang);
+lintTransforms.set(
+	"css/noDuplicateCustomProperties",
+	noDuplicateCustomProperties,
+);
 lintTransforms.set("css/noImportantInKeyframes", noImportantInKeyframes);
-lintTransforms.set("css/noInvalidGridTemplateAreas", noInvalidGridTemplateAreas);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
 lintTransforms.set("js/noArguments", noArguments);
 lintTransforms.set("js/noAsyncPromiseExecutor", noAsyncPromiseExecutor);
@@ -292,8 +295,8 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/useKeyWithMouseEvents",
 	"a11y/useMediaCaption",
 	"a11y/useValidLang",
+	"css/noDuplicateCustomProperties",
 	"css/noImportantInKeyframes",
-	"css/noInvalidGridTemplateAreas",
 	"html/useClosingNonVoid",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
@@ -412,8 +415,8 @@ export type LintRuleName =
 	| "a11y/useKeyWithMouseEvents"
 	| "a11y/useMediaCaption"
 	| "a11y/useValidLang"
+	| "css/noDuplicateCustomProperties"
 	| "css/noImportantInKeyframes"
-	| "css/noInvalidGridTemplateAreas"
 	| "html/useClosingNonVoid"
 	| "js/noArguments"
 	| "js/noAsyncPromiseExecutor"

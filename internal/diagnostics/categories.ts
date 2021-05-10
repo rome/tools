@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:393395694b61e1cd88540b0aedb310ad9b78509e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:f24225ca38c82588afb6f04337e6b2e9dafa08ed,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -129,8 +129,8 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useKeyWithMouseEvents"]
 	| ["lint", "a11y", "useMediaCaption"]
 	| ["lint", "a11y", "useValidLang"]
+	| ["lint", "css", "noDuplicateCustomProperties"]
 	| ["lint", "css", "noImportantInKeyframes"]
-	| ["lint", "css", "noInvalidGridTemplateAreas"]
 	| ["lint", "html", "useClosingNonVoid"]
 	| ["lint", "js", "noArguments"]
 	| ["lint", "js", "noAsyncPromiseExecutor"]
@@ -261,12 +261,12 @@ const lintCategoryNameMap: {
 	"lint/a11y/useKeyWithMouseEvents": ["lint", "a11y", "useKeyWithMouseEvents"],
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
-	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
-	"lint/css/noInvalidGridTemplateAreas": [
+	"lint/css/noDuplicateCustomProperties": [
 		"lint",
 		"css",
-		"noInvalidGridTemplateAreas",
+		"noDuplicateCustomProperties",
 	],
+	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
 	"lint/html/useClosingNonVoid": ["lint", "html", "useClosingNonVoid"],
 	"lint/js/noArguments": ["lint", "js", "noArguments"],
 	"lint/js/noAsyncPromiseExecutor": ["lint", "js", "noAsyncPromiseExecutor"],
