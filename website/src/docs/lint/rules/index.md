@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:17b0803aefe70326553e30bfad13453498a24556,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:f3859718dd73aa3d9f4361b524e0bfabd9a44cb4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -743,18 +743,18 @@ enforce style prop value is an object
 <h2>CSS</h2>
 <p>Rule semantics and descriptions taken from <a href="https://stylelint.io/">stylelint</a>. See individual rule docs for direct references.</p>
 <div class="rule">
+<h3 data-toc-exclude id="noDuplicateCustomProperties">
+	<a href="/docs/lint/rules/css/noDuplicateCustomProperties">noDuplicateCustomProperties</a>
+	<a class="header-anchor" href="#noDuplicateCustomProperties"></a>
+</h3>
+prevent custom properties with the same name inside a block
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noImportantInKeyframes">
 	<a href="/docs/lint/rules/css/noImportantInKeyframes">noImportantInKeyframes</a>
 	<a class="header-anchor" href="#noImportantInKeyframes"></a>
 </h3>
 disallow `!important` in `@keyframe` rules
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noInvalidGridTemplateAreas">
-	<a href="/docs/lint/rules/css/noInvalidGridTemplateAreas">noInvalidGridTemplateAreas</a>
-	<a class="header-anchor" href="#noInvalidGridTemplateAreas"></a>
-</h3>
-checks that `grid-template-areas` have valid names
 </div>
 </section>
 <!-- GENERATED:END(id:main) -->

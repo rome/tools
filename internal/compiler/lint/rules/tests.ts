@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:60f7abdfa5ac5a4ac92845f56385b2579b7ae5f3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:95406572621e688fc05cec9e98b106aa8d6e71b0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -62,9 +62,9 @@ import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-ignore
 import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-ignore
-import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
+import noDuplicateCustomProperties from "./css/noDuplicateCustomProperties.test.rjson";
 // @ts-ignore
-import noInvalidGridTemplateAreas from "./css/noInvalidGridTemplateAreas.test.rjson";
+import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -335,13 +335,13 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "useValidLang"],
 		cases: useValidLang,
 	},
+	"css/noDuplicateCustomProperties": {
+		category: ["lint", "css", "noDuplicateCustomProperties"],
+		cases: noDuplicateCustomProperties,
+	},
 	"css/noImportantInKeyframes": {
 		category: ["lint", "css", "noImportantInKeyframes"],
 		cases: noImportantInKeyframes,
-	},
-	"css/noInvalidGridTemplateAreas": {
-		category: ["lint", "css", "noInvalidGridTemplateAreas"],
-		cases: noInvalidGridTemplateAreas,
 	},
 	"html/useClosingNonVoid": {
 		category: ["lint", "html", "useClosingNonVoid"],

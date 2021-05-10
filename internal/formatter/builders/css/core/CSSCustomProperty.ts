@@ -5,9 +5,9 @@ export default function CSSCustomProperty(
 	builder: Builder,
 	node: CSSCustomProperty,
 ): Token {
-	// custom properties are case insensitive so they are formatted to lower case
+	// custom properties are case sensitive so they are formatted to lower case
 	// Source:
 	// - https://www.w3.org/TR/css-variables/#apis
 	// - https://www.w3.org/TR/css-variables/#serializing-custom-props
-	return node.value.toLowerCase();
+	return node.value;
 }

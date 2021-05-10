@@ -17,6 +17,10 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	CSS_NO_DUPLICATE_CUSTOM_PROPERTIES: {
+		category: DIAGNOSTIC_CATEGORIES["lint/css/noDuplicateCustomProperties"],
+		message: markup`Duplicate custom properties inside the same block can lead to unwanted styles`,
+	},
 	A11_Y_USE_HEADING_CONTENT: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useHeadingContent"],
 		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
@@ -93,10 +97,6 @@ export const lint = createDiagnosticsCategory({
 				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
 			},
 		],
-	},
-	CSS_NO_INVALID_GRID_TEMPLATE_AREAS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/css/noInvalidGridTemplateAreas"],
-		message: markup`All strings must have the same number of cell tokens`,
 	},
 	CSS_NO_IMPORTANT_IN_KEYFRAME: {
 		category: DIAGNOSTIC_CATEGORIES["lint/css/noImportantInKeyframes"],

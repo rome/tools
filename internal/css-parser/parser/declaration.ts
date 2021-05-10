@@ -103,9 +103,12 @@ export function parseDeclaration(
 		onAtDeclaration?.(currentToken, parentAtKeywordToken);
 
 		let name: string | CSSCustomProperty;
+		const start = parser.getPosition();
 		if (isCustomProperty(currentToken.value)) {
+			const pos = parser.getPosition();
+			nextToken(parser);
 			name = parser.finishNode(
-				parser.getPosition(),
+				pos,
 				{
 					type: "CSSCustomProperty",
 					value: currentToken.value,
@@ -113,11 +116,10 @@ export function parseDeclaration(
 			);
 		} else {
 			name = currentToken.value;
+			nextToken(parser);
 		}
-		const start = parser.getPosition();
 		let important = false;
 		let value: Array<AnyCSSValue | undefined> = [];
-		nextToken(parser);
 
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
