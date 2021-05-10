@@ -496,12 +496,6 @@
 
  lint/a11y/useValidAnchor/reject/1/file.html:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Provide a valid href attribute for the a element.
-
-  ℹ Anchor elements should only be used for default section or page navigation.
-
- lint/a11y/useValidAnchor/reject/1/file.html:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
   ✖ Use a button element instead of an a element.
 
   ℹ Anchor elements should only be used for default section or page navigation.
@@ -523,7 +517,7 @@
 
  lint/a11y/useValidAnchor/reject/2/file.html:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Provide a href attribute for the a element.
+  ✖ Use a button element instead of an a element.
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -541,12 +535,6 @@
 ### `28`
 
 ```
-
- lint/a11y/useValidAnchor/reject/3/file.html:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Provide a valid href attribute for the a element.
-
-  ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/3/file.html:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

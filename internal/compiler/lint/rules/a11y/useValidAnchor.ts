@@ -77,7 +77,7 @@ export default createVisitor({
 		} else if (isHTMLElement(node) && node.name.name === "a") {
 			const attr = getHTMLAttribute(node, "href");
 
-			if (attr === undefined && !hasHTMLAttribute(node, "onClick")) {
+			if (attr === undefined && !hasHTMLAttribute(node, "onclick")) {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.A11Y_ANCHOR_IS_VALID(
@@ -86,7 +86,7 @@ export default createVisitor({
 				);
 			}
 
-			if (attr && !hasHTMLAttribute(node, "onClick")) {
+			if (attr && !hasHTMLAttribute(node, "onclick")) {
 				if (
 					attr.value?.value === "#" ||
 					attr.value?.value === "javascript:void(0)"
@@ -101,7 +101,7 @@ export default createVisitor({
 			}
 
 			if (
-				(hasHTMLAttribute(node, "onClick") && !hasHTMLAttribute(node, "href")) ||
+				(hasHTMLAttribute(node, "onclick") && !hasHTMLAttribute(node, "href")) ||
 				(hasHTMLAttribute(node, "href") && attr?.value?.value === "#") ||
 				(hasHTMLAttribute(node, "href") &&
 				attr?.value?.value === "javascript:void(0)")
