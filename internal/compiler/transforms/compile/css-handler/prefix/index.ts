@@ -14,6 +14,7 @@ import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
 import scrollSnapType from "./prefixes/scroll-snap-type";
 import tabSize from "./prefixes/tab-size";
+import textAlignLast from "./prefixes/text-align-last";
 import textOrientation from "./prefixes/text-orientation";
 import textOverflow from "./prefixes/text-overflow";
 import transform from "./prefixes/transform";
@@ -37,6 +38,7 @@ export default [
 	...position,
 	...scrollSnapType,
 	...tabSize,
+	...textAlignLast,
 	...textOrientation,
 	...textOverflow,
 	...transform,
