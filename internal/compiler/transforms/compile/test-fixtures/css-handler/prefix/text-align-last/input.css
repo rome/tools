@@ -1,0 +1,13 @@
+.style {
+	text-align-last: center;
+}
+
+.style {
+	-moz-text-align-last: right;
+	text-align-last: right;
+}
+
+.style {
+	text-align: center;
+	text-align-last: left;
+}
