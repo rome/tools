@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:0ff4cecd8cf7859ea12e732e47da17e49baa397f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:e2a3922cf263e9e7b623fdaeb13af12d42a0109d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
@@ -23,6 +23,7 @@ import textAlignLast from "./prefixes/text-align-last";
 import textEmphasis from "./prefixes/text-emphasis";
 import textOrientation from "./prefixes/text-orientation";
 import textOverflow from "./prefixes/text-overflow";
+import textSizeAdjust from "./prefixes/text-size-adjust";
 import transform from "./prefixes/transform";
 import transition from "./prefixes/transition";
 import userSelect from "./prefixes/user-select";
@@ -54,6 +55,7 @@ export default [
 	...textEmphasis,
 	...textOrientation,
 	...textOverflow,
+	...textSizeAdjust,
 	...transform,
 	...transition,
 	...userSelect,
