@@ -6,7 +6,7 @@ import {
 	CSSMediaQueryList,
 } from "@internal/ast";
 import {CSSParser} from "@internal/css-parser/types";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {parseMediaType} from "@internal/css-parser/parser/media/type";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
 import {
@@ -16,6 +16,7 @@ import {
 import {descriptions} from "@internal/diagnostics";
 import {parseMediaCondition} from "@internal/css-parser/parser/media/comparison";
 import {AND, NOT} from "@internal/css-parser/utils";
+import {parseComplexBlock} from "@internal/css-parser/parser/block";
 
 function tryParseConditionWithoutOr(
 	parser: CSSParser,
@@ -23,7 +24,7 @@ function tryParseConditionWithoutOr(
 	// the start should be from AND keyword
 	const start = parser.getPosition();
 
-	parser.nextToken();
+	nextToken(parser);
 
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
@@ -101,11 +102,11 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 	if (token.type === "Ident") {
 		if (token.value === NOT) {
 			condition = NOT;
-			parser.nextToken();
+			nextToken(parser);
 			hasNot = true;
 		} else if (token.value === "only") {
 			condition = "only";
-			parser.nextToken();
+			nextToken(parser);
 		}
 	}
 
@@ -194,10 +195,6 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 		}
 	}
 
-	// } else if (token.type === "LeftParen") {
-
-	// }
-
 	return undefined;
 }
 
@@ -213,7 +210,7 @@ export function parseMediaList(parser: CSSParser): CSSMediaQueryList | undefined
 	}
 	while (!(parser.matchToken("EOF") && parser.matchToken("LeftCurlyBracket"))) {
 		if (parser.matchToken("Comma")) {
-			parser.nextToken();
+			nextToken(parser);
 		}
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
@@ -227,12 +224,16 @@ export function parseMediaList(parser: CSSParser): CSSMediaQueryList | undefined
 			list.push(media);
 		}
 	}
-
-	return parser.finishNode(
-		start,
-		{
-			type: "CSSMediaQueryList",
-			value: list,
-		},
-	);
+	const block = parseComplexBlock(parser);
+	if (block) {
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSMediaQueryList",
+				prelude: list,
+				block,
+			},
+		);
+	}
+	return undefined;
 }

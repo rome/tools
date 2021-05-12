@@ -432,7 +432,7 @@ function isObjectProp(val: unknown, stack?: RecursiveStack): boolean {
 		return true;
 	}
 
-	if (stack !== undefined && stack.includes(val)) {
+	if (stack?.includes(val)) {
 		return false;
 	}
 

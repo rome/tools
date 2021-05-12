@@ -43,14 +43,12 @@ async function testParser<T>(
 	});
 
 	const {diagnostics} = await catchDiagnostics(async () => {
-		if (preInit !== undefined) {
-			preInit(parser);
-		}
+		preInit?.(parser);
+
 		const flags = await parser.init();
 		t.namedSnapshot("flags", flags);
-		if (postInit !== undefined) {
-			postInit(parser, flags);
-		}
+
+		postInit?.(parser, flags);
 	});
 
 	if (diagnostics !== undefined) {
@@ -415,6 +413,19 @@ test(
 					return {};
 				},
 				args: ["foo"],
+			},
+		);
+	},
+);
+
+test(
+	"use normalized flags",
+	async (t) => {
+		await testParser(
+			t,
+			{
+				defineFlags: () => {},
+				args: ["--foo-bar"],
 			},
 		);
 	},

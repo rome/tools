@@ -17,12 +17,12 @@ disallow duplicate keys in object literals
 **ESLint Equivalent:** [no-dupe-keys](https://eslint.org/docs/rules/no-dupe-keys)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:296f60288df7216aef3ba616d4406881e0374496,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:1998bf43aecb77dbbfe5de84f497f4d63b7fbca4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
 	<span class="token variable">test</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
 	<span class="token variable">test2</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
 	<span class="token variable">test</span><span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>

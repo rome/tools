@@ -1,9 +1,10 @@
-import {CSSMediaQuery, NodeBaseWithComments} from "@internal/ast";
+import {CSSBlock, CSSMediaQuery, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSMediaQueryList extends NodeBaseWithComments {
 	readonly type: "CSSMediaQueryList";
-	readonly value: CSSMediaQuery[];
+	readonly prelude: CSSMediaQuery[];
+	readonly block: CSSBlock;
 }
 
 export const cssMediaQueryList = createBuilder<CSSMediaQueryList>(
@@ -11,7 +12,8 @@ export const cssMediaQueryList = createBuilder<CSSMediaQueryList>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true,
+			prelude: true,
+			block: true,
 		},
 	},
 );

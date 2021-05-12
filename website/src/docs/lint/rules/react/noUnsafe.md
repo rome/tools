@@ -17,12 +17,12 @@ prevent usage of unsafe lifecycle methods
 **ESLint Equivalent:** [no-unsafe](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unsafe.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e2f0237ff38fcc4031e0fec87bd07a2cf85deda0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:79f5991700cacaf914e4c71b200c7792798b41ff,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token function">UNSAFE_componentWillMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -44,7 +44,7 @@ prevent usage of unsafe lifecycle methods
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token function">UNSAFE_componentWillReceiveProps</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -66,7 +66,7 @@ prevent usage of unsafe lifecycle methods
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token function">UNSAFE_componentWillUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -88,7 +88,7 @@ prevent usage of unsafe lifecycle methods
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token function">componentDidMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

@@ -776,9 +776,7 @@ export default class Client {
 			reporter.error(markup`Failed to connect. Killing daemon.`);
 		}
 
-		if (proc !== undefined) {
-			proc.kill();
-		}
+		proc?.kill();
 
 		return undefined;
 	}

@@ -17,12 +17,12 @@ disallow negating the left operand of relational operators
 **ESLint Equivalent:** [no-unsafe-negation](https://eslint.org/docs/rules/no-unsafe-negation)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:f877744117d54efa6505157d87497d9873f01b98,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:6e7e42f894b3005a2ee904e53a1a7237fa35c472,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token operator">!</span><span class="token number">1</span> <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token operator">!</span><span class="token number">1</span> <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noUnsafeNegation</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

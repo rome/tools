@@ -112,7 +112,7 @@ export default createLocalCommand({
 					const description = license.get("description").asMap();
 					if (description.has("advice")) {
 						const advice = description.get("advice");
-						if (advice && advice.exists()) {
+						if (advice?.exists()) {
 							const diags = advice.asImplicitArray();
 							if (diags.length > 0) {
 								const actionDiagnostics = diags.filter((d) =>

@@ -550,9 +550,7 @@ export default async function cli() {
 				fileout = clientFlags.cwd.resolve(cliFlags.logPath).createWriteStream();
 
 				client.endEvent.subscribe(() => {
-					if (fileout !== undefined) {
-						fileout.end();
-					}
+					fileout?.end();
 				});
 			}
 

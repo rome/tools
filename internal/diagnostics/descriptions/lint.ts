@@ -17,9 +17,86 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
-	CSS_NO_INVALID_GRID_TEMPLATE_AREAS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/css/noInvalidGridTemplateAreas"],
-		message: markup`All strings must have the same number of cell tokens`,
+	CSS_NO_DUPLICATE_CUSTOM_PROPERTIES: {
+		category: DIAGNOSTIC_CATEGORIES["lint/css/noDuplicateCustomProperties"],
+		message: markup`Duplicate custom properties inside the same block can lead to unwanted styles`,
+	},
+	A11_Y_USE_HEADING_CONTENT: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useHeadingContent"],
+		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`All headings on a page should have content that is accessible to screen readers.`,
+			},
+		],
+	},
+	A11_Y_NO_ON_CHANGE: (goodEventName: string, badEventName: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noOnChange"],
+		message: markup`Provide an <emphasis>${goodEventName}</emphasis> event instead of an <emphasis>${badEventName}</emphasis> event unless absolutely necessary.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The ${goodEventName} event is more declarative and reliable for indicating input changes when using keyboard navigation.`,
+			},
+		],
+	}),
+	A11_Y_USE_KEY_WITH_MOUSE_EVENTS: (mouseEvent: string, keyboardEvent: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useKeyWithMouseEvents"],
+		message: markup`Pair the <emphasis>${mouseEvent}</emphasis> mouse event with the <emphasis>${keyboardEvent}</emphasis> keyboard event.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.`,
+			},
+		],
+	}),
+	A11_Y_USE_KEY_WITH_CLICK_EVENTS: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useKeyWithClickEvents"],
+		message: markup`Pair the <emphasis>onClick</emphasis> mouse event with the <emphasis>onKeyUp</emphasis>, the <emphasis>onKeyDown</emphasis>, or the <emphasis>onKeyPress</emphasis> keyboard event.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.`,
+			},
+		],
+	},
+	A11_Y_USE_ANCHOR_CONTENT: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAnchorContent"],
+		message: markup`Provide screen reader accessible content when using <emphasis>anchor</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`All links on a page should have content that is accessible to screen readers.`,
+			},
+		],
+	},
+	A11_Y_NO_TARGET_BLANK: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noTargetBlank"],
+		message: markup`Avoid using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Opening external links in new tabs without rel="noreferrer" is a security risk. See <hyperlink target="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" /> for more details.`,
+			},
+		],
+	},
+	A11_Y_NO_ACCESS_KEY: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAccessKey"],
+		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
+			},
+		],
 	},
 	CSS_NO_IMPORTANT_IN_KEYFRAME: {
 		category: DIAGNOSTIC_CATEGORIES["lint/css/noImportantInKeyframes"],
@@ -309,8 +386,8 @@ export const lint = createDiagnosticsCategory({
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noRedundantRoles"],
 		message: markup`Using the role attribute <emphasis>${role}</emphasis> on the <emphasis>${element}</emphasis> element is redundant.`,
 	}),
-	JSX_A11Y_ANCHOR_IS_VALID: (message: StaticMarkup) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useValidAnchor"],
+	A11Y_ANCHOR_IS_VALID: (message: StaticMarkup) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useValidAnchor"],
 		message,
 		advice: [
 			{
@@ -320,17 +397,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JSX_A11Y_CLICK_EVENTS_HAVE_KEY_EVENTS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithClickEvents"],
-		message: markup`Pair the <emphasis>onClick</emphasis> mouse event with the <emphasis>onKeyUp</emphasis>, the <emphasis>onKeyDown</emphasis>, or the <emphasis>onKeyPress</emphasis> keyboard event.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.`,
-			},
-		],
-	},
 	JSX_NO_DUPLICATE_PROPS: (key: string) => ({
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx/noDuplicateProps"],
 		message: markup`Avoid duplicate component props. Check the <emphasis>${key}</emphasis> prop.`,
@@ -401,20 +467,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_MOUSE_EVENTS_HAVE_KEY_EVENTS: (
-		mouseEvent: string,
-		keyboardEvent: string,
-	) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useKeyWithMouseEvents"],
-		message: markup`Pair the <emphasis>${mouseEvent}</emphasis> mouse event with the <emphasis>${keyboardEvent}</emphasis> keyboard event.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.`,
-			},
-		],
-	}),
 	REACT_NO_WILL_UPDATE_SET_STATE: {
 		category: DIAGNOSTIC_CATEGORIES["lint/react/noWillUpdateSetState"],
 		message: markup`Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentWillUpdate</emphasis> method.`,
@@ -423,17 +475,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Updating state immediately before a scheduled render causes a second render that can cause visual layout thrashing.`,
-			},
-		],
-	},
-	JSX_A11Y_ANCHOR_HAS_CONTENT: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAnchorContent"],
-		message: markup`Provide screen reader accessible content when using <emphasis>anchor</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`All links on a page should have content that is accessible to screen readers.`,
 			},
 		],
 	},
@@ -450,17 +491,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.`,
-			},
-		],
-	},
-	JSX_A11Y_HEADING_USE_CONTENT: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useHeadingContent"],
-		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`All headings on a page should have content that is accessible to screen readers.`,
 			},
 		],
 	},
@@ -486,9 +516,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-
-	JSX_A11Y_NO_ACCESS_KEY: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noAccessKey"],
+	A11Y_NO_ACCESS_KEY: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noAccessKey"],
 		message: markup`Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.`,
 		advice: [
 			{
@@ -498,34 +527,11 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-
-	JSX_A11Y_NO_ON_CHANGE: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noOnChange"],
-		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`The onBlur event is more declarative and reliable for indicating input changes when using keyboard navigation.`,
-			},
-		],
-	},
-	JSX_A11Y_NO_TARGET_BLANK: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noTargetBlank"],
-		message: markup`Avoid using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis>.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Opening external links in new tabs without rel="noreferrer" is a security risk. See <hyperlink target="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" /> for more details.`,
-			},
-		],
-	},
-	JSX_A11Y_ROLE_HAS_REQUIRED_ARIA_PROPS: (
+	A11Y_ROLE_HAS_REQUIRED_ARIA_PROPS: (
 		roleName: string,
 		missingAttributes: string[],
 	) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAriaPropsForRole"],
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAriaPropsForRole"],
 		message: markup`The element with the <emphasis>${roleName}</emphasis> ARIA role does not have the required ARIA attributes.`,
 		advice: missingAttributes.map((missingAttribute) => {
 			return {

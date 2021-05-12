@@ -12,3 +12,8 @@
 	@top-center { content: none }
 	margin-left: 4cm;
 }
+
+@page {
+	@top-center { CONTENT: none }
+	MARGIN-LEFT: 4cm;
+}

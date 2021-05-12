@@ -1,0 +1,14 @@
+.style {
+	text-align: center;
+	position: sticky;
+}
+
+.style {
+	position: sticky;
+}
+
+.style {
+	text-align: center;
+	position: sticky;
+	position: -webkit-sticky;
+}

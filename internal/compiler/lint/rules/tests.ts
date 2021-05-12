@@ -39,29 +39,35 @@ function normalizeCases(
 	}
 }
 
-/* GENERATED:START(hash:a3d0ae02e2c90b4b598c004520fae80b4c9d7bb5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:37b1ee00481b7531777773bd51ac0bff0f7712f9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
-import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.toml";
+import noAccessKey from "./a11y/noAccessKey.test.toml";
 // @ts-ignore
-import noDistractingElements from "./a11y/noDistractingElements.test.toml";
+import noAutofocus from "./a11y/noAutofocus.test.toml";
 // @ts-ignore
-import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole.test.toml";
+import noHeaderScope from "./a11y/noHeaderScope.test.toml";
 // @ts-ignore
-import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex.test.toml";
+import noOnChange from "./a11y/noOnChange.test.toml";
 // @ts-ignore
-import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.toml";
+import noPositiveTabindex from "./a11y/noPositiveTabindex.test.toml";
 // @ts-ignore
-import useAltText from "./a11y/useAltText.test.toml";
+import noRedundantAlt from "./a11y/noRedundantAlt.test.toml";
 // @ts-ignore
-import useAriaProptypes from "./a11y/useAriaProptypes.test.toml";
+import noTargetBlank from "./a11y/noTargetBlank.test.toml";
 // @ts-ignore
-import useHtmlLang from "./a11y/useHtmlLang.test.toml";
+import useAnchorContent from "./a11y/useAnchorContent.test.toml";
 // @ts-ignore
-import useIframeTitle from "./a11y/useIframeTitle.test.toml";
+import useAriaProps from "./a11y/useAriaProps.test.toml";
 // @ts-ignore
-import useMediaCaption from "./a11y/useMediaCaption.test.toml";
+import useAriaPropsForRole from "./a11y/useAriaPropsForRole.test.toml";
 // @ts-ignore
-import useValidLang from "./a11y/useValidLang.test.toml";
+import useHeadingContent from "./a11y/useHeadingContent.test.toml";
+// @ts-ignore
+import useKeyWithClickEvents from "./a11y/useKeyWithClickEvents.test.toml";
+// @ts-ignore
+import useKeyWithMouseEvents from "./a11y/useKeyWithMouseEvents.test.toml";
+// @ts-ignore
+import useValidAnchor from "./a11y/useValidAnchor.test.toml";
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.toml";
 // @ts-ignore
@@ -159,25 +165,7 @@ import useTemplate from "./js/useTemplate.test.toml";
 // @ts-ignore
 import useWhile from "./js/useWhile.test.toml";
 // @ts-ignore
-import noAccessKey from "./jsx-a11y/noAccessKey.test.toml";
-// @ts-ignore
-import noOnChange from "./jsx-a11y/noOnChange.test.toml";
-// @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.toml";
-// @ts-ignore
-import noTargetBlank from "./jsx-a11y/noTargetBlank.test.toml";
-// @ts-ignore
-import useAnchorContent from "./jsx-a11y/useAnchorContent.test.toml";
-// @ts-ignore
-import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.toml";
-// @ts-ignore
-import useHeadingContent from "./jsx-a11y/useHeadingContent.test.toml";
-// @ts-ignore
-import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents.test.toml";
-// @ts-ignore
-import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents.test.toml";
-// @ts-ignore
-import useValidAnchor from "./jsx-a11y/useValidAnchor.test.toml";
 // @ts-ignore
 import noCommentText from "./jsx/noCommentText.test.toml";
 // @ts-ignore
@@ -252,49 +240,61 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.toml";
 
 export const tests: Tests = {
-	"a11y/noAriaUnsupportedElements": {
-		category: ["lint", "a11y", "noAriaUnsupportedElements"],
-		cases: normalizeCases(noAriaUnsupportedElements),
+	"a11y/noAccessKey": {
+		category: ["lint", "a11y", "noAccessKey"],
+		cases: normalizeCases(noAccessKey),
 	},
-	"a11y/noDistractingElements": {
-		category: ["lint", "a11y", "noDistractingElements"],
-		cases: normalizeCases(noDistractingElements),
+	"a11y/noAutofocus": {
+		category: ["lint", "a11y", "noAutofocus"],
+		cases: normalizeCases(noAutofocus),
 	},
-	"a11y/noNoninteractiveElementToInteractiveRole": {
-		category: ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"],
-		cases: normalizeCases(noNoninteractiveElementToInteractiveRole),
+	"a11y/noHeaderScope": {
+		category: ["lint", "a11y", "noHeaderScope"],
+		cases: normalizeCases(noHeaderScope),
 	},
-	"a11y/noNoninteractiveTabindex": {
-		category: ["lint", "a11y", "noNoninteractiveTabindex"],
-		cases: normalizeCases(noNoninteractiveTabindex),
+	"a11y/noOnChange": {
+		category: ["lint", "a11y", "noOnChange"],
+		cases: normalizeCases(noOnChange),
 	},
-	"a11y/noSvgWithoutTitle": {
-		category: ["lint", "a11y", "noSvgWithoutTitle"],
-		cases: normalizeCases(noSvgWithoutTitle),
+	"a11y/noPositiveTabindex": {
+		category: ["lint", "a11y", "noPositiveTabindex"],
+		cases: normalizeCases(noPositiveTabindex),
 	},
-	"a11y/useAltText": {
-		category: ["lint", "a11y", "useAltText"],
-		cases: normalizeCases(useAltText),
+	"a11y/noRedundantAlt": {
+		category: ["lint", "a11y", "noRedundantAlt"],
+		cases: normalizeCases(noRedundantAlt),
 	},
-	"a11y/useAriaProptypes": {
-		category: ["lint", "a11y", "useAriaProptypes"],
-		cases: normalizeCases(useAriaProptypes),
+	"a11y/noTargetBlank": {
+		category: ["lint", "a11y", "noTargetBlank"],
+		cases: normalizeCases(noTargetBlank),
 	},
-	"a11y/useHtmlLang": {
-		category: ["lint", "a11y", "useHtmlLang"],
-		cases: normalizeCases(useHtmlLang),
+	"a11y/useAnchorContent": {
+		category: ["lint", "a11y", "useAnchorContent"],
+		cases: normalizeCases(useAnchorContent),
 	},
-	"a11y/useIframeTitle": {
-		category: ["lint", "a11y", "useIframeTitle"],
-		cases: normalizeCases(useIframeTitle),
+	"a11y/useAriaProps": {
+		category: ["lint", "a11y", "useAriaProps"],
+		cases: normalizeCases(useAriaProps),
 	},
-	"a11y/useMediaCaption": {
-		category: ["lint", "a11y", "useMediaCaption"],
-		cases: normalizeCases(useMediaCaption),
+	"a11y/useAriaPropsForRole": {
+		category: ["lint", "a11y", "useAriaPropsForRole"],
+		cases: normalizeCases(useAriaPropsForRole),
 	},
-	"a11y/useValidLang": {
-		category: ["lint", "a11y", "useValidLang"],
-		cases: normalizeCases(useValidLang),
+	"a11y/useHeadingContent": {
+		category: ["lint", "a11y", "useHeadingContent"],
+		cases: normalizeCases(useHeadingContent),
+	},
+	"a11y/useKeyWithClickEvents": {
+		category: ["lint", "a11y", "useKeyWithClickEvents"],
+		cases: normalizeCases(useKeyWithClickEvents),
+	},
+	"a11y/useKeyWithMouseEvents": {
+		category: ["lint", "a11y", "useKeyWithMouseEvents"],
+		cases: normalizeCases(useKeyWithMouseEvents),
+	},
+	"a11y/useValidAnchor": {
+		category: ["lint", "a11y", "useValidAnchor"],
+		cases: normalizeCases(useValidAnchor),
 	},
 	"html/useClosingNonVoid": {
 		category: ["lint", "html", "useClosingNonVoid"],
@@ -488,45 +488,9 @@ export const tests: Tests = {
 		category: ["lint", "js", "useWhile"],
 		cases: normalizeCases(useWhile),
 	},
-	"jsx-a11y/noAccessKey": {
-		category: ["lint", "jsx-a11y", "noAccessKey"],
-		cases: normalizeCases(noAccessKey),
-	},
-	"jsx-a11y/noOnChange": {
-		category: ["lint", "jsx-a11y", "noOnChange"],
-		cases: normalizeCases(noOnChange),
-	},
 	"jsx-a11y/noRedundantRoles": {
 		category: ["lint", "jsx-a11y", "noRedundantRoles"],
 		cases: normalizeCases(noRedundantRoles),
-	},
-	"jsx-a11y/noTargetBlank": {
-		category: ["lint", "jsx-a11y", "noTargetBlank"],
-		cases: normalizeCases(noTargetBlank),
-	},
-	"jsx-a11y/useAnchorContent": {
-		category: ["lint", "jsx-a11y", "useAnchorContent"],
-		cases: normalizeCases(useAnchorContent),
-	},
-	"jsx-a11y/useAriaPropsForRole": {
-		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],
-		cases: normalizeCases(useAriaPropsForRole),
-	},
-	"jsx-a11y/useHeadingContent": {
-		category: ["lint", "jsx-a11y", "useHeadingContent"],
-		cases: normalizeCases(useHeadingContent),
-	},
-	"jsx-a11y/useKeyWithClickEvents": {
-		category: ["lint", "jsx-a11y", "useKeyWithClickEvents"],
-		cases: normalizeCases(useKeyWithClickEvents),
-	},
-	"jsx-a11y/useKeyWithMouseEvents": {
-		category: ["lint", "jsx-a11y", "useKeyWithMouseEvents"],
-		cases: normalizeCases(useKeyWithMouseEvents),
-	},
-	"jsx-a11y/useValidAnchor": {
-		category: ["lint", "jsx-a11y", "useValidAnchor"],
-		cases: normalizeCases(useValidAnchor),
 	},
 	"jsx/noCommentText": {
 		category: ["lint", "jsx", "noCommentText"],

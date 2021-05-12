@@ -196,7 +196,10 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addFilter(
 		"blogSummary",
 		(val) => {
-			return val.split("<!-- DESCRIPTION_END -->")[0];
+			const lines = val.split("<!-- DESCRIPTION_END -->")[0].split("\n");
+			return lines.filter((line) => {
+				return line.startsWith("<p>");
+			}).join("\n");
 		},
 	);
 
@@ -209,7 +212,7 @@ module.exports = function(eleventyConfig) {
 					year: "numeric",
 					month: "long",
 					day: "numeric",
-					timeZone: "America/Los_Angeles",
+					timeZone: "UTC",
 				},
 			);
 		},

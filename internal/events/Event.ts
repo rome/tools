@@ -39,9 +39,8 @@ export default class Event<Param, Ret = void> {
 
 	private onSubscriptionChange() {
 		const {onSubscriptionChange} = this.options;
-		if (onSubscriptionChange !== undefined) {
-			onSubscriptionChange();
-		}
+
+		onSubscriptionChange?.();
 	}
 
 	public async clear(): Promise<void> {

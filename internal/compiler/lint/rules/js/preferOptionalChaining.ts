@@ -1,11 +1,16 @@
 import {
 	AnyJSExpression,
+	AnyNode,
 	JSBinaryExpression,
+	JSCallExpression,
+	JSConditionalExpression,
+	JSIfStatement,
 	JSMemberExpression,
 	JSNullLiteral,
 	JSReferenceIdentifier,
 	jsIdentifier,
 	jsMemberExpression,
+	jsOptionalCallExpression,
 	jsStaticMemberProperty,
 } from "@internal/ast";
 import {createVisitor, signals} from "@internal/compiler";
@@ -29,6 +34,11 @@ function isReferenceOrMemberExpression(
 	);
 }
 
+type Output = {
+	name: string;
+	optional?: boolean;
+};
+
 /**
  * Arrayify object to by identifiers
  *
@@ -44,12 +54,6 @@ function isReferenceOrMemberExpression(
  * output
  * `null`
  */
-
-type Output = {
-	name: string;
-	optional?: boolean;
-};
-
 function memberExpressionToArray(
 	arg: JSMemberExpression | JSReferenceIdentifier,
 ): Output[] | null {
@@ -210,16 +214,177 @@ function getVerifiedRight(node: AnyJSExpression): null | VerifiedRight {
 	return null;
 }
 
+function getVerifiedConsequent(node: AnyNode): null | JSCallExpression {
+	if (
+		node.type === "JSExpressionStatement" &&
+		node.expression.type === "JSCallExpression"
+	) {
+		return node.expression;
+	}
+
+	if (
+		node.type === "JSBlockStatement" &&
+		node.body.length === 1 &&
+		node.body[0].type === "JSExpressionStatement" &&
+		node.body[0].expression.type === "JSCallExpression"
+	) {
+		return node.body[0].expression;
+	}
+
+	return null;
+}
+
+function extractIfStatementComments(node: JSIfStatement): string[] {
+	const result: string[] = [];
+
+	if (node.leadingComments) {
+		result.push(...node.leadingComments);
+	}
+
+	if (node.test.leadingComments) {
+		result.push(...node.test.leadingComments);
+	}
+
+	if (node.consequent.type === "JSBlockStatement") {
+		if (node.consequent.leadingComments) {
+			result.push(...node.consequent.leadingComments);
+		}
+
+		const head = node.consequent.body[0];
+
+		if (head?.leadingComments) {
+			result.push(...head.leadingComments);
+		}
+	}
+
+	return result;
+}
+
+type NodeComments = {
+	leadingComments: string[];
+	trailingComments: string[];
+};
+function extractTernaryComments(node: JSConditionalExpression): NodeComments {
+	const result: NodeComments = {
+		leadingComments: [],
+		trailingComments: [],
+	};
+
+	// ternary leading comments should remain leading
+	if (node.leadingComments) {
+		result.leadingComments.push(...node.leadingComments);
+	}
+
+	if (node.test.leadingComments) {
+		result.leadingComments.push(...node.test.leadingComments);
+	}
+	if (node.test.trailingComments) {
+		result.leadingComments.push(...node.test.trailingComments);
+	}
+
+	if (node.consequent.leadingComments) {
+		result.leadingComments.push(...node.consequent.leadingComments);
+	}
+	if (node.consequent.trailingComments) {
+		result.leadingComments.push(...node.consequent.trailingComments);
+	}
+
+	if (node.alternate.leadingComments) {
+		result.trailingComments.push(...node.alternate.leadingComments);
+	}
+	if (node.alternate.trailingComments) {
+		result.trailingComments.push(...node.alternate.trailingComments);
+	}
+
+	// ternary trailing comments should remain trailing
+	if (node.trailingComments) {
+		result.trailingComments.push(...node.trailingComments);
+	}
+
+	return result;
+}
+
 export default createVisitor({
 	name: "js/preferOptionalChaining",
 	enter(path) {
 		const {node} = path;
 
 		/**
+		 * Optional call expression
+		 * `if (foo) foo()` --> `foo?.()`
+		 */
+		if (node.type === "JSIfStatement" && node.alternate === undefined) {
+			const consequent = getVerifiedConsequent(node.consequent);
+			const left = getVerifiedLeft(node.test);
+			if (
+				left !== null &&
+				consequent !== null &&
+				isReferenceOrMemberExpression(consequent.callee)
+			) {
+				const newCallee = mergeMemberExpressions(
+					left,
+					consequent.callee,
+					{inclusive: true},
+				);
+				if (newCallee) {
+					return path.addFixableDiagnostic(
+						{
+							fixed: signals.replace(
+								jsOptionalCallExpression.create({
+									...consequent,
+									callee: newCallee.node,
+									leadingComments: extractIfStatementComments(node),
+									trailingComments: node.trailingComments || [],
+									optional: newCallee.sameLength,
+								}),
+							),
+						},
+						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
+					);
+				}
+			}
+
+			return signals.retain;
+		}
+
+		/**
+		 * `foo ? foo() : undefined` --> `foo?.()`
 		 * `foo ? foo.bar : undefined` --> `foo?.bar`
 		 */
 		if (node.type === "JSConditionalExpression" && isUndefined(node.alternate)) {
 			const left = getVerifiedLeft(node.test);
+
+			/**
+			 * optional call expr
+			 * `foo ? foo() : undefined` --> `foo?.()`
+			 */
+			if (
+				node.consequent.type === "JSCallExpression" &&
+				isReferenceOrMemberExpression(node.consequent.callee) &&
+				left !== null
+			) {
+				const newCallee = mergeMemberExpressions(
+					left,
+					node.consequent.callee,
+					{inclusive: true},
+				);
+				if (newCallee) {
+					return path.addFixableDiagnostic(
+						{
+							fixed: signals.replace(
+								jsOptionalCallExpression.create({
+									...node.consequent,
+									...extractTernaryComments(node),
+									callee: newCallee.node,
+									optional: newCallee.sameLength,
+								}),
+							),
+						},
+						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
+					);
+				}
+			}
+
 			/**
 			 * optional member expr
 			 * `foo ? foo.bar : undefined` --> `foo?.bar`
@@ -239,7 +404,10 @@ export default createVisitor({
 					) {
 						return path.addFixableDiagnostic(
 							{
-								fixed: signals.replace(right.build(newMemberExpression.node)),
+								fixed: signals.replace({
+									...right.build(newMemberExpression.node),
+									...extractTernaryComments(node),
+								}),
 							},
 							descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
 						);
@@ -251,11 +419,39 @@ export default createVisitor({
 		/**
 		 * Optional member expression and call expression
 		 * `foo && foo.bar` --> `foo?.bar`
+		 * `foo.bar && foo.bar()` --> `foo.bar?.()
 		 */
 		if (node.type === "JSLogicalExpression" && node.operator === "&&") {
 			const left = getVerifiedLeft(node.left);
 			if (!left) {
 				return signals.retain;
+			}
+
+			if (
+				node.right.type === "JSCallExpression" &&
+				isReferenceOrMemberExpression(node.right.callee)
+			) {
+				const newCallee = mergeMemberExpressions(
+					left,
+					node.right.callee,
+					{inclusive: true},
+				);
+				if (newCallee) {
+					return path.addFixableDiagnostic(
+						{
+							fixed: signals.replace(
+								jsOptionalCallExpression.create({
+									...node.right,
+									leadingComments: node.leadingComments || [],
+									trailingComments: node.trailingComments || [],
+									callee: newCallee.node,
+									optional: newCallee.sameLength,
+								}),
+							),
+						},
+						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
+					);
+				}
 			}
 
 			const right = getVerifiedRight(node.right);
@@ -277,7 +473,11 @@ export default createVisitor({
 
 			return path.addFixableDiagnostic(
 				{
-					fixed: signals.replace(right.build(newMemberExpression.node)),
+					fixed: signals.replace({
+						...right.build(newMemberExpression.node),
+						leadingComments: node.leadingComments || [],
+						trailingComments: node.trailingComments || [],
+					}),
 				},
 				descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
 			);

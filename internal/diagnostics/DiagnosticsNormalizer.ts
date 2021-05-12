@@ -91,7 +91,7 @@ export default class DiagnosticsNormalizer {
 
 	private hasSourceMaps(): boolean {
 		const {sourceMaps} = this;
-		return sourceMaps !== undefined && sourceMaps.hasAny();
+		return sourceMaps?.hasAny() ?? false;
 	}
 
 	private couldNormalizeMarkup(): boolean {
@@ -214,7 +214,7 @@ export default class DiagnosticsNormalizer {
 		let {marker, path, start, end, integrity, resolved} = location;
 		let origPath = path;
 
-		if (sourceMaps !== undefined && sourceMaps.hasAny() && !resolved) {
+		if (sourceMaps?.hasAny() && !resolved) {
 			if (start !== undefined) {
 				const resolvedStart = sourceMaps.approxOriginalPositionFor(
 					origPath,

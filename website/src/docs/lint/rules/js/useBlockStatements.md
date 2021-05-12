@@ -17,12 +17,12 @@ MISSING DOCUMENTATION
 **ESLint Equivalent:** [curly](https://eslint.org/docs/rules/curly)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:145d520a6d8d814d7fbfe01c98fe8ccfde0bd2bd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a4b0cb3aff164c9fa20ec8118e5bccd930ccfb1e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span> <span class="token variable">x</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span> <span class="token variable">x</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useBlockStatements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -42,7 +42,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">x</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token variable">y</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -69,7 +69,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">x</span>
 <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">y</span><span class="token punctuation">)</span> <span class="token variable">y</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -93,7 +93,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useBlockStatements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -112,7 +112,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">p</span> <span class="token keyword">in</span> <span class="token variable">obj</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">p</span> <span class="token keyword">in</span> <span class="token variable">obj</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useBlockStatements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -131,7 +131,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">x</span> <span class="token variable">of</span> <span class="token variable">xs</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">x</span> <span class="token variable">of</span> <span class="token variable">xs</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useBlockStatements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -150,7 +150,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">do</span><span class="token punctuation">;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">do</span><span class="token punctuation">;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useBlockStatements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -170,7 +170,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useBlockStatements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -189,7 +189,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">with</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">with</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>parse(js)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

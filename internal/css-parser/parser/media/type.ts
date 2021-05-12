@@ -1,7 +1,7 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {CSSMediaType, CSSMediaValidType} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 
 const VALID_MEDIA_TYPES = ["all", "print", "screen"];
 
@@ -17,11 +17,11 @@ const DEPRECATED_MEDIA_TYPES = [
 ];
 
 function isValidType(value: string): value is CSSMediaValidType {
-	return VALID_MEDIA_TYPES.includes(value);
+	return VALID_MEDIA_TYPES.includes(value.toLowerCase());
 }
 
 function isDeprecatedType(value: string): boolean {
-	return DEPRECATED_MEDIA_TYPES.includes(value);
+	return DEPRECATED_MEDIA_TYPES.includes(value.toLowerCase());
 }
 
 export function parseMediaType(parser: CSSParser): CSSMediaType | undefined {
@@ -34,7 +34,7 @@ export function parseMediaType(parser: CSSParser): CSSMediaType | undefined {
 
 	if (token.type === "Ident") {
 		if (isValidType(token.value)) {
-			parser.nextToken();
+			nextToken(parser);
 			return parser.finishNode(
 				start,
 				{
@@ -59,7 +59,7 @@ export function parseMediaType(parser: CSSParser): CSSMediaType | undefined {
 				token: parser.getToken(),
 			});
 		}
-		parser.nextToken();
+		nextToken(parser);
 	}
 	return undefined;
 }

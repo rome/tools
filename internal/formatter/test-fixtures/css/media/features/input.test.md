@@ -22,7 +22,7 @@
 ### `Output`
 
 ```css
-@media (min-width: 30em) and (orientation: landscape)  {
+@media (min-width: 30em) and (orientation: landscape) {
 }
 
 

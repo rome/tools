@@ -17,12 +17,12 @@ disallow the use of `arguments`
 **ESLint Equivalent:** [prefer-rest-params](https://eslint.org/docs/rules/prefer-rest-params)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:34ed3bbf070da7df0b593034859613f33e92e7fb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:278a9de969e508d09e2cc88ac0f5ee5d012386d5,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">function</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">arguments</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -42,7 +42,7 @@ disallow the use of `arguments`
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">arguments</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -62,7 +62,7 @@ disallow the use of `arguments`
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token variable">C</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">class</span> <span class="token variable">C</span> <span class="token punctuation">{</span>
 	<span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">arguments</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
@@ -86,7 +86,7 @@ disallow the use of `arguments`
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">o</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">o</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
 	<span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">arguments</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span><span class="token punctuation">,</span>

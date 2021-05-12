@@ -55,7 +55,7 @@ function addComment(
 
 	// Find existing suppression comment
 	const lastComment = context.comments.getCommentsFromIds(node.leadingComments).pop();
-	if (lastComment !== undefined && lastComment.value.includes(SUPPRESSION_START)) {
+	if (lastComment?.value.includes(SUPPRESSION_START)) {
 		// Try to update it
 		const updated = updateExistingComment({
 			path,

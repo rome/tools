@@ -133,9 +133,7 @@ export default class Bridge<
 			this.registerEvent(new BridgeEventBidirectional(name, this));
 		}
 
-		if (def.init !== undefined) {
-			def.init(this);
-		}
+		def.init?.(this);
 	}
 
 	private heartbeatTimeout: undefined | NodeJS.Timeout;

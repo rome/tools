@@ -5,8 +5,10 @@ export default function CSSMediaQueryList(
 	builder: Builder,
 	node: CSSMediaQueryList,
 ): Token {
-	return concat(
-		node.value.map((child, index) => {
+	const tokens: Token[] = [];
+
+	tokens.push(
+		...node.prelude.map((child, index) => {
 			const tokens: Token[] = [];
 			if (index > 0) {
 				tokens.push(",", space);
@@ -15,4 +17,6 @@ export default function CSSMediaQueryList(
 			return concat(tokens);
 		}),
 	);
+	tokens.push(builder.tokenize(node.block, node));
+	return concat(tokens);
 }

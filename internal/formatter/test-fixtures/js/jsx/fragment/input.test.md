@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```jsx
 function Component() {
 	return (<></>);
 }
@@ -40,7 +40,7 @@ function Component2() {
 
 ### `Output`
 
-```js
+```jsx
 function Component() {
 	return <></>;
 }

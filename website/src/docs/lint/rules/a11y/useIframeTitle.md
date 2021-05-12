@@ -17,12 +17,12 @@ enforce `iframe` elements have a title attribute
 **ESLint Equivalent:** [iframe-has-title](https://github.com/jsx-eslint/eslint-plugin-a11y/blob/master/docs/rules/iframe-has-title.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:1b28d0cc1259638eacb63e778de6e414ef5d1cc6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:061385af2760f5e13064ff6b8c71250b983f9b32,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,7 +38,7 @@ enforce `iframe` elements have a title attribute
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -54,7 +54,7 @@ enforce `iframe` elements have a title attribute
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&quot;&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&quot;&quot;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -70,7 +70,7 @@ enforce `iframe` elements have a title attribute
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;&quot;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;&quot;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -86,7 +86,7 @@ enforce `iframe` elements have a title attribute
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">`</span><span class="token string">`</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">`</span><span class="token string">`</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -102,7 +102,7 @@ enforce `iframe` elements have a title attribute
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -118,7 +118,7 @@ enforce `iframe` elements have a title attribute
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">false</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">false</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -134,7 +134,7 @@ enforce `iframe` elements have a title attribute
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -150,7 +150,7 @@ enforce `iframe` elements have a title attribute
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">42</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">42</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useIframeTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -195,8 +195,8 @@ enforce `iframe` elements have a title attribute
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">Iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">Iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">iframe</span> <span class="token attr-name">title</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;Tour&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">iframe</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">iframe</span> <span class="token attr-name">title</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;Camping&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">iframe</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

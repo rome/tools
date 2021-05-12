@@ -69,8 +69,9 @@ export default createServerCommand({
 								freezeSnapshots: !flags.fix,
 								updateSnapshots: flags.fix,
 								showAllCoverage: false,
-								syncTests: false,
+								runInSync: false,
 								sourceMaps: true,
+								suppressLogs: true,
 							},
 						);
 					},

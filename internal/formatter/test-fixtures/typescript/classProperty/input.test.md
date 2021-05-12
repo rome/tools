@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 class Foo {
 	private foo?: string;
 }
@@ -21,7 +21,7 @@ class Foo {
 
 ### `Output`
 
-```js
+```ts
 class Foo {
 	private foo?: string;
 }

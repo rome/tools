@@ -93,7 +93,7 @@ export class LSPTransport {
 		return new Promise((resolve, reject) => {
 			const id = ++this.requestIdCounter;
 			this.requestCallbacks.set(id, {resolve, reject});
-			this.write({...req, id});
+			this.write({...req, id, jsonrpc: "2.0"});
 		});
 	}
 
@@ -148,12 +148,14 @@ export class LSPTransport {
 					result = await this.requestEvent.call({method, params});
 				}
 				const res: LSPResponseMessage = {
+					jsonrpc: "2.0",
 					id,
 					result,
 				};
 				this.write(res);
 			} catch (err) {
 				const res: LSPResponseMessage = {
+					jsonrpc: "2.0",
 					id,
 					error: {
 						code: -32_603,

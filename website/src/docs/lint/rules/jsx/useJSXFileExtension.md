@@ -16,7 +16,7 @@ MISSING DOCUMENTATION
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:735f5544ebc7c5e960ca7dd798d182aed08648c8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e1de72843fe323a5c8b41422b03de92bd12cbd94,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -90,20 +90,20 @@ MISSING DOCUMENTATION
 ### Valid
 
 {% raw %}<pre class="language-js"><code class="language-js"><span class="token string">&apos;&lt;div&gt;&lt;/div&gt;&apos;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token comment">// @jsx</span>
+{% raw %}<pre class="language-jsx"><code class="language-jsx"><span class="token comment">// @jsx</span>
 &lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token comment">// @jsx</span>
+{% raw %}<pre class="language-jsx"><code class="language-jsx"><span class="token comment">// @jsx</span>
 &lt;&gt;&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token comment">// @jsx</span>
+{% raw %}<pre class="language-jsx"><code class="language-jsx"><span class="token comment">// @jsx</span>
 &lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token comment">// @jsx</span>
+{% raw %}<pre class="language-jsx"><code class="language-jsx"><span class="token comment">// @jsx</span>
 &lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token comment">// @jsx</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token comment">// @jsx</span>
 &lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token comment">// @jsx</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token comment">// @jsx</span>
 &lt;&gt;&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token comment">// @jsx</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token comment">// @jsx</span>
 &lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token comment">// @jsx</span>
+{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token comment">// @jsx</span>
 &lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

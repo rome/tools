@@ -670,9 +670,10 @@ export default class Consumer {
 
 		for (const [key, value] of this.asMap(false)) {
 			if (!this.usedNames.has(key)) {
+				const normalizedKey = normalizeKey ? normalizeKey(key) : key;
 				value.unexpected(
 					descriptions.CONSUME.UNUSED_PROPERTY(
-						key,
+						normalizedKey,
 						type,
 						knownProperties,
 						this.parent?.getKeyPathString(),

@@ -14,12 +14,12 @@ eleventyNavigation:
 discard redundant terms from logical expressions
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:573cea741e4e6cd7ae3029f77a434f707ffc80b9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:01667bd76e8ae31b2a39287f9cce84874ab7e2ec,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">boolExp</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">boolExp</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">r</span> <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">boolExp</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:10</span> <strong>lint/js/useSimplifiedLogicalExpression</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
@@ -39,7 +39,7 @@ discard redundant terms from logical expressions
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">boolExp</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">boolExp</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">r</span> <span class="token operator">=</span> <span class="token variable">boolExp</span> <span class="token operator">||</span> <span class="token boolean">true</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:10</span> <strong>lint/js/useSimplifiedLogicalExpression</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
@@ -59,7 +59,7 @@ discard redundant terms from logical expressions
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">nonNullExp</span> <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">nonNullExp</span> <span class="token operator">=</span> <span class="token number">123</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">r</span> <span class="token operator">=</span> <span class="token boolean">null</span> <span class="token operator">??</span> <span class="token variable">nonNullExp</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:10</span> <strong>lint/js/useSimplifiedLogicalExpression</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
@@ -79,7 +79,7 @@ discard redundant terms from logical expressions
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">boolExpr1</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">boolExpr1</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">boolExpr2</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">r</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">boolExpr1</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">boolExpr2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -101,10 +101,10 @@ discard redundant terms from logical expressions
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">boolExpr1</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">boolExpr1</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">boolExpr2</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">r</span> <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token variable">boolExpr1</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">boolExpr2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token variable">boolExpr1</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">boolExpr1</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">boolExpr2</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">r</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span><span class="token variable">boolExpr1</span> <span class="token operator">||</span> <span class="token operator">!</span><span class="token operator">!</span><span class="token variable">boolExpr2</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

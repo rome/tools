@@ -15,7 +15,7 @@ function parseAtSupportsInParens(
 
 	if (token.type === "LeftParen") {
 		const start = prefixStart ?? parser.getPosition();
-		parser.nextToken();
+		nextToken(parser);
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
 		}
@@ -105,7 +105,7 @@ export function parseAtSupports(
 		if (inParens) {
 			const value = [inParens];
 			while (true) {
-				parser.nextToken();
+				nextToken(parser);
 
 				while (matchToken(parser, "Whitespace")) {
 					readToken(parser, "Whitespace");
@@ -124,7 +124,7 @@ export function parseAtSupports(
 					(token.value === AND || token.value === OR)
 				) {
 					const pos = parser.getPosition();
-					parser.nextToken();
+					nextToken(parser);
 					while (matchToken(parser, "Whitespace")) {
 						readToken(parser, "Whitespace");
 					}
@@ -137,7 +137,7 @@ export function parseAtSupports(
 						description: descriptions.CSS_PARSER.AT_SUPPORTS_MALFORMED,
 						token,
 					});
-					parser.nextToken();
+					nextToken(parser);
 					break;
 				}
 			}
@@ -152,7 +152,7 @@ export function parseAtSupports(
 	} else {
 		const prefix = (parser.getToken() as Tokens["Ident"]).value;
 		const position = parser.getPosition();
-		parser.nextToken();
+		nextToken(parser);
 
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
@@ -161,7 +161,7 @@ export function parseAtSupports(
 		const supportsInParens = parseAtSupportsInParens(parser, position, prefix);
 		if (supportsInParens) {
 			const value = [supportsInParens];
-			parser.nextToken();
+			nextToken(parser);
 			while (matchToken(parser, "Whitespace")) {
 				readToken(parser, "Whitespace");
 			}

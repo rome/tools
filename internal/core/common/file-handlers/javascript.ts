@@ -8,6 +8,7 @@
 import {ConstJSProgramSyntax, ConstJSSourceType} from "@internal/ast";
 import {PartialExtensionHandler} from "./types";
 import {parseJS, tokenizeJS} from "@internal/js-parser";
+import {DiagnosticLanguage} from "@internal/diagnostics";
 
 // These are extensions that be implicitly tried when a file is referenced
 // This is mostly for compatibility with Node.js projects. This list should not
@@ -21,7 +22,7 @@ export const IMPLICIT_JS_EXTENSIONS = ["js", "ts", "tsx", "json"];
 export const JS_EXTENSIONS: string[] = [];
 
 function buildJSHandler(
-	ext: string,
+	ext: DiagnosticLanguage,
 	syntax: ConstJSProgramSyntax[],
 	sourceTypeJS?: ConstJSSourceType,
 ): PartialExtensionHandler {
@@ -29,7 +30,7 @@ function buildJSHandler(
 
 	return {
 		sourceTypeJS,
-		language: "js",
+		language: ext === "mjs" || ext === "cjs" ? "js" : ext,
 		mime: "application/javascript",
 		hasTabs: true,
 		capabilities: {

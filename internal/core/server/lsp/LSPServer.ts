@@ -119,8 +119,10 @@ export default class LSPServer {
 	private logMessage(path: AbsoluteFilePath, message: string) {
 		this.server.logger.info(markup`[LSPServer] ${message}`);
 		this.transport.write({
+			jsonrpc: "2.0",
 			method: "window/logMessage",
 			params: {
+				type: 4,
 				uri: `file://${path.join()}`,
 				message,
 			},
@@ -429,6 +431,7 @@ export default class LSPServer {
 					const edits = diffTextEdits(original, saveFile.content);
 
 					await this.transport.request({
+						jsonrpc: "2.0",
 						method: "workspace/applyEdit",
 						params: {
 							label: "Rome Action",

@@ -17,12 +17,12 @@ MISSING DOCUMENTATION
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:73f5fc3c26ce7fa350191f94437f31b080d69b5a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f87c66ff5f833803e445cb75d13cdb4a2555c0e3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">svg</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">svg</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/noSvgWithoutTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,7 +38,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">svg</span>&gt;
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">svg</span>&gt;
     &lt;<span class="token variable">title</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">title</span>&gt;
     &lt;<span class="token variable">circle</span> <span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
@@ -97,7 +97,7 @@ MISSING DOCUMENTATION
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">svg</span>&gt;
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">svg</span>&gt;
 	&lt;<span class="token variable">rect</span> <span class="token operator">/</span>&gt;
 	&lt;<span class="token variable">rect</span> <span class="token operator">/</span>&gt;
 	&lt;<span class="token variable">g</span>&gt;
@@ -112,7 +112,7 @@ MISSING DOCUMENTATION
 		&lt;<span class="token operator">/</span><span class="token variable">g</span>&gt;
 	&lt;<span class="token operator">/</span><span class="token variable">g</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">svg</span>&gt;
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">svg</span>&gt;
     &lt;<span class="token variable">title</span>&gt;Pass&lt;<span class="token operator">/</span><span class="token variable">title</span>&gt;
     &lt;<span class="token variable">circle</span> <span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}

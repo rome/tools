@@ -9,6 +9,11 @@ import {JSONArray, JSONObject, JSONPropertyValue} from "@internal/codec-config";
 
 export type LSPRequestMessage = {
 	/**
+   * JSON-RPC version number. Must be "2.0".
+   */
+	jsonrpc: "2.0";
+
+	/**
    * The request id.
    */
 	id: number | string;
@@ -25,6 +30,11 @@ export type LSPRequestMessage = {
 };
 
 export type LSPResponseMessage = {
+	/**
+   * JSON-RPC version number. Must be "2.0".
+   */
+	jsonrpc: "2.0";
+
 	/**
    * The request id.
    */
@@ -61,6 +71,11 @@ export type LSPResponseError = {
 };
 
 export type LSPNotificationMessage = {
+	/**
+   * JSON-RPC version number. Must be "2.0".
+   */
+	jsonrpc: "2.0";
+
 	/**
    * The method to be invoked.
    */

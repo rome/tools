@@ -17,12 +17,12 @@ enforce all `aria-*` props are valid
 **ESLint Equivalent:** [aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-props.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a3e2eec7eee6a7f9115833a4385e04787e9ca32f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:c178406681b5b792e150f0867582f4ab8b1a1a6d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&apos;&apos;</span> <span class="token attr-name">aria-labell</span><span class="token operator">=</span><span class="token string">&apos;&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">input</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&apos;&apos;</span> <span class="token attr-name">aria-labell</span><span class="token operator">=</span><span class="token string">&apos;&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:20</span> <strong>lint/a11y/useAriaProps</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -42,7 +42,7 @@ enforce all `aria-*` props are valid
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">aria-</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span> <span class="token attr-name">aria-</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/a11y/useAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -55,7 +55,7 @@ enforce all `aria-*` props are valid
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">aria-labeledby</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span> <span class="token attr-name">aria-labeledby</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/a11y/useAriaProps</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -75,7 +75,7 @@ enforce all `aria-*` props are valid
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">aria-skldjfaria-klajsd</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span> <span class="token attr-name">aria-skldjfaria-klajsd</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/a11y/useAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -151,13 +151,13 @@ enforce all `aria-*` props are valid
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">aria</span><span class="token operator">=</span><span class="token string">&apos;wee&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">abcARIAdef</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">fooaria-foobar</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">div</span> <span class="token attr-name">fooaria-hidden</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span> <span class="token attr-name">aria-errormessage</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span> <span class="token attr-name">aria</span><span class="token operator">=</span><span class="token string">&apos;wee&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span> <span class="token attr-name">abcARIAdef</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span> <span class="token attr-name">fooaria-foobar</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">div</span> <span class="token attr-name">fooaria-hidden</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-jsx"><code class="language-jsx">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span> <span class="token attr-name">aria-errormessage</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">div</span> <span class="token attr-name">aria</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;wee&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">div</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}

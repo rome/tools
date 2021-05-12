@@ -70,14 +70,15 @@
 
   ✖ Using the role attribute heading on the h1 element is redundant.
 
-    <h1 role='heading' aria-level='1'></h1>
+    <h1 role='heading' aria-level='1'>title</h1>
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute and ARIA attributes.
 
     1   │ - <h1·role="heading"·aria-level="1">
       1 │ + <h1>
-    2 2 │   </h1>
+    2 2 │   → title
+    3 3 │   </h1>
 
   ℹ
 
@@ -87,7 +88,9 @@
 ### `2: formatted`
 
 ```tsx
-<h1 role="heading" aria-level="1" />;
+<h1 role="heading" aria-level="1">
+	title
+</h1>;
 
 ```
 
@@ -99,14 +102,12 @@
 
   ✖ Using the role attribute heading on the h1 element is redundant.
 
-    <h1 role='heading'></h1>
-        ^^^^^^^^^^^^^^
-
   Suggested fix: Remove the role attribute.
 
     1   │ - <h1·role="heading">
       1 │ + <h1>
-    2 2 │   </h1>
+    2 2 │   → title
+    3 3 │   </h1>
 
   ℹ
 
@@ -116,7 +117,9 @@
 ### `3: formatted`
 
 ```tsx
-<h1 role="heading" />;
+<h1 role="heading">
+	title
+</h1>;
 
 ```
 
@@ -156,9 +159,6 @@
  lint/jsx-a11y/noRedundantRoles/reject/6/file.tsx:1:23 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━
 
   ✖ Using the role attribute checkbox on the input element is redundant.
-
-    <input  type='checkbox' role='checkbox' />
-                            ^^^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute.
 
@@ -355,14 +355,12 @@
 
   ✖ Using the role attribute link on the a element is redundant.
 
-    <a role='link'></a>
-       ^^^^^^^^^^^
-
   Suggested fix: Remove the role attribute.
 
     1   │ - <a·role="link">
       1 │ + <a>
-    2 2 │   </a>
+    2 2 │   → something
+    3 3 │   </a>
 
   ℹ
 
@@ -372,7 +370,9 @@
 ### `12: formatted`
 
 ```tsx
-<a role="link" />;
+<a role="link">
+	something
+</a>;
 
 ```
 
@@ -556,9 +556,6 @@
  lint/jsx-a11y/noRedundantRoles/reject/20/file.tsx:1:8 lint/jsx-a11y/noRedundantRoles  FIXABLE  ━━━━
 
   ✖ Using the role attribute option on the option element is redundant.
-
-    <option role='option' ></option>
-            ^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute.
 

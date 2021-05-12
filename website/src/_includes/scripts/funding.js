@@ -268,6 +268,7 @@ function openModal(tier) {
 
 	// Remove tier description if one exists
 	const existingTierDescription = document.querySelector(".modal .tier");
+	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 	if (existingTierDescription != null) {
 		existingTierDescription.remove();
 	}

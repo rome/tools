@@ -14,12 +14,12 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:0717ce48df681c9bf8d2cf8d6ebb1f2457a272d3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:2d52e7c1eff06864db392e3a8dccab098338bf59,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,7 +38,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -57,7 +57,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -76,7 +76,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -95,7 +95,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -114,7 +114,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -133,7 +133,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -152,7 +152,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -171,7 +171,7 @@ MISSING DOCUMENTATION
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 

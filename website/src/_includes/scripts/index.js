@@ -345,6 +345,7 @@ class Manager {
 			return false;
 		}
 
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (callback !== undefined) {
 			callback();
 		}
@@ -370,11 +371,13 @@ class Manager {
 		const hash = target.getAttribute("href");
 		window.location.hash = hash;
 		this.scrollToHeading(hash);
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (navigator.clipboard !== undefined) {
 			navigator.clipboard.writeText(window.location.href);
 		}
 
 		// Only another copied text can appear here so delete it if it exists
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (target.nextElementSibling != null) {
 			target.nextElementSibling.remove();
 		}
@@ -476,14 +479,16 @@ class Manager {
 	}
 }
 
-const manager = new Manager();
+if (siteNavigation != null) {
+	const manager = new Manager();
 
-window.addEventListener(
-	"DOMContentLoaded",
-	() => {
-		manager.attach();
-	},
-);
+	window.addEventListener(
+		"DOMContentLoaded",
+		() => {
+			manager.attach();
+		},
+	);
+}
 
 //# Team list shuffle
 
@@ -542,7 +547,10 @@ function toggleColorSchemeSwitch(evt) {
 }
 
 const colorSchemeSwitcher = document.querySelector(".color-scheme-switch");
-colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
+// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+if (colorSchemeSwitcher != null) {
+	colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
+}
 
 //# Mobile navigation
 
@@ -555,49 +563,55 @@ function toggleMobileSidebar() {
 	sidebar.classList.toggle("visible");
 	document.body.classList.toggle("no-scroll");
 }
-mobileSidebarHandle.addEventListener(
-	"click",
-	(event) => {
-		event.preventDefault();
-		toggleMobileSidebar();
-	},
-	false,
-);
+// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+if (mobileSidebarHandle != null) {
+	mobileSidebarHandle.addEventListener(
+		"click",
+		(event) => {
+			event.preventDefault();
+			toggleMobileSidebar();
+		},
+		false,
+	);
+}
 
 //# Docsearch
 // Only initialize on focus
 
 const docsearchInput = document.querySelector("#docsearch");
-docsearchInput.addEventListener(
-	"focus",
-	() => {
-		// Stylesheet
-		const link = document.createElement("link");
-		link.href = "/docsearch.css";
-		link.rel = "stylesheet";
-		document.body.appendChild(link);
+// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
+if (docsearchInput != null) {
+	docsearchInput.addEventListener(
+		"focus",
+		() => {
+			// Stylesheet
+			const link = document.createElement("link");
+			link.href = "/docsearch.css";
+			link.rel = "stylesheet";
+			document.body.appendChild(link);
 
-		// Script
-		const script = document.createElement("script");
-		script.src = "/docsearch.js";
-		script.async = true;
-		script.defer = true;
-		script.addEventListener(
-			"load",
-			() => {
-				// @ts-ignore
-				return window.docsearch({
-					apiKey: "66db1ad366d458c6acded7cbc23dba7e",
-					indexName: "romefrontend",
-					inputSelector: "#docsearch",
-					debug: false, // Set debug to true if you want to inspect the dropdown
-				});
-			},
-		);
-		document.body.appendChild(script);
-	},
-	{once: true},
-);
+			// Script
+			const script = document.createElement("script");
+			script.src = "/docsearch.js";
+			script.async = true;
+			script.defer = true;
+			script.addEventListener(
+				"load",
+				() => {
+					// @ts-ignore
+					return window.docsearch({
+						apiKey: "66db1ad366d458c6acded7cbc23dba7e",
+						indexName: "romefrontend",
+						inputSelector: "#docsearch",
+						debug: false, // Set debug to true if you want to inspect the dropdown
+					});
+				},
+			);
+			document.body.appendChild(script);
+		},
+		{once: true},
+	);
+}
 
 //# Header scrolls to top
 let topAnchors = Array.from(document.querySelectorAll("[href='#top']"));
@@ -611,7 +625,10 @@ for (const elem of topAnchors) {
 			if (window.scrollY > 0) {
 				e.preventDefault();
 
-				sidebarScroller.scrollTop = 0;
+				if (sidebarScroller != null) {
+					sidebarScroller.scrollTop = 0;
+				}
+
 				window.scrollTo(0, 0);
 
 				// Remove the hash
@@ -679,6 +696,7 @@ for (const scroller of heroScrollers) {
 
 	function addActiveClasses(activeIndex) {
 		const beforeItem = items[activeIndex - 1];
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (beforeItem !== undefined) {
 			beforeItem.classList.add("active-sibling");
 		}
@@ -686,6 +704,7 @@ for (const scroller of heroScrollers) {
 		items[activeIndex].classList.add("active");
 
 		const afterItem = items[activeIndex + 1];
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (afterItem !== undefined) {
 			afterItem.classList.add("active-sibling");
 		}
@@ -693,6 +712,7 @@ for (const scroller of heroScrollers) {
 
 	function removeActiveClasses(activeIndex) {
 		const beforeItem = items[activeIndex - 1];
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (beforeItem !== undefined) {
 			beforeItem.classList.remove("active-sibling");
 		}
@@ -700,6 +720,7 @@ for (const scroller of heroScrollers) {
 		items[activeIndex].classList.remove("active");
 
 		const afterItem = items[activeIndex + 1];
+		// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 		if (afterItem !== undefined) {
 			afterItem.classList.remove("active-sibling");
 		}

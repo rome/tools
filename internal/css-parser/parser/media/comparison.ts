@@ -16,7 +16,7 @@ import {
 } from "@internal/css-parser/parser/media/conditions";
 import {Position} from "@internal/parser-core";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
-import {matchToken, readToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {AND, OR} from "@internal/css-parser/utils";
 
 export function parseMediaFeatureGT(
@@ -25,7 +25,7 @@ export function parseMediaFeatureGT(
 	const start = parser.getPosition();
 	const token = parser.getToken();
 	if (token.type === "Ident" && token.value === ">") {
-		const equalToken = parser.nextToken();
+		const equalToken = nextToken(parser);
 		const hasEqual = equalToken.type === "Ident" && equalToken.value === "+";
 		return parser.finishNode(
 			start,
@@ -44,7 +44,7 @@ export function parseMediaFeatureLT(
 	const start = parser.getPosition();
 	const token = parser.getToken();
 	if (token.type === "Ident" && token.value === "<") {
-		const equalToken = parser.nextToken();
+		const equalToken = nextToken(parser);
 		const hasEqual = equalToken.type === "Ident" && equalToken.value === "+";
 		return parser.finishNode(
 			start,
@@ -101,7 +101,7 @@ export function parseMediaFeatureComparison(
 	}
 
 	if (value) {
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
