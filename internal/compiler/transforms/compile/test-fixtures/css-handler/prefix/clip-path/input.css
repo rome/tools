@@ -1,0 +1,19 @@
+.style {
+	clip-path: none;
+}
+
+.style {
+	clip-path: margin-box;
+}
+
+.style {
+	clip-path: url("http://example.com");
+}
+
+.style {
+	clip-path: padding-box circle(50px at 0 100px);
+}
+
+.style {
+	clip-path: inset(100px 50px);
+}
