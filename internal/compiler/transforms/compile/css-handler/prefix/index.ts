@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:9d2f97abaad6ed5af257118f6a0f51bd0305122f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:fafbb75108e11941b60a9a0ff7016301790e9037,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
@@ -12,9 +12,9 @@ import hyphens from "./prefixes/hyphens";
 import imageSet from "./prefixes/image-set";
 import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
-import textEmphasis from "./prefixes/text-emphasis";
 import scrollSnapType from "./prefixes/scroll-snap-type";
 import tabSize from "./prefixes/tab-size";
+import textEmphasis from "./prefixes/text-emphasis";
 import textOrientation from "./prefixes/text-orientation";
 import textOverflow from "./prefixes/text-overflow";
 import transform from "./prefixes/transform";
@@ -36,9 +36,9 @@ export default [
 	...imageSet,
 	...multicolumn,
 	...position,
-	...textEmphasis,
 	...scrollSnapType,
 	...tabSize,
+	...textEmphasis,
 	...textOrientation,
 	...textOverflow,
 	...transform,
