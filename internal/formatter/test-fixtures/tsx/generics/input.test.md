@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```tsx
 const f1 = <T,>(arg: T) => false;
 const f2 = <T extends any>(arg: T) => false;
 const f3 = <T, S>(arg) => false;
@@ -40,8 +40,8 @@ type Type2 = Two<T>;
 
 ### `Output`
 
-```js
-const f1 = <T,>(arg: T) => false;
+```tsx
+const f1 = <T>(arg: T) => false;
 const f2 = <T extends any>(arg: T) => false;
 const f3 = <T, S>(arg) => false;
 
