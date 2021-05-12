@@ -382,8 +382,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_REDUNDANT_ROLES: (role: string, element: string) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noRedundantRoles"],
+	A11Y_NO_REDUNDANT_ROLES: (role: string, element: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noRedundantRoles"],
 		message: markup`Using the role attribute <emphasis>${role}</emphasis> on the <emphasis>${element}</emphasis> element is redundant.`,
 	}),
 	A11Y_ANCHOR_IS_VALID: (message: StaticMarkup) => ({

@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:bde32bd2ef9e8af883112977d488ace27edef0f3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:cf51d1698f9832523b422fa8cf890b14ad2f9f6c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -33,6 +33,8 @@ import noOnChange from "./a11y/noOnChange.test.rjson";
 import noPositiveTabindex from "./a11y/noPositiveTabindex.test.rjson";
 // @ts-ignore
 import noRedundantAlt from "./a11y/noRedundantAlt.test.rjson";
+// @ts-ignore
+import noRedundantRoles from "./a11y/noRedundantRoles.test.rjson";
 // @ts-ignore
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
@@ -164,8 +166,6 @@ import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-ignore
 import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
-import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
-// @ts-ignore
 import noCommentText from "./jsx/noCommentText.test.rjson";
 // @ts-ignore
 import noDuplicateProps from "./jsx/noDuplicateProps.test.rjson";
@@ -278,6 +278,10 @@ export const tests: Tests = {
 	"a11y/noRedundantAlt": {
 		category: ["lint", "a11y", "noRedundantAlt"],
 		cases: noRedundantAlt,
+	},
+	"a11y/noRedundantRoles": {
+		category: ["lint", "a11y", "noRedundantRoles"],
+		cases: noRedundantRoles,
 	},
 	"a11y/noSvgWithoutTitle": {
 		category: ["lint", "a11y", "noSvgWithoutTitle"],
@@ -538,10 +542,6 @@ export const tests: Tests = {
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
 		cases: useWhile,
-	},
-	"jsx-a11y/noRedundantRoles": {
-		category: ["lint", "jsx-a11y", "noRedundantRoles"],
-		cases: noRedundantRoles,
 	},
 	"jsx/noCommentText": {
 		category: ["lint", "jsx", "noCommentText"],
