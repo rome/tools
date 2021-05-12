@@ -5,36 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, JSFunctionHead} from "@internal/ast";
+import {JSFunctionHead} from "@internal/ast";
 import {Builder, Token, concat, group, space} from "@internal/formatter";
 import {printBindingPatternParams} from "../utils";
 
 export default function JSFunctionHead(
 	builder: Builder,
 	node: JSFunctionHead,
-	parent: AnyNode,
 ): Token {
 	const tokens: Token[] = [];
 
 	if (builder.options.typeAnnotations && node.typeParameters) {
-		const isTsx = /\.tsx$/.test(node.loc?.path.toString() ?? "");
-		if (
-			isTsx &&
-			parent.type === "JSArrowFunctionExpression" &&
-			node.typeParameters.params.length === 1 &&
-			!node.typeParameters.params[0].constraint
-		) {
-			tokens.push(
-				concat([
-					"<",
-					builder.tokenize(node.typeParameters.params[0], node),
-					",",
-					">",
-				]),
-			);
-		} else {
-			tokens.push(builder.tokenize(node.typeParameters, node));
-		}
+		tokens.push(builder.tokenize(node.typeParameters, node));
 	}
 
 	const printedParameters = printBindingPatternParams(
