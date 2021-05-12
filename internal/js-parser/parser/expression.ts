@@ -288,13 +288,21 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 			if (possibleArrow.type === "JSArrowFunctionExpression") {
 				// `as` cast for reasons... `possibleArrow` is `T | JSArrowFunctionExpression`
 				const arrow = possibleArrow as JSArrowFunctionExpression;
-				return {
+				const hasTrailingComma =
+					shouldTokenizeJSX(parser) &&
+					typeParameters.params.length === 1 &&
+					!typeParameters.params[0].constraint;
+				const arrowFunctionExpression: JSArrowFunctionExpression = {
 					...arrow,
 					head: {
 						...arrow.head,
-						typeParameters,
+						typeParameters: {
+							...typeParameters,
+							hasTrailingComma,
+						},
 					},
 				};
+				return arrowFunctionExpression;
 			} else {
 				unexpectedDiagnostic(
 					parser,

@@ -42,6 +42,7 @@ JSRoot {
 						loc: SourceLocation typescript/arrow-function/generic/input.ts 1:11-1:12
 					}
 					typeParameters: TSTypeParameterDeclaration {
+						hasTrailingComma: false
 						params: [
 							TSTypeParameter {
 								name: "T"
