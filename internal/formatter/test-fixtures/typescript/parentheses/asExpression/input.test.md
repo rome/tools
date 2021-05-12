@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 foo(bar as any);
 while (foo as any) {}
 
@@ -30,7 +30,7 @@ const qux = (foo || bar) as any;
 
 ### `Output`
 
-```js
+```ts
 foo(bar as any);
 while (foo as any) {}
 

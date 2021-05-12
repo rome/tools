@@ -17,12 +17,12 @@ require `let` or `const` instead of `var`
 **ESLint Equivalent:** [no-var](https://eslint.org/docs/rules/no-var)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3931fbedf8a11d8fbddb4e4f33acd6bb46615fb8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:94442627cfc03b0db3dcfb144c8eed757837e59e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token keyword">var</span> <span class="token variable">foobar</span><span class="token punctuation">;</span>
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">var</span> <span class="token variable">foobar</span><span class="token punctuation">;</span>
 <span class="token variable">foobar</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noVar</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

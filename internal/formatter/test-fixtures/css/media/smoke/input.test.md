@@ -44,30 +44,30 @@ screen {
 ### `Output`
 
 ```css
-@media screen {
+@media screen{
 }
 
 
-@media not screen {
+@media not screen{
 }
 
 
-@media screen, not all, only print {
+@media screen, not all, only print{
 }
 
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 800px){
 }
 
-@media screen and (min-width: 800px) {
-}
-
-
-@media screen and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) {
+@media screen and (min-width: 800px){
 }
 
 
-@media screen and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) {
+@media screen and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px){
+}
+
+
+@media screen and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px) and (min-width: 800px){
 }
 
 

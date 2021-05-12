@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 type Foo = "foo" | "foo_";
 type Bar = "bar" | "bar_";
 
@@ -22,7 +22,7 @@ type Baz = `${Foo | Bar}_id`;
 
 ### `Output`
 
-```js
+```ts
 type Foo = "foo" | "foo_";
 type Bar = "bar" | "bar_";
 

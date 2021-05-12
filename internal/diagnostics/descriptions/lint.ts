@@ -17,6 +17,21 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	CSS_NO_DUPLICATE_CUSTOM_PROPERTIES: {
+		category: DIAGNOSTIC_CATEGORIES["lint/css/noDuplicateCustomProperties"],
+		message: markup`Duplicate custom properties inside the same block can lead to unwanted styles`,
+	},
+	A11_Y_USE_HEADING_CONTENT: {
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useHeadingContent"],
+		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`All headings on a page should have content that is accessible to screen readers.`,
+			},
+		],
+	},
 	A11_Y_NO_ON_CHANGE: (goodEventName: string, badEventName: string) => ({
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noOnChange"],
 		message: markup`Provide an <emphasis>${goodEventName}</emphasis> event instead of an <emphasis>${badEventName}</emphasis> event unless absolutely necessary.`,
@@ -82,10 +97,6 @@ export const lint = createDiagnosticsCategory({
 				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
 			},
 		],
-	},
-	CSS_NO_INVALID_GRID_TEMPLATE_AREAS: {
-		category: DIAGNOSTIC_CATEGORIES["lint/css/noInvalidGridTemplateAreas"],
-		message: markup`All strings must have the same number of cell tokens`,
 	},
 	CSS_NO_IMPORTANT_IN_KEYFRAME: {
 		category: DIAGNOSTIC_CATEGORIES["lint/css/noImportantInKeyframes"],
@@ -375,8 +386,8 @@ export const lint = createDiagnosticsCategory({
 		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/noRedundantRoles"],
 		message: markup`Using the role attribute <emphasis>${role}</emphasis> on the <emphasis>${element}</emphasis> element is redundant.`,
 	}),
-	JSX_A11Y_ANCHOR_IS_VALID: (message: StaticMarkup) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useValidAnchor"],
+	A11Y_ANCHOR_IS_VALID: (message: StaticMarkup) => ({
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useValidAnchor"],
 		message,
 		advice: [
 			{
@@ -483,17 +494,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_HEADING_USE_CONTENT: {
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useHeadingContent"],
-		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`All headings on a page should have content that is accessible to screen readers.`,
-			},
-		],
-	},
 	A11Y_HTML_USE_LANG: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useHtmlLang"],
 		message: markup`Provide a <emphasis>lang</emphasis> attribute when using the <emphasis>html</emphasis> element.`,
@@ -527,11 +527,11 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_ROLE_HAS_REQUIRED_ARIA_PROPS: (
+	A11Y_ROLE_HAS_REQUIRED_ARIA_PROPS: (
 		roleName: string,
 		missingAttributes: string[],
 	) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/jsx-a11y/useAriaPropsForRole"],
+		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useAriaPropsForRole"],
 		message: markup`The element with the <emphasis>${roleName}</emphasis> ARIA role does not have the required ARIA attributes.`,
 		advice: missingAttributes.map((missingAttribute) => {
 			return {

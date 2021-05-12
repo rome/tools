@@ -16,6 +16,7 @@ import {
 import {descriptions} from "@internal/diagnostics";
 import {parseMediaCondition} from "@internal/css-parser/parser/media/comparison";
 import {AND, NOT} from "@internal/css-parser/utils";
+import {parseComplexBlock} from "@internal/css-parser/parser/block";
 
 function tryParseConditionWithoutOr(
 	parser: CSSParser,
@@ -194,10 +195,6 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 		}
 	}
 
-	// } else if (token.type === "LeftParen") {
-
-	// }
-
 	return undefined;
 }
 
@@ -227,12 +224,16 @@ export function parseMediaList(parser: CSSParser): CSSMediaQueryList | undefined
 			list.push(media);
 		}
 	}
-
-	return parser.finishNode(
-		start,
-		{
-			type: "CSSMediaQueryList",
-			value: list,
-		},
-	);
+	const block = parseComplexBlock(parser);
+	if (block) {
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSMediaQueryList",
+				prelude: list,
+				block,
+			},
+		);
+	}
+	return undefined;
 }

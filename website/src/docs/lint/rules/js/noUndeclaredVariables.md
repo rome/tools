@@ -32,12 +32,12 @@ MISSING DOCUMENTATION
 **ESLint Equivalent:** [no-undef](https://eslint.org/docs/rules/no-undef)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8afb80eba53f82c8f8379bd95daba47f75506577,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:877efd162cacc4f55983aee4a944695ad95dca04,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js"><span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noUndeclaredVariables(foobar)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 

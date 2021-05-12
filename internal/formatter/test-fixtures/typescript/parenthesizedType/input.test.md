@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 type A = keyof (T | U);
 type B = keyof (X & Y);
 type C = (keyof T)[];
@@ -27,7 +27,7 @@ type I = keyof ((number[] | string[]));
 
 ### `Output`
 
-```js
+```ts
 type A = keyof (T | U);
 type B = keyof (X & Y);
 type C = (keyof T)[];

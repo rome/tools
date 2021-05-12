@@ -24,6 +24,9 @@ export {AnsiHighlightOptions};
 export function highlightCode(opts: AnsiHighlightOptions): HighlightCodeResult {
 	if (opts.input.length < FILE_SIZE_MAX && opts.highlight) {
 		switch (opts.language) {
+			case "ts":
+			case "tsx":
+			case "jsx":
 			case "js":
 				return highlightJS(
 					opts,

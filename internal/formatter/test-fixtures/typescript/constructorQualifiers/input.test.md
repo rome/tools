@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 
 class Foo {
     constructor(public a: string, private b: string, protected c: string) {
@@ -26,7 +26,7 @@ class Foo {
 
 ### `Output`
 
-```js
+```ts
 class Foo {
 	constructor(public a: string, private b: string, protected c: string) {
 		console.log(a);

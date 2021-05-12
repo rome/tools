@@ -17,12 +17,12 @@ enforce explicit role property is not the same as implicit/default role property
 **ESLint Equivalent:** [no-redundant-roles](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-redundant-roles.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:96e8e75647fe82d8e1454904125430e6aac7a4ca,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:939bb852cfa08c6aa668eb4a597d22ad71137627,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;article&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">article</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;article&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">article</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:9</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -43,7 +43,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">button</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">button</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -64,20 +64,21 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;title&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>heading</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>h1</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;
+    &lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;title&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute and ARIA attributes.
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;h1</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>role=&quot;heading&quot;</strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>aria-level=&quot;1&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;h1&gt;</span>
-  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/h1&gt;
+  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  <span style="opacity: 0.8;">&rarr; </span>title
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  &lt;/h1&gt;
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
@@ -85,20 +86,21 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;title&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>heading</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>h1</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;
+    &lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;title&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;h1</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>role=&quot;heading&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;h1&gt;</span>
-  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/h1&gt;
+  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  <span style="opacity: 0.8;">&rarr; </span>title
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  &lt;/h1&gt;
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
@@ -106,7 +108,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">dialog</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;dialog&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">dialog</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">dialog</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;dialog&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">dialog</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -127,7 +129,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span>  <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">input</span>  <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:24</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
@@ -147,7 +149,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">figure</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;figure&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">figure</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">figure</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;figure&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">figure</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:9</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -168,7 +170,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">form</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;form&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">form</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">form</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;form&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">form</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -189,7 +191,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">table</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;grid&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">table</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">table</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;grid&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">table</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -210,7 +212,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">td</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;gridcell&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">td</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">td</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;gridcell&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">td</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -231,7 +233,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">fieldset</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;group&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">fieldset</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">fieldset</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;group&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">fieldset</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:11</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
@@ -252,7 +254,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;img&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;img&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:26</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
@@ -272,7 +274,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;something&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;something&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:3</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -294,7 +296,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">link</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">link</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -314,7 +316,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">ol</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">ol</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">ol</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">ol</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -335,7 +337,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">ul</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">ul</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">ul</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">ul</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -356,7 +358,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">select</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">select</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">select</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">select</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -377,7 +379,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">li</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listitem&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">li</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">li</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listitem&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">li</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -398,7 +400,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">nav</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;navigation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">nav</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">nav</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;navigation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">nav</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -419,7 +421,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">option</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">option</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">option</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">option</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -440,7 +442,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">tr</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tr</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">tr</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tr</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -461,7 +463,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">tbody</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tbody</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">tbody</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tbody</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -482,7 +484,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">tfoot</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tfoot</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">tfoot</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tfoot</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -503,7 +505,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">thead</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">thead</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">thead</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">thead</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -524,7 +526,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowheader&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">th</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowheader&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">th</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:16</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
@@ -545,7 +547,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;search&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;searchbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;search&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;searchbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:21</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
@@ -565,7 +567,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">table</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;table&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">table</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">table</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;table&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">table</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -586,7 +588,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">dt</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;term&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">dt</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">dt</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;term&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">dt</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
@@ -607,7 +609,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">textarea</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">textarea</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">textarea</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">textarea</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:10</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
@@ -629,7 +631,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ---
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
@@ -649,7 +651,7 @@ enforce explicit role property is not the same as implicit/default role property
 
 ### Valid
 
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;presentation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">article</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">Button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">Button</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-js"><code class="language-js">&lt;<span class="token variable">span</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;presentation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">article</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">Button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">Button</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">span</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

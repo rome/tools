@@ -24,8 +24,9 @@ export type TestServerRunnerOptions = {
 	updateSnapshots: boolean;
 	freezeSnapshots: boolean;
 	verboseDiagnostics: DiagnosticsPrinterFlags["verboseDiagnostics"];
-	syncTests: boolean;
+	runInSync: boolean;
 	sourceMaps: boolean;
+	suppressLogs: boolean;
 };
 
 export type CoverageDirectory = {

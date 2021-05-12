@@ -99,6 +99,12 @@ And to update snapshots:
 ./rome test --update-snapshots
 ```
 
+To enable logging:
+
+```bash
+./rome test --no-suppress-logs
+```
+
 ### Generated files
 
 If you are adding a new lint rule, or modifying some core code, you might need to regenerate some files. We have generated files to avoid having to write a lot of boilerplate and automate common tasks.
@@ -162,6 +168,24 @@ For example, to create a rule in the `js` category called `useCamelCase` run:
 ```
 
 The created files will be listed in the console output. See those files for inline comments on what to insert. Use other lint rules as a reference.
+
+#### Naming patterns
+
+1. Forbid a concept
+
+	```
+	no<Concept>
+	```
+
+	When a rule's sole intention is to **forbid a single concept** - such as disallowing the use of `debugger` statements - the rule should be named using the `no` prefix. For example, the rule to disallow the use of `debugger` statements is named `noDebugger`.
+
+1. Mandate a concept
+
+	```
+	use<Concept>
+	```
+
+ 	When a rule's sole intention is to **mandate a single concept** - such as forcing the use of camel-casing - the rule should be named using the `use` prefix. For example, the rule to mandating the use of camel-cased variable names is named `useCamelCase`.
 
 ### `ast-create-node`
 

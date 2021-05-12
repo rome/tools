@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 a1?.b();
 
 a2?.b?.c();
@@ -47,7 +47,7 @@ a14?.['b'].c?.['d'];
 
 ### `Output`
 
-```js
+```ts
 a1 == void 0 ? void 0 : a1.b();
 
 (a2 == void 0 ? void 0 : a2.b) == void 0 ? void 0 : a2.b.c();

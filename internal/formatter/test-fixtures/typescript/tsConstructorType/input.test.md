@@ -12,7 +12,7 @@
 
 ### `Input`
 
-```js
+```ts
 type Class<T> = new (...args: any)  => T;
 let d: new(x: number) => void;
 
@@ -20,7 +20,7 @@ let d: new(x: number) => void;
 
 ### `Output`
 
-```js
+```ts
 type Class<T> = new (...args: any) => T;
 let d: new (x: number) => void;
 
