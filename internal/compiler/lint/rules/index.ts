@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:eb30614b415459bd92a93e798d336eadb46df7ae,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:fd5b7140d911a60992ec9485d2c7c4f661a18d94,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -9,6 +9,7 @@ import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex";
 import noOnChange from "./a11y/noOnChange";
 import noPositiveTabindex from "./a11y/noPositiveTabindex";
 import noRedundantAlt from "./a11y/noRedundantAlt";
+import noRedundantRoles from "./a11y/noRedundantRoles";
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle";
 import noTargetBlank from "./a11y/noTargetBlank";
 import useAltText from "./a11y/useAltText";
@@ -75,7 +76,6 @@ import useSingleVarDeclarator from "./js/useSingleVarDeclarator";
 import useSortedSpecifiers from "./js/useSortedSpecifiers";
 import useTemplate from "./js/useTemplate";
 import useWhile from "./js/useWhile";
-import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noCommentText from "./jsx/noCommentText";
 import noDuplicateProps from "./jsx/noDuplicateProps";
 import noImplicitBoolean from "./jsx/noImplicitBoolean";
@@ -132,6 +132,7 @@ lintTransforms.set("a11y/noNoninteractiveTabindex", noNoninteractiveTabindex);
 lintTransforms.set("a11y/noOnChange", noOnChange);
 lintTransforms.set("a11y/noPositiveTabindex", noPositiveTabindex);
 lintTransforms.set("a11y/noRedundantAlt", noRedundantAlt);
+lintTransforms.set("a11y/noRedundantRoles", noRedundantRoles);
 lintTransforms.set("a11y/noSvgWithoutTitle", noSvgWithoutTitle);
 lintTransforms.set("a11y/noTargetBlank", noTargetBlank);
 lintTransforms.set("a11y/useAltText", useAltText);
@@ -207,7 +208,6 @@ lintTransforms.set("js/useSingleVarDeclarator", useSingleVarDeclarator);
 lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
 lintTransforms.set("js/useTemplate", useTemplate);
 lintTransforms.set("js/useWhile", useWhile);
-lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
 lintTransforms.set("jsx/noCommentText", noCommentText);
 lintTransforms.set("jsx/noDuplicateProps", noDuplicateProps);
 lintTransforms.set("jsx/noImplicitBoolean", noImplicitBoolean);
@@ -281,6 +281,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/noOnChange",
 	"a11y/noPositiveTabindex",
 	"a11y/noRedundantAlt",
+	"a11y/noRedundantRoles",
 	"a11y/noSvgWithoutTitle",
 	"a11y/noTargetBlank",
 	"a11y/useAltText",
@@ -347,7 +348,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"js/useSortedSpecifiers",
 	"js/useTemplate",
 	"js/useWhile",
-	"jsx-a11y/noRedundantRoles",
 	"jsx/noCommentText",
 	"jsx/noDuplicateProps",
 	"jsx/noImplicitBoolean",
@@ -401,6 +401,7 @@ export type LintRuleName =
 	| "a11y/noOnChange"
 	| "a11y/noPositiveTabindex"
 	| "a11y/noRedundantAlt"
+	| "a11y/noRedundantRoles"
 	| "a11y/noSvgWithoutTitle"
 	| "a11y/noTargetBlank"
 	| "a11y/useAltText"
@@ -467,7 +468,6 @@ export type LintRuleName =
 	| "js/useSortedSpecifiers"
 	| "js/useTemplate"
 	| "js/useWhile"
-	| "jsx-a11y/noRedundantRoles"
 	| "jsx/noCommentText"
 	| "jsx/noDuplicateProps"
 	| "jsx/noImplicitBoolean"

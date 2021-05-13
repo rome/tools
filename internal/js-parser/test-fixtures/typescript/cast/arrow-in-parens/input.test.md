@@ -42,6 +42,7 @@ JSRoot {
 									}
 								]
 								typeParameters: TSTypeParameterDeclaration {
+									hasTrailingComma: false
 									params: [
 										TSTypeParameter {
 											name: "any"

@@ -11,6 +11,7 @@ import {createBuilder} from "../../utils";
 export interface TSTypeParameterDeclaration extends NodeBaseWithComments {
 	readonly type: "TSTypeParameterDeclaration";
 	readonly params: TSTypeParameter[];
+	readonly hasTrailingComma?: boolean;
 }
 
 export const tsTypeParameterDeclaration = createBuilder<TSTypeParameterDeclaration>(

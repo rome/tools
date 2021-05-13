@@ -5,7 +5,13 @@ import {
 	getJSXElementName,
 	hasJSXAttribute,
 } from "@internal/js-ast-utils";
-import {AnyNode, JSXAttribute, JSXElement} from "@internal/ast";
+import {
+	AnyNode,
+	HTMLAttribute,
+	HTMLElement,
+	JSXAttribute,
+	JSXElement,
+} from "@internal/ast";
 import {
 	ARIAProperty,
 	ARIARoleDefinition,
@@ -13,15 +19,71 @@ import {
 } from "@internal/compiler/lint/utils/aria";
 import {markup} from "@internal/markup";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
+import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
+import getHTMLAttribute from "@internal/js-ast-utils/getHTMLAttribute";
+import hasHTMLAttribute from "@internal/js-ast-utils/hasHTMLAttribute";
+
+type JSXOrHTMLElement = JSXElement | HTMLElement;
+type JSXOrHTMLAttribute = JSXAttribute | HTMLAttribute;
 
 type CreateFixableDiagnostic = {
 	path: CompilerPath;
-	node: JSXElement;
+	node: JSXOrHTMLElement;
 	mappedRole: ARIARoleDefinition | undefined;
-	roleAttribute: JSXAttribute;
+	roleAttribute: JSXOrHTMLAttribute;
 	elementName: string;
 	roleName: string;
 };
+
+function getAttribute(node: JSXOrHTMLElement, prop: string) {
+	if (isHTMLElement(node)) {
+		return getHTMLAttribute(node, prop);
+	} else {
+		return getJSXAttribute(node, prop);
+	}
+}
+
+function getFixed(node: JSXOrHTMLElement, mappedRole?: ARIARoleDefinition) {
+	if (isHTMLElement(node)) {
+		return {
+			...node,
+			attributes: node.attributes.filter((attr) => {
+				return attr.type === "HTMLAttribute" && attr.name.name !== "role";
+			}).filter((attr) => {
+				if (attr.type === "HTMLAttribute") {
+					if (mappedRole) {
+						return (
+							attr.type === "HTMLAttribute" &&
+							!mappedRole.requiredProps.includes(attr.name.name as ARIAProperty)
+						);
+					}
+					return attr.name.name !== "role";
+				}
+
+				return true;
+			}),
+		};
+	} else {
+		return {
+			...node,
+			attributes: node.attributes.filter((attr) => {
+				return attr.type === "JSXAttribute" && attr.name.name !== "role";
+			}).filter((attr) => {
+				if (attr.type === "JSXAttribute") {
+					if (mappedRole) {
+						return (
+							attr.type === "JSXAttribute" &&
+							!mappedRole.requiredProps.includes(attr.name.name as ARIAProperty)
+						);
+					}
+					return attr.name.name !== "role";
+				}
+
+				return true;
+			}),
+		};
+	}
+}
 
 function createFixableDiagnostic(
 	{path, node, mappedRole, roleAttribute, elementName, roleName}: CreateFixableDiagnostic,
@@ -32,7 +94,7 @@ function createFixableDiagnostic(
 		// e.g. role="heading" aria-level="1"
 		ariaAttributesToRemove = mappedRole.requiredProps.reduce(
 			(nodes, prop) => {
-				const attr = getJSXAttribute(node, prop as string);
+				const attr = getAttribute(node, prop as string);
 				if (attr) {
 					nodes.push(attr);
 				}
@@ -46,24 +108,7 @@ function createFixableDiagnostic(
 			? markup`Remove the role attribute and ARIA attributes.`
 			: markup`Remove the role attribute.`;
 
-	const fixed: JSXElement = {
-		...node,
-		attributes: node.attributes.filter((attr) => {
-			return attr.type === "JSXAttribute" && attr.name.name !== "role";
-		}).filter((attr) => {
-			if (attr.type === "JSXAttribute") {
-				if (mappedRole) {
-					return (
-						attr.type === "JSXAttribute" &&
-						!mappedRole.requiredProps.includes(attr.name.name as ARIAProperty)
-					);
-				}
-				return attr.name.name !== "role";
-			}
-
-			return true;
-		}),
-	};
+	const fixed = getFixed(node, mappedRole);
 
 	return path.addFixableDiagnostic(
 		{
@@ -76,20 +121,33 @@ function createFixableDiagnostic(
 				},
 			],
 		},
-		descriptions.LINT.JSX_A11Y_NO_REDUNDANT_ROLES(roleName, elementName),
+		descriptions.LINT.A11Y_NO_REDUNDANT_ROLES(roleName, elementName),
 	);
 }
 
+function getElementName(node: JSXOrHTMLElement) {
+	if (isHTMLElement(node)) {
+		return node.name.name;
+	}
+	return getJSXElementName(node);
+}
+
 export default createVisitor({
-	name: "jsx-a11y/noRedundantRoles",
+	name: "a11y/noRedundantRoles",
 	enter(path) {
 		const {node} = path;
 
-		if (isJSXDOMElement(node) && hasJSXAttribute(node, "role")) {
-			const elementName = getJSXElementName(node);
+		if (
+			(isHTMLElement(node) && hasHTMLAttribute(node, "role")) ||
+			(isJSXDOMElement(node) && hasJSXAttribute(node, "role"))
+		) {
+			const elementName = getElementName(node);
 
-			const roleAttribute = getJSXAttribute(node, "role");
-			if (roleAttribute?.value?.type === "JSStringLiteral") {
+			const roleAttribute = getAttribute(node, "role");
+			if (
+				roleAttribute?.value?.type === "JSStringLiteral" ||
+				roleAttribute?.value?.type === "HTMLString"
+			) {
 				let elementHasARole;
 
 				const mappedRole = ariaRolesMap.get(roleAttribute.value.value);
@@ -102,9 +160,10 @@ export default createVisitor({
 							// e.g. role="checkbox" <=> <input type="checkbox" />
 							if (concept.attributes) {
 								return concept.attributes.every(({name, value}) => {
-									const attr = getJSXAttribute(node, name);
+									const attr = getAttribute(node, name);
 									return (
-										attr?.value?.type === "JSStringLiteral" &&
+										(attr?.value?.type === "JSStringLiteral" ||
+										attr?.value?.type === "HTMLString") &&
 										attr.value.value === value
 									);
 								});
