@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:70fb17b89e6e54f88ce90a5337da59bdd7aebf2a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:3dde580241470a209f79ee1e1568cd45130706c6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -115,6 +115,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noOnChange"]
 	| ["lint", "a11y", "noPositiveTabindex"]
 	| ["lint", "a11y", "noRedundantAlt"]
+	| ["lint", "a11y", "noRedundantRoles"]
 	| ["lint", "a11y", "noSvgWithoutTitle"]
 	| ["lint", "a11y", "noTargetBlank"]
 	| ["lint", "a11y", "useAltText"]
@@ -181,7 +182,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useSortedSpecifiers"]
 	| ["lint", "js", "useTemplate"]
 	| ["lint", "js", "useWhile"]
-	| ["lint", "jsx-a11y", "noRedundantRoles"]
 	| ["lint", "jsx", "noCommentText"]
 	| ["lint", "jsx", "noDuplicateProps"]
 	| ["lint", "jsx", "noImplicitBoolean"]
@@ -247,6 +247,7 @@ const lintCategoryNameMap: {
 	"lint/a11y/noOnChange": ["lint", "a11y", "noOnChange"],
 	"lint/a11y/noPositiveTabindex": ["lint", "a11y", "noPositiveTabindex"],
 	"lint/a11y/noRedundantAlt": ["lint", "a11y", "noRedundantAlt"],
+	"lint/a11y/noRedundantRoles": ["lint", "a11y", "noRedundantRoles"],
 	"lint/a11y/noSvgWithoutTitle": ["lint", "a11y", "noSvgWithoutTitle"],
 	"lint/a11y/noTargetBlank": ["lint", "a11y", "noTargetBlank"],
 	"lint/a11y/useAltText": ["lint", "a11y", "useAltText"],
@@ -325,7 +326,6 @@ const lintCategoryNameMap: {
 	"lint/js/useSortedSpecifiers": ["lint", "js", "useSortedSpecifiers"],
 	"lint/js/useTemplate": ["lint", "js", "useTemplate"],
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
-	"lint/jsx-a11y/noRedundantRoles": ["lint", "jsx-a11y", "noRedundantRoles"],
 	"lint/jsx/noCommentText": ["lint", "jsx", "noCommentText"],
 	"lint/jsx/noDuplicateProps": ["lint", "jsx", "noDuplicateProps"],
 	"lint/jsx/noImplicitBoolean": ["lint", "jsx", "noImplicitBoolean"],
