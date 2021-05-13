@@ -12,7 +12,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:47f3274dc1afbb79b39d6d2c678490d88fa9c2a5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:18258adf54b8055f532ed86bf9a65a6224b77b27,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./css/page/CSSAtPage";
@@ -68,6 +68,7 @@ export * from "./css/core/CSSPercentage";
 export * from "./css/selectors/CSSPseudoClassSelector";
 export * from "./css/selectors/CSSPseudoElementSelector";
 export * from "./css/page/CSSPseudoPage";
+export * from "./css/core/CSSRatio";
 export * from "./css/core/CSSRaw";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
@@ -373,6 +374,7 @@ export type AnyNode =
 	| n.CSSPseudoClassSelector
 	| n.CSSPseudoElementSelector
 	| n.CSSPseudoPage
+	| n.CSSRatio
 	| n.CSSRaw
 	| n.CSSRoot
 	| n.CSSRule
