@@ -1,0 +1,15 @@
+.style {
+	grid-template-rows: 1fr 1fr 1fr;
+}
+
+.style {
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+.style {
+	grid-template-rows: 50px 50px;
+}
+
+.style {
+	grid-template-columns: 50px;
+}
