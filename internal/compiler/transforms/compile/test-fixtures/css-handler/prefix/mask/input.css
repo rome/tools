@@ -1,3 +1,543 @@
 .style {
 	mask: none;
 }
+
+.style {
+	mask-clip: content-box;
+}
+
+.style {
+	mask-clip: padding-box;
+}
+
+.style {
+	mask-clip: border-box;
+}
+
+.style {
+	mask-clip: margin-box;
+}
+
+.style {
+	mask-clip: fill-box;
+}
+
+.style {
+	mask-clip: stroke-box;
+}
+
+.style {
+	mask-clip: view-box;
+}
+
+.style {
+	mask-clip: no-clip;
+}
+
+.style {
+	-webkit-mask-clip: border;
+}
+
+.style {
+	-webkit-mask-clip: padding;
+}
+
+.style {
+	-webkit-mask-clip: content;
+}
+
+.style {
+	-webkit-mask-clip: text;
+}
+
+.style {
+	mask-clip: padding-box, no-clip;
+}
+
+.style {
+	mask-clip: view-box, fill-box, border-box;
+}
+
+.style {
+	mask-clip: inherit;
+}
+
+.style {
+	mask-clip: initial;
+}
+
+.style {
+	mask-clip: unset;
+}
+
+.style {
+	mask-composite: add;
+}
+
+.style {
+	mask-composite: subtract;
+}
+
+.style {
+	mask-composite: intersect;
+}
+
+.style {
+	mask-composite: exclude;
+}
+
+.style {
+	mask-composite: inherit;
+}
+
+.style {
+	mask-composite: initial;
+}
+
+.style {
+	mask-composite: unset;
+}
+
+.style {
+	mask-image: none;
+}
+
+.style {
+	mask-image: url(masks.svg#mask1);
+}
+
+.style {
+	mask-image: linear-gradient(rgba(0, 0, 0, 1.0), transparent);
+}
+
+.style {
+	mask-image: image(url(mask.png), skyblue);
+}
+
+.style {
+	mask-image: image(url(mask.png), skyblue), linear-gradient(rgba(0, 0, 0, 1.0), transparent);
+}
+
+.style {
+	mask-image: inherit;
+}
+
+.style {
+	mask-image: initial;
+}
+
+.style {
+	mask-image: unset;
+}
+
+.style {
+	mask-origin: content-box;
+}
+
+.style {
+	mask-origin: padding-box;
+}
+
+.style {
+	mask-origin: border-box;
+}
+
+.style {
+	mask-origin: margin-box;
+}
+
+.style {
+	mask-origin: fill-box;
+}
+
+.style {
+	mask-origin: stroke-box;
+}
+
+.style {
+	mask-origin: view-box;
+}
+
+.style {
+	mask-origin: padding-box, content-box;
+}
+
+.style {
+	mask-origin: view-box, fill-box, border-box;
+}
+
+.style {
+	-webkit-mask-origin: content;
+}
+
+.style {
+	-webkit-mask-origin: padding;
+}
+
+.style {
+	-webkit-mask-origin: border;
+}
+
+.style {
+	mask-origin: inherit;
+}
+
+.style {
+	mask-origin: initial;
+}
+
+.style {
+	mask-origin: unset;
+}
+
+.style {
+	mask-repeat: repeat-x;
+}
+
+.style {
+	mask-repeat: repeat-y;
+}
+
+.style {
+	mask-repeat: repeat;
+}
+
+.style {
+	mask-repeat: space;
+}
+
+.style {
+	mask-repeat: round;
+}
+
+.style {
+	mask-repeat: no-repeat;
+}
+
+.style {
+	mask-repeat: repeat space;
+}
+
+.style {
+	mask-repeat: repeat repeat;
+}
+
+.style {
+	mask-repeat: round space;
+}
+
+.style {
+	mask-repeat: no-repeat round;
+}
+
+.style {
+	mask-repeat: space round, no-repeat;
+}
+
+.style {
+	mask-repeat: round repeat, space, repeat-x;
+}
+
+.style {
+	mask-repeat: inherit;
+}
+
+.style {
+	mask-repeat: initial;
+}
+
+.style {
+	mask-repeat: unset;
+}
+
+.style {
+	mask-border-repeat: stretch;
+}
+
+.style {
+	mask-border-repeat: repeat;
+}
+
+.style {
+	mask-border-repeat: round;
+}
+
+.style {
+	mask-border-repeat: space;
+}
+
+.style {
+	mask-border-repeat: round stretch;
+}
+
+.style {
+	mask-border-repeat: inherit;
+}
+
+.style {
+	mask-border-repeat: initial;
+}
+
+.style {
+	mask-border-repeat: unset;
+}
+
+.style {
+	mask-border-source: none;
+}
+
+.style {
+	mask-border-source: url(image.jpg);
+}
+
+.style {
+	mask-border-source: linear-gradient(to top, red, yellow);
+}
+
+.style {
+	mask-border-source: inherit;
+}
+
+.style {
+	mask-border-source: initial;
+}
+
+.style {
+	mask-border-source: unset;
+}
+
+.style {
+	mask-position: top;
+}
+
+.style {
+	mask-position: bottom;
+}
+
+.style {
+	mask-position: left;
+}
+
+.style {
+	mask-position: right;
+}
+
+.style {
+	mask-position: center;
+}
+
+.style {
+	mask-position: 25% 75%;
+}
+
+.style {
+	mask-position: 0px 0px;
+}
+
+.style {
+	mask-position: 10% 8em;
+}
+
+.style {
+	mask-position: top right;
+}
+
+.style {
+	mask-position: 1rem 1rem, center;
+}
+
+.style {
+	mask-position: inherit;
+}
+
+.style {
+	mask-position: initial;
+}
+
+.style {
+	mask-position: unset;
+}
+
+.style {
+	mask-size: cover;
+}
+
+.style {
+	mask-size: contain;
+}
+
+.style {
+	mask-size: 50%;
+}
+
+.style {
+	mask-size: 3em;
+}
+
+.style {
+	mask-size: 12px;
+}
+
+.style {
+	mask-size: auto;
+}
+
+.style {
+	mask-size: 50% auto;
+}
+
+.style {
+	mask-size: 3em 25%;
+}
+
+.style {
+	mask-size: auto 6px;
+}
+
+.style {
+	mask-size: auto auto;
+}
+
+.style {
+	mask-size: auto, auto;
+}
+
+.style {
+	mask-size: 50%, 25%, 25%;
+}
+
+.style {
+	mask-size: 6px, auto, contain;
+}
+
+.style {
+	mask-size: inherit;
+}
+
+.style {
+	mask-size: initial;
+}
+
+.style {
+	mask-size: unset;
+}
+
+.style {
+	mask-border: url('border-mask.png') 25;
+}
+
+.style {
+	mask-border: url('border-mask.png') 25 space;
+}
+
+.style {
+	mask-border: url('border-mask.png') 25 / 35px;
+}
+
+.style {
+	mask-border: url('border-mask.png') 25 / 35px / 12px space alpha;
+}
+
+.style {
+	mask-border-outset: 1rem;
+}
+
+.style {
+	mask-border-outset: 1.5;
+}
+
+.style {
+	mask-border-outset: 1 1.2;
+}
+
+.style {
+	mask-border-outset: 30px 2 45px;
+}
+
+.style {
+	mask-border-outset: 7px 12px 14px 5px;
+}
+
+.style {
+	mask-border-outset: inherit;
+}
+
+.style {
+	mask-border-outset: initial;
+}
+
+.style {
+	mask-border-outset: unset;
+}
+
+.style {
+	mask-border-width: auto;
+}
+
+.style {
+	mask-border-width: 1rem;
+}
+
+.style {
+	mask-border-width: 25%;
+}
+
+.style {
+	mask-border-width: 3;
+}
+
+.style {
+	mask-border-width: 2em 3em;
+}
+
+.style {
+	mask-border-width: 5% 15% 10%;
+}
+
+.style {
+	mask-border-width: 5% 2em 10% auto;
+}
+
+.style {
+	mask-border-width: inherit;
+}
+
+.style {
+	mask-border-width: initial;
+}
+
+.style {
+	mask-border-width: unset;
+}
+
+.style {
+	mask-border-slice: 30%;
+}
+
+.style {
+	mask-border-slice: 10% 30%;
+}
+
+.style {
+	mask-border-slice: 30 30% 45;
+}
+
+.style {
+	mask-border-slice: 7 12 14 5;
+}
+
+.style {
+	mask-border-slice: 10% fill 7 12;
+}
+
+.style {
+	mask-border-slice: inherit;
+}
+
+.style {
+	mask-border-slice: initial;
+}
+
+.style {
+	mask-border-slice: unset;
+}
