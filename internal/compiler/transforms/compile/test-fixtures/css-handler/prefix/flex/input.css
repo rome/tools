@@ -1,0 +1,47 @@
+.style {
+	flex-shrink: 1;
+}
+
+.style {
+	flex-grow: 1;
+}
+
+.style {
+	flex-basis: 1;
+}
+
+.style {
+	flex-basis: fill;
+}
+
+.style {
+	flex-basis: max-content;
+}
+
+.style {
+	flex-basis: min-content;
+}
+
+.style {
+	flex-basis: fit-content;
+}
+
+.style {
+	flex-basis: content;
+}
+
+.style {
+	flex: 1;
+}
+
+.style {
+	flex: 1 30px;
+}
+
+.style {
+	flex: 2 2;
+}
+
+.style {
+	flex: 2 2 10%;
+}
