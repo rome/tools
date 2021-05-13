@@ -43,6 +43,8 @@ JSRoot {
 						loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:11-2:12
 					}
 					typeParameters: TSTypeParameterDeclaration {
+						hasTrailingComma: true
+						leadingComments: ["0"]
 						params: [
 							TSTypeParameter {
 								name: "T"
