@@ -13,5 +13,5 @@ export default function JSXEmptyExpression(
 	builder: Builder,
 	node: JSXEmptyExpression,
 ): Token {
-	return builder.tokenizeInnerComments(node, false);
+	return builder.tokenizeTrailingComments(node, false);
 }

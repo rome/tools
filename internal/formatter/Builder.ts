@@ -184,15 +184,17 @@ export default class Builder {
 		return join(hardline, tokens);
 	}
 
-	public tokenizeInnerComments(node: AnyNode, shouldIndent: boolean): Token {
-		const innerComments = this.getComments("innerComments", node);
-		if (innerComments === undefined) {
+	private tokenizeComments(
+		comments: AnyComment[] | undefined,
+		shouldIndent: boolean,
+	) {
+		if (comments === undefined) {
 			return "";
 		}
 
 		const tokens: Token[] = [];
 
-		for (const comment of innerComments) {
+		for (const comment of comments) {
 			this.printedComments.add(comment.id);
 			tokens.push(tokenizeComment(comment, this.getLanguage()));
 		}
@@ -200,6 +202,21 @@ export default class Builder {
 		return shouldIndent
 			? indent(join(hardline, tokens), true)
 			: join(hardline, tokens);
+	}
+
+	public tokenizeInnerComments(node: AnyNode, shouldIndent: boolean): Token {
+		const innerComments = this.getComments("innerComments", node);
+		return this.tokenizeComments(innerComments, shouldIndent);
+	}
+
+	public tokenizeTrailingComments(node: AnyNode, shouldIndent: boolean): Token {
+		const trailingComments = this.getComments("trailingComments", node);
+		return this.tokenizeComments(trailingComments, shouldIndent);
+	}
+
+	public tokenizeLeadingComments(node: AnyNode, shouldIndent: boolean): Token {
+		const leadingComments = this.getComments("leadingComments", node);
+		return this.tokenizeComments(leadingComments, shouldIndent);
 	}
 
 	private getComments(
