@@ -20,6 +20,7 @@ import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
 import regions from "./prefixes/regions";
 import scrollSnapType from "./prefixes/scroll-snap-type";
+import shape from "./prefixes/shape";
 import tabSize from "./prefixes/tab-size";
 import textAlignLast from "./prefixes/text-align-last";
 import textEmphasis from "./prefixes/text-emphasis";
@@ -54,6 +55,7 @@ export default [
 	...position,
 	...regions,
 	...scrollSnapType,
+	...shape,
 	...tabSize,
 	...textAlignLast,
 	...textEmphasis,

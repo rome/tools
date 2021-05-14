@@ -1,0 +1,32 @@
+.style {
+	text-align: center;
+	shape-margin: 0%;
+}
+
+.style {
+	text-align: center;
+	-webkit-shape-margin: 0%;
+	shape-margin: 0%;
+}
+
+.style {
+	text-align: center;
+	shape-outside: none;
+}
+
+.style {
+	text-align: center;
+	-webkit-shape-outside: none;
+	shape-outside: none;
+}
+
+.style {
+	text-align: center;
+	shape-image-threshold: inherit;
+}
+
+.style {
+	text-align: center;
+	-webkit-shape-image-threshold: inherit;
+	shape-image-threshold: inherit;
+}
