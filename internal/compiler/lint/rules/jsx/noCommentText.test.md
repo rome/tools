@@ -107,7 +107,7 @@ const a = <div>
 
 ```tsx
 const a = <div>
-	{} /* comment */
+	{/* comment */}
 </div>;
 
 ```
@@ -122,7 +122,7 @@ const a = <div>
 
 ```tsx
 const a = <div>
-	{} /** comment*/
+	{/** comment*/}
 </div>;
 
 ```

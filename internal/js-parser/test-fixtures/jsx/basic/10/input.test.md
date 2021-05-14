@@ -15,8 +15,9 @@ JSRoot {
 				children: [
 					JSXExpressionContainer {
 						expression: JSXEmptyExpression {
-							trailingComments: ["1"]
-							loc: SourceLocation jsx/basic/10/input.jsx 1:4-1:4
+							innerComments: ["1"]
+							trailingComments: []
+							loc: SourceLocation jsx/basic/10/input.jsx 1:3-1:27
 						}
 						loc: SourceLocation jsx/basic/10/input.jsx 1:3-1:28
 					}

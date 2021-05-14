@@ -19,7 +19,7 @@ JSRoot {
 						}
 						value: JSXExpressionContainer {
 							expression: JSXEmptyExpression {
-								loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:10-1:10
+								loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:9-1:10
 							}
 							loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:9-1:11
 						}
