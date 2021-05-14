@@ -8,6 +8,7 @@ import {
 	CSSMediaFeaturePlain,
 	CSSMediaFeatureValue,
 	CSSNumber,
+	CSSRatio,
 } from "@internal/ast";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
@@ -55,7 +56,7 @@ export function parseMediaFeatureValue(
 	}
 	const token = parser.getToken();
 	const start = parser.getPosition();
-	let value: CSSDimension | CSSIdentifier | CSSNumber | undefined = undefined;
+	let value: CSSDimension | CSSIdentifier | CSSNumber | CSSRatio | undefined = undefined;
 
 	if (token.type === "Ident") {
 		nextToken(parser);
@@ -77,8 +78,7 @@ export function parseMediaFeatureValue(
 			},
 		);
 	} else if (token.type === "Number") {
-		nextToken(parser);
-		value = parser.finishNode(
+		const firstNumber = parser.finishNode(
 			start,
 			{
 				type: "CSSNumber",
@@ -86,6 +86,50 @@ export function parseMediaFeatureValue(
 				value: token.value,
 			},
 		);
+		nextToken(parser);
+
+		while (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
+		}
+
+		if (
+			matchToken(parser, "Delim") &&
+			(parser.getToken() as Tokens["Delim"]).value === "/"
+		) {
+			nextToken(parser);
+			while (matchToken(parser, "Whitespace")) {
+				readToken(parser, "Whitespace");
+			}
+			const maybeNumberToken = parser.getToken();
+			if (maybeNumberToken.type === "Number") {
+				const secondStart = parser.getPosition();
+				nextToken(parser);
+				value = parser.finishNode(
+					start,
+					{
+						type: "CSSRatio",
+						numerator: firstNumber,
+						denominator: parser.finishNode(
+							secondStart,
+							{
+								type: "CSSNumber",
+								raw: maybeNumberToken.raw,
+								value: maybeNumberToken.value,
+							},
+						),
+					},
+				);
+			} else {
+				nextToken(parser);
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.MEDIA_QUERY_FEATURE_INCORRENT_RATIO,
+					token: maybeNumberToken,
+				});
+				return undefined;
+			}
+		} else {
+			value = firstNumber;
+		}
 	} else {
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.MEDIA_QUERY_FEATURE_UNEXPECTED_VALUE,
