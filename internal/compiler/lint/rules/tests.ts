@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:1e7ee1bcd338286eb881f6d6bc738b39890e2617,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:cf51d1698f9832523b422fa8cf890b14ad2f9f6c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -34,6 +34,8 @@ import noPositiveTabindex from "./a11y/noPositiveTabindex.test.rjson";
 // @ts-ignore
 import noRedundantAlt from "./a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
+import noRedundantRoles from "./a11y/noRedundantRoles.test.rjson";
+// @ts-ignore
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
 import noTargetBlank from "./a11y/noTargetBlank.test.rjson";
@@ -43,6 +45,8 @@ import useAltText from "./a11y/useAltText.test.rjson";
 import useAnchorContent from "./a11y/useAnchorContent.test.rjson";
 // @ts-ignore
 import useAriaProps from "./a11y/useAriaProps.test.rjson";
+// @ts-ignore
+import useAriaPropsForRole from "./a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
 import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
 // @ts-ignore
@@ -58,11 +62,13 @@ import useKeyWithMouseEvents from "./a11y/useKeyWithMouseEvents.test.rjson";
 // @ts-ignore
 import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-ignore
+import useValidAnchor from "./a11y/useValidAnchor.test.rjson";
+// @ts-ignore
 import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-ignore
-import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
+import noDuplicateCustomProperties from "./css/noDuplicateCustomProperties.test.rjson";
 // @ts-ignore
-import noInvalidGridTemplateAreas from "./css/noInvalidGridTemplateAreas.test.rjson";
+import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -159,12 +165,6 @@ import useSortedSpecifiers from "./js/useSortedSpecifiers.test.rjson";
 import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-ignore
 import useWhile from "./js/useWhile.test.rjson";
-// @ts-ignore
-import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
-// @ts-ignore
-import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
-// @ts-ignore
-import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
 // @ts-ignore
 import noCommentText from "./jsx/noCommentText.test.rjson";
 // @ts-ignore
@@ -279,6 +279,10 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "noRedundantAlt"],
 		cases: noRedundantAlt,
 	},
+	"a11y/noRedundantRoles": {
+		category: ["lint", "a11y", "noRedundantRoles"],
+		cases: noRedundantRoles,
+	},
 	"a11y/noSvgWithoutTitle": {
 		category: ["lint", "a11y", "noSvgWithoutTitle"],
 		cases: noSvgWithoutTitle,
@@ -298,6 +302,10 @@ export const tests: Tests = {
 	"a11y/useAriaProps": {
 		category: ["lint", "a11y", "useAriaProps"],
 		cases: useAriaProps,
+	},
+	"a11y/useAriaPropsForRole": {
+		category: ["lint", "a11y", "useAriaPropsForRole"],
+		cases: useAriaPropsForRole,
 	},
 	"a11y/useAriaProptypes": {
 		category: ["lint", "a11y", "useAriaProptypes"],
@@ -327,17 +335,21 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "useMediaCaption"],
 		cases: useMediaCaption,
 	},
+	"a11y/useValidAnchor": {
+		category: ["lint", "a11y", "useValidAnchor"],
+		cases: useValidAnchor,
+	},
 	"a11y/useValidLang": {
 		category: ["lint", "a11y", "useValidLang"],
 		cases: useValidLang,
 	},
+	"css/noDuplicateCustomProperties": {
+		category: ["lint", "css", "noDuplicateCustomProperties"],
+		cases: noDuplicateCustomProperties,
+	},
 	"css/noImportantInKeyframes": {
 		category: ["lint", "css", "noImportantInKeyframes"],
 		cases: noImportantInKeyframes,
-	},
-	"css/noInvalidGridTemplateAreas": {
-		category: ["lint", "css", "noInvalidGridTemplateAreas"],
-		cases: noInvalidGridTemplateAreas,
 	},
 	"html/useClosingNonVoid": {
 		category: ["lint", "html", "useClosingNonVoid"],
@@ -530,18 +542,6 @@ export const tests: Tests = {
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
 		cases: useWhile,
-	},
-	"jsx-a11y/noRedundantRoles": {
-		category: ["lint", "jsx-a11y", "noRedundantRoles"],
-		cases: noRedundantRoles,
-	},
-	"jsx-a11y/useAriaPropsForRole": {
-		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],
-		cases: useAriaPropsForRole,
-	},
-	"jsx-a11y/useValidAnchor": {
-		category: ["lint", "jsx-a11y", "useValidAnchor"],
-		cases: useValidAnchor,
 	},
 	"jsx/noCommentText": {
 		category: ["lint", "jsx", "noCommentText"],

@@ -1,8 +1,9 @@
-/* GENERATED:START(hash:a1ed742d2a7f7384404be09f668edd0b6396e2eb,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:ff483e12ee225b6554720138deb99231e5fcf0d4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
 import borderRadius from "./prefixes/border-radius";
+import boxDecorationBreak from "./prefixes/box-decoration-break";
 import boxShadow from "./prefixes/box-shadow";
 import boxSizing from "./prefixes/box-sizing";
 import colorAdjust from "./prefixes/color-adjust";
@@ -13,6 +14,9 @@ import hyphens from "./prefixes/hyphens";
 import imageSet from "./prefixes/image-set";
 import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
+import scrollSnapType from "./prefixes/scroll-snap-type";
+import tabSize from "./prefixes/tab-size";
+import textAlignLast from "./prefixes/text-align-last";
 import textOrientation from "./prefixes/text-orientation";
 import textOverflow from "./prefixes/text-overflow";
 import transform from "./prefixes/transform";
@@ -25,6 +29,7 @@ export default [
 	...appearance,
 	...backdropFilter,
 	...borderRadius,
+	...boxDecorationBreak,
 	...boxShadow,
 	...boxSizing,
 	...colorAdjust,
@@ -35,6 +40,9 @@ export default [
 	...imageSet,
 	...multicolumn,
 	...position,
+	...scrollSnapType,
+	...tabSize,
+	...textAlignLast,
 	...textOrientation,
 	...textOverflow,
 	...transform,
