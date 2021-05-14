@@ -138,9 +138,9 @@ export const cssParser = createDiagnosticsCategory({
 	MEDIA_QUERY_DEPRECATED_MEDIA_TYPE: (wrongValue: string) => ({
 		message: markup`The media type <emphasis>${wrongValue}</emphasis> is deprecated.`,
 	}),
-	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURES: {},
-	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: {},
-	MALFORMED_MEDIA_QUERY: {},
+	MEDIA_QUERY_MALFORMED_RANGE: {
+		message: markup`The range value provided to the media query is not correct`,
+	},
 	MEDIA_QUERY_EXPECTED_PARENTHESIS: {
 		message: markup`A left parenthesis is expected in this position.`,
 	},
@@ -161,6 +161,10 @@ export const cssParser = createDiagnosticsCategory({
 
 	MEDIA_QUERY_FEATURE_MALFORMED_PLAN: {
 		message: markup`The media feature is not grammatically correct`,
+	},
+
+	MEDIA_QUERY_FEATURE_INCORRENT_RATIO: {
+		message: markup`The ratio value is not syntactically correct; you always have to provide a denominator after the slash.`,
 	},
 
 	AT_SUPPORTS_MALFORMED: {
