@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:d76dbb80975cebb9d1004233c89c2010dabb5a5e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:13f44e5e3d189d5fa6f5231de22f0b969d5b03d1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-expect-error
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-expect-error
@@ -62,18 +62,14 @@ import useKeyWithMouseEvents from "./a11y/useKeyWithMouseEvents.test.rjson";
 // @ts-expect-error
 import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-expect-error
-import useValidLang from "./a11y/useValidLang.test.rjson";
-// @ts-expect-error
-import noInvalidGridTemplateAreas from "./css/noInvalidGridTemplateAreas.test.rjson";
-// @ts-expect-error
 import useValidAnchor from "./a11y/useValidAnchor.test.rjson";
-// @ts-ignore
+// @ts-expect-error
 import useValidLang from "./a11y/useValidLang.test.rjson";
-// @ts-ignore
+// @ts-expect-error
 import noDuplicateCustomProperties from "./css/noDuplicateCustomProperties.test.rjson";
-// @ts-ignore
+// @ts-expect-error
 import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
-// @ts-ignore
+// @ts-expect-error
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-expect-error
 import noArguments from "./js/noArguments.test.rjson";
@@ -169,12 +165,6 @@ import useSortedSpecifiers from "./js/useSortedSpecifiers.test.rjson";
 import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-expect-error
 import useWhile from "./js/useWhile.test.rjson";
-// @ts-expect-error
-import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
-// @ts-expect-error
-import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
-// @ts-expect-error
-import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
 // @ts-expect-error
 import noCommentText from "./jsx/noCommentText.test.rjson";
 // @ts-expect-error

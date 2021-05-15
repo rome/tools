@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:bf76b4c7b8224134b89fc40af7f3250c1a6b6aae,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:5a4e6825d7d56184af0aa56ad3d5ce5cdcaa5a07,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>

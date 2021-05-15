@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:e140157c1993acf1bb44d87b093f1aa0365cea20,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:8ed4b3e6a845495bb31adfaecd26c1c4b046805f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
