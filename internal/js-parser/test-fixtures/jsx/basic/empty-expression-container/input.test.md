@@ -15,7 +15,7 @@ JSRoot {
 				children: [
 					JSXExpressionContainer {
 						expression: JSXEmptyExpression {
-							loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:4-1:4
+							loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:3-1:4
 						}
 						loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:3-1:5
 					}
