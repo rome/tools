@@ -115,11 +115,13 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noOnChange"]
 	| ["lint", "a11y", "noPositiveTabindex"]
 	| ["lint", "a11y", "noRedundantAlt"]
+	| ["lint", "a11y", "noRedundantRoles"]
 	| ["lint", "a11y", "noSvgWithoutTitle"]
 	| ["lint", "a11y", "noTargetBlank"]
 	| ["lint", "a11y", "useAltText"]
 	| ["lint", "a11y", "useAnchorContent"]
 	| ["lint", "a11y", "useAriaProps"]
+	| ["lint", "a11y", "useAriaPropsForRole"]
 	| ["lint", "a11y", "useAriaProptypes"]
 	| ["lint", "a11y", "useHeadingContent"]
 	| ["lint", "a11y", "useHtmlLang"]
@@ -127,9 +129,10 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useKeyWithClickEvents"]
 	| ["lint", "a11y", "useKeyWithMouseEvents"]
 	| ["lint", "a11y", "useMediaCaption"]
+	| ["lint", "a11y", "useValidAnchor"]
 	| ["lint", "a11y", "useValidLang"]
+	| ["lint", "css", "noDuplicateCustomProperties"]
 	| ["lint", "css", "noImportantInKeyframes"]
-	| ["lint", "css", "noInvalidGridTemplateAreas"]
 	| ["lint", "html", "useClosingNonVoid"]
 	| ["lint", "js", "noArguments"]
 	| ["lint", "js", "noAsyncPromiseExecutor"]
@@ -179,9 +182,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "js", "useSortedSpecifiers"]
 	| ["lint", "js", "useTemplate"]
 	| ["lint", "js", "useWhile"]
-	| ["lint", "jsx-a11y", "noRedundantRoles"]
-	| ["lint", "jsx-a11y", "useAriaPropsForRole"]
-	| ["lint", "jsx-a11y", "useValidAnchor"]
 	| ["lint", "jsx", "noCommentText"]
 	| ["lint", "jsx", "noDuplicateProps"]
 	| ["lint", "jsx", "noImplicitBoolean"]
@@ -248,11 +248,13 @@ const lintCategoryNameMap: {
 	"lint/a11y/noOnChange": ["lint", "a11y", "noOnChange"],
 	"lint/a11y/noPositiveTabindex": ["lint", "a11y", "noPositiveTabindex"],
 	"lint/a11y/noRedundantAlt": ["lint", "a11y", "noRedundantAlt"],
+	"lint/a11y/noRedundantRoles": ["lint", "a11y", "noRedundantRoles"],
 	"lint/a11y/noSvgWithoutTitle": ["lint", "a11y", "noSvgWithoutTitle"],
 	"lint/a11y/noTargetBlank": ["lint", "a11y", "noTargetBlank"],
 	"lint/a11y/useAltText": ["lint", "a11y", "useAltText"],
 	"lint/a11y/useAnchorContent": ["lint", "a11y", "useAnchorContent"],
 	"lint/a11y/useAriaProps": ["lint", "a11y", "useAriaProps"],
+	"lint/a11y/useAriaPropsForRole": ["lint", "a11y", "useAriaPropsForRole"],
 	"lint/a11y/useAriaProptypes": ["lint", "a11y", "useAriaProptypes"],
 	"lint/a11y/useHeadingContent": ["lint", "a11y", "useHeadingContent"],
 	"lint/a11y/useHtmlLang": ["lint", "a11y", "useHtmlLang"],
@@ -260,13 +262,14 @@ const lintCategoryNameMap: {
 	"lint/a11y/useKeyWithClickEvents": ["lint", "a11y", "useKeyWithClickEvents"],
 	"lint/a11y/useKeyWithMouseEvents": ["lint", "a11y", "useKeyWithMouseEvents"],
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
+	"lint/a11y/useValidAnchor": ["lint", "a11y", "useValidAnchor"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
-	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
-	"lint/css/noInvalidGridTemplateAreas": [
+	"lint/css/noDuplicateCustomProperties": [
 		"lint",
 		"css",
-		"noInvalidGridTemplateAreas",
+		"noDuplicateCustomProperties",
 	],
+	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
 	"lint/html/useClosingNonVoid": ["lint", "html", "useClosingNonVoid"],
 	"lint/js/noArguments": ["lint", "js", "noArguments"],
 	"lint/js/noAsyncPromiseExecutor": ["lint", "js", "noAsyncPromiseExecutor"],
@@ -324,13 +327,6 @@ const lintCategoryNameMap: {
 	"lint/js/useSortedSpecifiers": ["lint", "js", "useSortedSpecifiers"],
 	"lint/js/useTemplate": ["lint", "js", "useTemplate"],
 	"lint/js/useWhile": ["lint", "js", "useWhile"],
-	"lint/jsx-a11y/noRedundantRoles": ["lint", "jsx-a11y", "noRedundantRoles"],
-	"lint/jsx-a11y/useAriaPropsForRole": [
-		"lint",
-		"jsx-a11y",
-		"useAriaPropsForRole",
-	],
-	"lint/jsx-a11y/useValidAnchor": ["lint", "jsx-a11y", "useValidAnchor"],
 	"lint/jsx/noCommentText": ["lint", "jsx", "noCommentText"],
 	"lint/jsx/noDuplicateProps": ["lint", "jsx", "noDuplicateProps"],
 	"lint/jsx/noImplicitBoolean": ["lint", "jsx", "noImplicitBoolean"],

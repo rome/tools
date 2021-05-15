@@ -465,6 +465,13 @@ enforce tabIndex value is not greater than zero
 enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noRedundantRoles">
+	<a href="/docs/lint/rules/a11y/noRedundantRoles">noRedundantRoles</a>
+	<a class="header-anchor" href="#noRedundantRoles"></a>
+</h3>
+enforce explicit role property is not the same as implicit/default role property on element
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noSvgWithoutTitle">
 	<a href="/docs/lint/rules/a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
 	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
@@ -498,6 +505,13 @@ MISSING DOCUMENTATION
 	<a class="header-anchor" href="#useAriaProps"></a>
 </h3>
 enforce all `aria-*` props are valid
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useAriaPropsForRole">
+	<a href="/docs/lint/rules/a11y/useAriaPropsForRole">useAriaPropsForRole</a>
+	<a class="header-anchor" href="#useAriaPropsForRole"></a>
+</h3>
+enforce that elements with ARIA roles must have all required attributes for that role
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAriaProptypes">
@@ -549,6 +563,13 @@ MISSING DOCUMENTATION
 enforces that `audio` and `video` elements must have a `track` for captions
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useValidAnchor">
+	<a href="/docs/lint/rules/a11y/useValidAnchor">useValidAnchor</a>
+	<a class="header-anchor" href="#useValidAnchor"></a>
+</h3>
+enforce all anchors are valid, navigable elements
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useValidLang">
 	<a href="/docs/lint/rules/a11y/useValidLang">useValidLang</a>
 	<a class="header-anchor" href="#useValidLang"></a>
@@ -559,27 +580,6 @@ check if `lang` attribute is valid
 <section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="noRedundantRoles">
-	<a href="/docs/lint/rules/jsx-a11y/noRedundantRoles">noRedundantRoles</a>
-	<a class="header-anchor" href="#noRedundantRoles"></a>
-</h3>
-enforce explicit role property is not the same as implicit/default role property on element
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useAriaPropsForRole">
-	<a href="/docs/lint/rules/jsx-a11y/useAriaPropsForRole">useAriaPropsForRole</a>
-	<a class="header-anchor" href="#useAriaPropsForRole"></a>
-</h3>
-enforce that elements with ARIA roles must have all required attributes for that role
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useValidAnchor">
-	<a href="/docs/lint/rules/jsx-a11y/useValidAnchor">useValidAnchor</a>
-	<a class="header-anchor" href="#useValidAnchor"></a>
-</h3>
-enforce all anchors are valid, navigable elements
-</div>
 </section>
 <section>
 <h2>React</h2>
@@ -750,18 +750,18 @@ enforce style prop value is an object
 <h2>CSS</h2>
 <p>Rule semantics and descriptions taken from <a href="https://stylelint.io/">stylelint</a>. See individual rule docs for direct references.</p>
 <div class="rule">
+<h3 data-toc-exclude id="noDuplicateCustomProperties">
+	<a href="/docs/lint/rules/css/noDuplicateCustomProperties">noDuplicateCustomProperties</a>
+	<a class="header-anchor" href="#noDuplicateCustomProperties"></a>
+</h3>
+prevent custom properties with the same name inside a block
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noImportantInKeyframes">
 	<a href="/docs/lint/rules/css/noImportantInKeyframes">noImportantInKeyframes</a>
 	<a class="header-anchor" href="#noImportantInKeyframes"></a>
 </h3>
 disallow `!important` in `@keyframe` rules
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noInvalidGridTemplateAreas">
-	<a href="/docs/lint/rules/css/noInvalidGridTemplateAreas">noInvalidGridTemplateAreas</a>
-	<a class="header-anchor" href="#noInvalidGridTemplateAreas"></a>
-</h3>
-checks that `grid-template-areas` have valid names
 </div>
 </section>
 <!-- GENERATED:END(id:main) -->

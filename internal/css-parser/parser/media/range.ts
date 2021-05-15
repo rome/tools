@@ -123,7 +123,7 @@ export function parseMediaFeatureRange(
 	}
 
 	parser.unexpectedDiagnostic({
-		description: descriptions.CSS_PARSER.MALFORMED_MEDIA_QUERY,
+		description: descriptions.CSS_PARSER.MEDIA_QUERY_MALFORMED_RANGE,
 		start,
 		end: parser.getPosition(),
 	});

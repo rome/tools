@@ -32,7 +32,7 @@ CSSRoot {
 						important: false
 						name: CSSCustomProperty {
 							value: "--fancy"
-							loc: SourceLocation functions/input.css 2:1-2:1
+							loc: SourceLocation functions/input.css 2:1-2:8
 						}
 						loc: SourceLocation functions/input.css 2:1-2:13
 					}

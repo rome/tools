@@ -24,7 +24,7 @@
 
 ```css
 .styles {
-	--fancy: "test";
+	--FANCY: "test";
 	--very-long-lorem-ipsum-very-long-lorem-ipsum-very-long-lorem-ipsum-very-long-lorem-ipsum-very-long-lorem-ipsum-very-long-lorem-ipsum-very-long-lorem-ipsum: 8px;
 }
 

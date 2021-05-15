@@ -34,6 +34,8 @@ import noPositiveTabindex from "./a11y/noPositiveTabindex.test.rjson";
 // @ts-expect-error
 import noRedundantAlt from "./a11y/noRedundantAlt.test.rjson";
 // @ts-expect-error
+import noRedundantRoles from "./a11y/noRedundantRoles.test.rjson";
+// @ts-expect-error
 import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-expect-error
 import noTargetBlank from "./a11y/noTargetBlank.test.rjson";
@@ -43,6 +45,8 @@ import useAltText from "./a11y/useAltText.test.rjson";
 import useAnchorContent from "./a11y/useAnchorContent.test.rjson";
 // @ts-expect-error
 import useAriaProps from "./a11y/useAriaProps.test.rjson";
+// @ts-expect-error
+import useAriaPropsForRole from "./a11y/useAriaPropsForRole.test.rjson";
 // @ts-expect-error
 import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
 // @ts-expect-error
@@ -60,10 +64,16 @@ import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-expect-error
 import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-expect-error
-import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
-// @ts-expect-error
 import noInvalidGridTemplateAreas from "./css/noInvalidGridTemplateAreas.test.rjson";
 // @ts-expect-error
+import useValidAnchor from "./a11y/useValidAnchor.test.rjson";
+// @ts-ignore
+import useValidLang from "./a11y/useValidLang.test.rjson";
+// @ts-ignore
+import noDuplicateCustomProperties from "./css/noDuplicateCustomProperties.test.rjson";
+// @ts-ignore
+import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
+// @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-expect-error
 import noArguments from "./js/noArguments.test.rjson";
@@ -281,6 +291,10 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "noRedundantAlt"],
 		cases: noRedundantAlt,
 	},
+	"a11y/noRedundantRoles": {
+		category: ["lint", "a11y", "noRedundantRoles"],
+		cases: noRedundantRoles,
+	},
 	"a11y/noSvgWithoutTitle": {
 		category: ["lint", "a11y", "noSvgWithoutTitle"],
 		cases: noSvgWithoutTitle,
@@ -300,6 +314,10 @@ export const tests: Tests = {
 	"a11y/useAriaProps": {
 		category: ["lint", "a11y", "useAriaProps"],
 		cases: useAriaProps,
+	},
+	"a11y/useAriaPropsForRole": {
+		category: ["lint", "a11y", "useAriaPropsForRole"],
+		cases: useAriaPropsForRole,
 	},
 	"a11y/useAriaProptypes": {
 		category: ["lint", "a11y", "useAriaProptypes"],
@@ -329,17 +347,21 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "useMediaCaption"],
 		cases: useMediaCaption,
 	},
+	"a11y/useValidAnchor": {
+		category: ["lint", "a11y", "useValidAnchor"],
+		cases: useValidAnchor,
+	},
 	"a11y/useValidLang": {
 		category: ["lint", "a11y", "useValidLang"],
 		cases: useValidLang,
 	},
+	"css/noDuplicateCustomProperties": {
+		category: ["lint", "css", "noDuplicateCustomProperties"],
+		cases: noDuplicateCustomProperties,
+	},
 	"css/noImportantInKeyframes": {
 		category: ["lint", "css", "noImportantInKeyframes"],
 		cases: noImportantInKeyframes,
-	},
-	"css/noInvalidGridTemplateAreas": {
-		category: ["lint", "css", "noInvalidGridTemplateAreas"],
-		cases: noInvalidGridTemplateAreas,
 	},
 	"html/useClosingNonVoid": {
 		category: ["lint", "html", "useClosingNonVoid"],
@@ -532,18 +554,6 @@ export const tests: Tests = {
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
 		cases: useWhile,
-	},
-	"jsx-a11y/noRedundantRoles": {
-		category: ["lint", "jsx-a11y", "noRedundantRoles"],
-		cases: noRedundantRoles,
-	},
-	"jsx-a11y/useAriaPropsForRole": {
-		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],
-		cases: useAriaPropsForRole,
-	},
-	"jsx-a11y/useValidAnchor": {
-		category: ["lint", "jsx-a11y", "useValidAnchor"],
-		cases: useValidAnchor,
 	},
 	"jsx/noCommentText": {
 		category: ["lint", "jsx", "noCommentText"],
