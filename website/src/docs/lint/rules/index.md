@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:5a4e6825d7d56184af0aa56ad3d5ce5cdcaa5a07,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:65be770414346bf81a7d00fb7f71d2088679c3bf,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -369,13 +369,6 @@ it bans the use of `any`
 promotes the use of `[]` over `Array&lt;&gt;`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="preferTsExpectError">
-	<a href="/docs/lint/rules/ts/preferTsExpectError">preferTsExpectError</a>
-	<a class="header-anchor" href="#preferTsExpectError"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="useInterfaces">
 	<a href="/docs/lint/rules/ts/useInterfaces">useInterfaces</a>
 	<a class="header-anchor" href="#useInterfaces"></a>
@@ -388,6 +381,13 @@ MISSING DOCUMENTATION
 	<a class="header-anchor" href="#useSimplifiedBooleanExpression"></a>
 </h3>
 discard redundant terms or operators in boolean expressions
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useTsExpectError">
+	<a href="/docs/lint/rules/ts/useTsExpectError">useTsExpectError</a>
+	<a class="header-anchor" href="#useTsExpectError"></a>
+</h3>
+MISSING DOCUMENTATION
 </div>
 </section>
 <section>

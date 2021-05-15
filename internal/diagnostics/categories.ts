@@ -103,7 +103,7 @@ type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:39bbb26e042efba259b2d7b36a993be195408f0d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:0987ba9a16d11853524575504868c76da27ee307,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -220,9 +220,9 @@ export type DiagnosticLintCategory =
 	| ["lint", "regex", "noReferenceToNonExistingGroup"]
 	| ["lint", "ts", "noExplicitAny"]
 	| ["lint", "ts", "preferShorthandArrayType"]
-	| ["lint", "ts", "preferTsExpectError"]
 	| ["lint", "ts", "useInterfaces"]
-	| ["lint", "ts", "useSimplifiedBooleanExpression"];
+	| ["lint", "ts", "useSimplifiedBooleanExpression"]
+	| ["lint", "ts", "useTsExpectError"];
 const lintCategoryNameMap: {
 	[name in DiagnosticLintCategoryString]: DiagnosticLintCategory
 } = {
@@ -393,13 +393,13 @@ const lintCategoryNameMap: {
 	],
 	"lint/ts/noExplicitAny": ["lint", "ts", "noExplicitAny"],
 	"lint/ts/preferShorthandArrayType": ["lint", "ts", "preferShorthandArrayType"],
-	"lint/ts/preferTsExpectError": ["lint", "ts", "preferTsExpectError"],
 	"lint/ts/useInterfaces": ["lint", "ts", "useInterfaces"],
 	"lint/ts/useSimplifiedBooleanExpression": [
 		"lint",
 		"ts",
 		"useSimplifiedBooleanExpression",
 	],
+	"lint/ts/useTsExpectError": ["lint", "ts", "useTsExpectError"],
 };
 /* GENERATED:END(id:main) */
 

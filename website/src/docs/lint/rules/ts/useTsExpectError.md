@@ -1,15 +1,15 @@
 ---
-title: Lint Rule ts/preferTsExpectError
+title: Lint Rule ts/useTsExpectError
 layout: layouts/rule.liquid
 showHero: false
 description: MISSING DOCUMENTATION
 eleventyNavigation:
-	key: lint-rules/ts/preferTsExpectError
+	key: lint-rules/ts/useTsExpectError
 	parent: lint-rules
-	title: ts/preferTsExpectError
+	title: ts/useTsExpectError
 ---
 
-# ts/preferTsExpectError
+# ts/useTsExpectError
 
 Prefer `@ts-expect-error` to get notified when suppression is no longer necessary.
 

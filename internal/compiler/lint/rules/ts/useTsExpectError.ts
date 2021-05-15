@@ -6,7 +6,7 @@ const RE = {
 };
 
 export default createVisitor({
-	name: "ts/preferTsExpectError",
+	name: "ts/useTsExpectError",
 	enter(path) {
 		const {node} = path;
 

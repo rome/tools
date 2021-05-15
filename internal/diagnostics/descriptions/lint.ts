@@ -18,7 +18,7 @@ import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
 	TS_PREFER_TS_EXPECT_ERROR: {
-		category: DIAGNOSTIC_CATEGORIES["lint/ts/preferTsExpectError"],
+		category: DIAGNOSTIC_CATEGORIES["lint/ts/useTsExpectError"],
 		message: markup`Prefer @ts-expect-error to get notified when suppression is no longer necessary.`,
 	},
 	CSS_NO_DUPLICATE_CUSTOM_PROPERTIES: {

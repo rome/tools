@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:13f44e5e3d189d5fa6f5231de22f0b969d5b03d1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:17eccaa49243a017846fe91584dfca4756dbf519,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-expect-error
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-expect-error
@@ -238,7 +238,7 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 // @ts-expect-error
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 // @ts-expect-error
-import preferTsExpectError from "./ts/preferTsExpectError.test.rjson";
+import useTsExpectError from "./ts/useTsExpectError.test.rjson";
 
 export const tests: Tests = {
 	"a11y/noAccessKey": {
@@ -689,9 +689,9 @@ export const tests: Tests = {
 		category: ["lint", "ts", "preferShorthandArrayType"],
 		cases: preferShorthandArrayType,
 	},
-	"ts/preferTsExpectError": {
-		category: ["lint", "ts", "preferTsExpectError"],
-		cases: preferTsExpectError,
+	"ts/useTsExpectError": {
+		category: ["lint", "ts", "useTsExpectError"],
+		cases: useTsExpectError,
 	},
 };
 /* GENERATED:END(id:main) */

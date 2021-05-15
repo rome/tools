@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:8ed4b3e6a845495bb31adfaecd26c1c4b046805f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:a9bbc962ebaea2297941e035106e727be7a6f358,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -114,9 +114,9 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression";
 import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
 import noExplicitAny from "./ts/noExplicitAny";
 import preferShorthandArrayType from "./ts/preferShorthandArrayType";
-import preferTsExpectError from "./ts/preferTsExpectError";
 import useInterfaces from "./ts/useInterfaces";
 import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression";
+import useTsExpectError from "./ts/useTsExpectError";
 import {AnyVisitor} from "@internal/compiler";
 
 export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();
@@ -265,12 +265,12 @@ lintTransforms.set(
 );
 lintTransforms.set("ts/noExplicitAny", noExplicitAny);
 lintTransforms.set("ts/preferShorthandArrayType", preferShorthandArrayType);
-lintTransforms.set("ts/preferTsExpectError", preferTsExpectError);
 lintTransforms.set("ts/useInterfaces", useInterfaces);
 lintTransforms.set(
 	"ts/useSimplifiedBooleanExpression",
 	useSimplifiedBooleanExpression,
 );
+lintTransforms.set("ts/useTsExpectError", useTsExpectError);
 
 export const lintRuleNames: LintRuleName[] = [
 	"a11y/noAccessKey",
@@ -388,9 +388,9 @@ export const lintRuleNames: LintRuleName[] = [
 	"regex/noReferenceToNonExistingGroup",
 	"ts/noExplicitAny",
 	"ts/preferShorthandArrayType",
-	"ts/preferTsExpectError",
 	"ts/useInterfaces",
 	"ts/useSimplifiedBooleanExpression",
+	"ts/useTsExpectError",
 ];
 
 export type LintRuleName =
@@ -509,7 +509,7 @@ export type LintRuleName =
 	| "regex/noReferenceToNonExistingGroup"
 	| "ts/noExplicitAny"
 	| "ts/preferShorthandArrayType"
-	| "ts/preferTsExpectError"
 	| "ts/useInterfaces"
-	| "ts/useSimplifiedBooleanExpression";
+	| "ts/useSimplifiedBooleanExpression"
+	| "ts/useTsExpectError";
 /* GENERATED:END(id:main) */
