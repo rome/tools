@@ -161,6 +161,8 @@ This is used to generate new lint rules and boilerplate.
 
 The `category` is one of the lint category folders defined in [`internal/compiler/lint/rules`](https://github.com/rome/tools/tree/main/internal/compiler/lint/rules). Some of these represent specific languages, or general themes.
 
+The `ruleName` should start with either `use` or `no`.
+
 For example, to create a rule in the `js` category called `useCamelCase` run:
 
 ```bash
