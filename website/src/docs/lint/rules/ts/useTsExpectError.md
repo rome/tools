@@ -17,61 +17,70 @@ Prefer `@ts-expect-error` to get notified when suppression is no longer necessar
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:72776c06eb93739ef334af9f392b50f898fbb8b7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:0371e4e9e4bcc781dd033c3306d490d8b67dc824,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">// @ts-ignore</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
 
 ---
 
-{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">//		@ts-ignore</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">// @ts-ignore</span>
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/* @ts-ignore */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/** @ts-ignore */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/**</span>
 <span class="token comment"> * @ts-ignore */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/**</span>
 <span class="token comment"> ** @ts-ignore */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
 
 ### Valid
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">// @ts-expect-error</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">//		@ts-expect-error</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/* @ts-expect-error */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/** @ts-expect-error */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/**</span>
 <span class="token comment"> * @ts-expect-error */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/**</span>
 <span class="token comment"> ** @ts-expect-error */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
