@@ -1,0 +1,64 @@
+filename: "filename.ts"
+invalid: [
+	"
+	// @ts-ignore
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	// @ts-ignore
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	/* @ts-ignore */
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	/** @ts-ignore */
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	/**
+	 * @ts-ignore */
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	/**
+	 ** @ts-ignore */
+	let foo: boolean = 1;
+	foo;
+	"
+]
+valid: [
+	"
+	// @ts-expect-error
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	/* @ts-expect-error */
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	/** @ts-expect-error */
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	/**
+	 * @ts-expect-error */
+	let foo: boolean = 1;
+	foo;
+	"
+	"
+	/**
+	 ** @ts-expect-error */
+	let foo: boolean = 1;
+	foo;
+	"
+]
