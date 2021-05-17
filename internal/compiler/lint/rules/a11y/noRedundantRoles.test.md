@@ -29,7 +29,8 @@
 ### `0: formatted`
 
 ```tsx
-<article role="article" />;
+<article role="article">
+</article>;
 
 ```
 
@@ -58,7 +59,8 @@
 ### `1: formatted`
 
 ```tsx
-<button role="button" />;
+<button role="button">
+</button>;
 
 ```
 
@@ -151,7 +153,8 @@
 ### `4: formatted`
 
 ```tsx
-<dialog role="dialog" />;
+<dialog role="dialog">
+</dialog>;
 
 ```
 
@@ -208,7 +211,8 @@
 ### `6: formatted`
 
 ```tsx
-<figure role="figure" />;
+<figure role="figure">
+</figure>;
 
 ```
 
@@ -237,7 +241,8 @@
 ### `7: formatted`
 
 ```tsx
-<form role="form" />;
+<form role="form">
+</form>;
 
 ```
 
@@ -266,7 +271,8 @@
 ### `8: formatted`
 
 ```tsx
-<table role="grid" />;
+<table role="grid">
+</table>;
 
 ```
 
@@ -277,6 +283,9 @@
  lint/a11y/noRedundantRoles/reject/10/file.tsx:1:5 lint/a11y/noRedundantRoles  FIXABLE  ━━━━━━━━━━━━
 
   ✖ Using the role attribute gridcell on the td element is redundant.
+
+    <td  role='gridcell'></td>
+         ^^^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute.
 
@@ -292,7 +301,8 @@
 ### `9: formatted`
 
 ```tsx
-<td role="gridcell" />;
+<td role="gridcell">
+</td>;
 
 ```
 
@@ -321,7 +331,8 @@
 ### `10: formatted`
 
 ```tsx
-<fieldset role="group" />;
+<fieldset role="group">
+</fieldset>;
 
 ```
 
@@ -438,7 +449,8 @@
 ### `14: formatted`
 
 ```tsx
-<ol role="list" />;
+<ol role="list">
+</ol>;
 
 ```
 
@@ -467,7 +479,8 @@
 ### `15: formatted`
 
 ```tsx
-<ul role="list" />;
+<ul role="list">
+</ul>;
 
 ```
 
@@ -496,7 +509,8 @@
 ### `16: formatted`
 
 ```tsx
-<select role="listbox" />;
+<select role="listbox">
+</select>;
 
 ```
 
@@ -525,7 +539,8 @@
 ### `17: formatted`
 
 ```tsx
-<li role="listitem" />;
+<li role="listitem">
+</li>;
 
 ```
 
@@ -554,7 +569,8 @@
 ### `18: formatted`
 
 ```tsx
-<nav role="navigation" />;
+<nav role="navigation">
+</nav>;
 
 ```
 
@@ -583,7 +599,8 @@
 ### `19: formatted`
 
 ```tsx
-<option role="option" />;
+<option role="option">
+</option>;
 
 ```
 
@@ -612,7 +629,8 @@
 ### `20: formatted`
 
 ```tsx
-<tr role="row" />;
+<tr role="row">
+</tr>;
 
 ```
 
@@ -641,7 +659,8 @@
 ### `21: formatted`
 
 ```tsx
-<tbody role="rowgroup" />;
+<tbody role="rowgroup">
+</tbody>;
 
 ```
 
@@ -670,7 +689,8 @@
 ### `22: formatted`
 
 ```tsx
-<tfoot role="rowgroup" />;
+<tfoot role="rowgroup">
+</tfoot>;
 
 ```
 
@@ -699,7 +719,8 @@
 ### `23: formatted`
 
 ```tsx
-<thead role="rowgroup" />;
+<thead role="rowgroup">
+</thead>;
 
 ```
 
@@ -728,7 +749,8 @@
 ### `24: formatted`
 
 ```tsx
-<th scope="row" role="rowheader" />;
+<th scope="row" role="rowheader">
+</th>;
 
 ```
 
@@ -785,7 +807,8 @@
 ### `26: formatted`
 
 ```tsx
-<table role="table" />;
+<table role="table">
+</table>;
 
 ```
 
@@ -814,7 +837,8 @@
 ### `27: formatted`
 
 ```tsx
-<dt role="term" />;
+<dt role="term">
+</dt>;
 
 ```
 
@@ -843,7 +867,8 @@
 ### `28: formatted`
 
 ```tsx
-<textarea role="textbox" />;
+<textarea role="textbox">
+</textarea>;
 
 ```
 
@@ -884,7 +909,8 @@
 ### `30: formatted`
 
 ```tsx
-<article role="presentation" />;
+<article role="presentation">
+</article>;
 
 ```
 
@@ -897,7 +923,8 @@
 ### `31: formatted`
 
 ```tsx
-<Button role="button" />;
+<Button role="button">
+</Button>;
 
 ```
 
@@ -910,7 +937,8 @@
 ### `32: formatted`
 
 ```tsx
-<span />;
+<span>
+</span>;
 
 ```
 
@@ -1193,6 +1221,9 @@
  lint/a11y/noRedundantRoles/reject/10/file.html:1:5 lint/a11y/noRedundantRoles  FIXABLE  ━━━━━━━━━━━
 
   ✖ Using the role attribute gridcell on the td element is redundant.
+
+    <td  role="gridcell"></td>
+         ^^^^^^^^^^^^^^^
 
   Suggested fix: Remove the role attribute.
 

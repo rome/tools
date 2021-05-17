@@ -42,6 +42,9 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ img is a void element tag and must not have children.
 
+    <img>invalid children</img>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Safe fix
 
     1   │ - <img>
@@ -68,6 +71,9 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ hr is a void element tag and must not have children.
 
+    <hr children={'invalid children'} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Safe fix
 
   - <hr·children={"invalid·children"}·/>
@@ -91,6 +97,9 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ area is a void element tag and must not have dangerouslySetInnerHTML.
+
+    <area dangerouslySetInnerHTML={{__html: ''}}></area>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -116,6 +125,10 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children, or dangerouslySetInnerHTML.
+
+    <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid
+    children</img>
+    ^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -143,6 +156,9 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ img is a void element tag and must not have children.
 
+    React.createElement('img', {children: 'child'})
+                                ^^^^^^^^^^^^^^^^^
+
   ℹ Safe fix
 
   - React.createElement("img",·{children:·"child"})
@@ -165,6 +181,9 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
   FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have dangerouslySetInnerHTML.
+
+    React.createElement('img', {dangerouslySetInnerHTML: {__html: 'child'}})
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -216,6 +235,9 @@ React.createElement("img", {});
 
   ✖ img is a void element tag and must not have children.
 
+    createElement('img', {children: 'child'})
+                          ^^^^^^^^^^^^^^^^^
+
   ℹ Safe fix
 
   - createElement("img",·{children:·"child"})
@@ -238,6 +260,9 @@ React.createElement("img", {});
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have dangerouslySetInnerHTML.
+
+    createElement('img', {dangerouslySetInnerHTML: {__html: 'child'}})
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 

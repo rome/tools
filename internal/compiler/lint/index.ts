@@ -7,7 +7,7 @@
 
 import {Diagnostic, DiagnosticSuppression} from "@internal/diagnostics";
 import {AnyVisitor, LintRequest} from "../types";
-import {Cache, CompilerContext} from "@internal/compiler";
+import {Cache, CompilerContext, LintRuleName} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 import {addSuppressions} from "./suppressions";
 import {lintTransforms} from "./rules/index";
@@ -23,8 +23,17 @@ const ruleVisitorCache: WeakMap<ProjectConfig, AnyVisitor[]> = new WeakMap();
 
 const allVisitors = Array.from(lintTransforms.values());
 
-function getVisitors(config: ProjectConfig): AnyVisitor[] {
+function getVisitors(
+	config: ProjectConfig,
+	applyLintCategories?: LintRuleName[],
+): AnyVisitor[] {
 	const {disabledRules} = config.lint;
+
+	if (applyLintCategories && applyLintCategories.length > 0) {
+		return applyLintCategories.map((ruleName) => {
+			return lintTransforms.get(ruleName);
+		}).filter(Boolean) as AnyVisitor[];
+	}
 
 	// Fast path
 	if (disabledRules.length === 0) {
@@ -51,7 +60,13 @@ function getVisitors(config: ProjectConfig): AnyVisitor[] {
 const lintCache: Cache<LintResult> = new Cache();
 
 export default async function lint(req: LintRequest): Promise<LintResult> {
-	const {ast, applySafeFixes, options, suppressionExplanation} = req;
+	const {
+		ast,
+		applySafeFixes,
+		options,
+		suppressionExplanation,
+		applyLintCategories,
+	} = req;
 	const project = CompilerContext.normalizeProject(req.project);
 
 	const query = Cache.buildQuery(req, {applySafeFixes, suppressionExplanation});
@@ -62,7 +77,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 
 	const shouldLint = project.config.lint.enabled;
 	const shouldFormat = project.config.format.enabled;
-	const visitors = getVisitors(project.config);
+	const visitors = getVisitors(project.config, applyLintCategories);
 
 	// Perform fixes
 	let formatAst = ast;

@@ -96,7 +96,8 @@
 ### `3: formatted`
 
 ```tsx
-<html role="html" />;
+<html role="html">
+</html>;
 
 ```
 
@@ -120,7 +121,8 @@
 ### `4: formatted`
 
 ```tsx
-<script aria-label="script" />;
+<script aria-label="script">
+</script>;
 
 ```
 
@@ -144,7 +146,8 @@
 ### `5: formatted`
 
 ```tsx
-<script role="script" />;
+<script role="script">
+</script>;
 
 ```
 
@@ -168,7 +171,8 @@
 ### `6: formatted`
 
 ```tsx
-<style aria-labelledby={true} />;
+<style aria-labelledby>
+</style>;
 
 ```
 
@@ -192,7 +196,8 @@
 ### `7: formatted`
 
 ```tsx
-<style role="style" />;
+<style role="style">
+</style>;
 
 ```
 
@@ -218,7 +223,8 @@
 ### `9: formatted`
 
 ```tsx
-<html maria="text" />;
+<html maria="text">
+</html>;
 
 ```
 
@@ -231,7 +237,8 @@
 ### `10: formatted`
 
 ```tsx
-<script />;
+<script>
+</script>;
 
 ```
 
@@ -244,7 +251,8 @@
 ### `11: formatted`
 
 ```tsx
-<style parole={true} />;
+<style parole>
+</style>;
 
 ```
 
@@ -316,8 +324,7 @@
 ### `14: formatted`
 
 ```html
-<html aria-required="true">
-</html>
+<html aria-required="true" />
 
 ```
 

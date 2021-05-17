@@ -60,6 +60,9 @@ foo;
 
   ✖ Do not use empty character classes in regular expressions.
 
+    ;if (foo.match(/^abc[]/)) { foo; }
+                        ^
+
   ℹ Empty character classes are usually typos.
 
 

@@ -72,9 +72,9 @@ undefined
 ### `2: formatted`
 
 ```js
-function hello(a, a) {
+const hello = function(a, a) {
 	//
-}
+};
 
 ```
 

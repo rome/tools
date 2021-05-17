@@ -79,6 +79,11 @@ if (x) {
 
   ✖ Block statements are preferred in this position.
 
+    1 │ if (x) {
+    2 │   x
+  > 3 │ } else if (y) y;
+      │        ^^^^^^^^^
+
   ℹ Safe fix
 
     1   │ - if·(y)·y;
@@ -123,7 +128,7 @@ if (x) {
 ### `3: formatted`
 
 ```ts
-while (true) {
+for (;;) {
 	// empty
 }
 
