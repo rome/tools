@@ -65,11 +65,3 @@ export function needsParens(
 	const fn = parentheses.get(node.type);
 	return fn ? fn(node, parent, printStack) : false;
 }
-
-export function isOnSameLine(aNode: AnyNode, bNode: AnyNode): boolean {
-	if (aNode.loc && bNode.loc) {
-		return aNode.loc.end.line.equal(bNode.loc.start.line);
-	} else {
-		return false;
-	}
-}

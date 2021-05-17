@@ -17,6 +17,7 @@ import {
 } from "@internal/formatter";
 
 import {AnyNode, JSIfStatement} from "@internal/ast";
+import {LineComparison, compareLines} from "@internal/ast-utils";
 import {isStatement} from "@internal/js-ast-utils";
 
 export default function JSIfStatement(
@@ -53,12 +54,24 @@ export default function JSIfStatement(
 			hardline,
 			"}",
 		);
-	} else {
+	}
+	else {
 		tokens.push(builder.tokenize(node.consequent, node));
 	}
 
 	if (node.alternate) {
-		tokens.push(space, "else", space, builder.tokenize(node.alternate, node));
+		let separator: Token = space;
+
+		if (compareLines(node.consequent, node.alternate) === LineComparison.After) {
+			separator = hardline;
+		}
+
+		tokens.push(
+			separator,
+			"else",
+			space,
+			builder.tokenize(node.alternate, node),
+		);
 	}
 
 	return concat(tokens);
