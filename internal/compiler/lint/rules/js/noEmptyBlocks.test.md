@@ -65,9 +65,7 @@ if (foo) {
 ### `2: formatted`
 
 ```ts
-if (foo) {
-	foo;
-}
+if (foo) foo;
 
 ```
 

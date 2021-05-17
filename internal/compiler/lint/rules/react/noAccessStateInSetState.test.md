@@ -104,6 +104,17 @@ undefined
 
   ✖ Avoid using this.state within a this.setState call.
 
+    1 │ class MyComponent extends Component {
+    2 │   update() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^^^
+  > 4 │       foo: bar,
+  > 5 │       value: 1 + this.state.value
+  > 6 │     });
+      │ ^^^^^^
+    7 │   }
+    8 │ }
+
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
 
@@ -130,6 +141,17 @@ class MyComponent extends Component {
  lint/react/noAccessStateInSetState/reject/6/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
+
+    1 │ class MyComponent extends Component {
+    2 │   update() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^^^
+  > 4 │       foo: bar,
+  > 5 │       value: this.state.value + 1
+  > 6 │     });
+      │ ^^^^^^
+    7 │   }
+    8 │ }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
@@ -158,6 +180,16 @@ class MyComponent extends Component {
 
   ✖ Avoid using this.state within a this.setState call.
 
+    1 │ class MyComponent extends Component {
+    2 │   update() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^^^
+  > 4 │       value: this.state.value
+  > 5 │     });
+      │ ^^^^^^
+    6 │   }
+    7 │ }
+
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
 
@@ -183,6 +215,17 @@ class MyComponent extends Component {
  lint/react/noAccessStateInSetState/reject/8/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
+
+    1 │ class MyComponent extends Component {
+    2 │   update() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^^^
+  > 4 │       foo: bar,
+  > 5 │       value: this.state.value
+  > 6 │     });
+      │ ^^^^^^
+    7 │   }
+    8 │ }
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 

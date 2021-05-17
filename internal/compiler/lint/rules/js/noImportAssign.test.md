@@ -162,6 +162,10 @@ import x from "y";
 
   ✖ The imported variable x is read-only.
 
+    1 │ import x from 'y';
+  > 2 │ for (x in y);
+      │      ^
+
   ℹ Use a local variable instead of reassigning an import.
 
 
@@ -171,9 +175,7 @@ import x from "y";
 
 ```ts
 import x from "y";
-for (x in y) {
-	// empty
-}
+for (x in y);
 
 ```
 

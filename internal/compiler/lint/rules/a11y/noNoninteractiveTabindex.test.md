@@ -23,7 +23,8 @@
 ### `0: formatted`
 
 ```tsx
-<div tabIndex="0" />;
+<div tabIndex="0">
+</div>;
 
 ```
 
@@ -46,7 +47,8 @@
 ### `1: formatted`
 
 ```tsx
-<div role="article" tabIndex="0" />;
+<div role="article" tabIndex="0">
+</div>;
 
 ```
 
@@ -82,7 +84,8 @@
 ### `3: formatted`
 
 ```tsx
-<button tabIndex="0" />;
+<button tabIndex="0">
+</button>;
 
 ```
 
@@ -95,7 +98,8 @@
 ### `4: formatted`
 
 ```tsx
-<span role="button" tabIndex="0" />;
+<span role="button" tabIndex="0">
+</span>;
 
 ```
 
@@ -108,7 +112,8 @@
 ### `5: formatted`
 
 ```tsx
-<span role="article" tabIndex="-1" />;
+<span role="article" tabIndex="-1">
+</span>;
 
 ```
 
@@ -134,7 +139,8 @@
 ### `7: formatted`
 
 ```tsx
-<article tabIndex="-1" />;
+<article tabIndex="-1">
+</article>;
 
 ```
 
@@ -147,7 +153,8 @@
 ### `8: formatted`
 
 ```tsx
-<div tabIndex="-1" />;
+<div tabIndex="-1">
+</div>;
 
 ```
 
@@ -160,7 +167,8 @@
 ### `9: formatted`
 
 ```tsx
-<article tabIndex={-1} />;
+<article tabIndex={-1}>
+</article>;
 
 ```
 
@@ -173,7 +181,8 @@
 ### `10: formatted`
 
 ```tsx
-<div tabIndex={-1} />;
+<div tabIndex={-1}>
+</div>;
 
 ```
 
@@ -186,7 +195,8 @@
 ### `11: formatted`
 
 ```tsx
-<div />;
+<div>
+</div>;
 
 ```
 
@@ -199,7 +209,8 @@
 ### `12: formatted`
 
 ```tsx
-<button tabIndex="-1" />;
+<button tabIndex="-1">
+</button>;
 
 ```
 

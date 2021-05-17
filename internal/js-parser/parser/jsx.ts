@@ -200,18 +200,6 @@ function parseJSXAttributeValue(
 	}
 }
 
-// JSXEmptyExpression is unique type since it doesn't actually parse anything,
-// and so it should start at the end of last read token (left brace) and finish
-// at the beginning of the next one (right brace).
-function parseJSXEmptyExpression(parser: JSParser): JSXEmptyExpression {
-	return parser.finishNode(
-		parser.state.lastEndPos,
-		{
-			type: "JSXEmptyExpression",
-		},
-	);
-}
-
 // Parse JSX spread child
 function parseJSXSpreadChild(parser: JSParser): JSXSpreadChild {
 	const start = parser.getPosition();
@@ -244,8 +232,15 @@ function parseJSXExpressionContainer(parser: JSParser): JSXExpressionContainer {
 		"jsx expression container",
 	);
 	let expression;
+	const beforeBraceR = parser.getPosition();
 	if (match(parser, tt.braceR)) {
-		expression = parseJSXEmptyExpression(parser);
+		expression = parser.finishNodeAt<JSXEmptyExpression>(
+			start,
+			beforeBraceR,
+			{
+				type: "JSXEmptyExpression",
+			},
+		);
 	} else {
 		expression = parseExpression(parser, "jsx inner expression container");
 	}

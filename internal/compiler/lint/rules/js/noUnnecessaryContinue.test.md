@@ -39,6 +39,11 @@ loop: for (let i = 0; i < 5; i++) {}
 
   ✖ Unnecessary continue statement
 
+    1 │ while (i--) {
+  > 2 │     continue;
+      │     ^^^^^^^^^
+    3 │ }
+
   ℹ Safe fix
 
   - continue;

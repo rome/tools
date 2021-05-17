@@ -143,7 +143,8 @@
 ### `6: formatted`
 
 ```tsx
-<video muted={true} {...props} />;
+<video muted {...props}>
+</video>;
 
 ```
 

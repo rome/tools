@@ -53,7 +53,8 @@
 
 ```tsx
 <svg>
-	<title />
+	<title>
+	</title>
 	<circle />
 </svg>;
 
@@ -155,8 +156,7 @@
 <svg>
 	<title>
 	</title>
-	<circle>
-	</circle>
+	<circle />
 </svg>
 
 ```
@@ -171,23 +171,17 @@
 
 ```html
 <svg>
-	<rect>
-	</rect>
-	<rect>
-	</rect>
+	<rect />
+	<rect />
 	<g>
-		<circle>
-		</circle>
-		<circle>
-		</circle>
+		<circle />
+		<circle />
 		<g>
 			<title>
 				Pass
 			</title>
-			<circle>
-			</circle>
-			<circle>
-			</circle>
+			<circle />
+			<circle />
 		</g>
 	</g>
 </svg>
@@ -207,8 +201,7 @@
 	<title>
 		Pass
 	</title>
-	<circle>
-	</circle>
+	<circle />
 </svg>
 
 ```

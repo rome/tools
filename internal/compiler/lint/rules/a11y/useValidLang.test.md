@@ -219,7 +219,8 @@
 ### `8: formatted`
 
 ```tsx
-<html lang="foo" />;
+<html lang="foo">
+</html>;
 
 ```
 
@@ -240,7 +241,8 @@
 ### `9: formatted`
 
 ```tsx
-<html lang="ex" />;
+<html lang="ex">
+</html>;
 
 ```
 
@@ -261,7 +263,8 @@
 ### `10: formatted`
 
 ```tsx
-<html lang="foo-bar" />;
+<html lang="foo-bar">
+</html>;
 
 ```
 
@@ -301,7 +304,8 @@
 ### `11: formatted`
 
 ```tsx
-<html lang="aa-zz" />;
+<html lang="aa-zz">
+</html>;
 
 ```
 
@@ -341,7 +345,8 @@
 ### `12: formatted`
 
 ```tsx
-<html lang="zz-AA" />;
+<html lang="zz-AA">
+</html>;
 
 ```
 
@@ -374,7 +379,8 @@ undefined
 ### `14: formatted`
 
 ```tsx
-<html lang="en-US" />;
+<html lang="en-US">
+</html>;
 
 ```
 
@@ -387,7 +393,8 @@ undefined
 ### `15: formatted`
 
 ```tsx
-<html lang="en" />;
+<html lang="en">
+</html>;
 
 ```
 
@@ -400,6 +407,7 @@ undefined
 ### `16: formatted`
 
 ```tsx
-<html lang={lang} />;
+<html lang={lang}>
+</html>;
 
 ```

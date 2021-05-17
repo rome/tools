@@ -12,6 +12,13 @@
 
   ✖ Avoid calling this.setState in the componentDidMount method.
 
+    1 │ class Hello extends React.Component {
+    2 │   componentDidMount() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    4 │       name: 'John'
+    5 │     });
+
   ℹ Updating state after mounting causes a second render that can cause visual layout thrashing.
 
 
@@ -37,6 +44,13 @@ class Hello extends React.Component {
  lint/react/noDidMountSetState/reject/2/file.tsx:4:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidMount method.
+
+    2 │   componentDidMount() {
+    3 │     foo();
+  > 4 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    5 │       name: 'John'
+    6 │     });
 
   ℹ Updating state after mounting causes a second render that can cause visual layout thrashing.
 
@@ -65,6 +79,13 @@ class Hello extends React.Component {
 
   ✖ Avoid calling this.setState in the componentDidMount method.
 
+    1 │ class Hello extends Component {
+    2 │   componentDidMount() {
+  > 3 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    4 │       name: 'John'
+    5 │     });
+
   ℹ Updating state after mounting causes a second render that can cause visual layout thrashing.
 
 
@@ -90,6 +111,13 @@ class Hello extends Component {
  lint/react/noDidMountSetState/reject/4/file.tsx:4:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidMount method.
+
+    2 │   componentDidMount() {
+    3 │     foo();
+  > 4 │     this.setState({
+      │     ^^^^^^^^^^^^^
+    5 │       name: 'John'
+    6 │     });
 
   ℹ Updating state after mounting causes a second render that can cause visual layout thrashing.
 
