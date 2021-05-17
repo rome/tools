@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from "@internal/cli-reporter";
+import {Reporter, SelectOptions} from "@internal/cli-reporter";
 import {SerializeCLIOptions, serializeCLIFlags} from "./serializeCLIFlags";
 import {
 	ConsumePath,
@@ -16,7 +16,6 @@ import {
 } from "@internal/consume";
 import {
 	dedent,
-	findClosestStringMatch,
 	naturalCompare,
 	toCamelCase,
 	toKebabCase,
@@ -43,6 +42,7 @@ import {RSERObject} from "@internal/binary-transport";
 import {ExtendedMap} from "@internal/collections";
 import {markupToPlainText} from "@internal/cli-layout";
 import {safeProcessExit} from "@internal/resources";
+import {findClosestMatchingStrings} from "@internal/string-utils/findClosestMatchingStrings";
 
 export type Examples = {
 	description: StaticMarkup;
@@ -118,6 +118,7 @@ type SupportedCompletionShells = "bash" | "fish" | "zsh";
 
 export default class Parser<T> {
 	constructor(opts: ParserOptions<T>) {
+		this.rawArgs = opts.args;
 		this.reporter = opts.reporter;
 		this.opts = opts;
 
@@ -132,13 +133,14 @@ export default class Parser<T> {
 		this.flagToArgIndex = new ExtendedMap("flagToArgIndex");
 		this.flagToArgOffset = 0;
 
-		this.consumeRawArgs(opts.args);
+		this.consumeRawArgs(this.rawArgs);
 
 		this.commands = new Map();
 		this.ranCommand = undefined;
 		this.currentCommand = undefined;
 	}
 
+	private rawArgs: string[];
 	private reporter: Reporter;
 	private opts: ParserOptions<T>;
 	private incorrectCaseFlags: Set<string>;
@@ -570,7 +572,7 @@ export default class Parser<T> {
 			this.currentCommand = undefined;
 
 			if (this.opts.commandRequired && !shouldShowHelp) {
-				this.commandRequired(definedCommand !== undefined, flagsConsumer);
+				await this.commandRequired(definedCommand !== undefined, flagsConsumer);
 			}
 
 			return rootFlags;
@@ -1102,7 +1104,46 @@ export default class Parser<T> {
 		);
 	}
 
-	private commandRequired(
+	private async reinit(args: string[]) {
+		this.shorthandFlags = new Set();
+		this.incorrectCaseFlags = new Set();
+		this.declaredFlags = new Map();
+		this.defaultFlags = new Map();
+		this.flags = new Map();
+		this.args = args;
+		this.flagToArgIndex = new ExtendedMap("flagToArgIndex");
+		this.flagToArgOffset = 0;
+		this.ranCommand = undefined;
+		this.currentCommand = undefined;
+
+		this.consumeRawArgs(this.rawArgs);
+		await this.init();
+	}
+
+	private showDiagnostics(
+		opts: Parameters<typeof descriptions.FLAGS.UNKNOWN_COMMAND>[0],
+		commandName: string,
+		displayArgs: string[],
+		defaultFlags: Dict<FlagValue>,
+		rawFlags: Dict<FlagValue>,
+	) {
+		const diag: Diagnostic = {
+			description: descriptions.FLAGS.UNKNOWN_COMMAND(opts),
+			location: serializeCLIFlags(
+				{
+					...this.getSerializeOptions(),
+					commandName,
+					args: displayArgs,
+					defaultFlags,
+					flags: rawFlags,
+				},
+				"command",
+			),
+		};
+		throw new DiagnosticsError("Unknown command", [diag]);
+	}
+
+	private async commandRequired(
 		foundCommand: boolean,
 		{defaultFlags, rawFlags}: FlagsConsumer,
 	) {
@@ -1141,41 +1182,62 @@ export default class Parser<T> {
 
 		// If we don't have a suggestion then try to find another closest one
 		if (opts.suggestedName === undefined) {
-			opts.suggestedName = findClosestStringMatch(
+			const suggestions = findClosestMatchingStrings(
 				commandName,
 				Array.from(this.commands.keys()),
+				0.3,
+			);
+
+			if (suggestions.length > 1) {
+				let options: SelectOptions = {};
+
+				for (const suggestion of suggestions) {
+					options[suggestion] = {label: markup`${suggestion}`};
+				}
+
+				const selected = await this.reporter.select(
+					markup`Unknown command <emphasis>${commandName}</emphasis>. Found matching commands`,
+					{
+						radio: true,
+						options,
+					},
+				);
+
+				const args = Array.from(selected)[0].split(" ");
+				await this.reinit(args);
+			} else if (suggestions.length === 1) {
+				const yes = await this.reporter.radioConfirm(
+					markup`Did you mean ${suggestions[0]}`,
+				);
+				if (yes) {
+					await this.reinit(suggestions);
+				} else {
+					this.showDiagnostics(
+						opts,
+						commandName,
+						displayArgs,
+						defaultFlags,
+						rawFlags,
+					);
+				}
+			} else {
+				this.showDiagnostics(
+					opts,
+					commandName,
+					displayArgs,
+					defaultFlags,
+					rawFlags,
+				);
+			}
+		} else {
+			this.showDiagnostics(
+				opts,
+				commandName,
+				displayArgs,
+				defaultFlags,
+				rawFlags,
 			);
 		}
-
-		// Set suggestedCommand
-		if (opts.suggestedName !== undefined) {
-			opts.suggestedCommand = serializeCLIFlags(
-				{
-					...this.getSerializeOptions(),
-					commandName: opts.suggestedName,
-					args: displayArgs,
-					defaultFlags,
-					flags: rawFlags,
-				},
-				"none",
-			).sourceText;
-		}
-
-		const diag: Diagnostic = {
-			description: descriptions.FLAGS.UNKNOWN_COMMAND(opts),
-			location: serializeCLIFlags(
-				{
-					...this.getSerializeOptions(),
-					commandName,
-					args: displayArgs,
-					defaultFlags,
-					flags: rawFlags,
-				},
-				"command",
-			),
-		};
-
-		throw new DiagnosticsError("Unknown command", [diag]);
 	}
 
 	private getSerializeOptions(): Pick<
