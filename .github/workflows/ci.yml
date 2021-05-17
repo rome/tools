@@ -8,6 +8,35 @@ on:
       - main
 
 jobs:
+  changedfiles:
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      all: ${{ steps.changes.outputs.all }}
+      markdown: ${{ steps.changes.outputs.markdown }}
+    steps:
+      # Make sure we have some code to diff
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changes
+        # Set outputs using the command
+        run: |
+          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | xargs)"
+          echo "::set-output name=markdown::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep .md$ | xargs)"
+
+  checkforchangelog:
+    runs-on: ubuntu-latest
+    needs: changedfiles
+    steps:
+      - name: echo changed files
+        run: |
+          if [[ ! "${{needs.changedfiles.outputs.markdown}}" == *"CHANGELOG.md"* ]]; then
+            echo "::error file=CHANGELOG.md,line=1,col=1::Please make sure that you add a CHANGELOG entry to describe the changes in this pull request."
+            exit 1
+          fi
+
   lint:
     name: rome ci (ubuntu-latest)
     runs-on: ubuntu-latest
