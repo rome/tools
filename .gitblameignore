@@ -7,8 +7,14 @@
 # To use it all the time:
 #   $ git config --local blame.ignoreRevsFile .gitblameignore
 #
-# If you add a commit to this file, please include the message of the commit and a link to its PR
+# If you add a commit to this file, please include the message of the commit and a link to its PR or commit
 #
 
 # Switch to hard tabs (https://github.com/rome/tools/pull/443)
 edc8d08272e8d60f175add47d367171857b81a2b
+
+# Switch to double quotes (https://github.com/rome/tools/commit/8463545ec585b49c650fcad3900e138b3e1dc9dd)
+8463545ec585b49c650fcad3900e138b3e1dc9dd
+
+# Run formatter (https://github.com/rome/tools/commit/4d2c16a16c11bd7d1a5cb1bd5f04115e472a7cf4)
+4d2c16a16c11bd7d1a5cb1bd5f04115e472a7cf4
