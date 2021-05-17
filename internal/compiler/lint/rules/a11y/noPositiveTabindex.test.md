@@ -12,6 +12,9 @@
 
   ✖ Avoid positive integer values for the tabIndex attribute.
 
+    <span tabindex="1">foo</span>
+          ^^^^^^^^^^^^
+
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
 

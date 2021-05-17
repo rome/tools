@@ -12,6 +12,9 @@
 
   ✖ Avoid redundant double-negation.
 
+    if (Boolean(foo)) {}
+        ^^^^^^^^^^^^
+
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
   ℹ Safe fix
@@ -38,6 +41,9 @@ if (foo) {
 
   ✖ Avoid redundant double-negation.
 
+    if (!!Boolean(foo)) {}
+        ^^^^^^^^^^^^^^
+
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
   ℹ Safe fix
@@ -48,6 +54,9 @@ if (foo) {
  lint/js/noExtraBooleanCast/reject/2/file.ts:1:6 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
+
+    if (!!Boolean(foo)) {}
+          ^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -74,6 +83,9 @@ if (foo) {
  lint/js/noExtraBooleanCast/reject/3/file.ts:1:5 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
+
+    if (!Boolean(foo)) {}
+         ^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -162,6 +174,9 @@ do {
 
   ✖ Avoid redundant double-negation.
 
+    for (; !!foo; ) {}
+           ^^^^^
+
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
   ℹ Safe fix
@@ -175,7 +190,7 @@ do {
 ### `5: formatted`
 
 ```ts
-while (foo) {}
+for (; foo; ) {}
 
 ```
 

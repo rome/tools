@@ -148,9 +148,9 @@ foo();
 ### `4: formatted`
 
 ```ts
-function foo(b) {
+const foo = (b) => {
 	console.log("foo");
-}
+};
 
 ```
 
@@ -292,9 +292,9 @@ foo();
 ### `10: formatted`
 
 ```ts
-function foo(_, b) {
+const foo = (_, b) => {
 	console.log(b);
-}
+};
 foo();
 
 ```

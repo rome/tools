@@ -99,9 +99,9 @@ type StringConverter<T> = T extends [string]
 		? `${T[0]}/${StringConverter<Rest>}`
 		: never;
 
-type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
+export type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
-type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
+export type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
 /* GENERATED:START(hash:3dde580241470a209f79ee1e1568cd45130706c6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
@@ -556,6 +556,12 @@ export function joinCategoryName(
 	category: DiagnosticCategory,
 ): DiagnosticCategoryString {
 	return category.join("/") as DiagnosticCategoryString;
+}
+
+export function joinCategoryLintName(
+	category: DiagnosticLintCategory,
+): DiagnosticLintCategoryString {
+	return category.join("/") as DiagnosticLintCategoryString;
 }
 
 export function splitPossibleCategoryName(

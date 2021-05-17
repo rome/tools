@@ -12,6 +12,9 @@
 
   ✖ The element with the checkbox ARIA role does not have the required ARIA attributes.
 
+    <span role="checkbox"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-checked
 
 
@@ -20,7 +23,8 @@
 ### `0: formatted`
 
 ```tsx
-<span role="checkbox" />;
+<span role="checkbox">
+</span>;
 
 ```
 
@@ -32,6 +36,9 @@
 
   ✖ The element with the switch ARIA role does not have the required ARIA attributes.
 
+    <span role="switch"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-checked
 
 
@@ -40,7 +47,8 @@
 ### `1: formatted`
 
 ```tsx
-<span role="switch" />;
+<span role="switch">
+</span>;
 
 ```
 
@@ -51,6 +59,9 @@
  lint/a11y/useAriaPropsForRole/reject/3/file.tsx:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
+
+    <span role="spinbutton"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuemax
 
@@ -64,7 +75,8 @@
 ### `2: formatted`
 
 ```tsx
-<span role="spinbutton" />;
+<span role="spinbutton">
+</span>;
 
 ```
 
@@ -76,6 +88,9 @@
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
+    <span role="spinbutton" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
@@ -86,7 +101,8 @@
 ### `3: formatted`
 
 ```tsx
-<span role="spinbutton" aria-valuemax="100" />;
+<span role="spinbutton" aria-valuemax="100">
+</span>;
 
 ```
 
@@ -98,6 +114,9 @@
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
+    <span role="spinbutton" aria-valuemin="0"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemax
 
   ℹ Missing aria attribute: aria-valuenow
@@ -108,7 +127,8 @@
 ### `4: formatted`
 
 ```tsx
-<span role="spinbutton" aria-valuemin="0" />;
+<span role="spinbutton" aria-valuemin="0">
+</span>;
 
 ```
 
@@ -120,6 +140,9 @@
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
+    <span role="spinbutton" aria-valuemin="0" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuenow
 
 
@@ -128,7 +151,8 @@
 ### `5: formatted`
 
 ```tsx
-<span role="spinbutton" aria-valuemin="0" aria-valuemax="100" />;
+<span role="spinbutton" aria-valuemin="0" aria-valuemax="100">
+</span>;
 
 ```
 
@@ -140,6 +164,9 @@
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
+    <span role="slider" aria-valuemin="0"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemax
 
   ℹ Missing aria attribute: aria-valuenow
@@ -150,7 +177,8 @@
 ### `6: formatted`
 
 ```tsx
-<span role="slider" aria-valuemin="0" />;
+<span role="slider" aria-valuemin="0">
+</span>;
 
 ```
 
@@ -162,6 +190,9 @@
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
+    <span role="slider" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
@@ -172,7 +203,8 @@
 ### `7: formatted`
 
 ```tsx
-<span role="slider" aria-valuemax="100" />;
+<span role="slider" aria-valuemax="100">
+</span>;
 
 ```
 
@@ -184,6 +216,9 @@
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
+    <span role="slider" aria-valuemin="0" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuenow
 
 
@@ -192,7 +227,8 @@
 ### `8: formatted`
 
 ```tsx
-<span role="slider" aria-valuemin="0" aria-valuemax="100" />;
+<span role="slider" aria-valuemin="0" aria-valuemax="100">
+</span>;
 
 ```
 
@@ -204,6 +240,9 @@
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
+    <span role="separator" aria-valuemin="0"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemax
 
   ℹ Missing aria attribute: aria-valuenow
@@ -214,7 +253,8 @@
 ### `9: formatted`
 
 ```tsx
-<span role="separator" aria-valuemin="0" />;
+<span role="separator" aria-valuemin="0">
+</span>;
 
 ```
 
@@ -226,6 +266,9 @@
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
+    <span role="separator" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
@@ -236,7 +279,8 @@
 ### `10: formatted`
 
 ```tsx
-<span role="separator" aria-valuemax="100" />;
+<span role="separator" aria-valuemax="100">
+</span>;
 
 ```
 
@@ -248,6 +292,9 @@
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
+    <span role="separator" aria-valuemin="0" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuenow
 
 
@@ -256,7 +303,8 @@
 ### `11: formatted`
 
 ```tsx
-<span role="separator" aria-valuemin="0" aria-valuemax="100" />;
+<span role="separator" aria-valuemin="0" aria-valuemax="100">
+</span>;
 
 ```
 
@@ -267,6 +315,9 @@
  lint/a11y/useAriaPropsForRole/reject/13/file.tsx:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
+
+    <span role="scrollbar" aria-valuemin="0"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuemax
 
@@ -282,7 +333,8 @@
 ### `12: formatted`
 
 ```tsx
-<span role="scrollbar" aria-valuemin="0" />;
+<span role="scrollbar" aria-valuemin="0">
+</span>;
 
 ```
 
@@ -293,6 +345,9 @@
  lint/a11y/useAriaPropsForRole/reject/14/file.tsx:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
+
+    <span role="scrollbar" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuemin
 
@@ -308,7 +363,8 @@
 ### `13: formatted`
 
 ```tsx
-<span role="scrollbar" aria-valuemax="100" />;
+<span role="scrollbar" aria-valuemax="100">
+</span>;
 
 ```
 
@@ -319,6 +375,9 @@
  lint/a11y/useAriaPropsForRole/reject/15/file.tsx:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
+
+    <span role="scrollbar" aria-valuemin="0" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuenow
 
@@ -332,7 +391,8 @@
 ### `14: formatted`
 
 ```tsx
-<span role="scrollbar" aria-valuemin="0" aria-valuemax="100" />;
+<span role="scrollbar" aria-valuemin="0" aria-valuemax="100">
+</span>;
 
 ```
 
@@ -343,6 +403,10 @@
  lint/a11y/useAriaPropsForRole/reject/16/file.tsx:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
+
+    <span role="scrollbar" aria-valuemin="0" aria-valuemax="100"
+    aria-orientation="horizontal"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuenow
 
@@ -357,7 +421,8 @@
 <span role="scrollbar"
 aria-valuemin="0"
 aria-valuemax="100"
-aria-orientation="horizontal" />;
+aria-orientation="horizontal">
+</span>;
 
 ```
 
@@ -369,6 +434,9 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the radio ARIA role does not have the required ARIA attributes.
 
+    <span role="radio"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-checked
 
 
@@ -377,7 +445,8 @@ aria-orientation="horizontal" />;
 ### `16: formatted`
 
 ```tsx
-<span role="radio" />;
+<span role="radio">
+</span>;
 
 ```
 
@@ -389,6 +458,9 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the option ARIA role does not have the required ARIA attributes.
 
+    <span role="option"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-selected
 
 
@@ -397,7 +469,8 @@ aria-orientation="horizontal" />;
 ### `17: formatted`
 
 ```tsx
-<span role="option" />;
+<span role="option">
+</span>;
 
 ```
 
@@ -420,7 +493,8 @@ aria-orientation="horizontal" />;
 ### `18: formatted`
 
 ```tsx
-<span role="heading" />;
+<span role="heading">
+</span>;
 
 ```
 
@@ -432,6 +506,9 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
+    <span role="combobox"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-controls
 
   ℹ Missing aria attribute: aria-expanded
@@ -442,7 +519,8 @@ aria-orientation="horizontal" />;
 ### `19: formatted`
 
 ```tsx
-<span role="combobox" />;
+<span role="combobox">
+</span>;
 
 ```
 
@@ -454,6 +532,9 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
+    <span role="combobox" aria-expanded="true"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-controls
 
 
@@ -462,7 +543,8 @@ aria-orientation="horizontal" />;
 ### `20: formatted`
 
 ```tsx
-<span role="combobox" aria-expanded="true" />;
+<span role="combobox" aria-expanded="true">
+</span>;
 
 ```
 
@@ -474,6 +556,9 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
+    <span role="combobox" aria-controls="true"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-expanded
 
 
@@ -482,7 +567,8 @@ aria-orientation="horizontal" />;
 ### `21: formatted`
 
 ```tsx
-<span role="combobox" aria-controls="true" />;
+<span role="combobox" aria-controls="true">
+</span>;
 
 ```
 
@@ -505,7 +591,8 @@ aria-orientation="horizontal" />;
 ### `22: formatted`
 
 ```tsx
-<span role="menuitemcheckbox" />;
+<span role="menuitemcheckbox">
+</span>;
 
 ```
 
@@ -528,7 +615,8 @@ aria-orientation="horizontal" />;
 ### `23: formatted`
 
 ```tsx
-<span role="menuitemradio" />;
+<span role="menuitemradio">
+</span>;
 
 ```
 
@@ -541,7 +629,8 @@ aria-orientation="horizontal" />;
 ### `24: formatted`
 
 ```tsx
-<span role="checkbox" aria-checked="true" />;
+<span role="checkbox" aria-checked="true">
+</span>;
 
 ```
 
@@ -554,7 +643,8 @@ aria-orientation="horizontal" />;
 ### `25: formatted`
 
 ```tsx
-<span role="switch" aria-checked="true" />;
+<span role="switch" aria-checked="true">
+</span>;
 
 ```
 
@@ -570,7 +660,8 @@ aria-orientation="horizontal" />;
 <span role="spinbutton"
 aria-valuemax="100"
 aria-valuemin="0"
-aria-valuenow="50" />;
+aria-valuenow="50">
+</span>;
 
 ```
 
@@ -583,7 +674,8 @@ aria-valuenow="50" />;
 ### `27: formatted`
 
 ```tsx
-<span role="slider" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" />;
+<span role="slider" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50">
+</span>;
 
 ```
 
@@ -596,10 +688,8 @@ aria-valuenow="50" />;
 ### `28: formatted`
 
 ```tsx
-<span role="separator"
-aria-valuemax="100"
-aria-valuemin="0"
-aria-valuenow="50" />;
+<span role="separator" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50">
+</span>;
 
 ```
 
@@ -617,7 +707,8 @@ aria-valuemax="100"
 aria-valuemin="0"
 aria-valuenow="50"
 aria-orientation="horizontal"
-aria-controls="123" />;
+aria-controls="123">
+</span>;
 
 ```
 
@@ -630,7 +721,8 @@ aria-controls="123" />;
 ### `30: formatted`
 
 ```tsx
-<span role="radio" aria-checked="true" />;
+<span role="radio" aria-checked="true">
+</span>;
 
 ```
 
@@ -643,7 +735,8 @@ aria-controls="123" />;
 ### `31: formatted`
 
 ```tsx
-<span role="option" aria-selected="true" />;
+<span role="option" aria-selected="true">
+</span>;
 
 ```
 
@@ -656,7 +749,8 @@ aria-controls="123" />;
 ### `32: formatted`
 
 ```tsx
-<span role="heading" aria-level="1" />;
+<span role="heading" aria-level="1">
+</span>;
 
 ```
 
@@ -669,7 +763,8 @@ aria-controls="123" />;
 ### `33: formatted`
 
 ```tsx
-<span role="combobox" aria-controls="true" aria-expanded="true" />;
+<span role="combobox" aria-controls="true" aria-expanded="true">
+</span>;
 
 ```
 
@@ -682,7 +777,8 @@ aria-controls="123" />;
 ### `34: formatted`
 
 ```tsx
-<span role="menuitemcheckbox" aria-checked="true" />;
+<span role="menuitemcheckbox" aria-checked="true">
+</span>;
 
 ```
 
@@ -695,7 +791,8 @@ aria-controls="123" />;
 ### `35: formatted`
 
 ```tsx
-<span role="menuitemradio" aria-checked="true" />;
+<span role="menuitemradio" aria-checked="true">
+</span>;
 
 ```
 
@@ -708,7 +805,8 @@ aria-controls="123" />;
 ### `36: formatted`
 
 ```tsx
-<Span role="menuitemradio" />;
+<Span role="menuitemradio">
+</Span>;
 
 ```
 
@@ -719,6 +817,9 @@ aria-controls="123" />;
  lint/a11y/useAriaPropsForRole/reject/1/file.html:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the checkbox ARIA role does not have the required ARIA attributes.
+
+    <span role="checkbox"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-checked
 
@@ -741,6 +842,9 @@ aria-controls="123" />;
 
   ✖ The element with the switch ARIA role does not have the required ARIA attributes.
 
+    <span role="switch"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-checked
 
 
@@ -761,6 +865,9 @@ aria-controls="123" />;
  lint/a11y/useAriaPropsForRole/reject/3/file.html:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
+
+    <span role="spinbutton"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuemax
 
@@ -787,6 +894,9 @@ aria-controls="123" />;
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
+    <span role="spinbutton" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
@@ -809,6 +919,9 @@ aria-controls="123" />;
  lint/a11y/useAriaPropsForRole/reject/5/file.html:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
+
+    <span role="spinbutton" aria-valuemin="0"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuemax
 
@@ -833,6 +946,9 @@ aria-controls="123" />;
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
+    <span role="spinbutton" aria-valuemin="0" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuenow
 
 
@@ -853,6 +969,9 @@ aria-controls="123" />;
  lint/a11y/useAriaPropsForRole/reject/7/file.html:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━━
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
+
+    <span role="slider" aria-valuemin="0"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuemax
 
@@ -877,6 +996,9 @@ aria-controls="123" />;
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
+    <span role="slider" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
@@ -900,6 +1022,9 @@ aria-controls="123" />;
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
+    <span role="slider" aria-valuemin="0" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuenow
 
 
@@ -920,6 +1045,9 @@ aria-controls="123" />;
  lint/a11y/useAriaPropsForRole/reject/10/file.html:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
+
+    <span role="separator" aria-valuemin="0"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuemax
 
@@ -944,6 +1072,9 @@ aria-controls="123" />;
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
+    <span role="separator" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
@@ -967,6 +1098,9 @@ aria-controls="123" />;
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
+    <span role="separator" aria-valuemin="0" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuenow
 
 
@@ -987,6 +1121,9 @@ aria-controls="123" />;
  lint/a11y/useAriaPropsForRole/reject/13/file.html:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
+
+    <span role="scrollbar" aria-valuemin="0"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-valuemax
 
@@ -1015,6 +1152,9 @@ aria-controls="123" />;
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
+    <span role="scrollbar" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
@@ -1042,6 +1182,9 @@ aria-controls="123" />;
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
+    <span role="scrollbar" aria-valuemin="0" aria-valuemax="100"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuenow
 
   ℹ Missing aria attribute: aria-orientation
@@ -1067,6 +1210,10 @@ aria-controls="123" />;
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
+    <span role="scrollbar" aria-valuemin="0" aria-valuemax="100"
+    aria-orientation="horizontal"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-valuenow
 
   ℹ Missing aria attribute: aria-controls
@@ -1090,6 +1237,9 @@ aria-controls="123" />;
 
   ✖ The element with the radio ARIA role does not have the required ARIA attributes.
 
+    <span role="radio"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-checked
 
 
@@ -1110,6 +1260,9 @@ aria-controls="123" />;
  lint/a11y/useAriaPropsForRole/reject/18/file.html:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━
 
   ✖ The element with the option ARIA role does not have the required ARIA attributes.
+
+    <span role="option"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-selected
 
@@ -1156,6 +1309,9 @@ aria-controls="123" />;
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
+    <span role="combobox"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-controls
 
   ℹ Missing aria attribute: aria-expanded
@@ -1179,6 +1335,9 @@ aria-controls="123" />;
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
+    <span role="combobox" aria-expanded="true"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Missing aria attribute: aria-controls
 
 
@@ -1199,6 +1358,9 @@ aria-controls="123" />;
  lint/a11y/useAriaPropsForRole/reject/22/file.html:1 lint/a11y/useAriaPropsForRole ━━━━━━━━━━━━━━━━━
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
+
+    <span role="combobox" aria-controls="true"></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-expanded
 

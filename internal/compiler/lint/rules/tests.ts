@@ -1,4 +1,4 @@
-import {DiagnosticCategory} from "@internal/diagnostics";
+import {DiagnosticLintCategory} from "@internal/diagnostics";
 import {Dict} from "@internal/typescript-helpers";
 
 type Test = {
@@ -8,11 +8,11 @@ type Test = {
 };
 
 type Tests = Dict<{
-	category: DiagnosticCategory;
+	category: DiagnosticLintCategory;
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:cf51d1698f9832523b422fa8cf890b14ad2f9f6c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:39d7cff45b5fbaa33f344a6afa642c4d5aaafa34,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-ignore
@@ -236,7 +236,11 @@ import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpace
 // @ts-ignore
 import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.rjson";
 // @ts-ignore
+import noExplicitAny from "./ts/noExplicitAny.test.rjson";
+// @ts-ignore
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
+// @ts-ignore
+import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression.test.rjson";
 
 export const tests: Tests = {
 	"a11y/noAccessKey": {
@@ -683,9 +687,17 @@ export const tests: Tests = {
 		category: ["lint", "regex", "noPosixInRegularExpression"],
 		cases: noPosixInRegularExpression,
 	},
+	"ts/noExplicitAny": {
+		category: ["lint", "ts", "noExplicitAny"],
+		cases: noExplicitAny,
+	},
 	"ts/preferShorthandArrayType": {
 		category: ["lint", "ts", "preferShorthandArrayType"],
 		cases: preferShorthandArrayType,
+	},
+	"ts/useSimplifiedBooleanExpression": {
+		category: ["lint", "ts", "useSimplifiedBooleanExpression"],
+		cases: useSimplifiedBooleanExpression,
 	},
 };
 /* GENERATED:END(id:main) */
