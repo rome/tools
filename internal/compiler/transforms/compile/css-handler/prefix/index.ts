@@ -3,6 +3,7 @@ import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
 import block from "./prefixes/block";
+import borderImage from "./prefixes/border-image";
 import borderRadius from "./prefixes/border-radius";
 import boxDecorationBreak from "./prefixes/box-decoration-break";
 import boxShadow from "./prefixes/box-shadow";
@@ -31,6 +32,7 @@ export default [
 	...appearance,
 	...backdropFilter,
 	...block,
+	...borderImage,
 	...borderRadius,
 	...boxDecorationBreak,
 	...boxShadow,
