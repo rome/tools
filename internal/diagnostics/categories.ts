@@ -103,7 +103,7 @@ export type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 export type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:3dde580241470a209f79ee1e1568cd45130706c6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:dd816ba35228b18c872d41d790bac14c40a58400,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -222,7 +222,7 @@ export type DiagnosticLintCategory =
 	| ["lint", "ts", "preferShorthandArrayType"]
 	| ["lint", "ts", "useInterfaces"]
 	| ["lint", "ts", "useSimplifiedBooleanExpression"];
-const lintCategoryNameMap: {
+export const lintCategoryNameMap: {
 	[name in DiagnosticLintCategoryString]: DiagnosticLintCategory
 } = {
 	"lint/a11y/noAccessKey": ["lint", "a11y", "noAccessKey"],
