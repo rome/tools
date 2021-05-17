@@ -13,12 +13,11 @@
 	{
 		filename: "file.html"
 		invalid: [
-			"<blink />"
-			"<marquee />"
+			"<blink></blink>"
+			"<marquee></marquee>"
 	]
 		valid: [
-			"<div />"
-			"<Marquee />"
+			"<div></div>"
 	]
 }
 ]

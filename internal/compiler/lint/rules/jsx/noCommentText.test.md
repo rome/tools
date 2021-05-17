@@ -136,6 +136,7 @@ const a = <div>
 ### `5: formatted`
 
 ```tsx
-const a = <div className={"cls" /* comment */} />;
+const a = <div className={"cls" /* comment */}>
+</div>;
 
 ```

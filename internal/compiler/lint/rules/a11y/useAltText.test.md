@@ -277,7 +277,7 @@
 ### `11: formatted`
 
 ```jsx
-<img {...props} alt={true} />;
+<img {...props} alt />;
 
 ```
 
@@ -355,7 +355,7 @@
 ### `17: formatted`
 
 ```jsx
-<object aria-label={true} />;
+<object aria-label />;
 
 ```
 
@@ -437,7 +437,7 @@
 ### `23: formatted`
 
 ```jsx
-<area {...props} alt={true} />;
+<area {...props} alt />;
 
 ```
 
@@ -489,7 +489,7 @@
 ### `27: formatted`
 
 ```jsx
-<input type="image" {...props} alt={true} />;
+<input type="image" {...props} alt />;
 
 ```
 

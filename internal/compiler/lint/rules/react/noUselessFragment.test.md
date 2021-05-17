@@ -272,11 +272,11 @@ const cat = <>
 ### `10: formatted`
 
 ```tsx
-function cat() {
-	return <>
+const cat = () =>
+	<>
 		meow
-	</>;
-}
+	</>
+;
 
 ```
 
@@ -357,6 +357,9 @@ function cat() {
 ### `15: formatted`
 
 ```tsx
-true ? <div /> : <></>;
+true
+	? <div>
+		</div>
+	: <></>;
 
 ```

@@ -124,7 +124,8 @@
 ### `5: formatted`
 
 ```jsx
-<div />;
+<div>
+</div>;
 
 ```
 
@@ -137,7 +138,8 @@
 ### `6: formatted`
 
 ```jsx
-<div aria="wee" />;
+<div aria="wee">
+</div>;
 
 ```
 
@@ -150,7 +152,8 @@
 ### `7: formatted`
 
 ```jsx
-<div abcARIAdef="true" />;
+<div abcARIAdef="true">
+</div>;
 
 ```
 
@@ -163,7 +166,8 @@
 ### `8: formatted`
 
 ```jsx
-<div fooaria-foobar="true" />;
+<div fooaria-foobar="true">
+</div>;
 
 ```
 
@@ -176,7 +180,8 @@
 ### `9: formatted`
 
 ```jsx
-<div fooaria-hidden="true" />;
+<div fooaria-hidden="true">
+</div>;
 
 ```
 
@@ -229,14 +234,16 @@
 
   ✖ aria- is an invalid ARIA attribute.
 
+    <div aria-="foobar" />
+         ^^^^^^^^^^^^^^
+
 
 ```
 
 ### `12: formatted`
 
 ```html
-<div aria-="foobar">
-</div>
+<div aria-="foobar" />
 
 ```
 
@@ -247,6 +254,9 @@
  lint/a11y/useAriaProps/reject/3/file.html:1:5 lint/a11y/useAriaProps  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ✖ aria-labeledby is an invalid ARIA attribute.
+
+    <div aria-labeledby="foobar" />
+         ^^^^^^^^^^^^^^^^^^^^^^^
 
   Suggested fix: ARIA Spelling Mistake
 
@@ -261,8 +271,7 @@
 ### `13: formatted`
 
 ```html
-<div aria-labeledby="foobar">
-</div>
+<div aria-labeledby="foobar" />
 
 ```
 
@@ -274,14 +283,16 @@
 
   ✖ aria-skldjfaria-klajsd is an invalid ARIA attribute.
 
+    <div aria-skldjfaria-klajsd="foobar" />
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 ```
 
 ### `14: formatted`
 
 ```html
-<div aria-skldjfaria-klajsd="foobar">
-</div>
+<div aria-skldjfaria-klajsd="foobar" />
 
 ```
 
@@ -294,8 +305,7 @@
 ### `15: formatted`
 
 ```html
-<div>
-</div>
+<div />
 
 ```
 

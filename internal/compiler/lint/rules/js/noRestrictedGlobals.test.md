@@ -35,6 +35,9 @@ console.log(event);
 
   ✖ Do not use the global variable event.
 
+    foo(event)
+        ^^^^^
+
   ℹ Use a local variable instead.
 
 

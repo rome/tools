@@ -206,6 +206,7 @@ export async function compilerLint(
 			ast,
 			project,
 			sourceText,
+			applyLintCategories: options.applyLintCategories,
 		}));
 
 		formatted = normalizeFormattedLineEndings(sourceText, formatted);

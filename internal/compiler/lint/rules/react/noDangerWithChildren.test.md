@@ -12,6 +12,9 @@
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    <div dangerouslySetInnerHTML={{ __html: 'HTML' }}>children</div>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -34,6 +37,9 @@
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    <div dangerouslySetInnerHTML={{ __html: 'HTML' }} children={'children'} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -54,6 +60,9 @@
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    <div dangerouslySetInnerHTML={{ __html: 'HTML' }} children={['children']} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -73,6 +82,9 @@
  lint/react/noDangerWithChildren/reject/4/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
+
+    <Invalid dangerouslySetInnerHTML={{ __html: 'HTML' }}>children</Invalid>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
@@ -96,6 +108,9 @@
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    <Invalid dangerouslySetInnerHTML={{ __html: 'HTML' }} children={'children'}/>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -115,6 +130,9 @@
  lint/react/noDangerWithChildren/reject/6/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
+
+    React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
@@ -140,6 +158,9 @@ React.createElement(
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -164,6 +185,10 @@ React.createElement(
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children'
+       })
+    ^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -186,6 +211,10 @@ React.createElement(
  lint/react/noDangerWithChildren/reject/9/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
+
+    React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children:
+    ['children'] })
+    ^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
@@ -210,6 +239,10 @@ React.createElement(
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    React.createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' }, children:
+    'children' })
+    ^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -233,6 +266,10 @@ React.createElement(
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    React.createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' }, children:
+    ['children'] })
+    ^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -255,6 +292,9 @@ React.createElement(
  lint/react/noDangerWithChildren/reject/12/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
+
+    React.createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
@@ -280,6 +320,9 @@ React.createElement(
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    React.createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -304,6 +347,9 @@ React.createElement(
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -324,6 +370,9 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, "children");
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -343,6 +392,9 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, ["children"]);
  lint/react/noDangerWithChildren/reject/16/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
+
+    createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children' })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
@@ -367,6 +419,9 @@ createElement(
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: ['children'] })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -389,6 +444,10 @@ createElement(
  lint/react/noDangerWithChildren/reject/18/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
+
+    createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children'
+    })
+    ^^^^^^^^^^
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
@@ -413,6 +472,10 @@ createElement(
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
+    createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: ['children']
+       })
+    ^^^^^^^^^^^
+
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
 
@@ -435,6 +498,9 @@ createElement(
  lint/react/noDangerWithChildren/reject/20/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
+
+    createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
@@ -459,6 +525,9 @@ createElement(
  lint/react/noDangerWithChildren/reject/21/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
+
+    createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 

@@ -39,7 +39,7 @@ delete foo;
 
 ```js
 const arr = [["a", "b", "c"], [1, 2, 3]];
-arr[0][2] = undefined;
+delete arr[0][2];
 
 ```
 
@@ -53,7 +53,7 @@ arr[0][2] = undefined;
 
 ```js
 const obj = {a: {b: {c: 123}}};
-obj.a.b.c = undefined;
+delete obj.a.b.c;
 
 ```
 

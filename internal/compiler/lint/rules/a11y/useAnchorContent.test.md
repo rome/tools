@@ -47,7 +47,7 @@
 
 ```jsx
 <a>
-	<TextWrapper aria-hidden={true} />
+	<TextWrapper aria-hidden />
 </a>;
 
 ```

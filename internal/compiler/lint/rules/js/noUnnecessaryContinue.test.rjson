@@ -6,8 +6,9 @@ invalid: [
 	}
 	"
 	"
-	while (i--)
+	while (i--) {
  		continue;
+	}
 	"
 	"
 	while (1) {

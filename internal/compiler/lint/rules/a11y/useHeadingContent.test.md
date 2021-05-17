@@ -47,7 +47,7 @@
 
 ```tsx
 <h1>
-	<TextWrapper aria-hidden={true} />
+	<TextWrapper aria-hidden />
 </h1>;
 
 ```
@@ -72,7 +72,7 @@
 
 ```tsx
 <h1>
-	<div aria-hidden={true} />
+	<div aria-hidden />
 </h1>;
 
 ```
@@ -130,7 +130,7 @@
 
 ```tsx
 <h1>
-	<div aria-hidden={true} />
+	<div aria-hidden />
 	visible content
 </h1>;
 
