@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:bdf330cfb34726189e3d4695393bb9a804ea1f48,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:b8833fc6b3f947f4780cb2718ae3937211e5025d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
@@ -24,6 +24,7 @@ import textOverflow from "./prefixes/text-overflow";
 import transform from "./prefixes/transform";
 import transition from "./prefixes/transition";
 import userSelect from "./prefixes/user-select";
+import width from "./prefixes/width";
 import writingMode from "./prefixes/writing-mode";
 
 export default [
@@ -52,6 +53,7 @@ export default [
 	...transform,
 	...transition,
 	...userSelect,
+	...width,
 	...writingMode,
 ];
 /* GENERATED:END(id:main) */
