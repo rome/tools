@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:df8c5449fbde03ca7b6f5e4c97c27801a7461214,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:0ff4cecd8cf7859ea12e732e47da17e49baa397f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
