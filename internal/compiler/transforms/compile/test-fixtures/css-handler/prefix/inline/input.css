@@ -1,0 +1,27 @@
+.style {
+	inline: none;
+}
+
+.style {
+	border-inline-start: 1px;
+}
+
+.style {
+	border-inline-end: 1px;
+}
+
+.style {
+	margin-inline-start: 10px;
+}
+
+.style {
+	margin-inline-end: 10px;
+}
+
+.style {
+	padding-inline-start: 10px;
+}
+
+.style {
+	padding-inline-end: 10px;
+}
