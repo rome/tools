@@ -73,7 +73,7 @@ export default createServerCommand<Flags>({
 		const {configType, indentSize, indentStyle, checkProject} = flags;
 
 		// Warn if provided with arguments
-		if (args.length > 0) {
+		if (args.length > 0) { // TODO: Should this assertion be changed?
 			req.expectArgumentLength(
 				0,
 				0,
@@ -96,7 +96,7 @@ export default createServerCommand<Flags>({
 		// - second part creates a basic configuration file and and the .editorconfig
 		// part of the command where we check if a configuration already exists
 		if (checkProject) {
-			req.expectArgumentLength(1);
+			req.expectArgumentLength(1); // TODO: Does this belong here at all?
 			// Check for sensitive directory
 			if (server.projectManager.isBannedProjectPath(cwd)) {
 				const diagnostic: Diagnostic = {

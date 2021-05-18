@@ -33,6 +33,7 @@ export default createLocalCommand({
 				commandFlags: {
 					checkProject: true,
 				},
+				args: [], // TODO: What is supposed to be passed in here, if anything.
 			},
 			"server",
 		);
