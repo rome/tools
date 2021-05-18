@@ -6,7 +6,7 @@
  */
 
 import {AnalyzeDependencyResult, FileReference} from "@internal/core";
-import {CompilerPath} from "@internal/compiler";
+import {CompilerPath, LintRuleName} from "@internal/compiler";
 import {AnyRoot} from "@internal/ast";
 import {ProjectConfig} from "@internal/project";
 import {EnterSignal, ExitSignal} from "./signals";
@@ -61,6 +61,10 @@ export type CompileRequest = TransformRequest & {
 export type LintRequest = TransformRequest & {
 	applySafeFixes: boolean;
 	suppressionExplanation?: string;
+	/**
+	 * An array of specific lint name rules to apply
+	 */
+	applyLintCategories?: LintRuleName[];
 };
 
 export type TransformRequest = {

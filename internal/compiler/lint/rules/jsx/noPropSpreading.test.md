@@ -12,6 +12,9 @@
 
   ✖ Avoid using property spreading in JSX components.
 
+    <App {...props} />
+         ^^^^^^^^^^
+
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
 
@@ -32,6 +35,9 @@
  lint/jsx/noPropSpreading/reject/2/file.tsx:1:19 lint/jsx/noPropSpreading ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using property spreading in JSX components.
+
+    <MyCustomComponent {...props} some_other_prop={some_other_prop} />
+                       ^^^^^^^^^^
 
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
@@ -54,6 +60,9 @@
 
   ✖ Avoid using property spreading in JSX components.
 
+    <MyCustomComponent some_other_prop={some_other_prop} {...props} />
+                                                         ^^^^^^^^^^
+
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
 
@@ -74,6 +83,9 @@
  lint/jsx/noPropSpreading/reject/4/file.tsx:1:5 lint/jsx/noPropSpreading ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using property spreading in JSX components.
+
+    <img {...props} />
+         ^^^^^^^^^^
 
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.

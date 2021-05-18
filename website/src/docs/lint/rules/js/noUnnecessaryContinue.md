@@ -17,7 +17,7 @@ This rule detects `continue` statements that can be marked as unnecessary. These
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:bf349593c07917c4895195e4c8930d9767dafcdc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:b591b2442cf56c4c6f219df92dbdb74bc264f08d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -43,16 +43,18 @@ This rule detects `continue` statements that can be marked as unnecessary. These
 
 ---
 
-{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">i</span><span class="token operator">--</span><span class="token punctuation">)</span>
-		<span class="token keyword">continue</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">i</span><span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">continue</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:2</span> <strong>lint/js/noUnnecessaryContinue</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unnecessary </span><span style="color: Tomato;"><strong>continue</strong></span><span style="color: Tomato;"> statement</span>
 
-  <strong>  1</strong><strong> │ </strong><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">i</span><span class="token operator">--</span><span class="token punctuation">)</span>
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">i</span><span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>    <span class="token keyword">continue</span><span class="token punctuation">;</span>
      <strong> │ </strong>    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
@@ -87,11 +89,9 @@ This rule detects `continue` statements that can be marked as unnecessary. These
    	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">i</span> <span class="token operator">&gt;</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
        	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
        	<span class="token keyword">continue</span><span class="token punctuation">;</span>
-   	<span class="token punctuation">}</span>
-   	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">i</span> <span class="token operator">&gt;=</span> <span class="token number">5</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">i</span> <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">i</span> <span class="token operator">&gt;=</span> <span class="token number">5</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">i</span> <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
        	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;test&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-   	<span class="token punctuation">}</span>
-   	<span class="token keyword">else</span> <span class="token punctuation">{</span>
+   	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
        	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;test&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
    	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
@@ -104,8 +104,8 @@ This rule detects `continue` statements that can be marked as unnecessary. These
   <strong>  3</strong><strong> │ </strong>         <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 4</strong><strong> │ </strong>         <span class="token keyword">continue</span><span class="token punctuation">;</span>
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  5</strong><strong> │ </strong>     <span class="token punctuation">}</span>
-  <strong>  6</strong><strong> │ </strong>     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">i</span> <span class="token operator">&gt;=</span> <span class="token number">5</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">i</span> <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong>  5</strong><strong> │ </strong>     <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">i</span> <span class="token operator">&gt;=</span> <span class="token number">5</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">i</span> <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong>  6</strong><strong> │ </strong>         <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;test&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 

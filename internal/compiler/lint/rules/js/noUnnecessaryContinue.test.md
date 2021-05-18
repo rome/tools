@@ -39,6 +39,11 @@ loop: for (let i = 0; i < 5; i++) {}
 
   ✖ Unnecessary continue statement
 
+    1 │ while (i--) {
+  > 2 │     continue;
+      │     ^^^^^^^^^
+    3 │ }
+
   ℹ Safe fix
 
   - continue;
@@ -92,8 +97,8 @@ while (1) {}
     3 │          console.log('foo');
   > 4 │          continue;
       │          ^^^^^^^^^
-    5 │      }
-    6 │      else if (i >= 5 && i < 8) {
+    5 │      } else if (i >= 5 && i < 8) {
+    6 │          console.log('test');
 
   ℹ Safe fix
 

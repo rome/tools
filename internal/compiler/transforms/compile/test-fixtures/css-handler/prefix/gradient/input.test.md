@@ -161,6 +161,9 @@
 }
 
 .style {
+	-moz-border-image: linear-gradient;
+	-webkit-border-image: linear-gradient;
+	-o-border-image: linear-gradient;
 	border-image: -moz-linear-gradient;
 	border-image: -webkit-linear-gradient;
 	border-image: -o-linear-gradient;
@@ -168,6 +171,7 @@
 }
 
 .style {
+	-webkit-mask: -moz-linear-gradient;
 	mask: -moz-linear-gradient;
 	mask: -webkit-linear-gradient;
 	mask: -o-linear-gradient;
@@ -196,6 +200,7 @@
 }
 
 .style {
+	-webkit-mask-image: -moz-linear-gradient;
 	mask-image: -moz-linear-gradient;
 	mask-image: -webkit-linear-gradient;
 	mask-image: -o-linear-gradient;
@@ -217,6 +222,9 @@
 }
 
 .style {
+	-moz-border-image: repeating-linear-gradient;
+	-webkit-border-image: repeating-linear-gradient;
+	-o-border-image: repeating-linear-gradient;
 	border-image: -moz-repeating-linear-gradient;
 	border-image: -webkit-repeating-linear-gradient;
 	border-image: -o-repeating-linear-gradient;
@@ -224,6 +232,7 @@
 }
 
 .style {
+	-webkit-mask: -moz-repeating-linear-gradient;
 	mask: -moz-repeating-linear-gradient;
 	mask: -webkit-repeating-linear-gradient;
 	mask: -o-repeating-linear-gradient;
@@ -252,6 +261,7 @@
 }
 
 .style {
+	-webkit-mask-image: -moz-repeating-linear-gradient;
 	mask-image: -moz-repeating-linear-gradient;
 	mask-image: -webkit-repeating-linear-gradient;
 	mask-image: -o-repeating-linear-gradient;
@@ -273,6 +283,9 @@
 }
 
 .style {
+	-moz-border-image: radial-gradient;
+	-webkit-border-image: radial-gradient;
+	-o-border-image: radial-gradient;
 	border-image: -moz-radial-gradient;
 	border-image: -webkit-radial-gradient;
 	border-image: -o-radial-gradient;
@@ -280,6 +293,7 @@
 }
 
 .style {
+	-webkit-mask: -moz-radial-gradient;
 	mask: -moz-radial-gradient;
 	mask: -webkit-radial-gradient;
 	mask: -o-radial-gradient;
@@ -308,6 +322,7 @@
 }
 
 .style {
+	-webkit-mask-image: -moz-radial-gradient;
 	mask-image: -moz-radial-gradient;
 	mask-image: -webkit-radial-gradient;
 	mask-image: -o-radial-gradient;
@@ -329,6 +344,9 @@
 }
 
 .style {
+	-moz-border-image: repeating-radial-gradient;
+	-webkit-border-image: repeating-radial-gradient;
+	-o-border-image: repeating-radial-gradient;
 	border-image: -moz-repeating-radial-gradient;
 	border-image: -webkit-repeating-radial-gradient;
 	border-image: -o-repeating-radial-gradient;
@@ -336,6 +354,7 @@
 }
 
 .style {
+	-webkit-mask: -moz-repeating-radial-gradient;
 	mask: -moz-repeating-radial-gradient;
 	mask: -webkit-repeating-radial-gradient;
 	mask: -o-repeating-radial-gradient;
@@ -364,6 +383,7 @@
 }
 
 .style {
+	-webkit-mask-image: -moz-repeating-radial-gradient;
 	mask-image: -moz-repeating-radial-gradient;
 	mask-image: -webkit-repeating-radial-gradient;
 	mask-image: -o-repeating-radial-gradient;

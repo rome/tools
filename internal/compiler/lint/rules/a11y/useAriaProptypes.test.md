@@ -12,13 +12,17 @@
 
   ✖ The value of the ARIA attribute aria-checked is not correct.
 
+    <span role="checkbox" aria-checked="test" ></span>
+                          ^^^^^^^^^^^^^^^^^^^
+
 
 ```
 
 ### `0: formatted`
 
 ```tsx
-<span role="checkbox" aria-checked="test" />;
+<span role="checkbox" aria-checked="test">
+</span>;
 
 ```
 
@@ -30,6 +34,9 @@
 
   ✖ The value of the ARIA attribute aria-autocomplete is not correct.
 
+    <span aria-autocomplete="test" ></span>
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ The supported values for the aria-autocomplete attribute are: "inline", "list", "both", "none"
 
 
@@ -38,7 +45,8 @@
 ### `1: formatted`
 
 ```tsx
-<span aria-autocomplete="test" />;
+<span aria-autocomplete="test">
+</span>;
 
 ```
 
@@ -50,6 +58,9 @@
 
   ✖ The value of the ARIA attribute aria-invalid is not correct.
 
+    <span aria-invalid="foo"></span>
+          ^^^^^^^^^^^^^^^^^^
+
   ℹ The supported values for the aria-invalid attribute are: "grammar", false, "spelling", true
 
 
@@ -58,7 +69,8 @@
 ### `2: formatted`
 
 ```tsx
-<span aria-invalid="foo" />;
+<span aria-invalid="foo">
+</span>;
 
 ```
 
@@ -70,13 +82,17 @@
 
   ✖ The value of the ARIA attribute aria-errormessage is not correct.
 
+    <span aria-errormessage="" ></span>
+          ^^^^^^^^^^^^^^^^^^^^
+
 
 ```
 
 ### `3: formatted`
 
 ```tsx
-<span aria-errormessage="" />;
+<span aria-errormessage="">
+</span>;
 
 ```
 
@@ -88,6 +104,9 @@
 
   ✖ The value of the ARIA attribute aria-relevant is not correct.
 
+    <span aria-relevant="fancy" ></span>
+          ^^^^^^^^^^^^^^^^^^^^^
+
   ℹ The supported values for the aria-relevant attribute are: "additions", "all", "removals",
     "text"
 
@@ -97,7 +116,8 @@
 ### `4: formatted`
 
 ```tsx
-<span aria-relevant="fancy" />;
+<span aria-relevant="fancy">
+</span>;
 
 ```
 
@@ -109,13 +129,17 @@
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
 
+    <span aria-labelledby="" ></span>
+          ^^^^^^^^^^^^^^^^^^
+
 
 ```
 
 ### `5: formatted`
 
 ```tsx
-<span aria-labelledby="" />;
+<span aria-labelledby="">
+</span>;
 
 ```
 
@@ -127,13 +151,17 @@
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
 
+    <span aria-labelledby={``} ></span>
+          ^^^^^^^^^^^^^^^^^^^^
+
 
 ```
 
 ### `6: formatted`
 
 ```tsx
-<span aria-labelledby={""} />;
+<span aria-labelledby={``}>
+</span>;
 
 ```
 
@@ -145,13 +173,17 @@
 
   ✖ The value of the ARIA attribute aria-details is not correct.
 
+    <span aria-details="" ></span>
+          ^^^^^^^^^^^^^^^
+
 
 ```
 
 ### `7: formatted`
 
 ```tsx
-<span aria-details="" />;
+<span aria-details="">
+</span>;
 
 ```
 
@@ -164,7 +196,8 @@
 ### `8: formatted`
 
 ```tsx
-<span role="checkbox" aria-checked={checked} />;
+<span role="checkbox" aria-checked={checked}>
+</span>;
 
 ```
 
@@ -177,7 +210,8 @@
 ### `9: formatted`
 
 ```tsx
-<span role="checkbox" aria-checked="true" />;
+<span role="checkbox" aria-checked="true">
+</span>;
 
 ```
 
@@ -190,7 +224,8 @@
 ### `10: formatted`
 
 ```tsx
-<span role="checkbox" aria-checked={true} />;
+<span role="checkbox" aria-checked={true}>
+</span>;
 
 ```
 
@@ -203,7 +238,8 @@
 ### `11: formatted`
 
 ```tsx
-<span role="checkbox" aria-checked="false" />;
+<span role="checkbox" aria-checked="false">
+</span>;
 
 ```
 
@@ -216,7 +252,8 @@
 ### `12: formatted`
 
 ```tsx
-<span role="checkbox" aria-checked="mixed" />;
+<span role="checkbox" aria-checked="mixed">
+</span>;
 
 ```
 
@@ -229,7 +266,8 @@
 ### `13: formatted`
 
 ```tsx
-<span role="checkbox" aria-autocomplete="both" />;
+<span role="checkbox" aria-autocomplete="both">
+</span>;
 
 ```
 
@@ -242,7 +280,8 @@
 ### `14: formatted`
 
 ```tsx
-<span role="checkbox" aria-autocomplete="inline" />;
+<span role="checkbox" aria-autocomplete="inline">
+</span>;
 
 ```
 
@@ -255,7 +294,8 @@
 ### `15: formatted`
 
 ```tsx
-<span role="checkbox" aria-autocomplete="list" />;
+<span role="checkbox" aria-autocomplete="list">
+</span>;
 
 ```
 
@@ -268,7 +308,8 @@
 ### `16: formatted`
 
 ```tsx
-<span role="checkbox" aria-autocomplete="none" />;
+<span role="checkbox" aria-autocomplete="none">
+</span>;
 
 ```
 
@@ -281,7 +322,8 @@
 ### `17: formatted`
 
 ```tsx
-<span aria-invalid="true" />;
+<span aria-invalid="true">
+</span>;
 
 ```
 
@@ -294,7 +336,8 @@
 ### `18: formatted`
 
 ```tsx
-<span aria-invalid="grammar" />;
+<span aria-invalid="grammar">
+</span>;
 
 ```
 
@@ -307,7 +350,8 @@
 ### `19: formatted`
 
 ```tsx
-<span aria-invalid="false" />;
+<span aria-invalid="false">
+</span>;
 
 ```
 
@@ -320,7 +364,8 @@
 ### `20: formatted`
 
 ```tsx
-<span aria-invalid={false} />;
+<span aria-invalid={false}>
+</span>;
 
 ```
 
@@ -333,7 +378,8 @@
 ### `21: formatted`
 
 ```tsx
-<span role="checkbox" aria-errormessage="someid" />;
+<span role="checkbox" aria-errormessage="someid">
+</span>;
 
 ```
 
@@ -346,7 +392,8 @@
 ### `22: formatted`
 
 ```tsx
-<span role="checkbox" aria-relevant="additions" />;
+<span role="checkbox" aria-relevant="additions">
+</span>;
 
 ```
 
@@ -359,7 +406,8 @@
 ### `23: formatted`
 
 ```tsx
-<span role="checkbox" aria-relevant="additions all" />;
+<span role="checkbox" aria-relevant="additions all">
+</span>;
 
 ```
 
@@ -372,7 +420,8 @@
 ### `24: formatted`
 
 ```tsx
-<span aria-labelledby="id" />;
+<span aria-labelledby="id">
+</span>;
 
 ```
 
@@ -385,7 +434,8 @@
 ### `25: formatted`
 
 ```tsx
-<span aria-labelledby="fooId barId" />;
+<span aria-labelledby="fooId barId">
+</span>;
 
 ```
 
@@ -398,7 +448,8 @@
 ### `26: formatted`
 
 ```tsx
-<span aria-details="someid" />;
+<span aria-details="someid">
+</span>;
 
 ```
 
@@ -409,6 +460,9 @@
  lint/a11y/useAriaProptypes/reject/1/file.html:1:22 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-checked is not correct.
+
+    <span role="checkbox" aria-checked="test" ></span>
+                          ^^^^^^^^^^^^^^^^^^^
 
 
 ```

@@ -12,6 +12,13 @@
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.Component {
+    2 │   testFunc() {
+  > 3 │     this.state.foo++;
+      │     ^^^^^^^^^^^^^^^^
+    4 │     return <div>Hello {this.props.name}</div>;
+    5 │   }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -40,6 +47,13 @@ class Hello extends React.Component {
  lint/react/noDirectMutationState/reject/2/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    1 │ class Hello extends React.Component {
+    2 │   testFunc() {
+  > 3 │     --this.state.foo;
+      │     ^^^^^^^^^^^^^^^^
+    4 │     return <div>Hello {this.props.name}</div>;
+    5 │   }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
@@ -70,6 +84,13 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.Component {
+    2 │   testFunc() {
+  > 3 │     this.state.foo += 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^^
+    4 │     return <div>Hello {this.props.name}</div>;
+    5 │   }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -99,6 +120,13 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.Component {
+    2 │   testFunc() {
+  > 3 │     delete this.state.foo;
+      │     ^^^^^^^^^^^^^^^^^^^^^
+    4 │     return <div>Hello {this.props.name}</div>;
+    5 │   }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -110,7 +138,7 @@ class Hello extends React.Component {
 ```tsx
 class Hello extends React.Component {
 	testFunc() {
-		this.state.foo = undefined;
+		delete this.state.foo;
 		return <div>
 			Hello 
 			{this.props.name}
@@ -127,6 +155,13 @@ class Hello extends React.Component {
  lint/react/noDirectMutationState/reject/5/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    1 │ class Hello extends React.Component {
+    2 │   testFunc() {
+  > 3 │     this.state.person.name.first = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │     return <div>Hello</div>;
+    5 │   }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
@@ -156,12 +191,26 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.Component {
+    2 │   testFunc() {
+  > 3 │     this.state.person.name.first = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │     this.state.person.name.last = 'baz';
+    5 │     return <div>Hello</div>;
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
  lint/react/noDirectMutationState/reject/6/file.tsx:4:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    2 │   testFunc() {
+    3 │     this.state.person.name.first = 'bar';
+  > 4 │     this.state.person.name.last = 'baz';
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │     return <div>Hello</div>;
+    6 │   }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
@@ -192,6 +241,13 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
+    4 │   }
+    5 │   someFn() {
+  > 6 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    7 │   }
+    8 │ }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -219,6 +275,13 @@ class Hello extends React.Component {
  lint/react/noDirectMutationState/reject/8/file.tsx:5:6 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    3 │     super(props)
+    4 │     doSomethingAsync(() => {
+  > 5 │       this.state = 'bad';
+      │       ^^^^^^^^^^^^^^^^^^
+    6 │     });
+    7 │   }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
@@ -248,6 +311,13 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.Component {
+    2 │   componentWillMount() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -272,6 +342,13 @@ class Hello extends React.Component {
  lint/react/noDirectMutationState/reject/10/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    1 │ class Hello extends React.Component {
+    2 │   componentDidMount() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
@@ -298,6 +375,13 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.Component {
+    2 │   componentWillReceiveProps() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -322,6 +406,13 @@ class Hello extends React.Component {
  lint/react/noDirectMutationState/reject/12/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    1 │ class Hello extends React.Component {
+    2 │   shouldComponentUpdate() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
@@ -348,6 +439,13 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.Component {
+    2 │   componentWillUpdate() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -372,6 +470,13 @@ class Hello extends React.Component {
  lint/react/noDirectMutationState/reject/14/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    1 │ class Hello extends React.Component {
+    2 │   componentDidUpdate() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
@@ -398,6 +503,13 @@ class Hello extends React.Component {
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.Component {
+    2 │   componentWillUnmount() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -422,6 +534,13 @@ class Hello extends React.Component {
  lint/react/noDirectMutationState/reject/16/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    1 │ class Hello extends Component {
+    2 │   componentWillUnmount() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
@@ -448,6 +567,13 @@ class Hello extends Component {
 
   ✖ Avoid mutating this.state directly.
 
+    1 │ class Hello extends React.PureComponent {
+    2 │   componentWillUnmount() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
+
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
@@ -472,6 +598,13 @@ class Hello extends React.PureComponent {
  lint/react/noDirectMutationState/reject/18/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
+
+    1 │ class Hello extends PureComponent {
+    2 │   componentWillUnmount() {
+  > 3 │     this.state.foo = 'bar';
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    4 │   }
+    5 │ }
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.

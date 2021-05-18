@@ -6,8 +6,9 @@ invalid: [
 	}
 	"
 	"
-	while (i--)
+	while (i--) {
  		continue;
+	}
 	"
 	"
 	while (1) {
@@ -19,11 +20,9 @@ invalid: [
     	if (i > 5) {
         	console.log('foo');
         	continue;
-    	}
-    	else if (i >= 5 && i < 8) {
+    	} else if (i >= 5 && i < 8) {
         	console.log('test');
-    	}
-    	else {
+    	} else {
         	console.log('test');
     	}
 	}

@@ -8,7 +8,7 @@
 import {createRelativePath} from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
-import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {lintCategoryNameMap} from "@internal/diagnostics";
 
 test(
 	"Dangling backslash in regex",
@@ -42,7 +42,7 @@ test(
 					String.raw`let foo = /([abc]+)=\777/;foo;`,
 					// matches \77  (char code 63) followed by '7'
 				],
-				category: DIAGNOSTIC_CATEGORIES["lint/regex/noReferenceToNonExistingGroup"],
+				category: lintCategoryNameMap["lint/regex/noReferenceToNonExistingGroup"],
 				path: createRelativePath("file.ts"),
 			},
 		);

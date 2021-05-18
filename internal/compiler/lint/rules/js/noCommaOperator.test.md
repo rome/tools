@@ -85,7 +85,7 @@ foo(0, 1, 2);
 ### `4: formatted`
 
 ```ts
-[1, undefined, undefined, 3];
+[1, , , 3];
 
 ```
 
@@ -98,8 +98,6 @@ foo(0, 1, 2);
 ### `5: formatted`
 
 ```ts
-let a;
-let b;
-let c;
+let a, b, c;
 
 ```

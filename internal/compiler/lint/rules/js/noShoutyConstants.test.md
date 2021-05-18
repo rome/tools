@@ -93,11 +93,19 @@ function f() {
 
   ✖ Redundant constant reference
 
+    1 │ const FOO = "FOO", BAR = "bar";
+  > 2 │ console.log(FOO);
+      │             ^^^
+
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
     It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
+
+  > 1 │ const FOO = "FOO", BAR = "bar";
+      │       ^^^
+    2 │ console.log(FOO);
 
   ℹ Safe fix
 
@@ -110,8 +118,7 @@ function f() {
 ### `2: formatted`
 
 ```ts
-const FOO = "FOO";
-const BAR = "bar";
+const FOO = "FOO", BAR = "bar";
 console.log("FOO");
 
 ```

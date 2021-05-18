@@ -70,6 +70,9 @@
 }
 
 .style {
+	-moz-border-image: image-set;
+	-webkit-border-image: image-set;
+	-o-border-image: image-set;
 	border-image: -webkit-image-set;
 	border-image: image-set;
 }
@@ -80,11 +83,13 @@
 }
 
 .style {
+	-webkit-mask: -webkit-image-set;
 	mask: -webkit-image-set;
 	mask: image-set;
 }
 
 .style {
+	-webkit-mask-image: -webkit-image-set;
 	mask-image: -webkit-image-set;
 	mask-image: image-set;
 }
