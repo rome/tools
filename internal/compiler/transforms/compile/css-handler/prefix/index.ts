@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:840206d04bbb318cecbf25a4308ca4c2b099b5c2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:e2a3922cf263e9e7b623fdaeb13af12d42a0109d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
@@ -17,12 +17,14 @@ import inline from "./prefixes/inline";
 import mask from "./prefixes/mask";
 import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
+import regions from "./prefixes/regions";
 import scrollSnapType from "./prefixes/scroll-snap-type";
 import tabSize from "./prefixes/tab-size";
 import textAlignLast from "./prefixes/text-align-last";
 import textEmphasis from "./prefixes/text-emphasis";
 import textOrientation from "./prefixes/text-orientation";
 import textOverflow from "./prefixes/text-overflow";
+import textSizeAdjust from "./prefixes/text-size-adjust";
 import transform from "./prefixes/transform";
 import transition from "./prefixes/transition";
 import userSelect from "./prefixes/user-select";
@@ -48,12 +50,14 @@ export default [
 	...mask,
 	...multicolumn,
 	...position,
+	...regions,
 	...scrollSnapType,
 	...tabSize,
 	...textAlignLast,
 	...textEmphasis,
 	...textOrientation,
 	...textOverflow,
+	...textSizeAdjust,
 	...transform,
 	...transition,
 	...userSelect,

@@ -7,23 +7,7 @@
 }
 
 .style {
-	border-inline-start: 2px dotted;
-}
-
-.style {
-	border-inline-start: medium dashed green;
-}
-
-.style {
 	border-inline-end: 1px;
-}
-
-.style {
-	border-inline-end: 2px dashed;
-}
-
-.style {
-	border-inline-end: medium dashed blue;
 }
 
 .style {
@@ -31,47 +15,7 @@
 }
 
 .style {
-	margin-inline-start: 1em;
-}
-
-.style {
-	margin-inline-start: 5%;
-}
-
-.style {
-	margin-inline-start: auto;
-}
-
-.style {
-	margin-inline-start: inherit;
-}
-
-.style {
 	margin-inline-end: 10px;
-}
-
-.style {
-	margin-inline-end: 1em;
-}
-
-.style {
-	margin-inline-end: 5%;
-}
-
-.style {
-	margin-inline-end: auto;
-}
-
-.style {
-	margin-inline-end: inherit;
-}
-
-.style {
-	margin-inline-end: initial;
-}
-
-.style {
-	margin-inline-end: unset;
 }
 
 .style {
@@ -79,45 +23,5 @@
 }
 
 .style {
-	padding-inline-start: 1em;
-}
-
-.style {
-	padding-inline-start: 5%;
-}
-
-.style {
-	padding-inline-start: inherit;
-}
-
-.style {
-	padding-inline-start: initial;
-}
-
-.style {
-	padding-inline-start: unset;
-}
-
-.style {
 	padding-inline-end: 10px;
-}
-
-.style {
-	padding-inline-end: 1em;
-}
-
-.style {
-	padding-inline-end: 5%;
-}
-
-.style {
-	padding-inline-end: inherit;
-}
-
-.style {
-	padding-inline-end: initial;
-}
-
-.style {
-	padding-inline-end: unset;
 }
