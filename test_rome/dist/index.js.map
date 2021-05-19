@@ -1,0 +1,1 @@
+{"version":3,"file":"index.ts","names":["module.exports","foo"],"mappings":";;;;;;;;;;AAAA,qCAECA,EAFgB;AACf,KAAGC,CAAE,KAAI;EACV,CAAA;AACD;;;ACHA;AAEA,yCAAGA,CAAC;AACJ","sources":["uid://test-rome/test-package/index.js","uid://test-rome/index.ts"],"sourcesContent":["module.exports = {\n  foo: true\n}\n","import {foo} from \"test-package\";\n\nfoo;\n"]}

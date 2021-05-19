@@ -1,0 +1,9 @@
+[
+	{
+		"target": "uid://test-rome/test-package/index.js",
+		"source": "uid://test-rome/index.ts"
+	},
+	{
+		"source": "uid://test-rome/index.ts"
+	}
+]

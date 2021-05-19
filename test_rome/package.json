@@ -1,0 +1,13 @@
+{
+	"name": "test_rome",
+	"type": "module",
+	"rome": {
+		"root": true,
+		"name": "test-rome",
+		"lint": {
+			"ignore": [
+				"dist"
+			]
+		}
+	}
+}
