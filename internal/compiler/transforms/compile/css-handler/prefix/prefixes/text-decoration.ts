@@ -10,7 +10,7 @@ export default [
 			return prefixCSSProperty({
 				path,
 				propertyName: "text-decoration",
-				browserFeaturesKey: "css-text-decoration",
+				browserFeaturesKey: "text-decoration",
 			});
 		},
 	}),
