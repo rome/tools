@@ -37,3 +37,23 @@
 .style {
 	text-decoration: blink;
 }
+
+.style {
+	text-decoration: solid underline purple 4px;
+}
+
+.style {
+	text-decoration: dashed underline overline;
+}
+
+.style {
+	text-decoration: wavy overline lime;
+}
+
+.style {
+	text-decoration: underline red;
+}
+
+.style {
+	text-decoration: underline overline #FF3028;
+}
