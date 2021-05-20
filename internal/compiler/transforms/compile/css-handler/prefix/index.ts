@@ -18,6 +18,7 @@ import inline from "./prefixes/inline";
 import mask from "./prefixes/mask";
 import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
+import pseudoClasses from "./prefixes/pseudo-classes";
 import regions from "./prefixes/regions";
 import scrollSnapType from "./prefixes/scroll-snap-type";
 import shape from "./prefixes/shape";
@@ -53,6 +54,7 @@ export default [
 	...mask,
 	...multicolumn,
 	...position,
+	...pseudoClasses,
 	...regions,
 	...scrollSnapType,
 	...shape,

@@ -52,11 +52,13 @@ export function findPropertyValueIndex(
 	return [-1, undefined];
 }
 
-type PrefixCompilerPath = CompilerPath & {
+type PrefixCSSBlockCompilerPath = CompilerPath & {
 	node: RequiredProps<CSSBlock, "value">;
 };
 
-function isCssBlockAndHasValue(path: CompilerPath): path is PrefixCompilerPath {
+function isCssBlockAndHasValue(
+	path: CompilerPath,
+): path is PrefixCSSBlockCompilerPath {
 	return (
 		path.node.type === "CSSBlock" &&
 		path.node.value !== undefined &&
@@ -64,42 +66,23 @@ function isCssBlockAndHasValue(path: CompilerPath): path is PrefixCompilerPath {
 	);
 }
 
-export interface PrefixVisitor<State extends UnknownObject> {
-	name: string;
-	enter?: (
-		path: PrefixCompilerPath,
-		state: VisitorStateEnter<State>,
-	) => EnterSignal;
-	exit?: (
-		path: PrefixCompilerPath,
-		state: VisitorStateExit<State>,
-	) => ExitSignal;
-}
+export interface PrefixCSSBlockVisitor<State extends UnknownObject> extends __TypedVisitor<
+	State,
+	PrefixCSSBlockCompilerPath
+> {}
 
-export function createPrefixVisitor<State extends UnknownObject>(
-	visitor: PrefixVisitor<State>,
+export function createPrefixCSSBlockVisitor<State extends UnknownObject>(
+	visitor: PrefixCSSBlockVisitor<State>,
 ): Visitor<State> {
-	return {
-		name: `css-handler/prefix/${visitor.name}`,
-		enter: (path: CompilerPath, state: VisitorStateEnter<State>) => {
-			if (visitor.enter !== undefined && isCssBlockAndHasValue(path)) {
-				return visitor.enter(path, state);
-			} else {
-				return signals.retain;
-			}
-		},
-		exit: (path: CompilerPath, state: VisitorStateExit<State>) => {
-			if (visitor.exit !== undefined && isCssBlockAndHasValue(path)) {
-				return visitor.exit(path, state);
-			} else {
-				return signals.retain;
-			}
-		},
-	};
+	return __visitorTransformer<State, PrefixCSSBlockCompilerPath>(
+		"css-handler/prefix",
+		visitor,
+		isCssBlockAndHasValue,
+	);
 }
 
 interface PrefixCSSPropertyProps {
-	path: PrefixCompilerPath;
+	path: PrefixCSSBlockCompilerPath;
 	propertyName: string;
 	browserFeaturesKey: string;
 	rename?: (propertyName: string) => string;
@@ -242,4 +225,38 @@ function getTargets(path: CompilerPath): Browser[] {
 	}
 
 	return projectConfigToTargets.get(projectConfig)!;
+}
+
+export interface __TypedVisitor<
+	State extends UnknownObject,
+	PathType extends CompilerPath
+> {
+	name: string;
+	enter?: (path: PathType, state: VisitorStateEnter<State>) => EnterSignal;
+	exit?: (path: PathType, state: VisitorStateExit<State>) => ExitSignal;
+}
+
+export function __visitorTransformer<
+	State extends UnknownObject,
+	PathType extends CompilerPath
+>(
+	name: string,
+	visitor: __TypedVisitor<State, PathType>,
+	isPathType: (path: CompilerPath) => path is PathType,
+): Visitor<State> {
+	return {
+		name: `${name}/${visitor.name}`,
+		enter: (path, state) => {
+			if (visitor.enter !== undefined && isPathType(path)) {
+				return visitor.enter(path, state);
+			}
+			return signals.retain;
+		},
+		exit: (path, state) => {
+			if (visitor.exit !== undefined && isPathType(path)) {
+				return visitor.exit(path, state);
+			}
+			return signals.retain;
+		},
+	};
 }
