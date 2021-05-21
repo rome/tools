@@ -90,6 +90,29 @@ export function getFileHandlerFromPath(
 	return {ext, handler};
 }
 
+/**
+ * Given an extension, it retrieves its relative file handler.
+ *
+ * If it doesn't exists, an error is thrown
+ * @param ext
+ * @param path
+ */
+export function getFileHandlerFromExtension(
+	ext: string,
+	path: Path,
+): Required<GetFileHandlerResult> {
+	const handler = DEFAULT_HANDLERS.get(ext);
+	if (!handler) {
+		throw createSingleDiagnosticsError({
+			description: descriptions.FILES.NO_FILE_HANLDER_EXTENSION(ext),
+			location: {
+				path,
+			},
+		});
+	}
+	return {handler, ext};
+}
+
 export function getFileHandlerFromPathAssert(
 	path: Path,
 	projectConfig: undefined | ProjectConfig,
