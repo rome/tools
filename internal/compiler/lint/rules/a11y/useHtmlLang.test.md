@@ -24,7 +24,8 @@
 ### `0: formatted`
 
 ```tsx
-<html />;
+<html>
+</html>;
 
 ```
 
@@ -48,7 +49,8 @@
 ### `1: formatted`
 
 ```tsx
-<html {...props} />;
+<html {...props}>
+</html>;
 
 ```
 
@@ -112,7 +114,8 @@ undefined
 ### `4: formatted`
 
 ```tsx
-<html lang={""} />;
+<html lang={""}>
+</html>;
 
 ```
 
@@ -136,7 +139,8 @@ undefined
 ### `5: formatted`
 
 ```tsx
-<html lang={""} />;
+<html lang={``}>
+</html>;
 
 ```
 
@@ -160,7 +164,8 @@ undefined
 ### `6: formatted`
 
 ```tsx
-<html lang={undefined} />;
+<html lang={undefined}>
+</html>;
 
 ```
 
@@ -184,7 +189,8 @@ undefined
 ### `7: formatted`
 
 ```tsx
-<html lang={false} />;
+<html lang={false}>
+</html>;
 
 ```
 
@@ -208,7 +214,8 @@ undefined
 ### `8: formatted`
 
 ```tsx
-<html lang={true} />;
+<html lang={true}>
+</html>;
 
 ```
 
@@ -232,7 +239,8 @@ undefined
 ### `9: formatted`
 
 ```tsx
-<html lang={42} />;
+<html lang={42}>
+</html>;
 
 ```
 
@@ -245,7 +253,8 @@ undefined
 ### `10: formatted`
 
 ```tsx
-<html lang="en" />;
+<html lang="en">
+</html>;
 
 ```
 
@@ -258,7 +267,8 @@ undefined
 ### `11: formatted`
 
 ```tsx
-<html lang={language} />;
+<html lang={language}>
+</html>;
 
 ```
 
@@ -271,7 +281,8 @@ undefined
 ### `12: formatted`
 
 ```tsx
-<html lang={() => language} />;
+<html lang={() => language}>
+</html>;
 
 ```
 
@@ -284,7 +295,8 @@ undefined
 ### `13: formatted`
 
 ```tsx
-<Html lang={42} />;
+<Html lang={42}>
+</Html>;
 
 ```
 

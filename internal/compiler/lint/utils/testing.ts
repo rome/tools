@@ -8,17 +8,18 @@
 import {TestHelper} from "rome";
 import {
 	DIAGNOSTIC_CATEGORIES,
-	DiagnosticCategory,
+	DiagnosticLintCategory,
 	DiagnosticsProcessor,
 	equalCategoryNames,
-	joinCategoryName,
+	joinCategoryLintName,
 } from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {IntegrationWorker, createMockWorker} from "@internal/test-helpers";
 import {Path, createUIDPath} from "@internal/path";
+import {LintRuleName} from "@internal/compiler";
 
 type TestLintOptions = {
-	category: DiagnosticCategory;
+	category: DiagnosticLintCategory;
 	path: Path;
 	snapshotFilename?: string;
 	valid?: string[];
@@ -72,7 +73,7 @@ async function testLintExpect(
 	});
 
 	const uid = createUIDPath(
-		`${joinCategoryName(category)}/${expectValid ? "pass" : "reject"}/${index}/${path.join()}`,
+		`${joinCategoryLintName(category)}/${expectValid ? "pass" : "reject"}/${index}/${path.join()}`,
 	);
 
 	const res = await performFileOperation(
@@ -87,6 +88,7 @@ async function testLintExpect(
 					applySafeFixes: true,
 					prefetchedModuleSignatures: {},
 					save: true,
+					applyLintCategories: [category.slice(1).join("/") as LintRuleName],
 				},
 				{
 					//allowCorrupt: true,

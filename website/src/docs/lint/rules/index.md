@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:95b957a3071ccfdf1f610353175de6a682c8ebe4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:ce6ca9c77647f474966740c1c192705530aacd71,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -458,6 +458,13 @@ enforce tabIndex value is not greater than zero
 enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noRedundantRoles">
+	<a href="/docs/lint/rules/a11y/noRedundantRoles">noRedundantRoles</a>
+	<a class="header-anchor" href="#noRedundantRoles"></a>
+</h3>
+enforce explicit role property is not the same as implicit/default role property on element
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noSvgWithoutTitle">
 	<a href="/docs/lint/rules/a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
 	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
@@ -566,13 +573,6 @@ check if `lang` attribute is valid
 <section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="noRedundantRoles">
-	<a href="/docs/lint/rules/jsx-a11y/noRedundantRoles">noRedundantRoles</a>
-	<a class="header-anchor" href="#noRedundantRoles"></a>
-</h3>
-enforce explicit role property is not the same as implicit/default role property on element
-</div>
 </section>
 <section>
 <h2>React</h2>

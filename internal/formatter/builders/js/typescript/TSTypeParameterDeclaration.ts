@@ -33,7 +33,13 @@ export default function TSTypeParameterDeclaration(
 		params[0].type !== "TSMappedType";
 
 	if (shouldInline) {
-		return concat(["<", builder.tokenize(params[0], node), ">"]);
+		const hasTrailingComma = "hasTrailingComma" in node && node.hasTrailingComma;
+		return concat([
+			"<",
+			builder.tokenize(params[0], node),
+			hasTrailingComma ? "," : "",
+			">",
+		]);
 	} else {
 		return group(
 			concat([

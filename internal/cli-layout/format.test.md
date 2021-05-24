@@ -11,7 +11,7 @@
   ✖ pointerChar is not a valid attribute name for view
 
     <view pointerChar="<emphasis" pointerLine="1" pointerStart="1" pointerEnd="3">foobar</view>
-          ^
+          ^^^^^^^^^^^
 
   ⚠ This diagnostic was derived from an internal Rome error. Potential bug, please report if
     necessary.

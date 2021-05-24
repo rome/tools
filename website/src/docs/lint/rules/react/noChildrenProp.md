@@ -17,7 +17,7 @@ prevent passing of children as props
 **ESLint Equivalent:** [no-children-prop](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-children-prop.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:0a3af2301dca84099c33f722afd0e593ab5aa0d2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ef0dfab59a866d67363c69190c54feaf74618cbb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -70,7 +70,7 @@ prevent passing of children as props
 
 ### Valid
 
-{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">MyComponent</span>&gt;&lt;<span class="token variable">AnotherComponent</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">MyComponent</span>  &gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">MyComponent</span>&gt;&lt;<span class="token variable">AnotherComponent</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">MyComponent</span>	&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;div&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">&apos;children&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;div&apos;</span><span class="token punctuation">,</span> <span class="token variable">child1</span><span class="token punctuation">,</span> <span class="token string">&apos;child2&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

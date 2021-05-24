@@ -6,6 +6,7 @@ import {
 	CompileResult,
 	CompilerProject,
 	LintCompilerOptions,
+	LintRuleName,
 } from "@internal/compiler";
 import {
 	Diagnostic,
@@ -137,6 +138,10 @@ export type WorkerLintOptions = {
 	applySafeFixes: boolean;
 	suppressionExplanation?: string;
 	save: boolean;
+	/**
+	 * An array of specific lint name rules to apply
+	 */
+	applyLintCategories?: LintRuleName[];
 };
 
 export type WorkerFormatOptions = Omit<FormatterOptions, "projectConfig"> & {

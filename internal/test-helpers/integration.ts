@@ -116,10 +116,11 @@ export function findFixtureInput(
 		if (input !== undefined) {
 			return {
 				input,
-				handler: getFileHandlerFromPathAssert(
-					createPath(`input.${ext}`),
+				handler: getFileHandlerFromPathAssert({
+					path: createPath(`input.${ext}`),
 					projectConfig,
-				).handler,
+					method: "findFixtureInput",
+				}).handler,
 			};
 		}
 

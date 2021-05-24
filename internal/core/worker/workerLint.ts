@@ -90,7 +90,11 @@ export async function uncachedLint(
 	const project = worker.getProject(ref);
 
 	// Get the extension handler
-	const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
+	const {handler} = getFileHandlerFromPathAssert({
+		path: ref.real,
+		method: "lint",
+		projectConfig: project.config,
+	});
 
 	if (!(handler.capabilities.lint || handler.capabilities.format)) {
 		return EMPTY_LINT_RESULT;
@@ -206,6 +210,7 @@ export async function compilerLint(
 			ast,
 			project,
 			sourceText,
+			applyLintCategories: options.applyLintCategories,
 		}));
 
 		formatted = normalizeFormattedLineEndings(sourceText, formatted);
@@ -281,7 +286,11 @@ export async function uncachedFormat(
 
 	worker.logger.info(markup`Formatting: ${ref.real}`);
 
-	const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
+	const {handler} = getFileHandlerFromPathAssert({
+		path: ref.real,
+		method: "format",
+		projectConfig: project.config,
+	});
 
 	if (
 		!(options.forceFormat ||

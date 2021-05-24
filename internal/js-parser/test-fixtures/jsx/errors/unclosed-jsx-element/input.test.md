@@ -19,7 +19,7 @@ JSRoot {
 					}
 					JSXExpressionContainer {
 						expression: JSXEmptyExpression {
-							loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:12-1:12
+							loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:11-1:12
 						}
 						loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:11-1:13
 					}

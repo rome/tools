@@ -71,7 +71,8 @@
 ### `2: formatted`
 
 ```tsx
-<th scope={scope} />;
+<th scope={scope}>
+</th>;
 
 ```
 
@@ -84,7 +85,8 @@
 ### `3: formatted`
 
 ```tsx
-<th scope="col" />;
+<th scope="col">
+</th>;
 
 ```
 
@@ -113,8 +115,7 @@
 ### `4: formatted`
 
 ```html
-<div>
-</div>
+<div />
 
 ```
 

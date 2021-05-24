@@ -15,7 +15,7 @@ function stringifyArray(consumer: Consumer, helper: StringifyHelper): string {
 
 	for (const elem of consumer.asIterable()) {
 		stringifyPropComments(helper.getComments(elem), buff, elem.asUnknown());
-		buff.push(`${stringifyValue(elem, innerHelper, true)},`);
+		buff.push(`${stringifyValue(elem, innerHelper)},`);
 	}
 
 	return helper.wrap("[", buff, "]");
@@ -83,17 +83,13 @@ function stringifyPrimitives(consumer: Consumer): undefined | string {
 	return undefined;
 }
 
-function stringifyValue(
-	consumer: Consumer,
-	helper: StringifyHelper,
-	inline: boolean,
-): string {
+function stringifyValue(consumer: Consumer, helper: StringifyHelper): string {
 	const asPrim = stringifyPrimitives(consumer);
 	if (asPrim !== undefined) {
 		return asPrim;
 	}
 
-	return stringifyObject(consumer, helper, inline);
+	return stringifyObject(consumer, helper);
 }
 
 function stringifyComments(comments: Comments, buff: string[]): void {
@@ -199,7 +195,7 @@ function stringifyRoot(consumer: Consumer, helper: StringifyHelper): string {
 
 		let propValue;
 		if (reducedProp === undefined) {
-			propValue = stringifyValue(consumer, helper, true);
+			propValue = stringifyValue(consumer, helper);
 		} else {
 			propKey = `${propKey}.${reducedProp[0]}`;
 			propValue = reducedProp[1];

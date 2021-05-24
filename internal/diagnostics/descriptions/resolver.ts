@@ -58,6 +58,7 @@ export const resolver = createDiagnosticsCategory({
 	) => ({
 		message: markup`Couldn't find export <emphasis>${name}</emphasis> in <emphasis>${source}</emphasis>`,
 		category: DIAGNOSTIC_CATEGORIES["resolver/unknownExport"],
+		categoryValue: name,
 		advice: exportedNames.length === 0
 			? [
 					{
@@ -94,6 +95,7 @@ export const resolver = createDiagnosticsCategory({
 	) => ({
 		message: markup`Couldn't find export <emphasis>${name}</emphasis> in <emphasis>${source}</emphasis>`,
 		category: DIAGNOSTIC_CATEGORIES["resolver/unknownExport"],
+		categoryValue: name,
 		advice: [
 			{
 				type: "log",

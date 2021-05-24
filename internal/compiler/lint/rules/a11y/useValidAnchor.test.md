@@ -12,6 +12,9 @@
 
   ✖ Use a button element instead of an a element.
 
+    <a href='#' onClick={foo} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
 
@@ -31,6 +34,9 @@
  lint/a11y/useValidAnchor/reject/2/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href={'#'} onClick={foo} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -52,6 +58,9 @@
 
   ✖ Use a button element instead of an a element.
 
+    <a href={`#`} onClick={foo} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
 
@@ -60,7 +69,7 @@
 ### `2: formatted`
 
 ```jsx
-<a href={"#"} onClick={foo} />;
+<a href={`#`} onClick={foo} />;
 
 ```
 
@@ -71,6 +80,9 @@
  lint/a11y/useValidAnchor/reject/4/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a onClick={foo} />
+    ^^^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -92,6 +104,9 @@
 
   ✖ Use a button element instead of an a element.
 
+    <a href='javascript:void(0)' onClick={foo} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
 
@@ -111,6 +126,9 @@
  lint/a11y/useValidAnchor/reject/6/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href={'javascript:void(0)'} onClick={foo} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -132,6 +150,9 @@
 
   ✖ Use a button element instead of an a element.
 
+    <a href={`javascript:void(0)`} onClick={foo} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
 
@@ -140,7 +161,7 @@
 ### `6: formatted`
 
 ```jsx
-<a href={"javascript:void(0)"} onClick={foo} />;
+<a href={`javascript:void(0)`} onClick={foo} />;
 
 ```
 
@@ -151,6 +172,9 @@
  lint/a11y/useValidAnchor/reject/8/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a href attribute for the a element.
+
+    <a />
+    ^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -172,6 +196,9 @@
 
   ✖ Provide a href attribute for the a element.
 
+    <a href={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
 
@@ -191,6 +218,9 @@
  lint/a11y/useValidAnchor/reject/10/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a href attribute for the a element.
+
+    <a href={null} />
+    ^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -212,11 +242,17 @@
 
   ✖ Provide a valid href attribute for the a element.
 
+    <a href='#' />
+    ^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/11/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href='#' />
+    ^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -238,11 +274,17 @@
 
   ✖ Provide a valid href attribute for the a element.
 
+    <a href={'#'} />
+    ^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/12/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href={'#'} />
+    ^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -264,11 +306,17 @@
 
   ✖ Provide a valid href attribute for the a element.
 
+    <a href={`#`} />
+    ^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/13/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href={`#`} />
+    ^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -278,7 +326,7 @@
 ### `12: formatted`
 
 ```jsx
-<a href={"#"} />;
+<a href={`#`} />;
 
 ```
 
@@ -290,11 +338,17 @@
 
   ✖ Provide a valid href attribute for the a element.
 
+    <a href='javascript:void(0)' />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/14/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href='javascript:void(0)' />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -316,11 +370,17 @@
 
   ✖ Provide a valid href attribute for the a element.
 
+    <a href={'javascript:void(0)'} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/15/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href={'javascript:void(0)'} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -342,11 +402,17 @@
 
   ✖ Provide a valid href attribute for the a element.
 
+    <a href={`javascript:void(0)`} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/16/file.jsx:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href={`javascript:void(0)`} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -356,7 +422,7 @@
 ### `15: formatted`
 
 ```jsx
-<a href={"javascript:void(0)"} />;
+<a href={`javascript:void(0)`} />;
 
 ```
 
@@ -498,6 +564,9 @@
 
   ✖ Use a button element instead of an a element.
 
+    <a href="#" onclick="() => {}" ></a>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
 
@@ -519,6 +588,9 @@
 
   ✖ Use a button element instead of an a element.
 
+    <a onclick="() => {}"/>
+    ^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
 
@@ -527,8 +599,7 @@
 ### `27: formatted`
 
 ```html
-<a onclick="() => {}">
-</a>
+<a onclick="() => {}" />
 
 ```
 
@@ -539,6 +610,9 @@
  lint/a11y/useValidAnchor/reject/3/file.html:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href="javascript:void(0)" onclick="() => {}" ></a>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -561,6 +635,9 @@
 
   ✖ Provide a href attribute for the a element.
 
+    <a ></a>
+    ^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
 
@@ -582,11 +659,17 @@
 
   ✖ Provide a valid href attribute for the a element.
 
+    <a href="#"></a>
+    ^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/5/file.html:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href="#"></a>
+    ^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
@@ -609,11 +692,17 @@
 
   ✖ Provide a valid href attribute for the a element.
 
+    <a href="javascript:void(0)"></a>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Anchor elements should only be used for default section or page navigation.
 
  lint/a11y/useValidAnchor/reject/6/file.html:1 lint/a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
+
+    <a href="javascript:void(0)"></a>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Anchor elements should only be used for default section or page navigation.
 

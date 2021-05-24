@@ -5,7 +5,12 @@ import {DiagnosticAdvice} from "../types";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export const files = createDiagnosticsCategory({
-	NO_FILE_HANDLER: (path: Path) => {
+	NO_FILE_HANLDER_EXTENSION: (ext: string) => ({
+		category: DIAGNOSTIC_CATEGORIES["files/missingHandler"],
+		message: markup`Can't file a file handler for the extension <emphasis>${ext}</emphasis>`,
+	}),
+
+	NO_FILE_HANDLER: (path: Path, categoryValue: string) => {
 		let advice: DiagnosticAdvice[] = [];
 
 		if (path.hasAnyExtensions()) {
@@ -19,6 +24,7 @@ export const files = createDiagnosticsCategory({
 
 		return {
 			category: DIAGNOSTIC_CATEGORIES["files/missingHandler"],
+			categoryValue,
 			message: markup`No file handler found for <emphasis>${path}</emphasis>`,
 			advice,
 		};

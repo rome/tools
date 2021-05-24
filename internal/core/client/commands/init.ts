@@ -38,7 +38,7 @@ export default createLocalCommand({
 		if (hasProject.type !== "SUCCESS") {
 			return true;
 		}
-		if (hasProject.data === false) {
+		if (hasProject.data === true) {
 			client.reporter.warn(
 				markup`Rome has been already configured inside this project.`,
 			);
@@ -86,14 +86,19 @@ export default createLocalCommand({
 			markup`Please choose the size of the indentation (default 2)`,
 		);
 
-		const identSizeAsNumber = Number(indentSize);
-		if (isNaN(identSizeAsNumber) || identSizeAsNumber > 10) {
+		let identSizeAsNumber = Number(indentSize);
+		if (
+			isNaN(identSizeAsNumber) ||
+			identSizeAsNumber === 0 ||
+			identSizeAsNumber > 10
+		) {
 			client.reporter.warn(
 				markup`You inserted a value that is not a number o is greater than 10. Rome will fallback to the default value (1).`,
 			);
 			client.reporter.info(
 				markup`You can change this value later when this command is finished.`,
 			);
+			identSizeAsNumber = 1;
 		}
 
 		await client.query(

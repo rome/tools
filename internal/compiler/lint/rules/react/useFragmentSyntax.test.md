@@ -82,6 +82,9 @@
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
+    const Hello = <div><Fragment><Foo /><Foo /></Fragment></div>
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
   ℹ Safe fix
@@ -100,8 +103,10 @@
 
 ```tsx
 const Hello = <div>
-	<Foo />
-	<Foo />
+	<>
+		<Foo />
+		<Foo />
+	</>
 </div>;
 
 ```
@@ -113,6 +118,9 @@ const Hello = <div>
  lint/react/useFragmentSyntax/reject/4/file.tsx:1:19 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
+
+    const Hello = <div><React.Fragment><Foo /><Foo /></React.Fragment></div>
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -132,8 +140,10 @@ const Hello = <div>
 
 ```tsx
 const Hello = <div>
-	<Foo />
-	<Foo />
+	<>
+		<Foo />
+		<Foo />
+	</>
 </div>;
 
 ```
@@ -396,12 +406,12 @@ function Hello() {
 ### `10: formatted`
 
 ```tsx
-function Hello() {
-	return <>
+const Hello = () =>
+	<>
 		<Foo />
 		<Foo />
-	</>;
-}
+	</>
+;
 
 ```
 
@@ -433,12 +443,12 @@ function Hello() {
 ### `11: formatted`
 
 ```tsx
-function Hello() {
-	return <>
+const Hello = () =>
+	<>
 		<Foo />
 		<Foo />
-	</>;
-}
+	</>
+;
 
 ```
 
@@ -467,7 +477,8 @@ function Hello() {
 ### `13: formatted`
 
 ```tsx
-<Fragment key="id" />;
+<Fragment key="id">
+</Fragment>;
 
 ```
 
@@ -558,7 +569,8 @@ const Hello = <React.Fragment key="id">
 
 ```tsx
 function Foo() {
-	let bar = <React.Fragment key="word" />;
+	let bar = <React.Fragment key="word">
+	</React.Fragment>;
 	return bar;
 }
 
@@ -607,9 +619,7 @@ function Hello() {
 ### `22: formatted`
 
 ```tsx
-function Hello() {
-	return <></>;
-}
+const Hello = () => <></>;
 
 ```
 
@@ -622,9 +632,10 @@ function Hello() {
 ### `23: formatted`
 
 ```tsx
-function Hello() {
-	return <React.Fragment key="id" />;
-}
+const Hello = () =>
+	<React.Fragment key="id">
+	</React.Fragment>
+;
 
 ```
 
@@ -637,8 +648,9 @@ function Hello() {
 ### `24: formatted`
 
 ```tsx
-function Hello() {
-	return <Fragment key="id" />;
-}
+const Hello = () =>
+	<Fragment key="id">
+	</Fragment>
+;
 
 ```

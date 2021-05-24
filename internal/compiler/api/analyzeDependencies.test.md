@@ -178,8 +178,8 @@
 				language: "js"
 				sourceText: "export const foo = 'bar';\nexports.bar = 'foo';"
 				path: UIDPath<unknown>
-				end: Position 1:25
-				start: Position 1:0
+				end: Position 2:0
+				start: Position 2:0
 			}
 		}
 	]

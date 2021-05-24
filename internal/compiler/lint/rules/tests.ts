@@ -1,4 +1,4 @@
-import {DiagnosticCategory} from "@internal/diagnostics";
+import {DiagnosticLintCategory} from "@internal/diagnostics";
 import {dedent} from "@internal/string-utils";
 import {Dict} from "@internal/typescript-helpers";
 
@@ -9,7 +9,7 @@ type Test = {
 };
 
 type Tests = Dict<{
-	category: DiagnosticCategory;
+	category: DiagnosticLintCategory;
 	cases: Test[];
 }>;
 
@@ -39,7 +39,7 @@ function normalizeCases(
 	}
 }
 
-/* GENERATED:START(hash:37b1ee00481b7531777773bd51ac0bff0f7712f9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:45e6cd4fe20c6505a73fa55a851cea0804a5b84e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAccessKey from "./a11y/noAccessKey.test.toml";
 // @ts-ignore
@@ -52,6 +52,8 @@ import noOnChange from "./a11y/noOnChange.test.toml";
 import noPositiveTabindex from "./a11y/noPositiveTabindex.test.toml";
 // @ts-ignore
 import noRedundantAlt from "./a11y/noRedundantAlt.test.toml";
+// @ts-ignore
+import noRedundantRoles from "./a11y/noRedundantRoles.test.toml";
 // @ts-ignore
 import noTargetBlank from "./a11y/noTargetBlank.test.toml";
 // @ts-ignore
@@ -165,8 +167,6 @@ import useTemplate from "./js/useTemplate.test.toml";
 // @ts-ignore
 import useWhile from "./js/useWhile.test.toml";
 // @ts-ignore
-import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.toml";
-// @ts-ignore
 import noCommentText from "./jsx/noCommentText.test.toml";
 // @ts-ignore
 import noDuplicateProps from "./jsx/noDuplicateProps.test.toml";
@@ -263,6 +263,10 @@ export const tests: Tests = {
 	"a11y/noRedundantAlt": {
 		category: ["lint", "a11y", "noRedundantAlt"],
 		cases: normalizeCases(noRedundantAlt),
+	},
+	"a11y/noRedundantRoles": {
+		category: ["lint", "a11y", "noRedundantRoles"],
+		cases: normalizeCases(noRedundantRoles),
 	},
 	"a11y/noTargetBlank": {
 		category: ["lint", "a11y", "noTargetBlank"],
@@ -487,10 +491,6 @@ export const tests: Tests = {
 	"js/useWhile": {
 		category: ["lint", "js", "useWhile"],
 		cases: normalizeCases(useWhile),
-	},
-	"jsx-a11y/noRedundantRoles": {
-		category: ["lint", "jsx-a11y", "noRedundantRoles"],
-		cases: normalizeCases(noRedundantRoles),
 	},
 	"jsx/noCommentText": {
 		category: ["lint", "jsx", "noCommentText"],
