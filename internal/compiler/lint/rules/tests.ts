@@ -12,8 +12,8 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:39d7cff45b5fbaa33f344a6afa642c4d5aaafa34,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
-// @ts-ignore
+/* GENERATED:START(hash:256560c65dcafc042d40488c55963c310b77445f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+// @ts-expect-error
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-expect-error
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
@@ -236,13 +236,13 @@ import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpace
 // @ts-expect-error
 import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.rjson";
 // @ts-expect-error
-import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
-// @ts-ignore
 import noExplicitAny from "./ts/noExplicitAny.test.rjson";
-// @ts-ignore
+// @ts-expect-error
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
-// @ts-ignore
+// @ts-expect-error
 import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression.test.rjson";
+// @ts-expect-error
+import useTsExpectError from "./ts/useTsExpectError.test.rjson";
 
 export const tests: Tests = {
 	"a11y/noAccessKey": {
@@ -700,6 +700,10 @@ export const tests: Tests = {
 	"ts/useSimplifiedBooleanExpression": {
 		category: ["lint", "ts", "useSimplifiedBooleanExpression"],
 		cases: useSimplifiedBooleanExpression,
+	},
+	"ts/useTsExpectError": {
+		category: ["lint", "ts", "useTsExpectError"],
+		cases: useTsExpectError,
 	},
 };
 /* GENERATED:END(id:main) */
