@@ -12,9 +12,10 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:18258adf54b8055f532ed86bf9a65a6224b77b27,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:2fa73fd4651746a74df8d805727b42471eadb722,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
+export * from "./css/import/CSSAtImport";
 export * from "./css/page/CSSAtPage";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
@@ -38,6 +39,7 @@ export * from "./css/core/CSSFunction";
 export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
 export * from "./css/selectors/CSSIdSelector";
+export * from "./css/import/CSSImport";
 export * from "./css/keyframe/CSSKeyframe";
 export * from "./css/keyframe/CSSKeyframeBlock";
 export * from "./css/keyframe/CSSKeyframeName";
@@ -321,6 +323,7 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
+	| n.CSSAtImport
 	| n.CSSAtPage
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
@@ -344,6 +347,7 @@ export type AnyNode =
 	| n.CSSHash
 	| n.CSSIdentifier
 	| n.CSSIdSelector
+	| n.CSSImport
 	| n.CSSKeyframe
 	| n.CSSKeyframeBlock
 	| n.CSSKeyframeName
