@@ -1,0 +1,12 @@
+#
+# This file can be used to ignore certain files from ripgrep/vscode's search
+# results.
+#
+# Before you add anything to this file, keep in mind that it will affect
+# everyone's ability to grep for things. Consider creating your own local
+# `.rgignore` file in your `$HOME` directory.
+#
+
+# Checked-in pre-built version of Rome
+scripts/vendor/rome.cjs
+scripts/vendor/rome.cjs.map

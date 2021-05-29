@@ -33,6 +33,9 @@ const foo = ReactDOM.render(<div />, document.body);
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
+    const foo = bar && ReactDOM.render(<div />, document.body);
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 ```
 
@@ -50,6 +53,9 @@ const foo = bar && ReactDOM.render(<div />, document.body);
  lint/react/noRenderReturnValue/reject/3/file.tsx:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
+
+    const foo = bar ? ReactDOM.render(<div />, document.body) : null
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 ```
@@ -78,9 +84,7 @@ const foo = bar ? ReactDOM.render(<div />, document.body) : null;
 ### `3: formatted`
 
 ```tsx
-function foo() {
-	return ReactDOM.render(<div />, document.body);
-}
+const foo = () => ReactDOM.render(<div />, document.body);
 
 ```
 
@@ -194,8 +198,8 @@ function render() {
 ### `9: formatted`
 
 ```tsx
-function render() {
+const render = () => {
 	ReactDOM.render(<div />, document.body);
-}
+};
 
 ```

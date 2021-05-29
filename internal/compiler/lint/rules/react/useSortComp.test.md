@@ -84,6 +84,13 @@ class Hello extends React.Component {
 
   ✖ render should be placed after onClick.
 
+    2 │ var Hello = () => {
+    3 │   return class Test extends React.Component {
+  > 4 │     render () {
+      │     ^^^^^^
+    5 │       return <div>Hello</div>;
+    6 │     }
+
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.
 

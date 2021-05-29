@@ -1,0 +1,11 @@
+.style {
+	flow-into: main;
+}
+
+.style {
+	flow-from: main;
+}
+
+.style {
+	region-fragment: auto;
+}

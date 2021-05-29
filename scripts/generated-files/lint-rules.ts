@@ -131,7 +131,7 @@ export async function main() {
 			lines.push(";");
 
 			lines.push(
-				"const lintCategoryNameMap: {[name in DiagnosticLintCategoryString]: DiagnosticLintCategory} = {",
+				"export const lintCategoryNameMap: {[name in DiagnosticLintCategoryString]: DiagnosticLintCategory} = {",
 			);
 			for (const {ruleName, category, basename} of defs) {
 				lines.push(

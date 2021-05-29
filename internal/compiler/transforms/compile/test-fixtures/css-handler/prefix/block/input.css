@@ -1,0 +1,131 @@
+.style {
+	block: none;
+}
+
+.style {
+	border-block-start: 1px;
+}
+
+.style {
+	border-block-start: 2px dotted;
+}
+
+.style {
+	border-block-start: medium dashed blue;
+}
+
+.style {
+	border-block-end: 1px;
+}
+
+.style {
+	border-block-end: 2px dotted;
+}
+
+.style {
+	border-block-end: medium dashed blue;
+}
+
+.style {
+	margin-block-start: 10px;
+}
+
+.style {
+	margin-block-start: 1em;
+}
+
+.style {
+	margin-block-start: 5%;
+}
+
+.style {
+	margin-block-start: auto;
+}
+
+.style {
+	margin-block-start: inherit;
+}
+
+.style {
+	margin-block-start: initial;
+}
+
+.style {
+	margin-block-start: unset;
+}
+
+.style {
+	margin-block-end: 10px;
+}
+
+.style {
+	margin-block-end: 1em;
+}
+
+.style {
+	margin-block-end: 5%;
+}
+
+.style {
+	margin-block-end: auto;
+}
+
+.style {
+	margin-block-end: inherit;
+}
+
+.style {
+	margin-block-end: initial;
+}
+
+.style {
+	margin-block-end: unset;
+}
+
+.style {
+	padding-block-start: 10px;
+}
+
+.style {
+	padding-block-start: 1em;
+}
+
+.style {
+	padding-block-start: 5%;
+}
+
+.style {
+	padding-block-start: inherit;
+}
+
+.style {
+	padding-block-start: initial;
+}
+
+.style {
+	padding-block-start: unset;
+}
+
+.style {
+	padding-block-end: 10px;
+}
+
+.style {
+	padding-block-end: 1em;
+}
+
+.style {
+	padding-block-end: 5%;
+}
+
+.style {
+	padding-block-end: inherit;
+}
+
+.style {
+	padding-block-end: initial;
+}
+
+.style {
+	padding-block-end: unset;
+}

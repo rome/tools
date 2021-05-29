@@ -54,6 +54,9 @@ function foo() {}
 
   ✖ Use a function declaration instead of a const function.
 
+    const foo = () => {function bar() {this;}};
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 ```
 

@@ -5,21 +5,27 @@ import {ServerRequest, VERSION} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
 import {ConfigCommentMap, JSONObject, rjson} from "@internal/codec-config";
-import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
+import {
+	getFileHandlerFromExtension,
+	getFileHandlerFromPath,
+} from "@internal/core/common/file-handlers";
 import {IndentStyle, PROJECT_CONFIG_DIRECTORY} from "@internal/project";
 import {AbsoluteFilePathMap} from "@internal/path";
 import {
 	Diagnostic,
-	catchDiagnosticsSync,
 	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
-import {convertManifestToJSON} from "@internal/codec-js-manifest";
+import {
+	convertManifestToJSON,
+	normalizeManifest,
+} from "@internal/codec-js-manifest";
 import {parseSemverRange} from "@internal/codec-semver";
 import {spawn} from "@internal/child-process";
 import {ConfigHandler} from "@internal/codec-config/types";
 import updateConfig from "@internal/core/server/utils/updateConfig";
 import retrieveConfigHandler from "@internal/codec-config/retrieveConfigHandler";
+import {CachedFileReader} from "@internal/fs";
 
 type ConfigType = "rjson" | "toml" | "json";
 
@@ -45,7 +51,7 @@ export default createServerCommand<Flags>({
 	hidden: true,
 	defineFlags(c) {
 		return {
-			checkProject: c.get("checkProject").asBoolean(),
+			checkProject: c.get("checkProject").asBoolean(false),
 			configType: c.get(
 				"configType",
 				{
@@ -96,7 +102,6 @@ export default createServerCommand<Flags>({
 		// - second part creates a basic configuration file and and the .editorconfig
 		// part of the command where we check if a configuration already exists
 		if (checkProject) {
-			req.expectArgumentLength(1);
 			// Check for sensitive directory
 			if (server.projectManager.isBannedProjectPath(cwd)) {
 				const diagnostic: Diagnostic = {
@@ -107,20 +112,6 @@ export default createServerCommand<Flags>({
 			}
 
 			// Don't allow if we're already in a project
-			const {value} = catchDiagnosticsSync(async () => {
-				const existingProject = await server.projectManager.findProject(cwd);
-				if (existingProject !== undefined) {
-					reporter.error(
-						markup`Project already exists. Defined at <emphasis>${existingProject.meta.configPath}</emphasis>`,
-					);
-					reporter.info(
-						markup`Use <code>rome config</code> to update an existing config`,
-					);
-					return true;
-				}
-				return false;
-			});
-
 			const existingProject = await server.projectManager.findProject(cwd);
 			if (existingProject !== undefined) {
 				reporter.error(
@@ -131,13 +122,12 @@ export default createServerCommand<Flags>({
 				);
 				return true;
 			}
-			return value;
+			return false;
 		} else if (configType && indentSize && indentStyle) {
-			req.expectArgumentLength(3);
 			let configHandler: ConfigHandler = retrieveConfigHandler(configType);
 
 			if (!configType) {
-				client.reporter.warn(
+				reporter.warn(
 					markup`No extension chosen; Rome will now use RJSON extension for your project configuration as fallback.`,
 				);
 				configHandler = rjson;
@@ -193,12 +183,27 @@ export default createServerCommand<Flags>({
 				config,
 			});
 
-			//
+			// Add project inside the project manager
+			await server.projectManager.addDiskProject({
+				projectDirectory: cwd,
+				configPath,
+				isPartial: false,
+				reader: new CachedFileReader(),
+			});
+
+			// The manifest has not been loaded yet by Rome, so we manually retrieve it
 			const manifestPath = cwd.append("package.json");
-			const manifestDefinition = server.memoryFs.getManifestDefinition(cwd);
+			const consumer = configHandler.consumeValue({
+				path: manifestPath,
+				input: await manifestPath.readFileText(),
+			});
+			const manifestDefinition = await normalizeManifest(
+				manifestPath,
+				consumer,
+				[],
+			);
 			if (!manifestDefinition) {
 				reporter.error(markup`Couldn't find any manifest at path ${cwd}`);
-
 				return;
 			}
 
@@ -209,8 +214,8 @@ export default createServerCommand<Flags>({
 					test() {
 						return (
 							manifestDefinition !== undefined &&
-							!manifestDefinition.manifest.dependencies.has("rome") &&
-							!manifestDefinition.manifest.devDependencies.has("rome")
+							!manifestDefinition.dependencies.has("rome") &&
+							!manifestDefinition.devDependencies.has("rome")
 						);
 					},
 					async callback() {
@@ -220,7 +225,7 @@ export default createServerCommand<Flags>({
 						}
 
 						// Modify package.json
-						manifestDefinition.manifest.devDependencies.set(
+						manifestDefinition.devDependencies.set(
 							"rome",
 							{
 								type: "semver",
@@ -229,7 +234,7 @@ export default createServerCommand<Flags>({
 						);
 						await manifestPath.writeFile(
 							JSON.stringify(
-								convertManifestToJSON(manifestDefinition.manifest),
+								convertManifestToJSON(manifestDefinition),
 								null,
 								"  ",
 							),
@@ -277,6 +282,13 @@ export default createServerCommand<Flags>({
 								uniqueHandlers.set(handler.ext, handler);
 							}
 						}
+						// no files exists inside the project, we set defaults
+						if (uniqueHandlers.size === 0) {
+							for (const ext of ["js", "ts", "tsx", "css", "jsx", "html"]) {
+								const result = getFileHandlerFromExtension(ext, cwd);
+								uniqueHandlers.set(ext, result.handler);
+							}
+						}
 
 						let editorConfigTabExtensions: string[] = [];
 						for (const [ext, handler] of uniqueHandlers) {
@@ -286,7 +298,6 @@ export default createServerCommand<Flags>({
 						}
 
 						let editorConfigTemplate = "";
-
 						if (editorConfigTabExtensions.length > 0) {
 							editorConfigTemplate = dedent`
 								[{${editorConfigTabExtensions.sort().join(",")}}]

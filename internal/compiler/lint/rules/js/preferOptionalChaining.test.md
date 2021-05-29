@@ -464,8 +464,7 @@ foo?.bar;
 ### `16: formatted`
 
 ```ts
-let foo = {};
-let bar = "";
+let foo = {}, bar = "";
 foo && bar.foo;
 
 ```
@@ -479,8 +478,7 @@ foo && bar.foo;
 ### `17: formatted`
 
 ```ts
-let foo = {};
-let bar = "";
+let foo = {}, bar = "";
 bar in foo && foo.bar;
 
 ```

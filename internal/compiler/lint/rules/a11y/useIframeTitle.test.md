@@ -115,7 +115,7 @@
 ### `4: formatted`
 
 ```tsx
-<iframe title={""} />;
+<iframe title={``} />;
 
 ```
 

@@ -12,6 +12,9 @@
 
   ✖ Avoid passing children using a prop.
 
+    <MyComponent children={'foo'}></MyComponent>
+                 ^^^^^^^^^^^^^^^^
+
   ℹ The canonical way to pass children in React is to use JSX elements or additional arguments to
     React.createElement.
 
@@ -21,7 +24,8 @@
 ### `0: formatted`
 
 ```tsx
-<MyComponent children={"foo"} />;
+<MyComponent children={"foo"}>
+</MyComponent>;
 
 ```
 

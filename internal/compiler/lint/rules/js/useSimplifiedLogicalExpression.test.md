@@ -148,6 +148,6 @@ const r = !(boolExpr1 && boolExpr2);
 ```ts
 const boolExpr1 = true;
 const boolExpr2 = false;
-const r = boolExpr1 || boolExpr2;
+const r = !!boolExpr1 || !!boolExpr2;
 
 ```

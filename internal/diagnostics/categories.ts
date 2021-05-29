@@ -99,11 +99,11 @@ type StringConverter<T> = T extends [string]
 		? `${T[0]}/${StringConverter<Rest>}`
 		: never;
 
-type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
+export type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
-type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
+export type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:0987ba9a16d11853524575504868c76da27ee307,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:dd816ba35228b18c872d41d790bac14c40a58400,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -221,9 +221,8 @@ export type DiagnosticLintCategory =
 	| ["lint", "ts", "noExplicitAny"]
 	| ["lint", "ts", "preferShorthandArrayType"]
 	| ["lint", "ts", "useInterfaces"]
-	| ["lint", "ts", "useSimplifiedBooleanExpression"]
-	| ["lint", "ts", "useTsExpectError"];
-const lintCategoryNameMap: {
+	| ["lint", "ts", "useSimplifiedBooleanExpression"];
+export const lintCategoryNameMap: {
 	[name in DiagnosticLintCategoryString]: DiagnosticLintCategory
 } = {
 	"lint/a11y/noAccessKey": ["lint", "a11y", "noAccessKey"],
@@ -399,7 +398,6 @@ const lintCategoryNameMap: {
 		"ts",
 		"useSimplifiedBooleanExpression",
 	],
-	"lint/ts/useTsExpectError": ["lint", "ts", "useTsExpectError"],
 };
 /* GENERATED:END(id:main) */
 
@@ -558,6 +556,12 @@ export function joinCategoryName(
 	category: DiagnosticCategory,
 ): DiagnosticCategoryString {
 	return category.join("/") as DiagnosticCategoryString;
+}
+
+export function joinCategoryLintName(
+	category: DiagnosticLintCategory,
+): DiagnosticLintCategoryString {
+	return category.join("/") as DiagnosticLintCategoryString;
 }
 
 export function splitPossibleCategoryName(

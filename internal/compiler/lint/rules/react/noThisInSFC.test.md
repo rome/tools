@@ -339,6 +339,13 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
+    2 │   function Foo(props) {
+    3 │     return (
+  > 4 │       <div>{this.props.bar}</div>
+      │             ^^^^
+    5 │     );
+    6 │   }
+
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
 
@@ -362,6 +369,13 @@ React.memo(function Foo(props) {
  lint/react/noThisInSFC/reject/11/file.tsx:3:3 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
+
+    1 │ React.forwardRef((props, ref) => (
+    2 │   <div>
+  > 3 │     {this.props.bar}
+      │      ^^^^
+    4 │   </div>
+    5 │ ));
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -387,6 +401,13 @@ React.forwardRef((props, ref) =>
 
   ✖ Avoid using this in stateless functional components.
 
+    1 │ const Foo = React.forwardRef((props, ref) => (
+    2 │   <div>
+  > 3 │     {this.props.bar}
+      │      ^^^^
+    4 │   </div>
+    5 │ ));
+
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
 
@@ -410,6 +431,13 @@ const Foo = React.forwardRef((props, ref) =>
  lint/react/noThisInSFC/reject/13/file.tsx:3:4 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
+
+    1 │ const Foo = React.memo((props, ref) => (
+    2 │     <div>
+  > 3 │       {this.props.bar}
+      │        ^^^^
+    4 │     </div>
+    5 │   )
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -436,11 +464,11 @@ const Foo = React.memo((props, ref) =>
 ### `13: formatted`
 
 ```tsx
-function Foo(bar) {
-	return <div>
+const Foo = (bar) =>
+	<div>
 		{bar}
-	</div>;
-}
+	</div>
+;
 
 ```
 

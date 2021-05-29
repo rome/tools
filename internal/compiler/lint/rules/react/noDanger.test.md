@@ -12,6 +12,9 @@
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
 
+    <div dangerouslySetInnerHTML={{ __html: 'child' }}></div>;
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ Setting content using code can expose users to cross-site scripting (XSS) attacks.
 
 
@@ -20,7 +23,8 @@
 ### `0: formatted`
 
 ```tsx
-<div dangerouslySetInnerHTML={{__html: "child"}} />;
+<div dangerouslySetInnerHTML={{__html: "child"}}>
+</div>;
 
 ```
 

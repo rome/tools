@@ -25,7 +25,8 @@
 
 ```js
 // @jsx
-<div />;
+<div>
+</div>;
 
 ```
 
@@ -49,7 +50,8 @@
 ### `1: formatted`
 
 ```js
-
+// @jsx
+<></>;
 
 ```
 
@@ -73,7 +75,9 @@
 ### `2: formatted`
 
 ```js
-
+// @jsx
+<Fragment>
+</Fragment>;
 
 ```
 
@@ -97,7 +101,9 @@
 ### `3: formatted`
 
 ```js
-
+// @jsx
+<React.Fragment>
+</React.Fragment>;
 
 ```
 
@@ -125,7 +131,8 @@
 
 ```jsx
 // @jsx
-<div />;
+<div>
+</div>;
 
 ```
 
@@ -138,7 +145,8 @@
 ### `6: formatted`
 
 ```jsx
-
+// @jsx
+<></>;
 
 ```
 
@@ -151,7 +159,9 @@
 ### `7: formatted`
 
 ```jsx
-
+// @jsx
+<Fragment>
+</Fragment>;
 
 ```
 
@@ -164,7 +174,9 @@
 ### `8: formatted`
 
 ```jsx
-
+// @jsx
+<React.Fragment>
+</React.Fragment>;
 
 ```
 
@@ -178,7 +190,8 @@
 
 ```tsx
 // @jsx
-<div />;
+<div>
+</div>;
 
 ```
 
@@ -191,7 +204,8 @@
 ### `10: formatted`
 
 ```tsx
-
+// @jsx
+<></>;
 
 ```
 
@@ -204,7 +218,9 @@
 ### `11: formatted`
 
 ```tsx
-
+// @jsx
+<Fragment>
+</Fragment>;
 
 ```
 
@@ -217,6 +233,8 @@
 ### `12: formatted`
 
 ```tsx
-
+// @jsx
+<React.Fragment>
+</React.Fragment>;
 
 ```
