@@ -17,70 +17,171 @@ Prefer `@ts-expect-error` to get notified when suppression is no longer necessar
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:0371e4e9e4bcc781dd033c3306d490d8b67dc824,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:b3ef7a64a6eb39f8eafb309ff43238cf10e63f94,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">// @ts-ignore</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:1</span> <strong>lint/ts/useTsExpectError</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Prefer @ts-expect-error to get notified when suppression is no longer</span>
+    <span style="color: Tomato;">necessary.</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token comment">// @ts-ignore</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
+
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">//</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">@ts-</span><span style="color: Tomato;"><strong>ign</strong></span><span style="color: Tomato;">or</span><span style="color: Tomato;"><strong>e</strong></span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">//</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">@ts-</span><span style="color: MediumSeaGreen;"><strong>expect-err</strong></span><span style="color: MediumSeaGreen;">or</span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  let<span style="opacity: 0.8;">&middot;</span>foo:<span style="opacity: 0.8;">&middot;</span>boolean<span style="opacity: 0.8;">&middot;</span>=<span style="opacity: 0.8;">&middot;</span>1;
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>
+
+</code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">// @ts-ignore</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:1</span> <strong>lint/ts/useTsExpectError</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Prefer @ts-expect-error to get notified when suppression is no longer</span>
+    <span style="color: Tomato;">necessary.</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token comment">// @ts-ignore</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
+
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">//</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">@ts-</span><span style="color: Tomato;"><strong>ign</strong></span><span style="color: Tomato;">or</span><span style="color: Tomato;"><strong>e</strong></span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">//</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">@ts-</span><span style="color: MediumSeaGreen;"><strong>expect-err</strong></span><span style="color: MediumSeaGreen;">or</span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  let<span style="opacity: 0.8;">&middot;</span>foo:<span style="opacity: 0.8;">&middot;</span>boolean<span style="opacity: 0.8;">&middot;</span>=<span style="opacity: 0.8;">&middot;</span>1;
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>
+
+</code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/* @ts-ignore */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:1</span> <strong>lint/ts/useTsExpectError</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Prefer @ts-expect-error to get notified when suppression is no longer</span>
+    <span style="color: Tomato;">necessary.</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token comment">/* @ts-ignore */</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
+
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">/*</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">@ts-</span><span style="color: Tomato;"><strong>ign</strong></span><span style="color: Tomato;">or</span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">*/</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">/*</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">@ts-</span><span style="color: MediumSeaGreen;"><strong>expect-err</strong></span><span style="color: MediumSeaGreen;">or</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">*/</span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  let<span style="opacity: 0.8;">&middot;</span>foo:<span style="opacity: 0.8;">&middot;</span>boolean<span style="opacity: 0.8;">&middot;</span>=<span style="opacity: 0.8;">&middot;</span>1;
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>
+
+</code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/** @ts-ignore */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:1</span> <strong>lint/ts/useTsExpectError</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Prefer @ts-expect-error to get notified when suppression is no longer</span>
+    <span style="color: Tomato;">necessary.</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token comment">/** @ts-ignore */</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
+
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">/**</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">@ts-</span><span style="color: Tomato;"><strong>ign</strong></span><span style="color: Tomato;">or</span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;">*/</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">/**</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">@ts-</span><span style="color: MediumSeaGreen;"><strong>expect-err</strong></span><span style="color: MediumSeaGreen;">or*/</span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  let<span style="opacity: 0.8;">&middot;</span>foo:<span style="opacity: 0.8;">&middot;</span>boolean<span style="opacity: 0.8;">&middot;</span>=<span style="opacity: 0.8;">&middot;</span>1;
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>
+
+</code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/**</span>
 <span class="token comment"> * @ts-ignore */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:1</span> <strong>lint/ts/useTsExpectError</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Prefer @ts-expect-error to get notified when suppression is no longer</span>
+    <span style="color: Tomato;">necessary.</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token comment">/**</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token comment"> * @ts-ignore */</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
+
+  <strong>  </strong><strong>1</strong><strong> </strong><strong>1</strong><strong> │ </strong>  /**
+  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">*</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">@ts-</span><span style="color: Tomato;"><strong>ign</strong></span><span style="color: Tomato;">or</span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">*/</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>2</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">*</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">@ts-</span><span style="color: MediumSeaGreen;"><strong>expect-err</strong></span><span style="color: MediumSeaGreen;">or</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">*/</span>
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  let<span style="opacity: 0.8;">&middot;</span>foo:<span style="opacity: 0.8;">&middot;</span>boolean<span style="opacity: 0.8;">&middot;</span>=<span style="opacity: 0.8;">&middot;</span>1;
+  <strong>  </strong><strong>4</strong><strong> </strong><strong>4</strong><strong> │ </strong>
+
+</code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/**</span>
 <span class="token comment"> ** @ts-ignore */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.ts:1</span> <strong>lint/ts/useTsExpectError</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Prefer @ts-expect-error to get notified when suppression is no longer</span>
+    <span style="color: Tomato;">necessary.</span>
+
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token comment">/**</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token comment"> ** @ts-ignore */</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
+
+  <strong>  </strong><strong>1</strong><strong> </strong><strong>1</strong><strong> │ </strong>  /**
+  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">**</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">@ts-</span><span style="color: Tomato;"><strong>ign</strong></span><span style="color: Tomato;">or</span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">*/</span>
+  <strong>  </strong><strong> </strong><strong> </strong><strong>2</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">**</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">@ts-</span><span style="color: MediumSeaGreen;"><strong>expect-err</strong></span><span style="color: MediumSeaGreen;">or</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">*/</span>
+  <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  let<span style="opacity: 0.8;">&middot;</span>foo:<span style="opacity: 0.8;">&middot;</span>boolean<span style="opacity: 0.8;">&middot;</span>=<span style="opacity: 0.8;">&middot;</span>1;
+  <strong>  </strong><strong>4</strong><strong> </strong><strong>4</strong><strong> │ </strong>
+
+</code></pre>{% endraw %}
 
 ### Valid
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">// @ts-expect-error</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/* @ts-expect-error */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/** @ts-expect-error */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/**</span>
 <span class="token comment"> * @ts-expect-error */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token comment">/**</span>
 <span class="token comment"> ** @ts-expect-error */</span>
-<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-<span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">:</span> <span class="token variable">boolean</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
