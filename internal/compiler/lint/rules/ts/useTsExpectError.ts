@@ -45,7 +45,7 @@ export default createVisitor({
 					}),
 				}),
 			},
-			descriptions.LINT.TS_PREFER_TS_EXPECT_ERROR,
+			descriptions.LINT.TS_USE_TS_EXPECT_ERROR,
 		);
 	},
 });
