@@ -1,14 +1,20 @@
-import {NodeBaseWithComments} from "@internal/ast";
+import {AnyCSSValue, CSSAtImportValue, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSAtImport extends NodeBaseWithComments {
 	readonly type: "CSSAtImport";
+	readonly name: string;
+	readonly prelude: AnyCSSValue[];
+	readonly block?: CSSAtImportValue;
 }
 
-export const CSSAtImport = createBuilder<CSSAtImport>(
+export const cssAtImport = createBuilder<CSSAtImport>(
 	"CSSAtImport",
 	{
 		bindingKeys: {},
-		visitorKeys: {},
+		visitorKeys: {
+			block: true,
+			prelude: true,
+		},
 	},
 );
