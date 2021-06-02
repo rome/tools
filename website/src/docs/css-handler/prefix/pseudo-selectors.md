@@ -1,14 +1,14 @@
 ---
-title: Prefix pseudo-classes
+title: Prefix pseudo-selectors
 layout: layouts/prefix.liquid
 showHero: false
 description: MISSING DOCUMENTATION
 eleventyNavigation:
-	key: css-handler/prefix/pseudo-classes
+	key: css-handler/prefix/pseudo-selectors
 	parent: css-handler
-	title: pseudo-classes
+	title: pseudo-selectors
 ---
 
-# pseudo-classes
+# pseudo-selectors
 
 MISSING DOCUMENTATION
