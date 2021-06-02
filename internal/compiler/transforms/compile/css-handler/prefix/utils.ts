@@ -13,7 +13,7 @@ import {
 	cssPseudoClassSelector,
 	cssRoot,
 	cssRule,
-	cssSelector, CSSBlockValue, CSSPseudoElementSelector, cssPseudoElementSelector
+	cssSelector, CSSBlockValue, CSSPseudoElementSelector, cssPseudoElementSelector, CSSPseudoSelector
 } from "@internal/ast";
 import {RequiredProps, UnknownObject} from "@internal/typescript-helpers";
 import {
@@ -225,13 +225,17 @@ export function createPrefixCSSRootVisitor(
 	);
 }
 
-function isPseudoClass(node: AnyCSSPattern): node is CSSPseudoClassSelector {
+function isPseudoClassSelector(node: AnyCSSPattern): node is CSSPseudoClassSelector {
 	return node.type === "CSSPseudoClassSelector";
 }
 
-function isPseudoElement(node: AnyCSSPattern): node is CSSPseudoElementSelector {
+function isPseudoElementSelector(node: AnyCSSPattern): node is CSSPseudoElementSelector {
 	return node.type === "CSSPseudoElementSelector";
 }
+
+function isPseudoSelector(node: AnyCSSPattern): node is CSSPseudoSelector {
+	return isPseudoClassSelector(node) || isPseudoElementSelector(node);
+} 
 
 function collectCSSSelectorPrefixes(
 	selector: CSSSelector,
@@ -241,7 +245,7 @@ function collectCSSSelectorPrefixes(
 	const allPrefixes = new Set<string>();
 
 	for (const pattern of selector.patterns) {
-		if (isPseudoClass(pattern) || isPseudoElement(pattern)) {
+		if (isPseudoSelector(pattern)) {
 				const browserFeature = namesToFeatures.get(pattern.value);
 				if (browserFeature === undefined) continue;
 				const newPrefixes = getPrefixes(targets, browserFeature);
@@ -291,7 +295,7 @@ function prefixCSSSelector(
 	}: PrefixCSSSelectorProps,
 ) {
 	const newPatterns = selector.patterns.map(pattern => {
-		if (isPseudoClass(pattern) || isPseudoElement(pattern)) {
+		if (isPseudoSelector(pattern)) {
 			const browserFeature = namesToFeatures.get(pattern.value);
 			if (browserFeature === undefined) {
 				return pattern;
@@ -301,7 +305,7 @@ function prefixCSSSelector(
 				return pattern;
 			}
 			
-			if (isPseudoClass(pattern)) {
+			if (isPseudoClassSelector(pattern)) {
 				return cssPseudoClassSelector.create({
 					...pattern,
 					value: `-${prefix}-${pattern.value}`,
@@ -344,7 +348,7 @@ function prefixCSSRulePrelude(
 	});
 }
 
-export function prefixPseudoInCSSRoot(
+export function prefixPseudoSelectorInCSSRoot(
 	path: PrefixCSSRootCompilerPath,
 	namesToFeatures: Map<string, string>,
 ): signals.EnterSignal {
@@ -377,7 +381,7 @@ export function prefixPseudoInCSSRoot(
 	return signals.retain;
 }
 
-export function prefixPseudoInCSSBlock(
+export function prefixPseudoSelectorInCSSBlock(
 	path: PrefixCSSBlockCompilerPath,
 	namesToFeatures: Map<string, string>,
 ): signals.EnterSignal {

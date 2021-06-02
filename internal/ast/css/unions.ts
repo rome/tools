@@ -25,6 +25,8 @@ import {
 	CSSMinFunction,
 	CSSNumber,
 	CSSPercentage,
+	CSSPseudoClassSelector,
+	CSSPseudoElementSelector,
 	CSSRaw,
 	CSSString,
 	CSSSupportsCondition,
@@ -98,3 +100,5 @@ export type CSSAtRuleValue =
 	| CSSFontFace;
 
 export type CSSBlockValue =  Array<AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration>;
+
+export type CSSPseudoSelector = CSSPseudoClassSelector | CSSPseudoElementSelector;

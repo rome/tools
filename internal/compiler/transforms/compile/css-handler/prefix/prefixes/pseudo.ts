@@ -1,8 +1,8 @@
 import {
 	createPrefixCSSBlockVisitor,
 	createPrefixCSSRootVisitor,
-	prefixPseudoInCSSBlock,
-	prefixPseudoInCSSRoot,
+	prefixPseudoSelectorInCSSBlock,
+	prefixPseudoSelectorInCSSRoot,
 } from "../utils";
 
 const pseudoSelectorsFeatures = new Map([
@@ -22,13 +22,13 @@ export default [
 	createPrefixCSSRootVisitor({
 		name: "pseudo-selectors",
 		enter: (path) => {
-			return prefixPseudoInCSSRoot(path, pseudoSelectorsFeatures);
+			return prefixPseudoSelectorInCSSRoot(path, pseudoSelectorsFeatures);
 		},
 	}),
 	createPrefixCSSBlockVisitor({
 		name: "pseudo-selectors",
 		enter: (path) => {
-			return prefixPseudoInCSSBlock(path, pseudoSelectorsFeatures);
+			return prefixPseudoSelectorInCSSBlock(path, pseudoSelectorsFeatures);
 		},
 	}),
 ];
