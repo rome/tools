@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* GENERATED:START(hash:817f095cd37941c51ee5d0b64fb7ec9cf75789c6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+=======
+/* GENERATED:START(hash:c59264a0d7d3dc13afe107f9d9612ef6a18b7b7b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+>>>>>>> 396f700e6 (rename "pseudo-classes" to "pseudo")
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
@@ -18,7 +22,7 @@ import inline from "./prefixes/inline";
 import mask from "./prefixes/mask";
 import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
-import pseudoClasses from "./prefixes/pseudo-classes";
+import pseudo from "./prefixes/pseudo";
 import regions from "./prefixes/regions";
 import scrollSnapType from "./prefixes/scroll-snap-type";
 import shape from "./prefixes/shape";
@@ -54,7 +58,7 @@ export default [
 	...mask,
 	...multicolumn,
 	...position,
-	...pseudoClasses,
+	...pseudo,
 	...regions,
 	...scrollSnapType,
 	...shape,
