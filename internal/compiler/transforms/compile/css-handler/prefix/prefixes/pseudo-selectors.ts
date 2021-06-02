@@ -7,7 +7,6 @@ import {
 
 const pseudoSelectorsFeatures = new Map([
 	// classes
-	
 	// https://github.com/Fyrd/caniuse/blob/main/features-json/css-any-link.json
 	["any-link", "css-any-link"],
 
@@ -19,7 +18,6 @@ const pseudoSelectorsFeatures = new Map([
 	["write-only", "css-read-only-write"],
 
 	// elements
-
 	// https://github.com/Fyrd/caniuse/blob/main/features-json/css-selection.json
 	["selection", "css-selection"],
 
@@ -28,7 +26,7 @@ const pseudoSelectorsFeatures = new Map([
 
 	// https://github.com/Fyrd/caniuse/blob/main/features-json/fullscreen.json
 	["backdrop", "fullscreen"],
-])
+]);
 
 export default [
 	createPrefixCSSRootVisitor({

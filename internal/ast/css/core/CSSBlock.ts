@@ -1,7 +1,4 @@
-import {
-	CSSBlockValue,
-	NodeBaseWithComments,
-} from "@internal/ast";
+import {CSSBlockValue, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSBlock extends NodeBaseWithComments {

@@ -1,9 +1,13 @@
 import {
 	AnyCSSPattern,
 	AnyNode,
+	CSSAtRule,
 	CSSBlock,
+	CSSBlockValue,
 	CSSDeclaration,
 	CSSPseudoClassSelector,
+	CSSPseudoElementSelector,
+	CSSPseudoSelector,
 	CSSRoot,
 	CSSRule,
 	CSSSelector,
@@ -11,9 +15,10 @@ import {
 	cssDeclaration,
 	cssIdentifier,
 	cssPseudoClassSelector,
+	cssPseudoElementSelector,
 	cssRoot,
 	cssRule,
-	cssSelector, CSSBlockValue, CSSPseudoElementSelector, cssPseudoElementSelector, CSSPseudoSelector
+	cssSelector,
 } from "@internal/ast";
 import {RequiredProps, UnknownObject} from "@internal/typescript-helpers";
 import {
@@ -225,17 +230,21 @@ export function createPrefixCSSRootVisitor(
 	);
 }
 
-function isPseudoClassSelector(node: AnyCSSPattern): node is CSSPseudoClassSelector {
+function isPseudoClassSelector(
+	node: AnyCSSPattern,
+): node is CSSPseudoClassSelector {
 	return node.type === "CSSPseudoClassSelector";
 }
 
-function isPseudoElementSelector(node: AnyCSSPattern): node is CSSPseudoElementSelector {
+function isPseudoElementSelector(
+	node: AnyCSSPattern,
+): node is CSSPseudoElementSelector {
 	return node.type === "CSSPseudoElementSelector";
 }
 
 function isPseudoSelector(node: AnyCSSPattern): node is CSSPseudoSelector {
 	return isPseudoClassSelector(node) || isPseudoElementSelector(node);
-} 
+}
 
 function collectCSSSelectorPrefixes(
 	selector: CSSSelector,
@@ -246,10 +255,12 @@ function collectCSSSelectorPrefixes(
 
 	for (const pattern of selector.patterns) {
 		if (isPseudoSelector(pattern)) {
-				const browserFeature = namesToFeatures.get(pattern.value);
-				if (browserFeature === undefined) continue;
-				const newPrefixes = getPrefixes(targets, browserFeature);
-				newPrefixes.forEach(newPrefix => allPrefixes.add(newPrefix));
+			const browserFeature = namesToFeatures.get(pattern.value);
+			if (browserFeature === undefined) {
+				continue;
+			}
+			const newPrefixes = getPrefixes(targets, browserFeature);
+			newPrefixes.forEach((newPrefix) => allPrefixes.add(newPrefix));
 		}
 	}
 
@@ -269,7 +280,7 @@ function collectCSSRulePrefixes(
 			namesToFeatures,
 			targets,
 		);
-		newPrefixes.forEach(newPrefix => allPrefixes.add(newPrefix));
+		newPrefixes.forEach((newPrefix) => allPrefixes.add(newPrefix));
 	}
 
 	return allPrefixes;
@@ -280,10 +291,10 @@ function isCSSRule(node: AnyNode): node is CSSRule {
 }
 
 interface PrefixCSSSelectorProps {
-	selector: CSSSelector
-	prefix: string
-	namesToFeatures: Map<string, string>
-	targets: Browser[]
+	selector: CSSSelector;
+	prefix: string;
+	namesToFeatures: Map<string, string>;
+	targets: Browser[];
 }
 
 function prefixCSSSelector(
@@ -294,7 +305,7 @@ function prefixCSSSelector(
 		targets,
 	}: PrefixCSSSelectorProps,
 ) {
-	const newPatterns = selector.patterns.map(pattern => {
+	const newPatterns = selector.patterns.map((pattern) => {
 		if (isPseudoSelector(pattern)) {
 			const browserFeature = namesToFeatures.get(pattern.value);
 			if (browserFeature === undefined) {
@@ -304,7 +315,7 @@ function prefixCSSSelector(
 			if (!prefixes.has(prefix)) {
 				return pattern;
 			}
-			
+
 			if (isPseudoClassSelector(pattern)) {
 				return cssPseudoClassSelector.create({
 					...pattern,
@@ -318,7 +329,7 @@ function prefixCSSSelector(
 			}
 		}
 		return pattern;
-	})
+	});
 
 	return cssSelector.create({
 		...selector,
@@ -327,17 +338,14 @@ function prefixCSSSelector(
 }
 
 interface PrefixCSSRulePreludeProps {
-		rule: CSSRule,
-	prefix: string,
-	namesToFeatures: Map<string, string>,
-	targets: Browser[],
+	rule: CSSRule;
+	prefix: string;
+	namesToFeatures: Map<string, string>;
+	targets: Browser[];
 }
 
 function prefixCSSRulePrelude(
-	{rule,
-	prefix,
-	namesToFeatures,
-	targets}: PrefixCSSRulePreludeProps
+	{rule, prefix, namesToFeatures, targets}: PrefixCSSRulePreludeProps,
 ) {
 	const newPrelude = rule.prelude.map((selector) =>
 		prefixCSSSelector({selector, prefix, namesToFeatures, targets})
@@ -354,7 +362,7 @@ export function prefixPseudoSelectorInCSSRoot(
 ): signals.EnterSignal {
 	const targets = getTargets(path);
 
-	const newBody = [];
+	const newBody: (CSSRule | CSSAtRule)[] = [];
 	for (const node of path.node.body) {
 		newBody.push(node);
 
@@ -367,7 +375,9 @@ export function prefixPseudoSelectorInCSSRoot(
 		}
 
 		for (const prefix of prefixes) {
-			newBody.push(prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}));
+			newBody.push(
+				prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}),
+			);
 		}
 	}
 
@@ -400,7 +410,9 @@ export function prefixPseudoSelectorInCSSBlock(
 		}
 
 		for (const prefix of prefixes) {
-			newValue.push(prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}));
+			newValue.push(
+				prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}),
+			);
 		}
 	}
 

@@ -1,7 +1,6 @@
 import * as n from "@internal/ast";
 import {
 	CSSAtPage,
-	CSSRule,
 	CSSAtRule,
 	CSSBlock,
 	CSSCalcFunction,
@@ -28,6 +27,7 @@ import {
 	CSSPseudoClassSelector,
 	CSSPseudoElementSelector,
 	CSSRaw,
+	CSSRule,
 	CSSString,
 	CSSSupportsCondition,
 	CSSUrlFunction,
@@ -99,6 +99,10 @@ export type CSSAtRuleValue =
 	| CSSAtPage
 	| CSSFontFace;
 
-export type CSSBlockValue =  Array<AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration>;
+export type CSSBlockValue = Array<
+	AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration
+>;
 
-export type CSSPseudoSelector = CSSPseudoClassSelector | CSSPseudoElementSelector;
+export type CSSPseudoSelector =
+	| CSSPseudoClassSelector
+	| CSSPseudoElementSelector;
