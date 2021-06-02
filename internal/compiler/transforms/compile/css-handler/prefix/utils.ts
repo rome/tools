@@ -13,7 +13,7 @@ import {
 	cssPseudoClassSelector,
 	cssRoot,
 	cssRule,
-	cssSelector,
+	cssSelector, CSSBlockValue
 } from "@internal/ast";
 import {RequiredProps, UnknownObject} from "@internal/typescript-helpers";
 import {
@@ -30,6 +30,11 @@ import {
 	VisitorStateEnter,
 	VisitorStateExit,
 } from "@internal/compiler/lib/VisitorState";
+
+// TODO: This will be changed in further commits to allow
+// implementing other features which require state
+// eg. purging unnecessary prefixes
+export type CompilerPrefixerState = UnknownObject;
 
 export function findPropertyIndex(
 	node: CSSBlock,
@@ -76,15 +81,15 @@ function isCssBlockAndHasValue(
 	);
 }
 
-export interface PrefixCSSBlockVisitor<State extends UnknownObject> extends __TypedVisitor<
-	State,
+export interface PrefixCSSBlockVisitor extends TypedVisitor<
+	CompilerPrefixerState,
 	PrefixCSSBlockCompilerPath
 > {}
 
-export function createPrefixCSSBlockVisitor<State extends UnknownObject>(
-	visitor: PrefixCSSBlockVisitor<State>,
-): Visitor<State> {
-	return __visitorTransformer<State, PrefixCSSBlockCompilerPath>(
+export function createPrefixCSSBlockVisitor(
+	visitor: PrefixCSSBlockVisitor,
+): Visitor<CompilerPrefixerState> {
+	return transformVisitor<CompilerPrefixerState, PrefixCSSBlockCompilerPath>(
 		"css-handler/prefix",
 		visitor,
 		isCssBlockAndHasValue,
@@ -205,15 +210,15 @@ export type PrefixCSSRootCompilerPath = CompilerPath & {
 	node: CSSRoot;
 };
 
-export interface PrefixCSSRootVisitor<State extends UnknownObject> extends __TypedVisitor<
-	State,
+export interface PrefixCSSRootVisitor extends TypedVisitor<
+	CompilerPrefixerState,
 	PrefixCSSRootCompilerPath
 > {}
 
-export function createPrefixCSSRootVisitor<State extends UnknownObject>(
-	visitor: PrefixCSSRootVisitor<State>,
-): Visitor<State> {
-	return __visitorTransformer<State, PrefixCSSRootCompilerPath>(
+export function createPrefixCSSRootVisitor(
+	visitor: PrefixCSSRootVisitor,
+): Visitor<CompilerPrefixerState> {
+	return transformVisitor<CompilerPrefixerState, PrefixCSSRootCompilerPath>(
 		"css-handler/prefix",
 		visitor,
 		(path): path is PrefixCSSRootCompilerPath => path.node.type === "CSSRoot",
@@ -229,23 +234,18 @@ function collectCSSSelectorPrefixes(
 	namesToFeatures: Map<string, string>,
 	targets: Browser[],
 ) {
-	return selector.patterns.reduce(
-		(allPrefixes, pattern) => {
-			if (isPseudoClass(pattern)) {
+	const allPrefixes = new Set<string>();
+
+	for (const pattern of selector.patterns) {
+		if (isPseudoClass(pattern)) {
 				const browserFeature = namesToFeatures.get(pattern.value);
-				if (browserFeature === undefined) {
-					return allPrefixes;
-				}
+				if (browserFeature === undefined) continue;
 				const newPrefixes = getPrefixes(targets, browserFeature);
-				if (newPrefixes.size === 0) {
-					return allPrefixes;
-				}
-				return new Set([...allPrefixes, ...newPrefixes]);
-			}
-			return allPrefixes;
-		},
-		new Set<string>(),
-	);
+				newPrefixes.forEach(newPrefix => allPrefixes.add(newPrefix));
+		}
+	}
+
+	return allPrefixes;
 }
 
 function collectCSSRulePrefixes(
@@ -253,33 +253,40 @@ function collectCSSRulePrefixes(
 	namesToFeatures: Map<string, string>,
 	targets: Browser[],
 ) {
-	return rule.prelude.reduce(
-		(allPrefixes, selector) => {
-			const newPrefixes = collectCSSSelectorPrefixes(
-				selector,
-				namesToFeatures,
-				targets,
-			);
-			if (newPrefixes.size === 0) {
-				return allPrefixes;
-			}
-			return new Set([...allPrefixes, ...newPrefixes]);
-		},
-		new Set<string>(),
-	);
+	const allPrefixes = new Set<string>();
+
+	for (const selector of rule.prelude) {
+		const newPrefixes = collectCSSSelectorPrefixes(
+			selector,
+			namesToFeatures,
+			targets,
+		);
+		newPrefixes.forEach(newPrefix => allPrefixes.add(newPrefix));
+	}
+
+	return allPrefixes;
 }
 
 function isCSSRule(node: AnyNode): node is CSSRule {
 	return node.type === "CSSRule";
 }
 
+interface PrefixCSSSelectorProps {
+	selector: CSSSelector
+	prefix: string
+	namesToFeatures: Map<string, string>
+	targets: Browser[]
+}
+
 function prefixCSSSelector(
-	selector: CSSSelector,
-	prefix: string,
-	namesToFeatures: Map<string, string>,
-	targets: Browser[],
+	{
+		selector,
+		prefix,
+		namesToFeatures,
+		targets,
+	}: PrefixCSSSelectorProps,
 ) {
-	const newPatterns = selector.patterns.map((pattern) => {
+	const newPatterns = selector.patterns.map(pattern => {
 		if (isPseudoClass(pattern)) {
 			const browserFeature = namesToFeatures.get(pattern.value);
 			if (browserFeature === undefined) {
@@ -294,36 +301,43 @@ function prefixCSSSelector(
 				value: `-${prefix}-${pattern.value}`,
 			});
 		}
-
 		return pattern;
-	});
+	})
+
 	return cssSelector.create({
 		...selector,
 		patterns: newPatterns,
 	});
 }
 
-function prefixCSSRule(
-	rule: CSSRule,
+interface PrefixCSSRulePreludeProps {
+		rule: CSSRule,
 	prefix: string,
 	namesToFeatures: Map<string, string>,
 	targets: Browser[],
+}
+
+function prefixCSSRulePrelude(
+	{rule,
+	prefix,
+	namesToFeatures,
+	targets}: PrefixCSSRulePreludeProps
 ) {
 	// COMMENT: here we are sure that at least one selector will be changed
 	// so I think that's the most efficient way to write it
-	const newSelectors = rule.prelude.map((selector) =>
-		prefixCSSSelector(selector, prefix, namesToFeatures, targets)
+	const newPrelude = rule.prelude.map((selector) =>
+		prefixCSSSelector({selector, prefix, namesToFeatures, targets})
 	);
 	return cssRule.create({
 		...rule,
-		prelude: newSelectors,
+		prelude: newPrelude,
 	});
 }
 
 export function prefixPseudoInCSSRoot(
 	path: PrefixCSSRootCompilerPath,
 	namesToFeatures: Map<string, string>,
-) {
+): signals.EnterSignal {
 	const targets = getTargets(path);
 
 	// COMMENT: Maybe write this in a more efficient manner?
@@ -341,7 +355,7 @@ export function prefixPseudoInCSSRoot(
 		}
 
 		for (const prefix of prefixes) {
-			newBody.push(prefixCSSRule(node, prefix, namesToFeatures, targets));
+			newBody.push(prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}));
 		}
 	}
 
@@ -358,12 +372,12 @@ export function prefixPseudoInCSSRoot(
 export function prefixPseudoInCSSBlock(
 	path: PrefixCSSBlockCompilerPath,
 	namesToFeatures: Map<string, string>,
-) {
+): signals.EnterSignal {
 	const targets = getTargets(path);
 
 	// COMMENT: same performance problem as above
 	// also, it's pretty duplicate. would it worth the effort to make it one function?
-	const newValue = [];
+	const newValue: CSSBlockValue = [];
 	for (const node of path.node.value) {
 		newValue.push(node);
 
@@ -376,11 +390,11 @@ export function prefixPseudoInCSSBlock(
 		}
 
 		for (const prefix of prefixes) {
-			newValue.push(prefixCSSRule(node, prefix, namesToFeatures, targets));
+			newValue.push(prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}));
 		}
 	}
 
-	if (newValue.length !== path.node.value.length) {
+	if (newValue.length > path.node.value.length) {
 		const newBlock = cssBlock.create({
 			...path.node,
 			value: newValue,
@@ -428,7 +442,9 @@ function getPrefixes(
 
 // COMMENT: this is temporary naming, I'm open to suggestions, I couldn't find something
 // that I really like
-export interface __TypedVisitor<
+// TODO: this should be moved outside utils as it is generic, that's
+// why I'm still using State extends UnknownObject
+export interface TypedVisitor<
 	State extends UnknownObject,
 	PathType extends CompilerPath
 > {
@@ -438,12 +454,12 @@ export interface __TypedVisitor<
 }
 
 // vistitor for (CompilerPath, State) => visitor for (PathType, State)
-export function __visitorTransformer<
+export function transformVisitor<
 	State extends UnknownObject,
 	PathType extends CompilerPath
 >(
 	name: string,
-	visitor: __TypedVisitor<State, PathType>,
+	visitor: TypedVisitor<State, PathType>,
 	isPathType: (path: CompilerPath) => path is PathType,
 ): Visitor<State> {
 	return {

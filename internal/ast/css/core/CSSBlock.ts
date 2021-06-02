@@ -1,8 +1,5 @@
 import {
-	AnyCSSValue,
-	CSSAtRule,
-	CSSDeclaration,
-	CSSRule,
+	CSSBlockValue,
 	NodeBaseWithComments,
 } from "@internal/ast";
 import {createBuilder} from "../../utils";
@@ -10,7 +7,7 @@ import {createBuilder} from "../../utils";
 export interface CSSBlock extends NodeBaseWithComments {
 	readonly type: "CSSBlock";
 	readonly startingTokenValue?: string;
-	readonly value?: Array<AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration>;
+	readonly value?: CSSBlockValue;
 }
 export const cssBlock = createBuilder<CSSBlock>(
 	"CSSBlock",

@@ -1,11 +1,14 @@
 import * as n from "@internal/ast";
 import {
 	CSSAtPage,
+	CSSRule,
+	CSSAtRule,
 	CSSBlock,
 	CSSCalcFunction,
 	CSSCalcSum,
 	CSSComma,
 	CSSCustomProperty,
+	CSSDeclaration,
 	CSSDimension,
 	CSSFontFace,
 	CSSFunction,
@@ -93,3 +96,5 @@ export type CSSAtRuleValue =
 	| CSSMediaQueryList
 	| CSSAtPage
 	| CSSFontFace;
+
+export type CSSBlockValue =  Array<AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration>;
