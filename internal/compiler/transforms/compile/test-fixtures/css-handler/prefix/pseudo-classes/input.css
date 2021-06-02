@@ -1,7 +1,0 @@
-.parent > .child:any-link, .example:read-only {
-	width: 10px;
-}
-
-.parent2 > .child2:any-link, .example2:read-only {
-	width: 10px;
-}

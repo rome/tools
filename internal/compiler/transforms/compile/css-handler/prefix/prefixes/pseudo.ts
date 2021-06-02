@@ -5,27 +5,30 @@ import {
 	prefixPseudoInCSSRoot,
 } from "../utils";
 
-const pseudoClassesFeatures = new Map([
+const pseudoSelectorsFeatures = new Map([
+	// classes
 	["any-link", "css-any-link"],
 	["fullscreen", "fullscreen"],
 	["read-only", "css-read-only-write"],
 	["write-only", "css-read-only-write"],
-]);
 
-// COMMENT: unlike other prefixers, here I return a single visitor for all properties
-// This is to allow grouping prefixes in an efficient manner
+	// elements
+	["selection", "css-selection"],
+	["placeholder", "css-placeholder"],
+	["backdrop", "fullscreen"],
+])
 
 export default [
 	createPrefixCSSRootVisitor({
-		name: "pseudo-classes",
+		name: "pseudo-selectors",
 		enter: (path) => {
-			return prefixPseudoInCSSRoot(path, pseudoClassesFeatures);
+			return prefixPseudoInCSSRoot(path, pseudoSelectorsFeatures);
 		},
 	}),
 	createPrefixCSSBlockVisitor({
-		name: "pseudo-classes",
+		name: "pseudo-selectors",
 		enter: (path) => {
-			return prefixPseudoInCSSBlock(path, pseudoClassesFeatures);
+			return prefixPseudoInCSSBlock(path, pseudoSelectorsFeatures);
 		},
 	}),
 ];

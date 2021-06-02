@@ -13,7 +13,7 @@ import {
 	cssPseudoClassSelector,
 	cssRoot,
 	cssRule,
-	cssSelector, CSSBlockValue
+	cssSelector, CSSBlockValue, CSSPseudoElementSelector, cssPseudoElementSelector
 } from "@internal/ast";
 import {RequiredProps, UnknownObject} from "@internal/typescript-helpers";
 import {
@@ -229,6 +229,10 @@ function isPseudoClass(node: AnyCSSPattern): node is CSSPseudoClassSelector {
 	return node.type === "CSSPseudoClassSelector";
 }
 
+function isPseudoElement(node: AnyCSSPattern): node is CSSPseudoElementSelector {
+	return node.type === "CSSPseudoElementSelector";
+}
+
 function collectCSSSelectorPrefixes(
 	selector: CSSSelector,
 	namesToFeatures: Map<string, string>,
@@ -237,7 +241,7 @@ function collectCSSSelectorPrefixes(
 	const allPrefixes = new Set<string>();
 
 	for (const pattern of selector.patterns) {
-		if (isPseudoClass(pattern)) {
+		if (isPseudoClass(pattern) || isPseudoElement(pattern)) {
 				const browserFeature = namesToFeatures.get(pattern.value);
 				if (browserFeature === undefined) continue;
 				const newPrefixes = getPrefixes(targets, browserFeature);
@@ -287,7 +291,7 @@ function prefixCSSSelector(
 	}: PrefixCSSSelectorProps,
 ) {
 	const newPatterns = selector.patterns.map(pattern => {
-		if (isPseudoClass(pattern)) {
+		if (isPseudoClass(pattern) || isPseudoElement(pattern)) {
 			const browserFeature = namesToFeatures.get(pattern.value);
 			if (browserFeature === undefined) {
 				return pattern;
@@ -296,10 +300,18 @@ function prefixCSSSelector(
 			if (!prefixes.has(prefix)) {
 				return pattern;
 			}
-			return cssPseudoClassSelector.create({
-				...pattern,
-				value: `-${prefix}-${pattern.value}`,
-			});
+			
+			if (isPseudoClass(pattern)) {
+				return cssPseudoClassSelector.create({
+					...pattern,
+					value: `-${prefix}-${pattern.value}`,
+				});
+			} else {
+				return cssPseudoElementSelector.create({
+					...pattern,
+					value: `-${prefix}-${pattern.value}`,
+				});
+			}
 		}
 		return pattern;
 	})
@@ -323,8 +335,6 @@ function prefixCSSRulePrelude(
 	namesToFeatures,
 	targets}: PrefixCSSRulePreludeProps
 ) {
-	// COMMENT: here we are sure that at least one selector will be changed
-	// so I think that's the most efficient way to write it
 	const newPrelude = rule.prelude.map((selector) =>
 		prefixCSSSelector({selector, prefix, namesToFeatures, targets})
 	);
@@ -340,8 +350,6 @@ export function prefixPseudoInCSSRoot(
 ): signals.EnterSignal {
 	const targets = getTargets(path);
 
-	// COMMENT: Maybe write this in a more efficient manner?
-	// If there are no prefixes to be added, newBody is still created :P
 	const newBody = [];
 	for (const node of path.node.body) {
 		newBody.push(node);
@@ -359,7 +367,7 @@ export function prefixPseudoInCSSRoot(
 		}
 	}
 
-	if (newBody.length !== path.node.body.length) {
+	if (newBody.length > path.node.body.length) {
 		const newRoot = cssRoot.create({
 			...path.node,
 			body: newBody,
@@ -375,8 +383,6 @@ export function prefixPseudoInCSSBlock(
 ): signals.EnterSignal {
 	const targets = getTargets(path);
 
-	// COMMENT: same performance problem as above
-	// also, it's pretty duplicate. would it worth the effort to make it one function?
 	const newValue: CSSBlockValue = [];
 	for (const node of path.node.value) {
 		newValue.push(node);
@@ -440,8 +446,6 @@ function getPrefixes(
 	return prefixCache.get(browserFeaturesKey)!;
 }
 
-// COMMENT: this is temporary naming, I'm open to suggestions, I couldn't find something
-// that I really like
 // TODO: this should be moved outside utils as it is generic, that's
 // why I'm still using State extends UnknownObject
 export interface TypedVisitor<
