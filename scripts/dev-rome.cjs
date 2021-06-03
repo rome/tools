@@ -45,6 +45,8 @@ function unlink(loc) {
 }
 
 /**
+ * Keep this in sync with createPipePath in internal/core/common/constants.ts
+ * 
  * @param version {string}
  * @returns {string}
  */
