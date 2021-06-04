@@ -169,7 +169,7 @@ export function createResourceFromWebSocket(socket: WebSocket, name: string = "W
       socket.close();
     },
   });
-  socket.addEventListener("open", () => {
+  socket.addEventListener("close", () => {
     resc.release();
   });
   return resc;
