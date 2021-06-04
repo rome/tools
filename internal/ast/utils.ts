@@ -101,7 +101,8 @@ class Builder<Node extends AnyNode> {
 	}
 }
 
-class QuickBuilder<Node extends AnyNode, QuickKey extends keyof Node> extends Builder<Node> {
+class QuickBuilder<Node extends AnyNode, QuickKey extends keyof Node>
+	extends Builder<Node> {
 	constructor(type: string, quickKey: QuickKey) {
 		super(type);
 		this.quickKey = quickKey;

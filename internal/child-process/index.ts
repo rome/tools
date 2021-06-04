@@ -115,7 +115,9 @@ export class ChildProcess {
 		const code = await this.wait();
 		if (code !== 0) {
 			throw this.unexpected(
-				markup`Command <emphasis>${this.command}</emphasis> failed. Exited with code ${String(code)}.`,
+				markup`Command <emphasis>${this.command}</emphasis> failed. Exited with code ${String(
+					code,
+				)}.`,
 			);
 		}
 		return this;
