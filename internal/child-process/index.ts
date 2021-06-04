@@ -115,13 +115,13 @@ export class ChildProcess {
 		const code = await this.wait();
 		if (code !== 0) {
 			throw this.unexpected(
-				markup`Command <emphasis>${this.command}</emphasis> failed. Exited with code ${code}.`,
+				markup`Command <emphasis>${this.command}</emphasis> failed. Exited with code ${String(code)}.`,
 			);
 		}
 		return this;
 	}
 
-	public wait(): Promise<number> {
+	public wait(): Promise<number | null> {
 		return new Promise((resolve) => {
 			this.process.on(
 				"close",
