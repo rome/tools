@@ -1,19 +1,60 @@
+/* Single pseudo selectors */
+.example:any-link {
+	width: 10px;
+}
+
+.example::selection {
+	width: 10px;
+}
+
+/* Multiple pseudo classes */
 .parent > .child:any-link, .example:read-only {
 	width: 10px;
 }
 
-.parent2 > .child2:any-link, .example2:read-only {
+/* Multiple pseudo elements */
+.parent2 > .child2::placeholder, .example2::selection {
 	width: 10px;
 }
 
-.parent3 > .child3::placeholder, .example3::selection {
+/* Multiple pseudo selectors mixed */
+.parent3 > .child3:any-link, .example3::placeholder {
 	width: 10px;
 }
 
-.parent4 > .child4::placeholder, .example4::selection {
+.parent3 > .child3::selection, .example3:read-only {
 	width: 10px;
 }
 
-.parent5 > .child5:any-link, .example5::placeholder {
+/* Already prefixed */
+.example4:read-only, .example5:-moz-any-link, .example6::placeholder {
 	width: 10px;
+}
+
+.example5:any-link {
+	width: 10px;
+}
+
+.example5:-moz-any-link {
+	width: 10px;
+}
+
+/* Duplicate rules */
+.example6:any-link {
+	width: 10px;
+}
+
+.example6:any-link {
+	width: 10px;
+}
+
+/* Nested inside CSSAtRule */
+@media screen and (max-width: 992px) {
+  .example:any-link {
+	width: 10px;
+  }
+
+  .example2::placeholder {
+	width: 10px;
+  }
 }

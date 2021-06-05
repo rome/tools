@@ -13,30 +13,90 @@
 ### `Input`
 
 ```css
+/* Single pseudo selectors */
+.example:any-link {
+	width: 10px;
+}
+
+.example::selection {
+	width: 10px;
+}
+
+/* Multiple pseudo classes */
 .parent > .child:any-link, .example:read-only {
 	width: 10px;
 }
 
-.parent2 > .child2:any-link, .example2:read-only {
+/* Multiple pseudo elements */
+.parent2 > .child2::placeholder, .example2::selection {
 	width: 10px;
 }
 
-.parent3 > .child3::placeholder, .example3::selection {
+/* Multiple pseudo selectors mixed */
+.parent3 > .child3:any-link, .example3::placeholder {
 	width: 10px;
 }
 
-.parent4 > .child4::placeholder, .example4::selection {
+.parent3 > .child3::selection, .example3:read-only {
 	width: 10px;
 }
 
-.parent5 > .child5:any-link, .example5::placeholder {
+/* Already prefixed */
+.example4:read-only, .example5:-moz-any-link, .example6::placeholder {
 	width: 10px;
+}
+
+.example5:any-link {
+	width: 10px;
+}
+
+.example5:-moz-any-link {
+	width: 10px;
+}
+
+/* Duplicate rules */
+.example6:any-link {
+	width: 10px;
+}
+
+.example6:any-link {
+	width: 10px;
+}
+
+/* Nested inside CSSAtRule */
+@media screen and (max-width: 992px) {
+  .example:any-link {
+	width: 10px;
+  }
+
+  .example2::placeholder {
+	width: 10px;
+  }
 }
 ```
 
 ### `Output`
 
 ```css
+/* Single pseudo selectors */
+.example:any-link {
+	width: 10px;
+}
+.example:-moz-any-link {
+	width: 10px;
+}
+.example:-webkit-any-link {
+	width: 10px;
+}
+
+.example::selection {
+	width: 10px;
+}
+.example::-moz-selection {
+	width: 10px;
+}
+
+/* Multiple pseudo classes */
 .parent > .child:any-link,
 .example:read-only {
 	width: 10px;
@@ -50,68 +110,111 @@
 	width: 10px;
 }
 
-.parent2 > .child2:any-link,
-.example2:read-only {
+/* Multiple pseudo elements */
+.parent2 > .child2::placeholder,
+.example2::selection {
 	width: 10px;
 }
-.parent2 > .child2:-moz-any-link,
-.example2:-moz-read-only {
+.parent2 > .child2::-ms-placeholder,
+.example2::selection {
 	width: 10px;
 }
-.parent2 > .child2:-webkit-any-link,
-.example2:read-only {
+.parent2 > .child2::-moz-placeholder,
+.example2::-moz-selection {
 	width: 10px;
 }
-
-.parent3 > .child3::placeholder,
-.example3::selection {
-	width: 10px;
-}
-.parent3 > .child3::-ms-placeholder,
-.example3::selection {
-	width: 10px;
-}
-.parent3 > .child3::-moz-placeholder,
-.example3::-moz-selection {
-	width: 10px;
-}
-.parent3 > .child3::-webkit-placeholder,
-.example3::selection {
+.parent2 > .child2::-webkit-placeholder,
+.example2::selection {
 	width: 10px;
 }
 
-.parent4 > .child4::placeholder,
-.example4::selection {
+/* Multiple pseudo selectors mixed */
+.parent3 > .child3:any-link,
+.example3::placeholder {
 	width: 10px;
 }
-.parent4 > .child4::-ms-placeholder,
-.example4::selection {
+.parent3 > .child3:-moz-any-link,
+.example3::-moz-placeholder {
 	width: 10px;
 }
-.parent4 > .child4::-moz-placeholder,
-.example4::-moz-selection {
+.parent3 > .child3:-webkit-any-link,
+.example3::-webkit-placeholder {
 	width: 10px;
 }
-.parent4 > .child4::-webkit-placeholder,
-.example4::selection {
+.parent3 > .child3:any-link,
+.example3::-ms-placeholder {
 	width: 10px;
 }
 
-.parent5 > .child5:any-link,
-.example5::placeholder {
+.parent3 > .child3::selection,
+.example3:read-only {
 	width: 10px;
 }
-.parent5 > .child5:-moz-any-link,
-.example5::-moz-placeholder {
+.parent3 > .child3::-moz-selection,
+.example3:-moz-read-only {
 	width: 10px;
 }
-.parent5 > .child5:-webkit-any-link,
-.example5::-webkit-placeholder {
+
+/* Already prefixed */
+.example4:read-only,
+.example5:-moz-any-link,
+.example6::placeholder {
 	width: 10px;
 }
-.parent5 > .child5:any-link,
-.example5::-ms-placeholder {
+
+.example5:any-link {
 	width: 10px;
 }
+
+.example5:-moz-any-link {
+	width: 10px;
+}
+
+/* Duplicate rules */
+.example6:any-link {
+	width: 10px;
+}
+.example6:-moz-any-link {
+	width: 10px;
+}
+.example6:-webkit-any-link {
+	width: 10px;
+}
+
+.example6:any-link {
+	width: 10px;
+}
+.example6:-moz-any-link {
+	width: 10px;
+}
+.example6:-webkit-any-link {
+	width: 10px;
+}
+
+/* Nested inside CSSAtRule */
+@media screen and (max-width: 992px){
+	.example:any-link {
+		width: 10px;
+	}
+	.example:-moz-any-link {
+		width: 10px;
+	}
+	.example:-webkit-any-link {
+		width: 10px;
+	}
+	.example2::placeholder {
+		width: 10px;
+	}
+	.example2::-ms-placeholder {
+		width: 10px;
+	}
+	.example2::-moz-placeholder {
+		width: 10px;
+	}
+	.example2::-webkit-placeholder {
+		width: 10px;
+	}
+}
+
 
 ```

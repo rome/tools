@@ -11,6 +11,7 @@ import {
 	CSSRoot,
 	CSSRule,
 	CSSSelector,
+	MOCK_PARENT,
 	cssBlock,
 	cssDeclaration,
 	cssIdentifier,
@@ -23,22 +24,17 @@ import {
 import {RequiredProps, UnknownObject} from "@internal/typescript-helpers";
 import {
 	CompilerPath,
-	EnterSignal,
-	ExitSignal,
+	TypedVisitor,
 	Visitor,
 	signals,
+	transformVisitor,
 } from "@internal/compiler";
 import {Browser} from "@internal/browser-features/Browser";
 import {ProjectConfig} from "@internal/project";
 import {getBrowser} from "@internal/browser-features";
-import {
-	VisitorStateEnter,
-	VisitorStateExit,
-} from "@internal/compiler/lib/VisitorState";
+import {Builder} from "@internal/formatter";
+import {printTokenToString} from "@internal/formatter/Printer";
 
-// TODO: This will be changed in further commits to allow
-// implementing other features which require state
-// eg. purging unnecessary prefixes
 export type CompilerPrefixerState = UnknownObject;
 
 export function findPropertyIndex(
@@ -94,11 +90,7 @@ export interface PrefixCSSBlockVisitor extends TypedVisitor<
 export function createPrefixCSSBlockVisitor(
 	visitor: PrefixCSSBlockVisitor,
 ): Visitor<CompilerPrefixerState> {
-	return transformVisitor<CompilerPrefixerState, PrefixCSSBlockCompilerPath>(
-		"css-handler/prefix",
-		visitor,
-		isCssBlockAndHasValue,
-	);
+	return transformVisitor("css-handler/prefix", visitor, isCssBlockAndHasValue);
 }
 
 interface PrefixCSSPropertyProps {
@@ -223,48 +215,202 @@ export interface PrefixCSSRootVisitor extends TypedVisitor<
 export function createPrefixCSSRootVisitor(
 	visitor: PrefixCSSRootVisitor,
 ): Visitor<CompilerPrefixerState> {
-	return transformVisitor<CompilerPrefixerState, PrefixCSSRootCompilerPath>(
+	return transformVisitor(
 		"css-handler/prefix",
 		visitor,
 		(path): path is PrefixCSSRootCompilerPath => path.node.type === "CSSRoot",
 	);
 }
 
-function isPseudoClassSelector(
-	node: AnyCSSPattern,
-): node is CSSPseudoClassSelector {
-	return node.type === "CSSPseudoClassSelector";
+interface PrefixPseudoSelectorsInRootProps {
+	path: PrefixCSSRootCompilerPath;
+	namesToFeatures: Map<string, string>;
 }
 
-function isPseudoElementSelector(
-	node: AnyCSSPattern,
-): node is CSSPseudoElementSelector {
-	return node.type === "CSSPseudoElementSelector";
+/**
+ * Iterate over all rules in the root and prefix their 
+ * pseudo-selectors if it is the case. The root
+ * is replaced only if we prefixed at least one
+ * rule.
+ */
+export function prefixPseudoSelectorsInRoot(
+	{path, namesToFeatures}: PrefixPseudoSelectorsInRootProps,
+): signals.EnterSignal {
+	const hasRules = path.node.body.some(isCSSRule);
+	if (!hasRules) {
+		return signals.retain;
+	}
+
+	const targets = getTargets(path);
+
+	// The cast was necessary for a generic implementation
+	// Templates are not flexible enough in this case
+	const newBody = prefixRulesInArray(path.node.body, namesToFeatures, targets) as (
+		| CSSRule
+		| CSSAtRule)[];
+
+	if (newBody.length > path.node.body.length) {
+		const newRoot = cssRoot.create({
+			...path.node,
+			body: newBody,
+		});
+		return signals.replace(newRoot);
+	}
+	return signals.retain;
 }
 
-function isPseudoSelector(node: AnyCSSPattern): node is CSSPseudoSelector {
-	return isPseudoClassSelector(node) || isPseudoElementSelector(node);
+interface PrefixPseudoSelectorsInBlockProps {
+	path: PrefixCSSBlockCompilerPath;
+	namesToFeatures: Map<string, string>;
 }
 
-function collectCSSSelectorPrefixes(
-	selector: CSSSelector,
+/**
+ * Same functionality as `prefixPseudoSelectorsInRoot` but
+ * for CSS blocks.
+ */
+export function prefixPseudoSelectorsInBlock(
+	{path, namesToFeatures}: PrefixPseudoSelectorsInBlockProps,
+): signals.EnterSignal {
+	const hasRules = path.node.value.some(isCSSRule);
+	if (!hasRules) {
+		return signals.retain;
+	}
+
+	const targets = getTargets(path);
+	const newValue = prefixRulesInArray(path.node.value, namesToFeatures, targets) as CSSBlockValue;
+
+	if (newValue.length > path.node.value.length) {
+		const newBlock = cssBlock.create({
+			...path.node,
+			value: newValue,
+			loc: path.node.loc,
+		});
+		return signals.replace(newBlock);
+	}
+	return signals.retain;
+}
+
+interface RuleOccurrence {
+	original: boolean;
+	prefixed: boolean;
+}
+
+/**
+ * Prefixes any rule with pseudo-selectors if it is the case.
+ * It detects if a rule already has a prefixed version or if it
+ * is prefixed itself and ignores it.
+ */
+function prefixRulesInArray(
+	array: AnyNode[],
 	namesToFeatures: Map<string, string>,
 	targets: Browser[],
 ) {
-	const allPrefixes = new Set<string>();
+	const result: AnyNode[] = [];
+	const stringCache = new WeakMap<CSSRule, string>();
+	const occurrenceCache = new Map<string, RuleOccurrence>();
 
-	for (const pattern of selector.patterns) {
-		if (isPseudoSelector(pattern)) {
-			const browserFeature = namesToFeatures.get(pattern.value);
-			if (browserFeature === undefined) {
-				continue;
+	// build the caches for rules' occurrences
+	for (const node of array) {
+		if (isCSSRule(node)) {
+			// convert the rule prelude to a string
+			const {text, prefixed} = rulePreludeToString(node);
+			stringCache.set(node, text);
+
+			if (!occurrenceCache.has(text)) {
+				occurrenceCache.set(text, {original: false, prefixed: false});
 			}
-			const newPrefixes = getPrefixes(targets, browserFeature);
-			newPrefixes.forEach((newPrefix) => allPrefixes.add(newPrefix));
+
+			// remember if it is an "original" rule or
+			// a "prefixed" one
+			const occurrence = occurrenceCache.get(text)!;
+			if (prefixed && !occurrence.prefixed) {
+				occurrenceCache.set(
+					text,
+					{
+						...occurrence,
+						prefixed: true,
+					},
+				);
+			} else if (!(prefixed || occurrence.original)) {
+				occurrenceCache.set(
+					text,
+					{
+						...occurrence,
+						original: true,
+					},
+				);
+			}
 		}
 	}
 
-	return allPrefixes;
+	// build the result array
+	for (const node of array) {
+		// keep the original node
+		result.push(node);
+
+		if (isCSSRule(node)) {
+			// get the corresponding occurrence, we are sure it exists
+			const text = stringCache.get(node)!;
+			const occurrence = occurrenceCache.get(text)!;
+
+			// if the rule has no prefixed version, prefix it
+			if (occurrence.original && !occurrence.prefixed) {
+				const prefixes = collectCSSRulePrefixes(node, namesToFeatures, targets);
+				if (prefixes.size === 0) {
+					continue;
+				}
+
+				for (const prefix of prefixes) {
+					result.push(
+						prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}),
+					);
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
+// Regular expression for matching prefixes
+const prefixRegExpr = /-[a-z]+-/g;
+
+interface RuleRepresentation {
+	text: string;
+	prefixed: boolean;
+}
+
+/**
+ * If we want to check if a rule is already prefixed we
+ * need a distinctive representation for different rules
+ * but indistinctive for variations of the same rule.
+ * 
+ * eg. .example:any-link != .example:read-only
+ *     .example:any-link == .example:-moz-any-link
+ * 
+ * The function below converts the rule's prelude to a string
+ * and removes all occurrences of prefixes. It also returns if
+ * the rule was already containing a prefix.
+ */
+function rulePreludeToString(rule: CSSRule): RuleRepresentation {
+	const builder = new Builder({
+		allowInterpreterDirective: false,
+		typeAnnotations: false,
+	});
+	const token = builder.tokenizeStatementList(rule.prelude, MOCK_PARENT);
+	const {code} = printTokenToString(
+		token,
+		{
+			indentString: "",
+			printWidth: Infinity,
+			rootIndent: 0,
+			tabWidth: 2,
+		},
+	);
+	return {
+		text: code.replace(prefixRegExpr, ""),
+		prefixed: prefixRegExpr.test(code),
+	};
 }
 
 function collectCSSRulePrefixes(
@@ -286,8 +432,25 @@ function collectCSSRulePrefixes(
 	return allPrefixes;
 }
 
-function isCSSRule(node: AnyNode): node is CSSRule {
-	return node.type === "CSSRule";
+function collectCSSSelectorPrefixes(
+	selector: CSSSelector,
+	namesToFeatures: Map<string, string>,
+	targets: Browser[],
+) {
+	const allPrefixes = new Set<string>();
+
+	for (const pattern of selector.patterns) {
+		if (isPseudoSelector(pattern)) {
+			const browserFeature = namesToFeatures.get(pattern.value);
+			if (browserFeature === undefined) {
+				continue;
+			}
+			const newPrefixes = getPrefixes(targets, browserFeature);
+			newPrefixes.forEach((newPrefix) => allPrefixes.add(newPrefix));
+		}
+	}
+
+	return allPrefixes;
 }
 
 interface PrefixCSSSelectorProps {
@@ -356,74 +519,24 @@ function prefixCSSRulePrelude(
 	});
 }
 
-export function prefixPseudoSelectorInCSSRoot(
-	path: PrefixCSSRootCompilerPath,
-	namesToFeatures: Map<string, string>,
-): signals.EnterSignal {
-	const targets = getTargets(path);
-
-	const newBody: (CSSRule | CSSAtRule)[] = [];
-	for (const node of path.node.body) {
-		newBody.push(node);
-
-		if (!isCSSRule(node)) {
-			continue;
-		}
-		const prefixes = collectCSSRulePrefixes(node, namesToFeatures, targets);
-		if (prefixes.size === 0) {
-			continue;
-		}
-
-		for (const prefix of prefixes) {
-			newBody.push(
-				prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}),
-			);
-		}
-	}
-
-	if (newBody.length > path.node.body.length) {
-		const newRoot = cssRoot.create({
-			...path.node,
-			body: newBody,
-		});
-		return signals.replace(newRoot);
-	}
-	return signals.retain;
+function isPseudoClassSelector(
+	node: AnyCSSPattern,
+): node is CSSPseudoClassSelector {
+	return node.type === "CSSPseudoClassSelector";
 }
 
-export function prefixPseudoSelectorInCSSBlock(
-	path: PrefixCSSBlockCompilerPath,
-	namesToFeatures: Map<string, string>,
-): signals.EnterSignal {
-	const targets = getTargets(path);
+function isPseudoElementSelector(
+	node: AnyCSSPattern,
+): node is CSSPseudoElementSelector {
+	return node.type === "CSSPseudoElementSelector";
+}
 
-	const newValue: CSSBlockValue = [];
-	for (const node of path.node.value) {
-		newValue.push(node);
+function isPseudoSelector(node: AnyCSSPattern): node is CSSPseudoSelector {
+	return isPseudoClassSelector(node) || isPseudoElementSelector(node);
+}
 
-		if (!isCSSRule(node)) {
-			continue;
-		}
-		const prefixes = collectCSSRulePrefixes(node, namesToFeatures, targets);
-		if (prefixes.size === 0) {
-			continue;
-		}
-
-		for (const prefix of prefixes) {
-			newValue.push(
-				prefixCSSRulePrelude({rule: node, prefix, namesToFeatures, targets}),
-			);
-		}
-	}
-
-	if (newValue.length > path.node.value.length) {
-		const newBlock = cssBlock.create({
-			...path.node,
-			value: newValue,
-		});
-		return signals.replace(newBlock);
-	}
-	return signals.retain;
+function isCSSRule(node: AnyNode): node is CSSRule {
+	return node.type === "CSSRule";
 }
 
 const projectConfigToTargets: WeakMap<ProjectConfig, Browser[]> = new WeakMap();
@@ -460,41 +573,4 @@ function getPrefixes(
 	}
 	// `!` thanks Typescript
 	return prefixCache.get(browserFeaturesKey)!;
-}
-
-// TODO: this should be moved outside utils as it is generic, that's
-// why I'm still using State extends UnknownObject
-export interface TypedVisitor<
-	State extends UnknownObject,
-	PathType extends CompilerPath
-> {
-	name: string;
-	enter?: (path: PathType, state: VisitorStateEnter<State>) => EnterSignal;
-	exit?: (path: PathType, state: VisitorStateExit<State>) => ExitSignal;
-}
-
-// vistitor for (CompilerPath, State) => visitor for (PathType, State)
-export function transformVisitor<
-	State extends UnknownObject,
-	PathType extends CompilerPath
->(
-	name: string,
-	visitor: TypedVisitor<State, PathType>,
-	isPathType: (path: CompilerPath) => path is PathType,
-): Visitor<State> {
-	return {
-		name: `${name}/${visitor.name}`,
-		enter: (path, state) => {
-			if (visitor.enter !== undefined && isPathType(path)) {
-				return visitor.enter(path, state);
-			}
-			return signals.retain;
-		},
-		exit: (path, state) => {
-			if (visitor.exit !== undefined && isPathType(path)) {
-				return visitor.exit(path, state);
-			}
-			return signals.retain;
-		},
-	};
 }

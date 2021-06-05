@@ -1,8 +1,8 @@
 import {
 	createPrefixCSSBlockVisitor,
 	createPrefixCSSRootVisitor,
-	prefixPseudoSelectorInCSSBlock,
-	prefixPseudoSelectorInCSSRoot,
+	prefixPseudoSelectorsInBlock,
+	prefixPseudoSelectorsInRoot,
 } from "../utils";
 
 const pseudoSelectorsFeatures = new Map([
@@ -22,6 +22,7 @@ const pseudoSelectorsFeatures = new Map([
 	["selection", "css-selection"],
 
 	// https://github.com/Fyrd/caniuse/blob/main/features-json/css-placeholder.json
+	// TODO: BUG, is fetching the wrong prefixes. see autoprefixer
 	["placeholder", "css-placeholder"],
 
 	// https://github.com/Fyrd/caniuse/blob/main/features-json/fullscreen.json
@@ -32,13 +33,19 @@ export default [
 	createPrefixCSSRootVisitor({
 		name: "pseudo-selectors",
 		enter: (path) => {
-			return prefixPseudoSelectorInCSSRoot(path, pseudoSelectorsFeatures);
+			return prefixPseudoSelectorsInRoot({
+				path,
+				namesToFeatures: pseudoSelectorsFeatures,
+			});
 		},
 	}),
 	createPrefixCSSBlockVisitor({
 		name: "pseudo-selectors",
 		enter: (path) => {
-			return prefixPseudoSelectorInCSSBlock(path, pseudoSelectorsFeatures);
+			return prefixPseudoSelectorsInBlock({
+				path,
+				namesToFeatures: pseudoSelectorsFeatures,
+			});
 		},
 	}),
 ];
