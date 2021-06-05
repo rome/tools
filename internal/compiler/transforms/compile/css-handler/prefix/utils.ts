@@ -117,8 +117,12 @@ export function prefixCSSProperty(
 	const [propertyIndex, property] = findPropertyIndex(node, propertyName);
 	if (property !== undefined) {
 		const newDeclarations = [];
+		const prefixes = purgePrefixes(
+			getPrefixes(getTargets(path), browserFeaturesKey),
+			path,
+		);
 
-		for (const prefix of getPrefixes(getTargets(path), browserFeaturesKey)) {
+		for (const prefix of prefixes) {
 			const hasPrefix =
 				findPropertyIndex(node, rename(`-${prefix}-${propertyName}`))[0] !== -1;
 			if (!hasPrefix) {
@@ -167,7 +171,12 @@ export function prefixCSSValue(
 
 	if (property !== undefined) {
 		const newDeclarations = [];
-		for (const prefix of getPrefixes(getTargets(path), browserFeaturesKey)) {
+		const prefixes = purgePrefixes(
+			getPrefixes(getTargets(path), browserFeaturesKey),
+			path,
+		);
+
+		for (const prefix of prefixes) {
 			const hasPrefix =
 				findPropertyValueIndex(
 					node,
@@ -201,6 +210,50 @@ export function prefixCSSValue(
 	}
 
 	return signals.retain;
+}
+
+// Regular expression for matching prefixes
+const prefixRegExpr = /-[a-z]+-/g;
+
+/**
+ * Restrict the prefixes in the block to the prefixes
+ * present in the rule's prelude (if it's the case). 
+ */
+function purgePrefixes(prefixes: Set<string>, path: PrefixCSSBlockCompilerPath) {
+	if (isCSSRule(path.parent)) {
+		const allowedPrefixes = collectExistingPrefixesFromRule(path.parent);
+		if (allowedPrefixes.size > 0) {
+			return new Set([...prefixes].filter((x) => allowedPrefixes.has(x)));
+		}
+	}
+	return prefixes;
+}
+
+function collectExistingPrefixesFromRule(rule: CSSRule) {
+	const existingPrefixes = new Set<string>();
+	for (const selector of rule.prelude) {
+		for (const pattern of selector.patterns) {
+			if (isPseudoSelector(pattern)) {
+				const name = getPrefixName(pattern.value);
+				if (name !== undefined) {
+					existingPrefixes.add(name);
+				}
+			}
+		}
+	}
+	console.log(existingPrefixes);
+	return existingPrefixes;
+}
+
+// Regular expression for matching just the prefix name
+const prefixNameRegExpr = /-([a-z]+)-/;
+
+function getPrefixName(value: string) {
+	const matched = value.match(prefixNameRegExpr);
+	if (matched === null) {
+		return undefined;
+	}
+	return matched[1];
 }
 
 export type PrefixCSSRootCompilerPath = CompilerPath & {
@@ -371,9 +424,6 @@ function prefixRulesInArray(
 
 	return result;
 }
-
-// Regular expression for matching prefixes
-const prefixRegExpr = /-[a-z]+-/g;
 
 interface RuleRepresentation {
 	text: string;

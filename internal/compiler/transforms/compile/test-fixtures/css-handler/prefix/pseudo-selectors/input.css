@@ -58,3 +58,8 @@
 	width: 10px;
   }
 }
+
+/* Add only the necessary prefixes */
+.example7:any-link {
+   width: min-content;
+}

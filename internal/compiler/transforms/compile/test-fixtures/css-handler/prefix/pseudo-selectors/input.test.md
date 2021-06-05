@@ -73,6 +73,11 @@
 	width: 10px;
   }
 }
+
+/* Add only the necessary prefixes */
+.example7:any-link {
+   width: min-content;
+}
 ```
 
 ### `Output`
@@ -216,5 +221,20 @@
 	}
 }
 
+
+/* Add only the necessary prefixes */
+.example7:any-link {
+	width: -moz-min-content;
+	width: -webkit-min-content;
+	width: min-content;
+}
+.example7:-moz-any-link {
+	width: -moz-min-content;
+	width: min-content;
+}
+.example7:-webkit-any-link {
+	width: -webkit-min-content;
+	width: min-content;
+}
 
 ```
