@@ -128,7 +128,7 @@
 .example2::-moz-selection {
 	width: 10px;
 }
-.parent2 > .child2::-webkit-placeholder,
+.parent2 > .child2::-webkit-input-placeholder,
 .example2::selection {
 	width: 10px;
 }
@@ -143,7 +143,7 @@
 	width: 10px;
 }
 .parent3 > .child3:-webkit-any-link,
-.example3::-webkit-placeholder {
+.example3::-webkit-input-placeholder {
 	width: 10px;
 }
 .parent3 > .child3:any-link,
@@ -216,7 +216,7 @@
 	.example2::-moz-placeholder {
 		width: 10px;
 	}
-	.example2::-webkit-placeholder {
+	.example2::-webkit-input-placeholder {
 		width: 10px;
 	}
 }

@@ -529,15 +529,21 @@ function prefixCSSSelector(
 				return pattern;
 			}
 
+			// custom case for ::placeholder
+			let renamedPrefix = prefix;
+			if (pattern.value === "placeholder") {
+				renamedPrefix = prefix.replace("webkit", "webkit-input");
+			}
+
 			if (isPseudoClassSelector(pattern)) {
 				return cssPseudoClassSelector.create({
 					...pattern,
-					value: `-${prefix}-${pattern.value}`,
+					value: `-${renamedPrefix}-${pattern.value}`,
 				});
 			} else {
 				return cssPseudoElementSelector.create({
 					...pattern,
-					value: `-${prefix}-${pattern.value}`,
+					value: `-${renamedPrefix}-${pattern.value}`,
 				});
 			}
 		}
