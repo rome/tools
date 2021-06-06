@@ -142,7 +142,7 @@ export function createResourceFromServer(server: net.Server, name: string = "net
     finalize: () => {
       return new Promise((resolve, reject) => {
         server.close((err) => {
-          if (err === undefined) {
+          if (err != null) {
             reject(err);
           } else {
             resolve();
@@ -169,7 +169,7 @@ export function createResourceFromWebSocket(socket: WebSocket, name: string = "W
       socket.close();
     },
   });
-  socket.addEventListener("open", () => {
+  socket.addEventListener("close", () => {
     resc.release();
   });
   return resc;
