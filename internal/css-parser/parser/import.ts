@@ -3,6 +3,7 @@ import {
 	CSSImport,
 	CSSAtImport
 } from "@internal/ast";
+import {nextToken} from "@internal/css-parser/tokenizer";
 
 export function parseImport(
 	parser: CSSParser,
@@ -11,7 +12,7 @@ export function parseImport(
 	const value = parseAtImport(parser);
 
 	if (value) {
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
