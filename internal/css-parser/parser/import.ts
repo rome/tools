@@ -1,8 +1,8 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
-	CSSImport,
-	CSSAtImport
+	CSSImport
 } from "@internal/ast";
+import {parseAtImport} from "@internal/css-parser/parser/at-import";
 import {nextToken} from "@internal/css-parser/tokenizer";
 
 export function parseImport(
