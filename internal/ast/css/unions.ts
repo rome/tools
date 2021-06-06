@@ -96,4 +96,4 @@ export type CSSAtImportValue =
 	| AnyCSSValue
 	| CSSSupportsCondition
 	| CSSMediaQueryList
-	| CSSFontFace
+	| CSSFontFace;

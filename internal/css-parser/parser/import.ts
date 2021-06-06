@@ -1,14 +1,14 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
-
-export function tryParseAtImport(parser: CSSParser): CSSAtImport | undefined {
-	// css at import parser rules
-}
+import {
+	CSSImport,
+	CSSAtImport
+} from "@internal/ast";
 
 export function parseImport(
 	parser: CSSParser,
 ): CSSImport | undefined {
 	const start = parser.getPosition();
-	const value = tryParseAtImport(parser);
+	const value = parseAtImport(parser);
 
 	if (value) {
 		parser.nextToken();
