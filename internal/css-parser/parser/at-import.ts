@@ -7,6 +7,7 @@ import {
 	OnAtKeyword,
 	parseDeclarationBlock,
 } from "@internal/css-parser/parser/declaration";
+import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseMediaList} from "@internal/css-parser/parser/media";
 import {parseAtSupports} from "@internal/css-parser/parser/supports";
 import {parseFontFace} from "@internal/css-parser/parser/font";
@@ -80,7 +81,7 @@ export function parseAtImport(
 	return parser.finishNode(
 		start,
 		{
-			type: "CSSAtRule",
+			type: "CSSAtImport",
 			name,
 			prelude,
 			block,
