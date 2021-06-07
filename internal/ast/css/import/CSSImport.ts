@@ -5,7 +5,7 @@ export interface CSSImport extends NodeBaseWithComments {
 	readonly type: "CSSImport";
 }
 
-export const CSSImport = createBuilder<CSSImport>(
+export const cssImport = createBuilder<CSSImport>(
 	"CSSImport",
 	{
 		bindingKeys: {},
