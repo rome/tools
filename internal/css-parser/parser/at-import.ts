@@ -1,6 +1,8 @@
 // https://www.w3.org/TR/css-cascade-4/#conditional-import
 import {CSSParser, Tokens} from "@internal/css-parser/types";
-import {CSSAtImport} from "@internal/ast";
+import {CSSAtImport, AnyCSSValue} from "@internal/ast";
+import {matchToken} from "@internal/css-parser/tokenizer";
+import {descriptions} from "@internal/diagnostics";
 import {parseKeyframe} from "@internal/css-parser/parser/keyframe";
 import {
 	OnAtDeclaration,

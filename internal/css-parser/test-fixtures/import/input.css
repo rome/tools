@@ -4,8 +4,3 @@
 @import url("bluish.css") projection, tv;
 @import url("narrow.css") handheld and (max-width: 400px);
 @import url("fallback-layout.css") supports(not (display: flex));
-@supports (display: flex) {
-	.ex {
-		width: 100px;
-	}
-}
