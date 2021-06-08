@@ -1,6 +1,7 @@
 import * as n from "@internal/ast";
 import {
 	CSSAtPage,
+	CSSAtImport,
 	CSSBlock,
 	CSSCalcFunction,
 	CSSCalcSum,
@@ -56,6 +57,7 @@ export type AnyCSSValue =
 	| CSSCalcSum
 	| CSSMediaQueryList
 	| CSSSupportsCondition
+	| CSSAtImport
 	| CSSRaw;
 
 export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;
