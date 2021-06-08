@@ -64,28 +64,7 @@ CSSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<css>"}]
-			description: {
-				advice: [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Consider adding <emphasis>+ or -</emphasis>"}
-					}
-				]
-				category: ["parse"]
-				categoryValue: "css"
-				message: RAW_MARKUP {value: "An operator is needed."}
-			}
-			location: {
-				language: "css"
-				path: RelativePath<invalid/calc-space/input.css>
-				end: Position 2:20
-				start: Position 2:16
-			}
-		}
-	]
+	diagnostics: []
 	path: RelativePath<invalid/calc-space/input.css>
 	loc: SourceLocation invalid/calc-space/input.css 1:0-3:1
 }

@@ -76,7 +76,7 @@ export const cssParser = createDiagnosticsCategory({
 	},
 
 	CALC_VALUE_NOT_RECOGNISED: {
-		message: markup`The function <emphasis>calc()</emphasis> doesn't this token`,
+		message: markup`The function <emphasis>calc()</emphasis> doesn't support this token`,
 		advice: [
 			{
 				type: "log",
@@ -92,17 +92,6 @@ export const cssParser = createDiagnosticsCategory({
 
 	CALC_MISSING_RIGHT_SPACE: {
 		message: markup`Missing right space.`,
-	},
-
-	CALC_OPERATOR_ADD_OR_PLUS_NEEDED: {
-		message: markup`An operator is needed.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Consider adding <emphasis>+ or -</emphasis>`,
-			},
-		],
 	},
 
 	CALC_OPERATOR_TIMES_OR_MOD_NEEDED: {
@@ -210,4 +199,6 @@ export const cssParser = createDiagnosticsCategory({
 	AT_FONT_FACE_MISSING_SRC: {
 		message: markup`The rule <emphasis>@font-face</emphasis> needs the property <emphasis>src</emphasis> in order to be valid.`,
 	},
+
+
 });
