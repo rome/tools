@@ -1,27 +1,49 @@
-import {CSSParser} from "@internal/css-parser/types";
+import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
-	CSSImport
+	CSSImport,
+	CSSAtImport
 } from "@internal/ast";
 import {parseAtImport} from "@internal/css-parser/parser/at-import";
-import {nextToken} from "@internal/css-parser/tokenizer";
+import {parseImportRule} from "@internal/css-parser/parser/import-rule";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 
 export function parseImport(
 	parser: CSSParser,
-): CSSImport | undefined {
-	const start = parser.getPosition();
-	const value = parseAtImport({parser});
+	topLevel = false,
+	endingTokenType?: keyof Tokens
+): Array<CSSImport | CSSAtImport> {
+	const rules: Array<CSSAtImport | CSSImport> = [];
+	while (!matchToken(parser, "EOF")) {
+		if (endingTokenType && matchToken(parser, endingTokenType)) {
+			nextToken(parser);
+			break;
+		}
 
-	if (value) {
-		nextToken(parser);
-		return parser.finishNode(
-			start,
-			{
-				type: "CSSImport",
-				name: "import",
-				value,
+		if (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
+			continue;
+		}
+
+		if (matchToken(parser, "CDO") || matchToken(parser, "CDC")) {
+			if (topLevel) {
+				nextToken(parser);
+				continue;
 			}
-		);
+			const rule = parseImportRule(parser);
+			rule && rules.push(rule);
+			continue;
+		}
+
+		if (matchToken(parser, "AtKeyword")) {
+			rules.push(parseAtImport({parser}));
+			continue;
+		}
+
+		const rule = parseImportRule(parser);
+		if (rule !== undefined) {
+			rules.push(rule);
+		}
 	}
 
-	return undefined;
+	return rules;
 }

@@ -1,4 +1,4 @@
-import {NodeBaseWithComments} from "@internal/ast";
+import {CSSBlock, CSSSelector, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSImport extends NodeBaseWithComments {
