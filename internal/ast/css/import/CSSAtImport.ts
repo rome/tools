@@ -1,4 +1,8 @@
-import {AnyCSSValue, CSSAtImportValue, NodeBaseWithComments} from "@internal/ast";
+import {
+	AnyCSSValue,
+	CSSAtImportValue,
+	NodeBaseWithComments,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface CSSAtImport extends NodeBaseWithComments {

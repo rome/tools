@@ -1,6 +1,6 @@
 // https://www.w3.org/TR/css-cascade-4/#conditional-import
 import {CSSParser} from "@internal/css-parser/types";
-import {CSSSelector, CSSImport} from "@internal/ast";
+import {CSSImport, CSSSelector} from "@internal/ast";
 import {matchToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseSelectors} from "@internal/css-parser/parser/selectors";

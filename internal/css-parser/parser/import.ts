@@ -1,8 +1,5 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
-import {
-	CSSImport,
-	CSSAtImport
-} from "@internal/ast";
+import {CSSAtImport, CSSImport} from "@internal/ast";
 import {parseAtImport} from "@internal/css-parser/parser/at-import";
 import {parseImportRule} from "@internal/css-parser/parser/import-rule";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
@@ -10,7 +7,7 @@ import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 export function parseImport(
 	parser: CSSParser,
 	topLevel = false,
-	endingTokenType?: keyof Tokens
+	endingTokenType?: keyof Tokens,
 ): Array<CSSImport | CSSAtImport> {
 	const rules: Array<CSSAtImport | CSSImport> = [];
 	while (!matchToken(parser, "EOF")) {
