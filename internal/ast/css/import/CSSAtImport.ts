@@ -13,6 +13,8 @@ export const cssAtImport = createBuilder<CSSAtImport>(
 	"CSSAtImport",
 	{
 		bindingKeys: {},
-		visitorKeys: {},
+		visitorKeys: {
+			value: true,
+		},
 	},
 );

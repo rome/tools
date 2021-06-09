@@ -92,8 +92,9 @@ export type CSSAtRuleValue =
 	| CSSKeyframe
 	| CSSMediaQueryList
 	| CSSAtPage
-	| CSSFontFace;
+	| CSSFontFace
+	| CSSAtImport;
 
 export type CSSAtImportValue =
-	| CSSUrlFunction
-	| string;
+	| string[]
+	| CSSUrlFunction;
