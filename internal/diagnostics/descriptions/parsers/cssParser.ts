@@ -9,7 +9,9 @@ export const cssParser = createDiagnosticsCategory({
 	UNEXPECTED_TOKEN: {message: markup`Unexpected token.`},
 	UNTERMINATED_AT_RULE: {message: markup`Unterminated at-rule.`},
 	UNTERMINATED_BLOCK: {message: markup`Unterminated block.`},
-	UNTERMINATED_FUNCTION: {message: markup`Unterminated function.`},
+	UNTERMINATED_FUNCTION: {
+		message: markup`Unterminated function. Please add a right parenthesis.`,
+	},
 	UNTERMINATED_STRING: {message: markup`Unterminated string.`},
 	UNTERMINATED_URL: {message: markup`Unterminated URL.`},
 	EXPECTED_IDENTIFIER: {message: markup`Expected an identifier.`},
@@ -199,6 +201,4 @@ export const cssParser = createDiagnosticsCategory({
 	AT_FONT_FACE_MISSING_SRC: {
 		message: markup`The rule <emphasis>@font-face</emphasis> needs the property <emphasis>src</emphasis> in order to be valid.`,
 	},
-
-
 });

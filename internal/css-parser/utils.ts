@@ -295,7 +295,3 @@ export const ALLOWED_PAGE_MARGIN_PROPERTIES: string[] = [
 	"visibility",
 	"z-index",
 ];
-
-export function isDimension(token: AnyCSSToken): boolean {
-	return token.type === "Dimension" || token.type === "Percentage" || token.type === "Number";
-}

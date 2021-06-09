@@ -1,5 +1,5 @@
 import {CSSMaxFunction} from "@internal/ast";
-import {Builder, concat, Token} from "@internal/formatter";
+import {Builder, Token, concat, join, space} from "@internal/formatter";
 
 export default function CSSMaxFunction(
 	builder: Builder,
@@ -8,7 +8,10 @@ export default function CSSMaxFunction(
 	return concat([
 		node.name,
 		"(",
-		concat(node.params.map((p) => builder.tokenize(p, node))),
+		join(
+			concat([",", space]),
+			node.params.map((p) => builder.tokenize(p, node)),
+		),
 		")",
 	]);
 }

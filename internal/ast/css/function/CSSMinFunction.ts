@@ -12,7 +12,7 @@ export const cssMinFunction = createBuilder<CSSMinFunction>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			params: true
+			params: true,
 		},
 	},
 );

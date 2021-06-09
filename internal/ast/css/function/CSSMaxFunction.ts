@@ -12,7 +12,7 @@ export const cssMaxFunction = createBuilder<CSSMaxFunction>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			params: true
+			params: true,
 		},
 	},
 );

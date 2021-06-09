@@ -3,7 +3,9 @@ import {
 	AnyCSSValue,
 	CSSCalcFunction,
 	CSSCustomProperty,
-	CSSFunction, CSSMaxFunction, CSSMinFunction,
+	CSSFunction,
+	CSSMaxFunction,
+	CSSMinFunction,
 	CSSUrlFunction,
 	CSSVarFunction,
 } from "@internal/ast";
@@ -15,7 +17,14 @@ import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
 
 export function parseFunction(
 	parser: CSSParser,
-): CSSFunction | CSSVarFunction | CSSUrlFunction | CSSCalcFunction | CSSMinFunction | CSSMaxFunction | undefined {
+):
+	| CSSFunction
+	| CSSVarFunction
+	| CSSUrlFunction
+	| CSSCalcFunction
+	| CSSMinFunction
+	| CSSMaxFunction
+	| undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;
@@ -27,14 +36,13 @@ export function parseFunction(
 	const isMaxFunction = name === "max";
 	nextToken(parser);
 
-	console.log(isMaxFunction, isMinFunction)
 	if (isCalcFunction) {
 		const value = parseCalcFunction(parser);
 		if (value) {
 			return value;
 		}
-	} else if (isMinFunction || isMaxFunction)  {
-		const value =  parseMinOrMaxFunction(parser, name)
+	} else if (isMinFunction || isMaxFunction) {
+		const value = parseMinOrMaxFunction(parser, name);
 		if (value) {
 			return value;
 		}
