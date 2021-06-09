@@ -1,7 +1,7 @@
 import * as n from "@internal/ast";
 import {
-	CSSAtPage,
 	CSSAtImport,
+	CSSAtPage,
 	CSSBlock,
 	CSSCalcFunction,
 	CSSCalcSum,
@@ -95,6 +95,4 @@ export type CSSAtRuleValue =
 	| CSSFontFace
 	| CSSAtImport;
 
-export type CSSAtImportValue =
-	| string[]
-	| CSSUrlFunction;
+export type CSSAtImportValue = string[] | CSSUrlFunction;

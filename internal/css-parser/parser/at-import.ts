@@ -1,11 +1,9 @@
 // https://www.w3.org/TR/css-cascade-4/#conditional-import
 import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {CSSAtImport, CSSAtImportValue} from "@internal/ast";
-import {matchToken, readToken, nextToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 
-export function parseAtImport(
-	parser: CSSParser
-): CSSAtImport | undefined {
+export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	const start = parser.getPosition();
 	let value: CSSAtImportValue;
 	while (matchToken(parser, "Whitespace")) {
@@ -19,8 +17,8 @@ export function parseAtImport(
 			start,
 			{
 				type: "CSSAtImport",
-				value: value,
-			}
+				value,
+			},
 		);
 	}
 
@@ -32,8 +30,8 @@ export function parseAtImport(
 			start,
 			{
 				type: "CSSAtImport",
-				value: value,
-			}
+				value,
+			},
 		);
 	}
 

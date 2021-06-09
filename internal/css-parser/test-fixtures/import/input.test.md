@@ -9,13 +9,12 @@ CSSRoot {
 	body: [
 		CSSAtRule {
 			name: "import"
-			prelude: [
-				CSSString {
-					value: "something.css"
-					loc: SourceLocation import/input.css 1:8-1:23
-				}
-			]
-			loc: SourceLocation import/input.css 1:0-1:23
+			prelude: []
+			block: CSSAtImport {
+				value: ["something.css"]
+				loc: SourceLocation import/input.css 1:7-1:8
+			}
+			loc: SourceLocation import/input.css 1:0-1:8
 		}
 	]
 	comments: []
@@ -32,8 +31,8 @@ CSSRoot {
 			location: {
 				language: "css"
 				path: RelativePath<import/input.css>
-				end: Position 1:24
-				start: Position 1:23
+				end: Position 1:23
+				start: Position 1:8
 			}
 		}
 	]
