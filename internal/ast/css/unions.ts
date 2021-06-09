@@ -95,9 +95,5 @@ export type CSSAtRuleValue =
 	| CSSFontFace;
 
 export type CSSAtImportValue =
-	| CSSMediaQueryList
-	| CSSKeyframe
-	| CSSFontFace
-	| CSSAtPage
-	| CSSSupportsCondition
-	| AnyCSSValue;
+	| CSSUrlFunction
+	| string;

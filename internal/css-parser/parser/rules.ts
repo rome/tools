@@ -126,10 +126,8 @@ export function parseAtRule(
 		}
 
 		if (previousToken.value === "import") {
-			const value = parseAtImport({parser});
-			if (value) {
-				prelude.push(value);
-			}
+			block = parseAtImport(parser);
+			break;
 		}
 
 		if (previousToken.value === "supports") {
