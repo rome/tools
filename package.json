@@ -18,6 +18,9 @@
 	"rome": {
 		"name": "project-rome",
 		"root": true,
+		"vcs": {
+			"baseBranch": "main"
+		},
 		"lint": {
 			"ignore": [
 				"build",

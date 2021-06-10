@@ -24,15 +24,13 @@ export function extractFileList(out: string): string[] {
 }
 
 export class VCSClient {
-	constructor(root: AbsoluteFilePath) {
+	constructor(root: AbsoluteFilePath, baseBranch: string) {
 		this.root = root;
+		this.baseBranch = baseBranch;
 	}
 
 	public root: AbsoluteFilePath;
-
-	public getDefaultBranch(): Promise<string> {
-		throw new Error("unimplemented");
-	}
+	public baseBranch: string;
 
 	public getModifiedFiles(branch: string): Promise<string[]> {
 		throw new Error("unimplemented");
@@ -44,21 +42,8 @@ export class VCSClient {
 }
 
 class GitVCSClient extends VCSClient {
-	constructor(root: AbsoluteFilePath) {
-		super(root);
-	}
-
-	public async getDefaultBranch(): Promise<string> {
-		try {
-			const exitCode = await spawn(
-				"git",
-				["show-ref", "--verify", "--quiet", "refs/heads/main"],
-				{cwd: this.root},
-			).wait();
-			return exitCode === 0 ? "main" : "master";
-		} catch (_) {
-			throw new Error("Unexpected error when checking the default branch");
-		}
+	constructor(root: AbsoluteFilePath, baseBranch: string) {
+		super(root, baseBranch);
 	}
 
 	public async getUncommittedFiles(): Promise<string[]> {
@@ -74,17 +59,17 @@ class GitVCSClient extends VCSClient {
 		}
 	}
 
-	public async getModifiedFiles(branch: string): Promise<string[]> {
+	public async getModifiedFiles(): Promise<string[]> {
 		try {
 			const stdout = (await spawn(
 				"git",
-				["diff", "--name-status", branch],
+				["diff", "--name-status", this.baseBranch],
 				{cwd: this.root},
 			).waitSuccess()).getOutput(true, false);
 			return extractFileList(stdout);
 		} catch (_) {
 			throw new Error(
-				`Unexpected error when checking for modified files on the "${branch}" branch`,
+				`Unexpected error when checking for modified files on the "${this.baseBranch}" branch`,
 			);
 		}
 	}
@@ -92,9 +77,10 @@ class GitVCSClient extends VCSClient {
 
 export async function getVCSClient(
 	root: AbsoluteFilePath,
+	baseBranch: string,
 ): Promise<undefined | VCSClient> {
 	if (await root.append(".git").exists()) {
-		return new GitVCSClient(root);
+		return new GitVCSClient(root, baseBranch);
 	}
 
 	return undefined;

@@ -90,6 +90,7 @@ export type ProjectConfigObjects = {
 	};
 	vcs: {
 		root: AbsoluteFilePath;
+		baseBranch: string;
 	};
 	files: {
 		assetExtensions: string[];
@@ -206,6 +207,7 @@ export type RawUserProjectConfig = DeepPartial<{
 	};
 	vcs: {
 		root: string;
+		baseBranch: string;
 	};
 	targets: {
 		[key: string]: {
@@ -282,6 +284,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		},
 		vcs: {
 			root: createAbsoluteFilePath("/"),
+			baseBranch: "main",
 		},
 		files: {
 			vendorPath: TEMP_PATH.append("rome-remote"),
