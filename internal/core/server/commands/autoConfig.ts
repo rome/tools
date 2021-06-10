@@ -62,7 +62,6 @@ export default createServerCommand<Flags>({
 		if (checkVSC) {
 			const vcsClient = await getVCSClient(
 				cwd,
-				currentProject.config.vcs.baseBranch,
 			);
 			if (vcsClient === undefined) {
 				throw createSingleDiagnosticsError({

@@ -428,9 +428,6 @@ export async function normalizeProjectConfig(
 		if (vcs.has("root")) {
 			config.vcs.root = projectDirectory.resolve(vcs.get("root").asFilePath());
 		}
-		if (vcs.has("baseBranch")) {
-			config.vcs.baseBranch = vcs.get("baseBranch").asString();
-		}
 		vcs.enforceUsedProperties("vcs config property");
 	}
 

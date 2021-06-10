@@ -497,7 +497,6 @@ export default class ProjectManager {
 	): Promise<undefined | VCSClient> {
 		return await getVCSClient(
 			project.config.vcs.root,
-			project.config.vcs.baseBranch,
 		);
 	}
 

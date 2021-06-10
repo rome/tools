@@ -24,15 +24,13 @@ export function extractFileList(out: string): string[] {
 }
 
 export class VCSClient {
-	constructor(root: AbsoluteFilePath, baseBranch: string) {
+	constructor(root: AbsoluteFilePath) {
 		this.root = root;
-		this.baseBranch = baseBranch;
 	}
 
 	public root: AbsoluteFilePath;
-	public baseBranch: string;
 
-	public getModifiedFiles(branch: string): Promise<string[]> {
+	public getModifiedFiles(target: string): Promise<string[]> {
 		throw new Error("unimplemented");
 	}
 
@@ -46,51 +44,26 @@ export class VCSClient {
 }
 
 class GitVCSClient extends VCSClient {
-	constructor(root: AbsoluteFilePath, baseBranch: string) {
-		super(root, baseBranch);
+	constructor(root: AbsoluteFilePath) {
+		super(root);
 	}
 
-	public getDefaultBranch(): string {
-		return this.baseBranch;
-	}
 
-	public async getUncommittedFiles(): Promise<string[]> {
-		try {
-			const stdout = (await spawn(
-				"git",
-				["status", "--short"],
-				{cwd: this.root},
-			).waitSuccess()).getOutput(true, false);
-			return extractFileList(stdout);
-		} catch (_) {
-			throw new Error("Unexpected error when checking for uncommitted files");
-		}
-	}
-
-	public async getModifiedFiles(): Promise<string[]> {
-		try {
-			const currentBranch = (await spawn("git", ["branch", "--show-current"], {cwd: this.root}).waitSuccess()).getOutput(true, false)
-			const stdout = (await spawn(
-				"git",
-				["--no-pager", "diff", "--name-status", `origin/${this.baseBranch}...${currentBranch}`, "--"],
-				{cwd: this.root},
-			).waitSuccess()).getOutput(true, false);
-			return extractFileList(stdout);
-		} catch (_) {
-			// TODO: temporary
-			throw new Error(
-				`Unexpected error when checking for modified files on the "${this.baseBranch}" branch \n\n\ ${_.message}`,
-			);
-		}
+	public async getModifiedFiles(branch: string): Promise<string[]> {
+		const stdout = (await spawn(
+			"git",
+			["diff", "--name-status", branch],
+			{cwd: this.root},
+		).waitSuccess()).getOutput(true, false);
+		return extractFileList(stdout);
 	}
 }
 
 export async function getVCSClient(
 	root: AbsoluteFilePath,
-	baseBranch: string,
 ): Promise<undefined | VCSClient> {
 	if (await root.append(".git").exists()) {
-		return new GitVCSClient(root, baseBranch);
+		return new GitVCSClient(root);
 	}
 
 	return undefined;
