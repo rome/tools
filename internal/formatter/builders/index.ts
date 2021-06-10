@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:327dbbcbe40d0b51a3a35cd9b34bae51635b2a5a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:189e82475293dc06ac237f85e5355a84d8792ba1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -73,6 +73,8 @@ import CSSKeyframeName from "./css/keyframe/CSSKeyframeName";
 builders.set("CSSKeyframeName", CSSKeyframeName);
 import CSSKeyframeSelector from "./css/keyframe/CSSKeyframeSelector";
 builders.set("CSSKeyframeSelector", CSSKeyframeSelector);
+import CSSMaxFunction from "./css/function/CSSMaxFunction";
+builders.set("CSSMaxFunction", CSSMaxFunction);
 import CSSMediaAnd from "./css/media/CSSMediaAnd";
 builders.set("CSSMediaAnd", CSSMediaAnd);
 import CSSMediaCondition from "./css/media/CSSMediaCondition";
@@ -111,6 +113,8 @@ import CSSMediaQueryList from "./css/media/CSSMediaQueryList";
 builders.set("CSSMediaQueryList", CSSMediaQueryList);
 import CSSMediaType from "./css/media/CSSMediaType";
 builders.set("CSSMediaType", CSSMediaType);
+import CSSMinFunction from "./css/function/CSSMinFunction";
+builders.set("CSSMinFunction", CSSMinFunction);
 import CSSNumber from "./css/core/CSSNumber";
 builders.set("CSSNumber", CSSNumber);
 import CSSPageSelector from "./css/page/CSSPageSelector";
