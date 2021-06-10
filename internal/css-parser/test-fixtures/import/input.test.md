@@ -11,10 +11,10 @@ CSSRoot {
 			name: "import"
 			prelude: []
 			block: CSSAtImport {
-				value: ["something.css"]
-				loc: SourceLocation import/input.css 1:7-1:8
+				value: "something.css"
+				loc: SourceLocation import/input.css 1:7-1:23
 			}
-			loc: SourceLocation import/input.css 1:0-1:8
+			loc: SourceLocation import/input.css 1:0-1:23
 		}
 	]
 	comments: []
@@ -31,8 +31,8 @@ CSSRoot {
 			location: {
 				language: "css"
 				path: RelativePath<import/input.css>
-				end: Position 1:23
-				start: Position 1:8
+				end: Position 1:24
+				start: Position 1:23
 			}
 		}
 	]

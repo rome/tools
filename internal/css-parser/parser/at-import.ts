@@ -1,7 +1,8 @@
 // https://www.w3.org/TR/css-cascade-4/#conditional-import
-import {CSSParser, Tokens} from "@internal/css-parser/types";
+import {CSSParser} from "@internal/css-parser/types";
 import {CSSAtImport, CSSAtImportValue} from "@internal/ast";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {descriptions} from "@internal/diagnostics";
 
 export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	const start = parser.getPosition();
@@ -9,31 +10,38 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
 	}
-	let token = parser.getToken() as Tokens["String"];
+	const functionArgumentToken = parser.getToken();
 
-	if (token.type === "String") {
-		value = [token.value];
+	if (functionArgumentToken.type === "String") {
+		nextToken(parser);
+		value = functionArgumentToken.value;
 		return parser.finishNode(
 			start,
 			{
 				type: "CSSAtImport",
-				value,
-			},
+				value
+			}
 		);
 	}
+
+	const token = parser.getToken();
 
 	if (token.type === "Function") {
 		nextToken(parser);
-		token = parser.getToken() as Tokens["String"];
-		value = [token.value];
+		value = token.value;
 		return parser.finishNode(
 			start,
 			{
 				type: "CSSAtImport",
-				value,
-			},
+				value
+			}
 		);
 	}
 
+	if (token)
+	parser.unexpectedDiagnostic({
+		description: descriptions.CSS_PARSER.AT_IMPORT_INVALID_ARGUMENT, // we need to create this diagnostic,
+		token: functionArgumentToken
+	});
 	return undefined;
 }
