@@ -22,15 +22,18 @@ async function testParser<T>(
 		preInit,
 		postInit,
 		options: opts,
+		defaultReporter,
 	}: {
 		defineFlags: (consumer: Consumer) => T;
 		args: string[];
 		preInit?: (parser: Parser<T>) => void;
 		postInit?: (parser: Parser<T>, flags: T) => void;
 		options?: Partial<ParserOptions<T>>;
+		defaultReporter?: Reporter;
 	},
 ) {
-	const reporter = new Reporter("ParserTest");
+	const reporter =
+		defaultReporter ?? new Reporter("ParserTest", {stdin: process.stdin});
 	const stream = reporter.attachCaptureStream();
 
 	const parser = new Parser({
@@ -371,11 +374,16 @@ test(
 );
 
 test(
-	"command required with wrong command",
+	"command required with wrong command but only one generated suggestion",
 	async (t) => {
+		const reporter = new Reporter("ParserTest", {stdin: process.stdin});
+		reporter.radioConfirm = function() {
+			return Promise.resolve(true);
+		};
 		await testParser(
 			t,
 			{
+				defaultReporter: reporter,
 				options: {
 					commandRequired: true,
 				},
@@ -395,7 +403,42 @@ test(
 );
 
 test(
-	"command required with wrong command and suggestion",
+	"command required with wrong command but multiple generated suggestions",
+	async (t) => {
+		const reporter = new Reporter("ParserTest", {stdin: process.stdin});
+		reporter.select = function() {
+			const res = new Set(["foo1"]);
+			// rome-ignore lint/ts/noExplicitAny: TS generics constraint :(
+			return Promise.resolve(res as any);
+		};
+		await testParser(
+			t,
+			{
+				defaultReporter: reporter,
+				options: {
+					commandRequired: true,
+				},
+				defineFlags: () => {
+					return {};
+				},
+				args: ["foo"],
+				preInit(p) {
+					p.addCommand({
+						name: "foo1",
+						callback() {},
+					});
+					p.addCommand({
+						name: "foo2",
+						callback() {},
+					});
+				},
+			},
+		);
+	},
+);
+
+test(
+	"command required with wrong command but provided suggestion",
 	async (t) => {
 		await testParser(
 			t,
@@ -403,8 +446,8 @@ test(
 				options: {
 					commandRequired: true,
 					commandSuggestions: {
-						foo: {
-							commandName: "foobar",
+						losg: {
+							commandName: "logs",
 							description: markup`A much cooler command`,
 						},
 					},
@@ -412,7 +455,7 @@ test(
 				defineFlags: () => {
 					return {};
 				},
-				args: ["foo"],
+				args: ["losg"],
 			},
 		);
 	},

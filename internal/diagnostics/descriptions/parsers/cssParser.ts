@@ -9,7 +9,9 @@ export const cssParser = createDiagnosticsCategory({
 	UNEXPECTED_TOKEN: {message: markup`Unexpected token.`},
 	UNTERMINATED_AT_RULE: {message: markup`Unterminated at-rule.`},
 	UNTERMINATED_BLOCK: {message: markup`Unterminated block.`},
-	UNTERMINATED_FUNCTION: {message: markup`Unterminated function.`},
+	UNTERMINATED_FUNCTION: {
+		message: markup`Unterminated function. Please add a right parenthesis.`,
+	},
 	UNTERMINATED_STRING: {message: markup`Unterminated string.`},
 	UNTERMINATED_URL: {message: markup`Unterminated URL.`},
 	EXPECTED_IDENTIFIER: {message: markup`Expected an identifier.`},
@@ -76,7 +78,7 @@ export const cssParser = createDiagnosticsCategory({
 	},
 
 	CALC_VALUE_NOT_RECOGNISED: {
-		message: markup`The function <emphasis>calc()</emphasis> doesn't this token`,
+		message: markup`The function <emphasis>calc()</emphasis> doesn't support this token`,
 		advice: [
 			{
 				type: "log",
@@ -92,17 +94,6 @@ export const cssParser = createDiagnosticsCategory({
 
 	CALC_MISSING_RIGHT_SPACE: {
 		message: markup`Missing right space.`,
-	},
-
-	CALC_OPERATOR_ADD_OR_PLUS_NEEDED: {
-		message: markup`An operator is needed.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Consider adding <emphasis>+ or -</emphasis>`,
-			},
-		],
 	},
 
 	CALC_OPERATOR_TIMES_OR_MOD_NEEDED: {

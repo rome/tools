@@ -234,10 +234,6 @@ function tryParseOperator(
 		const previousToken = parser.getPreviousToken();
 		const start = parser.getPosition();
 		if (!(op && (op.value === "+" || op.value === "-"))) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.CALC_OPERATOR_ADD_OR_PLUS_NEEDED,
-				token: parser.getToken(),
-			});
 			return undefined;
 		}
 		if (!previousToken && checkWhitespace) {

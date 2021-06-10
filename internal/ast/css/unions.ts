@@ -13,12 +13,14 @@ import {
 	CSSHash,
 	CSSIdentifier,
 	CSSKeyframe,
+	CSSMaxFunction,
 	CSSMediaFeatureComparison,
 	CSSMediaFeatureGT,
 	CSSMediaFeatureLT,
 	CSSMediaFeatureName,
 	CSSMediaFeatureValue,
 	CSSMediaQueryList,
+	CSSMinFunction,
 	CSSNumber,
 	CSSPercentage,
 	CSSRaw,
@@ -55,12 +57,12 @@ export type AnyCSSValue =
 	| CSSUrlFunction
 	| CSSCalcFunction
 	| CSSCalcSum
+	| CSSMaxFunction
+	| CSSMinFunction
 	| CSSMediaQueryList
 	| CSSSupportsCondition
 	| CSSAtImport
 	| CSSRaw;
-
-export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;
 
 export type RangeNameAndValue = [
 	CSSMediaFeatureName,

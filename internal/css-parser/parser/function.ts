@@ -4,6 +4,8 @@ import {
 	CSSCalcFunction,
 	CSSCustomProperty,
 	CSSFunction,
+	CSSMaxFunction,
+	CSSMinFunction,
 	CSSUrlFunction,
 	CSSVarFunction,
 } from "@internal/ast";
@@ -11,10 +13,18 @@ import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseCalcFunction} from "@internal/css-parser/parser/calc";
+import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
 
 export function parseFunction(
 	parser: CSSParser,
-): CSSFunction | CSSVarFunction | CSSUrlFunction | CSSCalcFunction | undefined {
+):
+	| CSSFunction
+	| CSSVarFunction
+	| CSSUrlFunction
+	| CSSCalcFunction
+	| CSSMinFunction
+	| CSSMaxFunction
+	| undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;
@@ -22,6 +32,8 @@ export function parseFunction(
 	const isVarFunction = name === "var";
 	const isUrlFunction = name === "url";
 	const isCalcFunction = name === "calc";
+	const isMinFunction = name === "min";
+	const isMaxFunction = name === "max";
 	nextToken(parser);
 
 	if (isCalcFunction) {
@@ -29,7 +41,13 @@ export function parseFunction(
 		if (value) {
 			return value;
 		}
-	} else {
+	} else if (isMinFunction || isMaxFunction) {
+		const value = parseMinOrMaxFunction(parser, name);
+		if (value) {
+			return value;
+		}
+	}
+	else {
 		while (true) {
 			if (matchToken(parser, "RightParen")) {
 				nextToken(parser);
