@@ -12,7 +12,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:38a1e70803d1c52bc02689d26324b927e581a59a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:3208e422bbfac2f064518f78e313f58a7e30f258,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./css/import/CSSAtImport";
