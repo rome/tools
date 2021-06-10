@@ -64,6 +64,7 @@ export * from "./css/media/CSSMediaQuery";
 export * from "./css/media/CSSMediaQueryList";
 export * from "./css/media/CSSMediaType";
 export * from "./css/function/CSSMinFunction";
+export * from "./css/grid/CSSMinmaxFunction";
 export * from "./css/core/CSSNumber";
 export * from "./css/page/CSSPageSelector";
 export * from "./css/page/CSSPageSelectorList";
@@ -373,6 +374,7 @@ export type AnyNode =
 	| n.CSSMediaQueryList
 	| n.CSSMediaType
 	| n.CSSMinFunction
+	| n.CSSMinmaxFunction
 	| n.CSSNumber
 	| n.CSSPageSelector
 	| n.CSSPageSelectorList

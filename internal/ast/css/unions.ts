@@ -111,3 +111,8 @@ export type CSSBlockValue = Array<
 export type CSSPseudoSelector =
 	| CSSPseudoClassSelector
 	| CSSPseudoElementSelector;
+
+export type CSSMinmaxParam =
+	| CSSRaw
+	| CSSDimension
+	| CSSPercentage;

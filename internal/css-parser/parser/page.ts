@@ -5,7 +5,12 @@ import {
 	CSSPseudoPage,
 	CSSPseudoPageValue,
 } from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
 import {descriptions} from "@internal/diagnostics";
 import {
@@ -101,9 +106,7 @@ function parsePageSelector(parser: CSSParser): CSSPageSelector | undefined {
 
 export function parseAtPage(parser: CSSParser): CSSAtPage | undefined {
 	const start = parser.getPosition();
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	const token = parser.getToken();
 	if (token.type === "LeftCurlyBracket") {
 		// in case @page doesn't have any prelude

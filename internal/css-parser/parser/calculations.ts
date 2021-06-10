@@ -14,7 +14,12 @@ import {
 	CSSNumber,
 	CSSPercentage,
 } from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 /**
@@ -107,9 +112,7 @@ function tryParseNumberSum(parser: CSSParser): CSSCalcNumberSum | undefined {
 
 function tryParseNumberValue(parser: CSSParser): CSSCalcNumberValue | undefined {
 	const start = parser.getPosition();
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	const token = parser.getToken();
 
 	if (token.type === "Number") {
@@ -225,9 +228,7 @@ function tryParseOperator(
 	checkWhitespace = false,
 ): CSSCalcOperation | undefined {
 	// let's eat all the possible whitespaces we have
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	if (checkWhitespace) {
 		// let's eat the delimiter and read the its previous token
 		const op = parser.eatToken("Delim");

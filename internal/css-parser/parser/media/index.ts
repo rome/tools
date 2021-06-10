@@ -6,7 +6,12 @@ import {
 	CSSMediaQueryList,
 } from "@internal/ast";
 import {CSSParser} from "@internal/css-parser/types";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {parseMediaType} from "@internal/css-parser/parser/media/type";
 import {parseMediaInParens} from "@internal/css-parser/parser/media/inParens";
 import {
@@ -26,9 +31,7 @@ function tryParseConditionWithoutOr(
 
 	nextToken(parser);
 
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	const token = parser.getToken();
 
@@ -89,9 +92,7 @@ function parseMedia(parser: CSSParser): CSSMediaQuery | undefined {
 	const start = parser.getPosition();
 	let condition: CSSMediaQueryCondition | undefined = undefined;
 	let conditionWithoutOr: CSSMediaConditionWithoutOr | undefined = undefined;
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	let hasNot = false;
 	const token = parser.getToken();
 
@@ -205,9 +206,7 @@ export function parseMediaList(parser: CSSParser): CSSMediaQueryList | undefined
 	if (media) {
 		list.push(media);
 	}
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	while (!(parser.matchToken("EOF") && parser.matchToken("LeftCurlyBracket"))) {
 		if (parser.matchToken("Comma")) {
 			nextToken(parser);

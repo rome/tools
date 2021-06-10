@@ -202,6 +202,23 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`The rule <emphasis>@font-face</emphasis> needs the property <emphasis>src</emphasis> in order to be valid.`,
 	},
 
+	MIN_MAX_INVALID_ARGUMENTS: {
+		message: markup`The function <emphasis>minmax()</emphasis> requires two arguments or the arguments provided are not supported.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>min-content</emphasis>, <emphasis>max-content</emphasis> or <emphasis>auto</emphasis>`,
+			},
+
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use use lengths or dimensions. e.g. em, fr, px, %, etc.`,
+			},
+		],
+	},
+
 	AT_IMPORT_INVALID_ARGUMENT: {
 		message: markup`Unexpected argument in at-import`,
 	},

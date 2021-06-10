@@ -1,7 +1,12 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {CSSMediaInParens} from "@internal/ast";
 import {parseMediaFeature} from "@internal/css-parser/parser/media/feature";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {parseMediaCondition} from "@internal/css-parser/parser/media/comparison";
 import {NOT} from "@internal/css-parser/utils";
 
@@ -9,9 +14,7 @@ export function parseMediaInParens(
 	parser: CSSParser,
 ): CSSMediaInParens | undefined {
 	// remove possible white spaces
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	const token = parser.getToken();
 
 	if (token.type === "LeftParen") {
