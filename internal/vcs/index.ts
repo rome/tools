@@ -76,8 +76,9 @@ class GitVCSClient extends VCSClient {
 			).waitSuccess()).getOutput(true, false);
 			return extractFileList(stdout);
 		} catch (_) {
+			// TODO: temporary
 			throw new Error(
-				`Unexpected error when checking for modified files on the "${this.baseBranch}" branch`,
+				`Unexpected error when checking for modified files on the "${this.baseBranch}" branch \n\n\ ${_.message}`,
 			);
 		}
 	}
