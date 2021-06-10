@@ -69,9 +69,10 @@ class GitVCSClient extends VCSClient {
 
 	public async getModifiedFiles(): Promise<string[]> {
 		try {
+			const currentBranch = (await spawn("git", ["branch", "--show-current"], {cwd: this.root}).waitSuccess()).getOutput(true, false)
 			const stdout = (await spawn(
 				"git",
-				["diff", "--name-status", this.baseBranch],
+				["--no-pager", "diff", "--name-status", `origin/${this.baseBranch}...${currentBranch}`, "--"],
 				{cwd: this.root},
 			).waitSuccess()).getOutput(true, false);
 			return extractFileList(stdout);

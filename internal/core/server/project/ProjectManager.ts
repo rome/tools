@@ -495,7 +495,10 @@ export default class ProjectManager {
 	public async maybeGetVCSClient(
 		project: ProjectDefinition,
 	): Promise<undefined | VCSClient> {
-		return await getVCSClient(project.config.vcs.root, project.config.vcs.baseBranch);
+		return await getVCSClient(
+			project.config.vcs.root,
+			project.config.vcs.baseBranch,
+		);
 	}
 
 	public addDiskProject(
