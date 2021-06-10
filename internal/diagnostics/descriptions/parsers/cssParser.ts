@@ -212,6 +212,6 @@ export const cssParser = createDiagnosticsCategory({
 	},
 
 	AT_IMPORT_INVALID_ARGUMENT: {
-		message: markup`Unexpected argument in at-import`
+		message: markup`Unexpected argument in at-import`,
 	},
 });

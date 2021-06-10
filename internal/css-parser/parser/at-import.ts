@@ -25,9 +25,12 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	}
 
 	if (value) {
-		nextToken(parser)
+		nextToken(parser);
 		// Semi colon is optional, but if present we have to move forward in order to not
 		// break the existing usage and make it as part of the current node
+		if (parser.getToken().type === "RightParen") {
+			nextToken(parser);
+		}
 		if (parser.getToken().type === "Semi") {
 			nextToken(parser);
 		}
@@ -35,13 +38,14 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 			start,
 			{
 				type: "CSSAtImport",
-				value
-			}
+				value,
+			},
 		);
 	}
 	parser.unexpectedDiagnostic({
-		description: descriptions.CSS_PARSER.AT_IMPORT_INVALID_ARGUMENT, // we need to create this diagnostic,
-		token: functionArgumentToken
+		description: descriptions.CSS_PARSER.AT_IMPORT_INVALID_ARGUMENT,
+		// we need to create this diagnostic,
+		token: functionArgumentToken,
 	});
 	return undefined;
 }

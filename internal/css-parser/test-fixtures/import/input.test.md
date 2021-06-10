@@ -12,31 +12,24 @@ CSSRoot {
 			prelude: []
 			block: CSSAtImport {
 				value: "something.css"
-				loc: SourceLocation import/input.css 1:7-1:23
+				loc: SourceLocation import/input.css 1:7-1:24
 			}
-			loc: SourceLocation import/input.css 1:0-1:23
+			loc: SourceLocation import/input.css 1:0-1:24
+		}
+		CSSAtRule {
+			name: "import"
+			prelude: []
+			block: CSSAtImport {
+				value: "url"
+				loc: SourceLocation import/input.css 2:7-2:29
+			}
+			loc: SourceLocation import/input.css 2:0-2:29
 		}
 	]
 	comments: []
 	corrupt: false
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<css>"}]
-			description: {
-				advice: []
-				category: ["parse"]
-				categoryValue: "css"
-				message: RAW_MARKUP {value: "Expected a left curly bracket <emphasis>{</emphasis>."}
-			}
-			location: {
-				language: "css"
-				path: RelativePath<import/input.css>
-				end: Position 1:24
-				start: Position 1:23
-			}
-		}
-	]
+	diagnostics: []
 	path: RelativePath<import/input.css>
-	loc: SourceLocation import/input.css 1:0-6:65
+	loc: SourceLocation import/input.css 1:0-2:29
 }
 ```
