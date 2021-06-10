@@ -110,7 +110,7 @@ export default createServerCommand<Flags>({
 
 			const client = await req.getVCSClient();
 			const target =
-				flags.changed === "" ? await client.getDefaultBranch() : flags.changed;
+				flags.changed === "" ? client.getDefaultBranch() : flags.changed;
 			const modifiedFiles = await client.getModifiedFiles(target);
 			const flagLoc = req.getDiagnosticLocationFromFlags({
 				type: "flag",

@@ -39,11 +39,19 @@ export class VCSClient {
 	public getUncommittedFiles(): Promise<string[]> {
 		throw new Error("unimplemented");
 	}
+
+	public getDefaultBranch(): string {
+		throw new Error("unimplemented");
+	}
 }
 
 class GitVCSClient extends VCSClient {
 	constructor(root: AbsoluteFilePath, baseBranch: string) {
 		super(root, baseBranch);
+	}
+
+	public getDefaultBranch(): string {
+		return this.baseBranch;
 	}
 
 	public async getUncommittedFiles(): Promise<string[]> {
