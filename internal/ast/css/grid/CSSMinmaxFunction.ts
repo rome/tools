@@ -12,7 +12,7 @@ export const cssMinmaxFunction = createBuilder<CSSMinmaxFunction>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true,
+			params: true,
 		},
 	},
 );

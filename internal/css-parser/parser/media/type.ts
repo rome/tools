@@ -1,10 +1,7 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {CSSMediaType, CSSMediaValidType} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
-import {
-	nextToken,
-	skipWhitespaces,
-} from "@internal/css-parser/tokenizer";
+import {nextToken, skipWhitespaces} from "@internal/css-parser/tokenizer";
 
 const VALID_MEDIA_TYPES = ["all", "print", "screen"];
 

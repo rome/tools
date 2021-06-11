@@ -1,5 +1,5 @@
 import {CSSMinmaxFunction} from "@internal/ast";
-import {Builder, concat, join, space, Token} from "@internal/formatter";
+import {Builder, Token, concat, join, space} from "@internal/formatter";
 
 export default function CSSMinmaxFunction(
 	builder: Builder,
@@ -15,4 +15,3 @@ export default function CSSMinmaxFunction(
 		")",
 	]);
 }
-

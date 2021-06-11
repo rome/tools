@@ -1,19 +1,22 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
-import {
-	CSSMinmaxFunction,
-	CSSMinmaxParam,
-} from "@internal/ast";
-import {
-	nextToken,
-	skipWhitespaces,
-} from "@internal/css-parser/tokenizer";
+import {CSSMinmaxFunction, CSSMinmaxParam} from "@internal/ast";
+import {nextToken, skipWhitespaces} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
-
-function parseArgument(parser: CSSParser): CSSMinmaxParam | undefined {
+function parseArgument(
+	parser: CSSParser,
+	isFirst: boolean = false,
+): CSSMinmaxParam | undefined {
 	const token = parser.getToken();
 	const start = parser.getPosition();
 	if (token.type === "Dimension") {
+		if (isFirst && token.unit === "fr") {
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.MIN_MAX_INVALID_FLEX_ARGUMENT,
+				token,
+			});
+			return undefined;
+		}
 		nextToken(parser);
 		return parser.finishNode(
 			start,
@@ -61,8 +64,8 @@ function parseArgument(parser: CSSParser): CSSMinmaxParam | undefined {
 	nextToken(parser);
 	parser.unexpectedDiagnostic({
 		description: descriptions.CSS_PARSER.MIN_MAX_INVALID_ARGUMENTS,
-		token
-	})
+		token,
+	});
 
 	return undefined;
 }
@@ -76,7 +79,7 @@ export function parseMinmaxFunction(
 	// starting by removing possible white spaces
 	skipWhitespaces(parser);
 
-	const firstArgument = parseArgument(parser);
+	const firstArgument = parseArgument(parser, true);
 	if (firstArgument) {
 		skipWhitespaces(parser);
 		const maybeComma = parser.eatToken("Comma");
@@ -98,8 +101,8 @@ export function parseMinmaxFunction(
 			if (!maybeParenToken) {
 				parser.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.MIN_MAX_INVALID_ARGUMENTS,
-					token: maybeParenToken
-				})
+					token: maybeParenToken,
+				});
 				return undefined;
 			}
 			return parser.finishNode(

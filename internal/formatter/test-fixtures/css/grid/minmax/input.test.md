@@ -14,7 +14,7 @@
 
 ```css
 .style {
-	grid-template-columns: minmax(    1fr     ,     auto      );
+	grid-template-columns: minmax(    auto    ,     1fr       );
 }
 
 ```
@@ -23,7 +23,7 @@
 
 ```css
 .style {
-	grid-template-columns: minmax(1fr, auto);
+	grid-template-columns: minmax(auto, 1fr);
 }
 
 ```

@@ -202,6 +202,11 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`The rule <emphasis>@font-face</emphasis> needs the property <emphasis>src</emphasis> in order to be valid.`,
 	},
 
+
+	AT_IMPORT_INVALID_ARGUMENT: {
+		message: markup`Unexpected argument in at-import`,
+	},
+
 	MIN_MAX_INVALID_ARGUMENTS: {
 		message: markup`The function <emphasis>minmax()</emphasis> requires two arguments or the arguments provided are not supported.`,
 		advice: [
@@ -219,7 +224,7 @@ export const cssParser = createDiagnosticsCategory({
 		],
 	},
 
-	AT_IMPORT_INVALID_ARGUMENT: {
-		message: markup`Unexpected argument in at-import`,
+	MIN_MAX_INVALID_FLEX_ARGUMENT: {
+		message: markup`A flex argument is permitted only as <emphasis>second argument</emphasis> of the function <emphasis>minmax()</emphasis>`,
 	},
 });

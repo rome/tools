@@ -1,8 +1,6 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {CSSFontFace} from "@internal/ast/css/font/CSSFontFace";
-import {
-	skipWhitespaces,
-} from "@internal/css-parser/tokenizer";
+import {skipWhitespaces} from "@internal/css-parser/tokenizer";
 import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
 import {descriptions} from "@internal/diagnostics";
 
