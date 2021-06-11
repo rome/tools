@@ -27,7 +27,7 @@ CSSRoot {
 					name: "url"
 					params: [
 						CSSString {
-							value: "url"
+							value: "something.css"
 							loc: SourceLocation import/input.css 2:8-2:12
 						}
 					]
