@@ -1,5 +1,5 @@
 // https://www.w3.org/TR/css-cascade-4/#conditional-import
-import {CSSParser} from "@internal/css-parser/types";
+import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {CSSAtImport, CSSAtImportValue} from "@internal/ast";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
@@ -27,12 +27,13 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	if (token.type === "Function") {
 		const functionStart = parser.getPosition();
 		nextToken(parser);
+		const functionToken = parser.getToken() as Tokens["String"];
 		value = parser.finishNode(functionStart, {
 			type: "CSSUrlFunction",
 			name: "url",
 			params: [parser.finishNode(functionStart, {
 				type: "CSSString",
-				value: parser.getToken().value
+				value: functionToken.value
 			})]
 		});
 		isFunctionToken = true;
