@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -20,7 +20,7 @@ export default [
 	"mask-border-width",
 	"mask-border-slice",
 ].map((propertyName) =>
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: "mask",
 		enter(path) {
 			return prefixCSSProperty({
