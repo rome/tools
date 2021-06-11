@@ -397,7 +397,6 @@ function parseSelector(parser: CSSParser): CSSSelector {
 			matchToken(parser, "Comma") ||
 			matchToken(parser, "LeftCurlyBracket"))
 		) {
-			console.log("here");
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
 				start: selectorStart,

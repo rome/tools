@@ -23,7 +23,7 @@
 ```css
 @import "something.css"
 
-@import "url"
+@import url("something.css")
 
 
 ```

@@ -11,7 +11,10 @@ CSSRoot {
 			name: "import"
 			prelude: []
 			block: CSSAtImport {
-				value: "something.css"
+				value: CSSString {
+					value: "something.css"
+					loc: SourceLocation import/input.css 1:8-1:23
+				}
 				loc: SourceLocation import/input.css 1:7-1:24
 			}
 			loc: SourceLocation import/input.css 1:0-1:24
@@ -20,7 +23,16 @@ CSSRoot {
 			name: "import"
 			prelude: []
 			block: CSSAtImport {
-				value: "url"
+				value: CSSUrlFunction {
+					name: "url"
+					params: [
+						CSSString {
+							value: "url"
+							loc: SourceLocation import/input.css 2:8-2:12
+						}
+					]
+					loc: SourceLocation import/input.css 2:8-2:12
+				}
 				loc: SourceLocation import/input.css 2:7-2:29
 			}
 			loc: SourceLocation import/input.css 2:0-2:29

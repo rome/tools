@@ -11,28 +11,50 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 		readToken(parser, "Whitespace");
 	}
 	const functionArgumentToken = parser.getToken();
+	let isFunctionToken = false;
 
 	if (functionArgumentToken.type === "String") {
+		const functionStart = parser.getPosition();
 		nextToken(parser);
-		value = functionArgumentToken.value;
+		value = parser.finishNode(functionStart, {
+			type: "CSSString",
+			value: functionArgumentToken.value,
+		});
 	}
 
 	const token = parser.getToken();
 
 	if (token.type === "Function") {
+		const functionStart = parser.getPosition();
 		nextToken(parser);
-		value = token.value;
+		value = parser.finishNode(functionStart, {
+			type: "CSSUrlFunction",
+			name: "url",
+			params: [parser.finishNode(functionStart, {
+				type: "CSSString",
+				value: parser.getToken().value
+			})]
+		});
+		isFunctionToken = true;
 	}
 
 	if (value) {
 		nextToken(parser);
-		// Semi colon is optional, but if present we have to move forward in order to not
-		// break the existing usage and make it as part of the current node
 		if (parser.getToken().type === "RightParen") {
 			nextToken(parser);
 		}
+		// Semi colon is optional, but if present we have to move forward in order to not
+		// break the existing usage and make it as part of the current node
 		if (parser.getToken().type === "Semi") {
 			nextToken(parser);
+		} else {
+			if (isFunctionToken) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
+					token: token,
+				});
+				return undefined;
+			}
 		}
 		return parser.finishNode(
 			start,
@@ -44,7 +66,6 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	}
 	parser.unexpectedDiagnostic({
 		description: descriptions.CSS_PARSER.AT_IMPORT_INVALID_ARGUMENT,
-		// we need to create this diagnostic,
 		token: functionArgumentToken,
 	});
 	return undefined;
