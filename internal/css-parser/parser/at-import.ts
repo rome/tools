@@ -16,10 +16,13 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	if (functionArgumentToken.type === "String") {
 		const functionStart = parser.getPosition();
 		nextToken(parser);
-		value = parser.finishNode(functionStart, {
-			type: "CSSString",
-			value: functionArgumentToken.value,
-		});
+		value = parser.finishNode(
+			functionStart,
+			{
+				type: "CSSString",
+				value: functionArgumentToken.value,
+			},
+		);
 	}
 
 	const token = parser.getToken();
@@ -28,14 +31,22 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 		const functionStart = parser.getPosition();
 		nextToken(parser);
 		const functionToken = parser.getToken() as Tokens["String"];
-		value = parser.finishNode(functionStart, {
-			type: "CSSUrlFunction",
-			name: "url",
-			params: [parser.finishNode(functionStart, {
-				type: "CSSString",
-				value: functionToken.value
-			})]
-		});
+		value = parser.finishNode(
+			functionStart,
+			{
+				type: "CSSUrlFunction",
+				name: "url",
+				params: [
+					parser.finishNode(
+						functionStart,
+						{
+							type: "CSSString",
+							value: functionToken.value,
+						},
+					),
+				],
+			},
+		);
 		isFunctionToken = true;
 	}
 
@@ -52,7 +63,7 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 			if (isFunctionToken) {
 				parser.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
-					token: token,
+					token,
 				});
 				return undefined;
 			}
