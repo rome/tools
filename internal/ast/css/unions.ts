@@ -1,5 +1,6 @@
 import * as n from "@internal/ast";
 import {
+	CSSAtImport,
 	CSSAtPage,
 	CSSAtRule,
 	CSSBlock,
@@ -65,6 +66,7 @@ export type AnyCSSValue =
 	| CSSMinFunction
 	| CSSMediaQueryList
 	| CSSSupportsCondition
+	| CSSAtImport
 	| CSSRaw;
 
 export type RangeNameAndValue = [
@@ -97,7 +99,10 @@ export type CSSAtRuleValue =
 	| CSSKeyframe
 	| CSSMediaQueryList
 	| CSSAtPage
-	| CSSFontFace;
+	| CSSFontFace
+	| CSSAtImport;
+
+export type CSSAtImportValue = CSSString | CSSUrlFunction;
 
 export type CSSBlockValue = Array<
 	AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration
