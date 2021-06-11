@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -7,7 +7,7 @@ import {
 export default ["shape-margin", "shape-outside", "shape-image-threshold"].map((
 	propertyName,
 ) =>
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: propertyName,
 		enter(path) {
 			return prefixCSSProperty({

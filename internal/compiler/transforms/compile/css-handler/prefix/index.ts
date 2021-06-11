@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* GENERATED:START(hash:817f095cd37941c51ee5d0b64fb7ec9cf75789c6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
-=======
-/* GENERATED:START(hash:c59264a0d7d3dc13afe107f9d9612ef6a18b7b7b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
->>>>>>> 396f700e6 (rename "pseudo-classes" to "pseudo")
-=======
-/* GENERATED:START(hash:7b0718bf55eaf279be408bfb7baffbf90be42612,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
->>>>>>> 201acac80 (renames)
+/* GENERATED:START(hash:c33b0da136d1b7bf76d2f0b194f0ef454942e1e4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";

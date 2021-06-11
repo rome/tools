@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSValue,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -15,7 +15,7 @@ function pixelatedRenamer(value: string) {
 
 // https://github.com/Fyrd/caniuse/blob/main/features-json/css-crisp-edges.json
 export default [
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: "image-rendering/pixelated",
 		enter(path) {
 			return prefixCSSValue({
