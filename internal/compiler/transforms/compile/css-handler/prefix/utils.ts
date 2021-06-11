@@ -213,7 +213,10 @@ export function prefixCSSValue(
 }
 
 // Regular expression for matching prefixes
-const prefixRegExpr = /-[a-z]+-/g;
+const PREFIX_REG_EXPR = /-[a-z]+-/g;
+
+// Regular expression for matching just the prefix name
+const PREFIX_NAME_REG_EXPR = /-([a-z]+)-/;
 
 /**
  * Restrict the prefixes in the block to the prefixes
@@ -241,15 +244,11 @@ function collectExistingPrefixesFromRule(rule: CSSRule) {
 			}
 		}
 	}
-	console.log(existingPrefixes);
 	return existingPrefixes;
 }
 
-// Regular expression for matching just the prefix name
-const prefixNameRegExpr = /-([a-z]+)-/;
-
 function getPrefixName(value: string) {
-	const matched = value.match(prefixNameRegExpr);
+	const matched = value.match(PREFIX_NAME_REG_EXPR);
 	if (matched === null) {
 		return undefined;
 	}
@@ -317,10 +316,7 @@ interface PrefixPseudoSelectorsInBlockProps {
 	namesToFeatures: Map<string, string>;
 }
 
-/**
- * Same functionality as `prefixPseudoSelectorsInRoot` but
- * for CSS blocks.
- */
+/** {@link prefixPseudoSelectorsInRoot}*/
 export function prefixPseudoSelectorsInBlock(
 	{path, namesToFeatures}: PrefixPseudoSelectorsInBlockProps,
 ): signals.EnterSignal {
@@ -353,12 +349,12 @@ interface RuleOccurrence {
  * It detects if a rule already has a prefixed version or if it
  * is prefixed itself and ignores it.
  */
-function prefixRulesInArray(
-	array: AnyNode[],
+function prefixRulesInArray<T extends AnyNode>(
+	array: (T | CSSRule)[],
 	namesToFeatures: Map<string, string>,
 	targets: Browser[],
-) {
-	const result: AnyNode[] = [];
+): (T | CSSRule)[] {
+	const result: (T | CSSRule)[] = [];
 	const stringCache = new WeakMap<CSSRule, string>();
 	const occurrenceCache = new Map<string, RuleOccurrence>();
 
@@ -458,8 +454,8 @@ function rulePreludeToString(rule: CSSRule): RuleRepresentation {
 		},
 	);
 	return {
-		text: code.replace(prefixRegExpr, ""),
-		prefixed: prefixRegExpr.test(code),
+		text: code.replace(PREFIX_REG_EXPR, ""),
+		prefixed: PREFIX_REG_EXPR.test(code),
 	};
 }
 
@@ -517,7 +513,7 @@ function prefixCSSSelector(
 		namesToFeatures,
 		targets,
 	}: PrefixCSSSelectorProps,
-) {
+): CSSSelector {
 	const newPatterns = selector.patterns.map((pattern) => {
 		if (isPseudoSelector(pattern)) {
 			const browserFeature = namesToFeatures.get(pattern.value);
