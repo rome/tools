@@ -2,11 +2,13 @@ import * as n from "@internal/ast";
 import {
 	CSSAtImport,
 	CSSAtPage,
+	CSSAtRule,
 	CSSBlock,
 	CSSCalcFunction,
 	CSSCalcSum,
 	CSSComma,
 	CSSCustomProperty,
+	CSSDeclaration,
 	CSSDimension,
 	CSSFontFace,
 	CSSFunction,
@@ -23,7 +25,10 @@ import {
 	CSSMinFunction,
 	CSSNumber,
 	CSSPercentage,
+	CSSPseudoClassSelector,
+	CSSPseudoElementSelector,
 	CSSRaw,
+	CSSRule,
 	CSSString,
 	CSSSupportsCondition,
 	CSSUrlFunction,
@@ -98,3 +103,11 @@ export type CSSAtRuleValue =
 	| CSSAtImport;
 
 export type CSSAtImportValue = CSSString | CSSUrlFunction;
+
+export type CSSBlockValue = Array<
+	AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration
+>;
+
+export type CSSPseudoSelector =
+	| CSSPseudoClassSelector
+	| CSSPseudoElementSelector;

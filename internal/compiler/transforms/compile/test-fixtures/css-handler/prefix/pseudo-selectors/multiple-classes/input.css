@@ -1,0 +1,4 @@
+/* Multiple pseudo classes */
+.parent > .child:any-link, .example:read-only {
+	width: 10px;
+}

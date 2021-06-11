@@ -1,11 +1,11 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
 // https://github.com/Fyrd/caniuse/blob/main/features-json/css3-tabsize.json
 export default [
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: "tab-size",
 		enter(path) {
 			return prefixCSSProperty({

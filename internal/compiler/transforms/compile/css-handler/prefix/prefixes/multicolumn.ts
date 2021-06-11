@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -11,7 +11,7 @@ function breakRenamer(value: string) {
 
 export default [
 	...["break-before", "break-after", "break-inside"].map((propertyName) =>
-		createPrefixVisitor({
+		createPrefixCSSBlockVisitor({
 			name: propertyName,
 			enter(path) {
 				return prefixCSSProperty({
@@ -37,7 +37,7 @@ export default [
 		"column-span",
 		"column-fill",
 	].map((propertyName) =>
-		createPrefixVisitor({
+		createPrefixCSSBlockVisitor({
 			name: propertyName,
 			enter(path) {
 				return prefixCSSProperty({

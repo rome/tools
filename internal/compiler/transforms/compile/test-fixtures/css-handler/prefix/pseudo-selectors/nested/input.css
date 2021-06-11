@@ -1,0 +1,10 @@
+/* Nested inside CSSAtRule */
+@media screen and (max-width: 992px) {
+  .example:any-link {
+	width: 10px;
+  }
+
+  .example2::placeholder {
+	width: 10px;
+  }
+}
