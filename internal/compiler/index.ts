@@ -16,8 +16,8 @@ export {default as Cache} from "./lib/Cache";
 
 export * from "./lint/decisions";
 export {default as lint} from "./lint/index";
-export {LintRuleName, lintRuleNames} from "./lint/rules/index";
-
+export {LintRuleName} from "./lint/rules/categories";
+export {lintRuleNames} from "./lint/rules/index"
 export {default as compile} from "./api/compile";
 
 export {

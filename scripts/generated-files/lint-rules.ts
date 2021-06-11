@@ -1,7 +1,7 @@
 import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
 import {AbsoluteFilePath} from "@internal/path";
 import {pretty} from "@internal/pretty-format";
-import {dedent} from "@internal/string-utils";
+import {dedent, toCamelCase} from "@internal/string-utils";
 import {escapeXHTMLEntities} from "@internal/html-parser";
 
 const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
@@ -22,6 +22,8 @@ type LintDefinition = {
 	ruleName: string;
 };
 
+const categories: Map<string, string[]> = new Map();
+
 export async function getLintDefs(): Promise<LintDefinition[]> {
 	let defs: LintDefinition[] = [];
 
@@ -30,6 +32,8 @@ export async function getLintDefs(): Promise<LintDefinition[]> {
 		if ((await categoryPath.lstat()).isFile()) {
 			continue;
 		}
+
+		categories.set(category, []);
 
 		const categoryPaths = await categoryPath.readDirectory();
 		for (const path of categoryPaths) {
@@ -40,6 +44,10 @@ export async function getLintDefs(): Promise<LintDefinition[]> {
 			) {
 				const basename = path.getExtensionlessBasename();
 				const ruleName = `${category}/${basename}`;
+
+				const currentCategory = categories.get(category);
+
+				currentCategory?.push(basename);
 
 				defs.push({
 					docs: lintRulesDocFolder.append(`${ruleName}.md`),
@@ -91,6 +99,7 @@ export async function main() {
 				lines.push(`import ${basename} from "./${ruleName}";`);
 			}
 			lines.push(`import {AnyVisitor} from "@internal/compiler";`);
+			lines.push(`import {LintRuleName} from "./categories";`);
 			lines.push("");
 			lines.push(
 				"export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();",
@@ -107,11 +116,68 @@ export async function main() {
 			lines.push("];");
 			lines.push("");
 
-			lines.push("export type LintRuleName = ");
-			for (const {ruleName} of defs) {
-				lines.push(`	| "${ruleName}"`);
+			return {lines};
+		},
+	);
+
+	// Generate compiler rules index
+	await modifyGeneratedFile(
+		{
+			path: lintRulesFolder.append("categories.ts"),
+			scriptName: "generated-files/lint-rules",
+		},
+		async () => {
+			let lines = [];
+
+			lines.push("export type LintCategories = ");
+			for (const [category] of categories) {
+				lines.push(`	| "${category}"`);
 			}
-			lines.push(";");
+			lines.push("");
+
+			lines.push("export const lintCategories: Set<LintCategories> = new Set();");
+			for (const [category] of categories) {
+				lines.push(`lintCategories.add("${category}");`);
+			}
+
+			lines.push("");
+
+			const typedCategories: Map<string, string> = new Map();
+			for (const [category, rules] of categories) {
+				const typeName = `${toCamelCase(category, {forcePascal: true})}Rules`;
+				typedCategories.set(category, typeName);
+				lines.push(`export type ${typeName} = `);
+				for (const rule of rules) {
+					lines.push(`	| "${rule}"`);
+				}
+				lines.push(";");
+				lines.push("");
+			}
+
+			const finalTypes: Map<string, string> = new Map();
+			for (const [category, typedCategory] of typedCategories) {
+				const type = `${typedCategory}CategoryRules`;
+				finalTypes.set(category, type);
+				lines.push(`export type ${type} = { `);
+				lines.push(`	[key in ${typedCategory}]?: boolean`);
+				lines.push("}");
+				lines.push("");
+			}
+
+			lines.push(
+				// rome-ignore lint/js/noTemplateCurlyInString: needed to generate template literal type in TS
+				"export type LintRuleName = `${LintCategories}/${" +
+				Array.from(typedCategories.values()).join(" | ") +
+				"}`",
+			);
+			lines.push("");
+
+			lines.push("export type LintRules = { ");
+			for (const [category, typedCategory] of finalTypes) {
+				lines.push(`	"${category}"?: ${typedCategory}`);
+			}
+			lines.push("}");
+			lines.push("");
 
 			return {lines};
 		},

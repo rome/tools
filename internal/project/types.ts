@@ -16,9 +16,9 @@ import {
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {DeepPartial, Dict} from "@internal/typescript-helpers";
 import {SemverRange} from "@internal/codec-semver";
-import {LintRuleName} from "@internal/compiler";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {GetBrowserProps} from "@internal/browser-features";
+import {LintConfig} from "@internal/project/lint";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
@@ -48,6 +48,11 @@ export type DependenciesExceptions = {
 
 export type ProjectConfigPresetNames = "electron" | "cypress" | "jest";
 
+
+export type Recommendable = {
+	recommended?: boolean;
+};
+
 type Enableable = {
 	enabled: boolean;
 };
@@ -73,12 +78,7 @@ export type ProjectConfigObjects = {
 	check: {
 		dependencies: boolean;
 	};
-	lint: Enableable & {
-		globals: string[];
-		ignore: PathPattern[];
-		requireSuppressionExplanations: boolean;
-		disabledRules: LintRuleName[];
-	};
+	lint: Enableable & LintConfig;
 	typeCheck: Enableable & {
 		libs: AbsoluteFilePathSet;
 	};
@@ -152,6 +152,12 @@ export type ProjectConfig = ProjectConfigBase &
 		integrations: ProjectConfigIntegrations;
 	};
 
+type LooseRulesConfig = Recommendable & {
+	[key: string]: boolean | {
+		[key: string]: boolean
+	}
+}
+
 // The actual type that we allow users to specify their configuration
 // Types are deliberately wider than they need to be to more accurately represent how they will be provided. ie. `string` rather than string literals
 export type RawUserProjectConfig = DeepPartial<{
@@ -183,6 +189,7 @@ export type RawUserProjectConfig = DeepPartial<{
 		globals: string[];
 		disabledRules: string[];
 		requireSuppressionExplanations: boolean;
+		rules: LooseRulesConfig
 	};
 	format: {
 		enabled: boolean;
