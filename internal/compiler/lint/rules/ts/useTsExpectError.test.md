@@ -14,8 +14,7 @@
 
   > 1 │ // @ts-ignore
       │ ^^^^^^^^^^^^^
-  > 2 │ let foo: boolean = 1;
-      │ ^^^^^^^^^^^^^^^^^^^^^
+    2 │ let foo: boolean = 1;
 
   ℹ Safe fix
 
@@ -45,8 +44,7 @@ let foo: boolean = 1;
 
   > 1 │ // @ts-ignore: Blah blah blah
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  > 2 │ let foo: boolean = 1;
-      │ ^^^^^^^^^^^^^^^^^^^^^
+    2 │ let foo: boolean = 1;
 
   ℹ Safe fix
 
@@ -76,8 +74,7 @@ let foo: boolean = 1;
 
   > 1 │ /* @ts-ignore */
       │ ^^^^^^^^^^^^^^^^
-  > 2 │ let foo: boolean = 1;
-      │ ^^^^^^^^^^^^^^^^^^^^^
+    2 │ let foo: boolean = 1;
 
   ℹ Safe fix
 
@@ -107,8 +104,7 @@ let foo: boolean = 1;
 
   > 1 │ /** @ts-ignore */
       │ ^^^^^^^^^^^^^^^^^
-  > 2 │ let foo: boolean = 1;
-      │ ^^^^^^^^^^^^^^^^^^^^^
+    2 │ let foo: boolean = 1;
 
   ℹ Safe fix
 
@@ -139,8 +135,8 @@ let foo: boolean = 1;
   > 1 │ /**
       │ ^^^
   > 2 │  * @ts-ignore */
-  > 3 │ let foo: boolean = 1;
-      │ ^^^^^^^^^^^^^^^^^^^^^
+      │ ^^^^^^^^^^^^^^^^
+    3 │ let foo: boolean = 1;
 
   ℹ Safe fix
 
@@ -173,8 +169,8 @@ let foo: boolean = 1;
   > 1 │ /**
       │ ^^^
   > 2 │  ** @ts-ignore */
-  > 3 │ let foo: boolean = 1;
-      │ ^^^^^^^^^^^^^^^^^^^^^
+      │ ^^^^^^^^^^^^^^^^^
+    3 │ let foo: boolean = 1;
 
   ℹ Safe fix
 
