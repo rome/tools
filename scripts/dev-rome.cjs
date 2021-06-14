@@ -65,7 +65,7 @@ const versionParts = process.version.slice(1).split(".");
 const major = Number(versionParts[0]);
 
 // Keep this updated alongside engines in package.json
-const EXPECTED_MAJOR = 12;
+const EXPECTED_MAJOR = 14;
 
 if (major < EXPECTED_MAJOR) {
 	console.error(
