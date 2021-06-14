@@ -28,10 +28,10 @@ CSSRoot {
 					params: [
 						CSSString {
 							value: "something.css"
-							loc: SourceLocation import/input.css 2:8-2:12
+							loc: SourceLocation import/input.css 2:12-2:27
 						}
 					]
-					loc: SourceLocation import/input.css 2:8-2:12
+					loc: SourceLocation import/input.css 2:8-2:28
 				}
 				loc: SourceLocation import/input.css 2:7-2:29
 			}

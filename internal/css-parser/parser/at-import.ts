@@ -1,8 +1,9 @@
 // https://www.w3.org/TR/css-cascade-4/#conditional-import
-import {CSSParser, Tokens} from "@internal/css-parser/types";
+import {CSSParser} from "@internal/css-parser/types";
 import {CSSAtImport, CSSAtImportValue} from "@internal/ast";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
+import {parseFunction} from "@internal/css-parser/parser/function";
 
 export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	const start = parser.getPosition();
@@ -10,48 +11,29 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	while (matchToken(parser, "Whitespace")) {
 		readToken(parser, "Whitespace");
 	}
-	const functionArgumentToken = parser.getToken();
+	const token = parser.getToken();
 	let isFunctionToken = false;
 
-	if (functionArgumentToken.type === "String") {
+	if (token.type === "String") {
 		const functionStart = parser.getPosition();
 		nextToken(parser);
 		value = parser.finishNode(
 			functionStart,
 			{
 				type: "CSSString",
-				value: functionArgumentToken.value,
+				value: token.value,
 			},
 		);
-	}
+	} else if (token.type === "Function") {
+		const urlFunction = parseFunction(parser);
+		if (urlFunction?.type === "CSSUrlFunction") {
+			value = urlFunction;
+		}
 
-	const token = parser.getToken();
-
-	if (token.type === "Function") {
-		const functionStart = parser.getPosition();
-		nextToken(parser);
-		const functionToken = parser.getToken() as Tokens["String"];
-		value = parser.finishNode(
-			functionStart,
-			{
-				type: "CSSUrlFunction",
-				name: "url",
-				params: [
-					parser.finishNode(
-						functionStart,
-						{
-							type: "CSSString",
-							value: functionToken.value,
-						},
-					),
-				],
-			},
-		);
 		isFunctionToken = true;
 	}
 
 	if (value) {
-		nextToken(parser);
 		if (parser.getToken().type === "RightParen") {
 			nextToken(parser);
 		}
@@ -78,7 +60,7 @@ export function parseAtImport(parser: CSSParser): CSSAtImport | undefined {
 	}
 	parser.unexpectedDiagnostic({
 		description: descriptions.CSS_PARSER.AT_IMPORT_INVALID_ARGUMENT,
-		token: functionArgumentToken,
+		token,
 	});
 	return undefined;
 }
