@@ -434,7 +434,6 @@ export default class RecoveryStore {
 						fd = await path.openFile("r+");
 
 						// First verify the mtime
-						// @ts-expect-error: This is accurate
 						const stats: FSStats = await fd.stat({bigint: true});
 						if (stats.mtimeNs === mtimeNs) {
 							await events.beforeFileWrite(path, fd);
