@@ -230,7 +230,6 @@ function callRelease(
 	return selfPromise;
 }
 
-// @ts-ignore: Yes I really want to do this on an abstract class... bite me
 enhanceNodeInspectClass(
 	Resource,
 	(resc) => {

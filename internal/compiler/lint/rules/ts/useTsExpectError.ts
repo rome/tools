@@ -30,7 +30,10 @@ export default createVisitor({
 						if (x.type === "CommentLine") {
 							return {
 								...x,
-								value: x.value.replace(RE_LINE_IGNORE_SUPPRESSION, "$1@ts-expect-error"),
+								value: x.value.replace(
+									RE_LINE_IGNORE_SUPPRESSION,
+									"$1@ts-expect-error",
+								),
 							};
 						}
 

@@ -115,7 +115,7 @@ class QuickBuilder<Node extends AnyNode, QuickKey extends keyof Node>
 		opts?: Partial<Omit<Node, "type">>,
 		inheritNode?: Node,
 	): Node {
-		// @ts-ignore
+		// @ts-expect-error
 		const node: Omit<Node, "type"> = {
 			...opts,
 			[this.quickKey]: arg,
