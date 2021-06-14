@@ -3,10 +3,10 @@ import createDeferredPromise from "@internal/async/createDeferredPromise";
 import {GlobalLock} from "@internal/async";
 import {Resource, createResourceFromCallback} from "@internal/resources";
 
-type EventQueueCallack<Value> = AsyncVoidCallback<[Value[]]>;
+type EventQueueCallback<Value> = AsyncVoidCallback<[Value[]]>;
 
 type EventQueueItem<Value> = {
-	callback: EventQueueCallack<Value>;
+	callback: EventQueueCallback<Value>;
 	resource: Resource;
 };
 
@@ -108,7 +108,7 @@ export default class EventQueue<Value> {
 		await promise;
 	}
 
-	public subscribe(callback: EventQueueCallack<Value>): Resource {
+	public subscribe(callback: EventQueueCallback<Value>): Resource {
 		const resource = createResourceFromCallback(
 			`EventQueueSubscription<${this.name}>`,
 			async () => {

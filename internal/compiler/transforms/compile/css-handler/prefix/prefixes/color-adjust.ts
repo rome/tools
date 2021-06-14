@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -11,7 +11,7 @@ function printRenamer(value: string) {
 
 // https://github.com/Fyrd/caniuse/blob/main/features-json/css-color-adjust.json
 export default [
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: "color-adjust",
 		enter(path) {
 			return prefixCSSProperty({

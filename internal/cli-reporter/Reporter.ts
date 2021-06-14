@@ -154,6 +154,7 @@ export default class Reporter implements ReporterNamespace {
 					cwd: CWD_PATH,
 					home: HOME_PATH,
 				},
+				stdin: process.stdin,
 			},
 		);
 

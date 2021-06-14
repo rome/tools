@@ -1,10 +1,10 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
 export default [
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: "scroll-snap-type",
 		enter(path) {
 			return prefixCSSProperty({
