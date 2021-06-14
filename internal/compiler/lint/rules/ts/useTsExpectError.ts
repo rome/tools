@@ -2,7 +2,7 @@ import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 const RE_LINE_IGNORE_SUPPRESSION = /^(\s*)@ts-ignore/;
-const RE_BLOCK_IGNORE_SUPPRESSION = /^(\s*)@ts-ignore/;
+const RE_BLOCK_IGNORE_SUPPRESSION = /^(\s*)(\**)(\s*)@ts-ignore/;
 
 export default createVisitor({
 	name: "ts/useTsExpectError",

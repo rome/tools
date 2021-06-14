@@ -43,15 +43,15 @@ let foo: boolean = 1;
 
   ✖ Prefer @ts-expect-error to get notified when suppression is no longer necessary.
 
-  > 1 │ // @ts-ignore
-      │ ^^^^^^^^^^^^^
+  > 1 │ // @ts-ignore: Blah blah blah
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   > 2 │ let foo: boolean = 1;
       │ ^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
-    1   │ - //·@ts-ignore
-      1 │ + //·@ts-expect-error
+    1   │ - //·@ts-ignore:·Blah·blah·blah
+      1 │ + //·@ts-expect-error:·Blah·blah·blah
     2 2 │   let·foo:·boolean·=·1;
     3 3 │
 
@@ -61,7 +61,7 @@ let foo: boolean = 1;
 ### `1: formatted`
 
 ```ts
-// @ts-expect-error
+// @ts-expect-error: Blah blah blah
 let foo: boolean = 1;
 
 ```
@@ -219,7 +219,7 @@ let foo: boolean = 1;
 ### `7: formatted`
 
 ```ts
-/* @ts-expect-error */
+// @ts-expect-error: Blah blah blah
 let foo: boolean = 1;
 
 ```
@@ -233,7 +233,7 @@ let foo: boolean = 1;
 ### `8: formatted`
 
 ```ts
-/** @ts-expect-error*/
+/* @ts-expect-error */
 let foo: boolean = 1;
 
 ```
@@ -247,8 +247,7 @@ let foo: boolean = 1;
 ### `9: formatted`
 
 ```ts
-/**
- * @ts-expect-error */
+/** @ts-expect-error*/
 let foo: boolean = 1;
 
 ```
@@ -260,6 +259,21 @@ let foo: boolean = 1;
 ```
 
 ### `10: formatted`
+
+```ts
+/**
+ * @ts-expect-error */
+let foo: boolean = 1;
+
+```
+
+### `11`
+
+```
+
+```
+
+### `11: formatted`
 
 ```ts
 /**
