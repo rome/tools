@@ -371,7 +371,7 @@ export default class Consumer {
 
 		if (at === "suffix") {
 			msg = markup`${msg} at <emphasis>${target.getKeyPathString()}</emphasis>`;
-		} else {
+		} else if (at === "prefix") {
 			msg = markup`<emphasis>${target.getKeyPathString()}</emphasis> ${msg}`;
 		}
 

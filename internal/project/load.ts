@@ -38,7 +38,7 @@ import {lintRuleNames} from "@internal/compiler";
 import {sha256} from "@internal/string-utils";
 import {resolveBrowsers} from "@internal/codec-browsers";
 import {ParserOptions} from "@internal/parser-core";
-import {LintCategories, lintCategories} from "@internal/compiler/lint/rules/categories";
+import {loadRules} from "@internal/project/loadRules";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -338,25 +338,9 @@ export async function normalizeProjectConfig(
 		}
 
 		if (lint.has("rules")) {
-			const rules = lint.get("rules").asMappedObject((value, key) => {
-				if (value.exists()) {
-					if (key === "recommended") {
-						return value.asBoolean();
-					}
-					if (
-					//	temporary cast to make .has() working
-					lintCategories.has(key as LintCategories)
-					) {
-						value.asMappedObject((categoryValue, categoryKey) => {
-							console.log(categoryKey)
-							console.log(categoryValue)
-						})
-					}
-					console.log(key);
-					console.log(value);
-				}
-				return undefined
-			})
+			config.lint.rules = loadRules(lint);
+		} else {
+			config.lint.rules = undefined;
 		}
 
 		lint.enforceUsedProperties("lint config property");
