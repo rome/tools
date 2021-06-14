@@ -13,17 +13,21 @@ export default createVisitor({
 			return signals.retain;
 		}
 
-		if (
-			!node.comments.some((x) =>
-				(x.type === "CommentLine" && x.value.match(RE_LINE_IGNORE_SUPPRESSION)) ||
-				x.value.split("\n").some((l) => l.match(RE_BLOCK_IGNORE_SUPPRESSION))
-			)
-		) {
+		/**
+		 * Used to provide a meaningful diagnosic message instead of pointing at the fist line of a file
+		 */
+		const firstCommentToFixIndex = node.comments.findIndex((x) =>
+			(x.type === "CommentLine" && x.value.match(RE_LINE_IGNORE_SUPPRESSION)) ||
+			x.value.split("\n").some((l) => l.match(RE_BLOCK_IGNORE_SUPPRESSION))
+		);
+
+		if (firstCommentToFixIndex === -1) {
 			return signals.retain;
 		}
 
 		return path.addFixableDiagnostic(
 			{
+				target: node.comments[firstCommentToFixIndex],
 				fixed: signals.replace({
 					...node,
 					comments: node.comments.map((x) => {
