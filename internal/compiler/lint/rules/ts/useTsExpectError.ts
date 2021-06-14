@@ -1,10 +1,8 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
-const RE = {
-	line: /^(\s*)@ts-ignore/,
-	block: /^(\s*)(\**)(\s*)@ts-ignore/,
-};
+const RE_LINE_IGNORE_SUPPRESSION = /^(\s*)@ts-ignore/;
+const RE_BLOCK_IGNORE_SUPPRESSION = /^(\s*)@ts-ignore/;
 
 export default createVisitor({
 	name: "ts/useTsExpectError",
@@ -17,8 +15,8 @@ export default createVisitor({
 
 		if (
 			!node.comments.some((x) =>
-				(x.type === "CommentLine" && x.value.match(RE.line)) ||
-				x.value.split("\n").some((l) => l.match(RE.block))
+				(x.type === "CommentLine" && x.value.match(RE_LINE_IGNORE_SUPPRESSION)) ||
+				x.value.split("\n").some((l) => l.match(RE_BLOCK_IGNORE_SUPPRESSION))
 			)
 		) {
 			return signals.retain;
@@ -32,14 +30,14 @@ export default createVisitor({
 						if (x.type === "CommentLine") {
 							return {
 								...x,
-								value: x.value.replace(RE.line, "$1@ts-expect-error"),
+								value: x.value.replace(RE_LINE_IGNORE_SUPPRESSION, "$1@ts-expect-error"),
 							};
 						}
 
 						return {
 							...x,
 							value: x.value.split("\n").map((l) =>
-								l.replace(RE.block, "$1$2$3@ts-expect-error")
+								l.replace(RE_BLOCK_IGNORE_SUPPRESSION, "$1$2$3@ts-expect-error")
 							).join("\n"),
 						};
 					}),

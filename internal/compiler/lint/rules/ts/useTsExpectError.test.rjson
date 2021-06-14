@@ -5,7 +5,7 @@ invalid: [
 	let foo: boolean = 1;
 	"
 	"
-	// @ts-ignore
+	// @ts-ignore: Blah blah blah
 	let foo: boolean = 1;
 	"
 	"
@@ -30,6 +30,10 @@ invalid: [
 valid: [
 	"
 	// @ts-expect-error
+	let foo: boolean = 1;
+	"
+	"
+	// @ts-expect-error: Blah blah blah
 	let foo: boolean = 1;
 	"
 	"

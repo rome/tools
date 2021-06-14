@@ -2,7 +2,7 @@
 title: Lint Rule ts/useTsExpectError
 layout: layouts/rule.liquid
 showHero: false
-description: MISSING DOCUMENTATION
+description: use `@ts-expect-error` suppressions instead of `@ts-ignore` to get notified when suppression is no longer necessary
 eleventyNavigation:
 	key: lint-rules/ts/useTsExpectError
 	parent: lint-rules
