@@ -21,9 +21,9 @@
 ### `Output`
 
 ```css
-@import "something.css"
+@import "something.css";
 
-@import url("something.css")
+@import url("something.css");
 
 
 ```
