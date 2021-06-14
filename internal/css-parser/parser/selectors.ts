@@ -390,6 +390,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 			patterns.push(selector);
 		}
 
+		console.log(parser.getToken());
 		if (
 			!(selector ||
 			combinator ||
