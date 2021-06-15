@@ -5,7 +5,7 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern, isConditional} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
@@ -23,7 +23,7 @@ function inComponentDidUpdate(path: CompilerPath): boolean {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noDidUpdateSetState",
 	enter(path) {
 		const {node} = path;

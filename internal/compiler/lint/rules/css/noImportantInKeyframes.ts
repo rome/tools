@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {
 	CSSAtRule,
@@ -17,7 +17,7 @@ function hasImportant(values: Array<CSSAtRule | CSSDeclaration>) {
 	}
 	return false;
 }
-export default createVisitor({
+export default createLintVisitor({
 	name: "css/noImportantInKeyframes",
 	enter(path) {
 		const {node} = path;

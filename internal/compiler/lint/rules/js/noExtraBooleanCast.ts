@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {
 	AnyNode,
 	JSCallExpression,
@@ -45,7 +45,7 @@ function isNegation(node: AnyNode): node is JSUnaryExpression {
 	return node.type === "JSUnaryExpression" && node.operator === "!";
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noExtraBooleanCast",
 	enter(path) {
 		const {node, parent} = path;

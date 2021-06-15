@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {
 	JSCallExpression,
 	JSOptionalCallExpression,
@@ -40,7 +40,7 @@ function getMapCallback(node: JSCallExpression | JSOptionalCallExpression) {
 	return undefined;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/useKey",
 	enter(path) {
 		const {node, context} = path;

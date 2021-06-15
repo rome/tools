@@ -1,9 +1,9 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {normalizeCamelCase} from "../js/useCamelCase";
 import {toCamelCase} from "@internal/string-utils";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "jsx/usePascalCase",
 	enter(path) {
 		const {node} = path;

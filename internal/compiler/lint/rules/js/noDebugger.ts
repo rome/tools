@@ -6,9 +6,9 @@
  */
 
 import {descriptions} from "@internal/diagnostics";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noDebugger",
 	enter(path) {
 		const {node} = path;

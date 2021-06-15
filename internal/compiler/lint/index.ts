@@ -6,12 +6,16 @@
  */
 
 import {Diagnostic, DiagnosticSuppression} from "@internal/diagnostics";
-import {AnyVisitor, LintRequest} from "../types";
+import {LintRequest, LintVisitor} from "../types";
 import {Cache, CompilerContext, LintRuleName} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 import {addSuppressions} from "./suppressions";
 import {lintTransforms} from "./rules/index";
 import {ProjectConfig} from "@internal/project";
+import {
+	LintCategories,
+	RuleNames,
+} from "@internal/compiler/lint/rules/categories";
 
 export type LintResult = {
 	diagnostics: Diagnostic[];
@@ -19,24 +23,40 @@ export type LintResult = {
 	formatted: string;
 };
 
-const ruleVisitorCache: WeakMap<ProjectConfig, AnyVisitor[]> = new WeakMap();
+const ruleVisitorCache: WeakMap<ProjectConfig, LintVisitor[]> = new WeakMap();
 
-const allVisitors = Array.from(lintTransforms.values());
+const allVisitors: LintVisitor[] = [];
+const recommendedVisitors: LintVisitor[] = [];
 
-function getVisitors(
-	config: ProjectConfig,
-	applyLintCategories?: LintRuleName[],
-): AnyVisitor[] {
-	const {disabledRules} = config.lint;
-
-	if (applyLintCategories && applyLintCategories.length > 0) {
-		return applyLintCategories.map((ruleName) => {
-			return lintTransforms.get(ruleName);
-		}).filter(Boolean) as AnyVisitor[];
+for (const [, payload] of lintTransforms) {
+	for (const visitors of payload.values()) {
+		allVisitors.push(visitors.visitor);
+		if (visitors.recommended) {
+			recommendedVisitors.push(visitors.visitor);
+		}
 	}
+}
 
-	// Fast path
-	if (disabledRules.length === 0) {
+export function getVisitors(
+	config: ProjectConfig,
+	applyLintRules?: LintRuleName[],
+): LintVisitor[] {
+	// the option has priority above all
+	if (applyLintRules && applyLintRules.length > 0) {
+		for (const ruleToApply of applyLintRules) {
+			const [categoryToApply, ruleNameToApply] = ruleToApply.split("/");
+			const visitorPayload = lintTransforms.get(
+				categoryToApply as LintCategories,
+			)?.get(ruleNameToApply as RuleNames);
+			if (visitorPayload) {
+				return [visitorPayload.visitor];
+			}
+		}
+	}
+	const {rules} = config.lint;
+
+	// if no configuration was passed, let's just return all the rome visitors regardless
+	if (!rules) {
 		return allVisitors;
 	}
 
@@ -44,17 +64,38 @@ function getVisitors(
 	if (cached !== undefined) {
 		return cached;
 	}
+	const computedVisitors: LintVisitor[] = [];
+	ruleVisitorCache.set(config, computedVisitors);
 
-	const visitors: AnyVisitor[] = [];
-	ruleVisitorCache.set(config, visitors);
+	if (rules) {
+		if (rules.recommended === true) {
+			return recommendedVisitors;
+		}
 
-	for (const [ruleName, visitor] of lintTransforms) {
-		if (!disabledRules.includes(ruleName)) {
-			visitors.push(visitor);
+		for (const [category, currentRules] of lintTransforms) {
+			// select the configuration of the current category, e.g. a11y, js, ts, etc.
+			const categoryConfig = rules[category];
+			if (categoryConfig) {
+				// if it is recommended, let's push all the visitors that belong to that category
+				if (categoryConfig.recommended) {
+					computedVisitors.push(
+						...Array.from(currentRules.values()).map((c) => c.visitor),
+					);
+				} else {
+					for (const [ruleName, active] of categoryConfig) {
+						if (active) {
+							const payload = currentRules.get(ruleName);
+							if (payload) {
+								computedVisitors.push(payload.visitor);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
-	return visitors;
+	return computedVisitors;
 }
 
 const lintCache: Cache<LintResult> = new Cache();

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {AnyJSExpression, JSUnaryExpression} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 
@@ -17,7 +17,7 @@ function isNegation(node: AnyJSExpression): node is JSUnaryExpression {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noNegationElse",
 	enter(path) {
 		const {node} = path;

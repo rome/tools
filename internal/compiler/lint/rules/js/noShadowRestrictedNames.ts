@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {
 	builtin,
 	es5,
@@ -25,7 +25,7 @@ const restrictedNames = new Set([
 	...es2021,
 ]);
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noShadowRestrictedNames",
 	enter(path) {
 		const {node, context, scope} = path;

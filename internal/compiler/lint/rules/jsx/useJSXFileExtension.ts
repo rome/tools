@@ -1,4 +1,4 @@
-import {CompilerContext, createVisitor, signals} from "@internal/compiler";
+import {CompilerContext, createLintVisitor, signals} from "@internal/compiler";
 
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
@@ -18,7 +18,7 @@ function isJSXFile(context: CompilerContext): boolean {
 	return false;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "jsx/useJSXFileExtension",
 	enter(path) {
 		const {node, context} = path;

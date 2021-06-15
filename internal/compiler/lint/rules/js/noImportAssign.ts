@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 function isAssignment(path: CompilerPath): boolean {
@@ -23,7 +23,7 @@ function isAssignment(path: CompilerPath): boolean {
 	}
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noImportAssign",
 	enter(path) {
 		const {node, scope} = path;

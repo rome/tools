@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {jsBlockStatement} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {injectComment} from "@internal/compiler/transforms/helpers";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/useBlockStatements",
 	enter(path) {
 		const {node} = path;

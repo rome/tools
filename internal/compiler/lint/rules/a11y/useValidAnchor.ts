@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
@@ -34,7 +34,7 @@ function falsyHref(attr: JSXAttribute | undefined): boolean {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useValidAnchor",
 	enter(path) {
 		const {node} = path;

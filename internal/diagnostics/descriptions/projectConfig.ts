@@ -22,12 +22,11 @@ export const projectConfig = createDiagnosticsCategory({
 		availableCategories: LintCategories[],
 	) => ({
 		message: markup`The category <emphasis>${unknownCategory}</emphasis> is unknown`,
-		advice: buildSuggestionAdvice(unknownCategory, availableCategories)
-
+		advice: buildSuggestionAdvice(unknownCategory, availableCategories),
 	}),
 
 	RULES_UNKNOWN_RULE_NAME: (unknownRule: string, suggestions: string[]) => ({
 		message: markup`The rule <emphasis>${unknownRule}</emphasis> is unknown`,
-		advice: buildSuggestionAdvice(unknownRule, suggestions)
+		advice: buildSuggestionAdvice(unknownRule, suggestions),
 	}),
 });

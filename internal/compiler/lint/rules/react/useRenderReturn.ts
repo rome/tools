@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {AnyJSClassMember, AnyNode} from "@internal/ast";
 import {getCompletionRecords} from "@internal/js-ast-utils";
@@ -26,8 +26,8 @@ function getMethodBody(node: AnyJSClassMember) {
 	return undefined;
 }
 
-export default createVisitor({
-	name: "requireRenderReturn",
+export default createLintVisitor({
+	name: "react/useRenderReturn",
 	enter(path) {
 		const {node} = path;
 		if (node.type === "JSClassHead" && insideClassComponent(path)) {

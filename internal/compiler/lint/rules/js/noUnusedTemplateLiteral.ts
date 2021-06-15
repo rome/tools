@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {JSTemplateElement, jsStringLiteral} from "@internal/ast";
 
@@ -6,8 +6,8 @@ function containsSpecialCharacters(node: JSTemplateElement): boolean {
 	return /['"\n]/.test(node.raw);
 }
 
-export default createVisitor({
-	name: "js/jsNoUnusedTemplateLiteral",
+export default createLintVisitor({
+	name: "js/noUnusedTemplateLiteral",
 	enter(path) {
 		const {node} = path;
 

@@ -1,8 +1,8 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {jsBooleanLiteral, jsxExpressionContainer} from "@internal/ast";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "jsx/noImplicitBoolean",
 	enter(path) {
 		const {node} = path;

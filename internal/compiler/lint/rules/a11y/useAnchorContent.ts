@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {HTMLElement, JSXElement} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
@@ -21,7 +21,7 @@ function htmlHasAnchorContent(node: HTMLElement) {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useAnchorContent",
 	enter(path) {
 		const {node} = path;

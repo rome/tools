@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 import {doesNodeMatchPattern} from "@internal/js-ast-utils";
@@ -6,7 +6,7 @@ import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
 
 const DISTRACTING_TYPES = ["blink", "marquee"];
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/noDistractingElements",
 	enter(path) {
 		const {node} = path;

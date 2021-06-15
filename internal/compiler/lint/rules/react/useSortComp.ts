@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode, JSClassHead} from "@internal/ast";
 import {doesNodeMatchPattern} from "@internal/js-ast-utils";
@@ -210,7 +210,7 @@ function findOutOfOrderNodes(
 	return {nodesToMove, nodesInOrder};
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/useSortComp",
 	enter(path) {
 		const {node} = path;

@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
 import {HTMLElement, JSXElement} from "@internal/ast";
@@ -26,7 +26,7 @@ function htmlHasHeadingContent(node: HTMLElement): boolean {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useHeadingContent",
 	enter(path) {
 		const {node} = path;

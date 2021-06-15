@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {JSXElement} from "@internal/ast";
 import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
@@ -21,7 +21,7 @@ function hasAriaAttributes(node: JSXElement): boolean {
 
 const ELEMENTS_TO_CHECK = new Set(["meta", "html", "script", "style"]);
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/noAriaUnsupportedElements",
 	enter(path) {
 		const {node} = path;

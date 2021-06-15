@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 
 const SUGGESTION_DESCRIPTION = markup`This may be unsafe if you are relying on type coercion`;
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noDoubleEquals",
 	enter(path) {
 		const {node} = path;

@@ -1,4 +1,9 @@
-import {CompilerPath, Scope, createVisitor, signals} from "@internal/compiler";
+import {
+	CompilerPath,
+	Scope,
+	createLintVisitor,
+	signals,
+} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
 import {
@@ -121,7 +126,7 @@ function hasArrayIndexKey(keyValue: string, node: AnyNode) {
 	return false;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noArrayIndexKey",
 	enter(path) {
 		const {node, scope} = path;

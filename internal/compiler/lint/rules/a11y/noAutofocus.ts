@@ -1,12 +1,12 @@
 import {descriptions} from "@internal/diagnostics";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
 import hasHTMLAttribute from "@internal/js-ast-utils/hasHTMLAttribute";
 import getHTMLAttribute from "@internal/js-ast-utils/getHTMLAttribute";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/noAutofocus",
 
 	enter(path) {

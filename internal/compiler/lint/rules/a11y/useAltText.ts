@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {HTMLElement, JSXElement} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {
@@ -96,7 +96,7 @@ function isImportantTag(nodeName: string) {
 	return /(img)|(area)|(input)|(object)/.test(nodeName);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useAltText",
 	enter(path) {
 		const {node} = path;

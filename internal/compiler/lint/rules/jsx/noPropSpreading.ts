@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "jsx/noPropSpreading",
 	enter(path) {
 		const {node} = path;

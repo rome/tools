@@ -6,10 +6,10 @@ import {
 	jsUnaryExpression,
 } from "@internal/ast";
 import {CompilerPath, signals} from "@internal/compiler";
-import {createVisitor} from "@internal/compiler/utils";
+import {createLintVisitor} from "@internal/compiler/utils";
 import {descriptions} from "@internal/diagnostics";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/useSimplifiedLogicalExpression",
 	enter(path) {
 		const {node} = path;
@@ -51,7 +51,7 @@ export default createVisitor({
 		/* TODO: simplify the following case when the AST will support it
         if (boolExp) {
                 return true;
-            } 
+            }
             return false;
         */
 

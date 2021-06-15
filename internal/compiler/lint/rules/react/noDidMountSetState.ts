@@ -1,4 +1,4 @@
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern, isConditional} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
@@ -14,7 +14,7 @@ function inComponentDidMount(path: CompilerPath): boolean {
 	));
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noDidMountSetState",
 	enter(path) {
 		const {node} = path;

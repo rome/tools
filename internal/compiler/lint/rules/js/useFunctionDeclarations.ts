@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {
 	JSFunctionDeclaration,
 	JSVariableDeclarationStatement,
@@ -22,7 +22,7 @@ type State = {
 	declarators: JSVariableDeclarator[];
 };
 
-export default createVisitor<State>({
+export default createLintVisitor<State>({
 	name: "js/useFunctionDeclarations",
 	enter(path, state) {
 		const {node} = path;

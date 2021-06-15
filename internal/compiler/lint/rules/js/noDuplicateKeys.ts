@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {JSObjectMethod, JSObjectProperty} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
@@ -30,7 +30,7 @@ function extractPropertyKey(
 	return undefined;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noDuplicateKeys",
 	enter(path) {
 		const {node, context} = path;

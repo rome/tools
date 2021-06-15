@@ -2,7 +2,7 @@ import {
 	CompilerPath,
 	ExitSignal,
 	Scope,
-	createVisitor,
+	createLintVisitor,
 	signals,
 } from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
@@ -44,8 +44,8 @@ function getChildrenNode(node: JSXFragment | JSXElement): ExitSignal {
 	return signals.replace(node.children);
 }
 
-export default createVisitor({
-	name: "noUselessFragment",
+export default createLintVisitor({
+	name: "react/noUselessFragment",
 	enter(path) {
 		const {node, scope} = path;
 

@@ -11,7 +11,7 @@ import {
 	JSExportDefaultDeclaration,
 	JSFunctionDeclaration,
 } from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {Path} from "@internal/path";
 import {renameBindings} from "@internal/js-ast-utils";
 import {descriptions} from "@internal/diagnostics";
@@ -52,7 +52,7 @@ export function filenameToId(
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/useDefaultExportBasename",
 	enter(path) {
 		const {context, node} = path;

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 const commentPattern = /(^(\/\*\*|\/\*|\/\/)|\*\/$)/gm;
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "jsx/noCommentText",
 	enter(path) {
 		const {node} = path;

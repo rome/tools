@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {isEmptyTemplateLiteral} from "@internal/js-ast-utils";
 import {
@@ -82,7 +82,7 @@ function isCorrectValue(
 
 const ARIA_PREFIX = "aria-";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useAriaProptypes",
 	enter(path) {
 		const {node} = path;

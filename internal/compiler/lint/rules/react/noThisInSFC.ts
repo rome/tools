@@ -1,8 +1,8 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {isFunctionNode} from "@internal/js-ast-utils";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noThisInSFC",
 	enter(path) {
 		const {node} = path;

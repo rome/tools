@@ -1,4 +1,4 @@
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
 import {
@@ -52,7 +52,7 @@ function createJSXDiagnostic(
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/noPositiveTabindex",
 	enter(path) {
 		const {node} = path;

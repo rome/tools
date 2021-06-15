@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {getJSXAttribute} from "@internal/js-ast-utils";
 import {descriptions} from "@internal/diagnostics";
 import {getCreateElementProp} from "../../utils/react";
@@ -15,7 +15,7 @@ function getJSXChildrenProp(node: AnyNode) {
 	return node.type === "JSXElement" && getJSXAttribute(node, "children");
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noChildrenProp",
 	enter(path) {
 		const {node, scope} = path;

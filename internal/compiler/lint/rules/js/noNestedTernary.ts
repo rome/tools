@@ -1,8 +1,8 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
-export default createVisitor({
-	name: "js/jsNoNestedTernary",
+export default createLintVisitor({
+	name: "js/noNestedTernary",
 	enter(path) {
 		const {node} = path;
 

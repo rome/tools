@@ -5,7 +5,7 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {JSStringLiteral} from "@internal/ast";
 import {
@@ -16,7 +16,7 @@ import {
 } from "../../utils/react";
 import {VOID_DOM_ELEMENTS} from "../../utils/constants";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noVoidElementsWithChildren",
 	enter(path) {
 		const {node, scope} = path;

@@ -6,7 +6,7 @@
  */
 
 import {AnyJSRegExpBodyItem, AnyJSRegExpExpression} from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 function isQuantifiedMinZero(el: AnyJSRegExpBodyItem): boolean {
@@ -35,7 +35,7 @@ function lintEmptyMatches(expr: AnyJSRegExpExpression): boolean {
 	}
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "regex/noEmptyMatches",
 	enter(path) {
 		const {context, node} = path;

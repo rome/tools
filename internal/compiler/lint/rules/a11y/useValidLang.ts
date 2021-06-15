@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {HTMLAttribute, JSXElement} from "@internal/ast";
 import {
@@ -36,7 +36,7 @@ function htmlSupportedLang(attribute: HTMLAttribute): undefined | string {
 	return undefined;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useValidLang",
 	enter(path) {
 		const {node} = path;

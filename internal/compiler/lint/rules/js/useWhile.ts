@@ -6,10 +6,10 @@
  */
 
 import {descriptions} from "@internal/diagnostics";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {jsBooleanLiteral, jsWhileStatement} from "@internal/ast";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/useWhile",
 	enter(path) {
 		const {node} = path;

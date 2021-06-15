@@ -1,7 +1,7 @@
-import {ConstBinding, createVisitor, signals} from "@internal/compiler";
+import {ConstBinding, createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noShoutyConstants",
 	enter(path) {
 		const {node, scope} = path;

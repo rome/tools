@@ -1,5 +1,5 @@
 import {test} from "rome";
-import {LintRequest, LintResult, lint, lintRuleNames} from "@internal/compiler";
+import {LintRequest, LintResult, lint} from "@internal/compiler";
 import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
@@ -56,6 +56,7 @@ test(
 	"disabledLintRules single",
 	async (t) => {
 		function hasUndeclaredDiag(res: LintResult): boolean {
+			console.log(res.diagnostics);
 			for (const diag of res.diagnostics) {
 				if (
 					equalCategoryNames(
@@ -83,7 +84,10 @@ test(
 					...config,
 					lint: {
 						...config.lint,
-						disabledRules: ["js/noUndeclaredVariables"],
+						rules: {
+							...config.lint.rules,
+							js: new Map([["noUndeclaredVariables", false]]),
+						},
 					},
 				}),
 			),
@@ -102,7 +106,7 @@ test(
 					...config,
 					lint: {
 						...config.lint,
-						disabledRules: lintRuleNames,
+						enabled: false,
 					},
 				}),
 			),

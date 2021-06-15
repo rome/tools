@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {JSRegExpGroupCapture} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 
@@ -30,7 +30,7 @@ function findCaptureGroups(
 	return captureGroups;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "regex/noReferenceToNonExistingGroup",
 	enter(path) {
 		const {node, context} = path;

@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode, JSIdentifier} from "@internal/ast";
 
@@ -28,7 +28,7 @@ function getUnsafeDef(node: AnyNode) {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noUnsafe",
 
 	enter(path) {

@@ -1,4 +1,4 @@
-import {Scope, createVisitor, signals} from "@internal/compiler";
+import {Scope, createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
 import {
@@ -43,7 +43,7 @@ function jsxMissingType(node: AnyNode, scope: Scope) {
 	return typeof value !== "string" || !BUTTON_TYPE_REGEX.test(value);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/useButtonType",
 	enter(path) {
 		const {node, scope} = path;

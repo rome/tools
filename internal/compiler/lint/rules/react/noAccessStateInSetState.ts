@@ -1,9 +1,9 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noAccessStateInSetState",
 	enter(path) {
 		const {node} = path;

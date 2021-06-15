@@ -1,4 +1,4 @@
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {isFor} from "@internal/js-ast-utils";
 
@@ -78,8 +78,8 @@ function isContinueUnNecessary(path: CompilerPath): boolean {
 	);
 }
 
-export default createVisitor({
-	name: "js/noUnNecessaryContinue",
+export default createLintVisitor({
+	name: "js/noUnnecessaryContinue",
 	enter(path) {
 		const {node} = path;
 		if (node.type !== "JSContinueStatement") {

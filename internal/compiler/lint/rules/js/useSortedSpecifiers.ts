@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {
 	JSExportExternalSpecifier,
 	JSExportLocalSpecifier,
@@ -47,7 +47,7 @@ function shouldReorder<T>(a: T[], b: T[]) {
 	return false;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/useSortedSpecifiers",
 	enter(path) {
 		const {node} = path;

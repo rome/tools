@@ -1,4 +1,4 @@
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {findClosestStringMatch, toKebabCase} from "@internal/string-utils";
 import {descriptions} from "@internal/diagnostics";
 import {ARIAProperty, ariaPropsMap} from "@internal/compiler/lint/utils/aria";
@@ -53,7 +53,7 @@ function determineInvalidAriaProp(
 	return signals.retain;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useAriaProps",
 	enter(path) {
 		const {node} = path;

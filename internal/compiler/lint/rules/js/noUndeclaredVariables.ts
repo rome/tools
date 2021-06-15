@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 const NODE_VARIABLES_SET = new Set([
@@ -70,7 +70,7 @@ const TS_VARIABLES_SET = new Set([
 	"RequestInit",
 ]);
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noUndeclaredVariables",
 	enter(path) {
 		const {node, scope} = path;

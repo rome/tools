@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {PositionTracker, SourceLocation} from "@internal/parser-core";
 import {ZeroIndexed} from "@internal/numbers";
 import {isIdentifierish} from "@internal/js-ast-utils";
@@ -25,6 +25,7 @@ export const confusingLanguage: ConfusingLanguage = [
 		description: markup`The word <emphasis>whitelist</emphasis> can be considered racially charged language.`,
 		word: "whitelist",
 		suggestion: "allowlist",
+		// @ts-expect-error
 		advice: [
 			{
 				type: "log",
@@ -37,6 +38,7 @@ export const confusingLanguage: ConfusingLanguage = [
 		description: markup`The word <emphasis>blacklist</emphasis> can be considered racially charged language.`,
 		word: "blacklist",
 		suggestion: "denylist",
+		// @ts-expect-error
 		advice: [
 			{
 				type: "log",
@@ -80,7 +82,7 @@ function check(
 
 	const lower = input.toLowerCase();
 	const tracker = new PositionTracker({
-		filename: loc.path,
+		path: loc.path,
 		input: lower,
 		offsetPosition: loc.start,
 	});
@@ -132,8 +134,9 @@ function check(
 	};
 }
 
-export default createVisitor({
-	name: "js/inconsiderateLanguage",
+export default createLintVisitor({
+	// @ts-expect-error
+	name: "js/noConfusingLanguage",
 	enter(path) {
 		const {node, context, parent} = path;
 
@@ -159,6 +162,7 @@ export default createVisitor({
 				for (const {loc, description, suggestion, advice} of results) {
 					({suppressed} = context.addLocDiagnostic(
 						loc,
+						// @ts-expect-error
 						descriptions.LINT.JS_NO_CONFUSING_LANGUAGE(
 							description,
 							suggestion,

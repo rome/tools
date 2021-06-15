@@ -1,4 +1,4 @@
-import {Scope, createVisitor, signals} from "@internal/compiler";
+import {Scope, createLintVisitor, signals} from "@internal/compiler";
 import {
 	AnyTSTypeElement,
 	TSExpressionWithTypeArguments,
@@ -59,7 +59,7 @@ function extractObjects(
 	return {extends: _extends, members};
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "ts/useInterfaces",
 	enter(path) {
 		const {node} = path;

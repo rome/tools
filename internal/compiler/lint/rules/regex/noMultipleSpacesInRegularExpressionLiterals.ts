@@ -15,7 +15,7 @@ import {
 import {
 	CompilerPath,
 	ExitSignal,
-	createVisitor,
+	createLintVisitor,
 	signals,
 } from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
@@ -77,7 +77,7 @@ function checkRegex(path: CompilerPath, node: JSRegExpSubExpression): ExitSignal
 	}
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "regex/noMultipleSpacesInRegularExpressionLiterals",
 	enter(path) {
 		const {node} = path;

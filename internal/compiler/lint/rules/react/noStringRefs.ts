@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {
 	doesNodeMatchPattern,
@@ -24,7 +24,7 @@ function containsStringContainer(attribute: JSXAttribute): boolean {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noStringRefs",
 	enter(path) {
 		const {context, node} = path;

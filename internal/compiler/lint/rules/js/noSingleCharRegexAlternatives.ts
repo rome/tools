@@ -5,7 +5,7 @@ import {
 	jsRegExpCharacter,
 	jsRegExpSubExpression,
 } from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 /**
@@ -45,7 +45,7 @@ function getCharAlternations(node: AnyNode): (JSRegExpCharacter[]) | undefined {
 	return recurseCharAlternations(node, chars) ? chars : undefined;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noSingleCharRegexAlternatives",
 	enter(path) {
 		const {node} = path;

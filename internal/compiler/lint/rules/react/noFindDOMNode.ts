@@ -6,7 +6,7 @@
 */
 
 import {descriptions} from "@internal/diagnostics";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
 const reactDOMConfig = {
@@ -14,7 +14,7 @@ const reactDOMConfig = {
 	importName: "ReactDOM",
 };
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noFindDOMNode",
 
 	enter(path) {

@@ -1,8 +1,8 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noRedundantShouldComponentUpdate",
 	enter(path) {
 		const {node, scope} = path;

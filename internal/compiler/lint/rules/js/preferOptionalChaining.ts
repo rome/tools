@@ -13,7 +13,7 @@ import {
 	jsOptionalCallExpression,
 	jsStaticMemberProperty,
 } from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 function isUndefined(node: AnyJSExpression): node is JSReferenceIdentifier {
@@ -304,7 +304,7 @@ function extractTernaryComments(node: JSConditionalExpression): NodeComments {
 	return result;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/preferOptionalChaining",
 	enter(path) {
 		const {node} = path;

@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {DiagnosticsDuplicateHelper} from "@internal/compiler/lib/DiagnosticsDuplicateHelper";
 import {JSXAttribute} from "@internal/ast";
@@ -8,7 +8,7 @@ function getAttributeKey(node: JSXAttribute): string {
 	return typeof name === "string" ? name : name.name;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "jsx/noDuplicateProps",
 
 	enter(path) {

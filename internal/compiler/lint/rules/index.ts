@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:a9bbc962ebaea2297941e035106e727be7a6f358,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:1d9533329f019772d43395b59e9f1f4345892daa,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -116,161 +116,161 @@ import noExplicitAny from "./ts/noExplicitAny";
 import preferShorthandArrayType from "./ts/preferShorthandArrayType";
 import useInterfaces from "./ts/useInterfaces";
 import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression";
-import useTsExpectError from "./ts/useTsExpectError";
-import {AnyVisitor} from "@internal/compiler";
+import {CreateLintVisitor} from "@internal/compiler";
+import {LintCategories, LintRuleName, RuleNames} from "./categories";
 
-export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();
-lintTransforms.set("a11y/noAccessKey", noAccessKey);
-lintTransforms.set("a11y/noAriaUnsupportedElements", noAriaUnsupportedElements);
-lintTransforms.set("a11y/noAutofocus", noAutofocus);
-lintTransforms.set("a11y/noDistractingElements", noDistractingElements);
-lintTransforms.set("a11y/noHeaderScope", noHeaderScope);
-lintTransforms.set(
-	"a11y/noNoninteractiveElementToInteractiveRole",
+type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor>;
+export const lintTransforms: Map<LintCategories, CategoryToRuleMap> = new Map();
+
+export const a11y: CategoryToRuleMap = new Map();
+a11y.set("noAccessKey", noAccessKey);
+a11y.set("noAriaUnsupportedElements", noAriaUnsupportedElements);
+a11y.set("noAutofocus", noAutofocus);
+a11y.set("noDistractingElements", noDistractingElements);
+a11y.set("noHeaderScope", noHeaderScope);
+a11y.set(
+	"noNoninteractiveElementToInteractiveRole",
 	noNoninteractiveElementToInteractiveRole,
 );
-lintTransforms.set("a11y/noNoninteractiveTabindex", noNoninteractiveTabindex);
-lintTransforms.set("a11y/noOnChange", noOnChange);
-lintTransforms.set("a11y/noPositiveTabindex", noPositiveTabindex);
-lintTransforms.set("a11y/noRedundantAlt", noRedundantAlt);
-lintTransforms.set("a11y/noRedundantRoles", noRedundantRoles);
-lintTransforms.set("a11y/noSvgWithoutTitle", noSvgWithoutTitle);
-lintTransforms.set("a11y/noTargetBlank", noTargetBlank);
-lintTransforms.set("a11y/useAltText", useAltText);
-lintTransforms.set("a11y/useAnchorContent", useAnchorContent);
-lintTransforms.set("a11y/useAriaProps", useAriaProps);
-lintTransforms.set("a11y/useAriaPropsForRole", useAriaPropsForRole);
-lintTransforms.set("a11y/useAriaProptypes", useAriaProptypes);
-lintTransforms.set("a11y/useHeadingContent", useHeadingContent);
-lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
-lintTransforms.set("a11y/useIframeTitle", useIframeTitle);
-lintTransforms.set("a11y/useKeyWithClickEvents", useKeyWithClickEvents);
-lintTransforms.set("a11y/useKeyWithMouseEvents", useKeyWithMouseEvents);
-lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
-lintTransforms.set("a11y/useValidAnchor", useValidAnchor);
-lintTransforms.set("a11y/useValidLang", useValidLang);
-lintTransforms.set(
-	"css/noDuplicateCustomProperties",
-	noDuplicateCustomProperties,
-);
-lintTransforms.set("css/noImportantInKeyframes", noImportantInKeyframes);
-lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
-lintTransforms.set("js/noArguments", noArguments);
-lintTransforms.set("js/noAsyncPromiseExecutor", noAsyncPromiseExecutor);
-lintTransforms.set("js/noCatchAssign", noCatchAssign);
-lintTransforms.set("js/noCommaOperator", noCommaOperator);
-lintTransforms.set("js/noCompareNegZero", noCompareNegZero);
-lintTransforms.set("js/noCondAssign", noCondAssign);
-lintTransforms.set("js/noDebugger", noDebugger);
-lintTransforms.set("js/noDelete", noDelete);
-lintTransforms.set("js/noDeleteVars", noDeleteVars);
-lintTransforms.set("js/noDoubleEquals", noDoubleEquals);
-lintTransforms.set("js/noDupeArgs", noDupeArgs);
-lintTransforms.set("js/noDuplicateCase", noDuplicateCase);
-lintTransforms.set("js/noDuplicateImportSource", noDuplicateImportSource);
-lintTransforms.set("js/noDuplicateKeys", noDuplicateKeys);
-lintTransforms.set("js/noEmptyBlocks", noEmptyBlocks);
-lintTransforms.set("js/noExtraBooleanCast", noExtraBooleanCast);
-lintTransforms.set("js/noFunctionAssign", noFunctionAssign);
-lintTransforms.set("js/noGetterReturn", noGetterReturn);
-lintTransforms.set("js/noImportAssign", noImportAssign);
-lintTransforms.set("js/noLabelVar", noLabelVar);
-lintTransforms.set("js/noNegationElse", noNegationElse);
-lintTransforms.set("js/noNestedTernary", noNestedTernary);
-lintTransforms.set("js/noRestrictedGlobals", noRestrictedGlobals);
-lintTransforms.set("js/noSetterReturn", noSetterReturn);
-lintTransforms.set("js/noShadowRestrictedNames", noShadowRestrictedNames);
-lintTransforms.set("js/noShoutyConstants", noShoutyConstants);
-lintTransforms.set(
-	"js/noSingleCharRegexAlternatives",
-	noSingleCharRegexAlternatives,
-);
-lintTransforms.set("js/noSparseArray", noSparseArray);
-lintTransforms.set("js/noTemplateCurlyInString", noTemplateCurlyInString);
-lintTransforms.set("js/noUndeclaredVariables", noUndeclaredVariables);
-lintTransforms.set("js/noUnnecessaryContinue", noUnnecessaryContinue);
-lintTransforms.set("js/noUnsafeFinally", noUnsafeFinally);
-lintTransforms.set("js/noUnsafeNegation", noUnsafeNegation);
-lintTransforms.set("js/noUnusedTemplateLiteral", noUnusedTemplateLiteral);
-lintTransforms.set("js/noUnusedVariables", noUnusedVariables);
-lintTransforms.set("js/noVar", noVar);
-lintTransforms.set("js/preferOptionalChaining", preferOptionalChaining);
-lintTransforms.set("js/useBlockStatements", useBlockStatements);
-lintTransforms.set("js/useCamelCase", useCamelCase);
-lintTransforms.set("js/useDefaultExportBasename", useDefaultExportBasename);
-lintTransforms.set("js/useDefaultImportBasename", useDefaultImportBasename);
-lintTransforms.set("js/useFunctionDeclarations", useFunctionDeclarations);
-lintTransforms.set(
-	"js/useSimplifiedLogicalExpression",
-	useSimplifiedLogicalExpression,
-);
-lintTransforms.set("js/useSingleCaseStatement", useSingleCaseStatement);
-lintTransforms.set("js/useSingleVarDeclarator", useSingleVarDeclarator);
-lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
-lintTransforms.set("js/useTemplate", useTemplate);
-lintTransforms.set("js/useWhile", useWhile);
-lintTransforms.set("jsx/noCommentText", noCommentText);
-lintTransforms.set("jsx/noDuplicateProps", noDuplicateProps);
-lintTransforms.set("jsx/noImplicitBoolean", noImplicitBoolean);
-lintTransforms.set("jsx/noPropSpreading", noPropSpreading);
-lintTransforms.set("jsx/useJSXFileExtension", useJSXFileExtension);
-lintTransforms.set("jsx/usePascalCase", usePascalCase);
-lintTransforms.set("jsx/useSelfClosingElements", useSelfClosingElements);
-lintTransforms.set("react/noAccessStateInSetState", noAccessStateInSetState);
-lintTransforms.set("react/noArrayIndexKey", noArrayIndexKey);
-lintTransforms.set("react/noChildrenProp", noChildrenProp);
-lintTransforms.set("react/noDanger", noDanger);
-lintTransforms.set("react/noDangerWithChildren", noDangerWithChildren);
-lintTransforms.set("react/noDidMountSetState", noDidMountSetState);
-lintTransforms.set("react/noDidUpdateSetState", noDidUpdateSetState);
-lintTransforms.set("react/noDirectMutationState", noDirectMutationState);
-lintTransforms.set("react/noFindDOMNode", noFindDOMNode);
-lintTransforms.set(
-	"react/noRedundantShouldComponentUpdate",
-	noRedundantShouldComponentUpdate,
-);
-lintTransforms.set("react/noRenderReturnValue", noRenderReturnValue);
-lintTransforms.set("react/noStringRefs", noStringRefs);
-lintTransforms.set("react/noThisInSFC", noThisInSFC);
-lintTransforms.set("react/noUnsafe", noUnsafe);
-lintTransforms.set("react/noUselessFragment", noUselessFragment);
-lintTransforms.set(
-	"react/noVoidElementsWithChildren",
-	noVoidElementsWithChildren,
-);
-lintTransforms.set("react/noWillUpdateSetState", noWillUpdateSetState);
-lintTransforms.set("react/useButtonType", useButtonType);
-lintTransforms.set("react/useFragmentSyntax", useFragmentSyntax);
-lintTransforms.set("react/useKey", useKey);
-lintTransforms.set("react/useRenderReturn", useRenderReturn);
-lintTransforms.set("react/useSortComp", useSortComp);
-lintTransforms.set("react/useStylePropObject", useStylePropObject);
-lintTransforms.set(
-	"regex/noDuplicateGroupNamesInRegularExpressions",
+a11y.set("noNoninteractiveTabindex", noNoninteractiveTabindex);
+a11y.set("noOnChange", noOnChange);
+a11y.set("noPositiveTabindex", noPositiveTabindex);
+a11y.set("noRedundantAlt", noRedundantAlt);
+a11y.set("noRedundantRoles", noRedundantRoles);
+a11y.set("noSvgWithoutTitle", noSvgWithoutTitle);
+a11y.set("noTargetBlank", noTargetBlank);
+a11y.set("useAltText", useAltText);
+a11y.set("useAnchorContent", useAnchorContent);
+a11y.set("useAriaProps", useAriaProps);
+a11y.set("useAriaPropsForRole", useAriaPropsForRole);
+a11y.set("useAriaProptypes", useAriaProptypes);
+a11y.set("useHeadingContent", useHeadingContent);
+a11y.set("useHtmlLang", useHtmlLang);
+a11y.set("useIframeTitle", useIframeTitle);
+a11y.set("useKeyWithClickEvents", useKeyWithClickEvents);
+a11y.set("useKeyWithMouseEvents", useKeyWithMouseEvents);
+a11y.set("useMediaCaption", useMediaCaption);
+a11y.set("useValidAnchor", useValidAnchor);
+a11y.set("useValidLang", useValidLang);
+lintTransforms.set("a11y", a11y);
+
+export const css: CategoryToRuleMap = new Map();
+css.set("noDuplicateCustomProperties", noDuplicateCustomProperties);
+css.set("noImportantInKeyframes", noImportantInKeyframes);
+lintTransforms.set("css", css);
+
+export const html: CategoryToRuleMap = new Map();
+html.set("useClosingNonVoid", useClosingNonVoid);
+lintTransforms.set("html", html);
+
+export const js: CategoryToRuleMap = new Map();
+js.set("noArguments", noArguments);
+js.set("noAsyncPromiseExecutor", noAsyncPromiseExecutor);
+js.set("noCatchAssign", noCatchAssign);
+js.set("noCommaOperator", noCommaOperator);
+js.set("noCompareNegZero", noCompareNegZero);
+js.set("noCondAssign", noCondAssign);
+js.set("noDebugger", noDebugger);
+js.set("noDelete", noDelete);
+js.set("noDeleteVars", noDeleteVars);
+js.set("noDoubleEquals", noDoubleEquals);
+js.set("noDupeArgs", noDupeArgs);
+js.set("noDuplicateCase", noDuplicateCase);
+js.set("noDuplicateImportSource", noDuplicateImportSource);
+js.set("noDuplicateKeys", noDuplicateKeys);
+js.set("noEmptyBlocks", noEmptyBlocks);
+js.set("noExtraBooleanCast", noExtraBooleanCast);
+js.set("noFunctionAssign", noFunctionAssign);
+js.set("noGetterReturn", noGetterReturn);
+js.set("noImportAssign", noImportAssign);
+js.set("noLabelVar", noLabelVar);
+js.set("noNegationElse", noNegationElse);
+js.set("noNestedTernary", noNestedTernary);
+js.set("noRestrictedGlobals", noRestrictedGlobals);
+js.set("noSetterReturn", noSetterReturn);
+js.set("noShadowRestrictedNames", noShadowRestrictedNames);
+js.set("noShoutyConstants", noShoutyConstants);
+js.set("noSingleCharRegexAlternatives", noSingleCharRegexAlternatives);
+js.set("noSparseArray", noSparseArray);
+js.set("noTemplateCurlyInString", noTemplateCurlyInString);
+js.set("noUndeclaredVariables", noUndeclaredVariables);
+js.set("noUnnecessaryContinue", noUnnecessaryContinue);
+js.set("noUnsafeFinally", noUnsafeFinally);
+js.set("noUnsafeNegation", noUnsafeNegation);
+js.set("noUnusedTemplateLiteral", noUnusedTemplateLiteral);
+js.set("noUnusedVariables", noUnusedVariables);
+js.set("noVar", noVar);
+js.set("preferOptionalChaining", preferOptionalChaining);
+js.set("useBlockStatements", useBlockStatements);
+js.set("useCamelCase", useCamelCase);
+js.set("useDefaultExportBasename", useDefaultExportBasename);
+js.set("useDefaultImportBasename", useDefaultImportBasename);
+js.set("useFunctionDeclarations", useFunctionDeclarations);
+js.set("useSimplifiedLogicalExpression", useSimplifiedLogicalExpression);
+js.set("useSingleCaseStatement", useSingleCaseStatement);
+js.set("useSingleVarDeclarator", useSingleVarDeclarator);
+js.set("useSortedSpecifiers", useSortedSpecifiers);
+js.set("useTemplate", useTemplate);
+js.set("useWhile", useWhile);
+lintTransforms.set("js", js);
+
+export const jsx: CategoryToRuleMap = new Map();
+jsx.set("noCommentText", noCommentText);
+jsx.set("noDuplicateProps", noDuplicateProps);
+jsx.set("noImplicitBoolean", noImplicitBoolean);
+jsx.set("noPropSpreading", noPropSpreading);
+jsx.set("useJSXFileExtension", useJSXFileExtension);
+jsx.set("usePascalCase", usePascalCase);
+jsx.set("useSelfClosingElements", useSelfClosingElements);
+lintTransforms.set("jsx", jsx);
+
+export const react: CategoryToRuleMap = new Map();
+react.set("noAccessStateInSetState", noAccessStateInSetState);
+react.set("noArrayIndexKey", noArrayIndexKey);
+react.set("noChildrenProp", noChildrenProp);
+react.set("noDanger", noDanger);
+react.set("noDangerWithChildren", noDangerWithChildren);
+react.set("noDidMountSetState", noDidMountSetState);
+react.set("noDidUpdateSetState", noDidUpdateSetState);
+react.set("noDirectMutationState", noDirectMutationState);
+react.set("noFindDOMNode", noFindDOMNode);
+react.set("noRedundantShouldComponentUpdate", noRedundantShouldComponentUpdate);
+react.set("noRenderReturnValue", noRenderReturnValue);
+react.set("noStringRefs", noStringRefs);
+react.set("noThisInSFC", noThisInSFC);
+react.set("noUnsafe", noUnsafe);
+react.set("noUselessFragment", noUselessFragment);
+react.set("noVoidElementsWithChildren", noVoidElementsWithChildren);
+react.set("noWillUpdateSetState", noWillUpdateSetState);
+react.set("useButtonType", useButtonType);
+react.set("useFragmentSyntax", useFragmentSyntax);
+react.set("useKey", useKey);
+react.set("useRenderReturn", useRenderReturn);
+react.set("useSortComp", useSortComp);
+react.set("useStylePropObject", useStylePropObject);
+lintTransforms.set("react", react);
+
+export const regex: CategoryToRuleMap = new Map();
+regex.set(
+	"noDuplicateGroupNamesInRegularExpressions",
 	noDuplicateGroupNamesInRegularExpressions,
 );
-lintTransforms.set("regex/noEmptyCharacterClass", noEmptyCharacterClass);
-lintTransforms.set("regex/noEmptyMatches", noEmptyMatches);
-lintTransforms.set(
-	"regex/noMultipleSpacesInRegularExpressionLiterals",
+regex.set("noEmptyCharacterClass", noEmptyCharacterClass);
+regex.set("noEmptyMatches", noEmptyMatches);
+regex.set(
+	"noMultipleSpacesInRegularExpressionLiterals",
 	noMultipleSpacesInRegularExpressionLiterals,
 );
-lintTransforms.set(
-	"regex/noPosixInRegularExpression",
-	noPosixInRegularExpression,
-);
-lintTransforms.set(
-	"regex/noReferenceToNonExistingGroup",
-	noReferenceToNonExistingGroup,
-);
-lintTransforms.set("ts/noExplicitAny", noExplicitAny);
-lintTransforms.set("ts/preferShorthandArrayType", preferShorthandArrayType);
-lintTransforms.set("ts/useInterfaces", useInterfaces);
-lintTransforms.set(
-	"ts/useSimplifiedBooleanExpression",
-	useSimplifiedBooleanExpression,
-);
-lintTransforms.set("ts/useTsExpectError", useTsExpectError);
+regex.set("noPosixInRegularExpression", noPosixInRegularExpression);
+regex.set("noReferenceToNonExistingGroup", noReferenceToNonExistingGroup);
+lintTransforms.set("regex", regex);
+
+export const ts: CategoryToRuleMap = new Map();
+ts.set("noExplicitAny", noExplicitAny);
+ts.set("preferShorthandArrayType", preferShorthandArrayType);
+ts.set("useInterfaces", useInterfaces);
+ts.set("useSimplifiedBooleanExpression", useSimplifiedBooleanExpression);
+lintTransforms.set("ts", ts);
 
 export const lintRuleNames: LintRuleName[] = [
 	"a11y/noAccessKey",
@@ -390,126 +390,5 @@ export const lintRuleNames: LintRuleName[] = [
 	"ts/preferShorthandArrayType",
 	"ts/useInterfaces",
 	"ts/useSimplifiedBooleanExpression",
-	"ts/useTsExpectError",
 ];
-
-export type LintRuleName =
-	| "a11y/noAccessKey"
-	| "a11y/noAriaUnsupportedElements"
-	| "a11y/noAutofocus"
-	| "a11y/noDistractingElements"
-	| "a11y/noHeaderScope"
-	| "a11y/noNoninteractiveElementToInteractiveRole"
-	| "a11y/noNoninteractiveTabindex"
-	| "a11y/noOnChange"
-	| "a11y/noPositiveTabindex"
-	| "a11y/noRedundantAlt"
-	| "a11y/noRedundantRoles"
-	| "a11y/noSvgWithoutTitle"
-	| "a11y/noTargetBlank"
-	| "a11y/useAltText"
-	| "a11y/useAnchorContent"
-	| "a11y/useAriaProps"
-	| "a11y/useAriaPropsForRole"
-	| "a11y/useAriaProptypes"
-	| "a11y/useHeadingContent"
-	| "a11y/useHtmlLang"
-	| "a11y/useIframeTitle"
-	| "a11y/useKeyWithClickEvents"
-	| "a11y/useKeyWithMouseEvents"
-	| "a11y/useMediaCaption"
-	| "a11y/useValidAnchor"
-	| "a11y/useValidLang"
-	| "css/noDuplicateCustomProperties"
-	| "css/noImportantInKeyframes"
-	| "html/useClosingNonVoid"
-	| "js/noArguments"
-	| "js/noAsyncPromiseExecutor"
-	| "js/noCatchAssign"
-	| "js/noCommaOperator"
-	| "js/noCompareNegZero"
-	| "js/noCondAssign"
-	| "js/noDebugger"
-	| "js/noDelete"
-	| "js/noDeleteVars"
-	| "js/noDoubleEquals"
-	| "js/noDupeArgs"
-	| "js/noDuplicateCase"
-	| "js/noDuplicateImportSource"
-	| "js/noDuplicateKeys"
-	| "js/noEmptyBlocks"
-	| "js/noExtraBooleanCast"
-	| "js/noFunctionAssign"
-	| "js/noGetterReturn"
-	| "js/noImportAssign"
-	| "js/noLabelVar"
-	| "js/noNegationElse"
-	| "js/noNestedTernary"
-	| "js/noRestrictedGlobals"
-	| "js/noSetterReturn"
-	| "js/noShadowRestrictedNames"
-	| "js/noShoutyConstants"
-	| "js/noSingleCharRegexAlternatives"
-	| "js/noSparseArray"
-	| "js/noTemplateCurlyInString"
-	| "js/noUndeclaredVariables"
-	| "js/noUnnecessaryContinue"
-	| "js/noUnsafeFinally"
-	| "js/noUnsafeNegation"
-	| "js/noUnusedTemplateLiteral"
-	| "js/noUnusedVariables"
-	| "js/noVar"
-	| "js/preferOptionalChaining"
-	| "js/useBlockStatements"
-	| "js/useCamelCase"
-	| "js/useDefaultExportBasename"
-	| "js/useDefaultImportBasename"
-	| "js/useFunctionDeclarations"
-	| "js/useSimplifiedLogicalExpression"
-	| "js/useSingleCaseStatement"
-	| "js/useSingleVarDeclarator"
-	| "js/useSortedSpecifiers"
-	| "js/useTemplate"
-	| "js/useWhile"
-	| "jsx/noCommentText"
-	| "jsx/noDuplicateProps"
-	| "jsx/noImplicitBoolean"
-	| "jsx/noPropSpreading"
-	| "jsx/useJSXFileExtension"
-	| "jsx/usePascalCase"
-	| "jsx/useSelfClosingElements"
-	| "react/noAccessStateInSetState"
-	| "react/noArrayIndexKey"
-	| "react/noChildrenProp"
-	| "react/noDanger"
-	| "react/noDangerWithChildren"
-	| "react/noDidMountSetState"
-	| "react/noDidUpdateSetState"
-	| "react/noDirectMutationState"
-	| "react/noFindDOMNode"
-	| "react/noRedundantShouldComponentUpdate"
-	| "react/noRenderReturnValue"
-	| "react/noStringRefs"
-	| "react/noThisInSFC"
-	| "react/noUnsafe"
-	| "react/noUselessFragment"
-	| "react/noVoidElementsWithChildren"
-	| "react/noWillUpdateSetState"
-	| "react/useButtonType"
-	| "react/useFragmentSyntax"
-	| "react/useKey"
-	| "react/useRenderReturn"
-	| "react/useSortComp"
-	| "react/useStylePropObject"
-	| "regex/noDuplicateGroupNamesInRegularExpressions"
-	| "regex/noEmptyCharacterClass"
-	| "regex/noEmptyMatches"
-	| "regex/noMultipleSpacesInRegularExpressionLiterals"
-	| "regex/noPosixInRegularExpression"
-	| "regex/noReferenceToNonExistingGroup"
-	| "ts/noExplicitAny"
-	| "ts/preferShorthandArrayType"
-	| "ts/useInterfaces"
-	| "ts/useSimplifiedBooleanExpression"
-	| "ts/useTsExpectError";
 /* GENERATED:END(id:main) */

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {createPath} from "@internal/path";
 import {filenameToId} from "./useDefaultExportBasename";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/useDefaultImportBasename",
 	enter(path) {
 		const {node} = path;

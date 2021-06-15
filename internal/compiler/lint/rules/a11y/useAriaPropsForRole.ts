@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
 import {ariaRolesMap} from "@internal/compiler/lint/utils/aria";
@@ -7,7 +7,7 @@ import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
 import hasHTMLAttribute from "@internal/js-ast-utils/hasHTMLAttribute";
 import getHTMLAttribute from "@internal/js-ast-utils/getHTMLAttribute";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useAriaPropsForRole",
 	enter(path) {
 		const {node} = path;

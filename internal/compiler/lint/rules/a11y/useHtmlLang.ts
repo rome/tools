@@ -1,6 +1,6 @@
 import {descriptions} from "@internal/diagnostics";
 import {JSXElement} from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
@@ -31,7 +31,7 @@ function validLang(node: JSXElement) {
 	return false;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useHtmlLang",
 
 	enter(path) {

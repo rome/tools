@@ -1,4 +1,4 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {HTMLElement, JSXElement} from "@internal/ast";
 import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
@@ -19,7 +19,7 @@ function hasTrack(node: JSXElement | HTMLElement): boolean {
 	return node.children.some((child) => isJSXElement(child, "track"));
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useMediaCaption",
 	enter(path) {
 		const {node} = path;

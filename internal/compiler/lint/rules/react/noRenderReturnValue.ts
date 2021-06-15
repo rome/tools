@@ -1,8 +1,8 @@
 import {descriptions} from "@internal/diagnostics";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noRenderReturnValue",
 
 	enter(path) {

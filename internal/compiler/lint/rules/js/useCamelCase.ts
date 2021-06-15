@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {toCamelCase} from "@internal/string-utils";
 import {Binding} from "@internal/compiler/scope/bindings";
 import {descriptions} from "@internal/diagnostics";
@@ -23,7 +23,7 @@ export function normalizeCamelCase(name: string): undefined | string {
 	return name;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/useCamelCase",
 	enter(path) {
 		const {node, scope, context} = path;

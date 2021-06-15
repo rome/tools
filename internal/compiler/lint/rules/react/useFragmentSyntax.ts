@@ -1,10 +1,10 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {jsxFragment} from "@internal/ast";
 import {hasJSXAttribute} from "@internal/js-ast-utils";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/useFragmentSyntax",
 	enter(path) {
 		const {node, scope} = path;

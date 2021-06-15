@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {isInTypeAnnotation} from "@internal/js-ast-utils";
 import {descriptions} from "@internal/diagnostics";
 
 const RESTRICTED_GLOBALS = ["event", "error"];
 
-export default createVisitor({
-	name: "js/restrictedGlobal",
+export default createLintVisitor({
+	name: "js/noRestrictedGlobals",
 	enter(path) {
 		const {node, scope} = path;
 

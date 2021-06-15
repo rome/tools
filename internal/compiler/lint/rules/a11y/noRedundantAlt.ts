@@ -1,6 +1,6 @@
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {getJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
 import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
 import getHTMLAttribute from "@internal/js-ast-utils/getHTMLAttribute";
@@ -17,7 +17,7 @@ function jsxImgRedundantAlt(node: AnyNode) {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/noRedundantAlt",
 
 	enter(path) {

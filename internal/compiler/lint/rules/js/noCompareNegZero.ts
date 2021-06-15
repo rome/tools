@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import {AnyNode} from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {template} from "@internal/js-ast-utils";
 import {descriptions} from "@internal/diagnostics";
 
@@ -20,7 +20,7 @@ function isNegZero(node: AnyNode): boolean {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noCompareNegZero",
 	enter(path) {
 		const {node} = path;

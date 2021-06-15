@@ -1,4 +1,4 @@
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {AnyNode} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern} from "@internal/js-ast-utils";
@@ -52,7 +52,7 @@ function isStateMutated(node: AnyNode): boolean {
 	return false;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noDirectMutationState",
 	enter(path) {
 		const {node} = path;

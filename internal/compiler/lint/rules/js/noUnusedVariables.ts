@@ -1,4 +1,9 @@
-import {CompilerPath, Scope, createVisitor, signals} from "@internal/compiler";
+import {
+	CompilerPath,
+	Scope,
+	signals,
+	createLintVisitor,
+} from "@internal/compiler";
 import {getBindingIdentifiers} from "@internal/js-ast-utils";
 import {Dict} from "@internal/typescript-helpers";
 import {
@@ -60,8 +65,8 @@ function maybeFunctionNameBinding(binding: Binding) {
 	);
 }
 
-export default createVisitor<State>({
-	name: "js/unusedVariables",
+export default createLintVisitor<State>({
+	name: "js/noUnusedVariables",
 	enter(path, state) {
 		const {node, scope} = path;
 

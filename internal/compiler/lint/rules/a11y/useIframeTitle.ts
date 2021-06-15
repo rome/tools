@@ -6,7 +6,7 @@ import {
 	isJSXElement,
 } from "@internal/js-ast-utils";
 import {JSXElement} from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 import getHTMLAttribute from "@internal/js-ast-utils/getHTMLAttribute";
 import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
@@ -33,7 +33,7 @@ function validTitle(node: JSXElement) {
 	return false;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useIframeTitle",
 
 	enter(path) {

@@ -4,12 +4,17 @@ import {
 	JSBooleanLiteral,
 	jsUnaryExpression,
 } from "@internal/ast";
-import {CompilerPath, Scope, createVisitor, signals} from "@internal/compiler";
+import {
+	CompilerPath,
+	Scope,
+	createLintVisitor,
+	signals,
+} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 import {resolveIndirection} from "@internal/js-ast-utils";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "ts/useSimplifiedBooleanExpression",
 	enter(path) {
 		const {node, scope} = path;

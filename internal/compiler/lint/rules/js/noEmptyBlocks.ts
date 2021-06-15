@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {AnyNode} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 
@@ -25,7 +25,7 @@ function isEmpty(node: AnyNode): boolean {
 	return false;
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "js/noEmptyBlocks",
 	enter(path) {
 		const {node, context} = path;

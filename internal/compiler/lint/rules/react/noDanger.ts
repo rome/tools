@@ -6,7 +6,7 @@
  */
 
 import {AnyNode} from "@internal/ast";
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {getJSXAttribute} from "@internal/js-ast-utils";
 import {descriptions} from "@internal/diagnostics";
 import {getCreateElementProp} from "../../utils/react";
@@ -18,7 +18,7 @@ function getJSXDangerProp(node: AnyNode) {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noDanger",
 	enter(path) {
 		const {node, scope} = path;

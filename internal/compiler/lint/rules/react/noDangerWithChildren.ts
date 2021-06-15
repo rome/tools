@@ -7,7 +7,7 @@
 
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
-import {Scope, createVisitor, signals} from "@internal/compiler";
+import {Scope, createLintVisitor, signals} from "@internal/compiler";
 import {
 	getCreateElementChildren,
 	getCreateElementProp,
@@ -50,7 +50,7 @@ function createElementDangerWithChildren(node: AnyNode, scope: Scope): boolean {
 	);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "react/noDangerWithChildren",
 
 	enter(path) {

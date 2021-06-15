@@ -1,4 +1,4 @@
-import {CompilerPath, createVisitor, signals} from "@internal/compiler";
+import {CompilerPath, createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
@@ -132,7 +132,7 @@ function getElementName(node: JSXOrHTMLElement) {
 	return getJSXElementName(node);
 }
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/noRedundantRoles",
 	enter(path) {
 		const {node} = path;

@@ -1,11 +1,11 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {hasJSXAttribute} from "@internal/js-ast-utils";
 import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 import isHTMLElement from "@internal/js-ast-utils/isHTMLElement";
 import hasHTMLAttribute from "@internal/js-ast-utils/hasHTMLAttribute";
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "a11y/useKeyWithClickEvents",
 	enter(path) {
 		const {node} = path;
