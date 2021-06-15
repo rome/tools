@@ -5,11 +5,13 @@ import {ProjectLintRules} from "@internal/compiler/lint/rules/categories";
 //
 // 1. js: { recommended: true }
 // 2. js: { noAccessKey: true }
-type DeepRecommend<T> =
+type DeepRecommend<LintRule> =
 	| {
-			[P in keyof T]: T[P] & {
-				recommended?: undefined;
-			}
+			[Category in keyof LintRule]:
+				| (LintRule[Category] & {
+						recommended?: undefined;
+					})
+				| boolean
 		}
 	| {
 			recommended: true;

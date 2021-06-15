@@ -256,7 +256,15 @@ export async function main() {
 							} else if (!b.${category}) {
 								rules.${category} = a.${category};
 							} else {
-								rules.${category} = new Map([ ...a.${category}.entries(), ...b.${category}.entries()])
+								if (typeof a.${category} === "boolean" && typeof b.${category} === "boolean") {
+									// b takes over
+									rules.${category} = b.${category}
+								} else if (typeof a.${category} !== "boolean" && typeof b.${category} !== "boolean") {
+									rules.${category} = new Map([...a.${category}.entries(), ...b.${category}.entries()]);
+								} else {
+									// b takes over
+									rules.${category} = b.${category};
+								}
 							}
 						`,
 					);

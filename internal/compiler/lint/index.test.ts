@@ -96,6 +96,64 @@ test(
 );
 
 test(
+	"disable a whole category",
+	async (t) => {
+		function hasUndeclaredDiag(res: LintResult): boolean {
+			const results = {
+				undeclared: false,
+				unused: false,
+			};
+			for (const diag of res.diagnostics) {
+				if (
+					equalCategoryNames(
+						diag.description.category,
+						DIAGNOSTIC_CATEGORIES["lint/js/noUndeclaredVariables"],
+					)
+				) {
+					results.undeclared = true;
+				}
+				if (
+					equalCategoryNames(
+						diag.description.category,
+						DIAGNOSTIC_CATEGORIES["lint/js/noUnusedVariables"],
+					)
+				) {
+					results.unused = true;
+				}
+			}
+			return results.unused && results.undeclared;
+		}
+
+		// Make sure when it's not disabled the diagnostic is present
+		const res = await lint(
+			createLintTransformOptions(
+				`foo; const something = "lorem";`,
+				(config) => config,
+			),
+		);
+		t.true(hasUndeclaredDiag(res));
+
+		// Make sure when it's not disabled the diagnostic it is not present
+		const res2 = await lint(
+			createLintTransformOptions(
+				`foo; const something = "lorem";`,
+				(config) => ({
+					...config,
+					lint: {
+						...config.lint,
+						rules: {
+							...config.lint.rules,
+							js: false,
+						},
+					},
+				}),
+			),
+		);
+		t.false(hasUndeclaredDiag(res2));
+	},
+);
+
+test(
 	"disabledLintRules all rules",
 	async (t) => {
 		const res = await lint(

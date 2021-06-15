@@ -74,22 +74,31 @@ export function getVisitors(
 
 		for (const [category, currentRules] of lintTransforms) {
 			// select the configuration of the current category, e.g. a11y, js, ts, etc.
-			const categoryConfig = rules[category];
-			if (categoryConfig) {
-				// if it is recommended, let's push all the visitors that belong to that category
-				if (categoryConfig.recommended) {
-					computedVisitors.push(
-						...Array.from(currentRules.values()).map((c) => c.visitor),
-					);
-				} else {
-					for (const [ruleName, active] of categoryConfig) {
-						if (active) {
-							const payload = currentRules.get(ruleName);
-							if (payload) {
-								computedVisitors.push(payload.visitor);
+			if (typeof category === "boolean") {
+			} else {
+				const categoryConfig = rules[category];
+				if (categoryConfig && typeof categoryConfig !== "boolean") {
+					// if it is recommended, let's push all the visitors that belong to that category
+					if (categoryConfig.recommended) {
+						computedVisitors.push(
+							...Array.from(currentRules.values()).filter((c) => c.recommended).map((
+								c,
+							) => c.visitor),
+						);
+					} else {
+						for (const [ruleName, active] of categoryConfig) {
+							if (active) {
+								const payload = currentRules.get(ruleName);
+								if (payload) {
+									computedVisitors.push(payload.visitor);
+								}
 							}
 						}
 					}
+				} else if (categoryConfig === true) {
+					computedVisitors.push(
+						...Array.from(currentRules.values()).map((c) => c.visitor),
+					);
 				}
 			}
 		}
