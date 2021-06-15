@@ -1,5 +1,4 @@
-import {TypedVisitor, Visitor} from "./types";
-import {LintState, LintVisitor, Visitor} from "./types";
+import {LintState, LintVisitor, Visitor, TypedVisitor} from "./types";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {CompilerPath, signals} from ".";
 

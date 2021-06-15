@@ -15,12 +15,10 @@ function loadSingleRule(rule: Consumer): boolean {
 function loadCategory(category: Consumer): Map<RuleNames, boolean> {
 	const mappedRules: Map<RuleNames, boolean> = new Map();
 	for (const [ruleName, rule] of category.asMap()) {
-		console.log(ruleName, rule);
 		if (!ruleNames.has(ruleName as RuleNames)) {
 			mappedRules.set(ruleName as RuleNames, loadSingleRule(rule));
 		}
 	}
-	console.log(mappedRules);
 	return mappedRules;
 }
 

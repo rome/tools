@@ -180,7 +180,6 @@ export type RawUserProjectConfig = DeepPartial<{
 	lint: Enableable & {
 		ignore: string[];
 		globals: string[];
-		// disabledRules: string[];
 		requireSuppressionExplanations: boolean;
 		rules: Recommendable & PartialProjectValue<Rules>;
 	};
@@ -275,7 +274,6 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			ignore: [],
 			globals: [],
 			requireSuppressionExplanations: true,
-			// disabledRules: [],
 		},
 		tests: {
 			ignore: [],

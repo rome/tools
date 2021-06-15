@@ -27,6 +27,5 @@ export type LintConfig = {
 	globals: string[];
 	ignore: PathPattern[];
 	requireSuppressionExplanations: boolean;
-	// disabledRules: LintRuleName[];
 	rules?: Rules;
 };

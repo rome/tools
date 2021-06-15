@@ -325,12 +325,6 @@ export async function normalizeProjectConfig(
 			config.lint.globals = arrayOfStrings(lint.get("globals"));
 		}
 
-		// if (lint.has("disabledRules")) {
-		// 	config.lint.disabledRules = lint.get("disabledRules").asMappedArray((item) =>
-		// 		item.asStringSet(lintRuleNames)
-		// 	);
-		// }
-
 		if (lint.has("requireSuppressionExplanations")) {
 			config.lint.requireSuppressionExplanations = lint.get(
 				"requireSuppressionExplanations",

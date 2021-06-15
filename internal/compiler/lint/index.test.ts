@@ -56,7 +56,6 @@ test(
 	"disabledLintRules single",
 	async (t) => {
 		function hasUndeclaredDiag(res: LintResult): boolean {
-			console.log(res.diagnostics);
 			for (const diag of res.diagnostics) {
 				if (
 					equalCategoryNames(
