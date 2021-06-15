@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:9f47e5e21b40939b310b24e21808e22895af2bca,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:068fa5c01a42f8d916cca8c331d94304eda3f151,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type LintCategories =
 	| "a11y"
 	| "css"
@@ -46,10 +46,13 @@ export type A11YRules =
 	| "useMediaCaption"
 	| "useValidAnchor"
 	| "useValidLang";
+export type A11YRulesWithCategory = `a11y/${A11YRules}`;
 
 export type CssRules = "noDuplicateCustomProperties" | "noImportantInKeyframes";
+export type CssRulesWithCategory = `css/${CssRules}`;
 
 export type HtmlRules = "useClosingNonVoid";
+export type HtmlRulesWithCategory = `html/${HtmlRules}`;
 
 export type JsRules =
 	| "noArguments"
@@ -100,6 +103,7 @@ export type JsRules =
 	| "useSortedSpecifiers"
 	| "useTemplate"
 	| "useWhile";
+export type JsRulesWithCategory = `js/${JsRules}`;
 
 export type JsxRules =
 	| "noCommentText"
@@ -109,6 +113,7 @@ export type JsxRules =
 	| "useJSXFileExtension"
 	| "usePascalCase"
 	| "useSelfClosingElements";
+export type JsxRulesWithCategory = `jsx/${JsxRules}`;
 
 export type ReactRules =
 	| "noAccessStateInSetState"
@@ -134,6 +139,7 @@ export type ReactRules =
 	| "useRenderReturn"
 	| "useSortComp"
 	| "useStylePropObject";
+export type ReactRulesWithCategory = `react/${ReactRules}`;
 
 export type RegexRules =
 	| "noDuplicateGroupNamesInRegularExpressions"
@@ -142,30 +148,16 @@ export type RegexRules =
 	| "noMultipleSpacesInRegularExpressionLiterals"
 	| "noPosixInRegularExpression"
 	| "noReferenceToNonExistingGroup";
+export type RegexRulesWithCategory = `regex/${RegexRules}`;
 
 export type TsRules =
 	| "noExplicitAny"
 	| "preferShorthandArrayType"
 	| "useInterfaces"
 	| "useSimplifiedBooleanExpression";
+export type TsRulesWithCategory = `ts/${TsRules}`;
 
-export type A11YRulesCategoryRules = {[key in A11YRules]?: boolean};
-
-export type CssRulesCategoryRules = {[key in CssRules]?: boolean};
-
-export type HtmlRulesCategoryRules = {[key in HtmlRules]?: boolean};
-
-export type JsRulesCategoryRules = {[key in JsRules]?: boolean};
-
-export type JsxRulesCategoryRules = {[key in JsxRules]?: boolean};
-
-export type ReactRulesCategoryRules = {[key in ReactRules]?: boolean};
-
-export type RegexRulesCategoryRules = {[key in RegexRules]?: boolean};
-
-export type TsRulesCategoryRules = {[key in TsRules]?: boolean};
-
-export type LintRuleName = `${LintCategories}/${
+export type RuleNames =
 	| A11YRules
 	| CssRules
 	| HtmlRules
@@ -173,9 +165,149 @@ export type LintRuleName = `${LintCategories}/${
 	| JsxRules
 	| ReactRules
 	| RegexRules
-	| TsRules}`;
+	| TsRules;
 
-export type LintRules = {
+export const ruleNames: Set<RuleNames> = new Set();
+ruleNames.add("noAccessKey");
+ruleNames.add("noAriaUnsupportedElements");
+ruleNames.add("noAutofocus");
+ruleNames.add("noDistractingElements");
+ruleNames.add("noHeaderScope");
+ruleNames.add("noNoninteractiveElementToInteractiveRole");
+ruleNames.add("noNoninteractiveTabindex");
+ruleNames.add("noOnChange");
+ruleNames.add("noPositiveTabindex");
+ruleNames.add("noRedundantAlt");
+ruleNames.add("noRedundantRoles");
+ruleNames.add("noSvgWithoutTitle");
+ruleNames.add("noTargetBlank");
+ruleNames.add("useAltText");
+ruleNames.add("useAnchorContent");
+ruleNames.add("useAriaProps");
+ruleNames.add("useAriaPropsForRole");
+ruleNames.add("useAriaProptypes");
+ruleNames.add("useHeadingContent");
+ruleNames.add("useHtmlLang");
+ruleNames.add("useIframeTitle");
+ruleNames.add("useKeyWithClickEvents");
+ruleNames.add("useKeyWithMouseEvents");
+ruleNames.add("useMediaCaption");
+ruleNames.add("useValidAnchor");
+ruleNames.add("useValidLang");
+ruleNames.add("noDuplicateCustomProperties");
+ruleNames.add("noImportantInKeyframes");
+ruleNames.add("useClosingNonVoid");
+ruleNames.add("noArguments");
+ruleNames.add("noAsyncPromiseExecutor");
+ruleNames.add("noCatchAssign");
+ruleNames.add("noCommaOperator");
+ruleNames.add("noCompareNegZero");
+ruleNames.add("noCondAssign");
+ruleNames.add("noDebugger");
+ruleNames.add("noDelete");
+ruleNames.add("noDeleteVars");
+ruleNames.add("noDoubleEquals");
+ruleNames.add("noDupeArgs");
+ruleNames.add("noDuplicateCase");
+ruleNames.add("noDuplicateImportSource");
+ruleNames.add("noDuplicateKeys");
+ruleNames.add("noEmptyBlocks");
+ruleNames.add("noExtraBooleanCast");
+ruleNames.add("noFunctionAssign");
+ruleNames.add("noGetterReturn");
+ruleNames.add("noImportAssign");
+ruleNames.add("noLabelVar");
+ruleNames.add("noNegationElse");
+ruleNames.add("noNestedTernary");
+ruleNames.add("noRestrictedGlobals");
+ruleNames.add("noSetterReturn");
+ruleNames.add("noShadowRestrictedNames");
+ruleNames.add("noShoutyConstants");
+ruleNames.add("noSingleCharRegexAlternatives");
+ruleNames.add("noSparseArray");
+ruleNames.add("noTemplateCurlyInString");
+ruleNames.add("noUndeclaredVariables");
+ruleNames.add("noUnnecessaryContinue");
+ruleNames.add("noUnsafeFinally");
+ruleNames.add("noUnsafeNegation");
+ruleNames.add("noUnusedTemplateLiteral");
+ruleNames.add("noUnusedVariables");
+ruleNames.add("noVar");
+ruleNames.add("preferOptionalChaining");
+ruleNames.add("useBlockStatements");
+ruleNames.add("useCamelCase");
+ruleNames.add("useDefaultExportBasename");
+ruleNames.add("useDefaultImportBasename");
+ruleNames.add("useFunctionDeclarations");
+ruleNames.add("useSimplifiedLogicalExpression");
+ruleNames.add("useSingleCaseStatement");
+ruleNames.add("useSingleVarDeclarator");
+ruleNames.add("useSortedSpecifiers");
+ruleNames.add("useTemplate");
+ruleNames.add("useWhile");
+ruleNames.add("noCommentText");
+ruleNames.add("noDuplicateProps");
+ruleNames.add("noImplicitBoolean");
+ruleNames.add("noPropSpreading");
+ruleNames.add("useJSXFileExtension");
+ruleNames.add("usePascalCase");
+ruleNames.add("useSelfClosingElements");
+ruleNames.add("noAccessStateInSetState");
+ruleNames.add("noArrayIndexKey");
+ruleNames.add("noChildrenProp");
+ruleNames.add("noDanger");
+ruleNames.add("noDangerWithChildren");
+ruleNames.add("noDidMountSetState");
+ruleNames.add("noDidUpdateSetState");
+ruleNames.add("noDirectMutationState");
+ruleNames.add("noFindDOMNode");
+ruleNames.add("noRedundantShouldComponentUpdate");
+ruleNames.add("noRenderReturnValue");
+ruleNames.add("noStringRefs");
+ruleNames.add("noThisInSFC");
+ruleNames.add("noUnsafe");
+ruleNames.add("noUselessFragment");
+ruleNames.add("noVoidElementsWithChildren");
+ruleNames.add("noWillUpdateSetState");
+ruleNames.add("useButtonType");
+ruleNames.add("useFragmentSyntax");
+ruleNames.add("useKey");
+ruleNames.add("useRenderReturn");
+ruleNames.add("useSortComp");
+ruleNames.add("useStylePropObject");
+ruleNames.add("noDuplicateGroupNamesInRegularExpressions");
+ruleNames.add("noEmptyCharacterClass");
+ruleNames.add("noEmptyMatches");
+ruleNames.add("noMultipleSpacesInRegularExpressionLiterals");
+ruleNames.add("noPosixInRegularExpression");
+ruleNames.add("noReferenceToNonExistingGroup");
+ruleNames.add("noExplicitAny");
+ruleNames.add("preferShorthandArrayType");
+ruleNames.add("useInterfaces");
+ruleNames.add("useSimplifiedBooleanExpression");
+
+// These types are used for the project load
+export type A11YRulesCategoryRules = Map<A11YRules, boolean>;
+export type CssRulesCategoryRules = Map<CssRules, boolean>;
+export type HtmlRulesCategoryRules = Map<HtmlRules, boolean>;
+export type JsRulesCategoryRules = Map<JsRules, boolean>;
+export type JsxRulesCategoryRules = Map<JsxRules, boolean>;
+export type ReactRulesCategoryRules = Map<ReactRules, boolean>;
+export type RegexRulesCategoryRules = Map<RegexRules, boolean>;
+export type TsRulesCategoryRules = Map<TsRules, boolean>;
+
+export type LintRuleName =
+	| A11YRulesWithCategory
+	| CssRulesWithCategory
+	| HtmlRulesWithCategory
+	| JsRulesWithCategory
+	| JsxRulesWithCategory
+	| ReactRulesWithCategory
+	| RegexRulesWithCategory
+	| TsRulesWithCategory;
+
+// These types are used for the project load
+export type ProjectLintRules = {
 	a11y?: A11YRulesCategoryRules;
 	css?: CssRulesCategoryRules;
 	html?: HtmlRulesCategoryRules;

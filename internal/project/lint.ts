@@ -1,15 +1,32 @@
 import {PathPattern} from "@internal/path-match";
-import {Recommendable} from "@internal/project/types";
-import {LintRuleName, LintRules} from "@internal/compiler/lint/rules/categories";
+import {ProjectLintRules} from "@internal/compiler/lint/rules/categories";
 
-type Category = Recommendable & LintRules;
+// applies the possibility to recommend a category, resulting in these two options:
+//
+// 1. js: { recommended: true }
+// 2. js: { noAccessKey: true }
+type DeepRecommend<T> =
+	| {
+			[P in keyof T]: T[P] & {
+				recommended?: undefined;
+			}
+		}
+	| {
+			recommended: true;
+		};
 
-export type Rules = Category | boolean;
+export type Rules =
+	| {
+			recommended: true;
+		}
+	| ({
+			recommended?: undefined;
+		} & DeepRecommend<ProjectLintRules>);
 
-export interface LintConfig {
+export type LintConfig = {
 	globals: string[];
 	ignore: PathPattern[];
 	requireSuppressionExplanations: boolean;
-	disabledRules: LintRuleName[];
+	// disabledRules: LintRuleName[];
 	rules?: Rules;
-}
+};

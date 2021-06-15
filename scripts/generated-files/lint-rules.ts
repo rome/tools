@@ -5,6 +5,7 @@ import {dedent, toCamelCase} from "@internal/string-utils";
 import {escapeXHTMLEntities} from "@internal/html-parser";
 
 const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
+const mergeConfigFolder = INTERNAL.append("project", "lint");
 
 const lintRulesDocFolder = ROOT.append(
 	"website",
@@ -15,10 +16,14 @@ const lintRulesDocFolder = ROOT.append(
 );
 
 type LintDefinition = {
+	category: string;
+	rules: RuleDefinition[];
+};
+
+type RuleDefinition = {
+	basename: string;
 	docs: AbsoluteFilePath;
 	hasRJSON: boolean;
-	basename: string;
-	category: string;
 	ruleName: string;
 };
 
@@ -32,7 +37,10 @@ export async function getLintDefs(): Promise<LintDefinition[]> {
 		if ((await categoryPath.lstat()).isFile()) {
 			continue;
 		}
-
+		const categoryDef: LintDefinition = {
+			category,
+			rules: [],
+		};
 		categories.set(category, []);
 
 		const categoryPaths = await categoryPath.readDirectory();
@@ -49,21 +57,24 @@ export async function getLintDefs(): Promise<LintDefinition[]> {
 
 				currentCategory?.push(basename);
 
-				defs.push({
+				categoryDef.rules.push({
 					docs: lintRulesDocFolder.append(`${ruleName}.md`),
 					hasRJSON: categoryPaths.has(
 						categoryPath.append(`${basename}.test.rjson`),
 					),
 					basename,
-					category,
 					ruleName,
 				});
 			}
 		}
+		categoryDef.rules.sort((a, b) => {
+			return a.ruleName.localeCompare(b.ruleName);
+		});
+		defs.push(categoryDef);
 	}
 
 	defs = defs.sort((a, b) => {
-		return a.ruleName.localeCompare(b.ruleName);
+		return a.category.localeCompare(b.category);
 	});
 
 	return defs;
@@ -95,23 +106,37 @@ export async function main() {
 		},
 		async () => {
 			let lines = [];
-			for (const {basename, ruleName} of defs) {
-				lines.push(`import ${basename} from "./${ruleName}";`);
+			for (const {rules} of defs) {
+				for (const {basename, ruleName} of rules) {
+					lines.push(`import ${basename} from "./${ruleName}";`);
+				}
 			}
-			lines.push(`import {AnyVisitor} from "@internal/compiler";`);
-			lines.push(`import {LintRuleName} from "./categories";`);
-			lines.push("");
+			lines.push(`import {CreateLintVisitor} from "@internal/compiler";`);
 			lines.push(
-				"export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();",
+				`import {LintCategories, LintRuleName, RuleNames} from "./categories";`,
 			);
-			for (const {basename, ruleName} of defs) {
-				lines.push(`lintTransforms.set("${ruleName}", ${basename});`);
+			lines.push("");
+			lines.push("type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor>;");
+			lines.push(
+				"export const lintTransforms: Map<LintCategories, CategoryToRuleMap> = new Map();",
+			);
+
+			for (const {category, rules} of defs) {
+				lines.push("");
+				lines.push(`export const ${category}: CategoryToRuleMap = new Map()`);
+				for (const {basename} of rules) {
+					lines.push(`${category}.set("${basename}", ${basename})`);
+				}
+				lines.push(`lintTransforms.set("${category}", ${category});`);
 			}
+
 			lines.push("");
 
 			lines.push("export const lintRuleNames: LintRuleName[] = [");
-			for (const {ruleName} of defs) {
-				lines.push(`	"${ruleName}",`);
+			for (const {rules, category} of defs) {
+				for (const {basename} of rules) {
+					lines.push(`	"${category}/${basename}",`);
+				}
 			}
 			lines.push("];");
 			lines.push("");
@@ -135,7 +160,10 @@ export async function main() {
 			}
 			lines.push("");
 
-			lines.push("export const lintCategories: Set<LintCategories> = new Set();");
+
+			lines.push(
+				"export const lintCategories: Set<LintCategories> = new Set();",
+			);
 			for (const [category] of categories) {
 				lines.push(`lintCategories.add("${category}");`);
 			}
@@ -143,41 +171,127 @@ export async function main() {
 			lines.push("");
 
 			const typedCategories: Map<string, string> = new Map();
+			const templateLiteralTypes: string[] = [];
+			const allRules = [];
 			for (const [category, rules] of categories) {
 				const typeName = `${toCamelCase(category, {forcePascal: true})}Rules`;
 				typedCategories.set(category, typeName);
 				lines.push(`export type ${typeName} = `);
 				for (const rule of rules) {
 					lines.push(`	| "${rule}"`);
+					allRules.push(rule);
 				}
+				const templateLiteralType = typeName + "WithCategory";
+				templateLiteralTypes.push(templateLiteralType);
 				lines.push(";");
+				lines.push(
+					"export type " +
+					templateLiteralType +
+					" = `" +
+					category +
+					"/${" +
+					typeName +
+					"}`",
+				);
 				lines.push("");
 			}
 
-			const finalTypes: Map<string, string> = new Map();
-			for (const [category, typedCategory] of typedCategories) {
-				const type = `${typedCategory}CategoryRules`;
-				finalTypes.set(category, type);
-				lines.push(`export type ${type} = { `);
-				lines.push(`	[key in ${typedCategory}]?: boolean`);
-				lines.push("}");
-				lines.push("");
-			}
-
+			//RuleNames
 			lines.push(
-				// rome-ignore lint/js/noTemplateCurlyInString: needed to generate template literal type in TS
-				"export type LintRuleName = `${LintCategories}/${" +
-				Array.from(typedCategories.values()).join(" | ") +
-				"}`",
+				`export type RuleNames =${Array.from(typedCategories.values()).join(
+					" | ",
+				)}`,
 			);
 			lines.push("");
 
-			lines.push("export type LintRules = { ");
+			//RuleNames
+			lines.push("export const ruleNames: Set<RuleNames> = new Set();");
+			for (const rule of allRules) {
+				lines.push(`ruleNames.add("${rule}");`);
+			}
+
+			lines.push("");
+
+			const finalTypes: Map<string, string> = new Map();
+			lines.push("// These types are used for the project load");
+			for (const [category, typedCategory] of typedCategories) {
+				const type = `${typedCategory}CategoryRules`;
+				finalTypes.set(category, type);
+				lines.push(`export type ${type} = Map<${typedCategory}, boolean>; `);
+			}
+
+			lines.push("");
+			lines.push(
+				// rome-ignore lint/js/noTemplateCurlyInString: needed to generate template literal type in TS
+				`export type LintRuleName = ${templateLiteralTypes.join(" | ")}`,
+			);
+			lines.push("");
+
+			lines.push("// These types are used for the project load");
+			lines.push("export type ProjectLintRules = { ");
 			for (const [category, typedCategory] of finalTypes) {
 				lines.push(`	"${category}"?: ${typedCategory}`);
 			}
 			lines.push("}");
 			lines.push("");
+
+			return {lines};
+		},
+	);
+
+	await modifyGeneratedFile(
+		{
+			path: mergeConfigFolder.append("merge.ts"),
+			scriptName: "generated-files/lint-rules",
+		},
+		async () => {
+			let lines = [];
+
+			function generateCode() {
+				const lines = [];
+				for (const {category} of defs) {
+					lines.push(
+						dedent`
+							if (!a.${category}) {
+								rules.${category} = b.${category};
+							} else if (!b.a11y) {
+								rules.${category} = a.${category};
+							} else {
+								rules.${category} = new Map([ ...a.${category}.entries(), ...b.${category}.entries()])
+							}
+						`,
+					);
+				}
+
+				return lines.join("\n");
+			}
+
+			lines.push(
+				dedent`
+					import {Rules} from "@internal/project/lint";
+
+
+					export function mergeRules(a: Rules | undefined, b: Rules | undefined): Rules | undefined {
+						if (!a) {
+							return b;
+						}
+						if (!b) {
+							return a
+						}
+						let rules: Rules | undefined;
+						if (a.recommended || b.recommended) {
+							rules = {
+								recommended: true
+							}
+						} else {
+							rules = {};
+							${generateCode()}
+						}
+
+						return rules
+					}
+				`,
+			);
 
 			return {lines};
 		},
@@ -191,18 +305,22 @@ export async function main() {
 		},
 		async () => {
 			const lines = ["export type DiagnosticLintCategory ="];
-			for (const {category, basename} of defs) {
-				lines.push(`	| ["lint", "${category}", "${basename}"]`);
+			for (const {category, rules} of defs) {
+				for (const {basename} of rules) {
+					lines.push(`	| ["lint", "${category}", "${basename}"]`);
+				}
 			}
 			lines.push(";");
 
 			lines.push(
 				"export const lintCategoryNameMap: {[name in DiagnosticLintCategoryString]: DiagnosticLintCategory} = {",
 			);
-			for (const {ruleName, category, basename} of defs) {
-				lines.push(
-					`  "lint/${ruleName}": ["lint", "${category}", "${basename}"],`,
-				);
+			for (const {category, rules} of defs) {
+				for (const {basename, ruleName} of rules) {
+					lines.push(
+						`  "lint/${ruleName}": ["lint", "${category}", "${basename}"],`,
+					);
+				}
 			}
 			lines.push("};");
 			return {lines};
@@ -217,22 +335,27 @@ export async function main() {
 		},
 		async () => {
 			const lines = [];
-			for (const {basename, ruleName, hasRJSON} of defs) {
-				if (hasRJSON) {
-					lines.push("// @ts-expect-error");
-					lines.push(`import ${basename} from "./${ruleName}.test.rjson";`);
+			for (const {rules} of defs) {
+				for (const {basename, ruleName, hasRJSON} of rules) {
+					if (hasRJSON) {
+						lines.push("// @ts-expect-error");
+						lines.push(`import ${basename} from "./${ruleName}.test.rjson";`);
+					}
 				}
 			}
 			lines.push("");
 			lines.push("export const tests: Tests = {");
-			for (const {basename, ruleName, category, hasRJSON} of defs) {
-				if (hasRJSON) {
-					lines.push(`	"${ruleName}": {`);
-					lines.push(`    category: ["lint", "${category}", "${basename}"],`);
-					lines.push(`    cases: ${basename},`);
-					lines.push("  },");
+			for (const {rules, category} of defs) {
+				for (const {basename, ruleName, hasRJSON} of rules) {
+					if (hasRJSON) {
+						lines.push(`	"${ruleName}": {`);
+						lines.push(`    category: ["lint", "${category}", "${basename}"],`);
+						lines.push(`    cases: ${basename},`);
+						lines.push("  },");
+					}
 				}
 			}
+
 			lines.push("};");
 			return {lines};
 		},
@@ -299,24 +422,26 @@ export async function main() {
 					);
 				}
 
-				for (const {basename, ruleName, category, docs} of defs) {
-					if (category !== rootCategory) {
-						continue;
-					}
+				for (const {category, rules} of defs) {
+					for (const {basename, ruleName, docs} of rules) {
+						if (category !== rootCategory) {
+							continue;
+						}
 
-					const content = await docs.readFileText();
-					const description = getDocRuleDescription(docs, content);
-					lines.push(`<div class="rule">`);
-					lines.push(
-						dedent`
-							<h3 data-toc-exclude id="${basename}">
-								<a href="/docs/lint/rules/${ruleName}">${basename}</a>
-								<a class="header-anchor" href="#${basename}"></a>
-							</h3>
-						`,
-					);
-					lines.push(escapeXHTMLEntities(description));
-					lines.push("</div>");
+						const content = await docs.readFileText();
+						const description = getDocRuleDescription(docs, content);
+						lines.push(`<div class="rule">`);
+						lines.push(
+							dedent`
+								<h3 data-toc-exclude id="${basename}">
+									<a href="/docs/lint/rules/${ruleName}">${basename}</a>
+									<a class="header-anchor" href="#${basename}"></a>
+								</h3>
+							`,
+						);
+						lines.push(escapeXHTMLEntities(description));
+						lines.push("</div>");
+					}
 				}
 
 				lines.push("</section>");

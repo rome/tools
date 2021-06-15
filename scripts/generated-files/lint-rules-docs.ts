@@ -143,47 +143,51 @@ async function run(
 export async function main() {
 	const defs = await getLintDefs();
 
-	for (const {docs} of defs) {
-		await modifyGeneratedFile(
-			{
-				path: docs,
-				scriptName: "generated-files/lint-rules",
-				id: "description",
-			},
-			async () => {
-				const content = await docs.readFileText();
-				const eslintInfo = extractLintRuleInfo(content, "eslint");
-				const tslintInfo = extractLintRuleInfo(content, "tslint");
-				const styleLintInfo = extractLintRuleInfo(content, "stylelint");
+	for (const {rules} of defs) {
+		for (const {docs} of rules) {
+			await modifyGeneratedFile(
+				{
+					path: docs,
+					scriptName: "generated-files/lint-rules",
+					id: "description",
+				},
+				async () => {
+					const content = await docs.readFileText();
+					const eslintInfo = extractLintRuleInfo(content, "eslint");
+					const tslintInfo = extractLintRuleInfo(content, "tslint");
+					const styleLintInfo = extractLintRuleInfo(content, "stylelint");
 
-				const lines = [];
+					const lines = [];
 
-				const includeDefaultDescription = content.match(/\n# (.*?)([\n]+)<!--/);
-				if (includeDefaultDescription) {
-					lines.push(getDocRuleDescription(docs, content), "");
-				}
-
-				if (eslintInfo !== undefined) {
-					lines.push(
-						`**ESLint Equivalent:** [${eslintInfo.name}](${eslintInfo.url})`,
+					const includeDefaultDescription = content.match(
+						/\n# (.*?)([\n]+)<!--/,
 					);
-				}
+					if (includeDefaultDescription) {
+						lines.push(getDocRuleDescription(docs, content), "");
+					}
 
-				if (tslintInfo !== undefined) {
-					lines.push(
-						`**TSLint Equivalent:** [${tslintInfo.name}](${tslintInfo.url})`,
-					);
-				}
+					if (eslintInfo !== undefined) {
+						lines.push(
+							`**ESLint Equivalent:** [${eslintInfo.name}](${eslintInfo.url})`,
+						);
+					}
 
-				if (styleLintInfo !== undefined) {
-					lines.push(
-						`**stylelint Equivalent:** [${styleLintInfo.name}](${styleLintInfo.url})`,
-					);
-				}
+					if (tslintInfo !== undefined) {
+						lines.push(
+							`**TSLint Equivalent:** [${tslintInfo.name}](${tslintInfo.url})`,
+						);
+					}
 
-				return {lines};
-			},
-		);
+					if (styleLintInfo !== undefined) {
+						lines.push(
+							`**stylelint Equivalent:** [${styleLintInfo.name}](${styleLintInfo.url})`,
+						);
+					}
+
+					return {lines};
+				},
+			);
+		}
 	}
 
 	for (const ruleName in tests) {

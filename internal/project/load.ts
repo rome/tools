@@ -34,11 +34,11 @@ import {
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 	VCS_IGNORE_FILENAMES,
 } from "./constants";
-import {lintRuleNames} from "@internal/compiler";
 import {sha256} from "@internal/string-utils";
 import {resolveBrowsers} from "@internal/codec-browsers";
 import {ParserOptions} from "@internal/parser-core";
-import {loadRules} from "@internal/project/loadRules";
+import {loadRules} from "@internal/project/lint/load";
+import {mergeRules} from "@internal/project/lint/merge";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -325,11 +325,11 @@ export async function normalizeProjectConfig(
 			config.lint.globals = arrayOfStrings(lint.get("globals"));
 		}
 
-		if (lint.has("disabledRules")) {
-			config.lint.disabledRules = lint.get("disabledRules").asMappedArray((item) =>
-				item.asStringSet(lintRuleNames)
-			);
-		}
+		// if (lint.has("disabledRules")) {
+		// 	config.lint.disabledRules = lint.get("disabledRules").asMappedArray((item) =>
+		// 		item.asStringSet(lintRuleNames)
+		// 	);
+		// }
 
 		if (lint.has("requireSuppressionExplanations")) {
 			config.lint.requireSuppressionExplanations = lint.get(
@@ -583,12 +583,9 @@ async function extendProjectConfig(
 		merged.lint.globals = lintGlobals;
 	}
 
-	const lintDisabledRules = mergeArrays(
-		extendsObj.lint.disabledRules,
-		config.lint.disabledRules,
-	);
-	if (lintDisabledRules !== undefined) {
-		merged.lint.disabledRules = lintDisabledRules;
+	const rules = mergeRules(extendsObj.lint.rules, config.lint.rules);
+	if (rules !== undefined) {
+		merged.lint.rules = rules;
 	}
 
 	const testingIgnore = mergeArrays(
@@ -677,6 +674,7 @@ function mergePartialConfig<
 		lint: {
 			...a.lint,
 			...b.lint,
+			rules: {},
 		},
 		develop: {
 			...a.develop,
