@@ -1,4 +1,5 @@
 import {TypedVisitor, Visitor} from "./types";
+import {LintState, LintVisitor, Visitor} from "./types";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {CompilerPath, signals} from ".";
 
@@ -30,5 +31,25 @@ export function transformVisitor<
 			}
 			return signals.retain;
 		},
+	};
+}
+
+export interface CreateLintVisitorPayload {
+	visitor: LintVisitor;
+	recommended: boolean;
+}
+
+export interface CreateLintVisitor<State extends LintState = LintState> {
+	recommended: boolean;
+	visitor: LintVisitor;
+}
+
+export function createLintVisitor<State extends LintState>(
+	visitor: LintVisitor<State>,
+	recommended: boolean = true,
+) {
+	return {
+		visitor,
+		recommended,
 	};
 }
