@@ -160,7 +160,6 @@ export async function main() {
 			}
 			lines.push("");
 
-
 			lines.push(
 				"export const lintCategories: Set<LintCategories> = new Set();",
 			);
@@ -254,7 +253,7 @@ export async function main() {
 						dedent`
 							if (!a.${category}) {
 								rules.${category} = b.${category};
-							} else if (!b.a11y) {
+							} else if (!b.${category}) {
 								rules.${category} = a.${category};
 							} else {
 								rules.${category} = new Map([ ...a.${category}.entries(), ...b.${category}.entries()])

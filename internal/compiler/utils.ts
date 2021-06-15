@@ -1,6 +1,7 @@
 import {LintState, LintVisitor, Visitor, TypedVisitor} from "./types";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {CompilerPath, signals} from ".";
+import {Markup} from "@internal/markup";
 
 export function createVisitor<State extends UnknownObject>(
 	visitor: Visitor<State>,
@@ -41,14 +42,21 @@ export interface CreateLintVisitorPayload {
 export interface CreateLintVisitor<State extends LintState = LintState> {
 	recommended: boolean;
 	visitor: LintVisitor;
+	meta?: LintVisitorMeta;
+}
+
+export interface LintVisitorMeta {
+	description: Markup;
 }
 
 export function createLintVisitor<State extends LintState>(
 	visitor: LintVisitor<State>,
 	recommended: boolean = true,
+	meta?: LintVisitorMeta,
 ) {
 	return {
 		visitor,
 		recommended,
+		meta,
 	};
 }
