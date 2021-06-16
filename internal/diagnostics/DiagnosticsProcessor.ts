@@ -15,6 +15,7 @@ import {DiagnosticsError} from "./error-wrappers";
 import {
 	DIAGNOSTIC_CATEGORIES_SUPPRESS_DEPENDENCIES,
 	DiagnosticCategoryPrefix,
+	equalCategoryNames,
 } from "./categories";
 import {descriptions} from "./descriptions";
 import {matchesSuppression} from "@internal/compiler";
@@ -308,7 +309,7 @@ export default class DiagnosticsProcessor {
 
 			if (
 				filter.category !== undefined &&
-				filter.category !== diag.description.category
+				!equalCategoryNames(filter.category, diag.description.category)
 			) {
 				continue;
 			}
