@@ -60,11 +60,8 @@ export interface TypedVisitor<
 	exit?: (path: PathType, state: VisitorStateExit<State>) => ExitSignal;
 }
 
-// Unknown object for now
-export type LintState = UnknownObject;
-
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-export interface LintVisitor<State extends LintState = any> {
+export interface LintVisitor<State extends UnknownObject = any> {
 	name: LintRuleName;
 	enter?: (path: CompilerPath, state: VisitorStateEnter<State>) => EnterSignal;
 	exit?: (path: CompilerPath, state: VisitorStateExit<State>) => ExitSignal;

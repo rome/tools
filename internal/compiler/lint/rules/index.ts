@@ -120,7 +120,8 @@ import useTsExpectError from "./ts/useTsExpectError";
 import {CreateLintVisitor} from "@internal/compiler";
 import {LintCategories, LintRuleName, RuleNames} from "./categories";
 
-type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor>;
+// rome-ignore lint/ts/noExplicitAny: it should be allowed to accept anything, check later how to better type it
+type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor<any>>;
 export const lintTransforms: Map<LintCategories, CategoryToRuleMap> = new Map();
 
 const a11Y: CategoryToRuleMap = new Map();

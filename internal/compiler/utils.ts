@@ -1,4 +1,4 @@
-import {LintState, LintVisitor, TypedVisitor, Visitor} from "./types";
+import {LintVisitor, TypedVisitor, Visitor} from "./types";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {CompilerPath, signals} from ".";
 import {Markup} from "@internal/markup";
@@ -34,12 +34,7 @@ export function transformVisitor<
 	};
 }
 
-export interface CreateLintVisitorPayload {
-	visitor: LintVisitor;
-	recommended: boolean;
-}
-
-export interface CreateLintVisitor<State extends LintState = LintState> {
+export interface CreateLintVisitor<State extends UnknownObject> {
 	recommended: boolean;
 	visitor: LintVisitor<State>;
 	meta?: LintVisitorMeta;
@@ -58,11 +53,11 @@ export interface LintVisitorMeta {
  * @param {boolean} [recommended=true] Marks a rule as recommended by Rome
  * @param {LintVisitorMeta} meta Metadata useful for documentation, examples, etc.
  */
-export function createLintVisitor<State extends LintState>(
+export function createLintVisitor<State extends UnknownObject>(
 	visitor: LintVisitor<State>,
 	recommended: boolean = true,
 	meta?: LintVisitorMeta,
-) {
+): CreateLintVisitor<State> {
 	return {
 		visitor,
 		recommended,
