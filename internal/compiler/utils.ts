@@ -1,4 +1,4 @@
-import {LintState, LintVisitor, Visitor, TypedVisitor} from "./types";
+import {LintState, LintVisitor, TypedVisitor, Visitor} from "./types";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {CompilerPath, signals} from ".";
 import {Markup} from "@internal/markup";
@@ -41,7 +41,7 @@ export interface CreateLintVisitorPayload {
 
 export interface CreateLintVisitor<State extends LintState = LintState> {
 	recommended: boolean;
-	visitor: LintVisitor;
+	visitor: LintVisitor<State>;
 	meta?: LintVisitorMeta;
 }
 

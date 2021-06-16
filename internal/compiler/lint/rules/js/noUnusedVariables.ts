@@ -1,8 +1,8 @@
 import {
 	CompilerPath,
 	Scope,
-	signals,
 	createLintVisitor,
+	signals,
 } from "@internal/compiler";
 import {getBindingIdentifiers} from "@internal/js-ast-utils";
 import {Dict} from "@internal/typescript-helpers";

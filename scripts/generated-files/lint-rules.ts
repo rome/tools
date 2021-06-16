@@ -180,17 +180,11 @@ export async function main() {
 					lines.push(`	| "${rule}"`);
 					allRules.push(rule);
 				}
-				const templateLiteralType = typeName + "WithCategory";
+				const templateLiteralType = `${typeName}WithCategory`;
 				templateLiteralTypes.push(templateLiteralType);
 				lines.push(";");
 				lines.push(
-					"export type " +
-					templateLiteralType +
-					" = `" +
-					category +
-					"/${" +
-					typeName +
-					"}`",
+					`export type ${templateLiteralType} = \`\${category}/\${${typeName}}\``,
 				);
 				lines.push("");
 			}
