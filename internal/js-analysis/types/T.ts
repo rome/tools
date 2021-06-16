@@ -68,7 +68,7 @@ export default class T {
 	public originEvaluator: undefined | string;
 
 	public getConstructor(): typeof T {
-		// @ts-ignore
+		// @ts-expect-error
 		return this.constructor;
 	}
 

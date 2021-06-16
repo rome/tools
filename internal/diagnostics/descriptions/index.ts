@@ -113,7 +113,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			const callback: InputMessagesFactory = value as any;
 
-			// @ts-ignore trust me lol
+			// @ts-expect-error trust me lol
 			category[key] = function(...params) {
 				const {message, advice = [], ...ret} = callback(...params);
 				return {

@@ -206,7 +206,7 @@ export function parseTSModifier<T extends ConstTSModifier>(
 
 	const start = parser.getPosition();
 
-	// @ts-ignore: We are lying here but we validate it in all the correct places
+	// @ts-expect-error: We are lying here but we validate it in all the correct places
 	const modifier: T = String(parser.state.tokenValue);
 	if (
 		allowedModifiers.includes(modifier) &&
@@ -495,7 +495,6 @@ export function ambiguousTypeCastToParameter(
 		start,
 		{
 			...expr,
-			// @ts-ignore
 			meta,
 		},
 	);

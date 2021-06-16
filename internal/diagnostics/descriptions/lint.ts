@@ -17,6 +17,10 @@ import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const lint = createDiagnosticsCategory({
+	TS_USE_TS_EXPECT_ERROR: {
+		category: DIAGNOSTIC_CATEGORIES["lint/ts/useTsExpectError"],
+		message: markup`Prefer @ts-expect-error to get notified when suppression is no longer necessary.`,
+	},
 	CSS_NO_DUPLICATE_CUSTOM_PROPERTIES: {
 		category: DIAGNOSTIC_CATEGORIES["lint/css/noDuplicateCustomProperties"],
 		message: markup`Duplicate custom properties inside the same block can lead to unwanted styles`,

@@ -598,7 +598,7 @@ if (docsearchInput != null) {
 			script.addEventListener(
 				"load",
 				() => {
-					// @ts-ignore
+					// @ts-expect-error
 					return window.docsearch({
 						apiKey: "66db1ad366d458c6acded7cbc23dba7e",
 						indexName: "romefrontend",

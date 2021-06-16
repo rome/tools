@@ -460,7 +460,7 @@ function parseExportLocalSpecifiersMaybe(
 }
 
 function parseExportFromExpect(parser: JSParser): JSStringLiteral {
-	// @ts-ignore: `expect` parameter will always return a JSStringLiteral
+	// @ts-expect-error: `expect` parameter will always return a JSStringLiteral
 	return parseExportFrom(parser, true);
 }
 

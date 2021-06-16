@@ -165,7 +165,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			initialState = impl.getInitialState(this);
 		}
 
-		// @ts-ignore
 		this.state = {
 			...initialState,
 			...ParserCore.createInitialState(),
@@ -543,7 +542,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		const token = this.getToken();
 		if (token.type === type) {
 			this.nextToken();
-			// @ts-ignore
+			// @ts-expect-error
 			return token;
 		} else {
 			return undefined;
@@ -568,7 +567,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		const token = this.getToken();
 		if (token.type === type) {
 			this.nextToken();
-			// @ts-ignore
+			// @ts-expect-error
 			return token;
 		} else {
 			throw this.unexpected({
@@ -727,7 +726,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	//# Node finalization
 
 	public finalizeNode<T extends AnyNode>(node: T): T {
-		// @ts-ignore
+		// @ts-expect-error
 		attachComments(this, node);
 		return node;
 	}

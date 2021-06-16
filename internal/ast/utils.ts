@@ -77,7 +77,7 @@ class Builder<Node extends AnyNode> {
 	private type: string;
 
 	public create(opts: Omit<Node, "type">, inheritNode?: AnyNode): Node {
-		// @ts-ignore
+		// @ts-expect-error
 		return Object.freeze({
 			loc: inheritNode === undefined ? undefined : inheritLoc(inheritNode),
 			...opts,
@@ -96,7 +96,7 @@ class Builder<Node extends AnyNode> {
 			throw new Error(`Expected ${this.type} Node but got ${node.type}`);
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		return node;
 	}
 }
@@ -115,7 +115,7 @@ class QuickBuilder<Node extends AnyNode, QuickKey extends keyof Node>
 		opts?: Partial<Omit<Node, "type">>,
 		inheritNode?: Node,
 	): Node {
-		// @ts-ignore
+		// @ts-expect-error
 		const node: Omit<Node, "type"> = {
 			...opts,
 			[this.quickKey]: arg,

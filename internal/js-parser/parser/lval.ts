@@ -612,7 +612,7 @@ export function toReferencedList(
 		);
 	}
 
-	// @ts-ignore: We actually filtered them out
+	// @ts-expect-error: We actually filtered them out
 	return exprList;
 }
 
@@ -633,7 +633,7 @@ export function toReferencedListOptional(
 		}
 	}
 
-	// @ts-ignore: We actually filtered them out
+	// @ts-expect-error: We actually filtered them out
 	return exprList;
 }
 
@@ -716,7 +716,7 @@ export function filterSpread<T extends AnyNode>(
 			);
 		}
 	}
-	// @ts-ignore Technically wrong but we removed all JSSpreadElement
+	// @ts-expect-error Technically wrong but we removed all JSSpreadElement
 	return elems;
 }
 
@@ -889,7 +889,7 @@ export function parseBindingListNonEmpty(
 	rest: undefined | AnyJSTargetBindingPattern;
 } {
 	const list = parseBindingList(parser, openContext, false, allowTSModifiers);
-	// @ts-ignore: Need to make this more explicit we set `allowEmpty: false` above
+	// @ts-expect-error: Need to make this more explicit we set `allowEmpty: false` above
 	return list;
 }
 

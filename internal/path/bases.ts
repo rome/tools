@@ -421,7 +421,7 @@ export abstract class BasePath<
 
 		let target: Super = this._assert();
 		for (const item of items) {
-			// @ts-ignore
+			// @ts-expect-error
 			target = target._append(item);
 		}
 		return target;
@@ -453,7 +453,7 @@ export abstract class BasePath<
 }
 
 enhanceNodeInspectClass(
-	// @ts-ignore: We know this is an abstract class but it's ok...
+	// @ts-expect-error: We know this is an abstract class but it's ok...
 	BasePath,
 	(path) => {
 		return `${path[Symbol.toStringTag]}<${path.format()}>`;

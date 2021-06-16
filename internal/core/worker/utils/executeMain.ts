@@ -65,7 +65,7 @@ export default async function executeMain(
 					ROME_PROCESS_TYPE: undefined,
 					ROME_PROCESS_VERSION: undefined,
 				},
-				// @ts-ignore
+				// @ts-expect-error
 				...globals.process,
 			},
 			process,

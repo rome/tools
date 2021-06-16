@@ -78,5 +78,5 @@ const promise = createFixtureTests(async (fixture, t) => {
 	);
 });
 
-// @ts-ignore allow top level await
+// @ts-expect-error allow top level await
 await promise;

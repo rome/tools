@@ -3556,7 +3556,7 @@ export function parseExpressionListNonEmpty(
 		false,
 		refShorthandDefaultPos,
 	);
-	// @ts-ignore: Passed allowEmpty: false above
+	// @ts-expect-error: Passed allowEmpty: false above
 	return val;
 }
 

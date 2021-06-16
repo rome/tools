@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:ce6ca9c77647f474966740c1c192705530aacd71,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:b1d565d505c0ce10081c6cafdcc84536c4b226bd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -381,6 +381,13 @@ MISSING DOCUMENTATION
 	<a class="header-anchor" href="#useSimplifiedBooleanExpression"></a>
 </h3>
 discard redundant terms or operators in boolean expressions
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useTsExpectError">
+	<a href="/docs/lint/rules/ts/useTsExpectError">useTsExpectError</a>
+	<a class="header-anchor" href="#useTsExpectError"></a>
+</h3>
+use `@ts-expect-error` suppressions instead of `@ts-ignore` to get notified when suppression is no longer necessary
 </div>
 </section>
 <section>

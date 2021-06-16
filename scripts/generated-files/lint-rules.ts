@@ -153,7 +153,7 @@ export async function main() {
 			const lines = [];
 			for (const {basename, ruleName, hasRJSON} of defs) {
 				if (hasRJSON) {
-					lines.push("// @ts-ignore");
+					lines.push("// @ts-expect-error");
 					lines.push(`import ${basename} from "./${ruleName}.test.rjson";`);
 				}
 			}

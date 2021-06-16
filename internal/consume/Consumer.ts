@@ -1061,9 +1061,9 @@ export default class Consumer {
 
 		const value = this.asString(def);
 
-		// @ts-ignore
+		// @ts-expect-error
 		if (validValues.includes(value)) {
-			// @ts-ignore
+			// @ts-expect-error
 			return value;
 		} else {
 			this.unexpected(
@@ -1407,9 +1407,9 @@ export default class Consumer {
 
 		const value = this.asNumber(def);
 
-		// @ts-ignore
+		// @ts-expect-error
 		if (validValues.includes(value)) {
-			// @ts-ignore
+			// @ts-expect-error
 			return value;
 		} else {
 			this.unexpected(

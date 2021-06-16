@@ -978,7 +978,7 @@ test(
 			throw new Error('#1: parse confused by "__proto__"');
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		if (!Array.isArray(x.__proto__)) {
 			throw new Error('#2: parse did not set "__proto__" as a regular property');
 		}
