@@ -116,7 +116,8 @@ export async function main() {
 				`import {LintCategories, LintRuleName, RuleNames} from "./categories";`,
 			);
 			lines.push("");
-			lines.push("type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor>;");
+			lines.push("// rome-ignore lint/ts/noExplicitAny: it should be allowed to accept anything, check later how to better type it");
+			lines.push("type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor<any>>;");
 			lines.push(
 				"export const lintTransforms: Map<LintCategories, CategoryToRuleMap> = new Map();",
 			);
@@ -184,7 +185,7 @@ export async function main() {
 				templateLiteralTypes.push(templateLiteralType);
 				lines.push(";");
 				lines.push(
-					`export type ${templateLiteralType} = \`\${category}/\${${typeName}}\``,
+					`export type ${templateLiteralType} = \`${category}/\${${typeName}}\``,
 				);
 				lines.push("");
 			}
