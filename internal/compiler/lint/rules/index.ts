@@ -124,37 +124,38 @@ import {LintCategories, LintRuleName, RuleNames} from "./categories";
 type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor<any>>;
 export const lintTransforms: Map<LintCategories, CategoryToRuleMap> = new Map();
 
-export const a11y: CategoryToRuleMap = new Map();
-a11y.set("noAccessKey", noAccessKey);
-a11y.set("noAriaUnsupportedElements", noAriaUnsupportedElements);
-a11y.set("noAutofocus", noAutofocus);
-a11y.set("noDistractingElements", noDistractingElements);
-a11y.set("noHeaderScope", noHeaderScope);
-a11y.set(
+const a11Y: CategoryToRuleMap = new Map();
+export {a11Y as a11y};
+a11Y.set("noAccessKey", noAccessKey);
+a11Y.set("noAriaUnsupportedElements", noAriaUnsupportedElements);
+a11Y.set("noAutofocus", noAutofocus);
+a11Y.set("noDistractingElements", noDistractingElements);
+a11Y.set("noHeaderScope", noHeaderScope);
+a11Y.set(
 	"noNoninteractiveElementToInteractiveRole",
 	noNoninteractiveElementToInteractiveRole,
 );
-a11y.set("noNoninteractiveTabindex", noNoninteractiveTabindex);
-a11y.set("noOnChange", noOnChange);
-a11y.set("noPositiveTabindex", noPositiveTabindex);
-a11y.set("noRedundantAlt", noRedundantAlt);
-a11y.set("noRedundantRoles", noRedundantRoles);
-a11y.set("noSvgWithoutTitle", noSvgWithoutTitle);
-a11y.set("noTargetBlank", noTargetBlank);
-a11y.set("useAltText", useAltText);
-a11y.set("useAnchorContent", useAnchorContent);
-a11y.set("useAriaProps", useAriaProps);
-a11y.set("useAriaPropsForRole", useAriaPropsForRole);
-a11y.set("useAriaProptypes", useAriaProptypes);
-a11y.set("useHeadingContent", useHeadingContent);
-a11y.set("useHtmlLang", useHtmlLang);
-a11y.set("useIframeTitle", useIframeTitle);
-a11y.set("useKeyWithClickEvents", useKeyWithClickEvents);
-a11y.set("useKeyWithMouseEvents", useKeyWithMouseEvents);
-a11y.set("useMediaCaption", useMediaCaption);
-a11y.set("useValidAnchor", useValidAnchor);
-a11y.set("useValidLang", useValidLang);
-lintTransforms.set("a11y", a11y);
+a11Y.set("noNoninteractiveTabindex", noNoninteractiveTabindex);
+a11Y.set("noOnChange", noOnChange);
+a11Y.set("noPositiveTabindex", noPositiveTabindex);
+a11Y.set("noRedundantAlt", noRedundantAlt);
+a11Y.set("noRedundantRoles", noRedundantRoles);
+a11Y.set("noSvgWithoutTitle", noSvgWithoutTitle);
+a11Y.set("noTargetBlank", noTargetBlank);
+a11Y.set("useAltText", useAltText);
+a11Y.set("useAnchorContent", useAnchorContent);
+a11Y.set("useAriaProps", useAriaProps);
+a11Y.set("useAriaPropsForRole", useAriaPropsForRole);
+a11Y.set("useAriaProptypes", useAriaProptypes);
+a11Y.set("useHeadingContent", useHeadingContent);
+a11Y.set("useHtmlLang", useHtmlLang);
+a11Y.set("useIframeTitle", useIframeTitle);
+a11Y.set("useKeyWithClickEvents", useKeyWithClickEvents);
+a11Y.set("useKeyWithMouseEvents", useKeyWithMouseEvents);
+a11Y.set("useMediaCaption", useMediaCaption);
+a11Y.set("useValidAnchor", useValidAnchor);
+a11Y.set("useValidLang", useValidLang);
+lintTransforms.set("a11y", a11Y);
 
 export const css: CategoryToRuleMap = new Map();
 css.set("noDuplicateCustomProperties", noDuplicateCustomProperties);

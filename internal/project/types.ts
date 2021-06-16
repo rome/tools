@@ -18,7 +18,7 @@ import {DeepPartial, Dict} from "@internal/typescript-helpers";
 import {SemverRange} from "@internal/codec-semver";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {GetBrowserProps} from "@internal/browser-features";
-import {LintConfig, Rules} from "@internal/project/lint";
+import {LintConfig, UserProjectRules} from "@internal/project/lint";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
@@ -181,7 +181,7 @@ export type RawUserProjectConfig = DeepPartial<{
 		ignore: string[];
 		globals: string[];
 		requireSuppressionExplanations: boolean;
-		rules: Recommendable & PartialProjectValue<Rules>;
+		rules: UserProjectRules;
 	};
 	format: {
 		enabled: boolean;

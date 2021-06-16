@@ -5,7 +5,6 @@ import {dedent, toCamelCase} from "@internal/string-utils";
 import {escapeXHTMLEntities} from "@internal/html-parser";
 
 const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
-const mergeConfigFolder = INTERNAL.append("project", "lint");
 
 const lintRulesDocFolder = ROOT.append(
 	"website",
@@ -116,8 +115,12 @@ export async function main() {
 				`import {LintCategories, LintRuleName, RuleNames} from "./categories";`,
 			);
 			lines.push("");
-			lines.push("// rome-ignore lint/ts/noExplicitAny: it should be allowed to accept anything, check later how to better type it");
-			lines.push("type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor<any>>;");
+			lines.push(
+				"\t// rome-ignore lint/ts/noExplicitAny: it should be allowed to accept anything, check later how to better type it",
+			);
+			lines.push(
+				"type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor<any>>;",
+			);
 			lines.push(
 				"export const lintTransforms: Map<LintCategories, CategoryToRuleMap> = new Map();",
 			);
@@ -228,72 +231,6 @@ export async function main() {
 			}
 			lines.push("}");
 			lines.push("");
-
-			return {lines};
-		},
-	);
-
-	await modifyGeneratedFile(
-		{
-			path: mergeConfigFolder.append("merge.ts"),
-			scriptName: "generated-files/lint-rules",
-		},
-		async () => {
-			let lines = [];
-
-			function generateCode() {
-				const lines = [];
-				for (const {category} of defs) {
-					lines.push(
-						dedent`
-							if (!a.${category}) {
-								rules.${category} = b.${category};
-							} else if (!b.${category}) {
-								rules.${category} = a.${category};
-							} else {
-								if (typeof a.${category} === "boolean" && typeof b.${category} === "boolean") {
-									// b takes over
-									rules.${category} = b.${category}
-								} else if (typeof a.${category} !== "boolean" && typeof b.${category} !== "boolean") {
-									rules.${category} = new Map([...a.${category}.entries(), ...b.${category}.entries()]);
-								} else {
-									// b takes over
-									rules.${category} = b.${category};
-								}
-							}
-						`,
-					);
-				}
-
-				return lines.join("\n");
-			}
-
-			lines.push(
-				dedent`
-					import {Rules} from "@internal/project/lint";
-
-
-					export function mergeRules(a: Rules | undefined, b: Rules | undefined): Rules | undefined {
-						if (!a) {
-							return b;
-						}
-						if (!b) {
-							return a
-						}
-						let rules: Rules | undefined;
-						if (a.recommended || b.recommended) {
-							rules = {
-								recommended: true
-							}
-						} else {
-							rules = {};
-							${generateCode()}
-						}
-
-						return rules
-					}
-				`,
-			);
 
 			return {lines};
 		},
