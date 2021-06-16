@@ -668,7 +668,6 @@ function mergePartialConfig<
 		lint: {
 			...a.lint,
 			...b.lint,
-			rules: {},
 		},
 		develop: {
 			...a.develop,
