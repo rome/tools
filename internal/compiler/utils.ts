@@ -46,9 +46,18 @@ export interface CreateLintVisitor<State extends LintState = LintState> {
 }
 
 export interface LintVisitorMeta {
+	/**
+	 * Description of the rule
+	 */
 	description: Markup;
 }
 
+/**
+ *
+ * @param {LintVisitor} visitor A visitor that instructs the compiler how the code should change, if it changes
+ * @param {boolean} [recommended=true] Marks a rule as recommended by Rome
+ * @param {LintVisitorMeta} meta Metadata useful for documentation, examples, etc.
+ */
 export function createLintVisitor<State extends LintState>(
 	visitor: LintVisitor<State>,
 	recommended: boolean = true,

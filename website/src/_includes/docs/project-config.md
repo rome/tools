@@ -66,6 +66,14 @@ This is a semver range of the Rome version you want to set your project to. It i
 rome config set version "^0.0.0"
 ```
 
+#### `lint.enabled`
+
+Disables linting.
+
+```bash
+rome config push lint.enabled false
+```
+
 #### `lint.ignore`
 
 [Path patterns](#path-patterns) that you want to ignore from linting.
@@ -88,6 +96,83 @@ Raise a diagnostic if a suppression does not have a [valid explanation](#explana
 
 ```bash
 rome config enable lint.requireSuppressionExplanations
+```
+
+#### `lint.rules`
+
+Allows users to control rules and categories
+
+
+##### `lint.rules.recommended`
+
+Enables only the rules recommended by Rome.
+
+```bash
+rome config enable lint.rules.recommended
+```
+
+##### `lint.rules.{category}.{rule}`
+
+Allows turning on and off particular rule categories and particular rules.
+
+The list of rule categories can be found in the [lint page](/docs/lint/rules/).
+
+Below, there are some examples of how to control particular categories of rules.
+
+> The key `recommended` can't be provided in conjunction with the specific categorie
+
+```json
+{
+	"lint": {
+		"rules": {
+			"recommended": true
+		}
+	}
+}
+```
+
+Disable all `a11y` rules and enable all `react` rules.
+
+```json
+{
+	"lint": {
+		"rules": {
+			"a11y": false,
+			"react": true
+		}
+	}
+}
+```
+
+Disable all `a11y` rules and enable only the *recommended* `react` rules.
+
+```json
+{
+	"lint": {
+		"rules": {
+			"a11y": false,
+			"react": {
+				"recommended": true
+			}
+		}
+	}
+}
+```
+
+Disable all `a11y` rules and enable all the `react` rules, exception for `noArrayIndexKey`,
+which will be disabled.
+
+```json
+{
+	"lint": {
+		"rules": {
+			"a11y": false,
+			"react": {
+				"noArrayIndexKey": false
+			}
+		}
+	}
+}
 ```
 
 ### `dependencies.exceptions`

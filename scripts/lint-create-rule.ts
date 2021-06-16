@@ -21,10 +21,10 @@ export async function main([ruleName]: string[]): Promise<number> {
 	await writeFile(
 		rulesPath.append(`${ruleName}.ts`),
 		dedent`
-			import {createVisitor, signals} from "@internal/compiler";
+			import {createLintVisitor, signals} from "@internal/compiler";
 			import {descriptions} from "@internal/diagnostics";
 
-			export default createVisitor({
+			export default createLintVisitor({
 				name: "${ruleName}",
 				enter(path) {
 					const {node} = path;
