@@ -1,10 +1,10 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createLintVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 const RE_LINE_IGNORE_SUPPRESSION = /^(\s*)@ts-ignore/;
 const RE_BLOCK_IGNORE_SUPPRESSION = /^(\s*)(\**)(\s*)@ts-ignore/;
 
-export default createVisitor({
+export default createLintVisitor({
 	name: "ts/useTsExpectError",
 	enter(path) {
 		const {node} = path;

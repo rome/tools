@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:784852adc13d717510bc40f80c2597d9c24dde3d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:a3ec06e9d14504f2e66cf6ea27c28c340770c30a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type LintCategories =
 	| "a11y"
 	| "css"
@@ -154,7 +154,8 @@ export type TsRules =
 	| "noExplicitAny"
 	| "preferShorthandArrayType"
 	| "useInterfaces"
-	| "useSimplifiedBooleanExpression";
+	| "useSimplifiedBooleanExpression"
+	| "useTsExpectError";
 export type TsRulesWithCategory = `ts/${TsRules}`;
 
 export type RuleNames =
@@ -285,6 +286,7 @@ ruleNames.add("noExplicitAny");
 ruleNames.add("preferShorthandArrayType");
 ruleNames.add("useInterfaces");
 ruleNames.add("useSimplifiedBooleanExpression");
+ruleNames.add("useTsExpectError");
 
 // These types are used for the project load
 export type A11YRulesCategoryRules = Map<A11YRules, boolean>;

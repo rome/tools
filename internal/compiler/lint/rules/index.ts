@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:1d9533329f019772d43395b59e9f1f4345892daa,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:c99e987e3c0ed1b82f5a53a7584f189841248df9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -116,6 +116,7 @@ import noExplicitAny from "./ts/noExplicitAny";
 import preferShorthandArrayType from "./ts/preferShorthandArrayType";
 import useInterfaces from "./ts/useInterfaces";
 import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression";
+import useTsExpectError from "./ts/useTsExpectError";
 import {CreateLintVisitor} from "@internal/compiler";
 import {LintCategories, LintRuleName, RuleNames} from "./categories";
 
@@ -270,6 +271,7 @@ ts.set("noExplicitAny", noExplicitAny);
 ts.set("preferShorthandArrayType", preferShorthandArrayType);
 ts.set("useInterfaces", useInterfaces);
 ts.set("useSimplifiedBooleanExpression", useSimplifiedBooleanExpression);
+ts.set("useTsExpectError", useTsExpectError);
 lintTransforms.set("ts", ts);
 
 export const lintRuleNames: LintRuleName[] = [
@@ -390,5 +392,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"ts/preferShorthandArrayType",
 	"ts/useInterfaces",
 	"ts/useSimplifiedBooleanExpression",
+	"ts/useTsExpectError",
 ];
 /* GENERATED:END(id:main) */
