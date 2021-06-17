@@ -74,7 +74,6 @@ export function createSuppressionsVisitor(): AnyVisitor {
 						if (visitedComments.has(comment)) {
 							continue;
 						}
-						visitedComments.add(comment);
 						if (path.parent.type === "JSXElement") {
 							let currentNodeFound = false;
 							let nextSibling: AnyNode | undefined = undefined;
@@ -90,22 +89,13 @@ export function createSuppressionsVisitor(): AnyVisitor {
 								// here we don't check text because our parser tracks newlines and tabs/spaces as text
 								if (currentNodeFound && child.type !== "JSXText") {
 									nextSibling = child;
+									visitedComments.add(comment);
 									break;
 								}
 							}
 
 							if (nextSibling) {
-								const result = extractSuppressionsFromComment(
-									context,
-									comment,
-									nextSibling,
-								);
-								if (result !== undefined) {
-									context.diagnostics.addDiagnostics(result.diagnostics);
-									context.suppressions = context.suppressions.concat(
-										result.suppressions,
-									);
-								}
+								storeSuppressions(context, comment, nextSibling);
 							}
 						}
 					}
@@ -118,17 +108,7 @@ export function createSuppressionsVisitor(): AnyVisitor {
 						}
 
 						visitedComments.add(comment);
-						const result = extractSuppressionsFromComment(
-							context,
-							comment,
-							node,
-						);
-						if (result !== undefined) {
-							context.diagnostics.addDiagnostics(result.diagnostics);
-							context.suppressions = context.suppressions.concat(
-								result.suppressions,
-							);
-						}
+						storeSuppressions(context, comment, node);
 					}
 				}
 			}
@@ -136,6 +116,18 @@ export function createSuppressionsVisitor(): AnyVisitor {
 			return signals.retain;
 		},
 	});
+}
+
+function storeSuppressions(
+	context: CompilerContext,
+	comment: AnyComment,
+	node: AnyNode,
+) {
+	const result = extractSuppressionsFromComment(context, comment, node);
+	if (result !== undefined) {
+		context.diagnostics.addDiagnostics(result.diagnostics);
+		context.suppressions = context.suppressions.concat(result.suppressions);
+	}
 }
 
 export function matchesSuppression(
