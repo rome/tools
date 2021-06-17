@@ -126,12 +126,15 @@ export async function main() {
 			);
 
 			for (const {category, rules} of defs) {
+				const categoryConst = toCamelCase(category, {allowShouty: true});
 				lines.push("");
-				lines.push(`export const ${category}: CategoryToRuleMap = new Map()`);
+				lines.push(
+					`export const ${categoryConst}: CategoryToRuleMap = new Map()`,
+				);
 				for (const {basename} of rules) {
-					lines.push(`${category}.set("${basename}", ${basename})`);
+					lines.push(`${categoryConst}.set("${basename}", ${basename})`);
 				}
-				lines.push(`lintTransforms.set("${category}", ${category});`);
+				lines.push(`lintTransforms.set("${category}", ${categoryConst});`);
 			}
 
 			lines.push("");
@@ -177,7 +180,7 @@ export async function main() {
 			const templateLiteralTypes: string[] = [];
 			const allRules = [];
 			for (const [category, rules] of categories) {
-				const typeName = `${toCamelCase(category, {forcePascal: true})}Rules`;
+				const typeName = `${toCamelCase(category, {allowShouty: true})}Rules`;
 				typedCategories.set(category, typeName);
 				lines.push(`export type ${typeName} = `);
 				for (const rule of rules) {

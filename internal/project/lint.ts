@@ -1,14 +1,14 @@
 import {PathPattern} from "@internal/path-match";
 import {
-	A11YRules,
-	CssRules,
-	HtmlRules,
-	JsRules,
-	JsxRules,
 	ProjectLintRules,
-	ReactRules,
-	RegexRules,
-	TsRules,
+	a11YRules,
+	cssRules,
+	htmlRules,
+	jsRules,
+	jsxRules,
+	reactRules,
+	regexRules,
+	tsRules,
 } from "@internal/compiler/lint/rules/categories";
 
 type Recommended = {
@@ -18,6 +18,7 @@ type Recommended = {
 //
 // 1. js: { recommended: true }
 // 2. js: { noAccessKey: true }
+// 3. js: false
 type DeepRecommend =
 	| {
 			[Category in keyof ProjectLintRules]:
@@ -38,14 +39,14 @@ export type Rules =
 // NOTE: these are loose types that will be provided by the user
 // These soft rules are use inside the configuration provided by the user
 type SoftRules = {
-	a11y?: {[key in A11YRules]?: boolean};
-	css?: {[key in CssRules]?: boolean};
-	html?: {[key in HtmlRules]?: boolean};
-	js?: {[key in JsRules]?: boolean};
-	jsx?: {[key in JsxRules]?: boolean};
-	react?: {[key in ReactRules]?: boolean};
-	regex?: {[key in RegexRules]?: boolean};
-	ts?: {[key in TsRules]?: boolean};
+	a11y?: {[key in a11YRules]?: boolean};
+	css?: {[key in cssRules]?: boolean};
+	html?: {[key in htmlRules]?: boolean};
+	js?: {[key in jsRules]?: boolean};
+	jsx?: {[key in jsxRules]?: boolean};
+	react?: {[key in reactRules]?: boolean};
+	regex?: {[key in regexRules]?: boolean};
+	ts?: {[key in tsRules]?: boolean};
 };
 
 type LooseRules =

@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:c4cfe10d02f39569a86a0446fea049c8ad1eb577,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:d5f29deb07729a952ebd57c96c4660ea57fb9711,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -124,8 +124,7 @@ import {LintCategories, LintRuleName, RuleNames} from "./categories";
 type CategoryToRuleMap = Map<RuleNames, CreateLintVisitor<any>>;
 export const lintTransforms: Map<LintCategories, CategoryToRuleMap> = new Map();
 
-const a11Y: CategoryToRuleMap = new Map();
-export {a11Y as a11y};
+export const a11Y: CategoryToRuleMap = new Map();
 a11Y.set("noAccessKey", noAccessKey);
 a11Y.set("noAriaUnsupportedElements", noAriaUnsupportedElements);
 a11Y.set("noAutofocus", noAutofocus);

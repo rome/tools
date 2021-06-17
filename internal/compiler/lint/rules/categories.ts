@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:a3ec06e9d14504f2e66cf6ea27c28c340770c30a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:93eff879ca76083328aedd21b5e190ba1aa4f354,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type LintCategories =
 	| "a11y"
 	| "css"
@@ -19,7 +19,7 @@ lintCategories.add("react");
 lintCategories.add("regex");
 lintCategories.add("ts");
 
-export type A11YRules =
+export type a11YRules =
 	| "noAccessKey"
 	| "noAriaUnsupportedElements"
 	| "noAutofocus"
@@ -46,15 +46,15 @@ export type A11YRules =
 	| "useMediaCaption"
 	| "useValidAnchor"
 	| "useValidLang";
-export type A11YRulesWithCategory = `a11y/${A11YRules}`;
+export type a11YRulesWithCategory = `a11y/${a11YRules}`;
 
-export type CssRules = "noDuplicateCustomProperties" | "noImportantInKeyframes";
-export type CssRulesWithCategory = `css/${CssRules}`;
+export type cssRules = "noDuplicateCustomProperties" | "noImportantInKeyframes";
+export type cssRulesWithCategory = `css/${cssRules}`;
 
-export type HtmlRules = "useClosingNonVoid";
-export type HtmlRulesWithCategory = `html/${HtmlRules}`;
+export type htmlRules = "useClosingNonVoid";
+export type htmlRulesWithCategory = `html/${htmlRules}`;
 
-export type JsRules =
+export type jsRules =
 	| "noArguments"
 	| "noAsyncPromiseExecutor"
 	| "noCatchAssign"
@@ -103,9 +103,9 @@ export type JsRules =
 	| "useSortedSpecifiers"
 	| "useTemplate"
 	| "useWhile";
-export type JsRulesWithCategory = `js/${JsRules}`;
+export type jsRulesWithCategory = `js/${jsRules}`;
 
-export type JsxRules =
+export type jsxRules =
 	| "noCommentText"
 	| "noDuplicateProps"
 	| "noImplicitBoolean"
@@ -113,9 +113,9 @@ export type JsxRules =
 	| "useJSXFileExtension"
 	| "usePascalCase"
 	| "useSelfClosingElements";
-export type JsxRulesWithCategory = `jsx/${JsxRules}`;
+export type jsxRulesWithCategory = `jsx/${jsxRules}`;
 
-export type ReactRules =
+export type reactRules =
 	| "noAccessStateInSetState"
 	| "noArrayIndexKey"
 	| "noChildrenProp"
@@ -139,34 +139,34 @@ export type ReactRules =
 	| "useRenderReturn"
 	| "useSortComp"
 	| "useStylePropObject";
-export type ReactRulesWithCategory = `react/${ReactRules}`;
+export type reactRulesWithCategory = `react/${reactRules}`;
 
-export type RegexRules =
+export type regexRules =
 	| "noDuplicateGroupNamesInRegularExpressions"
 	| "noEmptyCharacterClass"
 	| "noEmptyMatches"
 	| "noMultipleSpacesInRegularExpressionLiterals"
 	| "noPosixInRegularExpression"
 	| "noReferenceToNonExistingGroup";
-export type RegexRulesWithCategory = `regex/${RegexRules}`;
+export type regexRulesWithCategory = `regex/${regexRules}`;
 
-export type TsRules =
+export type tsRules =
 	| "noExplicitAny"
 	| "preferShorthandArrayType"
 	| "useInterfaces"
 	| "useSimplifiedBooleanExpression"
 	| "useTsExpectError";
-export type TsRulesWithCategory = `ts/${TsRules}`;
+export type tsRulesWithCategory = `ts/${tsRules}`;
 
 export type RuleNames =
-	| A11YRules
-	| CssRules
-	| HtmlRules
-	| JsRules
-	| JsxRules
-	| ReactRules
-	| RegexRules
-	| TsRules;
+	| a11YRules
+	| cssRules
+	| htmlRules
+	| jsRules
+	| jsxRules
+	| reactRules
+	| regexRules
+	| tsRules;
 
 export const ruleNames: Set<RuleNames> = new Set();
 ruleNames.add("noAccessKey");
@@ -289,34 +289,34 @@ ruleNames.add("useSimplifiedBooleanExpression");
 ruleNames.add("useTsExpectError");
 
 // These types are used for the project load
-export type A11YRulesCategoryRules = Map<A11YRules, boolean>;
-export type CssRulesCategoryRules = Map<CssRules, boolean>;
-export type HtmlRulesCategoryRules = Map<HtmlRules, boolean>;
-export type JsRulesCategoryRules = Map<JsRules, boolean>;
-export type JsxRulesCategoryRules = Map<JsxRules, boolean>;
-export type ReactRulesCategoryRules = Map<ReactRules, boolean>;
-export type RegexRulesCategoryRules = Map<RegexRules, boolean>;
-export type TsRulesCategoryRules = Map<TsRules, boolean>;
+export type a11YRulesCategoryRules = Map<a11YRules, boolean>;
+export type cssRulesCategoryRules = Map<cssRules, boolean>;
+export type htmlRulesCategoryRules = Map<htmlRules, boolean>;
+export type jsRulesCategoryRules = Map<jsRules, boolean>;
+export type jsxRulesCategoryRules = Map<jsxRules, boolean>;
+export type reactRulesCategoryRules = Map<reactRules, boolean>;
+export type regexRulesCategoryRules = Map<regexRules, boolean>;
+export type tsRulesCategoryRules = Map<tsRules, boolean>;
 
 export type LintRuleName =
-	| A11YRulesWithCategory
-	| CssRulesWithCategory
-	| HtmlRulesWithCategory
-	| JsRulesWithCategory
-	| JsxRulesWithCategory
-	| ReactRulesWithCategory
-	| RegexRulesWithCategory
-	| TsRulesWithCategory;
+	| a11YRulesWithCategory
+	| cssRulesWithCategory
+	| htmlRulesWithCategory
+	| jsRulesWithCategory
+	| jsxRulesWithCategory
+	| reactRulesWithCategory
+	| regexRulesWithCategory
+	| tsRulesWithCategory;
 
 // These types are used for the project load
 export type ProjectLintRules = {
-	a11y?: A11YRulesCategoryRules;
-	css?: CssRulesCategoryRules;
-	html?: HtmlRulesCategoryRules;
-	js?: JsRulesCategoryRules;
-	jsx?: JsxRulesCategoryRules;
-	react?: ReactRulesCategoryRules;
-	regex?: RegexRulesCategoryRules;
-	ts?: TsRulesCategoryRules;
+	a11y?: a11YRulesCategoryRules;
+	css?: cssRulesCategoryRules;
+	html?: htmlRulesCategoryRules;
+	js?: jsRulesCategoryRules;
+	jsx?: jsxRulesCategoryRules;
+	react?: reactRulesCategoryRules;
+	regex?: regexRulesCategoryRules;
+	ts?: tsRulesCategoryRules;
 };
 /* GENERATED:END(id:main) */
