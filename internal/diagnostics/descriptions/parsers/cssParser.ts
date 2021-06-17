@@ -205,4 +205,25 @@ export const cssParser = createDiagnosticsCategory({
 	AT_IMPORT_INVALID_ARGUMENT: {
 		message: markup`Unexpected argument in at-import`,
 	},
+
+	MIN_MAX_INVALID_ARGUMENTS: {
+		message: markup`The function <emphasis>minmax()</emphasis> requires two arguments or the arguments provided are not supported.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>min-content</emphasis>, <emphasis>max-content</emphasis> or <emphasis>auto</emphasis>`,
+			},
+
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use use lengths or dimensions. e.g. em, fr, px, %, etc.`,
+			},
+		],
+	},
+
+	MIN_MAX_INVALID_FLEX_ARGUMENT: {
+		message: markup`A flex argument is permitted only as <emphasis>second argument</emphasis> of the function <emphasis>minmax()</emphasis>`,
+	},
 });

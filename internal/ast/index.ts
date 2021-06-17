@@ -12,7 +12,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:3208e422bbfac2f064518f78e313f58a7e30f258,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:ab19571783065eff380ea96cda0879e75e16b0df,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./css/import/CSSAtImport";
@@ -64,6 +64,7 @@ export * from "./css/media/CSSMediaQuery";
 export * from "./css/media/CSSMediaQueryList";
 export * from "./css/media/CSSMediaType";
 export * from "./css/function/CSSMinFunction";
+export * from "./css/grid/CSSMinmaxFunction";
 export * from "./css/core/CSSNumber";
 export * from "./css/page/CSSPageSelector";
 export * from "./css/page/CSSPageSelectorList";
@@ -373,6 +374,7 @@ export type AnyNode =
 	| n.CSSMediaQueryList
 	| n.CSSMediaType
 	| n.CSSMinFunction
+	| n.CSSMinmaxFunction
 	| n.CSSNumber
 	| n.CSSPageSelector
 	| n.CSSPageSelectorList

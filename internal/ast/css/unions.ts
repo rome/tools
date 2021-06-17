@@ -23,6 +23,7 @@ import {
 	CSSMediaFeatureValue,
 	CSSMediaQueryList,
 	CSSMinFunction,
+	CSSMinmaxFunction,
 	CSSNumber,
 	CSSPercentage,
 	CSSPseudoClassSelector,
@@ -64,6 +65,7 @@ export type AnyCSSValue =
 	| CSSCalcSum
 	| CSSMaxFunction
 	| CSSMinFunction
+	| CSSMinmaxFunction
 	| CSSMediaQueryList
 	| CSSSupportsCondition
 	| CSSAtImport
@@ -111,3 +113,5 @@ export type CSSBlockValue = Array<
 export type CSSPseudoSelector =
 	| CSSPseudoClassSelector
 	| CSSPseudoElementSelector;
+
+export type CSSMinmaxParam = CSSRaw | CSSDimension | CSSPercentage;

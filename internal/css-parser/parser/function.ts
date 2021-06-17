@@ -6,6 +6,7 @@ import {
 	CSSFunction,
 	CSSMaxFunction,
 	CSSMinFunction,
+	CSSMinmaxFunction,
 	CSSUrlFunction,
 	CSSVarFunction,
 } from "@internal/ast";
@@ -14,17 +15,19 @@ import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseCalcFunction} from "@internal/css-parser/parser/calc";
 import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
+import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
 
-export function parseFunction(
-	parser: CSSParser,
-):
+type ParseFunction =
 	| CSSFunction
 	| CSSVarFunction
 	| CSSUrlFunction
 	| CSSCalcFunction
 	| CSSMinFunction
 	| CSSMaxFunction
-	| undefined {
+	| CSSMinmaxFunction
+	| undefined;
+
+export function parseFunction(parser: CSSParser): ParseFunction {
 	const start = parser.getPosition();
 	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;
@@ -34,6 +37,7 @@ export function parseFunction(
 	const isCalcFunction = name === "calc";
 	const isMinFunction = name === "min";
 	const isMaxFunction = name === "max";
+	const isMinMaxFunction = name === "minmax";
 	nextToken(parser);
 
 	if (isCalcFunction) {
@@ -43,6 +47,11 @@ export function parseFunction(
 		}
 	} else if (isMinFunction || isMaxFunction) {
 		const value = parseMinOrMaxFunction(parser, name);
+		if (value) {
+			return value;
+		}
+	} else if (isMinMaxFunction) {
+		const value = parseMinmaxFunction(parser);
 		if (value) {
 			return value;
 		}

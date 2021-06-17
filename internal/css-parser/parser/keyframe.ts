@@ -8,7 +8,12 @@ import {
 	CSSRaw,
 	CSSString,
 } from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {CSS_WIDE_KEYWORDS, isCustomIdent} from "@internal/css-parser/utils";
 import {parseDeclarations} from "@internal/css-parser/parser/declaration";
@@ -17,9 +22,7 @@ const VALID_IDENTS = ["from", "to"];
 
 function parseKeyframeName(parser: CSSParser): CSSKeyframeName | undefined {
 	let value: CSSRaw | CSSString;
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	if (!(parser.matchToken("Ident") || parser.matchToken("String"))) {
 		parser.unexpectedDiagnostic({
@@ -190,9 +193,7 @@ export function parseKeyframe(parser: CSSParser): CSSKeyframe | undefined {
 		return undefined;
 	}
 
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	if (!parser.matchToken("LeftCurlyBracket")) {
 		parser.unexpectedDiagnostic({

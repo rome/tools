@@ -1,6 +1,11 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {CSSCalcSum, CSSMaxFunction, CSSMinFunction} from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {parseCalcSum} from "@internal/css-parser/parser/calculations";
 import {descriptions} from "@internal/diagnostics";
 
@@ -14,9 +19,7 @@ export function parseMinOrMaxFunction(
 	const start = parser.getPositionFromIndex(previousToken.start);
 
 	// skip possible white spaces
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	// push the first calculus
 	const calcSum = parseCalcSum(parser);
