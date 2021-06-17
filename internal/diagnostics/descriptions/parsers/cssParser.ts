@@ -202,7 +202,6 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`The rule <emphasis>@font-face</emphasis> needs the property <emphasis>src</emphasis> in order to be valid.`,
 	},
 
-
 	AT_IMPORT_INVALID_ARGUMENT: {
 		message: markup`Unexpected argument in at-import`,
 	},
