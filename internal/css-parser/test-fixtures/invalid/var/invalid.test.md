@@ -13,10 +13,10 @@ CSSRoot {
 					patterns: [
 						CSSClassSelector {
 							value: "style"
-							loc: SourceLocation invalid/var/input.css 1:0-1:6
+							loc: SourceLocation invalid/var/invalid.css 1:0-1:6
 						}
 					]
-					loc: SourceLocation invalid/var/input.css 1:0-1:7
+					loc: SourceLocation invalid/var/invalid.css 1:0-1:7
 				}
 			]
 			block: CSSBlock {
@@ -29,14 +29,14 @@ CSSRoot {
 								params: [
 									CSSHash {
 										value: "fff"
-										loc: SourceLocation invalid/var/input.css 2:13-2:17
+										loc: SourceLocation invalid/var/invalid.css 2:13-2:17
 									}
 								]
-								loc: SourceLocation invalid/var/input.css 2:9-2:18
+								loc: SourceLocation invalid/var/invalid.css 2:9-2:18
 							}
 						]
 						important: false
-						loc: SourceLocation invalid/var/input.css 2:1-2:18
+						loc: SourceLocation invalid/var/invalid.css 2:1-2:18
 					}
 					CSSDeclaration {
 						name: "border"
@@ -55,16 +55,16 @@ CSSRoot {
 																value: CSSDimension {
 																	value: 10
 																	unit: "px"
-																	loc: SourceLocation invalid/var/input.css 3:18-3:22
+																	loc: SourceLocation invalid/var/invalid.css 3:18-3:22
 																}
-																loc: SourceLocation invalid/var/input.css 3:18-3:22
+																loc: SourceLocation invalid/var/invalid.css 3:18-3:22
 															}
 														]
-														loc: SourceLocation invalid/var/input.css 3:22-3:23
+														loc: SourceLocation invalid/var/invalid.css 3:22-3:23
 													}
 													CSSCalcOperation {
 														value: "+"
-														loc: SourceLocation invalid/var/input.css 3:24-3:25
+														loc: SourceLocation invalid/var/invalid.css 3:24-3:25
 													}
 													CSSCalcProduct {
 														value: [
@@ -72,25 +72,25 @@ CSSRoot {
 																value: CSSDimension {
 																	value: 10
 																	unit: "px"
-																	loc: SourceLocation invalid/var/input.css 3:25-3:29
+																	loc: SourceLocation invalid/var/invalid.css 3:25-3:29
 																}
-																loc: SourceLocation invalid/var/input.css 3:25-3:29
+																loc: SourceLocation invalid/var/invalid.css 3:25-3:29
 															}
 														]
-														loc: SourceLocation invalid/var/input.css 3:29-3:29
+														loc: SourceLocation invalid/var/invalid.css 3:29-3:29
 													}
 												]
-												loc: SourceLocation invalid/var/input.css 3:18-3:29
+												loc: SourceLocation invalid/var/invalid.css 3:18-3:29
 											}
 										]
-										loc: SourceLocation invalid/var/input.css 3:18-3:30
+										loc: SourceLocation invalid/var/invalid.css 3:18-3:30
 									}
 								]
-								loc: SourceLocation invalid/var/input.css 3:9-3:31
+								loc: SourceLocation invalid/var/invalid.css 3:9-3:31
 							}
 						]
 						important: false
-						loc: SourceLocation invalid/var/input.css 3:1-3:31
+						loc: SourceLocation invalid/var/invalid.css 3:1-3:31
 					}
 					CSSDeclaration {
 						name: "border"
@@ -101,20 +101,20 @@ CSSRoot {
 									CSSDimension {
 										value: 90
 										unit: "rem"
-										loc: SourceLocation invalid/var/input.css 4:13-4:18
+										loc: SourceLocation invalid/var/invalid.css 4:13-4:18
 									}
 								]
-								loc: SourceLocation invalid/var/input.css 4:9-4:19
+								loc: SourceLocation invalid/var/invalid.css 4:9-4:19
 							}
 						]
 						important: false
-						loc: SourceLocation invalid/var/input.css 4:1-4:19
+						loc: SourceLocation invalid/var/invalid.css 4:1-4:19
 					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/var/input.css 1:7-5:1
+				loc: SourceLocation invalid/var/invalid.css 1:7-5:1
 			}
-			loc: SourceLocation invalid/var/input.css 1:0-5:1
+			loc: SourceLocation invalid/var/invalid.css 1:0-5:1
 		}
 	]
 	comments: []
@@ -130,13 +130,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/var/input.css>
+				path: RelativePath<invalid/var/invalid.css>
 				end: Position 2:18
 				start: Position 2:17
 			}
 		}
 	]
-	path: RelativePath<invalid/var/input.css>
-	loc: SourceLocation invalid/var/input.css 1:0-5:1
+	path: RelativePath<invalid/var/invalid.css>
+	loc: SourceLocation invalid/var/invalid.css 1:0-5:1
 }
 ```
