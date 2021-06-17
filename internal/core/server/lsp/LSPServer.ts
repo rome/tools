@@ -108,6 +108,7 @@ export default class LSPServer {
 	private createDiagnosticsProcessor(): DiagnosticsProcessor {
 		// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
 		const processor = this.request.createDiagnosticsProcessor({
+			mutable: true,
 			filter: undefined,
 		});
 		processor.addEliminationFilter({
@@ -221,20 +222,23 @@ export default class LSPServer {
 				return this.createProgress();
 			},
 			onChange: ({path, diagnostics}) => {
-				if (!path.isAbsolute()) {
+				const absolutePath = this.server.projectManager.getFilePathFromUIDOrAbsolute(
+					path,
+				);
+				if (!absolutePath) {
 					// Can only display absolute path diagnostics
 					return;
 				}
 
-				this.diagnosticsProcessor.removePath(path);
+				this.diagnosticsProcessor.removePath(absolutePath);
 				this.diagnosticsProcessor.addDiagnostics(diagnostics);
 
 				this.transport.write({
 					method: "textDocument/publishDiagnostics",
 					params: {
-						uri: `file://${path.join()}`,
+						uri: `file://${absolutePath.join()}`,
 						diagnostics: convertDiagnosticsToLSP(
-							this.diagnosticsProcessor.getDiagnosticsForPath(path),
+							this.diagnosticsProcessor.getDiagnosticsForPath(absolutePath),
 							this.server,
 						),
 					},
