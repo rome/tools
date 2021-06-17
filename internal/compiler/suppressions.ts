@@ -63,21 +63,52 @@ export function createSuppressionsVisitor(): AnyVisitor {
 		enter(path) {
 			const {node, context} = path;
 
-			if (node.loc !== undefined && node.leadingComments !== undefined) {
-				for (const comment of context.comments.getCommentsFromIds(
-					node.leadingComments,
-				)) {
-					if (visitedComments.has(comment)) {
-						continue;
-					}
+			if (node.loc !== undefined) {
+				if (
+					node.type === "JSXExpressionContainer" &&
+					node.expression.innerComments !== undefined
+				) {
+					for (const comment of context.comments.getCommentsFromIds(
+						node.expression.innerComments,
+					)) {
+						if (visitedComments.has(comment)) {
+							continue;
+						}
+						if (path.parent.type === "JSXElement") {
+							let currentNodeFound = false;
+							let nextSibling: AnyNode | undefined = undefined;
+							// scan the children in order to find the next sibling that should have the suppression
+							for (const child of path.parent.children) {
+								if (
+									child.loc?.start === node.loc?.start &&
+									child.loc?.end === node.loc?.end
+								) {
+									currentNodeFound = true;
+									continue;
+								}
+								// here we don't check text because our parser tracks newlines and tabs/spaces as text
+								if (currentNodeFound && child.type !== "JSXText") {
+									nextSibling = child;
+									visitedComments.add(comment);
+									break;
+								}
+							}
 
-					visitedComments.add(comment);
-					const result = extractSuppressionsFromComment(context, comment, node);
-					if (result !== undefined) {
-						context.diagnostics.addDiagnostics(result.diagnostics);
-						context.suppressions = context.suppressions.concat(
-							result.suppressions,
-						);
+							if (nextSibling) {
+								storeSuppressions(context, comment, nextSibling);
+							}
+						}
+					}
+				} else if (node.leadingComments !== undefined) {
+					for (const comment of context.comments.getCommentsFromIds(
+						node.leadingComments,
+					)) {
+						if (visitedComments.has(comment)) {
+							continue;
+						}
+
+						visitedComments.add(comment);
+						storeSuppressions(context, comment, node);
 					}
 				}
 			}
@@ -85,6 +116,18 @@ export function createSuppressionsVisitor(): AnyVisitor {
 			return signals.retain;
 		},
 	});
+}
+
+function storeSuppressions(
+	context: CompilerContext,
+	comment: AnyComment,
+	node: AnyNode,
+) {
+	const result = extractSuppressionsFromComment(context, comment, node);
+	if (result !== undefined) {
+		context.diagnostics.addDiagnostics(result.diagnostics);
+		context.suppressions = context.suppressions.concat(result.suppressions);
+	}
 }
 
 export function matchesSuppression(
