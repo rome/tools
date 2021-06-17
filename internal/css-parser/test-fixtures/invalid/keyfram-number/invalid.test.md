@@ -15,13 +15,13 @@ CSSRoot {
 				name: CSSKeyframeName {
 					value: CSSRaw {
 						value: "foo"
-						loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:14
+						loc: SourceLocation invalid/keyfram-number/invalid.css 1:11-1:14
 					}
-					loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:14
+					loc: SourceLocation invalid/keyfram-number/invalid.css 1:11-1:14
 				}
-				loc: SourceLocation invalid/keyfram-number/input.css 1:10-5:1
+				loc: SourceLocation invalid/keyfram-number/invalid.css 1:10-5:1
 			}
-			loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
+			loc: SourceLocation invalid/keyfram-number/invalid.css 1:0-5:1
 		}
 	]
 	comments: []
@@ -42,13 +42,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/keyfram-number/input.css>
+				path: RelativePath<invalid/keyfram-number/invalid.css>
 				end: Position 2:3
 				start: Position 2:1
 			}
 		}
 	]
-	path: RelativePath<invalid/keyfram-number/input.css>
-	loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
+	path: RelativePath<invalid/keyfram-number/invalid.css>
+	loc: SourceLocation invalid/keyfram-number/invalid.css 1:0-5:1
 }
 ```

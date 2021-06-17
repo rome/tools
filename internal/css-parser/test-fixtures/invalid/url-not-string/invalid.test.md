@@ -13,10 +13,10 @@ CSSRoot {
 					patterns: [
 						CSSClassSelector {
 							value: "foo"
-							loc: SourceLocation invalid/url-not-string/input.css 1:0-1:4
+							loc: SourceLocation invalid/url-not-string/invalid.css 1:0-1:4
 						}
 					]
-					loc: SourceLocation invalid/url-not-string/input.css 1:0-1:5
+					loc: SourceLocation invalid/url-not-string/invalid.css 1:0-1:5
 				}
 			]
 			block: CSSBlock {
@@ -25,13 +25,13 @@ CSSRoot {
 						name: "background"
 						value: []
 						important: false
-						loc: SourceLocation invalid/url-not-string/input.css 2:1-2:20
+						loc: SourceLocation invalid/url-not-string/invalid.css 2:1-2:20
 					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/url-not-string/input.css 1:5-3:1
+				loc: SourceLocation invalid/url-not-string/invalid.css 1:5-3:1
 			}
-			loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
+			loc: SourceLocation invalid/url-not-string/invalid.css 1:0-3:1
 		}
 	]
 	comments: []
@@ -47,13 +47,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/url-not-string/input.css>
+				path: RelativePath<invalid/url-not-string/invalid.css>
 				end: Position 2:20
 				start: Position 2:13
 			}
 		}
 	]
-	path: RelativePath<invalid/url-not-string/input.css>
-	loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
+	path: RelativePath<invalid/url-not-string/invalid.css>
+	loc: SourceLocation invalid/url-not-string/invalid.css 1:0-3:1
 }
 ```

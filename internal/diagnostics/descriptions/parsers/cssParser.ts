@@ -88,12 +88,8 @@ export const cssParser = createDiagnosticsCategory({
 		],
 	},
 
-	CALC_MISSING_LEFT_SPACE: {
-		message: markup`Missing left space.`,
-	},
-
-	CALC_MISSING_RIGHT_SPACE: {
-		message: markup`Missing right space.`,
+	CALC_MISSING_SPACES: {
+		message: markup`The operators <emphasis>+</emphasis> and <emphasis>-</emphasis> need to have a space left and right`,
 	},
 
 	CALC_OPERATOR_TIMES_OR_MOD_NEEDED: {

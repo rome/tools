@@ -10,7 +10,7 @@ CSSRoot {
 		CSSAtRule {
 			name: "font-face"
 			prelude: []
-			loc: SourceLocation invalid/font/input.css 1:0-3:1
+			loc: SourceLocation invalid/font/invalid.css 1:0-3:1
 		}
 	]
 	comments: []
@@ -26,13 +26,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/font/input.css>
+				path: RelativePath<invalid/font/invalid.css>
 				end: Position 1:10
 				start: Position 1:0
 			}
 		}
 	]
-	path: RelativePath<invalid/font/input.css>
-	loc: SourceLocation invalid/font/input.css 1:0-3:1
+	path: RelativePath<invalid/font/invalid.css>
+	loc: SourceLocation invalid/font/invalid.css 1:0-3:1
 }
 ```

@@ -13,10 +13,10 @@ CSSRoot {
 					patterns: [
 						CSSClassSelector {
 							value: "style"
-							loc: SourceLocation invalid/min-or-max/input.css 1:0-1:6
+							loc: SourceLocation invalid/min-or-max/invalid.css 1:0-1:6
 						}
 					]
-					loc: SourceLocation invalid/min-or-max/input.css 1:0-1:7
+					loc: SourceLocation invalid/min-or-max/invalid.css 1:0-1:7
 				}
 			]
 			block: CSSBlock {
@@ -27,17 +27,17 @@ CSSRoot {
 							CSSFunction {
 								name: "min"
 								params: []
-								loc: SourceLocation invalid/min-or-max/input.css 2:8-2:17
+								loc: SourceLocation invalid/min-or-max/invalid.css 2:8-2:17
 							}
 						]
 						important: false
-						loc: SourceLocation invalid/min-or-max/input.css 2:1-2:17
+						loc: SourceLocation invalid/min-or-max/invalid.css 2:1-2:17
 					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/min-or-max/input.css 1:7-3:1
+				loc: SourceLocation invalid/min-or-max/invalid.css 1:7-3:1
 			}
-			loc: SourceLocation invalid/min-or-max/input.css 1:0-3:1
+			loc: SourceLocation invalid/min-or-max/invalid.css 1:0-3:1
 		}
 	]
 	comments: []
@@ -49,17 +49,17 @@ CSSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Unterminated function. Please add a right parenthesis."}
+				message: RAW_MARKUP {value: "The operators <emphasis>+</emphasis> and <emphasis>-</emphasis> need to have a space left and right"}
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/min-or-max/input.css>
-				end: Position 2:17
+				path: RelativePath<invalid/min-or-max/invalid.css>
+				end: Position 2:18
 				start: Position 2:17
 			}
 		}
 	]
-	path: RelativePath<invalid/min-or-max/input.css>
-	loc: SourceLocation invalid/min-or-max/input.css 1:0-3:1
+	path: RelativePath<invalid/min-or-max/invalid.css>
+	loc: SourceLocation invalid/min-or-max/invalid.css 1:0-3:1
 }
 ```

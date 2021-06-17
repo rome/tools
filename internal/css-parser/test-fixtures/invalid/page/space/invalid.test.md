@@ -10,7 +10,7 @@ CSSRoot {
 		CSSAtRule {
 			name: "page"
 			prelude: []
-			loc: SourceLocation invalid/page/space/input.css 1:0-1:12
+			loc: SourceLocation invalid/page/space/invalid.css 1:0-1:12
 		}
 		CSSRule {
 			prelude: [
@@ -18,10 +18,10 @@ CSSRoot {
 					patterns: [
 						CSSTypeSelector {
 							value: "blank"
-							loc: SourceLocation invalid/page/space/input.css 1:12-1:17
+							loc: SourceLocation invalid/page/space/invalid.css 1:12-1:17
 						}
 					]
-					loc: SourceLocation invalid/page/space/input.css 1:12-1:18
+					loc: SourceLocation invalid/page/space/invalid.css 1:12-1:18
 				}
 			]
 			block: CSSBlock {
@@ -36,17 +36,17 @@ CSSRoot {
 									value: [
 										CSSIdentifier {
 											value: "none"
-											loc: SourceLocation invalid/page/space/input.css 2:24-2:28
+											loc: SourceLocation invalid/page/space/invalid.css 2:24-2:28
 										}
 									]
 									important: false
-									loc: SourceLocation invalid/page/space/input.css 2:15-2:29
+									loc: SourceLocation invalid/page/space/invalid.css 2:15-2:29
 								}
 							]
 							startingTokenValue: "{"
-							loc: SourceLocation invalid/page/space/input.css 2:13-2:30
+							loc: SourceLocation invalid/page/space/invalid.css 2:13-2:30
 						}
-						loc: SourceLocation invalid/page/space/input.css 2:1-2:30
+						loc: SourceLocation invalid/page/space/invalid.css 2:1-2:30
 					}
 					CSSDeclaration {
 						name: "margin-left"
@@ -54,17 +54,17 @@ CSSRoot {
 							CSSDimension {
 								value: 4
 								unit: "cm"
-								loc: SourceLocation invalid/page/space/input.css 3:14-3:17
+								loc: SourceLocation invalid/page/space/invalid.css 3:14-3:17
 							}
 						]
 						important: false
-						loc: SourceLocation invalid/page/space/input.css 3:1-3:17
+						loc: SourceLocation invalid/page/space/invalid.css 3:1-3:17
 					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/page/space/input.css 1:18-4:1
+				loc: SourceLocation invalid/page/space/invalid.css 1:18-4:1
 			}
-			loc: SourceLocation invalid/page/space/input.css 1:12-4:1
+			loc: SourceLocation invalid/page/space/invalid.css 1:12-4:1
 		}
 	]
 	comments: []
@@ -80,13 +80,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/page/space/input.css>
+				path: RelativePath<invalid/page/space/invalid.css>
 				end: Position 1:12
 				start: Position 1:11
 			}
 		}
 	]
-	path: RelativePath<invalid/page/space/input.css>
-	loc: SourceLocation invalid/page/space/input.css 1:0-4:1
+	path: RelativePath<invalid/page/space/invalid.css>
+	loc: SourceLocation invalid/page/space/invalid.css 1:0-4:1
 }
 ```

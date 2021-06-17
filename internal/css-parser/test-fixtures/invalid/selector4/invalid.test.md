@@ -13,18 +13,18 @@ CSSRoot {
 					patterns: [
 						CSSClassSelector {
 							value: "class"
-							loc: SourceLocation invalid/selector4/input.css 1:0-1:6
+							loc: SourceLocation invalid/selector4/invalid.css 1:0-1:6
 						}
 					]
-					loc: SourceLocation invalid/selector4/input.css 1:0-1:13
+					loc: SourceLocation invalid/selector4/invalid.css 1:0-1:13
 				}
 			]
 			block: CSSBlock {
 				value: []
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/selector4/input.css 1:13-3:1
+				loc: SourceLocation invalid/selector4/invalid.css 1:13-3:1
 			}
-			loc: SourceLocation invalid/selector4/input.css 1:0-3:1
+			loc: SourceLocation invalid/selector4/invalid.css 1:0-3:1
 		}
 	]
 	comments: []
@@ -40,13 +40,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector4/input.css>
+				path: RelativePath<invalid/selector4/invalid.css>
 				end: Position 1:14
 				start: Position 1:13
 			}
 		}
 	]
-	path: RelativePath<invalid/selector4/input.css>
-	loc: SourceLocation invalid/selector4/input.css 1:0-3:1
+	path: RelativePath<invalid/selector4/invalid.css>
+	loc: SourceLocation invalid/selector4/invalid.css 1:0-3:1
 }
 ```

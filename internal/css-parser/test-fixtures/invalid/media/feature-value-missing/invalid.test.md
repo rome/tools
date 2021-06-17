@@ -15,19 +15,19 @@ CSSRoot {
 					CSSMediaQuery {
 						value: CSSMediaType {
 							value: "screen"
-							loc: SourceLocation invalid/media/feature-value-missing/input.css 1:7-1:13
+							loc: SourceLocation invalid/media/feature-value-missing/invalid.css 1:7-1:13
 						}
-						loc: SourceLocation invalid/media/feature-value-missing/input.css 1:6-1:31
+						loc: SourceLocation invalid/media/feature-value-missing/invalid.css 1:6-1:31
 					}
 				]
 				block: CSSBlock {
 					value: []
 					startingTokenValue: "{"
-					loc: SourceLocation invalid/media/feature-value-missing/input.css 1:32-1:34
+					loc: SourceLocation invalid/media/feature-value-missing/invalid.css 1:32-1:34
 				}
-				loc: SourceLocation invalid/media/feature-value-missing/input.css 1:6-1:34
+				loc: SourceLocation invalid/media/feature-value-missing/invalid.css 1:6-1:34
 			}
-			loc: SourceLocation invalid/media/feature-value-missing/input.css 1:0-1:34
+			loc: SourceLocation invalid/media/feature-value-missing/invalid.css 1:0-1:34
 		}
 	]
 	comments: []
@@ -43,13 +43,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/media/feature-value-missing/input.css>
+				path: RelativePath<invalid/media/feature-value-missing/invalid.css>
 				end: Position 1:31
 				start: Position 1:30
 			}
 		}
 	]
-	path: RelativePath<invalid/media/feature-value-missing/input.css>
-	loc: SourceLocation invalid/media/feature-value-missing/input.css 1:0-1:34
+	path: RelativePath<invalid/media/feature-value-missing/invalid.css>
+	loc: SourceLocation invalid/media/feature-value-missing/invalid.css 1:0-1:34
 }
 ```

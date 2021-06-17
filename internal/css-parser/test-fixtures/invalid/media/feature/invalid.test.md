@@ -15,19 +15,19 @@ CSSRoot {
 					CSSMediaQuery {
 						value: CSSMediaType {
 							value: "screen"
-							loc: SourceLocation invalid/media/feature/input.css 1:7-1:13
+							loc: SourceLocation invalid/media/feature/invalid.css 1:7-1:13
 						}
-						loc: SourceLocation invalid/media/feature/input.css 1:6-1:18
+						loc: SourceLocation invalid/media/feature/invalid.css 1:6-1:18
 					}
 				]
 				block: CSSBlock {
 					value: []
 					startingTokenValue: "{"
-					loc: SourceLocation invalid/media/feature/input.css 1:18-1:20
+					loc: SourceLocation invalid/media/feature/invalid.css 1:18-1:20
 				}
-				loc: SourceLocation invalid/media/feature/input.css 1:6-1:20
+				loc: SourceLocation invalid/media/feature/invalid.css 1:6-1:20
 			}
-			loc: SourceLocation invalid/media/feature/input.css 1:0-1:20
+			loc: SourceLocation invalid/media/feature/invalid.css 1:0-1:20
 		}
 	]
 	comments: []
@@ -43,13 +43,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/media/feature/input.css>
+				path: RelativePath<invalid/media/feature/invalid.css>
 				end: Position 1:19
 				start: Position 1:18
 			}
 		}
 	]
-	path: RelativePath<invalid/media/feature/input.css>
-	loc: SourceLocation invalid/media/feature/input.css 1:0-1:20
+	path: RelativePath<invalid/media/feature/invalid.css>
+	loc: SourceLocation invalid/media/feature/invalid.css 1:0-1:20
 }
 ```

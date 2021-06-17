@@ -13,31 +13,31 @@ CSSRoot {
 					patterns: [
 						CSSTypeSelector {
 							value: "a"
-							loc: SourceLocation invalid/selector5/input.css 1:0-1:1
+							loc: SourceLocation invalid/selector5/invalid.css 1:0-1:1
 						}
 					]
-					loc: SourceLocation invalid/selector5/input.css 1:0-1:11
+					loc: SourceLocation invalid/selector5/invalid.css 1:0-1:11
 				}
 				CSSSelector {
 					patterns: []
-					loc: SourceLocation invalid/selector5/input.css 1:11-1:19
+					loc: SourceLocation invalid/selector5/invalid.css 1:11-1:19
 				}
 				CSSSelector {
 					patterns: [
 						CSSTypeSelector {
 							value: "i"
-							loc: SourceLocation invalid/selector5/input.css 1:20-1:21
+							loc: SourceLocation invalid/selector5/invalid.css 1:20-1:21
 						}
 					]
-					loc: SourceLocation invalid/selector5/input.css 1:19-1:22
+					loc: SourceLocation invalid/selector5/invalid.css 1:19-1:22
 				}
 				CSSSelector {
 					patterns: []
-					loc: SourceLocation invalid/selector5/input.css 1:22-1:23
+					loc: SourceLocation invalid/selector5/invalid.css 1:22-1:23
 				}
 				CSSSelector {
 					patterns: []
-					loc: SourceLocation invalid/selector5/input.css 1:23-1:24
+					loc: SourceLocation invalid/selector5/invalid.css 1:23-1:24
 				}
 			]
 			block: CSSBlock {
@@ -47,17 +47,17 @@ CSSRoot {
 						value: [
 							CSSIdentifier {
 								value: "purple"
-								loc: SourceLocation invalid/selector5/input.css 2:9-2:15
+								loc: SourceLocation invalid/selector5/invalid.css 2:9-2:15
 							}
 						]
 						important: false
-						loc: SourceLocation invalid/selector5/input.css 2:2-2:15
+						loc: SourceLocation invalid/selector5/invalid.css 2:2-2:15
 					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/selector5/input.css 1:24-3:1
+				loc: SourceLocation invalid/selector5/invalid.css 1:24-3:1
 			}
-			loc: SourceLocation invalid/selector5/input.css 1:0-3:1
+			loc: SourceLocation invalid/selector5/invalid.css 1:0-3:1
 		}
 	]
 	comments: []
@@ -81,13 +81,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector5/input.css>
+				path: RelativePath<invalid/selector5/invalid.css>
 				end: Position 1:10
 				start: Position 1:9
 			}
 		}
 	]
-	path: RelativePath<invalid/selector5/input.css>
-	loc: SourceLocation invalid/selector5/input.css 1:0-3:1
+	path: RelativePath<invalid/selector5/invalid.css>
+	loc: SourceLocation invalid/selector5/invalid.css 1:0-3:1
 }
 ```

@@ -10,44 +10,44 @@ CSSRoot {
 		CSSAtRule {
 			name: "keyframes"
 			prelude: []
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-1:18
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 1:0-1:18
 		}
 		CSSRule {
 			prelude: []
 			block: CSSBlock {
 				value: []
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:19-1:21
+				loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 1:19-1:21
 			}
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:19-1:21
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 1:19-1:21
 		}
 		CSSAtRule {
 			name: "keyframes"
 			prelude: []
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 2:0-2:18
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 2:0-2:18
 		}
 		CSSRule {
 			prelude: []
 			block: CSSBlock {
 				value: []
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 2:19-2:21
+				loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 2:19-2:21
 			}
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 2:19-2:21
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 2:19-2:21
 		}
 		CSSAtRule {
 			name: "keyframes"
 			prelude: []
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 3:0-3:16
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 3:0-3:16
 		}
 		CSSRule {
 			prelude: []
 			block: CSSBlock {
 				value: []
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 3:17-3:19
+				loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 3:17-3:19
 			}
-			loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 3:17-3:19
+			loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 3:17-3:19
 		}
 	]
 	comments: []
@@ -76,13 +76,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
+				path: RelativePath<invalid/keyframe-css-wide-keywords/invalid.css>
 				end: Position 1:18
 				start: Position 1:11
 			}
 		}
 	]
-	path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
-	loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-3:19
+	path: RelativePath<invalid/keyframe-css-wide-keywords/invalid.css>
+	loc: SourceLocation invalid/keyframe-css-wide-keywords/invalid.css 1:0-3:19
 }
 ```

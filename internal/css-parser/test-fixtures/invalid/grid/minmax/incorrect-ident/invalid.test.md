@@ -13,10 +13,10 @@ CSSRoot {
 					patterns: [
 						CSSClassSelector {
 							value: "style"
-							loc: SourceLocation invalid/grid/minmax/incorrect-ident/input.css 1:0-1:6
+							loc: SourceLocation invalid/grid/minmax/incorrect-ident/invalid.css 1:0-1:6
 						}
 					]
-					loc: SourceLocation invalid/grid/minmax/incorrect-ident/input.css 1:0-1:7
+					loc: SourceLocation invalid/grid/minmax/incorrect-ident/invalid.css 1:0-1:7
 				}
 			]
 			block: CSSBlock {
@@ -27,20 +27,20 @@ CSSRoot {
 							CSSFunction {
 								name: "minmax"
 								params: []
-								loc: SourceLocation invalid/grid/minmax/incorrect-ident/input.css 2:24-2:42
+								loc: SourceLocation invalid/grid/minmax/incorrect-ident/invalid.css 2:24-2:42
 							}
 							CSSRaw {
-								loc: SourceLocation invalid/grid/minmax/incorrect-ident/input.css 2:42-2:43
+								loc: SourceLocation invalid/grid/minmax/incorrect-ident/invalid.css 2:42-2:43
 							}
 						]
 						important: false
-						loc: SourceLocation invalid/grid/minmax/incorrect-ident/input.css 2:1-2:43
+						loc: SourceLocation invalid/grid/minmax/incorrect-ident/invalid.css 2:1-2:43
 					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/grid/minmax/incorrect-ident/input.css 1:7-3:1
+				loc: SourceLocation invalid/grid/minmax/incorrect-ident/invalid.css 1:7-3:1
 			}
-			loc: SourceLocation invalid/grid/minmax/incorrect-ident/input.css 1:0-3:1
+			loc: SourceLocation invalid/grid/minmax/incorrect-ident/invalid.css 1:0-3:1
 		}
 	]
 	comments: []
@@ -65,13 +65,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/grid/minmax/incorrect-ident/input.css>
+				path: RelativePath<invalid/grid/minmax/incorrect-ident/invalid.css>
 				end: Position 2:42
 				start: Position 2:37
 			}
 		}
 	]
-	path: RelativePath<invalid/grid/minmax/incorrect-ident/input.css>
-	loc: SourceLocation invalid/grid/minmax/incorrect-ident/input.css 1:0-3:1
+	path: RelativePath<invalid/grid/minmax/incorrect-ident/invalid.css>
+	loc: SourceLocation invalid/grid/minmax/incorrect-ident/invalid.css 1:0-3:1
 }
 ```

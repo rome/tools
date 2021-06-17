@@ -13,10 +13,10 @@ CSSRoot {
 					patterns: [
 						CSSClassSelector {
 							value: "style"
-							loc: SourceLocation invalid/calc-division/input.css 1:0-1:6
+							loc: SourceLocation invalid/calc-division/invalid.css 1:0-1:6
 						}
 					]
-					loc: SourceLocation invalid/calc-division/input.css 1:0-1:7
+					loc: SourceLocation invalid/calc-division/invalid.css 1:0-1:7
 				}
 			]
 			block: CSSBlock {
@@ -35,31 +35,31 @@ CSSRoot {
 														value: CSSDimension {
 															value: 2
 															unit: "px"
-															loc: SourceLocation invalid/calc-division/input.css 2:13-2:16
+															loc: SourceLocation invalid/calc-division/invalid.css 2:13-2:16
 														}
-														loc: SourceLocation invalid/calc-division/input.css 2:13-2:16
+														loc: SourceLocation invalid/calc-division/invalid.css 2:13-2:16
 													}
 												]
-												loc: SourceLocation invalid/calc-division/input.css 2:16-2:17
+												loc: SourceLocation invalid/calc-division/invalid.css 2:16-2:17
 											}
 										]
-										loc: SourceLocation invalid/calc-division/input.css 2:13-2:17
+										loc: SourceLocation invalid/calc-division/invalid.css 2:13-2:17
 									}
 								]
-								loc: SourceLocation invalid/calc-division/input.css 2:13-2:20
+								loc: SourceLocation invalid/calc-division/invalid.css 2:13-2:20
 							}
 							CSSRaw {
-								loc: SourceLocation invalid/calc-division/input.css 2:20-2:21
+								loc: SourceLocation invalid/calc-division/invalid.css 2:20-2:21
 							}
 						]
 						important: false
-						loc: SourceLocation invalid/calc-division/input.css 2:1-2:21
+						loc: SourceLocation invalid/calc-division/invalid.css 2:1-2:21
 					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation invalid/calc-division/input.css 1:7-3:1
+				loc: SourceLocation invalid/calc-division/invalid.css 1:7-3:1
 			}
-			loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
+			loc: SourceLocation invalid/calc-division/invalid.css 1:0-3:1
 		}
 	]
 	comments: []
@@ -75,13 +75,13 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/calc-division/input.css>
+				path: RelativePath<invalid/calc-division/invalid.css>
 				end: Position 2:20
 				start: Position 2:17
 			}
 		}
 	]
-	path: RelativePath<invalid/calc-division/input.css>
-	loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
+	path: RelativePath<invalid/calc-division/invalid.css>
+	loc: SourceLocation invalid/calc-division/invalid.css 1:0-3:1
 }
 ```

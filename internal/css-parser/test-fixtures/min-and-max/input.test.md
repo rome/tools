@@ -90,7 +90,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "/"
-														loc: SourceLocation min-and-max/input.css 3:21-3:23
+														loc: SourceLocation min-and-max/input.css 3:21-3:22
 													}
 													CSSCalcNumberValue {
 														value: CSSNumber {
@@ -215,7 +215,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation min-and-max/input.css 5:22-5:24
+														loc: SourceLocation min-and-max/input.css 5:22-5:23
 													}
 													CSSCalcValue {
 														value: CSSDimension {
@@ -292,7 +292,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation min-and-max/input.css 6:22-6:24
+														loc: SourceLocation min-and-max/input.css 6:22-6:23
 													}
 													CSSCalcValue {
 														value: CSSDimension {
@@ -338,7 +338,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation min-and-max/input.css 6:40-6:42
+														loc: SourceLocation min-and-max/input.css 6:40-6:41
 													}
 													CSSCalcValue {
 														value: CSSDimension {
@@ -384,7 +384,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation min-and-max/input.css 6:58-6:60
+														loc: SourceLocation min-and-max/input.css 6:58-6:59
 													}
 													CSSCalcValue {
 														value: CSSDimension {
@@ -493,7 +493,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "/"
-														loc: SourceLocation min-and-max/input.css 8:21-8:23
+														loc: SourceLocation min-and-max/input.css 8:21-8:22
 													}
 													CSSCalcNumberValue {
 														value: CSSNumber {
@@ -618,7 +618,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation min-and-max/input.css 10:22-10:24
+														loc: SourceLocation min-and-max/input.css 10:22-10:23
 													}
 													CSSCalcValue {
 														value: CSSDimension {
@@ -695,7 +695,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation min-and-max/input.css 11:22-11:24
+														loc: SourceLocation min-and-max/input.css 11:22-11:23
 													}
 													CSSCalcValue {
 														value: CSSDimension {
@@ -741,7 +741,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation min-and-max/input.css 11:40-11:42
+														loc: SourceLocation min-and-max/input.css 11:40-11:41
 													}
 													CSSCalcValue {
 														value: CSSDimension {
@@ -787,7 +787,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation min-and-max/input.css 11:58-11:60
+														loc: SourceLocation min-and-max/input.css 11:58-11:59
 													}
 													CSSCalcValue {
 														value: CSSDimension {
