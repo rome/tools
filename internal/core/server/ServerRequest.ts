@@ -264,7 +264,10 @@ export default class ServerRequest {
 		);
 
 		this.reporter = query.silent
-			? new Reporter("ServerRequestSilent")
+			? new Reporter(
+					"ServerRequestSilent",
+					{markupOptions: client.reporter.markupOptions},
+				)
 			: client.reporter.fork();
 		this.resources.add(this.reporter);
 
