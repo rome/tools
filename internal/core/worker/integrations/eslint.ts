@@ -19,9 +19,7 @@ const eslintLoader = new IntegrationLoader({
 					cwd: cwd.join(),
 					globInputPaths: false,
 					fix: true,
-					rulePaths: [
-						"/Users/sebmck/Scratch/TypeScript/scripts/eslint/built/rules",
-					],
+					rulePaths: [],
 				},
 			],
 		);
