@@ -104,7 +104,7 @@ export type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 export type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:1cc105a1e220477b2ffb9e959b47f54684f67486,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:728a8d0b42ede7075a991efd0bc768ff44c7fd7f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -132,8 +132,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useMediaCaption"]
 	| ["lint", "a11y", "useValidAnchor"]
 	| ["lint", "a11y", "useValidLang"]
-	| ["lint", "css", "noDuplicateCustomProperties"]
-	| ["lint", "css", "noImportantInKeyframes"]
 	| ["lint", "html", "useClosingNonVoid"]
 	| ["lint", "js", "noArguments"]
 	| ["lint", "js", "noAsyncPromiseExecutor"]
@@ -265,12 +263,6 @@ export const lintCategoryNameMap: {
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
 	"lint/a11y/useValidAnchor": ["lint", "a11y", "useValidAnchor"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
-	"lint/css/noDuplicateCustomProperties": [
-		"lint",
-		"css",
-		"noDuplicateCustomProperties",
-	],
-	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
 	"lint/html/useClosingNonVoid": ["lint", "html", "useClosingNonVoid"],
 	"lint/js/noArguments": ["lint", "js", "noArguments"],
 	"lint/js/noAsyncPromiseExecutor": ["lint", "js", "noAsyncPromiseExecutor"],

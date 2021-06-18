@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:a9bbc962ebaea2297941e035106e727be7a6f358,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:2a199a6c9a039bff240b15f8be9d88fe9b8e0d77,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -25,8 +25,6 @@ import useKeyWithMouseEvents from "./a11y/useKeyWithMouseEvents";
 import useMediaCaption from "./a11y/useMediaCaption";
 import useValidAnchor from "./a11y/useValidAnchor";
 import useValidLang from "./a11y/useValidLang";
-import noDuplicateCustomProperties from "./css/noDuplicateCustomProperties";
-import noImportantInKeyframes from "./css/noImportantInKeyframes";
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -149,11 +147,6 @@ lintTransforms.set("a11y/useKeyWithMouseEvents", useKeyWithMouseEvents);
 lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidAnchor", useValidAnchor);
 lintTransforms.set("a11y/useValidLang", useValidLang);
-lintTransforms.set(
-	"css/noDuplicateCustomProperties",
-	noDuplicateCustomProperties,
-);
-lintTransforms.set("css/noImportantInKeyframes", noImportantInKeyframes);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
 lintTransforms.set("js/noArguments", noArguments);
 lintTransforms.set("js/noAsyncPromiseExecutor", noAsyncPromiseExecutor);
@@ -299,8 +292,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/useMediaCaption",
 	"a11y/useValidAnchor",
 	"a11y/useValidLang",
-	"css/noDuplicateCustomProperties",
-	"css/noImportantInKeyframes",
 	"html/useClosingNonVoid",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
@@ -420,8 +411,6 @@ export type LintRuleName =
 	| "a11y/useMediaCaption"
 	| "a11y/useValidAnchor"
 	| "a11y/useValidLang"
-	| "css/noDuplicateCustomProperties"
-	| "css/noImportantInKeyframes"
 	| "html/useClosingNonVoid"
 	| "js/noArguments"
 	| "js/noAsyncPromiseExecutor"

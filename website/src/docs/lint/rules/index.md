@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:b1d565d505c0ce10081c6cafdcc84536c4b226bd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:ea4a07291faf12c3cb2e764d56ad809b177f7f3e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -749,19 +749,5 @@ enforce style prop value is an object
 <section>
 <h2>CSS</h2>
 <p>Rule semantics and descriptions taken from <a href="https://stylelint.io/">stylelint</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="noDuplicateCustomProperties">
-	<a href="/docs/lint/rules/css/noDuplicateCustomProperties">noDuplicateCustomProperties</a>
-	<a class="header-anchor" href="#noDuplicateCustomProperties"></a>
-</h3>
-prevent custom properties with the same name inside a block
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noImportantInKeyframes">
-	<a href="/docs/lint/rules/css/noImportantInKeyframes">noImportantInKeyframes</a>
-	<a class="header-anchor" href="#noImportantInKeyframes"></a>
-</h3>
-disallow `!important` in `@keyframe` rules
-</div>
 </section>
 <!-- GENERATED:END(id:main) -->

@@ -12,7 +12,7 @@ type Tests = Dict<{
 	cases: Test | Test[] | Test[][];
 }>;
 
-/* GENERATED:START(hash:256560c65dcafc042d40488c55963c310b77445f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:8d0a71526db3dcfb050c70a74a60ff848367b0a8,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-expect-error
 import noAccessKey from "./a11y/noAccessKey.test.rjson";
 // @ts-expect-error
@@ -65,10 +65,6 @@ import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 import useValidAnchor from "./a11y/useValidAnchor.test.rjson";
 // @ts-expect-error
 import useValidLang from "./a11y/useValidLang.test.rjson";
-// @ts-expect-error
-import noDuplicateCustomProperties from "./css/noDuplicateCustomProperties.test.rjson";
-// @ts-expect-error
-import noImportantInKeyframes from "./css/noImportantInKeyframes.test.rjson";
 // @ts-expect-error
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-expect-error
@@ -348,14 +344,6 @@ export const tests: Tests = {
 	"a11y/useValidLang": {
 		category: ["lint", "a11y", "useValidLang"],
 		cases: useValidLang,
-	},
-	"css/noDuplicateCustomProperties": {
-		category: ["lint", "css", "noDuplicateCustomProperties"],
-		cases: noDuplicateCustomProperties,
-	},
-	"css/noImportantInKeyframes": {
-		category: ["lint", "css", "noImportantInKeyframes"],
-		cases: noImportantInKeyframes,
 	},
 	"html/useClosingNonVoid": {
 		category: ["lint", "html", "useClosingNonVoid"],

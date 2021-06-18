@@ -21,10 +21,15 @@ export const lint = createDiagnosticsCategory({
 		category: DIAGNOSTIC_CATEGORIES["lint/ts/useTsExpectError"],
 		message: markup`Prefer @ts-expect-error to get notified when suppression is no longer necessary.`,
 	},
-	CSS_NO_DUPLICATE_CUSTOM_PROPERTIES: {
-		category: DIAGNOSTIC_CATEGORIES["lint/css/noDuplicateCustomProperties"],
-		message: markup`Duplicate custom properties inside the same block can lead to unwanted styles`,
-	},
+	// TODO: enable when CSS parser is turned on again
+	// CSS_NO_DUPLICATE_CUSTOM_PROPERTIES: {
+	// 	category: DIAGNOSTIC_CATEGORIES["lint/css/noDuplicateCustomProperties"],
+	// 	message: markup`Duplicate custom properties inside the same block can lead to unwanted styles`,
+	// },
+	// CSS_NO_IMPORTANT_IN_KEYFRAME: {
+	// 	category: DIAGNOSTIC_CATEGORIES["lint/css/noImportantInKeyframes"],
+	// 	message: markup`Using <emphasis>!important</emphasis> within keyframes declarations is completely ignored in some browsers.`,
+	// },
 	A11_Y_USE_HEADING_CONTENT: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/useHeadingContent"],
 		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
@@ -101,10 +106,6 @@ export const lint = createDiagnosticsCategory({
 				text: markup`Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.`,
 			},
 		],
-	},
-	CSS_NO_IMPORTANT_IN_KEYFRAME: {
-		category: DIAGNOSTIC_CATEGORIES["lint/css/noImportantInKeyframes"],
-		message: markup`Using <emphasis>!important</emphasis> within keyframes declarations is completely ignored in some browsers.`,
 	},
 	A11_Y_NO_REDUNDANT_ALT: {
 		category: DIAGNOSTIC_CATEGORIES["lint/a11y/noRedundantAlt"],
