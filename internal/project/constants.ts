@@ -16,6 +16,13 @@ export const ESLINT_CONFIG_FILENAMES: string[] = [
 	".eslintignore",
 ];
 
+// NOTE: only supporting JSON for now
+export const PRETTIER_CONFIG_FILESNAMES: string[] = [
+	".prettierrc",
+	".prettierr.json",
+	".prettierr.json5",
+];
+
 export const PROJECT_CONFIG_PACKAGE_JSON_FIELD = "rome";
 export const PROJECT_CONFIG_DIRECTORY = ".config";
 export const PROJECT_CONFIG_FILENAMES: string[] = [];
