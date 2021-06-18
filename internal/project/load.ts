@@ -31,6 +31,7 @@ import {CachedFileReader} from "@internal/fs";
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
 import {
+	INTEGRATIONS_IGNORE_FILES,
 	PRETTIER_CONFIG_FILESNAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 	VCS_IGNORE_FILENAMES,
@@ -119,6 +120,7 @@ export async function loadCompleteProjectConfig(
 	// Load extensions configuration of prettier
 	for (const prettierFile of PRETTIER_CONFIG_FILESNAMES) {
 		const possiblePath = projectDirectory.append(prettierFile);
+		meta.configDependencies.add(possiblePath);
 		if (await possiblePath.exists()) {
 			const file = await reader.readFileText(possiblePath);
 			const prettierConfig = loadPrettier(file, possiblePath.getExtensions());
@@ -126,6 +128,24 @@ export async function loadCompleteProjectConfig(
 				...config.integrations.prettier,
 				...prettierConfig,
 			};
+		}
+	}
+
+	// read ignore files
+	for (const fileToIgnore of INTEGRATIONS_IGNORE_FILES) {
+		const possiblePath = projectDirectory.append(fileToIgnore);
+		meta.configDependencies.add(possiblePath);
+		if (await possiblePath.exists()) {
+			const file = await reader.readFileText(possiblePath);
+
+			consumer.handleThrownDiagnostics(() => {
+				const patterns = parsePathPatternsFile({
+					input: file,
+					path: possiblePath,
+				});
+
+				config.lint.ignore = [...config.lint.ignore, ...patterns];
+			});
 		}
 	}
 
