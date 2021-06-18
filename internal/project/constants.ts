@@ -23,6 +23,11 @@ export const PRETTIER_CONFIG_FILESNAMES: string[] = [
 	".prettierr.json5",
 ];
 
+export const INTEGRATIONS_IGNORE_FILES: string[] = [
+	".prettierignore",
+	".eslintignore",
+];
+
 export const PROJECT_CONFIG_PACKAGE_JSON_FIELD = "rome";
 export const PROJECT_CONFIG_DIRECTORY = ".config";
 export const PROJECT_CONFIG_FILENAMES: string[] = [];
