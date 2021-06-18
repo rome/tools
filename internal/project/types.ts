@@ -103,10 +103,18 @@ export type ProjectConfigObjects = {
 	targets: Map<string, GetBrowserProps[]>;
 };
 
+export type PrettierConfig = {
+	printWidth: number;
+	tabWidth: number;
+	useTabs: boolean;
+	semi: boolean;
+	singleQuote: boolean;
+}
+
 export type ProjectConfigIntegrations = {
 	eslint: Enableable;
 	typescriptChecker: Enableable;
-	prettier: Enableable;
+	prettier: Enableable & Partial<PrettierConfig>;
 };
 
 export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
@@ -215,7 +223,7 @@ export type RawUserProjectConfig = DeepPartial<{
 	integrations: {
 		eslint: Enableable;
 		typescriptChecker: Enableable;
-		prettier: Enableable;
+		prettier: Enableable & Partial<PrettierConfig>;
 	};
 }>;
 

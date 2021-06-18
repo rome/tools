@@ -24,6 +24,7 @@ import * as jsAnalysis from "@internal/js-analysis";
 import Worker from "./Worker";
 import {formatAST} from "@internal/formatter";
 import {maybeRunESLint} from "./integrations/eslint";
+import {maybeRunPrettier} from "@internal/core/worker/integrations/prettier";
 
 const EMPTY_LINT_RESULT: WorkerLintResult = {
 	timings: new Map(),
@@ -129,7 +130,7 @@ export async function uncachedLint(
 	}: ExtensionLintResult = res.value;
 
 	// If the file has pending fixes
-	const needsSave = project.config.format.enabled && formatted !== sourceText;
+	const needsSave = project.config.format.enabled && formatted !== sourceText || project.config.integrations.prettier.enabled && formatted !== sourceText;
 
 	// Autofix if necessary
 	if (options.save && needsSave) {
@@ -256,6 +257,21 @@ export async function compilerLint(
 		diagnostics = [...diagnostics, ...eslintResult.diagnostics];
 	}
 
+	const prettierResult = await maybeRunPrettier({worker, ref, project});
+
+	if (prettierResult) {
+		formatted = prettierResult.formatted;
+		timings.set(
+			"prettier",
+			{
+				type: "official",
+				displayName: "Prettier",
+				took: prettierResult.timing,
+			},
+		);
+
+		diagnostics = [...diagnostics, ...prettierResult.diagnostics];
+	}
 	return worker.api.interceptDiagnostics(
 		{
 			timings,

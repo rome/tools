@@ -31,6 +31,7 @@ import {CachedFileReader} from "@internal/fs";
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
 import {
+	PRETTIER_CONFIG_FILESNAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 	VCS_IGNORE_FILENAMES,
 } from "./constants";
@@ -38,6 +39,7 @@ import {lintRuleNames} from "@internal/compiler";
 import {sha256} from "@internal/string-utils";
 import {resolveBrowsers} from "@internal/codec-browsers";
 import {ParserOptions} from "@internal/parser-core";
+import {loadPrettier} from "@internal/project/integrations/loadPrettier";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -111,6 +113,16 @@ export async function loadCompleteProjectConfig(
 				// TODO: Maybe these are useful in other places?
 				config.lint.ignore = [...config.lint.ignore, ...patterns];
 			});
+		}
+	}
+
+	// Load extensions configuration of prettier
+	for (const prettierFile of PRETTIER_CONFIG_FILESNAMES) {
+		const possiblePath = projectDirectory.append(prettierFile);
+		if (await possiblePath.exists()) {
+			const file = await reader.readFileText(possiblePath);
+			const prettierConfig = loadPrettier(file, possiblePath.getExtensions());
+			config.integrations.prettier = { ...config.integrations.prettier, ...prettierConfig };
 		}
 	}
 
@@ -466,6 +478,24 @@ export async function normalizeProjectConfig(
 			}
 		}
 		eslint.enforceUsedProperties("eslint config property");
+
+		const prettier = integrations.get("prettier");
+		if (categoryExists(prettier)) {
+			if (prettier.has("enabled")) {
+				config.integrations.prettier.enabled = prettier.get("enabled").asBoolean();
+				if (prettier.has("printWidth"))
+					config.integrations.prettier.printWidth = prettier.get("printWidth").asNumber();
+				if (prettier.has("tabWidth"))
+					config.integrations.prettier.tabWidth = prettier.get("tabWidth").asNumber();
+				if (prettier.has("useTabs"))
+					config.integrations.prettier.useTabs = prettier.get("useTabs").asBoolean();
+				if (prettier.has("semi"))
+					config.integrations.prettier.semi = prettier.get("semi").asBoolean();
+				if (prettier.has("singleQuote"))
+					config.integrations.prettier.singleQuote = prettier.get("singleQuote").asBoolean();
+			}
+		}
+		prettier.enforceUsedProperties("prettier config property");
 	}
 
 	meta.configDependencies = new AbsoluteFilePathSet([
@@ -498,6 +528,8 @@ export async function normalizeProjectConfig(
 		}
 	}
 
+	console.log(normalized.partial.integrations.prettier)
+	console.log(normalized.meta.consumer)
 	return normalized;
 }
 

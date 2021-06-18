@@ -28,6 +28,7 @@ export type DiagnosticCategory =
 	| ["compile", "jsx"]
 	| ["compile", "nonnumeric-enum-values"]
 	| ["eslint"]
+	| ["prettier"]
 	| ["files", "missingHandler"]
 	| ["files", "tooBig"]
 	| ["flags", "invalid"]
@@ -431,6 +432,7 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"compile/jsx": ["compile", "jsx"],
 	"compile/nonnumeric-enum-values": ["compile", "nonnumeric-enum-values"],
 	eslint: ["eslint"],
+	prettier: ["prettier"],
 	"files/missingHandler": ["files", "missingHandler"],
 	"files/tooBig": ["files", "tooBig"],
 	"flags/invalid": ["flags", "invalid"],
@@ -514,6 +516,7 @@ export const categoryPrefixMap: {[name in DiagnosticCategoryPrefix]: true} = {
 	commands: true,
 	compile: true,
 	eslint: true,
+	prettier: true,
 	files: true,
 	integration: true,
 	format: true,
