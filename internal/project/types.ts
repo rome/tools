@@ -109,7 +109,7 @@ export type PrettierConfig = {
 	useTabs: boolean;
 	semi: boolean;
 	singleQuote: boolean;
-}
+};
 
 export type ProjectConfigIntegrations = {
 	eslint: Enableable;

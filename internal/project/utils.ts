@@ -11,9 +11,9 @@ import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {PartialProjectConfig} from "./types";
 import {
 	ESLINT_CONFIG_FILENAMES,
+	PRETTIER_CONFIG_FILESNAMES,
 	PROJECT_CONFIG_FILENAMES,
 	VCS_IGNORE_FILENAMES,
-	PRETTIER_CONFIG_FILESNAMES
 } from "./constants";
 
 export function arrayOfStrings(consumer: Consumer): string[] {

@@ -20,7 +20,7 @@ export const ESLINT_CONFIG_FILENAMES: string[] = [
 export const PRETTIER_CONFIG_FILESNAMES: string[] = [
 	".prettierrc",
 	".prettierr.json",
-	".prettierr.json5"
+	".prettierr.json5",
 ];
 
 export const PROJECT_CONFIG_PACKAGE_JSON_FIELD = "rome";

@@ -8,14 +8,14 @@ const prettierLoader = new IntegrationLoader({
 	name: "prettier",
 	range: "^2.0.0",
 	normalize: (consumer) => {
-		return consumer
+		return consumer;
 	},
 });
 
 export interface MaybeRunPrettier {
 	formatted: string;
 	timing: Duration;
-	diagnostics: Diagnostic[]
+	diagnostics: Diagnostic[];
 }
 
 export async function maybeRunPrettier(
@@ -24,16 +24,16 @@ export async function maybeRunPrettier(
 		ref: FileReference;
 		project: WorkerProject;
 	},
-): Promise<
-	| undefined
-	|  MaybeRunPrettier
-	> {
+): Promise<undefined | MaybeRunPrettier> {
 	const options = project.config.integrations.prettier;
 	if (!options.enabled) {
 		return undefined;
 	}
 
-	const loader = await prettierLoader.load(project.configPath, project.directory);
+	const loader = await prettierLoader.load(
+		project.configPath,
+		project.directory,
+	);
 
 	const timer = new DurationMeasurer();
 
@@ -44,16 +44,18 @@ export async function maybeRunPrettier(
 
 	const formatted = await prettierLoader.wrap(async () => {
 		const format = loader.module.get("format").asWrappedFunction();
-		return await format(content, {
-			...options,
-			filepath: ref.real.join()
-		}).asPromise();
-
+		return await format(
+			content,
+			{
+				...options,
+				filepath: ref.real.join(),
+			},
+		).asPromise();
 	});
 
 	return {
 		formatted: formatted.asString(),
 		timing: timer.since(),
-		diagnostics
-	}
+		diagnostics,
+	};
 }

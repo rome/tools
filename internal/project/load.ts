@@ -122,7 +122,10 @@ export async function loadCompleteProjectConfig(
 		if (await possiblePath.exists()) {
 			const file = await reader.readFileText(possiblePath);
 			const prettierConfig = loadPrettier(file, possiblePath.getExtensions());
-			config.integrations.prettier = { ...config.integrations.prettier, ...prettierConfig };
+			config.integrations.prettier = {
+				...config.integrations.prettier,
+				...prettierConfig,
+			};
 		}
 	}
 
@@ -483,16 +486,21 @@ export async function normalizeProjectConfig(
 		if (categoryExists(prettier)) {
 			if (prettier.has("enabled")) {
 				config.integrations.prettier.enabled = prettier.get("enabled").asBoolean();
-				if (prettier.has("printWidth"))
+				if (prettier.has("printWidth")) {
 					config.integrations.prettier.printWidth = prettier.get("printWidth").asNumber();
-				if (prettier.has("tabWidth"))
+				}
+				if (prettier.has("tabWidth")) {
 					config.integrations.prettier.tabWidth = prettier.get("tabWidth").asNumber();
-				if (prettier.has("useTabs"))
+				}
+				if (prettier.has("useTabs")) {
 					config.integrations.prettier.useTabs = prettier.get("useTabs").asBoolean();
-				if (prettier.has("semi"))
+				}
+				if (prettier.has("semi")) {
 					config.integrations.prettier.semi = prettier.get("semi").asBoolean();
-				if (prettier.has("singleQuote"))
+				}
+				if (prettier.has("singleQuote")) {
 					config.integrations.prettier.singleQuote = prettier.get("singleQuote").asBoolean();
+				}
 			}
 		}
 		prettier.enforceUsedProperties("prettier config property");
@@ -528,8 +536,6 @@ export async function normalizeProjectConfig(
 		}
 	}
 
-	console.log(normalized.partial.integrations.prettier)
-	console.log(normalized.meta.consumer)
 	return normalized;
 }
 

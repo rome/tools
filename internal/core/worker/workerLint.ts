@@ -130,7 +130,9 @@ export async function uncachedLint(
 	}: ExtensionLintResult = res.value;
 
 	// If the file has pending fixes
-	const needsSave = project.config.format.enabled && formatted !== sourceText || project.config.integrations.prettier.enabled && formatted !== sourceText;
+	const needsSave =
+		(project.config.format.enabled && formatted !== sourceText) ||
+		(project.config.integrations.prettier.enabled && formatted !== sourceText);
 
 	// Autofix if necessary
 	if (options.save && needsSave) {
