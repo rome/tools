@@ -7,7 +7,7 @@
 
 import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
 import {CompilerContext, signals} from "@internal/compiler";
-import {OneIndexed} from "@internal/numbers";
+import {IndexedNumberSet, OneIndexed} from "@internal/numbers";
 import CompilerPath from "../lib/CompilerPath";
 import {LintCompilerOptionsDecision} from "../types";
 import {injectComment} from "../transforms/helpers";
@@ -39,7 +39,7 @@ export function addSuppressions(
 		return ast;
 	}
 
-	const visitedLines: Set<OneIndexed> = new Set();
+	const visitedLines = new IndexedNumberSet<OneIndexed>();
 
 	function addComment(
 		path: CompilerPath,

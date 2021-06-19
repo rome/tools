@@ -446,6 +446,7 @@ export default class CompilerPath {
 			{
 				...description,
 				advice,
+				verboseAdvice,
 			},
 			{
 				...diag,
