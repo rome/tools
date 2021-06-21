@@ -31,6 +31,7 @@ import {CachedFileReader} from "@internal/fs";
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
 import {
+	ESLINT_CONFIG_FILENAMES,
 	INTEGRATIONS_IGNORE_FILES,
 	PRETTIER_CONFIG_FILESNAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
@@ -41,6 +42,7 @@ import {sha256} from "@internal/string-utils";
 import {resolveBrowsers} from "@internal/codec-browsers";
 import {ParserOptions} from "@internal/parser-core";
 import {loadPrettier} from "@internal/project/integrations/loadPrettier";
+import {loadEslint} from "@internal/project/integrations/loadEslint";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -127,6 +129,20 @@ export async function loadCompleteProjectConfig(
 			config.integrations.prettier = {
 				...config.integrations.prettier,
 				...prettierConfig,
+			};
+		}
+	}
+
+	// Load extensions configuration of eslint
+	for (const eslintFile of ESLINT_CONFIG_FILENAMES) {
+		const possiblePath = projectDirectory.append(eslintFile);
+		meta.configDependencies.add(possiblePath);
+		if (await possiblePath.exists()) {
+			const file = await reader.readFileText(possiblePath);
+			const eslintConfig = loadEslint(file);
+			config.integrations.eslint = {
+				...config.integrations.eslint,
+				...eslintConfig,
 			};
 		}
 	}

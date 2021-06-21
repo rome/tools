@@ -8,10 +8,6 @@ import {CONFIG_EXTENSIONS} from "@internal/codec-config";
 export const VCS_IGNORE_FILENAMES = [".gitignore", ".hgignore"];
 
 export const ESLINT_CONFIG_FILENAMES: string[] = [
-	".eslintrc.js",
-	".eslintrc.cjs",
-	".eslintrc.yaml",
-	".eslintrc.yml",
 	".eslintrc.json",
 	".eslintignore",
 ];

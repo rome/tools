@@ -21,6 +21,7 @@ import {
 } from "@internal/diagnostics";
 
 import internalModule = require("module");
+import {ProjectConfigIntegrations} from "@internal/project";
 
 const requires: AbsoluteFilePathMap<NodeRequire> = new AbsoluteFilePathMap();
 
@@ -30,30 +31,37 @@ export function getRequire(path: AbsoluteFilePath): NodeRequire {
 		return existing;
 	}
 
-	const require: NodeRequire = internalModule.createRequire
-		? internalModule.createRequire(path.join())
-		: internalModule.createRequireFromPath(path.join());
+	const require: NodeRequire = internalModule.createRequire(path.join());
 	requires.set(path, require);
 	return require;
 }
 
-type IntegrationLoaderNormalize<Value> = (
-	consumer: Consumer,
-	path: AbsoluteFilePath,
-	version: undefined | SemverVersion,
-) => Value;
+type IntegrationLoaderNormalizePayload<IntegrationName extends keyof ProjectConfigIntegrations> = {
+	consumer: Consumer;
+	cwd: AbsoluteFilePath;
+	version: undefined | SemverVersion;
+	opts?: Omit<ProjectConfigIntegrations[IntegrationName], "enabled">;
+};
+
+type IntegrationLoaderNormalize<
+	Value,
+	IntegrationName extends keyof ProjectConfigIntegrations
+> = (payload: IntegrationLoaderNormalizePayload<IntegrationName>) => Value;
 
 type IntegrationLoaderEntry<Value> = {
 	version: undefined | SemverVersion;
 	module: Value;
 };
 
-export default class IntegrationLoader<Value> {
+export default class IntegrationLoader<
+	Value,
+	IntegrationName extends keyof ProjectConfigIntegrations
+> {
 	constructor(
 		{name, range, normalize}: {
 			name: string;
 			range?: string;
-			normalize: IntegrationLoaderNormalize<Value>;
+			normalize: IntegrationLoaderNormalize<Value, IntegrationName>;
 		},
 	) {
 		this.loaded = new AbsoluteFilePathMap();
@@ -64,7 +72,7 @@ export default class IntegrationLoader<Value> {
 	}
 
 	private loaded: AbsoluteFilePathMap<IntegrationLoaderEntry<Value>>;
-	private normalize: IntegrationLoaderNormalize<Value>;
+	private normalize: IntegrationLoaderNormalize<Value, IntegrationName>;
 	private name: string;
 	private range: undefined | SemverRange;
 
@@ -107,6 +115,7 @@ export default class IntegrationLoader<Value> {
 	public async load(
 		path: AbsoluteFilePath,
 		cwd: AbsoluteFilePath,
+		opts?: Omit<ProjectConfigIntegrations[IntegrationName], "enabled">,
 	): Promise<IntegrationLoaderEntry<Value>> {
 		const existing = this.loaded.get(path);
 		if (existing !== undefined) {
@@ -163,7 +172,7 @@ export default class IntegrationLoader<Value> {
 			DIAGNOSTIC_CATEGORIES["integration/load"],
 			this.name,
 		);
-		const module = this.normalize(consumer, cwd, version);
+		const module = this.normalize({consumer, cwd, version, opts});
 
 		const entry: IntegrationLoaderEntry<Value> = {version, module};
 		this.loaded.set(path, entry);
