@@ -29,6 +29,6 @@ jobs:
           npm install
           mkdir .config
           cd .config
-          echo '{ "root": true, "name": "cra-integration-test", "integrations": { "eslint": { "enabled": true, "rulePaths": ["./rules"] } } }' > rome.json
+          echo '{ "root": true, "name": "cra-integration-test", "format": { "enabled": false }, "integrations": { "eslint": { "enabled": true, "rulePaths": ["./rules"] } } }' > rome.json
           cd -
           ../rome/rome check --timing
