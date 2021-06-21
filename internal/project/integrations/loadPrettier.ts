@@ -1,13 +1,13 @@
 import {consumeUnknown} from "@internal/consume";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
-import {PrettierConfig} from "@internal/project";
+import {IntegrationPrettierConfig} from "@internal/project";
 import {json, json5} from "@internal/codec-config";
 
 export function loadPrettier(
 	file: string,
 	extension: string,
-): Partial<PrettierConfig> {
-	const config: Partial<PrettierConfig> = {};
+): Partial<IntegrationPrettierConfig> {
+	const config: Partial<IntegrationPrettierConfig> = {};
 	let data: unknown;
 	// NOTE: we only support json for now
 	if (extension === "json5") {

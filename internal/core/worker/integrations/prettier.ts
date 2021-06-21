@@ -3,11 +3,12 @@ import Worker from "../Worker";
 import {FileReference, WorkerProject} from "@internal/core";
 import {Duration, DurationMeasurer} from "@internal/numbers";
 import {Diagnostic} from "@internal/diagnostics";
+import {Consumer} from "@internal/consume";
 
-const prettierLoader = new IntegrationLoader({
+const prettierLoader = new IntegrationLoader<Consumer, "prettier">({
 	name: "prettier",
 	range: "^2.0.0",
-	normalize: (consumer) => {
+	normalize: ({consumer}) => {
 		return consumer;
 	},
 });

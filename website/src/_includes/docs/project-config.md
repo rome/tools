@@ -134,11 +134,11 @@ If your project uses `.prettierrc` already, Rome will load the configuration and
 Alternatively, you can configure `prettier` inside Rome's configuration. Rome supports only a
 subset of options:
 
-- [printWidth](https://prettier.io/docs/en/options.html#print-width);
-- [tabWidth](https://prettier.io/docs/en/options.html#tab-width);
-- [useTabs](https://prettier.io/docs/en/options.html#tabs);
-- [semi](https://prettier.io/docs/en/options.html#semicolons);
-- [singleQuote](https://prettier.io/docs/en/options.html#quotes);
+- [`printWidth`](https://prettier.io/docs/en/options.html#print-width);
+- [`tabWidth`](https://prettier.io/docs/en/options.html#tab-width);
+- [`useTabs`](https://prettier.io/docs/en/options.html#tabs);
+- [`semi`](https://prettier.io/docs/en/options.html#semicolons);
+- [`singleQuote`](https://prettier.io/docs/en/options.html#quotes);
 
 The rest of options will be ignored and won't be passed to `prettier`.
 
@@ -169,7 +169,56 @@ Ultimately, the configuration will look like this:
 
 ### `integrations.eslint`
 
-MISSING DOCUMENTATION
+You can use Rome to lint your code using eslint. In order to integrate it,
+you have to install `eslint` in your project and enabled the integration via Rome:
+
+```bash
+rome config enable integrations.eslint
+```
+
+> The minimum `eslint`'s version supported is `7.0.0`;
+
+Now, when you run `./rome check --apply`, Rome will use `prettier` to format your code.
+
+If your project uses `.eslint.json` already, Rome will load the configuration and pass it to
+`eslint`.
+
+Alternatively, you can configure `eslint` inside Rome's configuration. Rome supports only a
+subset of options:
+
+- `fix`
+- `extensions`
+- `globInputPaths`
+- `rulePaths`
+
+You can find more information in the [eslint webpage](https://eslint.org/docs/developer-guide/nodejs-api#parameters).
+
+The rest of options will be ignored and won't be passed to `eslint`.
+
+Ultimately, the configuration will look like this:
+
+```json
+{
+	"rome": {
+		"root": true,
+		"name": "fancy-project",
+		"lint": {
+			"enabled": false
+		},
+		"format": {
+			"enabled": false
+		},
+		"integrations": {
+			"eslint": {
+				"fix": true,
+				"extensions": [".js", ".ts", ".jsx"],
+				"globInputPaths": false,
+				"rulePaths":  ["./path/to/rules", "../../path/to/other/rules"]
+			}
+		}
+	}
+}
+```
 
 ### Supported Locations
 
