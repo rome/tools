@@ -126,10 +126,12 @@ export async function loadCompleteProjectConfig(
 		if (await possiblePath.exists()) {
 			const file = await reader.readFileText(possiblePath);
 			const prettierConfig = loadPrettier(file, possiblePath.getExtensions());
-			config.integrations.prettier = {
-				...config.integrations.prettier,
-				...prettierConfig,
-			};
+			consumer.handleThrownDiagnostics(() => {
+				config.integrations.prettier = {
+					...config.integrations.prettier,
+					...prettierConfig,
+				};
+			});
 		}
 	}
 
@@ -139,11 +141,13 @@ export async function loadCompleteProjectConfig(
 		meta.configDependencies.add(possiblePath);
 		if (await possiblePath.exists()) {
 			const file = await reader.readFileText(possiblePath);
-			const eslintConfig = loadEslint(file);
-			config.integrations.eslint = {
-				...config.integrations.eslint,
-				...eslintConfig,
-			};
+			consumer.handleThrownDiagnostics(() => {
+				const eslintConfig = loadEslint(file);
+				config.integrations.eslint = {
+					...config.integrations.eslint,
+					...eslintConfig,
+				};
+			});
 		}
 	}
 
@@ -515,8 +519,24 @@ export async function normalizeProjectConfig(
 			if (eslint.has("enabled")) {
 				config.integrations.eslint.enabled = eslint.get("enabled").asBoolean();
 			}
+			if (eslint.has("globInputPaths")) {
+				config.integrations.eslint.globInputPaths = eslint.get("globInputPaths").asBoolean();
+			}
+			if (eslint.has("extensions")) {
+				config.integrations.eslint.extensions = arrayOfStrings(
+					eslint.get("extensions"),
+				);
+			}
+			if (eslint.has("fix")) {
+				config.integrations.eslint.fix = eslint.get("fix").asBoolean();
+			}
+			if (eslint.has("rulePaths")) {
+				config.integrations.eslint.rulePaths = arrayOfStrings(
+					eslint.get("rulePaths"),
+				);
+			}
+			eslint.enforceUsedProperties("eslint config property");
 		}
-		eslint.enforceUsedProperties("eslint config property");
 
 		const prettier = integrations.get("prettier");
 		if (categoryExists(prettier)) {
