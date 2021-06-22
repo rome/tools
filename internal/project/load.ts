@@ -126,10 +126,12 @@ export async function loadCompleteProjectConfig(
 		if (await possiblePath.exists()) {
 			const file = await reader.readFileText(possiblePath);
 			const prettierConfig = loadPrettier(file, possiblePath.getExtensions());
-			config.integrations.prettier = {
-				...config.integrations.prettier,
-				...prettierConfig,
-			};
+			consumer.handleThrownDiagnostics(() => {
+				config.integrations.prettier = {
+					...config.integrations.prettier,
+					...prettierConfig,
+				};
+			});
 		}
 	}
 
@@ -139,11 +141,13 @@ export async function loadCompleteProjectConfig(
 		meta.configDependencies.add(possiblePath);
 		if (await possiblePath.exists()) {
 			const file = await reader.readFileText(possiblePath);
-			const eslintConfig = loadEslint(file);
-			config.integrations.eslint = {
-				...config.integrations.eslint,
-				...eslintConfig,
-			};
+			consumer.handleThrownDiagnostics(() => {
+				const eslintConfig = loadEslint(file);
+				config.integrations.eslint = {
+					...config.integrations.eslint,
+					...eslintConfig,
+				};
+			});
 		}
 	}
 
@@ -519,40 +523,44 @@ export async function normalizeProjectConfig(
 				config.integrations.eslint.globInputPaths = eslint.get("globInputPaths").asBoolean();
 			}
 			if (eslint.has("extensions")) {
-				config.integrations.eslint.extensions = arrayOfStrings(eslint.get("extensions"));
+				config.integrations.eslint.extensions = arrayOfStrings(
+					eslint.get("extensions"),
+				);
 			}
 			if (eslint.has("fix")) {
 				config.integrations.eslint.fix = eslint.get("fix").asBoolean();
 			}
 			if (eslint.has("rulePaths")) {
-				config.integrations.eslint.rulePaths = arrayOfStrings(eslint.get("rulePaths"));
+				config.integrations.eslint.rulePaths = arrayOfStrings(
+					eslint.get("rulePaths"),
+				);
 			}
 			eslint.enforceUsedProperties("eslint config property");
 		}
-	}
 
-	const prettier = integrations.get("prettier");
-	if (categoryExists(prettier)) {
-		if (prettier.has("enabled")) {
-			config.integrations.prettier.enabled = prettier.get("enabled").asBoolean();
-			if (prettier.has("printWidth")) {
-				config.integrations.prettier.printWidth = prettier.get("printWidth").asNumber();
-			}
-			if (prettier.has("tabWidth")) {
-				config.integrations.prettier.tabWidth = prettier.get("tabWidth").asNumber();
-			}
-			if (prettier.has("useTabs")) {
-				config.integrations.prettier.useTabs = prettier.get("useTabs").asBoolean();
-			}
-			if (prettier.has("semi")) {
-				config.integrations.prettier.semi = prettier.get("semi").asBoolean();
-			}
-			if (prettier.has("singleQuote")) {
-				config.integrations.prettier.singleQuote = prettier.get("singleQuote").asBoolean();
+		const prettier = integrations.get("prettier");
+		if (categoryExists(prettier)) {
+			if (prettier.has("enabled")) {
+				config.integrations.prettier.enabled = prettier.get("enabled").asBoolean();
+				if (prettier.has("printWidth")) {
+					config.integrations.prettier.printWidth = prettier.get("printWidth").asNumber();
+				}
+				if (prettier.has("tabWidth")) {
+					config.integrations.prettier.tabWidth = prettier.get("tabWidth").asNumber();
+				}
+				if (prettier.has("useTabs")) {
+					config.integrations.prettier.useTabs = prettier.get("useTabs").asBoolean();
+				}
+				if (prettier.has("semi")) {
+					config.integrations.prettier.semi = prettier.get("semi").asBoolean();
+				}
+				if (prettier.has("singleQuote")) {
+					config.integrations.prettier.singleQuote = prettier.get("singleQuote").asBoolean();
+				}
 			}
 		}
+		prettier.enforceUsedProperties("prettier config property");
 	}
-	prettier.enforceUsedProperties("prettier config property");
 
 	meta.configDependencies = new AbsoluteFilePathSet([
 		...meta.configDependencies,
