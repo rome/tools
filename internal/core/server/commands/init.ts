@@ -153,7 +153,7 @@ export default createServerCommand<Flags>({
 				root: true,
 				name: cwd.getBasename(),
 				format: {
-					enabled: true,
+					enabled: false,
 					indentSize,
 					indentStyle,
 				},
