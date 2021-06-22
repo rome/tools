@@ -1,3 +1,4 @@
+import {MappedSet} from "@internal/collections";
 import {enhanceNodeInspectClass} from "@internal/node";
 import {isObject} from "@internal/typescript-helpers";
 
@@ -81,6 +82,15 @@ enhanceNodeInspectClass(
 		return `OneIndexedNumber<${inst.valueOf()}>`;
 	},
 );
+
+export class IndexedNumberSet<Indexed extends IndexedNumber>
+	extends MappedSet<Indexed, number> {
+	constructor(entries?: Iterable<Indexed>) {
+		super((num) => [num.valueOf(), num], entries);
+	}
+}
+
+IndexedNumberSet.prototype[Symbol.toStringTag] = "IndexedNumberSet";
 
 export type IndexedNumber = OneIndexed | ZeroIndexed;
 
