@@ -537,28 +537,29 @@ export async function normalizeProjectConfig(
 			eslint.enforceUsedProperties("eslint config property");
 		}
 
-	const prettier = integrations.get("prettier");
-	if (categoryExists(prettier)) {
-		if (prettier.has("enabled")) {
-			config.integrations.prettier.enabled = prettier.get("enabled").asBoolean();
-			if (prettier.has("printWidth")) {
-				config.integrations.prettier.printWidth = prettier.get("printWidth").asNumber();
-			}
-			if (prettier.has("tabWidth")) {
-				config.integrations.prettier.tabWidth = prettier.get("tabWidth").asNumber();
-			}
-			if (prettier.has("useTabs")) {
-				config.integrations.prettier.useTabs = prettier.get("useTabs").asBoolean();
-			}
-			if (prettier.has("semi")) {
-				config.integrations.prettier.semi = prettier.get("semi").asBoolean();
-			}
-			if (prettier.has("singleQuote")) {
-				config.integrations.prettier.singleQuote = prettier.get("singleQuote").asBoolean();
+		const prettier = integrations.get("prettier");
+		if (categoryExists(prettier)) {
+			if (prettier.has("enabled")) {
+				config.integrations.prettier.enabled = prettier.get("enabled").asBoolean();
+				if (prettier.has("printWidth")) {
+					config.integrations.prettier.printWidth = prettier.get("printWidth").asNumber();
+				}
+				if (prettier.has("tabWidth")) {
+					config.integrations.prettier.tabWidth = prettier.get("tabWidth").asNumber();
+				}
+				if (prettier.has("useTabs")) {
+					config.integrations.prettier.useTabs = prettier.get("useTabs").asBoolean();
+				}
+				if (prettier.has("semi")) {
+					config.integrations.prettier.semi = prettier.get("semi").asBoolean();
+				}
+				if (prettier.has("singleQuote")) {
+					config.integrations.prettier.singleQuote = prettier.get("singleQuote").asBoolean();
+				}
 			}
 		}
+		prettier.enforceUsedProperties("prettier config property");
 	}
-	prettier.enforceUsedProperties("prettier config property");
 
 	meta.configDependencies = new AbsoluteFilePathSet([
 		...meta.configDependencies,
