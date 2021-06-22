@@ -86,7 +86,7 @@ enhanceNodeInspectClass(
 export class IndexedNumberSet<Indexed extends IndexedNumber>
 	extends MappedSet<Indexed, number> {
 	constructor(entries?: Iterable<Indexed>) {
-		super((line) => [line.valueOf(), line], entries);
+		super((num) => [num.valueOf(), num], entries);
 	}
 }
 
