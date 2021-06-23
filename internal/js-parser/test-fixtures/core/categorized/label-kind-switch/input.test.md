@@ -14,6 +14,7 @@ JSRoot {
 				JSLabeledStatement {
 					body: JSSwitchStatement {
 						cases: []
+						trailingComments: []
 						discriminant: JSReferenceIdentifier {
 							name: "i"
 							loc: SourceLocation core/categorized/label-kind-switch/input.js 2:13-2:14 (i)

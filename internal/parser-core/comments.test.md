@@ -392,3 +392,42 @@ JSRoot {
 	loc: SourceLocation unknown 1:0-5:1
 }
 ```
+
+### `9`
+
+```javascript
+JSRoot {
+	body: [
+		JSSwitchStatement {
+			cases: []
+			innerComments: ["0", "1"]
+			trailingComments: []
+			discriminant: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation unknown 1:8-1:12
+			}
+			loc: SourceLocation unknown 1:0-4:1
+		}
+	]
+	comments: [
+		CommentLine {
+			id: "0"
+			value: " test"
+			loc: SourceLocation unknown 2:1-2:8
+		}
+		CommentLine {
+			id: "1"
+			value: " comments"
+			loc: SourceLocation unknown 3:1-3:12
+		}
+	]
+	corrupt: false
+	diagnostics: []
+	directives: []
+	hasHoistedVars: false
+	sourceType: "script"
+	syntax: []
+	path: UIDPath<unknown>
+	loc: SourceLocation unknown 1:0-4:1
+}
+```

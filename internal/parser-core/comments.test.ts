@@ -47,5 +47,16 @@ test(
 				`,
 			),
 		);
+
+		t.snapshot(
+			helper(
+				dedent`
+					switch (true) {
+						// test
+						// comments
+					}
+				`,
+			),
+		);
 	},
 );

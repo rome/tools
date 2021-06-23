@@ -11,6 +11,7 @@ JSRoot {
 	body: [
 		JSSwitchStatement {
 			cases: []
+			trailingComments: []
 			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation core/uncategorised/268/input.js 1:8-1:9 (x)

@@ -11,6 +11,7 @@ JSRoot {
 	body: [
 		JSSwitchStatement {
 			cases: []
+			trailingComments: []
 			discriminant: JSTemplateLiteral {
 				expressions: []
 				quasis: [

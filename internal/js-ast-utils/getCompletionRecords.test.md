@@ -250,6 +250,7 @@
 		description: "switch with no default clause"
 		node: JSSwitchStatement {
 			cases: []
+			trailingComments: []
 			discriminant: JSReferenceIdentifier {
 				name: "foo"
 				loc: SourceLocation unknown 1:23-1:26 (foo)

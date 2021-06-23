@@ -11,6 +11,7 @@ JSRoot {
 	body: [
 		JSSwitchStatement {
 			cases: []
+			trailingComments: []
 			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: SourceLocation core/categorized/malformed-switch/input.js 1:8-1:9 (x)
