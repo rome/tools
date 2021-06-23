@@ -11,6 +11,8 @@ for (const name in tests) {
 			const def = tests[name];
 			const {category} = def;
 
+			// if (category.join("").includes("a11y/useHeadingContent")) {
+
 			for (const singleCase of def.cases) {
 				const {filename, invalid, valid} = singleCase;
 				await testLint(
@@ -24,6 +26,7 @@ for (const name in tests) {
 					},
 				);
 			}
+			// }
 		},
 	);
 }

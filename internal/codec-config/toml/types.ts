@@ -1,3 +1,4 @@
+import {ZeroIndexed} from "@internal/numbers";
 import {
 	BaseTokens,
 	ComplexToken,
@@ -6,30 +7,46 @@ import {
 	SimpleToken,
 	StringToken,
 } from "@internal/parser-core";
+import {PathComments} from "../types";
 
 export type Tokens = BaseTokens & {
 	Word: StringToken<"Word">;
 	Int: StringToken<"Int">;
 	Float: StringToken<"Float">;
-	Date: ComplexToken<"Date", {
-		year: number;
-		month: number;
-		day: number;
-	}>;
-	Time: ComplexToken<"Time", {
-		hours: number;
-		minutes: number;
-		seconds: number;
-	}>;
-	DateTime: ComplexToken<"DateTime", {
-		year: number;
-		month: number;
-		day: number;
-		hours: number;
-		minutes: number;
-		seconds: number;
-		offset?: number;
-	}>;
+	Comment: StringToken<"Comment">;
+	Date: ComplexToken<
+		"Date",
+		{
+			year: number;
+			month: number;
+			day: number;
+		}
+	>;
+	Time: ComplexToken<
+		"Time",
+		{
+			hours: number;
+			minutes: number;
+			seconds: number;
+		}
+	>;
+	DateTime: ComplexToken<
+		"DateTime",
+		{
+			year: number;
+			month: number;
+			day: number;
+			hours: number;
+			minutes: number;
+			seconds: number;
+			utc: boolean;
+			offset?: {
+				negative: boolean;
+				hours: number;
+				minutes: number;
+			};
+		}
+	>;
 	// [
 	OpenSquareBracket: SimpleToken<"OpenSquareBracket">;
 	// ]
@@ -63,13 +80,20 @@ export type TOMLParserTypes = {
 	tokens: Tokens;
 	options: ParserOptions;
 	state: State;
-	meta: {
-		root: TOMLObject;
-	};
+	meta: void;
+};
+
+export type TOMLKeys = TOMLKey[];
+
+export type TOMLKey = {
+	key: string;
+	start?: ZeroIndexed;
+	end?: ZeroIndexed;
 };
 
 export type State = {
-	target: TOMLObject;
+	explicitDefinedPaths: Set<string>;
+	pathComments: Map<string, PathComments>;
 };
 
 export type TOMLParser = ParserCore<TOMLParserTypes>;

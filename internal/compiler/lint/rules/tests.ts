@@ -268,54 +268,54 @@ import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression.
 import useTsExpectError from "./ts/useTsExpectError.test.toml";
 
 export const tests: Tests = {
-	"a11y/noAccessKey": {
-		category: ["lint", "a11y", "noAccessKey"],
-		cases: normalizeCases(noAccessKey),
-	},
-	"a11y/noAriaUnsupportedElements": {
-		category: ["lint", "a11y", "noAriaUnsupportedElements"],
-		cases: normalizeCases(noAriaUnsupportedElements),
-	},
-	"a11y/noAutofocus": {
-		category: ["lint", "a11y", "noAutofocus"],
-		cases: normalizeCases(noAutofocus),
-	},
-	"a11y/noDistractingElements": {
-		category: ["lint", "a11y", "noDistractingElements"],
-		cases: normalizeCases(noDistractingElements),
-	},
-	"a11y/noHeaderScope": {
-		category: ["lint", "a11y", "noHeaderScope"],
-		cases: normalizeCases(noHeaderScope),
-	},
-	"a11y/noNoninteractiveElementToInteractiveRole": {
-		category: ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"],
-		cases: normalizeCases(noNoninteractiveElementToInteractiveRole),
-	},
-	"a11y/noNoninteractiveTabindex": {
-		category: ["lint", "a11y", "noNoninteractiveTabindex"],
-		cases: normalizeCases(noNoninteractiveTabindex),
-	},
-	"a11y/noOnChange": {
-		category: ["lint", "a11y", "noOnChange"],
-		cases: normalizeCases(noOnChange),
-	},
-	"a11y/noPositiveTabindex": {
-		category: ["lint", "a11y", "noPositiveTabindex"],
-		cases: normalizeCases(noPositiveTabindex),
-	},
-	"a11y/noRedundantAlt": {
-		category: ["lint", "a11y", "noRedundantAlt"],
-		cases: normalizeCases(noRedundantAlt),
-	},
-	"a11y/noRedundantRoles": {
-		category: ["lint", "a11y", "noRedundantRoles"],
-		cases: normalizeCases(noRedundantRoles),
-	},
-	"a11y/noSvgWithoutTitle": {
-		category: ["lint", "a11y", "noSvgWithoutTitle"],
-		cases: normalizeCases(noSvgWithoutTitle),
-	},
+	// "a11y/noAccessKey": {
+	// 	category: ["lint", "a11y", "noAccessKey"],
+	// 	cases: normalizeCases(noAccessKey),
+	// },
+	// "a11y/noAriaUnsupportedElements": {
+	// 	category: ["lint", "a11y", "noAriaUnsupportedElements"],
+	// 	cases: normalizeCases(noAriaUnsupportedElements),
+	// },
+	// "a11y/noAutofocus": {
+	// 	category: ["lint", "a11y", "noAutofocus"],
+	// 	cases: normalizeCases(noAutofocus),
+	// },
+	// "a11y/noDistractingElements": {
+	// 	category: ["lint", "a11y", "noDistractingElements"],
+	// 	cases: normalizeCases(noDistractingElements),
+	// },
+	// "a11y/noHeaderScope": {
+	// 	category: ["lint", "a11y", "noHeaderScope"],
+	// 	cases: normalizeCases(noHeaderScope),
+	// },
+	// "a11y/noNoninteractiveElementToInteractiveRole": {
+	// 	category: ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"],
+	// 	cases: normalizeCases(noNoninteractiveElementToInteractiveRole),
+	// },
+	// "a11y/noNoninteractiveTabindex": {
+	// 	category: ["lint", "a11y", "noNoninteractiveTabindex"],
+	// 	cases: normalizeCases(noNoninteractiveTabindex),
+	// },
+	// "a11y/noOnChange": {
+	// 	category: ["lint", "a11y", "noOnChange"],
+	// 	cases: normalizeCases(noOnChange),
+	// },
+	// "a11y/noPositiveTabindex": {
+	// 	category: ["lint", "a11y", "noPositiveTabindex"],
+	// 	cases: normalizeCases(noPositiveTabindex),
+	// },
+	// "a11y/noRedundantAlt": {
+	// 	category: ["lint", "a11y", "noRedundantAlt"],
+	// 	cases: normalizeCases(noRedundantAlt),
+	// },
+	// "a11y/noRedundantRoles": {
+	// 	category: ["lint", "a11y", "noRedundantRoles"],
+	// 	cases: normalizeCases(noRedundantRoles),
+	// },
+	// "a11y/noSvgWithoutTitle": {
+	// 	category: ["lint", "a11y", "noSvgWithoutTitle"],
+	// 	cases: normalizeCases(noSvgWithoutTitle),
+	// },
 	"a11y/noTargetBlank": {
 		category: ["lint", "a11y", "noTargetBlank"],
 		cases: normalizeCases(noTargetBlank),
@@ -328,397 +328,397 @@ export const tests: Tests = {
 		category: ["lint", "a11y", "useAnchorContent"],
 		cases: normalizeCases(useAnchorContent),
 	},
-	"a11y/useAriaProps": {
-		category: ["lint", "a11y", "useAriaProps"],
-		cases: normalizeCases(useAriaProps),
-	},
-	"a11y/useAriaPropsForRole": {
-		category: ["lint", "a11y", "useAriaPropsForRole"],
-		cases: normalizeCases(useAriaPropsForRole),
-	},
-	"a11y/useAriaProptypes": {
-		category: ["lint", "a11y", "useAriaProptypes"],
-		cases: normalizeCases(useAriaProptypes),
-	},
-	"a11y/useHeadingContent": {
-		category: ["lint", "a11y", "useHeadingContent"],
-		cases: normalizeCases(useHeadingContent),
-	},
-	"a11y/useHtmlLang": {
-		category: ["lint", "a11y", "useHtmlLang"],
-		cases: normalizeCases(useHtmlLang),
-	},
-	"a11y/useIframeTitle": {
-		category: ["lint", "a11y", "useIframeTitle"],
-		cases: normalizeCases(useIframeTitle),
-	},
-	"a11y/useKeyWithClickEvents": {
-		category: ["lint", "a11y", "useKeyWithClickEvents"],
-		cases: normalizeCases(useKeyWithClickEvents),
-	},
-	"a11y/useKeyWithMouseEvents": {
-		category: ["lint", "a11y", "useKeyWithMouseEvents"],
-		cases: normalizeCases(useKeyWithMouseEvents),
-	},
-	"a11y/useMediaCaption": {
-		category: ["lint", "a11y", "useMediaCaption"],
-		cases: normalizeCases(useMediaCaption),
-	},
-	"a11y/useValidAnchor": {
-		category: ["lint", "a11y", "useValidAnchor"],
-		cases: normalizeCases(useValidAnchor),
-	},
-	"a11y/useValidLang": {
-		category: ["lint", "a11y", "useValidLang"],
-		cases: normalizeCases(useValidLang),
-	},
-	"html/useClosingNonVoid": {
-		category: ["lint", "html", "useClosingNonVoid"],
-		cases: normalizeCases(useClosingNonVoid),
-	},
-	"js/noArguments": {
-		category: ["lint", "js", "noArguments"],
-		cases: normalizeCases(noArguments),
-	},
-	"js/noAsyncPromiseExecutor": {
-		category: ["lint", "js", "noAsyncPromiseExecutor"],
-		cases: normalizeCases(noAsyncPromiseExecutor),
-	},
-	"js/noCatchAssign": {
-		category: ["lint", "js", "noCatchAssign"],
-		cases: normalizeCases(noCatchAssign),
-	},
-	"js/noCommaOperator": {
-		category: ["lint", "js", "noCommaOperator"],
-		cases: normalizeCases(noCommaOperator),
-	},
-	"js/noCompareNegZero": {
-		category: ["lint", "js", "noCompareNegZero"],
-		cases: normalizeCases(noCompareNegZero),
-	},
-	"js/noCondAssign": {
-		category: ["lint", "js", "noCondAssign"],
-		cases: normalizeCases(noCondAssign),
-	},
-	"js/noDebugger": {
-		category: ["lint", "js", "noDebugger"],
-		cases: normalizeCases(noDebugger),
-	},
-	"js/noDelete": {
-		category: ["lint", "js", "noDelete"],
-		cases: normalizeCases(noDelete),
-	},
-	"js/noDeleteVars": {
-		category: ["lint", "js", "noDeleteVars"],
-		cases: normalizeCases(noDeleteVars),
-	},
-	"js/noDoubleEquals": {
-		category: ["lint", "js", "noDoubleEquals"],
-		cases: normalizeCases(noDoubleEquals),
-	},
-	"js/noDupeArgs": {
-		category: ["lint", "js", "noDupeArgs"],
-		cases: normalizeCases(noDupeArgs),
-	},
-	"js/noDuplicateCase": {
-		category: ["lint", "js", "noDuplicateCase"],
-		cases: normalizeCases(noDuplicateCase),
-	},
-	"js/noDuplicateImportSource": {
-		category: ["lint", "js", "noDuplicateImportSource"],
-		cases: normalizeCases(noDuplicateImportSource),
-	},
-	"js/noDuplicateKeys": {
-		category: ["lint", "js", "noDuplicateKeys"],
-		cases: normalizeCases(noDuplicateKeys),
-	},
-	"js/noEmptyBlocks": {
-		category: ["lint", "js", "noEmptyBlocks"],
-		cases: normalizeCases(noEmptyBlocks),
-	},
-	"js/noExtraBooleanCast": {
-		category: ["lint", "js", "noExtraBooleanCast"],
-		cases: normalizeCases(noExtraBooleanCast),
-	},
-	"js/noFunctionAssign": {
-		category: ["lint", "js", "noFunctionAssign"],
-		cases: normalizeCases(noFunctionAssign),
-	},
-	"js/noGetterReturn": {
-		category: ["lint", "js", "noGetterReturn"],
-		cases: normalizeCases(noGetterReturn),
-	},
-	"js/noImportAssign": {
-		category: ["lint", "js", "noImportAssign"],
-		cases: normalizeCases(noImportAssign),
-	},
-	"js/noLabelVar": {
-		category: ["lint", "js", "noLabelVar"],
-		cases: normalizeCases(noLabelVar),
-	},
-	"js/noNegationElse": {
-		category: ["lint", "js", "noNegationElse"],
-		cases: normalizeCases(noNegationElse),
-	},
-	"js/noNestedTernary": {
-		category: ["lint", "js", "noNestedTernary"],
-		cases: normalizeCases(noNestedTernary),
-	},
-	"js/noRestrictedGlobals": {
-		category: ["lint", "js", "noRestrictedGlobals"],
-		cases: normalizeCases(noRestrictedGlobals),
-	},
-	"js/noSetterReturn": {
-		category: ["lint", "js", "noSetterReturn"],
-		cases: normalizeCases(noSetterReturn),
-	},
-	"js/noShadowRestrictedNames": {
-		category: ["lint", "js", "noShadowRestrictedNames"],
-		cases: normalizeCases(noShadowRestrictedNames),
-	},
-	"js/noShoutyConstants": {
-		category: ["lint", "js", "noShoutyConstants"],
-		cases: normalizeCases(noShoutyConstants),
-	},
-	"js/noSingleCharRegexAlternatives": {
-		category: ["lint", "js", "noSingleCharRegexAlternatives"],
-		cases: normalizeCases(noSingleCharRegexAlternatives),
-	},
-	"js/noSparseArray": {
-		category: ["lint", "js", "noSparseArray"],
-		cases: normalizeCases(noSparseArray),
-	},
-	"js/noTemplateCurlyInString": {
-		category: ["lint", "js", "noTemplateCurlyInString"],
-		cases: normalizeCases(noTemplateCurlyInString),
-	},
-	"js/noUndeclaredVariables": {
-		category: ["lint", "js", "noUndeclaredVariables"],
-		cases: normalizeCases(noUndeclaredVariables),
-	},
-	"js/noUnnecessaryContinue": {
-		category: ["lint", "js", "noUnnecessaryContinue"],
-		cases: normalizeCases(noUnnecessaryContinue),
-	},
-	"js/noUnsafeFinally": {
-		category: ["lint", "js", "noUnsafeFinally"],
-		cases: normalizeCases(noUnsafeFinally),
-	},
-	"js/noUnsafeNegation": {
-		category: ["lint", "js", "noUnsafeNegation"],
-		cases: normalizeCases(noUnsafeNegation),
-	},
-	"js/noUnusedTemplateLiteral": {
-		category: ["lint", "js", "noUnusedTemplateLiteral"],
-		cases: normalizeCases(noUnusedTemplateLiteral),
-	},
-	"js/noUnusedVariables": {
-		category: ["lint", "js", "noUnusedVariables"],
-		cases: normalizeCases(noUnusedVariables),
-	},
-	"js/noVar": {
-		category: ["lint", "js", "noVar"],
-		cases: normalizeCases(noVar),
-	},
-	"js/preferOptionalChaining": {
-		category: ["lint", "js", "preferOptionalChaining"],
-		cases: normalizeCases(preferOptionalChaining),
-	},
-	"js/useBlockStatements": {
-		category: ["lint", "js", "useBlockStatements"],
-		cases: normalizeCases(useBlockStatements),
-	},
-	"js/useDefaultExportBasename": {
-		category: ["lint", "js", "useDefaultExportBasename"],
-		cases: normalizeCases(useDefaultExportBasename),
-	},
-	"js/useDefaultImportBasename": {
-		category: ["lint", "js", "useDefaultImportBasename"],
-		cases: normalizeCases(useDefaultImportBasename),
-	},
-	"js/useFunctionDeclarations": {
-		category: ["lint", "js", "useFunctionDeclarations"],
-		cases: normalizeCases(useFunctionDeclarations),
-	},
-	"js/useSimplifiedLogicalExpression": {
-		category: ["lint", "js", "useSimplifiedLogicalExpression"],
-		cases: normalizeCases(useSimplifiedLogicalExpression),
-	},
-	"js/useSingleCaseStatement": {
-		category: ["lint", "js", "useSingleCaseStatement"],
-		cases: normalizeCases(useSingleCaseStatement),
-	},
-	"js/useSingleVarDeclarator": {
-		category: ["lint", "js", "useSingleVarDeclarator"],
-		cases: normalizeCases(useSingleVarDeclarator),
-	},
-	"js/useSortedSpecifiers": {
-		category: ["lint", "js", "useSortedSpecifiers"],
-		cases: normalizeCases(useSortedSpecifiers),
-	},
-	"js/useTemplate": {
-		category: ["lint", "js", "useTemplate"],
-		cases: normalizeCases(useTemplate),
-	},
-	"js/useWhile": {
-		category: ["lint", "js", "useWhile"],
-		cases: normalizeCases(useWhile),
-	},
-	"jsx/noCommentText": {
-		category: ["lint", "jsx", "noCommentText"],
-		cases: normalizeCases(noCommentText),
-	},
-	"jsx/noDuplicateProps": {
-		category: ["lint", "jsx", "noDuplicateProps"],
-		cases: normalizeCases(noDuplicateProps),
-	},
-	"jsx/noImplicitBoolean": {
-		category: ["lint", "jsx", "noImplicitBoolean"],
-		cases: normalizeCases(noImplicitBoolean),
-	},
-	"jsx/noPropSpreading": {
-		category: ["lint", "jsx", "noPropSpreading"],
-		cases: normalizeCases(noPropSpreading),
-	},
-	"jsx/useJSXFileExtension": {
-		category: ["lint", "jsx", "useJSXFileExtension"],
-		cases: normalizeCases(useJSXFileExtension),
-	},
-	"jsx/usePascalCase": {
-		category: ["lint", "jsx", "usePascalCase"],
-		cases: normalizeCases(usePascalCase),
-	},
-	"jsx/useSelfClosingElements": {
-		category: ["lint", "jsx", "useSelfClosingElements"],
-		cases: normalizeCases(useSelfClosingElements),
-	},
-	"react/noAccessStateInSetState": {
-		category: ["lint", "react", "noAccessStateInSetState"],
-		cases: normalizeCases(noAccessStateInSetState),
-	},
-	"react/noArrayIndexKey": {
-		category: ["lint", "react", "noArrayIndexKey"],
-		cases: normalizeCases(noArrayIndexKey),
-	},
-	"react/noChildrenProp": {
-		category: ["lint", "react", "noChildrenProp"],
-		cases: normalizeCases(noChildrenProp),
-	},
-	"react/noDanger": {
-		category: ["lint", "react", "noDanger"],
-		cases: normalizeCases(noDanger),
-	},
-	"react/noDangerWithChildren": {
-		category: ["lint", "react", "noDangerWithChildren"],
-		cases: normalizeCases(noDangerWithChildren),
-	},
-	"react/noDidMountSetState": {
-		category: ["lint", "react", "noDidMountSetState"],
-		cases: normalizeCases(noDidMountSetState),
-	},
-	"react/noDidUpdateSetState": {
-		category: ["lint", "react", "noDidUpdateSetState"],
-		cases: normalizeCases(noDidUpdateSetState),
-	},
-	"react/noDirectMutationState": {
-		category: ["lint", "react", "noDirectMutationState"],
-		cases: normalizeCases(noDirectMutationState),
-	},
-	"react/noFindDOMNode": {
-		category: ["lint", "react", "noFindDOMNode"],
-		cases: normalizeCases(noFindDOMNode),
-	},
-	"react/noRedundantShouldComponentUpdate": {
-		category: ["lint", "react", "noRedundantShouldComponentUpdate"],
-		cases: normalizeCases(noRedundantShouldComponentUpdate),
-	},
-	"react/noRenderReturnValue": {
-		category: ["lint", "react", "noRenderReturnValue"],
-		cases: normalizeCases(noRenderReturnValue),
-	},
-	"react/noStringRefs": {
-		category: ["lint", "react", "noStringRefs"],
-		cases: normalizeCases(noStringRefs),
-	},
-	"react/noThisInSFC": {
-		category: ["lint", "react", "noThisInSFC"],
-		cases: normalizeCases(noThisInSFC),
-	},
-	"react/noUnsafe": {
-		category: ["lint", "react", "noUnsafe"],
-		cases: normalizeCases(noUnsafe),
-	},
-	"react/noUselessFragment": {
-		category: ["lint", "react", "noUselessFragment"],
-		cases: normalizeCases(noUselessFragment),
-	},
-	"react/noVoidElementsWithChildren": {
-		category: ["lint", "react", "noVoidElementsWithChildren"],
-		cases: normalizeCases(noVoidElementsWithChildren),
-	},
-	"react/noWillUpdateSetState": {
-		category: ["lint", "react", "noWillUpdateSetState"],
-		cases: normalizeCases(noWillUpdateSetState),
-	},
-	"react/useButtonType": {
-		category: ["lint", "react", "useButtonType"],
-		cases: normalizeCases(useButtonType),
-	},
-	"react/useFragmentSyntax": {
-		category: ["lint", "react", "useFragmentSyntax"],
-		cases: normalizeCases(useFragmentSyntax),
-	},
-	"react/useKey": {
-		category: ["lint", "react", "useKey"],
-		cases: normalizeCases(useKey),
-	},
-	"react/useRenderReturn": {
-		category: ["lint", "react", "useRenderReturn"],
-		cases: normalizeCases(useRenderReturn),
-	},
-	"react/useSortComp": {
-		category: ["lint", "react", "useSortComp"],
-		cases: normalizeCases(useSortComp),
-	},
-	"react/useStylePropObject": {
-		category: ["lint", "react", "useStylePropObject"],
-		cases: normalizeCases(useStylePropObject),
-	},
-	"regex/noDuplicateGroupNamesInRegularExpressions": {
-		category: ["lint", "regex", "noDuplicateGroupNamesInRegularExpressions"],
-		cases: normalizeCases(noDuplicateGroupNamesInRegularExpressions),
-	},
-	"regex/noEmptyCharacterClass": {
-		category: ["lint", "regex", "noEmptyCharacterClass"],
-		cases: normalizeCases(noEmptyCharacterClass),
-	},
-	"regex/noEmptyMatches": {
-		category: ["lint", "regex", "noEmptyMatches"],
-		cases: normalizeCases(noEmptyMatches),
-	},
-	"regex/noMultipleSpacesInRegularExpressionLiterals": {
-		category: ["lint", "regex", "noMultipleSpacesInRegularExpressionLiterals"],
-		cases: normalizeCases(noMultipleSpacesInRegularExpressionLiterals),
-	},
-	"regex/noPosixInRegularExpression": {
-		category: ["lint", "regex", "noPosixInRegularExpression"],
-		cases: normalizeCases(noPosixInRegularExpression),
-	},
-	"ts/noExplicitAny": {
-		category: ["lint", "ts", "noExplicitAny"],
-		cases: normalizeCases(noExplicitAny),
-	},
-	"ts/preferShorthandArrayType": {
-		category: ["lint", "ts", "preferShorthandArrayType"],
-		cases: normalizeCases(preferShorthandArrayType),
-	},
-	"ts/useSimplifiedBooleanExpression": {
-		category: ["lint", "ts", "useSimplifiedBooleanExpression"],
-		cases: normalizeCases(useSimplifiedBooleanExpression),
-	},
-	"ts/useTsExpectError": {
-		category: ["lint", "ts", "useTsExpectError"],
-		cases: normalizeCases(useTsExpectError),
-	},
+	// "a11y/useAriaProps": {
+	// 	category: ["lint", "a11y", "useAriaProps"],
+	// 	cases: normalizeCases(useAriaProps),
+	// },
+	// "a11y/useAriaPropsForRole": {
+	// 	category: ["lint", "a11y", "useAriaPropsForRole"],
+	// 	cases: normalizeCases(useAriaPropsForRole),
+	// },
+	// "a11y/useAriaProptypes": {
+	// 	category: ["lint", "a11y", "useAriaProptypes"],
+	// 	cases: normalizeCases(useAriaProptypes),
+	// },
+	// "a11y/useHeadingContent": {
+	// 	category: ["lint", "a11y", "useHeadingContent"],
+	// 	cases: normalizeCases(useHeadingContent),
+	// },
+	// "a11y/useHtmlLang": {
+	// 	category: ["lint", "a11y", "useHtmlLang"],
+	// 	cases: normalizeCases(useHtmlLang),
+	// },
+	// "a11y/useIframeTitle": {
+	// 	category: ["lint", "a11y", "useIframeTitle"],
+	// 	cases: normalizeCases(useIframeTitle),
+	// },
+	// "a11y/useKeyWithClickEvents": {
+	// 	category: ["lint", "a11y", "useKeyWithClickEvents"],
+	// 	cases: normalizeCases(useKeyWithClickEvents),
+	// },
+	// "a11y/useKeyWithMouseEvents": {
+	// 	category: ["lint", "a11y", "useKeyWithMouseEvents"],
+	// 	cases: normalizeCases(useKeyWithMouseEvents),
+	// },
+	// "a11y/useMediaCaption": {
+	// 	category: ["lint", "a11y", "useMediaCaption"],
+	// 	cases: normalizeCases(useMediaCaption),
+	// },
+	// "a11y/useValidAnchor": {
+	// 	category: ["lint", "a11y", "useValidAnchor"],
+	// 	cases: normalizeCases(useValidAnchor),
+	// },
+	// "a11y/useValidLang": {
+	// 	category: ["lint", "a11y", "useValidLang"],
+	// 	cases: normalizeCases(useValidLang),
+	// },
+	// "html/useClosingNonVoid": {
+	// 	category: ["lint", "html", "useClosingNonVoid"],
+	// 	cases: normalizeCases(useClosingNonVoid),
+	// },
+	// "js/noArguments": {
+	// 	category: ["lint", "js", "noArguments"],
+	// 	cases: normalizeCases(noArguments),
+	// },
+	// "js/noAsyncPromiseExecutor": {
+	// 	category: ["lint", "js", "noAsyncPromiseExecutor"],
+	// 	cases: normalizeCases(noAsyncPromiseExecutor),
+	// },
+	// "js/noCatchAssign": {
+	// 	category: ["lint", "js", "noCatchAssign"],
+	// 	cases: normalizeCases(noCatchAssign),
+	// },
+	// "js/noCommaOperator": {
+	// 	category: ["lint", "js", "noCommaOperator"],
+	// 	cases: normalizeCases(noCommaOperator),
+	// },
+	// "js/noCompareNegZero": {
+	// 	category: ["lint", "js", "noCompareNegZero"],
+	// 	cases: normalizeCases(noCompareNegZero),
+	// },
+	// "js/noCondAssign": {
+	// 	category: ["lint", "js", "noCondAssign"],
+	// 	cases: normalizeCases(noCondAssign),
+	// },
+	// "js/noDebugger": {
+	// 	category: ["lint", "js", "noDebugger"],
+	// 	cases: normalizeCases(noDebugger),
+	// },
+	// "js/noDelete": {
+	// 	category: ["lint", "js", "noDelete"],
+	// 	cases: normalizeCases(noDelete),
+	// },
+	// "js/noDeleteVars": {
+	// 	category: ["lint", "js", "noDeleteVars"],
+	// 	cases: normalizeCases(noDeleteVars),
+	// },
+	// "js/noDoubleEquals": {
+	// 	category: ["lint", "js", "noDoubleEquals"],
+	// 	cases: normalizeCases(noDoubleEquals),
+	// },
+	// "js/noDupeArgs": {
+	// 	category: ["lint", "js", "noDupeArgs"],
+	// 	cases: normalizeCases(noDupeArgs),
+	// },
+	// "js/noDuplicateCase": {
+	// 	category: ["lint", "js", "noDuplicateCase"],
+	// 	cases: normalizeCases(noDuplicateCase),
+	// },
+	// "js/noDuplicateImportSource": {
+	// 	category: ["lint", "js", "noDuplicateImportSource"],
+	// 	cases: normalizeCases(noDuplicateImportSource),
+	// },
+	// "js/noDuplicateKeys": {
+	// 	category: ["lint", "js", "noDuplicateKeys"],
+	// 	cases: normalizeCases(noDuplicateKeys),
+	// },
+	// "js/noEmptyBlocks": {
+	// 	category: ["lint", "js", "noEmptyBlocks"],
+	// 	cases: normalizeCases(noEmptyBlocks),
+	// },
+	// "js/noExtraBooleanCast": {
+	// 	category: ["lint", "js", "noExtraBooleanCast"],
+	// 	cases: normalizeCases(noExtraBooleanCast),
+	// },
+	// "js/noFunctionAssign": {
+	// 	category: ["lint", "js", "noFunctionAssign"],
+	// 	cases: normalizeCases(noFunctionAssign),
+	// },
+	// "js/noGetterReturn": {
+	// 	category: ["lint", "js", "noGetterReturn"],
+	// 	cases: normalizeCases(noGetterReturn),
+	// },
+	// "js/noImportAssign": {
+	// 	category: ["lint", "js", "noImportAssign"],
+	// 	cases: normalizeCases(noImportAssign),
+	// },
+	// "js/noLabelVar": {
+	// 	category: ["lint", "js", "noLabelVar"],
+	// 	cases: normalizeCases(noLabelVar),
+	// },
+	// "js/noNegationElse": {
+	// 	category: ["lint", "js", "noNegationElse"],
+	// 	cases: normalizeCases(noNegationElse),
+	// },
+	// "js/noNestedTernary": {
+	// 	category: ["lint", "js", "noNestedTernary"],
+	// 	cases: normalizeCases(noNestedTernary),
+	// },
+	// "js/noRestrictedGlobals": {
+	// 	category: ["lint", "js", "noRestrictedGlobals"],
+	// 	cases: normalizeCases(noRestrictedGlobals),
+	// },
+	// "js/noSetterReturn": {
+	// 	category: ["lint", "js", "noSetterReturn"],
+	// 	cases: normalizeCases(noSetterReturn),
+	// },
+	// "js/noShadowRestrictedNames": {
+	// 	category: ["lint", "js", "noShadowRestrictedNames"],
+	// 	cases: normalizeCases(noShadowRestrictedNames),
+	// },
+	// "js/noShoutyConstants": {
+	// 	category: ["lint", "js", "noShoutyConstants"],
+	// 	cases: normalizeCases(noShoutyConstants),
+	// },
+	// "js/noSingleCharRegexAlternatives": {
+	// 	category: ["lint", "js", "noSingleCharRegexAlternatives"],
+	// 	cases: normalizeCases(noSingleCharRegexAlternatives),
+	// },
+	// "js/noSparseArray": {
+	// 	category: ["lint", "js", "noSparseArray"],
+	// 	cases: normalizeCases(noSparseArray),
+	// },
+	// "js/noTemplateCurlyInString": {
+	// 	category: ["lint", "js", "noTemplateCurlyInString"],
+	// 	cases: normalizeCases(noTemplateCurlyInString),
+	// },
+	// "js/noUndeclaredVariables": {
+	// 	category: ["lint", "js", "noUndeclaredVariables"],
+	// 	cases: normalizeCases(noUndeclaredVariables),
+	// },
+	// "js/noUnnecessaryContinue": {
+	// 	category: ["lint", "js", "noUnnecessaryContinue"],
+	// 	cases: normalizeCases(noUnnecessaryContinue),
+	// },
+	// "js/noUnsafeFinally": {
+	// 	category: ["lint", "js", "noUnsafeFinally"],
+	// 	cases: normalizeCases(noUnsafeFinally),
+	// },
+	// "js/noUnsafeNegation": {
+	// 	category: ["lint", "js", "noUnsafeNegation"],
+	// 	cases: normalizeCases(noUnsafeNegation),
+	// },
+	// "js/noUnusedTemplateLiteral": {
+	// 	category: ["lint", "js", "noUnusedTemplateLiteral"],
+	// 	cases: normalizeCases(noUnusedTemplateLiteral),
+	// },
+	// "js/noUnusedVariables": {
+	// 	category: ["lint", "js", "noUnusedVariables"],
+	// 	cases: normalizeCases(noUnusedVariables),
+	// },
+	// "js/noVar": {
+	// 	category: ["lint", "js", "noVar"],
+	// 	cases: normalizeCases(noVar),
+	// },
+	// "js/preferOptionalChaining": {
+	// 	category: ["lint", "js", "preferOptionalChaining"],
+	// 	cases: normalizeCases(preferOptionalChaining),
+	// },
+	// "js/useBlockStatements": {
+	// 	category: ["lint", "js", "useBlockStatements"],
+	// 	cases: normalizeCases(useBlockStatements),
+	// },
+	// "js/useDefaultExportBasename": {
+	// 	category: ["lint", "js", "useDefaultExportBasename"],
+	// 	cases: normalizeCases(useDefaultExportBasename),
+	// },
+	// "js/useDefaultImportBasename": {
+	// 	category: ["lint", "js", "useDefaultImportBasename"],
+	// 	cases: normalizeCases(useDefaultImportBasename),
+	// },
+	// "js/useFunctionDeclarations": {
+	// 	category: ["lint", "js", "useFunctionDeclarations"],
+	// 	cases: normalizeCases(useFunctionDeclarations),
+	// },
+	// "js/useSimplifiedLogicalExpression": {
+	// 	category: ["lint", "js", "useSimplifiedLogicalExpression"],
+	// 	cases: normalizeCases(useSimplifiedLogicalExpression),
+	// },
+	// "js/useSingleCaseStatement": {
+	// 	category: ["lint", "js", "useSingleCaseStatement"],
+	// 	cases: normalizeCases(useSingleCaseStatement),
+	// },
+	// "js/useSingleVarDeclarator": {
+	// 	category: ["lint", "js", "useSingleVarDeclarator"],
+	// 	cases: normalizeCases(useSingleVarDeclarator),
+	// },
+	// "js/useSortedSpecifiers": {
+	// 	category: ["lint", "js", "useSortedSpecifiers"],
+	// 	cases: normalizeCases(useSortedSpecifiers),
+	// },
+	// "js/useTemplate": {
+	// 	category: ["lint", "js", "useTemplate"],
+	// 	cases: normalizeCases(useTemplate),
+	// },
+	// "js/useWhile": {
+	// 	category: ["lint", "js", "useWhile"],
+	// 	cases: normalizeCases(useWhile),
+	// },
+	// "jsx/noCommentText": {
+	// 	category: ["lint", "jsx", "noCommentText"],
+	// 	cases: normalizeCases(noCommentText),
+	// },
+	// "jsx/noDuplicateProps": {
+	// 	category: ["lint", "jsx", "noDuplicateProps"],
+	// 	cases: normalizeCases(noDuplicateProps),
+	// },
+	// "jsx/noImplicitBoolean": {
+	// 	category: ["lint", "jsx", "noImplicitBoolean"],
+	// 	cases: normalizeCases(noImplicitBoolean),
+	// },
+	// "jsx/noPropSpreading": {
+	// 	category: ["lint", "jsx", "noPropSpreading"],
+	// 	cases: normalizeCases(noPropSpreading),
+	// },
+	// "jsx/useJSXFileExtension": {
+	// 	category: ["lint", "jsx", "useJSXFileExtension"],
+	// 	cases: normalizeCases(useJSXFileExtension),
+	// },
+	// "jsx/usePascalCase": {
+	// 	category: ["lint", "jsx", "usePascalCase"],
+	// 	cases: normalizeCases(usePascalCase),
+	// },
+	// "jsx/useSelfClosingElements": {
+	// 	category: ["lint", "jsx", "useSelfClosingElements"],
+	// 	cases: normalizeCases(useSelfClosingElements),
+	// },
+	// "react/noAccessStateInSetState": {
+	// 	category: ["lint", "react", "noAccessStateInSetState"],
+	// 	cases: normalizeCases(noAccessStateInSetState),
+	// },
+	// "react/noArrayIndexKey": {
+	// 	category: ["lint", "react", "noArrayIndexKey"],
+	// 	cases: normalizeCases(noArrayIndexKey),
+	// },
+	// "react/noChildrenProp": {
+	// 	category: ["lint", "react", "noChildrenProp"],
+	// 	cases: normalizeCases(noChildrenProp),
+	// },
+	// "react/noDanger": {
+	// 	category: ["lint", "react", "noDanger"],
+	// 	cases: normalizeCases(noDanger),
+	// },
+	// "react/noDangerWithChildren": {
+	// 	category: ["lint", "react", "noDangerWithChildren"],
+	// 	cases: normalizeCases(noDangerWithChildren),
+	// },
+	// "react/noDidMountSetState": {
+	// 	category: ["lint", "react", "noDidMountSetState"],
+	// 	cases: normalizeCases(noDidMountSetState),
+	// },
+	// "react/noDidUpdateSetState": {
+	// 	category: ["lint", "react", "noDidUpdateSetState"],
+	// 	cases: normalizeCases(noDidUpdateSetState),
+	// },
+	// "react/noDirectMutationState": {
+	// 	category: ["lint", "react", "noDirectMutationState"],
+	// 	cases: normalizeCases(noDirectMutationState),
+	// },
+	// "react/noFindDOMNode": {
+	// 	category: ["lint", "react", "noFindDOMNode"],
+	// 	cases: normalizeCases(noFindDOMNode),
+	// },
+	// "react/noRedundantShouldComponentUpdate": {
+	// 	category: ["lint", "react", "noRedundantShouldComponentUpdate"],
+	// 	cases: normalizeCases(noRedundantShouldComponentUpdate),
+	// },
+	// "react/noRenderReturnValue": {
+	// 	category: ["lint", "react", "noRenderReturnValue"],
+	// 	cases: normalizeCases(noRenderReturnValue),
+	// },
+	// "react/noStringRefs": {
+	// 	category: ["lint", "react", "noStringRefs"],
+	// 	cases: normalizeCases(noStringRefs),
+	// },
+	// "react/noThisInSFC": {
+	// 	category: ["lint", "react", "noThisInSFC"],
+	// 	cases: normalizeCases(noThisInSFC),
+	// },
+	// "react/noUnsafe": {
+	// 	category: ["lint", "react", "noUnsafe"],
+	// 	cases: normalizeCases(noUnsafe),
+	// },
+	// "react/noUselessFragment": {
+	// 	category: ["lint", "react", "noUselessFragment"],
+	// 	cases: normalizeCases(noUselessFragment),
+	// },
+	// "react/noVoidElementsWithChildren": {
+	// 	category: ["lint", "react", "noVoidElementsWithChildren"],
+	// 	cases: normalizeCases(noVoidElementsWithChildren),
+	// },
+	// "react/noWillUpdateSetState": {
+	// 	category: ["lint", "react", "noWillUpdateSetState"],
+	// 	cases: normalizeCases(noWillUpdateSetState),
+	// },
+	// "react/useButtonType": {
+	// 	category: ["lint", "react", "useButtonType"],
+	// 	cases: normalizeCases(useButtonType),
+	// },
+	// "react/useFragmentSyntax": {
+	// 	category: ["lint", "react", "useFragmentSyntax"],
+	// 	cases: normalizeCases(useFragmentSyntax),
+	// },
+	// "react/useKey": {
+	// 	category: ["lint", "react", "useKey"],
+	// 	cases: normalizeCases(useKey),
+	// },
+	// "react/useRenderReturn": {
+	// 	category: ["lint", "react", "useRenderReturn"],
+	// 	cases: normalizeCases(useRenderReturn),
+	// },
+	// "react/useSortComp": {
+	// 	category: ["lint", "react", "useSortComp"],
+	// 	cases: normalizeCases(useSortComp),
+	// },
+	// "react/useStylePropObject": {
+	// 	category: ["lint", "react", "useStylePropObject"],
+	// 	cases: normalizeCases(useStylePropObject),
+	// },
+	// "regex/noDuplicateGroupNamesInRegularExpressions": {
+	// 	category: ["lint", "regex", "noDuplicateGroupNamesInRegularExpressions"],
+	// 	cases: normalizeCases(noDuplicateGroupNamesInRegularExpressions),
+	// },
+	// "regex/noEmptyCharacterClass": {
+	// 	category: ["lint", "regex", "noEmptyCharacterClass"],
+	// 	cases: normalizeCases(noEmptyCharacterClass),
+	// },
+	// "regex/noEmptyMatches": {
+	// 	category: ["lint", "regex", "noEmptyMatches"],
+	// 	cases: normalizeCases(noEmptyMatches),
+	// },
+	// "regex/noMultipleSpacesInRegularExpressionLiterals": {
+	// 	category: ["lint", "regex", "noMultipleSpacesInRegularExpressionLiterals"],
+	// 	cases: normalizeCases(noMultipleSpacesInRegularExpressionLiterals),
+	// },
+	// "regex/noPosixInRegularExpression": {
+	// 	category: ["lint", "regex", "noPosixInRegularExpression"],
+	// 	cases: normalizeCases(noPosixInRegularExpression),
+	// },
+	// "ts/noExplicitAny": {
+	// 	category: ["lint", "ts", "noExplicitAny"],
+	// 	cases: normalizeCases(noExplicitAny),
+	// },
+	// "ts/preferShorthandArrayType": {
+	// 	category: ["lint", "ts", "preferShorthandArrayType"],
+	// 	cases: normalizeCases(preferShorthandArrayType),
+	// },
+	// "ts/useSimplifiedBooleanExpression": {
+	// 	category: ["lint", "ts", "useSimplifiedBooleanExpression"],
+	// 	cases: normalizeCases(useSimplifiedBooleanExpression),
+	// },
+	// "ts/useTsExpectError": {
+	// 	category: ["lint", "ts", "useTsExpectError"],
+	// 	cases: normalizeCases(useTsExpectError),
+	// },
 };
 /* GENERATED:END(id:main) */

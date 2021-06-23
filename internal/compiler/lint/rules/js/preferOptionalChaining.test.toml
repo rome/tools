@@ -22,7 +22,7 @@ invalid = [
 	""",
 	"""
 		let foo = {};
-		foo != null && foo.bar === \"baz\";
+		foo != null && foo.bar === "baz";
 	""",
 	"""
 		let foo = {};
@@ -57,11 +57,11 @@ valid = [
 		foo?.bar;
 	""",
 	"""
-		let foo = {},bar = \"\";
+		let foo = {},bar = "";
 		foo && bar.foo;
 	""",
 	"""
-		let foo = {},bar = \"\";
+		let foo = {},bar = "";
 		bar in foo && foo.bar;
 	""",
 	"""
@@ -74,6 +74,6 @@ valid = [
 	""",
 	"""
 		let foo = {};
-		foo ? foo.bar.baz : \"anything else\";
+		foo ? foo.bar.baz : "anything else";
 	""",
 ]

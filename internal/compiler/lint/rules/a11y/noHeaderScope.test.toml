@@ -1,17 +1,20 @@
 [[cases]]
-filename= "file.tsx"
-		invalid= [
-			"<div scope={scope} />",
-			"<div scope='col' />",
-	]
-		valid= [
-			"<th scope={scope}></th>",
-			"<th scope='col'></th>",
-	]
-		filename= "file.html"
-		invalid= [
-			"<div scope=\"col\" />"
-	]
-		valid= [
-			"<th scope=\"col\"></th>"
-	]
+filename = "file.tsx"
+invalid = [
+	'<div scope={scope} />',
+	'<div scope="col" />',
+]
+valid = [
+	'<th scope={scope}></th>',
+	'<th scope="col"></th>',
+]
+
+[[cases]]
+filename = "file.html"
+invalid = [
+	'<div scope="col" />',
+]
+valid = [
+	'<th scope="col"></th>',
+]
+

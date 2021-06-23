@@ -2,7 +2,7 @@ filename = "file.ts"
 invalid = [
 	"function NaN() {}",
 	"let Set;",
-	"try {	} catch(Object) {}",
+	"try {\t} catch(Object) {}",
 	"!function Array() {}",
 	"function test(JSON) {console.log(JSON)}",
 ]

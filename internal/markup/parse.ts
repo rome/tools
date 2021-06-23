@@ -144,10 +144,7 @@ const stringMarkupParser = createParser<MarkupParserTypes>({
 
 		// Keep eating text until we hit a <
 		const value = tokenizer.read(isTextChar);
-		return [
-			state,
-			tokenizer.finishValueToken("Text", unescapeTextValue(value)),
-		];
+		return [state, tokenizer.finishValueToken("Text", unescapeTextValue(value))];
 	},
 });
 

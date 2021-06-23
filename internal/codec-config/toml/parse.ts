@@ -1,156 +1,411 @@
-import {TOMLParser, TOMLValue, TOMLArray, TOMLObject, Tokens} from "./types";
+import {
+	TOMLArray,
+	TOMLKey,
+	TOMLKeys,
+	TOMLObject,
+	TOMLParser,
+	TOMLValue,
+	Tokens,
+} from "./types";
+import {Comments, PathComments} from "../types";
 import {descriptions} from "@internal/diagnostics";
 import {isPlainObject} from "@internal/typescript-helpers";
 import {isValidWordKey} from "./tokenizer";
+import {serializeConsumePath} from "@internal/consume";
+import {ZeroIndexed} from "@internal/numbers";
 
-function parseTableHeader(parser: TOMLParser) {
-  parser.expectToken("OpenSquareBracket")
+function parseComments(parser: TOMLParser): Comments {
+	const comments: Comments = [];
 
-  const isArrayElement = parser.eatToken("OpenSquareBracket");
-  const keys = parseKeys(parser);
+	while (parser.matchToken("Comment")) {
+		comments.push({
+			type: "LineComment",
+			value: parser.expectToken("Comment").value,
+		});
+	}
 
-  const [obj, key] = getPath(parser.meta.root, keys);
-  const newTarget = {};
+	return comments;
+}
 
-  if (isArrayElement) {
-    // TODO subtables
-    let arr: TOMLArray;
+function serializeKeys(keys: TOMLKeys): string {
+	return serializeConsumePath(keys.map(({key}) => key));
+}
 
-    let existing = obj[key];
-    if (existing === undefined) {
-      arr = [];
-    } else if (Array.isArray(existing)) {
-      arr = existing;
-    } else {
-      // TODO?
-      throw parser.unexpected();
-    }
+function setComments(
+	parser: TOMLParser,
+	table: Table,
+	inlineKeys: TOMLKeys,
+	comments: PathComments,
+): void {
+	parser.state.pathComments.set(
+		serializeKeys([...table.keys, ...inlineKeys]),
+		comments,
+	);
+}
 
-    arr.push(newTarget);
-    obj[key] = arr;
-  } else {
-    obj[key] = newTarget;
-  }
-  parser.setState({target: newTarget});
+type Table = {
+	object: TOMLObject;
+	keys: TOMLKeys;
+};
 
-  if (isArrayElement) {
-    parser.expectToken("CloseSquareBracket");
-  }
-  parser.expectToken("CloseSquareBracket");
+function parseTableHeader(parser: TOMLParser, root: Table): Table {
+	parser.expectToken("OpenSquareBracket");
+
+	let isArrayElement = false;
+
+	if (parser.matchToken("OpenSquareBracket")) {
+		isArrayElement = true;
+		parser.assertNoSpace();
+		parser.expectToken("OpenSquareBracket");
+	}
+
+	const start = parser.getPosition();
+	const keys = parseKeys(parser);
+	const end = parser.getPosition();
+
+	const path = getPath(parser, root.object, keys, isArrayElement);
+
+	let serialKey;
+	if (!isArrayElement) {
+		serialKey = serializeKeys(path.keys);
+		if (parser.state.explicitDefinedPaths.has(serialKey)) {
+			throw parser.unexpected({
+				description: descriptions.TOML.DUPLICATE_DECLARATION,
+				start,
+				end,
+			});
+		}
+	}
+
+	parser.expectToken("CloseSquareBracket");
+
+	if (isArrayElement) {
+		parser.assertNoSpace();
+		parser.expectToken("CloseSquareBracket");
+	}
+
+	if (serialKey !== undefined) {
+		parser.state.explicitDefinedPaths.add(serialKey);
+	}
+
+	return path;
 }
 
 export function parseRoot(parser: TOMLParser): TOMLObject {
+	const root: Table = {
+		object: {},
+		keys: [],
+	};
+	let table: Table = root;
+
 	while (true) {
-    while (parser.matchToken("OpenSquareBracket")) {
-      parseTableHeader(parser);
-    }
+		let propComments = parseComments(parser);
 
-    if (parser.matchToken("EOF")) {
-      break;
-    }
+		while (parser.matchToken("OpenSquareBracket")) {
+			table = parseTableHeader(parser, root);
 
-    // TODO ensure newlines between key/values
+			if (!(parser.matchToken("Comment") || parser.matchToken("EOF"))) {
+				parser.assertNewline();
+			}
 
-    const keys = parseKeys(parser);
+			if (propComments.length > 0) {
+				setComments(
+					parser,
+					table,
+					[],
+					{
+						inner: [],
+						outer: propComments,
+					},
+				);
+			}
 
-    if (!parser.eatToken("Equals")) {
-      throw parser.unexpected({
-        description: descriptions.TOML.NO_VALUE_FOR_KEY(keys.join(".")),
-      });
-    }
+			propComments = parseComments(parser);
+		}
 
-    const value = parseValue(parser);
-		setObjectValue(parser.state.target, keys, value);
+		if (parser.matchToken("EOF")) {
+			break;
+		}
+
+		const startKeyToken = parser.getToken();
+		const keys = parseKeys(parser);
+
+		if (propComments.length > 0) {
+			setComments(
+				parser,
+				table,
+				keys,
+				{
+					inner: [],
+					outer: propComments,
+				},
+			);
+		}
+
+		parser.assertNoNewline(startKeyToken);
+
+		const equalsToken = parser.getToken();
+		if (!parser.eatToken("Equals")) {
+			throw parser.unexpected({
+				description: descriptions.TOML.NO_VALUE_FOR_KEY(keys.join(".")),
+			});
+		}
+
+		parser.assertNoNewline(equalsToken);
+		const value = parseValue(parser, table, keys);
+		setObjectValue(parser, table, table.object, keys, value);
+
+		if (!(parser.matchToken("Comment") || parser.matchToken("EOF"))) {
+			parser.assertNewline();
+		}
 	}
 
-	return parser.meta.root;
+	return root.object;
 }
 
-function getPath(obj: TOMLObject, keys: string[]): [TOMLObject, string] {
-  let target = obj;
+function getPath(
+	parser: TOMLParser,
+	obj: TOMLObject,
+	keys: TOMLKeys,
+	isArrayElement: boolean,
+): Table {
+	if (keys.length === 0) {
+		return {
+			object: obj,
+			keys,
+		};
+	}
 
-  // Make sure all keys except the last are objects
-  for (let i = 0; i < keys.length - 2; i++) {
-    const key = keys[i];
-    const value = target[key];
+	const finalKeys: TOMLKeys = [];
+	let target: TOMLObject = obj;
 
-    if (value === undefined) {
-      const obj = {};
-      target[key] = obj;
-      target = obj;
-    } else if (isPlainObject(value)) {
-      target = value;
-    } else {
-      // TODO error
-    }
-  }
+	for (let i = 0; i < keys.length; i++) {
+		const isLast = i === keys.length - 1;
+		const elem = keys[i];
 
-  const key = keys[keys.length - 1];
-  return [target, key];
+		const {key, start, end} = elem;
+		const value = target[key];
+
+		finalKeys.push(elem);
+
+		if (value === undefined) {
+			const obj: TOMLObject = {};
+			if (isArrayElement && isLast) {
+				target[key] = [obj];
+			} else {
+				target[key] = obj;
+			}
+			target = obj;
+		} else if (isPlainObject(value)) {
+			if (isArrayElement && isLast) {
+				throw parser.unexpected({
+					description: descriptions.TOML.BAD_ARRAY_TYPE,
+					startIndex: start,
+					endIndex: end,
+				});
+			} else {
+				target = value;
+			}
+		} else if (Array.isArray(value)) {
+			if (isArrayElement && isLast) {
+				finalKeys.push({
+					key: String(value.length),
+					start,
+					end,
+				});
+
+				const obj: TOMLObject = {};
+				value.push(obj);
+				target = obj;
+			} else {
+				const index = value.length - 1;
+				const last = value[index];
+
+				finalKeys.push({
+					key: String(index),
+					start,
+					end,
+				});
+
+				if (isPlainObject(last)) {
+					target = last;
+				} else {
+					throw parser.unexpected({
+						description: descriptions.TOML.BAD_ARRAY_TYPE,
+						startIndex: start,
+						endIndex: end,
+					});
+				}
+			}
+		} else {
+			throw parser.unexpected({
+				description: descriptions.TOML.BAD_TABLE_TYPE,
+				startIndex: start,
+				endIndex: end,
+			});
+		}
+	}
+
+	return {
+		keys: finalKeys,
+		object: target,
+	};
 }
 
-function setObjectValue(obj: TOMLObject, keys: string[], value: TOMLValue) {
-  const [target, key] = getPath(obj, keys);
+function setObjectValue(
+	parser: TOMLParser,
+	table: Table,
+	obj: TOMLObject,
+	keys: TOMLKeys,
+	value: TOMLValue,
+) {
+	const prop = keys[keys.length - 1];
+	const {key, start, end} = prop;
 
-  if (key in target) {
-    // TODO defined multiple times
-  } else {
-    target[key] = value;
-  }
+	const path = getPath(parser, obj, keys.slice(0, -1), false);
+
+	const serialKey = serializeKeys([...table.keys, ...path.keys, prop]);
+
+	if (parser.state.explicitDefinedPaths.has(serialKey)) {
+		throw parser.unexpected({
+			description: descriptions.TOML.DUPLICATE_DECLARATION,
+			startIndex: start,
+			endIndex: end,
+		});
+	} else {
+		parser.state.explicitDefinedPaths.add(serialKey);
+	}
+
+	path.object[key] = value;
 }
 
-function parseInlineTable(parser: TOMLParser): TOMLObject {
-  const obj: TOMLObject = {};
+function parseInlineTable(
+	parser: TOMLParser,
+	table: Table,
+	inlineKeys: TOMLKeys,
+): TOMLObject {
+	const openToken = parser.expectToken("OpenCurlyBrace");
+	const obj: TOMLObject = {};
 
-  let trailingComma: undefined | Tokens["Comma"];
+	let trailingComma: undefined | Tokens["Comma"];
 
-	while (!parser.matchToken("EOF") && !parser.matchToken("CloseCurlyBrace")) {
-    const keys = parseKeys(parser);
+	const subtable: Table = {
+		object: obj,
+		keys: [...table.keys, ...inlineKeys],
+	};
 
-    parser.expectToken("Equals");
+	while (true) {
+		const propComments = parseComments(parser);
 
-    const value = parseValue(parser);
+		if (parser.matchToken("EOF") || parser.matchToken("CloseCurlyBrace")) {
+			if (propComments.length > 0) {
+				setComments(
+					parser,
+					subtable,
+					inlineKeys,
+					{
+						inner: propComments,
+						outer: [],
+					},
+				);
+			}
+			break;
+		}
 
-    setObjectValue(obj, keys, value);
+		const keys = parseKeys(parser);
 
-    trailingComma = parser.eatToken("Comma");
-  }
+		if (propComments.length > 0) {
+			setComments(
+				parser,
+				subtable,
+				keys,
+				{
+					inner: [],
+					outer: propComments,
+				},
+			);
+		}
 
-  if (trailingComma !== undefined) {
-    // TODO custom error
-    throw parser.unexpected({
-      token: trailingComma,
-    });
-  }
+		parser.expectToken("Equals");
 
+		const value = parseValue(parser, subtable, keys);
+
+		setObjectValue(parser, subtable, obj, keys, value);
+
+		trailingComma = parser.eatToken("Comma");
+	}
+
+	if (trailingComma !== undefined) {
+		throw parser.unexpected({
+			description: descriptions.TOML.TRAILING_INLINE_TABLE_COMMA,
+			token: trailingComma,
+		});
+	}
+
+	parser.assertNoNewline(openToken);
 	parser.expectToken("CloseCurlyBrace");
 
 	return obj;
 }
 
 function isArrayElementSeparator(parser: TOMLParser): boolean {
-  if (parser.eatToken("Comma")) {
-    return true;
-  }
+	if (parser.eatToken("Comma")) {
+		return true;
+	}
 
-  if (parser.matchToken("CloseSquareBracket")) {
-    return true;
-  }
+	if (parser.matchToken("CloseSquareBracket")) {
+		return true;
+	}
 
-  return false;
+	return false;
 }
 
-function parseArray(parser: TOMLParser): TOMLArray {
+function parseArray(
+	parser: TOMLParser,
+	table: Table,
+	inlineKeys: TOMLKeys,
+): TOMLArray {
 	const arr: TOMLArray = [];
 
-	while (!parser.matchToken("EOF") && !parser.matchToken("CloseSquareBracket")) {
-		const value = parseValue(parser);
+	while (true) {
+		const propKeys: TOMLKeys = [...inlineKeys, {key: String(arr.length)}];
+		const propComments = parseComments(parser);
+
+		if (parser.matchToken("EOF") || parser.matchToken("CloseSquareBracket")) {
+			if (propComments.length > 0) {
+				setComments(
+					parser,
+					table,
+					inlineKeys,
+					{
+						inner: propComments,
+						outer: [],
+					},
+				);
+			}
+			break;
+		}
+
+		if (propComments.length > 0) {
+			setComments(
+				parser,
+				table,
+				propKeys,
+				{
+					inner: [],
+					outer: propComments,
+				},
+			);
+		}
+
+		const value = parseValue(parser, table, propKeys);
 		arr.push(value);
 
 		if (!isArrayElementSeparator(parser)) {
-      // TODO custom message
-      throw parser.unexpected();
-    }
+			throw parser.unexpected({
+				description: descriptions.TOML.UNKNOWN_ARRAY_SEPARATOR,
+			});
+		}
 	}
 
 	parser.expectToken("CloseSquareBracket");
@@ -159,64 +414,125 @@ function parseArray(parser: TOMLParser): TOMLArray {
 }
 
 function parseNumberWord(parser: TOMLParser, token: Tokens["Word"]): number {
-  switch (token.value) {
-    case "nan": {
-      parser.nextToken();
-      return NaN;
-    }
+	switch (token.value) {
+		case "nan": {
+			parser.nextToken();
+			return NaN;
+		}
 
-    case "inf": {
-      parser.nextToken();
-      return Infinity;
-    }
+		case "inf": {
+			parser.nextToken();
+			return Infinity;
+		}
 
-    default:
-      // TODO custom error
-      throw parser.unexpected();
-  }
+		default:
+			throw parser.unexpected({
+				description: descriptions.TOML.UNKNOWN_WORD,
+			});
+	}
 }
 
 function parseWord(parser: TOMLParser, token: Tokens["Word"]): TOMLValue {
-  switch (token.value) {
-    case "true": {
-      parser.nextToken();
-      return true;
-    }
+	switch (token.value) {
+		case "true": {
+			parser.nextToken();
+			return true;
+		}
 
-    case "false": {
-      parser.nextToken();
-      return false;
-    }
+		case "false": {
+			parser.nextToken();
+			return false;
+		}
 
-    default:
-      return parseNumberWord(parser, token);
-  }
+		default:
+			return parseNumberWord(parser, token);
+	}
 }
 
 function parseNumber(parser: TOMLParser): number {
-  const token = parser.getToken();
+	const token = parser.getToken();
 
-  switch (token.type) {
-    case "Float":
-    case "Int": {
-      parser.nextToken();
-      return Number(token.value);
-    }
+	switch (token.type) {
+		case "Float":
+		case "Int": {
+			parser.nextToken();
+			return Number(token.value);
+		}
 
-    case "Plus":
-      // Excessive plus, should have been removed
-      throw parser.unexpected();
+		case "Plus":
+			throw parser.unexpected({
+				description: descriptions.TOML.EXCESSIVE_PLUS,
+			});
 
-    case "Minus":
-      // Excessive minus, should have been removed
-      throw parser.unexpected();
+		case "Minus":
+			throw parser.unexpected({
+				description: descriptions.TOML.EXCESSIVE_MINUS,
+			});
 
-    default:
-      throw parser.unexpected();
-  }
+		default:
+			throw parser.unexpected();
+	}
 }
 
-function parseValue(parser: TOMLParser): TOMLValue {
+function parseDate(parser: TOMLParser, token: Tokens["Date"]): Date {
+	const date = new Date();
+	date.setFullYear(token.year, token.month - 1, token.day);
+	date.setHours(0, 0, 0, 0);
+	return date;
+}
+
+// TODO: Temporal?
+function parseTime(parser: TOMLParser, token: Tokens["Time"]): TOMLObject {
+	return {
+		hours: token.hours,
+		minutes: token.minutes,
+		seconds: token.seconds,
+	};
+}
+
+function padTime(num: number): string {
+	if (num < 10) {
+		return `0${String(num)}`;
+	} else {
+		return String(num);
+	}
+}
+
+function parseDateTime(parser: TOMLParser, token: Tokens["DateTime"]): Date {
+	let iso = [
+		token.year,
+		"-",
+		padTime(token.month),
+		"-",
+		padTime(token.day),
+		"T",
+		padTime(token.hours),
+		":",
+		padTime(token.minutes),
+		":",
+		padTime(token.seconds),
+	].join("");
+
+	if (token.utc) {
+		iso += "Z";
+	} else if (token.offset !== undefined) {
+		const {negative, hours, minutes} = token.offset;
+		if (negative) {
+			iso += "-";
+		} else {
+			iso += "+";
+		}
+		iso += `${padTime(hours)}:${padTime(minutes)}`;
+	}
+
+	return new Date(iso);
+}
+
+function parseValue(
+	parser: TOMLParser,
+	table: Table,
+	inlineKeys: TOMLKeys,
+): TOMLValue {
 	const token = parser.getToken();
 
 	switch (token.type) {
@@ -227,58 +543,44 @@ function parseValue(parser: TOMLParser): TOMLValue {
 
 		case "OpenSquareBracket": {
 			parser.nextToken();
-			return parseArray(parser);
-    }
+			return parseArray(parser, table, inlineKeys);
+		}
 
 		case "OpenCurlyBrace": {
+			return parseInlineTable(parser, table, inlineKeys);
+		}
+
+		case "Word":
+			return parseWord(parser, token);
+
+		case "Minus": {
 			parser.nextToken();
-			return parseInlineTable(parser);
-    }
+			return -parseNumber(parser);
+		}
 
-    case "Word":
-      return parseWord(parser, token);
+		case "Plus": {
+			parser.nextToken();
+			return +parseNumber(parser);
+		}
 
-    case "Minus": {
-      parser.nextToken();
-      return -parseNumber(parser);
-    }
+		case "Int":
+		case "Float":
+			return parseNumber(parser);
 
-    case "Plus": {
-      parser.nextToken();
-      return +parseNumber(parser);
-    }
+		case "Date": {
+			parser.nextToken();
+			return parseDate(parser, token);
+		}
 
-    case "Int":
-    case "Float":
-      return parseNumber(parser);
+		case "Time": {
+			parser.nextToken();
+			return parseTime(parser, token);
+		}
 
-    // TODO hex
-    // 0xDEADBEEF
-    // 0xdeadbeef
-    // 0xdead_beef
-
-    // TODO binary
-    // 0b11010110
-
-    // TODO octal
-    // 0o01234567
-    // 0o755
-
-    // TODO offset datetime
-    // 1979-05-27T07:32:00Z
-    // 1979-05-27T00:32:00-07:00
-    // 1979-05-27T00:32:00.999999-07:00
-
-    // TODO local datetime
-    // 1979-05-27T07:32:00
-    // 1979-05-27T00:32:00.999999
-
-    // TODO local date
-    // 1979-05-27
-
-    // TODO local time
-    // 07:32:00
-    // 00:32:00.999999
+		case "DateTime": {
+			parser.nextToken();
+			return parseDateTime(parser, token);
+		}
 
 		default: {
 			throw parser.unexpected();
@@ -286,76 +588,94 @@ function parseValue(parser: TOMLParser): TOMLValue {
 	}
 }
 
-function parseKey(parser: TOMLParser): string {
-  if (parser.matchToken("String")) {
-    return parser.expectToken("String").value;
-  }
+function parseKey(parser: TOMLParser, start: ZeroIndexed): TOMLKey {
+	if (parser.matchToken("String")) {
+		const token = parser.expectToken("String");
+		return {
+			key: token.value,
+			start,
+			end: token.end,
+		};
+	}
 
-  const parts: string[] = [];
+	const parts: string[] = [];
 
-  while (true) {
-    const token = parser.getToken();
+	while (true) {
+		const token = parser.getToken();
 
-    switch (token.type) {
-      case "String":
-        // TODO custom message
-        throw parser.unexpected();
+		if (parts.length > 0) {
+			parser.assertNoSpace();
+		}
 
-      case "Int": {
-        parts.push(token.value);
-        parser.nextToken();
-        break;
-      }
+		switch (token.type) {
+			case "String":
+				throw parser.unexpected();
 
-      case "Word": {
-        const key = token.value;
+			case "Int": {
+				parts.push(token.value);
+				parser.nextToken();
+				break;
+			}
 
-        if (isValidWordKey(key)) {
-          parser.nextToken();
-          parts.push(key);
-        } else {
-          throw parser.unexpected({
-            token,
-            description: descriptions.TOML.INVALID_KEY_CHAR(key),
-          });
-        }
-        break;
-      }
+			case "Word": {
+				const key = token.value;
 
-      default:
-        throw parser.unexpected();
-    }
+				if (isValidWordKey(key)) {
+					parser.nextToken();
+					parts.push(key);
+				} else {
+					throw parser.unexpected({
+						token,
+						description: descriptions.TOML.INVALID_KEY_CHAR(key),
+					});
+				}
+				break;
+			}
 
-    if (!isAtValidKeyPart(parser)) {
-      break;
-    }
-  }
+			default:
+				throw parser.unexpected();
+		}
 
-  return parts.join("");
+		if (!isAtValidKeyPart(parser)) {
+			break;
+		}
+	}
+
+	const end = parser.getIndex();
+	return {
+		key: parts.join(""),
+		start,
+		end,
+	};
 }
 
 function isAtValidKeyPart(parser: TOMLParser): boolean {
-  return parser.matchToken("Word") || parser.matchToken("String") || parser.matchToken("Int");
+	return (
+		parser.matchToken("Word") ||
+		parser.matchToken("String") ||
+		parser.matchToken("Int")
+	);
 }
 
-function parseKeys(parser: TOMLParser): string[] {
-  let keys: string[] = [];
+function parseKeys(parser: TOMLParser): TOMLKeys {
+	let keys: TOMLKeys = [];
+	let start = parser.getIndex();
 
-  while (true) {
-    keys.push(parseKey(parser));
+	while (true) {
+		keys.push(parseKey(parser, start));
 
-    const trailingDot = parser.eatToken("Dot");
+		const trailingDot = parser.eatToken("Dot");
 
-    if (!isAtValidKeyPart(parser)) {
-      if (trailingDot !== undefined) {
-        // TODO custom message
-        throw parser.unexpected({
-          token: trailingDot,
-        });
-      }
-      break;
-    }
-  }
+		if (!isAtValidKeyPart(parser)) {
+			if (trailingDot !== undefined) {
+				throw parser.unexpected({
+					description: descriptions.TOML.TRAILING_KEY_DOT,
+					token: trailingDot,
+				});
+			}
+			break;
+		}
+	}
 
-  return keys;
+	return keys;
 }

@@ -1,31 +1,31 @@
 filename = "file.ts"
 invalid = [
 	"""
-		const FOO = \"FOO\";
+		const FOO = "FOO";
 		console.log(FOO);
 	""",
 	"""
-		const FOO = \"FOO\";
+		const FOO = "FOO";
 		function f() {
 			return FOO;
 		}
 	""",
 	"""
-		const FOO = \"FOO\", BAR = \"bar\";
+		const FOO = "FOO", BAR = "bar";
 		console.log(FOO);
 	""",
 ]
 valid = [
 	"""
-		let FOO = \"FOO\";
+		let FOO = "FOO";
 		console.log(FOO);
 	""",
 	"""
-		export const FOO = \"FOO\";
+		export const FOO = "FOO";
 		console.log(FOO);
 	""",
 	"""
-		function f(FOO = \"FOO\") {
+		function f(FOO = "FOO") {
 			return FOO;
 		}
 	""",

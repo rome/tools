@@ -1,12 +1,12 @@
 filename = "file.ts"
 invalid = [
 	"""
-		import	foo	from	'./testdummy.ts';
-		import	{bar}	from	'./testdummy.ts';
-		import	type	{fooType}	from	'./testdummy.ts';
+		import\tfoo\tfrom\t'./testdummy.ts';
+		import\t{bar}\tfrom\t'./testdummy.ts';
+		import\ttype\t{fooType}\tfrom\t'./testdummy.ts';
 
-		const	typedFoo:	fooType	=	{
-			type:	'foo'
+		const\ttypedFoo:\tfooType\t=\t{
+			type:\t'foo'
 		};
 	""",
 ]

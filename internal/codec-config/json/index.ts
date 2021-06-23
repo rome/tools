@@ -14,7 +14,7 @@ function createJSONParserMethods(
 ): Omit<
 	PartialConfigHandler,
 	"extensions" | "language" | "stringifyFromConsumer"
-	> {
+> {
 	return {
 		type,
 		jsonSuperset: true,

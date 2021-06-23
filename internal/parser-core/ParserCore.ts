@@ -142,10 +142,10 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private cachedDiagnostics:
 		| undefined
 		| {
-		diagnostics: Diagnostic[];
-		filters: DiagnosticEliminationFilter[];
-		rawDiagnostics: Diagnostic[];
-	};
+				diagnostics: Diagnostic[];
+				filters: DiagnosticEliminationFilter[];
+				rawDiagnostics: Diagnostic[];
+			};
 
 	// Internal mutable state
 	public comments!: CommentsConsumer;
@@ -428,9 +428,9 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 				beforeState === next[0]
 					? beforeState
 					: {
-						...beforeState,
-						...next[0],
-					},
+							...beforeState,
+							...next[0],
+						},
 				next[1],
 			];
 		} else {
@@ -624,7 +624,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		const token = this.getToken();
 		if (token.type === type) {
 			this.nextToken();
-			// @ts-ignore
+			// @ts-expect-error
 			return token;
 		} else {
 			return undefined;
@@ -648,7 +648,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	): Types["tokens"][Type] {
 		const token = this.getToken();
 		if (token.type === type) {
-			// @ts-ignore
+			// @ts-expect-error
 			return token;
 		} else {
 			throw this.unexpected({
@@ -740,7 +740,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	//# Node finalization
 
 	public finalizeNode<T extends AnyNode>(node: T): T {
-		// @ts-ignore
+		// @ts-expect-error
 		attachComments(this, node);
 		return node;
 	}

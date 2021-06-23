@@ -27,7 +27,7 @@ type Tokens = BaseTokens & {
 			text: string;
 			language: undefined | string;
 		}
-		>;
+	>;
 	TextLine: StringToken<"TextLine">;
 };
 

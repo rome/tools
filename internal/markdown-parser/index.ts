@@ -191,7 +191,10 @@ function isHash(char: string): boolean {
 	return char === "#";
 }
 
-function consumeHeading(parser: MarkdownParser, tokenizer: MarkdownParser["tokenizer"]) {
+function consumeHeading(
+	parser: MarkdownParser,
+	tokenizer: MarkdownParser["tokenizer"],
+) {
 	const value = tokenizer.read(isHash);
 	if (value.length > 6) {
 		const textValue = tokenizer.read(isntLineBreak);
@@ -210,11 +213,9 @@ function tokenizeBlock(
 	const nextNextChar = tokenizer.get(2);
 	if (hasThematicBreak([currentChar, nextChar, nextNextChar].join(""))) {
 		// by spec, should be at least 3, with an infinite number
-		const value = tokenizer.read(
-			(char) => {
-				return char === blockChar;
-			},
-		);
+		const value = tokenizer.read((char) => {
+			return char === blockChar;
+		});
 		return tokenizer.finishValueToken("Break", value);
 	}
 	return undefined;
@@ -358,20 +359,19 @@ export function parseMarkdown(opts: ParserOptions): MarkdownRoot {
 	);
 }
 
-function consumeCode(parser: MarkdownParser, tokenizer: MarkdownParser["tokenizer"]) {
+function consumeCode(
+	parser: MarkdownParser,
+	tokenizer: MarkdownParser["tokenizer"],
+) {
 	if (tokenizer.consume("```")) {
-		const languageValue = tokenizer.read(
-			isntLineBreak,
-		);
+		const languageValue = tokenizer.read(isntLineBreak);
 
-		const value = tokenizer.read(
-			(_, index) => {
-				const firstChar = tokenizer.get(1);
-				const secondChar = tokenizer.get(2);
-				const thirdChar = tokenizer.get(3);
-				return !(firstChar === "`" && secondChar === "`" && thirdChar === "`");
-			},
-		);
+		const value = tokenizer.read((_, index) => {
+			const firstChar = tokenizer.get(1);
+			const secondChar = tokenizer.get(2);
+			const thirdChar = tokenizer.get(3);
+			return !(firstChar === "`" && secondChar === "`" && thirdChar === "`");
+		});
 
 		tokenizer.assert("```");
 

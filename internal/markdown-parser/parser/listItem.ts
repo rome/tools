@@ -7,9 +7,7 @@ import {
 import {MarkdownListChildren, MarkdownListItem} from "@internal/ast";
 import {parseParagraph} from "./paragraph";
 
-function isChecked(
-	tokenizer: MarkdownParser["tokenizer"],
-): boolean | undefined {
+function isChecked(tokenizer: MarkdownParser["tokenizer"]): boolean | undefined {
 	if (tokenizer.eat("[ ]")) {
 		tokenizer.eat(" ");
 		return false;

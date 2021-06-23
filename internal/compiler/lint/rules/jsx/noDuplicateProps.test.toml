@@ -5,5 +5,5 @@ invalid = [
 ]
 valid = [
 	"<Hello foo='bar' />",
-	"<div	style='{}' />",
+	"<div\tstyle='{}' />",
 ]

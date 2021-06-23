@@ -1,5 +1,5 @@
-filename= "filename.ts"
-invalid= [
+filename = "filename.ts"
+invalid = [
 	"""
 	// @ts-ignore
 	let foo= boolean = 1;
@@ -25,9 +25,9 @@ invalid= [
 	/**
 	 ** @ts-ignore */
 	let foo= boolean = 1;
-	"""
+	""",
 ]
-valid= [
+valid = [
 	"""
 	// @ts-expect-error
 	let foo= boolean = 1;
@@ -53,5 +53,5 @@ valid= [
 	/**
 	 ** @ts-expect-error */
 	let foo= boolean = 1;
-	"""
+	""",
 ]

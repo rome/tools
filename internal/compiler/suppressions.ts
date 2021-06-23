@@ -40,15 +40,15 @@ export function extractSuppressionsFromComment(
 	const {diagnostics, suppressions, explanation} = parseCommentSuppressions({
 		input: comment.value,
 		requireExplanations: overrideRequireExplanations ??
-			context.project.config.lint.requireSuppressionExplanations,
+		context.project.config.lint.requireSuppressionExplanations,
 		targetNode,
 		path: context.path,
 		offsetPosition: comment.loc === undefined
 			? undefined
 			: addPositions(
-				comment.loc.start,
-				{line: new OneIndexed(), column: new ZeroIndexed(2)},
-			),
+					comment.loc.start,
+					{line: new OneIndexed(), column: new ZeroIndexed(2)},
+				),
 	});
 
 	if (suppressions.length === 0 && diagnostics.length === 0) {
@@ -148,6 +148,6 @@ export function matchesSuppression(
 		start.line.valueOf() >= suppression.startLine.valueOf() &&
 		end.line.valueOf() <= suppression.endLine.valueOf() &&
 		(suppression.categoryValue === undefined ||
-			categoryValue === suppression.categoryValue)
+		categoryValue === suppression.categoryValue)
 	);
 }

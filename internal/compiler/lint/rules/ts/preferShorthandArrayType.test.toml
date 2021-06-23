@@ -1,5 +1,5 @@
-filename= "file.ts"
-invalid= [
+filename = "file.ts"
+invalid = [
 	"""
     let valid= Array<foo>;
     let invalid= bar[];
@@ -12,9 +12,9 @@ invalid= [
 	""",
 	"""
 	let invalid= Array<Foo<Bar>>;
-	"""
+	""",
 ]
-valid= [
+valid = [
 	"""
     let valid= Array<foo | bar>;
     """,
@@ -23,5 +23,5 @@ valid= [
 	""",
 	"""
 	let valid= Array<keyof Bar>;
-    """
+    """,
 ]

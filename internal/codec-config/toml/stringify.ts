@@ -1,14 +1,21 @@
-import {Consumer} from "@internal/consume";
+import {ConsumePath, Consumer} from "@internal/consume";
 import {ConfigCommentMap} from "@internal/codec-config";
-import {escapeJSString, EscapeStringQuoteChar} from "@internal/string-escape";
+import {EscapeStringQuoteChar, escapeJSString} from "@internal/string-escape";
 import {isValidWordKey} from "./tokenizer";
+import {Comments, PathComments} from "../types";
 import StringifyHelper, {createStringifyHelper} from "../StringifyHelper";
+import {isObject} from "@internal/typescript-helpers";
+import {humanizeNumber} from "@internal/numbers";
 
 function stringifyArray(consumer: Consumer, helper: StringifyHelper): string {
-	const buff: Array<string> = [];
+	const buff: string[] = [];
+	stringifyComments(helper.getComments(consumer).inner, buff);
+
+	const innerHelper = helper.fork();
 
 	for (const elem of consumer.asIterable()) {
-		buff.push(`${stringifyValue(elem, helper)},`);
+		stringifyPropComments(helper.getComments(elem), buff, elem.asUnknown());
+		buff.push(`${stringifyValue(elem, innerHelper)},`);
 	}
 
 	return helper.wrap("[", buff, "]");
@@ -30,9 +37,11 @@ function stringifyKey(key: string): string {
 	}
 }
 
-function stringifyPrimitives(
-	consumer: Consumer,
-): undefined | string {
+function stringifyKeys(keys: ConsumePath): string {
+	return keys.map((key) => stringifyKey(String(key))).join(".");
+}
+
+function stringifyPrimitives(consumer: Consumer): undefined | string {
 	const value = consumer.asUnknown();
 
 	// Basic primitive types
@@ -45,17 +54,19 @@ function stringifyPrimitives(
 		case "boolean":
 			return String(value);
 
-		// TODO
 		case "number":
-			return String(value);
+			return humanizeNumber(value);
 
 		case "string": {
-			let quote: EscapeStringQuoteChar = value.includes('"') ? "'" : '"';
+			// TODO heuristics for when to use literal strings
+			let quote: EscapeStringQuoteChar = '"';
+			let str = value;
 			if (value.includes("\n")) {
-				quote = quote === '"' ? '"""' : "'''";
+				quote = '"""';
+				str = `\n${value}`;
 			}
 			return escapeJSString(
-				value,
+				str,
 				{
 					quote,
 					json: true,
@@ -81,9 +92,68 @@ function stringifyValue(consumer: Consumer, helper: StringifyHelper): string {
 	return stringifyObject(consumer, helper);
 }
 
-function stringifyPlainObject(consumer: Consumer, helper: StringifyHelper): string {
+function stringifyComments(comments: Comments, buff: string[]): void {
+	for (const comment of comments) {
+		for (const line of comment.value.split("\n")) {
+			buff.push(`#${line}`);
+		}
+	}
+}
+
+function stringifyPropComments(
+	comments: PathComments,
+	buff: string[],
+	value: unknown,
+): void {
+	stringifyComments(comments.outer, buff);
+
+	if (!(isObject(value) || Array.isArray(value))) {
+		stringifyComments(comments.inner, buff);
+	}
+}
+
+function isArrayOfObjects(arr: unknown): arr is unknown[] {
+	if (!Array.isArray(arr)) {
+		return false;
+	}
+
+	if (arr.length === 0) {
+		return false;
+	}
+
+	for (const elem of arr) {
+		if (!isObject(elem)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function printSingleObjects(val: unknown): undefined | [string, unknown] {
+	if (isObject(val)) {
+		const keys = Object.keys(val);
+		if (keys.length === 1) {
+			const key = keys[0];
+			const prop = val[key];
+			const converted = printSingleObjects(prop);
+			if (converted === undefined) {
+				return [key, prop];
+			} else {
+				return [`${key}.${converted[0]}`, converted[1]];
+			}
+		}
+	}
+
+	return undefined;
+}
+
+function stringifyRoot(consumer: Consumer, helper: StringifyHelper): string {
 	const map = consumer.asMap();
 	let buff: string[] = [];
+	stringifyComments(helper.getComments(consumer).inner, buff);
+
+	let buffTables: string[] = [];
 
 	for (const [key, consumer] of map) {
 		const value = consumer.asUnknown();
@@ -98,19 +168,43 @@ function stringifyPlainObject(consumer: Consumer, helper: StringifyHelper): stri
 	}
 
 	for (const [key, consumer] of map) {
-		const propKey = stringifyKey(key);
+		let propKey = stringifyKey(key);
 		const possibleValue = consumer.asUnknown();
-		if (typeof possibleValue === "object" && !Array.isArray(possibleValue)) {
-			buff.push(`[${propKey}]`);
-			const element = stringifyValue(consumer, helper);
-			buff.push(`${element}`);
-		} else {
-			const propValue = stringifyValue(consumer, helper);
-			buff.push(`${propKey} = ${propValue}`);
+		const comments = helper.getComments(consumer);
+
+		const reducedProp = printSingleObjects(possibleValue);
+
+		if (reducedProp === undefined) {
+			if (isObject(possibleValue)) {
+				stringifyPropComments(comments, buffTables, possibleValue);
+
+				buffTables.push(`[${stringifyKeys(consumer.keyPath)}]`);
+				buffTables.push(stringifyRoot(consumer, helper));
+				buffTables.push("");
+				continue;
+			} else if (isArrayOfObjects(possibleValue)) {
+				stringifyPropComments(comments, buffTables, possibleValue);
+				for (const elem of consumer.asIterable()) {
+					buffTables.push(`[[${stringifyKeys(consumer.keyPath)}]]`);
+					buffTables.push(stringifyRoot(elem, helper));
+					buffTables.push("");
+				}
+				continue;
+			}
 		}
+
+		let propValue;
+		if (reducedProp === undefined) {
+			propValue = stringifyValue(consumer, helper);
+		} else {
+			propKey = `${propKey}.${reducedProp[0]}`;
+			propValue = reducedProp[1];
+		}
+
+		buff.push(`${propKey} = ${propValue}`);
 	}
 
-	return `${buff.join("\n")}`;
+	return [...buff, ...buffTables].join("\n");
 }
 
 function stringifyObject(consumer: Consumer, helper: StringifyHelper): string {
@@ -120,7 +214,7 @@ function stringifyObject(consumer: Consumer, helper: StringifyHelper): string {
 		return stringifyArray(consumer, helper);
 	}
 
-	return stringifyPlainObject(consumer, helper);
+	throw new Error("Regular objects should have been printed as tables");
 }
 
 export function stringifyTOMLFromConsumer(
@@ -128,5 +222,5 @@ export function stringifyTOMLFromConsumer(
 	pathToComments: ConfigCommentMap,
 ): string {
 	const helper = createStringifyHelper(pathToComments);
-	return stringifyValue(consumer, helper);
+	return stringifyRoot(consumer, helper);
 }

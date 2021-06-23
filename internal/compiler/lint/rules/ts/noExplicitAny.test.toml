@@ -1,5 +1,5 @@
-filename= "file.ts"
-invalid= [
+filename = "file.ts"
+invalid = [
 	"const age= any = 'seventeen';age;",
 	"const ages= any[] = ['seventeen'];ages;",
 	"const ages= Array<any> = ['seventeen'];ages;",
@@ -10,7 +10,7 @@ invalid= [
 	"function greet(param= Array<any>)= string { return param; };greet();",
 	"function greet(param= Array<any>)= Array<any> { return param; };greet();",
 ]
-valid= [
+valid = [
 	"const age= number = 17;age;",
 	"const ages= Array<number> = [17];ages;",
 	"function greet()= string {};greet();",

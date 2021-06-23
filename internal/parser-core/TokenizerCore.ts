@@ -19,7 +19,7 @@ import {
 type StringTokenNames<Types extends ParserCoreTypes> = Extract<
 	keyof Types["tokens"],
 	string
-	>;
+>;
 
 type EmptyTypes = {
 	tokens: BaseTokens;
@@ -294,7 +294,7 @@ export default class TokenizerCore<Types extends ParserCoreTypes = EmptyTypes> {
 	public finishComplexToken<
 		Type extends StringTokenNames<Types>,
 		Data extends Omit<Types["tokens"][Type], "type" | "start" | "end">
-		>(type: Type, data: Data): ComplexToken<Type, Data> {
+	>(type: Type, data: Data): ComplexToken<Type, Data> {
 		return {
 			type,
 			...data,

@@ -91,7 +91,7 @@ export function createReadCallback(
 export function createParser<
 	Types extends ParserCoreTypes,
 	Impl extends ParserCoreImplementation<Types> = ParserCoreImplementation<Types>
-	>(impl: Impl): ParserCoreFactory<Types> {
+>(impl: Impl): ParserCoreFactory<Types> {
 	return {
 		create: (
 			opts: Types["options"],
@@ -112,7 +112,7 @@ export function createParserTemplateFactory<Ret>(
 			input: string;
 			value: Ret;
 		}
-		> = new Map();
+	> = new Map();
 
 	return (strs, ...subs) => {
 		let input = "";
@@ -139,7 +139,7 @@ export function createParserTemplateFactory<Ret>(
 export function tryParseWithOptionalOffsetPosition<
 	Opts extends ParserOptions,
 	Ret
-	>(
+>(
 	parserOpts: Opts,
 	opts: {
 		getOffsetPosition: () => Position;
@@ -324,7 +324,7 @@ export function isSourceLocationish(val: unknown): val is SourceLocationish {
 	return (
 		isPathish(val.path) &&
 		(typeof val.identifierName === "string" ||
-			typeof val.identifierName === "undefined") &&
+		typeof val.identifierName === "undefined") &&
 		isPositionish(val.start) &&
 		isPositionish(val.end)
 	);

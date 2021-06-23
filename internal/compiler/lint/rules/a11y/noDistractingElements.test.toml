@@ -1,21 +1,22 @@
 [[cases]]
 filename = "file.tsx"
 invalid = [
-	"<blink />",
-	"<marquee />",
+	'<blink />',
+	'<marquee />',
 ]
 valid = [
-	"<div />",
-	"<Marquee />",
+	'<div />',
+	'<Marquee />',
 ]
 
 [[cases]]
 filename = "file.html"
 invalid = [
-	"<blink />",
-	"<marquee />",
+	'<blink />',
+	'<marquee />',
 ]
 valid = [
-	"<div />",
-	"<Marquee />",
+	'<div />',
+	'<Marquee />',
 ]
+

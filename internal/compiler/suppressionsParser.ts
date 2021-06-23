@@ -180,7 +180,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 									start: parser.getPositionFromIndex(valueStart.add(strIndex)),
 								});
 							},
-						}
+						},
 					);
 				} else {
 					// Otherwise we can just safely read this until the closing )
@@ -213,8 +213,8 @@ const suppressionCommentParser = createParser<ParserTypes>({
 export function parseCategoryPair(
 	parser: SuppressionCommentParser,
 ): [
-		Tokens["Category"] | Tokens["InvalidCategory"],
-		undefined | Tokens["CategoryValue"]
+	Tokens["Category"] | Tokens["InvalidCategory"],
+	undefined | Tokens["CategoryValue"]
 ] {
 	return [
 		parser.eatToken("InvalidCategory") || parser.expectToken("Category"),
@@ -297,7 +297,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 				while (
 					parser.matchToken("Category") ||
 					parser.matchToken("InvalidCategory")
-					) {
+				) {
 					categories.push(parseCategoryPair(parser));
 				}
 

@@ -17,9 +17,7 @@ export const toml: PartialConfigHandler = {
 	jsonSuperset: false,
 
 	parseExtra(opts: ParserOptions): ConfigParserResult {
-		const parser = tomlParser.create(opts, {
-			root: {},
-		});
+		const parser = tomlParser.create(opts);
 
 		const root = parseRoot(parser);
 
@@ -38,13 +36,12 @@ export const toml: PartialConfigHandler = {
 				}),
 				getOriginalValue: () => undefined,
 			},
-			// TODO comments
-			comments: new Map(),
+			comments: parser.state.pathComments,
 		};
 	},
 
 	tokenize(opts: ConfigParserOptions): TokenBase[] {
-		return tomlParser.create(opts, {root: {}}).getAllTokens();
+		return tomlParser.create(opts).getAllTokens();
 	},
 
 	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {

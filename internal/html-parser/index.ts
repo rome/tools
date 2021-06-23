@@ -157,10 +157,7 @@ const htmlParser = createParser<HTMLParserTypes>({
 
 		// Keep eating text until we hit a <
 		const value = tokenizer.read(isTextChar);
-		return [
-			state,
-			tokenizer.finishValueToken("Text", value),
-		];
+		return [state, tokenizer.finishValueToken("Text", value)];
 	},
 });
 
@@ -527,7 +524,7 @@ function isntDoctypeEnd(char: string): boolean {
 }
 
 function consumeDOCTYPE(
-	tokenizer: HTMLParser["tokenizer"]
+	tokenizer: HTMLParser["tokenizer"],
 ): [boolean, string | undefined] {
 	// doc requires a token like this
 	if (
@@ -544,17 +541,13 @@ function consumeDOCTYPE(
 	return [false, undefined];
 }
 
-function consumeCDATA(
-	tokenizer: HTMLParser["tokenizer"]
-): string | undefined {
+function consumeCDATA(tokenizer: HTMLParser["tokenizer"]): string | undefined {
 	if (tokenizer.consume("[CDATA[")) {
-		const value = tokenizer.read(
-			(char, index, input) => {
-				return !(char === "]" &&
-				input[index.valueOf() + 1] === "]" &&
-				input[index.valueOf() + 2] === ">");
-			},
-		);
+		const value = tokenizer.read((char, index, input) => {
+			return !(char === "]" &&
+			input[index.valueOf() + 1] === "]" &&
+			input[index.valueOf() + 2] === ">");
+		});
 		tokenizer.assert("]]>");
 		return value.trim();
 	}
