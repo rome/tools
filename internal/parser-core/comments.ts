@@ -244,6 +244,12 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 				adjustCommentsAfterTrailingComma(parser, node, node.elements, true);
 				break;
 			}
+			case "JSSwitchStatement": {
+				if (node.cases.length === 0) {
+					trailingComments = state.leadingComments;
+				}
+				break;
+			}
 		}
 	} else if (
 		commentPreviousNode !== undefined &&

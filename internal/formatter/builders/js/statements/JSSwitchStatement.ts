@@ -41,6 +41,7 @@ export default function JSSwitchStatement(
 		),
 		space,
 		"{",
+		builder.tokenizeInnerComments(node, true),
 		node.cases.length > 0
 			? indent(
 					concat([hardline, builder.tokenizeStatementList(node.cases, node)]),
