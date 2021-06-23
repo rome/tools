@@ -1063,7 +1063,7 @@ export default class MemoryFileSystem {
 		}
 
 		if (isNew) {
-			this.server.refreshFileEvent.push({type: "CREATED", path});
+			await this.server.refreshFileEvent.push({type: "CREATED", path});
 		}
 
 		return true;
