@@ -334,7 +334,6 @@ test(
 				</div>;
 			`,
 		);
-
 		t.is(result.suppressions.length, 1);
 		t.is(result.diagnostics.length, 0);
 

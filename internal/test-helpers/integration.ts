@@ -28,7 +28,6 @@ import {partialServerQueryRequestToFull} from "../core/server/Server";
 import {PartialServerQueryRequest} from "../core/common/bridges/ServerBridge";
 import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 import {Fixture, FixtureFile, createFixtureTests} from "@internal/test-helpers";
-import {removeCarriageReturn} from "@internal/string-utils";
 import {
 	getFileHandlerExtensions,
 	getFileHandlerFromPathAssert,
@@ -51,6 +50,7 @@ import child = require("child_process");
 import util = require("util");
 import {Reporter} from "@internal/cli-reporter";
 import {BridgeClient} from "@internal/events";
+import {removeCarriageReturn} from "@internal/string-utils";
 import {decodeUTF8} from "@internal/binary";
 
 const exec = util.promisify(child.exec);
@@ -118,10 +118,11 @@ export function findFixtureInput(
 		if (input !== undefined) {
 			return {
 				input,
-				handler: getFileHandlerFromPathAssert(
-					createPath(`input.${ext}`),
+				handler: getFileHandlerFromPathAssert({
+					path: createPath(`input.${ext}`),
 					projectConfig,
-				).handler,
+					method: "findFixtureInput",
+				}).handler,
 			};
 		}
 
@@ -361,11 +362,7 @@ export function createIntegrationTest(
 
 			// Add serialized project config. We skip this if there's already a project config files entry to allow
 			// some flexibility if we want invalid project config tests.
-			if (
-				!opts.disableProjectConfig &&
-				files[".config/rome.json"] === undefined &&
-				files[".config/rome.rjson"] === undefined
-			) {
+			if (!opts.disableProjectConfig && files[".config/rome.json"] === undefined) {
 				files[".config/rome.json"] = json.stringify(projectConfig) + "\n";
 			}
 

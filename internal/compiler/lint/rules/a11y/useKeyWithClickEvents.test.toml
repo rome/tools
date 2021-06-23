@@ -1,0 +1,22 @@
+[[cases]]
+		filename= "file.tsx"
+		invalid= [
+			"<div onClick={() => {}} />",
+	]
+		valid= [
+			"<div onClick={() => {}} onKeyDown={this.handleKeyDown} />",
+			"<div onClick={() => {}} onKeyUp={this.handleKeyUp} />",
+			"<div onClick={() => {}} onKeyPress={this.handleKeyPress} />",
+			"<Button onClick={() => {}} />",
+	]
+[[cases]]
+		filename= "file.html"
+		invalid= [
+			"<div onclick=\"() => {}\"></div>",
+	]
+		valid= [
+			"<div onclick=\"() => {}\" onkeydown=\"() => {}\" ></div>",
+			"<div onclick=\"() => {}\" onkeyup=\"() => {}\" ></div>",
+			"<div onclick=\"() => {}\" onkeyup=\"() => {}\" ></div>",
+	]
+

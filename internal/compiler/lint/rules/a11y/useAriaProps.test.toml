@@ -1,0 +1,34 @@
+[[cases]]
+		filename= "file.jsx"
+		invalid= [
+			"<input className='' aria-labell='' />",
+			"<div aria-='foobar' />",
+			"<div aria-labeledby='foobar' />",
+			"<div aria-skldjfaria-klajsd='foobar' />",
+	]
+		valid= [
+			"<div />",
+			"<div></div>",
+			"<div aria='wee'></div>",
+			"<div abcARIAdef='true'></div>",
+			"<div fooaria-foobar='true'></div>",
+			"<div fooaria-hidden='true'></div>",
+			"<input type='text' aria-errormessage='foobar' />",
+	]
+[[cases]]
+		filename= "file.html"
+		invalid= [
+			"<input class=\"\" aria-labell=\"\" />",
+			"<div aria-=\"foobar\" />",
+			"<div aria-labeledby=\"foobar\" />",
+			"<div aria-skldjfaria-klajsd=\"foobar\" />",
+	]
+		valid= [
+			"<div />",
+			"<div></div>",
+			"<div aria=\"wee\"></div>",
+			"<div abcARIAdef=\"true\"></div>",
+			"<div fooaria-foobar=\"true\"></div>",
+			"<div fooaria-hidden=\"true\"></div>",
+			"<input type=\"text\" aria-errormessage=\"foobar\" />",
+	]

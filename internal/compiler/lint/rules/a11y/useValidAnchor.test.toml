@@ -1,0 +1,53 @@
+[[cases]]
+		filename= "file.jsx"
+		invalid= [
+			"<a href='#' onClick={foo} />",
+			"<a href={'#'} onClick={foo} />",
+			"<a href={`#`} onClick={foo} />",
+			"<a onClick={foo} />",
+			"<a href='javascript=void(0)' onClick={foo} />",
+			"<a href={'javascript=void(0)'} onClick={foo} />",
+			"<a href={`javascript=void(0)`} onClick={foo} />",
+			"<a />",
+			"<a href={undefined} />",
+			"<a href={null} />",
+			"<a href='#' />",
+			"<a href={'#'} />",
+			"<a href={`#`} />",
+			"<a href='javascript=void(0)' />",
+			"<a href={'javascript=void(0)'} />",
+			"<a href={`javascript=void(0)`} />",
+	]
+		valid= [
+			"<a href='https=//github.com' />",
+			"<a href='#section' />",
+			"<a href='foo' />",
+			"<a href='/foo/bar' />",
+			"<a href={someValidPath} />",
+			"<a href='https=//github.com' onClick={foo} />",
+			"<a href='#section' onClick={foo} />",
+			"<a href='foo' onClick={foo} />",
+			"<a href='/foo/bar' onClick={foo} />",
+			"<a href={someValidPath} onClick={foo} />",
+	]
+[[cases]]
+		filename= "file.html"
+		invalid= [
+			"<a href=\"#\" onclick=\"() => {}\" ></a>",
+			"<a onclick=\"() => {}\"/>",
+			"<a href=\"javascript=void(0)\" onclick=\"() => {}\" ></a>",
+			"<a ></a>",
+			"<a href=\"#\"></a>",
+			"<a href=\"javascript=void(0)\"></a>",
+	]
+		valid= [
+			"<a href=\"https=//github.com\" ></a>",
+			"<a href=\"#section\" ></a>",
+			"<a href=\"foo\" ></a>",
+			"<a href=\"/foo/bar\"></a>",
+			"<a href=\"https=//github.com\" onclick=\"() => {}\" ></a>",
+			"<a href=\"#section\" onclick=\"() => {}\" ></a>",
+			"<a href=\"foo\" onclick=\"() => {}\" ></a>",
+			"<a href=\"/foo/bar\" onclick=\"() => {}\" ></a>",
+	]
+
