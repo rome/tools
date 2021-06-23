@@ -11,18 +11,16 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {
-	Comments,
 	ConfigCommentMap,
 	ConfigParserOptions,
 	ConfigParserResult,
 	ConfigType,
-	PathComments,
 } from "../types";
 import {JSONObject, JSONValue, Tokens} from "./types";
 import {
 	ConsumeContext,
 	ConsumePath,
-	ConsumeSourceLocationRequestTarget,
+	ConsumeSourceLocationRequestTarget, serializeConsumePath,
 } from "@internal/consume";
 import {unescapeJSONString} from "@internal/string-escape";
 import {
@@ -34,7 +32,7 @@ import {
 	isDigit,
 } from "@internal/parser-core";
 import {ZeroIndexed} from "@internal/numbers";
-import {isEscaped, removeCarriageReturn} from "@internal/string-utils";
+import {isEscaped} from "@internal/string-utils";
 import {isWordChar, isWordStartChar} from "@internal/codec-config/util";
 
 // Check if a character is a part of a string, returning false for a newline or unescaped quote char
@@ -47,41 +45,7 @@ function isJSONStringValueChar(
 		return false;
 	}
 
-	return isRJSONStringValueChar(char, index, input);
-}
-
-// NOTE: Different methods as we allow newlines in RJSON strings
-function isRJSONStringValueChar(
-	char: string,
-	index: ZeroIndexed,
-	input: string,
-): boolean {
 	return !(char === '"' && !isEscaped(index, input));
-}
-
-// Turn a path into a string key we can use
-export function toPathKey(parts: string[]) {
-	// Right now this could conflict weirdly with properties with dots in them if they cause collisions
-	// We have this method abstracted so we can make changes later if it's necessary (probably not worth it)
-	return parts.join(".");
-}
-
-function isntNewline(char: string): boolean {
-	return char !== "\n";
-}
-
-function isntBlockCommentEnd(
-	char: string,
-	index: ZeroIndexed,
-	input: string,
-): boolean {
-	const nextChar = input[index.valueOf() + 1];
-	return !(char === "*" && nextChar === "/");
-}
-
-// Used for Number token validation, allow underscore as a separatore
-function isNumberChar(char: string): boolean {
-	return isDigit(char) || char === "_";
 }
 
 type PathInfo = {
@@ -120,153 +84,109 @@ export const jsonParser = createParser<JSONParserTypes>({
 			pathToComments: new Map(),
 		};
 	},
-	tokenize(parser: JSONParser, index: ZeroIndexed) {
-		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index.increment());
+	tokenize(parser, tokenizer) {
+		if (tokenizer.consume('"')) {
+			const valueStart = tokenizer.index;
+			const value = tokenizer.read(isJSONStringValueChar);
 
-		// Line comment
-		if (char === "/" && nextChar === "/") {
-			const commentValueIndex = index.add(2);
-			const [value] = parser.readInputFrom(commentValueIndex, isntNewline);
-			// (comment content start + comment content length)
-			return parser.finishValueToken(
-				"LineComment",
-				removeCarriageReturn(value),
-				commentValueIndex.add(value.length),
-			);
-		}
-
-		// BlockComment
-		if (char === "/" && nextChar === "*") {
-			const commentValueIndex = index.add(2);
-			const [value] = parser.readInputFrom(
-				commentValueIndex,
-				isntBlockCommentEnd,
-			);
-
-			// (comment content start + comment content length + 2 characters for comment end)
-			const endIndex = commentValueIndex.add(value.length).add(2);
-
-			// Ensure the comment is closed
-			if (
-				parser.input[endIndex.valueOf() - 2] !== "*" ||
-				parser.input[endIndex.valueOf() - 1] !== "/"
-			) {
+			if (tokenizer.isEOF()) {
 				throw parser.unexpected({
-					description: descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
-					start: parser.getPositionFromIndex(endIndex),
+					description: descriptions.JSON.UNCLOSED_STRING,
+					start: tokenizer.getPosition(),
 				});
 			}
 
-			return parser.finishValueToken(
-				"BlockComment",
-				removeCarriageReturn(value),
-				endIndex,
-			);
-		}
+			// Don't allow newlines in strings
+			for (let strIndex = 0; strIndex < value.length; strIndex++) {
+				const char = value[strIndex];
 
-		// Single character token starters
-		switch (char) {
-			case '"': {
-				const [value, end, overflow] = parser.readInputFrom(
-					index.increment(),
-					parser.meta.type === "rjson"
-						? isRJSONStringValueChar
-						: isJSONStringValueChar,
-				);
-
-				if (overflow) {
+				if (char === "\n") {
 					throw parser.unexpected({
-						description: descriptions.JSON.UNCLOSED_STRING,
-						start: parser.getPositionFromIndex(end),
+						description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
+						start: parser.getPositionFromIndex(valueStart.add(strIndex)),
 					});
 				}
-
-				// Don't allow newlines in JSON
-				if (parser.meta.type !== "rjson") {
-					for (let strIndex = 0; strIndex < value.length; strIndex++) {
-						const char = value[strIndex];
-
-						if (char === "\n") {
-							throw parser.unexpected({
-								description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
-								start: parser.getPositionFromIndex(index.add(strIndex)),
-							});
-						}
-					}
-				}
-
-				// Unescape the string
-				const unescaped = unescapeJSONString(
-					value,
-					(metadata, strIndex) => {
-						throw parser.unexpected({
-							description: metadata,
-							start: parser.getPositionFromIndex(index.add(strIndex)),
-						});
-					},
-					parser.meta.type === "rjson",
-				);
-
-				// increment to take the trailing quote
-				return parser.finishValueToken("String", unescaped, end.increment());
 			}
 
-			case "'":
-				throw parser.unexpected({
-					description: descriptions.JSON.SINGLE_QUOTE_USAGE,
-					start: parser.getPositionFromIndex(index),
-				});
+			// Unescape the string
+			const unescaped = unescapeJSONString(
+				value,
+				(metadata, strIndex) => {
+					throw parser.unexpected({
+						description: metadata,
+						start: parser.getPositionFromIndex(valueStart.add(strIndex)),
+					});
+				},
+				parser.meta.type === "rjson",
+			);
 
-			case "/":
-				throw parser.unexpected({
-					description: descriptions.JSON.REGEX_IN_JSON,
-					start: parser.getPositionFromIndex(index),
-				});
+			tokenizer.assert('"');
 
-			case ",":
-				return parser.finishToken("Comma");
+			// increment to take the trailing quote
+			return tokenizer.finishValueToken("String", unescaped);
+		}
 
-			case ".":
-				return parser.finishToken("Dot");
+		if (tokenizer.startsWith("'")) {
+			throw parser.unexpected({
+				description: descriptions.JSON.SINGLE_QUOTE_USAGE,
+				start: tokenizer.getPosition(),
+			});
+		}
 
-			case "-":
-				return parser.finishToken("Minus");
+		if (tokenizer.startsWith("/")) {
+			throw parser.unexpected({
+				description: descriptions.JSON.REGEX_IN_JSON,
+				start: tokenizer.getPosition(),
+			});
+		}
 
-			case "+":
-				return parser.finishToken("Plus");
+		if (tokenizer.consume(",")) {
+			return tokenizer.finishToken("Comma");
+		}
 
-			case ":":
-				return parser.finishToken("Colon");
+		if (tokenizer.consume(".")) {
+			return tokenizer.finishToken("Dot");
+		}
 
-			case "{":
-				return parser.finishToken("BraceOpen");
+		if (tokenizer.consume("-")) {
+			return tokenizer.finishToken("Minus");
+		}
 
-			case "}":
-				return parser.finishToken("BraceClose");
+		if (tokenizer.consume("+")) {
+			return tokenizer.finishToken("Plus");
+		}
 
-			case "[":
-				return parser.finishToken("BracketOpen");
+		if (tokenizer.consume(":")) {
+			return tokenizer.finishToken("Colon");
+		}
 
-			case "]":
-				return parser.finishToken("BracketClose");
+		if (tokenizer.consume("{")) {
+			return tokenizer.finishToken("BraceOpen");
+		}
+
+		if (tokenizer.consume("}")) {
+			return tokenizer.finishToken("BraceClose");
+		}
+
+		if (tokenizer.consume("[")) {
+			return tokenizer.finishToken("BracketOpen");
+		}
+
+		if (tokenizer.consume("]")) {
+			return tokenizer.finishToken("BracketClose");
 		}
 
 		// Numbers
-		if (isDigit(char)) {
-			const value = removeUnderscores(
-				parser,
-				index,
-				parser.readInputFrom(index, isNumberChar)[0],
-			);
-			const num = Number(value);
-			return parser.finishValueToken("Number", num, index.add(value.length));
+		if (isDigit(tokenizer.get())) {
+			const raw = tokenizer.read(isDigit);
+			const num = Number(raw);
+			return tokenizer.finishValueToken("Number", num);
 		}
 
 		// Word - boolean, undefined etc
-		if (isWordStartChar(char)) {
-			const [value] = parser.readInputFrom(index, isWordChar);
-			return parser.finishValueToken("Word", value, index.add(value.length));
+		if (isWordStartChar(tokenizer.get())) {
+			const value = tokenizer.read(isWordChar);
+			return tokenizer.finishValueToken("Word", value);
 		}
 
 		// Unknown character
@@ -278,57 +198,20 @@ function getPathInfo(
 	parser: JSONParser,
 	path: ConsumePath,
 ): undefined | PathInfo {
-	return parser.state.paths.get(path.join("."));
-}
-
-function setComments(parser: JSONParser, pathComments: PathComments) {
-	const key = parser.state.pathKeys.join(".");
-
-	const existing = parser.state.pathToComments.get(key);
-	if (existing === undefined) {
-		parser.state.pathToComments.set(key, pathComments);
-	} else {
-		parser.state.pathToComments.set(
-			key,
-			{
-				inner: [...existing.inner, ...pathComments.inner],
-				outer: [...existing.outer, ...pathComments.outer],
-			},
-		);
-	}
+	return parser.state.paths.get(serializeConsumePath(path));
 }
 
 function setPath({state}: JSONParser, info: PathInfo) {
-	state.paths.set(state.pathKeys.join("."), info);
+	state.paths.set(serializeConsumePath(state.pathKeys), info);
 	state.pathKeys.pop();
 }
 
-function parseObject(
-	parser: JSONParser,
-	firstKeyStart?: Position,
-	firstKey?: string,
-): JSONObject {
+function parseObject(parser: JSONParser): JSONObject {
 	const obj: JSONObject = {};
-
-	let innerComments: Comments = [];
-	let isFirstProp = true;
-
-	// These are comments that the next property should take in case the previous accidently took them
-	let nextLeadingComments;
 
 	do {
 		if (parser.matchToken("BraceClose")) {
 			break;
-		}
-
-		// Eat all the comments that appeared before this property, it's the most common and natural place to put them,
-		// and is where we'll print all comments for a property.
-		let leadingComments = eatComments(parser);
-
-		// Take any leading comments that were left by the previous property
-		if (nextLeadingComments !== undefined) {
-			leadingComments = [...nextLeadingComments, ...leadingComments];
-			nextLeadingComments = undefined;
 		}
 
 		// Throw a meaningful error for redundant commas
@@ -338,35 +221,13 @@ function parseObject(
 			});
 		}
 
-		// If there's no property key indicator then delegate any comments we have to object
-		const hasKey = isFirstProp && firstKey !== undefined;
-		if (!(hasKey || parser.matchToken("String") || parser.matchToken("Word"))) {
-			innerComments = [...innerComments, ...leadingComments];
-			break;
-		}
-
-		const keyStart =
-			isFirstProp && firstKeyStart !== undefined
-				? firstKeyStart
-				: parser.getPosition();
+		const keyStart = parser.getPosition();
 
 		// Parse the property key
-		let key;
-		if (isFirstProp && firstKey !== undefined) {
-			// If this is the first property and we've been given a property key then use it instead
-			key = firstKey;
-		} else {
-			key = parsePropertyKey(parser);
-		}
-		isFirstProp = false;
+		const key = parsePropertyKey(parser);
 
 		const keyEnd = parser.getPosition();
 		parser.expectToken("Colon");
-
-		// Having comments before the value is a really weird place to put them, but we'll handle it
-		// anyway to avoid throwing a parser error. When stringified, the comments will all be before
-		// the property.
-		const leadingValueComments = eatComments(parser);
 
 		parser.state.pathKeys.push(key);
 
@@ -374,28 +235,6 @@ function parseObject(
 		const valueStart = parser.getPosition();
 		const value = parseExpression(parser);
 		const valueEnd = parser.getLastEndPosition();
-
-		// Eat the comments after the expression and associate the comments with them
-		let trailingValueComments = eatComments(parser);
-
-		// If the next token isn't a comma or closing brace then we've just stolen
-		// the leading comments of the next property
-		if (!(parser.matchToken("Comma") || parser.matchToken("BraceClose"))) {
-			nextLeadingComments = trailingValueComments;
-			trailingValueComments = [];
-		}
-
-		setComments(
-			parser,
-			{
-				inner: [],
-				outer: [
-					...leadingComments,
-					...leadingValueComments,
-					...trailingValueComments,
-				],
-			},
-		);
 
 		setPath(
 			parser,
@@ -426,92 +265,15 @@ function parseObject(
 		}
 	} while (eatPropertySeparator(parser));
 
-	// Take any loose leading comments
-	if (nextLeadingComments !== undefined) {
-		innerComments = [...innerComments, ...nextLeadingComments];
-	}
-
-	// If we were passed a first key then this was an implicit object so there's no end token
-	if (firstKey === undefined) {
-		parser.expectToken("BraceClose");
-	}
-
-	setComments(
-		parser,
-		{
-			inner: innerComments,
-			outer: [],
-		},
-	);
+	parser.expectToken("BraceClose");
 
 	return obj;
-}
-
-// Remove underscores from 'a string, this is used for numeric separators eg. 100_000
-function removeUnderscores(
-	parser: JSONParser,
-	index: ZeroIndexed,
-	raw: string,
-): string {
-	let str = "";
-
-	for (let i = 0; i < raw.length; i++) {
-		const char = raw[i];
-
-		if (char === "_") {
-			// Don't allow separators in JSON
-			if (parser.meta.type !== "rjson") {
-				throw parser.unexpected({
-					description: descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
-					start: parser.getPositionFromIndex(index.increment()),
-				});
-			}
-		} else {
-			str += char;
-		}
-	}
-
-	return str;
-}
-
-function eatComments(parser: JSONParser): Comments {
-	const comments: Comments = [];
-
-	while (true) {
-		const token = parser.getToken();
-
-		if (token.type === "LineComment") {
-			comments.push({
-				type: "LineComment",
-				value: token.value,
-			});
-		} else if (token.type === "BlockComment") {
-			comments.push({
-				type: "BlockComment",
-				value: token.value,
-			});
-		} else {
-			break;
-		}
-
-		// Comments aren't allowed in regular JSON
-		if (parser.meta.type !== "rjson") {
-			throw parser.unexpected({
-				description: descriptions.JSON.COMMENTS_IN_JSON,
-			});
-		}
-
-		parser.nextToken();
-	}
-
-	return comments;
 }
 
 function parseArray(parser: JSONParser): JSONValue[] {
 	parser.expectToken("BracketOpen");
 
 	const arr = [];
-	let innerComments: Comments = [];
 	let i = 0;
 
 	do {
@@ -519,19 +281,10 @@ function parseArray(parser: JSONParser): JSONValue[] {
 			break;
 		}
 
-		// Eat all the comments before an element
-		const leadingComments = eatComments(parser);
-
 		if (parser.matchToken("Comma")) {
 			throw parser.unexpected({
 				description: descriptions.JSON.REDUNDANT_COMMA,
 			});
-		}
-
-		// If we're at the end of the array then associate these comments with the array
-		if (parser.matchToken("BracketClose")) {
-			innerComments = [...innerComments, ...leadingComments];
-			break;
 		}
 
 		const start = parser.getPosition();
@@ -542,17 +295,6 @@ function parseArray(parser: JSONParser): JSONValue[] {
 		const item = parseExpression(parser);
 		arr.push(item);
 		const end = parser.getLastEndPosition();
-
-		// Trailing comments are really weird, but let's handle them just like object properties
-		const trailingComments = eatComments(parser);
-
-		setComments(
-			parser,
-			{
-				outer: [...leadingComments, ...trailingComments],
-				inner: [],
-			},
-		);
 
 		setPath(
 			parser,
@@ -575,14 +317,6 @@ function parseArray(parser: JSONParser): JSONValue[] {
 
 	parser.expectToken("BracketClose");
 
-	setComments(
-		parser,
-		{
-			inner: innerComments,
-			outer: [],
-		},
-	);
-
 	return arr;
 }
 
@@ -590,40 +324,23 @@ function parseArray(parser: JSONParser): JSONValue[] {
 function eatPropertySeparator(parser: JSONParser): boolean {
 	const token = parser.getToken();
 
-	// Implicit commas are only allowed in rjson
-	if (parser.meta.type === "rjson") {
-		// Eat the token, don't care if we're in RJSON
-		if (token.type === "Comma") {
-			parser.nextToken();
-		}
-
-		// An object or array close is an instant failure
-		// Doesn't matter what we're parsing since the subsequent tokens will be validated
-		if (token.type === "BraceClose" || token.type === "BracketClose") {
-			return false;
-		}
-
-		return true;
-	} else {
-		if (token.type !== "Comma") {
-			return false;
-		}
-
-		// Make sure this isn't a trailing comma
-		const lookahead = parser.lookaheadToken();
-		if (lookahead.type === "BraceClose" || lookahead.type === "BracketClose") {
-			throw parser.unexpected({
-				description: descriptions.JSON.TRAILING_COMMA_IN_JSON,
-			});
-		}
-
-		parser.nextToken();
-		return true;
+	if (token.type !== "Comma") {
+		return false;
 	}
+
+	// Make sure this isn't a trailing comma
+	const lookahead = parser.lookaheadToken();
+	if (lookahead.type === "BraceClose" || lookahead.type === "BracketClose") {
+		throw parser.unexpected({
+			description: descriptions.JSON.TRAILING_COMMA_IN_JSON,
+		});
+	}
+
+	parser.nextToken();
+	return true;
 }
 
 function parseWord(parser: JSONParser, isStart: boolean): JSONValue {
-	const start = parser.getPosition();
 	const token = parser.expectToken("Word");
 
 	switch (token.value) {
@@ -643,13 +360,9 @@ function parseWord(parser: JSONParser, isStart: boolean): JSONValue {
 	}
 
 	if (isStart && parser.matchToken("Colon")) {
-		if (parser.meta.type === "rjson") {
-			return parseObject(parser, start, token.value);
-		} else {
-			throw parser.unexpected({
-				description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
-			});
-		}
+		throw parser.unexpected({
+			description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
+		});
 	}
 
 	throw parser.unexpected({
@@ -722,14 +435,9 @@ function parsePropertyKey(parser: JSONParser) {
 		}
 
 		case "Word":
-			if (parser.meta.type === "rjson") {
-				parser.nextToken();
-				return token.value;
-			} else {
-				throw parser.unexpected({
-					description: descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON,
-				});
-			}
+			throw parser.unexpected({
+				description: descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON,
+			});
 
 		default:
 			throw parser.unexpected();
@@ -737,17 +445,12 @@ function parsePropertyKey(parser: JSONParser) {
 }
 
 function parseString(parser: JSONParser, isStart: boolean): string | JSONObject {
-	const start = parser.getPosition();
 	const token = parser.expectToken("String");
 
 	if (isStart && parser.nextToken().type === "Colon") {
-		if (parser.meta.type === "rjson") {
-			return parseObject(parser, start, token.value);
-		} else {
-			throw parser.unexpected({
-				description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
-			});
-		}
+		throw parser.unexpected({
+			description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
+		});
 	} else {
 		return token.value;
 	}
@@ -785,14 +488,9 @@ function parseExpression(
 
 function parseEntry(parser: JSONParser): JSONValue {
 	if (parser.matchToken("EOF")) {
-		if (parser.meta.type === "rjson") {
-			// If we're in RJSON mode then an empty input is an implicit object
-			return {};
-		} else {
-			throw parser.unexpected({
-				description: descriptions.JSON.EMPTY_INPUT_IN_JSON,
-			});
-		}
+		throw parser.unexpected({
+			description: descriptions.JSON.EMPTY_INPUT_IN_JSON,
+		});
 	} else {
 		return parseExpression(parser, true);
 	}
@@ -871,18 +569,7 @@ export function parseJSONExtra(
 }
 
 function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
-	const leadingComments = eatComments(parser);
-
 	const expr = parseEntry(parser);
-
-	const trailingComments = eatComments(parser);
-	setComments(
-		parser,
-		{
-			inner: [],
-			outer: [...leadingComments, ...trailingComments],
-		},
-	);
 
 	parser.finalize();
 

@@ -24,33 +24,37 @@ import {
 import {AnyVisitor} from "./types";
 import {createVisitor} from "./utils";
 
-function extractSuppressionsFromComment(
-	context: CompilerContext,
-	comment: AnyComment,
-	targetNode: undefined | AnyNode,
+export function extractSuppressionsFromComment(
+	{context, comment, targetNode, overrideRequireExplanations}: {
+		context: CompilerContext;
+		comment: AnyComment;
+		targetNode: undefined | AnyNode;
+		overrideRequireExplanations?: boolean;
+	},
 ): undefined | ExtractedSuppressions {
 	const commentLocation = comment.loc;
 	if (commentLocation === undefined) {
 		return undefined;
 	}
 
-	const {diagnostics, suppressions} = parseCommentSuppressions({
+	const {diagnostics, suppressions, explanation} = parseCommentSuppressions({
 		input: comment.value,
-		requireExplanations: context.project.config.lint.requireSuppressionExplanations,
+		requireExplanations: overrideRequireExplanations ??
+			context.project.config.lint.requireSuppressionExplanations,
 		targetNode,
 		path: context.path,
 		offsetPosition: comment.loc === undefined
 			? undefined
 			: addPositions(
-					comment.loc.start,
-					{line: new OneIndexed(), column: new ZeroIndexed(2)},
-				),
+				comment.loc.start,
+				{line: new OneIndexed(), column: new ZeroIndexed(2)},
+			),
 	});
 
 	if (suppressions.length === 0 && diagnostics.length === 0) {
 		return undefined;
 	} else {
-		return {diagnostics, suppressions};
+		return {diagnostics, suppressions, explanation};
 	}
 }
 
@@ -63,52 +67,25 @@ export function createSuppressionsVisitor(): AnyVisitor {
 		enter(path) {
 			const {node, context} = path;
 
-			if (node.loc !== undefined) {
-				if (
-					node.type === "JSXExpressionContainer" &&
-					node.expression.innerComments !== undefined
-				) {
-					for (const comment of context.comments.getCommentsFromIds(
-						node.expression.innerComments,
-					)) {
-						if (visitedComments.has(comment)) {
-							continue;
-						}
-						if (path.parent.type === "JSXElement") {
-							let currentNodeFound = false;
-							let nextSibling: AnyNode | undefined = undefined;
-							// scan the children in order to find the next sibling that should have the suppression
-							for (const child of path.parent.children) {
-								if (
-									child.loc?.start === node.loc?.start &&
-									child.loc?.end === node.loc?.end
-								) {
-									currentNodeFound = true;
-									continue;
-								}
-								// here we don't check text because our parser tracks newlines and tabs/spaces as text
-								if (currentNodeFound && child.type !== "JSXText") {
-									nextSibling = child;
-									visitedComments.add(comment);
-									break;
-								}
-							}
-
-							if (nextSibling) {
-								storeSuppressions(context, comment, nextSibling);
-							}
-						}
+			if (node.loc !== undefined && node.leadingComments !== undefined) {
+				for (const comment of context.comments.getCommentsFromIds(
+					node.leadingComments,
+				)) {
+					if (visitedComments.has(comment)) {
+						continue;
 					}
-				} else if (node.leadingComments !== undefined) {
-					for (const comment of context.comments.getCommentsFromIds(
-						node.leadingComments,
-					)) {
-						if (visitedComments.has(comment)) {
-							continue;
-						}
 
-						visitedComments.add(comment);
-						storeSuppressions(context, comment, node);
+					visitedComments.add(comment);
+					const result = extractSuppressionsFromComment({
+						context,
+						comment,
+						targetNode: node,
+					});
+					if (result !== undefined) {
+						context.diagnostics.addDiagnostics(result.diagnostics);
+						context.suppressions = context.suppressions.concat(
+							result.suppressions,
+						);
 					}
 				}
 			}
@@ -116,18 +93,6 @@ export function createSuppressionsVisitor(): AnyVisitor {
 			return signals.retain;
 		},
 	});
-}
-
-function storeSuppressions(
-	context: CompilerContext,
-	comment: AnyComment,
-	node: AnyNode,
-) {
-	const result = extractSuppressionsFromComment(context, comment, node);
-	if (result !== undefined) {
-		context.diagnostics.addDiagnostics(result.diagnostics);
-		context.suppressions = context.suppressions.concat(result.suppressions);
-	}
 }
 
 export function matchesSuppression(
@@ -144,6 +109,6 @@ export function matchesSuppression(
 		start.line.valueOf() >= suppression.startLine.valueOf() &&
 		end.line.valueOf() <= suppression.endLine.valueOf() &&
 		(suppression.categoryValue === undefined ||
-		categoryValue === suppression.categoryValue)
+			categoryValue === suppression.categoryValue)
 	);
 }

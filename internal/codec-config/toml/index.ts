@@ -1,5 +1,5 @@
 import {ParserOptions, TokenBase, createParser} from "@internal/parser-core";
-import {isEscaped} from "@internal/string-utils";
+// import {isEscaped} from "@internal/string-utils";
 import {TOMLParser, TOMLParserTypes, TOMLValue} from "./types";
 import {JSONObject} from "@internal/codec-config";
 import {
@@ -9,23 +9,22 @@ import {
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
 import {DIAGNOSTIC_CATEGORIES, descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/numbers";
 import convertToTomlFromConsumer from "@internal/codec-config/toml/convertToTomlFromConsumer";
 
-function isSingleStringValueChar(
-	char: string,
-	index: ZeroIndexed,
-	input: string,
-): boolean {
-	return !(char === "'" && !isEscaped(index, input));
-}
-function isDoubleStringValueChar(
-	char: string,
-	index: ZeroIndexed,
-	input: string,
-): boolean {
-	return !(char === "'" && !isEscaped(index, input));
-}
+// function isSingleStringValueChar(
+// 	char: string,
+// 	index: ZeroIndexed,
+// 	input: string,
+// ): boolean {
+// 	return !(char === "'" && !isEscaped(index, input));
+// }
+// function isDoubleStringValueChar(
+// 	char: string,
+// 	index: ZeroIndexed,
+// 	input: string,
+// ): boolean {
+// 	return !(char === "'" && !isEscaped(index, input));
+// }
 
 function allowedCharacterForKey(char: string) {
 	return char !== undefined && /^[A-Za-z0-9_\-]+$/.test(char);
@@ -37,50 +36,50 @@ const tomlParser = createParser<TOMLParserTypes>({
 	getInitialState: () => ({
 		inValue: undefined,
 	}),
-	tokenize(parser, index) {
-		const char = parser.getInputCharOnly(index);
+	tokenize(parser, tokenizer) {
+		const char = tokenizer.get();
 
 		switch (char) {
 			case "'":
-			case '"': {
-				const [value, end] = parser.readInputFrom(
-					index.increment(),
-					char === '"' ? isDoubleStringValueChar : isSingleStringValueChar,
-				);
-
-				// TODO check overflow
-
-				// TODO string unescaping
-				return parser.finishValueToken("String", value, end.increment());
-			}
+			// case '"': {
+			// 	const [value, end] = tokenizer.read(
+			// 		index.increment(),
+			// 		char === '"' ? isDoubleStringValueChar : isSingleStringValueChar,
+			// 	);
+			//
+			// 	// TODO check overflow
+			//
+			// 	// TODO string unescaping
+			// 	return tokenizer.finishValueToken("String", value, end.increment());
+			// }
 
 			case "[":
-				return parser.finishToken("OpenSquareBracket");
+				return tokenizer.finishToken("OpenSquareBracket");
 
 			case "]":
-				return parser.finishToken("CloseSquareBracket");
+				return tokenizer.finishToken("CloseSquareBracket");
 
 			case "=":
-				return parser.finishToken("Equals");
+				return tokenizer.finishToken("Equals");
 
 			case "{":
-				return parser.finishToken("OpenCurlyBracket");
+				return tokenizer.finishToken("OpenCurlyBracket");
 
 			case "}":
-				return parser.finishToken("CloseCurlyBracket");
+				return tokenizer.finishToken("CloseCurlyBracket");
 		}
 
-		if (allowedCharacterForKey(char)) {
-			const [value, endIndex] = parser.readInputFrom(
-				index,
-				allowedCharacterForKey,
-			);
-
-			return parser.finishValueToken("Text", value, endIndex);
-		} else {
+		// if (allowedCharacterForKey(char)) {
+		// 	const [value, endIndex] = parser.readInputFrom(
+		// 		index,
+		// 		allowedCharacterForKey,
+		// 	);
+		//
+		// 	return parser.finishValueToken("Text", value, endIndex);
+		// } else {
 			// Invalid but we'll reverify it wqith allowedCharacterForKey later
-			return parser.finishValueToken("Text", char);
-		}
+			return tokenizer.finishValueToken("Text", char);
+		// }
 	},
 });
 

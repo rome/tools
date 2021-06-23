@@ -37,6 +37,7 @@ export const INCORRECT_SUPPRESSION_START = [
 export type ExtractedSuppressions = {
 	suppressions: DiagnosticSuppression[];
 	diagnostics: Diagnostic[];
+	explanation: undefined | string;
 };
 
 type Tokens = BaseTokens & {
@@ -102,139 +103,106 @@ const suppressionCommentParser = createParser<ParserTypes>({
 
 	tokenizeWithState(
 		parser: SuppressionCommentParser,
-		index: ZeroIndexed,
+		tokenizer: SuppressionCommentParser["tokenizer"],
 		state: State,
 	): ParserCoreTokenizeState<ParserTypes> {
 		if (state.searching) {
 			// Ignore leading stars
-			if (parser.getInputCharOnly(index) === "*") {
-				return parser.lookahead(index.increment());
+			if (tokenizer.eat("*")) {
+				return parser.lookahead(tokenizer.index);
 			}
 
 			// Get the first word
-			const [firstWord, end] = parser.readInputFrom(index, isntWhitespace);
+			const firstWord = tokenizer.read(isntWhitespace);
 
 			// Check for prefix typos
 			for (const possiblePrefixTypo of INCORRECT_SUPPRESSION_START) {
 				if (firstWord === possiblePrefixTypo) {
-					return [
-						state,
-						parser.finishValueToken("BadPrefixTypo", firstWord, end),
-					];
+					return [state, tokenizer.finishValueToken("BadPrefixTypo", firstWord)];
 				}
 			}
 
 			// Not a suppression comment. Skip to the end of the line.
 			if (!firstWord.startsWith(SUPPRESSION_START)) {
-				const [, end] = parser.readInputFrom(index, isntLineBreak);
-				return parser.lookahead(end);
+				tokenizer.read(isntLineBreak);
+				return parser.lookahead(tokenizer.index);
 			}
 
 			// Missing space after suppression prefix
 			if (firstWord !== SUPPRESSION_START) {
-				return [
-					state,
-					parser.finishToken(
-						"BadPrefixMissingSpace",
-						index.add(SUPPRESSION_START.length),
-					),
-				];
+				return [state, tokenizer.finishToken("BadPrefixMissingSpace")];
 			}
 
 			return [
 				{
 					searching: false,
 				},
-				parser.finishToken("ValidPrefix", end),
+				tokenizer.finishToken("ValidPrefix"),
 			];
 		} else {
-			const char = parser.getInputCharOnly(index);
-
 			// If the current character is a colon then we're an explanation
-			if (char === ":") {
-				const [rawExplanation, end] = parser.readInputFrom(
-					index.increment(),
-					isntLineBreak,
-				);
+			if (tokenizer.eat(":")) {
+				const rawExplanation = tokenizer.read(isntLineBreak);
 				const explanation = rawExplanation.trim();
 
 				// Handle the developer being cheeky and having a colon but an empty explanation, it's the same thing mate!
 				if (explanation === "") {
-					return parser.lookahead(end);
+					return parser.lookahead(tokenizer.index);
 				}
 
 				return [
 					{
 						searching: false,
 					},
-					parser.finishValueToken("Explanation", explanation, end),
+					tokenizer.finishValueToken("Explanation", explanation),
 				];
 			}
 
 			// Category value
-			if (char === "(") {
+			if (tokenizer.eat("(")) {
 				let value = "";
-				let valueEnd;
 
-				const [nextChar, innerValueStringStart] = parser.getInputChar(
-					index.increment(),
-				);
-				if (nextChar === '"') {
+				if (tokenizer.eat('"')) {
 					// String value we need to escape
-					const [rawValue, innerValueEnd] = parser.readInputFrom(
-						innerValueStringStart,
-						isStringValueChar,
-					);
+					const valueStart = tokenizer.index;
+					const rawValue = tokenizer.read(isStringValueChar);
 
 					// Ensure next character is a closing quote
-					const [endChar, stringValueEnd] = parser.getInputChar(innerValueEnd);
-					if (endChar !== '"') {
-						// TODO Unclosed quote
-					}
+					tokenizer.assert('"');
 
 					value = unescapeJSONString(
 						rawValue,
 						(metadata, strIndex) => {
 							throw parser.unexpected({
 								description: metadata,
-								start: parser.getPositionFromIndex(index.add(strIndex)),
+								start: parser.getPositionFromIndex(valueStart.add(strIndex)),
 							});
 						},
 					);
-					valueEnd = stringValueEnd;
 				} else {
 					// Otherwise we can just safely read this until the closing )
-					[value, valueEnd] = parser.readInputFrom(
-						index.increment(),
-						isCategoryValueChar,
-					);
+					value = tokenizer.read(isCategoryValueChar);
 				}
 
 				// Ensure next character is a closing )
-				const [closeChar, end] = parser.getInputChar(valueEnd);
-				if (closeChar !== ")") {
-					// TODO Unclosed category value
-				}
+				tokenizer.assert(")");
 
-				return [state, parser.finishValueToken("CategoryValue", value, end)];
+				return tokenizer.finishValueToken("CategoryValue", value);
 			}
 
 			// Read a category name!
-			const [strCategoryName, end] = parser.readInputFrom(
-				index,
-				isCategoryNameChar,
-			);
+			const strCategoryName = tokenizer.read(isCategoryNameChar);
 
 			const categoryName = splitPossibleCategoryName(strCategoryName);
 
 			let token;
 			if (categoryName === undefined) {
-				token = parser.finishValueToken("InvalidCategory", strCategoryName, end);
+				token = tokenizer.finishValueToken("InvalidCategory", strCategoryName);
 			} else {
-				token = parser.finishValueToken("Category", categoryName, end);
+				token = tokenizer.finishValueToken("Category", categoryName);
 			}
 
-			return [state, token];
+			return token;
 		}
 	},
 });
@@ -242,8 +210,8 @@ const suppressionCommentParser = createParser<ParserTypes>({
 export function parseCategoryPair(
 	parser: SuppressionCommentParser,
 ): [
-	Tokens["Category"] | Tokens["InvalidCategory"],
-	undefined | Tokens["CategoryValue"]
+		Tokens["Category"] | Tokens["InvalidCategory"],
+		undefined | Tokens["CategoryValue"]
 ] {
 	return [
 		parser.eatToken("InvalidCategory") || parser.expectToken("Category"),
@@ -260,6 +228,7 @@ const COMMENT_PARSE_CHECK = new RegExp(
 const EMPTY_EXTRACTIONS: ExtractedSuppressions = {
 	suppressions: [],
 	diagnostics: [],
+	explanation: undefined,
 };
 
 export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
@@ -277,6 +246,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 
 	const suppressedCategories: Set<string> = new Set();
 	const suppressions: DiagnosticSuppression[] = [];
+	let explanation: undefined | string;
 
 	while (!parser.matchToken("EOF")) {
 		const token = parser.getToken();
@@ -324,7 +294,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 				while (
 					parser.matchToken("Category") ||
 					parser.matchToken("InvalidCategory")
-				) {
+					) {
 					categories.push(parseCategoryPair(parser));
 				}
 
@@ -380,12 +350,18 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 					}
 				}
 
-				if (requireExplanations && !parser.eatToken("Explanation")) {
+				if (requireExplanations && !parser.matchToken("Explanation")) {
 					parser.unexpectedDiagnostic({
 						description: descriptions.SUPPRESSIONS.MISSING_EXPLANATION,
 					});
 				}
 
+				break;
+			}
+
+			case "Explanation": {
+				explanation = token.value;
+				parser.nextToken();
 				break;
 			}
 
@@ -396,11 +372,12 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 		}
 	}
 
-	parser.finalize();
+	parser.finalize(false);
 
 	return {
 		diagnostics: parser.getDiagnostics(),
 		suppressions,
+		explanation,
 	};
 }
 
