@@ -37,7 +37,7 @@ import {RequiredProps} from "@internal/typescript-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {attachComments} from "./comments";
 import {pretty} from "@internal/pretty-format";
-import ParserCoreTokenize from "./TokenizerCore";
+import TokenizerCore from "./TokenizerCore";
 
 export type ParserCoreState = {
 	comments: AnyComment[];
@@ -114,14 +114,18 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		this.indexTracker = indexTracker;
 
-		this.tokenizer = new ParserCoreTokenize(this.input, indexTracker, this);
+		this.tokenizer = new TokenizerCore({
+			input: this.input,
+			indexTracker,
+			parser: this,
+		});
 
 		this.reset();
 	}
 
 	public options: Types["options"];
 	public meta: Types["meta"];
-	public tokenizer: ParserCoreTokenize<Types>;
+	public tokenizer: TokenizerCore<Types>;
 	public indexTracker: PositionTracker;
 	public impl: ParserCoreImplementation<Types>;
 	private tokenizing: boolean;
@@ -135,7 +139,9 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private diagnosticCategory: DiagnosticCategory;
 	private diagnosticCategoryValue: string;
 
-	private cachedDiagnostics: undefined | {
+	private cachedDiagnostics:
+		| undefined
+		| {
 		diagnostics: Diagnostic[];
 		filters: DiagnosticEliminationFilter[];
 		rawDiagnostics: Diagnostic[];
@@ -419,10 +425,12 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		if (Array.isArray(next)) {
 			return [
-				beforeState === next[0] ? beforeState : {
-					...beforeState,
-					...next[0],
-				},
+				beforeState === next[0]
+					? beforeState
+					: {
+						...beforeState,
+						...next[0],
+					},
 				next[1],
 			];
 		} else {
@@ -442,10 +450,12 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		const {currentToken} = this;
 		let {description} = opts;
 		const location = this.getDiagnosticLocation(opts);
-		const start = this.getIndexFromPosition(location.start);
 
 		// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
 		if (description === undefined) {
+			const start = this.getIndexFromPosition(location.start);
+			const end = this.getIndexFromPosition(location.end);
+
 			let tokenType;
 			if (start.equal(currentToken?.start)) {
 				tokenType = currentToken.type;
@@ -454,8 +464,18 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			if (this.isEOF(start)) {
 				description = descriptions.PARSER_CORE.UNEXPECTED_EOF;
 			} else {
-				const char = this.input[start.valueOf()];
-				description = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char, tokenType);
+				const str = this.input.slice(start.valueOf(), end.valueOf());
+				if (str.length === 1) {
+					description = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(
+						str,
+						tokenType,
+					);
+				} else {
+					description = descriptions.PARSER_CORE.UNEXPECTED_CHARACTERS(
+						str,
+						tokenType,
+					);
+				}
 			}
 		}
 
@@ -502,21 +522,30 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			end = this.getPositionFromIndex(opts.endIndex);
 		}
 
+		// If we weren't given a start, end, or token then point to the current token
+		if (
+			start === undefined &&
+			end === undefined &&
+			token === undefined &&
+			this.currentToken.type !== "SOF"
+		) {
+			token = this.getToken();
+		}
+
 		if (token !== undefined) {
 			start = this.getPositionFromIndex(token.start);
 			end = this.getPositionFromIndex(token.end);
+		}
+
+		// If no start or end, just point to the current position
+		if (start === undefined && end === undefined) {
+			start = this.getPosition();
 		}
 
 		const loc = opts.loc ?? opts.node?.loc;
 		if (start === undefined && end === undefined && loc !== undefined) {
 			start = loc.start;
 			end = loc.end;
-		}
-
-		// If we weren't given a start then default to the provided end, or the current token start
-		if (start === undefined && end === undefined) {
-			start = this.getPosition();
-			end = this.getLastEndPosition();
 		}
 
 		if (start === undefined && end !== undefined) {
@@ -551,9 +580,39 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	//# Token utility methods
 	public assertNoSpace(): void {
-		if (this.currentToken.start !== this.prevToken.end) {
+		if (!this.currentToken.start.equal(this.prevToken.end)) {
 			throw this.unexpected({
-				description: descriptions.PARSER_CORE.EXPECTED_SPACE,
+				description: descriptions.PARSER_CORE.UNEXPECTED_SPACE,
+				startIndex: this.prevToken.end,
+				endIndex: this.currentToken.start,
+			});
+		}
+	}
+
+	public assertNoNewline(
+		prevToken: TokenValues<Types["tokens"]> = this.prevToken,
+	): void {
+		const prevLine = this.getPositionFromIndex(prevToken.start).line;
+		const currLine = this.getPositionFromIndex(this.currentToken.start).line;
+		if (!currLine.equal(prevLine)) {
+			throw this.unexpected({
+				description: descriptions.PARSER_CORE.UNEXPECTED_NEWLINE,
+				startIndex: prevToken.end,
+				endIndex: this.currentToken.start,
+			});
+		}
+	}
+
+	public assertNewline(
+		prevToken: TokenValues<Types["tokens"]> = this.prevToken,
+	): void {
+		const prevLine = this.getPositionFromIndex(prevToken.start).line;
+		const currLine = this.getPositionFromIndex(this.currentToken.start).line;
+		if (currLine.equal(prevLine)) {
+			throw this.unexpected({
+				description: descriptions.PARSER_CORE.EXPECTED_NEWLINE,
+				startIndex: prevToken.end,
+				endIndex: this.currentToken.start,
 			});
 		}
 	}
@@ -565,7 +624,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		const token = this.getToken();
 		if (token.type === type) {
 			this.nextToken();
-			// @ts-expect-error
+			// @ts-ignore
 			return token;
 		} else {
 			return undefined;
@@ -589,7 +648,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	): Types["tokens"][Type] {
 		const token = this.getToken();
 		if (token.type === type) {
-			// @ts-expect-error
+			// @ts-ignore
 			return token;
 		} else {
 			throw this.unexpected({
@@ -681,7 +740,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	//# Node finalization
 
 	public finalizeNode<T extends AnyNode>(node: T): T {
-		// @ts-expect-error
+		// @ts-ignore
 		attachComments(this, node);
 		return node;
 	}
@@ -756,7 +815,10 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getDiagnostics(): Diagnostic[] {
 		const {cachedDiagnostics, state} = this;
-		if (cachedDiagnostics !== undefined && cachedDiagnostics.filters === state.diagnosticFilters && cachedDiagnostics.rawDiagnostics === state.diagnostics) {
+		if (
+			cachedDiagnostics?.filters === state.diagnosticFilters &&
+			cachedDiagnostics.rawDiagnostics === state.diagnostics
+		) {
 			return cachedDiagnostics.diagnostics;
 		}
 

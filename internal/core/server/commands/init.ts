@@ -4,7 +4,7 @@ import {StaticMarkup, markup} from "@internal/markup";
 import {ServerRequest, VERSION} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
-import {ConfigCommentMap, JSONObject, rjson} from "@internal/codec-config";
+import {ConfigCommentMap, JSONObject, toml} from "@internal/codec-config";
 import {
 	getFileHandlerFromExtension,
 	getFileHandlerFromPath,
@@ -130,7 +130,7 @@ export default createServerCommand<Flags>({
 				reporter.warn(
 					markup`No extension chosen; Rome will now use RJSON extension for your project configuration as fallback.`,
 				);
-				configHandler = rjson;
+				configHandler = toml;
 			}
 
 			reporter.heading(markup`Welcome to Rome! Let's get you started...`);

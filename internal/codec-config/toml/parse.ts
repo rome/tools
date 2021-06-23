@@ -55,7 +55,7 @@ export function parseRoot(parser: TOMLParser): TOMLObject {
 
     if (!parser.eatToken("Equals")) {
       throw parser.unexpected({
-        description: descriptions.TOML_PARSER.NO_VALUE_FOR_KEY(keys.join(".")),
+        description: descriptions.TOML.NO_VALUE_FOR_KEY(keys.join(".")),
       });
     }
 
@@ -316,7 +316,7 @@ function parseKey(parser: TOMLParser): string {
         } else {
           throw parser.unexpected({
             token,
-            description: descriptions.TOML_PARSER.INVALID_KEY_CHAR(key),
+            description: descriptions.TOML.INVALID_KEY_CHAR(key),
           });
         }
         break;

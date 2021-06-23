@@ -34,7 +34,12 @@
  *   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {DOUBLE_QUOTE, SINGLE_QUOTE, TICK_QUOTE} from "./constants";
+import {
+	DOUBLE_QUOTE,
+	EscapeStringQuoteChar,
+	SINGLE_QUOTE,
+	TICK_QUOTE,
+} from "./constants";
 import {isDigit} from "@internal/parser-core";
 
 // This regex represents printable ASCII characters, except the characters: '"\`
@@ -42,6 +47,7 @@ const PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;
 
 function escapeChar(
 	char: string,
+	lineStart: boolean,
 	ignoreWhitespaceEscapes: boolean,
 ): undefined | string {
 	switch (char) {
@@ -69,22 +75,20 @@ function escapeChar(
 			return ignoreWhitespaceEscapes ? char : "\\r";
 
 		case "\t":
-			return ignoreWhitespaceEscapes ? char : "\\t";
+			return ignoreWhitespaceEscapes && lineStart ? char : "\\t";
 	}
 
 	return undefined;
 }
 
-type QuoteChar = "" | '"' | "'" | "`";
-
-type EscapeStringOptions = {
-	quote?: QuoteChar;
+export type EscapeStringOptions = {
+	quote?: EscapeStringQuoteChar;
 	json?: boolean;
 	ignoreWhitespaceEscapes?: boolean;
 	unicodeOnly?: boolean;
 };
 
-export default function escapeJSString(
+export function escapeJSString(
 	str: string,
 	opts: EscapeStringOptions = {},
 ): string {
@@ -98,9 +102,17 @@ export default function escapeJSString(
 		unicodeOnly = false,
 	} = opts;
 
+	let lineStart = true;
+
 	// Loop over each code unit in the string and escape it
 	while (++index < str.length) {
 		const char = str[index];
+
+		if (char === "\n") {
+			lineStart = true;
+		} else if (char !== "\t") {
+			lineStart = false;
+		}
 
 		// Handle surrogate pairs in non-JSON mode
 		if (!json) {
@@ -134,19 +146,19 @@ export default function escapeJSString(
 
 		// Escape double quotes
 		if (char === DOUBLE_QUOTE) {
-			result += quote === char ? '\\"' : char;
+			result += char === quote ? '\\"' : char;
 			continue;
 		}
 
 		// Escape single quotes
 		if (char === SINGLE_QUOTE) {
-			result += quote === char ? "\\'" : char;
+			result += char === quote ? "\\'" : char;
 			continue;
 		}
 
 		// Escape back tick
 		if (char === TICK_QUOTE) {
-			result += quote === char ? "\\`" : char;
+			result += char === quote ? "\\`" : char;
 			continue;
 		}
 
@@ -158,7 +170,7 @@ export default function escapeJSString(
 
 		// Simple escapes
 		if (!unicodeOnly) {
-			const replacement = escapeChar(char, ignoreWhitespaceEscapes);
+			const replacement = escapeChar(char, lineStart, ignoreWhitespaceEscapes);
 			if (replacement !== undefined) {
 				result += replacement;
 				continue;

@@ -20,7 +20,7 @@ import {
 	isntLineBreak,
 	isntWhitespace,
 } from "@internal/parser-core";
-import {unescapeJSONString} from "@internal/string-escape";
+import {unescapeString} from "@internal/string-escape";
 import {isEscaped} from "@internal/string-utils";
 
 export const SUPPRESSION_START = "rome-ignore";
@@ -170,14 +170,17 @@ const suppressionCommentParser = createParser<ParserTypes>({
 					// Ensure next character is a closing quote
 					tokenizer.assert('"');
 
-					value = unescapeJSONString(
+					value = unescapeString(
 						rawValue,
-						(metadata, strIndex) => {
-							throw parser.unexpected({
-								description: metadata,
-								start: parser.getPositionFromIndex(valueStart.add(strIndex)),
-							});
-						},
+						{
+							mode: "json",
+							unexpected: (metadata, strIndex) => {
+								throw parser.unexpected({
+									description: metadata,
+									start: parser.getPositionFromIndex(valueStart.add(strIndex)),
+								});
+							},
+						}
 					);
 				} else {
 					// Otherwise we can just safely read this until the closing )

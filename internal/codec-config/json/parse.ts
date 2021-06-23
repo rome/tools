@@ -20,9 +20,10 @@ import {JSONObject, JSONValue, Tokens} from "./types";
 import {
 	ConsumeContext,
 	ConsumePath,
-	ConsumeSourceLocationRequestTarget, serializeConsumePath,
+	ConsumeSourceLocationRequestTarget,
+	serializeConsumePath,
 } from "@internal/consume";
-import {unescapeJSONString} from "@internal/string-escape";
+import {unescapeString} from "@internal/string-escape";
 import {
 	ParserCore,
 	ParserOptions,
@@ -109,15 +110,17 @@ export const jsonParser = createParser<JSONParserTypes>({
 			}
 
 			// Unescape the string
-			const unescaped = unescapeJSONString(
+			const unescaped = unescapeString(
 				value,
-				(metadata, strIndex) => {
-					throw parser.unexpected({
-						description: metadata,
-						start: parser.getPositionFromIndex(valueStart.add(strIndex)),
-					});
+				{
+					mode: "json",
+					unexpected(metadata, strIndex) {
+						throw parser.unexpected({
+							description: metadata,
+							start: parser.getPositionFromIndex(valueStart.add(strIndex)),
+						});
+					},
 				},
-				parser.meta.type === "rjson",
 			);
 
 			tokenizer.assert('"');

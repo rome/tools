@@ -1,5 +1,5 @@
 import {ConfigHandler, ConfigType} from "@internal/codec-config/types";
-import {json, rjson} from "@internal/codec-config";
+import {json, toml} from "@internal/codec-config";
 
 export default function retrieveConfigHandler(
 	extension: ConfigType,
@@ -10,17 +10,14 @@ export default function retrieveConfigHandler(
 	// 	manifestHandler = yaml;
 	// 	fileExtension = "yaml";
 	// } else
-	// if (extension === "toml") {
-	// 	manifestHandler = toml;
-	// } else
-	if (extension === "rjson") {
-		manifestHandler = rjson;
+	if (extension === "toml") {
+		manifestHandler = toml;
 	} else if (extension === "json") {
 		manifestHandler = json;
 	}
 
 	if (!manifestHandler) {
-		manifestHandler = rjson;
+		manifestHandler = toml;
 	}
 
 	return manifestHandler;

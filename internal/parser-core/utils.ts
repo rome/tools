@@ -18,7 +18,7 @@ import {
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
 import {Path, UNKNOWN_PATH, isPathish} from "@internal/path";
-import {isIndexedNumberish, ZeroIndexed} from "@internal/numbers";
+import {ZeroIndexed, isIndexedNumberish} from "@internal/numbers";
 import {isEscaped} from "@internal/string-utils";
 
 export function isDigit(char: undefined | string): boolean {
@@ -41,15 +41,22 @@ export function isESIdentifierStart(char: undefined | string): boolean {
 	return char !== undefined && /[A-Fa-z_$]/.test(char);
 }
 
+export function isWhitespace(char: undefined | string): boolean {
+	return char === " " || char === "\n" || char === "\t";
+}
+
 export function isntLineBreak(char: string): boolean {
 	return char !== "\n";
 }
 
 export function isntWhitespace(char: string): boolean {
-	return char !== "\n" && char !== " " && char !== "\t";
+	return !isWhitespace(char);
 }
 
-export function createReadCallback(str: string, checkEscape: boolean = true): ParserCoreReadCallback {
+export function createReadCallback(
+	str: string,
+	checkEscape: boolean = true,
+): ParserCoreReadCallback {
 	if (str.length === 1) {
 		if (checkEscape) {
 			return (char: string, index: ZeroIndexed, input: string) => {
@@ -84,7 +91,7 @@ export function createReadCallback(str: string, checkEscape: boolean = true): Pa
 export function createParser<
 	Types extends ParserCoreTypes,
 	Impl extends ParserCoreImplementation<Types> = ParserCoreImplementation<Types>
->(impl: Impl): ParserCoreFactory<Types> {
+	>(impl: Impl): ParserCoreFactory<Types> {
 	return {
 		create: (
 			opts: Types["options"],
@@ -105,7 +112,7 @@ export function createParserTemplateFactory<Ret>(
 			input: string;
 			value: Ret;
 		}
-	> = new Map();
+		> = new Map();
 
 	return (strs, ...subs) => {
 		let input = "";
@@ -132,7 +139,7 @@ export function createParserTemplateFactory<Ret>(
 export function tryParseWithOptionalOffsetPosition<
 	Opts extends ParserOptions,
 	Ret
->(
+	>(
 	parserOpts: Opts,
 	opts: {
 		getOffsetPosition: () => Position;
@@ -317,7 +324,7 @@ export function isSourceLocationish(val: unknown): val is SourceLocationish {
 	return (
 		isPathish(val.path) &&
 		(typeof val.identifierName === "string" ||
-		typeof val.identifierName === "undefined") &&
+			typeof val.identifierName === "undefined") &&
 		isPositionish(val.start) &&
 		isPositionish(val.end)
 	);
