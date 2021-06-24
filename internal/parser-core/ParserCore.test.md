@@ -88,7 +88,7 @@
 			location: {
 				language: "unknown"
 				path: RelativePath<1.test>
-				end: Position 1:0
+				end: Position 1:1
 				start: Position 1:0
 			}
 		}

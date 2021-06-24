@@ -3,7 +3,7 @@ invalid = [
 	"""
     let valid: Array<foo>;
     let invalid: bar[];
-    """,
+	""",
 	"""
     let invalid: Array<foo, Array<string>>;
     """,

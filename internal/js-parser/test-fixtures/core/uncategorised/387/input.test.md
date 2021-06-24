@@ -33,7 +33,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<core/uncategorised/387/input.js>
-				end: Position 1:0
+				end: Position 4:0
 				start: Position 4:0
 			}
 		}
@@ -57,6 +57,8 @@ JSRoot {
 
     2 │ /* Some multiline
     3 │ comment */
+  > 4 │ )
+      │ ^
 
 
 ```

@@ -65,7 +65,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/invalid-escape-sequence-function/input.js>
-				end: Position 1:10
+				end: Position 1:11
 				start: Position 1:11
 			}
 		}

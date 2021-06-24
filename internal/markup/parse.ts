@@ -297,7 +297,6 @@ function parseTag(
 			parser.nextToken();
 			selfClosing = true;
 		} else {
-			console.log(keyToken);
 			throw parser.unexpected({
 				description: descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
 			});

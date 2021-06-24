@@ -94,7 +94,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/class-properties/super-inside-function/input.js>
-				end: Position 2:23
+				end: Position 3:4
 				start: Position 3:4
 			}
 		}
@@ -118,8 +118,10 @@ JSRoot {
 
     1 │ class A {
     2 │   foo = function fn() {
-    3 │     super.x();
+  > 3 │     super.x();
+      │     ^
     4 │   }
+    5 │ }
 
 
 ```

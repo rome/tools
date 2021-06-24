@@ -55,7 +55,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/arrow-functions/no-binary-left/input.js>
-				end: Position 1:8
+				end: Position 1:9
 				start: Position 1:9
 			}
 		}

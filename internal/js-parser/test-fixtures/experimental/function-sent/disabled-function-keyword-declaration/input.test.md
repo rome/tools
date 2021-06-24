@@ -67,7 +67,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/function-sent/disabled-function-keyword-declaration/input.js>
-				end: Position 2:17
+				end: Position 2:18
 				start: Position 2:18
 			}
 		}

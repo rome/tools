@@ -85,7 +85,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/private-in/private-in-without-field/input.js>
-				end: Position 2:10
+				end: Position 3:4
 				start: Position 3:4
 			}
 		}
@@ -109,8 +109,10 @@ JSRoot {
 
     1 │ class Foo {
     2 │   test() {
-    3 │     #x in {};
+  > 3 │     #x in {};
+      │     ^
     4 │   }
+    5 │ }
 
 
 ```

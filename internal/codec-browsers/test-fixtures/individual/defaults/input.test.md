@@ -46,7 +46,7 @@
 ```javascript
 [
 	Modern {
-		end: ZeroIndexedNumber<15>
+		end: ZeroIndexedNumber<8>
 		start: ZeroIndexedNumber<0>
 	}
 	EOF {

@@ -136,6 +136,13 @@ export const jsonParser = createParser<JSONParserTypes>({
 			});
 		}
 
+		if (tokenizer.startsWith("//") || tokenizer.startsWith("/*")) {
+			throw parser.unexpected({
+				description: descriptions.JSON.COMMENTS_IN_JSON,
+				start: tokenizer.getPosition(),
+			});
+		}
+
 		if (tokenizer.startsWith("/")) {
 			throw parser.unexpected({
 				description: descriptions.JSON.REGEX_IN_JSON,
@@ -563,9 +570,9 @@ export function parseJSONExtra(
 	const res: ConfigParserResult = _parse(parser, categoryValue);
 
 	if (expectSyntaxError) {
-		throw new Error(
-			"JSON.parse failed but our custom JSON parser was successful... That doesn't smell right",
-		);
+		throw parser.unexpected({
+			description: descriptions.JSON.UNEXPECTED_PARSING,
+		});
 	}
 
 	return res;

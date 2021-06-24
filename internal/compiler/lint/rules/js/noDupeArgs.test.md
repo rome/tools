@@ -33,14 +33,9 @@ function hello(a, a) {
 
 ```
 
- lint/js/noDupeArgs/reject/2/file.js:3:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDupeArgs/reject/2/file.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument a name clash in strict mode
-
-    1 │ const hello = (a, a) => {
-    2 │   //
-  > 3 │ }
-      │  ^
 
   ℹ Defined already here
 

@@ -255,12 +255,12 @@ while (x) {
 
 ```
 
- lint/js/useBlockStatements/reject/9/file.ts:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/useBlockStatements/reject/9/file.ts:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'with' in strict mode
 
     with (x);
-             ^
+    ^^^^^^^^^
 
 
 ```

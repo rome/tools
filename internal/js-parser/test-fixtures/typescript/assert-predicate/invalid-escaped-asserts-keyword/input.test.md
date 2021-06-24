@@ -92,7 +92,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/assert-predicate/invalid-escaped-asserts-keyword/input.ts>
-				end: Position 1:16
+				end: Position 1:17
 				start: Position 1:17
 			}
 		}

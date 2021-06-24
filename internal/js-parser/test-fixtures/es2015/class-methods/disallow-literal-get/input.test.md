@@ -67,7 +67,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/class-methods/disallow-literal-get/input.js>
-				end: Position 2:7
+				end: Position 2:8
 				start: Position 2:8
 			}
 		}

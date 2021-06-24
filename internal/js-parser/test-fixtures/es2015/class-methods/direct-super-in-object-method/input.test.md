@@ -112,7 +112,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
-				end: Position 4:12
+				end: Position 4:13
 				start: Position 4:13
 			}
 		}
