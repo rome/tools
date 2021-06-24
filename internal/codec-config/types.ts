@@ -15,7 +15,7 @@ export type ConfigParserOptions = Omit<ParserOptions, "retainCarriageReturn"> & 
 	consumeDiagnosticCategoryValue?: string;
 };
 
-export type JSONConfigType = "rjson" | "json" | "json5" | "yaml";
+export type JSONConfigType = "json" | "json5";
 
 export type ConfigType = JSONConfigType | "toml" | "json5";
 

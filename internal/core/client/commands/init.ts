@@ -28,7 +28,7 @@ export default createLocalCommand({
 			y: c.get(
 				"y",
 				{
-					description: markup`Creates a configuration file without interacting with the user, using Rome's default.`,
+					description: markup`Creates a configuration file without interacting with the user, using Rome's defaults.`,
 				},
 			).asBoolean(false),
 		};
