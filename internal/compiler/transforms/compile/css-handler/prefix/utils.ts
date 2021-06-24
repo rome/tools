@@ -220,7 +220,7 @@ const PREFIX_NAME_REG_EXPR = /-([a-z]+)-/;
 
 /**
  * Restrict the prefixes in the block to the prefixes
- * present in the rule's prelude (if it's the case). 
+ * present in the rule's prelude (if it's the case).
  */
 function purgePrefixes(prefixes: Set<string>, path: PrefixCSSBlockCompilerPath) {
 	if (isCSSRule(path.parent)) {
@@ -280,7 +280,7 @@ interface PrefixPseudoSelectorsInRootProps {
 }
 
 /**
- * Iterate over all rules in the root and prefix their 
+ * Iterate over all rules in the root and prefix their
  * pseudo-selectors if it is the case. The root
  * is replaced only if we prefixed at least one
  * rule.
@@ -430,10 +430,10 @@ interface RuleRepresentation {
  * If we want to check if a rule is already prefixed we
  * need a distinctive representation for different rules
  * but indistinctive for variations of the same rule.
- * 
+ *
  * eg. .example:any-link != .example:read-only
  *     .example:any-link == .example:-moz-any-link
- * 
+ *
  * The function below converts the rule's prelude to a string
  * and removes all occurrences of prefixes. It also returns if
  * the rule was already containing a prefix.
@@ -472,7 +472,9 @@ function collectCSSRulePrefixes(
 			namesToFeatures,
 			targets,
 		);
-		newPrefixes.forEach((newPrefix) => allPrefixes.add(newPrefix));
+		for (const newPrefix of newPrefixes) {
+			allPrefixes.add(newPrefix);
+		}
 	}
 
 	return allPrefixes;
@@ -492,7 +494,9 @@ function collectCSSSelectorPrefixes(
 				continue;
 			}
 			const newPrefixes = getPrefixes(targets, browserFeature);
-			newPrefixes.forEach((newPrefix) => allPrefixes.add(newPrefix));
+			for (const newPrefix of newPrefixes) {
+				allPrefixes.add(newPrefix);
+			}
 		}
 	}
 
