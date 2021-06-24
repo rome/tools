@@ -366,7 +366,7 @@ function consumeCode(
 	if (tokenizer.consume("```")) {
 		const languageValue = tokenizer.read(isntLineBreak);
 
-		const value = tokenizer.read((_) => {
+		const value = tokenizer.read(() => {
 			const firstChar = tokenizer.get(1);
 			const secondChar = tokenizer.get(2);
 			const thirdChar = tokenizer.get(3);

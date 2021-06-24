@@ -529,8 +529,8 @@ function consumeDOCTYPE(
 	// doc requires a token like this
 	if (
 		tokenizer.startsWith("DOCTYPE") &&
-		!isDigit(tokenizer.get(8)) &&
-		!isAlpha(tokenizer.get(8))
+		!isDigit(tokenizer.get(7)) &&
+		!isAlpha(tokenizer.get(7))
 	) {
 		tokenizer.assert("DOCTYPE");
 		const inner = tokenizer.read(isntDoctypeEnd);
