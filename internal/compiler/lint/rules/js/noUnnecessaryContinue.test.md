@@ -35,9 +35,14 @@ loop: for (let i = 0; i < 5; i++) {}
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/2/file.ts:2:2 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint/js/noUnnecessaryContinue/reject/2/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
+
+    1 │ while (i--) {
+  > 2 │   continue;
+      │   ^^^^^^^^^
+    3 │ }
 
   ℹ Safe fix
 
@@ -108,9 +113,11 @@ while (1) {}
 for (let i = 0; i < 10; i++) {
 	if (i > 5) {
 		console.log("foo");
-	} else if (i >= 5 && i < 8) {
+	}
+	else if (i >= 5 && i < 8) {
 		console.log("test");
-	} else {
+	}
+	else {
 		console.log("test");
 	}
 }

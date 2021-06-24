@@ -44,7 +44,7 @@ invalid = [
 	'<img src="foo" role="presentation" />',
 	'<img src="foo" role="none" />',
 	'<object ></object>',
-	'<area\\t/>',
+	'<area />',
 	'<area alt />',
 	'<input type="image" />',
 	'<input type="image" alt />',

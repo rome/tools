@@ -6,8 +6,9 @@ invalid = [
 	}
 	""",
 	"""
-	while (i--)
- \t\tcontinue;
+	while (i--) {
+		continue;
+	}
 	""",
 	"""
 	while (1) {
