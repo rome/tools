@@ -84,11 +84,11 @@ const htmlParser = createParser<HTMLParserTypes>({
 		const char = tokenizer.get();
 
 		if (!escaped && state.inTagHead) {
-			if (tokenizer.eat("=")) {
+			if (tokenizer.consume("=")) {
 				return tokenizer.finishToken("Equals");
 			}
 
-			if (tokenizer.eat("/>")) {
+			if (tokenizer.consume("/>")) {
 				return tokenizer.finishToken("TagSelfClosing");
 			}
 
@@ -97,13 +97,13 @@ const htmlParser = createParser<HTMLParserTypes>({
 				return tokenizer.finishValueToken("Identifier", value);
 			}
 
-			if (tokenizer.eat('"')) {
+			if (tokenizer.consume('"')) {
 				const value = tokenizer.read(isStringValueChar);
 				tokenizer.assert('"');
 				return tokenizer.finishValueToken("String", value);
 			}
 
-			if (tokenizer.eat(">")) {
+			if (tokenizer.consume(">")) {
 				return [
 					{
 						inTagHead: false,
@@ -113,7 +113,7 @@ const htmlParser = createParser<HTMLParserTypes>({
 			}
 		}
 
-		if (tokenizer.eat("!")) {
+		if (tokenizer.consume("!")) {
 			const [isDoctype, value] = consumeDOCTYPE(tokenizer);
 			if (isDoctype && value) {
 				return tokenizer.finishValueToken("Doctype", value);
@@ -125,7 +125,7 @@ const htmlParser = createParser<HTMLParserTypes>({
 			}
 		}
 
-		if (tokenizer.eat("<!--")) {
+		if (tokenizer.consume("<!--")) {
 			const value = tokenizer.read(isntCommentEnd);
 			tokenizer.assert("-->");
 
@@ -141,7 +141,7 @@ const htmlParser = createParser<HTMLParserTypes>({
 			tokenizer.take(1);
 
 			let token;
-			if (tokenizer.eat("/")) {
+			if (tokenizer.consume("/")) {
 				token = tokenizer.finishToken("TagEndOpen");
 			} else {
 				token = tokenizer.finishToken("TagStartOpen");

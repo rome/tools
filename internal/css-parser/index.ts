@@ -42,7 +42,7 @@ export const cssParser = createParser<CSSParserTypes>({
 	tokenize(parser: CSSParser, tokenizer): AnyCSSToken {
 		const char = tokenizer.get();
 
-		if (tokenizer.eat("/*")) {
+		if (tokenizer.consume("/*")) {
 			const value = tokenizer.read(isntBlockCommentEnd);
 			tokenizer.assert("*/");
 			return tokenizer.finishValueToken("Comment", value);
@@ -53,11 +53,11 @@ export const cssParser = createParser<CSSParserTypes>({
 			return tokenizer.finishToken("Whitespace");
 		}
 
-		if (tokenizer.eat('"')) {
+		if (tokenizer.consume('"')) {
 			return consumeStringToken(parser, tokenizer, '"');
 		}
 
-		if (tokenizer.eat("'")) {
+		if (tokenizer.consume("'")) {
 			return consumeStringToken(parser, tokenizer, "'");
 		}
 
@@ -82,11 +82,11 @@ export const cssParser = createParser<CSSParserTypes>({
 			}
 		}
 
-		if (tokenizer.eat("(")) {
+		if (tokenizer.consume("(")) {
 			return tokenizer.finishToken("LeftParen");
 		}
 
-		if (tokenizer.eat(")")) {
+		if (tokenizer.consume(")")) {
 			return tokenizer.finishToken("RightParen");
 		}
 
@@ -97,11 +97,11 @@ export const cssParser = createParser<CSSParserTypes>({
 			return consumeNumberToken(parser, tokenizer);
 		}
 
-		if (tokenizer.eat(",")) {
+		if (tokenizer.consume(",")) {
 			return tokenizer.finishToken("Comma");
 		}
 
-		if (tokenizer.eat("-->")) {
+		if (tokenizer.consume("-->")) {
 			return tokenizer.finishToken("CDC");
 		}
 
@@ -122,15 +122,15 @@ export const cssParser = createParser<CSSParserTypes>({
 			return consumeNumberToken(parser, tokenizer);
 		}
 
-		if (tokenizer.eat(":")) {
+		if (tokenizer.consume(":")) {
 			return tokenizer.finishToken("Colon");
 		}
 
-		if (tokenizer.eat(";")) {
+		if (tokenizer.consume(";")) {
 			return tokenizer.finishToken("Semi");
 		}
 
-		if (tokenizer.eat("<!--")) {
+		if (tokenizer.consume("<!--")) {
 			return tokenizer.finishToken("CDO");
 		}
 
@@ -143,11 +143,11 @@ export const cssParser = createParser<CSSParserTypes>({
 			return tokenizer.finishValueToken("AtKeyword", value);
 		}
 
-		if (tokenizer.eat("[")) {
+		if (tokenizer.consume("[")) {
 			return tokenizer.finishToken("LeftSquareBracket");
 		}
 
-		if (tokenizer.eat("\\")) {
+		if (tokenizer.consume("\\")) {
 			if (isValidEscape("\\", tokenizer.get())) {
 				return consumeIdentLikeToken(parser, tokenizer);
 			}
@@ -158,15 +158,15 @@ export const cssParser = createParser<CSSParserTypes>({
 			return tokenizer.finishValueToken("Delim", "\\");
 		}
 
-		if (tokenizer.eat("]")) {
+		if (tokenizer.consume("]")) {
 			return tokenizer.finishToken("RightSquareBracket");
 		}
 
-		if (tokenizer.eat("{")) {
+		if (tokenizer.consume("{")) {
 			return tokenizer.finishToken("LeftCurlyBracket");
 		}
 
-		if (tokenizer.eat("}")) {
+		if (tokenizer.consume("}")) {
 			return tokenizer.finishToken("RightCurlyBracket");
 		}
 
@@ -323,7 +323,7 @@ function consumeIdentLikeToken(
 	const name = consumeName(parser, tokenizer);
 	let value = name;
 
-	if (/url/gi.test(value) && tokenizer.eat("(")) {
+	if (/url/gi.test(value) && tokenizer.consume("(")) {
 		while (isWhitespace(tokenizer.get()) && isWhitespace(tokenizer.get(1))) {
 			tokenizer.take(1);
 		}
@@ -481,7 +481,7 @@ function consumeURLToken(
 			return tokenizer.finishToken("BadURL");
 		}
 
-		if (tokenizer.eat("\\")) {
+		if (tokenizer.consume("\\")) {
 			if (isValidEscape(tokenizer.get(), tokenizer.get())) {
 				const newValue = consumeEscaped(parser, tokenizer);
 				value += newValue;

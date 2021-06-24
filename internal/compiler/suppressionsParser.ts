@@ -108,7 +108,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 	): ParserCoreTokenizeState<ParserTypes> {
 		if (state.searching) {
 			// Ignore leading stars
-			if (tokenizer.eat("*")) {
+			if (tokenizer.consume("*")) {
 				return parser.lookahead(tokenizer.index);
 			}
 
@@ -141,7 +141,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 			];
 		} else {
 			// If the current character is a colon then we're an explanation
-			if (tokenizer.eat(":")) {
+			if (tokenizer.consume(":")) {
 				const rawExplanation = tokenizer.read(isntLineBreak);
 				const explanation = rawExplanation.trim();
 
@@ -159,10 +159,10 @@ const suppressionCommentParser = createParser<ParserTypes>({
 			}
 
 			// Category value
-			if (tokenizer.eat("(")) {
+			if (tokenizer.consume("(")) {
 				let value = "";
 
-				if (tokenizer.eat('"')) {
+				if (tokenizer.consume('"')) {
 					// String value we need to escape
 					const valueStart = tokenizer.index;
 					const rawValue = tokenizer.read(isStringValueChar);
