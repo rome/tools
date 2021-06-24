@@ -41,7 +41,7 @@
 
   ✖ Avoid using the scope attribute on elements other than th elements.
 
-    <div scope='col' />
+    <div scope="col" />
     ^^^^^^^^^^^^^^^^^^^
 
   ℹ Using the scope attribute incorrectly on tables makes them difficult to navigate using the

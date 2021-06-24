@@ -107,7 +107,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/private-in/private-in-escaped-sequence/input.js>
-				end: Position 3:10
+				end: Position 4:4
 				start: Position 4:4
 			}
 		}
@@ -131,8 +131,10 @@ JSRoot {
 
     2 │   #\u{61} = 1;
     3 │   test() {
-    4 │     #\u{61} in {};
+  > 4 │     #\u{61} in {};
+      │     ^
     5 │   }
+    6 │ }
 
 
 ```

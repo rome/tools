@@ -62,7 +62,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-generator/malformed-generator-method-2/input.js>
-				end: Position 1:13
+				end: Position 1:14
 				start: Position 1:14
 			}
 		}

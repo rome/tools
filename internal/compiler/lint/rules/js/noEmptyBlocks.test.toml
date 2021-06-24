@@ -1,0 +1,26 @@
+filename = "file.ts"
+invalid = [
+	"""
+		if (foo) {}
+	""",
+	"""
+		if (foo) {
+			// foo;
+		} else {}
+	""",
+]
+valid = [
+	"""
+		if (foo) foo;
+	""",
+	"""
+		if (foo) {
+			foo;
+		}
+	""",
+	"""
+		if (foo) {
+			// empty
+		}
+	""",
+]

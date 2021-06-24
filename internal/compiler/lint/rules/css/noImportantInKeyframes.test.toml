@@ -1,0 +1,29 @@
+filename = "filename.css"
+invalid = [
+	"""
+@keyframes foo {
+  from {
+    opacity= 0;
+    width= 0;
+  }
+
+  to {
+    opacity= 1 !important;
+    width= 100px !important;
+  }
+}
+	""",
+]
+valid = [
+	"""
+@keyframes foo {
+  from {
+    opacity= 0;
+  }
+
+  to {
+    opacity= 1;
+  }
+}
+	""",
+]

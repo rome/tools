@@ -1,8 +1,0 @@
-filename: "file.ts"
-invalid: [
-	"let foo, bar;"
-]
-valid: [
-	// Ignores loop heads
-	"for (let i = 0, x = 1; i < arr.length; i++) {}"
-]

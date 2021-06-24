@@ -226,7 +226,7 @@
 			location: {
 				language: "text"
 				path: UIDPath<unknown>
-				end: Position 1:12
+				end: Position 1:20
 				start: Position 1:20
 			}
 		}
@@ -240,7 +240,7 @@
 			location: {
 				language: "text"
 				path: UIDPath<unknown>
-				end: Position 1:18
+				end: Position 4:21
 				start: Position 4:21
 			}
 		}

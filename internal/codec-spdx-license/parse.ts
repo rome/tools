@@ -16,7 +16,6 @@ import {
 } from "@internal/parser-core";
 import {getSPDXLicense, licenseNames} from "./index";
 import {Diagnostic, descriptions} from "@internal/diagnostics";
-import {ZeroIndexed} from "@internal/numbers";
 import {
 	ExpressionNode,
 	LicenseNode,
@@ -63,32 +62,30 @@ export interface SPDXLicenseParseResult {
 const spdxLicenseParser = createParser<SPDXParserTypes>({
 	diagnosticLanguage: "spdxlicense",
 	ignoreWhitespaceTokens: true,
-	tokenize(parser: SPDXParser, index: ZeroIndexed) {
-		const char = parser.getInputCharOnly(index);
-
-		if (char === "+") {
-			return parser.finishToken("Plus");
+	tokenize(parser: SPDXParser, tokenizer) {
+		if (tokenizer.consume("+")) {
+			return tokenizer.finishToken("Plus");
 		}
 
-		if (char === "(") {
-			return parser.finishToken("ParenOpen");
+		if (tokenizer.consume("(")) {
+			return tokenizer.finishToken("ParenOpen");
 		}
 
-		if (char === ")") {
-			return parser.finishToken("ParenClose");
+		if (tokenizer.consume(")")) {
+			return tokenizer.finishToken("ParenClose");
 		}
 
-		if (isWordChar(char)) {
-			const [value, end] = parser.readInputFrom(index, isWordChar);
+		if (isWordChar(tokenizer.get())) {
+			const value = tokenizer.read(isWordChar);
 
 			if (value === "AND") {
-				return parser.finishToken("And", end);
+				return tokenizer.finishToken("And");
 			} else if (value === "OR") {
-				return parser.finishToken("Or", end);
+				return tokenizer.finishToken("Or");
 			} else if (value === "WITH") {
-				return parser.finishToken("With", end);
+				return tokenizer.finishToken("With");
 			} else {
-				return parser.finishValueToken("Word", value, end);
+				return tokenizer.finishValueToken("Word", value);
 			}
 		}
 

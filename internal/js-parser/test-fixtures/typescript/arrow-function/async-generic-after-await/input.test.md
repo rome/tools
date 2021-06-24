@@ -87,7 +87,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
-				end: Position 3:13
+				end: Position 3:14
 				start: Position 3:14
 			}
 		}

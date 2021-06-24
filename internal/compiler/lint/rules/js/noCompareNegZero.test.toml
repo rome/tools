@@ -1,0 +1,7 @@
+filename = "file.ts"
+invalid = [
+	"(1 >= -0)",
+]
+valid = [
+	"(1 >= 0)",
+]

@@ -50,7 +50,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
-				end: Position 1:9
+				end: Position 1:10
 				start: Position 1:10
 			}
 		}

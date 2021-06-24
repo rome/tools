@@ -86,7 +86,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default/input.js>
-				end: Position 1:6
+				end: Position 1:7
 				start: Position 1:7
 			}
 		}

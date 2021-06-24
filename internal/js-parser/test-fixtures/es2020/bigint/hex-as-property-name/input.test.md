@@ -46,7 +46,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2020/bigint/hex-as-property-name/input.js>
-				end: Position 1:2
+				end: Position 1:3
 				start: Position 1:3
 			}
 		}

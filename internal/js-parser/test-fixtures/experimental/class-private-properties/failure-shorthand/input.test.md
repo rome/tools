@@ -100,7 +100,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/class-private-properties/failure-shorthand/input.js>
-				end: Position 4:10
+				end: Position 4:11
 				start: Position 4:11
 			}
 		}

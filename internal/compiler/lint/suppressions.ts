@@ -95,14 +95,14 @@ export function addSuppressions(
 		if (suppressionCategories.size > 0) {
 			// get from comment possible existing categories
 			// TODO: make sure that category matches the rules we have (remove "lint/" from category)
-			updateComment.value.slice(
+			const computedCategories = updateComment.value.slice(
 				updateComment.value.indexOf(SUPPRESSION_START),
 				updateComment.value.indexOf(":"),
-			).replace(SUPPRESSION_START, "").split(" ").filter(Boolean).forEach((
-				category,
-			) => {
-				suppressionCategories.add(category);
-			});
+			).replace(SUPPRESSION_START, "").split(" ").filter(Boolean);
+
+			for (const computedCategory of computedCategories) {
+				suppressionCategories.add(computedCategory);
+			}
 			injectComment(
 				path,
 				{

@@ -143,7 +143,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/assert-predicate/function-declaration/input.ts>
-				end: Position 3:43
+				end: Position 3:44
 				start: Position 3:44
 			}
 		}

@@ -4,63 +4,56 @@ import {
 	MarkdownParser,
 	Tokens,
 } from "@internal/markdown-parser";
-import {ZeroIndexed} from "@internal/numbers";
 import {MarkdownListChildren, MarkdownListItem} from "@internal/ast";
 import {parseParagraph} from "./paragraph";
 
-function isChecked(
-	parser: MarkdownParser,
-	index: ZeroIndexed,
-): [boolean | undefined, ZeroIndexed] {
-	const openSquareBracketChar = parser.getInputCharOnly(index.increment());
-	const spaceOrXChar = parser.getInputCharOnly(index.add(2));
-	const closedSquareBracketChar = parser.getInputCharOnly(index.add(3));
-
-	if (openSquareBracketChar === "[" && closedSquareBracketChar === "]") {
-		if (spaceOrXChar === " ") {
-			return [false, index.add(3)];
-		} else if (spaceOrXChar.toLowerCase() === "x") {
-			return [true, index.add(3)];
-		}
+function isChecked(tokenizer: MarkdownParser["tokenizer"]): boolean | undefined {
+	if (tokenizer.eat("[ ]")) {
+		tokenizer.eat(" ");
+		return false;
 	}
-	return [undefined, index];
+
+	if (tokenizer.eat("[x]") || tokenizer.eat("[X]")) {
+		tokenizer.eat(" ");
+		return true;
+	}
+
+	return undefined;
 }
 
 export function tokenizeListItem(
 	parser: MarkdownParser,
-	index: ZeroIndexed,
+	tokenizer: MarkdownParser["tokenizer"],
 	withChar?: undefined | "*" | "-",
 ): TokenValues<Tokens> | undefined {
 	if (withChar) {
-		const nextChar = parser.getInputCharOnly(index.increment());
-		if (nextChar === " ") {
-			const [checked, newIndex] = isChecked(parser, index.add(1));
+		if (tokenizer.eat(`${withChar} `)) {
+			const checked = isChecked(tokenizer);
 
-			const endIndex = checked === undefined ? index.add(2) : newIndex.add(2);
-
-			return parser.finishComplexToken<"ListItem", ListProperties>(
+			return tokenizer.finishComplexToken<"ListItem", ListProperties>(
 				"ListItem",
 				{
 					numeric: false,
 					checked,
 					value: withChar,
 				},
-				endIndex,
 			);
 		}
-	}
-	const [, endIndex] = parser.readInputFrom(index, isDigit);
-	const nextChar = parser.getInputCharOnly(endIndex);
-	const nextNextChar = parser.getInputCharOnly(endIndex.increment());
-	if (nextChar === "." && (nextNextChar === " " || nextNextChar === "\n")) {
-		return parser.finishComplexToken<"ListItem", ListProperties>(
-			"ListItem",
-			{
-				numeric: true,
-				checked: undefined,
-			},
-			endIndex.add(2),
-		);
+	} else {
+		const start = tokenizer.index;
+		tokenizer.read(isDigit);
+
+		if (tokenizer.consume(".\n") || tokenizer.consume(". ")) {
+			return tokenizer.finishComplexToken<"ListItem", ListProperties>(
+				"ListItem",
+				{
+					numeric: true,
+					checked: undefined,
+				},
+			);
+		} else {
+			tokenizer.setIndex(start);
+		}
 	}
 
 	return undefined;

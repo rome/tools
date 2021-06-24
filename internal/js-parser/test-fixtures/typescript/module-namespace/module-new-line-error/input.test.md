@@ -43,7 +43,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/module-namespace/module-new-line-error/input.ts>
-				end: Position 2:3
+				end: Position 2:4
 				start: Position 2:4
 			}
 		}

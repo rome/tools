@@ -1,0 +1,12 @@
+filename = "file.ts"
+invalid = [
+	"""
+		import\tfoo\tfrom\t'./testdummy.ts';
+		import\t{bar}\tfrom\t'./testdummy.ts';
+		import\ttype\t{fooType}\tfrom\t'./testdummy.ts';
+
+		const\ttypedFoo:\tfooType\t=\t{
+			type:\t'foo'
+		};
+	""",
+]

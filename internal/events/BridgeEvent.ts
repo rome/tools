@@ -19,6 +19,7 @@ import {RSERValue} from "@internal/binary-transport";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	decorateErrorWithDiagnostics,
+	getDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {Resource, createResourceContainer} from "@internal/resources";
@@ -77,17 +78,21 @@ export class BridgeEvent<
 
 	public end(err: Error) {
 		for (const {reject} of this.requestCallbacks.values()) {
-			reject(
-				decorateErrorWithDiagnostics(
-					err,
-					{
-						description: {
-							message: markup`Terminated execution of ${this.backingEvent.displayName}`,
-							category: DIAGNOSTIC_CATEGORIES["bridge/closed"],
+			if (getDiagnosticsFromError(err) === undefined) {
+				reject(
+					decorateErrorWithDiagnostics(
+						err,
+						{
+							description: {
+								message: markup`Terminated execution of ${this.backingEvent.displayName}`,
+								category: DIAGNOSTIC_CATEGORIES["bridge/closed"],
+							},
 						},
-					},
-				),
-			);
+					),
+				);
+			} else {
+				reject(err);
+			}
 		}
 	}
 

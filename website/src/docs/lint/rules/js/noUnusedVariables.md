@@ -17,7 +17,7 @@ disallow unused variables
 **ESLint Equivalent:** [no-unused-vars](https://eslint.org/docs/rules/no-unused-vars)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:290796669dab469a93f60829518e8f37f66004cf,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:eb3633d0a4b64e74eba682920bcd4e7af28a66a6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -181,9 +181,9 @@ disallow unused variables
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword">typeof</span> <span class="token variable">foo</span> <span class="token punctuation">{</span>
-		<span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-				<span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:9</span> <strong>lint/js/noUnusedVariables(foo)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -192,8 +192,8 @@ disallow unused variables
 
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token keyword">typeof</span> <span class="token variable">foo</span> <span class="token punctuation">{</span>
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  2</strong><strong> │ </strong>    <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <strong>  3</strong><strong> │ </strong>        <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+  <strong>  2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong>  3</strong><strong> │ </strong>    <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
     <span style="color: rgb(38, 148, 255);">refactoring.</span>
@@ -203,9 +203,9 @@ disallow unused variables
 ---
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token punctuation">{</span>
-		<span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">_foo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
+	<span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">_foo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:6</span> <strong>lint/js/noUnusedVariables(Foo)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -214,8 +214,8 @@ disallow unused variables
 
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token punctuation">{</span>
      <strong> │ </strong>      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  2</strong><strong> │ </strong>    <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <strong>  3</strong><strong> │ </strong>      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">_foo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <strong>  2</strong><strong> │ </strong>  <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong>  3</strong><strong> │ </strong>    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">_foo</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
     <span style="color: rgb(38, 148, 255);">refactoring.</span>

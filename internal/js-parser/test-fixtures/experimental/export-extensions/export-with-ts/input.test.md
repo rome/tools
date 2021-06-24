@@ -190,7 +190,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
-				end: Position 1:15
+				end: Position 1:16
 				start: Position 1:16
 			}
 		}

@@ -1,0 +1,66 @@
+[[cases]]
+filename = "test.js"
+invalid = [
+	"""
+		// @jsx
+		<div></div>
+	""",
+	"""
+		// @jsx
+		<></>
+	""",
+	"""
+		// @jsx
+		<Fragment></Fragment>
+	""",
+	"""
+		// @jsx
+		<React.Fragment></React.Fragment>
+	""",
+]
+valid = [
+	"'<div></div>'",
+]
+
+[[cases]]
+filename = "test.jsx"
+valid = [
+	"""
+		// @jsx
+		<div></div>
+	""",
+	"""
+		// @jsx
+		<></>
+	""",
+	"""
+		// @jsx
+		<Fragment></Fragment>
+	""",
+	"""
+		// @jsx
+		<React.Fragment></React.Fragment>
+	""",
+]
+
+[[cases]]
+filename = "test.tsx"
+valid = [
+	"""
+		// @jsx
+		<div></div>
+	""",
+	"""
+		// @jsx
+		<></>
+	""",
+	"""
+		// @jsx
+		<Fragment></Fragment>
+	""",
+	"""
+		// @jsx
+		<React.Fragment></React.Fragment>
+	""",
+]
+

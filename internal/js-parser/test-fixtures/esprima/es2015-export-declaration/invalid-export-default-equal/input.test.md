@@ -38,7 +38,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-equal/input.js>
-				end: Position 1:14
+				end: Position 1:15
 				start: Position 1:15
 			}
 		}

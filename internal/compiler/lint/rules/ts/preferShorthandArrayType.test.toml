@@ -1,0 +1,27 @@
+filename = "file.ts"
+invalid = [
+	"""
+    let valid: Array<foo>;
+    let invalid: bar[];
+	""",
+	"""
+    let invalid: Array<foo, Array<string>>;
+    """,
+	"""
+	let invalid: Promise<Array<string>>;
+	""",
+	"""
+	let invalid: Array<Foo<Bar>>;
+	""",
+]
+valid = [
+	"""
+    let valid: Array<foo | bar>;
+    """,
+	"""
+	let valid: Array<Foo | Bar>;
+	""",
+	"""
+	let valid: Array<keyof Bar>;
+    """,
+]

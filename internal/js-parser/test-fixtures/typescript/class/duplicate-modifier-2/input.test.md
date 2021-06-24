@@ -54,7 +54,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/class/duplicate-modifier-2/input.ts>
-				end: Position 2:9
+				end: Position 2:10
 				start: Position 2:10
 			}
 		}

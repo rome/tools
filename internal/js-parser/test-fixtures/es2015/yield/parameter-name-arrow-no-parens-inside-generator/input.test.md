@@ -66,7 +66,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js>
-				end: Position 2:7
+				end: Position 2:8
 				start: Position 2:8
 			}
 		}

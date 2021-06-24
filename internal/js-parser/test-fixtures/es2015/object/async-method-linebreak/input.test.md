@@ -55,7 +55,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/object/async-method-linebreak/input.js>
-				end: Position 2:9
+				end: Position 3:4
 				start: Position 3:4
 			}
 		}
@@ -79,7 +79,8 @@ JSRoot {
 
     1 │ ({
     2 │     async
-    3 │     foo() {}
+  > 3 │     foo() {}
+      │     ^
     4 │ })
 
 

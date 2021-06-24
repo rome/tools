@@ -67,7 +67,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/top-level-await/for-await-script/input.js>
-				end: Position 1:3
+				end: Position 1:4
 				start: Position 1:4
 			}
 		}

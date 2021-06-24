@@ -57,7 +57,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-yield/invalid-yield-expression/input.js>
-				end: Position 1:19
+				end: Position 1:20
 				start: Position 1:20
 			}
 		}

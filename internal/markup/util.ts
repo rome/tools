@@ -61,6 +61,10 @@ export function buildFileLink(
 		}
 	}
 
+	if (path.isRelative() && opts.cwd !== undefined) {
+		path = opts.cwd.resolve(path);
+	}
+
 	return {
 		path,
 		text: formatFileLinkInnerText(path, opts, {line, column}),

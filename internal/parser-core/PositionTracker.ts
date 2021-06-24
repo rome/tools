@@ -18,7 +18,7 @@ export default class PositionTracker {
 			},
 			getPosition,
 		}: {
-			path: undefined | Path;
+			path?: Path;
 			input: string;
 			offsetPosition?: Position;
 			getPosition?: GetPosition;

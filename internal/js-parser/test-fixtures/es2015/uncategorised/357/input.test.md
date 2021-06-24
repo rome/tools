@@ -40,7 +40,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/uncategorised/357/input.js>
-				end: Position 1:5
+				end: Position 1:6
 				start: Position 1:6
 			}
 		}
