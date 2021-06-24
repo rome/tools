@@ -134,7 +134,7 @@ async function runCommand(
 
 			let configPath: AbsoluteFilePath;
 			if (existingConfigPath === undefined) {
-				configPath = USER_CONFIG_DIRECTORY.append("rome.rjson");
+				configPath = USER_CONFIG_DIRECTORY.append("rome.json");
 				await configPath.writeFile("");
 				reporter.info(
 					markup`Created user config at <emphasis>${configPath}</emphasis> as it did not exist`,
