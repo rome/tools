@@ -39,6 +39,6 @@ export const json = createDiagnosticsCategory({
 		message: markup`Numeric separators are not allowed in JSON`,
 	},
 	UNEXPECTED_PARSING: {
-		message: markup`JSON.parse failed but our custom JSON parser was successful... That doesn't smell right`
-	}
+		message: markup`JSON.parse failed but our custom JSON parser was successful... That doesn't smell right`,
+	},
 });

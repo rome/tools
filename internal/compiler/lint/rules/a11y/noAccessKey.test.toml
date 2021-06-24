@@ -1,21 +1,21 @@
 [[cases]]
 filename = "file.tsx"
 invalid = [
-	'<input accessKey="key" />',
-	'<input accessKey={key} />',
+	"<input accessKey=\"key\" />",
+	"<input accessKey={key} />",
 ]
 valid = [
-	'<input />',
-	'<input accessKey={undefined} />',
-	'<Input accessKey={key} />',
+	"<input />",
+	"<input accessKey={undefined} />",
+	"<Input accessKey={key} />",
 ]
 
 [[cases]]
 filename = "file.html"
 invalid = [
-	'<input accesskey="key" />',
+	"<input accesskey=\"key\" />",
 ]
 valid = [
-	'<input />',
+	"<input />",
 ]
 

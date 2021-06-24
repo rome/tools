@@ -1,7 +1,7 @@
 [[cases]]
 filename = "file.tsx"
 invalid = [
-	'<svg>foo</svg>',
+	"<svg>foo</svg>",
 	"""
 		<svg>
 			<title></title>
@@ -38,7 +38,7 @@ valid = [
 [[cases]]
 filename = "file.html"
 invalid = [
-	'<svg>foo</svg>',
+	"<svg>foo</svg>",
 	"""
 		<svg>
 			<title></title>

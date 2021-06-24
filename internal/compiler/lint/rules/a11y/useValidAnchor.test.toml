@@ -1,6 +1,6 @@
 [[cases]]
-filename= "file.jsx"
-invalid= [
+filename = "file.jsx"
+invalid = [
 	"<a href='#' onClick={foo} />",
 	"<a href={'#'} onClick={foo} />",
 	"<a href={`#`} onClick={foo} />",
@@ -18,7 +18,7 @@ invalid= [
 	"<a href={'javascript:void(0)'} />",
 	"<a href={`javascript:void(0)`} />",
 ]
-valid= [
+valid = [
 	"<a href='https://github.com' />",
 	"<a href='#section' />",
 	"<a href='foo' />",
@@ -34,21 +34,21 @@ valid= [
 [[cases]]
 filename = "file.html"
 invalid = [
-	'<a href="#" onclick="() => {}" ></a>',
-	'<a onclick="() => {}"/>',
-	'<a href="javascript:void(0)" onclick="() => {}" ></a>',
-	'<a ></a>',
-	'<a href="#"></a>',
-	'<a href="javascript:void(0)"></a>',
+	"<a href=\"#\" onclick=\"() => {}\" ></a>",
+	"<a onclick=\"() => {}\"/>",
+	"<a href=\"javascript:void(0)\" onclick=\"() => {}\" ></a>",
+	"<a ></a>",
+	"<a href=\"#\"></a>",
+	"<a href=\"javascript:void(0)\"></a>",
 ]
 valid = [
-	'<a href="https://github.com" ></a>',
-	'<a href="#section" ></a>',
-	'<a href="foo" ></a>',
-	'<a href="/foo/bar"></a>',
-	'<a href="https://github.com" onclick="() => {}" ></a>',
-	'<a href="#section" onclick="() => {}" ></a>',
-	'<a href="foo" onclick="() => {}" ></a>',
-	'<a href="/foo/bar" onclick="() => {}" ></a>',
+	"<a href=\"https://github.com\" ></a>",
+	"<a href=\"#section\" ></a>",
+	"<a href=\"foo\" ></a>",
+	"<a href=\"/foo/bar\"></a>",
+	"<a href=\"https://github.com\" onclick=\"() => {}\" ></a>",
+	"<a href=\"#section\" onclick=\"() => {}\" ></a>",
+	"<a href=\"foo\" onclick=\"() => {}\" ></a>",
+	"<a href=\"/foo/bar\" onclick=\"() => {}\" ></a>",
 ]
 

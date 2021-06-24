@@ -16,11 +16,11 @@ valid = [
 [[cases]]
 filename = "file.html"
 invalid = [
-	'<a href="http://external.link" target="_blank">child</a>',
+	"<a href=\"http://external.link\" target=\"_blank\">child</a>",
 ]
 valid = [
-	'<a href="http://external.link" rel="noopener noreferrer" target="_blank">child</a>',
-	'<a href="relative/link" rel="noreferrer" target="_blank">child</a>',
-	'<a href="/absolute/link" rel="noreferrer" target="_blank">child</a>',
+	"<a href=\"http://external.link\" rel=\"noopener noreferrer\" target=\"_blank\">child</a>",
+	"<a href=\"relative/link\" rel=\"noreferrer\" target=\"_blank\">child</a>",
+	"<a href=\"/absolute/link\" rel=\"noreferrer\" target=\"_blank\">child</a>",
 ]
 

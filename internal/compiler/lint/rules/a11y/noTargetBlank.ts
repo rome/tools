@@ -79,7 +79,6 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 
-
 		if (isHTMLElement(node) && node.name.name === "a") {
 			if (
 				anchorHasBlankTarget(node) &&
