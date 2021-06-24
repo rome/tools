@@ -17,7 +17,7 @@ enforce no duplicate props
 **ESLint Equivalent:** [jsx-no-duplicate-props](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-duplicate-props.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:1cb1f8b03d33fc8f47afb849761ca95f862ca11d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:764f74f1394a3a76d80dba30b3de1ad0d6e18310,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -71,5 +71,5 @@ enforce no duplicate props
 ### Valid
 
 {% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">div</span>  <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">div</span>	<span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

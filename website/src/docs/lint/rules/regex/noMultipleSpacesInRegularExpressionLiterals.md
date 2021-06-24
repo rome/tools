@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:11202fd72c756d2730efc98dc3c2f3e6bf3d3efd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5e65e0fe112b78b8705c2e8bf51764d82d475554,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -153,5 +153,6 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo {2}bar/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo bar baz/</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo bar	baz/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token regex">/foo /</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
