@@ -3,7 +3,7 @@ import {CommandName, commandCategories} from "@internal/core/common/commands";
 import {markup} from "@internal/markup";
 import ClientRequest from "@internal/core/client/ClientRequest";
 import {consumeUnknown} from "@internal/consume";
-import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {DIAGNOSTIC_CATEGORIES, DiagnosticsError} from "@internal/diagnostics";
 
 interface Flags {
 	allowDirty: boolean;
@@ -42,6 +42,10 @@ export default createLocalCommand({
 		);
 
 		if (result.type !== "SUCCESS") {
+			if (result.type === "DIAGNOSTICS" && result.hasDiagnostics) {
+				throw new DiagnosticsError("Auto-config failed", result.diagnostics);
+			}
+
 			return false;
 		}
 
