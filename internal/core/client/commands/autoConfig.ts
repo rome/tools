@@ -45,20 +45,11 @@ export default createLocalCommand({
 			return false;
 		}
 
-		const res = await req.client.query(
-			{
-				commandName: "auto-config",
-			},
-			"server",
+		const data = consumeUnknown(
+			result.data,
+			DIAGNOSTIC_CATEGORIES.parse,
+			"json",
 		);
-
-		if (res.type !== "SUCCESS") {
-			reporter.log(
-				markup`Something went wrong during the execution of the command.`,
-			);
-			return true;
-		}
-		const data = consumeUnknown(res.data, DIAGNOSTIC_CATEGORIES.parse, "json");
 
 		if (!data.exists()) {
 			reporter.log(markup`No problems or updates found in you project.`);
