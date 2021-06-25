@@ -482,6 +482,7 @@ export default class CompilerPath {
 					loc: inheritLoc(old),
 				};
 			}
+			fixed = {...fixed, value};
 		}
 
 		return fixed;
