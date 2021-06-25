@@ -32,7 +32,7 @@ MISSING DOCUMENTATION
 **ESLint Equivalent:** [no-undef](https://eslint.org/docs/rules/no-undef)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:877efd162cacc4f55983aee4a944695ad95dca04,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:39d4d2ae29b8010a09b054f1919d400cfe5743a8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -47,4 +47,8 @@ MISSING DOCUMENTATION
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
+
+### Valid
+
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">let</span> <span class="token variable">romeTest</span><span class="token punctuation">:</span> <span class="token variable">ReadonlyArray</span><span class="token operator">&lt;</span><span class="token variable">string</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

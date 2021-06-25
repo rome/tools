@@ -2,3 +2,6 @@ filename = "file.ts"
 invalid = [
 	"foobar;",
 ]
+valid = [
+	"let romeTest: ReadonlyArray<string>;",
+]
