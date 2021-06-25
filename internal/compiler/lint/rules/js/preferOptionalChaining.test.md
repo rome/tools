@@ -338,7 +338,6 @@ foo?.bar.baz;
 
 ```ts
 let foo = {};
-
 foo?.bar?.("baz")
 
 ```
