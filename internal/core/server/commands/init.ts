@@ -4,7 +4,7 @@ import {StaticMarkup, markup} from "@internal/markup";
 import {ServerRequest, VERSION} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
-import {ConfigCommentMap, json, JSONObject} from "@internal/codec-config";
+import {ConfigCommentMap, JSONObject, json} from "@internal/codec-config";
 import {
 	getFileHandlerFromExtension,
 	getFileHandlerFromPath,

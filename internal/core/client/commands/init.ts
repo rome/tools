@@ -103,7 +103,7 @@ export default createLocalCommand({
 				identSizeAsNumber > 10
 			) {
 				client.reporter.warn(
-					markup`You inserted a value that is not a number o is greater than 10. Rome will fallback to the default value (1).`,
+					markup`You inserted a value that is not a number or is greater than 10. Rome will fallback to the default value (2).`,
 				);
 				client.reporter.info(
 					markup`You can change this value later when this command is finished.`,
