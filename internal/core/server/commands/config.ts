@@ -174,7 +174,7 @@ async function runCommand(
 		}
 	} catch (err) {
 		reporter.warn(
-			markup`Error occured while validating new config. Your changes have not been saved. Listed locations are not accurate.`,
+			markup`Error occurred while validating new config. Your changes have not been saved. Listed locations are not accurate.`,
 		);
 		throw err;
 	}

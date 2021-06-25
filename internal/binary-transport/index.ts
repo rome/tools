@@ -94,7 +94,7 @@ export function decodeSingleMessageRSERStream(
 					err,
 					{
 						description: {
-							message: markup`An error occured while decoding binary file ${createAbsoluteFilePath(
+							message: markup`An error occurred while decoding binary file ${createAbsoluteFilePath(
 								String(readStream.path),
 							)}`,
 							category: DIAGNOSTIC_CATEGORIES.parse,
