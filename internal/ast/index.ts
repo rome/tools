@@ -12,7 +12,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:18258adf54b8055f532ed86bf9a65a6224b77b27,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:a1c22bb60005956c71c49707c3a4400f7287fbdd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./css/page/CSSAtPage";
@@ -33,6 +33,7 @@ export * from "./css/core/CSSComma";
 export * from "./css/core/CSSCustomProperty";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
+export * from "./css/function/CSSFitContent";
 export * from "./css/font/CSSFontFace";
 export * from "./css/core/CSSFunction";
 export * from "./css/core/CSSHash";
@@ -339,6 +340,7 @@ export type AnyNode =
 	| n.CSSCustomProperty
 	| n.CSSDeclaration
 	| n.CSSDimension
+	| n.CSSFitContent
 	| n.CSSFontFace
 	| n.CSSFunction
 	| n.CSSHash
