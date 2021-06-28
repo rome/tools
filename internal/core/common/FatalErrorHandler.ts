@@ -57,14 +57,17 @@ export default class FatalErrorHandler {
 	}
 
 	public setupGlobalHandlers(): Resource {
-		process.on("uncaughtException", this.handleBound);
-		process.on("unhandledRejection", this.handleBound);
+		// Only pass first argument to handler
+		const handleError = (err: Error) => this.handleBound(err);
+
+		process.on("uncaughtException", handleError);
+		process.on("unhandledRejection", handleError);
 
 		return createResourceFromCallback(
 			"FatalErrorHandlerEvents",
 			() => {
-				process.removeListener("uncaughtException", this.handleBound);
-				process.removeListener("unhandledRejection", this.handleBound);
+				process.removeListener("uncaughtException", handleError);
+				process.removeListener("unhandledRejection", handleError);
 			},
 		);
 	}
