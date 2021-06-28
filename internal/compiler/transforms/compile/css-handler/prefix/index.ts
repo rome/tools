@@ -11,6 +11,7 @@ import boxSizing from "./prefixes/box-sizing";
 import colorAdjust from "./prefixes/color-adjust";
 import cursor from "./prefixes/cursor";
 import display from "./prefixes/display";
+import fitContent from "./prefixes/fit-content";
 import hyphens from "./prefixes/hyphens";
 import imageRendering from "./prefixes/image-rendering";
 import imageSet from "./prefixes/image-set";
@@ -47,6 +48,7 @@ export default [
 	...colorAdjust,
 	...cursor,
 	...display,
+	...fitContent,
 	...hyphens,
 	...imageRendering,
 	...imageSet,
