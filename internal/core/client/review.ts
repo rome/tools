@@ -158,7 +158,7 @@ async function ask(
 
 	if (hasExtraOptions) {
 		if (showMoreOptions) {
-			options.more = {
+			options.less = {
 				label: markup`Less options...`,
 				shortcut: "l",
 			};
@@ -181,6 +181,7 @@ async function ask(
 		wrapErrors: true,
 	});
 	diag = printer.processor.normalizer.normalizeDiagnostic(diag);
+	printer.processor.addDiagnostic(diag);
 	await printer.print({showFooter: false});
 
 	const answer = await reporter.radio(

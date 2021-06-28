@@ -38,7 +38,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<core/uncategorised/321/input.js>
-				end: Position 1:1
+				end: Position 2:0
 				start: Position 2:0
 			}
 		}
@@ -61,7 +61,8 @@ JSRoot {
   ✖ Expected a semicolon or a line terminator
 
     1 │ a
-    2 │ b
+  > 2 │ b
+      │ ^
 
 
 ```

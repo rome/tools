@@ -56,7 +56,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-generator/incomplete-yield-delegate/input.js>
-				end: Position 1:21
+				end: Position 1:22
 				start: Position 1:22
 			}
 		}

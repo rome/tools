@@ -72,7 +72,7 @@ ask few questions about coding style and configuration extension.
 
 Actions that are performed:
 
- - `rome.rjson` is created that serves as your [project configuration](#project-configuration).
+ - `rome.json` is created that serves as your [project configuration](#project-configuration).
  - `.editorconfig` is created that correctly sets indentation for editors that support [EditorConfig](https://editorconfig.org/).
 
 The command only works on projects that don't have Rome configuration.

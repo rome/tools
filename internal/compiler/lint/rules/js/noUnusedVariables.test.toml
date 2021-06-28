@@ -1,0 +1,75 @@
+filename = "file.ts"
+invalid = [
+	"const a = 4;",
+	"let a = 4;",
+	"""
+		function foo(myVar) {
+			console.log('foo');
+		};
+	""",
+	"""
+		function foo(myVar) {
+			console.log('foo');
+		}
+		foo();
+	""",
+	"""
+		const foo = (b) => {
+			console.log('foo');
+		};
+	""",
+	"""
+		function foo() {
+			foo();
+		}
+	""",
+	"""
+		const foo = () => {
+			foo();
+			console.log(this);
+		};
+	""",
+	"""
+		function foo(): typeof foo {
+			return function () {
+				return foo;
+			};
+		}
+	""",
+	"""
+		class Foo {
+			init() {
+				this._foo = new Foo();
+			}
+		}
+	""",
+]
+valid = [
+	"""
+		function foo(_, b) {
+			console.log(b)
+		};
+		foo();
+	""",
+	"""
+		const foo = (_, b) => {
+			console.log(b)
+		};
+		foo();
+	""",
+	"""
+		foo();
+		function foo() {
+			foo();
+		}
+	""",
+	"""
+		class Foo {
+				init() {
+					this._foo = new Foo();
+				}
+		}
+		const foo = new Foo();
+		foo.init();
+	""",
+]

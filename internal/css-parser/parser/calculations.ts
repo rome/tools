@@ -14,7 +14,11 @@ import {
 	CSSNumber,
 	CSSPercentage,
 } from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 /**
@@ -39,6 +43,7 @@ function tryParseNumberProduct(
 			}
 			const operation = tryParseOperator(parser);
 			if (operation) {
+				skipWhitespaces(parser);
 				if (operation.value === "*") {
 					const numberValue = tryParseNumberValue(parser);
 					if (numberValue) {
@@ -84,6 +89,7 @@ function tryParseNumberSum(parser: CSSParser): CSSCalcNumberSum | undefined {
 			}
 			const operation = tryParseOperator(parser, true);
 			if (operation) {
+				skipWhitespaces(parser);
 				const product = tryParseNumberProduct(parser);
 				if (product) {
 					value.push(...[operation, product]);
@@ -107,9 +113,7 @@ function tryParseNumberSum(parser: CSSParser): CSSCalcNumberSum | undefined {
 
 function tryParseNumberValue(parser: CSSParser): CSSCalcNumberValue | undefined {
 	const start = parser.getPosition();
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	const token = parser.getToken();
 
 	if (token.type === "Number") {
@@ -225,40 +229,42 @@ function tryParseOperator(
 	checkWhitespace = false,
 ): CSSCalcOperation | undefined {
 	// let's eat all the possible whitespaces we have
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
+	skipWhitespaces(parser);
+	if (matchToken(parser, "Comma") || matchToken(parser, "RightParen")) {
+		return undefined;
 	}
 	if (checkWhitespace) {
+		const previousToken = parser.getPreviousToken();
 		// let's eat the delimiter and read the its previous token
 		const op = parser.eatToken("Delim");
-		const previousToken = parser.getPreviousToken();
 		const start = parser.getPosition();
-		if (!(op && (op.value === "+" || op.value === "-"))) {
+
+		if (
+			!(op && (op.value === "+" || op.value === "-")) ||
+			previousToken.type !== "Whitespace"
+		) {
 			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.CALC_OPERATOR_ADD_OR_PLUS_NEEDED,
+				description: descriptions.CSS_PARSER.CALC_MISSING_SPACES,
 				token: parser.getToken(),
 			});
 			return undefined;
 		}
-		if (!previousToken && checkWhitespace) {
+		if (previousToken.type !== "Whitespace") {
 			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.CALC_MISSING_LEFT_SPACE,
-				token: previousToken,
+				description: descriptions.CSS_PARSER.CALC_MISSING_SPACES,
+				token: parser.getToken(),
 			});
 			return undefined;
 		}
 		const rightWhitespace = parser.eatToken("Whitespace");
-		if (!rightWhitespace && checkWhitespace) {
+		if (!rightWhitespace) {
 			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.CALC_MISSING_RIGHT_SPACE,
-				token: rightWhitespace,
+				description: descriptions.CSS_PARSER.CALC_MISSING_SPACES,
+				token: parser.getToken(),
 			});
 			return undefined;
 		}
 		// let's eat all the possible whitespaces we have
-		while (matchToken(parser, "Whitespace")) {
-			readToken(parser, "Whitespace");
-		}
 		return parser.finishNode(
 			start,
 			{
@@ -273,9 +279,6 @@ function tryParseOperator(
 			if (token.value === "*" || token.value === "/") {
 				// advance and remove all the whitespaces
 				nextToken(parser);
-				while (matchToken(parser, "Whitespace")) {
-					readToken(parser, "Whitespace");
-				}
 				return parser.finishNode(
 					start,
 					{
@@ -299,8 +302,10 @@ function tryParseCalcProduct(parser: CSSParser): CSSCalcProduct | undefined {
 			if (matchToken(parser, "RightParen")) {
 				break;
 			}
+
 			const operation = tryParseOperator(parser);
 			if (operation) {
+				skipWhitespaces(parser);
 				if (operation.value === "*") {
 					const numberValue = tryParseCalcValue(parser);
 					if (numberValue) {
@@ -344,6 +349,7 @@ export function parseCalcSum(parser: CSSParser): CSSCalcSum | undefined {
 			}
 			const operation = tryParseOperator(parser, true);
 			if (operation) {
+				skipWhitespaces(parser);
 				const product = tryParseCalcProduct(parser);
 				if (product) {
 					value.push(...[operation, product]);

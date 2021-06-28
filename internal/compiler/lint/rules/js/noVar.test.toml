@@ -1,0 +1,7 @@
+filename = "file.ts"
+invalid = [
+	"""
+		var foobar;
+		foobar;
+	""",
+]

@@ -3556,7 +3556,7 @@ export function parseExpressionListNonEmpty(
 		false,
 		refShorthandDefaultPos,
 	);
-	// @ts-ignore: Passed allowEmpty: false above
+	// @ts-expect-error: Passed allowEmpty: false above
 	return val;
 }
 
@@ -3987,13 +3987,13 @@ export function parseNumericLiteral(parser: JSParser): JSNumericLiteral {
 
 function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 	const start = parser.getPosition();
-	const value = parser.state.tokenValue;
-	if (!(value instanceof RegExpTokenValue)) {
+	const token = parser.state.tokenValue;
+	if (!(token instanceof RegExpTokenValue)) {
 		throw new Error("Expected regex token value");
 	}
 	next(parser);
 
-	const {flags, pattern} = value;
+	const {flags, pattern} = token;
 
 	const {diagnostics, expression} = parseRegExp({
 		offsetPosition: {

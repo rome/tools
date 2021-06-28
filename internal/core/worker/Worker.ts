@@ -282,7 +282,7 @@ export default class Worker {
 		});
 
 		bridge.events.parse.subscribe((payload) => {
-			// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
+			// @ts-expect-error: AST is a bunch of interfaces which we cannot match with an object index
 			return this.api.parse(payload.ref, payload.options) as RSERObject;
 		});
 
@@ -570,7 +570,11 @@ export default class Worker {
 		const project = this.getProject(ref);
 
 		// Fetch and validate extension handler
-		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
+		const {handler} = getFileHandlerFromPathAssert({
+			path: ref.real,
+			projectConfig: project.config,
+			method: "parse",
+		});
 		if (handler.parse === undefined) {
 			throw new Error(`We don't know how to parse ${path}`);
 		}
@@ -656,7 +660,11 @@ export default class Worker {
 		const project = this.getProject(ref);
 
 		// Fetch and validate extension handler
-		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
+		const {handler} = getFileHandlerFromPathAssert({
+			path: ref.real,
+			projectConfig: project.config,
+			method: "tokenize",
+		});
 		if (handler.tokenize === undefined) {
 			throw new Error(`We don't know how to tokenize ${path}`);
 		}

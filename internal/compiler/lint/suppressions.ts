@@ -7,7 +7,7 @@
 
 import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
 import {CompilerContext, signals} from "@internal/compiler";
-import {OneIndexed} from "@internal/numbers";
+import {IndexedNumberSet, OneIndexed} from "@internal/numbers";
 import CompilerPath from "../lib/CompilerPath";
 import {LintCompilerOptionsDecision} from "../types";
 import {injectComment} from "../transforms/helpers";
@@ -39,7 +39,7 @@ export function addSuppressions(
 		return ast;
 	}
 
-	const visitedLines: Set<OneIndexed> = new Set();
+	const visitedLines = new IndexedNumberSet<OneIndexed>();
 
 	function addComment(
 		path: CompilerPath,
@@ -95,14 +95,14 @@ export function addSuppressions(
 		if (suppressionCategories.size > 0) {
 			// get from comment possible existing categories
 			// TODO: make sure that category matches the rules we have (remove "lint/" from category)
-			updateComment.value.slice(
+			const computedCategories = updateComment.value.slice(
 				updateComment.value.indexOf(SUPPRESSION_START),
 				updateComment.value.indexOf(":"),
-			).replace(SUPPRESSION_START, "").split(" ").filter(Boolean).forEach((
-				category,
-			) => {
-				suppressionCategories.add(category);
-			});
+			).replace(SUPPRESSION_START, "").split(" ").filter(Boolean);
+
+			for (const computedCategory of computedCategories) {
+				suppressionCategories.add(computedCategory);
+			}
 			injectComment(
 				path,
 				{

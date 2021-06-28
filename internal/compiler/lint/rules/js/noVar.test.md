@@ -14,7 +14,7 @@
 
   > 1 │ var foobar;
       │ ^^^^^^^^^^^
-    2 │ foobar
+    2 │ foobar;
 
   ℹ Use let or const instead.
 

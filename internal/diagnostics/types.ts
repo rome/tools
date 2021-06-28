@@ -67,7 +67,6 @@ export type DiagnosticLanguage =
 	| "binary"
 	| "rser"
 	| "json"
-	| "rjson"
 	| "json5"
 	| "js"
 	| "mjs"

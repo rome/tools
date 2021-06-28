@@ -33,7 +33,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<core/uncategorised/442/input.js>
-				end: Position 1:0
+				end: Position 2:0
 				start: Position 2:0
 			}
 		}
@@ -56,7 +56,8 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     1 │ //·
-    2 │ ]
+  > 2 │ ]
+      │ ^
 
 
 ```

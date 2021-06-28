@@ -6,9 +6,7 @@ import {commandCategories} from "@internal/core/common/commands";
 
 interface ConfigRadioOptions extends SelectOptions {
 	json?: SelectOption;
-	rjson?: SelectOption;
 	toml?: SelectOption;
-	yaml?: SelectOption;
 }
 
 interface IndentStyleOptions extends SelectOptions {
@@ -16,15 +14,26 @@ interface IndentStyleOptions extends SelectOptions {
 	tab: SelectOption;
 }
 
+interface Flags {
+	y: boolean;
+}
+
 export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
 	description: markup`Initialise the project by emitting a configuration file and a .editorconfig file`,
 	usage: markup`<cmd>npx rome init</cmd>`,
 	examples: [],
-	defineFlags() {
-		return {};
+	defineFlags(c) {
+		return {
+			y: c.get(
+				"y",
+				{
+					description: markup`Creates a configuration file without interacting with the user, using Rome's defaults.`,
+				},
+			).asBoolean(false),
+		};
 	},
-	async callback(req: ClientRequest) {
+	async callback(req: ClientRequest, flags: Flags) {
 		const {client} = req;
 
 		const hasProject = await client.query(
@@ -46,64 +55,61 @@ export default createLocalCommand({
 			);
 			return true;
 		}
+		let configType = "json";
+		let indentStyle = "tab";
+		let identSizeAsNumber = 2;
 
-		const configTypeOptions: ConfigRadioOptions = {
-			json: {
-				label: markup`JSON (package.json)`,
-			},
-			rjson: {
-				label: markup`RJSON (loose JSON format)`,
-			},
-			// TODO: not supported yet
-			// toml: {
-			// 	label: markup`TOML`,
-			// },
-			// TODO: not supported yet
-			// yaml: {
-			// 	label: markup`YAML`,
-			// },
-		};
+		if (flags.y === false) {
+			const configTypeOptions: ConfigRadioOptions = {
+				json: {
+					label: markup`JSON (package.json)`,
+				},
+				toml: {
+					label: markup`TOML`,
+				},
+			};
 
-		const indentationTypeOptions: IndentStyleOptions = {
-			space: {
-				label: markup`Spaces`,
-			},
-			tab: {
-				label: markup`Tabs`,
-			},
-		};
+			const indentationTypeOptions: IndentStyleOptions = {
+				space: {
+					label: markup`Spaces`,
+				},
+				tab: {
+					label: markup`Tabs`,
+				},
+			};
 
-		const configType = await client.reporter.radio(
-			markup`Please choose the extension of your Rome configuration file`,
-			{
-				options: configTypeOptions,
-			},
-		);
-
-		const indentStyle = await client.reporter.radio(
-			markup`Please choose the type of indentation (default Tabs)`,
-			{
-				options: indentationTypeOptions,
-			},
-		);
-
-		const indentSize = await client.reporter.question(
-			markup`Please choose the size of the indentation (default 2)`,
-		);
-
-		let identSizeAsNumber = Number(indentSize);
-		if (
-			isNaN(identSizeAsNumber) ||
-			identSizeAsNumber === 0 ||
-			identSizeAsNumber > 10
-		) {
-			client.reporter.warn(
-				markup`You inserted a value that is not a number o is greater than 10. Rome will fallback to the default value (1).`,
+			configType = await client.reporter.radio(
+				markup`Please choose the extension of your Rome configuration file`,
+				{
+					options: configTypeOptions,
+				},
 			);
-			client.reporter.info(
-				markup`You can change this value later when this command is finished.`,
+
+			indentStyle = await client.reporter.radio(
+				markup`Please choose the type of indentation (default Tabs)`,
+				{
+					options: indentationTypeOptions,
+				},
 			);
-			identSizeAsNumber = 1;
+
+			const indentSize = await client.reporter.question(
+				markup`Please choose the size of the indentation (default 2)`,
+			);
+
+			identSizeAsNumber = Number(indentSize);
+			if (
+				isNaN(identSizeAsNumber) ||
+				identSizeAsNumber === 0 ||
+				identSizeAsNumber > 10
+			) {
+				client.reporter.warn(
+					markup`You inserted a value that is not a number or is greater than 10. Rome will fallback to the default value (2).`,
+				);
+				client.reporter.info(
+					markup`You can change this value later when this command is finished.`,
+				);
+				identSizeAsNumber = 2;
+			}
 		}
 
 		await client.query(

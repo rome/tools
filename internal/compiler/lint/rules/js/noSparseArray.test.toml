@@ -1,0 +1,4 @@
+filename = "file.ts"
+invalid = [
+	"[1,,2]",
+]

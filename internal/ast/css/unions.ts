@@ -1,11 +1,14 @@
 import * as n from "@internal/ast";
 import {
+	CSSAtImport,
 	CSSAtPage,
+	CSSAtRule,
 	CSSBlock,
 	CSSCalcFunction,
 	CSSCalcSum,
 	CSSComma,
 	CSSCustomProperty,
+	CSSDeclaration,
 	CSSDimension,
 	CSSFitContent,
 	CSSFontFace,
@@ -13,15 +16,21 @@ import {
 	CSSHash,
 	CSSIdentifier,
 	CSSKeyframe,
+	CSSMaxFunction,
 	CSSMediaFeatureComparison,
 	CSSMediaFeatureGT,
 	CSSMediaFeatureLT,
 	CSSMediaFeatureName,
 	CSSMediaFeatureValue,
 	CSSMediaQueryList,
+	CSSMinFunction,
+	CSSMinmaxFunction,
 	CSSNumber,
 	CSSPercentage,
+	CSSPseudoClassSelector,
+	CSSPseudoElementSelector,
 	CSSRaw,
+	CSSRule,
 	CSSString,
 	CSSSupportsCondition,
 	CSSUrlFunction,
@@ -55,6 +64,9 @@ export type AnyCSSValue =
 	| CSSUrlFunction
 	| CSSCalcFunction
 	| CSSCalcSum
+	| CSSMaxFunction
+	| CSSMinFunction
+	| CSSMinmaxFunction
 	| CSSMediaQueryList
 	| CSSSupportsCondition
 	| CSSFitContent
@@ -65,6 +77,8 @@ export type AnyFunction =
 	| CSSVarFunction
 	| CSSUrlFunction
 	| CSSFitContent;
+	| CSSAtImport
+	| CSSRaw;
 
 export type RangeNameAndValue = [
 	CSSMediaFeatureName,
@@ -103,3 +117,17 @@ export type CSSFitContentValue =
 	| CSSPercentage
 	| CSSNumber
 	| CSSFitContent;
+	| CSSFontFace
+	| CSSAtImport;
+
+export type CSSAtImportValue = CSSString | CSSUrlFunction;
+
+export type CSSBlockValue = Array<
+	AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration
+>;
+
+export type CSSPseudoSelector =
+	| CSSPseudoClassSelector
+	| CSSPseudoElementSelector;
+
+export type CSSMinmaxParam = CSSRaw | CSSDimension | CSSPercentage;

@@ -194,7 +194,7 @@ export default createBridge({
 				ref: FileReference;
 				options: WorkerParseOptions;
 			},
-			// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
+			// @ts-expect-error: AST is a bunch of interfaces which we cannot match with an object index
 			AnyRoot
 		>(),
 

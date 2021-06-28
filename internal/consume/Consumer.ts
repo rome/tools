@@ -20,6 +20,7 @@ import {
 	UnknownFunction,
 	UnknownObject,
 	VoidCallback,
+	isObject,
 	isPlainObject,
 } from "@internal/typescript-helpers";
 import {
@@ -829,7 +830,7 @@ export default class Consumer {
 		}
 
 		const {value} = this;
-		if (!isPlainObject(value)) {
+		if (!isObject(value)) {
 			this.unexpected(descriptions.CONSUME.EXPECTED_OBJECT);
 			return {};
 		}
@@ -1001,7 +1002,7 @@ export default class Consumer {
 	public async asPromise(def?: PromiseLike<unknown>): Promise<Consumer> {
 		let value: unknown;
 
-		if (this.isObject()) {
+		if (isObject(this.value)) {
 			const obj = this.asOriginalUnknownObject();
 			if (typeof obj.then === "function") {
 				value = await obj;
@@ -1061,9 +1062,9 @@ export default class Consumer {
 
 		const value = this.asString(def);
 
-		// @ts-ignore
+		// @ts-expect-error
 		if (validValues.includes(value)) {
-			// @ts-ignore
+			// @ts-expect-error
 			return value;
 		} else {
 			this.unexpected(
@@ -1407,9 +1408,9 @@ export default class Consumer {
 
 		const value = this.asNumber(def);
 
-		// @ts-ignore
+		// @ts-expect-error
 		if (validValues.includes(value)) {
-			// @ts-ignore
+			// @ts-expect-error
 			return value;
 		} else {
 			this.unexpected(

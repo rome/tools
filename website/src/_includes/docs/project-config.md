@@ -2,7 +2,7 @@
 
 **Rome** needs to know how to find your project and what files it includes. To do this we require a project configuration file.
 
-Your configuration can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](#rome-json) which is our flavor of JSON. It supports comments and has a simpler syntax.
+Your configuration can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.json` file.
 
 All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](#rome-config) command to modify your configuration, this works with any of the supported config locations, and when editing RJSON will even retain comments.
 
@@ -107,15 +107,128 @@ rome config push dependencies.exceptions.invalidLicenses.invalid-license-name "t
 If you are unsure about the license name of your library, rome will suggest the command for
 you when you try to run a command.
 
+### `integrations`
+
+Rome is more than linting or formatting. Rome has the concept of integrations, where
+it's possible to run a limited number of third party libraries using Rome itself.
+
+The main advantage of using Rome to run these integrations is to take advantage of Rome's
+infrastructure: caching and parallelism.
+
+### `integrations.prettier`
+
+You can use Rome to format your code using prettier. In order to integrate it,
+you have to install `prettier` in your project and enabled the integration via Rome:
+
+```bash
+rome config enable integrations.prettier
+```
+
+> The minimum `prettier`'s version supported is `2.0.0`;
+
+Now, when you run `./rome check --apply`, Rome will use `prettier` to format your code.
+
+If your project uses `.prettierrc` already, Rome will load the configuration and pass it to
+`prettier`.
+
+Alternatively, you can configure `prettier` inside Rome's configuration. Rome supports only a
+subset of options:
+
+- [`printWidth`](https://prettier.io/docs/en/options.html#print-width);
+- [`tabWidth`](https://prettier.io/docs/en/options.html#tab-width);
+- [`useTabs`](https://prettier.io/docs/en/options.html#tabs);
+- [`semi`](https://prettier.io/docs/en/options.html#semicolons);
+- [`singleQuote`](https://prettier.io/docs/en/options.html#quotes);
+
+The rest of options will be ignored and won't be passed to `prettier`.
+
+Ultimately, the configuration will look like this:
+
+```json
+{
+	"rome": {
+		"root": true,
+		"name": "fancy-project",
+		"lint": {
+			"enabled": false
+		},
+		"format": {
+			"enabled": false
+		},
+		"integrations": {
+			"prettier": {
+				"enabled": true,
+				"tabWidth": 2,
+				"useTabs": true,
+				"printWidth": 140
+			}
+		}
+	}
+}
+```
+
+### `integrations.eslint`
+
+You can use Rome to lint your code using eslint. In order to integrate it,
+you have to install `eslint` in your project and enabled the integration via Rome:
+
+```bash
+rome config enable integrations.eslint
+```
+
+> The minimum `eslint`'s version supported is `7.0.0`;
+
+Now, when you run `./rome check --apply`, Rome will use `prettier` to format your code.
+
+If your project uses `.eslint.json` already, Rome will load the configuration and pass it to
+`eslint`.
+
+Alternatively, you can configure `eslint` inside Rome's configuration. Rome supports only a
+subset of options:
+
+- `fix`
+- `extensions`
+- `globInputPaths`
+- `rulePaths`
+
+You can find more information in the [eslint webpage](https://eslint.org/docs/developer-guide/nodejs-api#parameters).
+
+The rest of options will be ignored and won't be passed to `eslint`.
+
+Ultimately, the configuration will look like this:
+
+```json
+{
+	"rome": {
+		"root": true,
+		"name": "fancy-project",
+		"lint": {
+			"enabled": false
+		},
+		"format": {
+			"enabled": false
+		},
+		"integrations": {
+			"eslint": {
+				"fix": true,
+				"extensions": [".js", ".ts", ".jsx"],
+				"globInputPaths": false,
+				"rulePaths":  ["./path/to/rules", "../../path/to/other/rules"]
+			}
+		}
+	}
+}
+```
+
 ### Supported Locations
 
 You can specify your project config in a few different places.
 
-##### `.config/rome.rjson` (recommended)
+##### `.config/rome.json` (recommended)
 
-This is the recommend location. It's the file we create when running `rome init`.
+This is the recommended location. It's the file we create when running `rome init`.
 
-It can contains Rome's flavor of JSON, [RJSON](#rome-json), that allows comments and simpler syntax.
+It can contain Rome's flavor of JSON, [RJSON](#rome-json), that allows comments and simpler syntax.
 
 ##### `.config/rome.json`
 

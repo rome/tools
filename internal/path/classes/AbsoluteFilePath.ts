@@ -311,7 +311,6 @@ export default class AbsoluteFilePath
 	}
 
 	public lstat(): Promise<fs.BigIntStats> {
-		// @ts-ignore: Incomplete stdlib type definition
 		return fs.promises.lstat(this.join(), {bigint: true});
 	}
 

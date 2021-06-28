@@ -56,7 +56,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
-				end: Position 1:8
+				end: Position 1:9
 				start: Position 1:9
 			}
 		}

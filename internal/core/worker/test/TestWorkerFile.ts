@@ -516,7 +516,7 @@ export default class TestWorkerFile {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Error occured while executing test file <emphasis>${this.path}</emphasis>`,
+					text: markup`Error occurred while executing test file <emphasis>${this.path}</emphasis>`,
 				});
 				break;
 			}
@@ -541,7 +541,7 @@ export default class TestWorkerFile {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Error occured while running <emphasis>teardown</emphasis> for test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
+					text: markup`Error occurred while running <emphasis>teardown</emphasis> for test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
 						origin.test.callsiteLocation,
 					)}:</emphasis>`,
 				});

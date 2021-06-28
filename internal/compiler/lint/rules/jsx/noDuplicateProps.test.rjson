@@ -1,9 +1,0 @@
-filename: "file.tsx"
-invalid: [
-	"<Hello foo='bar' foo='baz' />"
-	"<div style='{}' style='{}' id='foo' id='bar' />"
-]
-valid: [
-	"<Hello foo='bar' />"
-	"<div  style='{}' />"
-]

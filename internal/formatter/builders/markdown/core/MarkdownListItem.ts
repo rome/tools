@@ -11,6 +11,9 @@ export default function MarkdownListItem(
 		tokens.push(space);
 	}
 
-	node.children.forEach((child) => tokens.push(builder.tokenize(child, node)));
+	for (const child of node.children) {
+		tokens.push(builder.tokenize(child, node));
+	}
+
 	return concat(tokens);
 }

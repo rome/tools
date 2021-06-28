@@ -82,7 +82,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
-				end: Position 3:9
+				end: Position 3:10
 				start: Position 3:10
 			}
 		}

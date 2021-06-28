@@ -75,7 +75,7 @@ export default class BundleRequest {
 		this.diagnostics.addAllowedUnusedSuppressionPrefix("lint");
 
 		this.sourceMap = new SourceMapGenerator({
-			path: createPath(this.resolvedEntry.getBasename()),
+			path: createPath("index.js"),
 		});
 
 		this.assets = new RelativePathMap();

@@ -167,7 +167,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation calc/input.css 5:17-5:19
+														loc: SourceLocation calc/input.css 5:17-5:18
 													}
 													CSSCalcValue {
 														value: CSSPercentage {
@@ -178,7 +178,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation calc/input.css 5:22-5:24
+														loc: SourceLocation calc/input.css 5:22-5:23
 													}
 													CSSCalcValue {
 														value: CSSDimension {
@@ -221,7 +221,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "/"
-														loc: SourceLocation calc/input.css 6:17-6:19
+														loc: SourceLocation calc/input.css 6:17-6:18
 													}
 													CSSCalcNumberValue {
 														value: CSSNumber {
@@ -233,7 +233,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "/"
-														loc: SourceLocation calc/input.css 6:21-6:23
+														loc: SourceLocation calc/input.css 6:21-6:22
 													}
 													CSSCalcNumberValue {
 														value: CSSNumber {
@@ -276,7 +276,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "/"
-														loc: SourceLocation calc/input.css 7:17-7:19
+														loc: SourceLocation calc/input.css 7:17-7:18
 													}
 													CSSCalcNumberValue {
 														value: CSSCalcNumberSum {
@@ -318,7 +318,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "/"
-														loc: SourceLocation calc/input.css 7:27-7:29
+														loc: SourceLocation calc/input.css 7:27-7:28
 													}
 													CSSCalcNumberValue {
 														value: CSSCalcNumberSum {
@@ -391,7 +391,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation calc/input.css 8:17-8:19
+														loc: SourceLocation calc/input.css 8:17-8:18
 													}
 													CSSCalcValue {
 														value: CSSNumber {
@@ -451,7 +451,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "*"
-														loc: SourceLocation calc/input.css 9:17-9:19
+														loc: SourceLocation calc/input.css 9:17-9:18
 													}
 													CSSCalcValue {
 														value: CSSNumber {
@@ -497,7 +497,7 @@ CSSRoot {
 													}
 													CSSCalcOperation {
 														value: "/"
-														loc: SourceLocation calc/input.css 9:31-9:33
+														loc: SourceLocation calc/input.css 9:31-9:32
 													}
 													CSSCalcNumberValue {
 														value: CSSNumber {

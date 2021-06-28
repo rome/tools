@@ -4,7 +4,7 @@ import {StaticMarkup, markup} from "@internal/markup";
 import {ServerRequest, VERSION} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
-import {ConfigCommentMap, JSONObject, rjson} from "@internal/codec-config";
+import {ConfigCommentMap, JSONObject, json} from "@internal/codec-config";
 import {
 	getFileHandlerFromExtension,
 	getFileHandlerFromPath,
@@ -27,7 +27,7 @@ import updateConfig from "@internal/core/server/utils/updateConfig";
 import retrieveConfigHandler from "@internal/codec-config/retrieveConfigHandler";
 import {CachedFileReader} from "@internal/fs";
 
-type ConfigType = "rjson" | "toml" | "json";
+type ConfigType = "toml" | "json";
 
 type Flags =
 	| {
@@ -57,7 +57,7 @@ export default createServerCommand<Flags>({
 				{
 					description: markup``,
 				},
-			).asStringSet<ConfigType>(["rjson", "json"], "rjson"),
+			).asStringSet<ConfigType>(["toml", "json"], "json"),
 			indentStyle: c.get(
 				"indentStyle",
 				{
@@ -128,9 +128,9 @@ export default createServerCommand<Flags>({
 
 			if (!configType) {
 				reporter.warn(
-					markup`No extension chosen; Rome will now use RJSON extension for your project configuration as fallback.`,
+					markup`No extension chosen; Rome will now use JSON extension for your project configuration as fallback.`,
 				);
-				configHandler = rjson;
+				configHandler = json;
 			}
 
 			reporter.heading(markup`Welcome to Rome! Let's get you started...`);
@@ -153,7 +153,7 @@ export default createServerCommand<Flags>({
 				root: true,
 				name: cwd.getBasename(),
 				format: {
-					enabled: true,
+					enabled: false,
 					indentSize,
 					indentStyle,
 				},
@@ -206,7 +206,6 @@ export default createServerCommand<Flags>({
 				reporter.error(markup`Couldn't find any manifest at path ${cwd}`);
 				return;
 			}
-
 			// Generate files
 			await reporter.steps([
 				{

@@ -15,6 +15,7 @@ export type AnyNodes = AnyNode | (AnyNode[]);
 /* GENERATED:START(hash:a1c22bb60005956c71c49707c3a4400f7287fbdd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
+export * from "./css/import/CSSAtImport";
 export * from "./css/page/CSSAtPage";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
@@ -43,6 +44,7 @@ export * from "./css/keyframe/CSSKeyframe";
 export * from "./css/keyframe/CSSKeyframeBlock";
 export * from "./css/keyframe/CSSKeyframeName";
 export * from "./css/keyframe/CSSKeyframeSelector";
+export * from "./css/function/CSSMaxFunction";
 export * from "./css/media/CSSMediaAnd";
 export * from "./css/media/CSSMediaCondition";
 export * from "./css/media/CSSMediaConditionWithoutOr";
@@ -62,6 +64,8 @@ export * from "./css/media/CSSMediaOr";
 export * from "./css/media/CSSMediaQuery";
 export * from "./css/media/CSSMediaQueryList";
 export * from "./css/media/CSSMediaType";
+export * from "./css/function/CSSMinFunction";
+export * from "./css/grid/CSSMinmaxFunction";
 export * from "./css/core/CSSNumber";
 export * from "./css/page/CSSPageSelector";
 export * from "./css/page/CSSPageSelectorList";
@@ -322,6 +326,7 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
+	| n.CSSAtImport
 	| n.CSSAtPage
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
@@ -350,6 +355,7 @@ export type AnyNode =
 	| n.CSSKeyframeBlock
 	| n.CSSKeyframeName
 	| n.CSSKeyframeSelector
+	| n.CSSMaxFunction
 	| n.CSSMediaAnd
 	| n.CSSMediaCondition
 	| n.CSSMediaConditionWithoutOr
@@ -369,6 +375,8 @@ export type AnyNode =
 	| n.CSSMediaQuery
 	| n.CSSMediaQueryList
 	| n.CSSMediaType
+	| n.CSSMinFunction
+	| n.CSSMinmaxFunction
 	| n.CSSNumber
 	| n.CSSPageSelector
 	| n.CSSPageSelectorList

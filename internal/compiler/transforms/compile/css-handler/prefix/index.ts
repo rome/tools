@@ -13,13 +13,16 @@ import cursor from "./prefixes/cursor";
 import display from "./prefixes/display";
 import fitContent from "./prefixes/fit-content";
 import hyphens from "./prefixes/hyphens";
+import imageRendering from "./prefixes/image-rendering";
 import imageSet from "./prefixes/image-set";
 import inline from "./prefixes/inline";
 import mask from "./prefixes/mask";
 import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
+import pseudoSelectors from "./prefixes/pseudo-selectors";
 import regions from "./prefixes/regions";
 import scrollSnapType from "./prefixes/scroll-snap-type";
+import shape from "./prefixes/shape";
 import tabSize from "./prefixes/tab-size";
 import textAlignLast from "./prefixes/text-align-last";
 import textEmphasis from "./prefixes/text-emphasis";
@@ -47,13 +50,16 @@ export default [
 	...display,
 	...fitContent,
 	...hyphens,
+	...imageRendering,
 	...imageSet,
 	...inline,
 	...mask,
 	...multicolumn,
 	...position,
+	...pseudoSelectors,
 	...regions,
 	...scrollSnapType,
+	...shape,
 	...tabSize,
 	...textAlignLast,
 	...textEmphasis,

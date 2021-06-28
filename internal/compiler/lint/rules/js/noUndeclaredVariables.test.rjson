@@ -1,4 +1,0 @@
-filename: "file.ts"
-invalid: [
-	"foobar;"
-]

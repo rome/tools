@@ -56,7 +56,7 @@ export function createQuickBuilder<
 	type: Node["type"],
 	quickKey: QuickKey,
 	opts: CreateBuilderOptions<Node>,
-): QuickBuilder<Node, Node[QuickKey]> {
+): QuickBuilder<Node, QuickKey> {
 	declareBuilder(type, opts);
 	return new QuickBuilder(type, quickKey);
 }
@@ -77,7 +77,7 @@ class Builder<Node extends AnyNode> {
 	private type: string;
 
 	public create(opts: Omit<Node, "type">, inheritNode?: AnyNode): Node {
-		// @ts-ignore
+		// @ts-expect-error
 		return Object.freeze({
 			loc: inheritNode === undefined ? undefined : inheritLoc(inheritNode),
 			...opts,
@@ -96,13 +96,14 @@ class Builder<Node extends AnyNode> {
 			throw new Error(`Expected ${this.type} Node but got ${node.type}`);
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		return node;
 	}
 }
 
-class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
-	constructor(type: string, quickKey: keyof Node) {
+class QuickBuilder<Node extends AnyNode, QuickKey extends keyof Node>
+	extends Builder<Node> {
+	constructor(type: string, quickKey: QuickKey) {
 		super(type);
 		this.quickKey = quickKey;
 	}
@@ -110,14 +111,15 @@ class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
 	private quickKey: keyof Node;
 
 	public quick(
-		arg: Arg,
+		arg: Node[QuickKey],
 		opts?: Partial<Omit<Node, "type">>,
 		inheritNode?: Node,
 	): Node {
-		const node = {
+		// @ts-expect-error
+		const node: Omit<Node, "type"> = {
 			...opts,
 			[this.quickKey]: arg,
-		} as Node;
+		};
 
 		return this.create(node, inheritNode);
 	}

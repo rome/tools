@@ -58,7 +58,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/invalid-parens-async-func/input.js>
-				end: Position 1:7
+				end: Position 1:8
 				start: Position 1:8
 			}
 		}

@@ -7,12 +7,17 @@ import {CONFIG_EXTENSIONS} from "@internal/codec-config";
 
 export const VCS_IGNORE_FILENAMES = [".gitignore", ".hgignore"];
 
-export const ESLINT_CONFIG_FILENAMES: string[] = [
-	".eslintrc.js",
-	".eslintrc.cjs",
-	".eslintrc.yaml",
-	".eslintrc.yml",
-	".eslintrc.json",
+export const ESLINT_CONFIG_FILENAMES: string[] = [".eslintrc", ".eslintrc.json"];
+
+// NOTE: only supporting JSON for now
+export const PRETTIER_CONFIG_FILESNAMES: string[] = [
+	".prettierrc",
+	".prettierr.json",
+	".prettierr.json5",
+];
+
+export const INTEGRATIONS_IGNORE_FILES: string[] = [
+	".prettierignore",
 	".eslintignore",
 ];
 

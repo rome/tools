@@ -75,7 +75,7 @@
 
   ✖ Avoid positive integer values for the tabIndex attribute.
 
-    <span tabIndex='5'>foo</span>
+    <span tabIndex="5">foo</span>
           ^^^^^^^^^^^^
 
   ℹ Elements with a positive tab index override natural page content order. This causes elements
@@ -141,7 +141,7 @@
 
   ✖ Avoid positive integer values for the tabIndex attribute.
 
-    <span tabIndex={'5'}>foo</span>
+    <span tabIndex={"5"}>foo</span>
           ^^^^^^^^^^^^^^
 
   ℹ Elements with a positive tab index override natural page content order. This causes elements

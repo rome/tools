@@ -26,7 +26,6 @@ JSRoot {
 								loc: SourceLocation core/uncategorised/441/input.js 1:1-1:2
 							}
 							JSRegExpCharacter {
-								value: ""
 								loc: SourceLocation core/uncategorised/441/input.js 1:2-1:3
 							}
 						]

@@ -47,7 +47,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js>
-				end: Position 1:23
+				end: Position 2:0
 				start: Position 2:0
 			}
 		}

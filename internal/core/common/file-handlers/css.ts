@@ -6,8 +6,8 @@ export const cssHandler: PartialExtensionHandler = {
 	hasTabs: true,
 	mime: "text/css",
 	capabilities: {
-		lint: true,
-		format: true,
+		lint: false,
+		format: false,
 	},
 
 	async parse({integrity, path, file, worker}) {

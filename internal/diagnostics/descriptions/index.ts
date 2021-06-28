@@ -40,7 +40,7 @@ import {recoveryStore} from "./commands/recoveryStore";
 import {markdownParser} from "./parsers/markdownParser";
 import {initCommand} from "./commands/initCommand";
 import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
-import {tomlParser} from "./parsers/tomlParser";
+import {toml} from "./parsers/tomlParser";
 import {browserquery} from "./parsers/browserquery";
 
 export function join(conjunction: string, items: StaticMarkup[]): StaticMarkup {
@@ -113,7 +113,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			const callback: InputMessagesFactory = value as any;
 
-			// @ts-ignore trust me lol
+			// @ts-expect-error trust me lol
 			category[key] = function(...params) {
 				const {message, advice = [], ...ret} = callback(...params);
 				return {
@@ -170,6 +170,6 @@ export const descriptions = {
 	MARKDOWN_PARSER: markdownParser,
 	RECOVERY_STORE: recoveryStore,
 	INIT_COMMAND: initCommand,
-	TOML_PARSER: tomlParser,
+	TOML: toml,
 	BROWSERQUERY: browserquery,
 };

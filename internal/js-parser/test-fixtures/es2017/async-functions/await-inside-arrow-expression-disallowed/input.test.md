@@ -56,7 +56,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/await-inside-arrow-expression-disallowed/input.js>
-				end: Position 1:13
+				end: Position 1:14
 				start: Position 1:14
 			}
 		}

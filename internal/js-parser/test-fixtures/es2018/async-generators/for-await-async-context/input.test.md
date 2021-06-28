@@ -87,7 +87,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2018/async-generators/for-await-async-context/input.js>
-				end: Position 2:5
+				end: Position 2:6
 				start: Position 2:6
 			}
 		}

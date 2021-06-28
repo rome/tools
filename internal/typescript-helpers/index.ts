@@ -93,7 +93,7 @@ export function isPlainObject(obj: unknown): obj is UnknownObject {
 
 export function isIterable(obj: unknown): obj is Iterable<unknown> {
 	if (typeof obj === "object" && obj != null) {
-		// @ts-ignore
+		// @ts-expect-error
 		return typeof obj[Symbol.iterator] === "function";
 	} else {
 		return false;
@@ -121,7 +121,6 @@ export function mergeObjects<A extends object>(
 	// If b contains undefined properties then use the value from A
 	for (const key in b) {
 		if (b[key] === undefined) {
-			// @ts-ignore
 			newObj[key] = a[key];
 		}
 	}

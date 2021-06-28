@@ -44,6 +44,20 @@ function unlink(loc) {
 	}
 }
 
+/**
+ * Keep this in sync with createPipePath in internal/core/common/constants.ts
+ * 
+ * @param version {string}
+ * @returns {string}
+ */
+function getSocketPath(version) {
+	if (process.platform === "win32") {
+		return String.raw`\\.\pipe\rome-${version}-server`;
+	}
+	const basedir = process.env.XDG_RUNTIME_DIR ?? os.tmpdir();
+	return path.join(basedir, "rome", `${version}-server.sock`);
+}
+
 //# Validate Node version
 
 // Format of node.version is "v12.6.0" so we want to slice off the v
@@ -51,7 +65,7 @@ const versionParts = process.version.slice(1).split(".");
 const major = Number(versionParts[0]);
 
 // Keep this updated alongside engines in package.json
-const EXPECTED_MAJOR = 12;
+const EXPECTED_MAJOR = 14;
 
 if (major < EXPECTED_MAJOR) {
 	console.error(
@@ -74,7 +88,7 @@ async function isDevDaemonRunning() {
 	// If there is a running daemon then we shouldn't build and just use the existing bundle
 	// We'll log to let the developer know what's going on
 	const version = `${packageJson.version}-dev`;
-	const socketPath = path.join(os.tmpdir(), `rome-${version}.sock`);
+	const socketPath = getSocketPath(version);
 
 	return new Promise((resolve) => {
 		const socket = net.createConnection(

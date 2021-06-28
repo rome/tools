@@ -125,7 +125,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/tsx/anonymous-function-generator/input.tsx>
-				end: Position 1:20
+				end: Position 1:21
 				start: Position 1:21
 			}
 		}

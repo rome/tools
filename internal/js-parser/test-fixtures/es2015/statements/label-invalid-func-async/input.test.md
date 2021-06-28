@@ -50,7 +50,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/statements/label-invalid-func-async/input.js>
-				end: Position 1:4
+				end: Position 1:5
 				start: Position 1:5
 			}
 		}

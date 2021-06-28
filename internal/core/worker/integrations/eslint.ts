@@ -6,22 +6,22 @@ import {Duration, DurationMeasurer} from "@internal/numbers";
 import {Position} from "@internal/parser-core";
 import {WorkerProject} from "../types";
 import Worker from "../Worker";
+import {Consumer} from "@internal/consume";
 
-const eslintLoader = new IntegrationLoader({
+const eslintLoader = new IntegrationLoader<Consumer, "eslint">({
 	name: "eslint",
 	range: "^7.0.0",
-	normalize: (consumer, cwd) => {
+	normalize: ({consumer, cwd, opts}) => {
 		const Factory = consumer.get("ESLint").asFunction();
 		const eslint = Reflect.construct(
 			Factory,
 			[
 				{
 					cwd: cwd.join(),
-					globInputPaths: false,
-					fix: true,
-					rulePaths: [
-						"/Users/sebmck/Scratch/TypeScript/scripts/eslint/built/rules",
-					],
+					fix: opts?.fix,
+					rulePaths: opts?.rulePaths,
+					extensions: opts?.extensions,
+					globInputPaths: opts?.globInputPaths,
 				},
 			],
 		);
@@ -51,7 +51,11 @@ export async function maybeRunESLint(
 
 	const diagnostics: Diagnostic[] = [];
 
-	const loader = await eslintLoader.load(project.configPath, project.directory);
+	const loader = await eslintLoader.load(
+		project.configPath,
+		project.directory,
+		project.config.integrations.eslint,
+	);
 
 	const ignored = await eslintLoader.wrap(async () => {
 		const isPathIgnored = loader.module.get("isPathIgnored").asWrappedFunction();

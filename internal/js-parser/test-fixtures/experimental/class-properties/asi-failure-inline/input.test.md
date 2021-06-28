@@ -54,7 +54,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/class-properties/asi-failure-inline/input.js>
-				end: Position 2:3
+				end: Position 2:4
 				start: Position 2:4
 			}
 		}

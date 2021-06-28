@@ -58,7 +58,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/allow-await-outside-function-throw/input.js>
-				end: Position 2:14
+				end: Position 2:15
 				start: Position 2:15
 			}
 		}

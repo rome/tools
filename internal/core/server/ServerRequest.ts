@@ -264,7 +264,10 @@ export default class ServerRequest {
 		);
 
 		this.reporter = query.silent
-			? new Reporter("ServerRequestSilent")
+			? new Reporter(
+					"ServerRequestSilent",
+					{markupOptions: client.reporter.markupOptions},
+				)
 			: client.reporter.fork();
 		this.resources.add(this.reporter);
 
@@ -997,7 +1000,7 @@ export default class ServerRequest {
 	): Promise<AnyRoot> {
 		this.checkCancelled();
 
-		// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
+		// @ts-expect-error: AST is a bunch of interfaces which we cannot match with an object index
 		return this.wrapRequestDiagnostic(
 			"parse",
 			path,

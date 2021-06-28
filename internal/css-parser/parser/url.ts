@@ -1,12 +1,14 @@
 import {CSSParser} from "@internal/css-parser/types";
 import {CSSString, CSSUrlFunction} from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 export function parseUrl(parser: CSSParser): CSSUrlFunction | undefined {
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	const start = parser.getPosition();
 	let value: CSSString;

@@ -1,6 +1,0 @@
-filename: "file.ts"
-invalid: [
-	"underscore_case"
-	"_underscore_case"
-	"obj.underscore_case"
-]

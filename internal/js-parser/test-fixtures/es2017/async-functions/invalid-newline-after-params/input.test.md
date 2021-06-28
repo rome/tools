@@ -47,7 +47,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/invalid-newline-after-params/input.js>
-				end: Position 1:9
+				end: Position 2:0
 				start: Position 2:0
 			}
 		}
@@ -70,7 +70,8 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     1 │ async (x)
-    2 │ => {}
+  > 2 │ => {}
+      │ ^
 
 
 ```
