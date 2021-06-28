@@ -69,8 +69,8 @@ export type AnyCSSValue =
 	| CSSMinmaxFunction
 	| CSSMediaQueryList
 	| CSSSupportsCondition
-	| CSSFitContent
-	| CSSRaw;
+	| CSSRaw
+	| CSSFitContent;
 
 export type AnyFunction =
 	| CSSFunction
@@ -110,15 +110,14 @@ export type CSSAtRuleValue =
 	| CSSKeyframe
 	| CSSMediaQueryList
 	| CSSAtPage
-	| CSSFontFace;
+	| CSSFontFace
+	| CSSAtImport;
 
 export type CSSFitContentValue =
 	| CSSDimension
 	| CSSPercentage
 	| CSSNumber
-	| CSSFitContent
-	| CSSFontFace
-	| CSSAtImport;
+	| CSSFitContent;
 
 export type CSSAtImportValue = CSSString | CSSUrlFunction;
 
