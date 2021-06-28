@@ -76,7 +76,6 @@ export type AnyFunction =
 	| CSSFunction
 	| CSSVarFunction
 	| CSSUrlFunction
-	| CSSFitContent
 	| CSSAtImport
 	| CSSRaw;
 
