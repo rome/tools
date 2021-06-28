@@ -91,3 +91,8 @@ export type CSSAtRuleValue =
 	| CSSMediaQueryList
 	| CSSAtPage
 	| CSSFontFace;
+
+export type CSSFitContentValue =
+	| CSSDimension
+	| CSSPercentage
+	| CSSNumber;

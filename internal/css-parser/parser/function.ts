@@ -11,6 +11,7 @@ import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseCalcFunction} from "@internal/css-parser/parser/calc";
+import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
 
 export function parseFunction(
 	parser: CSSParser,
@@ -22,7 +23,15 @@ export function parseFunction(
 	const isVarFunction = name === "var";
 	const isUrlFunction = name === "url";
 	const isCalcFunction = name === "calc";
+	const isFitContentFunction = name === "fit-content";
 	nextToken(parser);
+
+	if (isFitContentFunction) {
+		const value = parseFitContentFunction(parser);
+		if (value) {
+			return value;
+		}
+	}
 
 	if (isCalcFunction) {
 		const value = parseCalcFunction(parser);
