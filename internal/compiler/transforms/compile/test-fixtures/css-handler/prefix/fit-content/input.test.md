@@ -17,6 +17,10 @@
 	grid-template-columns: fit-content(8ch) fit-content(8ch) 1fr;
 }
 
+.style {
+	width: fit-content;
+}
+
 ```
 
 ### `Output`
@@ -24,6 +28,12 @@
 ```css
 .style {
 	grid-template-columns: fit-content(8ch) fit-content(8ch) 1fr;
+}
+
+.style {
+	width: -moz-fit-content;
+	width: -webkit-fit-content;
+	width: fit-content;
 }
 
 ```
