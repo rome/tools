@@ -32,7 +32,7 @@ export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 	...DEFAULT_PRINTER_FLAGS,
 	...DEFAULT_PROCESSOR_FILTER_FLAGS,
-	programmatic: true,
+	programmatic: false,
 	unsafeWrites: false,
 	collectMarkers: false,
 	timing: false,
