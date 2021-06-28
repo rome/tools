@@ -53,7 +53,7 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 
 		if (parser.getToken().type !== "RightParen") {
 			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.CALC_UNTERMITED_SUM,
+				description: descriptions.CSS_PARSER.FIT_CONTENT_UNTERMITED_FUNCTION,
 				token: parser.getToken(),
 			});
 			nextToken(parser);
@@ -70,7 +70,10 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 		}
 	}
 
-	parser.unexpectedDiagnostic({});
+	parser.unexpectedDiagnostic({
+		description: descriptions.CSS_PARSER.FIT_CONTENT_UNKOWN_FUNCTION,
+		token: parser.getToken(),
+	});
 
 	return undefined;
 }

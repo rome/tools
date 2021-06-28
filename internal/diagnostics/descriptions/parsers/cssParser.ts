@@ -120,6 +120,14 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`The character <emphasis>)</emphasis> is missing, the expression is not completed.`,
 	},
 
+	FIT_CONTENT_UNTERMITED_FUNCTION: {
+		message: markup`The character <emphasis>)</emphasis> is missing, the expression is not completed.`
+	},
+
+	FIT_CONTENT_UNKOWN_FUNCTION: {
+		message: markup`Uknown behavior in fit content function.`
+	},
+
 	CALC_INCORRECT_NUMBER_VALUE: {
 		message: markup`Incorrect character, expected a number or a parenthesis.`,
 	},
