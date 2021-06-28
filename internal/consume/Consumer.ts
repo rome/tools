@@ -12,7 +12,7 @@ import {
 	DiagnosticsError,
 	catchDiagnosticsSync,
 	createSingleDiagnosticsError,
-	descriptions,
+	descriptions, catchDiagnostics,
 } from "@internal/diagnostics";
 import {
 	Dict,
@@ -20,6 +20,7 @@ import {
 	UnknownObject,
 	VoidCallback,
 	isObject,
+	isPlainObject, AsyncVoidCallback,
 } from "@internal/typescript-helpers";
 import {
 	ConsumeContext,
@@ -165,6 +166,21 @@ export default class Consumer {
 		} else {
 			const {diagnostics} = catchDiagnosticsSync(callback);
 
+			if (diagnostics !== undefined) {
+				for (const diag of diagnostics) {
+					this.handleUnexpected(diag);
+				}
+			}
+		}
+	}
+
+	public async handleAsyncThrownDiagnostics(callback: AsyncVoidCallback) {
+		if (this.handleUnexpected === undefined) {
+			callback();
+		} else {
+			const {diagnostics} = await catchDiagnostics(async () => {
+				await callback();
+			});
 			if (diagnostics !== undefined) {
 				for (const diag of diagnostics) {
 					this.handleUnexpected(diag);

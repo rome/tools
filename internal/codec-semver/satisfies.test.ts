@@ -50,6 +50,7 @@ const testData: {
 		["<2.0.0", "1.9999.9999"],
 		["<2.0.0", "0.2.9"],
 		[">= 1.0.0", "1.0.0"],
+		[">= 10.0.0", "10.0.7-beta.8"],
 		[">=  1.0.0", "1.0.1"],
 		[">=   1.0.0", "1.1.0"],
 		["> 1.0.0", "1.0.1"],
@@ -224,7 +225,7 @@ test(
 
 			t.true(
 				satisfiesSemver(ver, range),
-				`${range} should be satisfied by ${ver}`,
+				`${range.toString()} should be satisfied by ${ver.toString()}`,
 			);
 		}
 	},

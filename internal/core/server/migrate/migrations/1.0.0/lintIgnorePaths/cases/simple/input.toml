@@ -1,0 +1,3 @@
+root = true
+[lint]
+ignorePaths = ["foo", "bar"]

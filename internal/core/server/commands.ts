@@ -122,6 +122,7 @@ serverCommands.set("config enable", config.enable);
 serverCommands.set("config push", config.push);
 serverCommands.set("config set", config.set);
 serverCommands.set("config set-directory", config.setDirectory);
+serverCommands.set("config migrate", config.migrate);
 serverCommands.set("format", format);
 serverCommands.set("init", init);
 serverCommands.set("lsp", lsp);

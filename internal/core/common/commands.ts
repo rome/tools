@@ -9,6 +9,9 @@ import {Consumer} from "@internal/consume";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {StaticMarkup} from "@internal/markup";
 import {Examples} from "@internal/cli-flags";
+import {ServerRequest} from "@internal/core";
+import {getVCSClient} from "@internal/vcs";
+import {createSingleDiagnosticsError, descriptions} from "@internal/diagnostics";
 
 // List of valid command names, includes both server and client commands
 export type CommandName =
@@ -29,6 +32,7 @@ export type CommandName =
 	| "config push"
 	| "config set"
 	| "config set-directory"
+	| "config migrate"
 	| "develop"
 	| "format"
 	| "init"
@@ -70,3 +74,23 @@ export const commandCategories = {
 	SOURCE_CONTROL: "Source Control",
 	INTERNAL: "Internal",
 };
+
+
+export async function checkVSCWorkingDirectory(req: ServerRequest) {
+	const { client } = req;
+	const vcsClient = await getVCSClient(client.flags.cwd);
+	if (vcsClient === undefined) {
+		throw createSingleDiagnosticsError({
+			location: req.getDiagnosticLocationForClientCwd(),
+			description: descriptions.VSC.UNCOMMITTED_CHANGES,
+		});
+	} else {
+		const uncommittedFiles = await vcsClient.getUncommittedFiles();
+		if (uncommittedFiles.length > 0) {
+			throw createSingleDiagnosticsError({
+				location: req.getDiagnosticLocationForClientCwd(),
+				description: descriptions.VSC.UNCOMMITTED_CHANGES,
+			});
+		}
+	}
+}

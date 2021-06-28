@@ -42,6 +42,8 @@ import {initCommand} from "./commands/initCommand";
 import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import {toml} from "./parsers/tomlParser";
 import {browserquery} from "./parsers/browserquery";
+import {vcs} from "@internal/diagnostics/descriptions/vcs";
+import {migrateCommand} from "@internal/diagnostics/descriptions/commands/migrateCommand";
 
 export function join(conjunction: string, items: StaticMarkup[]): StaticMarkup {
 	if (items.length === 0) {
@@ -170,6 +172,8 @@ export const descriptions = {
 	MARKDOWN_PARSER: markdownParser,
 	RECOVERY_STORE: recoveryStore,
 	INIT_COMMAND: initCommand,
+	MIGRATE_COMMAND: migrateCommand,
 	TOML: toml,
+	VSC: vcs,
 	BROWSERQUERY: browserquery,
 };

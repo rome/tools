@@ -21,8 +21,11 @@ export type DiagnosticCategory =
 	| ["bridge", "disconnected"]
 	| ["bridge", "timeout"]
 	| ["childProcess", "failure"]
+	| ["vcs", "uncommittedChanges"]
+	| ["vcs", "expectedRepo"]
 	| ["commands", "auto-config", "uncommittedChanges"]
 	| ["commands", "auto-config", "expectedRepo"]
+	| ["commands", "migrate"]
 	| ["compile", "classes"]
 	| ["compile", "const-enums"]
 	| ["compile", "jsx"]
@@ -409,6 +412,14 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"bundler/moduleCycle": ["bundler", "moduleCycle"],
 	"bundler/topLevelAwait": ["bundler", "topLevelAwait"],
 	"childProcess/failure": ["childProcess", "failure"],
+	"vcs/uncommittedChanges": [
+		"vcs",
+		"uncommittedChanges",
+	],
+	"vcs/expectedRepo": [
+		"vcs",
+		"expectedRepo",
+	],
 	"commands/auto-config/uncommittedChanges": [
 		"commands",
 		"auto-config",
@@ -419,6 +430,7 @@ export const DIAGNOSTIC_CATEGORIES: {
 		"auto-config",
 		"expectedRepo",
 	],
+	"commands/migrate": ["commands", "migrate"],
 	"compile/classes": ["compile", "classes"],
 	"compile/const-enums": ["compile", "const-enums"],
 	"compile/jsx": ["compile", "jsx"],
@@ -524,6 +536,7 @@ export const categoryPrefixMap: {[name in DiagnosticCategoryPrefix]: true} = {
 	tests: true,
 	typeCheck: true,
 	v8: true,
+	vcs: true,
 };
 
 export const VALID_DIAGNOSTIC_CATEGORIES: Set<DiagnosticCategoryString> = new Set(
