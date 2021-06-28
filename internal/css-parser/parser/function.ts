@@ -19,7 +19,6 @@ import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
 import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
 import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
 
-
 type ParseFunction =
 	| CSSFunction
 	| CSSVarFunction

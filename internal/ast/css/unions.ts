@@ -76,7 +76,7 @@ export type AnyFunction =
 	| CSSFunction
 	| CSSVarFunction
 	| CSSUrlFunction
-	| CSSFitContent;
+	| CSSFitContent
 	| CSSAtImport
 	| CSSRaw;
 
@@ -116,7 +116,7 @@ export type CSSFitContentValue =
 	| CSSDimension
 	| CSSPercentage
 	| CSSNumber
-	| CSSFitContent;
+	| CSSFitContent
 	| CSSFontFace
 	| CSSAtImport;
 
