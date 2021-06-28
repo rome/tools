@@ -12,7 +12,7 @@ export const CSSFitContent = createBuilder<CSSFitContent>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			params: true
+			params: true,
 		},
 	},
 );

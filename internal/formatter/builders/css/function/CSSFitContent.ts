@@ -1,9 +1,14 @@
-import {CSSFitContent} from "@internal/ast";
+import {CSSFitContent as CSSFitContentType} from "@internal/ast";
 import {Builder, Token, concat} from "@internal/formatter";
 
-export default function cssFitContent(
+export default function CSSFitContent(
 	builder: Builder,
-	node: CSSFitContent,
+	node: CSSFitContentType,
 ): Token {
-	return concat([node.name, "(", builder.tokenizer(node.value, node), ")"]);
+	return concat([
+		node.name,
+		"(",
+		concat(node.params.map((p) => builder.tokenize(p, node))),
+		")",
+	]);
 }

@@ -1,6 +1,12 @@
-import {CSSParser} from "@internal/css-parser/types";
-import {CSSFitContent} from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {CSSParser, Tokens} from "@internal/css-parser/types";
+import {
+	CSSDimension,
+	CSSFitContent,
+	CSSNumber,
+	CSSPercentage,
+} from "@internal/ast";
+import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
+import {descriptions} from "@internal/diagnostics";
 
 function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 	const start = parser.getPosition();
@@ -45,29 +51,10 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 			start,
 			{
 				type: "CSSFitContent",
-				value,
+				name: "fit-content",
+				params: [value],
 			},
 		);
-	} else if (matchToken(parser, "LeftParen")) {
-		const result = parseCalcSum(parser);
-
-		if (parser.getToken().type !== "RightParen") {
-			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.FIT_CONTENT_UNTERMITED_FUNCTION,
-				token: parser.getToken(),
-			});
-			nextToken(parser);
-			return undefined;
-		}
-		if (result) {
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSFitContent",
-					value: result,
-				},
-			);
-		}
 	}
 
 	parser.unexpectedDiagnostic({
@@ -81,19 +68,11 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 export function parseFitContentFunction(
 	parser: CSSParser,
 ): CSSFitContent | undefined {
-	const start = parser.getPosition();
 	const value = parseFitContent(parser);
 
 	if (value) {
 		nextToken(parser);
-		return parser.finishNode(
-			start,
-			{
-				type: "CSSFitContent",
-				name: "fit-content",
-				params: [value],
-			},
-		);
+		return value;
 	}
 
 	return undefined;

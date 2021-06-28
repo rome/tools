@@ -3,6 +3,7 @@ import {
 	AnyCSSValue,
 	CSSCalcFunction,
 	CSSCustomProperty,
+	CSSFitContent,
 	CSSFunction,
 	CSSUrlFunction,
 	CSSVarFunction,
@@ -15,7 +16,13 @@ import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
 
 export function parseFunction(
 	parser: CSSParser,
-): CSSFunction | CSSVarFunction | CSSUrlFunction | CSSCalcFunction | undefined {
+):
+	| CSSFunction
+	| CSSVarFunction
+	| CSSUrlFunction
+	| CSSCalcFunction
+	| CSSFitContent
+	| undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;

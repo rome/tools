@@ -7,6 +7,7 @@ import {
 	CSSComma,
 	CSSCustomProperty,
 	CSSDimension,
+	CSSFitContent,
 	CSSFontFace,
 	CSSFunction,
 	CSSHash,
@@ -56,9 +57,14 @@ export type AnyCSSValue =
 	| CSSCalcSum
 	| CSSMediaQueryList
 	| CSSSupportsCondition
+	| CSSFitContent
 	| CSSRaw;
 
-export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;
+export type AnyFunction =
+	| CSSFunction
+	| CSSVarFunction
+	| CSSUrlFunction
+	| CSSFitContent;
 
 export type RangeNameAndValue = [
 	CSSMediaFeatureName,
@@ -95,4 +101,5 @@ export type CSSAtRuleValue =
 export type CSSFitContentValue =
 	| CSSDimension
 	| CSSPercentage
-	| CSSNumber;
+	| CSSNumber
+	| CSSFitContent;
