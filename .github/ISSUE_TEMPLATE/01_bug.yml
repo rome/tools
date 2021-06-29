@@ -6,8 +6,8 @@ assignees:
   - ematipico
 body:
   - type: markdown
-      attributes:
-        value: Thank you for submitting the bug! We'll try to triage it ASAP!
+    attributes:
+      value: Thank you for submitting the bug! We'll try to triage it ASAP!
   - type: markdown
     attributes:
       value: |
@@ -36,7 +36,7 @@ body:
     id: expected-result
     attributes:
       label: Expected result
-      description:Describe what you expected to happen.
+      description: Describe what you expected to happen.
       placeholder: It should not throw an error.
     validations:
       required: true
@@ -53,7 +53,7 @@ body:
     id: configuration
     attributes:
       label: Configuration file of your project
-      description:  Past here your configuration if relevant
+      description: Paste here your configuration if relevant
       render: json
   - type: checkboxes
     id: terms
