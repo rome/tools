@@ -8,8 +8,10 @@
 
 ```toml
 root = true
-[lint]
-ignorePaths = ["foo", "bar"]
+lint.ignorePaths = [
+	"foo",
+	"bar",
+]
 
 ```
 
