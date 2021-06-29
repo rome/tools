@@ -5,22 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from "@internal/consume";
 import Server from "../Server";
 import ServerClient from "../ServerClient";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	createAbsoluteFilePath,
 } from "@internal/path";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticsProcessor,
-	catchDiagnostics,
 	formatCategoryDescription,
-	getActionAdviceFromDiagnostic,
 } from "@internal/diagnostics";
 import {
 	PartialServerQueryRequest,
@@ -29,31 +25,21 @@ import {
 import Checker from "../checker/Checker";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "../ServerRequest";
 import {DEFAULT_CLIENT_REQUEST_FLAGS} from "@internal/core/common/types/client";
-import {JSONPropertyValue} from "@internal/codec-config";
 import {
 	ReporterProgress,
 	ReporterProgressOptions,
 } from "@internal/cli-reporter";
 import {LSPTransport} from "./protocol";
 import LSPProgress from "./LSPProgress";
-import {
-	convertDiagnosticLocationToLSPRange,
-	convertDiagnosticsToLSP,
-	diffTextEdits,
-	doRangesOverlap,
-	getDecisionFromAdviceAction,
-	getLSPRange,
-	getPathFromTextDocument,
-	getWorkerBufferPatches,
-} from "./utils";
+import {convertDiagnosticsToLSP} from "./utils";
 import {markup, readMarkup} from "@internal/markup";
-import {LSPCodeAction} from "./types";
 import {Event} from "@internal/events";
 import {CommandName} from "@internal/core/common/commands";
-import {markupToPlainText} from "@internal/cli-layout";
+import {notificationHandlers, requestHandlers} from "./messages";
 
 type LSPProjectSession = {
 	request: ServerRequest;
+	status: "PENDING" | "WATCHING";
 };
 
 export default class LSPServer {
@@ -77,11 +63,11 @@ export default class LSPServer {
 		this.transport = transport;
 
 		transport.notificationEvent.subscribe(({method, params}) => {
-			return this.handleNotification(method, params);
+			return notificationHandlers.get(method)?.(this, params, method);
 		});
 
 		transport.requestEvent.subscribe(({method, params}) => {
-			return this.handleRequest(method, params);
+			return requestHandlers.get(method)?.(this, params, method);
 		});
 
 		transport.errorEvent.subscribe((err) => {
@@ -92,16 +78,15 @@ export default class LSPServer {
 	}
 
 	public transport: LSPTransport;
+	public request: ServerRequest;
+	public client: ServerClient;
+	public server: Server;
+	public diagnosticsProcessor: DiagnosticsProcessor;
 
-	private request: ServerRequest;
-	private client: ServerClient;
-	private server: Server;
-
-	private fileBuffers: AbsoluteFilePathSet;
-	private fileVersions: AbsoluteFilePathMap<number>;
+	public fileBuffers: AbsoluteFilePathSet;
+	public fileVersions: AbsoluteFilePathMap<number>;
 	private lintSessionsPending: AbsoluteFilePathSet;
 	private projectSessions: AbsoluteFilePathMap<LSPProjectSession>;
-	private diagnosticsProcessor: DiagnosticsProcessor;
 
 	public watchProjectEvent: Event<AbsoluteFilePath, void>;
 
@@ -117,10 +102,9 @@ export default class LSPServer {
 		return processor;
 	}
 
-	private logMessage(path: AbsoluteFilePath, message: string) {
+	public logMessage(path: AbsoluteFilePath, message: string) {
 		this.server.logger.info(markup`[LSPServer] ${message}`);
 		this.transport.write({
-			jsonrpc: "2.0",
 			method: "window/logMessage",
 			params: {
 				type: 4,
@@ -130,7 +114,7 @@ export default class LSPServer {
 		});
 	}
 
-	private logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostic[] = []) {
+	public logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostic[] = []) {
 		if (diagnostics.length === 0) {
 			return;
 		}
@@ -168,7 +152,7 @@ export default class LSPServer {
 		});
 	}
 
-	private unwatchProject(path: AbsoluteFilePath) {
+	public unwatchProject(path: AbsoluteFilePath) {
 		// TODO maybe unset all buffers?
 		const session = this.projectSessions.get(path);
 		if (session !== undefined) {
@@ -177,13 +161,14 @@ export default class LSPServer {
 			);
 			this.projectSessions.delete(path);
 		}
+		this.logMessage(path, `Unwatched: ${path.join()}`);
 	}
 
 	public createProgress(opts?: ReporterProgressOptions): ReporterProgress {
 		return new LSPProgress(this.transport, this.request.reporter, opts);
 	}
 
-	private async initProject(path: AbsoluteFilePath) {
+	public async initProject(path: AbsoluteFilePath) {
 		if (this.projectSessions.has(path) || this.lintSessionsPending.has(path)) {
 			return;
 		}
@@ -201,8 +186,23 @@ export default class LSPServer {
 		const req = this.createFakeServerRequest("noop", [path.join()]);
 		await req.init();
 
-		// This is not awaited so it doesn't delay the initialize response
-		this.server.fatalErrorHandler.wrapPromise(this.watchProject(path, req));
+		this.projectSessions.set(
+			path,
+			{
+				request: req,
+				status: "PENDING",
+			},
+		);
+	}
+
+	public async watchPendingProjects() {
+		const promises = [];
+		for (const [path, session] of this.projectSessions) {
+			if (session.status === "PENDING") {
+				promises.push(this.watchProject(path, session.request));
+			}
+		}
+		await Promise.all(promises);
 	}
 
 	private async watchProject(path: AbsoluteFilePath, req: ServerRequest) {
@@ -253,6 +253,7 @@ export default class LSPServer {
 			path,
 			{
 				request: req,
+				status: "WATCHING",
 			},
 		);
 		this.lintSessionsPending.delete(path);
@@ -262,7 +263,7 @@ export default class LSPServer {
 		this.watchProjectEvent.send(path);
 	}
 
-	private async shutdown() {
+	public async shutdown() {
 		// Unwatch projects
 		for (const path of this.projectSessions.keys()) {
 			this.unwatchProject(path);
@@ -283,272 +284,5 @@ export default class LSPServer {
 			silent: true,
 			...req,
 		});
-	}
-
-	private async handleRequest(
-		method: string,
-		params: Consumer,
-	): Promise<JSONPropertyValue> {
-		switch (method) {
-			case "initialize": {
-				const rootUri = params.get("rootUri");
-				if (rootUri.exists()) {
-					await this.initProject(createAbsoluteFilePath(rootUri.asString()));
-				}
-
-				const workspaceDirectories = params.get("workspaceDirectories");
-				if (workspaceDirectories.exists()) {
-					for (const elem of workspaceDirectories.asIterable()) {
-						await this.initProject(getPathFromTextDocument(elem));
-					}
-				}
-
-				return {
-					capabilities: {
-						textDocumentSync: {
-							openClose: true,
-							// This sends over incremental patches on change
-							change: 2,
-						},
-						documentFormattingProvider: true,
-						codeActionProvider: true,
-						executeCommandProvider: {
-							commands: ["rome.check.decisions", "rome.check.apply"],
-						},
-						workspaceDirectories: {
-							supported: true,
-							changeNotifications: true,
-						},
-					},
-					serverInfo: {
-						name: "rome",
-					},
-				};
-			}
-
-			case "textDocument/codeAction": {
-				const path = getPathFromTextDocument(params.get("textDocument"));
-				const codeActionRange = getLSPRange(params.get("range"));
-
-				const codeActions: LSPCodeAction[] = [];
-				const seenDecisions = new Set<string>();
-
-				const diagnostics = this.diagnosticsProcessor.getDiagnosticsForPath(
-					path,
-				);
-				if (diagnostics.length === 0) {
-					return codeActions;
-				}
-
-				for (const diag of diagnostics) {
-					const diagRange = convertDiagnosticLocationToLSPRange(diag.location);
-
-					if (!doRangesOverlap(diagRange, codeActionRange)) {
-						continue;
-					}
-					for (const item of getActionAdviceFromDiagnostic(diag)) {
-						if (item.secondary) {
-							continue;
-						}
-
-						const decision = getDecisionFromAdviceAction(item);
-						if (decision === undefined || seenDecisions.has(decision)) {
-							continue;
-						}
-						seenDecisions.add(decision);
-
-						codeActions.push({
-							title: `${markupToPlainText(item.description)}: ${formatCategoryDescription(
-								diag.description,
-							)}`,
-							command: {
-								title: "Rome: Check",
-								command: "rome.check.decisions",
-								arguments: [path.join(), decision],
-							},
-						});
-					}
-				}
-
-				codeActions.push({
-					title: "Rome: Fix All",
-					kind: "source.fixAll.rome",
-					command: {
-						title: "Rome: Fix All",
-						command: "rome.check.apply",
-						arguments: [path.join()],
-					},
-				});
-
-				return codeActions;
-			}
-
-			case "workspace/executeCommand": {
-				const command = params.get("command").asString();
-				const filename = params.get("arguments").getIndex(0).asString();
-
-				const path = createAbsoluteFilePath(filename);
-				const startVersion = this.fileVersions.get(path);
-
-				let req: PartialServerQueryRequest | undefined;
-
-				if (command === "rome.check.apply") {
-					req = {
-						commandName: "check",
-						args: [filename],
-						commandFlags: {apply: true},
-						noFileWrites: true,
-					};
-				}
-
-				if (command === "rome.check.decisions") {
-					const decisions = params.get("arguments").getIndex(1).asString();
-					req = {
-						commandName: "check",
-						args: [filename],
-						commandFlags: {decisions},
-						noFileWrites: true,
-					};
-				}
-
-				if (req === undefined) {
-					return null;
-				}
-
-				const response = await this.sendClientRequest(req);
-
-				if (response.type === "SUCCESS" || response.type === "DIAGNOSTICS") {
-					const original = await this.request.requestWorkerGetBuffer(path);
-					const saveFile = response.files[filename];
-					if (original === undefined || saveFile === undefined) {
-						return null;
-					}
-					const endVersion = this.fileVersions.get(path);
-					if (startVersion !== endVersion) {
-						this.logMessage(
-							path,
-							`Can't update ${filename} because it was modified,`,
-						);
-						return null;
-					}
-
-					const edits = diffTextEdits(original, saveFile.content);
-
-					await this.transport.request({
-						jsonrpc: "2.0",
-						method: "workspace/applyEdit",
-						params: {
-							label: "Rome Action",
-							edit: {
-								documentChanges: [
-									{
-										textDocument: {
-											uri: `file://${filename}`,
-											version: endVersion,
-										},
-										edits,
-									},
-								],
-							},
-						},
-					});
-				}
-
-				return null;
-			}
-
-			case "textDocument/formatting": {
-				const path = getPathFromTextDocument(params.get("textDocument"));
-
-				const project = this.server.projectManager.findLoadedProject(path);
-				if (project === undefined) {
-					// Not in a Rome project
-					return null;
-				}
-
-				const {value, diagnostics} = await catchDiagnostics(async () => {
-					return this.request.requestWorkerFormat(path, {}, {});
-				});
-
-				this.logDiagnostics(path, diagnostics);
-
-				if (value === undefined) {
-					// Not a file we support formatting or has diagnostics
-					return null;
-				}
-
-				return diffTextEdits(value.original, value.formatted);
-			}
-
-			case "shutdown": {
-				await this.shutdown();
-				break;
-			}
-		}
-
-		return null;
-	}
-
-	private async handleNotification(
-		method: string,
-		params: Consumer,
-	): Promise<void> {
-		switch (method) {
-			case "workspace/didChangeWorkspaceDirectories": {
-				for (const elem of params.get("added").asIterable()) {
-					await this.initProject(getPathFromTextDocument(elem));
-				}
-				for (const elem of params.get("removed").asIterable()) {
-					this.unwatchProject(getPathFromTextDocument(elem));
-				}
-				break;
-			}
-
-			case "textDocument/didOpen": {
-				const textDocument = params.get("textDocument");
-				const path = getPathFromTextDocument(textDocument);
-				const project = this.server.projectManager.findLoadedProject(path);
-				if (project === undefined) {
-					return;
-				}
-				this.fileVersions.set(path, textDocument.get("version").asNumber());
-				const content = textDocument.get("text").asString();
-				await this.request.requestWorkerUpdateBuffer(path, content);
-				this.fileBuffers.add(path);
-				this.logMessage(path, `Opened: ${path.join()}`);
-				break;
-			}
-
-			case "textDocument/didChange": {
-				const textDocument = params.get("textDocument");
-				const path = getPathFromTextDocument(textDocument);
-				if (!this.fileBuffers.has(path)) {
-					return;
-				}
-				this.fileVersions.set(path, textDocument.get("version").asNumber());
-				const contentChanges = params.get("contentChanges");
-
-				if (contentChanges.getIndex(0).has("range")) {
-					const patches = getWorkerBufferPatches(contentChanges);
-					await this.request.requestWorkerPatchBuffer(path, patches);
-				} else {
-					const content = contentChanges.getIndex(0).get("text").asString();
-					await this.request.requestWorkerUpdateBuffer(path, content);
-				}
-				break;
-			}
-
-			case "textDocument/didClose": {
-				const path = getPathFromTextDocument(params.get("textDocument"));
-				if (!this.fileBuffers.has(path)) {
-					return;
-				}
-				this.fileBuffers.delete(path);
-				this.fileVersions.delete(path);
-				await this.request.requestWorkerClearBuffer(path);
-				this.logMessage(path, `Closed: ${path.join()}`);
-				break;
-			}
-		}
 	}
 }
