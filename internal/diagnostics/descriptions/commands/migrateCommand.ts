@@ -1,4 +1,7 @@
-import {createDiagnosticsCategory, DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	createDiagnosticsCategory,
+} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 
 //
@@ -14,7 +17,15 @@ export const migrateCommand = createDiagnosticsCategory({
 				type: "action",
 				description: markup`Bootstrap the project first.`,
 				command: "init",
-			}
-		]
-	}
-})
+			},
+		],
+	},
+	EXPECT_REPO: {
+		category: DIAGNOSTIC_CATEGORIES["commands/migrate"],
+		message: markup`The migrate command should be run inside a repository.`,
+	},
+	UNCOMMITTED_CHANGES: {
+		category: DIAGNOSTIC_CATEGORIES["commands/migrate"],
+		message: markup`The migrate command could probably change you configuration file, it is recommended to stash your local changes.`,
+	},
+});

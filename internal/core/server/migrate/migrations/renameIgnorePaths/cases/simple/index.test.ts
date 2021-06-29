@@ -5,9 +5,10 @@ import {createAbsoluteFilePath} from "@internal/path";
 
 const dirname = testOptions.dirname ?? "";
 
-test("Ignore paths migration", async (t) => {
-
-	const testPath = createAbsoluteFilePath(dirname);
-	await testSingleMigration({t, migration, name: "simple case", testPath});
-
-})
+test(
+	"Ignore paths migration",
+	async (t) => {
+		const testPath = createAbsoluteFilePath(dirname);
+		await testSingleMigration({t, migration, testPath});
+	},
+);

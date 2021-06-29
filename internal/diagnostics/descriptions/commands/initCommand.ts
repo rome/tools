@@ -21,13 +21,17 @@ export const initCommand = createDiagnosticsCategory({
 	UNCOMMITTED_CHANGES: {
 		category: DIAGNOSTIC_CATEGORIES["commands/auto-config/uncommittedChanges"],
 		advice: [
+			{
+				type: "log",
+				category: "warn",
+				text: markup`This command is destructive and will format and autofix all files within. We recommend committing your changes so you can recover them if you don't like the changes.`,
+			},
 			...IGNORE_ADVICE,
 		],
 	},
 	EXPECTED_REPO: {
 		category: DIAGNOSTIC_CATEGORIES["commands/auto-config/expectedRepo"],
-		advice: [
-			...IGNORE_ADVICE,
-		],
+		message: markup`Are you sure this is where you wanted to create a project?`,
+		advice: [...IGNORE_ADVICE],
 	},
 });

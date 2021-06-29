@@ -583,6 +583,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		if (!this.currentToken.start.equal(this.prevToken.end)) {
 			throw this.unexpected({
 				description: descriptions.PARSER_CORE.UNEXPECTED_SPACE,
+				token: this.currentToken,
 				startIndex: this.prevToken.end,
 				endIndex: this.currentToken.start,
 			});

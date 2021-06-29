@@ -98,6 +98,10 @@ export function createSingleDiagnosticsError(diag: Diagnostic): DiagnosticsError
 	return new DiagnosticsError(undefined, [diag]);
 }
 
+export function createDiagnosticsErrors(diags: Diagnostic[]): DiagnosticsError {
+	return new DiagnosticsError(undefined, diags);
+}
+
 export function getDiagnosticsFromError(err: Error): undefined | Diagnostic[] {
 	if (err instanceof DiagnosticsError) {
 		const processor = new DiagnosticsProcessor({});

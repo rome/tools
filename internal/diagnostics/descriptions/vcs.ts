@@ -1,4 +1,7 @@
-import {createDiagnosticsCategory, DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	createDiagnosticsCategory,
+} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 
 export const vcs = createDiagnosticsCategory({
@@ -9,7 +12,7 @@ export const vcs = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "warn",
-				text: markup`This command is destructive and will format and autofix all files within. We recommend committing your changes so you can recover them if you don't like the changes.`,
+				text: markup`We recommend committing your changes so you can recover them if you don't like the changes.`,
 			},
 			{
 				type: "code",
@@ -20,12 +23,17 @@ export const vcs = createDiagnosticsCategory({
 	},
 	EXPECTED_REPO: {
 		category: DIAGNOSTIC_CATEGORIES["vcs/expectedRepo"],
-		message: markup`Directory is not a repository. Are you sure this is where you wanted to create a project?`,
+		message: markup`Directory is not a repository.`,
 		advice: [
 			{
 				type: "log",
 				category: "warn",
 				text: markup`This command is destructive and will format and autofix all files within.`,
+			},
+			{
+				type: "code",
+				language: "shell",
+				sourceText: `git init"`,
 			},
 		],
 	},

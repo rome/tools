@@ -1,5 +1,7 @@
-import lint from "./migrations/1.0.0/lintIgnorePaths"
+import lint from "./migrations/renameIgnorePaths";
+import {SemverVersion} from "@internal/codec-semver";
+import {Migration} from "@internal/core/server/migrate/Migration";
 
-export default new Set([
-	lint
-])
+export const migrations: Map<SemverVersion, Migration> = new Map();
+
+migrations.set(lint.addedVersion, lint);

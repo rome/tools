@@ -10,17 +10,19 @@ import {
 	DiagnosticAdvice,
 	DiagnosticLocation,
 	DiagnosticsError,
+	catchDiagnostics,
 	catchDiagnosticsSync,
 	createSingleDiagnosticsError,
-	descriptions, catchDiagnostics,
+	descriptions,
 } from "@internal/diagnostics";
 import {
+	AsyncVoidCallback,
 	Dict,
 	UnknownFunction,
 	UnknownObject,
 	VoidCallback,
 	isObject,
-	isPlainObject, AsyncVoidCallback,
+	isPlainObject,
 } from "@internal/typescript-helpers";
 import {
 	ConsumeContext,

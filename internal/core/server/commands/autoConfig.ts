@@ -1,10 +1,11 @@
 import {createServerCommand} from "@internal/core/server/commands";
 import {markup} from "@internal/markup";
-import {checkVSCWorkingDirectory, commandCategories} from "@internal/core/common/commands";
-import {ServerRequest} from "@internal/core";
 import {
-	Diagnostic,
-} from "@internal/diagnostics";
+	checkVSCWorkingDirectory,
+	commandCategories,
+} from "@internal/core/common/commands";
+import {ServerRequest} from "@internal/core";
+import {Diagnostic, descriptions} from "@internal/diagnostics";
 import {UnknownObject} from "@internal/typescript-helpers";
 import Checker from "../checker/Checker";
 
@@ -57,7 +58,13 @@ export default createServerCommand<Flags>({
 
 		// Check for no or dirty repo
 		if (checkVSC) {
-			await checkVSCWorkingDirectory(req);
+			await checkVSCWorkingDirectory(
+				req,
+				[
+					descriptions.INIT_COMMAND.EXPECTED_REPO,
+					descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES,
+				],
+			);
 		}
 		// Generate files
 		await reporter.steps([

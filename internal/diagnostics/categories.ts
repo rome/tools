@@ -412,14 +412,8 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"bundler/moduleCycle": ["bundler", "moduleCycle"],
 	"bundler/topLevelAwait": ["bundler", "topLevelAwait"],
 	"childProcess/failure": ["childProcess", "failure"],
-	"vcs/uncommittedChanges": [
-		"vcs",
-		"uncommittedChanges",
-	],
-	"vcs/expectedRepo": [
-		"vcs",
-		"expectedRepo",
-	],
+	"vcs/uncommittedChanges": ["vcs", "uncommittedChanges"],
+	"vcs/expectedRepo": ["vcs", "expectedRepo"],
 	"commands/auto-config/uncommittedChanges": [
 		"commands",
 		"auto-config",

@@ -5,8 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@internal/core";
-import {checkVSCWorkingDirectory, commandCategories} from "../../common/commands";
+import {ServerRequest, VERSION} from "@internal/core";
+import {
+	checkVSCWorkingDirectory,
+	commandCategories,
+} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {normalizeProjectConfig} from "@internal/project";
 import {AbsoluteFilePath, createPath} from "@internal/path";
@@ -14,7 +17,7 @@ import {markup} from "@internal/markup";
 import {
 	createSingleDiagnosticsError,
 	descriptions,
-	interceptDiagnostics
+	interceptDiagnostics,
 } from "@internal/diagnostics";
 import {Consumer} from "@internal/consume";
 import {
@@ -30,7 +33,6 @@ import {
 import {USER_CONFIG_DIRECTORY} from "@internal/core/common/constants";
 import prettyFormat from "@internal/pretty-format";
 import {Migrator} from "@internal/core/server/migrate/Migrator";
-import {VERSION} from "@internal/core";
 
 type Flags = {
 	user: boolean;
@@ -294,16 +296,22 @@ export const migrate = createServerCommand({
 	usage: "migrate",
 	examples: [],
 	defineFlags() {
-		return {}
+		return {};
 	},
-	async callback(req, ) {
+	async callback(req) {
 		req.expectArgumentLength(0, 0);
-		const { client } = req;
-		await checkVSCWorkingDirectory(req);
+		const {client} = req;
+		await checkVSCWorkingDirectory(
+			req,
+			[
+				descriptions.MIGRATE_COMMAND.EXPECT_REPO,
+				descriptions.MIGRATE_COMMAND.UNCOMMITTED_CHANGES,
+			],
+		);
 		const project = await req.assertClientCwdProject();
 		const {meta} = project;
 		const {configPath} = meta;
-		console.log(configPath)
+		console.log(configPath);
 		if (!configPath) {
 			throw createSingleDiagnosticsError({
 				location: req.getDiagnosticLocationForClientCwd(),
@@ -313,7 +321,7 @@ export const migrate = createServerCommand({
 
 		const migrator = new Migrator({
 			reporter: client.reporter,
-			version: VERSION
+			version: VERSION,
 		});
 
 		const configFile = await configPath.readFileText();
@@ -328,7 +336,6 @@ export const migrate = createServerCommand({
 		// Stringify the config
 		const stringified = stringifyConfig(res);
 
-		await configPath.writeFile(stringified)
-
+		await configPath.writeFile(stringified);
 	},
-})
+});
