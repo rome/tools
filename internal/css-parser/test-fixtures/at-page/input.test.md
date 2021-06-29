@@ -4,6 +4,8 @@
 
 ## `at-page`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -228,7 +230,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<at-page/input.css>
+	path: UIDPath<at-page/input.css>
 	loc: SourceLocation at-page/input.css 1:0-19:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

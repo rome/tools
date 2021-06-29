@@ -4,6 +4,8 @@
 
 ## `grid > minmax`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -83,7 +85,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<grid/minmax/input.css>
+	path: UIDPath<grid/minmax/input.css>
 	loc: SourceLocation grid/minmax/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```
