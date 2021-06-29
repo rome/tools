@@ -4,6 +4,8 @@
 
 ## `media > type`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -183,7 +185,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<media/type/input.css>
+	path: UIDPath<media/type/input.css>
 	loc: SourceLocation media/type/input.css 1:0-6:42
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

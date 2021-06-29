@@ -4,6 +4,8 @@
 
 ## `keyframe`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -196,7 +198,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<keyframe/input.css>
+	path: UIDPath<keyframe/input.css>
 	loc: SourceLocation keyframe/input.css 1:0-27:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

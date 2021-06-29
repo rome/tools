@@ -4,6 +4,8 @@
 
 ## `import`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -41,7 +43,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<import/input.css>
+	path: UIDPath<import/input.css>
 	loc: SourceLocation import/input.css 1:0-2:29
 }
+```
+
+### `diagnostics`
+
+```
+
 ```
