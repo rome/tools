@@ -1,0 +1,65 @@
+name: 🐛 Bug Report
+description: Report a possible bug or regression
+title: "🐛 "
+labels: [bug:unconfirmed]
+assignees:
+  - ematipico
+body:
+  - type: markdown
+      attributes:
+        value: Thank you for submitting the bug! We'll try to triage it ASAP!
+  - type: markdown
+    attributes:
+      value: |
+        Bug reports that don't follow this template will be closed.
+        Please provide a clear and concise description of what the bug is.
+  - type: textarea
+    id: rage-summary
+    attributes:
+      label: Environment information
+      description: Run `rome rage --summary` and paste the output below.
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: What happened?
+      description: |
+        Provide a detailed list of steps that reproduce the issue
+        The more information and included steps, the quicker your report can be confirmed and addressed!
+      placeholder: |
+        1.
+        2.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-result
+    attributes:
+      label: Expected result
+      description:Describe what you expected to happen.
+      placeholder: It should not throw an error.
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Rome version
+      description: What version of Rome are you running?
+      options:
+        - 10.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Configuration file of your project
+      description:  Past here your configuration if relevant
+      render: json
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/rome/tools/blob/main/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow Rome's Code of Conduct
+          required: true
