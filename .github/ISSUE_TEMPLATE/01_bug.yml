@@ -1,7 +1,7 @@
 name: 🐛 Bug Report
 description: Report a possible bug or regression
 title: "🐛 "
-labels: ["bug:unconfirmed"]
+labels: ["bug: unconfirmed"]
 assignees:
   - ematipico
 body:
