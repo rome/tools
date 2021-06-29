@@ -12,8 +12,8 @@ import {Examples} from "@internal/cli-flags";
 import {ServerRequest} from "@internal/core";
 import {getVCSClient} from "@internal/vcs";
 import {
-	DiagnosticDescription,
-	createDiagnosticsErrors,
+	DiagnosticAdvice,
+	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 
@@ -80,35 +80,31 @@ export const commandCategories = {
 };
 
 type VSCDiagnostics = [
-	noVSCDiagnostisc: DiagnosticDescription,
-	uncommittedChangesDiagnostics: DiagnosticDescription
+	noVSCAdvice: DiagnosticAdvice[],
+	uncommittedChangesAdvice: DiagnosticAdvice[]
 ];
 
 export async function checkVSCWorkingDirectory(
 	req: ServerRequest,
-	[noVcsDiagnostics, uncommittedChangesDiagnostics]: VSCDiagnostics,
+	[noVSCAdvice, uncommittedChangesAdvice]: VSCDiagnostics,
 ) {
 	const {client} = req;
 	const vcsClient = await getVCSClient(client.flags.cwd);
 	const location = req.getDiagnosticLocationForClientCwd();
 	if (vcsClient === undefined) {
-		throw createDiagnosticsErrors([
-			{
-				location,
-				description: descriptions.VSC.UNCOMMITTED_CHANGES,
-			},
-			{location, description: noVcsDiagnostics},
-		]);
+		throw createSingleDiagnosticsError({
+			location,
+			description: descriptions.VSC.UNCOMMITTED_CHANGES,
+			...noVSCAdvice,
+		});
 	} else {
 		const uncommittedFiles = await vcsClient.getUncommittedFiles();
 		if (uncommittedFiles.length > 0) {
-			throw createDiagnosticsErrors([
-				{
-					location,
-					description: descriptions.VSC.UNCOMMITTED_CHANGES,
-				},
-				{location, description: uncommittedChangesDiagnostics},
-			]);
+			throw createSingleDiagnosticsError({
+				location,
+				description: descriptions.VSC.UNCOMMITTED_CHANGES,
+				...uncommittedChangesAdvice,
+			});
 		}
 	}
 }

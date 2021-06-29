@@ -22,10 +22,22 @@ export const migrateCommand = createDiagnosticsCategory({
 	},
 	EXPECT_REPO: {
 		category: DIAGNOSTIC_CATEGORIES["commands/migrate"],
-		message: markup`The migrate command should be run inside a repository.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The migrate command should be run inside a repository.`,
+			},
+		],
 	},
 	UNCOMMITTED_CHANGES: {
 		category: DIAGNOSTIC_CATEGORIES["commands/migrate"],
-		message: markup`The migrate command could probably change you configuration file, it is recommended to stash your local changes.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The migrate command could probably change you configuration file, it is recommended to stash your local changes.`,
+			},
+		],
 	},
 });

@@ -31,7 +31,13 @@ export const initCommand = createDiagnosticsCategory({
 	},
 	EXPECTED_REPO: {
 		category: DIAGNOSTIC_CATEGORIES["commands/auto-config/expectedRepo"],
-		message: markup`Are you sure this is where you wanted to create a project?`,
-		advice: [...IGNORE_ADVICE],
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Are you sure this is where you wanted to create a project?`,
+			},
+			...IGNORE_ADVICE,
+		],
 	},
 });

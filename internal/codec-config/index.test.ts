@@ -5,18 +5,18 @@ const promise = createFixtureTests(
 	async (fixture, t) => {
 		const snapshotFile = fixture.dir.append("input").join();
 
-			for (const file of fixture.files.values()) {
-				const path = file.absolute;
-				const filename = file.relative;
-				if (filename.join().includes("input.toml")) {
-					const inputContent = file.contentAsText();
+		for (const file of fixture.files.values()) {
+			const path = file.absolute;
+			const filename = file.relative;
+			if (filename.join().includes("input.toml")) {
+				const inputContent = file.contentAsText();
 
-					const val = consumeConfig({
-						input: inputContent,
-						path: filename,
-					});
+				const val = consumeConfig({
+					input: inputContent,
+					path: filename,
+				});
 
-					const ext = path.getExtensions();const dotlessExtension = path.getDotlessExtensions();
+				const ext = path.getExtensions();const dotlessExtension = path.getDotlessExtensions();
 
 				const snapshot = t.customSnapshot(
 					snapshotFile,

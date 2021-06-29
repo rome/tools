@@ -1,4 +1,4 @@
-import {migrations} from "./index";
+import {migrations} from "./migrations/index";
 import {Migration} from "@internal/core/server/migrate/Migration";
 import {
 	SemverVersion,

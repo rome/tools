@@ -304,14 +304,13 @@ export const migrate = createServerCommand({
 		await checkVSCWorkingDirectory(
 			req,
 			[
-				descriptions.MIGRATE_COMMAND.EXPECT_REPO,
-				descriptions.MIGRATE_COMMAND.UNCOMMITTED_CHANGES,
+				descriptions.MIGRATE_COMMAND.EXPECT_REPO.advice,
+				descriptions.MIGRATE_COMMAND.UNCOMMITTED_CHANGES.advice,
 			],
 		);
 		const project = await req.assertClientCwdProject();
 		const {meta} = project;
 		const {configPath} = meta;
-		console.log(configPath);
 		if (!configPath) {
 			throw createSingleDiagnosticsError({
 				location: req.getDiagnosticLocationForClientCwd(),

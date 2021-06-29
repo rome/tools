@@ -88,7 +88,6 @@ export async function getUserConfigFile(): Promise<
 			path: configPath,
 			input: configFile,
 		});
-		console.log(consumer);
 		return {consumer, configPath};
 	}
 

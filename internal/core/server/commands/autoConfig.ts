@@ -61,8 +61,8 @@ export default createServerCommand<Flags>({
 			await checkVSCWorkingDirectory(
 				req,
 				[
-					descriptions.INIT_COMMAND.EXPECTED_REPO,
-					descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES,
+					descriptions.INIT_COMMAND.EXPECTED_REPO.advice,
+					descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES.advice,
 				],
 			);
 		}
