@@ -31,19 +31,16 @@
 
 ```css
 .style {
-	-ms-flow-into: main;
 	-webkit-flow-into: main;
 	flow-into: main;
 }
 
 .style {
-	-ms-flow-from: main;
 	-webkit-flow-from: main;
 	flow-from: main;
 }
 
 .style {
-	-ms-region-fragment: auto;
 	-webkit-region-fragment: auto;
 	region-fragment: auto;
 }

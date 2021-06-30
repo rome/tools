@@ -27,10 +27,6 @@
 .example2::selection {
 	width: 10px;
 }
-.parent2 > .child2::-ms-placeholder,
-.example2::selection {
-	width: 10px;
-}
 .parent2 > .child2::-moz-placeholder,
 .example2::-moz-selection {
 	width: 10px;
