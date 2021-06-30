@@ -8,20 +8,22 @@
 
 ```javascript
 [
-	"and_chr:88"
-	"chrome:87"
+	"and_chr:91"
+	"chrome:90"
 	"ios_saf:14"
 	"ios_saf:14.4"
-	"chrome:88"
+	"edge:90"
+	"firefox:88"
 	"safari:14"
-	"samsung:13"
-	"firefox:84"
-	"edge:87"
+	"samsung:14"
+	"ios_saf:14.5"
+	"ios_saf:14.6"
 	"and_uc:12.12"
-	"ios_saf:13.4"
-	"ios_saf:13.7"
 	"op_mini:1"
-	"ios_saf:12.2"
+	"chrome:89"
+	"chrome:91"
+	"safari:14.1"
+	"ios_saf:13.4"
 ]
 ```
 

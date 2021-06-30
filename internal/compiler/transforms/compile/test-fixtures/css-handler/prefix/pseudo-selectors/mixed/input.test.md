@@ -39,10 +39,6 @@
 .example3::-webkit-input-placeholder {
 	width: 10px;
 }
-.parent3 > .child3:any-link,
-.example3::-ms-placeholder {
-	width: 10px;
-}
 
 .parent3 > .child3::selection,
 .example3:read-only {

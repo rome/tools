@@ -23,7 +23,6 @@
 
 ```css
 .style {
-	-ms-hyphens: none;
 	-moz-hyphens: none;
 	-webkit-hyphens: none;
 	hyphens: none;

@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-["firefox:87", "firefox:86"]
+["firefox:91", "firefox:90"]
 ```
 
 ### `targets`
