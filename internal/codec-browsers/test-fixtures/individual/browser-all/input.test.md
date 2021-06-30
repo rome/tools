@@ -96,6 +96,10 @@
 	"firefox:85"
 	"firefox:86"
 	"firefox:87"
+	"firefox:88"
+	"firefox:89"
+	"firefox:90"
+	"firefox:91"
 ]
 ```
 
