@@ -16,18 +16,13 @@ const IGNORE_ADVICE: DiagnosticAdvice[] = [
 	},
 ];
 
-// @internal/core/server/commands/init.ts
-export const initCommand = createDiagnosticsCategory({
+/**
+ * {@link internal/core/server/commands/autoConfig}
+ */
+export const autoConfigCommand = createDiagnosticsCategory({
 	UNCOMMITTED_CHANGES: {
 		category: DIAGNOSTIC_CATEGORIES["commands/auto-config/uncommittedChanges"],
-		advice: [
-			{
-				type: "log",
-				category: "warn",
-				text: markup`This command is destructive and will format and autofix all files within. We recommend committing your changes so you can recover them if you don't like the changes.`,
-			},
-			...IGNORE_ADVICE,
-		],
+		advice: [...IGNORE_ADVICE],
 	},
 	EXPECTED_REPO: {
 		category: DIAGNOSTIC_CATEGORIES["commands/auto-config/expectedRepo"],

@@ -38,7 +38,7 @@ import {userConfig} from "./userConfig";
 import {htmlParser} from "./parsers/htmlParser";
 import {recoveryStore} from "./commands/recoveryStore";
 import {markdownParser} from "./parsers/markdownParser";
-import {initCommand} from "./commands/initCommand";
+import {autoConfigCommand} from "./commands/autoConfigCommand";
 import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
 import {toml} from "./parsers/tomlParser";
 import {browserquery} from "./parsers/browserquery";
@@ -171,7 +171,7 @@ export const descriptions = {
 	HTML_PARSER: htmlParser,
 	MARKDOWN_PARSER: markdownParser,
 	RECOVERY_STORE: recoveryStore,
-	INIT_COMMAND: initCommand,
+	INIT_COMMAND: autoConfigCommand,
 	MIGRATE_COMMAND: migrateCommand,
 	TOML: toml,
 	VSC: vcs,

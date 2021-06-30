@@ -4,7 +4,6 @@ import {
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 
-//
 /**
  * {@link internal/core/server/commands/migrate}
  */

@@ -178,7 +178,7 @@ export default class Consumer {
 
 	public async handleAsyncThrownDiagnostics(callback: AsyncVoidCallback) {
 		if (this.handleUnexpected === undefined) {
-			callback();
+			await callback();
 		} else {
 			const {diagnostics} = await catchDiagnostics(async () => {
 				await callback();

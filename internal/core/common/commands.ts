@@ -94,16 +94,16 @@ export async function checkVSCWorkingDirectory(
 	if (vcsClient === undefined) {
 		throw createSingleDiagnosticsError({
 			location,
-			description: descriptions.VSC.UNCOMMITTED_CHANGES,
-			...noVSCAdvice,
+			description: descriptions.VSC.UNCOMMITTED_CHANGES(noVSCAdvice),
 		});
 	} else {
 		const uncommittedFiles = await vcsClient.getUncommittedFiles();
 		if (uncommittedFiles.length > 0) {
 			throw createSingleDiagnosticsError({
 				location,
-				description: descriptions.VSC.UNCOMMITTED_CHANGES,
-				...uncommittedChangesAdvice,
+				description: descriptions.VSC.UNCOMMITTED_CHANGES(
+					uncommittedChangesAdvice,
+				),
 			});
 		}
 	}
