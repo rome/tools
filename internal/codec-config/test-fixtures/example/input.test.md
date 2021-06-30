@@ -34,8 +34,7 @@ name = "Tom Preston-Werner"
 organization = "GitHub"
 bio = """
 GitHub Cofounder & CEO
-Likes tater tots and beer.
-"""
+Likes tater tots and beer."""
 [owner.dob]
 
 
