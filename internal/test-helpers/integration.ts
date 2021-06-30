@@ -305,10 +305,14 @@ export async function declareParserTests(checkDiagnostics = true) {
 		if (checkDiagnostics) {
 			if (diagnostics.length === 0) {
 				if (options.has("throws")) {
-					throw new Error(`Expected diagnostics but didn't receive any\n${printedDiagnostics}`);
+					throw new Error(
+						`Expected diagnostics but didn't receive any\n${printedDiagnostics}`,
+					);
 				}
 			} else if (!options.has("throws")) {
-				throw new Error(`Received diagnostics when we didn't expect any\n${printedDiagnostics}`);
+				throw new Error(
+					`Received diagnostics when we didn't expect any\n${printedDiagnostics}`,
+				);
 			}
 		}
 	});
