@@ -133,8 +133,8 @@ CSSRoot {
 			location: {
 				language: "css"
 				path: UIDPath<invalid/var/input.css>
-				end: Position 2:18
-				start: Position 2:17
+				end: Position 2:17
+				start: Position 2:13
 			}
 		}
 	]
@@ -147,13 +147,13 @@ CSSRoot {
 
 ```
 
- invalid/var/input.css:2:17 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ invalid/var/input.css:2:13 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid custom property found inside the "var" function.
 
     1 │ .style {
   > 2 │   border: var(#fff);
-      │                   ^
+      │               ^^^^
     3 │   border: var(calc(10px + 10px));
     4 │   border: var(90rem);
 

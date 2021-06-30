@@ -250,7 +250,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 	return int;
 }
 
-export async function declareParserTests() {
+export async function declareParserTests(checkDiagnostics = true) {
 	const {worker, performFileOperation} = createMockWorker();
 
 	return createFixtureTests(async (fixture, t) => {
@@ -302,12 +302,14 @@ export async function declareParserTests() {
 			{filename: outputFile},
 		);
 
-		if (diagnostics.length === 0) {
-			if (options.has("throws")) {
-				// TODO: throw new Error(`Expected diagnostics but didn't receive any\n${printedDiagnostics}`);
+		if (checkDiagnostics) {
+			if (diagnostics.length === 0) {
+				if (options.has("throws")) {
+					throw new Error(`Expected diagnostics but didn't receive any\n${printedDiagnostics}`);
+				}
+			} else if (!options.has("throws")) {
+				throw new Error(`Received diagnostics when we didn't expect any\n${printedDiagnostics}`);
 			}
-		} else if (!options.has("throws")) {
-			// TODO: throw new Error(`Received diagnostics when we didn't expect any\n${printedDiagnostics}`);
 		}
 	});
 }

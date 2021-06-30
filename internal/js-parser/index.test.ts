@@ -7,7 +7,7 @@
 
 import {declareParserTests} from "@internal/test-helpers";
 
-const promise = declareParserTests();
+const promise = declareParserTests(false);
 
 // @ts-expect-error Doesn't support top-level await lol
 await promise;
