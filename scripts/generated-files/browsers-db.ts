@@ -298,9 +298,7 @@ export async function main() {
 		DIAGNOSTIC_CATEGORIES.parse,
 	).get("version").asString();
 	if (currentVersion !== version) {
-		reporter.success(
-			`Update found! ${currentVersion} -> ${version}`,
-		);
+		reporter.success(`Update found! ${currentVersion} -> ${version}`);
 		await updateData();
 		await updateRegions();
 		await updateVersion(version);
@@ -420,7 +418,9 @@ function generateDataAgentsVersions(rawVersions: Consumer[]): Agent["vs"] {
 
 	for (const v of rawVersions) {
 		// Remove `ms` prefixes
-		if (v.get("prefix").asString() === "ms") continue;
+		if (v.get("prefix").asString() === "ms") {
+			continue;
+		}
 
 		if (v.get("version").asString().includes("-")) {
 			// Could be optimized but copying 3 times works
