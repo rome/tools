@@ -4,6 +4,8 @@
 
 ## `comment`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -127,7 +129,13 @@ CSSRoot {
 	]
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<comment/input.css>
+	path: UIDPath<comment/input.css>
 	loc: SourceLocation comment/input.css 1:0-15:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

@@ -65,7 +65,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/module-attributes/invalid-spread-element-import-call/input.js>
 	loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:0-2:0

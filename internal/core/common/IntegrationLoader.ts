@@ -142,19 +142,17 @@ export default class IntegrationLoader<
 			const manifest = await normalizeManifest(manifestPath, jsonConsumer, []);
 
 			if (manifest.version === undefined) {
-				throw versionProp.unexpected(
-					descriptions.INTEGRATIONS.MISSING_VERSION(this.name),
-					{at: "none"},
+				throw versionProp.unexpected(() =>
+					descriptions.INTEGRATIONS.MISSING_VERSION(this.name)
 				);
 			}
 
 			if (!satisfiesSemver(manifest.version, expectedRange)) {
-				throw versionProp.unexpected(
+				throw versionProp.unexpected(() =>
 					descriptions.INTEGRATIONS.UNSUPPORTED_VERSION(
 						this.name,
 						stringifySemver(expectedRange),
-					),
-					{at: "none"},
+					)
 				);
 			}
 

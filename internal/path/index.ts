@@ -56,3 +56,7 @@ export function isPathish(val: unknown): val is Pathish {
 		typeof val.format() === "string"
 	);
 }
+
+export function isNodeInternalPath(path: Path): boolean {
+	return path.isUID() && path.getSegments()[0].startsWith("node:");
+}

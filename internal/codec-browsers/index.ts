@@ -1,6 +1,6 @@
 import {Browser} from "@internal/browser-features/Browser";
-import {ResolveOptions, resolveTargets} from "@internal/codec-browsers/resolve";
-import {parseBrowserQuery} from "@internal/codec-browsers/parse";
+import {ResolveOptions, resolveTargets} from "./resolve";
+import {parseBrowserQuery} from "./parse";
 import {ParserOptions} from "@internal/parser-core";
 
 export function resolveBrowsers(

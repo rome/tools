@@ -308,8 +308,8 @@ export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 				} else {
 					newTarget = {
 						type: "TargetBrowserCombination",
-						target: targets.pop()!,
-						and: newTarget,
+						left: targets.pop()!,
+						right: newTarget,
 					};
 				}
 			}

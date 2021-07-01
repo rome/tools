@@ -44,7 +44,7 @@ export type SelectArguments<Options extends SelectOptions> = {
 
 export type ReporterStepCallback = {
 	message: Markup;
-	test?: AsyncCallback<boolean>;
+	test?: AsyncCallback<[], boolean>;
 	callback: AsyncVoidCallback;
 };
 

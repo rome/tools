@@ -110,7 +110,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<typescript/class/optional-async-error/input.js>
 	loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-4:1

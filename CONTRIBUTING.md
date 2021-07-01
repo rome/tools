@@ -218,3 +218,87 @@ This is used to generate a new prefix boilerplate
 ```
 
 Prefix names with dashes are preferable.
+
+### Creating tests
+
+Rome uses its own test suite to run tests. Internally, we use different way to run tests.
+
+#### Testing the parsers
+
+Most of the parsers contain a file called `index.test.ts` and a folder called `test-fixtures`.
+
+We have an internal utility function called `declareParserTests`. When placed inside
+a `index.test.ts` file and called, it will browse the files and folders inside `test-fixtures`.
+
+When you want to test a new feature, generally when a new syntax is implemented, just create
+a new folder inside `test-fixtures` (doesn't matter where, you can also nest folders).
+When you're satisfied with the level of folder, you have to create a file called `input.*`.
+
+> The extension of `input.*` depends on the type of file you're testing
+
+Once created the file, run `./rome test ./path/to/parser/index.test.ts` and Rome will create a snapshot
+beside your `input.*` file. If the new implementation has errors, the test won't pass.
+
+On the other hand, you need to test also error cases; this is because Rome throw fancy diagnostics that
+we need to show to the developer, followed by the reason the grammar was incorrect.
+
+In order to do so, you have to create a file called `options.json` beside your `input.*` file. Inside this
+new JSON file, paste:
+
+```json
+{
+	"throws": true
+}
+```
+
+Doing so, Rome will expect diagnostics from your invalid syntax. If there aren't diagnostic,
+Rome will  fail the test. Rome will create a snapshot where it will print the diagnostic. Please check the
+snapshot test because you will likely want to see the end result of your diagnostic and making that:
+
+- the error message is clear enough;
+- the diagnostic highlight correctly the error;
+- the developer will understand what they need to do in order to fix the issue;
+
+The diagnostics should look like this:
+
+```
+
+ invalid/var/input.css:2:13 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Invalid custom property found inside the "var" function.
+
+    1 │ .style {
+  > 2 │   border: var(#fff);
+      │               ^^^^
+    3 │   border: var(calc(10px + 10px));
+    4 │   border: var(90rem);
+
+
+```
+
+#### Testing single functions
+
+Sometimes you need to test single functions in order to check if it handles edge cases.
+
+Just create a file that has the suffix `.test.ts` and Rome will pick it up automatically.
+
+A boilerplate of your test could look like this:
+
+```ts
+import {test} from "rome";
+import {toSnakeCase} from "./toSnakeCase";
+
+test("toSnakeCase", async (t) => {
+    t.is(toSnakeCase("SomethingGood"), "something_good");
+    t.inlineSnapshot(toSnakeCase("SomethingGood"))
+})
+
+```
+
+Check the interface [`TestHelper`](https://github.com/rome/tools/blob/main/internal/virtual-packages/rome/test.ts#L49) to learn the available methods that the
+testing suite provides.
+
+
+### Integration tests
+
+At the moment integration tests are turned off,

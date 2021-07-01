@@ -10,7 +10,7 @@ import {AsyncVoidCallback, VoidCallback} from "./types";
 export type ExpectedError = undefined | string | RegExp | Function;
 
 export type TestSnapshotOptions = {
-	filename?: string;
+	message?: string;
 	language?: string;
 };
 
@@ -60,6 +60,12 @@ export interface TestHelper {
 	false(value: boolean, message?: string): void;
 	is<T extends unknown>(received: T, expected: T, message?: string): void;
 	not(received: unknown, expected: unknown, message?: string): void;
+	deepEquals<T extends unknown>(
+		received: T,
+		expected: T,
+		message?: string,
+	): void;
+	notDeepEquals(received: unknown, expected: unknown, message?: string): void;
 	looksLike<T extends unknown>(
 		received: T,
 		expected: T,
@@ -83,18 +89,22 @@ export interface TestHelper {
 	): Promise<void>;
 	regex(contents: string, regex: RegExp, message?: string): void;
 	notRegex(contents: string, regex: RegExp, message?: string): void;
-	snapshot(
-		expected: unknown,
-		message?: string,
-		opts?: TestSnapshotOptions,
-	): string;
+	snapshot(expected: unknown, opts?: TestSnapshotOptions): string;
 	inlineSnapshot(received: unknown, expected?: string | boolean | number): void;
 	namedSnapshot(
 		name: string,
 		expected: unknown,
-		message?: string,
 		opts?: TestSnapshotOptions,
 	): string;
+	customSnapshot(
+		filename?: string,
+		opts?: TestSnapshotOptions,
+	): TestSnapshotHelper;
+}
+
+export interface TestSnapshotHelper {
+	snapshot(expected: unknown, opts?: TestSnapshotOptions): string;
+	named(name: string, expected: unknown, opts?: TestSnapshotOptions): string;
 }
 
 export type TestName = string | (string[]);

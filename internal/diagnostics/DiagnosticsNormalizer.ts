@@ -24,7 +24,7 @@ import {
 } from "@internal/markup";
 import {OneIndexed, ZeroIndexed} from "@internal/numbers";
 import {mergeObjects} from "@internal/typescript-helpers";
-import {MixedPathMap, MixedPathSet, Path} from "@internal/path";
+import {MixedPathMap, MixedPathSet, Path, UNKNOWN_PATH} from "@internal/path";
 import {DiagnosticsProcessorOptions} from "./DiagnosticsProcessor";
 
 export type DiagnosticsNormalizerOptions = {
@@ -211,42 +211,45 @@ export default class DiagnosticsNormalizer {
 
 		const {sourceMaps} = this;
 
-		let {marker, path, start, end, integrity} = location;
+		let {marker, path, start, end, integrity, resolved} = location;
 		let origPath = path;
 
-		if (sourceMaps?.hasAny()) {
+		if (sourceMaps?.hasAny() && !resolved) {
 			if (start !== undefined) {
-				const resolved = sourceMaps.approxOriginalPositionFor(
+				const resolvedStart = sourceMaps.approxOriginalPositionFor(
 					origPath,
 					start.line,
 					start.column,
 				);
-				if (resolved !== undefined) {
-					path = resolved.source;
+				if (resolvedStart !== undefined) {
+					resolved = true;
+					path = resolvedStart.source;
 					start = mergeObjects(
 						start,
 						{
-							line: resolved.line,
-							column: resolved.column,
+							line: resolvedStart.line,
+							column: resolvedStart.column,
 						},
 					);
 				}
 			}
 
 			if (end !== undefined) {
-				const resolved = sourceMaps.approxOriginalPositionFor(
+				const resolvedEnd = sourceMaps.approxOriginalPositionFor(
 					origPath,
 					end.line,
 					end.column,
 				);
-				if (resolved !== undefined) {
+				if (resolvedEnd !== undefined) {
+					resolved = true;
+
 					// TODO confirm this is the same as `start` if it resolved
-					path = resolved.source;
+					path = resolvedEnd.source;
 					end = mergeObjects(
 						end,
 						{
-							line: resolved.line,
-							column: resolved.column,
+							line: resolvedEnd.line,
+							column: resolvedEnd.column,
 						},
 					);
 				}
@@ -258,7 +261,7 @@ export default class DiagnosticsNormalizer {
 		// Inline sourceText. We keep track of filenames we've already inlined to avoid duplicating sourceText
 		// During printing we'll fill it back in
 		let {sourceText} = location;
-		if (!this.inlinedSourceTextPaths.has(path)) {
+		if (!(this.inlinedSourceTextPaths.has(path) || UNKNOWN_PATH.equal(path))) {
 			sourceText =
 				sourceText ??
 				this.inlineSourceText.get(path) ??
@@ -297,6 +300,7 @@ export default class DiagnosticsNormalizer {
 				marker,
 				start,
 				end,
+				resolved,
 			},
 		);
 	}
@@ -545,18 +549,16 @@ export default class DiagnosticsNormalizer {
 			}
 		}
 
-		const {defaultTags, defaultLabel} = this.options;
+		const {defaultTags} = this.options;
 		if (defaultTags !== undefined) {
 			if (diag.tags === undefined) {
 				merge.tags = defaultTags;
 			} else {
-				merge.tags = {
-					...defaultTags,
-					...diag.tags,
-				};
+				merge.tags = maybeMerge(diag.tags, defaultTags);
 			}
 		}
 
+		const {defaultLabel} = this.options;
 		if (defaultLabel !== undefined) {
 			merge.label = diag.label
 				? markup`${defaultLabel} (${diag.label})`

@@ -26,10 +26,35 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
+					}
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/export-extensions/default-default-asi/input.js>
+				end: Position 1:19
+				start: Position 1:0
+			}
+		}
+	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/export-extensions/default-default-asi/input.js>
 	loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:0-3:0
@@ -39,5 +64,18 @@ JSRoot {
 ### `diagnostics`
 
 ```
+
+ experimental/export-extensions/default-default-asi/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ import and export can only appear in a module
+
+  > 1 │ export default from
+      │ ^^^^^^^^^^^^^^^^^^^
+    2 │ "bar";
+
+  ℹ Change the extension to .mjs to turn this file into a module
+
+  ℹ Add "type": "module" to your <dim>undefined</dim>
+
 
 ```

@@ -28,6 +28,10 @@ type ExecuteMainOptions = {
 	globals?: UnknownObject;
 };
 
+export function getExecuteMainFilename(path: AbsoluteFilePath): string {
+	return `executeMain:${path.join()}`;
+}
+
 export default async function executeMain(
 	worker: Worker,
 	opts: ExecuteMainOptions,
@@ -80,7 +84,7 @@ export default async function executeMain(
 		script = new vm.Script(
 			code,
 			{
-				filename,
+				filename: getExecuteMainFilename(path),
 				displayErrors: true,
 			},
 		);

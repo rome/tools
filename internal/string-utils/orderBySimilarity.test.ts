@@ -55,9 +55,9 @@ test(
 			{first: "iphone", second: "iphone x", expected: 0.9090909090909091},
 		];
 
-		testData.forEach((td) => {
+		for (const td of testData) {
 			t.is(compareTwoStrings(td.first, td.second), td.expected);
-		});
+		}
 	},
 );
 

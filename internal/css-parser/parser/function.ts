@@ -87,7 +87,7 @@ export function parseFunction(parser: CSSParser): ParseFunction {
 					if (parsedValue.type !== "CSSCustomProperty") {
 						parser.unexpectedDiagnostic({
 							description: descriptions.CSS_PARSER.INVALID_CUSTOM_PROPERTY,
-							token: parser.getToken(),
+							token: parser.getPreviousToken(),
 						});
 					}
 					params.push(parsedValue);

@@ -4,6 +4,8 @@
 
 ## `font`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -42,7 +44,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<font/input.css>
+	path: UIDPath<font/input.css>
 	loc: SourceLocation font/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

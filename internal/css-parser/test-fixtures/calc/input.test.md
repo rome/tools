@@ -4,6 +4,8 @@
 
 ## `calc`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -530,7 +532,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<calc/input.css>
+	path: UIDPath<calc/input.css>
 	loc: SourceLocation calc/input.css 1:0-10:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

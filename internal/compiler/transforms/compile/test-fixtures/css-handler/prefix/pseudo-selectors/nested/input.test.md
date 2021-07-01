@@ -6,7 +6,7 @@
 
 ### `Diagnostics`
 
-```
+```css
 
 ```
 
@@ -41,9 +41,6 @@
 		width: 10px;
 	}
 	.example2::placeholder {
-		width: 10px;
-	}
-	.example2::-ms-placeholder {
 		width: 10px;
 	}
 	.example2::-moz-placeholder {

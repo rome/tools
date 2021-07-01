@@ -298,9 +298,7 @@ export async function main() {
 		DIAGNOSTIC_CATEGORIES.parse,
 	).get("version").asString();
 	if (currentVersion !== version) {
-		reporter.success(
-			`[browsers-db] Update found! ${currentVersion} -> ${version}`,
-		);
+		reporter.success(`Update found! ${currentVersion} -> ${version}`);
 		await updateData();
 		await updateRegions();
 		await updateVersion(version);
@@ -309,7 +307,7 @@ export async function main() {
 			markup`Don't forget to update the snapshots with <code>./rome test internal/codec-browsers/index.test.ts --update-snapshots</code>`,
 		);
 	} else {
-		reporter.success(`[browsers-db] Already using latest version! ${version}`);
+		reporter.success(`Already using latest version! ${version}`);
 	}
 }
 
@@ -418,7 +416,12 @@ function generateDataAgents(rawData: Consumer) {
 function generateDataAgentsVersions(rawVersions: Consumer[]): Agent["vs"] {
 	const versions: Agent["vs"] = [];
 
-	rawVersions.forEach((v) => {
+	for (const v of rawVersions) {
+		// Remove `ms` prefixes
+		if (v.get("prefix").asString() === "ms") {
+			continue;
+		}
+
 		if (v.get("version").asString().includes("-")) {
 			// Could be optimized but copying 3 times works
 			// Converts versions like `12-20` into 2 versions 12 and 20
@@ -452,7 +455,7 @@ function generateDataAgentsVersions(rawVersions: Consumer[]): Agent["vs"] {
 					: v.get("prefix").asString(),
 			});
 		}
-	});
+	}
 
 	return versions;
 }

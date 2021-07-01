@@ -57,16 +57,58 @@ export default class FatalErrorHandler {
 	}
 
 	public setupGlobalHandlers(): Resource {
-		process.on("uncaughtException", this.handleBound);
-		process.on("unhandledRejection", this.handleBound);
+		// Only pass first argument to handler
+		const handleError = (err: Error) => this.handleBound(err);
+
+		process.on("uncaughtException", handleError);
+		process.on("unhandledRejection", handleError);
 
 		return createResourceFromCallback(
 			"FatalErrorHandlerEvents",
 			() => {
-				process.removeListener("uncaughtException", this.handleBound);
-				process.removeListener("unhandledRejection", this.handleBound);
+				process.removeListener("uncaughtException", handleError);
+				process.removeListener("unhandledRejection", handleError);
 			},
 		);
+	}
+
+	private async printErrorAsDiagnostics(
+		reporter: Reporter,
+		error: Error,
+		overrideSource?: StaticMarkup,
+	): Promise<void> {
+		const diagnostics = getOrDeriveDiagnosticsFromError(
+			error,
+			{
+				description: {
+					category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
+				},
+				label: overrideSource ?? this.options.source,
+				tags: {
+					fatal: true,
+				},
+			},
+		);
+
+		const processor = new DiagnosticsProcessor({
+			normalizeOptions: {
+				defaultTags: {
+					fatal: true,
+				},
+			},
+		});
+		processor.addDiagnostics(diagnostics);
+
+		const printer = new DiagnosticsPrinter({
+			reporter,
+			processor,
+			flags: {
+				truncateDiagnostics: false,
+			},
+		});
+		await printer.print({
+			showFooter: false,
+		});
 	}
 
 	public handle(raw: Error, overrideSource?: StaticMarkup): Promise<void> {
@@ -94,38 +136,12 @@ export default class FatalErrorHandler {
 					reporter = getReporter();
 				}
 
-				const diagnostics = getOrDeriveDiagnosticsFromError(
-					error,
-					{
-						description: {
-							category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
-						},
-						label: overrideSource ?? this.options.source,
-						tags: {
-							fatal: true,
-						},
-					},
-				);
-
-				const processor = new DiagnosticsProcessor({
-					normalizeOptions: {
-						defaultTags: {
-							fatal: true,
-						},
-					},
-				});
-				processor.addDiagnostics(diagnostics);
-
-				const printer = new DiagnosticsPrinter({
-					reporter,
-					processor,
-					flags: {
-						truncateDiagnostics: false,
-					},
-				});
-				await printer.print({
-					showFooter: false,
-				});
+				if (reporter.hasStreams()) {
+					await this.printErrorAsDiagnostics(reporter, error, overrideSource);
+				} else {
+					console.error("Reporter had no available streams. Error:");
+					console.error(error.stack);
+				}
 			} catch (logErr) {
 				console.error("Failed to handle fatal error. Original error:");
 				console.error(error.stack);

@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-["chrome:87", "ios_saf:14", "ios_saf:14.4", "and_chr:88"]
+["chrome:90", "ios_saf:14", "ios_saf:14.4", "and_chr:91"]
 ```
 
 ### `targets`

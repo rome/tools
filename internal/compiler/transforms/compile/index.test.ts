@@ -6,15 +6,13 @@ import {
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {createDefaultProjectConfig} from "@internal/project";
 import {resolveBrowsers} from "@internal/codec-browsers";
-import {removeCarriageReturn} from "@internal/string-utils";
-import {decodeUTF8} from "@internal/binary";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {worker, performFileOperation, addProject} = createMockWorker();
 	const {input, handler} = findFixtureInput(fixture, undefined);
 
 	const filename = input.relative;
-	const content = removeCarriageReturn(decodeUTF8(input.content));
+	const content = input.contentAsText();
 
 	const res = await performFileOperation(
 		{
@@ -45,36 +43,18 @@ const promise = createFixtureTests(async (fixture, t) => {
 		input.absolute.getExtensionlessBasename(),
 	).join();
 
-	t.namedSnapshot(
-		"Input",
-		content,
-		undefined,
-		{
-			filename: snapshotFile,
-			language: handler.language,
-		},
-	);
+	const snapshot = t.customSnapshot(snapshotFile, {language: handler.language});
 
-	t.namedSnapshot(
-		"Output",
-		res.value.compiledCode,
-		undefined,
-		{
-			filename: snapshotFile,
-			language: handler.language,
-		},
-	);
+	snapshot.named("Input", content);
 
-	t.namedSnapshot(
+	snapshot.named("Output", res.value.compiledCode);
+
+	snapshot.named(
 		"Diagnostics",
 		await printDiagnosticsToString({
 			diagnostics: res.value.diagnostics,
 			suppressions: res.value.suppressions,
 		}),
-		undefined,
-		{
-			filename: snapshotFile,
-		},
 	);
 });
 

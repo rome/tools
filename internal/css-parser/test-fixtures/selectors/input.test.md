@@ -4,6 +4,8 @@
 
 ## `selectors`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -421,7 +423,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<selectors/input.css>
+	path: UIDPath<selectors/input.css>
 	loc: SourceLocation selectors/input.css 1:0-39:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

@@ -59,7 +59,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: true
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/identifiers/invalid-escape-seq-import/input.js>
 	loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-4:0

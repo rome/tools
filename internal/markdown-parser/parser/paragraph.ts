@@ -13,6 +13,7 @@ export function parseParagraph(
 	const start = parser.getPosition();
 	const children: AnyMarkdownInlineNode[] = [];
 	let endPos: Position | null = null;
+
 	while (!parser.matchToken("EOF")) {
 		const token = parser.getToken();
 
@@ -61,10 +62,12 @@ export function parseParagraph(
 
 				break;
 			}
+
 			case "Text": {
 				children.push(parseText(parser));
 				break;
 			}
+
 			case "OpenSquareBracket": {
 				const reference = parseLink(parser);
 				if (Array.isArray(reference)) {
@@ -75,6 +78,7 @@ export function parseParagraph(
 				// NOTE: do not go to the next token, parseReference already did that
 				break;
 			}
+
 			default: {
 				// TODO: to remove once all cases are handled
 				parser.unexpectedDiagnostic({

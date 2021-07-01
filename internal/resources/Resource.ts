@@ -7,11 +7,11 @@ import {
 	ResourcesContainer,
 } from "./types";
 import {extractResource} from "./index";
-import {isEnvVarSet} from "@internal/cli-environment";
+import {getEnvVarBoolean} from "@internal/cli-environment";
 import {createResourceContainer} from "./factories";
 import {AsyncVoidCallback} from "@internal/typescript-helpers";
 
-const isDebugStack = isEnvVarSet("ROME_RESOURCE_STACKS");
+let isDebugStack: undefined | boolean;
 
 export default class Resource {
 	constructor(opts: ResourceOptions) {
@@ -32,6 +32,7 @@ export default class Resource {
 		if (!opts.optional && this.resources.size === 0) {
 			let timeoutError: undefined | Error;
 			let timeoutMessage = `The resource ${opts.name} is not correctly managed as it has not been attached to a parent resource`;
+			isDebugStack = isDebugStack ?? getEnvVarBoolean("ROME_RESOURCE_STACKS");
 			if (isDebugStack) {
 				timeoutError = new Error(timeoutMessage);
 			}

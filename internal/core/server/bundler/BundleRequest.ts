@@ -284,11 +284,8 @@ export default class BundleRequest {
 			const compileResult = this.bundler.compiles.assert(path).value;
 
 			push(`  // ${uid}`);
-
 			declareCJS(node);
-
 			addMappings(uid, compileResult.sourceText, compileResult.mappings);
-
 			track(compileResult.compiledCode);
 			assembled.push([1, path]);
 			push("");

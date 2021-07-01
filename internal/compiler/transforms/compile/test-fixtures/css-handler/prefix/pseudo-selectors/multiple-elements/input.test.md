@@ -6,7 +6,7 @@
 
 ### `Diagnostics`
 
-```
+```css
 
 ```
 
@@ -24,10 +24,6 @@
 ```css
 /* Multiple pseudo elements */
 .parent2 > .child2::placeholder,
-.example2::selection {
-	width: 10px;
-}
-.parent2 > .child2::-ms-placeholder,
 .example2::selection {
 	width: 10px;
 }

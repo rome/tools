@@ -98,7 +98,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/module-attributes/trailing-comma/input.js>
 	loc: SourceLocation experimental/module-attributes/trailing-comma/input.js 1:0-3:0

@@ -7,7 +7,19 @@
 ### `result`
 
 ```javascript
-["firefox:81", "firefox:82", "firefox:83", "firefox:84", "firefox:85", "firefox:86", "firefox:87"]
+[
+	"firefox:81"
+	"firefox:82"
+	"firefox:83"
+	"firefox:84"
+	"firefox:85"
+	"firefox:86"
+	"firefox:87"
+	"firefox:88"
+	"firefox:89"
+	"firefox:90"
+	"firefox:91"
+]
 ```
 
 ### `targets`

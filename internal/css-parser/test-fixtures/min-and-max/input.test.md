@@ -4,6 +4,8 @@
 
 ## `min-and-max`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -837,7 +839,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<min-and-max/input.css>
+	path: UIDPath<min-and-max/input.css>
 	loc: SourceLocation min-and-max/input.css 1:0-12:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```
