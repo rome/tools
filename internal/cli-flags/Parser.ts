@@ -274,7 +274,9 @@ export default class Parser<T> {
 				// Automatically convert number strings
 				if (def.type === "number" && typeof value !== "number") {
 					if (valueConsumer.exists() || def.required) {
-						valueConsumer.setValue(valueConsumer.deriveNumberString().asNumber());
+						valueConsumer.setValue(
+							valueConsumer.deriveNumberString().asNumber(),
+						);
 					}
 				}
 

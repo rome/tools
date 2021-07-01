@@ -17,7 +17,10 @@ import SnapshotManager from "./SnapshotManager";
 import {TestServerRunnerOptions} from "../../server/testing/types";
 import {Event} from "@internal/events";
 import {getErrorStructure} from "@internal/errors";
-import {prettyFormatToString, normalizeLimitProperties} from "@internal/pretty-format";
+import {
+	normalizeLimitProperties,
+	prettyFormatToString,
+} from "@internal/pretty-format";
 import {markup} from "@internal/markup";
 import {
 	ExpectedError,
@@ -184,9 +187,7 @@ export default class TestAPI {
 			return startAdvice;
 		}
 
-		const advice: DiagnosticAdvice[] = [
-			...startAdvice,
-		];
+		const advice: DiagnosticAdvice[] = [...startAdvice];
 
 		if (userAdvice.length > 0) {
 			advice.push({
@@ -199,10 +200,7 @@ export default class TestAPI {
 		if (logAdvice.length > 0) {
 			let flatLogAdvice: DiagnosticAdvice[] = [];
 			for (const factory of logAdvice) {
-				flatLogAdvice = [
-					...flatLogAdvice,
-					...factory(),
-				];
+				flatLogAdvice = [...flatLogAdvice, ...factory()];
 			}
 			advice.push({
 				type: "group",
@@ -337,9 +335,7 @@ export default class TestAPI {
 			}
 
 			// Compare the snapshots
-			const snapshotPath = this.snapshotManager.normalizeSnapshotPath(
-				filename,
-			);
+			const snapshotPath = this.snapshotManager.normalizeSnapshotPath(filename);
 			if (formatted !== existingSnapshot) {
 				const advice: DiagnosticAdvice[] = this.buildMatchAdvice(
 					formatted,
@@ -654,20 +650,30 @@ export default class TestAPI {
 		}
 	}
 
-
 	private looksLike<T extends unknown>(
 		received: T,
 		expected: T,
 		message: string = "t.looksLike() failed, using prettyFormat semantics",
 	): void {
-		const receivedFormat = prettyFormatToString(received, {limitProperties: normalizeLimitProperties(expected)});
+		const receivedFormat = prettyFormatToString(
+			received,
+			{limitProperties: normalizeLimitProperties(expected)},
+		);
 		const expectedFormat = prettyFormatToString(expected);
 
 		if (receivedFormat !== expectedFormat) {
-			this.fail(message, this.buildMatchAdvice(received, expected, {
-				expectedFormat,
-				receivedFormat,
-			}), 1);
+			this.fail(
+				message,
+				this.buildMatchAdvice(
+					received,
+					expected,
+					{
+						expectedFormat,
+						receivedFormat,
+					},
+				),
+				1,
+			);
 		}
 	}
 
@@ -676,14 +682,25 @@ export default class TestAPI {
 		expected: unknown,
 		message: string = "t.notLooksLike() failed, using !prettyFormat semantics",
 	): void {
-		const receivedFormat = prettyFormatToString(received, {limitProperties: normalizeLimitProperties(expected)});
+		const receivedFormat = prettyFormatToString(
+			received,
+			{limitProperties: normalizeLimitProperties(expected)},
+		);
 		const expectedFormat = prettyFormatToString(expected);
 
 		if (receivedFormat === expectedFormat) {
-			this.fail(message, this.buildMatchAdvice(received, expected, {
-				expectedFormat,
-				receivedFormat,
-			}), 1);
+			this.fail(
+				message,
+				this.buildMatchAdvice(
+					received,
+					expected,
+					{
+						expectedFormat,
+						receivedFormat,
+					},
+				),
+				1,
+			);
 		}
 	}
 
@@ -852,7 +869,10 @@ export default class TestAPI {
 		}
 	}
 
-	private inlineSnapshot(received: unknown, snapshot?: string | boolean | number) {
+	private inlineSnapshot(
+		received: unknown,
+		snapshot?: string | boolean | number,
+	) {
 		const callFrame = getErrorStructure(new Error()).frames[1];
 		const callError = getErrorStructure(new Error(), 1);
 
@@ -897,10 +917,7 @@ export default class TestAPI {
 		});
 	}
 
-	private snapshot(
-		expected: unknown,
-		opts?: TestSnapshotOptions,
-	): string {
+	private snapshot(expected: unknown, opts?: TestSnapshotOptions): string {
 		const id = this.snapshotCounter++;
 		return this.bufferSnapshot({
 			entryName: String(id),
@@ -909,7 +926,10 @@ export default class TestAPI {
 		});
 	}
 
-	private customSnapshot(filename: string, defaultOpts?: TestSnapshotOptions): TestSnapshotHelper {
+	private customSnapshot(
+		filename: string,
+		defaultOpts?: TestSnapshotOptions,
+	): TestSnapshotHelper {
 		return {
 			snapshot: (expected, opts) => {
 				const id = this.snapshotCounter++;

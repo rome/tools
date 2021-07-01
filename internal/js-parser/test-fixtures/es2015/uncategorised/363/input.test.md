@@ -54,26 +54,10 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {
-				advice: []
-				category: ["parse"]
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
-			}
-			location: {
-				language: "js"
-				path: UIDPath<es2015/uncategorised/363/input.js>
-				end: Position 1:20
-				start: Position 1:15
-			}
-		}
-	]
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/uncategorised/363/input.js>
 	loc: SourceLocation es2015/uncategorised/363/input.js 1:0-2:0
@@ -83,13 +67,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- es2015/uncategorised/363/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Can't use await outside of an async function
-
-    function foo({ await }) {}
-                   ^^^^^
-
 
 ```

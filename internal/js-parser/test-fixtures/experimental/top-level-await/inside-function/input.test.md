@@ -53,19 +53,19 @@ JSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: {
 				language: "js"
 				path: UIDPath<experimental/top-level-await/inside-function/input.js>
-				end: Position 2:7
-				start: Position 2:2
+				end: Position 2:8
+				start: Position 2:8
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/top-level-await/inside-function/input.js>
 	loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:0-3:1
@@ -76,13 +76,13 @@ JSRoot {
 
 ```
 
- experimental/top-level-await/inside-function/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/top-level-await/inside-function/input.js:2:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Can't use await outside of an async function
+  ✖ Expected a semicolon or a line terminator
 
     1 │ function fn() {
   > 2 │   await 0;
-      │   ^^^^^
+      │         ^
     3 │ }
 
 

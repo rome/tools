@@ -45,7 +45,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-equal/input.js>
 	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-2:0

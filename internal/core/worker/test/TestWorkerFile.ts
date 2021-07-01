@@ -197,7 +197,9 @@ export default class TestWorkerFile {
 					text = markup`${args[0]}`;
 				} else {
 					text = joinMarkup(
-						args.map((arg) => serializeLazyMarkup(prettyFormat(arg, {accurate: true}))),
+						args.map((arg) =>
+							serializeLazyMarkup(prettyFormat(arg, {accurate: true}))
+						),
 						markup` `,
 					);
 				}
@@ -489,7 +491,7 @@ export default class TestWorkerFile {
 				| {
 						type: "TEST";
 						test: TestDetails;
-					}
+					};
 			trailingAdvice?: DiagnosticAdvice[];
 		},
 	): Promise<void> {

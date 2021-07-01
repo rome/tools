@@ -297,14 +297,13 @@ export async function declareParserTests(checkDiagnostics = true) {
 		});
 		snapshot.named("diagnostics", printedDiagnostics);
 
-		if (checkDiagnostics) {
-			if (diagnostics.length === 0) {
-				if (options.has("throws")) {
-					throw new Error(
-						`Expected diagnostics but didn't receive any\n${printedDiagnostics}`,
-					);
-				}
-			} else if (!options.has("throws")) {
+		const throws = options.get("throws").asBooleanOrVoid();
+		if (checkDiagnostics && throws !== undefined) {
+			if (throws === true && diagnostics.length === 0) {
+				throw new Error(
+					`Expected diagnostics but didn't receive any\n${printedDiagnostics}`,
+				);
+			} else if (throws === false && diagnostics.length > 0) {
 				throw new Error(
 					`Received diagnostics when we didn't expect any\n${printedDiagnostics}`,
 				);

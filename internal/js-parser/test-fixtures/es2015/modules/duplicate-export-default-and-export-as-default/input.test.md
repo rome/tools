@@ -61,27 +61,28 @@ JSRoot {
 				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
 					}
-					frame {
-						location: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
 					}
 				]
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Only one default export allowed per module."}
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 			}
 			location: {
 				language: "js"
 				path: UIDPath<es2015/modules/duplicate-export-default-and-export-as-default/input.js>
-				end: Position 2:23
-				start: Position 2:9
+				end: Position 1:28
+				start: Position 1:0
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/modules/duplicate-export-default-and-export-as-default/input.js>
 	loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:0-3:0
@@ -92,19 +93,17 @@ JSRoot {
 
 ```
 
- es2015/modules/duplicate-export-default-and-export-as-default/input.js:2:9 parse(js) ━━━━━━━━━━━━━━
+ es2015/modules/duplicate-export-default-and-export-as-default/input.js:1 parse(js) ━━━━━━━━━━━━━━━━
 
-  ✖ Only one default export allowed per module.
-
-    1 │ export default function() {};
-  > 2 │ export { foo as default };
-      │          ^^^^^^^^^^^^^^
-
-  ℹ Defined already here
+  ✖ import and export can only appear in a module
 
   > 1 │ export default function() {};
-      │                ^^^^^^^^^^^^^
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     2 │ export { foo as default };
+
+  ℹ Change the extension to .mjs to turn this file into a module
+
+  ℹ Add "type": "module" to your <dim>undefined</dim>
 
 
 ```

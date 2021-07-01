@@ -7,9 +7,7 @@
 
 import {ConsumeUnexpectedDescription} from "@internal/consume";
 import {ZeroIndexed} from "@internal/numbers";
-import {
-	descriptions,
-} from "@internal/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 import {ManifestName} from "../types";
 
 type NormalizeNameUnexpected = (

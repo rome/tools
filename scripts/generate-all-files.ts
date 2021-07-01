@@ -1,3 +1,4 @@
+import "@internal/core";
 import {main as virtualModulesMain} from "./generated-files/virtual-modules";
 import {main as ast} from "./generated-files/ast";
 import {main as lintRules} from "./generated-files/lint-rules";

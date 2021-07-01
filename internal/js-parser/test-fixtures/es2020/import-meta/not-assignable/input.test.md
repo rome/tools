@@ -34,7 +34,7 @@ JSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
-				message: [RAW_MARKUP {value: "Invalid left-hand side in "}, "assignment expression"]
+				message: RAW_MARKUP {value: "import.meta may only appear in a module"}
 			}
 			location: {
 				language: "js"
@@ -46,7 +46,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2020/import-meta/not-assignable/input.js>
 	loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-2:0
@@ -59,7 +59,7 @@ JSRoot {
 
  es2020/import-meta/not-assignable/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Invalid left-hand side in assignment expression
+  ✖ import.meta may only appear in a module
 
     import.meta = true;
     ^^^^^^^^^^^

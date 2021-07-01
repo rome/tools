@@ -51,21 +51,10 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: ["public", RAW_MARKUP {value: " is a reserved word"}]}
-			location: {
-				language: "js"
-				path: UIDPath<core/uncategorised/545/input.js>
-				end: Position 1:14
-				start: Position 1:8
-			}
-		}
-	]
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<core/uncategorised/545/input.js>
 	loc: SourceLocation core/uncategorised/545/input.js 1:0-2:0
@@ -75,13 +64,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- core/uncategorised/545/input.js:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ public is a reserved word
-
-    const { public } = foo();
-            ^^^^^^
-
 
 ```

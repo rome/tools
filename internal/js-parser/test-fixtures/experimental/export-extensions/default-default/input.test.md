@@ -45,7 +45,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/export-extensions/default-default/input.js>
 	loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:26

@@ -30,7 +30,7 @@ export default createLocalCommand({
 				{
 					description: markup`Creates a configuration file without interacting with the user, using Rome's defaults.`,
 				},
-			).asBoolean(false),
+			).required(false).asBoolean(),
 		};
 	},
 	async callback(req: ClientRequest, flags: Flags) {

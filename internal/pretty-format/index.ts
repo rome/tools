@@ -54,7 +54,10 @@ type FormatPartialOptions = {
 
 const NODE_UTIL_INSPECT_CUSTOM = Symbol.for("nodejs.util.inspect.custom");
 
-function getLimitProperties(key: string | number | symbol, {limitProperties}: FormatOptions): undefined | unknown[] {
+function getLimitProperties(
+	key: string | number | symbol,
+	{limitProperties}: FormatOptions,
+): undefined | unknown[] {
 	if (limitProperties === undefined || limitProperties.length === 0) {
 		return undefined;
 	}
@@ -352,12 +355,7 @@ function getExtraObjectProps(
 					continue;
 				}
 
-				props.push(
-					prettyFormat(
-						val,
-						forkPropOpts(i, opts),
-					),
-				);
+				props.push(prettyFormat(val, forkPropOpts(i, opts)));
 				ignoreKeys[String(i++)] = val;
 			}
 		}
@@ -434,12 +432,12 @@ function isObjectProp(val: unknown, stack?: RecursiveStack): boolean {
 		return true;
 	}
 
-	if (stack !== undefined && stack.includes(val)) {
+	if (stack?.includes(val)) {
 		return false;
 	}
 
 	if (Array.isArray(val)) {
-		stack = [...stack ?? [], val];
+		stack = [...(stack ?? []), val];
 
 		for (const elem of val) {
 			if (isObjectProp(elem, stack)) {
@@ -532,7 +530,10 @@ function formatObject(
 			continue;
 		}
 
-		const prop = markup`${formatKey(key)}: ${prettyFormat(val, forkPropOpts(key, nextOpts))}`;
+		const prop = markup`${formatKey(key)}: ${prettyFormat(
+			val,
+			forkPropOpts(key, nextOpts),
+		)}`;
 
 		if (isObjectProp(val)) {
 			hasObjectProp = true;

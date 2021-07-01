@@ -60,7 +60,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		if (this._message !== undefined) {
 			message += this._message;
 		}
-		message += `\n`;
+		message += "\n";
 
 		insideDiagnosticsErrorSerial = true;
 
@@ -79,7 +79,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		insideDiagnosticsErrorSerial = false;
 
 		message = message.trimRight();
-		message += `\n`;
+		message += "\n";
 
 		this._memoMessage = message;
 		return message;

@@ -10,37 +10,26 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSBinaryExpression {
-				operator: "<"
-				left: JSReferenceIdentifier {
-					name: "foo"
-					loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:3 (foo)
-				}
-				right: JSUnaryExpression {
-					operator: "!"
-					prefix: true
-					argument: JSUpdateExpression {
-						operator: "--"
-						prefix: true
-						argument: JSReferenceIdentifier {
-							name: "bar"
-							loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:8-1:11 (bar)
-						}
-						loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:6-1:11
-					}
-					loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:5-1:11
-				}
-				loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:11
+			trailingComments: ["0"]
+			expression: JSReferenceIdentifier {
+				name: "foo"
+				loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:3 (foo)
 			}
-			loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:11
+			loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-1:3
 		}
 	]
-	comments: []
+	comments: [
+		CommentLine {
+			id: "0"
+			value: "bar"
+			loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:4-1:11
+		}
+	]
 	corrupt: false
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/modules/xml-comment-in-module/input.js>
 	loc: SourceLocation es2015/modules/xml-comment-in-module/input.js 1:0-2:0

@@ -9,13 +9,13 @@ import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
+	DiagnosticLocation,
+	appendAdviceToDiagnostic,
 	deriveDiagnosticFromError,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	equalCategoryNames,
 	getDiagnosticsFromError,
-	appendAdviceToDiagnostic,
-	DiagnosticLocation,
 } from "@internal/diagnostics";
 import {Server, ServerRequest, TestRef} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
@@ -199,7 +199,11 @@ export default class TestServer {
 	}
 
 	public addDiagnostic(diagnostic: Diagnostic, ref?: TestFileRef) {
-		if (diagnostic.label === undefined && ref !== undefined && ref.testName !== undefined) {
+		if (
+			diagnostic.label === undefined &&
+			ref !== undefined &&
+			ref.testName !== undefined
+		) {
 			diagnostic = {
 				...diagnostic,
 				label: markup`${ref.testName}`,
@@ -219,14 +223,20 @@ export default class TestServer {
 		// how to find the originating test
 		if (ref !== undefined) {
 			// Normalize diagnostic to resolve source maps for stacktrace advice
-			diagnostic = this.printer.processor.normalizer.normalizeDiagnostic(diagnostic);
+			diagnostic = this.printer.processor.normalizer.normalizeDiagnostic(
+				diagnostic,
+			);
 
 			let includeTestDeclaration = true;
 
 			// If there's a stacktrace and the first frame points to the test file itself then don't show the
 			// test declaration or else it's just noise
 			const {advice} = diagnostic.description;
-			if (advice.length > 0 && advice[0].type === "stacktrace" && advice[0].frames?.[0].path?.equal(ref.path)) {
+			if (
+				advice.length > 0 &&
+				advice[0].type === "stacktrace" &&
+				advice[0].frames?.[0].path?.equal(ref.path)
+			) {
 				includeTestDeclaration = false;
 			}
 
@@ -234,20 +244,27 @@ export default class TestServer {
 				let callsiteLocation: undefined | DiagnosticLocation;
 
 				if (ref.testName !== undefined) {
-					callsiteLocation = this.files.assert(ref.path).getTestCallsiteLocation(ref.testName);
+					callsiteLocation = this.files.assert(ref.path).getTestCallsiteLocation(
+						ref.testName,
+					);
 
 					// Resolve source maps
-					callsiteLocation = this.printer.processor.normalizer.normalizeLocation(callsiteLocation);
+					callsiteLocation = this.printer.processor.normalizer.normalizeLocation(
+						callsiteLocation,
+					);
 				}
 
 				if (callsiteLocation === undefined) {
-					diagnostic = appendAdviceToDiagnostic(diagnostic, [
-						{
-							type: "log",
-							category: "info",
-							text: markup`Originated from test file <emphasis>${ref.path}</emphasis>`,
-						},
-					]);
+					diagnostic = appendAdviceToDiagnostic(
+						diagnostic,
+						[
+							{
+								type: "log",
+								category: "info",
+								text: markup`Originated from test file <emphasis>${ref.path}</emphasis>`,
+							},
+						],
+					);
 				} else {
 					let text = markup`Test declared at <emphasis>${diagnosticLocationToMarkupFilelink(
 						callsiteLocation,
@@ -259,18 +276,21 @@ export default class TestServer {
 						text = markup`${text} from test file <emphasis>${ref.path}</emphasis>`;
 					}
 
-					diagnostic = appendAdviceToDiagnostic(diagnostic, [
-						{
-							type: "log",
-							category: "info",
-							text,
-						},
-						// TODO: Decide if we might want a frame? It's pretty noisy
-						/*{
+					diagnostic = appendAdviceToDiagnostic(
+						diagnostic,
+						[
+							{
+								type: "log",
+								category: "info",
+								text,
+							},
+							// TODO: Decide if we might want a frame? It's pretty noisy
+							/*{
 							type: "frame",
 							location: callsiteLocation,
 						},*/
-					]);
+						],
+					);
 				}
 			}
 		}
@@ -777,7 +797,9 @@ export default class TestServer {
 
 	private printSnapshotSuggestion(reporter: Reporter) {
 		if (this.needsSnapshotUpdate) {
-			reporter.info(markup`Outdated snapshots found. To update these if correct, run`);
+			reporter.info(
+				markup`Outdated snapshots found. To update these if correct, run`,
+			);
 			reporter.command("rome test --update-snapshots");
 			reporter.br();
 		}
@@ -806,12 +828,16 @@ export default class TestServer {
 			}
 
 			if (failedTests > 0) {
-				let message = markup`<emphasis>${humanizeNumber(failedTests)}</emphasis> ${grammarNumberTests(failedTests)} failed`;
+				let message = markup`<emphasis>${humanizeNumber(failedTests)}</emphasis> ${grammarNumberTests(
+					failedTests,
+				)} failed`;
 
 				// Don't output the total error count if it's equal to the failed test count as it's redundant and doesn't provide any
 				// additional information
 				if (otherErrorCount > failedTests) {
-					message = markup`${message} with <emphasis>${humanizeNumber(otherErrorCount)}</emphasis> errors`;
+					message = markup`${message} with <emphasis>${humanizeNumber(
+						otherErrorCount,
+					)}</emphasis> errors`;
 				}
 
 				reporter.error(message);

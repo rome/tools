@@ -57,7 +57,10 @@ async function runCommand(
 
 		if (action === "push") {
 			keyConsumer.setValue([
-				...Array.from(keyConsumer.required([]).asIterable(), (c) => c.asUnknown()),
+				...Array.from(
+					keyConsumer.required([]).asIterable(),
+					(c) => c.asUnknown(),
+				),
 				...(Array.isArray(value) ? value : []),
 			]);
 		} else {

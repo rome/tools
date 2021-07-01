@@ -12,7 +12,10 @@ import {LintCompilerOptionsDecision} from "../types";
 import {injectComment} from "../transforms/helpers";
 import {extractSuppressionsFromComment} from "../suppressions";
 import {SUPPRESSION_START} from "../suppressionsParser";
-import {formatCategoryDescription, joinCategoryName} from "@internal/diagnostics";
+import {
+	formatCategoryDescription,
+	joinCategoryName,
+} from "@internal/diagnostics";
 
 function getStartLine(node: AnyNode): undefined | number {
 	const {loc} = node;
@@ -30,11 +33,13 @@ function buildSuppressionCommentValue(
 	return `${SUPPRESSION_START} ${Array.from(categories).sort().join(" ")}: ${explanation}`;
 }
 
-function addComment({path, decisions, explanation}: {
-	path: CompilerPath,
-	decisions: LintCompilerOptionsDecision[],
-	explanation: undefined | string;
-}): AnyNode {
+function addComment(
+	{path, decisions, explanation}: {
+		path: CompilerPath;
+		decisions: LintCompilerOptionsDecision[];
+		explanation: undefined | string;
+	},
+): AnyNode {
 	const {node, context} = path;
 
 	// Find all suppression decisions
@@ -49,13 +54,8 @@ function addComment({path, decisions, explanation}: {
 	}
 
 	// Find existing suppression comment
-	const lastComment = context.comments.getCommentsFromIds(
-		node.leadingComments,
-	).pop();
-	if (
-		lastComment !== undefined &&
-		lastComment.value.includes(SUPPRESSION_START)
-	) {
+	const lastComment = context.comments.getCommentsFromIds(node.leadingComments).pop();
+	if (lastComment?.value.includes(SUPPRESSION_START)) {
 		// Try to update it
 		const updated = updateExistingComment({
 			path,
@@ -85,12 +85,14 @@ function addComment({path, decisions, explanation}: {
 	};
 }
 
-function updateExistingComment({path, comment, injectCategories, explanation}: {
-	path: CompilerPath;
-	comment: AnyComment;
-	injectCategories: Set<string>;
-	explanation: undefined | string;
-}): boolean {
+function updateExistingComment(
+	{path, comment, injectCategories, explanation}: {
+		path: CompilerPath;
+		comment: AnyComment;
+		injectCategories: Set<string>;
+		explanation: undefined | string;
+	},
+): boolean {
 	const existingParsed = extractSuppressionsFromComment({
 		context: path.context,
 		comment,
@@ -103,7 +105,11 @@ function updateExistingComment({path, comment, injectCategories, explanation}: {
 		return false;
 	}
 
-	if (explanation !== undefined && existingParsed.explanation !== undefined && existingParsed.explanation !== explanation) {
+	if (
+		explanation !== undefined &&
+		existingParsed.explanation !== undefined &&
+		existingParsed.explanation !== explanation
+	) {
 		// We have a specific explanation so inject a new comment
 		return false;
 	}
@@ -180,17 +186,22 @@ export function addSuppressions(
 					return signals.retain;
 				}
 
-				const decisions = context.getLintDecisions(String(line.valueOf()), erroredLines.has(line.valueOf()));
+				const decisions = context.getLintDecisions(
+					String(line.valueOf()),
+					erroredLines.has(line.valueOf()),
+				);
 				if (decisions.length === 0) {
 					return signals.retain;
 				}
 
 				visitedLines.add(line);
-				return signals.replace(addComment({
-					path,
-					decisions,
-					explanation,
-				}));
+				return signals.replace(
+					addComment({
+						path,
+						decisions,
+						explanation,
+					}),
+				);
 			},
 		},
 		ast,

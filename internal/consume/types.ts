@@ -29,7 +29,9 @@ export type ConsumeSourceLocationRequestTarget =
 	| "value"
 	| "inner-value";
 
-export type ConsumeUnexpectedDescription = DiagnosticDescriptionOptional | ((path?: string) => DiagnosticDescriptionOptional)
+export type ConsumeUnexpectedDescription =
+	| DiagnosticDescriptionOptional
+	| ((path?: string) => DiagnosticDescriptionOptional);
 
 export type ConsumeContext = {
 	category: DiagnosticCategory;

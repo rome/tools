@@ -10,6 +10,6 @@ export type LSPNotificationHandler = AsyncVoidCallback<[
 ]>;
 
 export type LSPRequestHandler = AsyncCallback<
-	JSONValue,
-	[LSPServer, Consumer, string]
+	[LSPServer, Consumer, string],
+	JSONValue
 >;

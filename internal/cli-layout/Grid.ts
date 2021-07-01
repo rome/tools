@@ -1053,7 +1053,9 @@ export default class Grid {
 	private getViewPointer({attributes, children}: MarkupParsedTag): GridPointer {
 		return {
 			char: this.parse(
-				convertToMarkupFromRandomString(attributes.get("char").required("").asString()),
+				convertToMarkupFromRandomString(
+					attributes.get("char").required("").asString(),
+				),
 				attributes.get("char").getDiagnosticLocation("inner-value").start,
 				false,
 			),
@@ -1522,7 +1524,10 @@ export default class Grid {
 		}
 
 		// Insert highlight legend
-		if (tag.name === "highlight" && attributes.get("legend").required(false).asBoolean()) {
+		if (
+			tag.name === "highlight" &&
+			attributes.get("legend").required(false).asBoolean()
+		) {
 			const index = Math.min(0, attributes.get("i").required(0).asNumber());
 			return [
 				{

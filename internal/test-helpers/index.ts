@@ -16,7 +16,7 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {ExtendedMap} from "@internal/collections";
-import {catchDiagnostics, DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {DIAGNOSTIC_CATEGORIES, catchDiagnostics} from "@internal/diagnostics";
 import {decodeUTF8} from "@internal/binary";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {AsyncVoidCallback} from "@internal/typescript-helpers";
@@ -213,7 +213,10 @@ export async function createFixtureTests(
 
 export * from "./integration";
 
-export async function assertDiagnostics(t: TestHelper, callback: AsyncVoidCallback): Promise<void> {
+export async function assertDiagnostics(
+	t: TestHelper,
+	callback: AsyncVoidCallback,
+): Promise<void> {
 	const {diagnostics} = await catchDiagnostics(callback);
 
 	if (diagnostics === undefined) {

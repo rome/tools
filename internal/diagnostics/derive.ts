@@ -30,7 +30,13 @@ import {
 	isUserDiagnostic,
 	isUserDiagnosticsError,
 } from "./error-wrappers";
-import {MixedPathSet, Path, UNKNOWN_PATH, equalPaths, isNodeInternalPath} from "@internal/path";
+import {
+	MixedPathSet,
+	Path,
+	UNKNOWN_PATH,
+	equalPaths,
+	isNodeInternalPath,
+} from "@internal/path";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {hashRSERValue} from "@internal/binary-transport";
 

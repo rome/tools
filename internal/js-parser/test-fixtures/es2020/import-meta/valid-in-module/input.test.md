@@ -146,10 +146,26 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "import.meta may only appear in a module"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2020/import-meta/valid-in-module/input.js>
+				end: Position 1:21
+				start: Position 1:10
+			}
+		}
+	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2020/import-meta/valid-in-module/input.js>
 	loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-6:0
@@ -159,5 +175,15 @@ JSRoot {
 ### `diagnostics`
 
 ```
+
+ es2020/import-meta/valid-in-module/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ import.meta may only appear in a module
+
+  > 1 │ const x = import.meta;
+      │           ^^^^^^^^^^^
+    2 │ const url = import.meta.url;
+    3 │ import.meta;
+
 
 ```
