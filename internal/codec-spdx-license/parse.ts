@@ -175,6 +175,10 @@ function isLicenseValid(
 	const {exceptions} = parser.options;
 	if (exceptions !== undefined) {
 		for (const project of exceptions.projects) {
+			// if the check on dependencies is not enabled, do not do any kind of check
+			if (!project.config.dependencies.enabled) {
+				continue;
+			}
 			const {invalidLicenses} = project.config.dependencies.exceptions;
 			const licenses = invalidLicenses.get(id);
 			if (licenses === undefined) {

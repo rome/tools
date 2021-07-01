@@ -238,7 +238,6 @@ const INCORRECT_DEPENDENCIES_SUFFIXES = [
 	"dependancies",
 	"dependecies",
 ];
-
 function checkDependencyKeyTypo(key: string, prop: Consumer) {
 	for (const depPrefixKey of DEPENDENCIES_KEYS) {
 		// Ignore if the key is a valid dependency key
@@ -399,7 +398,6 @@ export async function normalizeManifest(
 		for (const [key, prop] of consumer.asMap()) {
 			// Check for typos for dependencies
 			checkDependencyKeyTypo(key, prop);
-
 			// Check for other typos
 			const correctKey = TYPO_KEYS.get(key);
 			if (correctKey !== undefined) {

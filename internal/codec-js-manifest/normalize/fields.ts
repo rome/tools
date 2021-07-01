@@ -176,6 +176,7 @@ export function normalizeRepoField(
 	}
 }
 
+// TODO: review this logic
 export function normalizeExportsField(
 	consumer: Consumer,
 ): boolean | ManifestExportsField {
