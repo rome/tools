@@ -62,6 +62,7 @@ export function canBeLeftFlankingDelimiter(
 	const nextCharIsPunctuation = PUNCTUATION_CHARACTERS.has(
 		input[endIndex.valueOf() + 1],
 	);
+
 	const previousCharIsPunctuation = PUNCTUATION_CHARACTERS.has(
 		input[startIndex.valueOf() - 1],
 	);

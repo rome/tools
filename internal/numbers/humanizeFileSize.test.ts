@@ -40,8 +40,8 @@ test(
 			{input: 1e25, expected: "10YB"},
 		];
 
-		testCases.forEach((td) => {
+		for (const td of testCases) {
 			t.is(humanizeFileSize(td.input), td.expected);
-		});
+		}
 	},
 );

@@ -50,8 +50,6 @@ import child = require("child_process");
 import util = require("util");
 import {Reporter} from "@internal/cli-reporter";
 import {BridgeClient} from "@internal/events";
-import {removeCarriageReturn} from "@internal/string-utils";
-import {decodeUTF8} from "@internal/binary";
 
 const exec = util.promisify(child.exec);
 
@@ -261,7 +259,7 @@ export async function declareParserTests(checkDiagnostics = true) {
 			"script",
 			"module",
 		]);
-		const inputContent = removeCarriageReturn(decodeUTF8(input.content));
+		const inputContent = input.contentAsText();
 
 		const {ast} = await performFileOperation(
 			{
@@ -289,27 +287,23 @@ export async function declareParserTests(checkDiagnostics = true) {
 		const outputFile = input.absolute.getParent().append(
 			input.absolute.getExtensionlessBasename(),
 		).join();
-		t.namedSnapshot("ast", ast, undefined, {filename: outputFile});
+		const snapshot = t.customSnapshot(outputFile);
+
+		snapshot.named("ast", ast);
 
 		const printedDiagnostics = await printDiagnosticsToString({
 			diagnostics,
 			suppressions: [],
 		});
-		t.namedSnapshot(
-			"diagnostics",
-			printedDiagnostics,
-			undefined,
-			{filename: outputFile},
-		);
+		snapshot.named("diagnostics", printedDiagnostics);
 
-		if (checkDiagnostics) {
-			if (diagnostics.length === 0) {
-				if (options.has("throws")) {
-					throw new Error(
-						`Expected diagnostics but didn't receive any\n${printedDiagnostics}`,
-					);
-				}
-			} else if (!options.has("throws")) {
+		const throws = options.get("throws").asBooleanOrVoid();
+		if (checkDiagnostics && throws !== undefined) {
+			if (throws === true && diagnostics.length === 0) {
+				throw new Error(
+					`Expected diagnostics but didn't receive any\n${printedDiagnostics}`,
+				);
+			} else if (throws === false && diagnostics.length > 0) {
 				throw new Error(
 					`Received diagnostics when we didn't expect any\n${printedDiagnostics}`,
 				);

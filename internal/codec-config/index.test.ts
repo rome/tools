@@ -18,19 +18,16 @@ const promise = createFixtureTests(
 			});
 
 			const ext = path.getExtensions();
+			const dotlessExtension = path.getDotlessExtensions();
 
-			t.namedSnapshot(
-				`parse ${ext}`,
-				val.consumer.asUnknown(),
-				undefined,
-				{filename: snapshotFile},
+			const snapshot = t.customSnapshot(
+				snapshotFile,
+				{language: dotlessExtension},
 			);
-			t.namedSnapshot(
-				`stringify ${ext}`,
-				stringifyConfig(val),
-				undefined,
-				{filename: snapshotFile},
-			);
+
+			snapshot.named(`parse ${ext}`, val.consumer.asUnknown());
+
+			snapshot.named(`stringify ${ext}`, stringifyConfig(val));
 		}
 	},
 	undefined,

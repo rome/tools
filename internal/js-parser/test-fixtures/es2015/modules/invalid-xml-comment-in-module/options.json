@@ -1,4 +1,4 @@
 {
-  "sourceTypeJS": "module",
-  "throws": "Unexpected token (1:0)"
+
+  "throws": true
 }

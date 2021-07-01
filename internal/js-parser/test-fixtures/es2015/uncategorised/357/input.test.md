@@ -10,44 +10,31 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSAwaitExpression {
-				argument: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: SourceLocation es2015/uncategorised/357/input.js 1:6-1:7
+			expression: JSAssignmentExpression {
+				operator: "="
+				left: JSAssignmentIdentifier {
+					name: "await"
+					loc: SourceLocation es2015/uncategorised/357/input.js 1:0-1:5 (await)
 				}
-				loc: SourceLocation es2015/uncategorised/357/input.js 1:0-1:7
-			}
-			loc: SourceLocation es2015/uncategorised/357/input.js 1:0-1:7
-		}
-		JSExpressionStatement {
-			expression: JSCallExpression {
-				arguments: []
-				callee: JSReferenceIdentifier {
-					name: "foo"
-					loc: SourceLocation es2015/uncategorised/357/input.js 1:8-1:11 (foo)
+				right: JSCallExpression {
+					arguments: []
+					callee: JSReferenceIdentifier {
+						name: "foo"
+						loc: SourceLocation es2015/uncategorised/357/input.js 1:8-1:11 (foo)
+					}
+					loc: SourceLocation es2015/uncategorised/357/input.js 1:8-1:13
 				}
-				loc: SourceLocation es2015/uncategorised/357/input.js 1:8-1:13
+				loc: SourceLocation es2015/uncategorised/357/input.js 1:0-1:13
 			}
-			loc: SourceLocation es2015/uncategorised/357/input.js 1:8-1:14
+			loc: SourceLocation es2015/uncategorised/357/input.js 1:0-1:14
 		}
 	]
 	comments: []
-	corrupt: true
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "await argument"]}
-			location: {
-				language: "js"
-				path: UIDPath<es2015/uncategorised/357/input.js>
-				end: Position 1:6
-				start: Position 1:6
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/uncategorised/357/input.js>
 	loc: SourceLocation es2015/uncategorised/357/input.js 1:0-2:0
@@ -57,13 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- es2015/uncategorised/357/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unknown start to an await argument
-
-    await = foo();
-          ^
-
 
 ```

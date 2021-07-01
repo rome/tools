@@ -1,6 +1,4 @@
 {
-	"plugins": [
-		"dynamicImport"
-	],
+
 	"throws": true
 }

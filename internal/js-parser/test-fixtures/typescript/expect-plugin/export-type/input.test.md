@@ -29,7 +29,7 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<typescript/expect-plugin/export-type/input.js>
 	loc: SourceLocation typescript/expect-plugin/export-type/input.js 1:0-2:0

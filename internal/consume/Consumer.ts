@@ -8,7 +8,6 @@
 import {
 	Diagnostic,
 	DiagnosticAdvice,
-	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
 	DiagnosticsError,
 	catchDiagnosticsSync,
@@ -21,25 +20,20 @@ import {
 	UnknownObject,
 	VoidCallback,
 	isObject,
-	isPlainObject,
 } from "@internal/typescript-helpers";
-import {
-	JSONArray,
-	JSONObject,
-	JSONPropertyValue,
-	JSONValue,
-} from "@internal/codec-config";
 import {
 	ConsumeContext,
 	ConsumeKey,
 	ConsumePath,
 	ConsumePropertyDefinition,
+	ConsumePropertyDefinitionBase,
 	ConsumePropertyMetadata,
 	ConsumePropertyNumberDefinition,
 	ConsumePropertyPrimitiveDefinition,
 	ConsumePropertyStringDefinition,
 	ConsumeProtectedFunction,
 	ConsumeSourceLocationRequestTarget,
+	ConsumeUnexpectedDescription,
 	ConsumerHandleUnexpected,
 	ConsumerMapCallback,
 	ConsumerOnDefinition,
@@ -66,16 +60,21 @@ import {
 	createURLPath,
 	isPath,
 } from "@internal/path";
-import {StaticMarkup, markup, readMarkup} from "@internal/markup";
+import {markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {enhanceNodeInspectClass} from "@internal/node";
+import {
+	JSONArray,
+	JSONObject,
+	JSONPropertyValue,
+	JSONValue,
+} from "@internal/codec-config";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
 	target?: ConsumeSourceLocationRequestTarget;
-	at?: "suffix" | "prefix" | "none";
-	atParent?: boolean;
+	suffix?: boolean;
 };
 
 function isComputedPart(part: ConsumeKey): boolean {
@@ -90,11 +89,14 @@ export default class Consumer {
 		this.keyPath = opts.objectPath;
 		this.context = opts.context;
 		this.onDefinition = opts.onDefinition;
-		this.propertyMetadata = opts.propertyMetadata;
 		this.usedNames = new Set(opts.usedNames);
 		this.forkCache = new Map();
 		this.forceDiagnosticTarget = opts.forceDiagnosticTarget;
+
+		this.propertyMetadata = opts.propertyMetadata;
 		this.declared = opts.declared === true;
+		this.isRequired = false;
+		this.defaultValue = undefined;
 
 		// See shouldDispatchUnexpected for explanation
 		this.hasHandledUnexpected = false;
@@ -109,6 +111,8 @@ export default class Consumer {
 	private propertyMetadata: undefined | ConsumePropertyMetadata;
 	private parent: undefined | Consumer;
 	private value: unknown;
+	private defaultValue: unknown;
+	private isRequired: boolean;
 	private context: ConsumeContext;
 	public keyPath: ConsumePath;
 	private usedNames: Set<string>;
@@ -130,7 +134,7 @@ export default class Consumer {
 					this.onDefinition(def, consumer);
 				}
 
-				definitions.push(def);
+				definitions.push();
 			},
 			handleUnexpectedDiagnostic(diag) {
 				diagnostics.push(diag);
@@ -171,9 +175,18 @@ export default class Consumer {
 
 	public declareDefinition(
 		partialDef:
-			| Omit<ConsumePropertyStringDefinition, "objectPath" | "metadata">
-			| Omit<ConsumePropertyPrimitiveDefinition, "objectPath" | "metadata">
-			| Omit<ConsumePropertyNumberDefinition, "objectPath" | "metadata">,
+			| Omit<
+					ConsumePropertyStringDefinition,
+					keyof ConsumePropertyDefinitionBase
+				>
+			| Omit<
+					ConsumePropertyPrimitiveDefinition,
+					keyof ConsumePropertyDefinitionBase
+				>
+			| Omit<
+					ConsumePropertyNumberDefinition,
+					keyof ConsumePropertyDefinitionBase
+				>,
 		inputName?: string,
 	) {
 		if (this.declared) {
@@ -189,10 +202,16 @@ export default class Consumer {
 			...this.propertyMetadata,
 		};
 
-		const def: ConsumePropertyDefinition = {
-			...partialDef,
+		const base: ConsumePropertyDefinitionBase = {
+			default: this.defaultValue,
+			required: this.isRequired,
 			objectPath: this.keyPath,
 			metadata,
+		};
+
+		const def: ConsumePropertyDefinition = {
+			...partialDef,
+			...base,
 		};
 
 		this.declared = true;
@@ -352,48 +371,29 @@ export default class Consumer {
 		return str;
 	}
 
-	private generateUnexpectedMessage(
-		msg: StaticMarkup,
-		opts: UnexpectedConsumerOptions,
-	): StaticMarkup {
-		const {at = "suffix", atParent = false} = opts;
-		const {parent} = this;
-
-		let target: Consumer = this;
-
-		if (atParent) {
-			if (parent === undefined) {
-				// Cannot target the parent if it does not exist
-				return msg;
-			} else {
-				target = parent;
-			}
-		}
-
-		if (at === "suffix") {
-			msg = markup`${msg} at <emphasis>${target.getKeyPathString()}</emphasis>`;
-		} else {
-			msg = markup`<emphasis>${target.getKeyPathString()}</emphasis> ${msg}`;
-		}
-
-		return msg;
-	}
-
 	public unexpected(
-		description: DiagnosticDescriptionOptional = descriptions.CONSUME.INVALID,
+		description: ConsumeUnexpectedDescription = descriptions.CONSUME.INVALID,
 		opts: UnexpectedConsumerOptions = {},
 	): DiagnosticsError {
-		const {target = "value"} = opts;
+		const {suffix = true, target = "value"} = opts;
 
 		const {path} = this;
 		let location = this.getDiagnosticLocation(target);
 		const fromSource = this.wasInSource();
 
-		const message = this.generateUnexpectedMessage(description.message, opts);
-		description = {
-			...description,
-			message,
-		};
+		let keyPath: undefined | string = this.getKeyPathString();
+		if (this.keyPath.length === 0) {
+			keyPath = undefined;
+		}
+
+		if (typeof description === "function") {
+			description = description(keyPath);
+		} else if (suffix && keyPath !== undefined) {
+			description = {
+				...description,
+				message: markup`${description.message} at <emphasis>${keyPath}</emphasis>`,
+			};
+		}
 
 		const advice: DiagnosticAdvice[] = [...(description.advice || [])];
 
@@ -420,7 +420,7 @@ export default class Consumer {
 			// If consumer is undefined and we have no filename then we were not able to find a location,
 			// in this case, just throw a normal error
 			if (consumer === undefined && path === undefined) {
-				throw new Error(readMarkup(message));
+				throw new Error(readMarkup(description.message));
 			}
 
 			// Warn that we didn't find this value in the source if it's parent wasn't either
@@ -438,7 +438,7 @@ export default class Consumer {
 		}
 
 		if (location === undefined) {
-			throw new Error(readMarkup(message));
+			throw new Error(readMarkup(description.message));
 		}
 
 		const diagnostic: Diagnostic = {
@@ -504,7 +504,7 @@ export default class Consumer {
 	public copy(mix?: object) {
 		let value = this.value;
 
-		if (isPlainObject(value)) {
+		if (isObject(value)) {
 			value = {...this.asOriginalUnknownObject()};
 		}
 
@@ -556,40 +556,25 @@ export default class Consumer {
 		return forked;
 	}
 
-	private _normalizeValueForSet(value: unknown): unknown {
-		if (value instanceof Set) {
-			return Array.from(value);
-		}
-
-		if (value instanceof Map) {
-			const obj: UnknownObject = {};
-			for (const [key, val] of value) {
-				obj[key] = val;
-			}
-			return obj;
-		}
-
-		return value;
-	}
-
-	public getParentValue(def?: unknown): unknown {
+	public getParentValue(): unknown {
 		if (this.parent === undefined) {
-			return def;
+			return undefined;
 		} else {
-			return this.parent.getValue();
+			return this.parent.asUnknown();
 		}
 	}
 
-	public getValue(def?: unknown): unknown {
-		if (this.exists()) {
-			return this.value;
-		} else {
-			return def;
+	public required(def?: unknown): this {
+		this.defaultValue = def;
+
+		if (!this.exists() && def === undefined) {
+			this.unexpected(descriptions.CONSUME.REQUIRED);
 		}
+
+		return this;
 	}
 
-	public setValue(rawValue: unknown): this {
-		const value = this._normalizeValueForSet(rawValue);
+	public setValue(value: unknown): this {
 		this.value = value;
 
 		// If we're at the root (as indicated by the lack of these properties) then go no where else
@@ -676,7 +661,7 @@ export default class Consumer {
 			knownProperties = knownProperties.map((key) => normalizeKey(key));
 		}
 
-		for (const [key, value] of this.asMap(false, false)) {
+		for (const [key, value] of this.asMap(false)) {
 			if (!this.usedNames.has(key)) {
 				const normalizedKey = normalizeKey ? normalizeKey(key) : key;
 				value.unexpected(
@@ -687,8 +672,7 @@ export default class Consumer {
 					),
 					{
 						target: "key",
-						at: "suffix",
-						atParent: true,
+						suffix: false,
 					},
 				);
 			}
@@ -699,38 +683,682 @@ export default class Consumer {
 		}
 	}
 
-	public asNumberString(def?: string): number {
+	public deriveBooleanString(): Consumer {
 		this.declareDefinition({
-			type: "number",
-			default: def,
-			required: def === undefined,
+			type: "boolean",
 		});
 
-		const str = this.asString(def);
+		if (!this.exists()) {
+			return this.cloneConsumer({
+				value: undefined,
+			});
+		}
+
+		if (typeof this.asUnknown() === "boolean") {
+			return this;
+		}
+
+		const str = this.asString();
+
+		if (str === "0" || str === "false" || str === "False") {
+			return this.cloneConsumer({
+				value: false,
+			});
+		}
+
+		if (str === "1" || str === "true" || str === "True") {
+			return this.cloneConsumer({
+				value: true,
+			});
+		}
+
+		return this.cloneConsumer({
+			value: str,
+		});
+	}
+
+	public deriveNumberString(): Consumer {
+		this.declareDefinition({
+			type: "number",
+		});
+
+		if (!this.exists()) {
+			return this.cloneConsumer({
+				value: undefined,
+			});
+		}
+
+		const str = this.asString();
 		const num = parseFloat(str);
-		if (isNaN(num)) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_VALID_NUMBER);
-			return 0;
+		return this.cloneConsumer({
+			value: num,
+		});
+	}
+
+	public exists() {
+		return this.value != null;
+	}
+
+	public isObject(): boolean {
+		return isObject(this.asUnknown());
+	}
+
+	public asUnknownObject(): UnknownObject {
+		this.declareDefinition({
+			type: "object",
+		});
+
+		return {
+			...this.asOriginalUnknownObject(),
+		};
+	}
+
+	public isEmpty(): boolean {
+		const value = this.asUnknown();
+
+		if (value == null) {
+			return true;
+		}
+
+		if (value === "") {
+			return true;
+		}
+
+		if (isObject(value)) {
+			return Object.keys(value).length === 0;
+		}
+
+		if (Array.isArray(value)) {
+			return value.length === 0;
+		}
+
+		return false;
+	}
+
+	public asOriginalUnknownObject(): UnknownObject {
+		const value = this.asUnknown();
+
+		if (!isObject(value)) {
+			this.unexpected(descriptions.CONSUME.EXPECTED_OBJECT);
+			return {};
+		}
+
+		return value;
+	}
+
+	public asMappedObject<T>(callback: (c: Consumer, key: string) => T): Dict<T> {
+		const obj: Dict<T> = {};
+		for (const [key, value] of this.asMap()) {
+			obj[key] = callback(value, key);
+		}
+		return obj;
+	}
+
+	public asMap(markUsed: boolean = true): Map<string, Consumer> {
+		this.declareDefinition({
+			type: "object",
+		});
+
+		const value = this.asOriginalUnknownObject();
+		const map = new Map();
+		for (const key in value) {
+			if (markUsed) {
+				this.markUsedProperty(key);
+			}
+			map.set(key, this.fork(key, value[key]));
+		}
+		return map;
+	}
+
+	public asPlainArray(): unknown[] {
+		this.declareDefinition({
+			type: "array",
+		});
+
+		const value = this.asUnknown();
+
+		if (!Array.isArray(value)) {
+			this.unexpected(descriptions.CONSUME.EXPECTED_ARRAY);
+			return [];
+		}
+
+		return [...value];
+	}
+
+	public asIterable(): Iterable<Consumer> {
+		const arr = this.asPlainArray();
+
+		return arr.map((val, index) => {
+			return this.fork(index, val);
+		});
+	}
+
+	public asMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
+		return Array.from(this.asIterable(), callback);
+	}
+
+	public asImplicitArray(): Consumer[] {
+		return this.asImplicitMappedArray((c) => c);
+	}
+
+	public asImplicitMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
+		if (Array.isArray(this.asUnknown())) {
+			return this.asMappedArray(callback);
+		} else if (this.exists()) {
+			return [callback(this, 0)];
 		} else {
-			return num;
+			return [];
 		}
 	}
 
-	public asNumberStringOrVoid(): undefined | number {
+	public asDateOrVoid(): undefined | Date {
 		this.declareDefinition({
-			type: "number",
-			default: undefined,
-			required: false,
+			type: "date",
 		});
 
 		if (this.exists()) {
-			return this.asNumberString();
+			return this.asDate();
 		} else {
 			return undefined;
 		}
 	}
 
-	// JSON
+	public asDate(): Date {
+		this.declareDefinition({
+			type: "date",
+		});
+
+		const value = this.asUnknown();
+
+		if (value instanceof Date) {
+			return value;
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_DATE);
+			return new Date();
+		}
+	}
+
+	public asBooleanOrVoid(): undefined | boolean {
+		this.declareDefinition({
+			type: "boolean",
+		});
+
+		if (this.exists()) {
+			return this.asBoolean();
+		} else {
+			return undefined;
+		}
+	}
+
+	public asBoolean(): boolean {
+		this.declareDefinition({
+			type: "boolean",
+		});
+
+		const value = this.asUnknown();
+
+		if (typeof value === "boolean") {
+			return value;
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_BOOLEAN);
+			return false;
+		}
+	}
+
+	public asStringOrVoid(): undefined | string {
+		this.declareDefinition({
+			type: "string",
+		});
+
+		if (this.exists()) {
+			return this.asString();
+		} else {
+			return undefined;
+		}
+	}
+
+	public asFunction(): UnknownFunction {
+		this.declareDefinition({
+			type: "function",
+		});
+
+		const fn = this.asUnknown();
+
+		if (typeof fn === "function") {
+			return fn as UnknownFunction;
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_FUNCTION);
+
+			return () => {
+				return undefined;
+			};
+		}
+	}
+
+	public async asPromise(): Promise<Consumer> {
+		let value: unknown;
+
+		if (isObject(this.value)) {
+			const obj = this.asOriginalUnknownObject();
+			if (typeof obj.then === "function") {
+				value = await obj;
+			} else {
+				value = obj;
+			}
+		} else {
+			value = this.asUnknown();
+		}
+
+		return consumeUnknown(
+			value,
+			this.context.category,
+			this.context.categoryValue,
+		);
+	}
+
+	public asWrappedFunction(): ConsumeProtectedFunction {
+		const fn = this.asFunction();
+		const context = this.getParentValue();
+
+		return (...args) => {
+			const ret = fn.apply(context, args);
+			return consumeUnknown(
+				ret,
+				this.context.category,
+				this.context.categoryValue,
+			);
+		};
+	}
+
+	public asString(): string {
+		this.declareDefinition({
+			type: "string",
+		});
+
+		const value = this.asUnknown();
+
+		if (typeof value === "string") {
+			return value;
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_STRING);
+			return "";
+		}
+	}
+
+	public asStringSet<ValidValue extends string>(
+		validValues: ValidValue[],
+	): ValidValue {
+		this.declareDefinition({
+			type: "string",
+			allowedValues: validValues,
+		});
+
+		const value = this.asString();
+
+		// @ts-expect-error
+		if (validValues.includes(value)) {
+			// @ts-expect-error
+			return value;
+		} else {
+			this.unexpected(
+				descriptions.CONSUME.INVALID_STRING_SET_VALUE(
+					value,
+					// rome-ignore lint/ts/noExplicitAny: future cleanup
+					(validValues as any) as string[],
+				),
+				{
+					target: "value",
+				},
+			);
+			return validValues[0];
+		}
+	}
+
+	public asStringSetOrVoid<ValidValue extends string>(
+		validValues: ValidValue[],
+	): undefined | ValidValue {
+		this.declareDefinition({
+			type: "string",
+			allowedValues: validValues,
+		});
+
+		if (this.exists()) {
+			return this.asStringSet(validValues);
+		} else {
+			return undefined;
+		}
+	}
+
+	public asBigIntOrVoid(): undefined | bigint {
+		this.declareDefinition({
+			type: "bigint",
+		});
+
+		if (this.exists()) {
+			return this.asBigInt();
+		} else {
+			return undefined;
+		}
+	}
+
+	public asBigInt(): bigint {
+		this.declareDefinition({
+			type: "bigint",
+		});
+
+		const value = this.asUnknown();
+
+		if (typeof value === "number") {
+			return BigInt(value);
+		}
+
+		if (typeof value === "bigint") {
+			return value;
+		}
+
+		this.unexpected(descriptions.CONSUME.EXPECTED_BIGINT);
+		return BigInt("0");
+	}
+
+	private _declareOptionalPath() {
+		this.declareDefinition(
+			{
+				type: "string",
+			},
+			"path",
+		);
+	}
+
+	public asURLPath(): URLPath {
+		const path = this.asAnyPath();
+		if (path.isURL()) {
+			return path.assertURL();
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_URL);
+			return createURLPath("unknown://").append(...path.getSegments());
+		}
+	}
+
+	public asURLPathOrVoid(): undefined | URLPath {
+		if (this.exists()) {
+			return this.asURLPath();
+		} else {
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
+	public asAnyPath(): Path {
+		this.declareDefinition(
+			{
+				type: "string",
+			},
+			"path",
+		);
+
+		const value = this.asUnknown();
+
+		// Allow path instances
+		if (isPath(value)) {
+			return value;
+		}
+
+		// Otherwise expect a string
+		return createPath(this.asString());
+	}
+
+	public asAnyPathOrVoid(): undefined | Path {
+		if (this.exists()) {
+			return this.asAnyPath();
+		} else {
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
+	public asFilePath(): FilePath {
+		const path = this.asAnyPath();
+		if (path.isFilePath()) {
+			return path.assertFilePath();
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_FILE_PATH);
+			return createRelativePath("unknown");
+		}
+	}
+
+	public asFilePathOrVoid(): undefined | FilePath {
+		const path = this.asAnyPath();
+		if (path.isFilePath()) {
+			return path.assertFilePath();
+		} else {
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
+	public asAbsoluteFilePath(
+		def?: string,
+		cwd?: AbsoluteFilePath,
+	): AbsoluteFilePath {
+		const path = this.asAnyPath();
+		if (path.isAbsolute()) {
+			return path.assertAbsolute();
+		} else if (cwd !== undefined && path.isRelative()) {
+			return cwd.resolve(path);
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
+			return createAbsoluteFilePath("/").append(...path.getSegments());
+		}
+	}
+
+	public asAbsoluteFilePathOrVoid(
+		cwd?: AbsoluteFilePath,
+	): undefined | AbsoluteFilePath {
+		if (this.exists()) {
+			return this.asAbsoluteFilePath(undefined, cwd);
+		} else {
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
+	public asRelativePath(): RelativePath {
+		const path = this.asAnyPath();
+		if (path.isRelative()) {
+			return path.assertRelative();
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_RELATIVE_PATH);
+			return createRelativePath("unknown");
+		}
+	}
+
+	public asRelativePathOrVoid(): undefined | RelativePath {
+		if (this.exists()) {
+			return this.asRelativePath();
+		} else {
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
+	public asExplicitRelativePath(): RelativePath {
+		const path = this.asRelativePath();
+
+		if (path.isExplicitRelative()) {
+			return path;
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_EXPLICIT_RELATIVE_PATH);
+			return path.toExplicitRelative();
+		}
+	}
+
+	public asExplicitRelativePathOrVoid(): undefined | RelativePath {
+		if (this.exists()) {
+			return this.asExplicitRelativePath();
+		} else {
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
+	public asNumberOrVoid(): undefined | number {
+		this.declareDefinition({
+			type: "number",
+		});
+
+		if (this.exists()) {
+			return this.asNumber();
+		} else {
+			return undefined;
+		}
+	}
+
+	public asZeroIndexedNumber(): ZeroIndexed {
+		return new ZeroIndexed(this.asNumber());
+	}
+
+	public asOneIndexedNumber(): OneIndexed {
+		return new OneIndexed(this.asNumber());
+	}
+
+	public asZeroIndexedNumberOrVoid(): undefined | ZeroIndexed {
+		const num = this.asNumberOrVoid();
+		return num === undefined ? undefined : new ZeroIndexed(num);
+	}
+
+	public asOneIndexedNumberOrVoid(): undefined | OneIndexed {
+		const num = this.asNumberOrVoid();
+		return num === undefined ? undefined : new OneIndexed(num);
+	}
+
+	public asNumber(): number {
+		this.declareDefinition({
+			type: "number",
+		});
+
+		let value = this.asUnknown();
+
+		if (isIndexedNumberish(value)) {
+			value = value.valueOf();
+		}
+
+		if (typeof value === "number") {
+			return value;
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
+			return 0;
+		}
+	}
+
+	public asNumberInRange(
+		opts: {
+			min?: number;
+			max?: number;
+			default?: number;
+		},
+	): number;
+
+	public asNumberInRange(
+		opts: {
+			min: OneIndexed;
+			max?: OneIndexed;
+			default?: OneIndexed;
+		},
+	): OneIndexed;
+
+	public asNumberInRange(
+		opts: {
+			min: OneIndexed;
+			max?: OneIndexed;
+			default?: OneIndexed;
+		},
+	): OneIndexed;
+
+	public asNumberInRange(
+		opts: {
+			min?: number | IndexedNumber;
+			max?: number | IndexedNumber;
+		},
+	): number | IndexedNumber {
+		const min = opts.min === undefined ? undefined : opts.min.valueOf();
+		const max = opts.max === undefined ? undefined : opts.max.valueOf();
+
+		this.declareDefinition({
+			type: "number",
+			min,
+			max,
+		});
+
+		const num = this.asNumber();
+
+		// Nice error message when both min and max are specified
+		if (min !== undefined && max !== undefined && (num < min || num > max)) {
+			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_BETWEEN(min, max));
+		} else {
+			if (min !== undefined && num < min) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
+			}
+
+			if (max !== undefined && num > max) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
+			}
+		}
+
+		if (opts.min instanceof OneIndexed) {
+			return new OneIndexed(num);
+		}
+
+		if (opts.min instanceof ZeroIndexed) {
+			return new ZeroIndexed(num);
+		}
+
+		return num;
+	}
+
+	public asNumberSet<ValidValue extends number>(
+		validValues: ValidValue[],
+	): ValidValue {
+		this.declareDefinition({
+			type: "number",
+			allowedValues: validValues,
+		});
+
+		const value = this.asNumber();
+
+		// @ts-expect-error
+		if (validValues.includes(value)) {
+			// @ts-expect-error
+			return value;
+		} else {
+			this.unexpected(
+				descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
+					value,
+					// rome-ignore lint/ts/noExplicitAny: future cleanup
+					(validValues as any) as number[],
+				),
+				{
+					target: "value",
+				},
+			);
+			return validValues[0];
+		}
+	}
+
+	public asNumberSetOrVoid<ValidValue extends number>(
+		validValues: ValidValue[],
+	): undefined | ValidValue {
+		this.declareDefinition({
+			type: "number",
+			allowedValues: validValues,
+		});
+
+		if (this.exists()) {
+			return this.asNumberSet(validValues);
+		} else {
+			return undefined;
+		}
+	}
+
 	public asJSONValue(): JSONValue {
 		const {value} = this;
 
@@ -781,682 +1409,23 @@ export default class Consumer {
 		}
 	}
 
-	public exists() {
-		return this.value != null;
-	}
-
-	public isObject(): boolean {
-		const {value} = this;
-		return (
-			typeof value === "object" &&
-			value !== null &&
-			value.constructor === Object
-		);
-	}
-
-	public asUnknownObject(optional: boolean = false): UnknownObject {
-		this.declareDefinition({
-			type: "object",
-			default: undefined,
-			required: !optional,
-		});
-
-		return {
-			...this.asOriginalUnknownObject(optional),
-		};
-	}
-
-	public isEmpty(): boolean {
-		const value = this.asUnknown();
-
-		if (value == null) {
-			return true;
-		}
-
-		if (value === "") {
-			return true;
-		}
-
-		if (isPlainObject(value)) {
-			return Object.keys(value).length === 0;
-		}
-
-		return false;
-	}
-
-	public asOriginalUnknownObject(optional: boolean = false): UnknownObject {
-		if (optional && !this.exists()) {
-			return {};
-		}
-
-		const {value} = this;
-		if (!isObject(value)) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_OBJECT);
-			return {};
-		}
-
-		return value;
-	}
-
-	public asMappedObject<T>(callback: (c: Consumer, key: string) => T): Dict<T> {
-		const obj: Dict<T> = {};
-		for (const [key, value] of this.asMap()) {
-			obj[key] = callback(value, key);
-		}
-		return obj;
-	}
-
-	public asMap(optional?: boolean, markUsed = true): Map<string, Consumer> {
-		this.declareDefinition({
-			type: "object",
-			default: undefined,
-			required: !optional,
-		});
-
-		const value = this.asOriginalUnknownObject(optional);
-		const map = new Map();
-		for (const key in value) {
-			if (markUsed) {
-				this.markUsedProperty(key);
-			}
-			map.set(key, this.fork(key, value[key]));
-		}
-		return map;
-	}
-
-	public asPlainArray(optional: boolean = false): unknown[] {
-		this.declareDefinition({
-			type: "array",
-			default: undefined,
-			required: !optional,
-		});
-
-		if (optional && !this.exists()) {
-			return [];
-		}
-
-		const {value} = this;
-
-		if (!Array.isArray(value)) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_ARRAY);
-			return [];
-		}
-
-		return [...value];
-	}
-
-	public asIterable(optional?: boolean): Iterable<Consumer> {
-		const arr = this.asPlainArray(optional);
-
-		return arr.map((val, index) => {
-			return this.fork(index, val);
-		});
-	}
-
-	public asMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
-		return Array.from(this.asIterable(), callback);
-	}
-
-	public asImplicitArray(): Consumer[] {
-		return this.asImplicitMappedArray((c) => c);
-	}
-
-	public asImplicitMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
-		if (Array.isArray(this.asUnknown())) {
-			return this.asMappedArray(callback);
-		} else if (this.exists()) {
-			return [callback(this, 0)];
-		} else {
-			return [];
-		}
-	}
-
-	public asDateOrVoid(): undefined | Date {
-		this.declareDefinition({
-			type: "date",
-			default: undefined,
-			required: false,
-		});
-		if (this.exists()) {
-			return this.asDate();
-		} else {
-			return undefined;
-		}
-	}
-
-	public asDate(def?: Date): Date {
-		this.declareDefinition({
-			type: "date",
-			default: def,
-			required: def === undefined,
-		});
-		const value = this.getValue(def);
-		if (!(value instanceof Date)) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_DATE);
-			return new Date();
-		}
-		return value;
-	}
-
-	public asBooleanOrVoid(): undefined | boolean {
-		this.declareDefinition({
-			type: "boolean",
-			default: undefined,
-			required: false,
-		});
-		if (this.exists()) {
-			return this.asBoolean();
-		} else {
-			return undefined;
-		}
-	}
-
-	public asBoolean(def?: boolean): boolean {
-		this.declareDefinition({
-			type: "boolean",
-			default: def,
-			required: def === undefined,
-		});
-		const value = this.getValue(def);
-		if (typeof value !== "boolean") {
-			this.unexpected(descriptions.CONSUME.EXPECTED_BOOLEAN);
-			return false;
-		}
-		return value;
-	}
-
-	public asStringOrVoid(): undefined | string {
-		this.declareDefinition({
-			type: "string",
-			default: undefined,
-			required: false,
-		});
-
-		if (this.exists()) {
-			return this.asString();
-		} else {
-			return undefined;
-		}
-	}
-
-	public asFunction(def?: UnknownFunction): UnknownFunction {
-		this.declareDefinition({
-			type: "function",
-			default: def,
-			required: def === undefined,
-		});
-
-		const fn = this.getValue(def);
-
-		if (typeof fn === "function") {
-			return fn as UnknownFunction;
-		} else {
-			this.unexpected(descriptions.CONSUME.EXPECTED_FUNCTION);
-
-			return () => {
-				return undefined;
-			};
-		}
-	}
-
-	public async asPromise(def?: PromiseLike<unknown>): Promise<Consumer> {
-		let value: unknown;
-
-		if (isObject(this.value)) {
-			const obj = this.asOriginalUnknownObject();
-			if (typeof obj.then === "function") {
-				value = await obj;
-			} else {
-				value = obj;
-			}
-		} else {
-			value = this.getValue(def);
-		}
-
-		return consumeUnknown(
-			value,
-			this.context.category,
-			this.context.categoryValue,
-		);
-	}
-
-	public asWrappedFunction(def?: UnknownFunction): ConsumeProtectedFunction {
-		const fn = this.asFunction(def);
-		const context = this.getParentValue();
-
-		return (...args) => {
-			const ret = fn.apply(context, args);
-			return consumeUnknown(
-				ret,
-				this.context.category,
-				this.context.categoryValue,
-			);
-		};
-	}
-
-	public asString(def?: string): string {
-		this.declareDefinition({
-			type: "string",
-			default: def,
-			required: def === undefined,
-		});
-
-		const value = this.getValue(def);
-		if (typeof value !== "string") {
-			this.unexpected(descriptions.CONSUME.EXPECTED_STRING);
-			return "";
-		}
-		return value;
-	}
-
-	public asStringSet<ValidValue extends string>(
-		validValues: ValidValue[],
-		def?: ValidValue,
-	): ValidValue {
-		this.declareDefinition({
-			type: "string",
-			default: def,
-			required: def === undefined,
-			allowedValues: validValues,
-		});
-
-		const value = this.asString(def);
-
-		// @ts-expect-error
-		if (validValues.includes(value)) {
-			// @ts-expect-error
-			return value;
-		} else {
-			this.unexpected(
-				descriptions.CONSUME.INVALID_STRING_SET_VALUE(
-					value,
-					// rome-ignore lint/ts/noExplicitAny: future cleanup
-					(validValues as any) as string[],
-				),
-				{
-					target: "value",
-				},
-			);
-			return validValues[0];
-		}
-	}
-
-	public asStringSetOrVoid<ValidValue extends string>(
-		validValues: ValidValue[],
-	): undefined | ValidValue {
-		this.declareDefinition({
-			type: "string",
-			default: undefined,
-			required: false,
-			allowedValues: validValues,
-		});
-
-		if (this.exists()) {
-			return this.asStringSet(validValues);
-		} else {
-			return undefined;
-		}
-	}
-
-	public asBigIntOrVoid(): undefined | bigint {
-		this.declareDefinition({
-			type: "bigint",
-			default: undefined,
-			required: false,
-		});
-		if (this.exists()) {
-			return this.asBigInt();
-		} else {
-			return undefined;
-		}
-	}
-
-	public asBigInt(def?: number | bigint): bigint {
-		this.declareDefinition({
-			type: "bigint",
-			default: def,
-			required: def === undefined,
-		});
-
-		const value = this.getValue(def);
-
-		if (typeof value === "number") {
-			return BigInt(value);
-		}
-
-		if (typeof value === "bigint") {
-			return value;
-		}
-
-		this.unexpected(descriptions.CONSUME.EXPECTED_BIGINT);
-		return BigInt("0");
-	}
-
-	private _declareOptionalPath() {
-		this.declareDefinition(
-			{
-				type: "string",
-				default: undefined,
-				required: false,
-			},
-			"path",
-		);
-	}
-
-	public asURLPath(def?: string): URLPath {
-		const path = this.asAnyPath(def);
-		if (path.isURL()) {
-			return path.assertURL();
-		} else {
-			this.unexpected(descriptions.CONSUME.EXPECTED_URL);
-			return createURLPath("unknown://").append(...path.getSegments());
-		}
-	}
-
-	public asURLPathOrVoid(): undefined | URLPath {
-		if (this.exists()) {
-			return this.asURLPath();
-		} else {
-			this._declareOptionalPath();
-			return undefined;
-		}
-	}
-
-	public asAnyPath(def?: string): Path {
-		this.declareDefinition(
-			{
-				type: "string",
-				default: def,
-				required: def === undefined,
-			},
-			"path",
-		);
-
-		// Allow path instances
-		const value = this.getValue(def);
-		if (isPath(value)) {
-			return value;
-		}
-
-		// Otherwise expect a string
-		return createPath(this.asString(def));
-	}
-
-	public asAnyPathOrVoid(): undefined | Path {
-		if (this.exists()) {
-			return this.asAnyPath();
-		} else {
-			this._declareOptionalPath();
-			return undefined;
-		}
-	}
-
-	public asFilePath(def?: string): FilePath {
-		const path = this.asAnyPath(def);
-		if (path.isFilePath()) {
-			return path.assertFilePath();
-		} else {
-			this.unexpected(descriptions.CONSUME.EXPECTED_FILE_PATH);
-			return createRelativePath("unknown");
-		}
-	}
-
-	public asFilePathOrVoid(): undefined | FilePath {
-		const path = this.asAnyPath();
-		if (path.isFilePath()) {
-			return path.assertFilePath();
-		} else {
-			this._declareOptionalPath();
-			return undefined;
-		}
-	}
-
-	public asAbsoluteFilePath(
-		def?: string,
-		cwd?: AbsoluteFilePath,
-	): AbsoluteFilePath {
-		const path = this.asAnyPath(def);
-		if (path.isAbsolute()) {
-			return path.assertAbsolute();
-		} else if (cwd !== undefined && path.isRelative()) {
-			return cwd.resolve(path);
-		} else {
-			this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
-			return createAbsoluteFilePath("/").append(...path.getSegments());
-		}
-	}
-
-	public asAbsoluteFilePathOrVoid(
-		cwd?: AbsoluteFilePath,
-	): undefined | AbsoluteFilePath {
-		if (this.exists()) {
-			return this.asAbsoluteFilePath(undefined, cwd);
-		} else {
-			this._declareOptionalPath();
-			return undefined;
-		}
-	}
-
-	public asRelativePath(def?: string): RelativePath {
-		const path = this.asAnyPath(def);
-		if (path.isRelative()) {
-			return path.assertRelative();
-		} else {
-			this.unexpected(descriptions.CONSUME.EXPECTED_RELATIVE_PATH);
-			return createRelativePath("unknown");
-		}
-	}
-
-	public asRelativePathOrVoid(): undefined | RelativePath {
-		if (this.exists()) {
-			return this.asRelativePath();
-		} else {
-			this._declareOptionalPath();
-			return undefined;
-		}
-	}
-
-	public asExplicitRelativePath(def?: string): RelativePath {
-		const path = this.asRelativePath(def);
-
-		if (path.isExplicitRelative()) {
-			return path;
-		} else {
-			this.unexpected(descriptions.CONSUME.EXPECTED_EXPLICIT_RELATIVE_PATH);
-			return path.toExplicitRelative();
-		}
-	}
-
-	public asExplicitRelativePathOrVoid(): undefined | RelativePath {
-		if (this.exists()) {
-			return this.asExplicitRelativePath();
-		} else {
-			this._declareOptionalPath();
-			return undefined;
-		}
-	}
-
-	public asNumberOrVoid(): undefined | number {
-		this.declareDefinition({
-			type: "number",
-			default: undefined,
-			required: false,
-		});
-
-		if (this.exists()) {
-			return this.asNumber();
-		} else {
-			return undefined;
-		}
-	}
-
-	public asZeroIndexedNumber(def?: number): ZeroIndexed {
-		return new ZeroIndexed(this.asNumber(def));
-	}
-
-	public asOneIndexedNumber(def?: number): OneIndexed {
-		return new OneIndexed(this.asNumber(def));
-	}
-
-	public asZeroIndexedNumberOrVoid(): undefined | ZeroIndexed {
-		const num = this.asNumberOrVoid();
-		return num === undefined ? undefined : new ZeroIndexed(num);
-	}
-
-	public asOneIndexedNumberOrVoid(): undefined | OneIndexed {
-		const num = this.asNumberOrVoid();
-		return num === undefined ? undefined : new OneIndexed(num);
-	}
-
-	public asNumber(def?: number): number {
-		this.declareDefinition({
-			type: "number",
-			default: def,
-			required: def === undefined,
-		});
-
-		let value = this.getValue(def);
-		if (isIndexedNumberish(value)) {
-			value = value.valueOf();
-		}
-		if (typeof value !== "number") {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
-			return 0;
-		}
-		return value;
-	}
-
-	public asNumberInRange(
-		opts: {
-			min?: number;
-			max?: number;
-			default?: number;
-		},
-	): number;
-
-	public asNumberInRange(
-		opts: {
-			min: OneIndexed;
-			max?: OneIndexed;
-			default?: OneIndexed;
-		},
-	): OneIndexed;
-
-	public asNumberInRange(
-		opts: {
-			min: OneIndexed;
-			max?: OneIndexed;
-			default?: OneIndexed;
-		},
-	): OneIndexed;
-
-	public asNumberInRange(
-		opts: {
-			min?: number | IndexedNumber;
-			max?: number | IndexedNumber;
-			default?: number | IndexedNumber;
-		},
-	): number | IndexedNumber {
-		const min = opts.min === undefined ? undefined : opts.min.valueOf();
-		const max = opts.max === undefined ? undefined : opts.max.valueOf();
-		const def = opts.default === undefined ? undefined : opts.default.valueOf();
-
-		this.declareDefinition({
-			type: "number",
-			default: def,
-			required: def !== undefined,
-			min,
-			max,
-		});
-
-		const num = this.asNumber(def);
-
-		// Nice error message when both min and max are specified
-		if (min !== undefined && max !== undefined && (num < min || num > max)) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_BETWEEN(min, max));
-		} else {
-			if (min !== undefined && num < min) {
-				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
-			}
-
-			if (max !== undefined && num > max) {
-				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
-			}
-		}
-
-		if (opts.min instanceof OneIndexed) {
-			return new OneIndexed(num);
-		}
-
-		if (opts.min instanceof ZeroIndexed) {
-			return new ZeroIndexed(num);
-		}
-
-		return num;
-	}
-
-	public asNumberSet<ValidValue extends number>(
-		validValues: ValidValue[],
-		def?: ValidValue,
-	): ValidValue {
-		this.declareDefinition({
-			type: "number",
-			default: def,
-			required: def === undefined,
-			allowedValues: validValues,
-		});
-
-		const value = this.asNumber(def);
-
-		// @ts-expect-error
-		if (validValues.includes(value)) {
-			// @ts-expect-error
-			return value;
-		} else {
-			this.unexpected(
-				descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
-					value,
-					// rome-ignore lint/ts/noExplicitAny: future cleanup
-					(validValues as any) as number[],
-				),
-				{
-					target: "value",
-				},
-			);
-			return validValues[0];
-		}
-	}
-
-	public asNumberSetOrVoid<ValidValue extends number>(
-		validValues: ValidValue[],
-	): undefined | ValidValue {
-		this.declareDefinition({
-			type: "number",
-			default: undefined,
-			required: false,
-			allowedValues: validValues,
-		});
-
-		if (this.exists()) {
-			return this.asNumberSet(validValues);
-		} else {
-			return undefined;
-		}
-	}
-
 	public asUnknown(): unknown {
-		return this.value;
+		if (this.exists()) {
+			return this.value;
+		} else {
+			return this.defaultValue;
+		}
 	}
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	public asAny(): any {
-		return this.value;
+		return this.asUnknown();
 	}
 }
 
 enhanceNodeInspectClass(
 	Consumer,
 	(consumer) => {
-		return `Consumer<${prettyFormatToString(consumer.getValue())}>`;
+		return `Consumer<${prettyFormatToString(consumer.asUnknown())}>`;
 	},
 );

@@ -1,6 +1,4 @@
 {
-	"plugins": [
-		"numericSeparator"
-	],
+
 	"throws": true
 }

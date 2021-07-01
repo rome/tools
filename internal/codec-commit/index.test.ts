@@ -1,13 +1,11 @@
 import {createFixtureTests} from "@internal/test-helpers";
-import {removeCarriageReturn} from "@internal/string-utils";
 import {parseCommit} from "./index";
-import {decodeUTF8} from "@internal/binary";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;
 	const inputFile = files.assert("input.txt");
 
-	const inputContent = removeCarriageReturn(decodeUTF8(inputFile.content));
+	const inputContent = inputFile.contentAsText();
 
 	const commit = parseCommit(inputContent);
 
@@ -15,7 +13,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 		inputFile.absolute.getExtensionlessBasename(),
 	).join();
 
-	t.snapshot(commit, undefined, {filename: outputFile});
+	t.customSnapshot(outputFile).snapshot(commit);
 });
 
 // @ts-expect-error Doesn't support top-level await

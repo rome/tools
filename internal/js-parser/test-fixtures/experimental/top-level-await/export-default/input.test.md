@@ -10,22 +10,42 @@
 JSRoot {
 	body: [
 		JSExportDefaultDeclaration {
-			declaration: JSAwaitExpression {
-				argument: JSNumericLiteral {
-					value: 0
-					loc: SourceLocation experimental/top-level-await/export-default/input.js 1:21-1:22
-				}
-				loc: SourceLocation experimental/top-level-await/export-default/input.js 1:15-1:22
+			declaration: JSReferenceIdentifier {
+				name: "await"
+				loc: SourceLocation experimental/top-level-await/export-default/input.js 1:15-1:20 (await)
 			}
-			loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
+			loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:20
+		}
+		JSExpressionStatement {
+			expression: JSNumericLiteral {
+				value: 0
+				loc: SourceLocation experimental/top-level-await/export-default/input.js 1:21-1:22
+			}
+			loc: SourceLocation experimental/top-level-await/export-default/input.js 1:21-1:23
 		}
 	]
 	comments: []
 	corrupt: false
-	diagnostics: []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/top-level-await/export-default/input.js>
+				end: Position 1:21
+				start: Position 1:21
+			}
+		}
+	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/top-level-await/export-default/input.js>
 	loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
@@ -35,5 +55,13 @@ JSRoot {
 ### `diagnostics`
 
 ```
+
+ experimental/top-level-await/export-default/input.js:1:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected a semicolon or a line terminator
+
+    export default await 0;
+                         ^
+
 
 ```

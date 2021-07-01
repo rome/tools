@@ -6,7 +6,7 @@ const elementsToConceptsMap: MapOfElementsToConcepts = new Map();
 
 for (const [, attributes] of ariaRolesMap) {
 	if (attributes.baseConcepts) {
-		for (const {concept, module} of attributes.baseConcepts) {
+		for (const {module, concept} of attributes.baseConcepts) {
 			if (module === "HTML") {
 				if (!elementsToConceptsMap.has(concept.name)) {
 					elementsToConceptsMap.set(
@@ -18,9 +18,10 @@ for (const [, attributes] of ariaRolesMap) {
 		}
 	}
 }
+
 for (const [, attributes] of ariaRolesMap) {
 	if (attributes.baseConcepts) {
-		for (const {concept, module} of attributes.baseConcepts) {
+		for (const {module, concept} of attributes.baseConcepts) {
 			if (module === "HTML") {
 				if (!elementsToConceptsMap.has(concept.name)) {
 					elementsToConceptsMap.set(

@@ -1,3 +1,4 @@
+import "@internal/core";
 import {main as virtualModulesMain} from "./generated-files/virtual-modules";
 import {main as ast} from "./generated-files/ast";
 import {main as lintRules} from "./generated-files/lint-rules";
@@ -15,7 +16,7 @@ export async function main(args: string[]) {
 		args,
 		defineFlags(c) {
 			return {
-				force: c.get("force").asBoolean(false),
+				force: c.get("force").required(false).asBoolean(),
 			};
 		},
 	}).init();

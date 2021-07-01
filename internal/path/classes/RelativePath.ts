@@ -21,7 +21,7 @@ export default class RelativePath
 					explicitRelative: false,
 				},
 				{
-					parent: this.memo.parent,
+					...this.memo,
 				},
 			);
 		} else {

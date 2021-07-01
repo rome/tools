@@ -72,6 +72,45 @@ export default class FatalErrorHandler {
 		);
 	}
 
+	private async printErrorAsDiagnostics(
+		reporter: Reporter,
+		error: Error,
+		overrideSource?: StaticMarkup,
+	): Promise<void> {
+		const diagnostics = getOrDeriveDiagnosticsFromError(
+			error,
+			{
+				description: {
+					category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
+				},
+				label: overrideSource ?? this.options.source,
+				tags: {
+					fatal: true,
+				},
+			},
+		);
+
+		const processor = new DiagnosticsProcessor({
+			normalizeOptions: {
+				defaultTags: {
+					fatal: true,
+				},
+			},
+		});
+		processor.addDiagnostics(diagnostics);
+
+		const printer = new DiagnosticsPrinter({
+			reporter,
+			processor,
+			flags: {
+				truncateDiagnostics: false,
+			},
+		});
+		await printer.print({
+			showFooter: false,
+		});
+	}
+
 	public handle(raw: Error, overrideSource?: StaticMarkup): Promise<void> {
 		return this.handleQueue.series(async () => {
 			let error: Error;
@@ -97,38 +136,12 @@ export default class FatalErrorHandler {
 					reporter = getReporter();
 				}
 
-				const diagnostics = getOrDeriveDiagnosticsFromError(
-					error,
-					{
-						description: {
-							category: DIAGNOSTIC_CATEGORIES["internalError/fatal"],
-						},
-						label: overrideSource ?? this.options.source,
-						tags: {
-							fatal: true,
-						},
-					},
-				);
-
-				const processor = new DiagnosticsProcessor({
-					normalizeOptions: {
-						defaultTags: {
-							fatal: true,
-						},
-					},
-				});
-				processor.addDiagnostics(diagnostics);
-
-				const printer = new DiagnosticsPrinter({
-					reporter,
-					processor,
-					flags: {
-						truncateDiagnostics: false,
-					},
-				});
-				await printer.print({
-					showFooter: false,
-				});
+				if (reporter.hasStreams()) {
+					await this.printErrorAsDiagnostics(reporter, error, overrideSource);
+				} else {
+					console.error("Reporter had no available streams. Error:");
+					console.error(error.stack);
+				}
 			} catch (logErr) {
 				console.error("Failed to handle fatal error. Original error:");
 				console.error(error.stack);

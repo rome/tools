@@ -51,25 +51,25 @@ export default createServerCommand<Flags>({
 	hidden: true,
 	defineFlags(c) {
 		return {
-			checkProject: c.get("checkProject").asBoolean(false),
+			checkProject: c.get("checkProject").required(false).asBoolean(),
 			configType: c.get(
 				"configType",
 				{
 					description: markup``,
 				},
-			).asStringSet<ConfigType>(["toml", "json"], "json"),
+			).required("json").asStringSet<ConfigType>(["json", "toml"]),
 			indentStyle: c.get(
 				"indentStyle",
 				{
 					description: markup``,
 				},
-			).asStringSet<IndentStyle>(["tab", "space"], "tab"),
+			).required("tab").asStringSet<IndentStyle>(["tab", "space"]),
 			indentSize: c.get(
 				"indentSize",
 				{
 					description: markup``,
 				},
-			).asNumber(1),
+			).required(1).asNumber(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags) {

@@ -15,8 +15,8 @@
 ```javascript
 [
 	TargetBrowserCombination {
-		and: TargetBrowserUsage {operator: "GT", usage: 5}
-		target: TargetBrowser {browser: "Firefox", version: 84}
+		left: TargetBrowser {browser: "Firefox", version: 84}
+		right: TargetBrowserUsage {operator: "GT", usage: 5}
 	}
 ]
 ```

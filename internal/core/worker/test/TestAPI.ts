@@ -17,12 +17,16 @@ import SnapshotManager from "./SnapshotManager";
 import {TestServerRunnerOptions} from "../../server/testing/types";
 import {Event} from "@internal/events";
 import {getErrorStructure} from "@internal/errors";
-import {prettyFormatToString} from "@internal/pretty-format";
+import {
+	normalizeLimitProperties,
+	prettyFormatToString,
+} from "@internal/pretty-format";
 import {markup} from "@internal/markup";
 import {
 	ExpectedError,
 	TestDiagnosticAdvice,
 	TestHelper,
+	TestSnapshotHelper,
 	TestSnapshotOptions,
 } from "@internal/virtual-rome/test";
 import TestWorkerFile, {TestDetails} from "./TestWorkerFile";
@@ -75,7 +79,7 @@ export type OnTimeout = (time: number) => void;
 type SnapshotOptions = {
 	entryName: string;
 	expected: unknown;
-	message?: string;
+	filename?: string;
 	opts?: TestSnapshotOptions;
 };
 
@@ -124,7 +128,9 @@ function normalizeUserAdviceItem(item: TestDiagnosticAdvice): DiagnosticAdvice {
 
 type UserAdviceItem = TestDiagnosticAdvice | (() => TestDiagnosticAdvice);
 
-export default class TestAPI implements TestHelper {
+type DiagnosticAdviceFactory = () => DiagnosticAdvice[];
+
+export default class TestAPI {
 	constructor(
 		file: TestWorkerFile,
 		testDetails: TestDetails,
@@ -133,19 +139,21 @@ export default class TestAPI implements TestHelper {
 		this.testDetails = testDetails;
 		this.options = file.globalOptions;
 		this.snapshotManager = file.snapshotManager;
-		this.snapshotCounter = 0;
 		this.file = file;
 		this.teardownEvent = new Event("TestAPI.teardown");
 		this.startTime = new DurationMeasurer();
+		this.snapshotCounter = 0;
 		this.onTimeout = onTimeout;
 		this.timeoutMax = 0;
 		this.timeoutId = undefined;
 		this.setTimeout(5_000);
-		this.advice = [];
+		this.logAdvice = [];
+		this.userAdvice = [];
 	}
 
 	public teardownEvent: Event<void, void>;
 
+	private snapshotCounter: number;
 	private file: TestWorkerFile;
 	private startTime: DurationMeasurer;
 	private options: TestServerRunnerOptions;
@@ -155,9 +163,9 @@ export default class TestAPI implements TestHelper {
 	private timeoutStart: undefined | DurationMeasurer;
 	private timeoutMax: undefined | number;
 
-	private advice: UserAdviceItem[];
+	private userAdvice: UserAdviceItem[];
+	private logAdvice: DiagnosticAdviceFactory[];
 	private testDetails: TestDetails;
-	private snapshotCounter: number;
 	private snapshotManager: SnapshotManager;
 
 	public async emitDiagnostic(diag: Diagnostic): Promise<void> {
@@ -174,22 +182,34 @@ export default class TestAPI implements TestHelper {
 	}
 
 	public getAdvice(startAdvice: DiagnosticAdvice[] = []): DiagnosticAdvice[] {
-		const {advice} = this;
-
-		if (advice.length === 0) {
+		const {userAdvice, logAdvice} = this;
+		if (userAdvice.length === 0 && logAdvice.length === 0) {
 			return startAdvice;
 		}
 
-		const userAdvice = normalizeUserAdvice(advice);
+		const advice: DiagnosticAdvice[] = [...startAdvice];
 
-		return [
-			...startAdvice,
-			{
+		if (userAdvice.length > 0) {
+			advice.push({
 				type: "group",
 				title: markup`User-specified test advice`,
-				advice: userAdvice,
-			},
-		];
+				advice: normalizeUserAdvice(userAdvice),
+			});
+		}
+
+		if (logAdvice.length > 0) {
+			let flatLogAdvice: DiagnosticAdvice[] = [];
+			for (const factory of logAdvice) {
+				flatLogAdvice = [...flatLogAdvice, ...factory()];
+			}
+			advice.push({
+				type: "group",
+				title: markup`Console logs`,
+				advice: flatLogAdvice,
+			});
+		}
+
+		return advice;
 	}
 
 	private buildMatchAdvice(
@@ -199,20 +219,24 @@ export default class TestAPI implements TestHelper {
 			visualMethod,
 			expectedAlias,
 			receivedAlias,
+			expectedFormat,
+			receivedFormat,
 		}: {
 			visualMethod?: string;
 			expectedAlias?: string;
 			receivedAlias?: string;
+			expectedFormat?: string;
+			receivedFormat?: string;
 		} = {},
 	): DiagnosticAdvice[] {
-		let expectedFormat;
-		let receivedFormat;
-		if (typeof received === "string" && typeof expected === "string") {
-			expectedFormat = expected;
-			receivedFormat = received;
-		} else {
-			expectedFormat = prettyFormatUntrusted(expected);
-			receivedFormat = prettyFormatUntrusted(received);
+		if (expectedFormat === undefined || receivedFormat === undefined) {
+			if (typeof received === "string" && typeof expected === "string") {
+				expectedFormat = expected;
+				receivedFormat = received;
+			} else {
+				expectedFormat = prettyFormatUntrusted(expected);
+				receivedFormat = prettyFormatUntrusted(received);
+			}
 		}
 
 		const advice: DiagnosticAdvice[] = [];
@@ -259,16 +283,144 @@ export default class TestAPI implements TestHelper {
 		return advice;
 	}
 
+	public addToLogAdvice(item: DiagnosticAdviceFactory): void {
+		this.logAdvice.push(item);
+	}
+
+	private bufferSnapshot(
+		{
+			entryName,
+			filename,
+			expected,
+			opts = {},
+		}: SnapshotOptions,
+	): string {
+		let language: undefined | string = opts.language;
+
+		let formatted = this.snapshotManager.formatValue(expected);
+		if (typeof expected !== "string") {
+			language = "javascript";
+		}
+
+		const callError = getErrorStructure(new Error(), 2);
+
+		this.onTeardown(async () => {
+			// Get the current snapshot
+			const existingSnapshot = await this.snapshotManager.get(
+				this.testDetails.name,
+				entryName,
+				filename,
+			);
+			if (existingSnapshot === undefined) {
+				if (this.options.freezeSnapshots) {
+					await this.emitDiagnostic(
+						this.file.deriveDiagnosticFromErrorStructure(
+							callError,
+							{
+								description: descriptions.SNAPSHOTS.FROZEN,
+							},
+						),
+					);
+				} else {
+					// No snapshot exists, let's save this one!
+					this.snapshotManager.set({
+						testName: this.testDetails.name,
+						entryName,
+						value: formatted,
+						language,
+						optionalFilename: filename,
+					});
+				}
+				return;
+			}
+
+			// Compare the snapshots
+			const snapshotPath = this.snapshotManager.normalizeSnapshotPath(filename);
+			if (formatted !== existingSnapshot) {
+				const advice: DiagnosticAdvice[] = this.buildMatchAdvice(
+					formatted,
+					existingSnapshot,
+					{
+						receivedAlias: "What the code gave us",
+						expectedAlias: "Existing snapshot",
+					},
+				);
+
+				let markupMessage;
+
+				if (opts.message === undefined) {
+					markupMessage = markup`Snapshot <emphasis>"${entryName}"</emphasis> at <emphasis>${snapshotPath}</emphasis> doesn't match`;
+				} else {
+					markupMessage = markup`${opts.message}`;
+
+					advice.push({
+						type: "log",
+						category: "info",
+						text: markup`Snapshot can be found at <emphasis>${snapshotPath}</emphasis>`,
+					});
+				}
+
+				await this.emitDiagnostic(
+					this.file.deriveDiagnosticFromErrorStructure(
+						callError,
+						{
+							description: {
+								category: DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"],
+								message: markupMessage,
+								advice,
+							},
+						},
+					),
+				);
+			}
+		});
+
+		return entryName;
+	}
+
+	// We don't want to expose an internal instance to userland tests that could allow for private property escape
+	public getUserSafeHelper(): TestHelper {
+		return Object.freeze({
+			addToAdvice: this.addToAdvice.bind(this),
+			clearAdvice: this.clearAdvice.bind(this),
+			onTeardown: this.onTeardown.bind(this),
+			clearTimeout: this.clearTimeout.bind(this),
+			extendTimeout: this.extendTimeout.bind(this),
+			setTimeout: this.setTimeout.bind(this),
+			checkTimeout: this.checkTimeout.bind(this),
+			truthy: this.truthy.bind(this),
+			falsy: this.falsy.bind(this),
+			true: this.true.bind(this),
+			false: this.false.bind(this),
+			is: this.is.bind(this),
+			not: this.not.bind(this),
+			deepEquals: this.deepEquals.bind(this),
+			notDeepEquals: this.notDeepEquals.bind(this),
+			looksLike: this.looksLike.bind(this),
+			notLooksLike: this.notLooksLike.bind(this),
+			throws: this.throws.bind(this),
+			throwsAsync: this.throwsAsync.bind(this),
+			notThrows: this.notThrows.bind(this),
+			notThrowsAsync: this.notThrowsAsync.bind(this),
+			regex: this.regex.bind(this),
+			notRegex: this.notRegex.bind(this),
+			snapshot: this.snapshot.bind(this),
+			inlineSnapshot: this.inlineSnapshot.bind(this),
+			namedSnapshot: this.namedSnapshot.bind(this),
+			customSnapshot: this.customSnapshot.bind(this),
+		});
+	}
+
 	// We allow lazy construction of test advice when an error actually occurs
-	public addToAdvice(item: UserAdviceItem): void {
-		this.advice.push(item);
+	private addToAdvice(item: UserAdviceItem): void {
+		this.userAdvice.push(item);
 	}
 
-	public clearAdvice() {
-		this.advice = [];
+	private clearAdvice() {
+		this.userAdvice = [];
 	}
 
-	public onTeardown(callback: AsyncVoidCallback): void {
+	private onTeardown(callback: AsyncVoidCallback): void {
 		this.teardownEvent.subscribe(callback);
 	}
 
@@ -281,7 +433,7 @@ export default class TestAPI implements TestHelper {
 		this.timeoutStart = undefined;
 	}
 
-	public extendTimeout(time: number): void {
+	private extendTimeout(time: number): void {
 		const {timeoutMax, timeoutStart} = this;
 		if (timeoutMax === undefined || timeoutStart === undefined) {
 			throw new Error("No timeout set");
@@ -292,7 +444,7 @@ export default class TestAPI implements TestHelper {
 		this.setTimeout(newTime);
 	}
 
-	public setTimeout(time: number): void {
+	private setTimeout(time: number): void {
 		this.clearTimeout();
 
 		this.timeoutStart = new DurationMeasurer();
@@ -306,7 +458,7 @@ export default class TestAPI implements TestHelper {
 		);
 	}
 
-	public checkTimeout(): void {
+	private checkTimeout(): void {
 		const {startTime, timeoutMax} = this;
 		if (timeoutMax === undefined) {
 			return;
@@ -318,7 +470,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public fail(
+	private fail(
 		message: string = "Test failure triggered by t.fail()",
 		advice: DiagnosticAdvice[] = [],
 		framesToShift: number = 0,
@@ -336,7 +488,7 @@ export default class TestAPI implements TestHelper {
 		throw createSingleDiagnosticsError(diag);
 	}
 
-	public truthy(
+	private truthy(
 		value: unknown,
 		message: string = "Expected value to be truthy",
 	): void {
@@ -360,7 +512,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public falsy(
+	private falsy(
 		value: unknown,
 		message: string = "Expected value to be falsy",
 	): void {
@@ -384,7 +536,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public true(
+	private true(
 		value: boolean,
 		message: string = "Expected value to be true",
 	): void {
@@ -408,7 +560,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public false(
+	private false(
 		value: boolean,
 		message: string = "Expected value to be false",
 	): void {
@@ -432,7 +584,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public is<T extends unknown>(
+	private is<T extends unknown>(
 		received: T,
 		expected: T,
 		message: string = "t.is() failed, using Object.is semantics",
@@ -452,7 +604,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public not(
+	private not(
 		received: unknown,
 		expected: unknown,
 		message: string = "t.not() failed, using !Object.is semantics",
@@ -472,33 +624,87 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public looksLike<T extends unknown>(
+	private deepEquals<T extends unknown>(
 		received: T,
 		expected: T,
-		message: string = "t.looksLike() failed, using prettyFormat semantics",
+		message: string = "t.deepEquals() failed, using prettyFormat semantics",
 	): void {
-		const actualInspect = prettyFormatUntrusted(received);
-		const expectedInspect = prettyFormatUntrusted(expected);
+		const actualInspect = prettyFormatToString(received);
+		const expectedInspect = prettyFormatToString(expected);
 
 		if (actualInspect !== expectedInspect) {
 			this.fail(message, this.buildMatchAdvice(received, expected), 1);
 		}
 	}
 
-	public notLooksLike(
+	private notDeepEquals(
 		received: unknown,
 		expected: unknown,
-		message: string = "t.notLooksLike() failed, using !prettyFormat semantics",
+		message: string = "t.notDeepEquals() failed, using !prettyFormat semantics",
 	): void {
-		const actualInspect = prettyFormatUntrusted(received);
-		const expectedInspect = prettyFormatUntrusted(expected);
+		const actualInspect = prettyFormatToString(received);
+		const expectedInspect = prettyFormatToString(expected);
 
 		if (actualInspect === expectedInspect) {
 			this.fail(message, this.buildMatchAdvice(received, expected), 1);
 		}
 	}
 
-	public throws(
+	private looksLike<T extends unknown>(
+		received: T,
+		expected: T,
+		message: string = "t.looksLike() failed, using prettyFormat semantics",
+	): void {
+		const receivedFormat = prettyFormatToString(
+			received,
+			{limitProperties: normalizeLimitProperties(expected)},
+		);
+		const expectedFormat = prettyFormatToString(expected);
+
+		if (receivedFormat !== expectedFormat) {
+			this.fail(
+				message,
+				this.buildMatchAdvice(
+					received,
+					expected,
+					{
+						expectedFormat,
+						receivedFormat,
+					},
+				),
+				1,
+			);
+		}
+	}
+
+	private notLooksLike(
+		received: unknown,
+		expected: unknown,
+		message: string = "t.notLooksLike() failed, using !prettyFormat semantics",
+	): void {
+		const receivedFormat = prettyFormatToString(
+			received,
+			{limitProperties: normalizeLimitProperties(expected)},
+		);
+		const expectedFormat = prettyFormatToString(expected);
+
+		if (receivedFormat === expectedFormat) {
+			this.fail(
+				message,
+				this.buildMatchAdvice(
+					received,
+					expected,
+					{
+						expectedFormat,
+						receivedFormat,
+					},
+				),
+				1,
+			);
+		}
+	}
+
+	private throws(
 		thrower: VoidCallback,
 		expected?: ExpectedError,
 		message: string = "t.throws() failed, callback did not throw an error",
@@ -527,7 +733,7 @@ export default class TestAPI implements TestHelper {
 		this.fail(message, undefined, 1);
 	}
 
-	public async throwsAsync(
+	private async throwsAsync(
 		thrower: AsyncVoidCallback,
 		expected?: ExpectedError,
 		message: string = "t.throwsAsync() failed, callback did not throw an error",
@@ -555,7 +761,7 @@ export default class TestAPI implements TestHelper {
 		this.fail(message, undefined, 1);
 	}
 
-	public notThrows(
+	private notThrows(
 		nonThrower: VoidCallback,
 		message: string = "t.notThrows() failed, callback threw an error",
 	): void {
@@ -574,7 +780,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public async notThrowsAsync(
+	private async notThrowsAsync(
 		nonThrower: AsyncVoidCallback,
 		message: string = "t.notThrowsAsync() failed, callback threw an error",
 	): Promise<void> {
@@ -593,7 +799,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public regex(
+	private regex(
 		contents: string,
 		regex: RegExp,
 		message: string = "t.regex() failed, using RegExp.test semantics",
@@ -628,7 +834,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public notRegex(
+	private notRegex(
 		contents: string,
 		regex: RegExp,
 		message: string = "t.notRegex() failed, using !RegExp.test semantics",
@@ -663,7 +869,10 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public inlineSnapshot(received: unknown, snapshot?: string | boolean | number) {
+	private inlineSnapshot(
+		received: unknown,
+		snapshot?: string | boolean | number,
+	) {
 		const callFrame = getErrorStructure(new Error()).frames[1];
 		const callError = getErrorStructure(new Error(), 1);
 
@@ -708,124 +917,55 @@ export default class TestAPI implements TestHelper {
 		});
 	}
 
-	public snapshot(
-		expected: unknown,
-		message?: string,
-		opts?: TestSnapshotOptions,
-	): string {
+	private snapshot(expected: unknown, opts?: TestSnapshotOptions): string {
 		const id = this.snapshotCounter++;
 		return this.bufferSnapshot({
 			entryName: String(id),
 			expected,
-			message,
 			opts,
 		});
 	}
 
-	public namedSnapshot(
+	private customSnapshot(
+		filename: string,
+		defaultOpts?: TestSnapshotOptions,
+	): TestSnapshotHelper {
+		return {
+			snapshot: (expected, opts) => {
+				const id = this.snapshotCounter++;
+				return this.bufferSnapshot({
+					entryName: String(id),
+					expected,
+					filename,
+					opts: {
+						...defaultOpts,
+						...opts,
+					},
+				});
+			},
+			named: (entryName, expected, opts) => {
+				return this.bufferSnapshot({
+					entryName,
+					expected,
+					filename,
+					opts: {
+						...defaultOpts,
+						...opts,
+					},
+				});
+			},
+		};
+	}
+
+	private namedSnapshot(
 		entryName: string,
 		expected: unknown,
-		message?: string,
 		opts?: TestSnapshotOptions,
 	): string {
 		return this.bufferSnapshot({
 			entryName,
 			expected,
-			message,
 			opts,
 		});
-	}
-
-	private bufferSnapshot(
-		{
-			entryName,
-			message,
-			expected,
-			opts = {},
-		}: SnapshotOptions,
-	): string {
-		let language: undefined | string = opts.language;
-
-		let formatted = this.snapshotManager.formatValue(expected);
-		if (typeof expected !== "string") {
-			language = "javascript";
-		}
-
-		const callError = getErrorStructure(new Error(), 2);
-
-		this.onTeardown(async () => {
-			// Get the current snapshot
-			const existingSnapshot = await this.snapshotManager.get(
-				this.testDetails.name,
-				entryName,
-				opts.filename,
-			);
-			if (existingSnapshot === undefined) {
-				if (this.options.freezeSnapshots) {
-					await this.emitDiagnostic(
-						this.file.deriveDiagnosticFromErrorStructure(
-							callError,
-							{
-								description: descriptions.SNAPSHOTS.FROZEN,
-							},
-						),
-					);
-				} else {
-					// No snapshot exists, let's save this one!
-					this.snapshotManager.set({
-						testName: this.testDetails.name,
-						entryName,
-						value: formatted,
-						language,
-						optionalFilename: opts.filename,
-					});
-				}
-				return;
-			}
-
-			// Compare the snapshots
-			const snapshotPath = this.snapshotManager.normalizeSnapshotPath(
-				opts.filename,
-			);
-			if (formatted !== existingSnapshot) {
-				const advice: DiagnosticAdvice[] = this.buildMatchAdvice(
-					formatted,
-					existingSnapshot,
-					{
-						receivedAlias: "What the code gave us",
-						expectedAlias: "Existing snapshot",
-					},
-				);
-
-				let markupMessage;
-
-				if (message === undefined) {
-					markupMessage = markup`Snapshot <emphasis>"${entryName}"</emphasis> at <emphasis>${snapshotPath}</emphasis> doesn't match`;
-				} else {
-					markupMessage = markup`${message}`;
-
-					advice.push({
-						type: "log",
-						category: "info",
-						text: markup`Snapshot can be found at <emphasis>${snapshotPath}</emphasis>`,
-					});
-				}
-
-				await this.emitDiagnostic(
-					this.file.deriveDiagnosticFromErrorStructure(
-						callError,
-						{
-							description: {
-								category: DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"],
-								message: markupMessage,
-								advice,
-							},
-						},
-					),
-				);
-			}
-		});
-
-		return entryName;
 	}
 }

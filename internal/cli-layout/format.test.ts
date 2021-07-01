@@ -1,10 +1,9 @@
 import {test} from "rome";
-import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {markupToAnsi, markupToPlainText} from "./format";
-import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {markup} from "../markup/escape";
 import {joinMarkupLines} from "@internal/markup";
 import {OneIndexed} from "@internal/numbers";
+import {assertDiagnostics} from "@internal/test-helpers";
 
 const SYNTAX_ERROR_TESTS = [
 	markup`<view pointerChar="<emphasis" pointerLine="1" pointerStart="1" pointerEnd="3">foobar</view>`,
@@ -14,25 +13,17 @@ test(
 	"should produce syntax errors",
 	async (t) => {
 		for (const input of SYNTAX_ERROR_TESTS) {
-			const {diagnostics} = catchDiagnosticsSync(() => {
-				markupToPlainText(
-					input,
-					{
-						columns: new OneIndexed(400),
-					},
-				);
-			});
-
-			if (diagnostics === undefined) {
-				throw new Error(`"${input}" should have thrown a syntax error`);
-			} else {
-				t.snapshot(
-					await printDiagnosticsToString({
-						diagnostics,
-						suppressions: [],
-					}),
-				);
-			}
+			await assertDiagnostics(
+				t,
+				() => {
+					markupToPlainText(
+						input,
+						{
+							columns: new OneIndexed(400),
+						},
+					);
+				},
+			);
 		}
 	},
 );

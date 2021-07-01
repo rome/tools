@@ -384,7 +384,7 @@
 
  argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unknown f flag at
+  ✖ Unknown f flag
 
     test -f
          ^^
@@ -855,7 +855,7 @@
 
  argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unknown foo-bar flag at
+  ✖ Unknown foo-bar flag
 
     test --foo-bar
          ^^^^^^^^^

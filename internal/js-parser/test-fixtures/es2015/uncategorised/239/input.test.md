@@ -56,7 +56,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/uncategorised/239/input.js>
 	loc: SourceLocation es2015/uncategorised/239/input.js 1:0-1:19

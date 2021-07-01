@@ -34,14 +34,29 @@ JSRoot {
 								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:3
 								start: Position 2:2
 							}
-							value: JSAwaitExpression {
-								argument: JSNumericLiteral {
+							value: JSReferenceIdentifier {
+								name: "await"
+								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:6-2:11 (await)
+							}
+							loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:11
+						}
+						JSClassProperty {
+							key: JSStaticPropertyKey {
+								value: JSNumericLiteral {
 									value: 0
 									loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:12-2:13
 								}
-								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:6-2:13
+								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:12-2:13
 							}
-							loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:2-2:14
+							meta: JSClassPropertyMeta {
+								abstract: false
+								optional: false
+								readonly: false
+								static: false
+								loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:12-2:13
+								start: Position 2:12
+							}
+							loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 2:12-2:14
 						}
 					]
 					loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:7-3:1
@@ -53,10 +68,26 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/top-level-await/inside-class-property/input.js>
+				end: Position 2:12
+				start: Position 2:12
+			}
+		}
+	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/top-level-await/inside-class-property/input.js>
 	loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:0-4:0
@@ -66,5 +97,15 @@ JSRoot {
 ### `diagnostics`
 
 ```
+
+ experimental/top-level-await/inside-class-property/input.js:2:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected a semicolon or a line terminator
+
+    1 │ export class C {
+  > 2 │   p = await 0;
+      │             ^
+    3 │ }
+
 
 ```

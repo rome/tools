@@ -15,11 +15,11 @@
 ```javascript
 [
 	TargetBrowserCombination {
-		and: TargetBrowserCoverage {coverage: 99}
-		target: TargetBrowserCombination {
-			and: TargetBrowserUsage {operator: "GT", usage: 5}
-			target: TargetBrowser {browser: "Firefox", version: 84}
+		left: TargetBrowserCombination {
+			left: TargetBrowser {browser: "Firefox", version: 84}
+			right: TargetBrowserUsage {operator: "GT", usage: 5}
 		}
+		right: TargetBrowserCoverage {coverage: 99}
 	}
 ]
 ```

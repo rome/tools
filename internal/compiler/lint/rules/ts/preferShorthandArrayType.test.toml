@@ -1,12 +1,12 @@
 filename = "file.ts"
 invalid = [
 	"""
-    let valid: Array<foo>;
-    let invalid: bar[];
+		let valid: Array<foo>;
+		let invalid: bar[];
 	""",
 	"""
-    let invalid: Array<foo, Array<string>>;
-    """,
+		let invalid: Array<foo, Array<string>>;
+	""",
 	"""
 	let invalid: Promise<Array<string>>;
 	""",
@@ -16,12 +16,12 @@ invalid = [
 ]
 valid = [
 	"""
-    let valid: Array<foo | bar>;
-    """,
+		let valid: Array<foo | bar>;
+	""",
 	"""
 	let valid: Array<Foo | Bar>;
 	""",
 	"""
 	let valid: Array<keyof Bar>;
-    """,
+	""",
 ]

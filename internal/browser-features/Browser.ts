@@ -129,9 +129,8 @@ export abstract class Browser {
 			value = featureConsumer.getPath([
 				this.getId(),
 				this.getVersion().toString(),
-			]).asBoolean(false);
+			]).required(false).asBoolean();
 		}
-
 		this.cssFeatureCache.set(feature, value);
 		return value;
 	}

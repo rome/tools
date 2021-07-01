@@ -70,7 +70,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js>
 	loc: SourceLocation experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js 1:0-2:0

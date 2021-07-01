@@ -26,41 +26,15 @@ export default createServerCommand({
 	examples: [],
 	defineFlags(c: Consumer): Flags {
 		return {
-			filter: c.get(
-				"filter",
-				{description: markup`filter tests using the provided string`},
-			).asStringOrVoid(),
-			coverage: c.get(
-				"coverage",
-				{description: markup`collect code coverage and print it`},
-			).asBoolean(false),
-			showAllCoverage: c.get(
-				"showAllCoverage",
-				{description: markup`show code coverage for all the tests`},
-			).asBoolean(false),
-			updateSnapshots: c.get(
-				"updateSnapshots",
-				{description: markup`update failing snapshots`},
-			).asBoolean(false),
-			freezeSnapshots: c.get(
-				"freezeSnapshots",
-				{description: markup`prevents snapshots from updating`},
-			).asBoolean(false),
-			focusAllowed: c.get(
-				"focusAllowed",
-				{description: markup`prevent tests from being focused`},
-			).asBoolean(true),
-			runInSync: c.get("runInSync", {description: markup`run tests in sync`}).asBoolean(
-				false,
-			),
-			sourceMaps: c.get(
-				"sourceMaps",
-				{description: markup`prevent sourceMaps from being generated`},
-			).asBoolean(true),
-			suppressLogs: c.get(
-				"suppressLogs",
-				{description: markup`print all logs to the console`},
-			).asBoolean(true),
+			filter: c.get("filter").asStringOrVoid(),
+			coverage: c.get("coverage").required(false).asBoolean(),
+			showAllCoverage: c.get("showAllCoverage").required(false).asBoolean(),
+			updateSnapshots: c.get("updateSnapshots").required(false).asBoolean(),
+			freezeSnapshots: c.get("freezeSnapshots").required(false).asBoolean(),
+			focusAllowed: c.get("focusAllowed").required(true).asBoolean(),
+			runInSync: c.get("runInSync").required(false).asBoolean(),
+			sourceMaps: c.get("sourceMaps").required(true).asBoolean(),
+			suppressLogs: c.get("suppressLogs").required(false).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {

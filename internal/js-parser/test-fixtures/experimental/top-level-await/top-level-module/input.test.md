@@ -10,22 +10,42 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSAwaitExpression {
-				argument: JSNumericLiteral {
-					value: 0
-					loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:6-1:7
-				}
-				loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:0-1:7
+			expression: JSReferenceIdentifier {
+				name: "await"
+				loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:0-1:5 (await)
 			}
-			loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:0-1:8
+			loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:0-1:5
+		}
+		JSExpressionStatement {
+			expression: JSNumericLiteral {
+				value: 0
+				loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:6-1:7
+			}
+			loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:6-1:8
 		}
 	]
 	comments: []
 	corrupt: false
-	diagnostics: []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/top-level-await/top-level-module/input.js>
+				end: Position 1:6
+				start: Position 1:6
+			}
+		}
+	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/top-level-await/top-level-module/input.js>
 	loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:0-1:8
@@ -35,5 +55,13 @@ JSRoot {
 ### `diagnostics`
 
 ```
+
+ experimental/top-level-await/top-level-module/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected a semicolon or a line terminator
+
+    await 0;
+          ^
+
 
 ```

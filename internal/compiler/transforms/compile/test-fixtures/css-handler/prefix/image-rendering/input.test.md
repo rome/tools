@@ -6,7 +6,7 @@
 
 ### `Diagnostics`
 
-```
+```css
 
 ```
 
