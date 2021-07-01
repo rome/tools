@@ -106,6 +106,7 @@ export const didOpen: LSPNotificationHandler = async (lsp, params) => {
 	await lsp.request.requestWorkerUpdateBuffer(path, content);
 	lsp.fileBuffers.add(path);
 	lsp.logMessage(path, `Opened: ${path.join()}`);
+	lsp.textDocumentSyncEvent.push({path, type: "DID_OPEN"});
 };
 
 export const didChange: LSPNotificationHandler = async (lsp, params) => {
@@ -124,6 +125,7 @@ export const didChange: LSPNotificationHandler = async (lsp, params) => {
 		const content = contentChanges.getIndex(0).get("text").asString();
 		await lsp.request.requestWorkerUpdateBuffer(path, content);
 	}
+	lsp.textDocumentSyncEvent.push({path, type: "DID_CHANGE"});
 };
 
 export const didClose: LSPNotificationHandler = async (lsp, params) => {
@@ -135,4 +137,5 @@ export const didClose: LSPNotificationHandler = async (lsp, params) => {
 	lsp.fileVersions.delete(path);
 	await lsp.request.requestWorkerClearBuffer(path);
 	lsp.logMessage(path, `Closed: ${path.join()}`);
+	lsp.textDocumentSyncEvent.push({path, type: "DID_CLOSE"});
 };

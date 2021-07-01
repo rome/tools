@@ -16,6 +16,7 @@ import {
 	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticsProcessor,
+	catchDiagnostics,
 	formatCategoryDescription,
 } from "@internal/diagnostics";
 import {
@@ -33,9 +34,11 @@ import {LSPTransport} from "./protocol";
 import LSPProgress from "./LSPProgress";
 import {convertDiagnosticsToLSP} from "./utils";
 import {markup, readMarkup} from "@internal/markup";
-import {Event} from "@internal/events";
+import {Event, EventQueue} from "@internal/events";
 import {CommandName} from "@internal/core/common/commands";
 import {notificationHandlers, requestHandlers} from "./messages";
+import {TextDocumentSync} from "./types";
+import {promiseAllFrom} from "@internal/async";
 
 type LSPProjectSession = {
 	request: ServerRequest;
@@ -54,6 +57,10 @@ export default class LSPServer {
 		this.fileVersions = new AbsoluteFilePathMap();
 
 		this.watchProjectEvent = new Event("LSPServer.watchProject");
+		this.textDocumentSyncEvent = new EventQueue(
+			"LSPServer.textDocumentSyncEvent",
+			{toDedupeKey: ({path}) => path.join()},
+		);
 
 		request.endEvent.subscribe(async () => {
 			await this.shutdown();
@@ -89,6 +96,60 @@ export default class LSPServer {
 	private projectSessions: AbsoluteFilePathMap<LSPProjectSession>;
 
 	public watchProjectEvent: Event<AbsoluteFilePath, void>;
+	public textDocumentSyncEvent: EventQueue<TextDocumentSync>;
+
+	public async init() {
+		this.server.resources.add(
+			this.textDocumentSyncEvent.subscribe(async (events) => {
+				await promiseAllFrom(
+					events,
+					(event) => this.handleTextDocumentSyncEvent(event),
+				);
+			}),
+		);
+	}
+
+	private async handleTextDocumentSyncEvent({path, type}: TextDocumentSync) {
+		if (type === "DID_CLOSE") {
+			this.clearPublishedDiagnostics(path);
+		} else {
+			const diagnostics = await this.getLintDiagnostics(path);
+			if (diagnostics !== undefined) {
+				this.publishDiagnostics(path, diagnostics);
+			}
+		}
+	}
+
+	private async getLintDiagnostics(path: AbsoluteFilePath) {
+		const {value, diagnostics} = await catchDiagnostics(async () => {
+			return this.request.requestWorkerLint(
+				path,
+				{applySafeFixes: false, save: false},
+			);
+		});
+		this.logDiagnostics(path, diagnostics);
+		if (value === undefined) {
+			return;
+		}
+		this.diagnosticsProcessor.removePath(path);
+		this.diagnosticsProcessor.addSuppressions(value.suppressions);
+		this.diagnosticsProcessor.addDiagnostics(value.diagnostics);
+		return this.diagnosticsProcessor.getDiagnosticsForPath(path);
+	}
+
+	private publishDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostic[]) {
+		this.transport.write({
+			method: "textDocument/publishDiagnostics",
+			params: {
+				uri: `file://${path.join()}`,
+				diagnostics: convertDiagnosticsToLSP(diagnostics, this.server),
+			},
+		});
+	}
+
+	private clearPublishedDiagnostics(path: AbsoluteFilePath) {
+		this.publishDiagnostics(path, []);
+	}
 
 	private createDiagnosticsProcessor(): DiagnosticsProcessor {
 		// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise

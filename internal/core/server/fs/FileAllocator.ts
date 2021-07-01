@@ -164,12 +164,17 @@ export default class FileAllocator {
 		for (const event of events) {
 			const {path} = event;
 
+			// Workers handle cache eviction internally when updating buffers
+			if (event.type === "BUFFER_UPDATE") {
+				continue;
+			}
+
 			if (event.type === "DELETED") {
 				await this.handleDeleted(path);
 				continue;
 			}
 
-			if (event.type === "DISK_UPDATE" || event.type === "BUFFER_UPDATE") {
+			if (event.type === "DISK_UPDATE") {
 				if (this.hasOwner(path)) {
 					// Get the worker
 					const workerId = this.getOwnerId(path);
@@ -180,21 +185,19 @@ export default class FileAllocator {
 					// Evict the file from cache
 					await this.evict(path, markup`file change`);
 
-					if (event.type === "DISK_UPDATE") {
-						const {newStats, oldStats} = event;
+					const {newStats, oldStats} = event;
 
-						// Verify that this file doesn't exceed any size limit
-						this.verifySize(path, newStats);
+					// Verify that this file doesn't exceed any size limit
+					this.verifySize(path, newStats);
 
-						// Add on the new size, and remove the old
-						if (oldStats === undefined) {
-							throw new Error(
-								"File already has an owner so expected to have old stats but had none",
-							);
-						}
-						workerManager.disown(workerId, oldStats);
-						workerManager.own(workerId, newStats);
+					// Add on the new size, and remove the old
+					if (oldStats === undefined) {
+						throw new Error(
+							"File already has an owner so expected to have old stats but had none",
+						);
 					}
+					workerManager.disown(workerId, oldStats);
+					workerManager.own(workerId, newStats);
 				} else {
 					this.logger.info(
 						markup`No owner for eviction <emphasis>${path}</emphasis>`,
@@ -203,9 +206,10 @@ export default class FileAllocator {
 			}
 		}
 
-		const paths = events.filter((event) => event.type !== "CREATED").map((event) =>
-			event.path
-		);
+		const paths = events.filter((event) =>
+			event.type === "DISK_UPDATE" || event.type === "DELETED"
+		).map((event) => event.path);
+
 		if (
 			paths.length > 0 &&
 			(await this.server.projectManager.maybeEvictProjects(paths))
