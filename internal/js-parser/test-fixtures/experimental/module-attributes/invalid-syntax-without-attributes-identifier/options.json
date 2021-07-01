@@ -1,5 +1,4 @@
 {
-  "throws": "Unexpected token (1:15)",
   "plugins": [
     [
       "moduleAttributes",
@@ -8,5 +7,6 @@
       }
     ]
   ],
-  "sourceTypeJS": "module"
+  "sourceTypeJS": "module",
+	"throws": true
 }
