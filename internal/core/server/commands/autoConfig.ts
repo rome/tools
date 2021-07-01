@@ -75,42 +75,41 @@ export default createServerCommand<Flags>({
 					});
 				}
 			}
-		} else {
-			// Generate files
-			await reporter.steps([
-				{
-					message: markup`Generating lint config and apply formatting`,
-					async callback() {
-						const checker = new Checker(
-							req,
-							{
-								apply: true,
-							},
-						);
-						const {printer, savedCount} = await checker.runSingle();
-						result.lint = {
-							diagnostics: printer.processor.getDiagnostics(),
-							savedCount,
-						};
-					},
-				},
-				{
-					message: markup`Scanning dependencies their licenses.`,
-					async callback() {
-						for (const def of currentProject.manifests.values()) {
-							const diagnostics = def.manifest.diagnostics.license;
-
-							if (diagnostics && diagnostics.length > 0) {
-								if (!result.licenses) {
-									result.licenses = [];
-								}
-								result.licenses.push(...diagnostics);
-							}
-						}
-					},
-				},
-			]);
 		}
+		// Generate files
+		await reporter.steps([
+			{
+				message: markup`Generating lint config and apply formatting`,
+				async callback() {
+					const checker = new Checker(
+						req,
+						{
+							apply: true,
+						},
+					);
+					const {printer, savedCount} = await checker.runSingle();
+					result.lint = {
+						diagnostics: printer.processor.getDiagnostics(),
+						savedCount,
+					};
+				},
+			},
+			{
+				message: markup`Scanning dependencies their licenses.`,
+				async callback() {
+					for (const def of currentProject.manifests.values()) {
+						const diagnostics = def.manifest.diagnostics.license;
+
+						if (diagnostics && diagnostics.length > 0) {
+							if (!result.licenses) {
+								result.licenses = [];
+							}
+							result.licenses.push(...diagnostics);
+						}
+					}
+				},
+			},
+		]);
 
 		return result;
 	},
