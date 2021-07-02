@@ -12,8 +12,10 @@ export const exit: LSPNotificationHandler = async () => {
 	await safeProcessExit(0);
 };
 
-export const initialized: LSPNotificationHandler = async (lsp) => {
-	await lsp.watchPendingProjects();
+export const initialized: LSPNotificationHandler = async () => {
+	// TODO: Re-enable project-wide check watching
+	// Disabled for stability
+	// await lsp.watchPendingProjects();
 };
 
 export const initialize: LSPRequestHandler = async (lsp, params) => {

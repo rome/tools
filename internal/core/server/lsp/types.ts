@@ -6,6 +6,7 @@
  */
 
 import {JSONArray, JSONObject, JSONPropertyValue} from "@internal/codec-config";
+import {AbsoluteFilePath} from "@internal/path";
 
 export type LSPRequestMessage = {
 	/**
@@ -381,3 +382,17 @@ export type LSPVersionedTextDocumentIdentifier = LSPTextDocumentIdentifier & {
 	 */
 	version: number | null;
 };
+
+export type TextDocumentSync =
+	| {
+			path: AbsoluteFilePath;
+			type: "DID_OPEN";
+		}
+	| {
+			path: AbsoluteFilePath;
+			type: "DID_CHANGE";
+		}
+	| {
+			path: AbsoluteFilePath;
+			type: "DID_CLOSE";
+		};
