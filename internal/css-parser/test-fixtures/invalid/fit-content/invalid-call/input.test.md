@@ -62,7 +62,7 @@ CSSRoot {
 				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "The only valid values are dimension, percentage or a number."}
+						text: RAW_MARKUP {value: "The only valid values are dimensions, percentages or numbers."}
 					}
 				]
 				category: ["parse"]
@@ -95,7 +95,7 @@ CSSRoot {
       │                                      ^^^^^^^^
     3 │ }
 
-  ℹ The only valid values are dimension, percentage or a number.
+  ℹ The only valid values are dimensions, percentages or numbers.
 
 
 ```
