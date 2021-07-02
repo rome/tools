@@ -53,7 +53,7 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 		}
 		nextToken(parser);
 		return parser.finishNode(
-			start,
+			functionStart,
 			{
 				type: "CSSFitContent",
 				name: "fit-content",
