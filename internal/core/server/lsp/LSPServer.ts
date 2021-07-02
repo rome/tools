@@ -98,7 +98,7 @@ export default class LSPServer {
 	public watchProjectEvent: Event<AbsoluteFilePath, void>;
 	public textDocumentSyncEvent: EventQueue<TextDocumentSync>;
 
-	public async init() {
+	public init() {
 		this.server.resources.add(
 			this.textDocumentSyncEvent.subscribe(async (events) => {
 				await promiseAllFrom(
@@ -127,8 +127,8 @@ export default class LSPServer {
 				{applySafeFixes: false, save: false},
 			);
 		});
-		this.logDiagnostics(path, diagnostics);
 		if (value === undefined) {
+			this.logDiagnostics(path, diagnostics);
 			return;
 		}
 		this.diagnosticsProcessor.removePath(path);

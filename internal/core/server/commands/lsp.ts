@@ -26,7 +26,7 @@ export default createServerCommand({
 		reporter.redirectOutToErr(true);
 
 		const lsp = new LSPServer(req);
-		await lsp.init();
+		lsp.init();
 		server.onLSPServer(req, lsp);
 
 		const {transport} = lsp;

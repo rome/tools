@@ -13,7 +13,8 @@ export const exit: LSPNotificationHandler = async () => {
 };
 
 export const initialized: LSPNotificationHandler = async () => {
-	// Project-wide check watching disabled for stability
+	// TODO: Re-enable project-wide check watching
+	// Disabled for stability
 	// await lsp.watchPendingProjects();
 };
 
