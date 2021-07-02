@@ -197,11 +197,11 @@ export default createServerCommand<Flags>({
 				path: manifestPath,
 				input: await manifestPath.readFileText(),
 			});
-			const manifestDefinition = await normalizeManifest(
-				manifestPath,
+			const manifestDefinition = await normalizeManifest({
+				path: manifestPath,
 				consumer,
-				[],
-			);
+				projects: [],
+			});
 			if (!manifestDefinition) {
 				reporter.error(markup`Couldn't find any manifest at path ${cwd}`);
 				return;

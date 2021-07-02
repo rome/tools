@@ -273,7 +273,7 @@ function normalizeManifestMetadata(
 	metadata: ManifestMetadata;
 	parsedLicense: undefined | SPDXLicenseParseResult;
 } {
-	const {consumer, loose} = context;
+	const {consumer, loose, checkDependenciesAndLicense} = context;
 	const name = normalizeNameField(consumer, loose);
 	const version = normalizeVersion(context);
 
@@ -282,12 +282,14 @@ function normalizeManifestMetadata(
 	}
 
 	const strName = name === undefined ? undefined : manifestNameToString(name);
-
-	const parsedLicense = normalizeLicense(
-		consumer,
-		{name: strName, version},
-		context,
-	);
+	let parsedLicense: undefined | SPDXLicenseParseResult = undefined;
+	if (checkDependenciesAndLicense) {
+		parsedLicense = normalizeLicense(
+			consumer,
+			{name: strName, version},
+			context,
+		);
+	}
 
 	return {
 		parsedLicense,
@@ -384,12 +386,18 @@ type NormalizeContext = {
 	loose: boolean;
 	consumer: Consumer;
 	projects: CompilerProject[];
+	checkDependenciesAndLicense?: boolean;
 };
 
+interface NormalizeManifest {
+	path: AbsoluteFilePath;
+	consumer: Consumer;
+	projects: CompilerProject[];
+	checkDependenciesAndLicense?: boolean;
+}
+
 export async function normalizeManifest(
-	path: AbsoluteFilePath,
-	consumer: Consumer,
-	projects: CompilerProject[],
+	{path, consumer, projects, checkDependenciesAndLicense}: NormalizeManifest,
 ): Promise<Manifest> {
 	const loose = path.hasSegment("node_modules");
 
@@ -411,6 +419,7 @@ export async function normalizeManifest(
 		loose,
 		consumer,
 		projects,
+		checkDependenciesAndLicense,
 	};
 
 	const {metadata, parsedLicense} = normalizeManifestMetadata(context);
