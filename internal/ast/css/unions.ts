@@ -115,8 +115,7 @@ export type CSSAtRuleValue =
 export type CSSFitContentValue =
 	| CSSDimension
 	| CSSPercentage
-	| CSSNumber
-	| CSSFitContent;
+	| CSSNumber;
 
 export type CSSAtImportValue = CSSString | CSSUrlFunction;
 
