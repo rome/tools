@@ -11,7 +11,9 @@ import {descriptions} from "@internal/diagnostics";
 function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 	// prepare variables needed for the final node
 	const previousToken = parser.getPreviousToken() as Tokens["Ident"];
-	const start = parser.getPositionFromIndex(previousToken.start);
+	const functionStart = parser.getPositionFromIndex(previousToken.start);
+	const start = parser.getPosition();
+	
 	if (
 		matchToken(parser, "Number") ||
 		matchToken(parser, "Percentage") ||
