@@ -63,43 +63,12 @@ CSSRoot {
 			}
 			loc: SourceLocation fit-content/input.css 1:0-3:1
 		}
-		CSSRule {
-			prelude: [
-				CSSSelector {
-					patterns: [
-						CSSClassSelector {
-							value: "style"
-							loc: SourceLocation fit-content/input.css 5:0-5:6
-						}
-					]
-					loc: SourceLocation fit-content/input.css 5:0-5:7
-				}
-			]
-			block: CSSBlock {
-				value: [
-					CSSDeclaration {
-						name: "width"
-						value: [
-							CSSIdentifier {
-								value: "fit-content"
-								loc: SourceLocation fit-content/input.css 6:8-6:19
-							}
-						]
-						important: false
-						loc: SourceLocation fit-content/input.css 6:1-6:19
-					}
-				]
-				startingTokenValue: "{"
-				loc: SourceLocation fit-content/input.css 5:7-7:1
-			}
-			loc: SourceLocation fit-content/input.css 5:0-7:1
-		}
 	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	path: UIDPath<fit-content/input.css>
-	loc: SourceLocation fit-content/input.css 1:0-7:1
+	loc: SourceLocation fit-content/input.css 1:0-3:1
 }
 ```
 

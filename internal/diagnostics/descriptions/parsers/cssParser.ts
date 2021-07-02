@@ -112,7 +112,7 @@ export const cssParser = createDiagnosticsCategory({
 	},
 
 	FIT_CONTENT_UNKOWN_FUNCTION: {
-		message: markup`Uknown unit on the fit content function.`,
+		message: markup`Unkown unit on the <emphasis>fit-content()</emphasis>, use dimension, percentage or a number.`,
 	},
 
 	CALC_INCORRECT_NUMBER_VALUE: {
