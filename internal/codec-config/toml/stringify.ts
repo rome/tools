@@ -130,24 +130,6 @@ function isArrayOfObjects(arr: unknown): arr is unknown[] {
 	return true;
 }
 
-function printSingleObjects(val: unknown): undefined | [string, unknown] {
-	if (isObject(val)) {
-		const keys = Object.keys(val);
-		if (keys.length === 1) {
-			const key = keys[0];
-			const prop = val[key];
-			const converted = printSingleObjects(prop);
-			if (converted === undefined) {
-				return [key, prop];
-			} else {
-				return [`${key}.${converted[0]}`, converted[1]];
-			}
-		}
-	}
-
-	return undefined;
-}
-
 function stringifyRoot(consumer: Consumer, helper: StringifyHelper): string {
 	const map = consumer.asMap();
 	let buff: string[] = [];
@@ -172,34 +154,25 @@ function stringifyRoot(consumer: Consumer, helper: StringifyHelper): string {
 		const possibleValue = consumer.asUnknown();
 		const comments = helper.getComments(consumer);
 
-		const reducedProp = printSingleObjects(possibleValue);
+		if (isObject(possibleValue)) {
+			stringifyPropComments(comments, buffTables, possibleValue);
 
-		if (reducedProp === undefined) {
-			if (isObject(possibleValue)) {
-				stringifyPropComments(comments, buffTables, possibleValue);
-
-				buffTables.push(`[${stringifyKeys(consumer.keyPath)}]`);
-				buffTables.push(stringifyRoot(consumer, helper));
+			buffTables.push(`[${stringifyKeys(consumer.keyPath)}]`);
+			buffTables.push(stringifyRoot(consumer, helper));
+			buffTables.push("");
+			continue;
+		} else if (isArrayOfObjects(possibleValue)) {
+			stringifyPropComments(comments, buffTables, possibleValue);
+			for (const elem of consumer.asIterable()) {
+				buffTables.push(`[[${stringifyKeys(consumer.keyPath)}]]`);
+				buffTables.push(stringifyRoot(elem, helper));
 				buffTables.push("");
-				continue;
-			} else if (isArrayOfObjects(possibleValue)) {
-				stringifyPropComments(comments, buffTables, possibleValue);
-				for (const elem of consumer.asIterable()) {
-					buffTables.push(`[[${stringifyKeys(consumer.keyPath)}]]`);
-					buffTables.push(stringifyRoot(elem, helper));
-					buffTables.push("");
-				}
-				continue;
 			}
+			continue;
 		}
 
 		let propValue;
-		if (reducedProp === undefined) {
-			propValue = stringifyValue(consumer, helper);
-		} else {
-			propKey = `${propKey}.${reducedProp[0]}`;
-			propValue = reducedProp[1];
-		}
+		propValue = stringifyValue(consumer, helper);
 
 		buff.push(`${propKey} = ${propValue}`);
 	}
