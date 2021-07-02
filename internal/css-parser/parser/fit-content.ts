@@ -13,6 +13,7 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 	const previousToken = parser.getPreviousToken() as Tokens["Ident"];
 	const functionStart = parser.getPositionFromIndex(previousToken.start);
 	const start = parser.getPosition();
+
 	if (
 		matchToken(parser, "Number") ||
 		matchToken(parser, "Percentage") ||
