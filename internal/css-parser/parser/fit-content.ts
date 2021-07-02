@@ -9,7 +9,9 @@ import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
-	const start = parser.getPosition();
+	// prepare variables needed for the final node
+	const previousToken = parser.getPreviousToken() as Tokens["Ident"];
+	const start = parser.getPositionFromIndex(previousToken.start);
 	if (
 		matchToken(parser, "Number") ||
 		matchToken(parser, "Percentage") ||
@@ -47,6 +49,7 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 				},
 			);
 		}
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{

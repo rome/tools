@@ -32,10 +32,10 @@ CSSRoot {
 									CSSDimension {
 										value: 8
 										unit: "ch"
-										loc: SourceLocation fit-content/input.css 2:36-2:39
+										loc: SourceLocation fit-content/input.css 2:24-2:39
 									}
 								]
-								loc: SourceLocation fit-content/input.css 2:36-2:39
+								loc: SourceLocation fit-content/input.css 2:24-2:40
 							}
 							CSSFitContent {
 								name: "fit-content"
@@ -43,10 +43,10 @@ CSSRoot {
 									CSSDimension {
 										value: 8
 										unit: "ch"
-										loc: SourceLocation fit-content/input.css 2:53-2:56
+										loc: SourceLocation fit-content/input.css 2:41-2:56
 									}
 								]
-								loc: SourceLocation fit-content/input.css 2:53-2:56
+								loc: SourceLocation fit-content/input.css 2:41-2:57
 							}
 							CSSDimension {
 								value: 1

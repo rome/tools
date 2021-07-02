@@ -59,10 +59,15 @@ CSSRoot {
 		{
 			origins: [{entity: "ParserCore<css>"}]
 			description: {
-				advice: []
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "The only valid values are dimension or percentage or a number."}
+					}
+				]
 				category: ["parse"]
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Unkown unit on the <emphasis>fit-content()</emphasis>, use dimension, percentage or a number."}
+				message: RAW_MARKUP {value: "Unknown unit on the <emphasis>fit-content()</emphasis>."}
 			}
 			location: {
 				language: "css"
@@ -83,12 +88,14 @@ CSSRoot {
 
  invalid/fit-content/invalid-call/input.css:2:36 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unkown unit on the fit-content(), use dimension, percentage or a number.
+  ✖ Unknown unit on the fit-content().
 
     1 │ .style {
   > 2 │   grid-template-columns: fit-content("broken";
       │                                      ^^^^^^^^
     3 │ }
+
+  ℹ The only valid values are dimension or percentage or a number.
 
 
 ```
