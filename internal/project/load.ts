@@ -43,6 +43,7 @@ import {resolveBrowsers} from "@internal/codec-browsers";
 import {ParserOptions} from "@internal/parser-core";
 import {loadPrettier} from "@internal/project/integrations/loadPrettier";
 import {loadEslint} from "@internal/project/integrations/loadEslint";
+import { consumePathAliasPattern } from "./aliases";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -249,6 +250,7 @@ export async function normalizeProjectConfig(
 			typescriptChecker: {},
 			prettier: {},
 		},
+		aliases: {}
 	};
 
 	if (inferredName !== undefined) {
@@ -562,6 +564,26 @@ export async function normalizeProjectConfig(
 		prettier.enforceUsedProperties("prettier config property");
 	}
 
+	const aliases = consumer.get("aliases");
+	if (aliases.exists()) {
+		if (aliases.has("base")) {
+			const base = aliases.get("base").asFilePath();
+			config.aliases.base = projectDirectory.resolve(base)
+		}
+
+		if (aliases.has("paths")) {
+			const paths = aliases.get("paths").asMap();
+			config.aliases.paths = [];
+			for (const [alias, targets] of paths) {
+				const targetsAsPatterns = targets.asMappedArray(target => consumePathAliasPattern(target))
+				const aliasAsPattern = consumePathAliasPattern(targets, alias);
+				config.aliases.paths.push([aliasAsPattern, targetsAsPatterns])
+			}
+		}
+
+		aliases.enforceUsedProperties("aliases config property");
+	}
+
 	meta.configDependencies = new AbsoluteFilePathSet([
 		...meta.configDependencies,
 		...getParentConfigDependencies({
@@ -710,6 +732,14 @@ async function extendProjectConfig(
 		merged.files.maxSizeIgnore = filesMaxSizeIgnore;
 	}
 
+	const aliasesPaths = mergeArrays(
+		extendsObj.aliases.paths,
+		config.aliases.paths
+	)
+	if (aliasesPaths !== undefined) {
+		merged.aliases.paths = aliasesPaths;
+	}
+
 	return {
 		partial: merged,
 		meta: {
@@ -814,5 +844,9 @@ function mergePartialConfig<
 				...b.integrations.prettier,
 			},
 		},
+		aliases: {
+			...a.aliases,
+			...b.aliases,
+		}
 	};
 }

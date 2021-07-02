@@ -6,8 +6,8 @@ export interface PathAliasPattern {
     wildcard: boolean
 }
 
-export function consumePathAliasPattern(consumer: Consumer): PathAliasPattern {
-    const path = consumer.asString();
+export function consumePathAliasPattern(consumer: Consumer, alreadyConsumed?: string): PathAliasPattern {
+    const path = alreadyConsumed || consumer.asString();
 
     if (path.length === 0) {
         throw consumer.unexpected(descriptions.PROJECT_CONFIG.EMPTY_PATTERN)
