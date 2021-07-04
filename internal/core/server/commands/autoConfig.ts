@@ -11,6 +11,7 @@ import {
 import {UnknownObject} from "@internal/typescript-helpers";
 import Checker from "../checker/Checker";
 import { consumeConfig } from "@internal/codec-config";
+import { aliasPatternToString } from "@internal/project/aliases";
 
 interface Flags extends UnknownObject {
 	checkVSC: boolean;
@@ -137,8 +138,17 @@ export default createServerCommand<Flags>({
 						const paths = compilerOptions.get("paths");
 						const resultPaths: [string, string[]][] = []
 						if (paths.exists()) {
-							for (const [alias, targets] of paths.asMap()) {
-								resultPaths.push([alias, targets.asMappedArray(target => target.asString())])
+							const currentPaths = currentProject.config.aliases.paths;
+							const currentPathsSet = new Set<string>();
+							for (const [alias, _] of currentPaths) {
+								currentPathsSet.add(aliasPatternToString(alias))
+							}
+
+							for (const [alias, targetsConsumer] of paths.asMap()) {
+								const targets = targetsConsumer.asMappedArray(target => target.asString());
+								if (!currentPathsSet.has(alias)) {
+									resultPaths.push([alias, targets])
+								}
 							}
 						}
 

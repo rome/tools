@@ -138,17 +138,31 @@ export default createLocalCommand({
 			const base = aliases.get("base").asString();
 			const paths = aliases.get("paths").asMappedArray(item => item.asPlainArray() as [string, string[]]);
 
-			await req.client.query({
-				commandName: "config set",
-				args: ["aliases.base", base],
-			}, "server")
-
-
-			for (const [alias, targets] of paths) {
+			const changeBase = await reporter.radioConfirm(markup`Change base path to ${base}?`)
+			if (changeBase) {
 				await req.client.query({
-					commandName: "config push",
-					args: [`aliases.paths.${escapePath(alias)}`, ...targets] 
+					commandName: "config set",
+					args: ["aliases.base", base],
 				}, "server")
+			}
+
+			if (paths.length > 0) {
+				const pathKeys = paths.map(item => item[0]).join(', ')
+				const addPaths = await reporter.radioConfirm(markup`Add the following aliases to your config: ${pathKeys}?`)
+				if (addPaths) {
+					for (const [alias, targets] of paths) {
+						const configPath = `aliases.paths.${escapePath(alias)}`
+						await req.client.query({
+							commandName: "config set",
+							args: [configPath, "[]"]
+						})
+
+						await req.client.query({
+							commandName: "config push",
+							args: [configPath, ...targets] 
+						}, "server")
+					}
+				}
 			}
 		}
 

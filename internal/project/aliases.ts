@@ -44,3 +44,11 @@ export function matchAliasPattern(path: string, pattern: PathAliasPattern): stri
 
     return undefined;
 }
+
+export function aliasPatternToString(pattern: PathAliasPattern): string {
+    const [prefix, sufix] = pattern.parts
+    if (pattern.wildcard) {
+        return prefix + "*" + sufix
+    }
+    return prefix
+}
