@@ -4,6 +4,7 @@ import {markup} from "@internal/markup";
 import ClientRequest from "@internal/core/client/ClientRequest";
 import {consumeUnknown} from "@internal/consume";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import { escapePath } from "@internal/core/server/utils/escapeObjectPaths";
 
 interface Flags {
 	allowDirty: boolean;
@@ -129,6 +130,25 @@ export default createLocalCommand({
 						}
 					}
 				}
+			}
+		}
+
+		if (data.has("aliases")) {
+			const aliases = data.get("aliases")
+			const base = aliases.get("base").asString();
+			const paths = aliases.get("paths").asMappedArray(item => item.asPlainArray() as [string, string[]]);
+
+			await req.client.query({
+				commandName: "config set",
+				args: ["aliases.base", base],
+			}, "server")
+
+
+			for (const [alias, targets] of paths) {
+				await req.client.query({
+					commandName: "config push",
+					args: [`aliases.paths.${escapePath(alias)}`, ...targets] 
+				}, "server")
 			}
 		}
 

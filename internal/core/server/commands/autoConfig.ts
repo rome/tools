@@ -10,6 +10,7 @@ import {
 } from "@internal/diagnostics";
 import {UnknownObject} from "@internal/typescript-helpers";
 import Checker from "../checker/Checker";
+import { consumeConfig } from "@internal/codec-config";
 
 interface Flags extends UnknownObject {
 	checkVSC: boolean;
@@ -21,6 +22,10 @@ export type AutoConfig = {
 		savedCount: number;
 	};
 	licenses?: Diagnostic[];
+	aliases?: {
+		base: string,
+		paths: [string, string[]][], 
+	}
 };
 
 export default createServerCommand<Flags>({
@@ -109,6 +114,41 @@ export default createServerCommand<Flags>({
 					}
 				},
 			},
+			{
+				message: markup`Import path aliases from tsconfig.`,
+				async callback() {
+					const tsconfigPath = currentProject.directory.append("tsconfig.json");
+					if (await tsconfigPath.exists()) {
+						const {consumer: tsconfig} = consumeConfig({
+							path: tsconfigPath,
+							input: await tsconfigPath.readFileText(),
+						})
+
+						if (!tsconfig.has("compilerOptions")) {
+							return; 	
+						}
+
+						const compilerOptions = tsconfig.get("compilerOptions");
+						const baseUrl = compilerOptions.get("baseUrl");
+						if (!baseUrl.exists()) {
+							return ;
+						}
+
+						const paths = compilerOptions.get("paths");
+						const resultPaths: [string, string[]][] = []
+						if (paths.exists()) {
+							for (const [alias, targets] of paths.asMap()) {
+								resultPaths.push([alias, targets.asMappedArray(target => target.asString())])
+							}
+						}
+
+						result.aliases = {
+							base: baseUrl.asString(),
+							paths: resultPaths,
+						}
+					}
+				} 
+			}
 		]);
 
 		return result;
