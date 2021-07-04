@@ -25,6 +25,7 @@ import {
 } from "@internal/core/common/userConfig";
 import {USER_CONFIG_DIRECTORY} from "@internal/core/common/constants";
 import prettyFormat from "@internal/pretty-format";
+import { splitEscapedObjectPath, unescapePath } from "../utils/escapeObjectPaths";
 
 type Flags = {
 	user: boolean;
@@ -48,11 +49,11 @@ async function runCommand(
 	function modify(consumer: Consumer) {
 		// Set the specified value
 		let keyConsumer = consumer;
-		for (const key of keyParts.split(".")) {
+		for (const key of splitEscapedObjectPath(keyParts)) {
 			if (!keyConsumer.exists()) {
 				keyConsumer.setValue({});
 			}
-			keyConsumer = keyConsumer.get(key);
+			keyConsumer = keyConsumer.get(unescapePath(key));
 		}
 
 		if (action === "push") {
