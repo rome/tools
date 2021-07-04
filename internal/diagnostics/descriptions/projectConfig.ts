@@ -21,12 +21,12 @@ export const projectConfig = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: markup`Alias patterns should have the following format \\<prefix>[*]\\<sufix>.`
-			}
-		]
+				text: markup`Alias patterns should have the following format \\<prefix>[*]\\<sufix>.`,
+			},
+		],
 	}),
 
 	EMPTY_PATTERN: {
-		message: markup`Alias pattern can't be empty.`
-	}
+		message: markup`Alias pattern can't be empty.`,
+	},
 });

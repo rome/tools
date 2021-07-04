@@ -43,7 +43,7 @@ import {resolveBrowsers} from "@internal/codec-browsers";
 import {ParserOptions} from "@internal/parser-core";
 import {loadPrettier} from "@internal/project/integrations/loadPrettier";
 import {loadEslint} from "@internal/project/integrations/loadEslint";
-import { consumePathAliasPattern } from "./aliases";
+import {consumePathAliasPattern} from "./aliases";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -250,7 +250,7 @@ export async function normalizeProjectConfig(
 			typescriptChecker: {},
 			prettier: {},
 		},
-		aliases: {}
+		aliases: {},
 	};
 
 	if (inferredName !== undefined) {
@@ -568,16 +568,18 @@ export async function normalizeProjectConfig(
 	if (aliases.exists()) {
 		if (aliases.has("base")) {
 			const base = aliases.get("base").asFilePath();
-			config.aliases.base = projectDirectory.resolve(base)
+			config.aliases.base = projectDirectory.resolve(base);
 		}
 
 		if (aliases.has("paths")) {
 			const paths = aliases.get("paths").asMap();
 			config.aliases.paths = [];
 			for (const [alias, targets] of paths) {
-				const targetsAsPatterns = targets.asMappedArray(target => consumePathAliasPattern(target))
+				const targetsAsPatterns = targets.asMappedArray((target) =>
+					consumePathAliasPattern(target)
+				);
 				const aliasAsPattern = consumePathAliasPattern(targets, alias);
-				config.aliases.paths.push([aliasAsPattern, targetsAsPatterns])
+				config.aliases.paths.push([aliasAsPattern, targetsAsPatterns]);
 			}
 		}
 
@@ -734,8 +736,8 @@ async function extendProjectConfig(
 
 	const aliasesPaths = mergeArrays(
 		extendsObj.aliases.paths,
-		config.aliases.paths
-	)
+		config.aliases.paths,
+	);
 	if (aliasesPaths !== undefined) {
 		merged.aliases.paths = aliasesPaths;
 	}
@@ -847,6 +849,6 @@ function mergePartialConfig<
 		aliases: {
 			...a.aliases,
 			...b.aliases,
-		}
+		},
 	};
 }

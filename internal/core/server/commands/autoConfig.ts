@@ -10,8 +10,8 @@ import {
 } from "@internal/diagnostics";
 import {UnknownObject} from "@internal/typescript-helpers";
 import Checker from "../checker/Checker";
-import { consumeConfig } from "@internal/codec-config";
-import { aliasPatternToString } from "@internal/project/aliases";
+import {consumeConfig} from "@internal/codec-config";
+import {aliasPatternToString} from "@internal/project/aliases";
 
 interface Flags extends UnknownObject {
 	checkVSC: boolean;
@@ -24,9 +24,9 @@ export type AutoConfig = {
 	};
 	licenses?: Diagnostic[];
 	aliases?: {
-		base: string,
-		paths: [string, string[]][], 
-	}
+		base: string;
+		paths: [string, string[]][];
+	};
 };
 
 export default createServerCommand<Flags>({
@@ -123,31 +123,35 @@ export default createServerCommand<Flags>({
 						const {consumer: tsconfig} = consumeConfig({
 							path: tsconfigPath,
 							input: await tsconfigPath.readFileText(),
-						})
+						});
 
 						if (!tsconfig.has("compilerOptions")) {
-							return; 	
+							return;
 						}
 
 						const compilerOptions = tsconfig.get("compilerOptions");
 						const baseUrl = compilerOptions.get("baseUrl");
 						if (!baseUrl.exists()) {
-							return ;
+							return;
 						}
 
 						const paths = compilerOptions.get("paths");
-						const resultPaths: [string, string[]][] = []
+						const resultPaths: [string, string[]][] = [];
 						if (paths.exists()) {
-							const currentPaths = currentProject.config.aliases.paths;
+							const currentPaths = currentProject.config.aliases.paths.map((
+								item,
+							) => item[0]);
 							const currentPathsSet = new Set<string>();
-							for (const [alias, _] of currentPaths) {
-								currentPathsSet.add(aliasPatternToString(alias))
+							for (const alias of currentPaths) {
+								currentPathsSet.add(aliasPatternToString(alias));
 							}
 
 							for (const [alias, targetsConsumer] of paths.asMap()) {
-								const targets = targetsConsumer.asMappedArray(target => target.asString());
+								const targets = targetsConsumer.asMappedArray((target) =>
+									target.asString()
+								);
 								if (!currentPathsSet.has(alias)) {
-									resultPaths.push([alias, targets])
+									resultPaths.push([alias, targets]);
 								}
 							}
 						}
@@ -155,10 +159,10 @@ export default createServerCommand<Flags>({
 						result.aliases = {
 							base: baseUrl.asString(),
 							paths: resultPaths,
-						}
+						};
 					}
-				} 
-			}
+				},
+			},
 		]);
 
 		return result;

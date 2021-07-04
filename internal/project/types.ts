@@ -19,7 +19,7 @@ import {SemverRange} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {GetBrowserProps} from "@internal/browser-features";
-import { PathAliasPattern } from "./aliases";
+import {PathAliasPattern} from "./aliases";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
@@ -103,9 +103,9 @@ export type ProjectConfigObjects = {
 	};
 	targets: Map<string, GetBrowserProps[]>;
 	aliases: {
-		base: AbsoluteFilePath,
-		paths: [PathAliasPattern, PathAliasPattern[]][],
-	}
+		base: AbsoluteFilePath;
+		paths: [PathAliasPattern, PathAliasPattern[]][];
+	};
 };
 
 export type IntegrationPrettierConfig = {
@@ -238,9 +238,11 @@ export type RawUserProjectConfig = DeepPartial<{
 		prettier: Enableable & Partial<IntegrationPrettierConfig>;
 	};
 	aliases: {
-		base: string,
-		paths: {[key: string]: string},
-	}
+		base: string;
+		paths: {
+			[key: string]: string;
+		};
+	};
 }>;
 
 export function createMockProjectConfigMeta(
@@ -328,6 +330,6 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		aliases: {
 			base: createAbsoluteFilePath("/"),
 			paths: [],
-		}
+		},
 	};
 }

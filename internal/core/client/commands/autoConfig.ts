@@ -4,7 +4,7 @@ import {markup} from "@internal/markup";
 import ClientRequest from "@internal/core/client/ClientRequest";
 import {consumeUnknown} from "@internal/consume";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
-import { escapePath } from "@internal/core/server/utils/escapeObjectPaths";
+import {escapePath} from "@internal/core/server/utils/escapeObjectPaths";
 
 interface Flags {
 	allowDirty: boolean;
@@ -134,33 +134,45 @@ export default createLocalCommand({
 		}
 
 		if (data.has("aliases")) {
-			const aliases = data.get("aliases")
+			const aliases = data.get("aliases");
 			const base = aliases.get("base").asString();
-			const paths = aliases.get("paths").asMappedArray(item => item.asPlainArray() as [string, string[]]);
+			const paths = aliases.get("paths").asMappedArray((item) =>
+				(item.asPlainArray() as [string, string[]])
+			);
 
-			const changeBase = await reporter.radioConfirm(markup`Change base path to ${base}?`)
+			const changeBase = await reporter.radioConfirm(
+				markup`Change base path to ${base}?`,
+			);
 			if (changeBase) {
-				await req.client.query({
-					commandName: "config set",
-					args: ["aliases.base", base],
-				}, "server")
+				await req.client.query(
+					{
+						commandName: "config set",
+						args: ["aliases.base", base],
+					},
+					"server",
+				);
 			}
 
 			if (paths.length > 0) {
-				const pathKeys = paths.map(item => item[0]).join(', ')
-				const addPaths = await reporter.radioConfirm(markup`Add the following aliases to your config: ${pathKeys}?`)
+				const pathKeys = paths.map((item) => item[0]).join(", ");
+				const addPaths = await reporter.radioConfirm(
+					markup`Add the following aliases to your config: ${pathKeys}?`,
+				);
 				if (addPaths) {
 					for (const [alias, targets] of paths) {
-						const configPath = `aliases.paths.${escapePath(alias)}`
+						const configPath = `aliases.paths.${escapePath(alias)}`;
 						await req.client.query({
 							commandName: "config set",
-							args: [configPath, "[]"]
-						})
+							args: [configPath, "[]"],
+						});
 
-						await req.client.query({
-							commandName: "config push",
-							args: [configPath, ...targets] 
-						}, "server")
+						await req.client.query(
+							{
+								commandName: "config push",
+								args: [configPath, ...targets],
+							},
+							"server",
+						);
 					}
 				}
 			}

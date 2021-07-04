@@ -25,7 +25,7 @@ import {
 } from "@internal/core/common/userConfig";
 import {USER_CONFIG_DIRECTORY} from "@internal/core/common/constants";
 import prettyFormat from "@internal/pretty-format";
-import { splitEscapedObjectPath, unescapePath } from "../utils/escapeObjectPaths";
+import {splitEscapedObjectPath, unescapePath} from "../utils/escapeObjectPaths";
 
 type Flags = {
 	user: boolean;
