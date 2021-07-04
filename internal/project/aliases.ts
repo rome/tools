@@ -1,7 +1,7 @@
 import {Consumer} from "@internal/consume";
 import {descriptions} from "@internal/diagnostics";
 
-export interface PathAliasPattern {
+export type PathAliasPattern = {
 	parts: string[];
 	wildcard: boolean;
 }
