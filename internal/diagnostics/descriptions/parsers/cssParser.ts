@@ -107,6 +107,17 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`The character <emphasis>)</emphasis> is missing, the expression is not completed.`,
 	},
 
+	FIT_CONTENT_UNKOWN_FUNCTION: {
+		message: markup`Unknown unit on the <emphasis>fit-content()</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The only valid values are dimensions, percentages or numbers.`,
+			}
+		]
+	},
+
 	CALC_INCORRECT_NUMBER_VALUE: {
 		message: markup`Incorrect character, expected a number or a parenthesis.`,
 	},

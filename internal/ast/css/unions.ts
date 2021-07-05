@@ -10,6 +10,7 @@ import {
 	CSSCustomProperty,
 	CSSDeclaration,
 	CSSDimension,
+	CSSFitContent,
 	CSSFontFace,
 	CSSFunction,
 	CSSHash,
@@ -68,6 +69,13 @@ export type AnyCSSValue =
 	| CSSMinmaxFunction
 	| CSSMediaQueryList
 	| CSSSupportsCondition
+	| CSSRaw
+	| CSSFitContent;
+
+export type AnyFunction =
+	| CSSFunction
+	| CSSVarFunction
+	| CSSUrlFunction
 	| CSSAtImport
 	| CSSRaw;
 
@@ -103,6 +111,11 @@ export type CSSAtRuleValue =
 	| CSSAtPage
 	| CSSFontFace
 	| CSSAtImport;
+
+export type CSSFitContentValue =
+	| CSSDimension
+	| CSSPercentage
+	| CSSNumber;
 
 export type CSSAtImportValue = CSSString | CSSUrlFunction;
 

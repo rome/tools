@@ -3,6 +3,7 @@ import {
 	AnyCSSValue,
 	CSSCalcFunction,
 	CSSCustomProperty,
+	CSSFitContent,
 	CSSFunction,
 	CSSMaxFunction,
 	CSSMinFunction,
@@ -14,6 +15,7 @@ import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseCalcFunction} from "@internal/css-parser/parser/calc";
+import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
 import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
 import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
 
@@ -22,6 +24,7 @@ type ParseFunction =
 	| CSSVarFunction
 	| CSSUrlFunction
 	| CSSCalcFunction
+	| CSSFitContent
 	| CSSMinFunction
 	| CSSMaxFunction
 	| CSSMinmaxFunction
@@ -35,10 +38,18 @@ export function parseFunction(parser: CSSParser): ParseFunction {
 	const isVarFunction = name === "var";
 	const isUrlFunction = name === "url";
 	const isCalcFunction = name === "calc";
+	const isFitContentFunction = name === "fit-content";
 	const isMinFunction = name === "min";
 	const isMaxFunction = name === "max";
 	const isMinMaxFunction = name === "minmax";
 	nextToken(parser);
+
+	if (isFitContentFunction) {
+		const value = parseFitContentFunction(parser);
+		if (value) {
+			return value;
+		}
+	}
 
 	if (isCalcFunction) {
 		const value = parseCalcFunction(parser);
