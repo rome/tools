@@ -107,10 +107,6 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`The character <emphasis>)</emphasis> is missing, the expression is not completed.`,
 	},
 
-	FIT_CONTENT_UNTERMITED_FUNCTION: {
-		message: markup`The character <emphasis>)</emphasis> is missing, the expression is not completed.`,
-	},
-
 	FIT_CONTENT_UNKOWN_FUNCTION: {
 		message: markup`Unknown unit on the <emphasis>fit-content()</emphasis>.`,
 		advice: [
