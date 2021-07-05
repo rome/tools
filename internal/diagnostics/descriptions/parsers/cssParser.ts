@@ -268,6 +268,6 @@ export const cssParser = createDiagnosticsCategory({
 				category: "info",
 				text: markup`Add a <emphasis>]</emphasis> after <emphasis>${ident}</emphasis>.`,
 			},
-		]
+		],
 	}),
 });

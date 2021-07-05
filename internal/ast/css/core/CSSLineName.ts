@@ -11,7 +11,7 @@ export const cssLineName = createBuilder<CSSLineName>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true
+			value: true,
 		},
 	},
 );

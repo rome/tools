@@ -15,46 +15,58 @@ import {descriptions} from "@internal/diagnostics";
 function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken();
-	if (token.type === "Dimension") {
-		nextToken(parser);
-		return parser.finishNode(
-			start,
-			{
-				type: "CSSDimension",
-				value: token.value,
-				unit: token.unit,
-			},
-		);
-	} else if (token.type === "Percentage") {
-		nextToken(parser);
-		return parser.finishNode(
-			start,
-			{
-				type: "CSSPercentage",
-				value: token.value,
-			},
-		);
-	} else if (token.type === "LeftSquareBracket") {
-		nextToken(parser);
-		skipWhitespaces(parser);
-		const ident = parser.eatToken("Ident");
-		if (!ident) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.GRID_REPEAT_EXPECTED_IDENTIFIER,
-				token: parser.getToken(),
-			});
-			return undefined;
-		}
-		skipWhitespaces(parser);
-		const squareBracket = parser.eatToken("RightSquareBracket");
-		if (!squareBracket) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.GRID_REPEAT_UNCLOSED_LINE_NAME(ident.value),
-				token: parser.getToken(),
-			});
-			return undefined;
-		}
+	while (!(matchToken(parser, "EOF") || matchToken(parser, "RightParen"))) {
+		if (token.type === "Dimension") {
+			nextToken(parser);
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSDimension",
+					value: token.value,
+					unit: token.unit,
+				},
+			);
+		} else if (token.type === "Percentage") {
+			nextToken(parser);
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSPercentage",
+					value: token.value,
+				},
+			);
+		} else if (token.type === "LeftSquareBracket") {
+			nextToken(parser);
+			skipWhitespaces(parser);
+			const ident = parser.eatToken("Ident");
+			if (!ident) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.GRID_REPEAT_EXPECTED_IDENTIFIER,
+					token: parser.getToken(),
+				});
+				return undefined;
+			}
+			skipWhitespaces(parser);
+			const squareBracket = parser.eatToken("RightSquareBracket");
+			if (!squareBracket) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.GRID_REPEAT_UNCLOSED_LINE_NAME(
+						ident.value,
+					),
+					token: parser.getToken(),
+				});
+				return undefined;
+			}
 
+			nextToken(parser);
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSLineName",
+					value: ident.value,
+				},
+			);
+		}
 	}
 
 	return undefined;

@@ -46,18 +46,40 @@ CSSRoot {
 						important: false
 						loc: SourceLocation grid/repeat/input.css 2:1-2:38
 					}
+					CSSDeclaration {
+						name: "grid-template-columns"
+						value: [
+							CSSRepeatFunction {
+								name: "repeat"
+								params: [
+									CSSNumber {
+										value: 4
+										raw: "4"
+										loc: SourceLocation grid/repeat/input.css 3:31-3:32
+									}
+									CSSLineName {
+										value: "col-start"
+										loc: SourceLocation grid/repeat/input.css 3:34-3:46
+									}
+								]
+								loc: SourceLocation grid/repeat/input.css 3:24-3:47
+							}
+						]
+						important: false
+						loc: SourceLocation grid/repeat/input.css 3:1-4:0
+					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation grid/repeat/input.css 1:7-3:1
+				loc: SourceLocation grid/repeat/input.css 1:7-4:1
 			}
-			loc: SourceLocation grid/repeat/input.css 1:0-3:1
+			loc: SourceLocation grid/repeat/input.css 1:0-4:1
 		}
 	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	path: UIDPath<grid/repeat/input.css>
-	loc: SourceLocation grid/repeat/input.css 1:0-3:1
+	loc: SourceLocation grid/repeat/input.css 1:0-4:1
 }
 ```
 
