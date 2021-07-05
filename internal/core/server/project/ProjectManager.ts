@@ -606,7 +606,6 @@ export default class ProjectManager {
 		diagnostics: DiagnosticsProcessor,
 	) {
 		const name = manifestNameToString(def.manifest.name);
-
 		const type = isProjectPackage ? "project package manifest" : "manifest";
 		this.logger.info(
 			markup`Declaring ${type} <emphasis>${name}</emphasis> in project <emphasis>#${project.id}</emphasis> in <emphasis>${def.directory}</emphasis>`,

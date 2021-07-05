@@ -703,8 +703,18 @@ export default class MemoryFileSystem {
 		const projects = await this.server.projectManager.getProjectHierarchyFromPath(
 			path,
 		);
+		let checkDependenciesAndLicense = false;
+		const mainProject = await this.server.projectManager.findLoadedProject(path);
+		if (mainProject) {
+			checkDependenciesAndLicense = mainProject.config.dependencies.enabled;
+		}
 		const {consumer: normalizeConsumer, diagnostics: rawDiagnostics} = consumer.capture();
-		const manifest = await normalizeManifest(path, normalizeConsumer, projects);
+		const manifest = await normalizeManifest({
+			path,
+			consumer: normalizeConsumer,
+			projects,
+			checkDependenciesAndLicense,
+		});
 
 		// If manifest is undefined then we failed to validate and have diagnostics
 		if (rawDiagnostics.length > 0) {

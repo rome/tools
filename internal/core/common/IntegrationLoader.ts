@@ -139,7 +139,11 @@ export default class IntegrationLoader<
 			);
 			const versionProp = jsonConsumer.get("version");
 
-			const manifest = await normalizeManifest(manifestPath, jsonConsumer, []);
+			const manifest = await normalizeManifest({
+				path: manifestPath,
+				consumer: jsonConsumer,
+				projects: [],
+			});
 
 			if (manifest.version === undefined) {
 				throw versionProp.unexpected(() =>
