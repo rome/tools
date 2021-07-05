@@ -35,6 +35,7 @@ export * from "./css/core/CSSCustomProperty";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
 export * from "./css/function/CSSFitContent";
+export * from "./css/grid/CSSFlex";
 export * from "./css/font/CSSFontFace";
 export * from "./css/core/CSSFunction";
 export * from "./css/core/CSSHash";
@@ -75,6 +76,7 @@ export * from "./css/selectors/CSSPseudoElementSelector";
 export * from "./css/page/CSSPseudoPage";
 export * from "./css/core/CSSRatio";
 export * from "./css/core/CSSRaw";
+export * from "./css/grid/CSSRepeatFunction";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
 export * from "./css/selectors/CSSSelector";
@@ -346,6 +348,7 @@ export type AnyNode =
 	| n.CSSDeclaration
 	| n.CSSDimension
 	| n.CSSFitContent
+	| n.CSSFlex
 	| n.CSSFontFace
 	| n.CSSFunction
 	| n.CSSHash
@@ -386,6 +389,7 @@ export type AnyNode =
 	| n.CSSPseudoPage
 	| n.CSSRatio
 	| n.CSSRaw
+	| n.CSSRepeatFunction
 	| n.CSSRoot
 	| n.CSSRule
 	| n.CSSSelector

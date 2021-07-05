@@ -233,4 +233,30 @@ export const cssParser = createDiagnosticsCategory({
 	MIN_MAX_INVALID_FLEX_ARGUMENT: {
 		message: markup`A flex argument is permitted only as <emphasis>second argument</emphasis> of the function <emphasis>minmax()</emphasis>`,
 	},
+
+	GRID_REPEAT_POSITIVE_INTEGER: {
+		message: markup`Only positive numbers are accepted`,
+	},
+
+	GRID_REPEAT_TRACK_REPEAT_MANDATORY: {
+		message: markup`The positive number must be followed by a comma`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`A track-repeat must specify what to repeat`,
+			},
+		],
+	},
+	GRID_REPEAT_INCORRECT_IDENT: {
+		message: markup`The only accepted identifiers are <emphasis>auto-fill</emphasis> and <emphasis>auto-fit</emphasis>`,
+	},
+
+	GRID_REPEAT_UNTERMINATED: {
+		message: markup`The <emphasis>repeat()</emphasis> doesn't have any value to repeat.`,
+	},
+
+	GRID_REPEAT_EXPECTED_IDENTIFIER: {
+		message: markup`Only identifiers are expected at this position.`,
+	},
 });

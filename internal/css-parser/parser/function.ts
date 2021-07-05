@@ -8,6 +8,7 @@ import {
 	CSSMaxFunction,
 	CSSMinFunction,
 	CSSMinmaxFunction,
+	CSSRepeatFunction,
 	CSSUrlFunction,
 	CSSVarFunction,
 } from "@internal/ast";
@@ -18,6 +19,7 @@ import {parseCalcFunction} from "@internal/css-parser/parser/calc";
 import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
 import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
 import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
+import {parseRepeatFunction} from "@internal/css-parser/parser/grid/repeat";
 
 type ParseFunction =
 	| CSSFunction
@@ -28,6 +30,7 @@ type ParseFunction =
 	| CSSMinFunction
 	| CSSMaxFunction
 	| CSSMinmaxFunction
+	| CSSRepeatFunction
 	| undefined;
 
 export function parseFunction(parser: CSSParser): ParseFunction {
@@ -42,6 +45,7 @@ export function parseFunction(parser: CSSParser): ParseFunction {
 	const isMinFunction = name === "min";
 	const isMaxFunction = name === "max";
 	const isMinMaxFunction = name === "minmax";
+	const isRepeatFunction = name === "repeat";
 	nextToken(parser);
 
 	if (isFitContentFunction) {
@@ -63,6 +67,11 @@ export function parseFunction(parser: CSSParser): ParseFunction {
 		}
 	} else if (isMinMaxFunction) {
 		const value = parseMinmaxFunction(parser);
+		if (value) {
+			return value;
+		}
+	} else if (isRepeatFunction) {
+		const value = parseRepeatFunction(parser);
 		if (value) {
 			return value;
 		}

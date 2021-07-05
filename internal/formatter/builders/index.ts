@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:f5e9c90ad52a4011e403e4a0dc40df1f91f3d75c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:60c1a3a978282f5573dd4a368176ba7de37d0f9c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -59,6 +59,8 @@ import CSSDimension from "./css/core/CSSDimension";
 builders.set("CSSDimension", CSSDimension);
 import CSSFitContent from "./css/function/CSSFitContent";
 builders.set("CSSFitContent", CSSFitContent);
+import CSSFlex from "./css/grid/CSSFlex";
+builders.set("CSSFlex", CSSFlex);
 import CSSFontFace from "./css/font/CSSFontFace";
 builders.set("CSSFontFace", CSSFontFace);
 import CSSFunction from "./css/core/CSSFunction";
@@ -139,6 +141,8 @@ import CSSRatio from "./css/core/CSSRatio";
 builders.set("CSSRatio", CSSRatio);
 import CSSRaw from "./css/core/CSSRaw";
 builders.set("CSSRaw", CSSRaw);
+import CSSRepeatFunction from "./css/grid/CSSRepeatFunction";
+builders.set("CSSRepeatFunction", CSSRepeatFunction);
 import CSSRoot from "./css/core/CSSRoot";
 builders.set("CSSRoot", CSSRoot);
 import CSSRule from "./css/core/CSSRule";
