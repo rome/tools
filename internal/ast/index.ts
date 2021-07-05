@@ -45,6 +45,7 @@ export * from "./css/keyframe/CSSKeyframe";
 export * from "./css/keyframe/CSSKeyframeBlock";
 export * from "./css/keyframe/CSSKeyframeName";
 export * from "./css/keyframe/CSSKeyframeSelector";
+export * from "./css/core/CSSLineName";
 export * from "./css/function/CSSMaxFunction";
 export * from "./css/media/CSSMediaAnd";
 export * from "./css/media/CSSMediaCondition";
@@ -358,6 +359,7 @@ export type AnyNode =
 	| n.CSSKeyframeBlock
 	| n.CSSKeyframeName
 	| n.CSSKeyframeSelector
+	| n.CSSLineName
 	| n.CSSMaxFunction
 	| n.CSSMediaAnd
 	| n.CSSMediaCondition

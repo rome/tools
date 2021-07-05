@@ -96,4 +96,4 @@ export type CSSGridRepeatValues =
 	| n.CSSDimension
 	| n.CSSMinmaxFunction
 	| n.CSSFlex
-	| n.CSSRaw;
+	| n.CSSLineName;

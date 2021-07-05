@@ -259,4 +259,15 @@ export const cssParser = createDiagnosticsCategory({
 	GRID_REPEAT_EXPECTED_IDENTIFIER: {
 		message: markup`Only identifiers are expected at this position.`,
 	},
+
+	GRID_REPEAT_UNCLOSED_LINE_NAME: (ident: string) => ({
+		message: markup`The line name doesn't have a closing square bracket`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Add a <emphasis>]</emphasis> after <emphasis>${ident}</emphasis>.`,
+			},
+		]
+	}),
 });

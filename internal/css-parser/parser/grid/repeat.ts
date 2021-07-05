@@ -45,6 +45,16 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues | undefined {
 			});
 			return undefined;
 		}
+		skipWhitespaces(parser);
+		const squareBracket = parser.eatToken("RightSquareBracket");
+		if (!squareBracket) {
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.GRID_REPEAT_UNCLOSED_LINE_NAME(ident.value),
+				token: parser.getToken(),
+			});
+			return undefined;
+		}
+
 	}
 
 	return undefined;
