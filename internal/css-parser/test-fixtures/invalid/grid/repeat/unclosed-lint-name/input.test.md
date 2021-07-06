@@ -61,8 +61,8 @@ CSSRoot {
 			location: {
 				language: "css"
 				path: UIDPath<invalid/grid/repeat/unclosed-lint-name/input.css>
-				end: Position 2:45
-				start: Position 2:44
+				end: Position 2:35
+				start: Position 2:34
 			}
 		}
 	]
@@ -75,13 +75,13 @@ CSSRoot {
 
 ```
 
- invalid/grid/repeat/unclosed-lint-name/input.css:2:44 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ invalid/grid/repeat/unclosed-lint-name/input.css:2:34 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The line name doesn't have a closing square bracket
 
     1 │ .style {
   > 2 │   grid-template-columns: repeat(4, [col-start);
-      │                                              ^
+      │                                    ^
     3 │ }
 
   ℹ Add a ] after col-start.

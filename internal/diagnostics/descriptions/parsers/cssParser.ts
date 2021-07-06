@@ -270,4 +270,15 @@ export const cssParser = createDiagnosticsCategory({
 			},
 		],
 	}),
+
+	GRID_REPEAT_WRONG_FUNCTION: {
+		message: markup`Unsupported function at this position`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>minmax()</emphasis> or <emphasis>fit-content()</emphasis>.`,
+			},
+		],
+	}
 });

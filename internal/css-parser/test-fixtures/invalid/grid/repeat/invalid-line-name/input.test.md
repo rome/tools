@@ -67,8 +67,8 @@ CSSRoot {
 			location: {
 				language: "css"
 				path: UIDPath<invalid/grid/repeat/invalid-line-name/input.css>
-				end: Position 2:36
-				start: Position 2:35
+				end: Position 2:35
+				start: Position 2:34
 			}
 		}
 	]
@@ -81,13 +81,13 @@ CSSRoot {
 
 ```
 
- invalid/grid/repeat/invalid-line-name/input.css:2:35 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ invalid/grid/repeat/invalid-line-name/input.css:2:34 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only identifiers are expected at this position.
 
     1 │ .style {
   > 2 │   grid-template-columns: repeat(4, [6]);
-      │                                     ^
+      │                                    ^
     3 │ }
 
 

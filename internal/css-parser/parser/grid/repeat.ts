@@ -11,61 +11,94 @@ import {
 	skipWhitespaces,
 } from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
+import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
 
 function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken();
 	while (!(matchToken(parser, "EOF") || matchToken(parser, "RightParen"))) {
-		if (token.type === "Dimension") {
-			nextToken(parser);
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSDimension",
-					value: token.value,
-					unit: token.unit,
-				},
-			);
-		} else if (token.type === "Percentage") {
-			nextToken(parser);
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSPercentage",
-					value: token.value,
-				},
-			);
-		} else if (token.type === "LeftSquareBracket") {
-			nextToken(parser);
-			skipWhitespaces(parser);
-			const ident = parser.eatToken("Ident");
-			if (!ident) {
-				parser.unexpectedDiagnostic({
-					description: descriptions.CSS_PARSER.GRID_REPEAT_EXPECTED_IDENTIFIER,
-					token: parser.getToken(),
-				});
-				return undefined;
-			}
-			skipWhitespaces(parser);
-			const squareBracket = parser.eatToken("RightSquareBracket");
-			if (!squareBracket) {
-				parser.unexpectedDiagnostic({
-					description: descriptions.CSS_PARSER.GRID_REPEAT_UNCLOSED_LINE_NAME(
-						ident.value,
-					),
-					token: parser.getToken(),
-				});
-				return undefined;
+		switch (token.type) {
+			case "Dimension": {
+				nextToken(parser);
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSDimension",
+						value: token.value,
+						unit: token.unit,
+					},
+				);
 			}
 
-			nextToken(parser);
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSLineName",
-					value: ident.value,
-				},
-			);
+			case "Percentage": {
+				nextToken(parser);
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSPercentage",
+						value: token.value,
+					},
+				);
+			}
+
+			case "LeftSquareBracket": {
+				nextToken(parser);
+				skipWhitespaces(parser);
+				const ident = parser.eatToken("Ident");
+				if (!ident) {
+					parser.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.GRID_REPEAT_EXPECTED_IDENTIFIER,
+						token,
+					});
+					return undefined;
+				}
+				skipWhitespaces(parser);
+				const squareBracket = parser.eatToken("RightSquareBracket");
+				if (!squareBracket) {
+					parser.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.GRID_REPEAT_UNCLOSED_LINE_NAME(
+							ident.value,
+						),
+						token,
+					});
+					return undefined;
+				}
+
+				nextToken(parser);
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSLineName",
+						value: ident.value,
+					},
+				);
+			}
+
+			case "Function": {
+				const functionName = token.value;
+				if (functionName === "minmax") {
+					nextToken(parser);
+					const minmaxFunction = parseMinmaxFunction(parser);
+					if (minmaxFunction) {
+						return minmaxFunction;
+					}
+					return undefined;
+				}
+				if (functionName === "fit-content") {
+					nextToken(parser);
+					const fitContentFunction = parseFitContent(parser);
+					if (fitContentFunction) {
+						return fitContentFunction;
+					}
+					return undefined;
+				}
+
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.GRID_REPEAT_WRONG_FUNCTION,
+					token,
+				})
+				return undefined;
+			}
 		}
 	}
 
