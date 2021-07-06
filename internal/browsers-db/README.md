@@ -51,7 +51,7 @@ Currently supported browsers:
 		[key: string]: { // feature id
 			s: { // stats
 				[key: string]: { // browser id
-					[key: number]: boolean // browser version: needs prefix
+					[key: number]: string // browser version: needs prefix `x (#\d)?`
 				}
 			},
 			c: string[] // categories
