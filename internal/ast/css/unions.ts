@@ -112,10 +112,7 @@ export type CSSAtRuleValue =
 	| CSSFontFace
 	| CSSAtImport;
 
-export type CSSFitContentValue =
-	| CSSDimension
-	| CSSPercentage
-	| CSSNumber;
+export type CSSFitContentValue = CSSDimension | CSSPercentage | CSSNumber;
 
 export type CSSAtImportValue = CSSString | CSSUrlFunction;
 

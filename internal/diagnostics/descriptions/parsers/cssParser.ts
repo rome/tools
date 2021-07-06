@@ -114,8 +114,8 @@ export const cssParser = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`The only valid values are dimensions, percentages or numbers.`,
-			}
-		]
+			},
+		],
 	},
 
 	CALC_INCORRECT_NUMBER_VALUE: {
