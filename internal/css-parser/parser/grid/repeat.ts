@@ -12,33 +12,38 @@ import {
 } from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
+import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
 
-function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues | undefined {
-	const start = parser.getPosition();
-	const token = parser.getToken();
+function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined {
+	const values: CSSGridRepeatValues[] = [];
+
 	while (!(matchToken(parser, "EOF") || matchToken(parser, "RightParen"))) {
+		const start = parser.getPosition();
+		const token = parser.getToken();
 		switch (token.type) {
 			case "Dimension": {
 				nextToken(parser);
-				return parser.finishNode(
+				values.push(parser.finishNode(
 					start,
 					{
 						type: "CSSDimension",
 						value: token.value,
 						unit: token.unit,
 					},
-				);
+				));
+				break;
 			}
 
 			case "Percentage": {
 				nextToken(parser);
-				return parser.finishNode(
+				values.push(parser.finishNode(
 					start,
 					{
 						type: "CSSPercentage",
 						value: token.value,
 					},
-				);
+				));
+				break;
 			}
 
 			case "LeftSquareBracket": {
@@ -64,14 +69,14 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues | undefined {
 					return undefined;
 				}
 
-				nextToken(parser);
-				return parser.finishNode(
+				values.push(parser.finishNode(
 					start,
 					{
 						type: "CSSLineName",
 						value: ident.value,
 					},
-				);
+				));
+				break;
 			}
 
 			case "Function": {
@@ -80,15 +85,23 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues | undefined {
 					nextToken(parser);
 					const minmaxFunction = parseMinmaxFunction(parser);
 					if (minmaxFunction) {
-						return minmaxFunction;
+
+						values.push(
+							minmaxFunction
+						);
+						break;
 					}
 					return undefined;
 				}
 				if (functionName === "fit-content") {
 					nextToken(parser);
-					const fitContentFunction = parseFitContent(parser);
+					const fitContentFunction = parseFitContentFunction(parser);
+
 					if (fitContentFunction) {
-						return fitContentFunction;
+						values.push(
+							fitContentFunction
+						);
+						break;
 					}
 					return undefined;
 				}
@@ -100,9 +113,25 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues | undefined {
 				return undefined;
 			}
 		}
+
+		if (matchToken(parser, "Whitespace")) {
+			skipWhitespaces(parser);
+			continue;
+		}
+		if (matchToken(parser, "RightParen")) {
+			return values
+		} else {
+
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
+				token: parser.getToken()
+			})
+			nextToken(parser);
+			return undefined;
+		}
 	}
 
-	return undefined;
+	return values;
 }
 
 function parseParams(parser: CSSParser): CSSGridRepeatParams | undefined {

@@ -73,12 +73,5 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 export function parseFitContentFunction(
 	parser: CSSParser,
 ): CSSFitContent | undefined {
-	const value = parseFitContent(parser);
-
-	if (value) {
-		nextToken(parser);
-		return value;
-	}
-
-	return undefined;
+	return parseFitContent(parser);
 }

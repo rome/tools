@@ -297,8 +297,8 @@ export async function declareParserTests(checkDiagnostics = true) {
 		});
 		snapshot.named("diagnostics", printedDiagnostics);
 
-		const throws = options.get("throws").asBooleanOrVoid();
-		if (checkDiagnostics && throws !== undefined) {
+		const throws = options.get("throws").required(false).asBoolean();
+		if (checkDiagnostics) {
 			if (throws === true && diagnostics.length === 0) {
 				throw new Error(
 					`Expected diagnostics but didn't receive any\n${printedDiagnostics}`,
