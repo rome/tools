@@ -18,7 +18,7 @@
 	"safari:14.1"
 	"opera:77"
 	"opera:76"
-	"ios_saf:14.6"
+	"ios_saf:14.7"
 	"ios_saf:14.5"
 	"op_mini:1"
 	"android:91"

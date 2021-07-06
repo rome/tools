@@ -165,9 +165,11 @@
 	"chrome:73"
 	"chrome:74"
 	"chrome:75"
-	"chrome:90"
+	"chrome:91"
 	"ios_saf:14"
 	"ios_saf:14.4"
+	"ios_saf:14.5"
+	"ios_saf:14.7"
 	"and_chr:91"
 ]
 ```
