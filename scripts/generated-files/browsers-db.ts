@@ -467,10 +467,10 @@ function generateDataData(rawData: Consumer) {
 		if (
 			!rawData.getPath(["cats", "CSS"]).asMappedArray((c) => c.asString()).some((
 				c,
-				) =>
-					rawData.getPath(["data", feature, "categories"]).asMappedArray((c) =>
-						c.asString()
-					).includes(c)
+			) =>
+				rawData.getPath(["data", feature, "categories"]).asMappedArray((c) =>
+					c.asString()
+				).includes(c)
 			)
 		) {
 			continue;
@@ -496,7 +496,10 @@ function generateDataData(rawData: Consumer) {
 						featureAgents.set(parseFloat(version.split("-")[0]), value);
 						featureAgents.set(parseFloat(version.split("-")[1]), value);
 					} else {
-						featureAgents.set(isNaN(parseFloat(version)) ? 1 : parseFloat(version), value);
+						featureAgents.set(
+							isNaN(parseFloat(version)) ? 1 : parseFloat(version),
+							value,
+						);
 					}
 				}
 			}
