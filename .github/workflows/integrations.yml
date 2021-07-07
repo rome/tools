@@ -29,7 +29,9 @@ jobs:
           ./rome start
           cd ../svelte
           npm install
-          ../rome/rome init -y
+          mkdir dir .config
+          touch .config/rome.json
+          echo '{ "root": true, "name": "rome-integration-eslint" }' > .config/rome.json
           ../rome/rome config disable format
           ../rome/rome config disable lint
           ../rome/rome config enable integrations.eslint
