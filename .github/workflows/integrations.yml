@@ -26,13 +26,10 @@ jobs:
       - name: Eslint svelte
         run: |
           cd rome
-          ./rome start
           cd ../svelte
           npm install
           mkdir dir .config
           touch .config/rome.json
-          echo '{ "root": true, "name": "rome-integration-eslint" }' > .config/rome.json
-          ../rome/rome config disable format
-          ../rome/rome config disable lint
-          ../rome/rome config enable integrations.eslint
+          echo '{ "root": true, "name": "rome-integration-eslint", "lint": { "enabled": false }, "integrations": { "eslint": { "enabled": true } } }' > .config/rome.json
+          ../rome/rome start
           ../rome/rome check --timing
