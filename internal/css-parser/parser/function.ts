@@ -1,16 +1,5 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
-import {
-	AnyCSSValue,
-	CSSCalcFunction,
-	CSSCustomProperty,
-	CSSFitContent,
-	CSSFunction,
-	CSSMaxFunction,
-	CSSMinFunction,
-	CSSMinmaxFunction,
-	CSSUrlFunction,
-	CSSVarFunction,
-} from "@internal/ast";
+import {AnyCSSValue, AnyFunction, CSSCustomProperty} from "@internal/ast";
 import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
@@ -18,19 +7,9 @@ import {parseCalcFunction} from "@internal/css-parser/parser/calc";
 import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
 import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
 import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
+import {parseRepeatFunction} from "@internal/css-parser/parser/grid/repeat";
 
-type ParseFunction =
-	| CSSFunction
-	| CSSVarFunction
-	| CSSUrlFunction
-	| CSSCalcFunction
-	| CSSFitContent
-	| CSSMinFunction
-	| CSSMaxFunction
-	| CSSMinmaxFunction
-	| undefined;
-
-export function parseFunction(parser: CSSParser): ParseFunction {
+export function parseFunction(parser: CSSParser): AnyFunction | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;
@@ -42,6 +21,7 @@ export function parseFunction(parser: CSSParser): ParseFunction {
 	const isMinFunction = name === "min";
 	const isMaxFunction = name === "max";
 	const isMinMaxFunction = name === "minmax";
+	const isRepeatFunction = name === "repeat";
 	nextToken(parser);
 
 	if (isFitContentFunction) {
@@ -63,6 +43,11 @@ export function parseFunction(parser: CSSParser): ParseFunction {
 		}
 	} else if (isMinMaxFunction) {
 		const value = parseMinmaxFunction(parser);
+		if (value) {
+			return value;
+		}
+	} else if (isRepeatFunction) {
+		const value = parseRepeatFunction(parser);
 		if (value) {
 			return value;
 		}

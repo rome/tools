@@ -26,7 +26,7 @@ CSSRoot {
 					CSSDeclaration {
 						name: "grid-template-columns"
 						value: [
-							CSSFitContent {
+							CSSFitContentFunction {
 								name: "fit-content"
 								params: [
 									CSSDimension {
@@ -37,7 +37,7 @@ CSSRoot {
 								]
 								loc: SourceLocation fit-content/input.css 2:24-2:40
 							}
-							CSSFitContent {
+							CSSFitContentFunction {
 								name: "fit-content"
 								params: [
 									CSSDimension {

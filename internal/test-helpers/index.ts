@@ -200,7 +200,13 @@ export async function createFixtureTests(
 
 				t.addToAdvice({
 					type: "list",
-					list: Array.from(fixture.files, ([basename]) => `${basename}`),
+					list: Array.from(fixture.files, ([, file]) => `${file.relative}`),
+				});
+
+				t.addToAdvice({
+					type: "log",
+					category: "info",
+					text: "Fixture content",
 				});
 
 				await callback(fixture, t);

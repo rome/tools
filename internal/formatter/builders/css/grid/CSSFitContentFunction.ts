@@ -1,9 +1,9 @@
-import {CSSFitContent as CSSFitContentType} from "@internal/ast";
+import {CSSFitContentFunction} from "@internal/ast";
 import {Builder, Token, concat} from "@internal/formatter";
 
-export default function CSSFitContent(
+export default function CSSFitContentFunction(
 	builder: Builder,
-	node: CSSFitContentType,
+	node: CSSFitContentFunction,
 ): Token {
 	return concat([
 		node.name,

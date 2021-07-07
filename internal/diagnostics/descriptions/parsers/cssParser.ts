@@ -233,4 +233,63 @@ export const cssParser = createDiagnosticsCategory({
 	MIN_MAX_INVALID_FLEX_ARGUMENT: {
 		message: markup`A flex argument is permitted only as <emphasis>second argument</emphasis> of the function <emphasis>minmax()</emphasis>`,
 	},
+
+	GRID_REPEAT_POSITIVE_INTEGER: {
+		message: markup`Only positive numbers are accepted`,
+	},
+
+	GRID_REPEAT_TRACK_REPEAT_MANDATORY: {
+		message: markup`The positive number must be followed by a comma`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`A track-repeat must specify what to repeat`,
+			},
+		],
+	},
+	GRID_REPEAT_INCORRECT_IDENT: {
+		message: markup`The only accepted identifiers are <emphasis>auto-fill</emphasis> and <emphasis>auto-fit</emphasis>`,
+	},
+
+	GRID_REPEAT_UNTERMINATED: {
+		message: markup`The <emphasis>repeat()</emphasis> doesn't have any value to repeat.`,
+	},
+
+	GRID_REPEAT_EXPECTED_IDENTIFIER: {
+		message: markup`Only identifiers are expected at this position.`,
+	},
+
+	GRID_REPEAT_UNCLOSED_LINE_NAME: (ident: string) => ({
+		message: markup`The line name doesn't have a closing square bracket`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Add a <emphasis>]</emphasis> after <emphasis>${ident}</emphasis>.`,
+			},
+		],
+	}),
+
+	GRID_REPEAT_WRONG_FUNCTION: {
+		message: markup`Unsupported function at this position`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>minmax()</emphasis> or <emphasis>fit-content()</emphasis>.`,
+			},
+		],
+	},
+
+	GRID_REPEAT_WRONG_IDENTIFIER: {
+		message: markup`Unsupported identifier`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>min-content</emphasis> or <emphasis>max-content</emphasis>.`,
+			},
+		],
+	},
 });
