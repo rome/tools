@@ -170,7 +170,7 @@ export default class CompilerPath {
 			this.context,
 			{
 				parentScope: this.scope,
-				ancestryPaths: this.ancestryPaths.concat([this]),
+				ancestryPaths: [this, ...this.ancestryPaths],
 				nodeKey: key,
 			},
 		);
