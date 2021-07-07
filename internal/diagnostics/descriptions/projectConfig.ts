@@ -16,12 +16,12 @@ export const projectConfig = createDiagnosticsCategory({
 	RECURSIVE_CONFIG: {message: markup`Recursive config`},
 
 	TOO_MANY_WILDCARDS: (pattern: string) => ({
-		message: markup`Pattern ${pattern} contains more than one wildacard.`,
+		message: markup`Pattern <emphasis>${pattern}</emphasis> contains more than one wildacard.`,
 		advice: [
 			{
 				type: "log",
 				category: "info",
-				text: markup`Alias patterns should have the following format \\<prefix>[*]\\<sufix>.`,
+				text: markup`Alias patterns should have the following format <emphasis>\\<prefix>[*]\\<sufix></emphasis>.`,
 			},
 		],
 	}),

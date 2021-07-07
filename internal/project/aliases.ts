@@ -33,9 +33,9 @@ export function buildPathFromAliasPattern(
 	path: string,
 	pattern: PathAliasPattern,
 ): string {
-	const [prefix, sufix] = pattern.parts;
+	const [prefix, suffix] = pattern.parts;
 	if (pattern.wildcard) {
-		return prefix + path + sufix;
+		return prefix + path + suffix;
 	}
 	return prefix;
 }
@@ -46,7 +46,7 @@ export function matchAliasPattern(
 ): string | undefined {
 	const [prefix, sufix] = pattern.parts;
 	if (pattern.wildcard && path.startsWith(prefix) && path.endsWith(sufix)) {
-		return path.slice(prefix.length, path.length - sufix.length);
+		return path.slice(prefix.length, path.length - suffix.length);
 	}
 
 	if (path === prefix) {
@@ -57,7 +57,7 @@ export function matchAliasPattern(
 }
 
 export function aliasPatternToString(pattern: PathAliasPattern): string {
-	const [prefix, sufix] = pattern.parts;
+	const [prefix, suffix] = pattern.parts;
 	if (pattern.wildcard) {
 		return `${prefix}*${sufix}`;
 	}
