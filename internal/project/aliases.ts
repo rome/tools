@@ -4,7 +4,7 @@ import {descriptions} from "@internal/diagnostics";
 export type PathAliasPattern = {
 	parts: string[];
 	wildcard: boolean;
-}
+};
 
 export function consumePathAliasPattern(
 	consumer: Consumer,
@@ -44,8 +44,8 @@ export function matchAliasPattern(
 	path: string,
 	pattern: PathAliasPattern,
 ): string | undefined {
-	const [prefix, sufix] = pattern.parts;
-	if (pattern.wildcard && path.startsWith(prefix) && path.endsWith(sufix)) {
+	const [prefix, suffix] = pattern.parts;
+	if (pattern.wildcard && path.startsWith(prefix) && path.endsWith(suffix)) {
 		return path.slice(prefix.length, path.length - suffix.length);
 	}
 
@@ -59,7 +59,7 @@ export function matchAliasPattern(
 export function aliasPatternToString(pattern: PathAliasPattern): string {
 	const [prefix, suffix] = pattern.parts;
 	if (pattern.wildcard) {
-		return `${prefix}*${sufix}`;
+		return `${prefix}*${suffix}`;
 	}
 	return prefix;
 }

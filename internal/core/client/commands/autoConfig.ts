@@ -158,9 +158,13 @@ export default createLocalCommand({
 				);
 
 				if (paths.length > 0) {
-					reporter.info(markup`Rome detected path aliases configured in your <emphasis>tsconfig.json</emphasis> and will try to import them.`)
+					reporter.info(
+						markup`Rome detected path aliases configured in your <emphasis>tsconfig.json</emphasis> and will try to import them.`,
+					);
 
-					const pathKeys = paths.map((item) => `<emphasis>${item[0]}</emphasis>`).join(", ");
+					const pathKeys = paths.map((item) => `<emphasis>${item[0]}</emphasis>`).join(
+						", ",
+					);
 					const addPaths = await reporter.radioConfirm(
 						markup`Would you like to import the following aliases ${pathKeys} in your Rome's configuration?`,
 					);
@@ -171,7 +175,7 @@ export default createLocalCommand({
 								commandName: "config set",
 								args: [configPath, "[]"],
 							});
-	
+
 							await req.client.query(
 								{
 									commandName: "config push",
@@ -184,8 +188,12 @@ export default createLocalCommand({
 				}
 			}
 
-			reporter.warn(markup`Rome won't keep track of imported configuration from <emphasis>tsconfig.json</emphasis>.`);
-			reporter.warn(markup`You must re-run <emphasis>auto-config</emphasis> if you want to import settings from <emphasis>tsconfig.json</emphasis> again.`);
+			reporter.warn(
+				markup`Rome won't keep track of imported configuration from <emphasis>tsconfig.json</emphasis>.`,
+			);
+			reporter.warn(
+				markup`You must re-run <emphasis>auto-config</emphasis> if you want to import settings from <emphasis>tsconfig.json</emphasis> again.`,
+			);
 		}
 
 		if (savedCheckFiles !== undefined && remainingCheckErrors !== undefined) {
