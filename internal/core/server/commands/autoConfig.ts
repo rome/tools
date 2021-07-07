@@ -7,11 +7,13 @@ import {
 	Diagnostic,
 	createSingleDiagnosticsError,
 	descriptions,
+	DIAGNOSTIC_CATEGORIES,
 } from "@internal/diagnostics";
 import {UnknownObject} from "@internal/typescript-helpers";
 import Checker from "../checker/Checker";
-import {consumeConfig} from "@internal/codec-config";
+import {json5} from "@internal/codec-config";
 import {aliasPatternToString} from "@internal/project/aliases";
+import { consumeUnknown } from "@internal/consume";
 
 interface Flags extends UnknownObject {
 	checkVSC: boolean;
@@ -24,8 +26,8 @@ export type AutoConfig = {
 	};
 	licenses?: Diagnostic[];
 	aliases?: {
-		base: string;
-		paths: [string, string[]][];
+		base?: string;
+		paths?: [string, string[]][];
 	};
 };
 
@@ -120,19 +122,19 @@ export default createServerCommand<Flags>({
 				async callback() {
 					const tsconfigPath = currentProject.directory.append("tsconfig.json");
 					if (await tsconfigPath.exists()) {
-						const {consumer: tsconfig} = consumeConfig({
-							path: tsconfigPath,
-							input: await tsconfigPath.readFileText(),
-						});
+						const tsconfigData = json5.parse({ input: await tsconfigPath.readFileText() });
+						const tsconfig =  consumeUnknown(tsconfigData, DIAGNOSTIC_CATEGORIES.parse, "json")
 
 						if (!tsconfig.has("compilerOptions")) {
 							return;
 						}
 
 						const compilerOptions = tsconfig.get("compilerOptions");
+						result.aliases = {}
+
 						const baseUrl = compilerOptions.get("baseUrl");
-						if (!baseUrl.exists()) {
-							return;
+						if (baseUrl.exists()) {
+							result.aliases.base = baseUrl.asString();
 						}
 
 						const paths = compilerOptions.get("paths");
@@ -154,12 +156,9 @@ export default createServerCommand<Flags>({
 									resultPaths.push([alias, targets]);
 								}
 							}
-						}
 
-						result.aliases = {
-							base: baseUrl.asString(),
-							paths: resultPaths,
-						};
+							result.aliases.paths = resultPaths;
+						}
 					}
 				},
 			},
