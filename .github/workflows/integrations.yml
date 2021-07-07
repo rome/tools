@@ -30,6 +30,6 @@ jobs:
           npm install
           mkdir dir .config
           touch .config/rome.json
-          echo '{ "root": true, "name": "rome-integration-eslint", "lint": { "enabled": false, "ignore": ["node_modules", "test", "site"] }, "integrations": { "eslint": { "enabled": true } } }' > .config/rome.json
+          echo '{ "root": true, "name": "rome-integration-eslint", "format": { "enabled": false }, "lint": { "enabled": false, "ignore": ["node_modules", "test", "site"] }, "integrations": { "eslint": { "enabled": true } } }' > .config/rome.json
           ../rome/rome start
-          ../rome/rome check --timing
+          ../rome/rome check ./src --timing
