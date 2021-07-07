@@ -56,5 +56,5 @@ jobs:
           mkdir dir .config
           touch .config/rome.json
           echo '{ "root": true, "name": "rome-integration-prettier", "format": { "enabled": false }, "lint": { "enabled": false, "ignore": ["node_modules", "test", "site"] }, "integrations": { "prettier": { "enabled": true } } }' > .config/rome.json
-          ../rome/rome start
-          ../rome/rome check --timing
+#          ../rome/rome start
+#          ../rome/rome check --timing

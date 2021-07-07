@@ -1,11 +1,11 @@
 import {consumeUnknown} from "@internal/consume";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {IntegrationEslintConfig, arrayOfStrings} from "@internal/project";
-import {json} from "@internal/codec-config";
+import {json5} from "@internal/codec-config";
 
 export function loadEslint(file: string): Partial<IntegrationEslintConfig> {
 	const config: Partial<IntegrationEslintConfig> = {};
-	const data = json.parse({input: file});
+	const data = json5.parse({input: file});
 	const eslint = consumeUnknown(data, DIAGNOSTIC_CATEGORIES.eslint, "json");
 
 	if (eslint.has("globInputPaths")) {
