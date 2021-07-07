@@ -1,0 +1,60 @@
+name: Integrations
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  eslint:
+    name: Eslint integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
+      - uses: actions/checkout@v2
+        with:
+          path: "rome"
+      - uses: actions/checkout@v2
+        with:
+          repository: 'sveltejs/svelte'
+          path: "svelte"
+      - name: Eslint svelte
+        run: |
+          cd rome
+          cd ../svelte
+          npm install
+          mkdir dir .config
+          touch .config/rome.json
+          echo '{ "root": true, "name": "rome-integration-eslint", "format": { "enabled": false }, "lint": { "enabled": false, "ignore": ["node_modules", "test", "site"] }, "integrations": { "eslint": { "enabled": true } } }' > .config/rome.json
+          ../rome/rome start
+          ../rome/rome check ./src --timing
+  prettier:
+    name: Prettier integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
+      - uses: actions/checkout@v2
+        with:
+          path: "rome"
+      - uses: actions/checkout@v2
+        with:
+          repository: 'vercel/next.js'
+          path: "nextjs"
+      - name: Prettier next.js
+        run: |
+          cd rome
+          cd ../nextjs
+          npm install prettier
+          mkdir dir .config
+          touch .config/rome.json
+          echo '{ "root": true, "name": "rome-integration-prettier", "format": { "enabled": false }, "lint": { "enabled": false, "ignore": ["node_modules", "test", "site"] }, "integrations": { "prettier": { "enabled": true } } }' > .config/rome.json
+#          ../rome/rome start
+#          ../rome/rome check --timing
