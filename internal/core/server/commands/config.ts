@@ -63,6 +63,10 @@ async function runCommand(
 				),
 				...(Array.isArray(value) ? value : []),
 			]);
+		} else if (action === "enable" || action === "disable") {
+			keyConsumer.setValue({
+				enabled: value,
+			});
 		} else {
 			keyConsumer.setValue(value);
 		}
@@ -77,11 +81,15 @@ async function runCommand(
 			reporter.log(configPath);
 			return;
 		}
+		const finalKeyParts =
+			action === "disable" || action === "enable"
+				? `${keyParts}.enabled`
+				: keyParts;
 
 		reporter.success(
 			markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${prettyFormat(
 				value,
-			)}</emphasis> to <emphasis>${keyParts}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
+			)}</emphasis> to <emphasis>${finalKeyParts}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
 		);
 
 		if (value === "true" || value === "false") {
@@ -89,7 +97,7 @@ async function runCommand(
 			reporter.warn(
 				markup`Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
 			);
-			reporter.command(`config ${suggestedCommand} ${keyParts}`);
+			reporter.command(`config ${suggestedCommand} ${finalKeyParts}`);
 		}
 
 		// Load the config file again
