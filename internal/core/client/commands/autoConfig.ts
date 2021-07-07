@@ -135,44 +135,49 @@ export default createLocalCommand({
 
 		if (data.has("aliases")) {
 			const aliases = data.get("aliases");
-			const base = aliases.get("base").asString();
-			const paths = aliases.get("paths").asMappedArray((item) =>
-				(item.asPlainArray() as [string, string[]])
-			);
 
-			const changeBase = await reporter.radioConfirm(
-				markup`Change base path to ${base}?`,
-			);
-			if (changeBase) {
-				await req.client.query(
-					{
-						commandName: "config set",
-						args: ["aliases.base", base],
-					},
-					"server",
+			if (aliases.has("base")) {
+				const base = aliases.get("base").asString();
+				const changeBase = await reporter.radioConfirm(
+					markup`Would you like to import <emphasis>${base}</emphasis> inside your configuration?`,
 				);
+				if (changeBase) {
+					await req.client.query(
+						{
+							commandName: "config set",
+							args: ["aliases.base", base],
+						},
+						"server",
+					);
+				}
 			}
 
-			if (paths.length > 0) {
-				const pathKeys = paths.map((item) => item[0]).join(", ");
-				const addPaths = await reporter.radioConfirm(
-					markup`Add the following aliases to your config: ${pathKeys}?`,
+			if (aliases.has("paths")) {
+				const paths = aliases.get("paths").asMappedArray((item) =>
+					(item.asPlainArray() as [string, string[]])
 				);
-				if (addPaths) {
-					for (const [alias, targets] of paths) {
-						const configPath = `aliases.paths.${escapePath(alias)}`;
-						await req.client.query({
-							commandName: "config set",
-							args: [configPath, "[]"],
-						});
 
-						await req.client.query(
-							{
-								commandName: "config push",
-								args: [configPath, ...targets],
-							},
-							"server",
-						);
+				if (paths.length > 0) {
+					const pathKeys = paths.map((item) => `<emphasis>${item[0]}</emphasis>`).join(", ");
+					const addPaths = await reporter.radioConfirm(
+						markup`Would you like to import the following aliases ${pathKeys} in your Rome's configuration?`,
+					);
+					if (addPaths) {
+						for (const [alias, targets] of paths) {
+							const configPath = `aliases.paths.${escapePath(alias)}`;
+							await req.client.query({
+								commandName: "config set",
+								args: [configPath, "[]"],
+							});
+	
+							await req.client.query(
+								{
+									commandName: "config push",
+									args: [configPath, ...targets],
+								},
+								"server",
+							);
+						}
 					}
 				}
 			}
