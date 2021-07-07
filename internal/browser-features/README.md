@@ -67,6 +67,8 @@ browser.getVersions(); // => [2, 3, 3.5, 3.6, 4, ..., 85, 86, 87]
 
 browser.cssFeatureRequiresPrefix("transforms2d"); // => false (for firefox 15 this would be true as it requires '-moz-' prefix)
 
+browser.cssFeatureRequiresPrefixRaw("transforms2d"); // => "" (for firefox 15 this would be "y x")
+
 browser.getRegionUsage("BE"); // => 2.4676 (for firefox 84, as of writing)
 ```
 

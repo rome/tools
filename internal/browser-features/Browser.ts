@@ -106,6 +106,7 @@ export abstract class Browser {
 
 	/**
 	 * Whether the css feature requires a browser prefix
+	 * Cached
 	 *
 	 * @param feature check internal/browsers-db/README.md for more info
 	 */
@@ -114,25 +115,36 @@ export abstract class Browser {
 			return this.cssFeatureCache.get(feature)!;
 		}
 
+		let value = this.cssFeatureRequiresPrefixRaw(feature).includes("x");
+		this.cssFeatureCache.set(feature, false);
+		return value;
+	}
+
+	/**
+	 * The raw value of whether the css feature requires a browser prefix
+	 *
+	 * @param feature check internal/browsers-db/README.md for more info
+	 *
+	 * @return raw value or empty string
+	 */
+	public cssFeatureRequiresPrefixRaw(feature: string): string {
 		const featureConsumer = this.getDataConsumer().getPath([
 			"data",
 			feature,
 			"s",
 		]);
 
-		let value = false;
-
 		if (
 			featureConsumer.has(this.getId()) &&
 			featureConsumer.get(this.getId()).has(this.getVersion().toString())
 		) {
-			value = featureConsumer.getPath([
+			return featureConsumer.getPath([
 				this.getId(),
 				this.getVersion().toString(),
-			]).required(false).asBoolean();
+			]).required("").asString();
 		}
-		this.cssFeatureCache.set(feature, value);
-		return value;
+
+		return "";
 	}
 
 	/**

@@ -9,21 +9,19 @@
 ```javascript
 [
 	"and_chr:91"
-	"chrome:90"
+	"chrome:91"
+	"ios_saf:14.5"
+	"ios_saf:14.7"
 	"ios_saf:14"
 	"ios_saf:14.4"
-	"edge:90"
-	"firefox:88"
-	"safari:14"
+	"chrome:90"
+	"edge:91"
 	"samsung:14"
-	"ios_saf:14.5"
-	"ios_saf:14.6"
-	"and_uc:12.12"
-	"op_mini:1"
-	"chrome:89"
-	"chrome:91"
+	"firefox:89"
 	"safari:14.1"
-	"ios_saf:13.4"
+	"and_uc:12.12"
+	"safari:14"
+	"op_mini:1"
 ]
 ```
 
