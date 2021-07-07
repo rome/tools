@@ -1,4 +1,5 @@
 import * as n from "@internal/ast";
+import {CSSGridRepeatValue} from "@internal/ast/css/grid/CSSGridRepeatValue";
 
 export type AnyCSSPattern =
 	| n.CSSIdSelector
@@ -11,8 +12,8 @@ export type AnyCSSPattern =
 	| n.CSSCombinator;
 
 export type AnyCSSValue =
+	| AnyFunction
 	| n.CSSFunction
-	| n.CSSVarFunction
 	| n.CSSBlock
 	| n.CSSDimension
 	| n.CSSPercentage
@@ -23,24 +24,25 @@ export type AnyCSSValue =
 	| n.CSSString
 	| n.CSSComma
 	| n.CSSCustomProperty
-	| n.CSSUrlFunction
-	| n.CSSCalcFunction
 	| n.CSSCalcSum
-	| n.CSSMaxFunction
-	| n.CSSMinFunction
-	| n.CSSMinmaxFunction
 	| n.CSSMediaQueryList
 	| n.CSSSupportsCondition
 	| n.CSSAtImport
-	| n.CSSFitContent
+	| n.CSSFitContentFunction
+	| n.CSSFlex
+	| n.CSSGridRepeatValue
 	| n.CSSRaw;
 
 export type AnyFunction =
 	| n.CSSFunction
 	| n.CSSVarFunction
 	| n.CSSUrlFunction
-	| n.CSSAtImport
-	| n.CSSRaw;
+	| n.CSSCalcFunction
+	| n.CSSFitContentFunction
+	| n.CSSMinFunction
+	| n.CSSMaxFunction
+	| n.CSSMinmaxFunction
+	| n.CSSRepeatFunction;
 
 export type RangeNameAndValue = [
 	n.CSSMediaFeatureName,
@@ -80,22 +82,28 @@ export type CSSFitContentValue = n.CSSDimension | n.CSSPercentage | n.CSSNumber;
 export type CSSAtImportValue = n.CSSString | n.CSSUrlFunction;
 
 export type CSSBlockValue = Array<
-	AnyCSSValue | CSSRule | n.CSSAtRule | n.CSSDeclaration
+	AnyCSSValue | n.CSSRule | n.CSSAtRule | n.CSSDeclaration
 >;
 
 export type CSSPseudoSelector =
 	| n.CSSPseudoClassSelector
 	| n.CSSPseudoElementSelector;
 
-export type CSSGridRepeatParams = [tracker: CSSGridRepeatTracker, values: CSSGridRepeatValues[]];
+export type CSSMinmaxParam = n.CSSRaw | n.CSSDimension | n.CSSPercentage;
+
+export type CSSGridRepeatParams = [
+	tracker: CSSGridRepeatTracker,
+	values: CSSGridRepeatValue
+];
 
 export type CSSGridRepeatTracker = n.CSSRaw | n.CSSNumber;
 
-export type CSSGridRepeatValues =
+export type CSSGridRepeatValues = Array<
 	| n.CSSPercentage
 	| n.CSSDimension
 	| n.CSSMinmaxFunction
-	| n.CSSFitContent
+	| n.CSSFitContentFunction
 	| n.CSSFlex
 	| n.CSSRaw
-	| n.CSSLineName;
+	| n.CSSLineName
+>;

@@ -34,12 +34,15 @@ CSSRoot {
 										raw: "4"
 										loc: SourceLocation grid/repeat/line-name/input.css 2:31-2:32
 									}
-									[
-										CSSLineName {
-											value: "col-start"
-											loc: SourceLocation grid/repeat/line-name/input.css 2:34-2:45
-										}
-									]
+									CSSGridRepeatValue {
+										values: [
+											CSSLineName {
+												value: "col-start"
+												loc: SourceLocation grid/repeat/line-name/input.css 2:34-2:45
+											}
+										]
+										loc: SourceLocation grid/repeat/line-name/input.css 2:34-2:45
+									}
 								]
 								loc: SourceLocation grid/repeat/line-name/input.css 2:24-2:46
 							}

@@ -3,8 +3,8 @@ import {createBuilder} from "../../utils";
 
 export interface CSSRepeatFunction extends NodeBaseWithComments {
 	readonly type: "CSSRepeatFunction";
-	readonly params: CSSGridRepeatParams;
 	readonly name: string;
+	readonly params: CSSGridRepeatParams;
 }
 
 export const cssRepeatFunction = createBuilder<CSSRepeatFunction>(

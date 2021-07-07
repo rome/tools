@@ -34,19 +34,22 @@ CSSRoot {
 										raw: "4"
 										loc: SourceLocation grid/repeat/fit-content/input.css 2:31-2:32
 									}
-									[
-										CSSFitContent {
-											name: "fit-content"
-											params: [
-												CSSDimension {
-													value: 300
-													unit: "px"
-													loc: SourceLocation grid/repeat/fit-content/input.css 2:46-2:51
-												}
-											]
-											loc: SourceLocation grid/repeat/fit-content/input.css 2:34-2:52
-										}
-									]
+									CSSGridRepeatValue {
+										values: [
+											CSSFitContentFunction {
+												name: "fit-content"
+												params: [
+													CSSDimension {
+														value: 300
+														unit: "px"
+														loc: SourceLocation grid/repeat/fit-content/input.css 2:46-2:51
+													}
+												]
+												loc: SourceLocation grid/repeat/fit-content/input.css 2:34-2:52
+											}
+										]
+										loc: SourceLocation grid/repeat/fit-content/input.css 2:34-2:52
+									}
 								]
 								loc: SourceLocation grid/repeat/fit-content/input.css 2:24-2:53
 							}

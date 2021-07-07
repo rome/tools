@@ -34,28 +34,31 @@ CSSRoot {
 										raw: "4"
 										loc: SourceLocation grid/repeat/multi-values/input.css 2:31-2:32
 									}
-									[
-										CSSLineName {
-											value: "col-start"
-											loc: SourceLocation grid/repeat/multi-values/input.css 2:34-2:45
-										}
-										CSSRaw {
-											value: "min-content"
-											loc: SourceLocation grid/repeat/multi-values/input.css 2:46-2:57
-										}
-										CSSLineName {
-											value: "col-middle"
-											loc: SourceLocation grid/repeat/multi-values/input.css 2:58-2:70
-										}
-										CSSRaw {
-											value: "max-content"
-											loc: SourceLocation grid/repeat/multi-values/input.css 2:71-2:82
-										}
-										CSSLineName {
-											value: "col-end"
-											loc: SourceLocation grid/repeat/multi-values/input.css 2:83-2:92
-										}
-									]
+									CSSGridRepeatValue {
+										values: [
+											CSSLineName {
+												value: "col-start"
+												loc: SourceLocation grid/repeat/multi-values/input.css 2:34-2:45
+											}
+											CSSRaw {
+												value: "min-content"
+												loc: SourceLocation grid/repeat/multi-values/input.css 2:46-2:57
+											}
+											CSSLineName {
+												value: "col-middle"
+												loc: SourceLocation grid/repeat/multi-values/input.css 2:58-2:70
+											}
+											CSSRaw {
+												value: "max-content"
+												loc: SourceLocation grid/repeat/multi-values/input.css 2:71-2:82
+											}
+											CSSLineName {
+												value: "col-end"
+												loc: SourceLocation grid/repeat/multi-values/input.css 2:83-2:92
+											}
+										]
+										loc: SourceLocation grid/repeat/multi-values/input.css 2:34-2:92
+									}
 								]
 								loc: SourceLocation grid/repeat/multi-values/input.css 2:24-2:93
 							}

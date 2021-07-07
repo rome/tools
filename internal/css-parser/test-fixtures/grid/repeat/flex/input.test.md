@@ -34,13 +34,16 @@ CSSRoot {
 										raw: "4"
 										loc: SourceLocation grid/repeat/flex/input.css 2:31-2:32
 									}
-									[
-										CSSDimension {
-											value: 1
-											unit: "fr"
-											loc: SourceLocation grid/repeat/flex/input.css 2:34-2:37
-										}
-									]
+									CSSGridRepeatValue {
+										values: [
+											CSSDimension {
+												value: 1
+												unit: "fr"
+												loc: SourceLocation grid/repeat/flex/input.css 2:34-2:37
+											}
+										]
+										loc: SourceLocation grid/repeat/flex/input.css 2:34-2:37
+									}
 								]
 								loc: SourceLocation grid/repeat/flex/input.css 2:24-2:38
 							}

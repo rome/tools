@@ -34,23 +34,26 @@ CSSRoot {
 										raw: "4"
 										loc: SourceLocation grid/repeat/minmax/input.css 2:31-2:32
 									}
-									[
-										CSSMinmaxFunction {
-											name: "minmax"
-											params: [
-												CSSRaw {
-													value: "min-content"
-													loc: SourceLocation grid/repeat/minmax/input.css 2:41-2:52
-												}
-												CSSDimension {
-													value: 300
-													unit: "px"
-													loc: SourceLocation grid/repeat/minmax/input.css 2:54-2:59
-												}
-											]
-											loc: SourceLocation grid/repeat/minmax/input.css 2:34-2:60
-										}
-									]
+									CSSGridRepeatValue {
+										values: [
+											CSSMinmaxFunction {
+												name: "minmax"
+												params: [
+													CSSRaw {
+														value: "min-content"
+														loc: SourceLocation grid/repeat/minmax/input.css 2:41-2:52
+													}
+													CSSDimension {
+														value: 300
+														unit: "px"
+														loc: SourceLocation grid/repeat/minmax/input.css 2:54-2:59
+													}
+												]
+												loc: SourceLocation grid/repeat/minmax/input.css 2:34-2:60
+											}
+										]
+										loc: SourceLocation grid/repeat/minmax/input.css 2:34-2:60
+									}
 								]
 								loc: SourceLocation grid/repeat/minmax/input.css 2:24-2:61
 							}

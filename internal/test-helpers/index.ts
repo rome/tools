@@ -21,7 +21,6 @@ import {decodeUTF8} from "@internal/binary";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {AsyncVoidCallback} from "@internal/typescript-helpers";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
-import {findFixtureInput} from "@internal/test-helpers/integration";
 
 const dirname = testOptions.dirname ?? "";
 
@@ -208,13 +207,6 @@ export async function createFixtureTests(
 					type: "log",
 					category: "info",
 					text: "Fixture content",
-				});
-
-				const {input} = findFixtureInput(fixture, undefined);
-
-				t.addToAdvice({
-					type: "code",
-					sourceText: input.contentAsText()
 				});
 
 				await callback(fixture, t);

@@ -2,6 +2,7 @@ import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
 	CSSGridRepeatParams,
 	CSSGridRepeatTracker,
+	CSSGridRepeatValue,
 	CSSGridRepeatValues,
 	CSSRepeatFunction,
 } from "@internal/ast";
@@ -14,8 +15,9 @@ import {descriptions} from "@internal/diagnostics";
 import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
 import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
 
-function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined {
-	const values: CSSGridRepeatValues[] = [];
+function parseRepeatValues(parser: CSSParser): CSSGridRepeatValue | undefined {
+	const mainStart = parser.getPosition();
+	const values: CSSGridRepeatValues = [];
 
 	while (!(matchToken(parser, "EOF") || matchToken(parser, "RightParen"))) {
 		const start = parser.getPosition();
@@ -23,26 +25,30 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined
 		switch (token.type) {
 			case "Dimension": {
 				nextToken(parser);
-				values.push(parser.finishNode(
-					start,
-					{
-						type: "CSSDimension",
-						value: token.value,
-						unit: token.unit,
-					},
-				));
+				values.push(
+					parser.finishNode(
+						start,
+						{
+							type: "CSSDimension",
+							value: token.value,
+							unit: token.unit,
+						},
+					),
+				);
 				break;
 			}
 
 			case "Percentage": {
 				nextToken(parser);
-				values.push(parser.finishNode(
-					start,
-					{
-						type: "CSSPercentage",
-						value: token.value,
-					},
-				));
+				values.push(
+					parser.finishNode(
+						start,
+						{
+							type: "CSSPercentage",
+							value: token.value,
+						},
+					),
+				);
 				break;
 			}
 
@@ -69,13 +75,15 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined
 					return undefined;
 				}
 
-				values.push(parser.finishNode(
-					start,
-					{
-						type: "CSSLineName",
-						value: ident.value,
-					},
-				));
+				values.push(
+					parser.finishNode(
+						start,
+						{
+							type: "CSSLineName",
+							value: ident.value,
+						},
+					),
+				);
 				break;
 			}
 
@@ -85,10 +93,7 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined
 					nextToken(parser);
 					const minmaxFunction = parseMinmaxFunction(parser);
 					if (minmaxFunction) {
-
-						values.push(
-							minmaxFunction
-						);
+						values.push(minmaxFunction);
 						break;
 					}
 					return undefined;
@@ -98,9 +103,7 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined
 					const fitContentFunction = parseFitContentFunction(parser);
 
 					if (fitContentFunction) {
-						values.push(
-							fitContentFunction
-						);
+						values.push(fitContentFunction);
 						break;
 					}
 					return undefined;
@@ -109,7 +112,7 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined
 				parser.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.GRID_REPEAT_WRONG_FUNCTION,
 					token,
-				})
+				});
 				return undefined;
 			}
 
@@ -117,17 +120,20 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined
 				if (token.value === "min-content" || token.value === "max-content") {
 					nextToken(parser);
 					values.push(
-						parser.finishNode(start, {
-							type: "CSSRaw",
-							value: token.value
-						})
+						parser.finishNode(
+							start,
+							{
+								type: "CSSRaw",
+								value: token.value,
+							},
+						),
 					);
 					break;
 				}
 				parser.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.GRID_REPEAT_WRONG_IDENTIFIER,
 					token,
-				})
+				});
 				return undefined;
 			}
 		}
@@ -137,19 +143,30 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined
 			continue;
 		}
 		if (matchToken(parser, "RightParen")) {
-			return values
+			return parser.finishNode(
+				mainStart,
+				{
+					type: "CSSGridRepeatValue",
+					values,
+				},
+			);
 		} else {
-
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
-				token: parser.getToken()
-			})
+				token: parser.getToken(),
+			});
 			nextToken(parser);
 			return undefined;
 		}
 	}
 
-	return values;
+	return parser.finishNode(
+		mainStart,
+		{
+			type: "CSSGridRepeatValue",
+			values,
+		},
+	);
 }
 
 function parseParams(parser: CSSParser): CSSGridRepeatParams | undefined {

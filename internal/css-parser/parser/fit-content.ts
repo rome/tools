@@ -1,16 +1,20 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
 	CSSDimension,
-	CSSFitContent,
+	CSSFitContentFunction,
 	CSSNumber,
 	CSSPercentage,
 } from "@internal/ast";
-import {matchToken, nextToken, skipWhitespaces} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 export function parseFitContentFunction(
 	parser: CSSParser,
-): CSSFitContent | undefined {
+): CSSFitContentFunction | undefined {
 	// prepare variables needed for the final node
 	const previousToken = parser.getPreviousToken() as Tokens["Ident"];
 	const functionStart = parser.getPositionFromIndex(previousToken.start);
@@ -61,7 +65,7 @@ export function parseFitContentFunction(
 			return parser.finishNode(
 				functionStart,
 				{
-					type: "CSSFitContent",
+					type: "CSSFitContentFunction",
 					name: "fit-content",
 					params: [value],
 				},
@@ -71,7 +75,7 @@ export function parseFitContentFunction(
 			description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
 			token: parser.getToken(),
 		});
-		return  undefined;
+		return undefined;
 	}
 
 	parser.unexpectedDiagnostic({
@@ -79,4 +83,5 @@ export function parseFitContentFunction(
 		token: parser.getToken(),
 	});
 
-	return undefined;}
+	return undefined;
+}

@@ -291,5 +291,5 @@ export const cssParser = createDiagnosticsCategory({
 				text: markup`Use <emphasis>min-content</emphasis> or <emphasis>max-content</emphasis>.`,
 			},
 		],
-	}
+	},
 });

@@ -1,5 +1,5 @@
 import {CSSRepeatFunction} from "@internal/ast";
-import {Builder, concat, space, Token} from "@internal/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function CSSRepeatFunction(
 	builder: Builder,
@@ -12,11 +12,7 @@ export default function CSSRepeatFunction(
 		concat([
 			builder.tokenize(tracker, node),
 			",",
-			concat(
-				values.map(value => {
-					return concat([space, builder.tokenize(value, node)]);
-				}
-			))
+			builder.tokenize(values, node),
 		]),
 		")",
 	]);
