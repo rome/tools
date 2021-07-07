@@ -1,0 +1,36 @@
+name: Integrations
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  checkout:
+    name: Eslint integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.16.0'
+      - uses: actions/checkout@v2
+        with:
+          path: "rome"
+      - uses: actions/checkout@v2
+        with:
+          repository: 'sveltejs/svelte'
+          path: "svelte"
+      - name: Eslint svelte
+        run: |
+          cd rome
+          ./rome start
+          cd ../svelte
+          npm install
+          ../rome/rome init -y
+          ../rome/rome config disable format
+          ../rome/rome config disable lint
+          ../rome/rome push integrations.eslint.enabled true
+          ../rome/rome check --timing
