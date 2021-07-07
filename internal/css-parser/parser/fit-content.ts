@@ -5,14 +5,18 @@ import {
 	CSSNumber,
 	CSSPercentage,
 } from "@internal/ast";
-import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
+import {matchToken, nextToken, skipWhitespaces} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
-function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
+export function parseFitContentFunction(
+	parser: CSSParser,
+): CSSFitContent | undefined {
 	// prepare variables needed for the final node
 	const previousToken = parser.getPreviousToken() as Tokens["Ident"];
 	const functionStart = parser.getPositionFromIndex(previousToken.start);
 	const start = parser.getPosition();
+
+	skipWhitespaces(parser);
 
 	if (
 		matchToken(parser, "Number") ||
@@ -51,15 +55,23 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 				},
 			);
 		}
-		nextToken(parser);
-		return parser.finishNode(
-			functionStart,
-			{
-				type: "CSSFitContent",
-				name: "fit-content",
-				params: [value],
-			},
-		);
+		skipWhitespaces(parser);
+		if (matchToken(parser, "RightParen")) {
+			nextToken(parser);
+			return parser.finishNode(
+				functionStart,
+				{
+					type: "CSSFitContent",
+					name: "fit-content",
+					params: [value],
+				},
+			);
+		}
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
+			token: parser.getToken(),
+		});
+		return  undefined;
 	}
 
 	parser.unexpectedDiagnostic({
@@ -67,11 +79,4 @@ function parseFitContent(parser: CSSParser): CSSFitContent | undefined {
 		token: parser.getToken(),
 	});
 
-	return undefined;
-}
-
-export function parseFitContentFunction(
-	parser: CSSParser,
-): CSSFitContent | undefined {
-	return parseFitContent(parser);
-}
+	return undefined;}

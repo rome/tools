@@ -112,6 +112,24 @@ function parseRepeatValues(parser: CSSParser): CSSGridRepeatValues[] | undefined
 				})
 				return undefined;
 			}
+
+			case "Ident": {
+				if (token.value === "min-content" || token.value === "max-content") {
+					nextToken(parser);
+					values.push(
+						parser.finishNode(start, {
+							type: "CSSRaw",
+							value: token.value
+						})
+					);
+					break;
+				}
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.GRID_REPEAT_WRONG_IDENTIFIER,
+					token,
+				})
+				return undefined;
+			}
 		}
 
 		if (matchToken(parser, "Whitespace")) {

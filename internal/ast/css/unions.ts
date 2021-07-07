@@ -87,7 +87,7 @@ export type CSSPseudoSelector =
 	| n.CSSPseudoClassSelector
 	| n.CSSPseudoElementSelector;
 
-export type CSSGridRepeatParams = [CSSGridRepeatTracker, CSSGridRepeatValues[]];
+export type CSSGridRepeatParams = [tracker: CSSGridRepeatTracker, values: CSSGridRepeatValues[]];
 
 export type CSSGridRepeatTracker = n.CSSRaw | n.CSSNumber;
 
@@ -97,4 +97,5 @@ export type CSSGridRepeatValues =
 	| n.CSSMinmaxFunction
 	| n.CSSFitContent
 	| n.CSSFlex
+	| n.CSSRaw
 	| n.CSSLineName;

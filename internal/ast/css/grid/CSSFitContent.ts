@@ -7,7 +7,7 @@ export interface CSSFitContent extends NodeBaseWithComments {
 	readonly params: [CSSFitContentValue];
 }
 
-export const CSSFitContent = createBuilder<CSSFitContent>(
+export const cssFitContent = createBuilder<CSSFitContent>(
 	"CSSFitContent",
 	{
 		bindingKeys: {},

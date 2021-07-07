@@ -57,7 +57,7 @@ import CSSDeclaration from "./css/core/CSSDeclaration";
 builders.set("CSSDeclaration", CSSDeclaration);
 import CSSDimension from "./css/core/CSSDimension";
 builders.set("CSSDimension", CSSDimension);
-import CSSFitContent from "./css/function/CSSFitContent";
+import CSSFitContent from "./css/grid/CSSFitContent";
 builders.set("CSSFitContent", CSSFitContent);
 import CSSFlex from "./css/grid/CSSFlex";
 builders.set("CSSFlex", CSSFlex);

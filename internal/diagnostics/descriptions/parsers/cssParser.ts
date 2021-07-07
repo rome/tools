@@ -280,5 +280,16 @@ export const cssParser = createDiagnosticsCategory({
 				text: markup`Use <emphasis>minmax()</emphasis> or <emphasis>fit-content()</emphasis>.`,
 			},
 		],
+	},
+
+	GRID_REPEAT_WRONG_IDENTIFIER: {
+		message: markup`Unsupported identifier`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>min-content</emphasis> or <emphasis>max-content</emphasis>.`,
+			},
+		],
 	}
 });

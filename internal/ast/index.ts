@@ -34,7 +34,7 @@ export * from "./css/core/CSSComma";
 export * from "./css/core/CSSCustomProperty";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
-export * from "./css/function/CSSFitContent";
+export * from "./css/grid/CSSFitContent";
 export * from "./css/grid/CSSFlex";
 export * from "./css/font/CSSFontFace";
 export * from "./css/core/CSSFunction";
