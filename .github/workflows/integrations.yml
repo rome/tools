@@ -32,5 +32,5 @@ jobs:
           ../rome/rome init -y
           ../rome/rome config disable format
           ../rome/rome config disable lint
-          ../rome/rome push integrations.eslint.enabled true
+          ../rome/rome config enable integrations.eslint
           ../rome/rome check --timing

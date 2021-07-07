@@ -20,7 +20,6 @@ import {
 	UnknownObject,
 	VoidCallback,
 	isObject,
-	isPlainObject,
 } from "@internal/typescript-helpers";
 import {
 	ConsumeContext,
