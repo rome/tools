@@ -52,7 +52,7 @@ export default createLocalCommand({
 		);
 
 		if (!data.exists()) {
-			reporter.log(markup`No problems or updates found in you project.`);
+			reporter.log(markup`No problems or updates found in your project.`);
 			return true;
 		}
 

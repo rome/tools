@@ -63,10 +63,15 @@ function categoryExists(consumer: Consumer): boolean {
 	return true;
 }
 
+interface LoadCompleteProjectConfigOptions {
+	silenceSuppressions: boolean;
+}
+
 export async function loadCompleteProjectConfig(
 	projectDirectory: AbsoluteFilePath,
 	configPath: AbsoluteFilePath,
 	reader: CachedFileReader,
+	opts?: LoadCompleteProjectConfigOptions,
 ): Promise<{
 	meta: ProjectConfigMeta;
 	config: ProjectConfig;
@@ -78,7 +83,11 @@ export async function loadCompleteProjectConfig(
 		projectDirectory,
 		configPath,
 	});
-	const {consumer} = meta;
+	let {consumer} = meta;
+
+	if (opts?.silenceSuppressions) {
+		consumer = consumer.capture().consumer;
+	}
 
 	// Produce a defaultConfig with some directory specific values
 	const _defaultConfig: ProjectConfig = createDefaultProjectConfig();

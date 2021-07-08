@@ -44,7 +44,7 @@ export class Migrator {
 				if (checkShouldMigrate(this.version, config)) {
 					if (migration.isDeprecated === true) {
 						this.reporter.warn(
-							markup`The migration <emaphasis>${name}</emaphasis> has been marked as deprecated and it will be deleted in the next major release.`,
+							markup`The migration <emphasis>${name}</emphasis> has been marked as <emphasis>deprecated</emphasis> and it will be deleted in the next major release.`,
 						);
 					}
 					this.reporter.log(

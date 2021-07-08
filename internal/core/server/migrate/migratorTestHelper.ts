@@ -15,7 +15,7 @@ export async function testSingleMigration(
 ): Promise<void> {
 	const input = testPath.append("input.toml");
 
-	if (!input.exists()) {
+	if (!await input.exists()) {
 		throw new Error(
 			`The directory ${testPath.getBasename()} must contain a input.toml file`,
 		);
@@ -30,25 +30,14 @@ export async function testSingleMigration(
 		input.getExtensionlessBasename(),
 	).join();
 
-	t.namedSnapshot(
-		`${migration.name}: Input`,
-		await input.readFileText(),
-		undefined,
-		{
-			filename: snapshotFile,
-			language: "toml",
-		},
-	);
+	const snapshot = t.customSnapshot(snapshotFile, {language: "toml"});
+
+	snapshot.named(`${migration.name}: Input`, await input.readFileText());
 
 	await migration.runMigration(consumer);
 
-	t.namedSnapshot(
+	snapshot.named(
 		`${migration.name}: Output`,
 		toml.stringifyFromConsumer({consumer, comments: new Map()}),
-		undefined,
-		{
-			filename: snapshotFile,
-			language: "toml",
-		},
 	);
 }

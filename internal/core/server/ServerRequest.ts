@@ -552,6 +552,12 @@ export default class ServerRequest {
 		);
 	}
 
+	public async retrieveProjectAndConfigPaths() {
+		return this.server.projectManager.getConfigAndProjectPaths(
+			this.client.flags.cwd,
+		);
+	}
+
 	public async getVCSClient(): Promise<VCSClient> {
 		return this.server.projectManager.getVCSClient(
 			await this.assertClientCwdProject(),

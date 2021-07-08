@@ -11,7 +11,10 @@ import {
 	commandCategories,
 } from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {normalizeProjectConfig} from "@internal/project";
+import {
+	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
+	normalizeProjectConfig,
+} from "@internal/project";
 import {AbsoluteFilePath, createPath} from "@internal/path";
 import {markup} from "@internal/markup";
 import {
@@ -308,16 +311,15 @@ export const migrate = createServerCommand({
 				descriptions.MIGRATE_COMMAND.UNCOMMITTED_CHANGES.advice,
 			],
 		);
-		const project = await req.assertClientCwdProject();
-		const {meta} = project;
-		const {configPath} = meta;
-		if (!configPath) {
+		const result = await req.retrieveProjectAndConfigPaths();
+		if (!result) {
 			throw createSingleDiagnosticsError({
 				location: req.getDiagnosticLocationForClientCwd(),
 				description: descriptions.MIGRATE_COMMAND.MISSING_CONFIGURATION,
 			});
 		}
 
+		const {configPath} = result;
 		const migrator = new Migrator({
 			reporter: client.reporter,
 			version: VERSION,
@@ -325,15 +327,27 @@ export const migrate = createServerCommand({
 
 		const configFile = await configPath.readFileText();
 
-		const res = consumeConfig({
+		let finalConsumer: Consumer;
+		let {consumer, type, comments} = consumeConfig({
 			path: configPath,
 			input: configFile,
 		});
 
-		await migrator.run(res.consumer);
+		const isInPackageJson = configPath.getBasename() === "package.json";
+		if (isInPackageJson) {
+			finalConsumer = consumer.get(PROJECT_CONFIG_PACKAGE_JSON_FIELD);
+		} else {
+			finalConsumer = consumer;
+		}
+
+		await migrator.run(finalConsumer);
 
 		// Stringify the config
-		const stringified = stringifyConfig(res);
+		const stringified = stringifyConfig({
+			consumer,
+			comments,
+			type,
+		});
 
 		await configPath.writeFile(stringified);
 	},

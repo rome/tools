@@ -10,16 +10,15 @@ export default createMigration({
 	runMigration: async (consumer) => {
 		const lint = consumer.get("lint");
 		const ignorePaths = lint.get("ignorePaths");
-		lint.set("ignore", ignorePaths.copy().getValue());
+		lint.set("ignore", ignorePaths.copy().asPlainArray());
 		lint.delete("ignorePaths");
 	},
 	shouldMigrate: (currentVersion, config) => {
-		let should = false;
 		if (config.has("lint")) {
 			const lint = config.get("lint");
-			should = lint.has("ignorePaths");
+			return lint.has("ignorePaths");
 		}
 
-		return should;
+		return false;
 	},
 });

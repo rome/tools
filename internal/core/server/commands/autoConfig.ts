@@ -42,7 +42,6 @@ export default createServerCommand<Flags>({
 	): Promise<AutoConfig | undefined> {
 		const {server, client, reporter} = req;
 
-		// const {args} = req.query;
 		const {cwd} = client.flags;
 		const {checkVSC} = flags;
 		const currentProject = await server.projectManager.assertProject(cwd);

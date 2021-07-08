@@ -10,7 +10,13 @@ import {AsyncVoidCallback, VoidCallback} from "./types";
 export type ExpectedError = undefined | string | RegExp | Function;
 
 export type TestSnapshotOptions = {
+	/**
+	 * Optional message to describe the snapshot
+	 */
 	message?: string;
+	/**
+	 * The language that will be used inside the snapshot
+	 */
 	language?: string;
 };
 
@@ -96,6 +102,12 @@ export interface TestHelper {
 		expected: unknown,
 		opts?: TestSnapshotOptions,
 	): string;
+
+	/**
+	 *
+	 * @param filename The name of the file
+	 * @param opts
+	 */
 	customSnapshot(
 		filename?: string,
 		opts?: TestSnapshotOptions,
@@ -104,6 +116,13 @@ export interface TestHelper {
 
 export interface TestSnapshotHelper {
 	snapshot(expected: unknown, opts?: TestSnapshotOptions): string;
+
+	/**
+	 *
+	 * @param name The name of the snapshot
+	 * @param expected Expected value
+	 * @param opts
+	 */
 	named(name: string, expected: unknown, opts?: TestSnapshotOptions): string;
 }
 

@@ -16,7 +16,8 @@ const promise = createFixtureTests(
 					path: filename,
 				});
 
-				const ext = path.getExtensions();const dotlessExtension = path.getDotlessExtensions();
+				const ext = path.getExtensions();
+				const dotlessExtension = path.getDotlessExtensions();
 
 				const snapshot = t.customSnapshot(
 					snapshotFile,
