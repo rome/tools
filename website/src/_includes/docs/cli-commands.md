@@ -65,6 +65,14 @@ Push the string `value` to an array at `key`. If `key` doesn't exist then it wil
 
 Show the config location that would be modified.
 
+#### `rome config migrate`
+
+Useful when upgrading Rome to the newest version, the command checks if your configuration
+is obsolete and updates it to a new one.
+
+Rome will try to map your old configuration to the new one as much as possible, but sometimes
+it wouldn't be possible. If that happens, Rome will tell you.
+
 #### `rome init`
 
 This command assists in the creation of a new Rome project. The command will
