@@ -87,6 +87,10 @@ The command only works on projects that don't have Rome configuration.
 
 {% include docs/cli-screenshots/init.md %}
 
+**Flags**
+
+- `--y` doesn't ask any questions and bootstraps the project using Rome's defaults;
+
 #### `rome auto-config`
 
 This command is useful to "fix" some issues inside the projects. Rome will scan your project
