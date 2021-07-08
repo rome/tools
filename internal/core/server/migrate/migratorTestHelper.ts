@@ -15,7 +15,7 @@ export async function testSingleMigration(
 ): Promise<void> {
 	const input = testPath.append("input.toml");
 
-	if (!await input.exists()) {
+	if (!(await input.exists())) {
 		throw new Error(
 			`The directory ${testPath.getBasename()} must contain a input.toml file`,
 		);

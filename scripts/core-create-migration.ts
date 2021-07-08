@@ -26,12 +26,9 @@ export async function main([migration]: string[]): Promise<number> {
 				versionRange: "",
 				name: "${migrationName}",
 				addedVersion: "${VERSION}",
-				runMigration: async (consumer) => {
-					const lint = consumer.get("lint");
-					const ignorePaths = lint.get("ignorePaths");
-					lint.set("ignore", ignorePaths.copy().getValue());
-					lint.delete("ignorePaths");
-				},
+				deprecated: false,
+				runMigration: async (consumer) => {},
+				shouldMigrate: (currentVersion, config) => {}
 			});
 		`,
 	);
