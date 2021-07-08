@@ -6,7 +6,7 @@ import {
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {createDefaultProjectConfig} from "@internal/project";
 import {resolveBrowsers} from "@internal/codec-browsers";
-import {createUIDPath, UIDPathMap} from "@internal/path";
+import {UIDPathMap, createUIDPath} from "@internal/path";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {worker, performFileOperation, addProject} = createMockWorker();
@@ -33,16 +33,24 @@ const promise = createFixtureTests(async (fixture, t) => {
 			}),
 		},
 		async (ref) => {
-			return await worker.api.compile(ref, "compileForBundle", {target: "default", bundle: {
-					assetPath: input.relative,
-					__filename: input.relative,
-					moduleAll: true,
-					moduleId: createUIDPath(input.relative.join()),
-					relativeSourcesToModuleId: new Map(),
-					resolvedImports: new UIDPathMap()
-				}}, {
-				sourceTypeJS: "module"
-			});
+			return await worker.api.compile(
+				ref,
+				"compileForBundle",
+				{
+					target: "default",
+					bundle: {
+						assetPath: input.relative,
+						__filename: input.relative,
+						moduleAll: true,
+						moduleId: createUIDPath(input.relative.join()),
+						relativeSourcesToModuleId: new Map(),
+						resolvedImports: new UIDPathMap(),
+					},
+				},
+				{
+					sourceTypeJS: "module",
+				},
+			);
 		},
 	);
 	if (res === undefined) {
