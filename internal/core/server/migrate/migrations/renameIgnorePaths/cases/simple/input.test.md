@@ -14,7 +14,6 @@ ignorePaths = [
 	"bar",
 ]
 
-
 ```
 
 ### `renameIgnorePaths: Output`

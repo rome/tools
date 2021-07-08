@@ -32,7 +32,10 @@ export async function testSingleMigration(
 
 	const snapshot = t.customSnapshot(snapshotFile, {language: "toml"});
 
-	snapshot.named(`${migration.name}: Input`, await input.readFileText());
+	snapshot.named(
+		`${migration.name}: Input`,
+		toml.stringifyFromConsumer({consumer, comments: new Map()}),
+	);
 
 	await migration.runMigration(consumer);
 
