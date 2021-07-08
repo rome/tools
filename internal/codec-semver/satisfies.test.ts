@@ -224,7 +224,7 @@ test(
 
 			t.true(
 				satisfiesSemver(ver, range),
-				`${range.toString()} should be satisfied by ${ver.toString()}`,
+				`${range} should be satisfied by ${ver}`,
 			);
 		}
 	},
