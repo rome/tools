@@ -3,7 +3,11 @@ import {CommandName, commandCategories} from "@internal/core/common/commands";
 import {markup} from "@internal/markup";
 import ClientRequest from "@internal/core/client/ClientRequest";
 import {consumeUnknown} from "@internal/consume";
-import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	equalCategoryNames,
+	isValidDiagnosticCategoryName,
+} from "@internal/diagnostics";
 
 interface Flags {
 	allowDirty: boolean;
@@ -78,7 +82,14 @@ export default createLocalCommand({
 								category.exists() &&
 								categoryValue.exists()
 							) {
-								if (category.asString() === "lint/js/noUndeclaredVariables") {
+								const categoryName = category.asMappedArray((c) => c.asString());
+								if (
+									isValidDiagnosticCategoryName(categoryName) &&
+									equalCategoryNames(
+										categoryName,
+										DIAGNOSTIC_CATEGORIES["lint/js/noUndeclaredVariables"],
+									)
+								) {
 									await req.client.query(
 										{
 											commandName: "config push",
