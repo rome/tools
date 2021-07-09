@@ -35,7 +35,7 @@ Reformat all files without applying any fixes.
 
 #### `rome config`
 
-Used to modify project configuration. These commands work with all Rome project config locations (see [supported locations](#supported-locations) for more info). When formatting a project config written with [RJSON](#rome-json), comments will be retained.
+Used to modify project configuration. These commands work with all Rome project config locations (see [supported locations](#supported-locations) for more info).
 
 Before your project config is saved, we will validate it for errors. It is not possible to save an invalid config with `rome config`.
 

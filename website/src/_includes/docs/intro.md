@@ -41,12 +41,11 @@ We plan on covering the following areas:
 ### Language Support
 
 | Language | Parsing | Formatting | Linting |
-| - | - | - | - |
+| -------- | ------- | ---------- | ------- |
 | JavaScript | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
 | &mdash; TypeScript | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
 | &mdash; JSX  | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
 | JSON | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
-| &mdash; [RJSON](#rome-json) | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
 | HTML [#983](https://github.com/rome/tools/issues/983) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
 | CSS [#984](https://github.com/rome/tools/issues/984) | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
 | Markdown [#985](https://github.com/rome/tools/issues/985) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
