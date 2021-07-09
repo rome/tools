@@ -72,10 +72,6 @@ async function runCommand(
 				),
 				...(Array.isArray(value) ? value : []),
 			]);
-		} else if (action === "enable" || action === "disable") {
-			keyConsumer.setValue({
-				enabled: value,
-			});
 		} else {
 			keyConsumer.setValue(value);
 		}
