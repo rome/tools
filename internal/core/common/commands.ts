@@ -29,6 +29,7 @@ export type CommandName =
 	| "config push"
 	| "config set"
 	| "config set-directory"
+	| "config migrate"
 	| "develop"
 	| "format"
 	| "init"

@@ -10,11 +10,13 @@ import {
 	DiagnosticAdvice,
 	DiagnosticLocation,
 	DiagnosticsError,
+	catchDiagnostics,
 	catchDiagnosticsSync,
 	createSingleDiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
 import {
+	AsyncVoidCallback,
 	Dict,
 	UnknownFunction,
 	UnknownObject,
@@ -165,6 +167,21 @@ export default class Consumer {
 		} else {
 			const {diagnostics} = catchDiagnosticsSync(callback);
 
+			if (diagnostics !== undefined) {
+				for (const diag of diagnostics) {
+					this.handleUnexpected(diag);
+				}
+			}
+		}
+	}
+
+	public async handleAsyncThrownDiagnostics(callback: AsyncVoidCallback) {
+		if (this.handleUnexpected === undefined) {
+			await callback();
+		} else {
+			const {diagnostics} = await catchDiagnostics(async () => {
+				await callback();
+			});
 			if (diagnostics !== undefined) {
 				for (const diag of diagnostics) {
 					this.handleUnexpected(diag);

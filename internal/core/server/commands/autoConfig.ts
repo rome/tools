@@ -2,14 +2,10 @@ import {createServerCommand} from "@internal/core/server/commands";
 import {markup} from "@internal/markup";
 import {commandCategories} from "@internal/core/common/commands";
 import {ServerRequest} from "@internal/core";
-import {getVCSClient} from "@internal/vcs";
-import {
-	Diagnostic,
-	createSingleDiagnosticsError,
-	descriptions,
-} from "@internal/diagnostics";
+import {Diagnostic, descriptions} from "@internal/diagnostics";
 import {UnknownObject} from "@internal/typescript-helpers";
 import Checker from "../checker/Checker";
+import {checkVSCWorkingDirectory} from "@internal/core/server/utils/checkVCSWorkingDirectory";
 
 interface Flags extends UnknownObject {
 	checkVSC: boolean;
@@ -44,7 +40,6 @@ export default createServerCommand<Flags>({
 	): Promise<AutoConfig | undefined> {
 		const {server, client, reporter} = req;
 
-		// const {args} = req.query;
 		const {cwd} = client.flags;
 		const {checkVSC} = flags;
 		const currentProject = await server.projectManager.assertProject(cwd);
@@ -60,21 +55,13 @@ export default createServerCommand<Flags>({
 
 		// Check for no or dirty repo
 		if (checkVSC) {
-			const vcsClient = await getVCSClient(cwd);
-			if (vcsClient === undefined) {
-				throw createSingleDiagnosticsError({
-					location: req.getDiagnosticLocationForClientCwd(),
-					description: descriptions.INIT_COMMAND.EXPECTED_REPO,
-				});
-			} else {
-				const uncommittedFiles = await vcsClient.getUncommittedFiles();
-				if (uncommittedFiles.length > 0) {
-					throw createSingleDiagnosticsError({
-						location: req.getDiagnosticLocationForClientCwd(),
-						description: descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES,
-					});
-				}
-			}
+			await checkVSCWorkingDirectory(
+				req,
+				[
+					descriptions.INIT_COMMAND.EXPECTED_REPO.advice,
+					descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES.advice,
+				],
+			);
 		}
 		// Generate files
 		await reporter.steps([

@@ -23,6 +23,7 @@ export type DiagnosticCategory =
 	| ["childProcess", "failure"]
 	| ["commands", "auto-config", "uncommittedChanges"]
 	| ["commands", "auto-config", "expectedRepo"]
+	| ["commands", "migrate"]
 	| ["compile", "classes"]
 	| ["compile", "const-enums"]
 	| ["compile", "jsx"]
@@ -90,6 +91,8 @@ export type DiagnosticCategory =
 	| ["typeCheck", "unknownImport"]
 	| ["typeCheck", "unknownProperty"]
 	| ["vsc", "dirty"]
+	| ["vcs", "expectedRepo"]
+	| ["vcs", "uncommittedChanges"]
 	| ["v8", "syntaxError"];
 
 export type DiagnosticCategoryPrefix = DiagnosticCategory[0];
@@ -419,6 +422,7 @@ export const DIAGNOSTIC_CATEGORIES: {
 		"auto-config",
 		"expectedRepo",
 	],
+	"commands/migrate": ["commands", "migrate"],
 	"compile/classes": ["compile", "classes"],
 	"compile/const-enums": ["compile", "const-enums"],
 	"compile/jsx": ["compile", "jsx"],
@@ -495,7 +499,9 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"typeCheck/undeclaredVariable": ["typeCheck", "undeclaredVariable"],
 	"typeCheck/unknownImport": ["typeCheck", "unknownImport"],
 	"typeCheck/unknownProperty": ["typeCheck", "unknownProperty"],
+	"vcs/expectedRepo": ["vcs", "expectedRepo"],
 	"vsc/dirty": ["vsc", "dirty"],
+	"vcs/uncommittedChanges": ["vcs", "uncommittedChanges"],
 	"v8/syntaxError": ["v8", "syntaxError"],
 };
 
@@ -524,6 +530,7 @@ export const categoryPrefixMap: {[name in DiagnosticCategoryPrefix]: true} = {
 	tests: true,
 	typeCheck: true,
 	v8: true,
+	vcs: true,
 };
 
 export const VALID_DIAGNOSTIC_CATEGORIES: Set<DiagnosticCategoryString> = new Set(

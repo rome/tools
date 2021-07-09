@@ -835,7 +835,58 @@ export default class ProjectManager {
 			entity: "ProjectManager.findProject",
 		});
 
-		// If not then let's access the file system and try to find one
+		const result = await this.getConfigAndProjectPaths(cwd);
+
+		if (result) {
+			if (
+				this.isLoadingBannedProjectPath(
+					result.projectPath,
+					result.configPath,
+					processor,
+				)
+			) {
+				return;
+			}
+			await this.server.memoryFs.watch(result.projectPath, cwd, partial);
+			return this.assertProjectExisting(cwd);
+		}
+		// If we didn't find a project config then
+		if (!result) {
+			for (const dir of cwd.getChain()) {
+				// Check for typo config filenames
+				for (const basename of PROJECT_CONFIG_WARN_FILENAMES) {
+					const path = dir.append(basename);
+
+					if (await this.server.memoryFs.existsHard(path)) {
+						this.checkPathForIncorrectConfig(path, processor);
+					}
+				}
+
+				// Check for configs outside of a .config directory
+				for (const configFilename of PROJECT_CONFIG_FILENAMES) {
+					const path = dir.append(configFilename);
+
+					if (await this.server.memoryFs.existsHard(path)) {
+						this.checkPathForIncorrectConfig(path, processor);
+					}
+				}
+			}
+		}
+
+		this.logger.info(markup`Found no project for <emphasis>${cwd}</emphasis>`);
+
+		return undefined;
+	}
+
+	public async getConfigAndProjectPaths(
+		cwd: AbsoluteFilePath,
+	): Promise<
+		| {
+				projectPath: AbsoluteFilePath;
+				configPath: AbsoluteFilePath;
+			}
+		| undefined
+	> {
 		for (const dir of cwd.getChain(true)) {
 			// Check for dedicated project configs
 			for (const configFilename of PROJECT_CONFIG_FILENAMES) {
@@ -844,12 +895,7 @@ export default class ProjectManager {
 
 				const hasProject = await this.server.memoryFs.existsHard(configPath);
 				if (hasProject) {
-					if (this.isLoadingBannedProjectPath(dir, configPath, processor)) {
-						// Would have emitted a diagnostic
-						return;
-					}
-					await this.server.memoryFs.watch(dir, cwd, partial);
-					return this.assertProjectExisting(cwd);
+					return {configPath, projectPath: dir};
 				}
 			}
 
@@ -859,40 +905,10 @@ export default class ProjectManager {
 				const input = await packagePath.readFileText();
 				const consumer = await json.consumeValue({input, path: packagePath});
 				if (consumer.has(PROJECT_CONFIG_PACKAGE_JSON_FIELD)) {
-					if (this.isLoadingBannedProjectPath(dir, packagePath, processor)) {
-						// Would have emitted a diagnostic
-						return;
-					}
-
-					await this.server.memoryFs.watch(dir, cwd, partial);
-					return this.assertProjectExisting(cwd);
+					return {configPath: packagePath, projectPath: dir};
 				}
 			}
 		}
-
-		// If we didn't find a project config then
-		for (const dir of cwd.getChain()) {
-			// Check for typo config filenames
-			for (const basename of PROJECT_CONFIG_WARN_FILENAMES) {
-				const path = dir.append(basename);
-
-				if (await this.server.memoryFs.existsHard(path)) {
-					this.checkPathForIncorrectConfig(path, processor);
-				}
-			}
-
-			// Check for configs outside of a .config directory
-			for (const configFilename of PROJECT_CONFIG_FILENAMES) {
-				const path = dir.append(configFilename);
-
-				if (await this.server.memoryFs.existsHard(path)) {
-					this.checkPathForIncorrectConfig(path, processor);
-				}
-			}
-		}
-
-		this.logger.info(markup`Found no project for <emphasis>${cwd}</emphasis>`);
-
 		return undefined;
 	}
 

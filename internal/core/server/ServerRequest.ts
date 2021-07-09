@@ -544,11 +544,17 @@ export default class ServerRequest {
 		});
 	}
 
-	public async assertClientCwdProject(): Promise<ProjectDefinition> {
+	public assertClientCwdProject(): Promise<ProjectDefinition> {
 		const location = this.getDiagnosticLocationForClientCwd();
 		return this.server.projectManager.assertProject(
 			this.client.flags.cwd,
 			location,
+		);
+	}
+
+	public retrieveProjectAndConfigPaths() {
+		return this.server.projectManager.getConfigAndProjectPaths(
+			this.client.flags.cwd,
 		);
 	}
 
