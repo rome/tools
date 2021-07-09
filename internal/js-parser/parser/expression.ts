@@ -388,7 +388,6 @@ function _parseMaybeAssign<T extends AnyNode>(
 	if (afterLeftParse) {
 		left = afterLeftParse(parser, left, startPos);
 	}
-
 	if (parser.state.tokenType.isAssign) {
 		const operator = String(parser.state.tokenValue) as AssignmentOperator;
 		const leftPatt = toAssignmentPattern(parser, left, "assignment expression");
@@ -407,6 +406,9 @@ function _parseMaybeAssign<T extends AnyNode>(
 
 		next(parser);
 		const right = parseMaybeAssign(parser, "assignment right", noIn);
+		console.log('operator = ', operator);
+		console.log('left = ', leftPatt);
+		console.log('right = ', right);
 		return parser.finishNode(
 			startPos,
 			{
