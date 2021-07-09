@@ -406,9 +406,9 @@ function _parseMaybeAssign<T extends AnyNode>(
 
 		next(parser);
 		const right = parseMaybeAssign(parser, "assignment right", noIn);
-		console.log('operator = ', operator);
-		console.log('left = ', leftPatt);
-		console.log('right = ', right);
+		console.log('operator: ', operator);
+		console.log('left: ', leftPatt);
+		console.log('right: ', right);
 		return parser.finishNode(
 			startPos,
 			{
