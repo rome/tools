@@ -107,7 +107,7 @@ export default class ProjectManager {
 		this.server.resources.add(
 			this.server.refreshFileEvent.subscribe((events) => {
 				for (const {path, type} of events) {
-					if (type === "DELETED") {
+					if (type === "DELETED" || type === "BUFFER_CLEARED") {
 						this.handleDeleted(path);
 					}
 				}

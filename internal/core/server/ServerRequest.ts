@@ -933,11 +933,12 @@ export default class ServerRequest {
 	): Promise<void> {
 		this.checkCancelled();
 
+		const mtimeNs = this.server.memoryFs.addBuffer(path, content);
+
 		await this.wrapRequestDiagnostic(
 			"updateBuffer",
 			path,
 			async (bridge, ref) => {
-				const mtimeNs = this.server.memoryFs.addBuffer(path, content);
 				await bridge.events.updateBuffer.call({
 					ref,
 					buffer: {
@@ -986,7 +987,7 @@ export default class ServerRequest {
 				await bridge.events.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
 				this.server.refreshFileEvent.push({
-					type: "BUFFER_UPDATE",
+					type: "BUFFER_CLEARED",
 					path,
 				});
 			},
