@@ -412,8 +412,6 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"bundler/moduleCycle": ["bundler", "moduleCycle"],
 	"bundler/topLevelAwait": ["bundler", "topLevelAwait"],
 	"childProcess/failure": ["childProcess", "failure"],
-	"vcs/uncommittedChanges": ["vcs", "uncommittedChanges"],
-	"vcs/expectedRepo": ["vcs", "expectedRepo"],
 	"commands/auto-config/uncommittedChanges": [
 		"commands",
 		"auto-config",
@@ -501,7 +499,9 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"typeCheck/undeclaredVariable": ["typeCheck", "undeclaredVariable"],
 	"typeCheck/unknownImport": ["typeCheck", "unknownImport"],
 	"typeCheck/unknownProperty": ["typeCheck", "unknownProperty"],
+	"vcs/expectedRepo": ["vcs", "expectedRepo"],
 	"vsc/dirty": ["vsc", "dirty"],
+	"vcs/uncommittedChanges": ["vcs", "uncommittedChanges"],
 	"v8/syntaxError": ["v8", "syntaxError"],
 };
 
