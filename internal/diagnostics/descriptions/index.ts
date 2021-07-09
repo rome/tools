@@ -174,6 +174,6 @@ export const descriptions = {
 	INIT_COMMAND: autoConfigCommand,
 	MIGRATE_COMMAND: migrateCommand,
 	TOML: toml,
-	VSC: vcs,
+	VCS: vcs,
 	BROWSERQUERY: browserquery,
 };

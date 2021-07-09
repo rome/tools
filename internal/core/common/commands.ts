@@ -9,13 +9,6 @@ import {Consumer} from "@internal/consume";
 import {UnknownObject} from "@internal/typescript-helpers";
 import {StaticMarkup} from "@internal/markup";
 import {Examples} from "@internal/cli-flags";
-import {ServerRequest} from "@internal/core";
-import {getVCSClient} from "@internal/vcs";
-import {
-	DiagnosticAdvice,
-	createSingleDiagnosticsError,
-	descriptions,
-} from "@internal/diagnostics";
 
 // List of valid command names, includes both server and client commands
 export type CommandName =
@@ -78,33 +71,3 @@ export const commandCategories = {
 	SOURCE_CONTROL: "Source Control",
 	INTERNAL: "Internal",
 };
-
-type VSCDiagnostics = [
-	noVSCAdvice: DiagnosticAdvice[],
-	uncommittedChangesAdvice: DiagnosticAdvice[]
-];
-
-export async function checkVSCWorkingDirectory(
-	req: ServerRequest,
-	[noVSCAdvice, uncommittedChangesAdvice]: VSCDiagnostics,
-) {
-	const {client} = req;
-	const vcsClient = await getVCSClient(client.flags.cwd);
-	const location = req.getDiagnosticLocationForClientCwd();
-	if (vcsClient === undefined) {
-		throw createSingleDiagnosticsError({
-			location,
-			description: descriptions.VSC.UNCOMMITTED_CHANGES(noVSCAdvice),
-		});
-	} else {
-		const uncommittedFiles = await vcsClient.getUncommittedFiles();
-		if (uncommittedFiles.length > 0) {
-			throw createSingleDiagnosticsError({
-				location,
-				description: descriptions.VSC.UNCOMMITTED_CHANGES(
-					uncommittedChangesAdvice,
-				),
-			});
-		}
-	}
-}

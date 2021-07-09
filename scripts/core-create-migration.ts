@@ -1,4 +1,4 @@
-import {INTERNAL, reporter, writeFile} from "./_utils";
+import {INTERNAL, createDirectory, reporter, writeFile} from "./_utils";
 import {markup} from "@internal/markup";
 import {dedent, toCamelCase} from "@internal/string-utils";
 import {VERSION} from "@internal/core";
@@ -13,22 +13,28 @@ const migrationsPath = INTERNAL.append(
 
 export async function main([migration]: string[]): Promise<number> {
 	if (migration === undefined) {
-		reporter.error(markup`./scripts core-create-migration [migrationName]`);
+		reporter.error(markup`./script core-create-migration [migrationName]`);
 		return 1;
 	}
 
 	const migrationName = toCamelCase(migration);
 
+	const migrationPath = migrationsPath.append(migrationName);
+
+	await createDirectory(migrationPath);
+
 	await writeFile(
-		migrationsPath.append(migrationName).append("index.ts"),
+		migrationPath.append("index.ts"),
 		dedent`
+			import {createMigration} from "@internal/core/server/migrate/Migration";
+
 			export default createMigration({
 				versionRange: "",
 				name: "${migrationName}",
 				addedVersion: "${VERSION}",
 				deprecated: false,
 				runMigration: async (consumer) => {},
-				shouldMigrate: (currentVersion, config) => {}
+				shouldMigrate: (config, currentVersion) => {}
 			});
 		`,
 	);

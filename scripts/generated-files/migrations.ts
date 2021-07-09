@@ -56,11 +56,9 @@ export async function main() {
 			lines.push(`import {SemverVersion} from "@internal/codec-semver";`);
 			lines.push(`import {Migration} from "../Migration";`);
 			lines.push("");
-			lines.push(
-				"export const migrations: Map<SemverVersion, Migration> = new Map();",
-			);
+			lines.push("export const migrations: Set<Migration> = new Set();");
 			for (const {name} of defs) {
-				lines.push(`migrations.set(${name}.addedVersion, ${name});`);
+				lines.push(`migrations.add(${name});`);
 			}
 
 			return {lines};

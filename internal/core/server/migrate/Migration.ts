@@ -10,8 +10,8 @@ import {Markup} from "@internal/markup";
 
 export type RunMigration = (consumer: Consumer) => Promise<void>;
 export type ShouldMigrate = (
-	currentVersion: SemverVersion,
 	config: Consumer,
+	currentVersion: SemverVersion,
 ) => boolean;
 
 export interface MigrationOptions {
@@ -78,7 +78,7 @@ export class Migration {
 		if (this._shouldMigrate === undefined) {
 			this._shouldMigrate =
 				satisfiesSemver(currentVersion, this.runOnVersion) &&
-				this.shouldMigrate?.(currentVersion, config);
+				this.shouldMigrate?.(config, currentVersion);
 		}
 		return this._shouldMigrate;
 	}

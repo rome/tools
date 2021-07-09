@@ -13,7 +13,7 @@ export const vcs = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "warn",
-				text: markup`We recommend committing your changes so you can recover them if you don't like the changes. We recommend committing your changes so you can recover them if you don't like the changes`,
+				text: markup`We recommend committing your changes so you can recover them if you don't like the changes.`,
 			},
 			{
 				type: "code",

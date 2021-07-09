@@ -21,8 +21,6 @@ export type DiagnosticCategory =
 	| ["bridge", "disconnected"]
 	| ["bridge", "timeout"]
 	| ["childProcess", "failure"]
-	| ["vcs", "uncommittedChanges"]
-	| ["vcs", "expectedRepo"]
 	| ["commands", "auto-config", "uncommittedChanges"]
 	| ["commands", "auto-config", "expectedRepo"]
 	| ["commands", "migrate"]
@@ -93,6 +91,8 @@ export type DiagnosticCategory =
 	| ["typeCheck", "unknownImport"]
 	| ["typeCheck", "unknownProperty"]
 	| ["vsc", "dirty"]
+	| ["vcs", "expectedRepo"]
+	| ["vcs", "uncommittedChanges"]
 	| ["v8", "syntaxError"];
 
 export type DiagnosticCategoryPrefix = DiagnosticCategory[0];

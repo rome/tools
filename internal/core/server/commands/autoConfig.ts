@@ -1,13 +1,11 @@
 import {createServerCommand} from "@internal/core/server/commands";
 import {markup} from "@internal/markup";
-import {
-	checkVSCWorkingDirectory,
-	commandCategories,
-} from "@internal/core/common/commands";
+import {commandCategories} from "@internal/core/common/commands";
 import {ServerRequest} from "@internal/core";
 import {Diagnostic, descriptions} from "@internal/diagnostics";
 import {UnknownObject} from "@internal/typescript-helpers";
 import Checker from "../checker/Checker";
+import {checkVSCWorkingDirectory} from "@internal/core/server/utils/checkVCSWorkingDirectory";
 
 interface Flags extends UnknownObject {
 	checkVSC: boolean;

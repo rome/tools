@@ -6,10 +6,7 @@
  */
 
 import {ServerRequest, VERSION} from "@internal/core";
-import {
-	checkVSCWorkingDirectory,
-	commandCategories,
-} from "../../common/commands";
+import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
@@ -36,6 +33,7 @@ import {
 import {USER_CONFIG_DIRECTORY} from "@internal/core/common/constants";
 import prettyFormat from "@internal/pretty-format";
 import {Migrator} from "@internal/core/server/migrate/Migrator";
+import {checkVSCWorkingDirectory} from "@internal/core/server/utils/checkVCSWorkingDirectory";
 
 type Flags = {
 	user: boolean;

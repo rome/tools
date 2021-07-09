@@ -13,7 +13,7 @@ export default createMigration({
 		lint.set("ignore", ignorePaths.copy().asPlainArray());
 		lint.delete("ignorePaths");
 	},
-	shouldMigrate: (currentVersion, config) => {
+	shouldMigrate: (config) => {
 		if (config.has("lint")) {
 			const lint = config.get("lint");
 			return lint.has("ignorePaths");
