@@ -640,7 +640,7 @@ export default class MemoryFileSystem {
 	}
 
 	public getFileStats(path: AbsoluteFilePath): undefined | SimpleStats {
-		return this.files.get(path);
+		return this.buffers.get(path) ?? this.files.get(path);
 	}
 
 	public getFileStatsAssert(path: AbsoluteFilePath): SimpleStats {
@@ -901,7 +901,11 @@ export default class MemoryFileSystem {
 
 	public exists(path: AbsoluteFilePath): undefined | boolean {
 		// if we have this in our cache then the file exists
-		if (this.files.has(path) || this.directories.has(path)) {
+		if (
+			this.buffers.has(path) ||
+			this.files.has(path) ||
+			this.directories.has(path)
+		) {
 			return true;
 		}
 

@@ -165,7 +165,7 @@ export default class FileAllocator {
 			const {path} = event;
 
 			// Workers handle cache eviction internally when updating buffers
-			if (event.type === "BUFFER_UPDATE") {
+			if (event.type === "BUFFER_UPDATE" || event.type === "BUFFER_CLEARED") {
 				continue;
 			}
 
