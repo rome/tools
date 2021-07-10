@@ -1933,6 +1933,7 @@ export function parseParenAndDistinguishExpression(
 		if (first) {
 			first = false;
 		} else {
+			console.log('expect parseParenAndDistinguishExpression');
 			if (
 				!expect(
 					parser,
