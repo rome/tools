@@ -1933,7 +1933,6 @@ export function parseParenAndDistinguishExpression(
 		if (first) {
 			first = false;
 		} else {
-			console.log('expect parseParenAndDistinguishExpression');
 			if (
 				!expect(
 					parser,
@@ -2415,6 +2414,7 @@ export function parseObjectExpression(
 	const openContext = expectOpening(parser, tt.braceL, tt.braceR, "object");
 
 	while (true) {
+		// Verify for a eq like colon
 		if (match(parser, tt.braceR) || match(parser, tt.eof)) {
 			expectClosing(parser, openContext);
 			break;
@@ -2423,7 +2423,7 @@ export function parseObjectExpression(
 		if (first) {
 			first = false;
 		} else {
-			if (!expect(parser, tt.comma)) {
+			if (!expect(parser, tt.eq) && !expect(parser, tt.comma)) {
 				break;
 			}
 
