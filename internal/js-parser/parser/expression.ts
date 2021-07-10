@@ -2407,6 +2407,7 @@ export function parseObjectExpression(
 ): JSObjectExpression {
 	const propHash: Set<string> = new Set();
 	let first = true;
+	let isLastUsageOfEq = false;
 
 	const start = parser.getPosition();
 	const properties = [];
@@ -2414,16 +2415,24 @@ export function parseObjectExpression(
 	const openContext = expectOpening(parser, tt.braceL, tt.braceR, "object");
 
 	while (true) {
-		// Verify for a eq like colon
-		if (match(parser, tt.braceR) || match(parser, tt.eof)) {
+		if ((!isLastUsageOfEq && match(parser, tt.braceR)) || match(parser, tt.eof)) {
 			expectClosing(parser, openContext);
 			break;
+		}
+
+		if (isLastUsageOfEq && !eat(parser, tt.eq)) {
+			next(parser);
+			isLastUsageOfEq = false;
 		}
 
 		if (first) {
 			first = false;
 		} else {
-			if (!expect(parser, tt.eq) && !expect(parser, tt.comma)) {
+			if (eat(parser, tt.eq)) {
+				isLastUsageOfEq = true;
+			}
+
+			if (!eat(parser, tt.eq) && !expect(parser, tt.comma)) {
 				break;
 			}
 
