@@ -2420,6 +2420,14 @@ export function parseObjectExpression(
 		if (first) {
 			first = false;
 		} else {
+			if (isLastUsageOfEq && !match(parser, tt.eq)) {
+				isLastUsageOfEq = false;
+			}
+
+			if (!isLastUsageOfEq && eat(parser, tt.eq)) {
+				isLastUsageOfEq = true;
+			}
+
 			if (!expect(parser, tt.comma)) {
 				break;
 			}
@@ -2507,6 +2515,7 @@ export function parseObjectExpression(
 
 		checkPropClash(parser, prop, propHash);
 		properties.push(prop);
+		console.log(prop);
 	}
 
 	return parser.finishNode(
