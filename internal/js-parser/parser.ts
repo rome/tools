@@ -493,10 +493,6 @@ export function expect(
 	type: TokenType,
 	pos?: Position,
 ): boolean {
-	console.log('parser: ', parser);
-	console.log('type: ', type);
-	console.log('pos: ', pos);
-	console.log(new Array(80).fill('=').join(''));
 	if (eat(parser, type)) {
 		return true;
 	} else {
