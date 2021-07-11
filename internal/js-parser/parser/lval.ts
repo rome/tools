@@ -33,6 +33,7 @@ import {
 	JSBindingArrayPattern,
 	JSBindingAssignmentPattern,
 	JSBindingIdentifier,
+	JSStringLiteral,
 	JSBindingObjectPattern,
 	JSBindingObjectPatternProperty,
 	JSReferenceIdentifier,
@@ -83,6 +84,7 @@ export function toAssignmentPattern(
 	contextDescription: string,
 ): AnyJSAssignmentPattern {
 	switch (node.type) {
+		case "JSStringLiteral":
 		case "JSAssignmentObjectPattern":
 		case "JSAssignmentArrayPattern":
 		case "JSAssignmentAssignmentPattern":
@@ -319,6 +321,12 @@ export function toBindingPattern(
 	}
 
 	switch (binding.type) {
+		case "JSStringLiteral":
+			const newNode: JSStringLiteral = {
+				...binding,
+				type: "JSStringLiteral",
+			};
+			return newNode;
 		case "JSAssignmentObjectPattern": {
 			const newNode: JSBindingObjectPattern = {
 				...binding,
