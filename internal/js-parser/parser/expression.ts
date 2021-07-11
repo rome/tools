@@ -2428,7 +2428,11 @@ export function parseObjectExpression(
 				isLastUsageOfEq = true;
 			}
 
-			if (!expect(parser, tt.comma)) {
+			if (isLastUsageOfEq && !expect(parser, tt.comma)) {
+				break;
+			}
+
+			if (match(parser, tt.eof)) {
 				break;
 			}
 
