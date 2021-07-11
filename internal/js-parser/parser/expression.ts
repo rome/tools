@@ -2515,7 +2515,6 @@ export function parseObjectExpression(
 
 		checkPropClash(parser, prop, propHash);
 		properties.push(prop);
-		console.log(prop);
 	}
 
 	return parser.finishNode(
@@ -2850,6 +2849,35 @@ export function parseObjectProperty(
 	isPattern: boolean,
 	refShorthandDefaultPos: undefined | IndexTracker,
 ): undefined | JSObjectProperty | JSBindingObjectPatternProperty {
+	if (eat(parser, tt.eq)) {
+		if (isPattern) {
+			const value = parseMaybeDefault(parser);
+			return parser.finishNode(
+				start,
+				{
+					key,
+					type: "JSBindingObjectPatternProperty",
+					value,
+				},
+			);
+		} else {
+			const value = parseMaybeAssign(
+				parser,
+				"assignment right",
+				false,
+				refShorthandDefaultPos,
+			);
+			return parser.finishNode(
+				start,
+				{
+					key,
+					type: "JSObjectProperty",
+					value,
+				},
+			);
+		}
+	}
+
 	if (eat(parser, tt.colon)) {
 		if (isPattern) {
 			const value = parseMaybeDefault(parser);
