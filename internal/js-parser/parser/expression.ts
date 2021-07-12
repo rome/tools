@@ -3752,10 +3752,10 @@ export function parseIdentifierName(
 
 	let name: string;
 
+	// Need to implement a case for empty object
+
 	if (match(parser, tt.name)) {
 		name = String(parser.state.tokenValue);
-	} else if (eat(parser, tt.braceR)) {
-		name = "object";
 	} else if (parser.state.tokenType.keyword !== undefined) {
 		name = parser.state.tokenType.keyword;
 
