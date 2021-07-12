@@ -157,13 +157,13 @@ export default createServerCommand<Flags>({
 				reporter.warn(
 					markup`ESlint integration is enabled. Beware that not all the settings are supported. To turn it off run`,
 				);
-				reporter.command("rome config disable integrations.eslint");
+				reporter.command("rome config disable integrations.eslint.enabled");
 			}
 			if (project.config.integrations.prettier.enabled) {
 				reporter.warn(
 					markup`Prettier integration is enabled. Beware that not all the settings are supported. To turn it off run`,
 				);
-				reporter.command("rome config disable integrations.prettier");
+				reporter.command("rome config disable integrations.prettier.enabled");
 			}
 		}
 		const linter = new Checker(req, opts);
