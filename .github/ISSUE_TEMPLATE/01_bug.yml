@@ -45,7 +45,7 @@ body:
       label: Rome version
       description: What version of Rome are you running?
       options:
-        - 10.0.0
+        - 10.0.4-beta
     validations:
       required: true
   - type: textarea
