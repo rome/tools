@@ -2,8 +2,6 @@ name: 🐛 Bug Report
 description: Report a possible bug or regression
 title: "🐛 "
 labels: ["bug: unconfirmed"]
-assignees:
-  - ematipico
 body:
   - type: markdown
     attributes:
@@ -20,6 +18,7 @@ body:
       description: Run `rome rage --summary` and paste the output below.
     validations:
       required: true
+    render: bash
   - type: textarea
     id: steps-to-reproduce
     attributes:
