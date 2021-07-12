@@ -16,9 +16,9 @@ body:
     attributes:
       label: Environment information
       description: Run `rome rage --summary` and paste the output below.
+      render: bash
     validations:
       required: true
-    render: bash
   - type: textarea
     id: steps-to-reproduce
     attributes:
