@@ -3751,9 +3751,25 @@ export function parseIdentifierName(
 	}
 
 	let name: string;
+	let isPastObject = false;
 
 	if (match(parser, tt.name)) {
 		name = String(parser.state.tokenValue);
+	} else if (match(parser, tt.braceR)) {
+		name = "object";
+
+		if (
+			(name === "object") &&
+			(parser.state.lastEndIndex !== parser.state.lastStartIndex + 1 ||
+			parser.input.charCodeAt(parser.state.lastStartIndex) !== charCodes.dot)
+		) {
+			parser.state.context.pop();
+		}
+
+		isPastObject = true;
+	} else if (match(parser, tt.parenR)) {
+		isPastObject = false;
+		name = "";
 	} else if (parser.state.tokenType.keyword !== undefined) {
 		name = parser.state.tokenType.keyword;
 
