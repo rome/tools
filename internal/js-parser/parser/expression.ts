@@ -1980,7 +1980,6 @@ export function parseParenAndDistinguishExpression(
 	}
 
 	const innerEnd = parser.getPosition();
-	// produce the correctly output for the expect
 	expectClosing(parser, openContext);
 	const outerEnd = parser.getPosition();
 
@@ -3760,8 +3759,7 @@ export function parseIdentifierName(
 		parser.state.context.shift();
 	} else if (match(parser, tt.parenR) && parser.state.context[0].token === tt.parenL.label) {
 		name = "call-expression";
-		parser.state.context.shift();
-	} else if (match(parser, tt.semi) && parser.state.context.length === 0) {
+	} else if (match(parser, tt.semi) && parser.state.context[0].token === tt.parenL.label) {
 		name = "termination";
 	} else if (parser.state.tokenType.keyword !== undefined) {
 		name = parser.state.tokenType.keyword;
