@@ -1980,6 +1980,7 @@ export function parseParenAndDistinguishExpression(
 	}
 
 	const innerEnd = parser.getPosition();
+	// produce the correctly output for the expect
 	expectClosing(parser, openContext);
 	const outerEnd = parser.getPosition();
 
@@ -3752,10 +3753,16 @@ export function parseIdentifierName(
 
 	let name: string;
 
-	// Need to implement a case for empty object
-
 	if (match(parser, tt.name)) {
 		name = String(parser.state.tokenValue);
+	} else if (match(parser, tt.braceR) && parser.state.context[0].token === tt.braceL.label) {
+		name = "object";
+		parser.state.context.shift();
+	} else if (match(parser, tt.parenR) && parser.state.context[0].token === tt.parenL.label) {
+		name = "call-expression";
+		parser.state.context.shift();
+	} else if (match(parser, tt.semi) && parser.state.context.length === 0) {
+		name = "termination";
 	} else if (parser.state.tokenType.keyword !== undefined) {
 		name = parser.state.tokenType.keyword;
 
