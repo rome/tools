@@ -39,15 +39,6 @@ body:
       placeholder: It should not throw an error.
     validations:
       required: true
-  - type: dropdown
-    id: version
-    attributes:
-      label: Rome version
-      description: What version of Rome are you running?
-      options:
-        - 10.0.4-beta
-    validations:
-      required: true
   - type: textarea
     id: configuration
     attributes:
