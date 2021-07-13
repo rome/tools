@@ -32,7 +32,7 @@ jobs:
           touch .config/rome.json
           echo '{ "root": true, "name": "rome-integration-eslint", "format": { "enabled": false }, "lint": { "enabled": false, "ignore": ["node_modules", "test", "site"] }, "integrations": { "eslint": { "enabled": true } } }' > .config/rome.json
           ../rome/rome start
-          ../rome/rome check ./src --timing
+#          ../rome/rome check ./src --timing
   prettier:
     name: Prettier integration
     runs-on: ubuntu-latest
