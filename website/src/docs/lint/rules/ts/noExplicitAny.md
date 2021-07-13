@@ -18,7 +18,7 @@ When `any` is used, all compiler type checks around that value are ignored.
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a13b58edfa3f53a21fabf7511a03182fc292d830,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:77cabf8bc94ba2f65af55432c3105dcbce4f89bf,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -38,14 +38,14 @@ When `any` is used, all compiler type checks around that value are ignored.
 
 ---
 
-{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">ages</span><span class="token punctuation">:</span> <span class="token variable">any</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;seventeen&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token variable">ages</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">ages</span><span class="token punctuation">:</span>  <span class="token variable">any</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;seventeen&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token variable">ages</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/ts/noExplicitAny</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:13</span> <strong>lint/ts/noExplicitAny</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using the </span><span style="color: Tomato;"><strong>any</strong></span><span style="color: Tomato;"> type.</span>
 
-    <span class="token keyword">const</span> <span class="token variable">ages</span><span class="token punctuation">:</span> <span class="token variable">any</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;seventeen&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token variable">ages</span><span class="token punctuation">;</span>
-                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+    <span class="token keyword">const</span> <span class="token variable">ages</span><span class="token punctuation">:</span>  <span class="token variable">any</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;seventeen&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token variable">ages</span><span class="token punctuation">;</span>
+                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Using nonspecific types defeats the purpose of using TypeScript.</span>
 
@@ -53,14 +53,14 @@ When `any` is used, all compiler type checks around that value are ignored.
 
 ---
 
-{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">ages</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">any</span><span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;seventeen&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token variable">ages</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">ages</span><span class="token punctuation">:</span>  <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">any</span><span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;seventeen&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token variable">ages</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:18</span> <strong>lint/ts/noExplicitAny</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:19</span> <strong>lint/ts/noExplicitAny</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using the </span><span style="color: Tomato;"><strong>any</strong></span><span style="color: Tomato;"> type.</span>
 
-    <span class="token keyword">const</span> <span class="token variable">ages</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">any</span><span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;seventeen&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token variable">ages</span><span class="token punctuation">;</span>
-                      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+    <span class="token keyword">const</span> <span class="token variable">ages</span><span class="token punctuation">:</span>  <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">any</span><span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&apos;seventeen&apos;</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token variable">ages</span><span class="token punctuation">;</span>
+                       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Using nonspecific types defeats the purpose of using TypeScript.</span>
 

@@ -1,8 +1,0 @@
-filename: "file.tsx"
-invalid: [
-	"findDOMNode(this).scrollIntoView()"
-	"ReactDOM.findDOMNode(this).scrollIntoView()"
-]
-valid: [
-	"this.node.scrollIntoView()"
-]

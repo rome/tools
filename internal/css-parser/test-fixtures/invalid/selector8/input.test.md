@@ -4,6 +4,8 @@
 
 ## `invalid > selector8`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -35,13 +37,29 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector8/input.css>
+				path: UIDPath<invalid/selector8/input.css>
 				end: Position 1:5
 				start: Position 1:0
 			}
 		}
 	]
-	path: RelativePath<invalid/selector8/input.css>
+	path: UIDPath<invalid/selector8/input.css>
 	loc: SourceLocation invalid/selector8/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/selector8/input.css:1 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected the use of an identifier after #.
+
+  > 1 │ #1234 {
+      │ ^^^^^
+    2 │
+    3 │ }
+
+
 ```

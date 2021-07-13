@@ -210,7 +210,7 @@
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang='foo'></html>
+    <html lang="foo"></html>
           ^^^^^^^^^^
 
 
@@ -232,7 +232,7 @@
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang='ex'></html>
+    <html lang="ex"></html>
           ^^^^^^^^^
 
 
@@ -254,7 +254,7 @@
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang='foo-bar'></html>
+    <html lang="foo-bar"></html>
           ^^^^^^^^^^^^^^
 
 
@@ -276,7 +276,7 @@
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang='aa-zz'></html>
+    <html lang="aa-zz"></html>
           ^^^^^^^^^^^^
 
   ℹ Did you mean aa-AF?
@@ -317,7 +317,7 @@
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang='zz-AA'></html>
+    <html lang="zz-AA"></html>
           ^^^^^^^^^^^^
 
   ℹ Did you mean az-AF?
@@ -354,20 +354,22 @@
 
 ```
 
- lint/a11y/useValidLang/reject/6/file.tsx:1:23 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useValidLang/reject/6/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unterminated string constant
+  ✖ Provide a valid value for the lang attribute.
 
-    <html lang='en2></html>
-                           ^
+    <html lang="en2"></html>
+          ^^^^^^^^^^
 
 
 ```
 
 ### `13: formatted`
 
-```javascript
-undefined
+```tsx
+<html lang="en2">
+</html>;
+
 ```
 
 ### `14`

@@ -4,6 +4,8 @@
 
 ## `invalid > at-page > page-properties-case-insensitive`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -126,13 +128,48 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/at-page/page-properties-case-insensitive/input.css>
+				path: UIDPath<invalid/at-page/page-properties-case-insensitive/input.css>
 				end: Position 2:8
 				start: Position 2:1
 			}
 		}
 	]
-	path: RelativePath<invalid/at-page/page-properties-case-insensitive/input.css>
+	path: UIDPath<invalid/at-page/page-properties-case-insensitive/input.css>
 	loc: SourceLocation invalid/at-page/page-properties-case-insensitive/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/at-page/page-properties-case-insensitive/input.css:2:1 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The at-rule @page accepts only a certain number of properties and DISPLAY is not one of them.
+
+    1 │ @page {
+  > 2 │   DISPLAY: none;
+      │   ^^^^^^^
+    3 │ }
+
+  ℹ Did you mean background-color?
+
+  - DISPLAY
+  + background-color
+
+  ℹ Or one of these?
+
+  - background-image
+  - background-repeat
+  - background-attachment
+  - background-position
+  - background
+  - border-top-width
+  - border-right-width
+  - border-bottom-width
+  - border-left-width
+  - border-width
+  and 54 others...
+
+
 ```

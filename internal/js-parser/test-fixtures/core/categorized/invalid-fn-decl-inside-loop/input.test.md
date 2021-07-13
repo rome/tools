@@ -52,7 +52,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
-				end: Position 1:9
+				end: Position 1:10
 				start: Position 1:10
 			}
 		}

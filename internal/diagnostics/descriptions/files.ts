@@ -10,7 +10,7 @@ export const files = createDiagnosticsCategory({
 		message: markup`Can't file a file handler for the extension <emphasis>${ext}</emphasis>`,
 	}),
 
-	NO_FILE_HANDLER: (path: Path) => {
+	NO_FILE_HANDLER: (path: Path, categoryValue: string) => {
 		let advice: DiagnosticAdvice[] = [];
 
 		if (path.hasAnyExtensions()) {
@@ -24,6 +24,7 @@ export const files = createDiagnosticsCategory({
 
 		return {
 			category: DIAGNOSTIC_CATEGORIES["files/missingHandler"],
+			categoryValue,
 			message: markup`No file handler found for <emphasis>${path}</emphasis>`,
 			advice,
 		};

@@ -88,7 +88,7 @@
 			location: {
 				language: "unknown"
 				path: RelativePath<1.test>
-				end: Position 1:0
+				end: Position 1:1
 				start: Position 1:0
 			}
 		}
@@ -142,16 +142,16 @@
 			snapshot: {
 				currentToken: String {
 					value: "i'm an unterminated string"
-					end: ZeroIndexedNumber<28>
+					end: ZeroIndexedNumber<27>
 					start: ZeroIndexedNumber<0>
 				}
-				nextTokenIndex: ZeroIndexedNumber<28>
+				nextTokenIndex: ZeroIndexedNumber<27>
 				prevToken: SOF {
 					end: ZeroIndexedNumber<0>
 					start: ZeroIndexedNumber<0>
 				}
 			}
-			loc: SourceLocation 2.test 1:0-1:28
+			loc: SourceLocation 2.test 1:0-1:27
 		}
 	]
 	path: RelativePath<2.test>

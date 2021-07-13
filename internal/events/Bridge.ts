@@ -117,7 +117,7 @@ export default class Bridge<
 
 		this.postHandshakeQueue = [];
 
-		// @ts-ignore: Cannot safely type this but the code to build it is fine
+		// @ts-expect-error: Cannot safely type this but the code to build it is fine
 		this.events = {};
 		this.eventsIdCounter = 0;
 
@@ -418,7 +418,7 @@ export default class Bridge<
 		}
 		this.idToEventMap.set(id, event);
 
-		// @ts-ignore: Necessary evil XqjWidsMhvM
+		// @ts-expect-error: Necessary evil XqjWidsMhvM
 		this.events[name] = event;
 	}
 
@@ -574,7 +574,7 @@ export default class Bridge<
 		name: string,
 		transport: ErrorSerial<T>,
 	) {
-		// @ts-ignore: Dynamicism
+		// @ts-expect-error: Dynamicism
 		this.customErrorTransports.set(name, transport);
 	}
 

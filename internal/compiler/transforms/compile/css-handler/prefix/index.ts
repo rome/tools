@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:1604f5526468be75cda1fa9d2610acc3f353bcf8,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
+/* GENERATED:START(hash:c33b0da136d1b7bf76d2f0b194f0ef454942e1e4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/css-prefix` to update. */
 import animation from "./prefixes/animation";
 import appearance from "./prefixes/appearance";
 import backdropFilter from "./prefixes/backdrop-filter";
@@ -12,13 +12,16 @@ import colorAdjust from "./prefixes/color-adjust";
 import cursor from "./prefixes/cursor";
 import display from "./prefixes/display";
 import hyphens from "./prefixes/hyphens";
+import imageRendering from "./prefixes/image-rendering";
 import imageSet from "./prefixes/image-set";
 import inline from "./prefixes/inline";
 import mask from "./prefixes/mask";
 import multicolumn from "./prefixes/multicolumn";
 import position from "./prefixes/position";
+import pseudoSelectors from "./prefixes/pseudo-selectors";
 import regions from "./prefixes/regions";
 import scrollSnapType from "./prefixes/scroll-snap-type";
+import shape from "./prefixes/shape";
 import tabSize from "./prefixes/tab-size";
 import textAlignLast from "./prefixes/text-align-last";
 import textEmphasis from "./prefixes/text-emphasis";
@@ -45,13 +48,16 @@ export default [
 	...cursor,
 	...display,
 	...hyphens,
+	...imageRendering,
 	...imageSet,
 	...inline,
 	...mask,
 	...multicolumn,
 	...position,
+	...pseudoSelectors,
 	...regions,
 	...scrollSnapType,
+	...shape,
 	...tabSize,
 	...textAlignLast,
 	...textEmphasis,

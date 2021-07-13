@@ -25,7 +25,9 @@ test(
 			DIAGNOSTIC_CATEGORIES.parse,
 			"manifest",
 		);
-		t.snapshot(await normalizeManifest(PATH, manifest, []));
+		t.snapshot(
+			await normalizeManifest({path: PATH, consumer: manifest, projects: []}),
+		);
 	},
 );
 
@@ -44,7 +46,9 @@ test(
 			DIAGNOSTIC_CATEGORIES.parse,
 			"manifest",
 		);
-		t.snapshot(await normalizeManifest(PATH, manifest, []));
+		t.snapshot(
+			await normalizeManifest({path: PATH, consumer: manifest, projects: []}),
+		);
 	},
 );
 
@@ -63,6 +67,8 @@ test(
 			DIAGNOSTIC_CATEGORIES.parse,
 			"manifest",
 		);
-		t.snapshot(await normalizeManifest(PATH, manifest, []));
+		t.snapshot(
+			await normalizeManifest({path: PATH, consumer: manifest, projects: []}),
+		);
 	},
 );

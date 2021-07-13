@@ -29,10 +29,10 @@ export default createServerCommand({
 	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
-			allowDiagnostics: c.get("allowDiagnostics").asBoolean(false),
-			compact: c.get("compact").asBoolean(true),
+			allowDiagnostics: c.get("allowDiagnostics").required(false).asBoolean(),
+			compact: c.get("compact").required(true).asBoolean(),
 			sourceType: c.get("sourceType").asStringSetOrVoid(["module", "script"]),
-			tokenize: c.get("tokenize").asBoolean(false),
+			tokenize: c.get("tokenize").required(false).asBoolean(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {

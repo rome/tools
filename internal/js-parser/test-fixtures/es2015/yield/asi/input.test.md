@@ -48,7 +48,7 @@ JSRoot {
 	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/yield/asi/input.js>
 	loc: SourceLocation es2015/yield/asi/input.js 1:0-2:4

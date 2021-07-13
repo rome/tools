@@ -31,6 +31,7 @@ import {
 	MixedPathMap,
 	MixedPathSet,
 	Path,
+	UNKNOWN_PATH,
 } from "@internal/path";
 import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
@@ -311,6 +312,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		if (path !== undefined) {
 			const normalPath = this.normalizePath(path);
+
 			if (hasFrame(diag.location)) {
 				deps.push({
 					type: "reference",
@@ -405,6 +407,10 @@ export default class DiagnosticsPrinter extends Error {
 		// Remove non-absolute filenames and normalize sourceType and language for conflicts
 		for (const dep of deps) {
 			const path = dep.path;
+			if (UNKNOWN_PATH.equal(path)) {
+				continue;
+			}
+
 			const existing = depsMap.get(path) ?? this.fileDependencies.get(path);
 
 			// "reference" dependency can override "change" since it has more metadata that needs conflict resolution
@@ -659,11 +665,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 		this.processor.addDiagnostics(printer.processor.getDiagnostics());
 
-		const {onFooterPrintCallbacks} = printer;
-		if (onFooterPrintCallbacks.length === 0) {
-			return;
-		}
-
+		// We include a more specific "X problems found" for each command
 		this.disableDefaultFooter();
 		this.onFooterPrint(
 			async (reporter) => {
@@ -672,14 +674,14 @@ export default class DiagnosticsPrinter extends Error {
 				reporter.br();
 
 				await reporter.indent(async () => {
-					// Include a more specific "X problems found" for each command
 					const hasProblems = printer.hasProblems();
-					if (hasProblems) {
-						printer.printDefaultFooter();
+
+					for (const {callback} of printer.onFooterPrintCallbacks) {
+						await callback(reporter, hasProblems);
 					}
 
-					for (const {callback} of onFooterPrintCallbacks) {
-						await callback(reporter, hasProblems);
+					if (hasProblems) {
+						printer.printDefaultFooter();
 					}
 				});
 
@@ -746,7 +748,7 @@ export default class DiagnosticsPrinter extends Error {
 				const calculated = this.processor.calculateVisibile();
 				if (calculated.truncated > 0) {
 					reporter.warn(
-						markup`Only <emphasis>${calculated.diagnostics.length}</emphasis> of <emphasis>${calculated.total}</emphasis> diagnostics shown. Add <code>--show-all-diagnostics</code> or <code>--max-diagnostics ${"<num>"}</code> flag to view remaining`,
+						markup`Only <emphasis>${calculated.diagnostics.length}</emphasis> of <emphasis>${calculated.total}</emphasis> diagnostics shown. Use <code>--show-all-diagnostics</code> or <code>--max-diagnostics ${"<num>"}</code> flag to view remaining.`,
 					);
 				}
 

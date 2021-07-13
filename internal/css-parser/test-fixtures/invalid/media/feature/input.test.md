@@ -4,6 +4,8 @@
 
 ## `invalid > media > feature`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -43,13 +45,27 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/media/feature/input.css>
+				path: UIDPath<invalid/media/feature/input.css>
 				end: Position 1:19
 				start: Position 1:18
 			}
 		}
 	]
-	path: RelativePath<invalid/media/feature/input.css>
+	path: UIDPath<invalid/media/feature/input.css>
 	loc: SourceLocation invalid/media/feature/input.css 1:0-1:20
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/media/feature/input.css:1:18 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ A left parenthesis or the keyword not are expected in this position.
+
+    @media screen and {}
+                      ^
+
+
 ```

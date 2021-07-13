@@ -12,12 +12,18 @@ export default async function getManifest(
 	const projects = await server.projectManager.getProjectHierarchyFromPath(
 		manifestPath,
 	);
+	let checkDependenciesAndLicense = false;
+	const mainProject = await server.projectManager.findLoadedProject(cwd);
+	if (mainProject) {
+		checkDependenciesAndLicense = mainProject.config.dependencies.enabled;
+	}
 	if (await manifestPath.exists()) {
-		manifest = await normalizeManifest(
-			manifestPath,
-			json.consumeValue(await manifestPath.readFileTextMeta()),
+		manifest = await normalizeManifest({
+			path: manifestPath,
+			consumer: json.consumeValue(await manifestPath.readFileTextMeta()),
 			projects,
-		);
+			checkDependenciesAndLicense,
+		});
 	}
 	return manifest;
 }

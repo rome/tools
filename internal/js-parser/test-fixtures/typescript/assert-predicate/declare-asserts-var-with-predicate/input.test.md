@@ -106,7 +106,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts>
-				end: Position 1:16
+				end: Position 1:17
 				start: Position 1:17
 			}
 		}

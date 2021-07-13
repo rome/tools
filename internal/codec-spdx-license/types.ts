@@ -18,7 +18,7 @@ export type SPDXLicenseDefinition = {
 	isDeprecatedLicenseId: boolean;
 	isFsfLibre?: boolean;
 	detailsUrl: string;
-	referenceNumber: string;
+	referenceNumber: number;
 	name: string;
 	licenseId: string;
 	seeAlso: string[];

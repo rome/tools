@@ -44,7 +44,7 @@ export function buildFileLink(
 	line: undefined | string;
 	column: undefined | string;
 } {
-	let path: Path = createPath(attributes.get("target").asString(""));
+	let path: Path = createPath(attributes.get("target").required("").asString());
 	let line = attributes.get("line").asOneIndexedNumberOrVoid();
 	let column = attributes.get("column").asZeroIndexedNumberOrVoid();
 
@@ -59,6 +59,10 @@ export function buildFileLink(
 				column = pos.column;
 			}
 		}
+	}
+
+	if (path.isRelative() && opts.cwd !== undefined) {
+		path = opts.cwd.resolve(path);
 	}
 
 	return {

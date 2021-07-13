@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -10,7 +10,7 @@ export default [
 	"text-emphasis-style",
 	"text-emphasis-color",
 ].map((propertyName) =>
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: "text-emphasis",
 		enter(path) {
 			return prefixCSSProperty({

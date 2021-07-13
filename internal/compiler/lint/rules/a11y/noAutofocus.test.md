@@ -41,7 +41,7 @@
 
   ✖ Avoid the autoFocus attribute.
 
-    <input autoFocus='true' />
+    <input autoFocus="true" />
            ^^^^^^^^^^^^^^^^
 
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for

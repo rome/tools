@@ -321,3 +321,22 @@ test(
 		t.snapshot(result);
 	},
 );
+
+test(
+	"JSX comment",
+	async (t) => {
+		const result = extractSuppressionsFromSource(
+			dedent`
+				<div>
+					{/* rome-ignore lint/react/noChildrenProp: this is intentional */}
+					<Cmp children={"foo"} text="something">
+					</Cmp>
+				</div>;
+			`,
+		);
+		t.is(result.suppressions.length, 1);
+		t.is(result.diagnostics.length, 0);
+
+		t.snapshot(result);
+	},
+);

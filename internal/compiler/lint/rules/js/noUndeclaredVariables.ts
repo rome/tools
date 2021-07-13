@@ -41,6 +41,7 @@ const TS_VARIABLES_SET = new Set([
 	"PromiseLike",
 	"Promise",
 	"ArrayLike",
+	"ReadonlyArray",
 	"Partial",
 	"Required",
 	"Readonly",

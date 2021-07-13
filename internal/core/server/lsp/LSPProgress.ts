@@ -21,9 +21,19 @@ export default class LSPProgress extends ReporterProgressBase {
 		this.transport = transport;
 		this.token = progressTokenCounter++;
 		this.lastRenderKey = "";
+		this.hasBegun = false;
 
-		transport.write({
-			jsonrpc: "2.0",
+		// Progress notifications disabled for now because of performance impact
+		this.pause();
+	}
+
+	private lastRenderKey: string;
+	private token: number;
+	private transport: LSPTransport;
+	private hasBegun: boolean;
+
+	private begin(percentage: number) {
+		this.transport.write({
 			method: "$/progress",
 			params: {
 				token: this.token,
@@ -31,17 +41,16 @@ export default class LSPProgress extends ReporterProgressBase {
 					kind: "begin",
 					cancellable: false,
 					title: this.title,
-					percentage: 0,
+					percentage,
 				},
 			},
 		});
 	}
 
-	private lastRenderKey: string;
-	private token: number;
-	private transport: LSPTransport;
-
 	public render() {
+		if (this.paused) {
+			return;
+		}
 		const total = this.total === undefined ? 0 : this.total;
 		const percentage = Math.floor(100 / total * this.current);
 
@@ -52,8 +61,33 @@ export default class LSPProgress extends ReporterProgressBase {
 		}
 
 		this.lastRenderKey = renderKey;
+
+		if (this.hasBegun) {
+			this.report(percentage);
+		} else {
+			this.begin(percentage);
+			this.hasBegun = true;
+		}
+	}
+
+	public end() {
+		if (!this.hasBegun) {
+			return;
+		}
+
 		this.transport.write({
-			jsonrpc: "2.0",
+			method: "$/progress",
+			params: {
+				token: this.token,
+				value: {
+					kind: "end",
+				},
+			},
+		});
+	}
+
+	private report(percentage: number) {
+		this.transport.write({
 			method: "$/progress",
 			params: {
 				token: this.token,
@@ -64,19 +98,6 @@ export default class LSPProgress extends ReporterProgressBase {
 						? ""
 						: markupToJoinedPlainText(this.text),
 					percentage,
-				},
-			},
-		});
-	}
-
-	public end() {
-		this.transport.write({
-			jsonrpc: "2.0",
-			method: "$/progress",
-			params: {
-				token: this.token,
-				value: {
-					kind: "end",
 				},
 			},
 		});

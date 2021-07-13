@@ -4,6 +4,8 @@
 
 ## `invalid > var`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -130,13 +132,30 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/var/input.css>
-				end: Position 2:18
-				start: Position 2:17
+				path: UIDPath<invalid/var/input.css>
+				end: Position 2:17
+				start: Position 2:13
 			}
 		}
 	]
-	path: RelativePath<invalid/var/input.css>
+	path: UIDPath<invalid/var/input.css>
 	loc: SourceLocation invalid/var/input.css 1:0-5:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/var/input.css:2:13 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Invalid custom property found inside the "var" function.
+
+    1 │ .style {
+  > 2 │   border: var(#fff);
+      │               ^^^^
+    3 │   border: var(calc(10px + 10px));
+    4 │   border: var(90rem);
+
+
 ```

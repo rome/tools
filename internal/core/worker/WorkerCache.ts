@@ -361,7 +361,7 @@ class CacheFile {
 
 		const loaded = this.entries.get(key);
 		if (loaded !== undefined) {
-			// @ts-ignore: Trust
+			// @ts-expect-error: Trust
 			return loaded;
 		}
 

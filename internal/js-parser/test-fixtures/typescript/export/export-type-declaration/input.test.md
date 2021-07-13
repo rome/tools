@@ -146,7 +146,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/export/export-type-declaration/input.ts>
-				end: Position 3:23
+				end: Position 3:24
 				start: Position 3:24
 			}
 		}

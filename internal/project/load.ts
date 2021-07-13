@@ -31,6 +31,9 @@ import {CachedFileReader} from "@internal/fs";
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
 import {
+	ESLINT_CONFIG_FILENAMES,
+	INTEGRATIONS_IGNORE_FILES,
+	PRETTIER_CONFIG_FILESNAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 	VCS_IGNORE_FILENAMES,
 } from "./constants";
@@ -38,6 +41,8 @@ import {lintRuleNames} from "@internal/compiler";
 import {sha256} from "@internal/string-utils";
 import {resolveBrowsers} from "@internal/codec-browsers";
 import {ParserOptions} from "@internal/parser-core";
+import {loadPrettier} from "@internal/project/integrations/loadPrettier";
+import {loadEslint} from "@internal/project/integrations/loadEslint";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -58,10 +63,15 @@ function categoryExists(consumer: Consumer): boolean {
 	return true;
 }
 
+interface LoadCompleteProjectConfigOptions {
+	silenceSuppressions: boolean;
+}
+
 export async function loadCompleteProjectConfig(
 	projectDirectory: AbsoluteFilePath,
 	configPath: AbsoluteFilePath,
 	reader: CachedFileReader,
+	opts?: LoadCompleteProjectConfigOptions,
 ): Promise<{
 	meta: ProjectConfigMeta;
 	config: ProjectConfig;
@@ -73,7 +83,11 @@ export async function loadCompleteProjectConfig(
 		projectDirectory,
 		configPath,
 	});
-	const {consumer} = meta;
+	let {consumer} = meta;
+
+	if (opts?.silenceSuppressions) {
+		consumer = consumer.capture().consumer;
+	}
 
 	// Produce a defaultConfig with some directory specific values
 	const _defaultConfig: ProjectConfig = createDefaultProjectConfig();
@@ -85,7 +99,7 @@ export async function loadCompleteProjectConfig(
 		},
 	};
 
-	const name = consumer.get("name").asString(projectDirectory.getBasename());
+	const name = consumer.get("name").required(projectDirectory.getBasename()).asString();
 
 	const config: ProjectConfig = {
 		...defaultConfig,
@@ -109,6 +123,56 @@ export async function loadCompleteProjectConfig(
 				});
 
 				// TODO: Maybe these are useful in other places?
+				config.lint.ignore = [...config.lint.ignore, ...patterns];
+			});
+		}
+	}
+
+	// Load extensions configuration of prettier
+	for (const prettierFile of PRETTIER_CONFIG_FILESNAMES) {
+		const possiblePath = projectDirectory.append(prettierFile);
+		meta.configDependencies.add(possiblePath);
+		if (await possiblePath.exists()) {
+			const file = await reader.readFileText(possiblePath);
+			const prettierConfig = loadPrettier(file, possiblePath.getExtensions());
+			consumer.handleThrownDiagnostics(() => {
+				config.integrations.prettier = {
+					...config.integrations.prettier,
+					...prettierConfig,
+				};
+			});
+		}
+	}
+
+	// Load extensions configuration of eslint
+	for (const eslintFile of ESLINT_CONFIG_FILENAMES) {
+		const possiblePath = projectDirectory.append(eslintFile);
+		meta.configDependencies.add(possiblePath);
+		if (await possiblePath.exists()) {
+			const file = await reader.readFileText(possiblePath);
+			consumer.handleThrownDiagnostics(() => {
+				const eslintConfig = loadEslint(file);
+				config.integrations.eslint = {
+					...config.integrations.eslint,
+					...eslintConfig,
+				};
+			});
+		}
+	}
+
+	// read ignore files
+	for (const fileToIgnore of INTEGRATIONS_IGNORE_FILES) {
+		const possiblePath = projectDirectory.append(fileToIgnore);
+		meta.configDependencies.add(possiblePath);
+		if (await possiblePath.exists()) {
+			const file = await reader.readFileText(possiblePath);
+
+			consumer.handleThrownDiagnostics(() => {
+				const patterns = parsePathPatternsFile({
+					input: file,
+					path: possiblePath,
+				});
+
 				config.lint.ignore = [...config.lint.ignore, ...patterns];
 			});
 		}
@@ -279,7 +343,6 @@ export async function normalizeProjectConfig(
 		if (dependencies.has("enabled")) {
 			config.dependencies.enabled = dependencies.get("enabled").asBoolean();
 		}
-
 		if (dependencies.has("exceptions")) {
 			const exceptions = dependencies.get("exceptions").asMap();
 
@@ -464,8 +527,47 @@ export async function normalizeProjectConfig(
 			if (eslint.has("enabled")) {
 				config.integrations.eslint.enabled = eslint.get("enabled").asBoolean();
 			}
+			if (eslint.has("globInputPaths")) {
+				config.integrations.eslint.globInputPaths = eslint.get("globInputPaths").asBoolean();
+			}
+			if (eslint.has("extensions")) {
+				config.integrations.eslint.extensions = arrayOfStrings(
+					eslint.get("extensions"),
+				);
+			}
+			if (eslint.has("fix")) {
+				config.integrations.eslint.fix = eslint.get("fix").asBoolean();
+			}
+			if (eslint.has("rulePaths")) {
+				config.integrations.eslint.rulePaths = arrayOfStrings(
+					eslint.get("rulePaths"),
+				);
+			}
+			eslint.enforceUsedProperties("eslint config property");
 		}
-		eslint.enforceUsedProperties("eslint config property");
+
+		const prettier = integrations.get("prettier");
+		if (categoryExists(prettier)) {
+			if (prettier.has("enabled")) {
+				config.integrations.prettier.enabled = prettier.get("enabled").asBoolean();
+				if (prettier.has("printWidth")) {
+					config.integrations.prettier.printWidth = prettier.get("printWidth").asNumber();
+				}
+				if (prettier.has("tabWidth")) {
+					config.integrations.prettier.tabWidth = prettier.get("tabWidth").asNumber();
+				}
+				if (prettier.has("useTabs")) {
+					config.integrations.prettier.useTabs = prettier.get("useTabs").asBoolean();
+				}
+				if (prettier.has("semi")) {
+					config.integrations.prettier.semi = prettier.get("semi").asBoolean();
+				}
+				if (prettier.has("singleQuote")) {
+					config.integrations.prettier.singleQuote = prettier.get("singleQuote").asBoolean();
+				}
+			}
+		}
+		prettier.enforceUsedProperties("prettier config property");
 	}
 
 	meta.configDependencies = new AbsoluteFilePathSet([

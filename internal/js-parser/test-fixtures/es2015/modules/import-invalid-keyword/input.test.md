@@ -54,7 +54,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/modules/import-invalid-keyword/input.js>
 	loc: SourceLocation es2015/modules/import-invalid-keyword/input.js 1:0-2:0

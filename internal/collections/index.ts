@@ -168,6 +168,7 @@ export class MappedSet<Real, Serial extends Primitive> implements Set<Real> {
 
 	public clear() {
 		this.map.clear();
+		this.set.clear();
 	}
 }
 

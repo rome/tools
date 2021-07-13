@@ -11,6 +11,7 @@ import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {PartialProjectConfig} from "./types";
 import {
 	ESLINT_CONFIG_FILENAMES,
+	PRETTIER_CONFIG_FILESNAMES,
 	PROJECT_CONFIG_FILENAMES,
 	VCS_IGNORE_FILENAMES,
 } from "./constants";
@@ -87,6 +88,10 @@ export function getParentConfigDependencies(
 		// If eslint integration is enabled then eslint config changes should cause invalid cache files
 		if (partialConfig.integrations.eslint.enabled) {
 			basenames = basenames.concat(ESLINT_CONFIG_FILENAMES);
+		}
+
+		if (partialConfig.integrations.prettier.enabled) {
+			basenames = basenames.concat(PRETTIER_CONFIG_FILESNAMES);
 		}
 
 		if (partialConfig.vcs.root?.equal(directory)) {

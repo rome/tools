@@ -10,22 +10,23 @@ import {
 	CSSNumber,
 	CSSRatio,
 } from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 export function parseMediaFeatureName(
 	parser: CSSParser,
 ): CSSMediaFeatureName | undefined {
 	// skip possible comments and spaces
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	const token = parser.getToken();
 	const ident = parser.eatToken("Ident");
 	// skip possible comments and spaces
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	const namePosition = parser.getPosition();
 	const colon = parser.eatToken("Colon");
 	if (!(ident && colon)) {
@@ -51,9 +52,7 @@ export function parseMediaFeatureValue(
 ): CSSMediaFeatureValue | undefined {
 	// move forward and get rid of all the white spaces
 	nextToken(parser);
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	const token = parser.getToken();
 	const start = parser.getPosition();
 	let value: CSSDimension | CSSIdentifier | CSSNumber | CSSRatio | undefined = undefined;
@@ -154,9 +153,7 @@ export function parseMediaFeaturePlain(
 ): CSSMediaFeaturePlain | undefined {
 	const start = parser.getPosition();
 	// remove white spaces between keyword and next important token
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 	const name = parseMediaFeatureName(parser);
 	const value = parseMediaFeatureValue(parser);
 
@@ -191,9 +188,7 @@ export function parseMediaFeature(
 	// - plain: "(max-width: 600px)", "(hover: hover)"
 	// - boolean: "(color)"
 	// we now remove possible white spaces
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	const nextToken = parser.getToken();
 

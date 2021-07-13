@@ -4,6 +4,8 @@
 
 ## `invalid > selector6`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -68,13 +70,29 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector6/input.css>
+				path: UIDPath<invalid/selector6/input.css>
 				end: Position 1:8
 				start: Position 1:7
 			}
 		}
 	]
-	path: RelativePath<invalid/selector6/input.css>
+	path: UIDPath<invalid/selector6/input.css>
 	loc: SourceLocation invalid/selector6/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/selector6/input.css:1:7 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected to close attribute selector with a right square bracket ].
+
+  > 1 │ a[title%="title"] {
+      │        ^
+    2 │   color: purple;
+    3 │ }
+
+
 ```

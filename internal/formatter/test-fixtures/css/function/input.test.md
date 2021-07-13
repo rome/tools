@@ -16,11 +16,14 @@
 
 .func {
 	background-color: rgb(0 128 255);
-	border: var(--foo,red, blue, min( 10px   +1rem));
+	border: var(--foo,red);
 	padding: calc(10px    - 2rem);
 	background: url("   something ");
 	width: calc(100vw    + 2em    /(2 - 3) / (   2       - 6));
 	height: calc(1px - 2px + 3px);
+	width: min(1px - 2px + 3px,
+	5%);
+	height: max(   1px    ,     500px    );
 }
 
 ```
@@ -30,11 +33,13 @@
 ```css
 .func {
 	background-color: rgb(0 128 255);
-	border: var(--foo, red, blue, min(10px 1rem));
+	border: var(--foo, red);
 	padding: calc(10px - 2rem);
 	background: url("   something ");
 	width: calc(100vw + 2em / (2 - 3) / (2 - 6));
 	height: calc(1px - 2px + 3px);
+	width: min(1px - 2px + 3px, 5%);
+	height: max(1px, 500px);
 }
 
 ```

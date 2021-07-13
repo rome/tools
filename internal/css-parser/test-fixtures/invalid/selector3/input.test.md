@@ -4,6 +4,8 @@
 
 ## `invalid > selector3`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -35,13 +37,28 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector3/input.css>
+				path: UIDPath<invalid/selector3/input.css>
 				end: Position 1:3
 				start: Position 1:2
 			}
 		}
 	]
-	path: RelativePath<invalid/selector3/input.css>
+	path: UIDPath<invalid/selector3/input.css>
 	loc: SourceLocation invalid/selector3/input.css 1:0-2:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/selector3/input.css:1:2 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected empty selectors.
+
+  > 1 │ , {
+      │   ^
+    2 │ }
+
+
 ```

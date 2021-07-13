@@ -24,3 +24,16 @@
 foobar;
 
 ```
+
+### `1`
+
+```
+
+```
+
+### `1: formatted`
+
+```ts
+let romeTest: ReadonlyArray<string>;
+
+```

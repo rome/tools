@@ -47,7 +47,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-super-property/invalid_super_not_inside_function/input.js>
-				end: Position 1:7
+				end: Position 1:8
 				start: Position 1:8
 			}
 		}

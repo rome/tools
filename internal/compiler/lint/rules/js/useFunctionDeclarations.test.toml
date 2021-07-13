@@ -1,0 +1,13 @@
+filename = "file.ts"
+invalid = [
+	"const foo = function () {};",
+	"const foo = () => {};",
+	# Doesn't need to be an arrow function because 'this' isn't from outer scope
+	"const foo = () => {function bar() {this;}};",
+]
+valid = [
+	# Allow arrow functions that use 'this' from outer scope
+	"const foo = () => {this;};",
+	# Allow functions with return types since you can't express that with a declaration
+	"const foo: string = function () {};",
+]

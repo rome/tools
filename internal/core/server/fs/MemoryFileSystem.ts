@@ -640,7 +640,7 @@ export default class MemoryFileSystem {
 	}
 
 	public getFileStats(path: AbsoluteFilePath): undefined | SimpleStats {
-		return this.files.get(path);
+		return this.buffers.get(path) ?? this.files.get(path);
 	}
 
 	public getFileStatsAssert(path: AbsoluteFilePath): SimpleStats {
@@ -703,8 +703,18 @@ export default class MemoryFileSystem {
 		const projects = await this.server.projectManager.getProjectHierarchyFromPath(
 			path,
 		);
+		let checkDependenciesAndLicense = false;
+		const mainProject = await this.server.projectManager.findLoadedProject(path);
+		if (mainProject) {
+			checkDependenciesAndLicense = mainProject.config.dependencies.enabled;
+		}
 		const {consumer: normalizeConsumer, diagnostics: rawDiagnostics} = consumer.capture();
-		const manifest = await normalizeManifest(path, normalizeConsumer, projects);
+		const manifest = await normalizeManifest({
+			path,
+			consumer: normalizeConsumer,
+			projects,
+			checkDependenciesAndLicense,
+		});
 
 		// If manifest is undefined then we failed to validate and have diagnostics
 		if (rawDiagnostics.length > 0) {
@@ -891,7 +901,11 @@ export default class MemoryFileSystem {
 
 	public exists(path: AbsoluteFilePath): undefined | boolean {
 		// if we have this in our cache then the file exists
-		if (this.files.has(path) || this.directories.has(path)) {
+		if (
+			this.buffers.has(path) ||
+			this.files.has(path) ||
+			this.directories.has(path)
+		) {
 			return true;
 		}
 
@@ -1063,7 +1077,7 @@ export default class MemoryFileSystem {
 		}
 
 		if (isNew) {
-			this.server.refreshFileEvent.push({type: "CREATED", path});
+			await this.server.refreshFileEvent.push({type: "CREATED", path});
 		}
 
 		return true;

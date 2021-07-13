@@ -219,6 +219,19 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 ### `8: formatted`
 
 ```ts
+/foo bar\tbaz/;
+
+```
+
+### `9`
+
+```
+
+```
+
+### `9: formatted`
+
+```ts
 /foo /;
 
 ```

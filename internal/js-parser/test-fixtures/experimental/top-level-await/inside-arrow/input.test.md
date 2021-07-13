@@ -42,19 +42,19 @@ JSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: {
 				language: "js"
 				path: UIDPath<experimental/top-level-await/inside-arrow/input.js>
-				end: Position 1:11
-				start: Position 1:6
+				end: Position 1:12
+				start: Position 1:12
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/top-level-await/inside-arrow/input.js>
 	loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-2:0
@@ -65,12 +65,12 @@ JSRoot {
 
 ```
 
- experimental/top-level-await/inside-arrow/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/top-level-await/inside-arrow/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Can't use await outside of an async function
+  ✖ Expected a semicolon or a line terminator
 
     () => await 0;
-          ^^^^^
+                ^
 
 
 ```

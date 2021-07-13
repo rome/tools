@@ -294,7 +294,6 @@ function getPreferredMainKey(
 	if (alias !== undefined) {
 		return alias;
 	}
-
 	if (manifest.main !== undefined) {
 		return {
 			key: consumer.get("main"),

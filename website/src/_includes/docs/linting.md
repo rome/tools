@@ -20,12 +20,11 @@ Rome stands out in the following ways:
 
 The [`rome check`](#rome-check) command is used to find problems in your project. This includes:
 
-- Dependency verification
-- Formatting
-- Linting
-- `package.json` validation
+- formatting
+- linting
 
-We plan on expanding this list to include other checks such as dead code detection, license verification, type checking, and more.
+We plan on expanding this list to include other checks such as dead code detection,
+license verification, type checking, dependency verification, `package.json` and more.
 
 Running `rome check` with no arguments will include all files in your project:
 
@@ -78,6 +77,7 @@ To use the Rome linter we require usage of the Rome formatter. We offer powerful
 Notable formatting choices include:
 
  - Indentation: Hard tabs. [Improved accessibility](https://github.com/rome/tools/issues/425) over two-spaced tabs.
+	 You can change the indentation type in the configuration file.
  - Double string quotes. Consistent quote style across all supported languages.
 
 ### Applying Fixes

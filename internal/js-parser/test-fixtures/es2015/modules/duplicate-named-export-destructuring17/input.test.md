@@ -75,10 +75,35 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
+					}
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<es2015/modules/duplicate-named-export-destructuring17/input.js>
+				end: Position 1:33
+				start: Position 1:0
+			}
+		}
+	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/modules/duplicate-named-export-destructuring17/input.js>
 	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring17/input.js 1:0-4:0
@@ -88,5 +113,18 @@ JSRoot {
 ### `diagnostics`
 
 ```
+
+ es2015/modules/duplicate-named-export-destructuring17/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ import and export can only appear in a module
+
+  > 1 │ export const [foo, ...bar] = baz;
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ export const bar = 1;
+
+  ℹ Change the extension to .mjs to turn this file into a module
+
+  ℹ Add "type": "module" to your <dim>undefined</dim>
+
 
 ```

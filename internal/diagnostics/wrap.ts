@@ -21,7 +21,7 @@ type WrapResult<T> =
 		};
 
 export async function catchDiagnostics<T>(
-	promise: () => Promise<T>,
+	promise: () => T | Promise<T>,
 	origin?: DiagnosticOrigin,
 ): Promise<WrapResult<T>> {
 	try {

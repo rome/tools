@@ -676,12 +676,12 @@ export function cloneState(
 	const state: JSParser["state"] = {...parser.state};
 
 	for (const key in state) {
-		// @ts-ignore
+		// @ts-expect-error
 		let val = state[key];
 
 		const shouldSlice = !skipArrays || key === "context";
 		if (shouldSlice && Array.isArray(val)) {
-			// @ts-ignore
+			// @ts-expect-error
 			state[key] = val.slice();
 		}
 	}

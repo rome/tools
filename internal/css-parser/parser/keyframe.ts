@@ -8,7 +8,12 @@ import {
 	CSSRaw,
 	CSSString,
 } from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {CSS_WIDE_KEYWORDS, isCustomIdent} from "@internal/css-parser/utils";
 import {parseDeclarations} from "@internal/css-parser/parser/declaration";
@@ -17,9 +22,7 @@ const VALID_IDENTS = ["from", "to"];
 
 function parseKeyframeName(parser: CSSParser): CSSKeyframeName | undefined {
 	let value: CSSRaw | CSSString;
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	if (!(parser.matchToken("Ident") || parser.matchToken("String"))) {
 		parser.unexpectedDiagnostic({
@@ -145,9 +148,11 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 		}
 		const pos = parser.getPosition();
 		const name = parseKeyframeSelector(parser);
+
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
 		}
+
 		if (!matchToken(parser, "LeftCurlyBracket")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
@@ -163,7 +168,7 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 			endingTokenType: "RightCurlyBracket",
 		});
 
-		if (name && value) {
+		if (name !== undefined && value !== undefined) {
 			nextToken(parser);
 			const block = parser.finishNode(
 				pos,
@@ -185,14 +190,13 @@ function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined 
 export function parseKeyframe(parser: CSSParser): CSSKeyframe | undefined {
 	const start = parser.getPosition();
 	nextToken(parser);
+
 	const name = parseKeyframeName(parser);
 	if (!name) {
 		return undefined;
 	}
 
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	if (!parser.matchToken("LeftCurlyBracket")) {
 		parser.unexpectedDiagnostic({
@@ -206,10 +210,10 @@ export function parseKeyframe(parser: CSSParser): CSSKeyframe | undefined {
 	nextToken(parser);
 
 	const value = parseKeyframeBlocks(parser);
-
-	if (!value) {
+	if (value === undefined) {
 		return undefined;
 	}
+
 	return parser.finishNode(
 		start,
 		{

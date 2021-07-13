@@ -12,9 +12,10 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:18258adf54b8055f532ed86bf9a65a6224b77b27,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:d3b2c4418b427b3f1a4ee1a9e1724858a922b274,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
+export * from "./css/import/CSSAtImport";
 export * from "./css/page/CSSAtPage";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
@@ -33,8 +34,11 @@ export * from "./css/core/CSSComma";
 export * from "./css/core/CSSCustomProperty";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
+export * from "./css/grid/CSSFitContentFunction";
+export * from "./css/grid/CSSFlex";
 export * from "./css/font/CSSFontFace";
 export * from "./css/core/CSSFunction";
+export * from "./css/grid/CSSGridRepeatValue";
 export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
 export * from "./css/selectors/CSSIdSelector";
@@ -42,6 +46,8 @@ export * from "./css/keyframe/CSSKeyframe";
 export * from "./css/keyframe/CSSKeyframeBlock";
 export * from "./css/keyframe/CSSKeyframeName";
 export * from "./css/keyframe/CSSKeyframeSelector";
+export * from "./css/core/CSSLineName";
+export * from "./css/function/CSSMaxFunction";
 export * from "./css/media/CSSMediaAnd";
 export * from "./css/media/CSSMediaCondition";
 export * from "./css/media/CSSMediaConditionWithoutOr";
@@ -61,6 +67,8 @@ export * from "./css/media/CSSMediaOr";
 export * from "./css/media/CSSMediaQuery";
 export * from "./css/media/CSSMediaQueryList";
 export * from "./css/media/CSSMediaType";
+export * from "./css/function/CSSMinFunction";
+export * from "./css/grid/CSSMinmaxFunction";
 export * from "./css/core/CSSNumber";
 export * from "./css/page/CSSPageSelector";
 export * from "./css/page/CSSPageSelectorList";
@@ -70,6 +78,7 @@ export * from "./css/selectors/CSSPseudoElementSelector";
 export * from "./css/page/CSSPseudoPage";
 export * from "./css/core/CSSRatio";
 export * from "./css/core/CSSRaw";
+export * from "./css/grid/CSSRepeatFunction";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
 export * from "./css/selectors/CSSSelector";
@@ -321,6 +330,7 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
+	| n.CSSAtImport
 	| n.CSSAtPage
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
@@ -339,8 +349,11 @@ export type AnyNode =
 	| n.CSSCustomProperty
 	| n.CSSDeclaration
 	| n.CSSDimension
+	| n.CSSFitContentFunction
+	| n.CSSFlex
 	| n.CSSFontFace
 	| n.CSSFunction
+	| n.CSSGridRepeatValue
 	| n.CSSHash
 	| n.CSSIdentifier
 	| n.CSSIdSelector
@@ -348,6 +361,8 @@ export type AnyNode =
 	| n.CSSKeyframeBlock
 	| n.CSSKeyframeName
 	| n.CSSKeyframeSelector
+	| n.CSSLineName
+	| n.CSSMaxFunction
 	| n.CSSMediaAnd
 	| n.CSSMediaCondition
 	| n.CSSMediaConditionWithoutOr
@@ -367,6 +382,8 @@ export type AnyNode =
 	| n.CSSMediaQuery
 	| n.CSSMediaQueryList
 	| n.CSSMediaType
+	| n.CSSMinFunction
+	| n.CSSMinmaxFunction
 	| n.CSSNumber
 	| n.CSSPageSelector
 	| n.CSSPageSelectorList
@@ -376,6 +393,7 @@ export type AnyNode =
 	| n.CSSPseudoPage
 	| n.CSSRatio
 	| n.CSSRaw
+	| n.CSSRepeatFunction
 	| n.CSSRoot
 	| n.CSSRule
 	| n.CSSSelector

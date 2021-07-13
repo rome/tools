@@ -4,6 +4,8 @@
 
 ## `invalid > keyframe-css-wide-keywords`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -76,13 +78,32 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
+				path: UIDPath<invalid/keyframe-css-wide-keywords/input.css>
 				end: Position 1:18
 				start: Position 1:11
 			}
 		}
 	]
-	path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
+	path: UIDPath<invalid/keyframe-css-wide-keywords/input.css>
 	loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-3:19
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/keyframe-css-wide-keywords/input.css:1:11 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The identifier initial can't be used here.
+
+  > 1 │ @keyframes initial {}
+      │            ^^^^^^^
+    2 │ @keyframes inherit {}
+    3 │ @keyframes unset {}
+
+  ℹ In this position, the words unset, initial, inherit,  are CSS-wide keywords, so they are
+    reserved.
+
+
 ```

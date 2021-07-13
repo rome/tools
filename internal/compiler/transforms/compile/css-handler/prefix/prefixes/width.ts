@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSValue,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -50,7 +50,7 @@ function fillRenamer(value: string) {
 
 export default properties.flatMap((propertyName) =>
 	values.map((value) =>
-		createPrefixVisitor({
+		createPrefixCSSBlockVisitor({
 			name: `${propertyName}/${value}`,
 			enter(path) {
 				return prefixCSSValue({

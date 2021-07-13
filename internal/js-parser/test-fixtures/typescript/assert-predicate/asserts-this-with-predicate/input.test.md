@@ -164,7 +164,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/assert-predicate/asserts-this-with-predicate/input.ts>
-				end: Position 2:23
+				end: Position 2:24
 				start: Position 2:24
 			}
 		}

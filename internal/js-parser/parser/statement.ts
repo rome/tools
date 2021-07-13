@@ -1108,7 +1108,7 @@ export function parseLabeledStatement(
 		if (context.includes("label")) {
 			statementContext = context;
 		} else {
-			// @ts-ignore
+			// @ts-expect-error
 			statementContext = `${context}label`;
 		}
 	}

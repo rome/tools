@@ -14,6 +14,7 @@ import {parseMediaList} from "@internal/css-parser/parser/media";
 import {parseAtSupports} from "@internal/css-parser/parser/supports";
 import {parseFontFace} from "@internal/css-parser/parser/font";
 import {parseAtPage} from "@internal/css-parser/parser/page";
+import {parseAtImport} from "@internal/css-parser/parser/at-import";
 
 export function parseRules(
 	parser: CSSParser,
@@ -121,6 +122,11 @@ export function parseAtRule(
 
 		if (previousToken.value === "page") {
 			block = parseAtPage(parser);
+			break;
+		}
+
+		if (previousToken.value === "import") {
+			block = parseAtImport(parser);
 			break;
 		}
 

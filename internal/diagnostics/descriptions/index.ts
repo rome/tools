@@ -38,10 +38,12 @@ import {userConfig} from "./userConfig";
 import {htmlParser} from "./parsers/htmlParser";
 import {recoveryStore} from "./commands/recoveryStore";
 import {markdownParser} from "./parsers/markdownParser";
-import {initCommand} from "./commands/initCommand";
+import {autoConfigCommand} from "./commands/autoConfigCommand";
 import {StaticMarkup, joinMarkup, markup} from "@internal/markup";
-import {tomlParser} from "./parsers/tomlParser";
+import {toml} from "./parsers/tomlParser";
 import {browserquery} from "./parsers/browserquery";
+import {vcs} from "@internal/diagnostics/descriptions/vcs";
+import {migrateCommand} from "@internal/diagnostics/descriptions/commands/migrateCommand";
 
 export function join(conjunction: string, items: StaticMarkup[]): StaticMarkup {
 	if (items.length === 0) {
@@ -113,7 +115,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			const callback: InputMessagesFactory = value as any;
 
-			// @ts-ignore trust me lol
+			// @ts-expect-error trust me lol
 			category[key] = function(...params) {
 				const {message, advice = [], ...ret} = callback(...params);
 				return {
@@ -169,7 +171,9 @@ export const descriptions = {
 	HTML_PARSER: htmlParser,
 	MARKDOWN_PARSER: markdownParser,
 	RECOVERY_STORE: recoveryStore,
-	INIT_COMMAND: initCommand,
-	TOML_PARSER: tomlParser,
+	INIT_COMMAND: autoConfigCommand,
+	MIGRATE_COMMAND: migrateCommand,
+	TOML: toml,
+	VCS: vcs,
 	BROWSERQUERY: browserquery,
 };

@@ -65,7 +65,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/invalid-escape-export-dflt-async-function/input.js>
-				end: Position 1:25
+				end: Position 1:26
 				start: Position 1:26
 			}
 		}

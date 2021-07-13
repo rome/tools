@@ -46,14 +46,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js>
-				end: Position 1:10
+				end: Position 1:11
 				start: Position 1:11
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js>
 	loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:0-2:0

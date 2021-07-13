@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -16,7 +16,7 @@ export default [
 	"animation-play-state",
 	"animation-timing-function",
 ].map((propertyName) =>
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: propertyName,
 		enter(path) {
 			return prefixCSSProperty({

@@ -922,11 +922,11 @@ export default class RSERBufferParser {
 		err.message = message;
 		err.stack = stack;
 
-		// @ts-ignore: Validating these is expensive but we can be confident on the validity
+		// @ts-expect-error: Validating these is expensive but we can be confident on the validity
 		const nodeProps: NodeSystemErrorProperties = this.decodeObject();
 		setNodeErrorProps(err, nodeProps);
 
-		// @ts-ignore: ^^
+		// @ts-expect-error: ^^
 		const frames: ErrorFrame[] = this.decodeTemplatedObjectArray();
 		setErrorFrames(err, frames);
 

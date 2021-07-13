@@ -84,7 +84,8 @@ export class LSPTransport {
 	public writeEvent: Event<string, void>;
 
 	public write(res: JSONObject) {
-		const json = JSON.stringify(res);
+		const message = {...res, jsonrpc: "2.0"};
+		const json = JSON.stringify(message);
 		const out = `Content-Length: ${getByteLength(json)}${HEADERS_END}${json}`;
 		this.writeEvent.send(out);
 	}
@@ -93,7 +94,7 @@ export class LSPTransport {
 		return new Promise((resolve, reject) => {
 			const id = ++this.requestIdCounter;
 			this.requestCallbacks.set(id, {resolve, reject});
-			this.write({...req, id, jsonrpc: "2.0"});
+			this.write({...req, id});
 		});
 	}
 
@@ -148,14 +149,12 @@ export class LSPTransport {
 					result = await this.requestEvent.call({method, params});
 				}
 				const res: LSPResponseMessage = {
-					jsonrpc: "2.0",
 					id,
 					result,
 				};
 				this.write(res);
 			} catch (err) {
 				const res: LSPResponseMessage = {
-					jsonrpc: "2.0",
 					id,
 					error: {
 						code: -32_603,

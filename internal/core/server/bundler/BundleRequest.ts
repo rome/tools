@@ -75,7 +75,7 @@ export default class BundleRequest {
 		this.diagnostics.addAllowedUnusedSuppressionPrefix("lint");
 
 		this.sourceMap = new SourceMapGenerator({
-			path: createPath(this.resolvedEntry.getBasename()),
+			path: createPath("index.js"),
 		});
 
 		this.assets = new RelativePathMap();
@@ -284,11 +284,8 @@ export default class BundleRequest {
 			const compileResult = this.bundler.compiles.assert(path).value;
 
 			push(`  // ${uid}`);
-
 			declareCJS(node);
-
 			addMappings(uid, compileResult.sourceText, compileResult.mappings);
-
 			track(compileResult.compiledCode);
 			assembled.push([1, path]);
 			push("");

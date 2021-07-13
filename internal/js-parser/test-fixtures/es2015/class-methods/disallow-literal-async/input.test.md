@@ -67,7 +67,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/class-methods/disallow-literal-async/input.js>
-				end: Position 2:9
+				end: Position 2:10
 				start: Position 2:10
 			}
 		}

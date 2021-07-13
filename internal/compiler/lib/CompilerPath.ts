@@ -170,7 +170,7 @@ export default class CompilerPath {
 			this.context,
 			{
 				parentScope: this.scope,
-				ancestryPaths: this.ancestryPaths.concat([this]),
+				ancestryPaths: [this, ...this.ancestryPaths],
 				nodeKey: key,
 			},
 		);
@@ -446,6 +446,7 @@ export default class CompilerPath {
 			{
 				...description,
 				advice,
+				verboseAdvice,
 			},
 			{
 				...diag,
@@ -481,6 +482,7 @@ export default class CompilerPath {
 					loc: inheritLoc(old),
 				};
 			}
+			fixed = {...fixed, value};
 		}
 
 		return fixed;

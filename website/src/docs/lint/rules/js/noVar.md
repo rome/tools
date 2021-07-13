@@ -17,13 +17,13 @@ require `let` or `const` instead of `var`
 **ESLint Equivalent:** [no-var](https://eslint.org/docs/rules/no-var)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:94442627cfc03b0db3dcfb144c8eed757837e59e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:48813dbfee55193933522f5b4eac26c93d0e029d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">var</span> <span class="token variable">foobar</span><span class="token punctuation">;</span>
-<span class="token variable">foobar</span></code></pre>{% endraw %}
+<span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noVar</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -31,7 +31,7 @@ require `let` or `const` instead of `var`
 
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">var</span> <span class="token variable">foobar</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  2</strong><strong> │ </strong><span class="token variable">foobar</span>
+  <strong>  2</strong><strong> │ </strong><span class="token variable">foobar</span><span class="token punctuation">;</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use let or const instead.</span>
 

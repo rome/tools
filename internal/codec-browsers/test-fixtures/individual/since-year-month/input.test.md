@@ -7,7 +7,7 @@
 ### `result`
 
 ```javascript
-["opera:73"]
+["edge:91", "firefox:89", "chrome:91", "safari:14.1", "opera:77", "ios_saf:14.5", "android:91", "op_mob:62", "and_chr:91", "and_ff:89", "samsung:14"]
 ```
 
 ### `targets`

@@ -1,4 +1,4 @@
-import {IS_ROME_DEV_ENV, getEnvVar} from "@internal/cli-environment";
+import {IS_ROME_DEV_ENV, getEnvVarBoolean} from "@internal/cli-environment";
 import {VERSION} from "@internal/core";
 import {AbsoluteFilePath} from "@internal/path";
 
@@ -18,7 +18,7 @@ export default class ServerCache extends Cache {
 		if (IS_ROME_DEV_ENV) {
 			disabled = true;
 		}
-		if (getEnvVar("ROME_CACHE").type === "DISABLED") {
+		if (getEnvVarBoolean("ROME_CACHE") === false) {
 			disabled = true;
 		}
 		if (server.options.forceCacheEnabled) {

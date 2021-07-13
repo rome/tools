@@ -138,7 +138,7 @@ export class ModuleSignatureManager {
 
 			// Create the type
 
-			// @ts-ignore
+			// @ts-expect-error
 			const realT = TConstructor.hydrate(
 				this.topScope,
 				{loc: origin},

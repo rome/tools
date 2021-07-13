@@ -71,7 +71,7 @@ test(
 				},
 				(msg, resolve) => {
 					if (msg.get("id").asNumberOrVoid() === 10) {
-						t.namedSnapshot("init", msg.asJSONObject());
+						t.namedSnapshot("init", msg.asUnknown());
 						resolve();
 					}
 				},
@@ -90,7 +90,7 @@ test(
 				},
 				(msg, resolve) => {
 					if (msg.get("id").asNumberOrVoid() === 20) {
-						t.namedSnapshot("formatting", msg.get("result").asJSONArray());
+						t.namedSnapshot("formatting", msg.get("result").asUnknown());
 						resolve();
 					}
 				},
@@ -145,7 +145,7 @@ test(
 					if (msg.get("id").asNumberOrVoid() === 40) {
 						t.namedSnapshot(
 							"formatting after didOpen",
-							msg.get("result").asJSONArray(),
+							msg.get("result").asUnknown(),
 						);
 						resolve();
 					}
@@ -165,7 +165,7 @@ test(
 					if (msg.get("method").asStringOrVoid() === "workspace/applyEdit") {
 						const edits = msg.getPath(["params", "edit", "documentChanges"]).getIndex(
 							0,
-						).get("edits").asJSONArray();
+						).get("edits").asUnknown();
 						t.namedSnapshot("edits", edits);
 						const response = createMessage({
 							id: msg.get("id").asNumber(),

@@ -67,7 +67,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/class/declare-method/input.ts>
-				end: Position 2:9
+				end: Position 2:10
 				start: Position 2:10
 			}
 		}

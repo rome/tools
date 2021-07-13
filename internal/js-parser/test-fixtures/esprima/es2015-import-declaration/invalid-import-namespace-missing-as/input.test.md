@@ -49,14 +49,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js>
-				end: Position 1:8
+				end: Position 1:9
 				start: Position 1:9
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js>
 	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-2:0

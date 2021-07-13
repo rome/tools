@@ -32,58 +32,45 @@ type PatchMatchParser = ParserCore<PatchMatchParserTypes>;
 
 const pathMatchParser = createParser<PatchMatchParserTypes>({
 	diagnosticLanguage: "path",
-	tokenize(parser, index) {
-		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index.increment());
-
-		switch (char) {
-			case "*": {
-				if (nextChar === "*") {
-					return parser.finishToken("DoubleStar", index.add(2));
-				} else {
-					return parser.finishToken("Star");
-				}
-			}
-
-			case "\n":
-				return parser.finishToken("EOL");
-
-			case "/":
-				return parser.finishToken("Separator");
-
-			case "!": {
-				if (index.valueOf() === 0 || parser.getCurrentToken().type === "EOL") {
-					return parser.finishToken("Exclamation");
-				}
-				break;
-			}
-
-			case "#": {
-				if (parser.getPositionFromIndex(index).column.valueOf() === 0) {
-					const [value, end] = parser.readInputFrom(index, isntNewline);
-					return parser.finishValueToken("Comment", value, end);
-				}
-				break;
-			}
-
-			case "\\": {
-				if (nextChar === "\\") {
-					return parser.finishToken("Separator", index.add(2));
-				}
-				break;
+	tokenize(parser, tokenizer) {
+		if (tokenizer.consume("*")) {
+			if (tokenizer.consume("*")) {
+				return tokenizer.finishToken("DoubleStar");
+			} else {
+				return tokenizer.finishToken("Star");
 			}
 		}
 
-		const [value, end] = parser.readInputFrom(
-			index,
-			isWordCharacter.bind(undefined, parser),
-		);
-		return parser.finishValueToken("Word", value, end);
+		if (tokenizer.consume("\n")) {
+			return tokenizer.finishToken("EOL");
+		}
+
+		if (tokenizer.consume("/") || tokenizer.consume("\\\\")) {
+			return tokenizer.finishToken("Separator");
+		}
+
+		if (tokenizer.startsWith("!")) {
+			if (tokenizer.index.equal(0) || parser.getCurrentToken().type === "EOL") {
+				tokenizer.take(1);
+				return tokenizer.finishToken("Exclamation");
+			}
+		}
+
+		if (
+			tokenizer.startsWith("#") &&
+			tokenizer.getPosition().column.equal(0) &&
+			tokenizer.consume("#")
+		) {
+			const value = tokenizer.read(isntNewline);
+			return tokenizer.finishValueToken("Comment", value);
+		}
+
+		const value = tokenizer.read(isWordCharacter);
+		return tokenizer.finishValueToken("Word", value);
 	},
 });
 
 function isWordCharacter(
-	parser: PatchMatchParser,
 	char: string,
 	index: ZeroIndexed,
 	input: string,

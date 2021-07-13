@@ -31,14 +31,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js>
-				end: Position 1:8
+				end: Position 2:0
 				start: Position 2:0
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js>
 	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-batch-missing-from-clause/input.js 1:0-2:0

@@ -6,7 +6,7 @@
 
 ### `Diagnostics`
 
-```
+```css
 
 ```
 
@@ -23,7 +23,6 @@
 
 ```css
 .style {
-	-ms-scroll-snap-type: x mandatory;
 	-webkit-scroll-snap-type: x mandatory;
 	scroll-snap-type: x mandatory;
 }

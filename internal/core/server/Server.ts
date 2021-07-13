@@ -130,6 +130,10 @@ export type ServerRefreshFile =
 	| {
 			type: "BUFFER_UPDATE";
 			path: AbsoluteFilePath;
+		}
+	| {
+			type: "BUFFER_CLEARED";
+			path: AbsoluteFilePath;
 		};
 
 export default class Server {

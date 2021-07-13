@@ -69,14 +69,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-comma/input.js>
-				end: Position 1:10
+				end: Position 1:11
 				start: Position 1:11
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<esprima/es2015-import-declaration/invalid-import-missing-comma/input.js>
 	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-missing-comma/input.js 1:0-2:0

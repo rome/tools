@@ -50,7 +50,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/types/literal-bigint/input.ts>
-				end: Position 1:6
+				end: Position 1:7
 				start: Position 1:7
 			}
 		}

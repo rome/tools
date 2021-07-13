@@ -2,9 +2,9 @@
 
 **Rome** needs to know how to find your project and what files it includes. To do this we require a project configuration file.
 
-Your configuration can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](#rome-json) which is our flavor of JSON. It supports comments and has a simpler syntax.
+Your configuration can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.json` file.
 
-All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](#rome-config) command to modify your configuration, this works with any of the supported config locations, and when editing RJSON will even retain comments.
+All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](#rome-config) command to modify your configuration, this works with any of the supported config locations.
 
 We are deliberately lean with the supported configuration. We do not include options just for the sake of personalization. We aim to offer everything out of the box and only introduce configuration if absolutely necessary.
 
@@ -66,6 +66,14 @@ This is a semver range of the Rome version you want to set your project to. It i
 rome config set version "^0.0.0"
 ```
 
+#### `lint.enabled`
+
+Enables Rome's linter
+
+```bash
+rome config enable lint.enabled
+```
+
 #### `lint.ignore`
 
 [Path patterns](#path-patterns) that you want to ignore from linting.
@@ -90,6 +98,32 @@ Raise a diagnostic if a suppression does not have a [valid explanation](#explana
 rome config enable lint.requireSuppressionExplanations
 ```
 
+### `format.enabled`
+
+Enables Rome's formatter
+
+```bash
+rome config enable format.enabled
+```
+
+### `format.indentStyle`
+
+The style of the indentation. It can be `"tab"` or `"space"`
+
+```bash
+rome config set format.indentStyle "tab"
+```
+
+Rome's default is `"tab"`.
+
+### `format.indentSize`
+
+How big the indentation should be. Rome's default is `1`.
+
+```bash
+rome config set format.indentSize 4
+```
+
 ### `dependencies.exceptions`
 
 Exception rules for your dependencies that don't pass validation.
@@ -107,19 +141,126 @@ rome config push dependencies.exceptions.invalidLicenses.invalid-license-name "t
 If you are unsure about the license name of your library, rome will suggest the command for
 you when you try to run a command.
 
+### `integrations`
+
+Rome is more than linting or formatting. Rome has the concept of integrations, where
+it's possible to run a limited number of third party libraries using Rome itself.
+
+The main advantage of using Rome to run these integrations is to take advantage of Rome's
+infrastructure: caching and parallelism.
+
+### `integrations.prettier`
+
+You can use Rome to format your code using prettier. In order to integrate it,
+you have to install `prettier` in your project and enabled the integration via Rome:
+
+```bash
+rome config enable integrations.prettier
+```
+
+> The minimum `prettier`'s version supported is `2.0.0`;
+
+Now, when you run `./rome check --apply`, Rome will use `prettier` to format your code.
+
+If your project uses `.prettierrc` already, Rome will load the configuration and pass it to
+`prettier`.
+
+Alternatively, you can configure `prettier` inside Rome's configuration. Rome supports only a
+subset of options:
+
+- [`printWidth`](https://prettier.io/docs/en/options.html#print-width);
+- [`tabWidth`](https://prettier.io/docs/en/options.html#tab-width);
+- [`useTabs`](https://prettier.io/docs/en/options.html#tabs);
+- [`semi`](https://prettier.io/docs/en/options.html#semicolons);
+- [`singleQuote`](https://prettier.io/docs/en/options.html#quotes);
+
+The rest of options will be ignored and won't be passed to `prettier`.
+
+Ultimately, the configuration will look like this:
+
+```json
+{
+	"rome": {
+		"root": true,
+		"name": "fancy-project",
+		"lint": {
+			"enabled": false
+		},
+		"format": {
+			"enabled": false
+		},
+		"integrations": {
+			"prettier": {
+				"enabled": true,
+				"tabWidth": 2,
+				"useTabs": true,
+				"printWidth": 140
+			}
+		}
+	}
+}
+```
+
+### `integrations.eslint`
+
+You can use Rome to lint your code using eslint. In order to integrate it,
+you have to install `eslint` in your project and enabled the integration via Rome:
+
+```bash
+rome config enable integrations.eslint
+```
+
+> The minimum `eslint`'s version supported is `7.0.0`;
+
+Now, when you run `./rome check --apply`, Rome will use `prettier` to format your code.
+
+If your project uses `.eslint.json` already, Rome will load the configuration and pass it to
+`eslint`.
+
+Alternatively, you can configure `eslint` inside Rome's configuration. Rome supports only a
+subset of options:
+
+- `fix`
+- `extensions`
+- `globInputPaths`
+- `rulePaths`
+
+You can find more information in the [eslint webpage](https://eslint.org/docs/developer-guide/nodejs-api#parameters).
+
+The rest of options will be ignored and won't be passed to `eslint`.
+
+Ultimately, the configuration will look like this:
+
+```json
+{
+	"rome": {
+		"root": true,
+		"name": "fancy-project",
+		"lint": {
+			"enabled": false
+		},
+		"format": {
+			"enabled": false
+		},
+		"integrations": {
+			"eslint": {
+				"fix": true,
+				"extensions": [".js", ".ts", ".jsx"],
+				"globInputPaths": false,
+				"rulePaths":  ["./path/to/rules", "../../path/to/other/rules"]
+			}
+		}
+	}
+}
+```
+
 ### Supported Locations
 
 You can specify your project config in a few different places.
 
-##### `.config/rome.rjson` (recommended)
+##### `.config/rome.json` (recommended)
 
-This is the recommend location. It's the file we create when running `rome init`.
-
-It can contains Rome's flavor of JSON, [RJSON](#rome-json), that allows comments and simpler syntax.
-
-##### `.config/rome.json`
-
-You can also use `rome.json` with regular JSON. This is useful if you think you might want to process and manipulate project configuration with another tool or language.
+This is the recommended location. It's the file we create when running `rome init`.
 
 ##### `package.json` field
 
@@ -130,7 +271,11 @@ Alternatively, your project config can be included in a `rome` field inside of `
 	"name": "my-package",
 	"version": "0.0.0",
 	"rome": {
-		"version": "^0.0.1"
+		"root": true,
+		"version": "^0.0.1",
+		"lint": {
+			"enabled": false
+		}
 	}
 }
 ```

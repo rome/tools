@@ -4,6 +4,8 @@
 
 ## `invalid > url-multiple-params`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -58,13 +60,29 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/url-multiple-params/input.css>
+				path: UIDPath<invalid/url-multiple-params/input.css>
 				end: Position 2:17
 				start: Position 2:13
 			}
 		}
 	]
-	path: RelativePath<invalid/url-multiple-params/input.css>
+	path: UIDPath<invalid/url-multiple-params/input.css>
 	loc: SourceLocation invalid/url-multiple-params/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/url-multiple-params/input.css:2:13 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The function url() can only accept one parameter.
+
+    1 │ .style {
+  > 2 │   background: url("foo", "bar");
+      │               ^^^^
+    3 │ }
+
+
 ```

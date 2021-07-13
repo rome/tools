@@ -53,14 +53,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js>
-				end: Position 1:10
+				end: Position 1:11
 				start: Position 1:11
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js>
 	loc: SourceLocation experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js 1:0-3:0

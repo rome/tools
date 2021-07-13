@@ -72,7 +72,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<core/opts/allowAwaitOutsideFunction-false/input.js>
-				end: Position 1:3
+				end: Position 1:4
 				start: Position 1:4
 			}
 		}

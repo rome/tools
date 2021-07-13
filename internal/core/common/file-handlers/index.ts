@@ -114,14 +114,17 @@ export function getFileHandlerFromExtension(
 }
 
 export function getFileHandlerFromPathAssert(
-	path: Path,
-	projectConfig: undefined | ProjectConfig,
+	{path, projectConfig, method}: {
+		path: Path;
+		projectConfig: undefined | ProjectConfig;
+		method: string;
+	},
 ): Required<GetFileHandlerResult> {
 	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);
 
 	if (handler === undefined) {
 		throw createSingleDiagnosticsError({
-			description: descriptions.FILES.NO_FILE_HANDLER(path),
+			description: descriptions.FILES.NO_FILE_HANDLER(path, method),
 			location: {
 				path,
 			},
@@ -202,11 +205,6 @@ setHandler("css", cssHandler);
 // Config
 for (const handler of CONFIG_HANDLERS) {
 	for (const ext of handler.extensions) {
-		if (ext === "yaml" || ext === "yml" || ext === "toml" || ext === "ini") {
-			// Temporarily disable WIP extensions
-			continue;
-		}
-
 		setHandler(
 			ext,
 			{

@@ -62,27 +62,28 @@ JSRoot {
 				advice: [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
 					}
-					frame {
-						location: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
 					}
 				]
 				category: ["parse"]
 				categoryValue: "js"
-				message: [RAW_MARKUP {value: "`"}, "foo", RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}]
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 			}
 			location: {
 				language: "js"
 				path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
-				end: Position 2:24
-				start: Position 2:7
+				end: Position 1:15
+				start: Position 1:0
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
 	loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:0-3:0
@@ -93,19 +94,17 @@ JSRoot {
 
 ```
 
- es2015/modules/duplicate-named-export-function-declaration/input.js:2:7 parse(js) ━━━━━━━━━━━━━━━━━
+ es2015/modules/duplicate-named-export-function-declaration/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━
 
-  ✖ `foo` has already been exported. Exported identifiers must be unique.
-
-    1 │ export { foo };
-  > 2 │ export function foo() {};
-      │        ^^^^^^^^^^^^^^^^^
-
-  ℹ Defined already here
+  ✖ import and export can only appear in a module
 
   > 1 │ export { foo };
-      │          ^^^
+      │ ^^^^^^^^^^^^^^^
     2 │ export function foo() {};
+
+  ℹ Change the extension to .mjs to turn this file into a module
+
+  ℹ Add "type": "module" to your <dim>undefined</dim>
 
 
 ```

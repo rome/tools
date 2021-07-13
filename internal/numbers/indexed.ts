@@ -1,3 +1,4 @@
+import {MappedSet} from "@internal/collections";
 import {enhanceNodeInspectClass} from "@internal/node";
 import {isObject} from "@internal/typescript-helpers";
 
@@ -82,6 +83,15 @@ enhanceNodeInspectClass(
 	},
 );
 
+export class IndexedNumberSet<Indexed extends IndexedNumber>
+	extends MappedSet<Indexed, number> {
+	constructor(entries?: Iterable<Indexed>) {
+		super((num) => [num.valueOf(), num], entries);
+	}
+}
+
+IndexedNumberSet.prototype[Symbol.toStringTag] = "IndexedNumberSet";
+
 export type IndexedNumber = OneIndexed | ZeroIndexed;
 
 export type UnknownNumber = IndexedNumber | bigint | number;
@@ -99,7 +109,7 @@ function isIndexedNumberInstance(
 ): value is IndexedNumberish {
 	return (
 		isObject(value) &&
-		// @ts-ignore: TS does not support generic symbol indexes...
+		// @ts-expect-error: TS does not support generic symbol indexes...
 		value[Symbol.toStringTag] === tagName &&
 		typeof value.valueOf === "function" &&
 		typeof value.valueOf() === "number"

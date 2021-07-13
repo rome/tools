@@ -67,7 +67,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/class-methods/disallow-computed-async/input.js>
-				end: Position 2:11
+				end: Position 2:12
 				start: Position 2:12
 			}
 		}

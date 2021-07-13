@@ -50,7 +50,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<typescript/const/reserved-word/input.ts>
-				end: Position 1:8
+				end: Position 1:9
 				start: Position 1:9
 			}
 		}

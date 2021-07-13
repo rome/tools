@@ -737,6 +737,7 @@ export default class Client {
 					"server",
 					{
 						detached: true,
+						stdio: "ignore",
 					},
 				);
 				proc.unref();

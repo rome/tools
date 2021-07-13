@@ -5,19 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {ConsumeUnexpectedDescription} from "@internal/consume";
 import {ZeroIndexed} from "@internal/numbers";
-import {
-	DiagnosticDescriptionOptional,
-	descriptions,
-} from "@internal/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 import {ManifestName} from "../types";
 
 type NormalizeNameUnexpected = (
 	opts: {
-		description: DiagnosticDescriptionOptional;
+		description: ConsumeUnexpectedDescription;
 		start?: ZeroIndexed;
 		end?: ZeroIndexed;
-		at?: "prefix";
 	},
 ) => void;
 
@@ -102,7 +99,6 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 
 	if (name.length > 214) {
 		unexpected({
-			at: "prefix",
 			description: descriptions.MANIFEST.NAME_EXCEEDS,
 		});
 		name = name.slice(0, 214);
@@ -110,7 +106,6 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 
 	if (name[0] === "." || name[0] === "_") {
 		unexpected({
-			at: "prefix",
 			description: descriptions.MANIFEST.INVALID_NAME_START,
 			start: new ZeroIndexed(),
 		});
@@ -139,7 +134,6 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 
 		if (rawPackageName === undefined) {
 			unexpected({
-				at: "prefix",
 				description: descriptions.MANIFEST.ORG_WITH_NO_PACKAGE_NAME,
 				start: offset,
 			});
@@ -162,7 +156,6 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 			// Complain on excess separators
 			if (other.length > 0) {
 				unexpected({
-					at: "prefix",
 					description: descriptions.MANIFEST.ORG_TOO_MANY_PARTS,
 					start: offset,
 				});

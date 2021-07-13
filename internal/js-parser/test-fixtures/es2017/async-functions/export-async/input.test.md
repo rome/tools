@@ -43,7 +43,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2017/async-functions/export-async/input.js>
 	loc: SourceLocation es2017/async-functions/export-async/input.js 1:0-2:0

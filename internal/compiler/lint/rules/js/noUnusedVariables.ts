@@ -181,7 +181,6 @@ export default createVisitor<State>({
 					(state): State => {
 						return {
 							...state,
-							// @ts-ignore
 							usedBindings: {
 								...state.usedBindings,
 								[node.name]: state.usedBindings[node.name] === false

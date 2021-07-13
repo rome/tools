@@ -1,0 +1,8 @@
+/* Single pseudo selectors */
+.example:any-link {
+	width: 10px;
+}
+
+.example::selection {
+	width: 10px;
+}

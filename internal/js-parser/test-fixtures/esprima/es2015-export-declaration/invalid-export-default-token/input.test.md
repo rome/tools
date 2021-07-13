@@ -53,14 +53,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-token/input.js>
-				end: Position 1:16
+				end: Position 1:17
 				start: Position 1:17
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-token/input.js>
 	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-token/input.js 1:0-2:0

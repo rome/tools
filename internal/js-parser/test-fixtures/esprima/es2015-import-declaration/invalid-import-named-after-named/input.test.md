@@ -88,7 +88,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-after-named/input.js>
 	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-after-named/input.js 1:0-2:0

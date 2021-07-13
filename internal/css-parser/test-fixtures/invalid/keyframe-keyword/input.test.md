@@ -4,6 +4,8 @@
 
 ## `invalid > keyframe-keyword`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -64,13 +66,31 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/keyframe-keyword/input.css>
+				path: UIDPath<invalid/keyframe-keyword/input.css>
 				end: Position 2:5
 				start: Position 2:1
 			}
 		}
 	]
-	path: RelativePath<invalid/keyframe-keyword/input.css>
+	path: UIDPath<invalid/keyframe-keyword/input.css>
 	loc: SourceLocation invalid/keyframe-keyword/input.css 1:0-7:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/keyframe-keyword/input.css:2:1 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The keyword form is not accepted as valid keyframe name.
+
+    1 │ @keyframes foo {
+  > 2 │   form {}
+      │   ^^^^
+    3 │ }
+
+  ℹ Did you mean from or to?
+
+
 ```

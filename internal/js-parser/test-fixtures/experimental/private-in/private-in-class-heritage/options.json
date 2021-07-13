@@ -1,3 +1,2 @@
 {
-  "plugins": ["classPrivateProperties", "privateIn"]
 }

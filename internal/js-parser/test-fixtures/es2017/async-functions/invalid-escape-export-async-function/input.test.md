@@ -129,7 +129,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/invalid-escape-export-async-function/input.js>
-				end: Position 1:6
+				end: Position 1:7
 				start: Position 1:7
 			}
 		}

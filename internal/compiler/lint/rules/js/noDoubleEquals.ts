@@ -4,12 +4,9 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
-
-const SUGGESTION_DESCRIPTION = markup`This may be unsafe if you are relying on type coercion`;
 
 export default createVisitor({
 	name: "js/noDoubleEquals",
@@ -27,7 +24,7 @@ export default createVisitor({
 						suggestions: [
 							{
 								title: markup`Use !==`,
-								description: SUGGESTION_DESCRIPTION,
+								description: markup`This may be unsafe if you are relying on type coercion`,
 								fixed: signals.replace({
 									...node,
 									operator: "!==",
@@ -45,7 +42,7 @@ export default createVisitor({
 						suggestions: [
 							{
 								title: markup`Use ===`,
-								description: SUGGESTION_DESCRIPTION,
+								description: markup`This may be unsafe if you are relying on type coercion`,
 								fixed: signals.replace({
 									...node,
 									operator: "===",

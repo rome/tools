@@ -34,22 +34,31 @@ JSRoot {
 		{
 			origins: [{entity: "ParserCore<js>"}]
 			description: {
-				advice: []
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
+					}
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
+					}
+				]
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "'with' in strict mode"}
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 			}
 			location: {
 				language: "js"
 				path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
-				end: Position 2:10
-				start: Position 2:0
+				end: Position 1:10
+				start: Position 1:0
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
 	loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:0-3:0
@@ -60,13 +69,17 @@ JSRoot {
 
 ```
 
- experimental/module-attributes/import-with-statement/input.js:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/import-with-statement/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ 'with' in strict mode
+  ✖ import and export can only appear in a module
 
-    1 │ import "x"
-  > 2 │ with ({});
+  > 1 │ import "x"
       │ ^^^^^^^^^^
+    2 │ with ({});
+
+  ℹ Change the extension to .mjs to turn this file into a module
+
+  ℹ Add "type": "module" to your <dim>undefined</dim>
 
 
 ```

@@ -25,7 +25,7 @@ export function ansiFormatText(
 			if (features.hyperlinks) {
 				return formatAnsi.hyperlink(
 					value,
-					attributes.get("target").asString(value),
+					attributes.get("target").required(value).asString(),
 				);
 			} else {
 				return value;
@@ -85,7 +85,7 @@ export function ansiFormatText(
 			return formatAnsi.italic(value);
 
 		case "highlight": {
-			const index = Math.min(0, attributes.get("i").asNumber(0));
+			const index = Math.min(0, attributes.get("i").required(0).asNumber());
 			const fn = ansiHighlightFactories[index % ansiHighlightFactories.length];
 			return fn(value);
 		}

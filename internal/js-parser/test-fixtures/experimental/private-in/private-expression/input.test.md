@@ -99,7 +99,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/private-in/private-expression/input.js>
-				end: Position 3:10
+				end: Position 4:4
 				start: Position 4:4
 			}
 		}
@@ -123,8 +123,10 @@ JSRoot {
 
     2 │   #x = 1;
     3 │   test() {
-    4 │     #x;
+  > 4 │     #x;
+      │     ^
     5 │   }
+    6 │ }
 
 
 ```

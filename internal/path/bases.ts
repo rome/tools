@@ -102,8 +102,8 @@ export abstract class BasePath<
 				relativeSegments,
 			},
 			{
+				...this.memo,
 				ext,
-				parent: this.memo.parent,
 			},
 		);
 	}
@@ -119,8 +119,8 @@ export abstract class BasePath<
 				relativeSegments,
 			},
 			{
+				...this.memo,
 				ext: newExt,
-				parent: this.memo.parent,
 			},
 		);
 	}
@@ -133,7 +133,8 @@ export abstract class BasePath<
 				relativeSegments,
 			},
 			{
-				parent: this.memo.parent,
+				...this.memo,
+				ext: undefined,
 			},
 		);
 	}
@@ -298,10 +299,15 @@ export abstract class BasePath<
 		let path: Super = this._assert();
 
 		if (this.parsed.explicitDirectory) {
-			path = this._fork({
-				...this.parsed,
-				explicitDirectory: false,
-			}).getUnique() as Super;
+			path = this._fork(
+				{
+					...this.parsed,
+					explicitDirectory: false,
+				},
+				{
+					parent: this.memo.parent,
+				},
+			).getUnique() as Super;
 		} else {
 			path = this._getUnique();
 		}
@@ -421,7 +427,7 @@ export abstract class BasePath<
 
 		let target: Super = this._assert();
 		for (const item of items) {
-			// @ts-ignore
+			// @ts-expect-error
 			target = target._append(item);
 		}
 		return target;
@@ -453,7 +459,7 @@ export abstract class BasePath<
 }
 
 enhanceNodeInspectClass(
-	// @ts-ignore: We know this is an abstract class but it's ok...
+	// @ts-expect-error: We know this is an abstract class but it's ok...
 	BasePath,
 	(path) => {
 		return `${path[Symbol.toStringTag]}<${path.format()}>`;

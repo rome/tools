@@ -3,7 +3,11 @@ import {CommandName, commandCategories} from "@internal/core/common/commands";
 import {markup} from "@internal/markup";
 import ClientRequest from "@internal/core/client/ClientRequest";
 import {consumeUnknown} from "@internal/consume";
-import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	equalCategoryNames,
+	isValidDiagnosticCategoryName,
+} from "@internal/diagnostics";
 
 interface Flags {
 	allowDirty: boolean;
@@ -21,7 +25,7 @@ export default createLocalCommand({
 				{
 					description: markup`Allows running auto-config command by skipping the check on uncommitted files.`,
 				},
-			).asBoolean(false),
+			).required(false).asBoolean(),
 		};
 	},
 	async callback(req: ClientRequest, flags: Flags) {
@@ -45,23 +49,14 @@ export default createLocalCommand({
 			return false;
 		}
 
-		const res = await req.client.query(
-			{
-				commandName: "auto-config",
-			},
-			"server",
+		const data = consumeUnknown(
+			result.data,
+			DIAGNOSTIC_CATEGORIES.parse,
+			"json",
 		);
 
-		if (res.type !== "SUCCESS") {
-			reporter.log(
-				markup`Something went wrong during the execution of the command.`,
-			);
-			return true;
-		}
-		const data = consumeUnknown(res.data, DIAGNOSTIC_CATEGORIES.parse, "json");
-
 		if (!data.exists()) {
-			reporter.log(markup`No problems or updates found in you project.`);
+			reporter.log(markup`No problems or updates found in your project.`);
 			return true;
 		}
 
@@ -87,7 +82,14 @@ export default createLocalCommand({
 								category.exists() &&
 								categoryValue.exists()
 							) {
-								if (category.asString() === "lint/js/noUndeclaredVariables") {
+								const categoryName = category.asMappedArray((c) => c.asString());
+								if (
+									isValidDiagnosticCategoryName(categoryName) &&
+									equalCategoryNames(
+										categoryName,
+										DIAGNOSTIC_CATEGORIES["lint/js/noUndeclaredVariables"],
+									)
+								) {
 									await req.client.query(
 										{
 											commandName: "config push",

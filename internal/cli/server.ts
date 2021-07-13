@@ -15,6 +15,7 @@ import setProcessTitle from "./utils/setProcessTitle";
 import net = require("net");
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import {isBridgeEndDiagnosticsError} from "@internal/events";
+import {createResourceFromServer} from "@internal/resources";
 
 export default async function server() {
 	setProcessTitle("server");
@@ -40,6 +41,7 @@ export default async function server() {
 			}),
 		);
 	});
+	server.resources.add(createResourceFromServer(socketServer));
 
 	socketServer.on(
 		"error",

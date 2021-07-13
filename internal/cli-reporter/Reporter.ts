@@ -154,6 +154,7 @@ export default class Reporter implements ReporterNamespace {
 					cwd: CWD_PATH,
 					home: HOME_PATH,
 				},
+				stdin: process.stdin,
 			},
 		);
 
@@ -202,10 +203,10 @@ export default class Reporter implements ReporterNamespace {
 			features,
 			write: (chunk, error) => {
 				if (error) {
-					// @ts-ignore
+					// @ts-expect-error
 					stderr?.write(chunk);
 				} else {
-					// @ts-ignore
+					// @ts-expect-error
 					stdout?.write(chunk);
 				}
 			},

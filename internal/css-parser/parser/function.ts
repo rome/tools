@@ -1,20 +1,15 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
-import {
-	AnyCSSValue,
-	CSSCalcFunction,
-	CSSCustomProperty,
-	CSSFunction,
-	CSSUrlFunction,
-	CSSVarFunction,
-} from "@internal/ast";
+import {AnyCSSValue, AnyFunction, CSSCustomProperty} from "@internal/ast";
 import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseCalcFunction} from "@internal/css-parser/parser/calc";
+import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
+import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
+import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
+import {parseRepeatFunction} from "@internal/css-parser/parser/grid/repeat";
 
-export function parseFunction(
-	parser: CSSParser,
-): CSSFunction | CSSVarFunction | CSSUrlFunction | CSSCalcFunction | undefined {
+export function parseFunction(parser: CSSParser): AnyFunction | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;
@@ -22,14 +17,42 @@ export function parseFunction(
 	const isVarFunction = name === "var";
 	const isUrlFunction = name === "url";
 	const isCalcFunction = name === "calc";
+	const isFitContentFunction = name === "fit-content";
+	const isMinFunction = name === "min";
+	const isMaxFunction = name === "max";
+	const isMinMaxFunction = name === "minmax";
+	const isRepeatFunction = name === "repeat";
 	nextToken(parser);
+
+	if (isFitContentFunction) {
+		const value = parseFitContentFunction(parser);
+		if (value) {
+			return value;
+		}
+	}
 
 	if (isCalcFunction) {
 		const value = parseCalcFunction(parser);
 		if (value) {
 			return value;
 		}
-	} else {
+	} else if (isMinFunction || isMaxFunction) {
+		const value = parseMinOrMaxFunction(parser, name);
+		if (value) {
+			return value;
+		}
+	} else if (isMinMaxFunction) {
+		const value = parseMinmaxFunction(parser);
+		if (value) {
+			return value;
+		}
+	} else if (isRepeatFunction) {
+		const value = parseRepeatFunction(parser);
+		if (value) {
+			return value;
+		}
+	}
+	else {
 		while (true) {
 			if (matchToken(parser, "RightParen")) {
 				nextToken(parser);
@@ -49,7 +72,7 @@ export function parseFunction(
 					if (parsedValue.type !== "CSSCustomProperty") {
 						parser.unexpectedDiagnostic({
 							description: descriptions.CSS_PARSER.INVALID_CUSTOM_PROPERTY,
-							token: parser.getToken(),
+							token: parser.getPreviousToken(),
 						});
 					}
 					params.push(parsedValue);

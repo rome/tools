@@ -15,6 +15,7 @@ import {
 import {Path, createPath, createUIDPath} from "@internal/path";
 import {OneIndexed} from "@internal/numbers";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
+const module = require("module");
 
 let inited: boolean = false;
 
@@ -133,6 +134,24 @@ function noNull<T>(val: null | T): undefined | T {
 	}
 }
 
+function toNodeFilename(filename: string): undefined | string {
+	if (filename.startsWith("node:")) {
+		// Node v15 internal module paths start with node: in stack traces
+		// https://github.com/nodejs/node/pull/35498
+		return filename;
+	}
+
+	// Simulate it for Node v14
+	if (filename.startsWith("internal/")) {
+		return `node:${filename}`;
+	}
+	if (module.builtinModules.includes(filename.replace(/\.js$/g, ""))) {
+		return `node:${filename}`;
+	}
+
+	return undefined;
+}
+
 function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 	if (err[ERROR_FRAMES_PROP]) {
 		return;
@@ -145,10 +164,11 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 
 		let path: undefined | Path;
 		if (filename !== undefined) {
-			if (filename.startsWith("node:")) {
-				path = createUIDPath(filename);
-			} else {
+			let nodeFilename = toNodeFilename(filename);
+			if (nodeFilename === undefined) {
 				path = createPath(filename);
+			} else {
+				path = createUIDPath(nodeFilename);
 			}
 		}
 

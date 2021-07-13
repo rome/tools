@@ -19,8 +19,8 @@ export default createServerCommand<DevelopServerListenOptions>({
 	examples: [],
 	defineFlags(c) {
 		return {
-			public: c.get("public").asBoolean(false),
-			port: c.get("port").asNumber(8_080),
+			public: c.get("public").required(false).asBoolean(),
+			port: c.get("port").required(8_080).asNumber(),
 		};
 	},
 	async callback(

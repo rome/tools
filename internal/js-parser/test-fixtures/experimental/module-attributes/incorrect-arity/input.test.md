@@ -105,7 +105,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/module-attributes/incorrect-arity/input.js>
 	loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:0-3:0

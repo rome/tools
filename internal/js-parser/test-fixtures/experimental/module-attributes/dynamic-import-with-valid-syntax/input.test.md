@@ -81,7 +81,7 @@ JSRoot {
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/module-attributes/dynamic-import-with-valid-syntax/input.js>
 	loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:0-2:0

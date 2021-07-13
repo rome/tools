@@ -42,7 +42,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/es2015-spread-element/invalid-new-spreads/input.js>
-				end: Position 1:9
+				end: Position 1:10
 				start: Position 1:10
 			}
 		}

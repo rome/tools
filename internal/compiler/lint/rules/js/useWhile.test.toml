@@ -1,0 +1,13 @@
+filename = "file.ts"
+invalid = [
+	"""
+		for (; x.running;) {
+			x.step();
+		}
+	""",
+	"""
+		for (;;) {
+			doSomething();
+		}
+	""",
+]

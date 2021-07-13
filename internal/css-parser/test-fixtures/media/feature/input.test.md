@@ -4,6 +4,8 @@
 
 ## `media > feature`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -399,7 +401,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<media/feature/input.css>
+	path: UIDPath<media/feature/input.css>
 	loc: SourceLocation media/feature/input.css 1:0-6:107
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

@@ -9,7 +9,9 @@ export const cssParser = createDiagnosticsCategory({
 	UNEXPECTED_TOKEN: {message: markup`Unexpected token.`},
 	UNTERMINATED_AT_RULE: {message: markup`Unterminated at-rule.`},
 	UNTERMINATED_BLOCK: {message: markup`Unterminated block.`},
-	UNTERMINATED_FUNCTION: {message: markup`Unterminated function.`},
+	UNTERMINATED_FUNCTION: {
+		message: markup`Unterminated function. Please add a right parenthesis.`,
+	},
 	UNTERMINATED_STRING: {message: markup`Unterminated string.`},
 	UNTERMINATED_URL: {message: markup`Unterminated URL.`},
 	EXPECTED_IDENTIFIER: {message: markup`Expected an identifier.`},
@@ -76,7 +78,7 @@ export const cssParser = createDiagnosticsCategory({
 	},
 
 	CALC_VALUE_NOT_RECOGNISED: {
-		message: markup`The function <emphasis>calc()</emphasis> doesn't this token`,
+		message: markup`The function <emphasis>calc()</emphasis> doesn't support this token`,
 		advice: [
 			{
 				type: "log",
@@ -86,23 +88,8 @@ export const cssParser = createDiagnosticsCategory({
 		],
 	},
 
-	CALC_MISSING_LEFT_SPACE: {
-		message: markup`Missing left space.`,
-	},
-
-	CALC_MISSING_RIGHT_SPACE: {
-		message: markup`Missing right space.`,
-	},
-
-	CALC_OPERATOR_ADD_OR_PLUS_NEEDED: {
-		message: markup`An operator is needed.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Consider adding <emphasis>+ or -</emphasis>`,
-			},
-		],
+	CALC_MISSING_SPACES: {
+		message: markup`The operators <emphasis>+</emphasis> and <emphasis>-</emphasis> need to have a space left and right`,
 	},
 
 	CALC_OPERATOR_TIMES_OR_MOD_NEEDED: {
@@ -118,6 +105,17 @@ export const cssParser = createDiagnosticsCategory({
 
 	CALC_UNTERMITED_SUM: {
 		message: markup`The character <emphasis>)</emphasis> is missing, the expression is not completed.`,
+	},
+
+	FIT_CONTENT_UNKOWN_FUNCTION: {
+		message: markup`Unknown unit on the <emphasis>fit-content()</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The only valid values are dimensions, percentages or numbers.`,
+			},
+		],
 	},
 
 	CALC_INCORRECT_NUMBER_VALUE: {
@@ -209,5 +207,89 @@ export const cssParser = createDiagnosticsCategory({
 
 	AT_FONT_FACE_MISSING_SRC: {
 		message: markup`The rule <emphasis>@font-face</emphasis> needs the property <emphasis>src</emphasis> in order to be valid.`,
+	},
+
+	AT_IMPORT_INVALID_ARGUMENT: {
+		message: markup`Unexpected argument in at-import`,
+	},
+
+	MIN_MAX_INVALID_ARGUMENTS: {
+		message: markup`The function <emphasis>minmax()</emphasis> requires two arguments or the arguments provided are not supported.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>min-content</emphasis>, <emphasis>max-content</emphasis> or <emphasis>auto</emphasis>`,
+			},
+
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use use lengths or dimensions. e.g. em, fr, px, %, etc.`,
+			},
+		],
+	},
+
+	MIN_MAX_INVALID_FLEX_ARGUMENT: {
+		message: markup`A flex argument is permitted only as <emphasis>second argument</emphasis> of the function <emphasis>minmax()</emphasis>`,
+	},
+
+	GRID_REPEAT_POSITIVE_INTEGER: {
+		message: markup`Only positive numbers are accepted`,
+	},
+
+	GRID_REPEAT_TRACK_REPEAT_MANDATORY: {
+		message: markup`The positive number must be followed by a comma`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`A track-repeat must specify what to repeat`,
+			},
+		],
+	},
+	GRID_REPEAT_INCORRECT_IDENT: {
+		message: markup`The only accepted identifiers are <emphasis>auto-fill</emphasis> and <emphasis>auto-fit</emphasis>`,
+	},
+
+	GRID_REPEAT_UNTERMINATED: {
+		message: markup`The <emphasis>repeat()</emphasis> doesn't have any value to repeat.`,
+	},
+
+	GRID_REPEAT_EXPECTED_IDENTIFIER: {
+		message: markup`Only identifiers are expected at this position.`,
+	},
+
+	GRID_REPEAT_UNCLOSED_LINE_NAME: (ident: string) => ({
+		message: markup`The line name doesn't have a closing square bracket`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Add a <emphasis>]</emphasis> after <emphasis>${ident}</emphasis>.`,
+			},
+		],
+	}),
+
+	GRID_REPEAT_WRONG_FUNCTION: {
+		message: markup`Unsupported function at this position`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>minmax()</emphasis> or <emphasis>fit-content()</emphasis>.`,
+			},
+		],
+	},
+
+	GRID_REPEAT_WRONG_IDENTIFIER: {
+		message: markup`Unsupported identifier`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Use <emphasis>min-content</emphasis> or <emphasis>max-content</emphasis>.`,
+			},
+		],
 	},
 });

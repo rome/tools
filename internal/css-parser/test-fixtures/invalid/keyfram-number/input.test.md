@@ -4,6 +4,8 @@
 
 ## `invalid > keyfram-number`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -42,13 +44,32 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/keyfram-number/input.css>
+				path: UIDPath<invalid/keyfram-number/input.css>
 				end: Position 2:3
 				start: Position 2:1
 			}
 		}
 	]
-	path: RelativePath<invalid/keyfram-number/input.css>
+	path: UIDPath<invalid/keyfram-number/input.css>
 	loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/keyfram-number/input.css:2:1 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The selector name of the keyframe is not correct.
+
+    1 │ @keyframes foo {
+  > 2 │   10 {
+      │   ^^
+    3 │
+    4 │   }
+
+  ℹ The only valid values are percentages, and the keywords from and to.
+
+
 ```

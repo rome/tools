@@ -177,6 +177,7 @@ function getRuntimeDirectory(): AbsoluteFilePath {
 
 export const RUNTIME_DIRECTORY = getRuntimeDirectory();
 
+// Keep this in sync with getSocketPath in scripts/dev-rome.cjs
 function createPipePath(name: string): AbsoluteFilePath {
 	let basename = VERSION;
 

@@ -15,6 +15,7 @@ import {DiagnosticsError} from "./error-wrappers";
 import {
 	DIAGNOSTIC_CATEGORIES_SUPPRESS_DEPENDENCIES,
 	DiagnosticCategoryPrefix,
+	equalCategoryNames,
 } from "./categories";
 import {descriptions} from "./descriptions";
 import {matchesSuppression} from "@internal/compiler";
@@ -102,6 +103,10 @@ type DiagnosticVisibility = {
 type SeenKeys = Set<string>;
 
 function isDuplicate(diag: Diagnostic, seenKeys: SeenKeys): boolean {
+	if (diag.tags?.unique) {
+		return false;
+	}
+
 	const parts: string[] = [
 		`label:${diag.label === undefined ? "" : readMarkup(diag.label)}`,
 		`category:${formatCategoryDescription(diag.description)}`,
@@ -308,7 +313,7 @@ export default class DiagnosticsProcessor {
 
 			if (
 				filter.category !== undefined &&
-				filter.category !== diag.description.category
+				!equalCategoryNames(filter.category, diag.description.category)
 			) {
 				continue;
 			}
@@ -452,9 +457,6 @@ export default class DiagnosticsProcessor {
 		this.cachedCalculate = undefined;
 		this.cachedDiagnostics = undefined;
 
-		// Normalize
-		diags = diags.map((diag) => this.normalizer.normalizeDiagnostic(diag));
-
 		let guaranteed: undefined | Diagnostic[];
 		if (
 			this.guaranteedDiagnosticsEvent.hasSubscriptions() &&
@@ -464,6 +466,8 @@ export default class DiagnosticsProcessor {
 		}
 
 		for (let diag of diags) {
+			diag = this.normalizer.normalizeDiagnostic(diag);
+
 			const {category} = diag.description;
 			const {path} = diag.location;
 

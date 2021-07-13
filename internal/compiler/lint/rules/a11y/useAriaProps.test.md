@@ -12,7 +12,7 @@
 
   ✖ aria-labell is an invalid ARIA attribute.
 
-    <input className='' aria-labell='' />
+    <input className="" aria-labell="" />
                         ^^^^^^^^^^^^^^
 
   Suggested fix: ARIA Spelling Mistake
@@ -40,7 +40,7 @@
 
   ✖ aria- is an invalid ARIA attribute.
 
-    <div aria-='foobar' />
+    <div aria-="foobar" />
          ^^^^^^^^^^^^^^
 
 
@@ -61,7 +61,7 @@
 
   ✖ aria-labeledby is an invalid ARIA attribute.
 
-    <div aria-labeledby='foobar' />
+    <div aria-labeledby="foobar" />
          ^^^^^^^^^^^^^^^^^^^^^^^
 
   Suggested fix: ARIA Spelling Mistake
@@ -89,7 +89,7 @@
 
   ✖ aria-skldjfaria-klajsd is an invalid ARIA attribute.
 
-    <div aria-skldjfaria-klajsd='foobar' />
+    <div aria-skldjfaria-klajsd="foobar" />
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 

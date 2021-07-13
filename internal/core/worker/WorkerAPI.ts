@@ -10,6 +10,7 @@ import {FileReference, Worker} from "@internal/core";
 import {AnyNode, AnyRoot} from "@internal/ast";
 import {
 	Diagnostic,
+	appendAdviceToDiagnostic,
 	catchDiagnostics,
 	descriptions,
 } from "@internal/diagnostics";
@@ -94,20 +95,16 @@ export default class WorkerAPI {
 	): T {
 		if (astModifiedFromSource) {
 			const diagnostics = val.diagnostics.map((diag) => {
-				return {
-					...diag,
-					metadata: {
-						...diag.description,
-						advice: [
-							...diag.description.advice,
-							{
-								type: "log",
-								category: "warn",
-								text: "We manipulated this file before parsing it so the source locations are likely incorrect",
-							},
-						],
-					},
-				};
+				return appendAdviceToDiagnostic(
+					diag,
+					[
+						{
+							type: "log",
+							category: "warn",
+							text: "We manipulated this file before parsing it so the source locations are likely incorrect",
+						},
+					],
+				);
 			});
 
 			return {...val, diagnostics};

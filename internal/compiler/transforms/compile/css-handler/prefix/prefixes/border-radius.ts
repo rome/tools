@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -30,7 +30,7 @@ export default [
 	"border-bottom-right-radius",
 	"border-bottom-left-radius",
 ].map((propertyName) =>
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: propertyName,
 		enter(path) {
 			return prefixCSSProperty({

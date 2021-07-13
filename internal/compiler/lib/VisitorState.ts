@@ -72,10 +72,9 @@ export default class VisitorState<State extends UnknownObject>
 	public getOptional(find?: FindState<State>): undefined | State {
 		const index = this.getIndex(find);
 		if (index === -1) {
-			throw new Error("VisitorState: Could not find stack");
-		} else {
-			return this.stack[index][0];
+			return undefined;
 		}
+		return this.stack[index][0];
 	}
 
 	public get(find?: FindState<State>): State {

@@ -12,7 +12,7 @@
 
   ✖ Avoid using target="_blank" without rel="noreferrer".
 
-    <a href="http://external.link" target="_blank">child</a>
+    <a href='http://external.link' target='_blank'>child</a>
                                    ^^^^^^^^^^^^^^^
 
   ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See
@@ -45,7 +45,7 @@
 
   ✖ Avoid using target="_blank" without rel="noreferrer".
 
-    <a href={dynamicLink} target="_blank">child</a>
+    <a href={dynamicLink} target='_blank'>child</a>
                           ^^^^^^^^^^^^^^^
 
   ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See

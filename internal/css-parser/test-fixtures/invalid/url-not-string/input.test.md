@@ -4,6 +4,8 @@
 
 ## `invalid > url-not-string`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -47,13 +49,29 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/url-not-string/input.css>
+				path: UIDPath<invalid/url-not-string/input.css>
 				end: Position 2:20
 				start: Position 2:13
 			}
 		}
 	]
-	path: RelativePath<invalid/url-not-string/input.css>
+	path: UIDPath<invalid/url-not-string/input.css>
 	loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/url-not-string/input.css:2:13 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The function url() can only accept strings.
+
+    1 │ .foo {
+  > 2 │   background: url(18);
+      │               ^^^^^^^
+    3 │ }
+
+
 ```

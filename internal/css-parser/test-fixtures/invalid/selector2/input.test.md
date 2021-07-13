@@ -4,6 +4,8 @@
 
 ## `invalid > selector2`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -44,13 +46,27 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector2/input.css>
+				path: UIDPath<invalid/selector2/input.css>
 				end: Position 1:8
 				start: Position 1:7
 			}
 		}
 	]
-	path: RelativePath<invalid/selector2/input.css>
+	path: UIDPath<invalid/selector2/input.css>
 	loc: SourceLocation invalid/selector2/input.css 1:0-1:11
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/selector2/input.css:1:7 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected a selector.
+
+    span ~ + {}
+           ^
+
+
 ```

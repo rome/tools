@@ -17,21 +17,21 @@ disallow template literal placeholder syntax in regular strings
 **ESLint Equivalent:** [no-template-curly-in-string](https://eslint.org/docs/rules/no-template-curly-in-string)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:4106a013d43aa3f558e2276d31042c7ebad07dc0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:79c38c43cb2dd8b45c1816cd0851a99160fba521,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">user</span> <span class="token operator">=</span> <span class="token string">&apos;Faustina&apos;</span><span class="token punctuation">;</span>
-               <span class="token keyword">const</span> <span class="token variable">helloUser</span> <span class="token operator">=</span> <span class="token string">&apos;Hello, ${user}&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+<span class="token keyword">const</span> <span class="token variable">helloUser</span> <span class="token operator">=</span> <span class="token string">&apos;Hello, ${user}&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:33</span> <strong>lint/js/noTemplateCurlyInString</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:18</span> <strong>lint/js/noTemplateCurlyInString</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This string contains an </span><span style="color: Tomato;"><strong>unexpected template string</strong></span><span style="color: Tomato;"> expression.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">user</span> <span class="token operator">=</span> <span class="token string">&apos;Faustina&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>               <span class="token keyword">const</span> <span class="token variable">helloUser</span> <span class="token operator">=</span> <span class="token string">&apos;Hello, ${user}&apos;</span><span class="token punctuation">;</span>
-     <strong> │ </strong>                                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">helloUser</span> <span class="token operator">=</span> <span class="token string">&apos;Hello, ${user}&apos;</span><span class="token punctuation">;</span>
+     <strong> │ </strong>                  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Using template string expressions in regular strings is usually a</span>
     <span style="color: rgb(38, 148, 255);">typo.</span>

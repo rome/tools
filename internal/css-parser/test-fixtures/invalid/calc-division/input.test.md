@@ -4,6 +4,8 @@
 
 ## `invalid > calc-division`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -75,13 +77,29 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/calc-division/input.css>
+				path: UIDPath<invalid/calc-division/input.css>
 				end: Position 2:20
 				start: Position 2:17
 			}
 		}
 	]
-	path: RelativePath<invalid/calc-division/input.css>
+	path: UIDPath<invalid/calc-division/input.css>
 	loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/calc-division/input.css:2:17 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Incorrect character, expected a number or a parenthesis.
+
+    1 │ .style {
+  > 2 │   width: calc(2px/1px);
+      │                   ^^^
+    3 │ }
+
+
 ```

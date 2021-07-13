@@ -32,3 +32,9 @@ export function readToken(parser: CSSParser, type: TokenType) {
 	skipComments(parser);
 	return parser.eatToken(type);
 }
+
+export function skipWhitespaces(parser: CSSParser): void {
+	while (matchToken(parser, "Whitespace")) {
+		readToken(parser, "Whitespace");
+	}
+}

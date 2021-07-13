@@ -8,3 +8,8 @@ Profile-*.json
 /dist.tar.gz
 # Ignore test files that contributors could create locally
 /test.*
+# Ignore lockfiles
+yarn.lock
+package-lock.json
+npm-shrinkwrap.json
+pnpm-lock.yaml

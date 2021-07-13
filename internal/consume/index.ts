@@ -69,3 +69,4 @@ export function consumeUnknown(
 export {Consumer};
 
 export * from "./types";
+export * from "./utils";

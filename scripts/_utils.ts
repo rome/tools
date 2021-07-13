@@ -8,6 +8,7 @@ import {regex} from "@internal/string-escape";
 import {json} from "@internal/codec-config";
 import crypto = require("crypto");
 import child = require("child_process");
+import https = require("https");
 
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();
@@ -363,4 +364,41 @@ export async function languageCategoryExists(
 
 export function valueToCode(value: unknown): string {
 	return formatAST(valueToNode(value)).code;
+}
+
+export function httpsGet(url: string): Promise<unknown> {
+	return new Promise((resolve, reject) => {
+		const req = https.get(
+			url,
+			(res) => {
+				let buff = "";
+
+				res.setEncoding("utf8");
+				res.on(
+					"data",
+					(chunk) => {
+						buff += chunk;
+					},
+				);
+
+				res.on(
+					"end",
+					() => {
+						try {
+							resolve(JSON.parse(buff));
+						} catch (err) {
+							reject(err);
+						}
+					},
+				);
+			},
+		);
+
+		req.on(
+			"error",
+			(err) => {
+				reject(err);
+			},
+		);
+	});
 }

@@ -86,8 +86,8 @@
 
   ✖ Avoid using deprecated blink elements.
 
-    <blink></blink>
-    ^^^^^^^^^^^^^^
+    <blink />
+    ^^^^^^
 
   ℹ Deprecated blink are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
@@ -98,8 +98,7 @@
 ### `4: formatted`
 
 ```html
-<blink>
-</blink>
+<blink />
 
 ```
 
@@ -111,8 +110,8 @@
 
   ✖ Avoid using deprecated marquee elements.
 
-    <marquee></marquee>
-    ^^^^^^^^^^^^^^^^^^
+    <marquee />
+    ^^^^^^^^
 
   ℹ Deprecated marquee are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
@@ -123,8 +122,7 @@
 ### `5: formatted`
 
 ```html
-<marquee>
-</marquee>
+<marquee />
 
 ```
 
@@ -137,7 +135,19 @@
 ### `6: formatted`
 
 ```html
-<div>
-</div>
+<div />
+
+```
+
+### `7`
+
+```
+
+```
+
+### `7: formatted`
+
+```html
+<Marquee />
 
 ```

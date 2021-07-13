@@ -23,11 +23,13 @@ export type DiagnosticCategory =
 	| ["childProcess", "failure"]
 	| ["commands", "auto-config", "uncommittedChanges"]
 	| ["commands", "auto-config", "expectedRepo"]
+	| ["commands", "migrate"]
 	| ["compile", "classes"]
 	| ["compile", "const-enums"]
 	| ["compile", "jsx"]
 	| ["compile", "nonnumeric-enum-values"]
 	| ["eslint"]
+	| ["prettier"]
 	| ["files", "missingHandler"]
 	| ["files", "tooBig"]
 	| ["flags", "invalid"]
@@ -89,6 +91,8 @@ export type DiagnosticCategory =
 	| ["typeCheck", "unknownImport"]
 	| ["typeCheck", "unknownProperty"]
 	| ["vsc", "dirty"]
+	| ["vcs", "expectedRepo"]
+	| ["vcs", "uncommittedChanges"]
 	| ["v8", "syntaxError"];
 
 export type DiagnosticCategoryPrefix = DiagnosticCategory[0];
@@ -103,7 +107,7 @@ export type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 export type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:dd816ba35228b18c872d41d790bac14c40a58400,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:728a8d0b42ede7075a991efd0bc768ff44c7fd7f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -131,8 +135,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "a11y", "useMediaCaption"]
 	| ["lint", "a11y", "useValidAnchor"]
 	| ["lint", "a11y", "useValidLang"]
-	| ["lint", "css", "noDuplicateCustomProperties"]
-	| ["lint", "css", "noImportantInKeyframes"]
 	| ["lint", "html", "useClosingNonVoid"]
 	| ["lint", "js", "noArguments"]
 	| ["lint", "js", "noAsyncPromiseExecutor"]
@@ -221,7 +223,8 @@ export type DiagnosticLintCategory =
 	| ["lint", "ts", "noExplicitAny"]
 	| ["lint", "ts", "preferShorthandArrayType"]
 	| ["lint", "ts", "useInterfaces"]
-	| ["lint", "ts", "useSimplifiedBooleanExpression"];
+	| ["lint", "ts", "useSimplifiedBooleanExpression"]
+	| ["lint", "ts", "useTsExpectError"];
 export const lintCategoryNameMap: {
 	[name in DiagnosticLintCategoryString]: DiagnosticLintCategory
 } = {
@@ -263,12 +266,6 @@ export const lintCategoryNameMap: {
 	"lint/a11y/useMediaCaption": ["lint", "a11y", "useMediaCaption"],
 	"lint/a11y/useValidAnchor": ["lint", "a11y", "useValidAnchor"],
 	"lint/a11y/useValidLang": ["lint", "a11y", "useValidLang"],
-	"lint/css/noDuplicateCustomProperties": [
-		"lint",
-		"css",
-		"noDuplicateCustomProperties",
-	],
-	"lint/css/noImportantInKeyframes": ["lint", "css", "noImportantInKeyframes"],
 	"lint/html/useClosingNonVoid": ["lint", "html", "useClosingNonVoid"],
 	"lint/js/noArguments": ["lint", "js", "noArguments"],
 	"lint/js/noAsyncPromiseExecutor": ["lint", "js", "noAsyncPromiseExecutor"],
@@ -398,6 +395,7 @@ export const lintCategoryNameMap: {
 		"ts",
 		"useSimplifiedBooleanExpression",
 	],
+	"lint/ts/useTsExpectError": ["lint", "ts", "useTsExpectError"],
 };
 /* GENERATED:END(id:main) */
 
@@ -424,11 +422,13 @@ export const DIAGNOSTIC_CATEGORIES: {
 		"auto-config",
 		"expectedRepo",
 	],
+	"commands/migrate": ["commands", "migrate"],
 	"compile/classes": ["compile", "classes"],
 	"compile/const-enums": ["compile", "const-enums"],
 	"compile/jsx": ["compile", "jsx"],
 	"compile/nonnumeric-enum-values": ["compile", "nonnumeric-enum-values"],
 	eslint: ["eslint"],
+	prettier: ["prettier"],
 	"files/missingHandler": ["files", "missingHandler"],
 	"files/tooBig": ["files", "tooBig"],
 	"flags/invalid": ["flags", "invalid"],
@@ -499,7 +499,9 @@ export const DIAGNOSTIC_CATEGORIES: {
 	"typeCheck/undeclaredVariable": ["typeCheck", "undeclaredVariable"],
 	"typeCheck/unknownImport": ["typeCheck", "unknownImport"],
 	"typeCheck/unknownProperty": ["typeCheck", "unknownProperty"],
+	"vcs/expectedRepo": ["vcs", "expectedRepo"],
 	"vsc/dirty": ["vsc", "dirty"],
+	"vcs/uncommittedChanges": ["vcs", "uncommittedChanges"],
 	"v8/syntaxError": ["v8", "syntaxError"],
 };
 
@@ -512,6 +514,7 @@ export const categoryPrefixMap: {[name in DiagnosticCategoryPrefix]: true} = {
 	commands: true,
 	compile: true,
 	eslint: true,
+	prettier: true,
 	files: true,
 	integration: true,
 	format: true,
@@ -527,6 +530,7 @@ export const categoryPrefixMap: {[name in DiagnosticCategoryPrefix]: true} = {
 	tests: true,
 	typeCheck: true,
 	v8: true,
+	vcs: true,
 };
 
 export const VALID_DIAGNOSTIC_CATEGORIES: Set<DiagnosticCategoryString> = new Set(

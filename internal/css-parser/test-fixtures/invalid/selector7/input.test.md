@@ -4,6 +4,8 @@
 
 ## `invalid > selector7`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -44,13 +46,28 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector7/input.css>
+				path: UIDPath<invalid/selector7/input.css>
 				end: Position 1:4
 				start: Position 1:3
 			}
 		}
 	]
-	path: RelativePath<invalid/selector7/input.css>
+	path: UIDPath<invalid/selector7/input.css>
 	loc: SourceLocation invalid/selector7/input.css 1:0-2:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/selector7/input.css:1:3 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected an identifier.
+
+  > 1 │ a::1 {
+      │    ^
+    2 │ }
+
+
 ```

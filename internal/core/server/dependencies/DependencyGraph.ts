@@ -91,6 +91,8 @@ const NODE_BUILTINS = [
 	"inspector",
 ];
 
+const NODE_PROTOCOL_BUILTINS = NODE_BUILTINS.map((n) => `node:${n}`);
+
 type SeedQueueItem = {
 	all: boolean;
 	async: boolean;
@@ -137,7 +139,8 @@ export default class DependencyGraph {
 		const project = this.server.projectManager.assertProjectExisting(path);
 		return (
 			project.config.bundler.externals.includes(source) ||
-			NODE_BUILTINS.includes(source)
+			NODE_BUILTINS.includes(source) ||
+			NODE_PROTOCOL_BUILTINS.includes(source)
 		);
 	}
 

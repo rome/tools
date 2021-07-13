@@ -1,5 +1,0 @@
-filename: "file.ts"
-invalid: [
-	"const pattern = /[[:alpha:]]/"
-	"const pattern = /[[.ch.]]/"
-]

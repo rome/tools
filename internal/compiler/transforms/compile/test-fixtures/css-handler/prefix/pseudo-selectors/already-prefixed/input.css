@@ -1,0 +1,12 @@
+/* Already prefixed */
+.example4:read-only, .example5:-moz-any-link, .example6::placeholder {
+	width: 10px;
+}
+
+.example5:any-link {
+	width: 10px;
+}
+
+.example5:-moz-any-link {
+	width: 10px;
+}

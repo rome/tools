@@ -12,7 +12,7 @@
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
-    <select onChange={() => {}} />;
+    <select onChange={() => {}} />
             ^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
@@ -36,7 +36,7 @@
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
-    <select onChange={handleOnChange} />;
+    <select onChange={handleOnChange} />
             ^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using

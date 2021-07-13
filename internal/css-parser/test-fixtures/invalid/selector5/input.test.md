@@ -4,6 +4,8 @@
 
 ## `invalid > selector5`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -81,13 +83,42 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector5/input.css>
+				path: UIDPath<invalid/selector5/input.css>
 				end: Position 1:10
 				start: Position 1:9
 			}
 		}
 	]
-	path: RelativePath<invalid/selector5/input.css>
+	path: UIDPath<invalid/selector5/input.css>
 	loc: SourceLocation invalid/selector5/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/selector5/input.css:1:9 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unknown attribute matcher.
+
+  > 1 │ a[title * = "title" i ] {
+      │          ^
+    2 │   color: purple;
+    3 │ }
+
+  ℹ Did you mean ~=?
+
+  - *
+  + ~=
+
+  ℹ Or one of these?
+
+  - |=
+  - ^=
+  - $=
+  - *=
+  - =
+
+
 ```

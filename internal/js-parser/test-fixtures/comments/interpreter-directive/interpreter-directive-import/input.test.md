@@ -35,10 +35,35 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
+					}
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
+					}
+				]
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<comments/interpreter-directive/interpreter-directive-import/input.js>
+				end: Position 3:29
+				start: Position 3:0
+			}
+		}
+	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
@@ -52,5 +77,19 @@ JSRoot {
 ### `diagnostics`
 
 ```
+
+ comments/interpreter-directive/interpreter-directive-import/input.js:3 parse(js) ━━━━━━━━━━━━━━━━━━
+
+  ✖ import and export can only appear in a module
+
+    1 │ #!/usr/bin/env babel-node
+    2 │
+  > 3 │ import {spawn} from 'foobar';
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Change the extension to .mjs to turn this file into a module
+
+  ℹ Add "type": "module" to your <dim>undefined</dim>
+
 
 ```

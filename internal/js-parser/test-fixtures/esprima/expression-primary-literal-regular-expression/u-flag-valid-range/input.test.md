@@ -186,8 +186,8 @@ JSRoot {
 			location: {
 				language: "regex"
 				path: UIDPath<esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js>
-				end: Position 1:18
-				start: Position 1:15
+				end: Position 1:19
+				start: Position 1:18
 			}
 		}
 	]
@@ -204,13 +204,13 @@ JSRoot {
 
 ```
 
- esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js:1:15 parse(regex)
+ esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js:1:18 parse(regex)
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Range values reversed. Start char code is greater than end char code
 
     var x = /[\u{61}-b][\u0061-b][a-\u{62}][a-\u0062]\u{1ffff}/u;
-                   ^^^
+                      ^
 
 
 ```

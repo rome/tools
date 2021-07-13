@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -7,7 +7,7 @@ export default [
 	// https://github.com/Fyrd/caniuse/blob/main/features-json/transforms2d.json
 	// https://github.com/postcss/autoprefixer/blob/main/data/prefixes.js#L128-L129
 	...["transform", "transform-origin"].map((propertyName) =>
-		createPrefixVisitor({
+		createPrefixCSSBlockVisitor({
 			name: propertyName,
 			enter(path) {
 				return prefixCSSProperty({
@@ -26,7 +26,7 @@ export default [
 		"transform-style",
 		"backface-visibility",
 	].map((propertyName) =>
-		createPrefixVisitor({
+		createPrefixCSSBlockVisitor({
 			name: propertyName,
 			enter(path) {
 				return prefixCSSProperty({

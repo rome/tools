@@ -4,6 +4,8 @@
 
 ## `invalid > at-page > page-properties`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -126,13 +128,48 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/at-page/page-properties/input.css>
+				path: UIDPath<invalid/at-page/page-properties/input.css>
 				end: Position 2:8
 				start: Position 2:1
 			}
 		}
 	]
-	path: RelativePath<invalid/at-page/page-properties/input.css>
+	path: UIDPath<invalid/at-page/page-properties/input.css>
 	loc: SourceLocation invalid/at-page/page-properties/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/at-page/page-properties/input.css:2:1 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The at-rule @page accepts only a certain number of properties and display is not one of them.
+
+    1 │ @page {
+  > 2 │   display: none;
+      │   ^^^^^^^
+    3 │ }
+
+  ℹ Did you mean padding?
+
+  - display
+  + padding
+
+  ℹ Or one of these?
+
+  - direction
+  - visibility
+  - padding-top
+  - white-space
+  - padding-left
+  - word-spacing
+  - padding-right
+  - padding-bottom
+  - letter-spacing
+  - background-color
+  and 54 others...
+
+
 ```

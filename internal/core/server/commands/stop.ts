@@ -9,6 +9,7 @@ import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {markup} from "@internal/markup";
+import {safeProcessExit} from "@internal/resources";
 
 export default createServerCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
@@ -20,5 +21,6 @@ export default createServerCommand({
 	},
 	async callback({server}: ServerRequest) {
 		await server.end();
+		await safeProcessExit(0);
 	},
 });

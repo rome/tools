@@ -131,7 +131,6 @@ function createIdentifier(
 				value: substitute,
 			};
 		} else {
-			// @ts-ignore: No idea why this error exists
 			return {
 				type: expectedIdType,
 				name: substitute,

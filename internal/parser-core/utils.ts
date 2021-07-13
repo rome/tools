@@ -3,6 +3,7 @@ import {
 	ParserCoreFactory,
 	ParserCoreImplementation,
 	ParserCoreOverrides,
+	ParserCoreReadCallback,
 	ParserCoreTypes,
 	ParserOptions,
 	Position,
@@ -17,7 +18,8 @@ import {
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
 import {Path, UNKNOWN_PATH, isPathish} from "@internal/path";
-import {isIndexedNumberish} from "@internal/numbers";
+import {ZeroIndexed, isIndexedNumberish} from "@internal/numbers";
+import {isEscaped} from "@internal/string-utils";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -39,12 +41,51 @@ export function isESIdentifierStart(char: undefined | string): boolean {
 	return char !== undefined && /[A-Fa-z_$]/.test(char);
 }
 
+export function isWhitespace(char: undefined | string): boolean {
+	return char === " " || char === "\n" || char === "\t";
+}
+
 export function isntLineBreak(char: string): boolean {
 	return char !== "\n";
 }
 
 export function isntWhitespace(char: string): boolean {
-	return char !== "\n" && char !== " " && char !== "\t";
+	return !isWhitespace(char);
+}
+
+export function createReadCallback(
+	str: string,
+	checkEscape: boolean = true,
+): ParserCoreReadCallback {
+	if (str.length === 1) {
+		if (checkEscape) {
+			return (char: string, index: ZeroIndexed, input: string) => {
+				return !(char === str && !isEscaped(index, input));
+			};
+		} else {
+			return (char: string) => {
+				return char !== str;
+			};
+		}
+	} else {
+		return (char: string, index: ZeroIndexed, input: string) => {
+			if (char !== str[0]) {
+				return true;
+			}
+
+			if (checkEscape && isEscaped(index, input)) {
+				return true;
+			}
+
+			for (let i = 1; i < str.length; i++) {
+				if (char !== input[index.add(i).valueOf()]) {
+					return true;
+				}
+			}
+
+			return false;
+		};
+	}
 }
 
 export function createParser<

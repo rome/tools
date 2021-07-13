@@ -19,7 +19,7 @@ readers to understand the purpose and the context of the image.
 **ESLint Equivalent:** [alt-text](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/alt-text.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:f142450e31b7db3f6f4d1115d2e2d2b2c2750ce3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3561d0a1c6809ddfe55641bbc24582250a912b6f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -293,14 +293,14 @@ readers to understand the purpose and the context of the image.
 
 ---
 
-{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">area</span>  <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-html"><code class="language-html"><span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token punctuation">/&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1</span> <strong>lint/a11y/useAltText</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide </span><span style="color: Tomato;"><strong>alt</strong></span><span style="color: Tomato;"> text when using </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>area</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>input type=&apos;image&apos;</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>object</strong></span>
     <span style="color: Tomato;"> elements.</span>
 
-    <span class="token punctuation">&lt;</span><span class="token tag">area</span>  <span class="token punctuation">/&gt;</span>
+    <span class="token punctuation">&lt;</span><span class="token tag">area</span> <span class="token punctuation">/&gt;</span>
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Meaningful alternative text on elements helps users relying on screen</span>

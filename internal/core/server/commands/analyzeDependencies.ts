@@ -33,7 +33,7 @@ export default createServerCommand({
 	hidden: true,
 	defineFlags(c: Consumer): Flags {
 		return {
-			compact: c.get("compact").asBoolean(false),
+			compact: c.get("compact").required(false).asBoolean(),
 			focusSource: c.get("focusSource").asStringOrVoid(),
 		};
 	},

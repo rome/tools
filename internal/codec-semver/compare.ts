@@ -22,7 +22,7 @@ function compareIdentifiers(
 	}
 
 	if (typeof a === "string" || typeof b === "string") {
-		// @ts-ignore: built-in def is not restrictive enough
+		// @ts-expect-error: built-in def is not restrictive enough
 		return String(a).localeCompare(String(b));
 	}
 

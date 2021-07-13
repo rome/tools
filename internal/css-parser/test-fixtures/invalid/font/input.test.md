@@ -4,6 +4,8 @@
 
 ## `invalid > font`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -26,13 +28,29 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/font/input.css>
+				path: UIDPath<invalid/font/input.css>
 				end: Position 1:10
 				start: Position 1:0
 			}
 		}
 	]
-	path: RelativePath<invalid/font/input.css>
+	path: UIDPath<invalid/font/input.css>
 	loc: SourceLocation invalid/font/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/font/input.css:1 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The rule @font-face needs the property src in order to be valid.
+
+  > 1 │ @font-face {
+      │ ^^^^^^^^^^
+    2 │   font-display: block;
+    3 │ }
+
+
 ```

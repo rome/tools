@@ -169,6 +169,21 @@ const style: Style = {
 };
 ```
 
+Adding type checked CSS properties to a `HTMLElement`.
+
+```ts
+import * as CSS from 'csstype';
+
+const style: CSS.Properties = {
+  color: 'red',
+  margin: '1em',
+};
+
+let button = document.createElement('button');
+
+Object.assign(button.style, style);
+```
+
 ## What should I do when I get type errors?
 
 The goal is to have as perfect types as possible and we're trying to do our best. But with CSS Custom Properties, the CSS specification changing frequently and vendors implementing their own specifications with new releases sometimes causes type errors even if it should work. Here's some steps you could take to get it fixed:

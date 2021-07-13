@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSValue,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -9,7 +9,7 @@ function flexRenamer(value: string) {
 
 // https://github.com/Fyrd/caniuse/blob/main/features-json/flexbox.json
 export default ["flex", "inline-flex"].map((value) =>
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: `display/${value}`,
 		enter(path) {
 			return prefixCSSValue({

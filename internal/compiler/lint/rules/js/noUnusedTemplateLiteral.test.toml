@@ -1,0 +1,13 @@
+filename = "file.ts"
+invalid = [
+	"const foo = `bar`",
+	"const foo = `bar `",
+]
+valid = [
+	"""
+		const foo = `bar
+		has newline`;
+	""",
+	"const foo = `\"bar\"`",
+	"const foo = `'bar'`",
+]

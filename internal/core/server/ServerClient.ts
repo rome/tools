@@ -306,7 +306,7 @@ export default class ServerClient {
 					defaultFlags: defaultCommandFlags,
 				});
 
-				// @ts-ignore
+				// @ts-expect-error
 				const data = await serverCommand.callback(req, commandFlags);
 				return {
 					...EMPTY_SUCCESS_RESPONSE,

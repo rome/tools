@@ -1,7 +1,20 @@
 import {createDiagnosticsCategory} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 
-export const tomlParser = createDiagnosticsCategory({
+export const toml = createDiagnosticsCategory({
+	UNCLOSED_STRING: {message: markup`Unclosed string`},
+	DUPLICATE_DECLARATION: {message: markup`Duplicate key`},
+	BAD_ARRAY_TYPE: {message: markup`Bad array value type`},
+	BAD_TABLE_TYPE: {message: markup`Bad table value type`},
+	TRAILING_NUMBER_UNDERSCORE: {message: markup`Trailing number underscore`},
+	LEADING_NUMBER_UNDERSCORE: {message: markup`Leading number underscore`},
+	DOUBLE_NUMBER_UNDERSCORE: {message: markup`Double number underscore`},
+	TRAILING_KEY_DOT: {message: markup`Trailing key dot`},
+	EXCESSIVE_PLUS: {message: markup`Excessive plus`},
+	EXCESSIVE_MINUS: {message: markup`Excessive minus`},
+	UNKNOWN_WORD: {message: markup`Unknown word`},
+	UNKNOWN_ARRAY_SEPARATOR: {message: markup`Unknown array separator`},
+	TRAILING_INLINE_TABLE_COMMA: {message: markup`Trailing inline table comma`},
 	INVALID_KEY_CHAR: (char: string) => ({
 		message: markup`The character <emphasis>${char}</emphasis> isn't a valid character in a key`,
 	}),

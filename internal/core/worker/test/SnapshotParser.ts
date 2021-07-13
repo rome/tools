@@ -84,85 +84,65 @@ type SnapshotParserTypes = {
 
 type SnapshotParser = ParserCore<SnapshotParserTypes>;
 
+// TODO just use markdown-parser
 export const snapshotParser = createParser<SnapshotParserTypes>({
 	diagnosticLanguage: "markdown",
 	ignoreWhitespaceTokens: true,
 
-	tokenize(parser, index) {
-		const char = parser.getInputCharOnly(index);
+	tokenize(parser, tokenizer) {
+		if (tokenizer.startsWith("#")) {
+			const hashes = tokenizer.read(isHash);
+			const level = hashes.length;
+			return tokenizer.finishValueToken("Hashes", level);
+		}
 
-		switch (char) {
-			case "#": {
-				const [hashes] = parser.readInputFrom(index, isHash);
-				const level = hashes.length;
-				return parser.finishValueToken("Hashes", level, index.add(level));
+		if (tokenizer.consume("```")) {
+			let language: undefined | string;
+			if (!tokenizer.startsWith("\n")) {
+				language = tokenizer.read(isntNewline);
 			}
 
-			case "`": {
-				const nextChar = parser.getInputCharOnly(index.increment());
-				const nextNextChar = parser.getInputCharOnly(index.add(2));
+			// Expect the first offset character to be a newline
+			if (!tokenizer.consume("\n")) {
+				throw parser.unexpected({
+					description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
+					start: tokenizer.getPosition(),
+				});
+			}
 
-				if (nextChar === "`" && nextNextChar === "`") {
-					let codeOffset = index.add(3);
+			let code = tokenizer.read(isInCodeBlock);
 
-					let language: undefined | string;
-					if (parser.getInputCharOnly(codeOffset) !== "\n") {
-						[language, codeOffset] = parser.readInputFrom(
-							codeOffset,
-							isntNewline,
-						);
-					}
+			if (isCodeBlockEnd(tokenizer.index, parser.input)) {
+				// Check for trailing newline
+				if (code[code.length - 1] === "\n") {
+					// Trim trailing newline
+					code = code.slice(0, -1);
 
-					// Expect the first offset character to be a newline
-					if (parser.getInputCharOnly(codeOffset) === "\n") {
-						// Skip leading newline
-						codeOffset = codeOffset.add(1);
-					} else {
-						throw parser.unexpected({
-							description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
-							start: parser.getPositionFromIndex(codeOffset),
-						});
-					}
+					tokenizer.assert("```");
 
-					let [code] = parser.readInputFrom(codeOffset, isInCodeBlock);
-
-					let end = codeOffset.add(code.length);
-
-					if (isCodeBlockEnd(end, parser.input)) {
-						// Check for trailing newline
-						if (code[code.length - 1] === "\n") {
-							// Trim trailing newline
-							code = code.slice(0, -1);
-
-							// Skip closing ticks
-							end = end.add(3);
-
-							return parser.finishValueToken(
-								"CodeBlock",
-								{
-									language,
-									text: unescapeTicks(code),
-								},
-								end,
-							);
-						} else {
-							throw parser.unexpected({
-								description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
-								start: parser.getPositionFromIndex(end),
-							});
-						}
-					} else {
-						throw parser.unexpected({
-							description: descriptions.SNAPSHOTS.UNCLOSED_CODE_BLOCK,
-							start: parser.getPositionFromIndex(end),
-						});
-					}
+					return tokenizer.finishValueToken(
+						"CodeBlock",
+						{
+							language,
+							text: unescapeTicks(code),
+						},
+					);
+				} else {
+					throw parser.unexpected({
+						description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
+						start: tokenizer.getPosition(),
+					});
 				}
+			} else {
+				throw parser.unexpected({
+					description: descriptions.SNAPSHOTS.UNCLOSED_CODE_BLOCK,
+					start: tokenizer.getPosition(),
+				});
 			}
 		}
 
-		const [text, end] = parser.readInputFrom(index, isntNewline);
-		return parser.finishValueToken("TextLine", text, end);
+		const text = tokenizer.read(isntNewline);
+		return tokenizer.finishValueToken("TextLine", text);
 	},
 });
 

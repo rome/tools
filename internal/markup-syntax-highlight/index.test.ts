@@ -70,14 +70,12 @@ test(
 				"value": "content",
 				"another_value": 123,
 				"key": true
-				// Line comment
-				/* Block Comment */
 			}
 		`,
 		(t, markup) =>
 			t.inlineSnapshot(
 				markup,
-				'<token type="punctuation">{</token>\n\t<token type="string">\\"value\\"</token><token type="operator">:</token> <token type="string">\\"content\\"</token><token type="operator">,</token>\n\t<token type="string">\\"another_value\\"</token><token type="operator">:</token> <token type="number">123</token><token type="operator">,</token>\n\t<token type="string">\\"key\\"</token><token type="operator">:</token> <token type="boolean">true</token>\n\t<token type="comment">// Line comment</token>\n\t<token type="comment">/* Block Comment */</token>\n<token type="punctuation">}</token>',
+				'<token type="punctuation">{</token>\n\t<token type="string">\\"value\\"</token><token type="operator">:</token> <token type="string">\\"content\\"</token><token type="operator">,</token>\n\t<token type="string">\\"another_value\\"</token><token type="operator">:</token> <token type="number">123</token><token type="operator">,</token>\n\t<token type="string">\\"key\\"</token><token type="operator">:</token> <token type="boolean">true</token>\n<token type="punctuation">}</token>',
 			)
 		,
 	),

@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSValue,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -15,7 +15,7 @@ export default [
 	"list-style-image",
 	"content",
 ].map((propertyName) =>
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: `${propertyName}/image-set`,
 		enter(path) {
 			return prefixCSSValue({

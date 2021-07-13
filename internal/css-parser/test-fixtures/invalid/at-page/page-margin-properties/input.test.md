@@ -4,6 +4,8 @@
 
 ## `invalid > at-page > page-margin-properties`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -144,13 +146,51 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/at-page/page-margin-properties/input.css>
+				path: UIDPath<invalid/at-page/page-margin-properties/input.css>
 				end: Position 3:9
 				start: Position 3:2
 			}
 		}
 	]
-	path: RelativePath<invalid/at-page/page-margin-properties/input.css>
+	path: UIDPath<invalid/at-page/page-margin-properties/input.css>
 	loc: SourceLocation invalid/at-page/page-margin-properties/input.css 1:0-5:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/at-page/page-margin-properties/input.css:3:2 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The at-rule @top-center accepts only a certain number of properties and display is not one of
+    them.
+
+    1 │ @page {
+    2 │   @top-center {
+  > 3 │     display: none;
+      │     ^^^^^^^
+    4 │   }
+    5 │ }
+
+  ℹ Did you mean padding?
+
+  - display
+  + padding
+
+  ℹ Or one of these?
+
+  - direction
+  - visibility
+  - padding-top
+  - white-space
+  - padding-left
+  - word-spacing
+  - unicode-bidi
+  - padding-right
+  - padding-bottom
+  - letter-spacing
+  and 59 others...
+
+
 ```

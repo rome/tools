@@ -4,6 +4,8 @@
 
 ## `media > ratio`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -63,7 +65,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<media/ratio/input.css>
+	path: UIDPath<media/ratio/input.css>
 	loc: SourceLocation media/ratio/input.css 1:0-1:30
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

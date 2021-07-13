@@ -72,14 +72,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/modules/export-default-variable-declaration/input.js>
-				end: Position 1:14
+				end: Position 1:15
 				start: Position 1:15
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/modules/export-default-variable-declaration/input.js>
 	loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:0-3:1

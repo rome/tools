@@ -4,6 +4,8 @@
 
 ## `invalid > selector4`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -40,13 +42,29 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/selector4/input.css>
+				path: UIDPath<invalid/selector4/input.css>
 				end: Position 1:14
 				start: Position 1:13
 			}
 		}
 	]
-	path: RelativePath<invalid/selector4/input.css>
+	path: UIDPath<invalid/selector4/input.css>
 	loc: SourceLocation invalid/selector4/input.css 1:0-3:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/selector4/input.css:1:13 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected to close attribute selector with a right square bracket ].
+
+  > 1 │ .class[attr= {
+      │              ^
+    2 │
+    3 │ }
+
+
 ```

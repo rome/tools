@@ -38,7 +38,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/yield/in-global-scope/input.js>
-				end: Position 1:5
+				end: Position 1:6
 				start: Position 1:6
 			}
 		}

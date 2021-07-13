@@ -11,6 +11,7 @@ import {
 import {
 	Diagnostic,
 	DiagnosticIntegrity,
+	DiagnosticLocation,
 	DiagnosticSuppression,
 } from "@internal/diagnostics";
 import {BridgeClient, BridgeServer} from "@internal/events";
@@ -231,6 +232,8 @@ export type TestRef = {
 	testName: string;
 };
 
+export type TestFileRef = OptionalProps<TestRef, "testName">;
+
 export type TestWorkerPrepareTestOptions = {
 	partial: boolean;
 	path: AbsoluteFilePath;
@@ -243,7 +246,7 @@ export type TestWorkerPrepareTestOptions = {
 };
 
 export type TestWorkerPrepareTestResult = {
-	foundTests: string[];
+	foundTests: Map<string, DiagnosticLocation>;
 	focusedTests: FocusedTest[];
 };
 

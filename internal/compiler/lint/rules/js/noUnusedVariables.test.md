@@ -219,8 +219,8 @@ const foo = () => {
 
   > 1 │ function foo(): typeof foo {
       │          ^^^
-    2 │     return function () {
-    3 │         return foo;
+    2 │   return function () {
+    3 │     return foo;
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
@@ -248,8 +248,8 @@ function foo(): typeof foo {
 
   > 1 │ class Foo {
       │       ^^^
-    2 │     init() {
-    3 │       this._foo = new Foo();
+    2 │   init() {
+    3 │     this._foo = new Foo();
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 

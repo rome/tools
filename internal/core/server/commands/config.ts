@@ -5,13 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@internal/core";
+import {ServerRequest, VERSION} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {normalizeProjectConfig} from "@internal/project";
+import {
+	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
+	normalizeProjectConfig,
+} from "@internal/project";
 import {AbsoluteFilePath, createPath} from "@internal/path";
 import {markup} from "@internal/markup";
-import {interceptDiagnostics} from "@internal/diagnostics";
+import {
+	createSingleDiagnosticsError,
+	descriptions,
+	interceptDiagnostics,
+} from "@internal/diagnostics";
 import {Consumer} from "@internal/consume";
 import {
 	ConsumeConfigResult,
@@ -25,6 +32,8 @@ import {
 } from "@internal/core/common/userConfig";
 import {USER_CONFIG_DIRECTORY} from "@internal/core/common/constants";
 import prettyFormat from "@internal/pretty-format";
+import {Migrator} from "@internal/core/server/migrate/Migrator";
+import {checkVSCWorkingDirectory} from "@internal/core/server/utils/checkVCSWorkingDirectory";
 
 type Flags = {
 	user: boolean;
@@ -32,7 +41,7 @@ type Flags = {
 
 function defineFlags(c: Consumer): Flags {
 	return {
-		user: c.get("user").asBoolean(false),
+		user: c.get("user").required(false).asBoolean(),
 	};
 }
 
@@ -57,7 +66,10 @@ async function runCommand(
 
 		if (action === "push") {
 			keyConsumer.setValue([
-				...Array.from(keyConsumer.asIterable(true), (c) => c.asUnknown()),
+				...Array.from(
+					keyConsumer.required([]).asIterable(),
+					(c) => c.asUnknown(),
+				),
 				...(Array.isArray(value) ? value : []),
 			]);
 		} else {
@@ -74,11 +86,15 @@ async function runCommand(
 			reporter.log(configPath);
 			return;
 		}
+		const finalKeyParts =
+			action === "disable" || action === "enable"
+				? `${keyParts}.enabled`
+				: keyParts;
 
 		reporter.success(
 			markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${prettyFormat(
 				value,
-			)}</emphasis> to <emphasis>${keyParts}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
+			)}</emphasis> to <emphasis>${finalKeyParts}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
 		);
 
 		if (value === "true" || value === "false") {
@@ -86,7 +102,7 @@ async function runCommand(
 			reporter.warn(
 				markup`Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
 			);
-			reporter.command(`config ${suggestedCommand} ${keyParts}`);
+			reporter.command(`config ${suggestedCommand} ${finalKeyParts}`);
 		}
 
 		// Load the config file again
@@ -134,7 +150,7 @@ async function runCommand(
 
 			let configPath: AbsoluteFilePath;
 			if (existingConfigPath === undefined) {
-				configPath = USER_CONFIG_DIRECTORY.append("rome.rjson");
+				configPath = USER_CONFIG_DIRECTORY.append("rome.json");
 				await configPath.writeFile("");
 				reporter.info(
 					markup`Created user config at <emphasis>${configPath}</emphasis> as it did not exist`,
@@ -174,7 +190,7 @@ async function runCommand(
 		}
 	} catch (err) {
 		reporter.warn(
-			markup`Error occured while validating new config. Your changes have not been saved. Listed locations are not accurate.`,
+			markup`Error occurred while validating new config. Your changes have not been saved. Listed locations are not accurate.`,
 		);
 		throw err;
 	}
@@ -268,5 +284,65 @@ export const push = createServerCommand<Flags>({
 	async callback(req, flags) {
 		req.expectArgumentLength(2, Infinity);
 		await runCommand(req, flags, req.query.args.slice(1), "push");
+	},
+});
+
+export const migrate = createServerCommand({
+	category: commandCategories.PROJECT_MANAGEMENT,
+	description: markup`Migrates Rome's old configuration file to use its latest version`,
+	usage: "migrate",
+	examples: [],
+	defineFlags() {
+		return {};
+	},
+	async callback(req) {
+		req.expectArgumentLength(0, 0);
+		const {client} = req;
+		await checkVSCWorkingDirectory(
+			req,
+			[
+				descriptions.MIGRATE_COMMAND.EXPECT_REPO.advice,
+				descriptions.MIGRATE_COMMAND.UNCOMMITTED_CHANGES.advice,
+			],
+		);
+		const result = await req.retrieveProjectAndConfigPaths();
+		if (!result) {
+			throw createSingleDiagnosticsError({
+				location: req.getDiagnosticLocationForClientCwd(),
+				description: descriptions.MIGRATE_COMMAND.MISSING_CONFIGURATION,
+			});
+		}
+
+		const {configPath} = result;
+		const migrator = new Migrator({
+			reporter: client.reporter,
+			version: VERSION,
+		});
+
+		const configFile = await configPath.readFileText();
+
+		let finalConsumer: Consumer;
+		let {consumer, type, comments} = consumeConfig({
+			path: configPath,
+			input: configFile,
+		});
+
+		const isInPackageJson = configPath.getBasename() === "package.json";
+		if (isInPackageJson) {
+			finalConsumer = consumer.get(PROJECT_CONFIG_PACKAGE_JSON_FIELD);
+		} else {
+			finalConsumer = consumer;
+		}
+
+		await migrator.run(finalConsumer);
+
+		// Stringify the config
+		const stringified = stringifyConfig({
+			consumer,
+			comments,
+			type,
+		});
+
+		await configPath.writeFile(stringified);
 	},
 });

@@ -4,6 +4,8 @@
 
 ## `smoke`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -126,7 +128,13 @@ CSSRoot {
 	]
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<smoke/input.css>
+	path: UIDPath<smoke/input.css>
 	loc: SourceLocation smoke/input.css 1:0-12:5
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

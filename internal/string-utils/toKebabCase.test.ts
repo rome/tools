@@ -18,8 +18,8 @@ test(
 			{input: "ROME TEST", expected: "rome-test"},
 		];
 
-		testCases.forEach((td) => {
+		for (const td of testCases) {
 			t.is(toKebabCase(td.input), td.expected);
-		});
+		}
 	},
 );

@@ -32,12 +32,12 @@ age;
 
 ```
 
- lint/ts/noExplicitAny/reject/2/file.ts:1:12 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/2/file.ts:1:13 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    const ages: any[] = ['seventeen'];ages;
-                ^^^
+    const ages:  any[] = ['seventeen'];ages;
+                 ^^^
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
@@ -56,12 +56,12 @@ ages;
 
 ```
 
- lint/ts/noExplicitAny/reject/3/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/3/file.ts:1:19 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    const ages: Array<any> = ['seventeen'];ages;
-                      ^^^
+    const ages:  Array<any> = ['seventeen'];ages;
+                       ^^^
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 

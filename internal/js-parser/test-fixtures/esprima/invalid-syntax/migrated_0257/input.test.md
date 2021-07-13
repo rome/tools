@@ -38,7 +38,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/invalid-syntax/migrated_0257/input.js>
-				end: Position 1:15
+				end: Position 1:16
 				start: Position 1:16
 			}
 		}

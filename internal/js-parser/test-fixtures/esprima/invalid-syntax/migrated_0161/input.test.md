@@ -33,7 +33,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<esprima/invalid-syntax/migrated_0161/input.js>
-				end: Position 1:0
+				end: Position 2:2
 				start: Position 2:2
 			}
 		}
@@ -56,7 +56,8 @@ JSRoot {
   ✖ Unknown start to an statement expression
 
     1 │ /*·
-    2 │ */]
+  > 2 │ */]
+      │   ^
 
 
 ```

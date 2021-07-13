@@ -56,7 +56,12 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 			].join("\n");
 		}
 
-		let message = this._message === undefined ? "" : this._message + "\n";
+		let message = `DiagnosticsError(${this.diagnostics.length}): `;
+		if (this._message !== undefined) {
+			message += this._message;
+		}
+		message += "\n";
+
 		insideDiagnosticsErrorSerial = true;
 
 		const reporter = new Reporter("DiagnosticsErrorMessage");
@@ -73,6 +78,9 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		message += stream.read();
 		insideDiagnosticsErrorSerial = false;
 
+		message = message.trimRight();
+		message += "\n";
+
 		this._memoMessage = message;
 		return message;
 	}
@@ -87,7 +95,7 @@ export function createRuntimeDiagnosticsError(
 }
 
 export function createSingleDiagnosticsError(diag: Diagnostic): DiagnosticsError {
-	return new DiagnosticsError(readMarkup(diag.description.message), [diag]);
+	return new DiagnosticsError(undefined, [diag]);
 }
 
 export function getDiagnosticsFromError(err: Error): undefined | Diagnostic[] {

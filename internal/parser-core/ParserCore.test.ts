@@ -9,7 +9,6 @@ import {
 	createParser,
 	isDigit,
 } from "@internal/parser-core/index";
-import {ZeroIndexed} from "@internal/numbers";
 import {dedent} from "@internal/string-utils";
 import {markup} from "@internal/markup";
 import {isNewline} from "@internal/css-parser/utils";
@@ -38,60 +37,55 @@ test(
 			ignoreWhitespaceTokens: true,
 
 			tokenize(
-				parser: ParserCore<TestParserTypes>,
-				index: ZeroIndexed,
+				parser,
+				tokenizer,
 			): TokenValues<TestParserTypes["tokens"]> | undefined {
-				const char = parser.getInputCharOnly(index);
+				const char = tokenizer.get();
 
-				if (char === "/" && parser.getInputCharOnly(index.increment()) === "/") {
-					index = index.add(2);
+				if (tokenizer.consume("//")) {
 					let value = "";
 
-					while (
-						!(isNewline(parser.getInputCharOnly(index)) || parser.isEOF(index))
-					) {
-						value += parser.getInputCharOnly(index);
-						index = index.increment();
+					while (!(isNewline(tokenizer.get()) || tokenizer.isEOF())) {
+						value += tokenizer.take(1);
 					}
 
-					return parser.finishValueToken("Comment", value, index);
+					return tokenizer.finishValueToken("Comment", value);
 				}
 
-				if (char === '"') {
-					index = index.increment();
+				if (tokenizer.consume('"')) {
 					let value = "";
 
-					while (parser.getInputCharOnly(index) !== '"') {
-						if (parser.isEOF(index)) {
+					while (!tokenizer.startsWith('"')) {
+						if (tokenizer.isEOF()) {
 							parser.unexpectedDiagnostic({
 								description: {message: markup`Unterminated string`},
 							});
 							break;
 						}
 
-						value += parser.getInputCharOnly(index);
-						index = index.increment();
+						value += tokenizer.take(1);
 					}
 
-					return parser.finishValueToken("String", value, index.increment());
+					tokenizer.assert('"');
+
+					return tokenizer.finishValueToken("String", value);
 				}
 
 				if (isDigit(char)) {
 					let value = "";
 
 					while (
-						isDigit(parser.getInputCharOnly(index)) &&
-						!isNewline(parser.getInputCharOnly(index)) &&
-						!parser.isEOF(index)
+						isDigit(tokenizer.get()) &&
+						!isNewline(tokenizer.get()) &&
+						!tokenizer.isEOF()
 					) {
-						value += parser.getInputCharOnly(index);
-						index = index.increment();
+						value += tokenizer.take(1);
 					}
 
-					return parser.finishValueToken("Number", parseInt(value), index);
+					return tokenizer.finishValueToken("Number", parseInt(value));
 				}
 
-				return parser.finishValueToken("Invalid", char);
+				return tokenizer.finishValueToken("Invalid", char);
 			},
 		});
 

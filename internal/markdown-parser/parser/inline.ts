@@ -10,7 +10,6 @@ import {
 	canBeRightFlankingDelimiter,
 	hasBlockTokens,
 } from "@internal/markdown-parser";
-import {ZeroIndexed} from "@internal/numbers";
 import {
 	AnyMarkdownInlineNode,
 	MarkdownBoldInline,
@@ -39,16 +38,16 @@ export function parseInline(
 	token: Emphasis | Strong,
 	onUnknownToken: OnUnknownToken,
 ): MarkdownEmphasisInline | MarkdownText | MarkdownBoldInline | undefined {
+	const {leftFlankingDelimiter, closingIndexOfDelimiter} = token;
+	const start = parser.getPosition();
+
 	let children: AnyMarkdownInlineNode[] = [];
 
-	const {leftFlankingDelimiter, closingIndexOfDelimiter} = token;
-
-	// the token can potentially open an inline style, let's start checking the next tokens
+	// The token can potentially open an inline style, let's start checking the next tokens
 	// until we find a potential closing token
 	if (leftFlankingDelimiter && closingIndexOfDelimiter !== undefined) {
-		const start = parser.getPosition();
-
 		parser.nextToken();
+
 		let exit = false;
 		while (
 			!(parser.matchToken("EOF") ||
@@ -72,12 +71,13 @@ export function parseInline(
 				if (nodeOrNodes === undefined) {
 					exit = true;
 				} else if (Array.isArray(nodeOrNodes)) {
-					children.push(...nodeOrNodes);
+					children = children.concat(nodeOrNodes);
 				} else {
 					children.push(nodeOrNodes);
 				}
 			}
 		}
+
 		if (token.type === "Emphasis" || token.type === "Strong") {
 			return parser.finishNode(
 				start,
@@ -87,6 +87,7 @@ export function parseInline(
 				},
 			);
 		}
+
 		return parser.finishNode(
 			start,
 			{
@@ -110,12 +111,11 @@ export function tokenizeInline(
 	parser: MarkdownParser,
 	state: MarkdownParserState,
 	charToCheck: "*" | "_",
-	index: ZeroIndexed,
+	tokenizer: MarkdownParser["tokenizer"],
 ): ParserCoreTokenizeState<MarkdownParserTypes> | undefined {
-	const [valueOfInlineToken, endIndexOfDelimiter] = parser.readInputFrom(
-		index,
-		(char1) => char1 === charToCheck,
-	);
+	const index = tokenizer.index;
+	const valueOfInlineToken = tokenizer.read((char1) => char1 === charToCheck);
+	const endIndexOfDelimiter = tokenizer.index;
 
 	const leftFlankingDelimiter = canBeLeftFlankingDelimiter({
 		startIndex: index,
@@ -132,63 +132,60 @@ export function tokenizeInline(
 	if (leftFlankingDelimiter) {
 		let rightFlankingDelimiterFound = false;
 		let isEndOfParagraph = false;
-		const [, closingIndex, endOfInput] = parser.readInputFrom(
-			index,
-			(char, indexToCheck, input) => {
-				if (hasBlockTokens(char, indexToCheck, input)) {
-					// found list item ahead, let's exit
-					isEndOfParagraph = true;
-					return false;
-				}
+		tokenizer.read((char, indexToCheck, input) => {
+			if (hasBlockTokens(char, indexToCheck, input)) {
+				// found list item ahead, let's exit
+				isEndOfParagraph = true;
+				return false;
+			}
 
-				// the right flanking check should be done only when there's a
-				// ending character that matches the starting character
-				if (char !== charToCheck || indexToCheck === index) {
-					// continue, no need to do further checks
+			// the right flanking check should be done only when there's a
+			// ending character that matches the starting character
+			if (char !== charToCheck || indexToCheck.equal(index)) {
+				// continue, no need to do further checks
+				return true;
+			}
+
+			let endIndex = indexToCheck;
+
+			const nextChar = input[indexToCheck.valueOf() + 1];
+			if (valueOfInlineToken.length > 1) {
+				// we found a character that matches but we need to make sure that also the next character
+				// is the same
+				if (nextChar !== charToCheck) {
 					return true;
 				}
+			}
 
-				let endIndex = indexToCheck;
+			rightFlankingDelimiterFound = canBeRightFlankingDelimiter({
+				startIndex: indexToCheck,
+				endIndex,
+				input: parser.input,
+			});
 
-				const nextChar = parser.getInputCharOnly(index.add(1));
-				if (valueOfInlineToken.length > 1) {
-					// we found a character that matches but we need to make sure that also the next character
-					// is the same
-					if (nextChar !== charToCheck) {
-						return true;
-					}
-				}
+			// we should stop only if the characters that we found are a right flanking delimiter
+			return !rightFlankingDelimiterFound;
+		});
 
-				rightFlankingDelimiterFound = canBeRightFlankingDelimiter({
-					startIndex: indexToCheck,
-					endIndex,
-					input: parser.input,
-				});
-
-				// we should stop only if the characters that we found are a right flanking delimiter
-				return !rightFlankingDelimiterFound;
-			},
-		);
-
-		if (!rightFlankingDelimiterFound || endOfInput) {
+		if (!rightFlankingDelimiterFound) {
+			tokenizer.setIndex(endIndexOfDelimiter);
 			return [
 				{
-					isParagraph: endOfInput || isEndOfParagraph
+					isParagraph: tokenizer.isEOF() || isEndOfParagraph
 						? false
 						: state.isParagraph,
 				},
-				parser.finishValueToken("Text", valueOfInlineToken, endIndexOfDelimiter),
+				tokenizer.finishValueToken("Text", valueOfInlineToken),
 			];
 		}
 
-		const nextChar = parser.getInputCharOnly(closingIndex.add(2));
-		const [, closingIndexOfDelimiter] = parser.readInputFrom(
-			closingIndex,
-			(char1, index, input) => {
-				const prevChar = input[index.valueOf() - 1];
-				return !(prevChar !== " " && char1 === charToCheck);
-			},
-		);
+		const nextChar = tokenizer.get();
+		tokenizer.read((char1, index, input) => {
+			const prevChar = input[index.valueOf() - 1];
+			return !(prevChar !== " " && char1 === charToCheck);
+		});
+		const closingIndexOfDelimiter = tokenizer.index;
+		tokenizer.setIndex(endIndexOfDelimiter);
 
 		return [
 			{
@@ -196,7 +193,7 @@ export function tokenizeInline(
 				isParagraph: nextChar === "\n" ? false : state.isParagraph,
 			},
 
-			parser.finishComplexToken<typeof tokenType, DelimiterRun>(
+			tokenizer.finishComplexToken<typeof tokenType, DelimiterRun>(
 				tokenType,
 				{
 					closingIndexOfDelimiter,
@@ -204,7 +201,6 @@ export function tokenizeInline(
 					rightFlankingDelimiter,
 					value: valueOfInlineToken,
 				},
-				endIndexOfDelimiter,
 			),
 		];
 	}
@@ -217,14 +213,13 @@ export function tokenizeInline(
 				// if next after two characters we still have a new line, it means we need to start a new paragraph
 				isParagraph: nextChar === "\n" ? false : state.isParagraph,
 			},
-			parser.finishComplexToken<typeof tokenType, DelimiterRun>(
+			tokenizer.finishComplexToken<typeof tokenType, DelimiterRun>(
 				tokenType,
 				{
 					leftFlankingDelimiter,
 					rightFlankingDelimiter,
 					value: valueOfInlineToken,
 				},
-				endIndexOfDelimiter,
 			),
 		];
 	}

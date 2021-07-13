@@ -19,7 +19,7 @@ This rule is applied to HTML and JSX files.
 **ESLint Equivalent:** [html-has-lang](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/html-has-lang.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8c2fc4ee005bb2ce57d900f1cda6e038521a6cb2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ba2f43eaa8714ac99878b679b33a8e890e3bf0a9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -56,28 +56,17 @@ This rule is applied to HTML and JSX files.
 
 ---
 
-{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-tsx"><code class="language-tsx">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&quot;&quot;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:11</span> <strong>parse(js)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/a11y/useHtmlLang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">JSX attribute value should be either an expression or a quoted JSX</span>
-    <span style="color: Tomato;">text</span>
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>lang</strong></span><span style="color: Tomato;"> attribute when using the </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;"> element.</span>
 
-    &lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span>
-               <span style="color: Tomato;"><strong>^</strong></span>
+    &lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&quot;&quot;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-</code></pre>{% endraw %}
-
----
-
-{% raw %}<pre class="language-tsx"><code class="language-tsx"><span class="token operator">&gt;</span>&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>parse(js)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unknown start to an statement expression</span>
-
-    <span class="token operator">&gt;</span>&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;
-    <span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting a lang attribute on HTML elements configures the language</span>
+    <span style="color: rgb(38, 148, 255);">used by screen readers when no user default is specified.</span>
 
 </code></pre>{% endraw %}
 

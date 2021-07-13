@@ -6,7 +6,7 @@
 
 ### `Diagnostics`
 
-```
+```css
 
 ```
 
@@ -23,7 +23,6 @@
 
 ```css
 .style {
-	-ms-user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	user-select: none;

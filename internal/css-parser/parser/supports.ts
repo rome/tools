@@ -1,6 +1,11 @@
 import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {CSSSupportsCondition, CSSSupportsInParens} from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {AND, CONDITIONS, OR} from "@internal/css-parser/utils";
 import {parseDeclaration} from "@internal/css-parser/parser/declaration";
@@ -86,9 +91,7 @@ function parseAtSupportsInParens(
 export function parseAtSupports(
 	parser: CSSParser,
 ): CSSSupportsCondition | undefined {
-	while (matchToken(parser, "Whitespace")) {
-		readToken(parser, "Whitespace");
-	}
+	skipWhitespaces(parser);
 
 	if (!(parser.matchToken("Ident") || parser.matchToken("LeftParen"))) {
 		parser.unexpectedDiagnostic({

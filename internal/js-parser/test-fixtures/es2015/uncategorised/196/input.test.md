@@ -77,8 +77,8 @@ JSRoot {
 			location: {
 				language: "regex"
 				path: UIDPath<es2015/uncategorised/196/input.js>
-				end: Position 1:21
-				start: Position 1:8
+				end: Position 1:27
+				start: Position 1:21
 			}
 		}
 	]
@@ -95,12 +95,12 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/196/input.js:1:8 parse(regex) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/196/input.js:1:21 parse(regex) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Range values reversed. Start char code is greater than end char code
 
     /[\uD834\uDF06-\uD834\uDF08a-z]/u
-            ^^^^^^^^^^^^^
+                         ^^^^^^
 
 
 ```

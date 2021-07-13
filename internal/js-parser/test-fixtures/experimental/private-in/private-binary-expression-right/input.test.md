@@ -107,7 +107,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/private-in/private-binary-expression-right/input.js>
-				end: Position 4:7
+				end: Position 4:8
 				start: Position 4:8
 			}
 		}

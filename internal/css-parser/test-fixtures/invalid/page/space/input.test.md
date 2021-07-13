@@ -4,6 +4,8 @@
 
 ## `invalid > page > space`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -80,13 +82,29 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/page/space/input.css>
+				path: UIDPath<invalid/page/space/input.css>
 				end: Position 1:12
 				start: Position 1:11
 			}
 		}
 	]
-	path: RelativePath<invalid/page/space/input.css>
+	path: UIDPath<invalid/page/space/input.css>
 	loc: SourceLocation invalid/page/space/input.css 1:0-4:1
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/page/space/input.css:1:11 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Pseudo page can accept only left, right, first or blank and there can't be spaces in between
+
+  > 1 │ @page Page: blank {
+      │            ^
+    2 │   @top-center { content: none }
+    3 │   margin-left: 4cm;
+
+
 ```

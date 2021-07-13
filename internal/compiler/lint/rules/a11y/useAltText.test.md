@@ -661,7 +661,7 @@
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
 
-    <area  />
+    <area />
     ^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand

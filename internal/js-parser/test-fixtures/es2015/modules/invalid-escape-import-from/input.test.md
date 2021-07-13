@@ -56,14 +56,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
-				end: Position 1:8
+				end: Position 1:9
 				start: Position 1:9
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
 	loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-2:0

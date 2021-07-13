@@ -75,7 +75,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
-				end: Position 1:34
+				end: Position 1:35
 				start: Position 1:35
 			}
 		}

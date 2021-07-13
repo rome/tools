@@ -8,6 +8,7 @@ import {
 	createResourceContainer,
 	createResourceFromCallback,
 } from "@internal/resources";
+import {Consumer, consumeUnknown} from "@internal/consume";
 
 export type Stdout = stream.Writable | tty.WriteStream;
 
@@ -39,41 +40,32 @@ export const DEFAULT_TERMINAL_FEATURES: TerminalFeatures = {
 	colorDepth: 4,
 };
 
-type EnvVarStatus =
-	| {
-			type: "DISABLED";
-			value: false;
-		}
-	| {
-			type: "ENABLED";
-			value: true;
-		}
-	| {
-			type: "SET";
-			value: string;
-		}
-	| {
-			type: "UNDEFINED";
-			value: undefined;
-		};
+let envAllConsumer: undefined | Consumer;
 
-export function getEnvVar(key: string): EnvVarStatus {
-	const value = process.env[key];
-	if (value === undefined) {
-		return {type: "UNDEFINED", value: undefined};
+export function consumeEnvVar(key: string): Consumer {
+	if (envAllConsumer === undefined) {
+		envAllConsumer = consumeUnknown({...process.env}, ["parse"], "env");
 	}
-	if (value === "0" || value === "false") {
-		return {type: "DISABLED", value: false};
+
+	return envAllConsumer.get(key);
+}
+
+export function getEnvVarBoolean(key: string): undefined | boolean {
+	const env = consumeEnvVar(key);
+	if (env.exists()) {
+		const bool = consumeEnvVar(key).deriveBooleanString();
+		if (bool.exists()) {
+			return bool.asBoolean();
+		} else {
+			return undefined;
+		}
+	} else {
+		return undefined;
 	}
-	if (value === "1" || value === "true" || value === "") {
-		return {type: "ENABLED", value: true};
-	}
-	return {type: "SET", value};
 }
 
 export function isEnvVarSet(key: string): boolean {
-	const envVar = getEnvVar(key);
-	return envVar.type === "ENABLED" || envVar.type === "SET";
+	return consumeEnvVar(key).exists();
 }
 
 export function inferTerminalFeatures(
@@ -103,9 +95,9 @@ export function inferTerminalFeatures(
 
 		// Sniff for the background
 		// https://github.com/vim/vim/blob/e3f915d12c8fe0466918a29ab4eaef153f71a2cd/src/term.c#L2943-L2952
-		const COLORFGBG = getEnvVar("COLORFGBG");
-		if (COLORFGBG.type === "ENABLED") {
-			const color = parseInt(String(COLORFGBG.value).split(";").pop()!);
+		const COLORFGBG = consumeEnvVar("COLORFGBG");
+		if (COLORFGBG.exists()) {
+			const color = parseInt(String(COLORFGBG.asString()).split(";").pop()!);
 			if (!isNaN(color)) {
 				if ((color >= 0 && color <= 6) || color === 8) {
 					background = "dark";
@@ -116,20 +108,26 @@ export function inferTerminalFeatures(
 		}
 	}
 
-	const fancyAnsi = isTTY && !IS_CI_ENV;
-
-	const progress = fancyAnsi && getEnvVar("ROME_PROGRESS").type !== "DISABLED";
+	const fancyAnsi = getEnvVarBoolean("ROME_CLI_FANCY") ?? (isTTY && !IS_CI_ENV);
 
 	let features: TerminalFeatures = mergeObjects(
 		{
-			progress,
 			isTTY,
-			background,
-			columns,
-			cursor: fancyAnsi,
-			hyperlinks: fancyAnsi,
-			colorDepth,
-			unicode,
+			progress: getEnvVarBoolean("ROME_CLI_PROGRESS") ?? fancyAnsi,
+			background: consumeEnvVar("ROME_CLI_BACKGROUND").required(background).asStringSet([
+				"unknown",
+				"dark",
+				"light",
+			]),
+			columns: consumeEnvVar("ROME_CLI_COLUMNS").deriveNumberString().required(
+				columns,
+			).asOneIndexedNumber(),
+			cursor: getEnvVarBoolean("ROME_CLI_CURSOR") ?? fancyAnsi,
+			hyperlinks: getEnvVarBoolean("ROME_CLI_HYPERLINKS") ?? fancyAnsi,
+			colorDepth: consumeEnvVar("ROME_CLI_COLOR_DEPTH").deriveNumberString().required(
+				colorDepth,
+			).asNumberSet([1, 4, 8, 24]),
+			unicode: getEnvVarBoolean("ROME_CLI_UNICODE") ?? unicode,
 		},
 		force,
 	);
@@ -184,10 +182,10 @@ const CI_ENV_NAMES = [
 
 export let IS_CI_ENV = false;
 for (const key of CI_ENV_NAMES) {
-	if (getEnvVar(key).type === "ENABLED") {
+	if (getEnvVarBoolean(key)) {
 		IS_CI_ENV = true;
 		break;
 	}
 }
 
-export const IS_ROME_DEV_ENV = getEnvVar("ROME_DEV").type === "ENABLED";
+export const IS_ROME_DEV_ENV = getEnvVarBoolean("ROME_DEV") === true;

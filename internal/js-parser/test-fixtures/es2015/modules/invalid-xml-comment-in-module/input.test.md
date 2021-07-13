@@ -8,61 +8,22 @@
 
 ```javascript
 JSRoot {
-	body: [
-		JSExpressionStatement {
-			expression: JSUpdateExpression {
-				operator: "--"
-				prefix: false
-				argument: TSNonNullExpression {
-					expression: JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:1
-					}
-					loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:2
-				}
-				loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:4
-			}
-			loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:4
-		}
-		JSExpressionStatement {
-			expression: JSBinaryExpression {
-				operator: ">"
-				left: JSUpdateExpression {
-					operator: "--"
-					prefix: false
-					argument: JSReferenceIdentifier {
-						name: "bar"
-						loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:4-1:7 (bar)
-					}
-					loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:4-1:9
-				}
-				right: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 2:0-2:0
-				}
-				loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:4-2:0
-			}
-			loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:4-2:0
+	body: []
+	comments: [
+		CommentLine {
+			id: "0"
+			value: "bar-->"
+			loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-1:10
 		}
 	]
-	comments: []
-	corrupt: true
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {advice: [], category: ["parse"], categoryValue: "js", message: [RAW_MARKUP {value: "Unknown start to an "}, "statement expression"]}
-			location: {
-				language: "js"
-				path: UIDPath<es2015/modules/invalid-xml-comment-in-module/input.js>
-				end: Position 1:0
-				start: Position 1:0
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	innerComments: ["0"]
+	sourceType: "script"
 	syntax: []
+	trailingComments: []
 	path: UIDPath<es2015/modules/invalid-xml-comment-in-module/input.js>
 	loc: SourceLocation es2015/modules/invalid-xml-comment-in-module/input.js 1:0-2:0
 }
@@ -71,13 +32,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- es2015/modules/invalid-xml-comment-in-module/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unknown start to an statement expression
-
-    <!--bar-->
-    ^
-
 
 ```

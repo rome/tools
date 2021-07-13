@@ -1,0 +1,10 @@
+filename = "file.ts"
+invalid = [
+	"""
+		const foo = {
+			test: true,
+			test2: true,
+			test: false,
+		};
+	""",
+]

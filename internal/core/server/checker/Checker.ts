@@ -52,6 +52,7 @@ export type CheckerOptions = {
 	globalDecisions?: LintCompilerOptionsDecisions;
 	lintCompilerOptionsPerFile?: LinterCompilerOptionsPerFile;
 	suppressionExplanation?: string;
+	enableDependenciesCheck?: boolean;
 };
 
 type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
@@ -406,7 +407,9 @@ class CheckRunner {
 		await this.runCompiler(event);
 
 		// Update dependency graph
-		await this.runGraph(event);
+		if (this.options.enableDependenciesCheck) {
+			await this.runGraph(event);
+		}
 
 		// Flush saved files
 		const savedPaths = await this.request.flushFiles();

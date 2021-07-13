@@ -264,7 +264,10 @@ export default class ServerRequest {
 		);
 
 		this.reporter = query.silent
-			? new Reporter("ServerRequestSilent")
+			? new Reporter(
+					"ServerRequestSilent",
+					{markupOptions: client.reporter.markupOptions},
+				)
 			: client.reporter.fork();
 		this.resources.add(this.reporter);
 
@@ -541,11 +544,17 @@ export default class ServerRequest {
 		});
 	}
 
-	public async assertClientCwdProject(): Promise<ProjectDefinition> {
+	public assertClientCwdProject(): Promise<ProjectDefinition> {
 		const location = this.getDiagnosticLocationForClientCwd();
 		return this.server.projectManager.assertProject(
 			this.client.flags.cwd,
 			location,
+		);
+	}
+
+	public retrieveProjectAndConfigPaths() {
+		return this.server.projectManager.getConfigAndProjectPaths(
+			this.client.flags.cwd,
 		);
 	}
 
@@ -930,11 +939,12 @@ export default class ServerRequest {
 	): Promise<void> {
 		this.checkCancelled();
 
+		const mtimeNs = this.server.memoryFs.addBuffer(path, content);
+
 		await this.wrapRequestDiagnostic(
 			"updateBuffer",
 			path,
 			async (bridge, ref) => {
-				const mtimeNs = this.server.memoryFs.addBuffer(path, content);
 				await bridge.events.updateBuffer.call({
 					ref,
 					buffer: {
@@ -983,7 +993,7 @@ export default class ServerRequest {
 				await bridge.events.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
 				this.server.refreshFileEvent.push({
-					type: "BUFFER_UPDATE",
+					type: "BUFFER_CLEARED",
 					path,
 				});
 			},
@@ -997,7 +1007,7 @@ export default class ServerRequest {
 	): Promise<AnyRoot> {
 		this.checkCancelled();
 
-		// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
+		// @ts-expect-error: AST is a bunch of interfaces which we cannot match with an object index
 		return this.wrapRequestDiagnostic(
 			"parse",
 			path,

@@ -62,8 +62,8 @@ export interface TargetBrowserPreset {
 
 export interface TargetBrowserCombination {
 	readonly type: "TargetBrowserCombination";
-	target: AnyTargetBrowser;
-	and: AnyTargetBrowser;
+	left: AnyTargetBrowser;
+	right: AnyTargetBrowser;
 }
 
 export interface TargetBrowserCoverage {
@@ -107,8 +107,8 @@ export function resolveTargets(
 	targets: AnyTargetBrowser | AnyTargetBrowser[],
 	resolveOptions?: ResolveOptions,
 ): Set<Browser> {
-	const browsers: Set<Browser> = new Set([]);
-	const toRemove: Set<Browser> = new Set([]);
+	const browsers: Set<Browser> = new Set();
+	const toRemove: Set<Browser> = new Set();
 
 	if (!Array.isArray(targets)) {
 		targets = [targets];
@@ -130,23 +130,23 @@ export function resolveTargets(
 					break;
 				}
 
-				const newBrowser = getBrowser({
-					name: target.browser,
-					version: target.version,
-				});
+				browsers.add(
+					getBrowser({
+						name: target.browser,
+						version: target.version,
+					}),
+				);
 
-				if (newBrowser) {
-					browsers.add(newBrowser);
-				}
 				break;
 			}
+
 			case "TargetBrowserState": {
-				const browserNames: string[] = [];
+				let browserNames: string[] = [];
 
 				if (target.browser) {
 					browserNames.push(target.browser);
 				} else {
-					browserNames.push(...getAllBrowserNames());
+					browserNames = browserNames.concat(getAllBrowserNames());
 				}
 
 				for (const name of browserNames) {
@@ -157,12 +157,18 @@ export function resolveTargets(
 							}
 							break;
 						}
+
 						case "unreleased": {
-							getBrowser({name}).getVersions().filter((version) =>
+							const allVersions = getBrowser({name}).getVersions();
+							const releasedVersions = allVersions.filter((version) =>
 								!getBrowser({name, version}).isReleased()
-							).forEach((version) => browsers.add(getBrowser({name, version})));
+							);
+							for (const version of releasedVersions) {
+								browsers.add(getBrowser({name, version}));
+							}
 							break;
 						}
+
 						case "maintained": {
 							// Not supported yet, will be once we add javascript feature support
 							break;
@@ -172,6 +178,7 @@ export function resolveTargets(
 
 				break;
 			}
+
 			case "TargetBrowserRange": {
 				const versions = getBrowser({name: target.browser})
 					? getBrowser({name: target.browser}).getVersions()
@@ -184,119 +191,95 @@ export function resolveTargets(
 				}
 				break;
 			}
+
 			case "TargetBrowserRangeOperator": {
 				const versions = getBrowser({name: target.browser}).getVersions();
 
 				for (const version of versions) {
-					switch (target.operator) {
-						case "GT": {
-							if (version > target.version) {
-								browsers.add(getBrowser({name: target.browser, version}));
-							}
-							break;
-						}
-						case "LT": {
-							if (version < target.version) {
-								browsers.add(getBrowser({name: target.browser, version}));
-							}
-							break;
-						}
-						case "GE": {
-							if (version >= target.version) {
-								browsers.add(getBrowser({name: target.browser, version}));
-							}
-							break;
-						}
-						case "LE": {
-							if (version <= target.version) {
-								browsers.add(getBrowser({name: target.browser, version}));
-							}
-							break;
-						}
+					if (evaluateTargetOperator(version, target.operator, target.version)) {
+						browsers.add(getBrowser({name: target.browser, version}));
 					}
 				}
 				break;
 			}
+
 			case "TargetBrowserPreset": {
 				switch (target.preset) {
 					case "modern": {
-						resolveTargets(
+						const targets = resolveTargets(
 							parseBrowserQuery({
 								input: modern,
 							}),
 							resolveOptions,
-						).forEach((b) => browsers.add(b));
+						);
+
+						for (const browser of targets) {
+							browsers.add(browser);
+						}
 						break;
 					}
+
 					case "dead": {
-						resolveTargets(
+						const targets = resolveTargets(
 							parseBrowserQuery({
 								input: dead,
 							}),
 							resolveOptions,
-						).forEach((b) => browsers.add(b));
+						);
+
+						for (const browser of targets) {
+							browsers.add(browser);
+						}
 						break;
 					}
 				}
 				break;
 			}
+
 			case "TargetBrowserCombination": {
-				const andTarget = resolveTargets(target.and);
-				Array.from(resolveTargets(target.target)).filter((browser) =>
-					andTarget.has(browser)
-				).forEach((browser) => browsers.add(browser));
+				const left = resolveTargets(target.left, resolveOptions);
+				const right = resolveTargets(target.right, resolveOptions);
+
+				for (const browser of left) {
+					if (right.has(browser)) {
+						browsers.add(browser);
+					}
+				}
 				break;
 			}
+
 			case "TargetBrowserCoverage": {
 				const usages = getAllBrowserUsages().sort((a, b) => b.usage - a.usage);
 				let coverage = 0;
 
-				for (let i = 0; i < usages.length; i++) {
-					if (usages[i].usage === 0) {
+				for (const {id, usage, version} of usages) {
+					if (usage === 0) {
 						break;
 					}
-					browsers.add(
-						getBrowser({name: usages[i].id, version: usages[i].version}),
-					);
-					coverage += usages[i].usage;
+
+					browsers.add(getBrowser({name: id, version}));
+
+					coverage += usage;
 					if (coverage >= target.coverage) {
 						break;
 					}
 				}
 				break;
 			}
+
 			case "TargetBrowserUsage": {
 				for (const name of getAllBrowserNames()) {
 					for (const version of getBrowser({name}).getVersions()) {
-						let usage = target.region
-							? getBrowser({name, version}).getRegionUsage(target.region)
-							: getBrowser({name, version}).getGlobalUsage();
+						const browser = getBrowser({name, version});
+						const usage = target.region
+							? browser.getRegionUsage(target.region)
+							: browser.getGlobalUsage();
 
-						switch (target.operator) {
-							case "GT": {
-								if (usage && usage > target.usage) {
-									browsers.add(getBrowser({name, version}));
-								}
-								break;
-							}
-							case "LT": {
-								if (usage && usage < target.usage) {
-									browsers.add(getBrowser({name, version}));
-								}
-								break;
-							}
-							case "GE": {
-								if (usage && usage >= target.usage) {
-									browsers.add(getBrowser({name, version}));
-								}
-								break;
-							}
-							case "LE": {
-								if (usage && usage <= target.usage) {
-									browsers.add(getBrowser({name, version}));
-								}
-								break;
-							}
+						if (
+							usage !== undefined &&
+							evaluateTargetOperator(usage, target.operator, target.usage)
+						) {
+							browsers.add(getBrowser({name, version}));
 						}
 					}
 				}
@@ -304,14 +287,15 @@ export function resolveTargets(
 			}
 
 			case "TargetBrowserSince": {
-				getAllBrowserNames().forEach((name) => {
+				for (const name of getAllBrowserNames()) {
 					const releaseDate = getBrowser({name}).getRawReleaseDate();
-					if (releaseDate && releaseDate > target.since) {
+					if (releaseDate !== undefined && releaseDate > target.since) {
 						browsers.add(getBrowser({name}));
 					}
-				});
+				}
 				break;
 			}
+
 			case "TargetBrowserLast": {
 				let names = target.browser ? [target.browser] : getAllBrowserNames();
 
@@ -337,31 +321,33 @@ export function resolveTargets(
 									break;
 								}
 							}
-							if (releaseDate && releaseDate > date.getTime()) {
+
+							if (releaseDate !== undefined && releaseDate > date.getTime()) {
 								browsers.add(getBrowser({name}));
 							}
 							break;
 						}
+
 						case "versions": {
-							// `b - a` reverses the list
-							if (getBrowser({name})) {
-								getBrowser({name}).getVersions().sort((a, b) => b - a).slice(
-									0,
-									target.qty,
-								).forEach((version) => browsers.add(getBrowser({name, version})));
+							const allVersions = getBrowser({name}).getVersions();
+							const desiredVersions = getLatestVersions(allVersions, target.qty);
+							for (const version of desiredVersions) {
+								browsers.add(getBrowser({name, version}));
 							}
 							break;
 						}
+
 						case "majorversions": {
-							// `b - a` reverses the list
-							// v % 1 checks if the number is whole
-							if (getBrowser({name})) {
-								getBrowser({name}).getVersions().filter((v) => v % 1 === 0).sort((
-									a,
-									b,
-								) => b - a).slice(0, target.qty).forEach((version) =>
-									browsers.add(getBrowser({name, version}))
-								);
+							const allVersions = getBrowser({name}).getVersions();
+							const majorVersions = allVersions.filter((v) =>
+								Number.isInteger(v)
+							);
+							const desiredVersions = getLatestVersions(
+								majorVersions,
+								target.qty,
+							);
+							for (const version of desiredVersions) {
+								browsers.add(getBrowser({name, version}));
 							}
 							break;
 						}
@@ -369,14 +355,43 @@ export function resolveTargets(
 				}
 				break;
 			}
+
 			case "TargetBrowserInversion": {
-				resolveTargets(target.target).forEach((b) => toRemove.add(b));
+				for (const b of resolveTargets(target.target, resolveOptions)) {
+					toRemove.add(b);
+				}
 				break;
 			}
 		}
 	}
 
-	return new Set(
-		Array.from(browsers).filter((browser) => !toRemove.has(browser)),
-	);
+	for (const browser of toRemove) {
+		browsers.delete(browser);
+	}
+
+	return browsers;
+}
+
+function evaluateTargetOperator(
+	version: number,
+	op: TargetOperator,
+	targetVersion: number,
+): boolean {
+	switch (op) {
+		case "GT":
+			return version > targetVersion;
+
+		case "LT":
+			return version < targetVersion;
+
+		case "GE":
+			return version >= targetVersion;
+
+		case "LE":
+			return version <= targetVersion;
+	}
+}
+
+function getLatestVersions(versions: number[], count: number): number[] {
+	return versions.sort((a, b) => b - a).slice(0, count);
 }

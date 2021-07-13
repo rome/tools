@@ -17,7 +17,7 @@ disallow identifiers from shadowing restricted names
 **ESLint Equivalent:** [no-shadow-restricted-names](https://eslint.org/docs/rules/no-shadow-restricted-names)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ab3f4ba173e520dcb6eb638c65bcda5b59135a0a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:bde7fb686d6ac4889a39b7e692cbc7abac0ad8d0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -54,9 +54,9 @@ disallow identifiers from shadowing restricted names
 
 ---
 
-{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">try</span> <span class="token punctuation">{</span>  <span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">Object</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">try</span> <span class="token punctuation">{</span>	<span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">Object</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:15</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:14</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not shadow the global </span><span style="color: Tomato;"><strong>Object</strong></span><span style="color: Tomato;"> property.</span>
 

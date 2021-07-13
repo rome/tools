@@ -6,7 +6,7 @@
 
 ### `Diagnostics`
 
-```
+```css
 
 ```
 
@@ -23,7 +23,6 @@
 
 ```css
 .style {
-	-ms-text-size-adjust: auto;
 	-webkit-text-size-adjust: auto;
 	-moz-text-size-adjust: auto;
 	text-size-adjust: auto;

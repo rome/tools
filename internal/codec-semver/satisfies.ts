@@ -66,18 +66,18 @@ function compareOp(
 			if (major === 0) {
 				if (minor === 0) {
 					// ^0.0.3 := >=0.0.3 <0.0.4
-					// @ts-ignore
+					// @ts-expect-error
 					return compareOp("<", version, buildVersion(0, 0, patch + 1));
 				} else {
 					// ^0.2.3 := >=0.2.3 <0.3.0
-					// @ts-ignore
+					// @ts-expect-error
 					return compareOp("<", version, buildVersion(0, minor + 1, 0));
 				}
 			}
 
 			// ^1.2.3 := >=1.2.3 <2.0.0
 
-			// @ts-ignore
+			// @ts-expect-error
 			return compareOp("<", version, buildVersion(major + 1, 0, 0));
 		}
 
@@ -93,7 +93,7 @@ function compareOp(
 
 			if (minor === undefined) {
 				// ~1 := >=1.0.0 <(1+1).0.0 := >=1.0.0 <2.0.0 (Same as 1.x)
-				// @ts-ignore
+				// @ts-expect-error
 				return compareOp("<", version, buildVersion(major + 1, minor, 0));
 			}
 

@@ -4,6 +4,8 @@
 
 ## `invalid > media > ratio`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -35,13 +37,28 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/media/ratio/input.css>
+				path: UIDPath<invalid/media/ratio/input.css>
 				end: Position 1:26
 				start: Position 1:25
 			}
 		}
 	]
-	path: RelativePath<invalid/media/ratio/input.css>
+	path: UIDPath<invalid/media/ratio/input.css>
 	loc: SourceLocation invalid/media/ratio/input.css 1:0-1:29
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/media/ratio/input.css:1:25 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The ratio value is not syntactically correct; you always have to provide a denominator after
+    the slash.
+
+    @media (aspect-ratio: 12/) {}
+                             ^
+
+
 ```

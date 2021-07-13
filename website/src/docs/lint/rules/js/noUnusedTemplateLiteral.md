@@ -17,7 +17,7 @@ MISSING DOCUMENTATION
 **ESLint Equivalent:** [quotes#allowtemplateliterals](https://eslint.org/docs/rules/quotes#allowtemplateliterals)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:7d6b28d1f0787c0ff19d535faa54135270a3238c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:639608696a6b20a0605222fce704d7696fb3d9c4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -61,7 +61,7 @@ MISSING DOCUMENTATION
 ### Valid
 
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">`</span><span class="token string">bar</span>
-<span class="token string">`</span></code></pre>{% endraw %}
+<span class="token string">has newline</span><span class="token string">`</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">`</span><span class="token string">&quot;bar&quot;</span><span class="token string">`</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-ts"><code class="language-ts"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">`</span><span class="token string">&apos;bar&apos;</span><span class="token string">`</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

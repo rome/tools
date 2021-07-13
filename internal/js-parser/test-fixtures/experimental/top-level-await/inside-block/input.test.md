@@ -13,14 +13,18 @@ JSRoot {
 			consequent: JSBlockStatement {
 				body: [
 					JSExpressionStatement {
-						expression: JSAwaitExpression {
-							argument: JSNumericLiteral {
-								value: 0
-								loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:8-2:9
-							}
-							loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:9
+						expression: JSReferenceIdentifier {
+							name: "await"
+							loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:7 (await)
 						}
-						loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:10
+						loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:7
+					}
+					JSExpressionStatement {
+						expression: JSNumericLiteral {
+							value: 0
+							loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:8-2:9
+						}
+						loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:8-2:10
 					}
 				]
 				directives: []
@@ -35,10 +39,26 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: []
+	diagnostics: [
+		{
+			origins: [{entity: "ParserCore<js>"}]
+			description: {
+				advice: []
+				category: ["parse"]
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
+			}
+			location: {
+				language: "js"
+				path: UIDPath<experimental/top-level-await/inside-block/input.js>
+				end: Position 2:8
+				start: Position 2:8
+			}
+		}
+	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/top-level-await/inside-block/input.js>
 	loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:0-3:1
@@ -48,5 +68,15 @@ JSRoot {
 ### `diagnostics`
 
 ```
+
+ experimental/top-level-await/inside-block/input.js:2:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Expected a semicolon or a line terminator
+
+    1 │ if (true) {
+  > 2 │   await 0;
+      │         ^
+    3 │ }
+
 
 ```

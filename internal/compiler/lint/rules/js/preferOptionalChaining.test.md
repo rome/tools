@@ -120,13 +120,12 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/5/filename.ts:3 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint/js/preferOptionalChaining/reject/5/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
 
     1 │ let foo = {};
-    2 │ // leading binary comment
-  > 3 │ foo != null && foo.bar;
+  > 2 │ foo != null && foo.bar;
       │ ^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
@@ -141,7 +140,6 @@ foo?.bar;
 
 ```ts
 let foo = {};
-// leading binary comment
 foo?.bar;
 
 ```
@@ -290,13 +288,12 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/11/filename.ts:3 lint/js/preferOptionalChaining  FIXABLE  ━━━
+ lint/js/preferOptionalChaining/reject/11/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━
 
   ✖ Prefer optional chaining to manual checks.
 
     1 │ let foo = {};
-    2 │ // leading ternary comment
-  > 3 │ foo ? foo.bar.baz : undefined
+  > 2 │ foo ? foo.bar.baz : undefined
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
@@ -311,7 +308,6 @@ foo?.bar;
 
 ```ts
 let foo = {};
-// leading ternary comment
 foo?.bar.baz;
 
 ```
@@ -320,106 +316,15 @@ foo?.bar.baz;
 
 ```
 
- lint/js/preferOptionalChaining/reject/12/filename.ts:3 lint/js/preferOptionalChaining  FIXABLE  ━━━
+ lint/js/preferOptionalChaining/reject/12/filename.ts:2:4 lint/js/preferOptionalChaining  FIXABLE  ━
 
   ✖ Prefer optional chaining to manual checks.
 
-    1 │ let foo = {}
-    2 │ // leading binary comment
-  > 3 │ foo && foo()
-      │ ^^^^^^^^^^^^
-
-  ℹ Safe fix
-
-  - foo·&&·foo()
-  + foo?.()
-
-
-```
-
-### `11: formatted`
-
-```ts
-let foo = {};
-// leading binary comment
-foo?.();
-
-```
-
-### `12`
-
-```
-
- lint/js/preferOptionalChaining/reject/13/filename.ts:3 lint/js/preferOptionalChaining  FIXABLE  ━━━
-
-  ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {}
-    2 │ // leading binary comment
-  > 3 │ foo && foo.bar()
-      │ ^^^^^^^^^^^^^^^^
-
-  ℹ Safe fix
-
-  - foo·&&·foo.bar()
-  + foo?.bar()
-
-
-```
-
-### `12: formatted`
-
-```ts
-let foo = {};
-// leading binary comment
-foo?.bar();
-
-```
-
-### `13`
-
-```
-
- lint/js/preferOptionalChaining/reject/14/filename.ts:3 lint/js/preferOptionalChaining  FIXABLE  ━━━
-
-  ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {}
-    2 │ // leading ternary comment
-  > 3 │ foo ? foo.bar() : undefined
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  ℹ Safe fix
-
-  - foo·?·foo.bar()·:·undefined
-  + foo?.bar()
-
-
-```
-
-### `13: formatted`
-
-```ts
-let foo = {};
-// leading ternary comment
-foo?.bar();
-
-```
-
-### `14`
-
-```
-
- lint/js/preferOptionalChaining/reject/15/filename.ts:5:1 lint/js/preferOptionalChaining  FIXABLE  ━
-
-  ✖ Prefer optional chaining to manual checks.
-
-    3 │ if (
-    4 │   // leading if condtion comment
-  > 5 │   foo != undefined && foo.bar != null
-      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    6 │ ) {
-    7 │   // leading call expression comment comment
+    1 │ let foo = {};
+  > 2 │ if (foo != undefined && foo.bar != null) {
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │   foo.bar('baz');
+    4 │ }
 
   ℹ Safe fix
 
@@ -429,15 +334,53 @@ foo?.bar();
 
 ```
 
-### `14: formatted`
+### `11: formatted`
 
 ```ts
 let foo = {};
-// leading if statement comment
-
-// leading if condtion comment
-// leading call expression comment comment
 foo?.bar?.("baz")
+
+```
+
+### `12`
+
+```
+
+```
+
+### `12: formatted`
+
+```ts
+let foo = {};
+foo?.bar;
+
+```
+
+### `13`
+
+```
+
+```
+
+### `13: formatted`
+
+```ts
+let foo = {}, bar = "";
+foo && bar.foo;
+
+```
+
+### `14`
+
+```
+
+```
+
+### `14: formatted`
+
+```ts
+let foo = {}, bar = "";
+bar in foo && foo.bar;
 
 ```
 
@@ -451,7 +394,7 @@ foo?.bar?.("baz")
 
 ```ts
 let foo = {};
-foo?.bar;
+foo?.[bar];
 
 ```
 
@@ -464,8 +407,8 @@ foo?.bar;
 ### `16: formatted`
 
 ```ts
-let foo = {}, bar = "";
-foo && bar.foo;
+let foo = {};
+foo ? foo.bar.baz : null;
 
 ```
 
@@ -476,48 +419,6 @@ foo && bar.foo;
 ```
 
 ### `17: formatted`
-
-```ts
-let foo = {}, bar = "";
-bar in foo && foo.bar;
-
-```
-
-### `18`
-
-```
-
-```
-
-### `18: formatted`
-
-```ts
-let foo = {};
-foo?.[bar];
-
-```
-
-### `19`
-
-```
-
-```
-
-### `19: formatted`
-
-```ts
-let foo = {};
-foo ? foo.bar.baz : null;
-
-```
-
-### `20`
-
-```
-
-```
-
-### `20: formatted`
 
 ```ts
 let foo = {};

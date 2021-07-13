@@ -58,47 +58,32 @@
 
 ```
 
- lint/a11y/useHtmlLang/reject/3/file.tsx:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useHtmlLang/reject/3/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ JSX attribute value should be either an expression or a quoted JSX text
+  ✖ Provide a lang attribute when using the html element.
 
-    <html lang=
-               ^
+    <html lang=""></html>
+    ^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
+    no user default is specified.
 
 
 ```
 
 ### `2: formatted`
 
-```javascript
-undefined
+```tsx
+<html lang="">
+</html>;
+
 ```
 
 ### `3`
 
 ```
 
- lint/a11y/useHtmlLang/reject/4/file.tsx:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unknown start to an statement expression
-
-    ></html>
-    ^
-
-
-```
-
-### `3: formatted`
-
-```javascript
-undefined
-```
-
-### `4`
-
-```
-
- lint/a11y/useHtmlLang/reject/5/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useHtmlLang/reject/4/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -111,7 +96,7 @@ undefined
 
 ```
 
-### `4: formatted`
+### `3: formatted`
 
 ```tsx
 <html lang={""}>
@@ -119,11 +104,11 @@ undefined
 
 ```
 
-### `5`
+### `4`
 
 ```
 
- lint/a11y/useHtmlLang/reject/6/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useHtmlLang/reject/5/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -136,7 +121,7 @@ undefined
 
 ```
 
-### `5: formatted`
+### `4: formatted`
 
 ```tsx
 <html lang={``}>
@@ -144,11 +129,11 @@ undefined
 
 ```
 
-### `6`
+### `5`
 
 ```
 
- lint/a11y/useHtmlLang/reject/7/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useHtmlLang/reject/6/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -161,7 +146,7 @@ undefined
 
 ```
 
-### `6: formatted`
+### `5: formatted`
 
 ```tsx
 <html lang={undefined}>
@@ -169,11 +154,11 @@ undefined
 
 ```
 
-### `7`
+### `6`
 
 ```
 
- lint/a11y/useHtmlLang/reject/8/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useHtmlLang/reject/7/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -186,7 +171,7 @@ undefined
 
 ```
 
-### `7: formatted`
+### `6: formatted`
 
 ```tsx
 <html lang={false}>
@@ -194,11 +179,11 @@ undefined
 
 ```
 
-### `8`
+### `7`
 
 ```
 
- lint/a11y/useHtmlLang/reject/9/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useHtmlLang/reject/8/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -211,7 +196,7 @@ undefined
 
 ```
 
-### `8: formatted`
+### `7: formatted`
 
 ```tsx
 <html lang={true}>
@@ -219,11 +204,11 @@ undefined
 
 ```
 
-### `9`
+### `8`
 
 ```
 
- lint/a11y/useHtmlLang/reject/10/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useHtmlLang/reject/9/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
 
@@ -236,10 +221,24 @@ undefined
 
 ```
 
-### `9: formatted`
+### `8: formatted`
 
 ```tsx
 <html lang={42}>
+</html>;
+
+```
+
+### `9`
+
+```
+
+```
+
+### `9: formatted`
+
+```tsx
+<html lang="en">
 </html>;
 
 ```
@@ -253,7 +252,7 @@ undefined
 ### `10: formatted`
 
 ```tsx
-<html lang="en">
+<html lang={language}>
 </html>;
 
 ```
@@ -267,7 +266,7 @@ undefined
 ### `11: formatted`
 
 ```tsx
-<html lang={language}>
+<html lang={() => language}>
 </html>;
 
 ```
@@ -281,26 +280,12 @@ undefined
 ### `12: formatted`
 
 ```tsx
-<html lang={() => language}>
-</html>;
-
-```
-
-### `13`
-
-```
-
-```
-
-### `13: formatted`
-
-```tsx
 <Html lang={42}>
 </Html>;
 
 ```
 
-### `14`
+### `13`
 
 ```
 
@@ -317,7 +302,7 @@ undefined
 
 ```
 
-### `14: formatted`
+### `13: formatted`
 
 ```html
 <html>
@@ -325,7 +310,7 @@ undefined
 
 ```
 
-### `15`
+### `14`
 
 ```
 
@@ -344,10 +329,24 @@ undefined
 
 ```
 
-### `15: formatted`
+### `14: formatted`
 
 ```html
 <html lang="">
+</html>
+
+```
+
+### `15`
+
+```
+
+```
+
+### `15: formatted`
+
+```html
+<html lang="42">
 </html>
 
 ```
@@ -359,20 +358,6 @@ undefined
 ```
 
 ### `16: formatted`
-
-```html
-<html lang="42">
-</html>
-
-```
-
-### `17`
-
-```
-
-```
-
-### `17: formatted`
 
 ```html
 <html lang="en">

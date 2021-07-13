@@ -63,7 +63,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/module-attributes/without-plugin/input.js>
-				end: Position 1:26
+				end: Position 1:27
 				start: Position 1:27
 			}
 		}

@@ -298,9 +298,7 @@ export async function main() {
 		DIAGNOSTIC_CATEGORIES.parse,
 	).get("version").asString();
 	if (currentVersion !== version) {
-		reporter.success(
-			`[browsers-db] Update found! ${currentVersion} -> ${version}`,
-		);
+		reporter.success(`Update found! ${currentVersion} -> ${version}`);
 		await updateData();
 		await updateRegions();
 		await updateVersion(version);
@@ -309,7 +307,7 @@ export async function main() {
 			markup`Don't forget to update the snapshots with <code>./rome test internal/codec-browsers/index.test.ts --update-snapshots</code>`,
 		);
 	} else {
-		reporter.success(`[browsers-db] Already using latest version! ${version}`);
+		reporter.success(`Already using latest version! ${version}`);
 	}
 }
 
@@ -341,7 +339,7 @@ interface Agent {
 }
 
 interface Feature {
-	s: Map<string, Map<number, boolean>>;
+	s: Map<string, Map<number, string>>;
 	c: string[];
 }
 
@@ -373,7 +371,6 @@ async function updateData() {
 		categories: new Map<string, string[]>(
 			Object.entries(rawData.get("cats").asAny()),
 		),
-		// Would take to many lines to convert it without 'any'
 		data: generateDataData(rawData),
 	};
 
@@ -418,41 +415,46 @@ function generateDataAgents(rawData: Consumer) {
 function generateDataAgentsVersions(rawVersions: Consumer[]): Agent["vs"] {
 	const versions: Agent["vs"] = [];
 
-	rawVersions.forEach((v) => {
-		if (v.get("version").asString().includes("-")) {
+	for (const version of rawVersions) {
+		// Remove `ms` prefixes
+		if (version.get("prefix").asString() === "ms") {
+			continue;
+		}
+
+		if (version.get("version").asString().includes("-")) {
 			// Could be optimized but copying 3 times works
 			// Converts versions like `12-20` into 2 versions 12 and 20
 			versions.push({
-				v: parseFloat(v.get("version").asString().split("-")[0]),
-				g: v.get("global_usage").asNumber(),
-				r: v.get("release_date").asNumberOrVoid(),
-				p: v.get("prefix").asString().length === 0
+				v: parseFloat(version.get("version").asString().split("-")[0]),
+				g: version.get("global_usage").asNumber(),
+				r: version.get("release_date").asNumberOrVoid(),
+				p: version.get("prefix").asString().length === 0
 					? undefined
-					: v.get("prefix").asString(),
+					: version.get("prefix").asString(),
 			});
 
 			versions.push({
-				v: parseFloat(v.get("version").asString().split("-")[1]),
-				g: v.get("global_usage").asNumber(),
-				r: v.get("release_date").asNumberOrVoid(),
-				p: v.get("prefix").asString().length === 0
+				v: parseFloat(version.get("version").asString().split("-")[1]),
+				g: version.get("global_usage").asNumber(),
+				r: version.get("release_date").asNumberOrVoid(),
+				p: version.get("prefix").asString().length === 0
 					? undefined
-					: v.get("prefix").asString(),
+					: version.get("prefix").asString(),
 			});
 		} else {
 			versions.push({
-				v: isNaN(parseFloat(v.get("version").asString()))
+				v: isNaN(parseFloat(version.get("version").asString()))
 					? 1
-					: parseFloat(v.get("version").asString()),
+					: parseFloat(version.get("version").asString()),
 				// String may be "all", replaced with 1
-				g: v.get("global_usage").asNumber(),
-				r: v.get("release_date").asNumberOrVoid(),
-				p: v.get("prefix").asString().length === 0
+				g: version.get("global_usage").asNumber(),
+				r: version.get("release_date").asNumberOrVoid(),
+				p: version.get("prefix").asString().length === 0
 					? undefined
-					: v.get("prefix").asString(),
+					: version.get("prefix").asString(),
 			});
 		}
-	});
+	}
 
 	return versions;
 }
@@ -474,28 +476,30 @@ function generateDataData(rawData: Consumer) {
 			continue;
 		}
 
-		const stats = new Map<string, Map<number, boolean>>();
+		const stats = new Map<string, Map<number, string>>();
 
 		for (const agent in rawData.getPath(["data", feature, "stats"]).asUnknownObject()) {
 			if (agent === "ie" || agent === "ie_mob") {
 				continue;
 			}
 
-			const featureAgents = new Map<number, boolean>();
+			const featureAgents = new Map<number, string>();
 
-			for (const v in rawData.getPath(["data", feature, "stats", agent]).asUnknownObject()) {
-				if (
-					rawData.getPath(["data", feature, "stats", agent, v]).asString().includes(
-						"x",
-					)
-				) {
+			for (const version in rawData.getPath(["data", feature, "stats", agent]).asUnknownObject()) {
+				const value = rawData.getPath(["data", feature, "stats", agent, version]).asString();
+
+				// Requires a prefix if it contains "x"
+				if (value.includes("x")) {
 					// Could be optimized but copying 3 times works
 					// Converts versions like `12-20` into 2 versions 12 and 20
-					if (v.includes("-")) {
-						featureAgents.set(parseFloat(v.split("-")[0]), true);
-						featureAgents.set(parseFloat(v.split("-")[1]), true);
+					if (version.includes("-")) {
+						featureAgents.set(parseFloat(version.split("-")[0]), value);
+						featureAgents.set(parseFloat(version.split("-")[1]), value);
 					} else {
-						featureAgents.set(parseFloat(v), true);
+						featureAgents.set(
+							isNaN(parseFloat(version)) ? 1 : parseFloat(version),
+							value,
+						);
 					}
 				}
 			}

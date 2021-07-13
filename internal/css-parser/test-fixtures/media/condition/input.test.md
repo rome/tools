@@ -4,6 +4,8 @@
 
 ## `media > condition`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -531,7 +533,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<media/condition/input.css>
+	path: UIDPath<media/condition/input.css>
 	loc: SourceLocation media/condition/input.css 1:0-13:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

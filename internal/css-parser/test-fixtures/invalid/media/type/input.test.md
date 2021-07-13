@@ -4,6 +4,8 @@
 
 ## `invalid > media > type`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -35,13 +37,27 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/media/type/input.css>
+				path: UIDPath<invalid/media/type/input.css>
 				end: Position 1:10
 				start: Position 1:7
 			}
 		}
 	]
-	path: RelativePath<invalid/media/type/input.css>
+	path: UIDPath<invalid/media/type/input.css>
 	loc: SourceLocation invalid/media/type/input.css 1:0-1:13
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/media/type/input.css:1:7 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The media type tty is deprecated.
+
+    @media tty {}
+           ^^^
+
+
 ```

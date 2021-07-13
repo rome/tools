@@ -98,7 +98,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-function/input.js>
-				end: Position 2:24
+				end: Position 2:25
 				start: Position 2:25
 			}
 		}

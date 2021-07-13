@@ -51,6 +51,15 @@ export interface Visitor<State extends UnknownObject> {
 	exit?: (path: CompilerPath, state: VisitorStateExit<State>) => ExitSignal;
 }
 
+export interface TypedVisitor<
+	State extends UnknownObject,
+	PathType extends CompilerPath
+> {
+	name: string;
+	enter?: (path: PathType, state: VisitorStateEnter<State>) => EnterSignal;
+	exit?: (path: PathType, state: VisitorStateExit<State>) => ExitSignal;
+}
+
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyVisitor = Visitor<any>;
 

@@ -4,6 +4,8 @@
 
 ## `invalid > media > feature-value-missing`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -43,13 +45,27 @@ CSSRoot {
 			}
 			location: {
 				language: "css"
-				path: RelativePath<invalid/media/feature-value-missing/input.css>
+				path: UIDPath<invalid/media/feature-value-missing/input.css>
 				end: Position 1:31
 				start: Position 1:30
 			}
 		}
 	]
-	path: RelativePath<invalid/media/feature-value-missing/input.css>
+	path: UIDPath<invalid/media/feature-value-missing/input.css>
 	loc: SourceLocation invalid/media/feature-value-missing/input.css 1:0-1:34
 }
+```
+
+### `diagnostics`
+
+```
+
+ invalid/media/feature-value-missing/input.css:1:30 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The value provided inside the media feature is not correct.
+
+    @media screen and (min-width: ) {}
+                                  ^
+
+
 ```

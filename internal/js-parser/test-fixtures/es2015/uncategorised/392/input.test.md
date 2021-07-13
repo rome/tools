@@ -106,14 +106,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/uncategorised/392/input.js>
-				end: Position 1:18
+				end: Position 1:19
 				start: Position 1:19
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/uncategorised/392/input.js>
 	loc: SourceLocation es2015/uncategorised/392/input.js 1:0-2:0

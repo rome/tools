@@ -4,6 +4,8 @@
 
 ## `custom-properties`
 
+### `ast`
+
 ```javascript
 CSSRoot {
 	body: [
@@ -377,7 +379,13 @@ CSSRoot {
 	comments: []
 	corrupt: false
 	diagnostics: []
-	path: RelativePath<custom-properties/input.css>
+	path: UIDPath<custom-properties/input.css>
 	loc: SourceLocation custom-properties/input.css 1:0-24:1
 }
+```
+
+### `diagnostics`
+
+```
+
 ```

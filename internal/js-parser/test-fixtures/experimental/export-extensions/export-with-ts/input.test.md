@@ -190,14 +190,14 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
-				end: Position 1:15
+				end: Position 1:16
 				start: Position 1:16
 			}
 		}
 	]
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
 	loc: SourceLocation experimental/export-extensions/export-with-ts/input.js 1:0-8:0

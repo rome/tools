@@ -66,7 +66,7 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/9/input.js>
-				end: Position 1:29
+				end: Position 1:30
 				start: Position 1:30
 			}
 		}

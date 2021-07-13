@@ -31,26 +31,10 @@ JSRoot {
 	]
 	comments: []
 	corrupt: false
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {
-				advice: []
-				category: ["parse"]
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
-			}
-			location: {
-				language: "js"
-				path: UIDPath<es2015/uncategorised/365/input.js>
-				end: Position 1:14
-				start: Position 1:9
-			}
-		}
-	]
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
-	sourceType: "module"
+	sourceType: "script"
 	syntax: []
 	path: UIDPath<es2015/uncategorised/365/input.js>
 	loc: SourceLocation es2015/uncategorised/365/input.js 1:0-2:0
@@ -60,13 +44,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- es2015/uncategorised/365/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Can not use 'await' as identifier inside an async function
-
-    function await() {}
-             ^^^^^
-
 
 ```

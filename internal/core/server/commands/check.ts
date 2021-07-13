@@ -48,13 +48,13 @@ export default createServerCommand<Flags>({
 				{
 					description: markup`apply safe fixes and formatting`,
 				},
-			).asBoolean(false),
+			).required(false).asBoolean(),
 			formatOnly: consumer.get(
 				"formatOnly",
 				{
 					description: markup`only formatting is applied`,
 				},
-			).asBoolean(false),
+			).required(false).asBoolean(),
 			changed: consumer.get(
 				"changed",
 				{
@@ -149,6 +149,23 @@ export default createServerCommand<Flags>({
 			suppressionExplanation: cachedSuppressionExplanation,
 			args,
 		};
+		const project = await req.server.projectManager.findProject(
+			req.client.flags.cwd,
+		);
+		if (project) {
+			if (project.config.integrations.eslint.enabled) {
+				reporter.warn(
+					markup`ESlint integration is enabled. Beware that not all the settings are supported. To turn it off run`,
+				);
+				reporter.command("rome config disable integrations.eslint.enabled");
+			}
+			if (project.config.integrations.prettier.enabled) {
+				reporter.warn(
+					markup`Prettier integration is enabled. Beware that not all the settings are supported. To turn it off run`,
+				);
+				reporter.command("rome config disable integrations.prettier.enabled");
+			}
+		}
 		const linter = new Checker(req, opts);
 		if (req.query.requestFlags.watch) {
 			await linter.runWatch();
