@@ -2414,7 +2414,7 @@ export function parseObjectExpression(
 	const start = parser.getPosition();
 	const properties = [];
 
-	const openContext = expectOpening(parser, tt.braceL, tt.braceR, "object");
+	// const openContext = expectOpening(parser, tt.braceL, tt.braceR, "object");
 
 	while (true) {
 		if (first) {
