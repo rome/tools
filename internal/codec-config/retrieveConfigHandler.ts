@@ -4,16 +4,12 @@ import {json, toml} from "@internal/codec-config";
 export default function retrieveConfigHandler(
 	extension: ConfigType,
 ): ConfigHandler {
-	let manifestHandler: ConfigHandler | undefined = undefined;
-	if (extension === "toml") {
-		manifestHandler = toml;
-	} else if (extension === "json") {
-		manifestHandler = json;
+	switch (extension) {
+		case "toml":
+			return toml;
+		case "json":
+			return json;
+		default:
+			return json;
 	}
-
-	if (!manifestHandler) {
-		manifestHandler = json;
-	}
-
-	return manifestHandler;
 }
