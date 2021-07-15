@@ -2,14 +2,14 @@
 
 ### Installation and Usage
 
-#### [Yarn](https://yarnpkg.com/):
+#### [Yarn](https://yarnpkg.com/)
 
 ```bash
 yarn add rome
 yarn rome init
 ```
 
-#### [npm/npx](https://www.npmjs.com/):
+#### [npm/npx](https://www.npmjs.com/)
 
 ```bash
 npx rome init
