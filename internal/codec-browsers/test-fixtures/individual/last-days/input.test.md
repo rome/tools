@@ -9,7 +9,7 @@
 ```javascript
 [
 	"edge:91"
-	"firefox:89"
+	"firefox:90"
 	"chrome:91"
 	"safari:14.1"
 	"opera:77"

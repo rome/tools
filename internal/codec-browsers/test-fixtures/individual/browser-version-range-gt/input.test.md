@@ -19,6 +19,7 @@
 	"firefox:89"
 	"firefox:90"
 	"firefox:91"
+	"firefox:92"
 ]
 ```
 
