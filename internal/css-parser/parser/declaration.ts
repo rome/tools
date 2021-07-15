@@ -136,10 +136,11 @@ export function parseDeclaration(
 			readToken(parser, "Whitespace");
 		}
 		while (!matchEndOfDeclaration(parser, endingTokenType)) {
-			const parsedValue = parseComponentValue(parser);
+			const parsedValue = parseComponentValue(parser, name);
 			parsedValue && value.push(parsedValue);
 		}
 
+		// matching "important" inside a declaration
 		if (value.length >= 2) {
 			const lastTwoTokens = [...value].slice(-2);
 			if (

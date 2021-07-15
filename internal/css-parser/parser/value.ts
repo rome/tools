@@ -5,9 +5,14 @@ import {ValueToken} from "@internal/parser-core";
 import {parseSimpleBlock} from "@internal/css-parser/parser/block";
 import {parseFunction} from "@internal/css-parser/parser/function";
 import {parseUrl} from "@internal/css-parser/parser/url";
-import {AnyCSSValue} from "@internal/ast";
+import {AnyCSSValue, CSSCustomProperty} from "@internal/ast";
+import {parseTemplateAreas} from "@internal/css-parser/parser/grid/parseTemplateAreas";
+import {parseGridArea} from "@internal/css-parser/parser/grid/parseGridArea";
 
-export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
+export function parseComponentValue(
+	parser: CSSParser,
+	declarationName?: string | CSSCustomProperty,
+): AnyCSSValue | undefined {
 	if (
 		matchToken(parser, "LeftCurlyBracket") ||
 		matchToken(parser, "LeftParen") ||
@@ -58,6 +63,16 @@ export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined 
 	}
 
 	if (matchToken(parser, "Ident")) {
+		if (declarationName && typeof declarationName === "string") {
+			if (declarationName === "grid-area") {
+				const gridArea = parseGridArea(parser);
+				if (gridArea) {
+					return gridArea;
+				}
+				// there's been an error, so we exist from the function
+				return undefined;
+			}
+		}
 		const value = (parser.getToken() as Tokens["Ident"]).value;
 		nextToken(parser);
 		if (isCustomProperty(value)) {
@@ -80,6 +95,14 @@ export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined 
 	}
 
 	if (matchToken(parser, "Number")) {
+		if (declarationName && typeof declarationName === "string") {
+			if (declarationName === "grid-area") {
+				const gridArea = parseGridArea(parser);
+				if (gridArea) {
+					return gridArea;
+				}
+			}
+		}
 		const numberToken = parser.getToken() as Tokens["Number"];
 		nextToken(parser);
 		return parser.finishNode(
@@ -126,6 +149,23 @@ export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined 
 	}
 
 	if (matchToken(parser, "String")) {
+		// grid syntax is a bit more , strict and its values are a bit more strict
+		if (declarationName && typeof declarationName === "string") {
+			if (declarationName === "grid-template-areas") {
+				const stringToken = parseTemplateAreas(parser);
+				if (stringToken) {
+					nextToken(parser);
+					return parser.finishNode(
+						start,
+						{
+							type: "CSSString",
+							value: stringToken.value,
+						},
+					);
+				}
+			}
+		}
+
 		const stringToken = parser.getToken() as Tokens["String"];
 		nextToken(parser);
 		return parser.finishNode(

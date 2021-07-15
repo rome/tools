@@ -12,7 +12,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:d3b2c4418b427b3f1a4ee1a9e1724858a922b274,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:012d286b5c200c9fe7185fa664e40269949af935,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./css/import/CSSAtImport";
@@ -38,6 +38,7 @@ export * from "./css/grid/CSSFitContentFunction";
 export * from "./css/grid/CSSFlex";
 export * from "./css/font/CSSFontFace";
 export * from "./css/core/CSSFunction";
+export * from "./css/grid/CSSGridAreaValue";
 export * from "./css/grid/CSSGridRepeatValue";
 export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
@@ -353,6 +354,7 @@ export type AnyNode =
 	| n.CSSFlex
 	| n.CSSFontFace
 	| n.CSSFunction
+	| n.CSSGridAreaValue
 	| n.CSSGridRepeatValue
 	| n.CSSHash
 	| n.CSSIdentifier

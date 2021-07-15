@@ -1,5 +1,6 @@
 import * as n from "@internal/ast";
 import {CSSGridRepeatValue} from "@internal/ast/css/grid/CSSGridRepeatValue";
+import {CSSNumber, CSSRaw} from "@internal/ast";
 
 export type AnyCSSPattern =
 	| n.CSSIdSelector
@@ -31,6 +32,7 @@ export type AnyCSSValue =
 	| n.CSSFitContentFunction
 	| n.CSSFlex
 	| n.CSSGridRepeatValue
+	| n.CSSGridAreaValue
 	| n.CSSRaw;
 
 export type AnyFunction =
@@ -107,3 +109,13 @@ export type CSSGridRepeatValues = Array<
 	| n.CSSRaw
 	| n.CSSLineName
 >;
+
+export type CSSGridLine = //span 1
+
+	| [CSSRaw, CSSNumber]
+		// span some-area
+	| [CSSRaw, CSSRaw]
+		// some-grid-area , auto
+	| [CSSRaw]
+		// 5 span, 4 some-grid-area
+	| [CSSNumber, CSSRaw];

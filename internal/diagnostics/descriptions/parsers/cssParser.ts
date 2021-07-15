@@ -1,6 +1,7 @@
 import {createDiagnosticsCategory} from "../index";
 import {buildSuggestionAdvice} from "../../helpers";
 import {markup} from "@internal/markup";
+import {DiagnosticLocation} from "@internal/diagnostics";
 
 export const cssParser = createDiagnosticsCategory({
 	INVALID_BLOCK_START: {message: markup`Invalid block start.`},
@@ -291,5 +292,33 @@ export const cssParser = createDiagnosticsCategory({
 				text: markup`Use <emphasis>min-content</emphasis> or <emphasis>max-content</emphasis>.`,
 			},
 		],
+	},
+
+	GRID_TEMPLATE_INCORRECT_AREAS: (
+		areas: number,
+		openLocation: DiagnosticLocation,
+	) => ({
+		message: markup`All template areas must have the same number. The first one had <emphasis>${areas}</emphasis> areas.`,
+		advice: [
+			{
+				type: "frame",
+				location: openLocation,
+			},
+		],
+	}),
+	GRID_AREA_INCORRECT_SPAN: {
+		message: markup`The <emphasis>span</emphasis> attribute must be followed by a number or a grid area previously defined`,
+	},
+
+	GRID_AREA_INCORRECT_DELIMITER: {
+		message: markup`The only delimiter that can be used here is the <emphasis>slash ("/")</emphasis> `,
+	},
+
+	GRID_AREA_UNTERMINATED_GRID_LINE: {
+		message: markup`Incorrect grid line, you must complete the expression`,
+	},
+
+	GRID_AREA_TOO_MANY_GRID_LINES: {
+		message: markup`A grid area can have a maximum of four grid lines, your style has more`,
 	},
 });

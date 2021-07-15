@@ -13,7 +13,7 @@ import {
 } from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
-import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
+import {parseFitContentFunction} from "@internal/css-parser/parser/grid/fit-content";
 
 function parseRepeatValues(parser: CSSParser): CSSGridRepeatValue | undefined {
 	const mainStart = parser.getPosition();

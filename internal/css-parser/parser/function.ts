@@ -4,7 +4,7 @@ import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 import {parseCalcFunction} from "@internal/css-parser/parser/calc";
-import {parseFitContentFunction} from "@internal/css-parser/parser/fit-content";
+import {parseFitContentFunction} from "@internal/css-parser/parser/grid/fit-content";
 import {parseMinOrMaxFunction} from "@internal/css-parser/parser/minOrMax";
 import {parseMinmaxFunction} from "@internal/css-parser/parser/grid/minmax";
 import {parseRepeatFunction} from "@internal/css-parser/parser/grid/repeat";

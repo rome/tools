@@ -1,0 +1,7 @@
+.style {
+	grid-area: span 2 / span another-grid-area / span 2 / span something;
+}
+
+.style {
+	grid-area: auto / auto / auto / auto;
+}
