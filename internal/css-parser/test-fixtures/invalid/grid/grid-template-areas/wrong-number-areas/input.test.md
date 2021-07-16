@@ -25,20 +25,7 @@ CSSRoot {
 				value: [
 					CSSDeclaration {
 						name: "grid-template-areas"
-						value: [
-							CSSString {
-								value: "sad story"
-								loc: SourceLocation invalid/grid/grid-template-areas/wrong-number-areas/input.css 2:22-2:33
-							}
-							CSSString {
-								value: "indeed is"
-								loc: SourceLocation invalid/grid/grid-template-areas/wrong-number-areas/input.css 2:34-2:45
-							}
-							CSSString {
-								value: "incorrect"
-								loc: SourceLocation invalid/grid/grid-template-areas/wrong-number-areas/input.css 2:46-2:57
-							}
-						]
+						value: []
 						important: false
 						loc: SourceLocation invalid/grid/grid-template-areas/wrong-number-areas/input.css 2:1-2:57
 					}
@@ -57,7 +44,7 @@ CSSRoot {
 			description: {
 				advice: [
 					frame {
-						location: SourceLocation invalid/grid/grid-template-areas/wrong-number-areas/input.css 2:22-2:46
+						location: SourceLocation invalid/grid/grid-template-areas/wrong-number-areas/input.css 2:34-2:46
 					}
 				]
 				category: ["parse"]
@@ -96,7 +83,7 @@ CSSRoot {
 
     1 │ .style {
   > 2 │   grid-template-areas: "sad story" "indeed is" "incorrect";
-      │                        ^^^^^^^^^^^^^^^^^^^^^^^^
+      │                                    ^^^^^^^^^^^^
     3 │ }
 
 

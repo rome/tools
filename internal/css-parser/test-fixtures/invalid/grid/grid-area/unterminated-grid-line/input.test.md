@@ -27,7 +27,7 @@ CSSRoot {
 						name: "grid-area"
 						value: []
 						important: false
-						loc: SourceLocation invalid/grid/grid-area/unterminated-grid-line/input.css 2:1-2:22
+						loc: SourceLocation invalid/grid/grid-area/unterminated-grid-line/input.css 2:1-3:1
 					}
 				]
 				startingTokenValue: "{"

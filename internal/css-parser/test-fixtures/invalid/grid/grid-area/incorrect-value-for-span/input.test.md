@@ -25,13 +25,7 @@ CSSRoot {
 				value: [
 					CSSDeclaration {
 						name: "grid-area"
-						value: [
-							CSSDimension {
-								value: 19
-								unit: "px"
-								loc: SourceLocation invalid/grid/grid-area/incorrect-value-for-span/input.css 2:17-2:21
-							}
-						]
+						value: []
 						important: false
 						loc: SourceLocation invalid/grid/grid-area/incorrect-value-for-span/input.css 2:1-2:21
 					}

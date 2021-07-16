@@ -25,12 +25,7 @@ CSSRoot {
 				value: [
 					CSSDeclaration {
 						name: "grid-area"
-						value: [
-							CSSRaw {
-								value: "/"
-								loc: SourceLocation invalid/grid/grid-area/only-span/input.css 2:17-2:18
-							}
-						]
+						value: []
 						important: false
 						loc: SourceLocation invalid/grid/grid-area/only-span/input.css 2:1-2:18
 					}

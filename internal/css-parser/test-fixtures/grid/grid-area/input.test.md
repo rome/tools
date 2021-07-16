@@ -26,52 +26,30 @@ CSSRoot {
 					CSSDeclaration {
 						name: "grid-area"
 						value: [
-							CSSGridAreaValue {
-								value: [
-									[
-										CSSRaw {
-											value: "span"
-											loc: SourceLocation grid/grid-area/input.css 2:12-2:17
-										}
-										CSSNumber {
-											value: 2
-											raw: "2"
-											loc: SourceLocation grid/grid-area/input.css 2:17-2:18
-										}
-									]
-									[
-										CSSRaw {
-											value: "span"
-											loc: SourceLocation grid/grid-area/input.css 2:21-2:26
-										}
-										CSSRaw {
-											value: "another-grid-area"
-											loc: SourceLocation grid/grid-area/input.css 2:26-2:43
-										}
-									]
-									[
-										CSSRaw {
-											value: "span"
-											loc: SourceLocation grid/grid-area/input.css 2:46-2:51
-										}
-										CSSNumber {
-											value: 2
-											raw: "2"
-											loc: SourceLocation grid/grid-area/input.css 2:51-2:52
-										}
-									]
-									[
-										CSSRaw {
-											value: "span"
-											loc: SourceLocation grid/grid-area/input.css 2:55-2:60
-										}
-										CSSRaw {
-											value: "something"
-											loc: SourceLocation grid/grid-area/input.css 2:60-2:69
-										}
-									]
-								]
-								loc: SourceLocation grid/grid-area/input.css 2:12-2:69
+							CSSRaw {
+								value: "span"
+								loc: SourceLocation grid/grid-area/input.css 2:21-2:21
+							}
+							CSSRaw {
+								value: "another-grid-area"
+								loc: SourceLocation grid/grid-area/input.css 2:26-2:43
+							}
+							CSSRaw {
+								value: "span"
+								loc: SourceLocation grid/grid-area/input.css 2:46-2:46
+							}
+							CSSNumber {
+								value: 2
+								raw: "2"
+								loc: SourceLocation grid/grid-area/input.css 2:51-2:52
+							}
+							CSSRaw {
+								value: "span"
+								loc: SourceLocation grid/grid-area/input.css 2:55-2:55
+							}
+							CSSRaw {
+								value: "something"
+								loc: SourceLocation grid/grid-area/input.css 2:60-2:69
 							}
 						]
 						important: false
@@ -100,34 +78,17 @@ CSSRoot {
 					CSSDeclaration {
 						name: "grid-area"
 						value: [
-							CSSGridAreaValue {
-								value: [
-									[
-										CSSRaw {
-											value: "auto"
-											loc: SourceLocation grid/grid-area/input.css 6:12-6:16
-										}
-									]
-									[
-										CSSRaw {
-											value: "auto"
-											loc: SourceLocation grid/grid-area/input.css 6:19-6:23
-										}
-									]
-									[
-										CSSRaw {
-											value: "auto"
-											loc: SourceLocation grid/grid-area/input.css 6:26-6:30
-										}
-									]
-									[
-										CSSRaw {
-											value: "auto"
-											loc: SourceLocation grid/grid-area/input.css 6:33-6:37
-										}
-									]
-								]
-								loc: SourceLocation grid/grid-area/input.css 6:12-6:37
+							CSSRaw {
+								value: "auto"
+								loc: SourceLocation grid/grid-area/input.css 6:19-6:23
+							}
+							CSSRaw {
+								value: "auto"
+								loc: SourceLocation grid/grid-area/input.css 6:26-6:30
+							}
+							CSSRaw {
+								value: "auto"
+								loc: SourceLocation grid/grid-area/input.css 6:33-6:37
 							}
 						]
 						important: false

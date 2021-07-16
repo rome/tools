@@ -306,6 +306,11 @@ export const cssParser = createDiagnosticsCategory({
 			},
 		],
 	}),
+
+	GRID_TEMPLATE_UNSUPPORTED_VALUE: {
+		message: markup`Unsupported value for <emphasis>grid-template-areas</emphasis>. You should provide an identifier or a string`,
+	},
+
 	GRID_AREA_INCORRECT_SPAN: {
 		message: markup`The <emphasis>span</emphasis> attribute must be followed by a number or a grid area previously defined`,
 	},
@@ -318,7 +323,20 @@ export const cssParser = createDiagnosticsCategory({
 		message: markup`Incorrect grid line, you must complete the expression`,
 	},
 
-	GRID_AREA_TOO_MANY_GRID_LINES: {
-		message: markup`A grid area can have a maximum of four grid lines, your style has more`,
-	},
+	GRID_AREA_TOO_MANY_GRID_LINES: (num: number) => ({
+		message: markup`A grid area can have a maximum of ${num} grid lines, your style has more`,
+	}),
+
+	GRID_INVALID_GLOBAL_VALUE: (validValues: string[]) => ({
+		message: markup`Incorrect identifier provided.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Accepted values are: ${validValues.map((v) =>
+					markup`<emphasis>${v}</emphasis>`
+				).join(", ")}`,
+			},
+		],
+	}),
 });

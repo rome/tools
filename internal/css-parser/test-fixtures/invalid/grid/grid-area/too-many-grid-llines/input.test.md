@@ -27,7 +27,7 @@ CSSRoot {
 						name: "grid-area"
 						value: []
 						important: false
-						loc: SourceLocation invalid/grid/grid-area/too-many-grid-llines/input.css 2:1-2:54
+						loc: SourceLocation invalid/grid/grid-area/too-many-grid-llines/input.css 2:1-3:1
 					}
 				]
 				startingTokenValue: "{"
@@ -45,7 +45,7 @@ CSSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "A grid area can have a maximum of four grid lines, your style has more"}
+				message: [RAW_MARKUP {value: "A grid area can have a maximum of "}, 4, RAW_MARKUP {value: " grid lines, your style has more"}]
 			}
 			location: {
 				language: "css"
@@ -66,7 +66,7 @@ CSSRoot {
 
  invalid/grid/grid-area/too-many-grid-llines/input.css:2:12 parse(css) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ A grid area can have a maximum of four grid lines, your style has more
+  ✖ A grid area can have a maximum of 4 grid lines, your style has more
 
     1 │ .style {
   > 2 │   grid-area: span 2 / span 2 / span 2 / span 2 / span 2;

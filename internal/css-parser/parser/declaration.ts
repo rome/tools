@@ -6,7 +6,12 @@ import {
 	CSSCustomProperty,
 	CSSDeclaration,
 } from "@internal/ast";
-import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
+import {
+	matchToken,
+	nextToken,
+	readToken,
+	skipWhitespaces,
+} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {
 	getBlockEndTokenType,
@@ -16,6 +21,8 @@ import {
 } from "@internal/css-parser/utils";
 import {parseAtRule} from "@internal/css-parser/parser/rules";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
+import {parseGridLines} from "@internal/css-parser/parser/grid/parseGridLines";
+import {parseTemplateAreas} from "@internal/css-parser/parser/grid/parseTemplateAreas";
 
 interface ParseDeclarations {
 	parser: CSSParser;
@@ -121,9 +128,7 @@ export function parseDeclaration(
 		let important = false;
 		let value: Array<AnyCSSValue | undefined> = [];
 
-		while (matchToken(parser, "Whitespace")) {
-			readToken(parser, "Whitespace");
-		}
+		skipWhitespaces(parser);
 		if (!matchToken(parser, "Colon")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.INVALID_DECLARATION,
@@ -132,12 +137,67 @@ export function parseDeclaration(
 			return undefined;
 		}
 		nextToken(parser);
-		while (matchToken(parser, "Whitespace")) {
-			readToken(parser, "Whitespace");
+		skipWhitespaces(parser);
+		if (name && typeof name === "string") {
+			/**
+			 * If there's an error, we break from the switch and we continue the parsing.
+			 *
+			 * The error is carried over by the parser so the parsing won't break in any case.
+			 */
+			switch (name) {
+				case "grid-column-end":
+				case "grid-column-start":
+				case "grid-row-end":
+				case "grid-row-start": {
+					const gridLine = parseGridLines(parser, 1);
+					skipWhitespaces(parser);
+					if (gridLine) {
+						if (!matchToken(parser, "Semi")) {
+							nextToken(parser);
+							parser.unexpectedDiagnostic({
+								description: descriptions.CSS_PARSER.GRID_AREA_UNTERMINATED_GRID_LINE,
+								token: parser.getToken(),
+							});
+							// the previous function doesn't
+							return undefined;
+						}
+						value.push(...gridLine);
+					}
+					// there's been an error, so we exist from the function
+					break;
+				}
+				case "grid-area":
+				case "grid-column":
+				case "grid-row": {
+					const gridArea = parseGridLines(parser);
+					if (gridArea) {
+						value.push(...gridArea);
+					}
+					// there's been an error, so we exist from the function
+					break;
+				}
+
+				case "grid-template-areas": {
+					const templateValue = parseTemplateAreas(parser);
+					if (templateValue) {
+						value.push(templateValue);
+					}
+					// there's been an error, so we exist from the function
+					break;
+				}
+				default:
+					break;
+			}
 		}
 		while (!matchEndOfDeclaration(parser, endingTokenType)) {
 			const parsedValue = parseComponentValue(parser, name);
-			parsedValue && value.push(parsedValue);
+			if (parsedValue) {
+				if (Array.isArray(parsedValue)) {
+					value.push(...parsedValue);
+				} else {
+					value.push(parsedValue);
+				}
+			}
 		}
 
 		// matching "important" inside a declaration

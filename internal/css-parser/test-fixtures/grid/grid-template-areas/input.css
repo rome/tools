@@ -1,3 +1,4 @@
 .style {
 	grid-template-areas: "sad story" "indeed is" "correct now";
+	grid-template-areas: inherit;
 }

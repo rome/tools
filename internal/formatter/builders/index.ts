@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:53420353f87b95ceb9fb371c9f03228256a6f835,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:34d7945e97d32818ecc73eea5e11fe65ba0a1fcc,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -65,10 +65,10 @@ import CSSFontFace from "./css/font/CSSFontFace";
 builders.set("CSSFontFace", CSSFontFace);
 import CSSFunction from "./css/core/CSSFunction";
 builders.set("CSSFunction", CSSFunction);
-import CSSGridAreaValue from "./css/grid/CSSGridAreaValue";
-builders.set("CSSGridAreaValue", CSSGridAreaValue);
 import CSSGridRepeatValue from "./css/grid/CSSGridRepeatValue";
 builders.set("CSSGridRepeatValue", CSSGridRepeatValue);
+import CSSGridTemplateAreaValue from "./css/grid/CSSGridTemplateAreaValue";
+builders.set("CSSGridTemplateAreaValue", CSSGridTemplateAreaValue);
 import CSSHash from "./css/core/CSSHash";
 builders.set("CSSHash", CSSHash);
 import CSSIdentifier from "./css/core/CSSIdentifier";

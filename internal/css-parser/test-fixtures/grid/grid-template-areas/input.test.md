@@ -26,34 +26,55 @@ CSSRoot {
 					CSSDeclaration {
 						name: "grid-template-areas"
 						value: [
-							CSSString {
-								value: "sad story"
-								loc: SourceLocation grid/grid-template-areas/input.css 2:22-2:33
-							}
-							CSSString {
-								value: "indeed is"
-								loc: SourceLocation grid/grid-template-areas/input.css 2:34-2:45
-							}
-							CSSString {
-								value: "correct now"
-								loc: SourceLocation grid/grid-template-areas/input.css 2:46-2:59
+							CSSGridTemplateAreaValue {
+								value: [
+									CSSString {
+										value: "sad story"
+										loc: SourceLocation grid/grid-template-areas/input.css 2:22-2:33
+									}
+									CSSString {
+										value: "indeed is"
+										loc: SourceLocation grid/grid-template-areas/input.css 2:34-2:45
+									}
+									CSSString {
+										value: "correct now"
+										loc: SourceLocation grid/grid-template-areas/input.css 2:46-2:59
+									}
+								]
+								loc: SourceLocation grid/grid-template-areas/input.css 2:22-2:59
 							}
 						]
 						important: false
 						loc: SourceLocation grid/grid-template-areas/input.css 2:1-2:59
 					}
+					CSSDeclaration {
+						name: "grid-template-areas"
+						value: [
+							CSSGridTemplateAreaValue {
+								value: [
+									CSSRaw {
+										value: "inherit"
+										loc: SourceLocation grid/grid-template-areas/input.css 3:22-3:29
+									}
+								]
+								loc: SourceLocation grid/grid-template-areas/input.css 3:22-3:29
+							}
+						]
+						important: false
+						loc: SourceLocation grid/grid-template-areas/input.css 3:1-3:29
+					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation grid/grid-template-areas/input.css 1:7-3:1
+				loc: SourceLocation grid/grid-template-areas/input.css 1:7-4:1
 			}
-			loc: SourceLocation grid/grid-template-areas/input.css 1:0-3:1
+			loc: SourceLocation grid/grid-template-areas/input.css 1:0-4:1
 		}
 	]
 	comments: []
 	corrupt: false
 	diagnostics: []
 	path: UIDPath<grid/grid-template-areas/input.css>
-	loc: SourceLocation grid/grid-template-areas/input.css 1:0-3:1
+	loc: SourceLocation grid/grid-template-areas/input.css 1:0-4:1
 }
 ```
 
