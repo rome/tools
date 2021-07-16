@@ -10,8 +10,8 @@
 [
 	"edge:91"
 	"edge:90"
+	"firefox:92"
 	"firefox:91"
-	"firefox:90"
 	"chrome:94"
 	"chrome:93"
 	"safari:15"

@@ -375,8 +375,11 @@ async function updateData() {
 	};
 
 	await writeFile(
-		browsersDbFolder.append("data.json"),
-		JSON.stringify(mapToObject(data)),
+		browsersDbFolder.append("data.ts"),
+		`export default JSON.parse("${JSON.stringify(mapToObject(data)).replace(
+			/"/g,
+			'\\"',
+		)}");`,
 	);
 
 	progress.end();
@@ -549,8 +552,11 @@ async function updateRegions() {
 	}
 
 	await writeFile(
-		browsersDbFolder.append("regions.json"),
-		JSON.stringify(mapToObject(regionsUsage)),
+		browsersDbFolder.append("regions.ts"),
+		`export default JSON.parse("${JSON.stringify(mapToObject(regionsUsage)).replace(
+			/"/g,
+			'\\"',
+		)}");`,
 	);
 
 	progress.end();
