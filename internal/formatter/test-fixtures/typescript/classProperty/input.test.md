@@ -15,6 +15,8 @@
 ```ts
 class Foo {
 	private foo?: string;
+	private declare d: number
+	private declare readonly dr: number
 }
 
 ```
@@ -24,6 +26,8 @@ class Foo {
 ```ts
 class Foo {
 	private foo?: string;
+	private declare d: number;
+	private declare readonly dr: number;
 }
 
 ```

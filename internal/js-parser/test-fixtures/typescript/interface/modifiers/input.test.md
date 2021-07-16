@@ -17,6 +17,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: [
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: true
 						key: JSStaticPropertyKey {

@@ -27,6 +27,7 @@ JSRoot {
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
+							declare: false
 							optional: false
 							readonly: false
 							static: false
@@ -46,6 +47,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "r"
 									meta: JSPatternMeta {
+										declare: false
 										readonly: true
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 3:8-3:18
 									}
@@ -55,6 +57,7 @@ JSRoot {
 									name: "pu"
 									meta: JSPatternMeta {
 										accessibility: "public"
+										declare: false
 										readonly: false
 										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: SourceLocation typescript/class/parameter-properties/input.ts 4:19-4:25
@@ -67,6 +70,7 @@ JSRoot {
 									name: "po"
 									meta: JSPatternMeta {
 										accessibility: "protected"
+										declare: false
 										readonly: false
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 5:8-5:21
 									}
@@ -76,6 +80,7 @@ JSRoot {
 									name: "pi"
 									meta: JSPatternMeta {
 										accessibility: "private"
+										declare: false
 										readonly: false
 										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: SourceLocation typescript/class/parameter-properties/input.ts 6:21-6:27
@@ -88,6 +93,7 @@ JSRoot {
 									name: "pur"
 									meta: JSPatternMeta {
 										accessibility: "public"
+										declare: false
 										readonly: true
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 7:8-7:27
 									}
@@ -96,6 +102,7 @@ JSRoot {
 								JSBindingAssignmentPattern {
 									leadingComments: ["0"]
 									meta: JSPatternMeta {
+										declare: false
 										readonly: true
 										loc: SourceLocation typescript/class/parameter-properties/input.ts 9:8-9:22
 									}
@@ -115,6 +122,7 @@ JSRoot {
 								JSBindingAssignmentPattern {
 									meta: JSPatternMeta {
 										accessibility: "public"
+										declare: false
 										readonly: false
 										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: SourceLocation typescript/class/parameter-properties/input.ts 10:19-10:25

@@ -27,6 +27,7 @@ JSRoot {
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
+							declare: false
 							optional: false
 							readonly: false
 							static: false
@@ -131,6 +132,7 @@ JSRoot {
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
+							declare: false
 							optional: false
 							readonly: false
 							static: false

@@ -50,6 +50,7 @@ JSRoot {
 								typeAnnotation: TSObjectTypeAnnotation {
 									members: [
 										TSPropertySignature {
+											declare: false
 											optional: false
 											readonly: false
 											key: JSStaticPropertyKey {
@@ -65,6 +66,7 @@ JSRoot {
 											loc: SourceLocation typescript/declare/destructure/input.ts 1:26-1:36
 										}
 										TSPropertySignature {
+											declare: false
 											optional: false
 											readonly: false
 											key: JSStaticPropertyKey {
