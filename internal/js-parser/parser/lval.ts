@@ -901,9 +901,11 @@ export function parseBindingListItem(
 
 	let accessibility: undefined | ConstTSAccessibility;
 	let readonly = false;
+	let declare = false;
 	if (allowTSModifiers) {
 		accessibility = parseTSAccessModifier(parser);
 		readonly = hasTSModifier(parser, ["readonly"]);
+		declare = hasTSModifier(parser, ["declare"]);
 	}
 
 	const left = parseBindingListItemTypes(
@@ -913,12 +915,12 @@ export function parseBindingListItem(
 	);
 	const elt = parseMaybeDefault(parser, start, left);
 
-	if (accessibility !== undefined || readonly) {
+	if (accessibility !== undefined || readonly || declare) {
 		if (!isSyntaxEnabled(parser, "ts")) {
 			unexpectedDiagnostic(
 				parser,
 				{
-					description: descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY,
+					description: descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY_OR_DECLARE,
 				},
 			);
 		}
@@ -945,6 +947,7 @@ export function parseBindingListItem(
 					{
 						type: "JSPatternMeta",
 						accessibility,
+						declare,
 						readonly,
 						typeAnnotation: left.meta?.typeAnnotation,
 					},

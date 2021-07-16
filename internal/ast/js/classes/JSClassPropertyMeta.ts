@@ -13,6 +13,7 @@ export interface JSClassPropertyMeta extends NodeBaseWithComments {
 	readonly static?: boolean;
 	readonly accessibility?: ConstTSAccessibility;
 	readonly optional?: boolean;
+	readonly declare?: boolean;
 	readonly readonly?: boolean;
 	readonly abstract?: boolean;
 }
