@@ -124,11 +124,11 @@ See [Project Configuration](#project-configuration) for configuration options.
 
 ### Diagnostics
 
-A diagnostic that belong to a `lint` category is built in three parts divided by a slash (/):
+A diagnostic that belong to a `lint` (e.g. `lint/js/noUnusedVariables`) category is built in three parts divided by a slash (/):
 
-- `lint` the category of the diagnostic
-- a **lint category** which tells which kind of rule is throwing the error
-- the **name** of the category
+- `lint`, the category of the diagnostic
+- `js`, the **lint category** which tells which kind of rule is throwing the error
+- `noUnusedVariables`, the **name** of the rule
 
 #### Suppressions
 
