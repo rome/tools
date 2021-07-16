@@ -10,13 +10,18 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSSequenceExpression {
-				expressions: [
-					JSAssignmentExpression {
-						operator: "="
-						left: JSAssignmentObjectPattern {
+			expression: JSArrowFunctionExpression {
+				body: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:23-1:24
+				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					params: [
+						JSBindingObjectPattern {
 							properties: [
-								JSAssignmentObjectPatternProperty {
+								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
@@ -24,13 +29,13 @@ JSRoot {
 										}
 										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:2-1:3
 									}
-									value: JSAssignmentIdentifier {
+									value: JSBindingIdentifier {
 										name: "a"
 										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:2-1:3 (a)
 									}
 									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:2-1:3
 								}
-								JSAssignmentObjectPatternProperty {
+								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "b"
@@ -38,87 +43,69 @@ JSRoot {
 										}
 										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:4-1:5
 									}
-									value: JSAssignmentIdentifier {
-										name: "b"
-										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:4-1:5 (b)
+									value: JSBindingAssignmentPattern {
+										left: JSBindingIdentifier {
+											name: "b"
+											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:4-1:5 (b)
+										}
+										right: JSReferenceIdentifier {
+											name: "b"
+											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:6-1:7 (b)
+										}
+										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:4-1:7
 									}
-									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:4-1:5
+									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:4-1:7
+								}
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
+											name: "a"
+											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:8-1:9 (a)
+										}
+										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:8-1:9
+									}
+									value: JSBindingIdentifier {
+										name: "c"
+										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:10-1:11 (c)
+									}
+									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:8-1:11
+								}
+								JSBindingObjectPatternProperty {
+									key: JSComputedPropertyKey {
+										value: JSReferenceIdentifier {
+											name: "a"
+											loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:13-1:14 (a)
+										}
+										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:12-1:15
+									}
+									value: JSBindingArrayPattern {
+										elements: [
+											JSBindingIdentifier {
+												name: "d"
+												meta: JSPatternMeta {
+													loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:17-1:18
+												}
+												loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:17-1:18 (d)
+											}
+										]
+										loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:16-1:19
+									}
+									loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:12-1:19
 								}
 							]
-							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:1-1:5
+							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:1-1:20
 						}
-						right: JSReferenceIdentifier {
-							name: "b"
-							loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:6-1:7 (b)
-						}
-						loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:1-1:7
-					}
-					JSReferenceIdentifier {
-						name: "a"
-						loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:8-1:9 (a)
-					}
-					JSArrayExpression {
-						elements: [
-							JSReferenceIdentifier {
-								name: "a"
-								loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:13-1:14 (a)
-							}
-						]
-						loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:12-1:15
-					}
-				]
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:0-1:19
+					]
+					loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:0-1:23
+				}
+				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:0-1:24
 			}
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:0-1:19
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:19-1:20
-			}
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:19-1:20
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:20-1:21
-			}
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:20-1:21
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:21-1:23
-			}
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:21-1:23
-		}
-		JSExpressionStatement {
-			expression: JSNumericLiteral {
-				value: 0
-				loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:23-1:24
-			}
-			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:23-1:25
+			loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:0-1:25
 		}
 	]
 	comments: []
-	corrupt: true
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {
-				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
-				category: ["parse"]
-				categoryValue: "js"
-				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
-			}
-			location: {
-				language: "js"
-				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-01/input.js>
-				end: Position 1:6
-				start: Position 1:5
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
 	sourceType: "script"
@@ -131,15 +118,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- esprima/es2015-arrow-function/object-binding-pattern-01/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected character =
-
-    ({a,b=b,a:c,[a]:[d]})=>0;
-         ^
-
-  ℹ Expected character ,
-
 
 ```

@@ -10,83 +10,52 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSAssignmentExpression {
-				operator: "="
-				left: JSAssignmentObjectPattern {
-					properties: [
-						JSAssignmentObjectPatternProperty {
-							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "x"
-									loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:3 (x)
+			expression: JSArrowFunctionExpression {
+				body: JSReferenceIdentifier {
+					name: "x"
+					loc: SourceLocation es2015/uncategorised/308/input.js 1:13-1:14 (x)
+				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					params: [
+						JSBindingObjectPattern {
+							properties: [
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
+											name: "x"
+											loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:3 (x)
+										}
+										loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:3
+									}
+									value: JSBindingAssignmentPattern {
+										left: JSBindingIdentifier {
+											name: "x"
+											loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:3 (x)
+										}
+										right: JSNumericLiteral {
+											value: 0
+											loc: SourceLocation es2015/uncategorised/308/input.js 1:6-1:7
+										}
+										loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:7
+									}
+									loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:7
 								}
-								loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:3
-							}
-							value: JSAssignmentIdentifier {
-								name: "x"
-								loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:3 (x)
-							}
-							loc: SourceLocation es2015/uncategorised/308/input.js 1:2-1:3
+							]
+							loc: SourceLocation es2015/uncategorised/308/input.js 1:1-1:8
 						}
 					]
-					loc: SourceLocation es2015/uncategorised/308/input.js 1:1-1:3
+					loc: SourceLocation es2015/uncategorised/308/input.js 1:0-1:12
 				}
-				right: JSNumericLiteral {
-					value: 0
-					loc: SourceLocation es2015/uncategorised/308/input.js 1:6-1:7
-				}
-				loc: SourceLocation es2015/uncategorised/308/input.js 1:1-1:7
+				loc: SourceLocation es2015/uncategorised/308/input.js 1:0-1:14
 			}
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:0-1:7
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation es2015/uncategorised/308/input.js 1:7-1:8
-			}
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:7-1:8
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation es2015/uncategorised/308/input.js 1:8-1:9
-			}
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:8-1:9
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation es2015/uncategorised/308/input.js 1:10-1:12
-			}
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:10-1:12
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "x"
-				loc: SourceLocation es2015/uncategorised/308/input.js 1:13-1:14 (x)
-			}
-			loc: SourceLocation es2015/uncategorised/308/input.js 1:13-1:14
+			loc: SourceLocation es2015/uncategorised/308/input.js 1:0-1:14
 		}
 	]
 	comments: []
-	corrupt: true
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {
-				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
-				category: ["parse"]
-				categoryValue: "js"
-				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
-			}
-			location: {
-				language: "js"
-				path: UIDPath<es2015/uncategorised/308/input.js>
-				end: Position 1:5
-				start: Position 1:4
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
 	sourceType: "script"
@@ -99,15 +68,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- es2015/uncategorised/308/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected character =
-
-    ({x = 0}) => x
-        ^
-
-  ℹ Expected character ,
-
 
 ```
