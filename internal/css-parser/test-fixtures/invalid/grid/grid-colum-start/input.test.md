@@ -27,7 +27,7 @@ CSSRoot {
 						name: "grid-row-end"
 						value: []
 						important: false
-						loc: SourceLocation invalid/grid/grid-colum-start/input.css 2:1-3:1
+						loc: SourceLocation invalid/grid/grid-colum-start/input.css 2:1-3:0
 					}
 				]
 				startingTokenValue: "{"

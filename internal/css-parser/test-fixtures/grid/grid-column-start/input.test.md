@@ -25,7 +25,17 @@ CSSRoot {
 				value: [
 					CSSDeclaration {
 						name: "grid-column-start"
-						value: []
+						value: [
+							CSSRaw {
+								value: "span"
+								loc: SourceLocation grid/grid-column-start/input.css 2:20-2:20
+							}
+							CSSNumber {
+								value: 1
+								raw: "1"
+								loc: SourceLocation grid/grid-column-start/input.css 2:25-2:26
+							}
+						]
 						important: false
 						loc: SourceLocation grid/grid-column-start/input.css 2:1-2:26
 					}

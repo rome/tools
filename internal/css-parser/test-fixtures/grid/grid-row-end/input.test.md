@@ -25,7 +25,17 @@ CSSRoot {
 				value: [
 					CSSDeclaration {
 						name: "grid-row-end"
-						value: []
+						value: [
+							CSSRaw {
+								value: "span"
+								loc: SourceLocation grid/grid-row-end/input.css 2:15-2:15
+							}
+							CSSNumber {
+								value: 1
+								raw: "1"
+								loc: SourceLocation grid/grid-row-end/input.css 2:20-2:21
+							}
+						]
 						important: false
 						loc: SourceLocation grid/grid-row-end/input.css 2:1-2:21
 					}

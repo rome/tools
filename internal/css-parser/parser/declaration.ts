@@ -190,7 +190,7 @@ export function parseDeclaration(
 			}
 		}
 		while (!matchEndOfDeclaration(parser, endingTokenType)) {
-			const parsedValue = parseComponentValue(parser, name);
+			const parsedValue = parseComponentValue(parser);
 			if (parsedValue) {
 				if (Array.isArray(parsedValue)) {
 					value.push(...parsedValue);

@@ -111,6 +111,7 @@ export function parseGridLines(
 	if (!lines) {
 		return undefined;
 	}
+	value.push(...lines);
 
 	let currentGridLineIndex = 1;
 	while (!matchToken(parser, "EOF")) {
@@ -128,6 +129,7 @@ export function parseGridLines(
 		}
 		skipWhitespaces(parser);
 		const token = parser.getToken();
+		const pos = parser.getPosition();
 		if (token.type === "Semi") {
 			break;
 		}
@@ -142,6 +144,15 @@ export function parseGridLines(
 				break;
 			}
 			nextToken(parser);
+			value.push(
+				parser.finishNode(
+					pos,
+					{
+						type: "CSSRaw",
+						value: token.value,
+					},
+				),
+			);
 			skipWhitespaces(parser);
 			if (!(matchToken(parser, "Ident") || matchToken(parser, "Number"))) {
 				parser.unexpectedDiagnostic({
@@ -166,9 +177,9 @@ export function parseGridLines(
 	// dirty trick to finish the parsing early because there's an error
 	// The reason why we use this gotcha is because this function is used inside
 	if (hasError) {
-		while (!(matchToken(parser, "Semi") || matchToken(parser, "EOF"))) {
-			nextToken(parser);
-		}
+		// while (!(matchToken(parser, "Semi") || matchToken(parser, "EOF"))) {
+		// 	nextToken(parser);
+		// }
 		return undefined;
 	}
 

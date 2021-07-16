@@ -1,4 +1,5 @@
 .style {
 	grid-area: span    2     /     span another-grid-area
 	/ span 2 / span something    ;
+	grid-column-end: span    4;
 }

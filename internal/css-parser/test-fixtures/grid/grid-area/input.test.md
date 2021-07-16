@@ -28,11 +28,28 @@ CSSRoot {
 						value: [
 							CSSRaw {
 								value: "span"
+								loc: SourceLocation grid/grid-area/input.css 2:12-2:12
+							}
+							CSSNumber {
+								value: 2
+								raw: "2"
+								loc: SourceLocation grid/grid-area/input.css 2:17-2:18
+							}
+							CSSRaw {
+								value: "/"
+								loc: SourceLocation grid/grid-area/input.css 2:19-2:20
+							}
+							CSSRaw {
+								value: "span"
 								loc: SourceLocation grid/grid-area/input.css 2:21-2:21
 							}
 							CSSRaw {
 								value: "another-grid-area"
 								loc: SourceLocation grid/grid-area/input.css 2:26-2:43
+							}
+							CSSRaw {
+								value: "/"
+								loc: SourceLocation grid/grid-area/input.css 2:44-2:45
 							}
 							CSSRaw {
 								value: "span"
@@ -42,6 +59,10 @@ CSSRoot {
 								value: 2
 								raw: "2"
 								loc: SourceLocation grid/grid-area/input.css 2:51-2:52
+							}
+							CSSRaw {
+								value: "/"
+								loc: SourceLocation grid/grid-area/input.css 2:53-2:54
 							}
 							CSSRaw {
 								value: "span"
@@ -80,11 +101,27 @@ CSSRoot {
 						value: [
 							CSSRaw {
 								value: "auto"
+								loc: SourceLocation grid/grid-area/input.css 6:12-6:16
+							}
+							CSSRaw {
+								value: "/"
+								loc: SourceLocation grid/grid-area/input.css 6:17-6:18
+							}
+							CSSRaw {
+								value: "auto"
 								loc: SourceLocation grid/grid-area/input.css 6:19-6:23
+							}
+							CSSRaw {
+								value: "/"
+								loc: SourceLocation grid/grid-area/input.css 6:24-6:25
 							}
 							CSSRaw {
 								value: "auto"
 								loc: SourceLocation grid/grid-area/input.css 6:26-6:30
+							}
+							CSSRaw {
+								value: "/"
+								loc: SourceLocation grid/grid-area/input.css 6:31-6:32
 							}
 							CSSRaw {
 								value: "auto"

@@ -27,7 +27,7 @@ CSSRoot {
 						name: "grid-area"
 						value: []
 						important: false
-						loc: SourceLocation invalid/grid/grid-area/too-many-grid-llines/input.css 2:1-3:1
+						loc: SourceLocation invalid/grid/grid-area/too-many-grid-llines/input.css 2:1-3:0
 					}
 				]
 				startingTokenValue: "{"
