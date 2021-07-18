@@ -121,6 +121,8 @@ serverCommands.set("config disable", config.disable);
 serverCommands.set("config enable", config.enable);
 serverCommands.set("config push", config.push);
 serverCommands.set("config set", config.set);
+serverCommands.set("config pop", config.pop);
+serverCommands.set("config remove", config.remove);
 serverCommands.set("config set-directory", config.setDirectory);
 serverCommands.set("config migrate", config.migrate);
 serverCommands.set("format", format);
