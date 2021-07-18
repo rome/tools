@@ -12,6 +12,7 @@ import status from "./commands/status";
 import lsp from "./commands/lsp";
 import init from "./commands/init";
 import autoConfig from "./commands/autoConfig";
+import * as config from "./commands/config";
 
 //
 import {UnknownObject} from "@internal/typescript-helpers";
@@ -40,3 +41,5 @@ localCommands.set("status", status);
 localCommands.set("lsp", lsp);
 localCommands.set("init", init);
 localCommands.set("auto-config", autoConfig);
+localCommands.set("config remove", config.remove);
+localCommands.set("config pop", config.pop);

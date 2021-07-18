@@ -403,6 +403,7 @@ export const remove = createServerCommand<Flags>({
 	description: markup`modify a project config - remove ${"<key>"}`,
 	usage: "<key>",
 	examples: [],
+	hidden: true,
 	defineFlags,
 	async callback(req, flags) {
 		req.expectArgumentLength(1);
@@ -415,6 +416,7 @@ export const pop = createServerCommand<Flags>({
 	description: markup`modify a project config - remove ${"<values>"} from ${"<key>"}`,
 	usage: "<key> <...values>",
 	examples: [],
+	hidden: true,
 	defineFlags,
 	async callback(req, flags) {
 		req.expectArgumentLength(2, Infinity);
