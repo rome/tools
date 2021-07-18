@@ -53,13 +53,21 @@ Set the `key` to `false`.
 
 Set the `key` to a string `value`.
 
+### `rome config remove <key>`
+
+Remove `key` from configuration.
+
 #### `rome config set-directory <key> <value>`
 
 Set the `key` to the string `value`. If `value` is an absolute path then it will be made relative to the config path.
 
 #### `rome config push <key> <value>`
 
-Push the string `value` to an array at `key`. If `key` doesn't exist then it will be created.
+Push the string `value` to an array at `key`. If `key` doesn't exist then it will be created. You can pass multiple values to push separated by space.
+
+#### `rome config pop <key> <value>`
+
+Pop the string `value` from an array at `key`. If the `key` doesn't exist then it will be created. You pass multiple values to remove separated by space. 
 
 #### `rome config location`
 
