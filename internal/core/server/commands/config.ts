@@ -90,17 +90,19 @@ async function runCommand(
 			const lastKey = keyParts[keyParts.length - 1];
 			prevKeyConsumer.delete(lastKey);
 		} else if (action === "pop") {
-			const existingValues = Array.from(
-				keyConsumer.required([]).asIterable(),
-				(c) => c.asUnknown(),
-			);
-			const valuesToRemove = Array.isArray(value) ? value : [value];
+			if (keyConsumer.exists()) {
+				const existingValues = Array.from(
+					keyConsumer.asIterable(),
+					(c) => c.asUnknown(),
+				);
+				const valuesToRemove = Array.isArray(value) ? value : [value];
 
-			keyConsumer.setValue(
-				existingValues.filter((item) =>
-					!valuesToRemove.includes(item as string | boolean)
-				),
-			);
+				keyConsumer.setValue(
+					existingValues.filter((item) =>
+						!valuesToRemove.includes(item as string | boolean)
+					),
+				);
+			}
 		} else {
 			const currentValue = keyConsumer.asUnknown();
 			if (typeof currentValue === "number") {

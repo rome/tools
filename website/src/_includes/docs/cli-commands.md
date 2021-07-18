@@ -63,7 +63,7 @@ Set the `key` to the string `value`. If `value` is an absolute path then it will
 
 #### `rome config push <key> <value>`
 
-Push the string `value` to an array at `key`. If `key` doesn't exist then it will be created. You can pass multiple values to push separated by space.
+Push the string `value` to an array at `key`. You can pass multiple values to push separated by space.
 
 #### `rome config pop <key> <value>`
 
