@@ -1,10 +1,10 @@
 # The entire project is managed by the team
 
-* @rome/core-contributors
+* @rome/staff
 
 # The next sections address specific people that help to maintain particular packages inside the project
 
-* @sebmck
+* @sebmck @ematipico
 
 /internal/browser-features/* @jer3m01
 /internal/browser-db/* @jer3m01
