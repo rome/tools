@@ -12,47 +12,17 @@ JSRoot {
 		JSExpressionStatement {
 			expression: JSAssignmentExpression {
 				operator: "="
-				left: JSAssignmentObjectPattern {
-					properties: [
-						JSAssignmentObjectPatternProperty {
-							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "x"
-									loc: SourceLocation es2015/uncategorised/307/input.js 1:2-1:3 (x)
-								}
-								loc: SourceLocation es2015/uncategorised/307/input.js 1:2-1:3
-							}
-							value: JSAssignmentIdentifier {
-								name: "x"
-								loc: SourceLocation es2015/uncategorised/307/input.js 1:2-1:3 (x)
-							}
-							loc: SourceLocation es2015/uncategorised/307/input.js 1:2-1:3
-						}
-					]
-					loc: SourceLocation es2015/uncategorised/307/input.js 1:1-1:3
-				}
-				right: JSNumericLiteral {
-					value: 0
-					loc: SourceLocation es2015/uncategorised/307/input.js 1:6-1:7
-				}
-				loc: SourceLocation es2015/uncategorised/307/input.js 1:1-1:7
-			}
-			loc: SourceLocation es2015/uncategorised/307/input.js 1:0-1:7
-		}
-		JSExpressionStatement {
-			expression: JSAssignmentExpression {
-				operator: "="
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: SourceLocation es2015/uncategorised/307/input.js 1:7-1:8
+					loc: SourceLocation es2015/uncategorised/307/input.js 1:1-1:9
 				}
 				right: JSReferenceIdentifier {
 					name: "obj"
 					loc: SourceLocation es2015/uncategorised/307/input.js 1:11-1:14 (obj)
 				}
-				loc: SourceLocation es2015/uncategorised/307/input.js 1:7-1:14
+				loc: SourceLocation es2015/uncategorised/307/input.js 1:0-1:14
 			}
-			loc: SourceLocation es2015/uncategorised/307/input.js 1:7-1:14
+			loc: SourceLocation es2015/uncategorised/307/input.js 1:0-1:14
 		}
 		JSExpressionStatement {
 			expression: JSReferenceIdentifier {
@@ -76,8 +46,8 @@ JSRoot {
 			location: {
 				language: "js"
 				path: UIDPath<es2015/uncategorised/307/input.js>
-				end: Position 1:5
-				start: Position 1:4
+				end: Position 1:10
+				start: Position 1:9
 			}
 		}
 	]
@@ -94,12 +64,12 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/307/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/307/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected character =
 
     ({x = 0} = obj)
-        ^
+             ^
 
   ℹ Expected character ,
 

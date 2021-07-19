@@ -18,53 +18,16 @@ JSRoot {
 							name: "foo"
 							loc: SourceLocation es2017/async-functions/36/input.js 1:6-1:9 (foo)
 						}
-						init: JSAssignmentExpression {
-							operator: "="
-							left: JSAssignmentObjectPattern {
-								properties: [
-									JSAssignmentObjectPatternProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "async"
-												loc: SourceLocation es2017/async-functions/36/input.js 1:15-1:20 (async)
-											}
-											loc: SourceLocation es2017/async-functions/36/input.js 1:15-1:20 (async)
-										}
-										value: JSAssignmentIdentifier {
-											name: "async"
-											loc: SourceLocation es2017/async-functions/36/input.js 1:15-1:20 (async)
-										}
-										loc: SourceLocation es2017/async-functions/36/input.js 1:15-1:20
-									}
-								]
-								loc: SourceLocation es2017/async-functions/36/input.js 1:13-1:20
-							}
-							right: JSBooleanLiteral {
-								value: true
-								loc: SourceLocation es2017/async-functions/36/input.js 1:23-1:27
-							}
-							loc: SourceLocation es2017/async-functions/36/input.js 1:13-1:27
+						init: JSReferenceIdentifier {
+							name: "INVALID_PLACEHOLDER"
+							loc: SourceLocation es2017/async-functions/36/input.js 1:13-1:29
 						}
-						loc: SourceLocation es2017/async-functions/36/input.js 1:6-1:27
+						loc: SourceLocation es2017/async-functions/36/input.js 1:6-1:30
 					}
 				]
-				loc: SourceLocation es2017/async-functions/36/input.js 1:0-1:27
+				loc: SourceLocation es2017/async-functions/36/input.js 1:0-1:31
 			}
-			loc: SourceLocation es2017/async-functions/36/input.js 1:0-1:27
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation es2017/async-functions/36/input.js 1:28-1:29
-			}
-			loc: SourceLocation es2017/async-functions/36/input.js 1:28-1:29
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation es2017/async-functions/36/input.js 1:29-1:30
-			}
-			loc: SourceLocation es2017/async-functions/36/input.js 1:29-1:31
+			loc: SourceLocation es2017/async-functions/36/input.js 1:0-1:31
 		}
 	]
 	comments: []
@@ -73,16 +36,16 @@ JSRoot {
 		{
 			origins: [{entity: "ParserCore<js>"}]
 			description: {
-				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
+				advice: []
 				category: ["parse"]
 				categoryValue: "js"
-				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
+				message: RAW_MARKUP {value: "Parenthesized expression didnt contain anything"}
 			}
 			location: {
 				language: "js"
 				path: UIDPath<es2017/async-functions/36/input.js>
-				end: Position 1:22
-				start: Position 1:21
+				end: Position 1:29
+				start: Position 1:13
 			}
 		}
 	]
@@ -99,14 +62,12 @@ JSRoot {
 
 ```
 
- es2017/async-functions/36/input.js:1:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/36/input.js:1:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected character =
+  ✖ Parenthesized expression didnt contain anything
 
     const foo = ({ async = true });
-                         ^
-
-  ℹ Expected character ,
+                 ^^^^^^^^^^^^^^^^
 
 
 ```

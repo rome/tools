@@ -10,83 +10,52 @@
 JSRoot {
 	body: [
 		JSExpressionStatement {
-			expression: JSAssignmentExpression {
-				operator: "="
-				left: JSAssignmentObjectPattern {
-					properties: [
-						JSAssignmentObjectPatternProperty {
-							key: JSStaticPropertyKey {
-								value: JSIdentifier {
-									name: "a"
-									loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:4 (a)
+			expression: JSArrowFunctionExpression {
+				body: JSNumericLiteral {
+					value: 0
+					loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:15-1:16
+				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					params: [
+						JSBindingObjectPattern {
+							properties: [
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
+											name: "a"
+											loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:4 (a)
+										}
+										loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:4
+									}
+									value: JSBindingAssignmentPattern {
+										left: JSBindingIdentifier {
+											name: "a"
+											loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:4 (a)
+										}
+										right: JSNumericLiteral {
+											value: 0
+											loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:7-1:8
+										}
+										loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:8
+									}
+									loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:8
 								}
-								loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:4
-							}
-							value: JSAssignmentIdentifier {
-								name: "a"
-								loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:4 (a)
-							}
-							loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:3-1:4
+							]
+							loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:1-1:10
 						}
 					]
-					loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:1-1:4
+					loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:0-1:14
 				}
-				right: JSNumericLiteral {
-					value: 0
-					loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:7-1:8
-				}
-				loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:1-1:8
+				loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:0-1:16
 			}
-			loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:0-1:8
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:9-1:10
-			}
-			loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:9-1:10
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:10-1:11
-			}
-			loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:10-1:11
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:12-1:14
-			}
-			loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:12-1:14
-		}
-		JSExpressionStatement {
-			expression: JSNumericLiteral {
-				value: 0
-				loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:15-1:16
-			}
-			loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:15-1:17
+			loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:0-1:17
 		}
 	]
 	comments: []
-	corrupt: true
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {
-				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
-				category: ["parse"]
-				categoryValue: "js"
-				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
-			}
-			location: {
-				language: "js"
-				path: UIDPath<typescript/arrow-function/destructuring/input.ts>
-				end: Position 1:6
-				start: Position 1:5
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
 	sourceType: "module"
@@ -99,15 +68,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- typescript/arrow-function/destructuring/input.ts:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected character =
-
-    ({ a = 0 }) => 0;
-         ^
-
-  ℹ Expected character ,
-
 
 ```

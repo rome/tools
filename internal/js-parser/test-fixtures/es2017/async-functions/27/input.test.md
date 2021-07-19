@@ -18,89 +18,58 @@ JSRoot {
 							name: "foo"
 							loc: SourceLocation es2017/async-functions/27/input.js 1:6-1:9 (foo)
 						}
-						init: JSAssignmentExpression {
-							operator: "="
-							left: JSAssignmentObjectPattern {
-								properties: [
-									JSAssignmentObjectPatternProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "async"
-												loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20 (async)
+						init: JSArrowFunctionExpression {
+							body: JSBlockStatement {
+								body: []
+								directives: []
+								loc: SourceLocation es2017/async-functions/27/input.js 1:34-1:36
+							}
+							head: JSFunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: [
+									JSBindingObjectPattern {
+										properties: [
+											JSBindingObjectPatternProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
+														name: "async"
+														loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20 (async)
+													}
+													loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20
+												}
+												value: JSBindingAssignmentPattern {
+													left: JSBindingIdentifier {
+														name: "async"
+														loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20 (async)
+													}
+													right: JSBooleanLiteral {
+														value: true
+														loc: SourceLocation es2017/async-functions/27/input.js 1:23-1:27
+													}
+													loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:27
+												}
+												loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:27
 											}
-											loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20 (async)
-										}
-										value: JSAssignmentIdentifier {
-											name: "async"
-											loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20 (async)
-										}
-										loc: SourceLocation es2017/async-functions/27/input.js 1:15-1:20
+										]
+										loc: SourceLocation es2017/async-functions/27/input.js 1:13-1:29
 									}
 								]
-								loc: SourceLocation es2017/async-functions/27/input.js 1:13-1:20
+								loc: SourceLocation es2017/async-functions/27/input.js 1:12-1:33
 							}
-							right: JSBooleanLiteral {
-								value: true
-								loc: SourceLocation es2017/async-functions/27/input.js 1:23-1:27
-							}
-							loc: SourceLocation es2017/async-functions/27/input.js 1:13-1:27
+							loc: SourceLocation es2017/async-functions/27/input.js 1:12-1:36
 						}
-						loc: SourceLocation es2017/async-functions/27/input.js 1:6-1:27
+						loc: SourceLocation es2017/async-functions/27/input.js 1:6-1:36
 					}
 				]
-				loc: SourceLocation es2017/async-functions/27/input.js 1:0-1:27
+				loc: SourceLocation es2017/async-functions/27/input.js 1:0-1:37
 			}
-			loc: SourceLocation es2017/async-functions/27/input.js 1:0-1:27
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation es2017/async-functions/27/input.js 1:28-1:29
-			}
-			loc: SourceLocation es2017/async-functions/27/input.js 1:28-1:29
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation es2017/async-functions/27/input.js 1:29-1:30
-			}
-			loc: SourceLocation es2017/async-functions/27/input.js 1:29-1:30
-		}
-		JSExpressionStatement {
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: SourceLocation es2017/async-functions/27/input.js 1:31-1:33
-			}
-			loc: SourceLocation es2017/async-functions/27/input.js 1:31-1:33
-		}
-		JSBlockStatement {
-			body: []
-			directives: []
-			loc: SourceLocation es2017/async-functions/27/input.js 1:34-1:36
-		}
-		JSEmptyStatement {
-			loc: SourceLocation es2017/async-functions/27/input.js 1:36-1:37
+			loc: SourceLocation es2017/async-functions/27/input.js 1:0-1:37
 		}
 	]
 	comments: []
-	corrupt: true
-	diagnostics: [
-		{
-			origins: [{entity: "ParserCore<js>"}]
-			description: {
-				advice: [log {category: "info", text: [RAW_MARKUP {value: "Expected character <emphasis>"}, ",", RAW_MARKUP {value: "</emphasis>"}]}]
-				category: ["parse"]
-				categoryValue: "js"
-				message: [RAW_MARKUP {value: "Unexpected character <emphasis>"}, "=", RAW_MARKUP {value: "</emphasis>"}]
-			}
-			location: {
-				language: "js"
-				path: UIDPath<es2017/async-functions/27/input.js>
-				end: Position 1:22
-				start: Position 1:21
-			}
-		}
-	]
+	corrupt: false
+	diagnostics: []
 	directives: []
 	hasHoistedVars: false
 	sourceType: "script"
@@ -113,15 +82,5 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- es2017/async-functions/27/input.js:1:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected character =
-
-    const foo = ({ async = true }) => {};
-                         ^
-
-  ℹ Expected character ,
-
 
 ```

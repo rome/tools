@@ -1924,6 +1924,7 @@ export function parseParenAndDistinguishExpression(
 
 	const innerStart = parser.getPosition();
 	const exprList: ToReferencedItem[] = [];
+	const bindingList: AnyJSBindingPattern[] = [];
 	const refShorthandDefaultPos: IndexTracker = createIndexTracker();
 	const refNeedsArrowPos: IndexTracker = createIndexTracker();
 	let first = true;
@@ -1967,16 +1968,39 @@ export function parseParenAndDistinguishExpression(
 				eat(parser, tt.comma);
 			}
 		} else {
-			exprList.push(
-				parseMaybeAssign<ReturnType<typeof parseParenItem>>(
-					parser,
-					context,
-					false,
-					refShorthandDefaultPos,
-					parseParenItem,
-					refNeedsArrowPos,
-				),
+			const branches = createBranch<
+				ReturnType<typeof parseParenItem> | JSBindingObjectPattern
+			>(parser);
+
+			// Try parsing normally
+			branches.add(
+				() => {
+					return parseMaybeAssign<ReturnType<typeof parseParenItem>>(
+						parser,
+						context,
+						false,
+						refShorthandDefaultPos,
+						parseParenItem,
+						refNeedsArrowPos,
+					);
+				},
+				{
+					diagnosticsPriority: 1,
+				},
 			);
+
+			// Try parsing as JSBindingObjectPattern
+			branches.add(() => {
+				return parseObjectPattern(parser, refShorthandDefaultPos);
+			});
+
+			const node = branches.pick();
+
+			if (node.type === "JSBindingObjectPattern") {
+				bindingList.push(node);
+			} else {
+				exprList.push(node);
+			}
 		}
 	}
 
@@ -2010,6 +2034,7 @@ export function parseParenAndDistinguishExpression(
 				parser,
 				startPos,
 				{
+					bindingList,
 					assignmentList: exprList,
 				},
 			);
@@ -2156,6 +2181,7 @@ export function parseArrowHead(
 	}
 }
 
+// TODO: remove flow?
 // Parse a possible function param or call argument
 export function parseParenItem(
 	parser: JSParser,
@@ -3181,16 +3207,16 @@ export function parseArrowExpression(
 	let params: AnyJSBindingPattern[] = [];
 	let rest: undefined | AnyJSTargetBindingPattern = opts.rest;
 
-	if (opts.bindingList !== undefined) {
-		params = opts.bindingList;
-	}
-
 	if (opts.assignmentList !== undefined) {
 		({params, rest} = toFunctionParamsBindingList(
 			parser,
 			opts.assignmentList,
 			"arrow function parameters",
 		));
+	}
+
+	if (opts.bindingList !== undefined) {
+		params.push(...opts.bindingList);
 	}
 
 	let head = parser.finishNodeAt(

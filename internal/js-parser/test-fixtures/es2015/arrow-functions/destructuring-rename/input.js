@@ -1,0 +1,1 @@
+({ bar: foo = "foobar" }) => foo
