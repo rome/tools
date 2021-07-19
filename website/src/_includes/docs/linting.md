@@ -86,7 +86,7 @@ Rome has two different types of fixes:
 
 #### Safe Fixes
 
-For some lint errors, the fixes are unambigious and can be applied automatically. Diagnostics that are fixable are indicated with a label that appears in the header:
+For some lint errors, the fixes are unambiguous and can be applied automatically. Diagnostics that are fixable are indicated with a label that appears in the header:
 
 {% include docs/diagnostic-anatomy-fixable.md %}
 
@@ -124,18 +124,11 @@ See [Project Configuration](#project-configuration) for configuration options.
 
 ### Diagnostics
 
-Diagnostics are what Rome calls errors. They are emitted absolutely everywhere Rome finds a problem. This includes CLI argument parsing, JSON normalization, module resolution, lint errors, and more.
+A diagnostic that belong to a `lint` (e.g. `lint/js/noUnusedVariables`) category is built in three parts divided by a slash (/):
 
-#### Anatomy
-
-Diagnostics consist of six main parts:
-
-- The header contains the **filename**, **line**, and **column**. They refer to the position that we believe is the main cause of a problem.
-- Followed is the **message** which contains a single-line summary of what we believe is wrong.
-- The **code frame** contains a snippet of the file referred in the header. This allows you to see what it's referring to without having to jump into your editor and look it up.
-- **Advice** is freeform and appears at the end of a diagnostic. It can include additional messages, lists, other code frames, and more. It gives you more details about why you're seeing the diagnostic, and how you might fix it.
-
-{% include docs/diagnostic-anatomy.md %}
+- `lint`, the category of the diagnostic
+- `js`, the **lint category** which tells which kind of rule is throwing the error
+- `noUnusedVariables`, the **name** of the rule
 
 #### Suppressions
 
