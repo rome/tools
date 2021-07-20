@@ -107,7 +107,7 @@ export const projectManager = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: markup`This should be inside of a <emphasis>.config</emphasis> folder`,
+				text: markup`This should be inside your project root folder`,
 			},
 		],
 	}),

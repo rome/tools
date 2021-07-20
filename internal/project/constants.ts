@@ -22,7 +22,6 @@ export const INTEGRATIONS_IGNORE_FILES: string[] = [
 ];
 
 export const PROJECT_CONFIG_PACKAGE_JSON_FIELD = "rome";
-export const PROJECT_CONFIG_DIRECTORY = ".config";
 export const PROJECT_CONFIG_FILENAMES: string[] = [];
 export const PROJECT_CONFIG_WARN_FILENAMES: string[] = [
 	".romeconfig",

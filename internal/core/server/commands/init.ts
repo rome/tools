@@ -9,7 +9,7 @@ import {
 	getFileHandlerFromExtension,
 	getFileHandlerFromPath,
 } from "@internal/core/common/file-handlers";
-import {IndentStyle, PROJECT_CONFIG_DIRECTORY} from "@internal/project";
+import {IndentStyle} from "@internal/project";
 import {AbsoluteFilePathMap} from "@internal/path";
 import {
 	Diagnostic,
@@ -135,10 +135,7 @@ export default createServerCommand<Flags>({
 
 			reporter.heading(markup`Welcome to Rome! Let's get you started...`);
 
-			const configPath = cwd.append(
-				PROJECT_CONFIG_DIRECTORY,
-				`rome.${configType}`,
-			);
+			const configPath = cwd.append(`rome.${configType}`);
 
 			// Track some information about our project generation
 			const files: AbsoluteFilePathMap<StaticMarkup> = new AbsoluteFilePathMap();
