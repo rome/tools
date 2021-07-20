@@ -258,7 +258,7 @@ Ultimately, the configuration will look like this:
 
 You can specify your project config in a few different places.
 
-##### `.config/rome.json` (recommended)
+##### `rome.json` (recommended)
 
 This is the recommended location. It's the file we create when running `rome init`.
 

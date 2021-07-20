@@ -99,5 +99,5 @@ export const projectManager = createDiagnosticsCategory({
 		category: DIAGNOSTIC_CATEGORIES["projectManager/typoConfigFilename"],
 		message: markup`Invalid Rome config filename <emphasis>${invalidFilename}</emphasis>`,
 		advice: buildSuggestionAdvice(invalidFilename, validFilenames),
-	})
+	}),
 });
