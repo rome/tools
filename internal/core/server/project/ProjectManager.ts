@@ -955,16 +955,5 @@ export default class ProjectManager {
 				},
 			});
 		}
-
-		if (PROJECT_CONFIG_FILENAMES.includes(path.getBasename())) {
-			diagnostics.addDiagnostic({
-				description: descriptions.PROJECT_MANAGER.MISPLACED_CONFIG(
-					path.getBasename(),
-				),
-				location: {
-					path,
-				},
-			});
-		}
 	}
 }

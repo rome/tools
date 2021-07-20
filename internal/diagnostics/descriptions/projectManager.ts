@@ -99,16 +99,5 @@ export const projectManager = createDiagnosticsCategory({
 		category: DIAGNOSTIC_CATEGORIES["projectManager/typoConfigFilename"],
 		message: markup`Invalid Rome config filename <emphasis>${invalidFilename}</emphasis>`,
 		advice: buildSuggestionAdvice(invalidFilename, validFilenames),
-	}),
-	MISPLACED_CONFIG: (misplacedName: string) => ({
-		category: DIAGNOSTIC_CATEGORIES["projectManager/misplacedConfig"],
-		message: markup`Misplaced project config <emphasis>${misplacedName}</emphasis>`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`This should be inside your project root folder`,
-			},
-		],
-	}),
+	})
 });
