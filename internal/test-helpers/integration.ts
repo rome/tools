@@ -317,7 +317,7 @@ export function createIntegrationTest(
 	callback: (t: TestHelper, helper: IntegrationTestHelper) => Promise<void>,
 ): (t: TestHelper) => Promise<void> {
 	return async function(t: TestHelper) {
-		return;
+		// return;
 		t.setTimeout(10_000);
 
 		const temp = await generateTempDirectory("rome-integration");
@@ -362,8 +362,8 @@ export function createIntegrationTest(
 
 			// Add serialized project config. We skip this if there's already a project config files entry to allow
 			// some flexibility if we want invalid project config tests.
-			if (!opts.disableProjectConfig && files[".config/rome.json"] === undefined) {
-				files[".config/rome.json"] = json.stringify(projectConfig) + "\n";
+			if (!opts.disableProjectConfig && files["rome.json"] === undefined) {
+				files["rome.json"] = json.stringify(projectConfig) + "\n";
 			}
 
 			// Materialize files

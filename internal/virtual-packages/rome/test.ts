@@ -140,6 +140,7 @@ export type GlobalTestOptions =
 type NamelessTestOptions = {
 	timeout?: number;
 	only?: boolean;
+	skip?: boolean;
 };
 
 export type TestCallback = (t: TestHelper) => void | undefined | Promise<void>;
