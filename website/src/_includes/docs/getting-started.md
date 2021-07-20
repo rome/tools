@@ -18,7 +18,7 @@ npx rome init
 After running this command, Rome will:
 
 - Add itself to `package.json` as dependency if it wasn't present, and run your package manager to install
-- Generate `.config/rome.json` that serves as your project config.
+- Generate `rome.json` that serves as your project config.
 
 If you're putting Rome into an already established project and you'd like to automatically apply formatting and fixes, you can use:
 
