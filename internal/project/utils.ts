@@ -100,7 +100,7 @@ export function getParentConfigDependencies(
 
 		for (const configFilename of PROJECT_CONFIG_FILENAMES) {
 			basenames.push(configFilename);
-			deps.add(directory.append(".config", configFilename));
+			deps.add(directory.append(configFilename));
 		}
 
 		for (const basename of basenames) {

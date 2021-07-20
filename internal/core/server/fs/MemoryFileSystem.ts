@@ -12,7 +12,6 @@ import {
 	normalizeManifest,
 } from "@internal/codec-js-manifest";
 import {
-	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 	ProjectDefinition,
@@ -90,7 +89,7 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
 }
 
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
-const PRIORITY_FILES = new Set([PROJECT_CONFIG_DIRECTORY, "package.json"]);
+const PRIORITY_FILES = new Set(["package.json"]);
 
 type DeclareManifestOpts = {
 	diagnostics: DiagnosticsProcessor;
@@ -1044,10 +1043,7 @@ export default class MemoryFileSystem {
 		//this.logger.info(markup`Found: <emphasis>${path}</emphasis>`);
 
 		// Add project if this is a config
-		if (
-			dirname.getBasename() === PROJECT_CONFIG_DIRECTORY &&
-			PROJECT_CONFIG_FILENAMES.includes(basename)
-		) {
+		if (PROJECT_CONFIG_FILENAMES.includes(basename)) {
 			if (projectManager.hasLoadedProjectDirectory(dirname.getParent())) {
 				opts.diagnostics.addDiagnostic({
 					description: descriptions.PROJECT_MANAGER.MULTIPLE_CONFIGS,

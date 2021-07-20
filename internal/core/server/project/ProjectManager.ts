@@ -7,7 +7,6 @@
 
 import Server from "../Server";
 import {
-	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 	PROJECT_CONFIG_SENSITIVE_DIRECTORIES,
@@ -891,7 +890,7 @@ export default class ProjectManager {
 			// Check for dedicated project configs
 			for (const configFilename of PROJECT_CONFIG_FILENAMES) {
 				// Check in root
-				const configPath = dir.append(PROJECT_CONFIG_DIRECTORY, configFilename);
+				const configPath = dir.append(configFilename);
 
 				const hasProject = await this.server.memoryFs.existsHard(configPath);
 				if (hasProject) {
@@ -957,10 +956,7 @@ export default class ProjectManager {
 			});
 		}
 
-		if (
-			PROJECT_CONFIG_FILENAMES.includes(path.getBasename()) &&
-			path.getParent().getBasename() !== PROJECT_CONFIG_DIRECTORY
-		) {
+		if (PROJECT_CONFIG_FILENAMES.includes(path.getBasename())) {
 			diagnostics.addDiagnostic({
 				description: descriptions.PROJECT_MANAGER.MISPLACED_CONFIG(
 					path.getBasename(),
