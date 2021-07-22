@@ -491,8 +491,10 @@ export function createIntegrationTest(
 				};
 
 				await callback(t, intTestHelper);
+				await server.end();
 			} finally {
 				await client.end();
+				await client.shutdownServer();
 
 				// Console
 				t.namedSnapshot("console", clientStream.read());
