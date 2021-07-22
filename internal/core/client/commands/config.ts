@@ -5,7 +5,7 @@ import {Reporter} from "@internal/cli-reporter";
 
 export const remove = createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config - remove ${"<key>"}`,
+	description: markup`modify a project config - remove "\\<key>"`,
 	usage: "<key>",
 	examples: [],
 	defineFlags() {
@@ -31,9 +31,12 @@ export const remove = createLocalCommand({
 
 export const pop = createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config - remove "<values>" from "<key>"`,
+	description: markup`modify a project config - remove "\\<values>" from "\\<key>"`,
 	usage: "<key> <...values>",
-	examples: [],
+	examples: [{
+		command: "rome config pop aliases.paths path1 path2",
+		description: markup`Remove multiple values from aliases.paths configuration.`,
+	}],
 	defineFlags() {
 		return {};
 	},

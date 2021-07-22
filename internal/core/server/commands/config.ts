@@ -400,7 +400,7 @@ export const migrate = createServerCommand({
 
 export const remove = createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config - remove "<key>"`,
+	description: markup`modify a project config - remove "\\<key>"`,
 	usage: "<key>",
 	examples: [],
 	hidden: true,
@@ -413,7 +413,7 @@ export const remove = createServerCommand<Flags>({
 
 export const pop = createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config - remove "<values>" from "<key>"`,
+	description: markup`modify a project config - remove "\\<values>" from "\\<key>"`,
 	usage: "<key> <...values>",
 	examples: [],
 	hidden: true,
