@@ -73,7 +73,12 @@ async function runCommand(
 				...(Array.isArray(value) ? value : []),
 			]);
 		} else {
-			keyConsumer.setValue(value);
+			const currentValue = keyConsumer.asUnknown();
+			if (typeof currentValue === "number") {
+				keyConsumer.setValue(Number(value));
+			} else {
+				keyConsumer.setValue(value);
+			}
 		}
 	}
 

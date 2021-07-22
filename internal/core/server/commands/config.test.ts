@@ -77,7 +77,7 @@ test(
 		async (t, {client}) => {
 			await client.query({
 				commandName: "config set",
-				args: ["format.indentSize", 9],
+				args: ["format.indentSize", "9"],
 			});
 		},
 	),

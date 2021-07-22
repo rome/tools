@@ -90,7 +90,7 @@
 ### `console`
 
 ```
-✔ Setting 9 to format.indentSize in the config project/rome.json
+✔ Setting "9" to format.indentSize in the config project/rome.json
 
 ```
 
