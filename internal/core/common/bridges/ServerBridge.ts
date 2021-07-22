@@ -24,7 +24,7 @@ import {CommandName} from "../commands";
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
 	commandFlags: RSERObject;
-	args: string[];
+	args: Array<string | number>;
 	commandName: CommandName;
 	silent: boolean;
 	noData: boolean;
