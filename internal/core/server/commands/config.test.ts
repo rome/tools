@@ -1,7 +1,6 @@
 import {test} from "rome";
 import {createIntegrationTest} from "@internal/test-helpers";
 
-
 test(
 	"should push a new property",
 	createIntegrationTest(
@@ -11,12 +10,16 @@ test(
 				root: true,
 				name: "dummy",
 				lint: {
-					globals: []
-				}
-			}
+					globals: [],
+				},
+			},
+			disableTest: true,
 		},
 		async (t, {client}) => {
-			await client.query({commandName: "config push", args: ["lint.globals", "jQuery"]});
+			await client.query({
+				commandName: "config push",
+				args: ["lint.globals", "jQuery"],
+			});
 		},
 	),
 );
@@ -30,9 +33,10 @@ test(
 				root: true,
 				name: "dummy",
 				lint: {
-					enabled: true
-				}
-			}
+					enabled: true,
+				},
+			},
+			disableTest: true,
 		},
 		async (t, {client}) => {
 			await client.query({commandName: "config disable", args: ["lint.enabled"]});
@@ -49,9 +53,10 @@ test(
 				root: true,
 				name: "dummy",
 				lint: {
-					enabled: false
-				}
-			}
+					enabled: false,
+				},
+			},
+			disableTest: true,
 		},
 		async (t, {client}) => {
 			await client.query({commandName: "config enable", args: ["lint.enabled"]});
@@ -68,13 +73,16 @@ test(
 				root: true,
 				name: "dummy",
 				format: {
-					indentSize: 2
-				}
-			}
+					indentSize: 2,
+				},
+			},
+			disableTest: true,
 		},
 		async (t, {client}) => {
-			await client.query({commandName: "config set", args: ["format.indentSize", 9]});
-
+			await client.query({
+				commandName: "config set",
+				args: ["format.indentSize", "9"],
+			});
 		},
 	),
 );
