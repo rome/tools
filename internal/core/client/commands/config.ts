@@ -33,10 +33,12 @@ export const pop = createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
 	description: markup`modify a project config - remove "\\<values>" from "\\<key>"`,
 	usage: "<key> <...values>",
-	examples: [{
-		command: "rome config pop aliases.paths path1 path2",
-		description: markup`Remove multiple values from aliases.paths configuration.`,
-	}],
+	examples: [
+		{
+			command: "rome config pop aliases.paths path1 path2",
+			description: markup`Remove multiple values from aliases.paths configuration.`,
+		},
+	],
 	defineFlags() {
 		return {};
 	},
