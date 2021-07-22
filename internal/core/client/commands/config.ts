@@ -31,7 +31,7 @@ export const remove = createLocalCommand({
 
 export const pop = createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config - remove ${"<values>"} from ${"<key>"}`,
+	description: markup`modify a project config - remove "<values>" from "<key>"`,
 	usage: "<key> <...values>",
 	examples: [],
 	defineFlags() {
