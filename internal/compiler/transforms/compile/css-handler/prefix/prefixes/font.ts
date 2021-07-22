@@ -1,5 +1,5 @@
 import {
-	createPrefixVisitor,
+	createPrefixCSSBlockVisitor,
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
@@ -10,7 +10,7 @@ export default [
 		"font-variant-ligatures",
 		"font-language-override",
 	].map((propertyName) =>
-		createPrefixVisitor({
+		createPrefixCSSBlockVisitor({
 			name: propertyName,
 			enter(path) {
 				return prefixCSSProperty({
@@ -22,7 +22,7 @@ export default [
 		})
 	),
 	// https://github.com/Fyrd/caniuse/blob/main/features-json/font-kerning.json
-	createPrefixVisitor({
+	createPrefixCSSBlockVisitor({
 		name: "font-kerning",
 		enter(path) {
 			return prefixCSSProperty({
