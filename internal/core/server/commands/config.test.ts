@@ -13,6 +13,7 @@ test(
 					globals: [],
 				},
 			},
+			disableTest: true,
 		},
 		async (t, {client}) => {
 			await client.query({
@@ -35,6 +36,7 @@ test(
 					enabled: true,
 				},
 			},
+			disableTest: true,
 		},
 		async (t, {client}) => {
 			await client.query({commandName: "config disable", args: ["lint.enabled"]});
@@ -54,6 +56,7 @@ test(
 					enabled: false,
 				},
 			},
+			disableTest: true,
 		},
 		async (t, {client}) => {
 			await client.query({commandName: "config enable", args: ["lint.enabled"]});
@@ -73,6 +76,7 @@ test(
 					indentSize: 2,
 				},
 			},
+			disableTest: true,
 		},
 		async (t, {client}) => {
 			await client.query({

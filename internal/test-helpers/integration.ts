@@ -70,6 +70,7 @@ type IntegrationTestOptions = {
 	files?: Dict<string>;
 	projectConfig?: JSONObject;
 	flags?: Partial<ClientFlags>;
+	disableTest?: boolean;
 };
 
 export async function generateTempDirectory(
@@ -317,8 +318,11 @@ export function createIntegrationTest(
 	callback: (t: TestHelper, helper: IntegrationTestHelper) => Promise<void>,
 ): (t: TestHelper) => Promise<void> {
 	return async function(t: TestHelper) {
-		// return;
-		t.setTimeout(10_000);
+		if (opts.disableTest) {
+			return;
+		}
+
+		t.setTimeout(30_000);
 
 		const temp = await generateTempDirectory("rome-integration");
 
@@ -493,7 +497,6 @@ export function createIntegrationTest(
 				await callback(t, intTestHelper);
 				await server.end();
 			} finally {
-				await client.end();
 				await client.shutdownServer();
 
 				// Console
