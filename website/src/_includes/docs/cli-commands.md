@@ -67,7 +67,7 @@ Push the string `value` to an array at `key`. You can pass multiple values to pu
 
 #### `rome config pop <key> <value>`
 
-Pop the string `value` from an array at `key`. If the `key` doesn't exist then it will be created. You pass multiple values to remove separated by space. 
+Pop the string `value` from an array at `key`. If the `key` doesn't exist then it will be created. You can pass multiple values to remove, separated by space. 
 
 #### `rome config location`
 
