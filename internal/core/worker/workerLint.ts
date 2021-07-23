@@ -262,7 +262,7 @@ export async function compilerLint(
 		diagnostics = [...diagnostics, ...eslintResult.diagnostics];
 	}
 
-	const prettierResult = await maybeRunPrettier({worker, ref, project});
+	const prettierResult = await maybeRunPrettier({worker, ref, project, content: formatted});
 
 	if (prettierResult) {
 		formatted = prettierResult.formatted;

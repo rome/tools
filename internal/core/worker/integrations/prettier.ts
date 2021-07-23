@@ -20,10 +20,11 @@ export interface MaybeRunPrettier {
 }
 
 export async function maybeRunPrettier(
-	{ref, project, worker}: {
+	{ref, project, worker, content}: {
 		worker: Worker;
 		ref: FileReference;
 		project: WorkerProject;
+		content: string
 	},
 ): Promise<undefined | MaybeRunPrettier> {
 	const options = project.config.integrations.prettier;
@@ -37,8 +38,6 @@ export async function maybeRunPrettier(
 	);
 
 	const timer = new DurationMeasurer();
-
-	const content = await worker.readFileText(ref);
 
 	// NOTE: check if we need diagnostics
 	const diagnostics: Diagnostic[] = [];
