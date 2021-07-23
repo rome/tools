@@ -1,5 +1,4 @@
 import IntegrationLoader from "@internal/core/common/IntegrationLoader";
-import Worker from "../Worker";
 import {FileReference, WorkerProject} from "@internal/core";
 import {Duration, DurationMeasurer} from "@internal/numbers";
 import {Diagnostic} from "@internal/diagnostics";
@@ -20,11 +19,10 @@ export interface MaybeRunPrettier {
 }
 
 export async function maybeRunPrettier(
-	{ref, project, worker, content}: {
-		worker: Worker;
+	{ref, project, content}: {
 		ref: FileReference;
 		project: WorkerProject;
-		content: string
+		content: string;
 	},
 ): Promise<undefined | MaybeRunPrettier> {
 	const options = project.config.integrations.prettier;
