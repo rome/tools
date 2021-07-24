@@ -86,3 +86,50 @@ test(
 		},
 	),
 );
+
+test(
+	"should remove an existing property",
+	createIntegrationTest(
+		{
+			files: {},
+			projectConfig: {
+				root: true,
+				name: "dummy",
+				format: {
+					indentSize: 2,
+				},
+			},
+			disableTest: true,
+		},
+		async (t, {client}) => {
+			await client.query({
+				commandName: "config remove",
+				args: ["format.indentSize"],
+			});
+		},
+	),
+);
+
+
+test(
+	"should pop a value from an existing array",
+	createIntegrationTest(
+		{
+			files: {},
+			projectConfig: {
+				root: true,
+				name: "dummy",
+				lint: {
+					globals: ["beforeEach"]
+				}
+			},
+			disableTest: true,
+		},
+		async (t, {client}) => {
+			await client.query({
+				commandName: "config pop",
+				args: ["lint.globals", "beforeEach"],
+			});
+		},
+	),
+);
