@@ -17,6 +17,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: [
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSStaticPropertyKey {
@@ -32,6 +33,7 @@ JSRoot {
 						loc: SourceLocation typescript/interface/separators/input.ts 1:18-1:28
 					}
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSStaticPropertyKey {
@@ -59,6 +61,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: [
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSStaticPropertyKey {
@@ -74,6 +77,7 @@ JSRoot {
 						loc: SourceLocation typescript/interface/separators/input.ts 2:17-2:27
 					}
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSStaticPropertyKey {
@@ -101,6 +105,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: [
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSStaticPropertyKey {
@@ -116,6 +121,7 @@ JSRoot {
 						loc: SourceLocation typescript/interface/separators/input.ts 4:4-4:13
 					}
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSStaticPropertyKey {

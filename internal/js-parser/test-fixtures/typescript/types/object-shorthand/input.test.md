@@ -63,6 +63,7 @@ JSRoot {
 													constraint: TSObjectTypeAnnotation {
 														members: [
 															TSPropertySignature {
+																declare: false
 																optional: false
 																readonly: false
 																key: JSStaticPropertyKey {

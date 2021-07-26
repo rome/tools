@@ -17,6 +17,7 @@ export interface TSPropertySignature extends NodeBaseWithComments {
 	readonly key: AnyJSObjectPropertyKey;
 	readonly optional?: boolean;
 	readonly readonly?: boolean;
+	readonly declare?: boolean;
 	readonly typeAnnotation?: AnyTSPrimary;
 }
 

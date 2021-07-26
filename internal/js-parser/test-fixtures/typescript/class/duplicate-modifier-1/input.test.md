@@ -19,6 +19,25 @@ JSRoot {
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
+								name: "public"
+								loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:10-2:16 (public)
+							}
+							loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:10-2:16
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							declare: true
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:2-2:16
+							start: Position 2:2
+						}
+						loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:2-2:16
+					}
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "foo"
 								loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:28 (foo)
 							}
@@ -26,13 +45,14 @@ JSRoot {
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
+							declare: true
 							optional: false
 							readonly: false
 							static: false
-							loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:28
-							start: Position 2:25
+							loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:17-2:28
+							start: Position 2:17
 						}
-						loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:25-2:29
+						loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 2:17-2:29
 					}
 				]
 				loc: SourceLocation typescript/class/duplicate-modifier-1/input.ts 1:0-3:1
@@ -49,13 +69,13 @@ JSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unknown class property start"}
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: {
 				language: "js"
 				path: UIDPath<typescript/class/duplicate-modifier-1/input.ts>
-				end: Position 2:10
-				start: Position 2:10
+				end: Position 2:17
+				start: Position 2:17
 			}
 		}
 	]
@@ -72,13 +92,13 @@ JSRoot {
 
 ```
 
- typescript/class/duplicate-modifier-1/input.ts:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/duplicate-modifier-1/input.ts:2:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unknown class property start
+  ✖ Expected a semicolon or a line terminator
 
     1 │ class A {
   > 2 │   declare public declare foo;
-      │           ^
+      │                  ^
     3 │ }
 
 

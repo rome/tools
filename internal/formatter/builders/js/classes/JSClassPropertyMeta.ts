@@ -20,6 +20,10 @@ export default function JSClassPropertyMeta(
 			tokens.push(node.accessibility, space);
 		}
 
+		if (node.declare) {
+			tokens.push("declare", space);
+		}
+
 		if (node.readonly) {
 			tokens.push("readonly", space);
 		}

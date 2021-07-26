@@ -801,11 +801,15 @@ function parseTSPropertyOrMethodSignature(
 	parser: JSParser,
 	start: Position,
 	readonly: boolean,
+	declare: boolean,
 ): TSPropertySignature | TSMethodSignature {
 	const key = parseObjectPropertyKey(parser);
 	const optional = eat(parser, tt.question);
 
-	if (!readonly && (match(parser, tt.parenL) || isRelational(parser, "<"))) {
+	if (
+		!(readonly || declare) &&
+		(match(parser, tt.parenL) || isRelational(parser, "<"))
+	) {
 		const {meta, typeAnnotation} = parseTSSignatureDeclarationMeta(
 			parser,
 			tt.colon,
@@ -830,6 +834,7 @@ function parseTSPropertyOrMethodSignature(
 				type: "TSPropertySignature",
 				optional,
 				readonly,
+				declare,
 				typeAnnotation,
 				key,
 			},
@@ -851,16 +856,19 @@ function parseTSTypeMember(parser: JSParser): AnyTSTypeElement {
 
 	const start = parser.getPosition();
 	const readonly = hasTSModifier(parser, ["readonly"]);
+	const declare = hasTSModifier(parser, ["declare"]);
 
-	const idx = tryTSParseIndexSignature(parser, start);
-	if (idx) {
-		return {
-			...idx,
-			readonly,
-		};
+	if (!declare) {
+		const idx = tryTSParseIndexSignature(parser, start);
+		if (idx) {
+			return {
+				...idx,
+				readonly,
+			};
+		}
 	}
 
-	return parseTSPropertyOrMethodSignature(parser, start, readonly);
+	return parseTSPropertyOrMethodSignature(parser, start, readonly, declare);
 }
 
 function tsIsStartOfConstructSignature(parser: JSParser) {

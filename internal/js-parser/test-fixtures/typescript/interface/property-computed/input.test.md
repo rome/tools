@@ -17,6 +17,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: [
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSComputedPropertyKey {
@@ -42,6 +43,7 @@ JSRoot {
 						loc: SourceLocation typescript/interface/property-computed/input.ts 2:4-2:30
 					}
 					TSPropertySignature {
+						declare: false
 						optional: true
 						readonly: false
 						key: JSComputedPropertyKey {

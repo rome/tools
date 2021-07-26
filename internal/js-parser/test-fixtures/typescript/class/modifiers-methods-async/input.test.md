@@ -29,6 +29,7 @@ JSRoot {
 						}
 						meta: JSClassPropertyMeta {
 							abstract: true
+							declare: false
 							optional: false
 							readonly: false
 							static: false
@@ -55,6 +56,7 @@ JSRoot {
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
+							declare: false
 							optional: false
 							readonly: false
 							static: true
@@ -87,6 +89,7 @@ JSRoot {
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
+							declare: false
 							optional: false
 							readonly: false
 							static: false
@@ -114,6 +117,7 @@ JSRoot {
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
+							declare: false
 							optional: false
 							readonly: false
 							static: true
@@ -146,6 +150,7 @@ JSRoot {
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
+							declare: false
 							optional: false
 							readonly: false
 							static: false
@@ -178,6 +183,7 @@ JSRoot {
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "protected"
+							declare: false
 							optional: false
 							readonly: false
 							static: false
@@ -210,6 +216,7 @@ JSRoot {
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "private"
+							declare: false
 							optional: false
 							readonly: false
 							static: false

@@ -16,8 +16,7 @@ JSRoot {
 			}
 			meta: JSClassHead {
 				body: [
-					JSClassMethod {
-						kind: "method"
+					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
@@ -27,34 +26,49 @@ JSRoot {
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
+							declare: true
 							optional: false
 							readonly: false
 							static: false
-							loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:13
-							start: Position 2:10
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:2-2:13
+							start: Position 2:2
 						}
-						body: JSBlockStatement {
-							body: []
-							directives: []
-							loc: SourceLocation typescript/class/declare-method/input.ts 2:16-2:18
+						loc: SourceLocation typescript/class/declare-method/input.ts 2:2-2:13
+					}
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: ""
+								loc: SourceLocation typescript/class/declare-method/input.ts 2:16-2:17 ()
+							}
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:16-2:17
 						}
-						head: JSFunctionHead {
-							async: false
-							generator: false
-							hasHoistedVars: false
-							params: []
-							loc: SourceLocation typescript/class/declare-method/input.ts 2:13-2:15
+						meta: JSClassPropertyMeta {
+							abstract: false
+							declare: false
+							optional: false
+							readonly: false
+							static: false
+							loc: SourceLocation typescript/class/declare-method/input.ts 2:16-2:17
+							start: Position 2:16
 						}
-						loc: SourceLocation typescript/class/declare-method/input.ts 2:10-2:18
+						loc: SourceLocation typescript/class/declare-method/input.ts 2:16-2:17
 					}
 				]
-				loc: SourceLocation typescript/class/declare-method/input.ts 1:0-3:1
+				loc: SourceLocation typescript/class/declare-method/input.ts 1:0-2:18
 			}
-			loc: SourceLocation typescript/class/declare-method/input.ts 1:0-3:1
+			loc: SourceLocation typescript/class/declare-method/input.ts 1:0-2:18
+		}
+		JSExpressionStatement {
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation typescript/class/declare-method/input.ts 3:0-3:1
+			}
+			loc: SourceLocation typescript/class/declare-method/input.ts 3:0-3:1
 		}
 	]
 	comments: []
-	corrupt: false
+	corrupt: true
 	diagnostics: [
 		{
 			origins: [{entity: "ParserCore<js>"}]
@@ -62,13 +76,13 @@ JSRoot {
 				advice: []
 				category: ["parse"]
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unknown class property start"}
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: {
 				language: "js"
 				path: UIDPath<typescript/class/declare-method/input.ts>
-				end: Position 2:10
-				start: Position 2:10
+				end: Position 2:13
+				start: Position 2:13
 			}
 		}
 	]
@@ -85,13 +99,13 @@ JSRoot {
 
 ```
 
- typescript/class/declare-method/input.ts:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/declare-method/input.ts:2:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unknown class property start
+  ✖ Expected a semicolon or a line terminator
 
     1 │ class A {
   > 2 │   declare foo() {}
-      │           ^
+      │              ^
     3 │ }
 
 

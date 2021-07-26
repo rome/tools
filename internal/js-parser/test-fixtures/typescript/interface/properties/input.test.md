@@ -17,6 +17,7 @@ JSRoot {
 			body: TSInterfaceBody {
 				body: [
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSStaticPropertyKey {
@@ -29,6 +30,7 @@ JSRoot {
 						loc: SourceLocation typescript/interface/properties/input.ts 2:4-2:6
 					}
 					TSPropertySignature {
+						declare: false
 						optional: false
 						readonly: false
 						key: JSStaticPropertyKey {
@@ -44,6 +46,7 @@ JSRoot {
 						loc: SourceLocation typescript/interface/properties/input.ts 3:4-3:14
 					}
 					TSPropertySignature {
+						declare: false
 						optional: true
 						readonly: false
 						key: JSStaticPropertyKey {

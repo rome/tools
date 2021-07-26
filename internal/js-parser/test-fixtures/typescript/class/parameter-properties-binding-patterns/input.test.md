@@ -27,6 +27,7 @@ JSRoot {
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
+							declare: false
 							optional: false
 							readonly: false
 							static: false
@@ -47,6 +48,7 @@ JSRoot {
 									elements: []
 									meta: JSPatternMeta {
 										accessibility: "public"
+										declare: false
 										readonly: false
 										loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:16-2:25
 									}
