@@ -110,7 +110,6 @@ test(
 	),
 );
 
-
 test(
 	"should pop a value from an existing array",
 	createIntegrationTest(
@@ -120,8 +119,8 @@ test(
 				root: true,
 				name: "dummy",
 				lint: {
-					globals: ["beforeEach"]
-				}
+					globals: ["beforeEach"],
+				},
 			},
 			disableTest: true,
 		},
