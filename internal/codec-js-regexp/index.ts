@@ -139,17 +139,27 @@ function readOctalCode(tokenizer: RegExpParser["tokenizer"]): number | undefined
 
 type RegExpParserTypes = {
 	tokens: Tokens;
-	state: {};
+	state: {
+		/**
+		 * nCapturingParens is the total number of left-capturing parentheses
+		 * {@see https://tc39.es/ecma262/multipage/text-processing.html#sec-notation NcapturingParens}
+		 */
+		nCapturingParens: number;
+	};
 	options: RegExpParserOptions;
 	meta: void;
 };
 type RegExpParser = ParserCore<RegExpParserTypes>;
 
+/**
+ * Parses an [AtomEscape]{@link https://tc39.es/ecma262/multipage/text-processing.html#prod-AtomEscape}
+ */
 function tokenizeEscaped(
 	parser: RegExpParser,
 	tokenizer: RegExpParser["tokenizer"],
 ) {
 	const char = tokenizer.get();
+	// Character Class Escape: https://tc39.es/ecma262/multipage/text-processing.html#prod-CharacterClassEscape
 	switch (char) {
 		case "d":
 		case "D":
@@ -164,6 +174,23 @@ function tokenizeEscaped(
 		}
 	}
 
+	// DecimalEscape https://tc39.es/ecma262/multipage/text-processing.html#prod-DecimalEscape
+	if (/[1-9]/.test(char)) {
+		const backRefString = tokenizer.read(isDigit);
+		const num = parseInt(backRefString, 10);
+
+		if (num <= parser.state.nCapturingParens) {
+			return tokenizer.finishComplexToken(
+				"NumericBackReferenceCharacter",
+				{
+					value: num,
+					escaped: true,
+				},
+			);
+		}
+	}
+
+	// Control Escape
 	if (tokenizer.eat("t")) {
 		return tokenizer.finishComplexToken(
 			"Character",
@@ -214,27 +241,15 @@ function tokenizeEscaped(
 		);
 	}
 
+	// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
 	if (tokenizer.eat("k")) {
-		if (parser.options.unicode) {
-			// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
-			if (tokenizer.eat("<")) {
-				const value = tokenizer.read(isBackReferenceCharacter);
-				tokenizer.assert(">");
-
-				return tokenizer.finishComplexToken(
-					"NamedBackReferenceCharacter",
-					{
-						value,
-						escaped: true,
-					},
-				);
-			}
-		}
-
+		tokenizer.assert("<");
+		const name = tokenizer.read(isBackReferenceCharacter);
+		const closed = tokenizer.consume(">");
 		return tokenizer.finishComplexToken(
-			"Character",
+			"NamedBackReferenceCharacter",
 			{
-				value: "k",
+				value: `<${name}${closed ? ">" : ""}`,
 				escaped: true,
 			},
 		);
@@ -382,36 +397,17 @@ function tokenizeEscaped(
 			);
 		}
 
-		// back reference allowed are 1 - 99
-		if (referenceValue >= 1 && referenceValue <= 99) {
+		backReference = backReference.slice(0, backReference.length - 1);
+		tokenizer.reverse(1);
+
+		if (isOct(backReference)) {
 			return tokenizer.finishComplexToken(
-				"NumericBackReferenceCharacter",
+				"Character",
 				{
-					value: parseInt(backReference, 10),
+					value: String.fromCharCode(parseInt(backReference, 8)),
 					escaped: true,
 				},
 			);
-		} else {
-			backReference = backReference.slice(0, backReference.length - 1);
-			tokenizer.reverse(1);
-
-			if (isOct(backReference)) {
-				return tokenizer.finishComplexToken(
-					"Character",
-					{
-						value: String.fromCharCode(parseInt(backReference, 8)),
-						escaped: true,
-					},
-				);
-			} else {
-				return tokenizer.finishComplexToken(
-					"NumericBackReferenceCharacter",
-					{
-						value: parseInt(backReference, 10),
-						escaped: true,
-					},
-				);
-			}
 		}
 	}
 
@@ -427,6 +423,7 @@ function tokenizeEscaped(
 
 const regExpParser = createParser<RegExpParserTypes>({
 	diagnosticLanguage: "regex",
+	getInitialState: () => ({nCapturingParens: 0}),
 
 	tokenize(parser, tokenizer) {
 		const char = tokenizer.get();
@@ -575,6 +572,8 @@ function eatOperator(parser: RegExpParser, op: string): boolean {
 function parseGroupCapture(
 	parser: RegExpParser,
 ): JSRegExpGroupCapture | JSRegExpGroupNonCapture {
+	parser.setState({nCapturingParens: parser.state.nCapturingParens + 1});
+
 	const start = parser.getPosition();
 	parser.nextToken();
 

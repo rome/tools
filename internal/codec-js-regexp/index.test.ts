@@ -45,3 +45,57 @@ test(
 		);
 	},
 );
+
+test(
+	"parses escape characters correctly",
+	(t) => {
+		const node1 = parseRegExp({
+			input: "f(o)\\1",
+			unicode: false,
+		}).expression;
+
+		t.snapshot(node1);
+
+		const node2 = parseRegExp({
+			input: "f(o)\\0",
+			unicode: false,
+		}).expression;
+
+		t.snapshot(node2);
+
+		const node3 = parseRegExp({
+			input: "f(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)\\11",
+			unicode: false,
+		}).expression;
+
+		t.snapshot(node3);
+
+		const node4 = parseRegExp({
+			input: "f(a)\\2",
+			unicode: false,
+		}).expression;
+
+		t.snapshot(node4);
+
+		const node5 = parseRegExp({
+			input: "[\u0400-\u04ff]+\\0",
+			unicode: false,
+		}).expression;
+
+		t.snapshot(node5);
+
+		const node6 = parseRegExp({
+			input: '(?<quote>[\'"])\\k<quote>',
+			unicode: true,
+		}).expression;
+
+		t.snapshot(node6);
+
+		const result1 = parseRegExp({
+			input: '(?<quote>[\'"])\\k<quote',
+			unicode: true,
+		});
+
+		t.snapshot(result1);
+	},
+);
