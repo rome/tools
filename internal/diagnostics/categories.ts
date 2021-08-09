@@ -107,7 +107,7 @@ export type DiagnosticCategoryString = StringConverter<DiagnosticCategory>;
 
 export type DiagnosticLintCategoryString = StringConverter<DiagnosticLintCategory>;
 
-/* GENERATED:START(hash:728a8d0b42ede7075a991efd0bc768ff44c7fd7f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:12729ff8e4d078ab94154fbe5097e197d6823a57,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| ["lint", "a11y", "noAccessKey"]
 	| ["lint", "a11y", "noAriaUnsupportedElements"]
@@ -219,7 +219,6 @@ export type DiagnosticLintCategory =
 	| ["lint", "regex", "noEmptyMatches"]
 	| ["lint", "regex", "noMultipleSpacesInRegularExpressionLiterals"]
 	| ["lint", "regex", "noPosixInRegularExpression"]
-	| ["lint", "regex", "noReferenceToNonExistingGroup"]
 	| ["lint", "ts", "noExplicitAny"]
 	| ["lint", "ts", "preferShorthandArrayType"]
 	| ["lint", "ts", "useInterfaces"]
@@ -381,11 +380,6 @@ export const lintCategoryNameMap: {
 		"lint",
 		"regex",
 		"noPosixInRegularExpression",
-	],
-	"lint/regex/noReferenceToNonExistingGroup": [
-		"lint",
-		"regex",
-		"noReferenceToNonExistingGroup",
 	],
 	"lint/ts/noExplicitAny": ["lint", "ts", "noExplicitAny"],
 	"lint/ts/preferShorthandArrayType": ["lint", "ts", "preferShorthandArrayType"],

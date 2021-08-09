@@ -145,6 +145,10 @@ type RegExpParserTypes = {
 		 * {@see https://tc39.es/ecma262/multipage/text-processing.html#sec-notation NcapturingParens}
 		 */
 		nCapturingParens: number;
+		/**
+		 * Names of the captured named groups up to the parsed position.
+		 */
+		capturedGroupNames: Set<string>;
 	};
 	options: RegExpParserOptions;
 	meta: void;
@@ -179,7 +183,7 @@ function tokenizeEscaped(
 		const backRefString = tokenizer.read(isDigit);
 		const num = parseInt(backRefString, 10);
 
-		if (num <= parser.state.nCapturingParens) {
+		if (parser.options.unicode || num <= parser.state.nCapturingParens) {
 			return tokenizer.finishComplexToken(
 				"NumericBackReferenceCharacter",
 				{
@@ -187,6 +191,8 @@ function tokenizeEscaped(
 					escaped: true,
 				},
 			);
+		} else {
+			tokenizer.reverse(backRefString.length);
 		}
 	}
 
@@ -243,13 +249,23 @@ function tokenizeEscaped(
 
 	// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
 	if (tokenizer.eat("k")) {
-		tokenizer.assert("<");
-		const name = tokenizer.read(isBackReferenceCharacter);
-		const closed = tokenizer.consume(">");
+		if (parser.options.unicode || parser.state.capturedGroupNames.size > 0) {
+			tokenizer.assert("<");
+			const name = tokenizer.read(isBackReferenceCharacter);
+			const closed = tokenizer.consume(">");
+			return tokenizer.finishComplexToken(
+				"NamedBackReferenceCharacter",
+				{
+					value: `<${name}${closed ? ">" : ""}`,
+					escaped: true,
+				},
+			);
+		}
+
 		return tokenizer.finishComplexToken(
-			"NamedBackReferenceCharacter",
+			"Character",
 			{
-				value: `<${name}${closed ? ">" : ""}`,
+				value: "k",
 				escaped: true,
 			},
 		);
@@ -423,7 +439,7 @@ function tokenizeEscaped(
 
 const regExpParser = createParser<RegExpParserTypes>({
 	diagnosticLanguage: "regex",
-	getInitialState: () => ({nCapturingParens: 0}),
+	getInitialState: () => ({nCapturingParens: 0, capturedGroupNames: new Set()}),
 
 	tokenize(parser, tokenizer) {
 		const char = tokenizer.get();
@@ -572,14 +588,27 @@ function eatOperator(parser: RegExpParser, op: string): boolean {
 function parseGroupCapture(
 	parser: RegExpParser,
 ): JSRegExpGroupCapture | JSRegExpGroupNonCapture {
-	parser.setState({nCapturingParens: parser.state.nCapturingParens + 1});
-
 	const start = parser.getPosition();
 	parser.nextToken();
 
 	let modifiers: undefined | GroupModifiers;
 	if (eatOperator(parser, "?")) {
 		modifiers = getGroupModifiers(parser);
+	}
+
+	if (modifiers?.type !== "NON_CAPTURE") {
+		parser.setState({nCapturingParens: parser.state.nCapturingParens + 1});
+	}
+
+	if (modifiers?.type === "NAMED_CAPTURE") {
+		if (parser.state.capturedGroupNames.has(modifiers.name)) {
+			parser.unexpectedDiagnostic({
+				description: descriptions.REGEX_PARSER.DUPLICATE_NAMED_CAPTURE,
+				start,
+			});
+		} else {
+			parser.state.capturedGroupNames.add(modifiers.name);
+		}
 	}
 
 	const expression = parseExpression(parser, () => !matchOperator(parser, ")"));
@@ -678,24 +707,25 @@ function parseCharacter(parser: RegExpParser): AnyJSRegExpEscapedCharacter {
 	}
 
 	if (token.type === "NamedBackReferenceCharacter") {
-		const start = parser.input.slice(0, token.start.valueOf());
 		parser.nextToken();
 
+		let closed = true;
 		if (token.value[token.value.length - 1] !== ">") {
+			closed = false;
 			parser.unexpectedDiagnostic({
 				description: descriptions.REGEX_PARSER.UNCLOSED_NAMED_CAPTURE,
 				loc: parser.finishLocFromToken(token),
 			});
 		}
 
-		if (!start.includes(token.value)) {
+		const name = token.value.slice(1, token.value.length - (closed ? 1 : 0));
+		if (!parser.state.capturedGroupNames.has(name)) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.REGEX_PARSER.INVALID_NAMED_CAPTURE,
 				loc: parser.finishLocFromToken(token),
 			});
 		}
 
-		const name = token.value.slice(1, token.value.length - 1);
 		return {
 			type: "JSRegExpNamedBackReference",
 			name,
