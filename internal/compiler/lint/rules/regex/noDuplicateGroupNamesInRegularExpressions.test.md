@@ -8,35 +8,9 @@
 
 ```
 
- lint/regex/noDuplicateGroupNamesInRegularExpressions/reject/1/file.ts:1:1
-lint/regex/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/regex/noDuplicateGroupNamesInRegularExpressions/reject/1/file.ts:1:32 parse(regex) ━━━━━━━━━━━
 
-  ✖ Avoid duplicate group names. Check the month group.
-
-    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>
-      [0-9])/
-    ^
-
-  ℹ Defined already here
-
-    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>
-      [0-9])/
-    ^
-
-    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>
-      [0-9])/
-    ^^^^^
-
- lint/regex/noDuplicateGroupNamesInRegularExpressions/reject/1/file.ts:1:17
-lint/regex/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Avoid duplicate group names. Check the year group.
-
-    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>
-      [0-9])/
-    ^
-
-  ℹ Defined already here
+  ✖ Duplicate capture group name
 
     /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>
       [0-9])/
@@ -47,7 +21,6 @@ lint/regex/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━
 
 ### `0: formatted`
 
-```ts
-/(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/;
-
+```javascript
+undefined
 ```

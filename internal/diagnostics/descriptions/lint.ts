@@ -1083,10 +1083,6 @@ export const lint = createDiagnosticsCategory({
 		category: DIAGNOSTIC_CATEGORIES["lint/regex/noDuplicateGroupNamesInRegularExpressions"],
 		message: markup`Avoid duplicate group names. Check the <emphasis>${name}</emphasis> group.`,
 	}),
-	REGEX_NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
-		category: DIAGNOSTIC_CATEGORIES["lint/regex/noReferenceToNonExistingGroup"],
-		message: markup`Avoid nonexistent group names. Check the <emphasis>${name}</emphasis> group.`,
-	}),
 	JS_USE_DEFAULT_EXPORT_BASENAME: (
 		{
 			defaultName,

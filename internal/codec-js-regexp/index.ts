@@ -139,17 +139,31 @@ function readOctalCode(tokenizer: RegExpParser["tokenizer"]): number | undefined
 
 type RegExpParserTypes = {
 	tokens: Tokens;
-	state: {};
+	state: {
+		/**
+		 * nCapturingParens is the total number of left-capturing parentheses
+		 * {@see https://tc39.es/ecma262/multipage/text-processing.html#sec-notation NcapturingParens}
+		 */
+		nCapturingParens: number;
+		/**
+		 * Names of the captured named groups up to the parsed position.
+		 */
+		capturedGroupNames: Set<string>;
+	};
 	options: RegExpParserOptions;
 	meta: void;
 };
 type RegExpParser = ParserCore<RegExpParserTypes>;
 
+/**
+ * Parses an [AtomEscape]{@link https://tc39.es/ecma262/multipage/text-processing.html#prod-AtomEscape}
+ */
 function tokenizeEscaped(
 	parser: RegExpParser,
 	tokenizer: RegExpParser["tokenizer"],
 ) {
 	const char = tokenizer.get();
+	// Character Class Escape: https://tc39.es/ecma262/multipage/text-processing.html#prod-CharacterClassEscape
 	switch (char) {
 		case "d":
 		case "D":
@@ -164,6 +178,25 @@ function tokenizeEscaped(
 		}
 	}
 
+	// DecimalEscape https://tc39.es/ecma262/multipage/text-processing.html#prod-DecimalEscape
+	if (/[1-9]/.test(char)) {
+		const backRefString = tokenizer.read(isDigit);
+		const num = parseInt(backRefString, 10);
+
+		if (parser.options.unicode || num <= parser.state.nCapturingParens) {
+			return tokenizer.finishComplexToken(
+				"NumericBackReferenceCharacter",
+				{
+					value: num,
+					escaped: true,
+				},
+			);
+		} else {
+			tokenizer.reverse(backRefString.length);
+		}
+	}
+
+	// Control Escape
 	if (tokenizer.eat("t")) {
 		return tokenizer.finishComplexToken(
 			"Character",
@@ -214,21 +247,19 @@ function tokenizeEscaped(
 		);
 	}
 
+	// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
 	if (tokenizer.eat("k")) {
-		if (parser.options.unicode) {
-			// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
-			if (tokenizer.eat("<")) {
-				const value = tokenizer.read(isBackReferenceCharacter);
-				tokenizer.assert(">");
-
-				return tokenizer.finishComplexToken(
-					"NamedBackReferenceCharacter",
-					{
-						value,
-						escaped: true,
-					},
-				);
-			}
+		if (parser.options.unicode || parser.state.capturedGroupNames.size > 0) {
+			tokenizer.assert("<");
+			const name = tokenizer.read(isBackReferenceCharacter);
+			const closed = tokenizer.consume(">");
+			return tokenizer.finishComplexToken(
+				"NamedBackReferenceCharacter",
+				{
+					value: `<${name}${closed ? ">" : ""}`,
+					escaped: true,
+				},
+			);
 		}
 
 		return tokenizer.finishComplexToken(
@@ -382,36 +413,17 @@ function tokenizeEscaped(
 			);
 		}
 
-		// back reference allowed are 1 - 99
-		if (referenceValue >= 1 && referenceValue <= 99) {
+		backReference = backReference.slice(0, backReference.length - 1);
+		tokenizer.reverse(1);
+
+		if (isOct(backReference)) {
 			return tokenizer.finishComplexToken(
-				"NumericBackReferenceCharacter",
+				"Character",
 				{
-					value: parseInt(backReference, 10),
+					value: String.fromCharCode(parseInt(backReference, 8)),
 					escaped: true,
 				},
 			);
-		} else {
-			backReference = backReference.slice(0, backReference.length - 1);
-			tokenizer.reverse(1);
-
-			if (isOct(backReference)) {
-				return tokenizer.finishComplexToken(
-					"Character",
-					{
-						value: String.fromCharCode(parseInt(backReference, 8)),
-						escaped: true,
-					},
-				);
-			} else {
-				return tokenizer.finishComplexToken(
-					"NumericBackReferenceCharacter",
-					{
-						value: parseInt(backReference, 10),
-						escaped: true,
-					},
-				);
-			}
 		}
 	}
 
@@ -427,6 +439,7 @@ function tokenizeEscaped(
 
 const regExpParser = createParser<RegExpParserTypes>({
 	diagnosticLanguage: "regex",
+	getInitialState: () => ({nCapturingParens: 0, capturedGroupNames: new Set()}),
 
 	tokenize(parser, tokenizer) {
 		const char = tokenizer.get();
@@ -583,6 +596,21 @@ function parseGroupCapture(
 		modifiers = getGroupModifiers(parser);
 	}
 
+	if (modifiers?.type !== "NON_CAPTURE") {
+		parser.setState({nCapturingParens: parser.state.nCapturingParens + 1});
+	}
+
+	if (modifiers?.type === "NAMED_CAPTURE") {
+		if (parser.state.capturedGroupNames.has(modifiers.name)) {
+			parser.unexpectedDiagnostic({
+				description: descriptions.REGEX_PARSER.DUPLICATE_NAMED_CAPTURE,
+				start,
+			});
+		} else {
+			parser.state.capturedGroupNames.add(modifiers.name);
+		}
+	}
+
 	const expression = parseExpression(parser, () => !matchOperator(parser, ")"));
 
 	if (!eatOperator(parser, ")")) {
@@ -679,24 +707,25 @@ function parseCharacter(parser: RegExpParser): AnyJSRegExpEscapedCharacter {
 	}
 
 	if (token.type === "NamedBackReferenceCharacter") {
-		const start = parser.input.slice(0, token.start.valueOf());
 		parser.nextToken();
 
+		let closed = true;
 		if (token.value[token.value.length - 1] !== ">") {
+			closed = false;
 			parser.unexpectedDiagnostic({
 				description: descriptions.REGEX_PARSER.UNCLOSED_NAMED_CAPTURE,
 				loc: parser.finishLocFromToken(token),
 			});
 		}
 
-		if (!start.includes(token.value)) {
+		const name = token.value.slice(1, token.value.length - (closed ? 1 : 0));
+		if (!parser.state.capturedGroupNames.has(name)) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.REGEX_PARSER.INVALID_NAMED_CAPTURE,
 				loc: parser.finishLocFromToken(token),
 			});
 		}
 
-		const name = token.value.slice(1, token.value.length - 1);
 		return {
 			type: "JSRegExpNamedBackReference",
 			name,

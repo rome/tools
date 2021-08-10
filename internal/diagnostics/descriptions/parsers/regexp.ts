@@ -22,4 +22,5 @@ export const regexp = createDiagnosticsCategory({
 	NO_TARGET_QUANTIFIER: {message: markup`Nothing to repeat`},
 	INVALID_NAMED_CAPTURE: {message: markup`Invalid named capture referenced`},
 	UNCLOSED_NAMED_CAPTURE: {message: markup`Unclosed named capture`},
+	DUPLICATE_NAMED_CAPTURE: {message: markup`Duplicate capture group name`},
 });

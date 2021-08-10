@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:2a199a6c9a039bff240b15f8be9d88fe9b8e0d77,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:0b0a4fe97cd9ea98a9033dfe5a2d538a5a2b2219,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAccessKey from "./a11y/noAccessKey";
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noAutofocus from "./a11y/noAutofocus";
@@ -109,7 +109,6 @@ import noEmptyCharacterClass from "./regex/noEmptyCharacterClass";
 import noEmptyMatches from "./regex/noEmptyMatches";
 import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals";
 import noPosixInRegularExpression from "./regex/noPosixInRegularExpression";
-import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
 import noExplicitAny from "./ts/noExplicitAny";
 import preferShorthandArrayType from "./ts/preferShorthandArrayType";
 import useInterfaces from "./ts/useInterfaces";
@@ -252,10 +251,6 @@ lintTransforms.set(
 	"regex/noPosixInRegularExpression",
 	noPosixInRegularExpression,
 );
-lintTransforms.set(
-	"regex/noReferenceToNonExistingGroup",
-	noReferenceToNonExistingGroup,
-);
 lintTransforms.set("ts/noExplicitAny", noExplicitAny);
 lintTransforms.set("ts/preferShorthandArrayType", preferShorthandArrayType);
 lintTransforms.set("ts/useInterfaces", useInterfaces);
@@ -376,7 +371,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"regex/noEmptyMatches",
 	"regex/noMultipleSpacesInRegularExpressionLiterals",
 	"regex/noPosixInRegularExpression",
-	"regex/noReferenceToNonExistingGroup",
 	"ts/noExplicitAny",
 	"ts/preferShorthandArrayType",
 	"ts/useInterfaces",
@@ -495,7 +489,6 @@ export type LintRuleName =
 	| "regex/noEmptyMatches"
 	| "regex/noMultipleSpacesInRegularExpressionLiterals"
 	| "regex/noPosixInRegularExpression"
-	| "regex/noReferenceToNonExistingGroup"
 	| "ts/noExplicitAny"
 	| "ts/preferShorthandArrayType"
 	| "ts/useInterfaces"
