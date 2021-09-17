@@ -1,6 +1,0 @@
-{
-	"name": "@internal/browser-features",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

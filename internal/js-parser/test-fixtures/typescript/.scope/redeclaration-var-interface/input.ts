@@ -1,2 +1,0 @@
-var A;
-interface A {}

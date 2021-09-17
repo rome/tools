@@ -1,6 +1,0 @@
-{
-	"name": "@internal/pretty-format",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

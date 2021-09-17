@@ -1,6 +1,0 @@
-{
-	"name": "@internal/cli-reporter",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

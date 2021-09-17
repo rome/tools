@@ -1,1 +1,0 @@
-const t  = __dirname;

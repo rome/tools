@@ -1,6 +1,0 @@
-{
-	"name": "@internal/codec-browsers",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

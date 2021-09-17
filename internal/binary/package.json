@@ -1,6 +1,0 @@
-{
-	"name": "@internal/binary",
-	"type": "module",
-	"private": true,
-	"main": "index.ts"
-}

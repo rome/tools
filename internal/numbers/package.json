@@ -1,6 +1,0 @@
-{
-	"name": "@internal/numbers",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

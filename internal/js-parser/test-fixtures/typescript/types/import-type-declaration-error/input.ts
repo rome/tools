@@ -1,1 +1,0 @@
-import type FooDefault, { Bar, Baz } from "module";

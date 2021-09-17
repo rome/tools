@@ -1,0 +1,14 @@
+[package]
+name = "syntax"
+version = "0.0.0"
+description = ""
+license = "MIT"
+edition = "2018"
+
+[dependencies]
+# parser = { path = "../parser", version = "0.0.0" }
+# tree-sitter = "0.17"
+# tree-sitter-javascript = { path = "../../third_party/tree-sitter-javascript" }
+# tree-sitter-typescript = { path = "../../third_party/tree-sitter-typescript" }
+# tree-sitter-html = { path = "../../third_party/tree-sitter-html" }
+# tree-sitter-css = { path = "../../third_party/tree-sitter-css" }

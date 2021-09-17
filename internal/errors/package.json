@@ -1,6 +1,0 @@
-{
-	"name": "@internal/errors",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

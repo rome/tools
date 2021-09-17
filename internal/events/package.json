@@ -1,6 +1,0 @@
-{
-	"name": "@internal/events",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

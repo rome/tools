@@ -1,6 +1,0 @@
-{
-	"name": "@internal/browsers-db",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

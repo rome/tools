@@ -1,6 +1,0 @@
-{
-	"name": "@internal/markup-syntax-highlight",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

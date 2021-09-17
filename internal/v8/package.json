@@ -1,6 +1,0 @@
-{
-	"name": "@internal/v8",
-	"type": "module",
-	"private": true,
-	"main": "index.ts"
-}

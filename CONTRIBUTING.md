@@ -11,25 +11,10 @@ Getting started with developing Rome takes three commands. You will only need No
 ```bash
 git clone https://github.com/rome/tools
 cd tools
-./rome --help
+# TBD
 ```
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
-
-## Developing on Windows
-
-Use a backslash (`\`) rather than a forward slash (`/`) when running commands.
-
-For example, to run help:
-
-```bash
-.\rome --help
-```
-or you can directly use `rome` without any path referencing like below:
-
-```bash
-rome --help
-```
 
 ### User files
 

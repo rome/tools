@@ -1,3 +1,0 @@
-namespace N {}
-
-export { N };

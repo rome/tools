@@ -1,2 +1,0 @@
-try {}
-catch (e: unknown) {}

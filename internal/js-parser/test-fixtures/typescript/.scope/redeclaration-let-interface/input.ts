@@ -1,2 +1,0 @@
-let A;
-interface A {}

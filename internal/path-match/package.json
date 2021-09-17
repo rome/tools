@@ -1,6 +1,0 @@
-{
-	"name": "@internal/path-match",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
-}

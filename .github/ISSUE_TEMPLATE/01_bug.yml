@@ -12,10 +12,10 @@ body:
         Bug reports that don't follow this template will be closed.
         Please provide a clear and concise description of what the bug is.
   - type: textarea
-    id: rage-summary
+    id: environment
     attributes:
       label: Environment information
-      description: Run `rome rage --summary` and paste the output below.
+      description: Please share any information about your environment that can help debug your issue.
       render: bash
     validations:
       required: true

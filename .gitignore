@@ -4,8 +4,7 @@ Profile-*.json
 .vscode
 .idea
 # Release artifacts
-/dist
-/dist.tar.gz
+/target
 # Ignore test files that contributors could create locally
 /test.*
 # Ignore lockfiles

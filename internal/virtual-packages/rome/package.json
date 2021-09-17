@@ -1,6 +1,0 @@
-{
-	"name": "@internal/virtual-rome",
-	"type": "module",
-	"private": true,
-	"main": "index.ts"
-}

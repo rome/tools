@@ -1,1 +1,0 @@
-modern, > 5% and Firefox 80-85, last 2 Chrome versions or since 2018-05 and > 20% in BE

@@ -1,5 +1,0 @@
-feat: commit with a breaking change footer
-
-More description
-
-BREAKING CHANGE: breaking change footer
