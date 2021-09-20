@@ -1,30 +1,72 @@
 name: CI
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push]
+
+env:
+  RUST_LOG: info
+  RUST_BACKTRACE: 1
 
 jobs:
-  rustfmt:
-    name: rustfmt
+  format:
+    name: format
     runs-on: ubuntu-latest
     steps:
-      - name: TBD
-        run: echo "TBD"
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+      - name: Run rustfmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all --verbose -- --check
 
-  clippy:
-    name: clippy
+  lint:
+    name: lint
     runs-on: ubuntu-latest
     steps:
-      - name: TBD
-        run: echo "TBD"
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly # get nightly lints
+          override: true
+          components: clippy
+      - name: Run clippy
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: --workspace --all-targets --verbose -- --deny warnings
 
-  tests:
-    name: tests
+  test:
+    name: test
     runs-on: ubuntu-latest
     steps:
-      - name: TBD
-        run: echo "TBD"
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+      - name: Compile for tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --no-run --workspace --verbose
+      - name: Run tests
+        uses: actions-rs/cargo@v1
+        env:
+          RUST_TEST_THREADS: 1
+        with:
+          command: test
+          args: --workspace --verbose
