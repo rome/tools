@@ -11,6 +11,8 @@ tags:
   - rust
 permalink: /blog/2021/09/21/rome-will-be-rewritten-in-rust.html
 layout: layouts/blog.liquid
+social-image: social-logo-rust.png
+cover-image: rust-cover.png
 ---
 
 Rome started off written in JavaScript because that is the language of choice for our team and it made it easier for others in the community to join as contributors. We love JavaScript and TypeScript (and HTML and CSS) at Rome, and we want to build the very best tooling possible for these languages. For a number of reasons, we've decided that Rust will provide a better foundation for this tooling.

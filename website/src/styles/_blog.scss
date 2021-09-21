@@ -69,3 +69,15 @@ a.tag {
 		color: $gray-4;
 	}
 }
+
+.blog-cover {
+	pointer-events: none;
+	margin: 0 -$unit * 2;
+	margin-bottom: $unit;
+	overflow: hidden;
+
+	img {
+		display: block;
+		width: 100%;
+	}
+}

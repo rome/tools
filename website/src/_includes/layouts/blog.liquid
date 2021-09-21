@@ -5,6 +5,12 @@ social-image: social-logo.png
 
 <section class="blog">
 	<div class="post">
+		{% if cover-image %}
+			<div class="blog-cover">
+				<img src="/img/{{ social-image }}">
+			</div>
+		{% endif %}
+
 		<h1 id="{{ title | kebabCase }} ">{{ title }}</a></h1>
 		{% include blog-post-info.liquid %}
 
