@@ -1,5 +1,5 @@
 use clap::{crate_version, App, Arg};
-use rome_formatter::{format, FormatOptions};
+use rome_formatter::{format, FormatOptions, IndentStyle};
 use std::path::PathBuf;
 
 /// Main function to run Rome CLI
@@ -61,12 +61,22 @@ pub fn run_cli() {
 	match result_matches {
 		Ok(matches) => {
 			if let Some(matches) = matches.subcommand_matches("format") {
-				let size = matches.value_of("indentSize").unwrap();
-				let style = matches.value_of("indentStyle").unwrap();
+				let size = matches.value_of("indentSize");
+				let style = matches.value_of("indentStyle");
 				let input = matches.value_of("input").unwrap();
 				let input = PathBuf::from(&input);
-				let options = FormatOptions::new(style, size.parse::<u8>().unwrap());
-				format(input, options);
+				let options = match style {
+					Some(style) => match style {
+						"tab" => IndentStyle::Tab,
+						"space" => {
+							let size = size.unwrap_or("2");
+							IndentStyle::Space(size.parse::<u8>().unwrap_or(2))
+						}
+						_ => IndentStyle::Tab,
+					},
+					None => IndentStyle::Tab,
+				};
+				format(input, FormatOptions::new(options));
 			}
 		}
 		Err(err) => err.exit(),

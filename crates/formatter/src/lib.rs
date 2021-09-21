@@ -9,7 +9,8 @@ use std::{path::PathBuf, str::FromStr};
 
 pub enum IndentStyle {
 	Tab,
-	Space,
+	/// Space, with its quantity
+	Space(u8),
 }
 
 impl FromStr for IndentStyle {
@@ -18,7 +19,7 @@ impl FromStr for IndentStyle {
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		match s {
 			"tab" => Ok(Self::Tab),
-			"space" => return Ok(Self::Space),
+			"space" => return Ok(Self::Space(2)),
 			// TODO: replace this error with a diagnostic
 			_ => Err("Value not supported for IndentStyle"),
 		}
@@ -28,18 +29,13 @@ impl FromStr for IndentStyle {
 // TODO: evaluate to remove it
 #[derive(Debug)]
 pub struct FormatOptions {
-	/// The style of the
+	/// The indent style
 	indent_style: IndentStyle,
-	/// The size of the indentation
-	indent_size: u8,
 }
 
 impl FormatOptions {
-	pub fn new(style: &str, size: u8) -> Self {
-		Self {
-			indent_size: size,
-			indent_style: IndentStyle::from_str(style).unwrap(),
-		}
+	pub fn new(indent_style: IndentStyle) -> Self {
+		Self { indent_style }
 	}
 }
 // TODO: implement me
