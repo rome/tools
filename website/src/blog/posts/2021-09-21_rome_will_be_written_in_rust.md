@@ -1,6 +1,6 @@
 ---
 title: Rome will be written in Rust 🦀
-description: An update from the Rome project
+description: Building a foundation for the future of JavaScript and Web tooling
 author_name: Jamie Kyle
 author_url: https://twitter.com/buildsghost
 author_avatar: /img/blog/jamie-avatar.jpg
