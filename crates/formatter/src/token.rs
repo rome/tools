@@ -1,11 +1,13 @@
 use crate::intersperse::Intersperse;
 
-type Content = Box<Token>;
-pub type Tokens = Vec<Token>;
+type Content = Box<FormatTokens>;
+pub type Tokens = Vec<FormatTokens>;
 
-/// TODO Rename to something different than Token?
+/// The tokens that are used to apply formatting.
+///
+/// These tokens are language agnostic.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum Token {
+pub enum FormatTokens {
 	Space,
 	Line {
 		mode: LineMode,
@@ -43,74 +45,80 @@ impl GroupToken {
 	}
 }
 
-impl<'a> Token {
-	const SOFT_LINE: Token = Token::Line {
+impl<'a> FormatTokens {
+	const SOFT_LINE: FormatTokens = FormatTokens::Line {
 		mode: LineMode::Soft,
 	};
-	const HARD_LINE: Token = Token::Line {
+	const HARD_LINE: FormatTokens = FormatTokens::Line {
 		mode: LineMode::Hard,
 	};
-	const NEW_LINE_OR_SPACE: Token = Token::Line {
+	const NEW_LINE_OR_SPACE: FormatTokens = FormatTokens::Line {
 		mode: LineMode::Space,
 	};
 
-	pub fn group(content: Token) -> Token {
-		Token::Group(GroupToken::new(Box::new(content), false))
+	pub fn group(content: FormatTokens) -> FormatTokens {
+		FormatTokens::Group(GroupToken::new(Box::new(content), false))
 	}
 
-	pub fn indent(content: Token) -> Token {
-		Token::Indent {
+	pub fn indent(content: FormatTokens) -> FormatTokens {
+		FormatTokens::Indent {
 			content: Box::new(content),
 		}
 	}
 
-	pub fn concat<T: Into<Tokens>>(tokens: T) -> Token {
+	pub fn concat<T: Into<Tokens>>(tokens: T) -> FormatTokens {
 		let tokens = tokens.into();
 
 		if tokens.len() == 1 {
 			tokens.first().unwrap().clone()
 		} else {
-			Token::List { content: tokens }
+			FormatTokens::List { content: tokens }
 		}
 	}
 
-	pub fn join<T: Into<Tokens>>(separator: Token, tokens: T) -> Token {
+	pub fn join<T: Into<Tokens>>(separator: FormatTokens, tokens: T) -> FormatTokens {
 		let joined: Tokens = Intersperse::new(tokens.into().into_iter(), separator).collect();
 		Self::concat(joined)
 	}
 
-	pub fn string<T: Into<&'a str>>(content: T) -> Token {
-		Token::String(String::from(content.into()))
+	pub fn string<T: Into<&'a str>>(content: T) -> FormatTokens {
+		FormatTokens::String(String::from(content.into()))
 	}
 }
 
-impl From<&str> for Token {
+impl From<&str> for FormatTokens {
 	fn from(value: &str) -> Self {
-		Token::String(String::from(value))
+		FormatTokens::String(String::from(value))
 	}
 }
 
-impl From<u64> for Token {
+impl From<u64> for FormatTokens {
 	fn from(value: u64) -> Self {
-		Token::Number(value)
+		FormatTokens::Number(value)
 	}
 }
 
-impl From<&bool> for Token {
+impl From<&bool> for FormatTokens {
 	fn from(value: &bool) -> Self {
-		Token::Boolean(*value)
+		FormatTokens::Boolean(*value)
 	}
 }
 
-impl From<GroupToken> for Token {
+impl From<bool> for FormatTokens {
+	fn from(value: bool) -> Self {
+		FormatTokens::Boolean(value)
+	}
+}
+
+impl From<GroupToken> for FormatTokens {
 	fn from(group: GroupToken) -> Self {
-		Token::Group(group)
+		FormatTokens::Group(group)
 	}
 }
 
-impl From<Tokens> for Token {
+impl From<Tokens> for FormatTokens {
 	fn from(tokens: Tokens) -> Self {
-		Token::concat(tokens)
+		FormatTokens::concat(tokens)
 	}
 }
 

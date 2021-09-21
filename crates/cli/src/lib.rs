@@ -18,7 +18,7 @@ pub fn run_cli() {
 						// .possible_values(&["tabs", "spaces"])
 						.default_value("tab")
 						.validator(|value| {
-							if value.len() > 0 {
+							if !value.is_empty() {
 								if value.eq("tab") || value.eq("space") {
 									return Ok(());
 								}
@@ -52,7 +52,7 @@ pub fn run_cli() {
 							if !path.exists() {
 								return Err(format!("The file \"{}\" doesn't exist.", value));
 							}
-							return Ok(());
+							Ok(())
 						}),
 				),
 		)

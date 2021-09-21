@@ -1,12 +1,14 @@
-mod format_node;
+mod format_json;
 mod intersperse;
 mod token;
-
-use format_node::FormatValue;
-use serde_json::Value;
-pub use token::Token;
-
+use crate::format_json::json_to_tokens;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
+pub use token::FormatTokens;
+
+/// This trait should implemented on each node/value that should have a formatted representation
+pub trait FormatValue {
+	fn format(&self) -> FormatTokens;
+}
 
 #[derive(Debug)]
 
@@ -23,7 +25,7 @@ impl FromStr for IndentStyle {
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		match s {
 			"tab" => Ok(Self::Tab),
-			"space" => return Ok(Self::Space(2)),
+			"space" => Ok(Self::Space(2)),
 			// TODO: replace this error with a diagnostic
 			_ => Err("Value not supported for IndentStyle"),
 		}
@@ -54,9 +56,8 @@ pub fn format(path: PathBuf, options: FormatOptions) {
 	let mut buffer = String::new();
 	// we assume we have permissions
 	file.read_to_string(&mut buffer).unwrap();
-	let json: Value = serde_json::from_str(buffer.as_str()).unwrap();
 
-	let tokens = json.format();
+	let tokens = json_to_tokens(buffer.as_str());
 
 	println!("{:?}", tokens);
 }
