@@ -2,6 +2,9 @@
 	<img alt="Rome's logo depicting an ancient Roman arch with the word Rome to its side" src="assets/PNG/logo_transparent_outlined.png" width="700">
 </p>
 
+# Rome is currently being rewritten in Rust. Read more about it in our [latest blog post](https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust.html).
+# The documentation below is is out of date and available for posterity.
+
 <!-- This intro is synced with the website via the `./rome run scripts/generate-files/website-intro` script. Make sure you run it after modifying anything between these comments. -->
 <!-- INTRO START -->
 **Rome** is a linter, compiler, bundler, and [more](https://rome.tools/#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.

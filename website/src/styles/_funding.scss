@@ -503,6 +503,11 @@
 		border-color: rgba(adjust-hue($color-4, 300%), 0.5);
 	}
 
+	&.warning {
+		background-color: rgba(adjust-hue($color-4, 0%), 0.3);
+		border-color: rgba(adjust-hue($color-4, 0%), 0.5);
+	}
+
 	&.success {
 		background-color: rgba(adjust-hue($color-4, 450%), 0.3);
 		border-color: rgba(adjust-hue($color-4, 450%), 0.5);

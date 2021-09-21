@@ -12,7 +12,6 @@ const terser = require("terser");
 const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
 const {base64Encode} = require("./utils");
-const romePackage = require("../package.json");
 
 require("dotenv").config();
 
@@ -242,7 +241,7 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addShortcode(
 		"romeVersion",
 		function() {
-			return romePackage.version;
+			return "?.?.?";
 		},
 	);
 
