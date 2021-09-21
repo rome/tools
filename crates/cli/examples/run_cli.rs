@@ -16,7 +16,7 @@ use cli::run_cli;
 ///	To run a valid example:
 ///
 ///	```bash
-///		cargo run --example run_cli format examples/input.jso
+///		cargo run --example run_cli format examples/input.json
 ///	```
 ///
 fn main() {

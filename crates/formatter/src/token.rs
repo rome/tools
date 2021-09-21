@@ -1,7 +1,7 @@
 use crate::intersperse::Intersperse;
 
 type Content = Box<Token>;
-type Tokens = Vec<Token>;
+pub type Tokens = Vec<Token>;
 
 /// TODO Rename to something different than Token?
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -23,6 +23,9 @@ pub enum Token {
 		flat_contents: Content,
 	},
 	String(String),
+	Number(u64),
+	Boolean(bool),
+	Break,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -40,7 +43,7 @@ impl GroupToken {
 	}
 }
 
-impl Token {
+impl<'a> Token {
 	const SOFT_LINE: Token = Token::Line {
 		mode: LineMode::Soft,
 	};
@@ -76,14 +79,26 @@ impl Token {
 		Self::concat(joined)
 	}
 
-	pub fn string(content: &str) -> Token {
-		Token::String(String::from(content))
+	pub fn string<T: Into<&'a str>>(content: T) -> Token {
+		Token::String(String::from(content.into()))
 	}
 }
 
 impl From<&str> for Token {
 	fn from(value: &str) -> Self {
 		Token::String(String::from(value))
+	}
+}
+
+impl From<u64> for Token {
+	fn from(value: u64) -> Self {
+		Token::Number(value)
+	}
+}
+
+impl From<&bool> for Token {
+	fn from(value: &bool) -> Self {
+		Token::Boolean(*value)
 	}
 }
 

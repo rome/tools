@@ -1,13 +1,17 @@
-mod token;
+mod format_node;
 mod intersperse;
+mod token;
 
+use format_node::FormatValue;
+use serde_json::Value;
 pub use token::Token;
 
-use std::{path::PathBuf, str::FromStr};
+use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
 #[derive(Debug)]
 
 pub enum IndentStyle {
+	/// Tab
 	Tab,
 	/// Space, with its quantity
 	Space(u8),
@@ -39,9 +43,20 @@ impl FormatOptions {
 	}
 }
 // TODO: implement me
+/// Main function
 pub fn format(path: PathBuf, options: FormatOptions) {
 	println!(
 		"Running formatter to: \n- file {:?} \n- with options {:?}",
 		path, options
 	);
+	// we assume that file exists
+	let mut file = File::open(&path).unwrap();
+	let mut buffer = String::new();
+	// we assume we have permissions
+	file.read_to_string(&mut buffer).unwrap();
+	let json: Value = serde_json::from_str(buffer.as_str()).unwrap();
+
+	let tokens = json.format();
+
+	println!("{:?}", tokens);
 }
