@@ -1,5 +1,3 @@
-use std::slice::from_mut;
-
 use crate::{intersperse::Intersperse, FormatValue};
 
 type Content = Box<FormatTokens>;
@@ -36,7 +34,8 @@ pub enum FormatTokens {
 	Boolean(bool),
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
+/// Struct to use when the content should be wrapped into a group
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct GroupToken {
 	pub should_break: bool,
 	pub content: Content,
@@ -51,6 +50,31 @@ impl GroupToken {
 	}
 }
 
+/// Struct to use when there's need to create collection of tokens
+#[derive(Debug, PartialEq, Eq)]
+pub struct ConcatTokens {
+	pub tokens: Tokens,
+}
+
+impl ConcatTokens {
+	pub fn new() -> Self {
+		Self { tokens: vec![] }
+	}
+
+	pub fn push_token<T: Into<FormatTokens>>(mut self, value: T) -> Self {
+		self.tokens.push(value.into());
+		self
+	}
+
+	pub fn to_format_tokens(mut self) -> FormatTokens {
+		FormatTokens::concat(self.tokens)
+	}
+
+	pub fn to_tokens(mut self) -> Tokens {
+		self.tokens
+	}
+}
+
 impl<'a> FormatTokens {
 	const SOFT_LINE: FormatTokens = FormatTokens::Line {
 		mode: LineMode::Soft,
@@ -61,30 +85,41 @@ impl<'a> FormatTokens {
 	const NEW_LINE_OR_SPACE: FormatTokens = FormatTokens::Line {
 		mode: LineMode::Space,
 	};
-
+	///	Group is a special token that controls how the child tokens are printed.
+	///
+	/// The printer first tries to print all tokens in the group onto a single line (ignoring soft line wraps)
+	/// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
 	pub fn group(content: FormatTokens) -> FormatTokens {
 		FormatTokens::Group(GroupToken::new(Box::new(content), false))
 	}
 
+	/// Apply an additional level of indentation to `content`
 	pub fn indent(content: FormatTokens) -> FormatTokens {
 		FormatTokens::Indent {
 			content: Box::new(content),
 		}
 	}
 
-	pub fn concat<T: Into<FormatTokens>>(tokens: Vec<T>) -> FormatTokens {
+	/// Stores lint a list a `Vec` of `FormatTokens`
+	pub fn concat<T: Into<Tokens>>(tokens: T) -> FormatTokens {
+		let tokens = tokens.into();
+
 		if tokens.len() == 1 {
-			tokens.into_iter().nth(0).unwrap().into().clone()
+			tokens.first().unwrap().clone()
 		} else {
-			let mapped_tokens = tokens.into_iter().map(|t| t.into()).collect();
-			FormatTokens::List {
-				content: mapped_tokens,
-			}
+			FormatTokens::List { content: tokens }
 		}
 	}
 
-	pub fn join<T: Into<Tokens>>(separator: FormatTokens, tokens: T) -> FormatTokens {
-		let joined: Tokens = Intersperse::new(tokens.into().into_iter(), separator).collect();
+	/// Takes a list of tokens and a separator as input and creates a list of tokens where they are separated by the separator.
+	///
+	///
+	pub fn join<Separator: Into<FormatTokens>, T: Into<Tokens>>(
+		separator: Separator,
+		tokens: T,
+	) -> FormatTokens {
+		let joined: Tokens =
+			Intersperse::new(tokens.into().into_iter(), separator.into()).collect();
 		Self::concat(joined)
 	}
 
@@ -92,8 +127,16 @@ impl<'a> FormatTokens {
 		FormatTokens::StringLiteral(String::from(content.into()))
 	}
 
-	pub fn myself(token: FormatTokens) -> FormatTokens {
-		token
+	pub fn hardline() -> FormatTokens {
+		Self::HARD_LINE
+	}
+
+	pub fn softline() -> FormatTokens {
+		Self::SOFT_LINE
+	}
+
+	pub fn new_line_or_space() -> FormatTokens {
+		Self::NEW_LINE_OR_SPACE
 	}
 }
 
@@ -138,4 +181,27 @@ pub enum LineMode {
 	Space,
 	Soft,
 	Hard,
+}
+
+#[cfg(test)]
+mod tests {
+	use super::ConcatTokens;
+	use crate::{format_tokens::Tokens, FormatTokens};
+
+	#[test]
+	fn should_join() {
+		let separator = ",";
+		let tokens = ConcatTokens::new()
+			.push_token("foo")
+			.push_token("bar")
+			.to_tokens();
+		let result = FormatTokens::join(separator, tokens);
+		let expected = ConcatTokens::new()
+			.push_token("foo")
+			.push_token(",")
+			.push_token("bar")
+			.to_format_tokens();
+
+		assert_eq!(result, expected);
+	}
 }

@@ -1,5 +1,5 @@
 use crate::{
-	format_tokens::{FormatTokens, Tokens},
+	format_tokens::{ConcatTokens, FormatTokens, Tokens},
 	FormatValue,
 };
 use serde_json::Value;
@@ -19,15 +19,18 @@ impl FormatValue for Value {
 				let mut final_tokens: Tokens = vec!["{".into()];
 				let mut content = vec![];
 				for (key, value) in value {
-					content.push(FormatTokens::concat([
-						"\"",
-						key.as_str(),
-						"\"",
-						":",
-						FormatTokens::Space,
-						value.format(),
-						",",
-					]));
+					content.push(
+						ConcatTokens::new()
+							.push_token("\"")
+							.push_token(key.as_str())
+							.push_token("\"")
+							.push_token(":")
+							.push_token(FormatTokens::Space)
+							.push_token(value.format())
+							.push_token(",")
+							.push_token(FormatTokens::hardline())
+							.to_format_tokens(),
+					);
 				}
 				final_tokens.push(FormatTokens::indent(FormatTokens::from(content)));
 				final_tokens.push("}".into());
@@ -46,7 +49,7 @@ pub fn json_to_tokens(content: &str) -> FormatTokens {
 
 #[cfg(test)]
 mod test {
-	use crate::FormatTokens;
+	use crate::{format_tokens::ConcatTokens, FormatTokens};
 
 	use super::json_to_tokens;
 
@@ -99,15 +102,17 @@ mod test {
 		let input = r#"{ "foo": false }"#;
 		let expected = FormatTokens::concat([
 			"{".into(),
-			FormatTokens::indent(FormatTokens::from(vec![
-				"\"".into(),
-				"foo".into(),
-				"\"".into(),
-				":".into(),
-				FormatTokens::Space,
-				false.into(),
-				",".into(),
-			])),
+			FormatTokens::indent(
+				ConcatTokens::new()
+					.push_token("{")
+					.push_token("foo")
+					.push_token("\"")
+					.push_token(":")
+					.push_token(FormatTokens::Space)
+					.push_token(false)
+					.push_token(",")
+					.to_format_tokens(),
+			),
 			"}".into(),
 		]);
 
