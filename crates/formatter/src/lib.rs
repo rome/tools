@@ -49,7 +49,7 @@ impl FormatOptions {
 pub fn format(path: PathBuf, options: FormatOptions) {
 	println!(
 		"Running formatter to: \n- file {:?} \n- with options {:?}",
-		path, options
+		path, options.indent_style
 	);
 	// we assume that file exists
 	let mut file = File::open(&path).unwrap();
