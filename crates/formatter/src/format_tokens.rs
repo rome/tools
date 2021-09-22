@@ -1,4 +1,6 @@
-use crate::intersperse::Intersperse;
+use std::slice::from_mut;
+
+use crate::{intersperse::Intersperse, FormatValue};
 
 type Content = Box<FormatTokens>;
 pub type Tokens = Vec<FormatTokens>;
@@ -8,10 +10,12 @@ pub type Tokens = Vec<FormatTokens>;
 /// These tokens are language agnostic.
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum FormatTokens {
+	/// Simple space
 	Space,
 	Line {
 		mode: LineMode,
 	},
+	/// The content should be have indentation of one
 	Indent {
 		content: Content,
 	},
@@ -24,10 +28,12 @@ pub enum FormatTokens {
 		break_contents: Content,
 		flat_contents: Content,
 	},
-	String(String),
+	/// A literal string, the content will be printed with quotes
+	StringLiteral(String),
+	/// A number
 	Number(u64),
+	/// A generic boolean
 	Boolean(bool),
-	Break,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -66,13 +72,14 @@ impl<'a> FormatTokens {
 		}
 	}
 
-	pub fn concat<T: Into<Tokens>>(tokens: T) -> FormatTokens {
-		let tokens = tokens.into();
-
+	pub fn concat<T: Into<FormatTokens>>(tokens: Vec<T>) -> FormatTokens {
 		if tokens.len() == 1 {
-			tokens.first().unwrap().clone()
+			tokens.into_iter().nth(0).unwrap().into().clone()
 		} else {
-			FormatTokens::List { content: tokens }
+			let mapped_tokens = tokens.into_iter().map(|t| t.into()).collect();
+			FormatTokens::List {
+				content: mapped_tokens,
+			}
 		}
 	}
 
@@ -82,13 +89,17 @@ impl<'a> FormatTokens {
 	}
 
 	pub fn string<T: Into<&'a str>>(content: T) -> FormatTokens {
-		FormatTokens::String(String::from(content.into()))
+		FormatTokens::StringLiteral(String::from(content.into()))
+	}
+
+	pub fn myself(token: FormatTokens) -> FormatTokens {
+		token
 	}
 }
 
 impl From<&str> for FormatTokens {
 	fn from(value: &str) -> Self {
-		FormatTokens::String(String::from(value))
+		FormatTokens::StringLiteral(String::from(value))
 	}
 }
 

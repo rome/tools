@@ -1,5 +1,5 @@
 use crate::{
-	token::{FormatTokens, Tokens},
+	format_tokens::{FormatTokens, Tokens},
 	FormatValue,
 };
 use serde_json::Value;
@@ -20,14 +20,13 @@ impl FormatValue for Value {
 				let mut content = vec![];
 				for (key, value) in value {
 					content.push(FormatTokens::concat([
-						"\"".into(),
-						key.as_str().into(),
-						"\"".into(),
-						":".into(),
+						"\"",
+						key.as_str(),
+						"\"",
+						":",
 						FormatTokens::Space,
 						value.format(),
-						",".into(),
-						FormatTokens::Break,
+						",",
 					]));
 				}
 				final_tokens.push(FormatTokens::indent(FormatTokens::from(content)));
@@ -47,7 +46,7 @@ pub fn json_to_tokens(content: &str) -> FormatTokens {
 
 #[cfg(test)]
 mod test {
-	use crate::{token::Tokens, FormatTokens};
+	use crate::FormatTokens;
 
 	use super::json_to_tokens;
 
@@ -64,7 +63,6 @@ mod test {
 				FormatTokens::Space,
 				6.into(),
 				",".into(),
-				FormatTokens::Break,
 			])),
 			"}".into(),
 		]);
@@ -87,7 +85,6 @@ mod test {
 				FormatTokens::Space,
 				FormatTokens::concat(vec!["\"".into(), "bar".into(), "\"".into()]),
 				",".into(),
-				FormatTokens::Break,
 			])),
 			"}".into(),
 		]);
@@ -110,7 +107,6 @@ mod test {
 				FormatTokens::Space,
 				false.into(),
 				",".into(),
-				FormatTokens::Break,
 			])),
 			"}".into(),
 		]);
@@ -120,7 +116,7 @@ mod test {
 		assert_eq!(expected, result);
 	}
 
-		#[test]
+	#[test]
 	fn tokenize_boolean_true() {
 		let input = r#"{ "foo": true }"#;
 		let expected = FormatTokens::concat([
@@ -133,7 +129,6 @@ mod test {
 				FormatTokens::Space,
 				true.into(),
 				",".into(),
-				FormatTokens::Break,
 			])),
 			"}".into(),
 		]);
