@@ -1,4 +1,4 @@
-use crate::{intersperse::Intersperse, FormatValue};
+use crate::intersperse::Intersperse;
 
 type Content = Box<FormatTokens>;
 pub type Tokens = Vec<FormatTokens>;
@@ -73,12 +73,8 @@ impl ConcatTokens {
 		self
 	}
 
-	pub fn to_format_tokens(mut self) -> FormatTokens {
+	pub fn format_tokens(self) -> FormatTokens {
 		FormatTokens::concat(self.tokens)
-	}
-
-	pub fn to_tokens(mut self) -> Tokens {
-		self.tokens
 	}
 }
 
@@ -92,7 +88,7 @@ impl<'a> FormatTokens {
 	const NEW_LINE_OR_SPACE: FormatTokens = FormatTokens::Line {
 		mode: LineMode::Space,
 	};
-	///	Group is a special token that controls how the child tokens are printed.
+	/// Group is a special token that controls how the child tokens are printed.
 	///
 	/// The printer first tries to print all tokens in the group onto a single line (ignoring soft line wraps)
 	/// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
@@ -196,7 +192,7 @@ mod tests {
 	use super::ConcatTokens;
 	use crate::{
 		format_tokens::{GroupToken, LineMode},
-		FormatTokens, FormatValue,
+		FormatTokens,
 	};
 
 	#[test]
@@ -205,13 +201,13 @@ mod tests {
 		let tokens = ConcatTokens::new()
 			.push_token("foo")
 			.push_token("bar")
-			.to_tokens();
+			.tokens;
 		let result = FormatTokens::join(separator, tokens);
 		let expected = ConcatTokens::new()
 			.push_token("foo")
 			.push_token(",")
 			.push_token("bar")
-			.to_format_tokens();
+			.format_tokens();
 
 		assert_eq!(result, expected);
 	}
@@ -226,7 +222,7 @@ mod tests {
 		let expected = ConcatTokens::new()
 			.push_token("foo")
 			.push_token("bar")
-			.to_format_tokens();
+			.format_tokens();
 
 		assert_eq!(result, expected);
 	}
@@ -236,12 +232,12 @@ mod tests {
 		let tokens = ConcatTokens::new()
 			.push_token("foo")
 			.push_token("bar")
-			.to_format_tokens();
+			.format_tokens();
 
 		let tokens_expected = ConcatTokens::new()
 			.push_token("foo")
 			.push_token("bar")
-			.to_format_tokens();
+			.format_tokens();
 
 		let result = FormatTokens::group(tokens);
 		let expected = GroupToken::new(Box::new(tokens_expected), false);

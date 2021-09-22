@@ -1,5 +1,5 @@
 use crate::{
-	format_tokens::{ConcatTokens, FormatTokens, Tokens},
+	format_tokens::{ConcatTokens, FormatTokens},
 	FormatValue,
 };
 use serde_json::Value;
@@ -28,16 +28,14 @@ impl FormatValue for Value {
 							.push_token(value.format())
 							.push_token(",")
 							// .push_token(FormatTokens::hardline())
-							.to_format_tokens(),
+							.format_tokens(),
 					);
 				}
-				let tokens = ConcatTokens::new()
+				ConcatTokens::with_capacity(3)
 					.push_token("{")
 					.push_token(FormatTokens::indent(FormatTokens::from(content)))
 					.push_token("}")
-					.to_format_tokens();
-
-				FormatTokens::from(tokens)
+					.format_tokens()
 			}
 			_ => unimplemented!("Implement rest"),
 		}
@@ -70,10 +68,10 @@ mod test {
 					.push_token(FormatTokens::Space)
 					.push_token(6)
 					.push_token(",")
-					.to_format_tokens(),
+					.format_tokens(),
 			))
 			.push_token("}")
-			.to_format_tokens();
+			.format_tokens();
 
 		let result = json_to_tokens(input);
 
@@ -97,13 +95,13 @@ mod test {
 							.push_token("\"")
 							.push_token("bar")
 							.push_token("\"")
-							.to_format_tokens(),
+							.format_tokens(),
 					)
 					.push_token(",")
-					.to_format_tokens(),
+					.format_tokens(),
 			))
 			.push_token("}")
-			.to_format_tokens();
+			.format_tokens();
 
 		let result = json_to_tokens(input);
 
@@ -124,10 +122,10 @@ mod test {
 					.push_token(FormatTokens::Space)
 					.push_token(false)
 					.push_token(",")
-					.to_format_tokens(),
+					.format_tokens(),
 			))
 			.push_token("}")
-			.to_format_tokens();
+			.format_tokens();
 
 		let result = json_to_tokens(input);
 
@@ -149,10 +147,10 @@ mod test {
 					.push_token(FormatTokens::Space)
 					.push_token(true)
 					.push_token(",")
-					.to_format_tokens(),
+					.format_tokens(),
 			))
 			.push_token("}")
-			.to_format_tokens();
+			.format_tokens();
 
 		let result = json_to_tokens(input);
 
