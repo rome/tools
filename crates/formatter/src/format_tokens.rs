@@ -215,8 +215,8 @@ mod tests {
 	#[test]
 	fn should_concat() {
 		let tokens = vec![
-			FormatTokens::StringLiteral(format!("foo")),
-			FormatTokens::StringLiteral(format!("bar")),
+			FormatTokens::StringLiteral("foo".to_string()),
+			FormatTokens::StringLiteral("bar".to_string()),
 		];
 		let result = FormatTokens::concat(tokens);
 		let expected = ConcatTokens::new()
