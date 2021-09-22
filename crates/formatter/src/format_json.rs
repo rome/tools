@@ -16,7 +16,6 @@ impl FormatValue for Value {
 			}
 			Value::Bool(value) => FormatTokens::from(value),
 			Value::Object(value) => {
-				let mut final_tokens: Tokens = vec!["{".into()];
 				let mut content = vec![];
 				for (key, value) in value {
 					content.push(
@@ -28,13 +27,17 @@ impl FormatValue for Value {
 							.push_token(FormatTokens::Space)
 							.push_token(value.format())
 							.push_token(",")
-							.push_token(FormatTokens::hardline())
+							// .push_token(FormatTokens::hardline())
 							.to_format_tokens(),
 					);
 				}
-				final_tokens.push(FormatTokens::indent(FormatTokens::from(content)));
-				final_tokens.push("}".into());
-				FormatTokens::from(final_tokens)
+				let tokens = ConcatTokens::new()
+					.push_token("{")
+					.push_token(FormatTokens::indent(FormatTokens::from(content)))
+					.push_token("}")
+					.to_format_tokens();
+
+				FormatTokens::from(tokens)
 			}
 			_ => unimplemented!("Implement rest"),
 		}
@@ -56,19 +59,21 @@ mod test {
 	#[test]
 	fn tokenize_numbers() {
 		let input = r#"{ "foo": 6 }"#;
-		let expected = FormatTokens::concat([
-			"{".into(),
-			FormatTokens::indent(FormatTokens::from(vec![
-				"\"".into(),
-				"foo".into(),
-				"\"".into(),
-				":".into(),
-				FormatTokens::Space,
-				6.into(),
-				",".into(),
-			])),
-			"}".into(),
-		]);
+		let expected = ConcatTokens::new()
+			.push_token("{")
+			.push_token(FormatTokens::indent(
+				ConcatTokens::new()
+					.push_token("\"")
+					.push_token("foo")
+					.push_token("\"")
+					.push_token(":")
+					.push_token(FormatTokens::Space)
+					.push_token(6)
+					.push_token(",")
+					.to_format_tokens(),
+			))
+			.push_token("}")
+			.to_format_tokens();
 
 		let result = json_to_tokens(input);
 
@@ -78,19 +83,27 @@ mod test {
 	#[test]
 	fn tokenize_strings() {
 		let input = r#"{ "foo": "bar" }"#;
-		let expected = FormatTokens::concat([
-			"{".into(),
-			FormatTokens::indent(FormatTokens::from(vec![
-				"\"".into(),
-				"foo".into(),
-				"\"".into(),
-				":".into(),
-				FormatTokens::Space,
-				FormatTokens::concat(vec!["\"".into(), "bar".into(), "\"".into()]),
-				",".into(),
-			])),
-			"}".into(),
-		]);
+		let expected = ConcatTokens::new()
+			.push_token("{")
+			.push_token(FormatTokens::indent(
+				ConcatTokens::new()
+					.push_token("\"")
+					.push_token("foo")
+					.push_token("\"")
+					.push_token(":")
+					.push_token(FormatTokens::Space)
+					.push_token(
+						ConcatTokens::with_capacity(3)
+							.push_token("\"")
+							.push_token("bar")
+							.push_token("\"")
+							.to_format_tokens(),
+					)
+					.push_token(",")
+					.to_format_tokens(),
+			))
+			.push_token("}")
+			.to_format_tokens();
 
 		let result = json_to_tokens(input);
 
@@ -100,11 +113,11 @@ mod test {
 	#[test]
 	fn tokenize_boolean_false() {
 		let input = r#"{ "foo": false }"#;
-		let expected = FormatTokens::concat([
-			"{".into(),
-			FormatTokens::indent(
+		let expected = ConcatTokens::new()
+			.push_token("{")
+			.push_token(FormatTokens::indent(
 				ConcatTokens::new()
-					.push_token("{")
+					.push_token("\"")
 					.push_token("foo")
 					.push_token("\"")
 					.push_token(":")
@@ -112,9 +125,9 @@ mod test {
 					.push_token(false)
 					.push_token(",")
 					.to_format_tokens(),
-			),
-			"}".into(),
-		]);
+			))
+			.push_token("}")
+			.to_format_tokens();
 
 		let result = json_to_tokens(input);
 
@@ -124,19 +137,22 @@ mod test {
 	#[test]
 	fn tokenize_boolean_true() {
 		let input = r#"{ "foo": true }"#;
-		let expected = FormatTokens::concat([
-			"{".into(),
-			FormatTokens::indent(FormatTokens::from(vec![
-				"\"".into(),
-				"foo".into(),
-				"\"".into(),
-				":".into(),
-				FormatTokens::Space,
-				true.into(),
-				",".into(),
-			])),
-			"}".into(),
-		]);
+
+		let expected = ConcatTokens::new()
+			.push_token("{")
+			.push_token(FormatTokens::indent(
+				ConcatTokens::new()
+					.push_token("\"")
+					.push_token("foo")
+					.push_token("\"")
+					.push_token(":")
+					.push_token(FormatTokens::Space)
+					.push_token(true)
+					.push_token(",")
+					.to_format_tokens(),
+			))
+			.push_token("}")
+			.to_format_tokens();
 
 		let result = json_to_tokens(input);
 

@@ -61,6 +61,13 @@ impl ConcatTokens {
 		Self { tokens: vec![] }
 	}
 
+	/// Use this utility if you know ahead of time how many tokens you will store
+	pub fn with_capacity(capacity: usize) -> Self {
+		Self {
+			tokens: Vec::with_capacity(capacity),
+		}
+	}
+
 	pub fn push_token<T: Into<FormatTokens>>(mut self, value: T) -> Self {
 		self.tokens.push(value.into());
 		self
@@ -185,8 +192,12 @@ pub enum LineMode {
 
 #[cfg(test)]
 mod tests {
+
 	use super::ConcatTokens;
-	use crate::{format_tokens::Tokens, FormatTokens};
+	use crate::{
+		format_tokens::{GroupToken, LineMode},
+		FormatTokens, FormatValue,
+	};
 
 	#[test]
 	fn should_join() {
@@ -203,5 +214,70 @@ mod tests {
 			.to_format_tokens();
 
 		assert_eq!(result, expected);
+	}
+
+	#[test]
+	fn should_concat() {
+		let tokens = vec![
+			FormatTokens::StringLiteral(format!("foo")),
+			FormatTokens::StringLiteral(format!("bar")),
+		];
+		let result = FormatTokens::concat(tokens);
+		let expected = ConcatTokens::new()
+			.push_token("foo")
+			.push_token("bar")
+			.to_format_tokens();
+
+		assert_eq!(result, expected);
+	}
+
+	#[test]
+	fn should_group() {
+		let tokens = ConcatTokens::new()
+			.push_token("foo")
+			.push_token("bar")
+			.to_format_tokens();
+
+		let tokens_expected = ConcatTokens::new()
+			.push_token("foo")
+			.push_token("bar")
+			.to_format_tokens();
+
+		let result = FormatTokens::group(tokens);
+		let expected = GroupToken::new(Box::new(tokens_expected), false);
+		match result {
+			FormatTokens::Group(result) => {
+				assert_eq!(result, expected)
+			}
+			_ => unreachable!(),
+		}
+	}
+
+	#[test]
+	fn should_give_line_tokens() {
+		let hard_line = FormatTokens::hardline();
+		let soft_line = FormatTokens::softline();
+		let line_or_space = FormatTokens::new_line_or_space();
+
+		assert_eq!(
+			hard_line,
+			FormatTokens::Line {
+				mode: LineMode::Hard
+			}
+		);
+
+		assert_eq!(
+			soft_line,
+			FormatTokens::Line {
+				mode: LineMode::Soft
+			}
+		);
+
+		assert_eq!(
+			line_or_space,
+			FormatTokens::Line {
+				mode: LineMode::Space
+			}
+		);
 	}
 }
