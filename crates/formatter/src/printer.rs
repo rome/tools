@@ -20,71 +20,68 @@ struct LineBreakRequiredError;
 #[derive(Debug, Clone, Default)]
 pub struct Printer {
 	options: PrinterOptions,
+	state: PrinterState,
 }
 
 impl Printer {
 	pub fn new<T: Into<PrinterOptions>>(options: T) -> Self {
 		Self {
 			options: options.into(),
+			state: PrinterState::default(),
 		}
 	}
 
 	/// Prints the passed in token as well as all its contained tokens
-	pub fn print(&self, token: &FormatTokens) -> PrintResult {
-		let mut state = PrinterState::default();
+	pub fn print(mut self, token: &FormatTokens) -> PrintResult {
 		let mut queue: Vec<PrintTokenCall> =
 			vec![PrintTokenCall::new(token, PrintTokenArgs::default())];
 
 		while let Some(print_token_call) = queue.pop() {
-			queue.extend(self.print_token(
-				print_token_call.token,
-				print_token_call.args,
-				&mut state,
-			));
+			queue.extend(self.print_token(print_token_call.token, print_token_call.args));
 		}
 
-		PrintResult { code: state.buffer }
+		PrintResult {
+			code: self.state.buffer,
+		}
 	}
 
 	/// Prints a single token and returns the tokens to queue (that should be printed next).
 	fn print_token<'a>(
-		&self,
+		&mut self,
 		token: &'a FormatTokens,
 		args: PrintTokenArgs,
-		state: &mut PrinterState,
 	) -> Vec<PrintTokenCall<'a>> {
 		match token {
 			FormatTokens::Space => {
-				state.pending_spaces += 1;
+				self.state.pending_spaces += 1;
 				vec![]
 			}
 			FormatTokens::StringLiteral(content) => {
 				if content != "" {
 					// Print pending indention
-					if state.pending_indent > 0 {
+					if self.state.pending_indent > 0 {
 						self.print_str(
 							self.options
 								.indent_string
-								.repeat(state.pending_indent as usize)
+								.repeat(self.state.pending_indent as usize)
 								.as_str(),
-							state,
 						);
-						state.pending_indent = 0;
+						self.state.pending_indent = 0;
 					}
 
 					// Print pending spaces
-					if state.pending_spaces > 0 {
-						self.print_str(" ".repeat(state.pending_spaces as usize).as_str(), state);
-						state.pending_spaces = 0;
+					if self.state.pending_spaces > 0 {
+						self.print_str(" ".repeat(self.state.pending_spaces as usize).as_str());
+						self.state.pending_spaces = 0;
 					}
 
-					self.print_str(content.as_str(), state);
+					self.print_str(content.as_str());
 				}
 				vec![]
 			}
 
 			FormatTokens::Group(group) if !group.should_break => {
-				match self.try_print_flat(token, args.clone(), state) {
+				match self.try_print_flat(token, args.clone()) {
 					Err(_) => {
 						// Flat printing didn't work, print with line breaks
 						vec![PrintTokenCall::new(group.content.as_ref(), args)]
@@ -112,9 +109,9 @@ impl Printer {
 			}
 
 			FormatTokens::Line { .. } => {
-				self.print_str("\n", state);
-				state.pending_spaces = 0;
-				state.pending_indent = args.indent;
+				self.print_str("\n");
+				self.state.pending_spaces = 0;
+				self.state.pending_indent = args.indent;
 				vec![]
 			}
 		}
@@ -124,20 +121,19 @@ impl Printer {
 	/// and returns with a [LineBreakRequiredError] if the `token` contains any hard line breaks
 	/// or printing the group exceeds the configured maximal print width.
 	fn try_print_flat(
-		&self,
+		&mut self,
 		token: &FormatTokens,
 		args: PrintTokenArgs,
-		state: &mut PrinterState,
 	) -> Result<(), LineBreakRequiredError> {
 		let mut queue = vec![PrintTokenCall::new(token, args)];
 
-		let snapshot = state.snapshot();
+		let snapshot = self.state.snapshot();
 
 		while let Some(call) = queue.pop() {
-			match self.try_print_flat_token(call.token, call.args, state) {
+			match self.try_print_flat_token(call.token, call.args) {
 				Ok(to_queue) => queue.extend(to_queue),
 				Err(err) => {
-					state.restore(snapshot);
+					self.state.restore(snapshot);
 					return Err(err);
 				}
 			}
@@ -147,25 +143,24 @@ impl Printer {
 	}
 
 	fn try_print_flat_token<'a>(
-		&self,
+		&mut self,
 		token: &'a FormatTokens,
 		args: PrintTokenArgs,
-		state: &mut PrinterState,
 	) -> Result<Vec<PrintTokenCall<'a>>, LineBreakRequiredError> {
 		let next_calls = match token {
 			FormatTokens::StringLiteral(_) => {
-				let current_line = state.generated_line;
+				let current_line = self.state.generated_line;
 
 				// Delegate to generic string printing
-				let calls = self.print_token(token, args, state);
+				let calls = self.print_token(token, args);
 
 				// If the line is too long, break the group
-				if state.line_width > self.options.print_width {
+				if self.state.line_width > self.options.print_width {
 					return Err(LineBreakRequiredError);
 				}
 
 				// If a new line was printed, break the group
-				if current_line != state.generated_line {
+				if current_line != self.state.generated_line {
 					return Err(LineBreakRequiredError);
 				}
 
@@ -174,7 +169,7 @@ impl Printer {
 			FormatTokens::Line { mode } => {
 				match mode {
 					LineMode::Space => {
-						state.pending_spaces += 1;
+						self.state.pending_spaces += 1;
 						vec![]
 					}
 					// We want a flat structure, so omit soft line wraps
@@ -199,23 +194,23 @@ impl Printer {
 				..
 			} => vec![],
 
-			_ => self.print_token(token, args, state),
+			_ => self.print_token(token, args),
 		};
 
 		Ok(next_calls)
 	}
 
-	fn print_str(&self, content: &str, state: &mut PrinterState) -> () {
+	fn print_str(&mut self, content: &str) -> () {
 		for char in content.chars() {
-			state.generated_index += 1;
+			self.state.generated_index += 1;
 
 			if char == '\n' {
 				// TODO support different line endings?
-				state.generated_line += 1;
-				state.generated_column = 0;
-				state.line_width = 0;
+				self.state.generated_line += 1;
+				self.state.generated_column = 0;
+				self.state.line_width = 0;
 			} else {
-				state.generated_column += 1;
+				self.state.generated_column += 1;
 
 				let char_width = if char == '\t' {
 					self.options.tab_width as u16
@@ -223,18 +218,18 @@ impl Printer {
 					1
 				};
 
-				state.line_width += char_width;
+				self.state.line_width += char_width;
 			}
 		}
 
-		state.buffer.push_str(content);
+		self.state.buffer.push_str(content);
 	}
 }
 
 /// Printer state that is global to all tokens.
 /// Stores the result of the print operation (buffer and mappings) and at what
 /// position the printer currently is.
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone)]
 struct PrinterState {
 	buffer: String,
 	pending_indent: u16,
@@ -327,8 +322,8 @@ struct PrintTokenCall<'token> {
 }
 
 impl<'token> PrintTokenCall<'token> {
-	pub fn new(token: &'token FormatTokens, state: PrintTokenArgs) -> Self {
-		Self { token, args: state }
+	pub fn new(token: &'token FormatTokens, args: PrintTokenArgs) -> Self {
+		Self { token, args }
 	}
 }
 
