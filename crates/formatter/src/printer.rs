@@ -292,7 +292,7 @@ struct PrinterStateSnapshot {
 ///
 /// The state is passed by value, which is why it's important that it isn't storing any heavy
 /// data structures. Such structures should be stored on the [PrinterState] instead.
-#[derive(Debug, Default, Clone, PartialOrd, PartialEq)]
+#[derive(Debug, Default, Clone, Eq, PartialEq)]
 struct PrintTokenArgs {
 	indent: u16,
 }
@@ -319,7 +319,7 @@ impl PrintTokenArgs {
 /// The `PrintTokenCall` stores the data for a single `print_token` call consisting of the token
 /// and the `args` that's passed to `print_token`.
 ///
-#[derive(Debug, PartialOrd, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone)]
 struct PrintTokenCall<'token> {
 	token: &'token FormatToken,
 	args: PrintTokenArgs,

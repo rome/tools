@@ -1,4 +1,4 @@
-use crate::format_token::IndentToken;
+use crate::format_token::{IndentToken, LineToken};
 use crate::{
 	format_token::{ConcatTokens, FormatToken},
 	FormatValue,
@@ -28,7 +28,7 @@ impl FormatValue for Value {
 							.push_token(FormatToken::Space)
 							.push_token(value.format())
 							.push_token(",")
-							.push_token(FormatToken::new_line_or_space())
+							.push_token(LineToken::soft_or_space())
 							.format_tokens(),
 					);
 				}
