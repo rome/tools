@@ -32,10 +32,9 @@ impl Printer {
 	}
 
 	/// Prints the passed in token as well as all its contained tokens
-	pub fn print<T: Into<FormatTokens>>(mut self, token: T) -> PrintResult {
-		let token = token.into();
+	pub fn print(mut self, token: &FormatTokens) -> PrintResult {
 		let mut queue: Vec<PrintTokenCall> =
-			vec![PrintTokenCall::new(&token, PrintTokenArgs::default())];
+			vec![PrintTokenCall::new(token, PrintTokenArgs::default())];
 
 		while let Some(print_token_call) = queue.pop() {
 			queue.extend(self.print_token(print_token_call.token, print_token_call.args));
@@ -381,7 +380,7 @@ mod tests {
 
 	/// Prints the given token with the default printer options
 	fn print_token<T: Into<FormatTokens>>(token: T) -> PrintResult {
-		Printer::default().print(token.into())
+		Printer::default().print(&token.into())
 	}
 
 	#[test]
@@ -489,7 +488,7 @@ two lines`,
 			print_width: 19,
 		});
 
-		let result = printer.print(create_array_tokens(vec![
+		let result = printer.print(&create_array_tokens(vec![
 			FormatTokens::string("'a'"),
 			FormatTokens::string("'b'"),
 			FormatTokens::string("'c'"),
