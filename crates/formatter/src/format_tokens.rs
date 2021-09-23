@@ -24,14 +24,10 @@ pub enum FormatTokens {
 	// TODO Revisit, structure is a bit weird
 	IfBreak {
 		break_contents: Content,
-		flat_contents: Content,
+		flat_contents: Option<Content>,
 	},
 	/// A literal string, the content will be printed with quotes
 	StringLiteral(String),
-	/// A number
-	Number(u64),
-	/// A generic boolean
-	Boolean(bool),
 }
 
 /// Struct to use when the content should be wrapped into a group
@@ -115,8 +111,6 @@ impl<'a> FormatTokens {
 	}
 
 	/// Takes a list of tokens and a separator as input and creates a list of tokens where they are separated by the separator.
-	///
-	///
 	pub fn join<Separator: Into<FormatTokens>, T: Into<Tokens>>(
 		separator: Separator,
 		tokens: T,
@@ -130,14 +124,19 @@ impl<'a> FormatTokens {
 		FormatTokens::StringLiteral(String::from(content.into()))
 	}
 
+	/// A forced line break that always must be printed
 	pub fn hardline() -> FormatTokens {
 		Self::HARD_LINE
 	}
 
+	/// An optional line that the printer is allowed to emit to e.g. fit an array expression on a
+	/// single line but gets emitted if the array expression spans across multiple lines anyway.
 	pub fn softline() -> FormatTokens {
 		Self::SOFT_LINE
 	}
 
+	/// Gets printed as a space if used inside of a group that fits on a single line and otherwise
+	/// gets printed as a new line (e.g. if the array expression spans multiple lines).
 	pub fn new_line_or_space() -> FormatTokens {
 		Self::NEW_LINE_OR_SPACE
 	}
@@ -151,19 +150,19 @@ impl From<&str> for FormatTokens {
 
 impl From<u64> for FormatTokens {
 	fn from(value: u64) -> Self {
-		FormatTokens::Number(value)
+		FormatTokens::StringLiteral(value.to_string())
 	}
 }
 
 impl From<&bool> for FormatTokens {
 	fn from(value: &bool) -> Self {
-		FormatTokens::Boolean(*value)
+		FormatTokens::StringLiteral(value.to_string())
 	}
 }
 
 impl From<bool> for FormatTokens {
 	fn from(value: bool) -> Self {
-		FormatTokens::Boolean(value)
+		FormatTokens::StringLiteral(value.to_string())
 	}
 }
 
