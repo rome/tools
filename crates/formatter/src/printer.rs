@@ -464,8 +464,7 @@ two lines`,
 				FormatTokens::string("\"0123456789\""),
 				FormatTokens::string("\"0123456789\""),
 				FormatTokens::string("\"0123456789\""),
-			])
-			.into(),
+			]),
 		]));
 
 		assert_eq!(
