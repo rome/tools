@@ -28,12 +28,6 @@ pub enum FormatToken {
 	},
 	/// A literal string, the content will be printed with quotes
 	StringLiteral(String),
-
-	/// To store f64 numbers
-	NumberF64(f64),
-
-	/// To store unsigned u64 numbers
-	NumberU64(u64),
 }
 
 /// Struct to use when the content should be wrapped into a group
@@ -130,8 +124,24 @@ impl<'a> FormatToken {
 		Self::concat(joined)
 	}
 
+	/// Utility to tokenize a string
 	pub fn string<T: Into<&'a str>>(content: T) -> FormatToken {
 		FormatToken::StringLiteral(String::from(content.into()))
+	}
+
+	/// Utility to tokenize a f64
+	pub fn f64<T: Into<f64>>(content: T) -> FormatToken {
+		FormatToken::from(content.into())
+	}
+
+	/// Utility to tokenize a u64
+	pub fn u64<T: Into<u64>>(content: T) -> FormatToken {
+		FormatToken::from(content.into())
+	}
+
+	/// Utility to tokenize a boolean
+	pub fn boolean<T: Into<bool>>(content: T) -> FormatToken {
+		FormatToken::from(content.into())
 	}
 
 	/// A forced line break that always must be printed
@@ -160,13 +170,13 @@ impl From<&str> for FormatToken {
 
 impl From<u64> for FormatToken {
 	fn from(value: u64) -> Self {
-		FormatToken::NumberU64(value)
+		FormatToken::StringLiteral(value.to_string())
 	}
 }
 
 impl From<f64> for FormatToken {
 	fn from(value: f64) -> Self {
-		FormatToken::NumberF64(value)
+		FormatToken::StringLiteral(value.to_string())
 	}
 }
 

@@ -115,14 +115,6 @@ impl Printer {
 				self.state.pending_indent = args.indent;
 				vec![]
 			}
-
-			FormatToken::NumberF64(_) => {
-				todo!()
-			}
-
-			FormatToken::NumberU64(_) => {
-				todo!()
-			}
 		}
 	}
 
@@ -205,14 +197,6 @@ impl Printer {
 
 			FormatToken::Space | FormatToken::Indent { .. } | FormatToken::List { .. } => {
 				self.print_token(token, args)
-			}
-
-			FormatToken::NumberU64(_) => {
-				todo!()
-			}
-
-			FormatToken::NumberF64(_) => {
-				todo!()
 			}
 		};
 
