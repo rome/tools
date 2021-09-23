@@ -31,7 +31,7 @@ impl FormatValue for Value {
 							.format_tokens(),
 					);
 				}
-				ConcatTokens::with_capacity(3)
+				ConcatTokens::new()
 					.push_token("{")
 					.push_token(FormatToken::softline())
 					.push_token(FormatToken::indent(FormatToken::from(content)))
@@ -93,7 +93,7 @@ mod test {
 					.push_token(":")
 					.push_token(FormatToken::Space)
 					.push_token(
-						ConcatTokens::with_capacity(3)
+						ConcatTokens::new()
 							.push_token("\"")
 							.push_token("bar")
 							.push_token("\"")

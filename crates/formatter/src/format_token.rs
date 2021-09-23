@@ -61,13 +61,6 @@ impl ConcatTokens {
 		Self { tokens: vec![] }
 	}
 
-	/// Use this utility if you know ahead of time how many tokens you will store
-	pub fn with_capacity(capacity: usize) -> Self {
-		Self {
-			tokens: Vec::with_capacity(capacity),
-		}
-	}
-
 	pub fn push_token<T: Into<FormatToken>>(mut self, value: T) -> Self {
 		self.tokens.push(value.into());
 		self
