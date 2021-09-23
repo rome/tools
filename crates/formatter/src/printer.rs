@@ -368,7 +368,7 @@ impl Default for PrinterOptions {
 		PrinterOptions {
 			tab_width: 2,
 			print_width: 80,
-			indent_string: String::from("  "),
+			indent_string: String::from("\t"),
 		}
 	}
 }
@@ -380,7 +380,12 @@ mod tests {
 
 	/// Prints the given token with the default printer options
 	fn print_token<T: Into<FormatTokens>>(token: T) -> PrintResult {
-		Printer::default().print(&token.into())
+		let options = PrinterOptions {
+			indent_string: String::from("  "),
+			..PrinterOptions::default()
+		};
+
+		Printer::new(options).print(&token.into())
 	}
 
 	#[test]
