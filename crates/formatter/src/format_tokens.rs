@@ -13,7 +13,7 @@ pub enum FormatTokens {
 	Line {
 		mode: LineMode,
 	},
-	/// The content should be have indentation of one
+	/// Content that is indented one level deeper than its parent.
 	Indent {
 		content: Content,
 	},
@@ -33,6 +33,10 @@ pub enum FormatTokens {
 /// Struct to use when the content should be wrapped into a group
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct GroupToken {
+	/// `false` if you want that the content is printed on a single line if it fits and is only
+	/// broken across multiple lines if it doesn't. `true` if the content should always be printed
+	/// across multiple lines. Using `true` has the same meaning as replacing all non hard line breaks
+	/// with hard line breaks.
 	pub should_break: bool,
 	pub content: Content,
 }
@@ -88,14 +92,14 @@ impl<'a> FormatTokens {
 	///
 	/// The printer first tries to print all tokens in the group onto a single line (ignoring soft line wraps)
 	/// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
-	pub fn group(content: FormatTokens) -> FormatTokens {
-		FormatTokens::Group(GroupToken::new(Box::new(content), false))
+	pub fn group<T: Into<FormatTokens>>(content: T) -> FormatTokens {
+		FormatTokens::Group(GroupToken::new(Box::new(content.into()), false))
 	}
 
 	/// Apply an additional level of indentation to `content`
-	pub fn indent(content: FormatTokens) -> FormatTokens {
+	pub fn indent<T: Into<FormatTokens>>(content: T) -> FormatTokens {
 		FormatTokens::Indent {
-			content: Box::new(content),
+			content: Box::new(content.into()),
 		}
 	}
 

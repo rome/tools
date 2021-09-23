@@ -8,7 +8,7 @@ pub struct PrintResult {
 
 impl PrintResult {
 	pub fn code(&self) -> &String {
-		return &self.code;
+		&self.code
 	}
 }
 
@@ -32,9 +32,10 @@ impl Printer {
 	}
 
 	/// Prints the passed in token as well as all its contained tokens
-	pub fn print(mut self, token: &FormatTokens) -> PrintResult {
+	pub fn print<T: Into<FormatTokens>>(mut self, token: T) -> PrintResult {
+		let token = token.into();
 		let mut queue: Vec<PrintTokenCall> =
-			vec![PrintTokenCall::new(token, PrintTokenArgs::default())];
+			vec![PrintTokenCall::new(&token, PrintTokenArgs::default())];
 
 		while let Some(print_token_call) = queue.pop() {
 			queue.extend(self.print_token(print_token_call.token, print_token_call.args));
@@ -57,7 +58,7 @@ impl Printer {
 				vec![]
 			}
 			FormatTokens::StringLiteral(content) => {
-				if content != "" {
+				if !content.is_empty() {
 					// Print pending indention
 					if self.state.pending_indent > 0 {
 						self.print_str(
@@ -194,18 +195,19 @@ impl Printer {
 				..
 			} => vec![],
 
-			_ => self.print_token(token, args),
+			FormatTokens::Space | FormatTokens::Indent { .. } | FormatTokens::List { .. } => {
+				self.print_token(token, args)
+			}
 		};
 
 		Ok(next_calls)
 	}
 
-	fn print_str(&mut self, content: &str) -> () {
+	fn print_str(&mut self, content: &str) {
 		for char in content.chars() {
 			self.state.generated_index += 1;
 
 			if char == '\n' {
-				// TODO support different line endings?
 				self.state.generated_line += 1;
 				self.state.generated_column = 0;
 				self.state.line_width = 0;
@@ -374,12 +376,85 @@ impl Default for PrinterOptions {
 
 #[cfg(test)]
 mod tests {
-	use crate::printer::Printer;
+	use crate::printer::{PrintResult, Printer, PrinterOptions};
 	use crate::FormatTokens;
+
+	/// Prints the given token with the default printer options
+	fn print_token<T: Into<FormatTokens>>(token: T) -> PrintResult {
+		Printer::default().print(token.into())
+	}
+
+	#[test]
+	fn it_prints_a_group_on_a_single_line_if_it_fits() {
+		let result = print_token(create_array_tokens(vec![
+			FormatTokens::string("\"a\""),
+			FormatTokens::string("\"b\""),
+			FormatTokens::string("\"c\""),
+			FormatTokens::string("\"d\""),
+		]));
+
+		assert_eq!(r#"["a", "b", "c", "d"]"#, result.code)
+	}
+
+	#[test]
+	fn it_tracks_the_indent_for_each_token() {
+		let tokens = FormatTokens::concat(vec![
+			FormatTokens::string("a"),
+			FormatTokens::indent(vec![
+				FormatTokens::softline(),
+				FormatTokens::string("b"),
+				FormatTokens::indent(vec![
+					FormatTokens::softline(),
+					FormatTokens::string("c"),
+					FormatTokens::indent(vec![
+						FormatTokens::softline(),
+						FormatTokens::string("d"),
+						FormatTokens::softline(),
+						FormatTokens::string("d"),
+					]),
+					FormatTokens::softline(),
+					FormatTokens::string("c"),
+				]),
+				FormatTokens::softline(),
+				FormatTokens::string("b"),
+			]),
+			FormatTokens::softline(),
+			FormatTokens::string("a"),
+		]);
+
+		assert_eq!(
+			r#"a
+  b
+    c
+      d
+      d
+    c
+  b
+a"#,
+			print_token(tokens).code
+		)
+	}
+
+	#[test]
+	fn it_breaks_a_group_if_a_string_contains_a_newline() {
+		let result = print_token(create_array_tokens(vec![
+			FormatTokens::string("`This string spans\ntwo lines`"),
+			FormatTokens::string("\"b\""),
+		]));
+
+		assert_eq!(
+			r#"[
+  `This string spans
+two lines`,
+  "b",
+]"#,
+			result.code
+		)
+	}
 
 	#[test]
 	fn it_breaks_parent_groups_if_they_dont_fit_on_a_single_line() {
-		let array = create_array_tokens(vec![
+		let result = print_token(create_array_tokens(vec![
 			FormatTokens::string("\"a\""),
 			FormatTokens::string("\"b\""),
 			FormatTokens::string("\"c\""),
@@ -390,20 +465,42 @@ mod tests {
 				FormatTokens::string("\"0123456789\""),
 				FormatTokens::string("\"0123456789\""),
 				FormatTokens::string("\"0123456789\""),
-			]),
-		]);
+			])
+			.into(),
+		]));
 
-		let printer = Printer::default();
-		let result = printer.print(&array);
+		assert_eq!(
+			r#"[
+  "a",
+  "b",
+  "c",
+  "d",
+  ["0123456789", "0123456789", "0123456789", "0123456789", "0123456789"],
+]"#,
+			result.code
+		);
+	}
 
-		assert_eq!("[\n  \"a\",\n  \"b\",\n  \"c\",\n  \"d\",\n  [\"0123456789\", \"0123456789\", \"0123456789\", \"0123456789\", \"0123456789\"],\n]", result.code);
+	#[test]
+	fn it_use_the_indent_character_specified_in_the_options() {
+		let printer = Printer::new(PrinterOptions {
+			indent_string: String::from("\t"),
+			tab_width: 4,
+			print_width: 19,
+		});
+
+		let result = printer.print(create_array_tokens(vec![
+			FormatTokens::string("'a'"),
+			FormatTokens::string("'b'"),
+			FormatTokens::string("'c'"),
+			FormatTokens::string("'d'"),
+		]));
+
+		assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.code);
 	}
 
 	fn create_array_tokens(items: Vec<FormatTokens>) -> FormatTokens {
-		let separator = FormatTokens::concat(vec![
-			FormatTokens::string(","),
-			FormatTokens::new_line_or_space(),
-		]);
+		let separator = vec![FormatTokens::string(","), FormatTokens::new_line_or_space()];
 
 		let elements = vec![
 			FormatTokens::softline(),
@@ -414,11 +511,11 @@ mod tests {
 			},
 		];
 
-		FormatTokens::group(FormatTokens::concat(vec![
+		FormatTokens::group(vec![
 			FormatTokens::string("["),
-			FormatTokens::indent(FormatTokens::concat(elements)),
+			FormatTokens::indent(elements),
 			FormatTokens::softline(),
 			FormatTokens::string("]"),
-		]))
+		])
 	}
 }

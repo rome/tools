@@ -63,7 +63,7 @@ pub fn format(path: PathBuf, options: FormatOptions) {
 	let tokens = json_to_tokens(buffer.as_str());
 
 	let printer = Printer::new(options);
-	let print_result = printer.print(&tokens);
+	let print_result = printer.print(tokens);
 
 	println!("{}", print_result.code());
 }
