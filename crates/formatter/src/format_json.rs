@@ -1,3 +1,4 @@
+use crate::format_token::IndentToken;
 use crate::{
 	format_token::{ConcatTokens, FormatToken},
 	FormatValue,
@@ -33,9 +34,9 @@ impl FormatValue for Value {
 				}
 				ConcatTokens::new()
 					.push_token("{")
-					.push_token(FormatToken::softline())
-					.push_token(FormatToken::indent(FormatToken::from(content)))
-					.push_token(FormatToken::softline())
+					.push_token(LineToken::soft())
+					.push_token(IndentToken::new(content))
+					.push_token(LineToken::soft())
 					.push_token("}")
 					.format_tokens()
 			}
@@ -55,13 +56,14 @@ mod test {
 	use crate::{format_token::ConcatTokens, FormatToken};
 
 	use super::json_to_tokens;
+	use crate::format_token::IndentToken;
 
 	#[test]
 	fn tokenize_numbers() {
 		let input = r#"{ "foo": 6 }"#;
 		let expected = ConcatTokens::new()
 			.push_token("{")
-			.push_token(FormatToken::indent(
+			.push_token(IndentToken::new(
 				ConcatTokens::new()
 					.push_token("\"")
 					.push_token("foo")
@@ -85,7 +87,7 @@ mod test {
 		let input = r#"{ "foo": "bar" }"#;
 		let expected = ConcatTokens::new()
 			.push_token("{")
-			.push_token(FormatToken::indent(
+			.push_token(IndentToken::new(
 				ConcatTokens::new()
 					.push_token("\"")
 					.push_token("foo")
@@ -115,7 +117,7 @@ mod test {
 		let input = r#"{ "foo": false }"#;
 		let expected = ConcatTokens::new()
 			.push_token("{")
-			.push_token(FormatToken::indent(
+			.push_token(IndentToken::new(
 				ConcatTokens::new()
 					.push_token("\"")
 					.push_token("foo")
@@ -140,7 +142,7 @@ mod test {
 
 		let expected = ConcatTokens::new()
 			.push_token("{")
-			.push_token(FormatToken::indent(
+			.push_token(IndentToken::new(
 				ConcatTokens::new()
 					.push_token("\"")
 					.push_token("foo")

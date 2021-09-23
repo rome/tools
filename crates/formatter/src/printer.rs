@@ -1,3 +1,4 @@
+use crate::format_token::IfBreakToken;
 use crate::LineMode;
 use crate::{FormatOptions, FormatToken, IndentStyle};
 
@@ -57,7 +58,7 @@ impl Printer {
 				self.state.pending_spaces += 1;
 				vec![]
 			}
-			FormatToken::StringLiteral(content) => {
+			FormatToken::String(content) => {
 				if !content.is_empty() {
 					// Print pending indention
 					if self.state.pending_indent > 0 {
@@ -95,18 +96,22 @@ impl Printer {
 				vec![PrintTokenCall::new(group.content.as_ref(), args)]
 			}
 
-			FormatToken::List { content } => content
+			FormatToken::List(list) => list
+				.content
 				.iter()
 				.rev()
 				.map(|t| PrintTokenCall::new(t, args.clone()))
 				.collect(),
 
-			FormatToken::Indent { content } => {
-				vec![PrintTokenCall::new(content, args.with_incremented_indent())]
+			FormatToken::Indent(indent) => {
+				vec![PrintTokenCall::new(
+					&indent.content,
+					args.with_incremented_indent(),
+				)]
 			}
 
-			FormatToken::IfBreak { break_contents, .. } => {
-				vec![PrintTokenCall::new(break_contents, args)]
+			FormatToken::IfBreak(if_break) => {
+				vec![PrintTokenCall::new(&if_break.break_contents, args)]
 			}
 
 			FormatToken::Line { .. } => {
@@ -149,7 +154,7 @@ impl Printer {
 		args: PrintTokenArgs,
 	) -> Result<Vec<PrintTokenCall<'a>>, LineBreakRequiredError> {
 		let next_calls = match token {
-			FormatToken::StringLiteral(_) => {
+			FormatToken::String(_) => {
 				let current_line = self.state.generated_line;
 
 				// Delegate to generic string printing
@@ -167,9 +172,9 @@ impl Printer {
 
 				calls
 			}
-			FormatToken::Line { mode } => {
-				match mode {
-					LineMode::Space => {
+			FormatToken::Line(line) => {
+				match line.mode {
+					LineMode::SoftOrSpace => {
 						self.state.pending_spaces += 1;
 						vec![]
 					}
@@ -184,16 +189,13 @@ impl Printer {
 
 			FormatToken::Group(group) => vec![PrintTokenCall::new(group.content.as_ref(), args)],
 
-			FormatToken::IfBreak {
+			FormatToken::IfBreak(IfBreakToken {
 				flat_contents: Some(content),
 				..
-			} => vec![PrintTokenCall::new(content, args)],
+			}) => vec![PrintTokenCall::new(content, args)],
 
 			// Omit if there's no flat_contents
-			FormatToken::IfBreak {
-				flat_contents: None,
-				..
-			} => vec![],
+			FormatToken::IfBreak(_) => vec![],
 
 			FormatToken::Space | FormatToken::Indent { .. } | FormatToken::List { .. } => {
 				self.print_token(token, args)
@@ -376,6 +378,7 @@ impl Default for PrinterOptions {
 
 #[cfg(test)]
 mod tests {
+	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
 	use crate::printer::{PrintResult, Printer, PrinterOptions};
 	use crate::FormatToken;
 
@@ -399,27 +402,30 @@ mod tests {
 	#[test]
 	fn it_tracks_the_indent_for_each_token() {
 		let tokens = FormatToken::concat(vec![
-			FormatToken::string("a"),
-			FormatToken::indent(vec![
-				FormatToken::softline(),
-				FormatToken::string("b"),
-				FormatToken::indent(vec![
-					FormatToken::softline(),
-					FormatToken::string("c"),
-					FormatToken::indent(vec![
-						FormatToken::softline(),
-						FormatToken::string("d"),
-						FormatToken::softline(),
-						FormatToken::string("d"),
-					]),
-					FormatToken::softline(),
-					FormatToken::string("c"),
-				]),
-				FormatToken::softline(),
-				FormatToken::string("b"),
-			]),
-			FormatToken::softline(),
-			FormatToken::string("a"),
+			"a".into(),
+			IndentToken::new(vec![
+				LineToken::soft().into(),
+				"b".into(),
+				IndentToken::new(vec![
+					LineToken::soft().into(),
+					"c".into(),
+					IndentToken::new(vec![
+						LineToken::soft().into(),
+						"d".into(),
+						LineToken::soft().into(),
+						"d".into(),
+					])
+					.into(),
+					LineToken::soft().into(),
+					"c".into(),
+				])
+				.into(),
+				LineToken::soft().into(),
+				"b".into(),
+			])
+			.into(),
+			LineToken::soft().into(),
+			"a".into(),
 		]);
 
 		assert_eq!(
@@ -499,24 +505,21 @@ two lines`,
 	}
 
 	fn create_array_tokens(items: Vec<FormatToken>) -> FormatToken {
-		let separator = FormatToken::concat(vec![
+		let separator = vec![
 			FormatToken::string(","),
-			FormatToken::new_line_or_space(),
-		]);
-
-		let elements = vec![
-			FormatToken::softline(),
-			FormatToken::join(separator, items),
-			FormatToken::IfBreak {
-				break_contents: Box::new(FormatToken::string(",")),
-				flat_contents: None,
-			},
+			FormatToken::Line(LineToken::soft_or_space()),
 		];
 
-		FormatToken::group(FormatToken::concat(vec![
+		let elements = vec![
+			FormatToken::Line(LineToken::soft()),
+			FormatToken::List(ListToken::join(separator, items)),
+			FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
+		];
+
+		FormatToken::Group(GroupToken::new(vec![
 			FormatToken::string("["),
-			FormatToken::indent(FormatToken::concat(elements)),
-			FormatToken::softline(),
+			FormatToken::Indent(IndentToken::new(elements)),
+			FormatToken::Line(LineToken::soft()),
 			FormatToken::string("]"),
 		]))
 	}
