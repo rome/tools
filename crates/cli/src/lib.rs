@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 /// Main function to run Rome CLI
 pub fn run_cli() {
-	let result_matches = App::new("rome")
+	let matches = App::new("rome")
 		.about("The official Rome CLI")
 		.version(crate_version!())
 		.subcommand(
@@ -15,7 +15,6 @@ pub fn run_cli() {
 						.long("indent-style")
 						.about("The style of indentation")
 						.value_name("tab|space")
-						// .possible_values(&["tabs", "spaces"])
 						.default_value("tab")
 						.validator(|value| {
 							if !value.is_empty() {
@@ -36,7 +35,7 @@ pub fn run_cli() {
 						.value_name("NUMBER")
 						.default_value("2")
 						.validator(|value| {
-							let number = value.parse::<u16>();
+							let number = value.parse::<u8>();
 							match number {
 								Ok(_) => Ok(()),
 								Err(_) => Err("Invalid indent-size value. Try using a number"),
@@ -56,29 +55,28 @@ pub fn run_cli() {
 						}),
 				),
 		)
-		.try_get_matches();
+		.try_get_matches()
+		.unwrap_or_else(|error| {
+			error.exit();
+		});
 
-	match result_matches {
-		Ok(matches) => {
-			if let Some(matches) = matches.subcommand_matches("format") {
-				let size = matches.value_of("indentSize");
-				let style = matches.value_of("indentStyle");
-				let input = matches.value_of("input").unwrap();
-				let input = PathBuf::from(&input);
-				let options = match style {
-					Some(style) => match style {
-						"tab" => IndentStyle::Tab,
-						"space" => {
-							let size = size.unwrap_or("2");
-							IndentStyle::Space(size.parse::<u8>().unwrap_or(2))
-						}
-						_ => IndentStyle::Tab,
-					},
-					None => IndentStyle::Tab,
-				};
-				format(input, FormatOptions::new(options));
-			}
-		}
-		Err(err) => err.exit(),
+	if let Some(matches) = matches.subcommand_matches("format") {
+		let size = matches.value_of("indentSize");
+		let style = matches.value_of("indentStyle");
+		let input = matches.value_of("input").unwrap();
+		let input = PathBuf::from(&input);
+		let options = match style {
+			Some(style) => match style {
+				"tab" => IndentStyle::Tab,
+				"space" => {
+					// default value is already set in the argument
+					let size = size.unwrap();
+					IndentStyle::Space(size.parse::<u8>().unwrap_or(2))
+				}
+				_ => IndentStyle::Tab,
+			},
+			None => IndentStyle::Tab,
+		};
+		format(input, FormatOptions::new(options));
 	}
 }

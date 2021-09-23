@@ -1,20 +1,20 @@
 use crate::{
-	format_tokens::{ConcatTokens, FormatTokens},
+	format_token::{ConcatTokens, FormatToken},
 	FormatValue,
 };
 use serde_json::Value;
 
 impl FormatValue for Value {
-	fn format(&self) -> FormatTokens {
+	fn format(&self) -> FormatToken {
 		match self {
 			Value::String(string) => {
-				FormatTokens::from(vec!["\"".into(), string.as_str().into(), "\"".into()])
+				FormatToken::from(vec!["\"".into(), string.as_str().into(), "\"".into()])
 			}
 			Value::Number(number) => {
-				let number = number.as_u64().unwrap();
-				FormatTokens::from(number)
+				let number = number.as_f64().unwrap();
+				FormatToken::from(number)
 			}
-			Value::Bool(value) => FormatTokens::from(value),
+			Value::Bool(value) => FormatToken::from(value),
 			Value::Object(value) => {
 				let mut content = vec![];
 				for (key, value) in value {
@@ -24,16 +24,18 @@ impl FormatValue for Value {
 							.push_token(key.as_str())
 							.push_token("\"")
 							.push_token(":")
-							.push_token(FormatTokens::Space)
+							.push_token(FormatToken::Space)
 							.push_token(value.format())
 							.push_token(",")
-							// .push_token(FormatTokens::hardline())
+							.push_token(FormatToken::new_line_or_space())
 							.format_tokens(),
 					);
 				}
 				ConcatTokens::with_capacity(3)
 					.push_token("{")
-					.push_token(FormatTokens::indent(FormatTokens::from(content)))
+					.push_token(FormatToken::softline())
+					.push_token(FormatToken::indent(FormatToken::from(content)))
+					.push_token(FormatToken::softline())
 					.push_token("}")
 					.format_tokens()
 			}
@@ -42,7 +44,7 @@ impl FormatValue for Value {
 	}
 }
 
-pub fn json_to_tokens(content: &str) -> FormatTokens {
+pub fn json_to_tokens(content: &str) -> FormatToken {
 	let json: Value = serde_json::from_str(content).unwrap();
 
 	json.format()
@@ -50,7 +52,7 @@ pub fn json_to_tokens(content: &str) -> FormatTokens {
 
 #[cfg(test)]
 mod test {
-	use crate::{format_tokens::ConcatTokens, FormatTokens};
+	use crate::{format_token::ConcatTokens, FormatToken};
 
 	use super::json_to_tokens;
 
@@ -59,13 +61,13 @@ mod test {
 		let input = r#"{ "foo": 6 }"#;
 		let expected = ConcatTokens::new()
 			.push_token("{")
-			.push_token(FormatTokens::indent(
+			.push_token(FormatToken::indent(
 				ConcatTokens::new()
 					.push_token("\"")
 					.push_token("foo")
 					.push_token("\"")
 					.push_token(":")
-					.push_token(FormatTokens::Space)
+					.push_token(FormatToken::Space)
 					.push_token(6)
 					.push_token(",")
 					.format_tokens(),
@@ -83,13 +85,13 @@ mod test {
 		let input = r#"{ "foo": "bar" }"#;
 		let expected = ConcatTokens::new()
 			.push_token("{")
-			.push_token(FormatTokens::indent(
+			.push_token(FormatToken::indent(
 				ConcatTokens::new()
 					.push_token("\"")
 					.push_token("foo")
 					.push_token("\"")
 					.push_token(":")
-					.push_token(FormatTokens::Space)
+					.push_token(FormatToken::Space)
 					.push_token(
 						ConcatTokens::with_capacity(3)
 							.push_token("\"")
@@ -113,13 +115,13 @@ mod test {
 		let input = r#"{ "foo": false }"#;
 		let expected = ConcatTokens::new()
 			.push_token("{")
-			.push_token(FormatTokens::indent(
+			.push_token(FormatToken::indent(
 				ConcatTokens::new()
 					.push_token("\"")
 					.push_token("foo")
 					.push_token("\"")
 					.push_token(":")
-					.push_token(FormatTokens::Space)
+					.push_token(FormatToken::Space)
 					.push_token(false)
 					.push_token(",")
 					.format_tokens(),
@@ -138,13 +140,13 @@ mod test {
 
 		let expected = ConcatTokens::new()
 			.push_token("{")
-			.push_token(FormatTokens::indent(
+			.push_token(FormatToken::indent(
 				ConcatTokens::new()
 					.push_token("\"")
 					.push_token("foo")
 					.push_token("\"")
 					.push_token(":")
-					.push_token(FormatTokens::Space)
+					.push_token(FormatToken::Space)
 					.push_token(true)
 					.push_token(",")
 					.format_tokens(),

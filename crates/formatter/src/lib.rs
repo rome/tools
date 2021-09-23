@@ -1,5 +1,5 @@
 mod format_json;
-mod format_tokens;
+mod format_token;
 mod intersperse;
 mod printer;
 
@@ -7,11 +7,11 @@ use crate::format_json::json_to_tokens;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
 use crate::printer::Printer;
-pub use format_tokens::{FormatTokens, LineMode};
+pub use format_token::{FormatToken, LineMode};
 
 /// This trait should implemented on each node/value that should have a formatted representation
 pub trait FormatValue {
-	fn format(&self) -> FormatTokens;
+	fn format(&self) -> FormatToken;
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]
