@@ -2,6 +2,51 @@ use crate::format_token::IfBreakToken;
 use crate::LineMode;
 use crate::{FormatOptions, FormatToken, IndentStyle};
 
+/// Options that affect how the [Printer] prints the format tokens
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct PrinterOptions {
+	/// Width of a single tab character (does it equal 2, 4, ... spaces?)
+	pub tab_width: u8,
+
+	/// What's the max width of a line. Defaults to 80
+	pub print_width: u16,
+
+	/// The never ending question whatever to use spaces or tabs, and if spaces, how many spaces
+	/// to indent code.
+	///
+	/// * Tab: Value is '\t'
+	/// * Spaces: String containing the number of spaces per indention level, e.g. "  " for using two spaces
+	pub indent_string: String,
+}
+
+impl From<FormatOptions> for PrinterOptions {
+	fn from(options: FormatOptions) -> Self {
+		let indent_string: String;
+		let tab_width = 2;
+
+		match options.indent_style {
+			IndentStyle::Tab => indent_string = String::from("\t"),
+			IndentStyle::Space(width) => indent_string = " ".repeat(width as usize),
+		};
+
+		PrinterOptions {
+			indent_string,
+			tab_width,
+			..PrinterOptions::default()
+		}
+	}
+}
+
+impl Default for PrinterOptions {
+	fn default() -> Self {
+		PrinterOptions {
+			tab_width: 2,
+			print_width: 80,
+			indent_string: String::from("  "),
+		}
+	}
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct PrintResult {
 	code: String,
@@ -34,11 +79,12 @@ impl Printer {
 
 	/// Prints the passed in token as well as all its contained tokens
 	pub fn print<T: Into<FormatToken>>(mut self, token: T) -> PrintResult {
-		let token = token.into();
-		let mut queue: Vec<PrintTokenCall> =
-			vec![PrintTokenCall::new(&token, PrintTokenArgs::default())];
+		let mut queue = TokenCallQueue::new();
 
-		while let Some(print_token_call) = queue.pop() {
+		let token = token.into();
+		queue.enqueue(PrintTokenCall::new(&token, PrintTokenArgs::default()));
+
+		while let Some(print_token_call) = queue.dequeue() {
 			queue.extend(self.print_token(print_token_call.token, print_token_call.args));
 		}
 
@@ -99,7 +145,6 @@ impl Printer {
 			FormatToken::List(list) => list
 				.content
 				.iter()
-				.rev()
 				.map(|t| PrintTokenCall::new(t, args.clone()))
 				.collect(),
 
@@ -131,11 +176,12 @@ impl Printer {
 		token: &FormatToken,
 		args: PrintTokenArgs,
 	) -> Result<(), LineBreakRequiredError> {
-		let mut queue = vec![PrintTokenCall::new(token, args)];
-
 		let snapshot = self.state.snapshot();
 
-		while let Some(call) = queue.pop() {
+		let mut queue = TokenCallQueue::new();
+		queue.enqueue(PrintTokenCall::new(token, args));
+
+		while let Some(call) = queue.dequeue() {
 			match self.try_print_flat_token(call.token, call.args) {
 				Ok(to_queue) => queue.extend(to_queue),
 				Err(err) => {
@@ -331,48 +377,34 @@ impl<'token> PrintTokenCall<'token> {
 	}
 }
 
-/// Options that affect how the [Printer] prints the format tokens
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub struct PrinterOptions {
-	/// Width of a single tab character (does it equal 2, 4, ... spaces?)
-	pub tab_width: u8,
+/// Small helper that manages the order in which the tokens should be visited.
+#[derive(Debug, Default)]
+struct TokenCallQueue<'a>(Vec<PrintTokenCall<'a>>);
 
-	/// What's the max width of a line. Defaults to 80
-	pub print_width: u16,
-
-	/// The never ending question whatever to use spaces or tabs, and if spaces, how many spaces
-	/// to indent code.
-	///
-	/// * Tab: Value is '\t'
-	/// * Spaces: String containing the number of spaces per indention level, e.g. "  " for using two spaces
-	pub indent_string: String,
-}
-
-impl From<FormatOptions> for PrinterOptions {
-	fn from(options: FormatOptions) -> Self {
-		let indent_string: String;
-		let tab_width = 2;
-
-		match options.indent_style {
-			IndentStyle::Tab => indent_string = String::from("\t"),
-			IndentStyle::Space(width) => indent_string = " ".repeat(width as usize),
-		};
-
-		PrinterOptions {
-			indent_string,
-			tab_width,
-			..PrinterOptions::default()
-		}
+impl<'a> TokenCallQueue<'a> {
+	#[inline]
+	pub fn new() -> Self {
+		Self(Vec::new())
 	}
-}
 
-impl Default for PrinterOptions {
-	fn default() -> Self {
-		PrinterOptions {
-			tab_width: 2,
-			print_width: 80,
-			indent_string: String::from("  "),
-		}
+	#[inline]
+	fn extend(&mut self, calls: Vec<PrintTokenCall<'a>>) {
+		let mut calls = calls;
+		// Reverse the calls because elements are removed from the back of the vec
+		// in reversed insertion order
+		calls.reverse();
+
+		self.0.extend(calls);
+	}
+
+	#[inline]
+	pub fn enqueue(&mut self, call: PrintTokenCall<'a>) {
+		self.0.push(call);
+	}
+
+	#[inline]
+	pub fn dequeue(&mut self) -> Option<PrintTokenCall<'a>> {
+		self.0.pop()
 	}
 }
 
