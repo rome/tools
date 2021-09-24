@@ -47,7 +47,7 @@ impl FormatValue for Value {
 }
 
 pub fn json_to_tokens(content: &str) -> FormatToken {
-	let json: Value = serde_json::from_str(content).unwrap();
+	let json: Value = serde_json::from_str(content).expect("cannot convert json to tokens");
 
 	json.format()
 }

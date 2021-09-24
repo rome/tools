@@ -25,7 +25,7 @@ pub enum IndentStyle {
 
 impl Default for IndentStyle {
 	fn default() -> Self {
-		IndentStyle::Tab
+		Self::Tab
 	}
 }
 
@@ -53,18 +53,19 @@ impl FormatOptions {
 		Self { indent_style }
 	}
 }
-// TODO: implement me
+// TODO: implement me + handle errors
 /// Main function
 pub fn format(path: PathBuf, options: FormatOptions) {
 	println!(
-		"Running formatter to: \n- file {:?} \n- with options {:?}",
+		"Running formatter to:\n- file {:?}\n- with options {:?}",
 		path, options.indent_style
 	);
 	// we assume that file exists
-	let mut file = File::open(&path).unwrap();
+	let mut file = File::open(&path).expect("cannot open the file to format");
 	let mut buffer = String::new();
 	// we assume we have permissions
-	file.read_to_string(&mut buffer).unwrap();
+	file.read_to_string(&mut buffer)
+		.expect("cannot read the file to format");
 
 	let tokens = json_to_tokens(buffer.as_str());
 	let print_result = format_token(&tokens, options);
