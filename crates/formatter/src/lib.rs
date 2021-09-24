@@ -72,6 +72,11 @@ pub fn format(path: PathBuf, options: FormatOptions) {
 	println!("{}", print_result.code());
 }
 
+pub fn format_str(content: &str, options: FormatOptions) -> PrintResult {
+	let tokens = json_to_tokens(content);
+	format_token(&tokens, options)
+}
+
 pub fn format_token(token: &FormatToken, options: FormatOptions) -> PrintResult {
 	let printer = Printer::new(options);
 	printer.print(token)
