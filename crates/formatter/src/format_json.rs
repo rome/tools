@@ -12,7 +12,7 @@ impl FormatValue for Value {
 			}
 			Value::Bool(value) => FormatToken::from(value),
 			Value::Object(value) => {
-				let separator = FormatToken::List(ListToken::new(vec![
+				let separator = FormatToken::List(ListToken::concat(vec![
 					FormatToken::string(","),
 					FormatToken::Line(LineToken::soft_or_space()),
 				]));
@@ -20,7 +20,7 @@ impl FormatValue for Value {
 				let properties_list: Vec<FormatToken> = value
 					.iter()
 					.map(|(key, value)| {
-						FormatToken::List(ListToken::new(vec![
+						FormatToken::List(ListToken::concat(vec![
 							FormatToken::string(format!("\"{}\":", key).as_str()),
 							FormatToken::Space,
 							value.format(),
@@ -100,9 +100,9 @@ mod test {
 		let input = r#"{ "foo": "bar", "num": 5 }"#;
 		let expected = FormatToken::Group(GroupToken::new(vec![
 			FormatToken::string("{"),
-			FormatToken::Indent(IndentToken::new(FormatToken::List(ListToken::new(vec![
-				FormatToken::Line(LineToken::soft()),
-				FormatToken::List(ListToken::new(vec![
+			FormatToken::Indent(IndentToken::new(FormatToken::List(ListToken::concat(
+				vec![
+					FormatToken::Line(LineToken::soft()),
 					FormatToken::string("\"foo\":"),
 					FormatToken::Space,
 					FormatToken::string("\"bar\""),
@@ -111,9 +111,9 @@ mod test {
 					FormatToken::string("\"num\":"),
 					FormatToken::Space,
 					FormatToken::string("5"),
-				])),
-				FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
-			])))),
+					FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
+				],
+			)))),
 			FormatToken::Line(LineToken::soft()),
 			FormatToken::string("}"),
 		]));

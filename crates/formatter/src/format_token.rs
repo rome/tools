@@ -68,10 +68,15 @@ pub struct ListToken {
 }
 
 impl ListToken {
-	pub fn new<T: Into<Vec<FormatToken>>>(content: T) -> Self {
-		Self {
-			content: content.into(),
-		}
+	pub fn concat<T: IntoIterator<Item = FormatToken>>(tokens: T) -> Self {
+		let tokens: Vec<FormatToken> = tokens
+			.into_iter()
+			.flat_map(|t| match t {
+				FormatToken::List(list) => list.content,
+				_ => vec![t],
+			})
+			.collect();
+		Self { content: tokens }
 	}
 
 	/// Takes a list of tokens and a separator as input and creates a list of tokens where they are separated by the separator.
@@ -79,19 +84,16 @@ impl ListToken {
 		separator: Separator,
 		tokens: T,
 	) -> ListToken {
-		let joined: Tokens = Intersperse::new(tokens.into().into_iter(), separator.into())
-			.flat_map(|t| match t {
-				FormatToken::List(list) => list.content,
-				_ => vec![t],
-			})
-			.collect();
-		ListToken::new(joined)
+		Self::concat(Intersperse::new(
+			tokens.into().into_iter(),
+			separator.into(),
+		))
 	}
 }
 
 impl<T: Into<Vec<FormatToken>>> From<T> for ListToken {
 	fn from(tokens: T) -> Self {
-		ListToken::new(tokens)
+		ListToken::concat(tokens.into())
 	}
 }
 
@@ -179,7 +181,7 @@ impl<'a> FormatToken {
 		if tokens.len() == 1 {
 			tokens.first().unwrap().clone()
 		} else {
-			FormatToken::List(ListToken::new(tokens))
+			FormatToken::List(ListToken::concat(tokens))
 		}
 	}
 
@@ -281,6 +283,7 @@ pub enum LineMode {
 mod tests {
 
 	use super::ConcatTokens;
+	use crate::format_token::FormatToken::List;
 	use crate::format_token::{LineToken, ListToken};
 	use crate::{
 		format_token::{GroupToken, LineMode},
@@ -314,6 +317,23 @@ mod tests {
 			.format_tokens();
 
 		assert_eq!(result, expected);
+	}
+
+	#[test]
+	fn flattens_lists() {
+		let sub_list = ListToken::concat(vec![FormatToken::string("sub_list")]);
+		let parent_list = ListToken::concat(vec![
+			FormatToken::string("parent"),
+			FormatToken::List(sub_list),
+		]);
+
+		assert_eq!(
+			parent_list,
+			ListToken::concat(vec![
+				FormatToken::string("parent"),
+				FormatToken::string("sub_list")
+			])
+		)
 	}
 
 	#[test]
