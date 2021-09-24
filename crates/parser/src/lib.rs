@@ -1,4 +1,4 @@
-//! Experimental parser using [tree_sitter] and [rowan]
+//! Experimental parser using [Tree_sitter] and [rowan]
 //!
 //! It uses tree-sitter to parse source code then converts
 //! the parse tree into a rowan syntax tree. The integration
@@ -8,6 +8,8 @@
 //!
 //! The sourcegen module borrows heavily from [rust-analyzer].
 //!
+//![Tree_sitter]: <https://github.com/tree-sitter/tree-sitter>
+//![rowan]: <https://github.com/rust-analyzer/rowan>
 //![rust-analyzer]: <https://github.com/rust-analyzer/rust-analyzer>
 //![`node-types.json`]: <https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types>
 
@@ -15,7 +17,7 @@ pub mod languages;
 pub mod sourcegen;
 
 use anyhow::{anyhow, Result};
-use rowan::{self, GreenNode, GreenNodeBuilder, SyntaxKind};
+use rowan::{self, GreenNode, GreenNodeBuilder};
 
 pub trait ParserLanguage {
 	type SyntaxNode: std::fmt::Debug;
@@ -64,13 +66,13 @@ impl<L: ParserLanguage> Parser<L> {
 		loop {
 			let node = cursor.node();
 			let node_kind = self.language.get_kind(node.kind(), node.is_named());
-			let kind = SyntaxKind(node_kind);
+			let kind = rowan::SyntaxKind(node_kind);
 
 			// Tree-sitter doesn't include whitespace tokens, but they are necessary
 			// for building a lossless rowan green tree
 			if last_token_byte < node.start_byte() {
 				let text = &src[last_token_byte..node.start_byte()];
-				let whitespace = SyntaxKind(self.language.whitespace_kind());
+				let whitespace = rowan::SyntaxKind(self.language.whitespace_kind());
 				builder.token(whitespace, text);
 				last_token_byte += text.len();
 			}
