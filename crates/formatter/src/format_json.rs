@@ -1,8 +1,5 @@
 use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
-use crate::{
-	format_token::{ConcatTokens, FormatToken},
-	FormatValue,
-};
+use crate::{format_token::FormatToken, FormatValue};
 use serde_json::Value;
 
 impl FormatValue for Value {
@@ -44,7 +41,8 @@ impl FormatValue for Value {
 					FormatToken::string("}"),
 				]))
 			}
-			_ => unimplemented!("Implement rest"),
+			Value::Null => FormatToken::string("null"),
+			Value::Array(_) => todo!("Implement array"),
 		}
 	}
 }
@@ -57,7 +55,7 @@ pub fn json_to_tokens(content: &str) -> FormatToken {
 
 #[cfg(test)]
 mod test {
-	use crate::{format_token::ConcatTokens, FormatToken};
+	use crate::FormatToken;
 
 	use super::json_to_tokens;
 	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
@@ -88,6 +86,13 @@ mod test {
 		let result = json_to_tokens("true");
 
 		assert_eq!(FormatToken::string("true"), result);
+	}
+
+	#[test]
+	fn tokenize_boolean_null() {
+		let result = json_to_tokens("null");
+
+		assert_eq!(FormatToken::string("null"), result);
 	}
 
 	#[test]
