@@ -1,4 +1,4 @@
-use crate::format_token::{GroupToken, IfBreakToken, LineToken};
+use crate::format_token::{GroupToken, LineToken};
 use crate::{format_token::FormatToken, FormatValue};
 use serde_json::Value;
 
@@ -31,7 +31,6 @@ impl FormatValue for Value {
 				let properties = vec![
 					FormatToken::Line(LineToken::soft()),
 					FormatToken::join(separator, properties_list),
-					FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
 				];
 
 				FormatToken::Group(GroupToken::new(vec![
@@ -58,7 +57,7 @@ mod test {
 	use crate::FormatToken;
 
 	use super::json_to_tokens;
-	use crate::format_token::{GroupToken, IfBreakToken, LineToken};
+	use crate::format_token::{GroupToken, LineToken};
 
 	#[test]
 	fn tokenize_number() {
@@ -110,7 +109,6 @@ mod test {
 				FormatToken::string("\"num\":"),
 				FormatToken::Space,
 				FormatToken::string("5"),
-				FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
 			])),
 			FormatToken::Line(LineToken::soft()),
 			FormatToken::string("}"),
