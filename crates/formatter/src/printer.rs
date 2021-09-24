@@ -42,7 +42,7 @@ impl Default for PrinterOptions {
 		PrinterOptions {
 			tab_width: 2,
 			print_width: 80,
-			indent_string: String::from("  "),
+			indent_string: String::from("\t"),
 		}
 	}
 }
@@ -81,7 +81,7 @@ impl Printer {
 	pub fn print(mut self, token: &FormatToken) -> PrintResult {
 		let mut queue = TokenCallQueue::new();
 
-		queue.enqueue(PrintTokenCall::new(&token, PrintTokenArgs::default()));
+		queue.enqueue(PrintTokenCall::new(token, PrintTokenArgs::default()));
 
 		while let Some(print_token_call) = queue.dequeue() {
 			queue.extend(self.print_token(print_token_call.token, print_token_call.args));
