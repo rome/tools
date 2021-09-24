@@ -1,4 +1,4 @@
-use crate::format_token::{IndentToken, LineToken};
+use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
 use crate::{
 	format_token::{ConcatTokens, FormatToken},
 	FormatValue,
@@ -15,22 +15,34 @@ impl FormatValue for Value {
 			}
 			Value::Bool(value) => FormatToken::from(value),
 			Value::Object(value) => {
-				let mut content = ConcatTokens::new();
-				for (key, value) in value {
-					content = content
-						.push_token(format!("\"{}\":", key).as_str())
-						.push_token(FormatToken::Space)
-						.push_token(value.format())
-						.push_token(",")
-						.push_token(LineToken::soft_or_space());
-				}
-				ConcatTokens::new()
-					.push_token("{")
-					.push_token(LineToken::soft())
-					.push_token(IndentToken::new(content.format_tokens()))
-					.push_token(LineToken::soft())
-					.push_token("}")
-					.format_tokens()
+				let separator = FormatToken::List(ListToken::new(vec![
+					FormatToken::string(","),
+					FormatToken::Line(LineToken::soft_or_space()),
+				]));
+
+				let properties_list: Vec<FormatToken> = value
+					.iter()
+					.map(|(key, value)| {
+						FormatToken::List(ListToken::new(vec![
+							FormatToken::string(format!("\"{}\":", key).as_str()),
+							FormatToken::Space,
+							value.format(),
+						]))
+					})
+					.collect();
+
+				let properties = vec![
+					FormatToken::Line(LineToken::soft()),
+					FormatToken::List(ListToken::join(separator, properties_list)),
+					FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
+				];
+
+				FormatToken::Group(GroupToken::new(vec![
+					FormatToken::string("{"),
+					FormatToken::Indent(IndentToken::new(properties)),
+					FormatToken::Line(LineToken::soft()),
+					FormatToken::string("}"),
+				]))
 			}
 			_ => unimplemented!("Implement rest"),
 		}
@@ -48,7 +60,7 @@ mod test {
 	use crate::{format_token::ConcatTokens, FormatToken};
 
 	use super::json_to_tokens;
-	use crate::format_token::{IndentToken, LineToken};
+	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
 
 	#[test]
 	fn tokenize_number() {
@@ -81,28 +93,25 @@ mod test {
 	#[test]
 	fn tokenize_object() {
 		let input = r#"{ "foo": "bar", "num": 5 }"#;
-		let expected = ConcatTokens::new()
-			.push_token("{")
-			.push_token(LineToken::soft())
-			.push_token(IndentToken::new(
-				ConcatTokens::new()
-					// 'foo'
-					.push_token("\"foo\":")
-					.push_token(FormatToken::Space)
-					.push_token("\"bar\"")
-					.push_token(",")
-					.push_token(LineToken::soft_or_space())
-					// 'num'
-					.push_token("\"num\":")
-					.push_token(FormatToken::Space)
-					.push_token(FormatToken::string("5"))
-					.push_token(",")
-					.push_token(LineToken::soft_or_space())
-					.format_tokens(),
-			))
-			.push_token(LineToken::soft())
-			.push_token("}")
-			.format_tokens();
+		let expected = FormatToken::Group(GroupToken::new(vec![
+			FormatToken::string("{"),
+			FormatToken::Indent(IndentToken::new(FormatToken::List(ListToken::new(vec![
+				FormatToken::Line(LineToken::soft()),
+				FormatToken::List(ListToken::new(vec![
+					FormatToken::string("\"foo\":"),
+					FormatToken::Space,
+					FormatToken::string("\"bar\""),
+					FormatToken::string(","),
+					FormatToken::Line(LineToken::soft_or_space()),
+					FormatToken::string("\"num\":"),
+					FormatToken::Space,
+					FormatToken::string("5"),
+				])),
+				FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
+			])))),
+			FormatToken::Line(LineToken::soft()),
+			FormatToken::string("}"),
+		]));
 
 		let result = json_to_tokens(input);
 

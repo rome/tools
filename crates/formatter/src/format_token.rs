@@ -79,8 +79,12 @@ impl ListToken {
 		separator: Separator,
 		tokens: T,
 	) -> ListToken {
-		let joined: Tokens =
-			Intersperse::new(tokens.into().into_iter(), separator.into()).collect();
+		let joined: Tokens = Intersperse::new(tokens.into().into_iter(), separator.into())
+			.flat_map(|t| match t {
+				FormatToken::List(list) => list.content,
+				_ => vec![t],
+			})
+			.collect();
 		ListToken::new(joined)
 	}
 }
