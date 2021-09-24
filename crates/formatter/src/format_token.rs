@@ -1,4 +1,5 @@
 use crate::intersperse::Intersperse;
+use std::ops::Deref;
 
 type Content = Box<FormatToken>;
 pub type Tokens = Vec<FormatToken>;
@@ -17,8 +18,7 @@ pub enum FormatToken {
 	List(ListToken),
 	// TODO Revisit, structure is a bit weird
 	IfBreak(IfBreakToken),
-	/// A string that will be printed as is.
-	String(String),
+	String(StringToken),
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -64,7 +64,7 @@ impl IndentToken {
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ListToken {
-	pub content: Vec<FormatToken>,
+	content: Vec<FormatToken>,
 }
 
 impl ListToken {
@@ -95,6 +95,14 @@ impl ListToken {
 impl<T: Into<Vec<FormatToken>>> From<T> for ListToken {
 	fn from(tokens: T) -> Self {
 		ListToken::concat(tokens.into())
+	}
+}
+
+impl Deref for ListToken {
+	type Target = Vec<FormatToken>;
+
+	fn deref(&self) -> &Self::Target {
+		&self.content
 	}
 }
 
@@ -153,6 +161,48 @@ impl GroupToken {
 	}
 }
 
+/// A code fragment that gets written to the output. Newlines must be encoded with line feeds `\n`.
+/// The [Printer] takes care of converting the line feeds to the line ending specified in the options.
+///
+/// # Example
+/// ```
+/// use rome_formatter::{FormatToken, format_token, FormatOptions};
+/// let token = FormatToken::string(r#"["a", "b"]"#);
+/// let formatted = format_token(&token, FormatOptions::default());
+///
+/// assert_eq!(r#"["a", "b"]"#, formatted.code());
+/// ```
+/// Is not allowed to contain any new lines
+#[derive(Debug, PartialEq, Eq, Clone)]
+pub struct StringToken(String);
+
+impl StringToken {
+	pub fn new(content: &str) -> Self {
+		debug_assert!(!content.contains('\r'), "The content '{}' contains a carriage return '\\r' character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", content);
+		Self(String::from(content))
+	}
+}
+
+impl From<&str> for StringToken {
+	fn from(content: &str) -> Self {
+		StringToken::new(content)
+	}
+}
+
+impl From<String> for StringToken {
+	fn from(content: String) -> Self {
+		StringToken::new(content.as_str())
+	}
+}
+
+impl Deref for StringToken {
+	type Target = String;
+
+	fn deref(&self) -> &Self::Target {
+		&self.0
+	}
+}
+
 impl<'a> FormatToken {
 	/// Stores lint a list a `Vec` of `FormatToken`
 	pub fn concat<T: Into<Tokens>>(tokens: T) -> FormatToken {
@@ -178,52 +228,52 @@ impl<'a> FormatToken {
 
 	/// Utility to tokenize a string
 	pub fn string<T: Into<&'a str>>(content: T) -> FormatToken {
-		FormatToken::String(String::from(content.into()))
+		FormatToken::String(StringToken::new(content.into()))
 	}
 
 	/// Utility to tokenize a f64
 	pub fn f64<T: Into<f64>>(content: T) -> FormatToken {
-		FormatToken::from(content.into())
+		FormatToken::string(content.into().to_string().as_str())
 	}
 
 	/// Utility to tokenize a u64
 	pub fn u64<T: Into<u64>>(content: T) -> FormatToken {
-		FormatToken::from(content.into())
+		FormatToken::string(content.into().to_string().as_str())
 	}
 
 	/// Utility to tokenize a boolean
 	pub fn boolean<T: Into<bool>>(content: T) -> FormatToken {
-		FormatToken::from(content.into())
+		FormatToken::string(content.into().to_string().as_str())
 	}
 }
 
 impl From<&str> for FormatToken {
 	fn from(value: &str) -> Self {
-		FormatToken::String(String::from(value))
+		FormatToken::string(value)
 	}
 }
 
 impl From<u64> for FormatToken {
 	fn from(value: u64) -> Self {
-		FormatToken::String(value.to_string())
+		FormatToken::u64(value)
 	}
 }
 
 impl From<f64> for FormatToken {
 	fn from(value: f64) -> Self {
-		FormatToken::String(value.to_string())
+		FormatToken::f64(value)
 	}
 }
 
 impl From<&bool> for FormatToken {
 	fn from(value: &bool) -> Self {
-		FormatToken::String(value.to_string())
+		FormatToken::boolean(*value)
 	}
 }
 
 impl From<bool> for FormatToken {
 	fn from(value: bool) -> Self {
-		FormatToken::String(value.to_string())
+		FormatToken::boolean(value)
 	}
 }
 

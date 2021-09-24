@@ -1,6 +1,6 @@
 use crate::format_token::IfBreakToken;
-use crate::LineMode;
 use crate::{FormatOptions, FormatToken, IndentStyle};
+use crate::{GroupToken, LineMode};
 
 /// Options that affect how the [Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -10,6 +10,8 @@ pub struct PrinterOptions {
 
 	/// What's the max width of a line. Defaults to 80
 	pub print_width: u16,
+
+	pub line_ending: LineEnding,
 
 	/// The never ending question whatever to use spaces or tabs, and if spaces, how many spaces
 	/// to indent code.
@@ -37,12 +39,37 @@ impl From<FormatOptions> for PrinterOptions {
 	}
 }
 
+#[allow(dead_code)]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum LineEnding {
+	///  Line Feed only (\n), common on Linux and macOS as well as inside git repos
+	LineFeed,
+
+	/// Carriage Return + Line Feed characters (\r\n), common on Windows
+	CarriageReturnLineFeed,
+
+	/// Carriage Return character only (\r), used very rarely
+	CarriageReturn,
+}
+
+impl LineEnding {
+	#[inline]
+	pub const fn as_str(&self) -> &'static str {
+		match self {
+			LineEnding::LineFeed => "\n",
+			LineEnding::CarriageReturnLineFeed => "\r\n",
+			LineEnding::CarriageReturn => "\r",
+		}
+	}
+}
+
 impl Default for PrinterOptions {
 	fn default() -> Self {
 		PrinterOptions {
 			tab_width: 2,
 			print_width: 80,
 			indent_string: String::from("\t"),
+			line_ending: LineEnding::LineFeed,
 		}
 	}
 }
@@ -127,11 +154,14 @@ impl Printer {
 				vec![]
 			}
 
-			FormatToken::Group(group) if !group.should_break => {
+			FormatToken::Group(GroupToken {
+				should_break: false,
+				content,
+			}) => {
 				match self.try_print_flat(token, args.clone()) {
 					Err(_) => {
 						// Flat printing didn't work, print with line breaks
-						vec![PrintTokenCall::new(group.content.as_ref(), args)]
+						vec![PrintTokenCall::new(content.as_ref(), args)]
 					}
 					Ok(_) => vec![],
 				}
@@ -142,7 +172,6 @@ impl Printer {
 			}
 
 			FormatToken::List(list) => list
-				.content
 				.iter()
 				.map(|t| PrintTokenCall::new(t, args.clone()))
 				.collect(),
@@ -228,9 +257,9 @@ impl Printer {
 					LineMode::Hard => return Err(LineBreakRequiredError {}),
 				}
 			}
-			FormatToken::Group(group) if group.should_break => {
-				return Err(LineBreakRequiredError {})
-			}
+			FormatToken::Group(GroupToken {
+				should_break: true, ..
+			}) => return Err(LineBreakRequiredError {}),
 
 			FormatToken::Group(group) => vec![PrintTokenCall::new(group.content.as_ref(), args)],
 
@@ -251,14 +280,21 @@ impl Printer {
 	}
 
 	fn print_str(&mut self, content: &str) {
-		for char in content.chars() {
-			self.state.generated_index += 1;
+		self.state.buffer.reserve(content.len());
 
+		for char in content.chars() {
 			if char == '\n' {
+				for char in self.options.line_ending.as_str().chars() {
+					self.state.generated_index += 1;
+					self.state.buffer.push(char);
+				}
+
 				self.state.generated_line += 1;
 				self.state.generated_column = 0;
 				self.state.line_width = 0;
 			} else {
+				self.state.buffer.push(char);
+				self.state.generated_index += 1;
 				self.state.generated_column += 1;
 
 				let char_width = if char == '\t' {
@@ -270,8 +306,6 @@ impl Printer {
 				self.state.line_width += char_width;
 			}
 		}
-
-		self.state.buffer.push_str(content);
 	}
 }
 
@@ -409,8 +443,8 @@ impl<'a> TokenCallQueue<'a> {
 
 #[cfg(test)]
 mod tests {
-	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken};
-	use crate::printer::{PrintResult, Printer, PrinterOptions};
+	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
+	use crate::printer::{LineEnding, PrintResult, Printer, PrinterOptions};
 	use crate::FormatToken;
 
 	/// Prints the given token with the default printer options
@@ -480,18 +514,44 @@ a"#,
 	#[test]
 	fn it_breaks_a_group_if_a_string_contains_a_newline() {
 		let result = print_token(create_array_tokens(vec![
-			FormatToken::string("`This string spans\ntwo lines`"),
+			FormatToken::string("`This is a string spanning\ntwo lines`"),
 			FormatToken::string("\"b\""),
 		]));
 
 		assert_eq!(
 			r#"[
-  `This string spans
+  `This is a string spanning
 two lines`,
   "b",
 ]"#,
 			result.code
 		)
+	}
+
+	#[test]
+	fn it_converts_line_endings_in_strings() {
+		let options = PrinterOptions {
+			line_ending: LineEnding::CarriageReturnLineFeed,
+			..PrinterOptions::default()
+		};
+
+		let program = ListToken::concat(vec![
+			FormatToken::string("function main() {"),
+			FormatToken::Indent(IndentToken::new(ListToken::concat(vec![
+				FormatToken::Line(LineToken::hard()),
+				FormatToken::string("let x = `This is a multiline\nstring`;"),
+			]))),
+			FormatToken::Line(LineToken::hard()),
+			FormatToken::string("}"),
+			FormatToken::Line(LineToken::hard()),
+		]);
+
+		let result = Printer::new(options).print(&FormatToken::from(program));
+
+		assert_eq!(
+			"function main() {\r\n\tlet x = `This is a multiline\r\nstring`;\r\n}\r\n",
+			result.code
+		);
 	}
 
 	#[test]
@@ -528,6 +588,7 @@ two lines`,
 			indent_string: String::from("\t"),
 			tab_width: 4,
 			print_width: 19,
+			..PrinterOptions::default()
 		});
 
 		let result = printer.print(&create_array_tokens(vec![
