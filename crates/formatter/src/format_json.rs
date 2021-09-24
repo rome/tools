@@ -1,4 +1,4 @@
-use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
+use crate::format_token::{GroupToken, IfBreakToken, LineToken};
 use crate::{format_token::FormatToken, FormatValue};
 use serde_json::Value;
 
@@ -12,31 +12,31 @@ impl FormatValue for Value {
 			}
 			Value::Bool(value) => FormatToken::from(value),
 			Value::Object(value) => {
-				let separator = FormatToken::List(ListToken::concat(vec![
+				let separator = FormatToken::concat(vec![
 					FormatToken::string(","),
 					FormatToken::Line(LineToken::soft_or_space()),
-				]));
+				]);
 
 				let properties_list: Vec<FormatToken> = value
 					.iter()
 					.map(|(key, value)| {
-						FormatToken::List(ListToken::concat(vec![
+						FormatToken::concat(vec![
 							FormatToken::string(format!("\"{}\":", key).as_str()),
 							FormatToken::Space,
 							value.format(),
-						]))
+						])
 					})
 					.collect();
 
 				let properties = vec![
 					FormatToken::Line(LineToken::soft()),
-					FormatToken::List(ListToken::join(separator, properties_list)),
+					FormatToken::join(separator, properties_list),
 					FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
 				];
 
 				FormatToken::Group(GroupToken::new(vec![
 					FormatToken::string("{"),
-					FormatToken::Indent(IndentToken::new(properties)),
+					FormatToken::indent(properties),
 					FormatToken::Line(LineToken::soft()),
 					FormatToken::string("}"),
 				]))
@@ -58,7 +58,7 @@ mod test {
 	use crate::FormatToken;
 
 	use super::json_to_tokens;
-	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
+	use crate::format_token::{GroupToken, IfBreakToken, LineToken};
 
 	#[test]
 	fn tokenize_number() {
@@ -100,20 +100,18 @@ mod test {
 		let input = r#"{ "foo": "bar", "num": 5 }"#;
 		let expected = FormatToken::Group(GroupToken::new(vec![
 			FormatToken::string("{"),
-			FormatToken::Indent(IndentToken::new(FormatToken::List(ListToken::concat(
-				vec![
-					FormatToken::Line(LineToken::soft()),
-					FormatToken::string("\"foo\":"),
-					FormatToken::Space,
-					FormatToken::string("\"bar\""),
-					FormatToken::string(","),
-					FormatToken::Line(LineToken::soft_or_space()),
-					FormatToken::string("\"num\":"),
-					FormatToken::Space,
-					FormatToken::string("5"),
-					FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
-				],
-			)))),
+			FormatToken::indent(FormatToken::concat(vec![
+				FormatToken::Line(LineToken::soft()),
+				FormatToken::string("\"foo\":"),
+				FormatToken::Space,
+				FormatToken::string("\"bar\""),
+				FormatToken::string(","),
+				FormatToken::Line(LineToken::soft_or_space()),
+				FormatToken::string("\"num\":"),
+				FormatToken::Space,
+				FormatToken::string("5"),
+				FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
+			])),
 			FormatToken::Line(LineToken::soft()),
 			FormatToken::string("}"),
 		]));

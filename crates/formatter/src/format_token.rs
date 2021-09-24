@@ -68,6 +68,10 @@ pub struct ListToken {
 }
 
 impl ListToken {
+	fn new(content: Vec<FormatToken>) -> Self {
+		Self { content }
+	}
+
 	pub fn concat<T: IntoIterator<Item = FormatToken>>(tokens: T) -> Self {
 		let tokens: Vec<FormatToken> = tokens
 			.into_iter()
@@ -76,18 +80,15 @@ impl ListToken {
 				_ => vec![t],
 			})
 			.collect();
-		Self { content: tokens }
+		Self::new(tokens)
 	}
 
 	/// Takes a list of tokens and a separator as input and creates a list of tokens where they are separated by the separator.
-	pub fn join<Separator: Into<FormatToken>, T: Into<Tokens>>(
+	pub fn join<Separator: Into<FormatToken>, T: IntoIterator<Item = FormatToken>>(
 		separator: Separator,
 		tokens: T,
 	) -> ListToken {
-		Self::concat(Intersperse::new(
-			tokens.into().into_iter(),
-			separator.into(),
-		))
+		Self::concat(Intersperse::new(tokens.into_iter(), separator.into()))
 	}
 }
 
@@ -152,27 +153,6 @@ impl GroupToken {
 	}
 }
 
-/// Struct to use when there's need to create collection of tokens
-#[derive(Debug, PartialEq, Eq)]
-pub struct ConcatTokens {
-	pub tokens: Tokens,
-}
-
-impl ConcatTokens {
-	pub fn new() -> Self {
-		Self { tokens: vec![] }
-	}
-
-	pub fn push_token<T: Into<FormatToken>>(mut self, value: T) -> Self {
-		self.tokens.push(value.into());
-		self
-	}
-
-	pub fn format_tokens(self) -> FormatToken {
-		FormatToken::concat(self.tokens)
-	}
-}
-
 impl<'a> FormatToken {
 	/// Stores lint a list a `Vec` of `FormatToken`
 	pub fn concat<T: Into<Tokens>>(tokens: T) -> FormatToken {
@@ -183,6 +163,17 @@ impl<'a> FormatToken {
 		} else {
 			FormatToken::List(ListToken::concat(tokens))
 		}
+	}
+
+	pub fn join<TSep: Into<FormatToken>, I: IntoIterator<Item = FormatToken>>(
+		separator: TSep,
+		tokens: I,
+	) -> FormatToken {
+		FormatToken::List(ListToken::join(separator, tokens))
+	}
+
+	pub fn indent<T: Into<FormatToken>>(content: T) -> FormatToken {
+		FormatToken::Indent(IndentToken::new(content))
 	}
 
 	/// Utility to tokenize a string
@@ -282,27 +273,21 @@ pub enum LineMode {
 #[cfg(test)]
 mod tests {
 
-	use super::ConcatTokens;
-	use crate::format_token::FormatToken::List;
 	use crate::format_token::{LineToken, ListToken};
-	use crate::{
-		format_token::{GroupToken, LineMode},
-		FormatToken,
-	};
+	use crate::{format_token::LineMode, FormatToken};
 
 	#[test]
 	fn should_join() {
 		let separator = ",";
-		let tokens = ConcatTokens::new()
-			.push_token("foo")
-			.push_token("bar")
-			.tokens;
-		let result = FormatToken::List(ListToken::join(separator, tokens));
-		let expected = ConcatTokens::new()
-			.push_token("foo")
-			.push_token(",")
-			.push_token("bar")
-			.format_tokens();
+		let tokens = vec![FormatToken::string("foo"), FormatToken::string("bar")];
+
+		let result = FormatToken::join(separator, tokens);
+
+		let expected = FormatToken::concat(vec![
+			FormatToken::string("foo"),
+			FormatToken::string(","),
+			FormatToken::string("bar"),
+		]);
 
 		assert_eq!(result, expected);
 	}
@@ -310,11 +295,13 @@ mod tests {
 	#[test]
 	fn should_concat() {
 		let tokens = vec![FormatToken::string("foo"), FormatToken::string("bar")];
+
 		let result = FormatToken::concat(tokens);
-		let expected = ConcatTokens::new()
-			.push_token("foo")
-			.push_token("bar")
-			.format_tokens();
+
+		let expected = FormatToken::List(ListToken::new(vec![
+			FormatToken::string("foo"),
+			FormatToken::string("bar"),
+		]));
 
 		assert_eq!(result, expected);
 	}
@@ -334,23 +321,6 @@ mod tests {
 				FormatToken::string("sub_list")
 			])
 		)
-	}
-
-	#[test]
-	fn should_group() {
-		let tokens = ConcatTokens::new()
-			.push_token("foo")
-			.push_token("bar")
-			.format_tokens();
-
-		let tokens_expected = ConcatTokens::new()
-			.push_token("foo")
-			.push_token("bar")
-			.format_tokens();
-
-		let result = GroupToken::new(tokens);
-		let expected = GroupToken::new(tokens_expected);
-		assert_eq!(result, expected)
 	}
 
 	#[test]

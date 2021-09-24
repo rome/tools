@@ -409,7 +409,7 @@ impl<'a> TokenCallQueue<'a> {
 
 #[cfg(test)]
 mod tests {
-	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
+	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken};
 	use crate::printer::{PrintResult, Printer, PrinterOptions};
 	use crate::FormatToken;
 
@@ -548,13 +548,13 @@ two lines`,
 
 		let elements = vec![
 			FormatToken::Line(LineToken::soft()),
-			FormatToken::List(ListToken::join(separator, items)),
+			FormatToken::join(separator, items),
 			FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
 		];
 
 		FormatToken::Group(GroupToken::new(vec![
 			FormatToken::string("["),
-			FormatToken::Indent(IndentToken::new(elements)),
+			FormatToken::indent(elements),
 			FormatToken::Line(LineToken::soft()),
 			FormatToken::string("]"),
 		]))
