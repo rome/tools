@@ -1,17 +1,20 @@
 mod format_json;
 mod format_tokens;
 mod intersperse;
+mod printer;
+
 use crate::format_json::json_to_tokens;
-pub use format_tokens::FormatTokens;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
+
+use crate::printer::Printer;
+pub use format_tokens::{FormatTokens, LineMode};
 
 /// This trait should implemented on each node/value that should have a formatted representation
 pub trait FormatValue {
 	fn format(&self) -> FormatTokens;
 }
 
-#[derive(Debug)]
-
+#[derive(Debug, Eq, PartialEq, Clone)]
 pub enum IndentStyle {
 	/// Tab
 	Tab,
@@ -59,5 +62,8 @@ pub fn format(path: PathBuf, options: FormatOptions) {
 
 	let tokens = json_to_tokens(buffer.as_str());
 
-	println!("{:?}", tokens);
+	let printer = Printer::new(options);
+	let print_result = printer.print(&tokens);
+
+	println!("{}", print_result.code());
 }

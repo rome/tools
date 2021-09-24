@@ -13,7 +13,7 @@ pub enum FormatTokens {
 	Line {
 		mode: LineMode,
 	},
-	/// The content should be have indentation of one
+	/// Content that is indented one level deeper than its parent.
 	Indent {
 		content: Content,
 	},
@@ -24,19 +24,19 @@ pub enum FormatTokens {
 	// TODO Revisit, structure is a bit weird
 	IfBreak {
 		break_contents: Content,
-		flat_contents: Content,
+		flat_contents: Option<Content>,
 	},
 	/// A literal string, the content will be printed with quotes
 	StringLiteral(String),
-	/// A number
-	Number(u64),
-	/// A generic boolean
-	Boolean(bool),
 }
 
 /// Struct to use when the content should be wrapped into a group
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct GroupToken {
+	/// `false` if you want that the content is printed on a single line if it fits and is only
+	/// broken across multiple lines if it doesn't. `true` if the content should always be printed
+	/// across multiple lines. Using `true` has the same meaning as replacing all non hard line breaks
+	/// with hard line breaks.
 	pub should_break: bool,
 	pub content: Content,
 }
@@ -92,14 +92,14 @@ impl<'a> FormatTokens {
 	///
 	/// The printer first tries to print all tokens in the group onto a single line (ignoring soft line wraps)
 	/// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
-	pub fn group(content: FormatTokens) -> FormatTokens {
-		FormatTokens::Group(GroupToken::new(Box::new(content), false))
+	pub fn group<T: Into<FormatTokens>>(content: T) -> FormatTokens {
+		FormatTokens::Group(GroupToken::new(Box::new(content.into()), false))
 	}
 
 	/// Apply an additional level of indentation to `content`
-	pub fn indent(content: FormatTokens) -> FormatTokens {
+	pub fn indent<T: Into<FormatTokens>>(content: T) -> FormatTokens {
 		FormatTokens::Indent {
-			content: Box::new(content),
+			content: Box::new(content.into()),
 		}
 	}
 
@@ -115,8 +115,6 @@ impl<'a> FormatTokens {
 	}
 
 	/// Takes a list of tokens and a separator as input and creates a list of tokens where they are separated by the separator.
-	///
-	///
 	pub fn join<Separator: Into<FormatTokens>, T: Into<Tokens>>(
 		separator: Separator,
 		tokens: T,
@@ -130,14 +128,19 @@ impl<'a> FormatTokens {
 		FormatTokens::StringLiteral(String::from(content.into()))
 	}
 
+	/// A forced line break that always must be printed
 	pub fn hardline() -> FormatTokens {
 		Self::HARD_LINE
 	}
 
+	/// An optional line that the printer is allowed to emit to e.g. fit an array expression on a
+	/// single line but gets emitted if the array expression spans across multiple lines anyway.
 	pub fn softline() -> FormatTokens {
 		Self::SOFT_LINE
 	}
 
+	/// Gets printed as a space if used inside of a group that fits on a single line and otherwise
+	/// gets printed as a new line (e.g. if the array expression spans multiple lines).
 	pub fn new_line_or_space() -> FormatTokens {
 		Self::NEW_LINE_OR_SPACE
 	}
@@ -151,19 +154,19 @@ impl From<&str> for FormatTokens {
 
 impl From<u64> for FormatTokens {
 	fn from(value: u64) -> Self {
-		FormatTokens::Number(value)
+		FormatTokens::StringLiteral(value.to_string())
 	}
 }
 
 impl From<&bool> for FormatTokens {
 	fn from(value: &bool) -> Self {
-		FormatTokens::Boolean(*value)
+		FormatTokens::StringLiteral(value.to_string())
 	}
 }
 
 impl From<bool> for FormatTokens {
 	fn from(value: bool) -> Self {
-		FormatTokens::Boolean(value)
+		FormatTokens::StringLiteral(value.to_string())
 	}
 }
 
