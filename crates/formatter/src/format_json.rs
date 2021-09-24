@@ -41,7 +41,24 @@ impl FormatValue for Value {
 				]))
 			}
 			Value::Null => FormatToken::string("null"),
-			Value::Array(_) => todo!("Implement array"),
+			Value::Array(array) => {
+				let separator = FormatToken::concat(vec![
+					FormatToken::string(","),
+					FormatToken::Line(LineToken::soft_or_space()),
+				]);
+
+				let elements = vec![
+					FormatToken::Line(LineToken::soft()),
+					FormatToken::join(separator, array.iter().map(|element| element.format())),
+				];
+
+				FormatToken::Group(GroupToken::new(vec![
+					FormatToken::string("["),
+					FormatToken::indent(elements),
+					FormatToken::Line(LineToken::soft()),
+					FormatToken::string("]"),
+				]))
+			}
 		}
 	}
 }
@@ -112,6 +129,30 @@ mod test {
 			])),
 			FormatToken::Line(LineToken::soft()),
 			FormatToken::string("}"),
+		]));
+
+		let result = json_to_tokens(input);
+
+		assert_eq!(expected, result);
+	}
+
+	#[test]
+	fn tokenize_array() {
+		let input = r#"[ "foo", "bar", 5 ]"#;
+		let expected = FormatToken::Group(GroupToken::new(vec![
+			FormatToken::string("["),
+			FormatToken::indent(FormatToken::concat(vec![
+				FormatToken::Line(LineToken::soft()),
+				FormatToken::string("\"foo\""),
+				FormatToken::string(","),
+				FormatToken::Line(LineToken::soft_or_space()),
+				FormatToken::string("\"bar\""),
+				FormatToken::string(","),
+				FormatToken::Line(LineToken::soft_or_space()),
+				FormatToken::string("5"),
+			])),
+			FormatToken::Line(LineToken::soft()),
+			FormatToken::string("]"),
 		]));
 
 		let result = json_to_tokens(input);
