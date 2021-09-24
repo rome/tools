@@ -42,7 +42,6 @@ impl FromStr for IndentStyle {
 	}
 }
 
-// TODO: evaluate to remove it
 #[derive(Debug, Default)]
 pub struct FormatOptions {
 	/// The indent style
