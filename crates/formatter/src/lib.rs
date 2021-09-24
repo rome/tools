@@ -6,8 +6,9 @@ mod printer;
 use crate::format_json::json_to_tokens;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
-use crate::printer::Printer;
-pub use format_token::{FormatToken, LineMode};
+pub use format_token::{FormatToken, GroupToken, IfBreakToken, IndentToken, LineMode, ListToken};
+pub use printer::PrintResult;
+use printer::Printer;
 
 /// This trait should implemented on each node/value that should have a formatted representation
 pub trait FormatValue {
@@ -20,6 +21,12 @@ pub enum IndentStyle {
 	Tab,
 	/// Space, with its quantity
 	Space(u8),
+}
+
+impl Default for IndentStyle {
+	fn default() -> Self {
+		IndentStyle::Tab
+	}
 }
 
 impl FromStr for IndentStyle {
@@ -36,7 +43,7 @@ impl FromStr for IndentStyle {
 }
 
 // TODO: evaluate to remove it
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct FormatOptions {
 	/// The indent style
 	indent_style: IndentStyle,
@@ -61,9 +68,12 @@ pub fn format(path: PathBuf, options: FormatOptions) {
 	file.read_to_string(&mut buffer).unwrap();
 
 	let tokens = json_to_tokens(buffer.as_str());
-
-	let printer = Printer::new(options);
-	let print_result = printer.print(&tokens);
+	let print_result = format_token(&tokens, options);
 
 	println!("{}", print_result.code());
+}
+
+pub fn format_token(token: &FormatToken, options: FormatOptions) -> PrintResult {
+	let printer = Printer::new(options);
+	printer.print(token)
 }
