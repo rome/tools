@@ -27,7 +27,7 @@ pub fn run_cli() {
 						.default_value("2")
 						.validator(|value| {
 							value
-								.parse::<u16>()
+								.parse::<u8>()
 								.map_err(|_| "Invalid indent-size value. Try using a number")
 						}),
 				)

@@ -85,12 +85,9 @@ impl PrintResult {
 	}
 }
 
-#[derive(Debug)]
-pub enum PrinterError {
-	/// Error returned if printing an item as a flat string fails because it either contains
-	/// explicit line breaks or would otherwise exceed the specified line width.
-	LineBreakRequiredError,
-}
+/// Error returned if printing an item as a flat string fails because it either contains
+/// explicit line breaks or would otherwise exceed the specified line width.
+struct LineBreakRequiredError;
 
 /// Prints the format tokens into a string
 #[derive(Debug, Clone, Default)]
@@ -206,7 +203,7 @@ impl Printer {
 		&mut self,
 		token: &FormatToken,
 		args: PrintTokenArgs,
-	) -> Result<(), PrinterError> {
+	) -> Result<(), LineBreakRequiredError> {
 		let snapshot = self.state.snapshot();
 
 		let mut queue = TokenCallQueue::new();
@@ -229,7 +226,7 @@ impl Printer {
 		&mut self,
 		token: &'a FormatToken,
 		args: PrintTokenArgs,
-	) -> Result<Vec<PrintTokenCall<'a>>, PrinterError> {
+	) -> Result<Vec<PrintTokenCall<'a>>, LineBreakRequiredError> {
 		let next_calls = match token {
 			FormatToken::String(_) => {
 				let current_line = self.state.generated_line;
@@ -239,12 +236,12 @@ impl Printer {
 
 				// If the line is too long, break the group
 				if self.state.line_width > self.options.print_width {
-					return Err(PrinterError::LineBreakRequiredError);
+					return Err(LineBreakRequiredError);
 				}
 
 				// If a new line was printed, break the group
 				if current_line != self.state.generated_line {
-					return Err(PrinterError::LineBreakRequiredError);
+					return Err(LineBreakRequiredError);
 				}
 
 				calls
@@ -257,12 +254,12 @@ impl Printer {
 					}
 					// We want a flat structure, so omit soft line wraps
 					LineMode::Soft => vec![],
-					LineMode::Hard => return Err(PrinterError::LineBreakRequiredError),
+					LineMode::Hard => return Err(LineBreakRequiredError),
 				}
 			}
 			FormatToken::Group(GroupToken {
 				should_break: true, ..
-			}) => return Err(PrinterError::LineBreakRequiredError),
+			}) => return Err(LineBreakRequiredError),
 
 			FormatToken::Group(group) => vec![PrintTokenCall::new(group.content.as_ref(), args)],
 
