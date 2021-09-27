@@ -29,6 +29,7 @@ fn test_format_cli() {
 - file "fixtures/input.json"
 - with options Tab
 {"string": "foo", "boolean": false, "number": 15, "object": {"something": 15}}
+
 "#
 	);
 }
