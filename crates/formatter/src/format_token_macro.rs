@@ -22,7 +22,7 @@
 /// ```
 /// You would write it like the following:
 ///
-/// ```rust, no_test
+/// ```rust
 /// use rome_formatter::{format_tokens, IndentToken, LineToken, FormatToken};
 /// let token = format_tokens!(
 ///   "foo",
@@ -32,35 +32,42 @@
 ///   ),
 ///   "}"
 /// );
+///
+/// let inner = FormatToken::concat(vec![
+///     FormatToken::from(LineToken::hard()),
+///     FormatToken::string("bar"),
+///     FormatToken::string(":"),
+///     FormatToken::Space,
+///     FormatToken::string("lorem")
+/// ]);
+/// let outer = FormatToken::concat(vec![
+///     FormatToken::string("foo"),
+///     FormatToken::string(":"),
+///     FormatToken::indent(inner),
+///     FormatToken::string("}")
+/// ]);
+///
+/// assert_eq!(token, outer);
+///
 /// ```
 #[macro_export]
 macro_rules! format_tokens {
 
 	// called for things like format_tokens!("hey")
-	($token:ident) => {
+	($token:expr) => {
 		{
-			use rome_formatter::FormatToken;
+			use $crate::FormatToken;
 			FormatToken::from($token)
 		}
 	};
 
-	($($token:literal),+ $(,)?) => {{
-		use rome_formatter::{FormatToken, ListToken};
-		FormatToken::from(ListToken::concat(vec![
-			$(
-					 FormatToken::from($token)
-			),+
-
-		]))
-	}};
-
 	( $( $token:expr ),+ $(,)?) => {{
-		use rome_formatter::{FormatToken, ListToken};
-		FormatToken::from(ListToken::concat(vec![
+		use $crate::{FormatToken, ListToken};
+		FormatToken::concat(vec![
 			$(
 					 FormatToken::from($token)
 			),+
 
-		]))
+		])
 	}};
 }
