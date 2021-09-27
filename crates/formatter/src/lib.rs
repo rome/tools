@@ -31,8 +31,8 @@
 //!     }
 //! }
 //!
-//! fn main() {
-//!	    let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
+//! fn my_function() {
+//!     let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
 //!     let token = key_value.format();
 //!     let options = FormatOptions::default();
 //!     let result = format_token(&token, options);

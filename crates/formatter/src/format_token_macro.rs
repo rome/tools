@@ -22,7 +22,7 @@
 /// ```
 /// You would write it like the following:
 ///
-/// ```rust,no_test
+/// ```rust, no_test
 /// use rome_formatter::{format_tokens, IndentToken, LineToken, FormatToken};
 /// let token = format_tokens!(
 ///   "foo",
@@ -64,3 +64,4 @@ macro_rules! format_tokens {
 		]))
 	}};
 }
+
