@@ -2,10 +2,10 @@ use rome_formatter::{format_str, FormatOptions};
 use std::fs;
 use std::path::PathBuf;
 
-/// Tests that formatting a given input file results in the expected formatted output.
+/// Tests that format a given input file, results in the expected formatted output.
 ///
-/// The input and expected output are stored as dedicated files in the `tests/specs` directory where
-/// the input file name is `{spec_name}.json` and the output file name is `{spec_name.expected}`.
+/// The input and the expected output are stored as dedicated files in the `tests/specs` directory where
+/// the input file name is `{spec_name}.json` and the output file name is `{spec_name.expected}.json`.
 ///
 /// Specs can be grouped in directories by specifying the directory name in the spec name. Examples:
 ///
