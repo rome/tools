@@ -1,16 +1,62 @@
+//! Rome's official formatter.
+//!
+//! The crate exposes some API and utilities to implement the formatting logic.
+//!
+//! The formatter relies on an [IR], which allows to format any kind of data structure.
+//!
+//! In order to implement the formatting logic, you need to implement the trait [FormatValue] for
+//! the data structure you want to format.
+//!
+//! Let's say, for example that you have a small data structure that represents a key/value data:
+//!
+//! ```rust,no_test
+//! struct KeyValue {
+//!     key: String,
+//!     value: String
+//! }
+//! ```
+//!
+//! Now, we do want to create this IR for the data structure:
+//! ```rust
+//! use rome_formatter::{format_tokens, format_token, FormatToken, FormatValue, FormatOptions};
+//!
+//! struct KeyValue {
+//!     key: String,
+//!     value: String
+//! }
+//!
+//! impl FormatValue for KeyValue {
+//!     fn format(&self) -> FormatToken {
+//!         format_tokens!(self.key.as_str(), FormatToken::Space, "=>", FormatToken::Space, self.value.as_str())
+//!     }
+//! }
+//!
+//! fn main() {
+//!	    let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
+//!     let token = key_value.format();
+//!     let options = FormatOptions::default();
+//!     let result = format_token(&token, options);
+//!     assert_eq!(result.code(), "lorem => ipsum");
+//! }
+//!
+//! ```
+//! [IR]: https://en.wikipedia.org/wiki/Intermediate_representation
+
 mod format_json;
 mod format_token;
+mod format_token_macro;
 mod intersperse;
 mod printer;
 
 use crate::format_json::json_to_tokens;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
-pub use format_token::{FormatToken, GroupToken, IfBreakToken, IndentToken, LineMode, ListToken};
+pub use format_token::{FormatToken, GroupToken, IfBreakToken, IndentToken, LineMode, ListToken, LineToken};
 pub use printer::PrintResult;
-use printer::Printer;
+pub use printer::Printer;
+pub use printer::PrinterOptions;
 
-/// This trait should implemented on each node/value that should have a formatted representation
+/// This trait should be implemented on each node/value that should have a formatted representation
 pub trait FormatValue {
 	fn format(&self) -> FormatToken;
 }
