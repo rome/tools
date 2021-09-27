@@ -75,7 +75,7 @@ fn escape_string(string: &str) -> String {
 }
 
 pub fn json_to_tokens(content: &str) -> FormatToken {
-	let json: Value = serde_json::from_str(content).unwrap();
+	let json: Value = serde_json::from_str(content).expect("cannot convert json to tokens");
 
 	FormatToken::from(ListToken::concat(vec![
 		json.format(),

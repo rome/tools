@@ -149,7 +149,7 @@ impl Printer {
 						self.state.pending_spaces = 0;
 					}
 
-					self.print_str(content.as_str());
+					self.print_str(content);
 				}
 				vec![]
 			}
@@ -254,12 +254,12 @@ impl Printer {
 					}
 					// We want a flat structure, so omit soft line wraps
 					LineMode::Soft => vec![],
-					LineMode::Hard => return Err(LineBreakRequiredError {}),
+					LineMode::Hard => return Err(LineBreakRequiredError),
 				}
 			}
 			FormatToken::Group(GroupToken {
 				should_break: true, ..
-			}) => return Err(LineBreakRequiredError {}),
+			}) => return Err(LineBreakRequiredError),
 
 			FormatToken::Group(group) => vec![PrintTokenCall::new(group.content.as_ref(), args)],
 
