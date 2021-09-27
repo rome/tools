@@ -51,7 +51,9 @@ mod printer;
 use crate::format_json::json_to_tokens;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
-pub use format_token::{FormatToken, GroupToken, IfBreakToken, IndentToken, LineMode, ListToken, LineToken};
+pub use format_token::{
+	FormatToken, GroupToken, IfBreakToken, IndentToken, LineMode, LineToken, ListToken,
+};
 pub use printer::PrintResult;
 pub use printer::Printer;
 pub use printer::PrinterOptions;

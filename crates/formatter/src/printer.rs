@@ -22,7 +22,6 @@ pub struct PrinterOptions {
 	pub indent_string: String,
 }
 
-
 impl From<FormatOptions> for PrinterOptions {
 	fn from(options: FormatOptions) -> Self {
 		let indent_string: String;

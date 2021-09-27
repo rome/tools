@@ -64,4 +64,3 @@ macro_rules! format_tokens {
 		]))
 	}};
 }
-
