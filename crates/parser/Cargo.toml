@@ -1,10 +1,10 @@
 [package]
-name = "parser"
+name = "rome-parser"
 version = "0.0.0"
 description = ""
 license = "MIT"
 edition = "2018"
-default-run = "parser"
+default-run = "rome-parser"
 
 [dependencies]
 anyhow = "1"

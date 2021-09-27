@@ -78,14 +78,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cli"
-version = "0.0.0"
-dependencies = [
- "clap",
- "rome-formatter",
-]
-
-[[package]]
 name = "countme"
 version = "2.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -166,22 +158,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6acbef58a60fe69ab50510a55bc8cdd4d6cf2283d27ad338f54cb52747a9cf2d"
 
 [[package]]
-name = "parser"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "indexmap",
- "proc-macro2",
- "quote",
- "rowan",
- "serde",
- "serde_json",
- "tree-sitter",
- "tree-sitter-typescript",
- "xshell",
-]
-
-[[package]]
 name = "proc-macro-error"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -241,11 +217,35 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f497285884f3fcff424ffc933e56d7cbca511def0c9831a7f9b5f6153e3cc89b"
 
 [[package]]
+name = "rome-cli"
+version = "0.0.0"
+dependencies = [
+ "clap",
+ "rome-formatter",
+]
+
+[[package]]
 name = "rome-formatter"
 version = "0.0.0"
 dependencies = [
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "rome-parser"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "indexmap",
+ "proc-macro2",
+ "quote",
+ "rowan",
+ "serde",
+ "serde_json",
+ "tree-sitter",
+ "tree-sitter-typescript",
+ "xshell",
 ]
 
 [[package]]

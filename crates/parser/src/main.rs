@@ -1,5 +1,5 @@
 use anyhow::{anyhow, Result};
-use parser::{languages, ParserLanguage};
+use rome_parser::{languages, Parser, ParserLanguage};
 
 fn main() -> Result<()> {
 	let args: Vec<String> = std::env::args().collect();
@@ -17,7 +17,7 @@ fn main() -> Result<()> {
 }
 
 fn print_tree(src: &str, syntax: impl ParserLanguage) -> Result<()> {
-	let mut parser = parser::Parser::new(syntax)?;
+	let mut parser = Parser::new(syntax)?;
 	let tree = parser.parse_text(src)?;
 	println!("{:#?}", tree);
 	Ok(())

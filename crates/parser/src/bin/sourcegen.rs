@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use anyhow::{anyhow, Result};
-use parser::sourcegen::Grammar;
+use rome_parser::sourcegen::Grammar;
 
 fn main() -> Result<()> {
 	let args: Vec<String> = std::env::args().collect();
