@@ -17,3 +17,4 @@ quote = "1.0.9"
 proc-macro2 = "1"
 xshell = "0.1"
 indexmap = {version = "1", features = ["serde-1"] }
+# syntax_kind = {path = "../syntax_kind"}

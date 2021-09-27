@@ -325,6 +325,11 @@ dependencies = [
 [[package]]
 name = "syntax"
 version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "parser",
+ "rowan",
+]
 
 [[package]]
 name = "termcolor"
