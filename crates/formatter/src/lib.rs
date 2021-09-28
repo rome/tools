@@ -44,7 +44,7 @@
 
 mod format_json;
 mod format_token;
-mod format_token_macro;
+mod format_tokens_macro;
 mod intersperse;
 mod printer;
 

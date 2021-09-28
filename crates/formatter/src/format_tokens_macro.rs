@@ -16,27 +16,29 @@
 /// For example, let's try to format following string:
 ///
 /// ```no_rust
-/// "foo": {
-///   "bar": "lorem"
-/// }
+/// foo: { bar: lorem }
 /// ```
 /// You would write it like the following:
 ///
 /// ```rust
-/// use rome_formatter::{format_tokens, IndentToken, LineToken, FormatToken};
+/// use rome_formatter::{format_tokens, format_token, IndentToken, FormatToken, FormatOptions};
 /// let token = format_tokens!(
 ///   "foo:",
+///   FormatToken::Space,
+///   "{",
 ///   IndentToken::new(
-///     format_tokens!(LineToken::hard(), "bar:", FormatToken::Space, "lorem")
+///     format_tokens!(FormatToken::Space, "bar:", FormatToken::Space, "lorem")
 ///   ),
+///    FormatToken::Space,
 ///   "}"
 /// );
-///
-/// 
-/// assert_eq!(r#"foo: {
-  bar: lorem
-}"#, format_token(&token).code());
-///
+/// assert_eq!(r#"foo: { bar: lorem }"#, format_token(&token, FormatOptions::default()).code());
+/// ```
+/// Or you can also create single tokens:
+/// ```
+/// use rome_formatter::{format_tokens, format_token, FormatOptions};
+/// let unique_token = format_tokens!("single");
+/// assert_eq!(r#"single"#, format_token(&unique_token, FormatOptions::default()).code());
 /// ```
 #[macro_export]
 macro_rules! format_tokens {
