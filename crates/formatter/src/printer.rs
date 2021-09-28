@@ -11,6 +11,7 @@ pub struct PrinterOptions {
 	/// What's the max width of a line. Defaults to 80
 	pub print_width: u16,
 
+	/// The type of line ending to apply to the printed input
 	pub line_ending: LineEnding,
 
 	/// The never ending question whatever to use spaces or tabs, and if spaces, how many spaces

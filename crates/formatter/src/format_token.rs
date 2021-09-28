@@ -62,6 +62,7 @@ impl IndentToken {
 	}
 }
 
+/// A token used to gather a list of tokens; optionally they can be printed with a separator, using [ListToken::join]
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ListToken {
 	content: Vec<FormatToken>,
@@ -72,6 +73,7 @@ impl ListToken {
 		Self { content }
 	}
 
+	/// Emits a list of [ListToken] which contains a list of [FormatToken]
 	pub fn concat<T: IntoIterator<Item = FormatToken>>(tokens: T) -> Self {
 		let tokens: Vec<FormatToken> = tokens
 			.into_iter()
@@ -83,7 +85,7 @@ impl ListToken {
 		Self::new(tokens)
 	}
 
-	/// Takes a list of tokens and a separator as input and creates a list of tokens where they are separated by the separator.
+	/// Takes a list of tokens and a separator as input and creates a list of tokens where they are separated by that separator.
 	pub fn join<Separator: Into<FormatToken>, T: IntoIterator<Item = FormatToken>>(
 		separator: Separator,
 		tokens: T,
