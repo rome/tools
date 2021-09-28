@@ -9,7 +9,7 @@
 ///
 /// ```rust
 /// use rome_formatter::{format_tokens, FormatToken};
-/// let token = format_tokens!("foo", ":", FormatToken::Space, "bar");
+/// let token = format_tokens!("foo:", FormatToken::Space, "bar");
 /// ```
 ///
 /// The macro can be also nested, although the macro needs to be decorated with the token you need.
@@ -25,29 +25,17 @@
 /// ```rust
 /// use rome_formatter::{format_tokens, IndentToken, LineToken, FormatToken};
 /// let token = format_tokens!(
-///   "foo",
-///   ":",
+///   "foo:",
 ///   IndentToken::new(
-///     format_tokens!(LineToken::hard(), "bar", ":", FormatToken::Space, "lorem")
+///     format_tokens!(LineToken::hard(), "bar:", FormatToken::Space, "lorem")
 ///   ),
 ///   "}"
 /// );
 ///
-/// let inner = FormatToken::concat(vec![
-///     FormatToken::from(LineToken::hard()),
-///     FormatToken::string("bar"),
-///     FormatToken::string(":"),
-///     FormatToken::Space,
-///     FormatToken::string("lorem")
-/// ]);
-/// let outer = FormatToken::concat(vec![
-///     FormatToken::string("foo"),
-///     FormatToken::string(":"),
-///     FormatToken::indent(inner),
-///     FormatToken::string("}")
-/// ]);
-///
-/// assert_eq!(token, outer);
+/// 
+/// assert_eq!(r#"foo: {
+  bar: lorem
+}"#, format_token(&token).code());
 ///
 /// ```
 #[macro_export]
