@@ -120,9 +120,54 @@ impl GreenNode {
 		}
 	}
 
+	#[inline]
 	pub(crate) fn ptr(&self) -> *const u8 {
 		let r: &HeaderSlice<_, _> = &self.data;
 		r as *const _ as _
+	}
+
+	/// Tests if this and the passed in node point to the same underlying data (pointer comparison)
+	///
+	/// # Examples
+	///
+	/// Returns true for the same node
+	/// ```
+	/// use rslint_rowan::{GreenNode, SyntaxKind};
+	///
+	/// let node = GreenNode::new(SyntaxKind(1), vec![]);
+	///
+	/// assert!(node.shallow_eq(&node))
+	/// ```
+	///
+	/// Returns true for cloned nodes
+	/// ```
+	/// use rslint_rowan::{GreenNode, SyntaxKind};
+	///
+	/// let node = GreenNode::new(SyntaxKind(1), vec![]);
+	/// let node_2 = node.clone(); // points to the same underlying data
+	///
+	/// assert!(node.shallow_eq(&node_2));
+	/// assert!(node_2.shallow_eq(&node));
+	/// ```
+	///
+	/// Returns `false` for nodes that are structurally equal but were created independently
+	/// ```
+	/// use rslint_rowan::{GreenNode, SyntaxKind};
+	///
+	/// let node = GreenNode::new(SyntaxKind(1), vec![]);
+	/// let node_2 = GreenNode::new(SyntaxKind(1), vec![]);
+	///
+	/// // The nodes' structures are equal
+	/// assert_eq!(node, node_2);
+	///
+	/// // but they point to different underlying data structures, which is why they are not shallow equal
+	/// assert!(!node.shallow_eq(&node_2));
+	/// assert!(!node_2.shallow_eq(&node));
+	/// ```
+	///
+	#[inline]
+	pub fn shallow_eq(&self, other: &GreenNode) -> bool {
+		self.ptr() == other.ptr()
 	}
 }
 

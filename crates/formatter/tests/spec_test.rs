@@ -36,7 +36,7 @@ pub fn spec_test(spec_name: &str) {
 	let result = format_str(spec_content.as_str(), FormatOptions::default());
 
 	let expected_output = fs::read_to_string(expected_file).unwrap();
-	assert_eq!(&expected_output, result.code());
+	assert_eq!(expected_output, result.root().text().to_string());
 }
 
 fn spec_file_name(spec_name: &str, extension: &str) -> PathBuf {

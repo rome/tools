@@ -5,6 +5,7 @@ mod token;
 
 pub(crate) use self::element::GreenElementRef;
 use self::element::{GreenElement, PackedGreenElement};
+use crate::NodeOrToken;
 
 pub use self::{
 	builder::{Checkpoint, GreenNodeBuilder, NodeCache},

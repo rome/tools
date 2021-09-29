@@ -7,3 +7,5 @@ members = ["xtask/", "crates/*"]
 # TODO: Possibly setup profiles for dev to speed up tests/etc
 
 # TODO: Setup release profile (incremental mode?)
+[profile.release]
+debug = true

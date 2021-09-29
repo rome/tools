@@ -1,4 +1,5 @@
 use crate::arc::Arc;
+use std::ops::Deref;
 use std::{convert::TryFrom, fmt, hash, mem::ManuallyDrop, ptr};
 
 use crate::{green::SyntaxKind, SmolStr, TextSize};
@@ -11,6 +12,7 @@ pub(super) struct GreenTokenData {
 }
 
 /// Leaf node in the immutable tree.
+#[repr(transparent)]
 pub struct GreenToken {
 	ptr: ptr::NonNull<GreenTokenData>,
 }
@@ -33,6 +35,7 @@ impl GreenToken {
 		}
 	}
 
+	#[inline]
 	fn data(&self) -> &GreenTokenData {
 		unsafe { &*Self::remove_tag(self.ptr).as_ptr() }
 	}
@@ -63,6 +66,53 @@ impl GreenToken {
 	#[inline]
 	pub fn text_len(&self) -> TextSize {
 		TextSize::try_from(self.text().len()).unwrap()
+	}
+
+	/// Tests if this and the passed in token point to the same underlying data (pointer comparison)
+	///
+	/// # Examples
+	///
+	/// Returns true for the same tokens
+	/// ```
+	/// use smol_str::SmolStr;
+	/// use rslint_rowan::{GreenToken, SyntaxKind};
+	///
+	/// let token = GreenToken::new(SyntaxKind(1), SmolStr::new("hy"));
+	///
+	/// assert!(token.shallow_eq(&token))
+	/// ```
+	///
+	/// Returns true for cloned tokens
+	/// ```
+	/// use smol_str::SmolStr;
+	/// use rslint_rowan::{GreenToken, SyntaxKind};
+	///
+	/// let token = GreenToken::new(SyntaxKind(1), SmolStr::new("hy"));
+	/// let token_2 = token.clone(); // points to the same underlying data
+	///
+	/// assert!(token.shallow_eq(&token_2));
+	/// assert!(token_2.shallow_eq(&token));
+	/// ```
+	///
+	/// Returns `false` for tokens that are structurally equal but were created independently
+	/// ```
+	/// use smol_str::SmolStr;
+	/// use rslint_rowan::{GreenToken, SyntaxKind};
+	///
+	/// let token = GreenToken::new(SyntaxKind(1), SmolStr::new("hy"));
+	/// let token_2 = GreenToken::new(SyntaxKind(1), SmolStr::new("hy"));
+	///
+	/// // The tokens' structures are equal
+	/// assert_eq!(token, token_2);
+	///
+	/// // but they point to different underlying data structures, which is why they are not shallow equal
+	/// assert!(!token.shallow_eq(&token_2));
+	/// assert!(!token_2.shallow_eq(&token));
+	/// ```
+	///
+	#[inline]
+	pub fn shallow_eq(&self, other: &GreenToken) -> bool {
+		return self.data() == other.data();
 	}
 }
 

@@ -1,4 +1,6 @@
 use crate::intersperse::Intersperse;
+use rslint_parser::{GreenNode, SyntaxToken};
+use rslint_rowan::GreenToken;
 use std::ops::Deref;
 
 type Content = Box<FormatToken>;
@@ -16,9 +18,11 @@ pub enum FormatToken {
 	Indent(IndentToken),
 	Group(GroupToken),
 	List(ListToken),
-	// TODO Revisit, structure is a bit weird
+	// TODO Revisit naming, structure is a bit weird
 	IfBreak(IfBreakToken),
-	String(StringToken),
+	Token(TokenToken),
+	Node(NodeToken),
+	RawNode(RawNodeToken),
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -73,7 +77,34 @@ impl ListToken {
 		Self { content }
 	}
 
-	/// Emits a list of [ListToken] which contains a list of [FormatToken]
+	/// Emits a list of [ListToken] which contains a list of [FormatToken]s
+	///
+	/// The implementation flattens the result if any of its children is a list token
+	///
+	/// # Examples
+	///
+	/// ```
+	/// use rome_formatter::{ListToken, FormatToken, Tokens};
+	/// use rslint_parser::SyntaxKind;
+	///
+	/// let mut tokens = Tokens::default();
+	/// let one: FormatToken = tokens.get(SyntaxKind::NUMBER, "1").into();
+	/// let two: FormatToken = tokens.get(SyntaxKind::NUMBER, "2").into();
+	///
+	/// let sub_list = ListToken::concat(vec![one.clone()]);
+	/// let parent_list = ListToken::concat(vec![
+	///     FormatToken::List(sub_list),
+	///     two.clone(),
+	/// ]);
+	///
+	/// assert_eq!(
+	///     parent_list,
+	///     ListToken::concat(vec![
+	///         one,
+	///         two
+	///     ])
+	/// );
+	/// ```
 	pub fn concat<T: IntoIterator<Item = FormatToken>>(tokens: T) -> Self {
 		let tokens: Vec<FormatToken> = tokens
 			.into_iter()
@@ -86,6 +117,22 @@ impl ListToken {
 	}
 
 	/// Takes a list of tokens and a separator as input and creates a list of tokens where they are separated by that separator.
+	///
+	/// # Examples
+	///
+	/// ```
+	/// use rome_formatter::{FormatToken, ListToken, Tokens};
+	/// use rslint_parser::SyntaxKind;
+	///
+	/// let mut tokens = Tokens::default();
+	/// let comma: FormatToken = tokens.comma().into();
+	/// let one: FormatToken = tokens.get(SyntaxKind::NUMBER, "1").into();
+	/// let two: FormatToken = tokens.get(SyntaxKind::NUMBER, "2").into();
+	///
+	/// let result = ListToken::join(comma.clone(), vec![one.clone(), two.clone()]);
+	///
+	/// assert_eq!(result, ListToken::concat(vec![one, comma, two]));
+	/// ```
 	pub fn join<Separator: Into<FormatToken>, T: IntoIterator<Item = FormatToken>>(
 		separator: Separator,
 		tokens: T,
@@ -133,6 +180,68 @@ impl IfBreakToken {
 	}
 }
 
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct TokenToken {
+	pub token: GreenToken,
+}
+
+impl TokenToken {
+	pub fn new<T: Into<GreenToken>>(token: T) -> Self {
+		Self {
+			token: token.into(),
+		}
+	}
+}
+
+impl From<GreenToken> for TokenToken {
+	fn from(token: GreenToken) -> Self {
+		TokenToken::new(token)
+	}
+}
+
+impl From<SyntaxToken> for TokenToken {
+	fn from(token: SyntaxToken) -> Self {
+		TokenToken::new(token.green().to_owned())
+	}
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct NodeToken {
+	pub node: GreenNode,
+	pub content: Content,
+}
+
+impl NodeToken {
+	pub fn new<TNode: Into<GreenNode>, TContent: Into<FormatToken>>(
+		node: TNode,
+		content: TContent,
+	) -> Self {
+		Self {
+			node: node.into(),
+			content: Box::new(content.into()),
+		}
+	}
+}
+
+/// The node gets printed as is. Helpful if you want to keep a CST node unaffected by formatting,
+/// e.g. because it contains erroneous syntax.
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct RawNodeToken {
+	pub node: GreenNode,
+}
+
+impl RawNodeToken {
+	pub fn new<TNode: Into<GreenNode>>(node: TNode) -> Self {
+		Self { node: node.into() }
+	}
+}
+
+impl From<GreenNode> for RawNodeToken {
+	fn from(node: GreenNode) -> Self {
+		RawNodeToken::new(node)
+	}
+}
+
 /// Group is a special token that controls how the child tokens are printed.
 ///
 /// The printer first tries to print all tokens in the group onto a single line (ignoring soft line wraps)
@@ -163,48 +272,6 @@ impl GroupToken {
 	}
 }
 
-/// A code fragment that gets written to the output. Newlines must be encoded with line feeds `\n`.
-/// The [Printer] takes care of converting the line feeds to the line ending specified in the options.
-///
-/// # Example
-/// ```
-/// use rome_formatter::{FormatToken, format_token, FormatOptions};
-/// let token = FormatToken::string(r#"["a", "b"]"#);
-/// let formatted = format_token(&token, FormatOptions::default());
-///
-/// assert_eq!(r#"["a", "b"]"#, formatted.code());
-/// ```
-/// Is not allowed to contain any new lines
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct StringToken(String);
-
-impl StringToken {
-	pub fn new(content: &str) -> Self {
-		debug_assert!(!content.contains('\r'), "The content '{}' contains a carriage return '\\r' character but string tokens must only use line feeds '\\n' as line separator. Use '\\n' instead of '\\r' and '\\r\\n' to insert a line break in strings.", content);
-		Self(String::from(content))
-	}
-}
-
-impl From<&str> for StringToken {
-	fn from(content: &str) -> Self {
-		StringToken::new(content)
-	}
-}
-
-impl From<String> for StringToken {
-	fn from(content: String) -> Self {
-		StringToken::new(content.as_str())
-	}
-}
-
-impl Deref for StringToken {
-	type Target = String;
-
-	fn deref(&self) -> &Self::Target {
-		&self.0
-	}
-}
-
 impl<'a> FormatToken {
 	/// Stores lint a list a `Vec` of `FormatToken`
 	pub fn concat<T: Into<Tokens>>(tokens: T) -> FormatToken {
@@ -226,56 +293,6 @@ impl<'a> FormatToken {
 
 	pub fn indent<T: Into<FormatToken>>(content: T) -> FormatToken {
 		FormatToken::Indent(IndentToken::new(content))
-	}
-
-	/// Utility to tokenize a string
-	pub fn string<T: Into<&'a str>>(content: T) -> FormatToken {
-		FormatToken::String(StringToken::new(content.into()))
-	}
-
-	/// Utility to tokenize a f64
-	pub fn f64<T: Into<f64>>(content: T) -> FormatToken {
-		FormatToken::string(content.into().to_string().as_str())
-	}
-
-	/// Utility to tokenize a u64
-	pub fn u64<T: Into<u64>>(content: T) -> FormatToken {
-		FormatToken::string(content.into().to_string().as_str())
-	}
-
-	/// Utility to tokenize a boolean
-	pub fn boolean<T: Into<bool>>(content: T) -> FormatToken {
-		FormatToken::string(content.into().to_string().as_str())
-	}
-}
-
-impl From<&str> for FormatToken {
-	fn from(value: &str) -> Self {
-		FormatToken::string(value)
-	}
-}
-
-impl From<u64> for FormatToken {
-	fn from(value: u64) -> Self {
-		FormatToken::u64(value)
-	}
-}
-
-impl From<f64> for FormatToken {
-	fn from(value: f64) -> Self {
-		FormatToken::f64(value)
-	}
-}
-
-impl From<&bool> for FormatToken {
-	fn from(value: &bool) -> Self {
-		FormatToken::boolean(*value)
-	}
-}
-
-impl From<bool> for FormatToken {
-	fn from(value: bool) -> Self {
-		FormatToken::boolean(value)
 	}
 }
 
@@ -315,6 +332,24 @@ impl From<IndentToken> for FormatToken {
 	}
 }
 
+impl<T: Into<TokenToken>> From<T> for FormatToken {
+	fn from(token: T) -> Self {
+		FormatToken::Token(token.into())
+	}
+}
+
+impl From<NodeToken> for FormatToken {
+	fn from(node: NodeToken) -> Self {
+		FormatToken::Node(node)
+	}
+}
+
+impl From<RawNodeToken> for FormatToken {
+	fn from(node: RawNodeToken) -> Self {
+		FormatToken::RawNode(node)
+	}
+}
+
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum LineMode {
 	SoftOrSpace,
@@ -325,55 +360,8 @@ pub enum LineMode {
 #[cfg(test)]
 mod tests {
 
-	use crate::format_token::{LineToken, ListToken};
-	use crate::{format_token::LineMode, FormatToken};
-
-	#[test]
-	fn should_join() {
-		let separator = ",";
-		let tokens = vec![FormatToken::string("foo"), FormatToken::string("bar")];
-
-		let result = FormatToken::join(separator, tokens);
-
-		let expected = FormatToken::concat(vec![
-			FormatToken::string("foo"),
-			FormatToken::string(","),
-			FormatToken::string("bar"),
-		]);
-
-		assert_eq!(result, expected);
-	}
-
-	#[test]
-	fn should_concat() {
-		let tokens = vec![FormatToken::string("foo"), FormatToken::string("bar")];
-
-		let result = FormatToken::concat(tokens);
-
-		let expected = FormatToken::List(ListToken::new(vec![
-			FormatToken::string("foo"),
-			FormatToken::string("bar"),
-		]));
-
-		assert_eq!(result, expected);
-	}
-
-	#[test]
-	fn flattens_lists() {
-		let sub_list = ListToken::concat(vec![FormatToken::string("sub_list")]);
-		let parent_list = ListToken::concat(vec![
-			FormatToken::string("parent"),
-			FormatToken::List(sub_list),
-		]);
-
-		assert_eq!(
-			parent_list,
-			ListToken::concat(vec![
-				FormatToken::string("parent"),
-				FormatToken::string("sub_list")
-			])
-		)
-	}
+	use crate::format_token::LineMode;
+	use crate::format_token::LineToken;
 
 	#[test]
 	fn should_give_line_tokens() {

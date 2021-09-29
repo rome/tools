@@ -67,7 +67,7 @@ pub fn run_cli() {
 				})
 				.unwrap_or_default();
 
-			format(input, FormatOptions::new(options));
+			format(input.as_path(), FormatOptions::new(options));
 		}
 		// Thanks to the settings AppSettings::SubcommandRequiredElseHelp we should not be there
 		_ => clap::Error::with_description(
