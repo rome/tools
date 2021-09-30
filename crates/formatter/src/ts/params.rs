@@ -1,4 +1,4 @@
-use crate::{format_tokens, FormatToken, GroupToken, ListToken};
+use crate::{format_tokens, FormatToken, ListToken};
 use syntax::{
 	ast::{self, AstNode},
 	SyntaxNode,
