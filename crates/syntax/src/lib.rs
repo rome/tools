@@ -6,7 +6,7 @@ pub mod syntax_node;
 use anyhow::Result;
 
 pub use syntax_node::{
-	SyntaxElement, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren, SyntaxToken,
+	NodeOrToken, SyntaxElement, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren, SyntaxToken,
 };
 
 pub use parser::SyntaxKind;

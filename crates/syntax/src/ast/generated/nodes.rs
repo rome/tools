@@ -1,5 +1,5 @@
 use crate::{
-	ast::{support, AstChildren, AstNode},
+	ast::{support, AstChildren, AstChildrenWithTokens, AstNode},
 	SyntaxKind, SyntaxNode, SyntaxToken,
 };
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -57,7 +57,11 @@ impl Arguments {}
 pub struct Array {
 	pub(crate) syntax: SyntaxNode,
 }
-impl Array {}
+impl Array {
+	pub fn elements(&self) -> AstChildrenWithTokens<Expression> {
+		support::children_and_tokens(&self.syntax)
+	}
+}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrayPattern {
 	pub(crate) syntax: SyntaxNode,
@@ -463,7 +467,11 @@ impl ForStatement {
 pub struct FormalParameters {
 	pub(crate) syntax: SyntaxNode,
 }
-impl FormalParameters {}
+impl FormalParameters {
+	pub fn parameters(&self) -> AstChildren<RequiredParameter> {
+		support::children(&self.syntax)
+	}
+}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Function {
 	pub(crate) syntax: SyntaxNode,
@@ -1053,8 +1061,8 @@ impl RequiredParameter {
 	pub fn decorator(&self) -> AstChildren<Decorator> {
 		support::children(&self.syntax)
 	}
-	pub fn value(&self) -> Option<Expression> {
-		support::child(&self.syntax)
+	pub fn value(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, SyntaxKind::Identifier)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1071,7 +1079,11 @@ impl RestType {}
 pub struct ReturnStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ReturnStatement {}
+impl ReturnStatement {
+	pub fn return_value(&self) -> Option<PrimaryExpression> {
+		support::child(&self.syntax)
+	}
+}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SequenceExpression {
 	pub(crate) syntax: SyntaxNode,
@@ -1093,12 +1105,21 @@ impl SpreadElement {}
 pub struct StatementBlock {
 	pub(crate) syntax: SyntaxNode,
 }
-impl StatementBlock {}
+impl StatementBlock {
+	pub fn return_statement(&self) -> Option<ReturnStatement> {
+		support::child(&self.syntax)
+	}
+}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct StringLiteral {
 	pub(crate) syntax: SyntaxNode,
 }
-impl StringLiteral {}
+impl StringLiteral {
+	pub fn value(&self) -> Option<SyntaxToken> {
+		// TODO: hack because strings have whitespace, it's a known bug
+		support::token(&self.syntax, SyntaxKind::Whitespace)
+	}
+}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SubscriptExpression {
 	pub(crate) syntax: SyntaxNode,
@@ -1749,7 +1770,11 @@ impl FromToken {}
 pub struct FunctionToken {
 	pub(crate) syntax: SyntaxNode,
 }
-impl FunctionToken {}
+impl FunctionToken {
+	pub fn parameters(&self) -> AstChildren<FormalParameters> {
+		support::children(&self.syntax)
+	}
+}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct GetToken {
 	pub(crate) syntax: SyntaxNode,
@@ -3706,6 +3731,7 @@ impl AstNode for JsxSelfClosingElement {
 		&self.syntax
 	}
 }
+
 impl AstNode for LabeledStatement {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		kind == SyntaxKind::LabeledStatement
@@ -7195,6 +7221,7 @@ impl From<VariableDeclaration> for Declaration {
 		Declaration::VariableDeclaration(node)
 	}
 }
+
 impl AstNode for Declaration {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {

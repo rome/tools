@@ -16,3 +16,4 @@ pub type SyntaxToken = rowan::SyntaxToken<TSX>;
 pub type SyntaxElement = rowan::SyntaxElement<TSX>;
 pub type SyntaxNodeChildren = rowan::SyntaxNodeChildren<TSX>;
 pub type SyntaxElementChildren = rowan::SyntaxElementChildren<TSX>;
+pub type NodeOrToken = rowan::NodeOrToken<SyntaxNode, SyntaxToken>;

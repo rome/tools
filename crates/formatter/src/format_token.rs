@@ -1,5 +1,6 @@
 use crate::intersperse::Intersperse;
 use std::ops::Deref;
+use syntax::SyntaxNode;
 
 type Content = Box<FormatToken>;
 pub type Tokens = Vec<FormatToken>;
@@ -19,6 +20,7 @@ pub enum FormatToken {
 	// TODO Revisit, structure is a bit weird
 	IfBreak(IfBreakToken),
 	String(StringToken),
+	Syntax(SyntaxNode),
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -312,6 +314,12 @@ impl From<LineToken> for FormatToken {
 impl From<IndentToken> for FormatToken {
 	fn from(token: IndentToken) -> Self {
 		FormatToken::Indent(token)
+	}
+}
+
+impl From<SyntaxNode> for FormatToken {
+	fn from(token: SyntaxNode) -> Self {
+		FormatToken::Syntax(token)
 	}
 }
 

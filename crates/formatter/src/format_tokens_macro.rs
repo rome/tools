@@ -52,7 +52,7 @@ macro_rules! format_tokens {
 	};
 
 	( $( $token:expr ),+ $(,)?) => {{
-		use $crate::{FormatToken, ListToken};
+		use $crate::{FormatToken};
 		FormatToken::concat(vec![
 			$(
 					 FormatToken::from($token)

@@ -47,6 +47,7 @@ mod format_token;
 mod format_tokens_macro;
 mod intersperse;
 mod printer;
+mod ts;
 
 use crate::format_json::json_to_tokens;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
