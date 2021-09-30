@@ -184,6 +184,7 @@ impl Printer {
 				self.state.pending_indent = args.indent;
 				vec![]
 			}
+			_ => unimplemented!(""),
 		}
 	}
 
@@ -265,6 +266,8 @@ impl Printer {
 			FormatToken::Space | FormatToken::Indent { .. } | FormatToken::List { .. } => {
 				self.print_token(token, args)
 			}
+
+			_ => unimplemented!(""),
 		};
 
 		Ok(next_calls)

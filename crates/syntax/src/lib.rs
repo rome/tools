@@ -6,7 +6,7 @@ use anyhow::Result;
 
 use rowan::{GreenNode, GreenNodeBuilder};
 pub use syntax_node::{
-	SyntaxElement, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren, SyntaxToken,
+	NodeOrToken, SyntaxElement, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren, SyntaxToken,
 };
 
 use parser::TreeSink;
