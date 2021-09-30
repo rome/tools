@@ -7,7 +7,9 @@ pub use generated::nodes::*;
 
 use std::marker::PhantomData;
 
-use crate::{SyntaxKind, SyntaxNode, SyntaxNodeChildren, SyntaxToken};
+use crate::{
+	NodeOrToken, SyntaxElementChildren, SyntaxKind, SyntaxNode, SyntaxNodeChildren, SyntaxToken,
+};
 
 pub trait AstNode {
 	fn can_cast(kind: SyntaxKind) -> bool
@@ -73,8 +75,31 @@ impl<N: AstNode> Iterator for AstChildren<N> {
 	}
 }
 
+/// An iterator over `SyntaxNode` children of a particular AST type.
+#[derive(Debug, Clone)]
+pub struct AstChildrenWithTokens<N> {
+	inner: SyntaxElementChildren,
+	ph: PhantomData<N>,
+}
+
+impl<N> AstChildrenWithTokens<N> {
+	fn new(parent: &SyntaxNode) -> Self {
+		AstChildrenWithTokens {
+			inner: parent.children_with_tokens(),
+			ph: PhantomData,
+		}
+	}
+}
+
+impl<N: AstNode> Iterator for AstChildrenWithTokens<N> {
+	type Item = NodeOrToken;
+	fn next(&mut self) -> Option<NodeOrToken> {
+		self.inner.find_map(|node_or_token| Some(node_or_token))
+	}
+}
+
 pub mod support {
-	use super::{AstChildren, AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
+	use super::{AstChildren, AstChildrenWithTokens, AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
 
 	pub fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
@@ -82,6 +107,10 @@ pub mod support {
 
 	pub fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {
 		AstChildren::new(parent)
+	}
+
+	pub fn children_and_tokens<N: AstNode>(parent: &SyntaxNode) -> AstChildrenWithTokens<N> {
+		AstChildrenWithTokens::new(parent)
 	}
 
 	#[allow(unused)]
