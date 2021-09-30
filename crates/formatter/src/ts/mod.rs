@@ -1,4 +1,4 @@
-use crate::{format_tokens, FormatToken, FormatValue, LineToken, ListToken};
+use crate::{format_tokens, FormatToken, FormatValue, GroupToken, LineToken, ListToken};
 use syntax::{NodeOrToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
 mod array;
@@ -44,12 +44,17 @@ pub fn format_syntax_kind(kind: SyntaxKind, node: SyntaxNode) -> FormatToken {
 			if let None = node.first_child() {
 				return format_tokens!("{}");
 			}
-			format_tokens!(
+			let group = GroupToken::new(format_tokens!(
 				"{",
-				FormatToken::indent(format_tokens!(LineToken::hard(), format_nodes(node)),),
-				LineToken::hard(),
+				FormatToken::indent(format_tokens!(
+					LineToken::soft_or_space(),
+					ListToken::join(LineToken::soft_or_space(), format_nodes(node))
+				)),
+				LineToken::soft_or_space(),
 				"}"
-			)
+			));
+
+			FormatToken::from(group)
 		}
 
 		SyntaxKind::FormalParameters => params::format(node),
@@ -80,12 +85,10 @@ fn format_tokens_and_nodes(node: SyntaxNode) -> FormatToken {
 	)
 }
 
-fn format_nodes(node: SyntaxNode) -> FormatToken {
-	FormatToken::from(
-		node.children()
-			.map(|node| node.format())
-			.collect::<Vec<FormatToken>>(),
-	)
+fn format_nodes(node: SyntaxNode) -> Vec<FormatToken> {
+	node.children()
+		.map(|node| node.format())
+		.collect::<Vec<FormatToken>>()
 }
 
 impl FormatValue for SyntaxNode {
@@ -111,39 +114,32 @@ mod test {
 	fn function_block() {
 		let src = r#"function() foo { return 'something' }"#;
 		let tree = parse(src).unwrap();
-		dbg!(&tree);
 		let result = format_token(&tree.format(), FormatOptions::default());
-		assert_eq!(
-			result.code(),
-			r#"function() foo {
-	return "something";
-}"#
-		);
+		assert_eq!(result.code(), r#"function() foo { return "something"; }"#);
 	}
 
 	#[test]
 	fn array() {
-		let src = r#"let users = [   'john', 'chandler' ]"#;
+		let src = r#"let users = [   'john', 'chandler', true ]"#;
 		let tree = parse(src).unwrap();
 		let result = format_token(&tree.format(), FormatOptions::default());
-		assert_eq!(result.code(), r#"let users = ["john", "chandler",];"#);
+		assert_eq!(result.code(), r#"let users = ["john", "chandler", true,];"#);
 	}
 
 	#[test]
 	fn poc() {
 		let src = r#"function foo { let var1 = [true, false]
 	let broken = [-, 45, 54]
-	let var2 = var => {}
+	let var2 = (var1, var2) => {}
 }"#;
 		let tree = parse(src).unwrap();
-		dbg!(&tree);
 		let result = format_token(&tree.format(), FormatOptions::default());
 		assert_eq!(
 			result.code(),
 			r#"function foo {
 	let var1 = [true, false,];
 	let broken = [-, 45, 54,];
-	let var2 = (var) => {};
+	let var2 = (var1, var2) => {};
 }"#
 		);
 	}

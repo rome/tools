@@ -13,7 +13,6 @@ pub fn format_node(node: SyntaxNode) -> FormatToken {
 	let mut tokens = vec![];
 
 	for element in elements {
-		dbg!(&element);
 		let token = match element {
 			NodeOrToken::Node(node) => Some(node.format()),
 			NodeOrToken::Token(token) => {
