@@ -1,4 +1,4 @@
-use crate::{format_tokens, FormatToken, FormatValue, GroupToken, LineToken, ListToken};
+use crate::{format_tokens, FormatToken, FormatValue};
 use syntax::{NodeOrToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
 mod array;
@@ -39,24 +39,7 @@ pub fn format_syntax_kind(kind: SyntaxKind, node: SyntaxNode) -> FormatToken {
 		SyntaxKind::ArrowFunction => arrow_function::format(node),
 		SyntaxKind::ERROR => format_tokens_and_nodes(node),
 		SyntaxKind::ReturnStatement => return_statement::format_node(node),
-		SyntaxKind::StatementBlock => {
-			// doesn't have any children, so it's an empty block
-			if let None = node.first_child() {
-				return format_tokens!("{}");
-			}
-			let group = GroupToken::new(format_tokens!(
-				"{",
-				FormatToken::indent(format_tokens!(
-					LineToken::soft_or_space(),
-					ListToken::join(LineToken::soft_or_space(), format_nodes(node))
-				)),
-				LineToken::soft_or_space(),
-				"}"
-			));
-
-			FormatToken::from(group)
-		}
-
+		SyntaxKind::StatementBlock => statement::format(node),
 		SyntaxKind::FormalParameters => params::format(node),
 
 		_ => FormatToken::Space,
@@ -128,9 +111,9 @@ mod test {
 
 	#[test]
 	fn poc() {
-		let src = r#"function foo { let var1 = [true, false]
-	let broken = [-, 45, 54]
-	let var2 = (var1, var2) => {}
+		let src = r#"function foo { let var1 = [true, false] let broken = [-, 45, 54]
+
+			let var2 = (var1, var2) => {}
 }"#;
 		let tree = parse(src).unwrap();
 		let result = format_token(&tree.format(), FormatOptions::default());
