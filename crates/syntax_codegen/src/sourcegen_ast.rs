@@ -109,7 +109,7 @@ pub(crate) fn generate_nodes(grammar: &AstSrc) -> String {
 				.map(|k| format_ident!("{}", to_upper_snake_case(&k.to_string())))
 				.collect();
 
-			let can_cast_matchall = if enums.len() > 0 {
+			let can_cast_matchall = if !enums.is_empty() {
 				quote! { _ => #(#enums::can_cast(kind))|* }
 			} else {
 				quote! { _ => false }
@@ -190,6 +190,7 @@ pub(crate) fn generate_nodes(grammar: &AstSrc) -> String {
 		});
 
 	let ast = quote! {
+		#![allow(clippy::all)]
 		use crate::{
 			SyntaxNode, SyntaxToken, SyntaxKind::{self, *},
 			ast::{AstNode, AstChildren, support},

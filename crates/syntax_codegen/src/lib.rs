@@ -3,7 +3,10 @@ pub mod ast_src;
 pub mod sourcegen_ast;
 pub mod syntax_kind;
 
-use std::collections::{BTreeMap, BTreeSet};
+use std::{
+	cmp::Ordering,
+	collections::{BTreeMap, BTreeSet},
+};
 
 use anyhow::Result;
 use ast_src::{AstEnumSrc, AstNodeSrc, AstSrc, Cardinality};
@@ -107,14 +110,12 @@ impl Grammar {
 
 pub fn generate_nodes_from_grammars(grammars: &[Grammar]) -> String {
 	let (ast_src, _) = create_ast_src(grammars);
-	let result = generate_nodes(&ast_src);
-	result
+	generate_nodes(&ast_src)
 }
 
 pub fn generate_tokens_from_grammars(grammars: &[Grammar]) -> String {
 	let (ast_src, _) = create_ast_src(grammars);
-	let result = generate_tokens(&ast_src);
-	result
+	generate_tokens(&ast_src)
 }
 
 pub(crate) fn create_ast_src(grammars: &[Grammar]) -> (AstSrc, Vec<String>) {
@@ -147,7 +148,7 @@ pub(crate) fn add_nodes_and_enums(ast_src: &mut AstSrc, grammars: &[Grammar]) {
 	for grammar in grammars {
 		for node in &grammar.nodes {
 			if let Some(subtypes) = &node.subtypes {
-				add_variants(&mut supertypes, node.kind_name(), &subtypes);
+				add_variants(&mut supertypes, node.kind_name(), subtypes);
 				continue;
 			}
 
@@ -164,53 +165,61 @@ pub(crate) fn add_nodes_and_enums(ast_src: &mut AstSrc, grammars: &[Grammar]) {
 						true => Cardinality::Many,
 						false => Cardinality::Optional,
 					};
-					if child.types.len() > 1 {
-						let enum_name =
-							format!("{}{}", node.kind_name(), to_pascal_case(field_name));
-						add_variants(&mut supertypes, enum_name.clone(), &child.types);
+					match child.types.len().cmp(&1) {
+						Ordering::Greater => {
+							let enum_name =
+								format!("{}{}", node.kind_name(), to_pascal_case(field_name));
+							add_variants(&mut supertypes, enum_name.clone(), &child.types);
 
-						// TODO: Check for conflicts
-						node_fields.insert(
-							field_name.clone(),
-							Field::Node {
-								name: field_name.clone(),
-								ty: enum_name,
-								cardinality,
-							},
-						);
-					} else if child.types.len() == 1 {
-						let kind = &child.types[0];
-						let ty = kind.kind_name();
-						let field = match ast_src.tokens.contains(&ty) {
-							true => Field::NamedToken {
-								name: field_name.clone(),
-								ty,
-								cardinality,
-							},
-							false => Field::Node {
-								name: field_name.clone(),
-								ty,
-								cardinality,
-							},
-						};
-						// TODO: Check for conflicts
-						node_fields.insert(field_name.clone(), field);
+							// TODO: Check for conflicts
+							node_fields.insert(
+								field_name.clone(),
+								Field::Node {
+									name: field_name.clone(),
+									ty: enum_name,
+									cardinality,
+								},
+							);
+						}
+						Ordering::Equal => {
+							let kind = &child.types[0];
+							let ty = kind.kind_name();
+							let field = match ast_src.tokens.contains(&ty) {
+								true => Field::NamedToken {
+									name: field_name.clone(),
+									ty,
+									cardinality,
+								},
+								false => Field::Node {
+									name: field_name.clone(),
+									ty,
+									cardinality,
+								},
+							};
+							// TODO: Check for conflicts
+							node_fields.insert(field_name.clone(), field);
+						}
+						Ordering::Less => {}
 					}
 				}
 			}
 		}
 	}
 	for (name, variants) in supertypes {
-		let mut ast_enum_src = AstEnumSrc::default();
-		ast_enum_src.name = name;
+		let mut ast_enum_src = AstEnumSrc {
+			name,
+			..Default::default()
+		};
 		ast_enum_src.variants = variants.into_iter().collect();
 
 		ast_src.enums.push(ast_enum_src)
 	}
 
 	for name in all_nodes {
-		let mut node = AstNodeSrc::default();
-		node.name = name;
+		let mut node = AstNodeSrc {
+			name,
+			..Default::default()
+		};
 		if let Some(node_fields) = all_node_fields.remove(&node.name) {
 			node.fields = node_fields.into_values().collect();
 		}

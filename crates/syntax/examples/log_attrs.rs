@@ -10,11 +10,8 @@ fn main() {
 
 	let tree = parse(src, syntax::Language::Tsx).unwrap();
 	for event in tree.preorder() {
-		match event {
-			WalkEvent::Enter(n) => {
-				log_attr(n);
-			}
-			_ => {}
+		if let WalkEvent::Enter(n) = event {
+			log_attr(n);
 		}
 	}
 
