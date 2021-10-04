@@ -1,9 +1,9 @@
 use crate::format_token::{GroupToken, LineToken};
 use crate::ListToken;
-use crate::{format_token::FormatToken, TokenizeValue};
+use crate::{format_token::FormatToken, Tokenizable};
 use serde_json::Value;
 
-impl TokenizeValue for Value {
+impl Tokenizable for Value {
 	fn tokenize(&self) -> FormatToken {
 		match self {
 			Value::String(string) => {

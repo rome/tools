@@ -4,7 +4,7 @@
 //!
 //! The formatter relies on an [IR], which allows to format any kind of data structure.
 //!
-//! In order to implement the formatting logic, you need to implement the trait [TokenizeValue] for
+//! In order to implement the formatting logic, you need to implement the trait [Tokenizable] for
 //! the data structure you want to format.
 //!
 //! Let's say, for example that you have a small data structure that represents a key/value data:
@@ -18,14 +18,14 @@
 //!
 //! Now, we do want to create this IR for the data structure:
 //! ```rust
-//! use rome_formatter::{format_tokens, format_token, FormatToken, TokenizeValue, FormatOptions};
+//! use rome_formatter::{format_tokens, format_token, FormatToken, Tokenizable, FormatOptions};
 //!
 //! struct KeyValue {
 //!     key: String,
 //!     value: String
 //! }
 //!
-//! impl TokenizeValue for KeyValue {
+//! impl Tokenizable for KeyValue {
 //!     fn tokenize(&self) -> FormatToken {
 //!         format_tokens!(self.key.as_str(), FormatToken::Space, "=>", FormatToken::Space, self.value.as_str())
 //!     }
@@ -59,7 +59,7 @@ pub use printer::Printer;
 pub use printer::PrinterOptions;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
-pub trait TokenizeValue {
+pub trait Tokenizable {
 	fn tokenize(&self) -> FormatToken;
 }
 
