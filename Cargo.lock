@@ -170,15 +170,8 @@ name = "parser"
 version = "0.0.0"
 dependencies = [
  "anyhow",
- "indexmap",
- "proc-macro2",
- "quote",
- "rowan",
- "serde",
- "serde_json",
  "tree-sitter",
  "tree-sitter-typescript",
- "xshell",
 ]
 
 [[package]]
@@ -325,6 +318,26 @@ dependencies = [
 [[package]]
 name = "syntax"
 version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "parser",
+ "rowan",
+]
+
+[[package]]
+name = "syntax_codegen"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "indexmap",
+ "proc-macro2",
+ "quote",
+ "serde",
+ "serde_json",
+ "tree-sitter",
+ "tree-sitter-typescript",
+ "xshell",
+]
 
 [[package]]
 name = "termcolor"
