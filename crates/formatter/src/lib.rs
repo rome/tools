@@ -59,8 +59,8 @@ pub use printer::Printer;
 pub use printer::PrinterOptions;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
-pub trait FormatValue {
-	fn format(&self) -> FormatToken;
+pub trait TokenizeValue {
+	fn tokenize(&self) -> FormatToken;
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]

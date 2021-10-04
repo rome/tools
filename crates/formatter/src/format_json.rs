@@ -1,9 +1,9 @@
 use crate::format_token::{GroupToken, LineToken};
-use crate::{format_token::FormatToken, FormatValue, ListToken};
+use crate::{format_token::FormatToken, TokenizeValue};
 use serde_json::Value;
 
-impl FormatValue for Value {
-	fn format(&self) -> FormatToken {
+impl TokenizeValue for Value {
+	fn tokenize(&self) -> FormatToken {
 		match self {
 			Value::String(string) => {
 				FormatToken::string(format!("\"{}\"", escape_string(string)).as_str())
@@ -25,7 +25,7 @@ impl FormatValue for Value {
 						FormatToken::concat(vec![
 							FormatToken::string(format!("\"{}\":", escape_string(key)).as_str()),
 							FormatToken::Space,
-							value.format(),
+							value.tokenize(),
 						])
 					})
 					.collect();
@@ -51,7 +51,7 @@ impl FormatValue for Value {
 
 				let elements = vec![
 					FormatToken::Line(LineToken::soft()),
-					FormatToken::join(separator, array.iter().map(|element| element.format())),
+					FormatToken::join(separator, array.iter().map(|element| element.tokenize())),
 				];
 
 				FormatToken::Group(GroupToken::new(vec![
@@ -78,7 +78,7 @@ pub fn json_to_tokens(content: &str) -> FormatToken {
 	let json: Value = serde_json::from_str(content).expect("cannot convert json to tokens");
 
 	FormatToken::from(ListToken::concat(vec![
-		json.format(),
+		json.tokenize(),
 		FormatToken::from(LineToken::hard()),
 	]))
 }
