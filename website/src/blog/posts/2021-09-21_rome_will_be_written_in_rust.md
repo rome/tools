@@ -146,7 +146,7 @@ Using this structure, you can traverse through the tree and print each of the to
 # `let value = 42;`
 Node(VariableDeclaration, children: [
 	Token(LetKeyword, "let"),
-	Token(Whitespce, " "),
+	Token(Whitespace, " "),
   Node(VariableDeclarator, children: [
 		Node(BindingIdentifier, children: [
 			Token(Identifier, "value"),
