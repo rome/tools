@@ -1,5 +1,6 @@
 use super::{ExtensionHandler, Mime};
 
+#[derive(Debug, PartialEq, Eq)]
 pub struct JsFileHandler {}
 
 impl ExtensionHandler for JsFileHandler {

@@ -172,7 +172,7 @@ pub fn format(rome_path: RomePath, options: FormatOptions) -> FormatResult {
 			FileHandlers::Js(handler) => {
 				if handler.capabilities().format {
 					// TODO: js format
-					let ast = parse_text(buffer.as_str(), 0);
+					let _ast = parse_text(buffer.as_str(), 0);
 				}
 			}
 			_ => {}

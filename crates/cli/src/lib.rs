@@ -72,9 +72,7 @@ pub fn run_cli() {
 				.unwrap_or_default();
 
 			let file = RomePath::new(input).deduce_handler(&app);
-			if let Ok(file) = file {
-				format(file, FormatOptions::new(options));
-			}
+			format(file, FormatOptions::new(options));
 		}
 		// Thanks to the settings AppSettings::SubcommandRequiredElseHelp we should not be there
 		_ => clap::Error::with_description(

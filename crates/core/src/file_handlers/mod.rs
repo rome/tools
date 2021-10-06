@@ -59,6 +59,7 @@ pub trait ExtensionHandler {
 	}
 }
 
+#[derive(Debug, PartialEq, Eq)]
 pub enum FileHandlers {
 	Js(JsFileHandler),
 	Json(JsonFileHandler),

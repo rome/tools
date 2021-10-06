@@ -34,32 +34,67 @@ impl<'handler> RomePath<'handler> {
 		}
 	}
 
-	/// deduce the handler based on the extension of the file
-	pub fn deduce_handler(mut self, app: &'handler App) -> Result<Self, String> {
+	/// Deduce the file handler based on the extension of the file.
+	///
+	/// Any error will default to the base file handler for now.
+	///
+	///
+	/// ```rust
+	/// use file::RomePath;
+	/// use core::create_app;
+	/// let app = create_app();
+	/// let file = RomePath::new("file.js").deduce_handler(&app);
+	/// let handler = file.get_handler();
+	/// let expected = app.get_js_handler("js").unwrap();
+	/// assert_eq!(handler.unwrap(), expected)
+	/// ```
+	pub fn deduce_handler(mut self, app: &'handler App) -> Self {
 		if let Some(extension) = self.extension() {
-			let extension = extension.to_str().unwrap();
-			match extension {
-				"js" => {
-					let handler = app.get_js_handler(extension).unwrap();
-					self.handler = Some(handler);
-					return Ok(self);
+			if let Some(extension) = extension.to_str() {
+				match extension {
+					"js" => {
+						let handler = app.get_js_handler(extension).unwrap();
+						self.handler = Some(handler);
+					}
+					"json" => {
+						let handler = app.get_json_handler(extension).unwrap();
+						self.handler = Some(handler);
+					}
+					_ => self.handler = Some(app.get_base_handler()),
 				}
-				"json" => {
-					let handler = app.get_json_handler(extension).unwrap();
-					self.handler = Some(handler);
-					return Ok(self);
-				}
-				_ => return Err(format!("We don't have {} stored in Rome", extension)),
 			}
+		} else {
+			self.handler = Some(app.get_base_handler());
 		}
-		Err(format!("We don't have  stored in Rome"))
+
+		self
 	}
 
+	// TODO: handle error with diagnostic?
+	/// Opens a file and returns a [File] in write mode
 	pub fn open(&self) -> File {
 		File::open(&self.file).expect("cannot open the file to format")
 	}
 
+	/// Returns the current handler associated to the file.
+	///
+	/// You need to call [deduce_handler] first in order to receive one. If not, [None] is always returned.
 	pub fn get_handler(&self) -> Option<&FileHandlers> {
 		self.handler
+	}
+}
+
+#[cfg(test)]
+mod test {
+	use crate::RomePath;
+	use core::create_app;
+
+	#[test]
+	fn deduce_handler() {
+		let app = create_app();
+		let file = RomePath::new("file.js").deduce_handler(&app);
+		let handler = file.get_handler();
+		let expected = app.get_js_handler("js").unwrap();
+		assert_eq!(handler.unwrap(), expected)
 	}
 }

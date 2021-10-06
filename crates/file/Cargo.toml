@@ -7,3 +7,5 @@ edition = "2018"
 
 [dependencies]
 core = { path = "../core" }
+
+[dev-dependencies]

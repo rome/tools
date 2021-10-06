@@ -31,6 +31,10 @@ impl App {
 			_ => None,
 		}
 	}
+
+	pub fn get_base_handler<'a>(&self) -> &FileHandlers {
+		&self.base_file_handler
+	}
 }
 
 pub fn create_app() -> App {

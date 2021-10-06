@@ -1,5 +1,5 @@
 use super::ExtensionHandler;
-
+#[derive(Debug, PartialEq, Eq)]
 pub struct BaseFileHandler {}
 
 impl ExtensionHandler for BaseFileHandler {
