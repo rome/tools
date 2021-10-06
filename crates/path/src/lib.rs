@@ -40,7 +40,7 @@ impl<'handler> RomePath<'handler> {
 	///
 	///
 	/// ```rust
-	/// use file::RomePath;
+	/// use path::RomePath;
 	/// use core::create_app;
 	/// let app = create_app();
 	/// let file = RomePath::new("file.js").deduce_handler(&app);

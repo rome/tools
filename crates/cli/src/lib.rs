@@ -1,6 +1,6 @@
 use clap::{crate_version, App, AppSettings, Arg};
 use core::create_app;
-use file::RomePath;
+use path::RomePath;
 use rome_formatter::{format, FormatOptions, IndentStyle};
 use std::{path::PathBuf, str::FromStr};
 

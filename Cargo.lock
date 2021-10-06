@@ -166,7 +166,7 @@ version = "0.0.0"
 dependencies = [
  "clap 3.0.0-beta.4",
  "core",
- "file",
+ "path",
  "rome-formatter",
 ]
 
@@ -362,13 +362,6 @@ checksum = "2300477aab3a378f2ca00a4fbd4dc713654ab7ed790e4017493cb33656280633"
 dependencies = [
  "dissimilar",
  "once_cell",
-]
-
-[[package]]
-name = "file"
-version = "0.0.0"
-dependencies = [
- "core",
 ]
 
 [[package]]
@@ -731,6 +724,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "path"
+version = "0.0.0"
+dependencies = [
+ "core",
+]
+
+[[package]]
 name = "percent-encoding"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -935,7 +935,7 @@ name = "rome-formatter"
 version = "0.0.0"
 dependencies = [
  "core",
- "file",
+ "path",
  "rslint_parser",
  "rslint_rowan",
  "tests_macros",

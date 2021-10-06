@@ -64,6 +64,8 @@ pub use format_element::{
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
 	soft_line_break_or_space, space_token, token, FormatElement,
 };
+use path::RomePath;
+pub use printer::PrintResult;
 pub use printer::Printer;
 pub use printer::PrinterOptions;
 use rslint_parser::parse_text;

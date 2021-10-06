@@ -1,5 +1,5 @@
 [package]
-name = "file"
+name = "path"
 version = "0.0.0"
 edition = "2018"
 
