@@ -8,7 +8,7 @@ use syn::parse::ParseStream;
 
 struct Arguments {
 	pattern: syn::ExprLit,
-	f: syn::Path,
+	called_function: syn::Path,
 }
 
 struct Variables {
@@ -116,7 +116,7 @@ impl Arguments {
 
 			let span = self.pattern.lit.span();
 			let test_name = syn::Ident::new(&test_name, span);
-			let f = &self.f;
+			let f = &self.called_function;
 			q.extend(quote! {
 				#[test]
 				pub fn #test_name () {
@@ -140,7 +140,7 @@ impl syn::parse::Parse for Arguments {
 		let call: syn::Path = input.parse()?;
 		Ok(Arguments {
 			pattern: path,
-			f: call,
+			called_function: call,
 		})
 	}
 }
