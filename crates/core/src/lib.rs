@@ -9,13 +9,19 @@ pub struct App {
 	json_file_handler: FileHandlers,
 }
 
-impl App {
-	pub fn new() -> Self {
+impl Default for App {
+	fn default() -> Self {
 		Self {
 			js_file_handler: FileHandlers::Js(JsFileHandler {}),
 			base_file_handler: FileHandlers::Base(BaseFileHandler {}),
 			json_file_handler: FileHandlers::Json(JsonFileHandler {}),
 		}
+	}
+}
+
+impl App {
+	pub fn new() -> Self {
+		Default::default()
 	}
 
 	pub fn get_js_handler<'a>(&self, file_extension: &'a str) -> Option<&FileHandlers> {
@@ -32,12 +38,11 @@ impl App {
 		}
 	}
 
-	pub fn get_base_handler<'a>(&self) -> &FileHandlers {
+	pub fn get_base_handler(&self) -> &FileHandlers {
 		&self.base_file_handler
 	}
 }
 
 pub fn create_app() -> App {
-	let app = App::new();
-	app
+	App::new()
 }
