@@ -18,7 +18,7 @@
 //!
 //! Now, we do want to create this IR for the data structure:
 //! ```rust
-//! use rome_formatter::{format_tokens, format_token, FormatToken, FormatValue, FormatOptions};
+//! use rome_formatter::{format_tokens, format_element, FormatToken, FormatValue, FormatOptions, space_token, token};
 //!
 //! struct KeyValue {
 //!     key: String,
@@ -27,38 +27,35 @@
 //!
 //! impl FormatValue for KeyValue {
 //!     fn format(&self) -> FormatToken {
-//!         format_tokens!(self.key.as_str(), FormatToken::Space, "=>", FormatToken::Space, self.value.as_str())
+//!         format_tokens!(token(self.key.as_str()), space_token(), token("=>"), space_token(), token(self.value.as_str()))
 //!     }
 //! }
 //!
 //! fn my_function() {
 //!     let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
-//!     let token = key_value.format();
-//!     let options = FormatOptions::default();
-//!     let result = format_token(&token, options);
+//!     let element = key_value.format();
+//!     let result = format_element(&element, FormatOptions::default());
 //!     assert_eq!(result.code(), "lorem => ipsum");
 //! }
 //!
 //! ```
 //! [IR]: https://en.wikipedia.org/wiki/Intermediate_representation
 
-use std::fs::File;
-use std::io::Read;
-use std::{path::PathBuf, str::FromStr};
-
-pub use format_token::{
-	FormatToken, GroupToken, IfBreakToken, IndentToken, LineMode, LineToken, ListToken,
-};
-pub use printer::Printer;
-pub use printer::PrinterOptions;
-
-use crate::format_json::tokenize_json;
-
 mod format_json;
 mod format_token;
 mod format_tokens_macro;
 mod intersperse;
 mod printer;
+
+use crate::format_json::tokenize_json;
+use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
+
+pub use format_token::{
+	concat_elements, group, hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
+	join_elements, soft_line_break, soft_line_break_or_space, space_token, token, FormatToken,
+	LineMode,
+};
+use printer::Printer;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait FormatValue {
@@ -92,15 +89,30 @@ impl FromStr for IndentStyle {
 	}
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct FormatOptions {
 	/// The indent style
-	indent_style: IndentStyle,
+	pub indent_style: IndentStyle,
+
+	/// What's the max width of a line. Defaults to 80
+	pub line_width: u16,
 }
 
 impl FormatOptions {
 	pub fn new(indent_style: IndentStyle) -> Self {
-		Self { indent_style }
+		Self {
+			indent_style,
+			..Self::default()
+		}
+	}
+}
+
+impl Default for FormatOptions {
+	fn default() -> Self {
+		Self {
+			indent_style: IndentStyle::default(),
+			line_width: 80,
+		}
 	}
 }
 
@@ -136,7 +148,7 @@ pub fn format(path: PathBuf, options: FormatOptions) -> FormatResult {
 		.expect("cannot read the file to format");
 
 	let tokens = tokenize_json(buffer.as_str());
-	let result = format_token(&tokens, options);
+	let result = format_element(&tokens, options);
 
 	println!("{}", result.code());
 
@@ -145,10 +157,10 @@ pub fn format(path: PathBuf, options: FormatOptions) -> FormatResult {
 
 pub fn format_str(content: &str, options: FormatOptions) -> FormatResult {
 	let tokens = tokenize_json(content);
-	format_token(&tokens, options)
+	format_element(&tokens, options)
 }
 
-pub fn format_token(token: &FormatToken, options: FormatOptions) -> FormatResult {
+pub fn format_element(element: &FormatToken, options: FormatOptions) -> FormatResult {
 	let printer = Printer::new(options);
-	printer.print(token)
+	printer.print(element)
 }

@@ -8,8 +8,8 @@
 /// you would write:
 ///
 /// ```rust
-/// use rome_formatter::{format_tokens, FormatToken};
-/// let token = format_tokens!("foo:", FormatToken::Space, "bar");
+/// use rome_formatter::{format_tokens, space_token, token};
+/// let element = format_tokens!(token("foo:"), space_token(), token("bar"));
 /// ```
 ///
 /// The macro can be also nested, although the macro needs to be decorated with the token you need.
@@ -21,24 +21,25 @@
 /// You would write it like the following:
 ///
 /// ```rust
-/// use rome_formatter::{format_tokens, format_token, IndentToken, FormatToken, FormatOptions};
-/// let token = format_tokens!(
-///   "foo:",
-///   FormatToken::Space,
-///   "{",
-///   IndentToken::new(
-///     format_tokens!(FormatToken::Space, "bar:", FormatToken::Space, "lorem")
-///   ),
-///    FormatToken::Space,
-///   "}"
+/// use rome_formatter::{format_tokens, format_element, FormatOptions, space_token, token};
+/// let element = format_tokens!(
+///   token("foo:"),
+///   space_token(),
+///   token("{"),
+///   space_token(),
+///   token("bar:"),
+///   space_token(),
+///   token("lorem"),
+///   space_token(),
+///   token("}")
 /// );
-/// assert_eq!(r#"foo: { bar: lorem }"#, format_token(&token, FormatOptions::default()).code());
+/// assert_eq!(r#"foo: { bar: lorem }"#, format_element(&element, FormatOptions::default()).code());
 /// ```
 /// Or you can also create single tokens:
 /// ```
-/// use rome_formatter::{format_tokens, format_token, FormatOptions};
-/// let unique_token = format_tokens!("single");
-/// assert_eq!(r#"single"#, format_token(&unique_token, FormatOptions::default()).code());
+/// use rome_formatter::{format_tokens, format_element, FormatOptions, token};
+/// let element = format_tokens!(token("single"));
+/// assert_eq!(r#"single"#, format_element(&element, FormatOptions::default()).code());
 /// ```
 #[macro_export]
 macro_rules! format_tokens {
@@ -52,8 +53,8 @@ macro_rules! format_tokens {
 	};
 
 	( $( $token:expr ),+ $(,)?) => {{
-		use $crate::{FormatToken};
-		FormatToken::concat(vec![
+		use $crate::{FormatToken, concat_elements};
+		concat_elements(vec![
 			$(
 					 FormatToken::from($token)
 			),+
