@@ -62,20 +62,6 @@ impl Arguments {
 			.map_err(|_| "Cannot walk the requested glob")?;
 
 		Ok(AllFiles(walker))
-
-		// for entry in walker.flatten() {
-		// 	let file_name = entry.file_name().to_str().ok_or("File name not UTF8")?;
-
-		// 	if file_name.contains("expected") {
-		// 		continue;
-		// 	}
-		// 	let meta = entry.metadata().map_err(|_| "Cannot open file")?;
-		// 	if meta.is_file() {
-		// 		files.push(entry.path().to_path_buf());
-		// 	}
-		// }
-
-		// Ok(files)
 	}
 
 	fn get_variables<P: AsRef<Path>>(path: P) -> Option<Variables> {
@@ -126,8 +112,6 @@ impl Arguments {
 				}
 			});
 		}
-
-		// println!("{}", q);
 
 		Ok(q.into())
 	}
