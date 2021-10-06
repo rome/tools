@@ -20,9 +20,11 @@ fn test_data_dir() -> PathBuf {
 
 fn try_parse(path: &str, text: &str) -> Parse<Module> {
 	let res = catch_unwind(|| parse_module(text, 0));
-	if res.is_err() {
-		panic!("Trying to parse `{}` caused infinite recursion", path);
-	};
+	assert!(
+		!res.is_err(),
+		"Trying to parse `{}` caused infinite recursion",
+		path
+	);
 	res.unwrap()
 }
 

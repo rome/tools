@@ -1293,7 +1293,7 @@ pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = lhs.precede(p);
 	let type_args = if p.at(T![<]) {
 		let checkpoint = p.checkpoint();
-		let mut complete = try_parse_ts(p, |p| ts_type_args(p));
+		let mut complete = try_parse_ts(p, ts_type_args);
 		if !p.at(T!['(']) {
 			p.rewind(checkpoint);
 			None

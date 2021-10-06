@@ -216,7 +216,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	let declare = p.typescript() && p.cur_src() == "declare";
 
 	if declare {
-		if let Some(mut res) = try_parse_ts(p, |p| ts_declare(p)) {
+		if let Some(mut res) = try_parse_ts(p, ts_declare) {
 			res.err_if_not_ts(
 				p,
 				"TypeScript declarations can only be used in TypeScript files",
@@ -228,7 +228,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	let offset = declare as usize;
 
 	if p.typescript() && at_ident_name!(p, offset) {
-		if let Some(mut res) = try_parse_ts(p, |p| ts_decl(p)) {
+		if let Some(mut res) = try_parse_ts(p, ts_decl) {
 			res.err_if_not_ts(
 				p,
 				"TypeScript declarations can only be used in TypeScript files",

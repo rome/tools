@@ -167,7 +167,7 @@ impl<'p, 't> Deref for StateGuard<'p, 't> {
 
 impl<'p, 't> DerefMut for StateGuard<'p, 't> {
 	fn deref_mut(&mut self) -> &mut Parser<'t> {
-		&mut self.inner
+		self.inner
 	}
 }
 

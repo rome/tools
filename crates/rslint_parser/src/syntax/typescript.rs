@@ -686,11 +686,11 @@ pub fn ts_non_conditional_type(p: &mut Parser) -> Option<CompletedMarker> {
 		return ts_fn_or_constructor_type(p, false);
 	}
 
-	intersection_or_union(p, false, |p| ts_intersection_type_or_higher(p), T![|])
+	intersection_or_union(p, false, ts_intersection_type_or_higher, T![|])
 }
 
 fn ts_intersection_type_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
-	intersection_or_union(p, true, |p| ts_type_operator_or_higher(p), T![&])
+	intersection_or_union(p, true, ts_type_operator_or_higher, T![&])
 }
 
 fn look_ahead(p: &mut Parser, func: impl FnOnce(&mut Parser) -> bool) -> bool {

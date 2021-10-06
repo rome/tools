@@ -187,7 +187,7 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 	) && !p.nth_at(1, T![:])
 		&& !p.nth_at(1, T![.])
 	{
-		if let Some(mut res) = try_parse_ts(p, |p| ts_expr_stmt(p)) {
+		if let Some(mut res) = try_parse_ts(p, ts_expr_stmt) {
 			if let Some(decorator) = decorator {
 				let kind = res.kind();
 				let m = decorator.precede(p);
@@ -204,7 +204,7 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 
 	// module and global are special because its used normally in js a lot so we cant assume its a ts module decl
 	if p.cur_src() == "module" || (p.cur_src() == "global" && p.nth_at(1, T!['{'])) {
-		if let Some(mut res) = try_parse_ts(p, |p| ts_expr_stmt(p)) {
+		if let Some(mut res) = try_parse_ts(p, ts_expr_stmt) {
 			res.err_if_not_ts(
 				p,
 				"TypeScript declarations can only be used in TypeScript files",
