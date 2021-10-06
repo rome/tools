@@ -1,0 +1,4 @@
+MODULE@0..2
+  EMPTY_STMT@0..1
+    SEMICOLON@0..1 ";"
+  WHITESPACE@1..2 "\n"

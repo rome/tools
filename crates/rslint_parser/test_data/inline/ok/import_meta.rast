@@ -1,0 +1,7 @@
+MODULE@0..12
+  EXPR_STMT@0..11
+    IMPORT_META@0..11
+      IMPORT_KW@0..6 "import"
+      DOT@6..7 "."
+      IDENT@7..11 "meta"
+  WHITESPACE@11..12 "\n"

@@ -1,0 +1,16 @@
+MODULE@0..19
+  EXPR_STMT@0..4
+    NAME_REF@0..3
+      IDENT@0..3 "foo"
+    SEMICOLON@3..4 ";"
+  WHITESPACE@4..5 "\n"
+  EXPR_STMT@5..11
+    NAME_REF@5..10
+      IDENT@5..10 "yield"
+    SEMICOLON@10..11 ";"
+  WHITESPACE@11..12 "\n"
+  EXPR_STMT@12..18
+    NAME_REF@12..17
+      IDENT@12..17 "await"
+    SEMICOLON@17..18 ";"
+  WHITESPACE@18..19 "\n"

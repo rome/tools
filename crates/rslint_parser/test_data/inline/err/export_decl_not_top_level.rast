@@ -1,0 +1,35 @@
+MODULE@0..34
+  BLOCK_STMT@0..33
+    L_CURLY@0..1 "{"
+    WHITESPACE@1..3 "\n "
+    ERROR@3..31
+      EXPORT_KW@3..9 "export"
+      WHITESPACE@9..10 " "
+      EXPORT_NAMED@10..31
+        L_CURLY@10..11 "{"
+        WHITESPACE@11..12 " "
+        SPECIFIER@12..16
+          NAME@12..16
+            IDENT@12..16 "pain"
+        WHITESPACE@16..17 " "
+        R_CURLY@17..18 "}"
+        WHITESPACE@18..19 " "
+        FROM_KW@19..23 "from"
+        WHITESPACE@23..24 " "
+        LITERAL@24..30
+          STRING@24..30 "\"life\""
+        SEMICOLON@30..31 ";"
+    WHITESPACE@31..32 "\n"
+    R_CURLY@32..33 "}"
+  WHITESPACE@33..34 "\n"
+--
+error[SyntaxError]: Illegal use of an import declaration not at the top level
+  ┌─ export_decl_not_top_level.js:2:2
+  │
+2 │  export { pain } from "life";
+  │  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
+
+--
+{
+ export { pain } from "life";
+}

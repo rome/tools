@@ -1,0 +1,37 @@
+MODULE@0..43
+  VAR_DECL@0..42
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..42
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      OBJECT_EXPR@8..42
+        L_CURLY@8..9 "{"
+        WHITESPACE@9..11 "\n "
+        GETTER@11..40
+          GET_KW@11..14 "get"
+          WHITESPACE@14..15 " "
+          NAME@15..18
+            IDENT@15..18 "foo"
+          PARAMETER_LIST@18..20
+            L_PAREN@18..19 "("
+            R_PAREN@19..20 ")"
+          WHITESPACE@20..21 " "
+          BLOCK_STMT@21..40
+            L_CURLY@21..22 "{"
+            WHITESPACE@22..26 "\n   "
+            RETURN_STMT@26..37
+              RETURN_KW@26..32 "return"
+              WHITESPACE@32..33 " "
+              NAME_REF@33..36
+                IDENT@33..36 "foo"
+              SEMICOLON@36..37 ";"
+            WHITESPACE@37..39 "\n "
+            R_CURLY@39..40 "}"
+        WHITESPACE@40..41 "\n"
+        R_CURLY@41..42 "}"
+  WHITESPACE@42..43 "\n"

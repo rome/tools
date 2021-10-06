@@ -1,0 +1,29 @@
+MODULE@0..20
+  RETURN_STMT@0..7
+    RETURN_KW@0..6 "return"
+    SEMICOLON@6..7 ";"
+  WHITESPACE@7..8 "\n"
+  RETURN_STMT@8..19
+    RETURN_KW@8..14 "return"
+    WHITESPACE@14..15 " "
+    NAME_REF@15..18
+      IDENT@15..18 "foo"
+    SEMICOLON@18..19 ";"
+  WHITESPACE@19..20 "\n"
+--
+error[SyntaxError]: Illegal return statement outside of a function
+  ┌─ return_stmt_err.js:1:1
+  │
+1 │ return;
+  │ ^^^^^^^
+
+--
+error[SyntaxError]: Illegal return statement outside of a function
+  ┌─ return_stmt_err.js:2:1
+  │
+2 │ return foo;
+  │ ^^^^^^^^^^^
+
+--
+return;
+return foo;

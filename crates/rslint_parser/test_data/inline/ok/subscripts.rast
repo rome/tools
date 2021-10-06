@@ -1,0 +1,36 @@
+MODULE@0..33
+  EXPR_STMT@0..8
+    TEMPLATE@0..8
+      NAME_REF@0..3
+        IDENT@0..3 "foo"
+      BACKTICK@3..4 "`"
+      TEMPLATE_CHUNK@4..7 "bar"
+      BACKTICK@7..8 "`"
+  WHITESPACE@8..9 "\n"
+  EXPR_STMT@9..32
+    BRACKET_EXPR@9..32
+      CALL_EXPR@9..27
+        CALL_EXPR@9..22
+          CALL_EXPR@9..17
+            NAME_REF@9..12
+              IDENT@9..12 "foo"
+            ARG_LIST@12..17
+              L_PAREN@12..13 "("
+              NAME_REF@13..16
+                IDENT@13..16 "bar"
+              R_PAREN@16..17 ")"
+          ARG_LIST@17..22
+            L_PAREN@17..18 "("
+            NAME_REF@18..21
+              IDENT@18..21 "baz"
+            R_PAREN@21..22 ")"
+        ARG_LIST@22..27
+          L_PAREN@22..23 "("
+          NAME_REF@23..26
+            IDENT@23..26 "baz"
+          R_PAREN@26..27 ")"
+      L_BRACK@27..28 "["
+      NAME_REF@28..31
+        IDENT@28..31 "bar"
+      R_BRACK@31..32 "]"
+  WHITESPACE@32..33 "\n"

@@ -1,0 +1,55 @@
+MODULE@0..19
+  EXPR_STMT@0..5
+    BRACKET_EXPR@0..5
+      NAME_REF@0..3
+        IDENT@0..3 "foo"
+      L_BRACK@3..4 "["
+      R_BRACK@4..5 "]"
+  WHITESPACE@5..6 "\n"
+  EXPR_STMT@6..13
+    BRACKET_EXPR@6..13
+      NAME_REF@6..9
+        IDENT@6..9 "foo"
+      QUESTIONDOT@9..11 "?."
+      L_BRACK@11..12 "["
+      R_BRACK@12..13 "]"
+  WHITESPACE@13..14 "\n"
+  EXPR_STMT@14..19
+    BRACKET_EXPR@14..19
+      NAME_REF@14..17
+        IDENT@14..17 "foo"
+      L_BRACK@17..18 "["
+      WHITESPACE@18..19 "\n"
+      ERROR@19..19
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ bracket_expr_err.js:1:5
+  │
+1 │ foo[]
+  │     ^ Expected an expression here
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ bracket_expr_err.js:2:7
+  │
+2 │ foo?.[]
+  │       ^ Expected an expression here
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ bracket_expr_err.js:4:1
+  │
+4 │ 
+  │ ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `']'` but instead the file ends
+  ┌─ bracket_expr_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+foo[]
+foo?.[]
+foo[

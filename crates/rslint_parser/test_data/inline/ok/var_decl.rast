@@ -1,0 +1,101 @@
+MODULE@0..92
+  VAR_DECL@0..10
+    VAR_KW@0..3 "var"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..9
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      LITERAL@8..9
+        NUMBER@8..9 "5"
+    SEMICOLON@9..10 ";"
+  WHITESPACE@10..11 "\n"
+  VAR_DECL@11..32
+    IDENT@11..14 "let"
+    WHITESPACE@14..15 " "
+    DECLARATOR@15..31
+      OBJECT_PATTERN@15..27
+        L_CURLY@15..16 "{"
+        WHITESPACE@16..17 " "
+        SINGLE_PATTERN@17..20
+          NAME@17..20
+            IDENT@17..20 "foo"
+        COMMA@20..21 ","
+        WHITESPACE@21..22 " "
+        SINGLE_PATTERN@22..25
+          NAME@22..25
+            IDENT@22..25 "bar"
+        WHITESPACE@25..26 " "
+        R_CURLY@26..27 "}"
+      WHITESPACE@27..28 " "
+      EQ@28..29 "="
+      WHITESPACE@29..30 " "
+      LITERAL@30..31
+        NUMBER@30..31 "5"
+    SEMICOLON@31..32 ";"
+  WHITESPACE@32..33 "\n"
+  VAR_DECL@33..46
+    IDENT@33..36 "let"
+    WHITESPACE@36..37 " "
+    DECLARATOR@37..40
+      SINGLE_PATTERN@37..40
+        NAME@37..40
+          IDENT@37..40 "bar"
+    COMMA@40..41 ","
+    WHITESPACE@41..42 " "
+    DECLARATOR@42..45
+      SINGLE_PATTERN@42..45
+        NAME@42..45
+          IDENT@42..45 "foo"
+    SEMICOLON@45..46 ";"
+  WHITESPACE@46..47 "\n"
+  VAR_DECL@47..59
+    CONST_KW@47..52 "const"
+    WHITESPACE@52..53 " "
+    DECLARATOR@53..58
+      SINGLE_PATTERN@53..54
+        NAME@53..54
+          IDENT@53..54 "a"
+      WHITESPACE@54..55 " "
+      EQ@55..56 "="
+      WHITESPACE@56..57 " "
+      LITERAL@57..58
+        NUMBER@57..58 "5"
+    SEMICOLON@58..59 ";"
+  WHITESPACE@59..60 "\n"
+  VAR_DECL@60..91
+    CONST_KW@60..65 "const"
+    WHITESPACE@65..66 " "
+    DECLARATOR@66..90
+      OBJECT_PATTERN@66..85
+        L_CURLY@66..67 "{"
+        WHITESPACE@67..68 " "
+        KEY_VALUE_PATTERN@68..78
+          NAME@68..71
+            IDENT@68..71 "foo"
+          COLON@71..72 ":"
+          WHITESPACE@72..73 " "
+          ARRAY_PATTERN@73..78
+            L_BRACK@73..74 "["
+            SINGLE_PATTERN@74..77
+              NAME@74..77
+                IDENT@74..77 "bar"
+            R_BRACK@77..78 "]"
+        COMMA@78..79 ","
+        WHITESPACE@79..80 " "
+        SINGLE_PATTERN@80..83
+          NAME@80..83
+            IDENT@80..83 "baz"
+        WHITESPACE@83..84 " "
+        R_CURLY@84..85 "}"
+      WHITESPACE@85..86 " "
+      EQ@86..87 "="
+      WHITESPACE@87..88 " "
+      OBJECT_EXPR@88..90
+        L_CURLY@88..89 "{"
+        R_CURLY@89..90 "}"
+    SEMICOLON@90..91 ";"
+  WHITESPACE@91..92 "\n"

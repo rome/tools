@@ -1,0 +1,1002 @@
+use nodrop::NoDrop;
+use stable_deref_trait::{CloneStableDeref, StableDeref};
+use std::borrow;
+use std::cmp::Ordering;
+use std::convert::From;
+use std::fmt;
+use std::hash::{Hash, Hasher};
+use std::iter::{ExactSizeIterator, Iterator};
+use std::mem;
+use std::ops::{Deref, DerefMut};
+use std::os::raw::c_void;
+use std::process;
+use std::ptr;
+use std::slice;
+use std::sync::atomic;
+use std::sync::atomic::Ordering::{Acquire, Relaxed, Release};
+use std::{alloc::Layout, isize, mem::align_of_val, usize};
+
+/// Get the offset within an `ArcInner` for
+/// a payload of type described by a pointer.
+///
+/// # Safety
+///
+/// This has the same safety requirements as `align_of_val_raw`. In effect:
+///
+/// - This function is safe for any argument if `T` is sized, and
+/// - if `T` is unsized, the pointer must have appropriate pointer metadata
+///   acquired from the real instance that you are getting this offset for.
+unsafe fn data_offset<T: ?Sized>(ptr: *const T) -> isize {
+	// Align the unsized value to the end of the `ArcInner`.
+	// Because it is `?Sized`, it will always be the last field in memory.
+	// Note: This is a detail of the current implementation of the compiler,
+	// and is not a guaranteed language detail. Do not rely on it outside of std.
+	data_offset_align(align_of_val(&*ptr))
+}
+
+#[inline]
+fn data_offset_align(align: usize) -> isize {
+	let layout = Layout::new::<ArcInner<()>>();
+	(layout.size() + padding_needed_for(&layout, align)) as isize
+}
+
+#[inline]
+fn padding_needed_for(layout: &Layout, align: usize) -> usize {
+	let len = layout.size();
+	let len_rounded_up = len.wrapping_add(align).wrapping_sub(1) & !align.wrapping_sub(1);
+	len_rounded_up.wrapping_sub(len)
+}
+
+/// A soft limit on the amount of references that may be made to an `Arc`.
+///
+/// Going above this limit will abort your program (although not
+/// necessarily) at _exactly_ `MAX_REFCOUNT + 1` references.
+const MAX_REFCOUNT: usize = (isize::MAX) as usize;
+
+/// Wrapper type for pointers to get the non-zero optimization. When
+/// NonZero/Shared/Unique are stabilized, we should just use Shared
+/// here to get the same effect. Gankro is working on this in [1].
+///
+/// It's unfortunate that this needs to infect all the caller types
+/// with 'static. It would be nice to just use a &() and a PhantomData<T>
+/// instead, but then the compiler can't determine whether the &() should
+/// be thin or fat (which depends on whether or not T is sized). Given
+/// that this is all a temporary hack, this restriction is fine for now.
+///
+/// [1]: https://github.com/rust-lang/rust/issues/27730
+// FIXME: remove this and use std::ptr::NonNull when Firefox requires Rust 1.25+
+pub struct NonZeroPtrMut<T: ?Sized + 'static>(&'static mut T);
+impl<T: ?Sized> NonZeroPtrMut<T> {
+	pub fn new(ptr: *mut T) -> Self {
+		assert!(!(ptr as *mut u8).is_null());
+		NonZeroPtrMut(unsafe { mem::transmute(ptr) })
+	}
+
+	pub fn ptr(&self) -> *mut T {
+		self.0 as *const T as *mut T
+	}
+}
+
+impl<T: ?Sized + 'static> Clone for NonZeroPtrMut<T> {
+	fn clone(&self) -> Self {
+		NonZeroPtrMut::new(self.ptr())
+	}
+}
+
+impl<T: ?Sized + 'static> fmt::Pointer for NonZeroPtrMut<T> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		fmt::Pointer::fmt(&self.ptr(), f)
+	}
+}
+
+impl<T: ?Sized + 'static> fmt::Debug for NonZeroPtrMut<T> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		<Self as fmt::Pointer>::fmt(self, f)
+	}
+}
+
+impl<T: ?Sized + 'static> PartialEq for NonZeroPtrMut<T> {
+	fn eq(&self, other: &Self) -> bool {
+		self.ptr() == other.ptr()
+	}
+}
+
+impl<T: ?Sized + 'static> Eq for NonZeroPtrMut<T> {}
+
+impl<T: Sized + 'static> Hash for NonZeroPtrMut<T> {
+	fn hash<H: Hasher>(&self, state: &mut H) {
+		self.ptr().hash(state)
+	}
+}
+
+#[repr(C)]
+pub struct Arc<T: ?Sized + 'static> {
+	p: NonZeroPtrMut<ArcInner<T>>,
+}
+
+/// An Arc that is known to be uniquely owned
+///
+/// This lets us build arcs that we can mutate before
+/// freezing, without needing to change the allocation
+pub struct UniqueArc<T: ?Sized + 'static>(Arc<T>);
+
+impl<T> UniqueArc<T> {
+	#[inline]
+	/// Construct a new UniqueArc
+	pub fn new(data: T) -> Self {
+		UniqueArc(Arc::new(data))
+	}
+
+	#[inline]
+	/// Convert to a shareable Arc<T> once we're done using it
+	pub fn shareable(self) -> Arc<T> {
+		self.0
+	}
+}
+
+impl<T> Deref for UniqueArc<T> {
+	type Target = T;
+	fn deref(&self) -> &T {
+		&*self.0
+	}
+}
+
+impl<T> DerefMut for UniqueArc<T> {
+	fn deref_mut(&mut self) -> &mut T {
+		// We know this to be uniquely owned
+		unsafe { &mut (*self.0.ptr()).data }
+	}
+}
+
+unsafe impl<T: ?Sized + Sync + Send> Send for Arc<T> {}
+unsafe impl<T: ?Sized + Sync + Send> Sync for Arc<T> {}
+
+#[repr(C)]
+struct ArcInner<T: ?Sized> {
+	count: atomic::AtomicUsize,
+	data: T,
+}
+
+unsafe impl<T: ?Sized + Sync + Send> Send for ArcInner<T> {}
+unsafe impl<T: ?Sized + Sync + Send> Sync for ArcInner<T> {}
+
+impl<T> Arc<T> {
+	#[inline]
+	pub fn new(data: T) -> Self {
+		let x = Box::new(ArcInner {
+			count: atomic::AtomicUsize::new(1),
+			data: data,
+		});
+		Arc {
+			p: NonZeroPtrMut::new(Box::into_raw(x)),
+		}
+	}
+
+	#[inline]
+	pub fn into_raw(this: Self) -> *const T {
+		let ptr = unsafe { &((*this.ptr()).data) as *const _ };
+		mem::forget(this);
+		ptr
+	}
+
+	#[inline]
+	pub unsafe fn from_raw(ptr: *const T) -> Self {
+		// To find the corresponding pointer to the `ArcInner` we need
+		// to subtract the offset of the `data` field from the pointer.
+		let offset = data_offset(ptr);
+		let ptr = (ptr as *const u8).offset(-offset);
+		Arc {
+			p: NonZeroPtrMut::new(ptr as *mut ArcInner<T>),
+		}
+	}
+
+	/// Produce a pointer to the data that can be converted back
+	/// to an arc
+	#[inline]
+	pub fn borrow_arc<'a>(&'a self) -> ArcBorrow<'a, T> {
+		ArcBorrow(&**self)
+	}
+
+	/// Temporarily converts |self| into a bonafide RawOffsetArc and exposes it to the
+	/// provided callback. The refcount is not modified.
+	#[inline(always)]
+	pub fn with_raw_offset_arc<F, U>(&self, f: F) -> U
+	where
+		F: FnOnce(&RawOffsetArc<T>) -> U,
+	{
+		// Synthesize transient Arc, which never touches the refcount of the ArcInner.
+		let transient = unsafe { NoDrop::new(Arc::into_raw_offset(ptr::read(self))) };
+
+		// Expose the transient Arc to the callback, which may clone it if it wants.
+		let result = f(&transient);
+
+		// Forget the transient Arc to leave the refcount untouched.
+		mem::forget(transient);
+
+		// Forward the result.
+		result
+	}
+
+	/// Returns the address on the heap of the Arc itself -- not the T within it -- for memory
+	/// reporting.
+	pub fn heap_ptr(&self) -> *const c_void {
+		self.p.ptr() as *const ArcInner<T> as *const c_void
+	}
+}
+
+impl<T: ?Sized> Arc<T> {
+	#[inline]
+	fn inner(&self) -> &ArcInner<T> {
+		// This unsafety is ok because while this arc is alive we're guaranteed
+		// that the inner pointer is valid. Furthermore, we know that the
+		// `ArcInner` structure itself is `Sync` because the inner data is
+		// `Sync` as well, so we're ok loaning out an immutable pointer to these
+		// contents.
+		unsafe { &*self.ptr() }
+	}
+
+	// Non-inlined part of `drop`. Just invokes the destructor.
+	#[inline(never)]
+	unsafe fn drop_slow(&mut self) {
+		let _ = Box::from_raw(self.ptr());
+	}
+
+	#[inline]
+	pub fn ptr_eq(this: &Self, other: &Self) -> bool {
+		this.ptr() == other.ptr()
+	}
+
+	fn ptr(&self) -> *mut ArcInner<T> {
+		self.p.ptr()
+	}
+}
+
+impl<T: ?Sized> Clone for Arc<T> {
+	#[inline]
+	fn clone(&self) -> Self {
+		// Using a relaxed ordering is alright here, as knowledge of the
+		// original reference prevents other threads from erroneously deleting
+		// the object.
+		//
+		// As explained in the [Boost documentation][1], Increasing the
+		// reference counter can always be done with memory_order_relaxed: New
+		// references to an object can only be formed from an existing
+		// reference, and passing an existing reference from one thread to
+		// another must already provide any required synchronization.
+		//
+		// [1]: (www.boost.org/doc/libs/1_55_0/doc/html/atomic/usage_examples.html)
+		let old_size = self.inner().count.fetch_add(1, Relaxed);
+
+		// However we need to guard against massive refcounts in case someone
+		// is `mem::forget`ing Arcs. If we don't do this the count can overflow
+		// and users will use-after free. We racily saturate to `isize::MAX` on
+		// the assumption that there aren't ~2 billion threads incrementing
+		// the reference count at once. This branch will never be taken in
+		// any realistic program.
+		//
+		// We abort because such a program is incredibly degenerate, and we
+		// don't care to support it.
+		if old_size > MAX_REFCOUNT {
+			process::abort();
+		}
+
+		Arc {
+			p: NonZeroPtrMut::new(self.ptr()),
+		}
+	}
+}
+
+impl<T: ?Sized> Deref for Arc<T> {
+	type Target = T;
+
+	#[inline]
+	fn deref(&self) -> &T {
+		&self.inner().data
+	}
+}
+
+impl<T: Clone> Arc<T> {
+	#[inline]
+	pub fn make_mut(this: &mut Self) -> &mut T {
+		if !this.is_unique() {
+			// Another pointer exists; clone
+			*this = Arc::new((**this).clone());
+		}
+
+		unsafe {
+			// This unsafety is ok because we're guaranteed that the pointer
+			// returned is the *only* pointer that will ever be returned to T. Our
+			// reference count is guaranteed to be 1 at this point, and we required
+			// the Arc itself to be `mut`, so we're returning the only possible
+			// reference to the inner data.
+			&mut (*this.ptr()).data
+		}
+	}
+}
+
+impl<T: ?Sized> Arc<T> {
+	#[inline]
+	pub fn get_mut(this: &mut Self) -> Option<&mut T> {
+		if this.is_unique() {
+			unsafe {
+				// See make_mut() for documentation of the threadsafety here.
+				Some(&mut (*this.ptr()).data)
+			}
+		} else {
+			None
+		}
+	}
+
+	#[inline]
+	pub fn is_unique(&self) -> bool {
+		// We can use Relaxed here, but the justification is a bit subtle.
+		//
+		// The reason to use Acquire would be to synchronize with other threads
+		// that are modifying the refcount with Release, i.e. to ensure that
+		// their writes to memory guarded by this refcount are flushed. However,
+		// we know that threads only modify the contents of the Arc when they
+		// observe the refcount to be 1, and no other thread could observe that
+		// because we're holding one strong reference here.
+		self.inner().count.load(Relaxed) == 1
+	}
+}
+
+impl<T: ?Sized> Drop for Arc<T> {
+	#[inline]
+	fn drop(&mut self) {
+		// Because `fetch_sub` is already atomic, we do not need to synchronize
+		// with other threads unless we are going to delete the object.
+		if self.inner().count.fetch_sub(1, Release) != 1 {
+			return;
+		}
+
+		// FIXME(bholley): Use the updated comment when [2] is merged.
+		//
+		// This load is needed to prevent reordering of use of the data and
+		// deletion of the data.  Because it is marked `Release`, the decreasing
+		// of the reference count synchronizes with this `Acquire` load. This
+		// means that use of the data happens before decreasing the reference
+		// count, which happens before this load, which happens before the
+		// deletion of the data.
+		//
+		// As explained in the [Boost documentation][1],
+		//
+		// > It is important to enforce any possible access to the object in one
+		// > thread (through an existing reference) to *happen before* deleting
+		// > the object in a different thread. This is achieved by a "release"
+		// > operation after dropping a reference (any access to the object
+		// > through this reference must obviously happened before), and an
+		// > "acquire" operation before deleting the object.
+		//
+		// [1]: (www.boost.org/doc/libs/1_55_0/doc/html/atomic/usage_examples.html)
+		// [2]: https://github.com/rust-lang/rust/pull/41714
+		self.inner().count.load(Acquire);
+
+		unsafe {
+			self.drop_slow();
+		}
+	}
+}
+
+impl<T: ?Sized + PartialEq> PartialEq for Arc<T> {
+	fn eq(&self, other: &Arc<T>) -> bool {
+		Self::ptr_eq(self, other) || *(*self) == *(*other)
+	}
+
+	fn ne(&self, other: &Arc<T>) -> bool {
+		!Self::ptr_eq(self, other) && *(*self) != *(*other)
+	}
+}
+impl<T: ?Sized + PartialOrd> PartialOrd for Arc<T> {
+	fn partial_cmp(&self, other: &Arc<T>) -> Option<Ordering> {
+		(**self).partial_cmp(&**other)
+	}
+
+	fn lt(&self, other: &Arc<T>) -> bool {
+		*(*self) < *(*other)
+	}
+
+	fn le(&self, other: &Arc<T>) -> bool {
+		*(*self) <= *(*other)
+	}
+
+	fn gt(&self, other: &Arc<T>) -> bool {
+		*(*self) > *(*other)
+	}
+
+	fn ge(&self, other: &Arc<T>) -> bool {
+		*(*self) >= *(*other)
+	}
+}
+impl<T: ?Sized + Ord> Ord for Arc<T> {
+	fn cmp(&self, other: &Arc<T>) -> Ordering {
+		(**self).cmp(&**other)
+	}
+}
+impl<T: ?Sized + Eq> Eq for Arc<T> {}
+
+impl<T: ?Sized + fmt::Display> fmt::Display for Arc<T> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		fmt::Display::fmt(&**self, f)
+	}
+}
+
+impl<T: ?Sized + fmt::Debug> fmt::Debug for Arc<T> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		fmt::Debug::fmt(&**self, f)
+	}
+}
+
+impl<T: ?Sized> fmt::Pointer for Arc<T> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		fmt::Pointer::fmt(&self.ptr(), f)
+	}
+}
+
+impl<T: Default> Default for Arc<T> {
+	fn default() -> Arc<T> {
+		Arc::new(Default::default())
+	}
+}
+
+impl<T: ?Sized + Hash> Hash for Arc<T> {
+	fn hash<H: Hasher>(&self, state: &mut H) {
+		(**self).hash(state)
+	}
+}
+
+impl<T> From<T> for Arc<T> {
+	#[inline]
+	fn from(t: T) -> Self {
+		Arc::new(t)
+	}
+}
+
+impl<T: ?Sized> borrow::Borrow<T> for Arc<T> {
+	#[inline]
+	fn borrow(&self) -> &T {
+		&**self
+	}
+}
+
+impl<T: ?Sized> AsRef<T> for Arc<T> {
+	#[inline]
+	fn as_ref(&self) -> &T {
+		&**self
+	}
+}
+
+unsafe impl<T: ?Sized> StableDeref for Arc<T> {}
+unsafe impl<T: ?Sized> CloneStableDeref for Arc<T> {}
+
+#[cfg(feature = "servo")]
+impl<'de, T: Deserialize<'de>> Deserialize<'de> for Arc<T> {
+	fn deserialize<D>(deserializer: D) -> Result<Arc<T>, D::Error>
+	where
+		D: ::serde::de::Deserializer<'de>,
+	{
+		T::deserialize(deserializer).map(Arc::new)
+	}
+}
+
+#[cfg(feature = "servo")]
+impl<T: Serialize> Serialize for Arc<T> {
+	fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+	where
+		S: ::serde::ser::Serializer,
+	{
+		(**self).serialize(serializer)
+	}
+}
+
+/// Structure to allow Arc-managing some fixed-sized data and a variably-sized
+/// slice in a single allocation.
+#[derive(Debug, Eq, PartialEq, PartialOrd)]
+pub struct HeaderSlice<H, T: ?Sized> {
+	/// The fixed-sized data.
+	pub header: H,
+
+	/// The dynamically-sized data.
+	pub slice: T,
+}
+
+#[inline(always)]
+fn divide_rounding_up(dividend: usize, divisor: usize) -> usize {
+	(dividend + divisor - 1) / divisor
+}
+
+impl<H, T> Arc<HeaderSlice<H, [T]>> {
+	/// Creates an Arc for a HeaderSlice using the given header struct and
+	/// iterator to generate the slice. The resulting Arc will be fat.
+	#[inline]
+	pub fn from_header_and_iter<I>(header: H, mut items: I) -> Self
+	where
+		I: Iterator<Item = T> + ExactSizeIterator,
+	{
+		use ::std::mem::size_of;
+		assert_ne!(size_of::<T>(), 0, "Need to think about ZST");
+
+		// Compute the required size for the allocation.
+		let num_items = items.len();
+		let size = {
+			// First, determine the alignment of a hypothetical pointer to a
+			// HeaderSlice.
+			let fake_slice_ptr_align: usize = mem::align_of::<ArcInner<HeaderSlice<H, [T; 1]>>>();
+
+			// Next, synthesize a totally garbage (but properly aligned) pointer
+			// to a sequence of T.
+			let fake_slice_ptr = fake_slice_ptr_align as *const T;
+
+			// Convert that sequence to a fat pointer. The address component of
+			// the fat pointer will be garbage, but the length will be correct.
+			let fake_slice = unsafe { slice::from_raw_parts(fake_slice_ptr, num_items) };
+
+			// Pretend the garbage address points to our allocation target (with
+			// a trailing sequence of T), rather than just a sequence of T.
+			let fake_ptr = fake_slice as *const [T] as *const ArcInner<HeaderSlice<H, [T]>>;
+			let fake_ref: &ArcInner<HeaderSlice<H, [T]>> = unsafe { &*fake_ptr };
+
+			// Use size_of_val, which will combine static information about the
+			// type with the length from the fat pointer. The garbage address
+			// will not be used.
+			mem::size_of_val(fake_ref)
+		};
+
+		let ptr: *mut ArcInner<HeaderSlice<H, [T]>>;
+		unsafe {
+			// Allocate the buffer. We use Vec because the underlying allocation
+			// machinery isn't available in stable Rust.
+			//
+			// To avoid alignment issues, we allocate words rather than bytes,
+			// rounding up to the nearest word size.
+			let buffer = if mem::align_of::<T>() <= mem::align_of::<usize>() {
+				Self::allocate_buffer::<usize>(size)
+			} else if mem::align_of::<T>() <= mem::align_of::<u64>() {
+				// On 32-bit platforms <T> may have 8 byte alignment while usize has 4 byte aligment.
+				// Use u64 to avoid over-alignment.
+				// This branch will compile away in optimized builds.
+				Self::allocate_buffer::<u64>(size)
+			} else {
+				panic!("Over-aligned type not handled");
+			};
+
+			// Synthesize the fat pointer. We do this by claiming we have a direct
+			// pointer to a [T], and then changing the type of the borrow. The key
+			// point here is that the length portion of the fat pointer applies
+			// only to the number of elements in the dynamically-sized portion of
+			// the type, so the value will be the same whether it points to a [T]
+			// or something else with a [T] as its last member.
+			let fake_slice: &mut [T] = slice::from_raw_parts_mut(buffer as *mut T, num_items);
+			ptr = fake_slice as *mut [T] as *mut ArcInner<HeaderSlice<H, [T]>>;
+
+			// Write the data.
+			//
+			// Note that any panics here (i.e. from the iterator) are safe, since
+			// we'll just leak the uninitialized memory.
+			ptr::write(&mut ((*ptr).count), atomic::AtomicUsize::new(1));
+			ptr::write(&mut ((*ptr).data.header), header);
+			if let Some(current) = (*ptr).data.slice.get_mut(0) {
+				let mut current: *mut T = current;
+				for _ in 0..num_items {
+					ptr::write(
+						current,
+						items
+							.next()
+							.expect("ExactSizeIterator over-reported length"),
+					);
+					current = current.offset(1);
+				}
+				assert!(
+					items.next().is_none(),
+					"ExactSizeIterator under-reported length"
+				);
+
+				// We should have consumed the buffer exactly.
+				debug_assert_eq!(current as *mut u8, buffer.offset(size as isize));
+			}
+		}
+
+		// Return the fat Arc.
+		assert_eq!(
+			size_of::<Self>(),
+			size_of::<usize>() * 2,
+			"The Arc will be fat"
+		);
+		Arc {
+			p: NonZeroPtrMut::new(ptr),
+		}
+	}
+
+	#[inline]
+	unsafe fn allocate_buffer<W>(size: usize) -> *mut u8 {
+		let words_to_allocate = divide_rounding_up(size, mem::size_of::<W>());
+		let mut vec = Vec::<W>::with_capacity(words_to_allocate);
+		vec.set_len(words_to_allocate);
+		Box::into_raw(vec.into_boxed_slice()) as *mut W as *mut u8
+	}
+}
+
+/// Header data with an inline length. Consumers that use HeaderWithLength as the
+/// Header type in HeaderSlice can take advantage of ThinArc.
+#[derive(Debug, Eq, PartialEq, PartialOrd)]
+pub struct HeaderWithLength<H> {
+	/// The fixed-sized data.
+	pub header: H,
+
+	/// The slice length.
+	length: usize,
+}
+
+impl<H> HeaderWithLength<H> {
+	/// Creates a new HeaderWithLength.
+	pub fn new(header: H, length: usize) -> Self {
+		HeaderWithLength {
+			header: header,
+			length: length,
+		}
+	}
+}
+
+type HeaderSliceWithLength<H, T> = HeaderSlice<HeaderWithLength<H>, T>;
+pub struct ThinArc<H: 'static, T: 'static> {
+	ptr: *mut ArcInner<HeaderSliceWithLength<H, [T; 1]>>,
+}
+
+unsafe impl<H: Sync + Send, T: Sync + Send> Send for ThinArc<H, T> {}
+unsafe impl<H: Sync + Send, T: Sync + Send> Sync for ThinArc<H, T> {}
+
+// Synthesize a fat pointer from a thin pointer.
+//
+// See the comment around the analogous operation in from_header_and_iter.
+fn thin_to_thick<H, T>(
+	thin: *mut ArcInner<HeaderSliceWithLength<H, [T; 1]>>,
+) -> *mut ArcInner<HeaderSliceWithLength<H, [T]>> {
+	let len = unsafe { (*thin).data.header.length };
+	let fake_slice: *mut [T] = unsafe { slice::from_raw_parts_mut(thin as *mut T, len) };
+
+	fake_slice as *mut ArcInner<HeaderSliceWithLength<H, [T]>>
+}
+
+impl<H: 'static, T: 'static> ThinArc<H, T> {
+	/// Temporarily converts |self| into a bonafide Arc and exposes it to the
+	/// provided callback. The refcount is not modified.
+	#[inline]
+	pub fn with_arc<F, U>(&self, f: F) -> U
+	where
+		F: FnOnce(&Arc<HeaderSliceWithLength<H, [T]>>) -> U,
+	{
+		// Synthesize transient Arc, which never touches the refcount of the ArcInner.
+		let transient = NoDrop::new(Arc {
+			p: NonZeroPtrMut::new(thin_to_thick(self.ptr)),
+		});
+
+		// Expose the transient Arc to the callback, which may clone it if it wants.
+		let result = f(&transient);
+
+		// Forget the transient Arc to leave the refcount untouched.
+		// XXXManishearth this can be removed when unions stabilize,
+		// since then NoDrop becomes zero overhead
+		mem::forget(transient);
+
+		// Forward the result.
+		result
+	}
+
+	/// Returns the address on the heap of the ThinArc itself -- not the T
+	/// within it -- for memory reporting.
+	#[inline]
+	pub fn heap_ptr(&self) -> *const c_void {
+		self.ptr as *const ArcInner<T> as *const c_void
+	}
+}
+
+impl<H, T> Deref for ThinArc<H, T> {
+	type Target = HeaderSliceWithLength<H, [T]>;
+
+	#[inline]
+	fn deref(&self) -> &Self::Target {
+		unsafe { &(*thin_to_thick(self.ptr)).data }
+	}
+}
+
+impl<H: 'static, T: 'static> Clone for ThinArc<H, T> {
+	#[inline]
+	fn clone(&self) -> Self {
+		ThinArc::with_arc(self, |a| Arc::into_thin(a.clone()))
+	}
+}
+
+impl<H: 'static, T: 'static> Drop for ThinArc<H, T> {
+	#[inline]
+	fn drop(&mut self) {
+		let _ = Arc::from_thin(ThinArc { ptr: self.ptr });
+	}
+}
+
+impl<H: 'static, T: 'static> Arc<HeaderSliceWithLength<H, [T]>> {
+	/// Converts an Arc into a ThinArc. This consumes the Arc, so the refcount
+	/// is not modified.
+	#[inline]
+	pub fn into_thin(a: Self) -> ThinArc<H, T> {
+		assert_eq!(
+			a.header.length,
+			a.slice.len(),
+			"Length needs to be correct for ThinArc to work"
+		);
+		let fat_ptr: *mut ArcInner<HeaderSliceWithLength<H, [T]>> = a.ptr();
+		mem::forget(a);
+		let thin_ptr = fat_ptr as *mut [usize] as *mut usize;
+		ThinArc {
+			ptr: thin_ptr as *mut ArcInner<HeaderSliceWithLength<H, [T; 1]>>,
+		}
+	}
+
+	/// Converts a ThinArc into an Arc. This consumes the ThinArc, so the refcount
+	/// is not modified.
+	#[inline]
+	pub fn from_thin(a: ThinArc<H, T>) -> Self {
+		let ptr = thin_to_thick(a.ptr);
+		mem::forget(a);
+		Arc {
+			p: NonZeroPtrMut::new(ptr),
+		}
+	}
+}
+
+impl<H: PartialEq + 'static, T: PartialEq + 'static> PartialEq for ThinArc<H, T> {
+	#[inline]
+	fn eq(&self, other: &ThinArc<H, T>) -> bool {
+		ThinArc::with_arc(self, |a| ThinArc::with_arc(other, |b| *a == *b))
+	}
+}
+
+impl<H: Eq + 'static, T: Eq + 'static> Eq for ThinArc<H, T> {}
+
+/// An Arc, except it holds a pointer to the T instead of to the
+/// entire ArcInner.
+///
+/// ```text
+///  Arc<T>    RawOffsetArc<T>
+///   |          |
+///   v          v
+///  ---------------------
+/// | RefCount | T (data) | [ArcInner<T>]
+///  ---------------------
+/// ```
+///
+/// This means that this is a direct pointer to
+/// its contained data (and can be read from by both C++ and Rust),
+/// but we can also convert it to a "regular" Arc<T> by removing the offset
+#[derive(Eq)]
+#[repr(C)]
+pub struct RawOffsetArc<T: 'static> {
+	ptr: NonZeroPtrMut<T>,
+}
+
+unsafe impl<T: 'static + Sync + Send> Send for RawOffsetArc<T> {}
+unsafe impl<T: 'static + Sync + Send> Sync for RawOffsetArc<T> {}
+
+impl<T: 'static> Deref for RawOffsetArc<T> {
+	type Target = T;
+	fn deref(&self) -> &Self::Target {
+		unsafe { &*self.ptr.ptr() }
+	}
+}
+
+impl<T: 'static> Clone for RawOffsetArc<T> {
+	#[inline]
+	fn clone(&self) -> Self {
+		Arc::into_raw_offset(self.clone_arc())
+	}
+}
+
+impl<T: 'static> Drop for RawOffsetArc<T> {
+	fn drop(&mut self) {
+		let _ = Arc::from_raw_offset(RawOffsetArc {
+			ptr: self.ptr.clone(),
+		});
+	}
+}
+
+impl<T: fmt::Debug + 'static> fmt::Debug for RawOffsetArc<T> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		fmt::Debug::fmt(&**self, f)
+	}
+}
+
+impl<T: PartialEq> PartialEq for RawOffsetArc<T> {
+	fn eq(&self, other: &RawOffsetArc<T>) -> bool {
+		*(*self) == *(*other)
+	}
+
+	fn ne(&self, other: &RawOffsetArc<T>) -> bool {
+		*(*self) != *(*other)
+	}
+}
+
+impl<T: 'static> RawOffsetArc<T> {
+	/// Temporarily converts |self| into a bonafide Arc and exposes it to the
+	/// provided callback. The refcount is not modified.
+	#[inline]
+	pub fn with_arc<F, U>(&self, f: F) -> U
+	where
+		F: FnOnce(&Arc<T>) -> U,
+	{
+		// Synthesize transient Arc, which never touches the refcount of the ArcInner.
+		let transient = unsafe { NoDrop::new(Arc::from_raw(self.ptr.ptr())) };
+
+		// Expose the transient Arc to the callback, which may clone it if it wants.
+		let result = f(&transient);
+
+		// Forget the transient Arc to leave the refcount untouched.
+		// XXXManishearth this can be removed when unions stabilize,
+		// since then NoDrop becomes zero overhead
+		mem::forget(transient);
+
+		// Forward the result.
+		result
+	}
+
+	/// If uniquely owned, provide a mutable reference
+	/// Else create a copy, and mutate that
+	#[inline]
+	pub fn make_mut(&mut self) -> &mut T
+	where
+		T: Clone,
+	{
+		unsafe {
+			// extract the RawOffsetArc as an owned variable
+			let this = ptr::read(self);
+			// treat it as a real Arc
+			let mut arc = Arc::from_raw_offset(this);
+			// obtain the mutable reference. Cast away the lifetime
+			// This may mutate `arc`
+			let ret = Arc::make_mut(&mut arc) as *mut _;
+			// Store the possibly-mutated arc back inside, after converting
+			// it to a RawOffsetArc again
+			ptr::write(self, Arc::into_raw_offset(arc));
+			&mut *ret
+		}
+	}
+
+	/// Clone it as an Arc
+	#[inline]
+	pub fn clone_arc(&self) -> Arc<T> {
+		RawOffsetArc::with_arc(self, |a| a.clone())
+	}
+
+	/// Produce a pointer to the data that can be converted back
+	/// to an arc
+	#[inline]
+	pub fn borrow_arc<'a>(&'a self) -> ArcBorrow<'a, T> {
+		ArcBorrow(&**self)
+	}
+}
+
+impl<T: 'static> Arc<T> {
+	/// Converts an Arc into a RawOffsetArc. This consumes the Arc, so the refcount
+	/// is not modified.
+	#[inline]
+	pub fn into_raw_offset(a: Self) -> RawOffsetArc<T> {
+		RawOffsetArc {
+			ptr: NonZeroPtrMut::new(Arc::into_raw(a) as *mut T),
+		}
+	}
+
+	/// Converts a RawOffsetArc into an Arc. This consumes the RawOffsetArc, so the refcount
+	/// is not modified.
+	#[inline]
+	pub fn from_raw_offset(a: RawOffsetArc<T>) -> Self {
+		let ptr = a.ptr.ptr();
+		mem::forget(a);
+		unsafe { Arc::from_raw(ptr) }
+	}
+}
+
+/// A "borrowed Arc". This is a pointer to
+/// a T that is known to have been allocated within an
+/// Arc.
+///
+/// This is equivalent in guarantees to `&Arc<T>`, however it is
+/// a bit more flexible. To obtain an `&Arc<T>` you must have
+/// an Arc<T> instance somewhere pinned down until we're done with it.
+///
+/// However, Gecko hands us refcounted things as pointers to T directly,
+/// so we have to conjure up a temporary Arc on the stack each time. The
+/// same happens for when the object is managed by a RawOffsetArc.
+///
+/// ArcBorrow lets us deal with borrows of known-refcounted objects
+/// without needing to worry about how they're actually stored.
+#[derive(Eq, PartialEq)]
+pub struct ArcBorrow<'a, T: 'a>(&'a T);
+
+impl<'a, T> Copy for ArcBorrow<'a, T> {}
+impl<'a, T> Clone for ArcBorrow<'a, T> {
+	#[inline]
+	fn clone(&self) -> Self {
+		*self
+	}
+}
+
+impl<'a, T> ArcBorrow<'a, T> {
+	#[inline]
+	pub fn clone_arc(&self) -> Arc<T> {
+		let arc = unsafe { Arc::from_raw(self.0) };
+		// addref it!
+		mem::forget(arc.clone());
+		arc
+	}
+
+	/// For constructing from a reference known to be Arc-backed,
+	/// e.g. if we obtain such a reference over FFI
+	#[inline]
+	pub unsafe fn from_ref(r: &'a T) -> Self {
+		ArcBorrow(r)
+	}
+
+	#[inline]
+	pub fn with_arc<F, U>(&self, f: F) -> U
+	where
+		F: FnOnce(&Arc<T>) -> U,
+		T: 'static,
+	{
+		// Synthesize transient Arc, which never touches the refcount.
+		let transient = unsafe { NoDrop::new(Arc::from_raw(self.0)) };
+
+		// Expose the transient Arc to the callback, which may clone it if it wants.
+		let result = f(&transient);
+
+		// Forget the transient Arc to leave the refcount untouched.
+		// XXXManishearth this can be removed when unions stabilize,
+		// since then NoDrop becomes zero overhead
+		mem::forget(transient);
+
+		// Forward the result.
+		result
+	}
+}
+
+impl<'a, T> Deref for ArcBorrow<'a, T> {
+	type Target = T;
+
+	#[inline]
+	fn deref(&self) -> &T {
+		&*self.0
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use super::{Arc, HeaderWithLength, ThinArc};
+	use std::clone::Clone;
+	use std::ops::Drop;
+	use std::sync::atomic;
+	use std::sync::atomic::Ordering::{Acquire, SeqCst};
+
+	#[derive(PartialEq)]
+	struct Canary(*mut atomic::AtomicUsize);
+
+	impl Drop for Canary {
+		fn drop(&mut self) {
+			unsafe {
+				(*self.0).fetch_add(1, SeqCst);
+			}
+		}
+	}
+
+	#[test]
+	fn slices_and_thin() {
+		let mut canary = atomic::AtomicUsize::new(0);
+		let c = Canary(&mut canary as *mut atomic::AtomicUsize);
+		let v = vec![5, 6];
+		let header = HeaderWithLength::new(c, v.len());
+		{
+			let x = Arc::into_thin(Arc::from_header_and_iter(header, v.into_iter()));
+			let y = ThinArc::with_arc(&x, |q| q.clone());
+			let _ = y.clone();
+			let _ = x == x;
+			Arc::from_thin(x.clone());
+		}
+		assert_eq!(canary.load(Acquire), 1);
+	}
+}

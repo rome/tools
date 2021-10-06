@@ -1,0 +1,45 @@
+MODULE@0..67
+  CLASS_DECL@0..12
+    CLASS_KW@0..5 "class"
+    WHITESPACE@5..6 " "
+    NAME@6..9
+      IDENT@6..9 "foo"
+    WHITESPACE@9..10 " "
+    CLASS_BODY@10..12
+      L_CURLY@10..11 "{"
+      R_CURLY@11..12 "}"
+  WHITESPACE@12..13 "\n"
+  CLASS_DECL@13..37
+    CLASS_KW@13..18 "class"
+    WHITESPACE@18..19 " "
+    NAME@19..22
+      IDENT@19..22 "foo"
+    WHITESPACE@22..23 " "
+    EXTENDS_KW@23..30 "extends"
+    WHITESPACE@30..31 " "
+    NAME_REF@31..34
+      IDENT@31..34 "bar"
+    WHITESPACE@34..35 " "
+    CLASS_BODY@35..37
+      L_CURLY@35..36 "{"
+      R_CURLY@36..37 "}"
+  WHITESPACE@37..38 "\n"
+  CLASS_DECL@38..66
+    CLASS_KW@38..43 "class"
+    WHITESPACE@43..44 " "
+    NAME@44..47
+      IDENT@44..47 "foo"
+    WHITESPACE@47..48 " "
+    EXTENDS_KW@48..55 "extends"
+    WHITESPACE@55..56 " "
+    DOT_EXPR@56..63
+      NAME_REF@56..59
+        IDENT@56..59 "foo"
+      DOT@59..60 "."
+      NAME@60..63
+        IDENT@60..63 "bar"
+    WHITESPACE@63..64 " "
+    CLASS_BODY@64..66
+      L_CURLY@64..65 "{"
+      R_CURLY@65..66 "}"
+  WHITESPACE@66..67 "\n"

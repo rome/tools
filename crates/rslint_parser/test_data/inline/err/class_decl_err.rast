@@ -1,0 +1,136 @@
+MODULE@0..74
+  CLASS_DECL@0..8
+    CLASS_KW@0..5 "class"
+    WHITESPACE@5..6 " "
+    CLASS_BODY@6..8
+      L_CURLY@6..7 "{"
+      R_CURLY@7..8 "}"
+  WHITESPACE@8..9 "\n"
+  CLASS_DECL@9..29
+    CLASS_KW@9..14 "class"
+    WHITESPACE@14..15 " "
+    EXTENDS_KW@15..22 "extends"
+    WHITESPACE@22..23 " "
+    NAME_REF@23..26
+      IDENT@23..26 "bar"
+    WHITESPACE@26..27 " "
+    CLASS_BODY@27..29
+      L_CURLY@27..28 "{"
+      R_CURLY@28..29 "}"
+  WHITESPACE@29..30 "\n"
+  CLASS_DECL@30..71
+    CLASS_KW@30..35 "class"
+    WHITESPACE@35..36 " "
+    EXTENDS_KW@36..43 "extends"
+    WHITESPACE@43..44 " "
+    OBJECT_EXPR@44..46
+      L_CURLY@44..45 "{"
+      R_CURLY@45..46 "}"
+    WHITESPACE@46..47 "\n"
+    CLASS_BODY@47..71
+      NAME@47..52
+        IDENT@47..52 "class"
+      WHITESPACE@52..53 "\n"
+      ERROR@53..58
+        CLASS_KW@53..58 "class"
+      WHITESPACE@58..59 " "
+      NAME@59..62
+        IDENT@59..62 "foo"
+      WHITESPACE@62..63 " "
+      ERROR@63..64
+        L_CURLY@63..64 "{"
+      WHITESPACE@64..65 " "
+      CLASS_PROP@65..68
+        NAME@65..68
+          IDENT@65..68 "set"
+      WHITESPACE@68..69 " "
+      ERROR@69..70
+        L_CURLY@69..70 "{"
+      R_CURLY@70..71 "}"
+  WHITESPACE@71..72 " "
+  ERROR@72..73
+    R_CURLY@72..73 "}"
+  WHITESPACE@73..74 "\n"
+--
+error[SyntaxError]: class declarations must have a name
+  ┌─ class_decl_err.js:1:7
+  │
+1 │ class {}
+  │       ^
+
+--
+error[SyntaxError]: class declarations must have a name
+  ┌─ class_decl_err.js:2:7
+  │
+2 │ class extends bar {}
+  │       ^^^^^^^
+
+--
+error[SyntaxError]: class declarations must have a name
+  ┌─ class_decl_err.js:3:7
+  │
+3 │ class extends {}
+  │       ^^^^^^^
+
+--
+error[SyntaxError]: expected `'{'` but instead found `class`
+  ┌─ class_decl_err.js:4:1
+  │
+4 │ class
+  │ ^^^^^ unexpected
+
+--
+error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none
+  ┌─ class_decl_err.js:5:1
+  │
+5 │ class foo { set {} }
+  │ ^^^^^
+
+--
+error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none
+  ┌─ class_decl_err.js:5:11
+  │
+5 │ class foo { set {} }
+  │           ^
+
+--
+error[SyntaxError]: expected a semicolon for a class property, but found none
+  ┌─ class_decl_err.js:5:13
+  │
+5 │ class foo { set {} }
+  │             ^^^^
+
+--
+error[SyntaxError]: class fields are unsupported
+  ┌─ class_decl_err.js:5:13
+  │
+5 │ class foo { set {} }
+  │             ^^^
+
+--
+error[SyntaxError]: Expected an identifier or keyword
+  ┌─ class_decl_err.js:5:17
+  │
+5 │ class foo { set {} }
+  │                 ^ Expected an identifier or keyword here
+
+--
+error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none
+  ┌─ class_decl_err.js:5:17
+  │
+5 │ class foo { set {} }
+  │                 ^
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ class_decl_err.js:5:20
+  │
+5 │ class foo { set {} }
+  │                    ^ Expected a statement or declaration here
+
+--
+class {}
+class extends bar {}
+class extends {}
+class
+class foo { set {} }

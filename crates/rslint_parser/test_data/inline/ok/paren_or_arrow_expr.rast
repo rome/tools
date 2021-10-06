@@ -1,0 +1,105 @@
+MODULE@0..85
+  EXPR_STMT@0..6
+    GROUPING_EXPR@0..5
+      L_PAREN@0..1 "("
+      NAME_REF@1..4
+        IDENT@1..4 "foo"
+      R_PAREN@4..5 ")"
+    SEMICOLON@5..6 ";"
+  WHITESPACE@6..7 "\n"
+  EXPR_STMT@7..19
+    ARROW_EXPR@7..18
+      PARAMETER_LIST@7..12
+        L_PAREN@7..8 "("
+        SINGLE_PATTERN@8..11
+          NAME@8..11
+            IDENT@8..11 "foo"
+        R_PAREN@11..12 ")"
+      WHITESPACE@12..13 " "
+      FAT_ARROW@13..15 "=>"
+      WHITESPACE@15..16 " "
+      BLOCK_STMT@16..18
+        L_CURLY@16..17 "{"
+        R_CURLY@17..18 "}"
+    SEMICOLON@18..19 ";"
+  WHITESPACE@19..20 "\n"
+  EXPR_STMT@20..28
+    GROUPING_EXPR@20..27
+      L_PAREN@20..21 "("
+      BIN_EXPR@21..26
+        LITERAL@21..22
+          NUMBER@21..22 "5"
+        WHITESPACE@22..23 " "
+        PLUS@23..24 "+"
+        WHITESPACE@24..25 " "
+        LITERAL@25..26
+          NUMBER@25..26 "5"
+      R_PAREN@26..27 ")"
+    SEMICOLON@27..28 ";"
+  WHITESPACE@28..29 "\n"
+  EXPR_STMT@29..64
+    ARROW_EXPR@29..63
+      PARAMETER_LIST@29..57
+        L_PAREN@29..30 "("
+        OBJECT_PATTERN@30..56
+          L_CURLY@30..31 "{"
+          SINGLE_PATTERN@31..34
+            NAME@31..34
+              IDENT@31..34 "foo"
+          COMMA@34..35 ","
+          WHITESPACE@35..36 " "
+          SINGLE_PATTERN@36..39
+            NAME@36..39
+              IDENT@36..39 "bar"
+          COMMA@39..40 ","
+          WHITESPACE@40..41 " "
+          KEY_VALUE_PATTERN@41..55
+            NAME@41..42
+              IDENT@41..42 "b"
+            COLON@42..43 ":"
+            WHITESPACE@43..44 " "
+            ARRAY_PATTERN@44..55
+              L_BRACK@44..45 "["
+              SINGLE_PATTERN@45..46
+                NAME@45..46
+                  IDENT@45..46 "f"
+              COMMA@46..47 ","
+              WHITESPACE@47..48 " "
+              REST_PATTERN@48..54
+                DOT2@48..51 "..."
+                SINGLE_PATTERN@51..54
+                  NAME@51..54
+                    IDENT@51..54 "baz"
+              R_BRACK@54..55 "]"
+          R_CURLY@55..56 "}"
+        R_PAREN@56..57 ")"
+      WHITESPACE@57..58 " "
+      FAT_ARROW@58..60 "=>"
+      WHITESPACE@60..61 " "
+      BLOCK_STMT@61..63
+        L_CURLY@61..62 "{"
+        R_CURLY@62..63 "}"
+    SEMICOLON@63..64 ";"
+  WHITESPACE@64..65 "\n"
+  EXPR_STMT@65..84
+    ARROW_EXPR@65..84
+      PARAMETER_LIST@65..78
+        L_PAREN@65..66 "("
+        SINGLE_PATTERN@66..69
+          NAME@66..69
+            IDENT@66..69 "foo"
+        COMMA@69..70 ","
+        WHITESPACE@70..71 " "
+        REST_PATTERN@71..77
+          DOT2@71..74 "..."
+          SINGLE_PATTERN@74..77
+            NAME@74..77
+              IDENT@74..77 "bar"
+        R_PAREN@77..78 ")"
+      WHITESPACE@78..79 " "
+      FAT_ARROW@79..81 "=>"
+      WHITESPACE@81..82 " "
+      BLOCK_STMT@82..84
+        L_CURLY@82..83 "{"
+        R_CURLY@83..84 "}"
+  WHITESPACE@84..85 "\n"

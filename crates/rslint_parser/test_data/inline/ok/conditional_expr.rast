@@ -1,0 +1,42 @@
+MODULE@0..44
+  EXPR_STMT@0..15
+    COND_EXPR@0..15
+      NAME_REF@0..3
+        IDENT@0..3 "foo"
+      WHITESPACE@3..4 " "
+      QUESTION@4..5 "?"
+      WHITESPACE@5..6 " "
+      NAME_REF@6..9
+        IDENT@6..9 "bar"
+      WHITESPACE@9..10 " "
+      COLON@10..11 ":"
+      WHITESPACE@11..12 " "
+      NAME_REF@12..15
+        IDENT@12..15 "baz"
+  WHITESPACE@15..16 "\n"
+  EXPR_STMT@16..43
+    COND_EXPR@16..43
+      NAME_REF@16..19
+        IDENT@16..19 "foo"
+      WHITESPACE@19..20 " "
+      QUESTION@20..21 "?"
+      WHITESPACE@21..22 " "
+      NAME_REF@22..25
+        IDENT@22..25 "bar"
+      WHITESPACE@25..26 " "
+      COLON@26..27 ":"
+      WHITESPACE@27..28 " "
+      COND_EXPR@28..43
+        NAME_REF@28..31
+          IDENT@28..31 "baz"
+        WHITESPACE@31..32 " "
+        QUESTION@32..33 "?"
+        WHITESPACE@33..34 " "
+        NAME_REF@34..37
+          IDENT@34..37 "bar"
+        WHITESPACE@37..38 " "
+        COLON@38..39 ":"
+        WHITESPACE@39..40 " "
+        NAME_REF@40..43
+          IDENT@40..43 "baz"
+  WHITESPACE@43..44 "\n"

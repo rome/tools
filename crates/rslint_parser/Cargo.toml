@@ -1,0 +1,19 @@
+[package]
+edition = "2018"
+name = "rslint_parser"
+version = "0.3.0"
+authors = ["RDambrosio016 <rdambrosio016@gmail.com>"]
+license = "MIT"
+description = "An extremely fast ECMAScript parser made for the rslint project"
+repository = "https://github.com/rslint/rslint"
+
+[dependencies]
+rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
+rslint_syntax = { path = "../rslint_syntax", version = "0.1" }
+rslint_lexer = { path = "../rslint_lexer", version = "0.2", features = ["highlight"] }
+rslint_rowan = { path = "../rslint_rowan", version = "0.10.0" }
+num-bigint = "0.3.0"
+lexical = { version = "5.2.0", features = ["radix"] }
+
+[dev-dependencies]
+expect-test = "1.0"

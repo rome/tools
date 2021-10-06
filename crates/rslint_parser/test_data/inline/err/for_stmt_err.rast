@@ -1,0 +1,82 @@
+MODULE@0..40
+  FOR_STMT@0..39
+    FOR_KW@0..3 "for"
+    WHITESPACE@3..4 " "
+    SEMICOLON@4..5 ";"
+    SEMICOLON@5..6 ";"
+    WHITESPACE@6..7 " "
+    FOR_STMT_UPDATE@7..9
+      OBJECT_EXPR@7..9
+        L_CURLY@7..8 "{"
+        R_CURLY@8..9 "}"
+    WHITESPACE@9..10 "\n"
+    FOR_STMT@10..39
+      FOR_KW@10..13 "for"
+      WHITESPACE@13..14 " "
+      FOR_STMT_INIT@14..23
+        VAR_DECL@14..23
+          IDENT@14..17 "let"
+          WHITESPACE@17..18 " "
+          DECLARATOR@18..23
+            SINGLE_PATTERN@18..19
+              NAME@18..19
+                IDENT@18..19 "i"
+            WHITESPACE@19..20 " "
+            EQ@20..21 "="
+            WHITESPACE@21..22 " "
+            LITERAL@22..23
+              NUMBER@22..23 "5"
+      SEMICOLON@23..24 ";"
+      WHITESPACE@24..25 " "
+      FOR_STMT_TEST@25..31
+        BIN_EXPR@25..31
+          NAME_REF@25..26
+            IDENT@25..26 "i"
+          WHITESPACE@26..27 " "
+          L_ANGLE@27..28 "<"
+          WHITESPACE@28..29 " "
+          LITERAL@29..31
+            NUMBER@29..31 "10"
+      SEMICOLON@31..32 ";"
+      WHITESPACE@32..33 " "
+      FOR_STMT_UPDATE@33..36
+        UNARY_EXPR@33..36
+          NAME_REF@33..34
+            IDENT@33..34 "i"
+          PLUS2@34..36 "++"
+      WHITESPACE@36..37 " "
+      BLOCK_STMT@37..39
+        L_CURLY@37..38 "{"
+        R_CURLY@38..39 "}"
+  WHITESPACE@39..40 "\n"
+--
+error[SyntaxError]: expected `'('` but instead found `;`
+  ┌─ for_stmt_err.js:1:5
+  │
+1 │ for ;; {}
+  │     ^ unexpected
+
+--
+error[SyntaxError]: expected `')'` but instead found `for`
+  ┌─ for_stmt_err.js:2:1
+  │
+2 │ for let i = 5; i < 10; i++ {}
+  │ ^^^ unexpected
+
+--
+error[SyntaxError]: expected `'('` but instead found `let`
+  ┌─ for_stmt_err.js:2:5
+  │
+2 │ for let i = 5; i < 10; i++ {}
+  │     ^^^ unexpected
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ for_stmt_err.js:2:28
+  │
+2 │ for let i = 5; i < 10; i++ {}
+  │                            ^ unexpected
+
+--
+for ;; {}
+for let i = 5; i < 10; i++ {}

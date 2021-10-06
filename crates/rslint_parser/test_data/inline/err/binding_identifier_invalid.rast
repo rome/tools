@@ -1,0 +1,107 @@
+MODULE@0..83
+  EXPR_STMT@0..30
+    ARROW_EXPR@0..30
+      ASYNC_KW@0..5 "async"
+      WHITESPACE@5..6 " "
+      PARAMETER_LIST@6..8
+        L_PAREN@6..7 "("
+        R_PAREN@7..8 ")"
+      WHITESPACE@8..9 " "
+      FAT_ARROW@9..11 "=>"
+      WHITESPACE@11..12 " "
+      BLOCK_STMT@12..30
+        L_CURLY@12..13 "{"
+        WHITESPACE@13..14 " "
+        VAR_DECL@14..28
+          IDENT@14..17 "let"
+          WHITESPACE@17..18 " "
+          DECLARATOR@18..27
+            SINGLE_PATTERN@18..23
+              NAME@18..23
+                IDENT@18..23 "await"
+            WHITESPACE@23..24 " "
+            EQ@24..25 "="
+            WHITESPACE@25..26 " "
+            LITERAL@26..27
+              NUMBER@26..27 "5"
+          SEMICOLON@27..28 ";"
+        WHITESPACE@28..29 " "
+        R_CURLY@29..30 "}"
+  WHITESPACE@30..31 "\n"
+  FN_DECL@31..68
+    FUNCTION_KW@31..39 "function"
+    WHITESPACE@39..40 " "
+    STAR@40..41 "*"
+    NAME@41..44
+      IDENT@41..44 "foo"
+    PARAMETER_LIST@44..46
+      L_PAREN@44..45 "("
+      R_PAREN@45..46 ")"
+    WHITESPACE@46..47 " "
+    BLOCK_STMT@47..68
+      L_CURLY@47..48 "{"
+      WHITESPACE@48..52 "\n   "
+      VAR_DECL@52..66
+        IDENT@52..55 "let"
+        WHITESPACE@55..56 " "
+        DECLARATOR@56..65
+          SINGLE_PATTERN@56..61
+            NAME@56..61
+              IDENT@56..61 "yield"
+          WHITESPACE@61..62 " "
+          EQ@62..63 "="
+          WHITESPACE@63..64 " "
+          LITERAL@64..65
+            NUMBER@64..65 "5"
+        SEMICOLON@65..66 ";"
+      WHITESPACE@66..67 "\n"
+      R_CURLY@67..68 "}"
+  WHITESPACE@68..69 "\n"
+  VAR_DECL@69..82
+    IDENT@69..72 "let"
+    WHITESPACE@72..73 " "
+    DECLARATOR@73..81
+      SINGLE_PATTERN@73..77
+        NAME@73..77
+          IDENT@73..77 "eval"
+      WHITESPACE@77..78 " "
+      EQ@78..79 "="
+      WHITESPACE@79..80 " "
+      LITERAL@80..81
+        NUMBER@80..81 "5"
+    SEMICOLON@81..82 ";"
+  WHITESPACE@82..83 "\n"
+--
+error[SyntaxError]: Illegal use of `await` as an identifier in an async context
+  ┌─ binding_identifier_invalid.js:1:19
+  │
+1 │ async () => { let await = 5; }
+  │                   ^^^^^
+
+--
+error[SyntaxError]: Illegal use of `yield` as an identifier in generator function
+  ┌─ binding_identifier_invalid.js:3:8
+  │
+3 │    let yield = 5;
+  │        ^^^^^
+
+--
+error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+  ┌─ binding_identifier_invalid.js:3:8
+  │
+3 │    let yield = 5;
+  │        ^^^^^
+
+--
+error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
+  ┌─ binding_identifier_invalid.js:5:5
+  │
+5 │ let eval = 5;
+  │     ^^^^
+
+--
+async () => { let await = 5; }
+function *foo() {
+   let yield = 5;
+}
+let eval = 5;

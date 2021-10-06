@@ -1,0 +1,22 @@
+MODULE@0..14
+  EXPR_STMT@0..13
+    SEQUENCE_EXPR@0..13
+      LITERAL@0..1
+        NUMBER@0..1 "1"
+      COMMA@1..2 ","
+      WHITESPACE@2..3 " "
+      LITERAL@3..4
+        NUMBER@3..4 "2"
+      COMMA@4..5 ","
+      WHITESPACE@5..6 " "
+      LITERAL@6..7
+        NUMBER@6..7 "3"
+      COMMA@7..8 ","
+      WHITESPACE@8..9 " "
+      LITERAL@9..10
+        NUMBER@9..10 "4"
+      COMMA@10..11 ","
+      WHITESPACE@11..12 " "
+      LITERAL@12..13
+        NUMBER@12..13 "5"
+  WHITESPACE@13..14 "\n"

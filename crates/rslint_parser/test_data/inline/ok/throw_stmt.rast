@@ -1,0 +1,22 @@
+MODULE@0..36
+  THROW_STMT@0..23
+    THROW_KW@0..5 "throw"
+    WHITESPACE@5..6 " "
+    NEW_EXPR@6..22
+      NEW_KW@6..9 "new"
+      WHITESPACE@9..10 " "
+      NAME_REF@10..15
+        IDENT@10..15 "Error"
+      ARG_LIST@15..22
+        L_PAREN@15..16 "("
+        LITERAL@16..21
+          STRING@16..21 "\"foo\""
+        R_PAREN@21..22 ")"
+    SEMICOLON@22..23 ";"
+  WHITESPACE@23..24 "\n"
+  THROW_STMT@24..35
+    THROW_KW@24..29 "throw"
+    WHITESPACE@29..30 " "
+    LITERAL@30..35
+      STRING@30..35 "\"foo\""
+  WHITESPACE@35..36 "\n"

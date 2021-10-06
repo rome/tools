@@ -1,0 +1,37 @@
+MODULE@0..12
+  CLASS_DECL@0..10
+    CLASS_KW@0..5 "class"
+    WHITESPACE@5..6 " "
+    NAME@6..7
+      IDENT@6..7 "S"
+    CLASS_BODY@7..10
+      L_CURLY@7..8 "{"
+      ERROR@8..9
+        L_CURLY@8..9 "{"
+      R_CURLY@9..10 "}"
+  ERROR@10..11
+    R_CURLY@10..11 "}"
+  WHITESPACE@11..12 "\n"
+--
+error[SyntaxError]: Expected an identifier or keyword
+  ┌─ block_stmt_in_class.js:1:9
+  │
+1 │ class S{{}}
+  │         ^ Expected an identifier or keyword here
+
+--
+error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none
+  ┌─ block_stmt_in_class.js:1:9
+  │
+1 │ class S{{}}
+  │         ^
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ block_stmt_in_class.js:1:11
+  │
+1 │ class S{{}}
+  │           ^ Expected a statement or declaration here
+
+--
+class S{{}}

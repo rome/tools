@@ -1,0 +1,36 @@
+MODULE@0..25
+  VAR_DECL@0..17
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..16
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      IMPORT_CALL@8..16
+        IMPORT_KW@8..14 "import"
+        L_PAREN@14..15 "("
+        R_PAREN@15..16 ")"
+    SEMICOLON@16..17 ";"
+  WHITESPACE@17..18 "\n"
+  EXPR_STMT@18..24
+    CALL_EXPR@18..23
+      NAME_REF@18..21
+        IDENT@18..21 "foo"
+      ARG_LIST@21..23
+        L_PAREN@21..22 "("
+        R_PAREN@22..23 ")"
+    SEMICOLON@23..24 ";"
+  WHITESPACE@24..25 "\n"
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ import_call_no_arg.js:1:16
+  │
+1 │ let a = import();
+  │                ^ Expected an expression here
+
+--
+let a = import();
+foo();

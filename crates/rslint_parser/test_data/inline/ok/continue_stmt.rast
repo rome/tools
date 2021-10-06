@@ -1,0 +1,38 @@
+MODULE@0..64
+  LABELLED_STMT@0..7
+    NAME@0..3
+      IDENT@0..3 "foo"
+    COLON@3..4 ":"
+    WHITESPACE@4..5 " "
+    BLOCK_STMT@5..7
+      L_CURLY@5..6 "{"
+      R_CURLY@6..7 "}"
+  WHITESPACE@7..8 "\n"
+  WHILE_STMT@8..63
+    WHILE_KW@8..13 "while"
+    WHITESPACE@13..14 " "
+    CONDITION@14..20
+      L_PAREN@14..15 "("
+      LITERAL@15..19
+        TRUE_KW@15..19 "true"
+      R_PAREN@19..20 ")"
+    WHITESPACE@20..21 " "
+    BLOCK_STMT@21..63
+      L_CURLY@21..22 "{"
+      WHITESPACE@22..25 "\n  "
+      CONTINUE_STMT@25..34
+        CONTINUE_KW@25..33 "continue"
+        SEMICOLON@33..34 ";"
+      WHITESPACE@34..37 "\n  "
+      CONTINUE_STMT@37..50
+        CONTINUE_KW@37..45 "continue"
+        WHITESPACE@45..46 " "
+        NAME_REF@46..49
+          IDENT@46..49 "foo"
+        SEMICOLON@49..50 ";"
+      WHITESPACE@50..53 "\n  "
+      CONTINUE_STMT@53..61
+        CONTINUE_KW@53..61 "continue"
+      WHITESPACE@61..62 "\n"
+      R_CURLY@62..63 "}"
+  WHITESPACE@63..64 "\n"

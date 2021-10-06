@@ -1,0 +1,115 @@
+MODULE@0..101
+  EXPR_STMT@0..21
+    ASSIGN_EXPR@0..20
+      NAME_REF@0..3
+        IDENT@0..3 "foo"
+      WHITESPACE@3..4 " "
+      PLUSEQ@4..6 "+="
+      WHITESPACE@6..7 " "
+      ASSIGN_EXPR@7..20
+        NAME_REF@7..10
+          IDENT@7..10 "bar"
+        WHITESPACE@10..11 " "
+        EQ@11..12 "="
+        WHITESPACE@12..13 " "
+        ASSIGN_EXPR@13..20
+          NAME_REF@13..14
+            IDENT@13..14 "b"
+          WHITESPACE@14..15 " "
+          QUESTION2EQ@15..18 "??="
+          WHITESPACE@18..19 " "
+          LITERAL@19..20
+            NUMBER@19..20 "3"
+    SEMICOLON@20..21 ";"
+  WHITESPACE@21..22 "\n"
+  EXPR_STMT@22..33
+    ASSIGN_EXPR@22..32
+      NAME_REF@22..25
+        IDENT@22..25 "foo"
+      WHITESPACE@25..26 " "
+      MINUSEQ@26..28 "-="
+      WHITESPACE@28..29 " "
+      NAME_REF@29..32
+        IDENT@29..32 "bar"
+    SEMICOLON@32..33 ";"
+  WHITESPACE@33..34 "\n"
+  EXPR_STMT@34..51
+    ASSIGN_EXPR@34..50
+      ARRAY_PATTERN@34..44
+        L_BRACK@34..35 "["
+        SINGLE_PATTERN@35..38
+          NAME@35..38
+            IDENT@35..38 "foo"
+        COMMA@38..39 ","
+        WHITESPACE@39..40 " "
+        SINGLE_PATTERN@40..43
+          NAME@40..43
+            IDENT@40..43 "bar"
+        R_BRACK@43..44 "]"
+      WHITESPACE@44..45 " "
+      EQ@45..46 "="
+      WHITESPACE@46..47 " "
+      NAME_REF@47..50
+        IDENT@47..50 "baz"
+    SEMICOLON@50..51 ";"
+  WHITESPACE@51..52 "\n"
+  EXPR_STMT@52..72
+    GROUPING_EXPR@52..71
+      L_PAREN@52..53 "("
+      ASSIGN_EXPR@53..70
+        OBJECT_PATTERN@53..65
+          L_CURLY@53..54 "{"
+          WHITESPACE@54..55 " "
+          SINGLE_PATTERN@55..58
+            NAME@55..58
+              IDENT@55..58 "bar"
+          COMMA@58..59 ","
+          WHITESPACE@59..60 " "
+          SINGLE_PATTERN@60..63
+            NAME@60..63
+              IDENT@60..63 "baz"
+          WHITESPACE@63..64 " "
+          R_CURLY@64..65 "}"
+        WHITESPACE@65..66 " "
+        EQ@66..67 "="
+        WHITESPACE@67..68 " "
+        OBJECT_EXPR@68..70
+          L_CURLY@68..69 "{"
+          R_CURLY@69..70 "}"
+      R_PAREN@70..71 ")"
+    SEMICOLON@71..72 ";"
+  WHITESPACE@72..73 "\n"
+  EXPR_STMT@73..100
+    GROUPING_EXPR@73..99
+      L_PAREN@73..74 "("
+      ASSIGN_EXPR@74..98
+        OBJECT_PATTERN@74..93
+          L_CURLY@74..75 "{"
+          WHITESPACE@75..76 " "
+          KEY_VALUE_PATTERN@76..86
+            NAME@76..79
+              IDENT@76..79 "bar"
+            COLON@79..80 ":"
+            WHITESPACE@80..81 " "
+            ARRAY_PATTERN@81..86
+              L_BRACK@81..82 "["
+              SINGLE_PATTERN@82..85
+                NAME@82..85
+                  IDENT@82..85 "baz"
+              R_BRACK@85..86 "]"
+          COMMA@86..87 ","
+          WHITESPACE@87..88 " "
+          SINGLE_PATTERN@88..91
+            NAME@88..91
+              IDENT@88..91 "foo"
+          WHITESPACE@91..92 " "
+          R_CURLY@92..93 "}"
+        WHITESPACE@93..94 " "
+        EQ@94..95 "="
+        WHITESPACE@95..96 " "
+        OBJECT_EXPR@96..98
+          L_CURLY@96..97 "{"
+          R_CURLY@97..98 "}"
+      R_PAREN@98..99 ")"
+    SEMICOLON@99..100 ";"
+  WHITESPACE@100..101 "\n"

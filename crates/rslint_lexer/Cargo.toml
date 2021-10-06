@@ -1,0 +1,24 @@
+[package]
+edition = "2018"
+name = "rslint_lexer"
+version = "0.2.0"
+authors = ["RSLint developers"]
+description = "An extremely fast ECMAScript lexer made for the rslint project"
+license = "MIT"
+repository = "https://github.com/rslint/rslint"
+
+[dependencies]
+rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
+rslint_syntax = { version = "0.1.4", path = "../rslint_syntax" }
+atty = { version = "0.2.14", optional = true }
+ansi_term = { version = "0.12.1", optional = true }
+
+[dev-dependencies]
+quickcheck = "0.9"
+quickcheck_macros = "0.9"
+
+[features]
+highlight = ["atty", "ansi_term"]
+
+[package.metadata.docs.rs]
+features = ["highlight"]

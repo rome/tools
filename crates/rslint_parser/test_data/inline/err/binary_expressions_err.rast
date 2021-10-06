@@ -1,0 +1,62 @@
+MODULE@0..35
+  EXPR_STMT@0..11
+    CALL_EXPR@0..10
+      NAME_REF@0..3
+        IDENT@0..3 "foo"
+      ARG_LIST@3..10
+        L_PAREN@3..4 "("
+        BIN_EXPR@4..9
+          NAME_REF@4..7
+            IDENT@4..7 "foo"
+          WHITESPACE@7..8 " "
+          PLUS@8..9 "+"
+        R_PAREN@9..10 ")"
+    SEMICOLON@10..11 ";"
+  WHITESPACE@11..12 "\n"
+  EXPR_STMT@12..22
+    BIN_EXPR@12..21
+      NAME_REF@12..15
+        IDENT@12..15 "foo"
+      WHITESPACE@15..16 " "
+      PLUS@16..17 "+"
+      WHITESPACE@17..18 " "
+      BIN_EXPR@18..21
+        STAR@18..19 "*"
+        WHITESPACE@19..20 " "
+        LITERAL@20..21
+          NUMBER@20..21 "2"
+    SEMICOLON@21..22 ";"
+  WHITESPACE@22..23 "\n"
+  EXPR_STMT@23..34
+    BIN_EXPR@23..33
+      UNARY_EXPR@23..27
+        BANG@23..24 "!"
+        NAME_REF@24..27
+          IDENT@24..27 "foo"
+      WHITESPACE@27..28 " "
+      STAR@28..29 "*"
+      WHITESPACE@29..30 " "
+      NAME_REF@30..33
+        IDENT@30..33 "bar"
+    SEMICOLON@33..34 ";"
+  WHITESPACE@34..35 "\n"
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ binary_expressions_err.js:1:10
+  │
+1 │ foo(foo +);
+  │          ^ Expected an expression here
+
+--
+error[SyntaxError]: Expected an expression for the right hand side of a `+`, but found an operator instead
+  ┌─ binary_expressions_err.js:2:7
+  │
+2 │ foo + * 2;
+  │     - ^ But this operator was encountered instead
+  │     │  
+  │     This operator requires a right hand side value
+
+--
+foo(foo +);
+foo + * 2;
+!foo * bar;

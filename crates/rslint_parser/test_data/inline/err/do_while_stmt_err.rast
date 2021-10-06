@@ -1,0 +1,156 @@
+MODULE@0..42
+  DO_WHILE_STMT@0..42
+    DO_KW@0..2 "do"
+    WHITESPACE@2..3 " "
+    WHILE_STMT@3..42
+      WHILE_KW@3..8 "while"
+      WHITESPACE@8..9 " "
+      CONDITION@9..15
+        L_PAREN@9..10 "("
+        LITERAL@10..14
+          TRUE_KW@10..14 "true"
+        R_PAREN@14..15 ")"
+      WHITESPACE@15..16 "\n"
+      DO_WHILE_STMT@16..42
+        DO_KW@16..18 "do"
+        WHITESPACE@18..19 " "
+        WHILE_STMT@19..42
+          WHILE_KW@19..24 "while"
+          WHITESPACE@24..25 " "
+          CONDITION@25..27
+            L_PAREN@25..26 "("
+            R_PAREN@26..27 ")"
+          WHITESPACE@27..28 "\n"
+          DO_WHILE_STMT@28..42
+            DO_KW@28..30 "do"
+            WHITESPACE@30..31 " "
+            WHILE_STMT@31..42
+              WHILE_KW@31..36 "while"
+              WHITESPACE@36..37 " "
+              CONDITION@37..41
+                LITERAL@37..41
+                  TRUE_KW@37..41 "true"
+              WHITESPACE@41..42 "\n"
+              ERROR@42..42
+            CONDITION@42..42
+              ERROR@42..42
+        CONDITION@42..42
+          ERROR@42..42
+    CONDITION@42..42
+      ERROR@42..42
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ do_while_stmt_err.js:2:11
+  │
+2 │ do while ()
+  │           ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `'('` but instead found `true`
+  ┌─ do_while_stmt_err.js:3:10
+  │
+3 │ do while true
+  │          ^^^^ unexpected
+
+--
+error[SyntaxError]: expected `')'` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: expected `WHILE_KW` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected `'('` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected `WHILE_KW` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected `'('` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected `WHILE_KW` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected `'('` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead the file ends
+  ┌─ do_while_stmt_err.js:4:1
+  │
+4 │ 
+  │ ^ the file ends here
+
+--
+do while (true)
+do while ()
+do while true

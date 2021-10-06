@@ -1,0 +1,40 @@
+MODULE@0..20
+  EXPR_STMT@0..20
+    TEMPLATE@0..20
+      DOT_EXPR@0..17
+        BRACKET_EXPR@0..12
+          DOT_EXPR@0..10
+            CALL_EXPR@0..5
+              NAME_REF@0..3
+                IDENT@0..3 "foo"
+              ARG_LIST@3..5
+                L_PAREN@3..4 "("
+                R_PAREN@4..5 ")"
+            QUESTIONDOT@5..7 "?."
+            NAME@7..10
+              IDENT@7..10 "baz"
+          L_BRACK@10..11 "["
+          R_BRACK@11..12 "]"
+        DOT@12..13 "."
+        WHITESPACE@13..14 "\n"
+        NAME@14..17
+          IDENT@14..17 "BAR"
+      BACKTICK@17..18 "`"
+      TEMPLATE_CHUNK@18..20 "b\n"
+--
+error: unterminated template literal
+  ┌─ subscripts_err.js:3:1
+  │
+3 │ 
+  │ ^
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ subscripts_err.js:1:12
+  │
+1 │ foo()?.baz[].
+  │            ^ Expected an expression here
+
+--
+foo()?.baz[].
+BAR`b

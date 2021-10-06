@@ -76,3 +76,22 @@ jobs:
         with:
           command: test
           args: --workspace --verbose
+
+  coverage:
+    name: Test262 coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+      - name: Run Test262 suite
+        continue-on-error: true
+        run: cargo xtask coverage

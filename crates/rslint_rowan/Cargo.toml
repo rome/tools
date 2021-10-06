@@ -1,0 +1,22 @@
+[package]
+name = "rslint_rowan"
+version = "0.10.0"
+authors = ["Aleksey Kladov <aleksey.kladov@gmail.com>", "RSLint developers"]
+license = "MIT"
+description = "A simple threadsafe fork of rowan for the rslint project"
+edition = "2018"
+
+[dependencies]
+serde = { version = "1.0.89", optional = true, default-features = false }
+smol_str = "0.1.10"
+text-size = "1.0.0"
+nodrop = "0.1.14"
+stable_deref_trait = "1.2.0"
+fxhash = "0.2.1"
+smallvec = "1.5.1"
+
+[dev-dependencies]
+m_lexer = "0.0.4"
+
+[features]
+serde1 = [ "serde", "text-size/serde" ]

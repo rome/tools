@@ -1,0 +1,36 @@
+MODULE@0..46
+  LABELLED_STMT@0..7
+    NAME@0..3
+      IDENT@0..3 "foo"
+    COLON@3..4 ":"
+    WHITESPACE@4..5 " "
+    BLOCK_STMT@5..7
+      L_CURLY@5..6 "{"
+      R_CURLY@6..7 "}"
+  WHITESPACE@7..8 "\n"
+  LABELLED_STMT@8..16
+    NAME@8..12
+      IDENT@8..12 "rust"
+    COLON@12..13 ":"
+    WHITESPACE@13..14 " "
+    BLOCK_STMT@14..16
+      L_CURLY@14..15 "{"
+      R_CURLY@15..16 "}"
+  WHITESPACE@16..17 "\n"
+  BREAK_STMT@17..23
+    BREAK_KW@17..22 "break"
+    SEMICOLON@22..23 ";"
+  WHITESPACE@23..24 "\n"
+  BREAK_STMT@24..34
+    BREAK_KW@24..29 "break"
+    WHITESPACE@29..30 " "
+    NAME_REF@30..33
+      IDENT@30..33 "foo"
+    SEMICOLON@33..34 ";"
+  WHITESPACE@34..35 "\n"
+  BREAK_STMT@35..45
+    BREAK_KW@35..40 "break"
+    WHITESPACE@40..41 " "
+    NAME_REF@41..45
+      IDENT@41..45 "rust"
+  WHITESPACE@45..46 "\n"
