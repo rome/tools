@@ -1,0 +1,2 @@
+foo()?.baz[].
+BAR`b

@@ -1,0 +1,28 @@
+MODULE@0..20
+  VAR_DECL@0..20
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..20
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      TEMPLATE@8..20
+        BACKTICK@8..9 "`"
+        TEMPLATE_ELEMENT@9..15
+          DOLLARCURLY@9..11 "${"
+          NAME_REF@11..14
+            IDENT@11..14 "foo"
+          R_CURLY@14..15 "}"
+        TEMPLATE_CHUNK@15..20 " bar\n"
+--
+error: unterminated template literal
+  ┌─ template_literal_unterminated.js:2:1
+  │
+2 │ 
+  │ ^
+
+--
+let a = `${foo} bar

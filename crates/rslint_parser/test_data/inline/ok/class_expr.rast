@@ -1,0 +1,64 @@
+MODULE@0..72
+  VAR_DECL@0..17
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..16
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      CLASS_EXPR@8..16
+        CLASS_KW@8..13 "class"
+        WHITESPACE@13..14 " "
+        CLASS_BODY@14..16
+          L_CURLY@14..15 "{"
+          R_CURLY@15..16 "}"
+    SEMICOLON@16..17 ";"
+  WHITESPACE@17..18 "\n"
+  VAR_DECL@18..57
+    IDENT@18..21 "let"
+    WHITESPACE@21..22 " "
+    DECLARATOR@22..57
+      SINGLE_PATTERN@22..23
+        NAME@22..23
+          IDENT@22..23 "a"
+      WHITESPACE@23..24 " "
+      EQ@24..25 "="
+      WHITESPACE@25..26 " "
+      CLASS_EXPR@26..57
+        CLASS_KW@26..31 "class"
+        WHITESPACE@31..32 " "
+        NAME@32..35
+          IDENT@32..35 "foo"
+        WHITESPACE@35..36 " "
+        CLASS_BODY@36..57
+          L_CURLY@36..37 "{"
+          WHITESPACE@37..39 "\n "
+          CONSTRUCTOR@39..55
+            NAME@39..50
+              IDENT@39..50 "constructor"
+            PARAMETER_LIST@50..52
+              L_PAREN@50..51 "("
+              R_PAREN@51..52 ")"
+            WHITESPACE@52..53 " "
+            BLOCK_STMT@53..55
+              L_CURLY@53..54 "{"
+              R_CURLY@54..55 "}"
+          WHITESPACE@55..56 "\n"
+          R_CURLY@56..57 "}"
+  WHITESPACE@57..58 "\n"
+  EXPR_STMT@58..71
+    BRACKET_EXPR@58..71
+      NAME_REF@58..61
+        IDENT@58..61 "foo"
+      L_BRACK@61..62 "["
+      CLASS_EXPR@62..70
+        CLASS_KW@62..67 "class"
+        WHITESPACE@67..68 " "
+        CLASS_BODY@68..70
+          L_CURLY@68..69 "{"
+          R_CURLY@69..70 "}"
+      R_BRACK@70..71 "]"
+  WHITESPACE@71..72 "\n"

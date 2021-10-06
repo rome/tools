@@ -1,0 +1,29 @@
+MODULE@0..28
+  THROW_STMT@0..5
+    THROW_KW@0..5 "throw"
+  WHITESPACE@5..6 "\n"
+  EXPR_STMT@6..27
+    NEW_EXPR@6..27
+      NEW_KW@6..9 "new"
+      WHITESPACE@9..10 " "
+      NAME_REF@10..15
+        IDENT@10..15 "Error"
+      ARG_LIST@15..27
+        L_PAREN@15..16 "("
+        LITERAL@16..26
+          STRING@16..26 "\"oh no :(\""
+        R_PAREN@26..27 ")"
+  WHITESPACE@27..28 "\n"
+--
+error[SyntaxError]: Linebreaks between a throw statement and the error to be thrown are not allowed
+  ┌─ throw_stmt_err.js:2:1
+  │
+2 │ new Error("oh no :(")
+  │ ^^^
+  │ │
+  │ Help: did you mean to throw this?
+  │ A linebreak is not allowed here
+
+--
+throw
+new Error("oh no :(")

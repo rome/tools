@@ -1,0 +1,50 @@
+MODULE@0..62
+  VAR_DECL@0..28
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..27
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      FN_EXPR@8..27
+        ASYNC_KW@8..13 "async"
+        WHITESPACE@13..14 " "
+        FUNCTION_KW@14..22 "function"
+        PARAMETER_LIST@22..24
+          L_PAREN@22..23 "("
+          R_PAREN@23..24 ")"
+        WHITESPACE@24..25 " "
+        BLOCK_STMT@25..27
+          L_CURLY@25..26 "{"
+          R_CURLY@26..27 "}"
+    SEMICOLON@27..28 ";"
+  WHITESPACE@28..29 "\n"
+  VAR_DECL@29..61
+    IDENT@29..32 "let"
+    WHITESPACE@32..33 " "
+    DECLARATOR@33..60
+      SINGLE_PATTERN@33..34
+        NAME@33..34
+          IDENT@33..34 "b"
+      WHITESPACE@34..35 " "
+      EQ@35..36 "="
+      WHITESPACE@36..37 " "
+      FN_EXPR@37..60
+        ASYNC_KW@37..42 "async"
+        WHITESPACE@42..43 " "
+        FUNCTION_KW@43..51 "function"
+        WHITESPACE@51..52 " "
+        NAME@52..55
+          IDENT@52..55 "foo"
+        PARAMETER_LIST@55..57
+          L_PAREN@55..56 "("
+          R_PAREN@56..57 ")"
+        WHITESPACE@57..58 " "
+        BLOCK_STMT@58..60
+          L_CURLY@58..59 "{"
+          R_CURLY@59..60 "}"
+    SEMICOLON@60..61 ";"
+  WHITESPACE@61..62 "\n"

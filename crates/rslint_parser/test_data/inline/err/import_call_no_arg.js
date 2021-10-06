@@ -1,0 +1,2 @@
+let a = import();
+foo();

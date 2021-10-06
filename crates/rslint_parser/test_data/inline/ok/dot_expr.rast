@@ -1,0 +1,49 @@
+MODULE@0..54
+  EXPR_STMT@0..7
+    DOT_EXPR@0..7
+      NAME_REF@0..3
+        IDENT@0..3 "foo"
+      DOT@3..4 "."
+      NAME@4..7
+        IDENT@4..7 "bar"
+  WHITESPACE@7..8 "\n"
+  EXPR_STMT@8..17
+    DOT_EXPR@8..17
+      NAME_REF@8..11
+        IDENT@8..11 "foo"
+      DOT@11..12 "."
+      NAME@12..17
+        IDENT@12..17 "await"
+  WHITESPACE@17..18 "\n"
+  EXPR_STMT@18..27
+    DOT_EXPR@18..27
+      NAME_REF@18..21
+        IDENT@18..21 "foo"
+      DOT@21..22 "."
+      NAME@22..27
+        IDENT@22..27 "yield"
+  WHITESPACE@27..28 "\n"
+  EXPR_STMT@28..35
+    DOT_EXPR@28..35
+      NAME_REF@28..31
+        IDENT@28..31 "foo"
+      DOT@31..32 "."
+      NAME@32..35
+        IDENT@32..35 "for"
+  WHITESPACE@35..36 "\n"
+  EXPR_STMT@36..44
+    DOT_EXPR@36..44
+      NAME_REF@36..39
+        IDENT@36..39 "foo"
+      QUESTIONDOT@39..41 "?."
+      NAME@41..44
+        IDENT@41..44 "for"
+  WHITESPACE@44..45 "\n"
+  EXPR_STMT@45..53
+    DOT_EXPR@45..53
+      NAME_REF@45..48
+        IDENT@45..48 "foo"
+      QUESTIONDOT@48..50 "?."
+      NAME@50..53
+        IDENT@50..53 "bar"
+  WHITESPACE@53..54 "\n"

@@ -1,0 +1,80 @@
+MODULE@0..88
+  IF_STMT@0..20
+    IF_KW@0..2 "if"
+    WHITESPACE@2..3 " "
+    CONDITION@3..9
+      L_PAREN@3..4 "("
+      LITERAL@4..8
+        TRUE_KW@4..8 "true"
+      R_PAREN@8..9 ")"
+    WHITESPACE@9..10 " "
+    BLOCK_STMT@10..12
+      L_CURLY@10..11 "{"
+      R_CURLY@11..12 "}"
+    WHITESPACE@12..13 " "
+    ELSE_KW@13..17 "else"
+    WHITESPACE@17..18 " "
+    BLOCK_STMT@18..20
+      L_CURLY@18..19 "{"
+      R_CURLY@19..20 "}"
+  WHITESPACE@20..21 "\n"
+  IF_STMT@21..33
+    IF_KW@21..23 "if"
+    WHITESPACE@23..24 " "
+    CONDITION@24..30
+      L_PAREN@24..25 "("
+      LITERAL@25..29
+        TRUE_KW@25..29 "true"
+      R_PAREN@29..30 ")"
+    WHITESPACE@30..31 " "
+    BLOCK_STMT@31..33
+      L_CURLY@31..32 "{"
+      R_CURLY@32..33 "}"
+  WHITESPACE@33..34 "\n"
+  IF_STMT@34..49
+    IF_KW@34..36 "if"
+    WHITESPACE@36..37 " "
+    CONDITION@37..43
+      L_PAREN@37..38 "("
+      LITERAL@38..42
+        TRUE_KW@38..42 "true"
+      R_PAREN@42..43 ")"
+    WHITESPACE@43..44 " "
+    EXPR_STMT@44..49
+      LITERAL@44..49
+        FALSE_KW@44..49 "false"
+  WHITESPACE@49..50 "\n"
+  IF_STMT@50..87
+    IF_KW@50..52 "if"
+    WHITESPACE@52..53 " "
+    CONDITION@53..58
+      L_PAREN@53..54 "("
+      NAME_REF@54..57
+        IDENT@54..57 "bar"
+      R_PAREN@57..58 ")"
+    WHITESPACE@58..59 " "
+    BLOCK_STMT@59..61
+      L_CURLY@59..60 "{"
+      R_CURLY@60..61 "}"
+    WHITESPACE@61..62 " "
+    ELSE_KW@62..66 "else"
+    WHITESPACE@66..67 " "
+    IF_STMT@67..87
+      IF_KW@67..69 "if"
+      WHITESPACE@69..70 " "
+      CONDITION@70..76
+        L_PAREN@70..71 "("
+        LITERAL@71..75
+          TRUE_KW@71..75 "true"
+        R_PAREN@75..76 ")"
+      WHITESPACE@76..77 " "
+      BLOCK_STMT@77..79
+        L_CURLY@77..78 "{"
+        R_CURLY@78..79 "}"
+      WHITESPACE@79..80 " "
+      ELSE_KW@80..84 "else"
+      WHITESPACE@84..85 " "
+      BLOCK_STMT@85..87
+        L_CURLY@85..86 "{"
+        R_CURLY@86..87 "}"
+  WHITESPACE@87..88 "\n"

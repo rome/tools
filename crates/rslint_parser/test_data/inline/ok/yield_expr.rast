@@ -1,0 +1,33 @@
+MODULE@0..45
+  FN_DECL@0..44
+    FUNCTION_KW@0..8 "function"
+    WHITESPACE@8..9 " "
+    STAR@9..10 "*"
+    NAME@10..13
+      IDENT@10..13 "foo"
+    PARAMETER_LIST@13..15
+      L_PAREN@13..14 "("
+      R_PAREN@14..15 ")"
+    WHITESPACE@15..16 " "
+    BLOCK_STMT@16..44
+      L_CURLY@16..17 "{"
+      WHITESPACE@17..19 "\n "
+      EXPR_STMT@19..29
+        YIELD_EXPR@19..28
+          YIELD_KW@19..24 "yield"
+          WHITESPACE@24..25 " "
+          NAME_REF@25..28
+            IDENT@25..28 "foo"
+        SEMICOLON@28..29 ";"
+      WHITESPACE@29..31 "\n "
+      EXPR_STMT@31..42
+        YIELD_EXPR@31..41
+          YIELD_KW@31..36 "yield"
+          STAR@36..37 "*"
+          WHITESPACE@37..38 " "
+          NAME_REF@38..41
+            IDENT@38..41 "foo"
+        SEMICOLON@41..42 ";"
+      WHITESPACE@42..43 "\n"
+      R_CURLY@43..44 "}"
+  WHITESPACE@44..45 "\n"

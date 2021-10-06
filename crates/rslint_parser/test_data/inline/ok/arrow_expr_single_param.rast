@@ -1,0 +1,45 @@
+MODULE@0..44
+  EXPR_STMT@0..9
+    ARROW_EXPR@0..9
+      NAME@0..3
+        IDENT@0..3 "foo"
+      WHITESPACE@3..4 " "
+      FAT_ARROW@4..6 "=>"
+      WHITESPACE@6..7 " "
+      BLOCK_STMT@7..9
+        L_CURLY@7..8 "{"
+        R_CURLY@8..9 "}"
+  WHITESPACE@9..10 "\n"
+  EXPR_STMT@10..21
+    ARROW_EXPR@10..21
+      NAME@10..15
+        IDENT@10..15 "yield"
+      WHITESPACE@15..16 " "
+      FAT_ARROW@16..18 "=>"
+      WHITESPACE@18..19 " "
+      BLOCK_STMT@19..21
+        L_CURLY@19..20 "{"
+        R_CURLY@20..21 "}"
+  WHITESPACE@21..22 "\n"
+  EXPR_STMT@22..33
+    ARROW_EXPR@22..33
+      NAME@22..27
+        IDENT@22..27 "await"
+      WHITESPACE@27..28 " "
+      FAT_ARROW@28..30 "=>"
+      WHITESPACE@30..31 " "
+      BLOCK_STMT@31..33
+        L_CURLY@31..32 "{"
+        R_CURLY@32..33 "}"
+  WHITESPACE@33..34 "\n"
+  EXPR_STMT@34..43
+    ARROW_EXPR@34..43
+      NAME@34..37
+        IDENT@34..37 "foo"
+      WHITESPACE@37..38 " "
+      FAT_ARROW@38..40 "=>"
+      WHITESPACE@40..41 "\n"
+      BLOCK_STMT@41..43
+        L_CURLY@41..42 "{"
+        R_CURLY@42..43 "}"
+  WHITESPACE@43..44 "\n"

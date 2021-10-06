@@ -4,7 +4,7 @@ Profile-*.json
 .vscode
 .idea
 # Release artifacts
-/target
+**/target
 # Ignore test files that contributors could create locally
 /test.*
 # Ignore lockfiles
@@ -12,3 +12,5 @@ yarn.lock
 package-lock.json
 npm-shrinkwrap.json
 pnpm-lock.yaml
+**/node_modules
+**/dist

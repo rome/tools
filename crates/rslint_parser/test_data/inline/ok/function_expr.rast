@@ -1,0 +1,44 @@
+MODULE@0..48
+  VAR_DECL@0..21
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..21
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      FN_EXPR@8..21
+        FUNCTION_KW@8..16 "function"
+        PARAMETER_LIST@16..18
+          L_PAREN@16..17 "("
+          R_PAREN@17..18 ")"
+        WHITESPACE@18..19 " "
+        BLOCK_STMT@19..21
+          L_CURLY@19..20 "{"
+          R_CURLY@20..21 "}"
+  WHITESPACE@21..22 "\n"
+  VAR_DECL@22..47
+    IDENT@22..25 "let"
+    WHITESPACE@25..26 " "
+    DECLARATOR@26..47
+      SINGLE_PATTERN@26..27
+        NAME@26..27
+          IDENT@26..27 "b"
+      WHITESPACE@27..28 " "
+      EQ@28..29 "="
+      WHITESPACE@29..30 " "
+      FN_EXPR@30..47
+        FUNCTION_KW@30..38 "function"
+        WHITESPACE@38..39 " "
+        NAME@39..42
+          IDENT@39..42 "foo"
+        PARAMETER_LIST@42..44
+          L_PAREN@42..43 "("
+          R_PAREN@43..44 ")"
+        WHITESPACE@44..45 " "
+        BLOCK_STMT@45..47
+          L_CURLY@45..46 "{"
+          R_CURLY@46..47 "}"
+  WHITESPACE@47..48 "\n"

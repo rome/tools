@@ -1,0 +1,34 @@
+MODULE@0..27
+  VAR_DECL@0..11
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..10
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      OBJECT_EXPR@8..10
+        L_CURLY@8..9 "{"
+        R_CURLY@9..10 "}"
+    SEMICOLON@10..11 ";"
+  WHITESPACE@11..12 "\n"
+  VAR_DECL@12..26
+    IDENT@12..15 "let"
+    WHITESPACE@15..16 " "
+    DECLARATOR@16..26
+      SINGLE_PATTERN@16..17
+        NAME@16..17
+          IDENT@16..17 "b"
+      WHITESPACE@17..18 " "
+      EQ@18..19 "="
+      WHITESPACE@19..20 " "
+      OBJECT_EXPR@20..26
+        L_CURLY@20..21 "{"
+        IDENT_PROP@21..24
+          NAME@21..24
+            IDENT@21..24 "foo"
+        COMMA@24..25 ","
+        R_CURLY@25..26 "}"
+  WHITESPACE@26..27 "\n"

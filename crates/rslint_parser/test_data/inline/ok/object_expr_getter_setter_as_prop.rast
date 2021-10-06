@@ -1,0 +1,26 @@
+MODULE@0..26
+  VAR_DECL@0..25
+    CONST_KW@0..5 "const"
+    WHITESPACE@5..6 " "
+    DECLARATOR@6..24
+      SINGLE_PATTERN@6..9
+        NAME@6..9
+          IDENT@6..9 "foo"
+      WHITESPACE@9..10 " "
+      EQ@10..11 "="
+      WHITESPACE@11..12 " "
+      OBJECT_EXPR@12..24
+        L_CURLY@12..13 "{"
+        WHITESPACE@13..14 " "
+        IDENT_PROP@14..17
+          NAME@14..17
+            IDENT@14..17 "set"
+        COMMA@17..18 ","
+        WHITESPACE@18..19 " "
+        IDENT_PROP@19..22
+          NAME@19..22
+            IDENT@19..22 "get"
+        WHITESPACE@22..23 " "
+        R_CURLY@23..24 "}"
+    SEMICOLON@24..25 ";"
+  WHITESPACE@25..26 "\n"

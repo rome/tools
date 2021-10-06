@@ -1,0 +1,9 @@
+MODULE@0..14
+  EXPR_STMT@0..13
+    IMPORT_CALL@0..13
+      IMPORT_KW@0..6 "import"
+      L_PAREN@6..7 "("
+      LITERAL@7..12
+        STRING@7..12 "\"foo\""
+      R_PAREN@12..13 ")"
+  WHITESPACE@13..14 "\n"

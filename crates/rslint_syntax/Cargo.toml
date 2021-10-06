@@ -1,0 +1,10 @@
+[package]
+edition = "2018"
+name = "rslint_syntax"
+version = "0.1.4"
+authors = ["RSLint developers"]
+description = "SyntaxKind and common rowan definitions for rslint_parser"
+license = "MIT"
+repository = "https://github.com/rslint/rslint"
+
+[dependencies]

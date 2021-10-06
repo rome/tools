@@ -1,0 +1,31 @@
+MODULE@0..24
+  VAR_DECL@0..13
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..13
+      SINGLE_PATTERN@4..7
+        NAME@4..7
+          IDENT@4..7 "foo"
+      WHITESPACE@7..8 " "
+      EQ@8..9 "="
+      WHITESPACE@9..10 " "
+      NAME_REF@10..13
+        IDENT@10..13 "bar"
+  WHITESPACE@13..14 " "
+  THROW_STMT@14..23
+    THROW_KW@14..19 "throw"
+    WHITESPACE@19..20 " "
+    NAME_REF@20..23
+      IDENT@20..23 "foo"
+  WHITESPACE@23..24 "\n"
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ semicolons_err.js:1:15
+  │
+1 │ let foo = bar throw foo
+  │ --------------^^^^^ An explicit or implicit semicolon is expected here...
+  │ │              
+  │ ...Which is required to end this statement
+
+--
+let foo = bar throw foo

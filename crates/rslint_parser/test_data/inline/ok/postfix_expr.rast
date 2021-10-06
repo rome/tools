@@ -1,0 +1,13 @@
+MODULE@0..12
+  EXPR_STMT@0..5
+    UNARY_EXPR@0..5
+      NAME_REF@0..3
+        IDENT@0..3 "foo"
+      PLUS2@3..5 "++"
+  WHITESPACE@5..6 "\n"
+  EXPR_STMT@6..11
+    UNARY_EXPR@6..11
+      NAME_REF@6..9
+        IDENT@6..9 "foo"
+      MINUS2@9..11 "--"
+  WHITESPACE@11..12 "\n"

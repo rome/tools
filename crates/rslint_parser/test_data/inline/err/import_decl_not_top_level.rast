@@ -1,0 +1,29 @@
+MODULE@0..28
+  BLOCK_STMT@0..27
+    L_CURLY@0..1 "{"
+    WHITESPACE@1..3 "\n "
+    ERROR@3..25
+      IMPORT_KW@3..9 "import"
+      WHITESPACE@9..10 " "
+      NAME@10..13
+        IDENT@10..13 "foo"
+      WHITESPACE@13..14 " "
+      FROM_KW@14..18 "from"
+      WHITESPACE@18..19 " "
+      LITERAL@19..24
+        STRING@19..24 "\"bar\""
+      SEMICOLON@24..25 ";"
+    WHITESPACE@25..26 "\n"
+    R_CURLY@26..27 "}"
+  WHITESPACE@27..28 "\n"
+--
+error[SyntaxError]: Illegal use of an import declaration not at the top level
+  ┌─ import_decl_not_top_level.js:2:2
+  │
+2 │  import foo from "bar";
+  │  ^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
+
+--
+{
+ import foo from "bar";
+}

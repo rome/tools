@@ -1,0 +1,29 @@
+MODULE@0..33
+  EXPR_STMT@0..1
+    LITERAL@0..1
+      NUMBER@0..1 "5"
+  WHITESPACE@1..2 "\n"
+  EXPR_STMT@2..6
+    LITERAL@2..6
+      TRUE_KW@2..6 "true"
+  WHITESPACE@6..7 "\n"
+  EXPR_STMT@7..12
+    LITERAL@7..12
+      FALSE_KW@7..12 "false"
+  WHITESPACE@12..13 "\n"
+  EXPR_STMT@13..15
+    LITERAL@13..15
+      NUMBER@13..15 "5n"
+  WHITESPACE@15..16 "\n"
+  EXPR_STMT@16..21
+    LITERAL@16..21
+      STRING@16..21 "\"foo\""
+  WHITESPACE@21..22 "\n"
+  EXPR_STMT@22..27
+    LITERAL@22..27
+      STRING@22..27 "\'bar\'"
+  WHITESPACE@27..28 "\n"
+  EXPR_STMT@28..32
+    LITERAL@28..32
+      NULL_KW@28..32 "null"
+  WHITESPACE@32..33 "\n"

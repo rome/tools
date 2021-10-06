@@ -1,0 +1,32 @@
+MODULE@0..24
+  EXPR_STMT@0..10
+    ERROR@0..10
+      IMPORT_KW@0..6 "import"
+      DOT@6..7 "."
+      ERROR@7..10
+        IDENT@7..10 "foo"
+  WHITESPACE@10..11 "\n"
+  EXPR_STMT@11..23
+    ERROR@11..23
+      IMPORT_KW@11..17 "import"
+      DOT@17..18 "."
+      ERROR@18..23
+        IDENT@18..23 "metaa"
+  WHITESPACE@23..24 "\n"
+--
+error[SyntaxError]: Expected `meta` following an import keyword, but found `foo`
+  ┌─ import_no_meta.js:1:8
+  │
+1 │ import.foo
+  │        ^^^
+
+--
+error[SyntaxError]: Expected `meta` following an import keyword, but found `metaa`
+  ┌─ import_no_meta.js:2:8
+  │
+2 │ import.metaa
+  │        ^^^^^
+
+--
+import.foo
+import.metaa

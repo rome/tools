@@ -1,0 +1,158 @@
+MODULE@0..125
+  EXPR_STMT@0..5
+    BIN_EXPR@0..5
+      LITERAL@0..1
+        NUMBER@0..1 "5"
+      WHITESPACE@1..2 " "
+      STAR@2..3 "*"
+      WHITESPACE@3..4 " "
+      LITERAL@4..5
+        NUMBER@4..5 "5"
+  WHITESPACE@5..6 "\n"
+  EXPR_STMT@6..17
+    BIN_EXPR@6..17
+      LITERAL@6..7
+        NUMBER@6..7 "6"
+      WHITESPACE@7..8 " "
+      STAR2@8..10 "**"
+      WHITESPACE@10..11 " "
+      BIN_EXPR@11..17
+        LITERAL@11..12
+          NUMBER@11..12 "6"
+        WHITESPACE@12..13 " "
+        STAR2@13..15 "**"
+        WHITESPACE@15..16 " "
+        LITERAL@16..17
+          NUMBER@16..17 "7"
+  WHITESPACE@17..18 "\n"
+  EXPR_STMT@18..39
+    BIN_EXPR@18..39
+      LITERAL@18..19
+        NUMBER@18..19 "1"
+      WHITESPACE@19..20 " "
+      PLUS@20..21 "+"
+      WHITESPACE@21..22 " "
+      BIN_EXPR@22..39
+        BIN_EXPR@22..35
+          LITERAL@22..23
+            NUMBER@22..23 "2"
+          WHITESPACE@23..24 " "
+          STAR@24..25 "*"
+          WHITESPACE@25..26 " "
+          CALL_EXPR@26..35
+            LITERAL@26..27
+              NUMBER@26..27 "3"
+            WHITESPACE@27..28 "\n"
+            ARG_LIST@28..35
+              L_PAREN@28..29 "("
+              BIN_EXPR@29..34
+                LITERAL@29..30
+                  NUMBER@29..30 "1"
+                WHITESPACE@30..31 " "
+                PLUS@31..32 "+"
+                WHITESPACE@32..33 " "
+                LITERAL@33..34
+                  NUMBER@33..34 "2"
+              R_PAREN@34..35 ")"
+        WHITESPACE@35..36 " "
+        STAR@36..37 "*"
+        WHITESPACE@37..38 " "
+        LITERAL@38..39
+          NUMBER@38..39 "3"
+  WHITESPACE@39..40 "\n"
+  EXPR_STMT@40..45
+    BIN_EXPR@40..45
+      LITERAL@40..41
+        NUMBER@40..41 "1"
+      WHITESPACE@41..42 " "
+      SLASH@42..43 "/"
+      WHITESPACE@43..44 " "
+      LITERAL@44..45
+        NUMBER@44..45 "2"
+  WHITESPACE@45..46 "\n"
+  EXPR_STMT@46..55
+    BIN_EXPR@46..55
+      LITERAL@46..48
+        NUMBER@46..48 "74"
+      WHITESPACE@48..49 " "
+      IN_KW@49..51 "in"
+      WHITESPACE@51..52 " "
+      NAME_REF@52..55
+        IDENT@52..55 "foo"
+  WHITESPACE@55..56 "\n"
+  EXPR_STMT@56..76
+    BIN_EXPR@56..76
+      NAME_REF@56..59
+        IDENT@56..59 "foo"
+      WHITESPACE@59..60 " "
+      INSTANCEOF_KW@60..70 "instanceof"
+      WHITESPACE@70..71 " "
+      NAME_REF@71..76
+        IDENT@71..76 "Array"
+  WHITESPACE@76..77 "\n"
+  EXPR_STMT@77..87
+    BIN_EXPR@77..87
+      NAME_REF@77..80
+        IDENT@77..80 "foo"
+      WHITESPACE@80..81 " "
+      QUESTION2@81..83 "??"
+      WHITESPACE@83..84 " "
+      NAME_REF@84..87
+        IDENT@84..87 "bar"
+  WHITESPACE@87..88 "\n"
+  EXPR_STMT@88..101
+    BIN_EXPR@88..101
+      BIN_EXPR@88..97
+        BIN_EXPR@88..93
+          LITERAL@88..89
+            NUMBER@88..89 "1"
+          WHITESPACE@89..90 " "
+          PLUS@90..91 "+"
+          WHITESPACE@91..92 " "
+          LITERAL@92..93
+            NUMBER@92..93 "1"
+        WHITESPACE@93..94 " "
+        PLUS@94..95 "+"
+        WHITESPACE@95..96 " "
+        LITERAL@96..97
+          NUMBER@96..97 "1"
+      WHITESPACE@97..98 " "
+      PLUS@98..99 "+"
+      WHITESPACE@99..100 " "
+      LITERAL@100..101
+        NUMBER@100..101 "1"
+  WHITESPACE@101..102 "\n"
+  EXPR_STMT@102..124
+    BIN_EXPR@102..124
+      BIN_EXPR@102..107
+        LITERAL@102..103
+          NUMBER@102..103 "5"
+        WHITESPACE@103..104 " "
+        PLUS@104..105 "+"
+        WHITESPACE@105..106 " "
+        LITERAL@106..107
+          NUMBER@106..107 "6"
+      WHITESPACE@107..108 " "
+      MINUS@108..109 "-"
+      WHITESPACE@109..110 " "
+      BIN_EXPR@110..124
+        BIN_EXPR@110..115
+          LITERAL@110..111
+            NUMBER@110..111 "1"
+          WHITESPACE@111..112 " "
+          STAR@112..113 "*"
+          WHITESPACE@113..114 " "
+          LITERAL@114..115
+            NUMBER@114..115 "2"
+        WHITESPACE@115..116 " "
+        SLASH@116..117 "/"
+        WHITESPACE@117..118 " "
+        BIN_EXPR@118..124
+          LITERAL@118..119
+            NUMBER@118..119 "1"
+          WHITESPACE@119..120 " "
+          STAR2@120..122 "**"
+          WHITESPACE@122..123 " "
+          LITERAL@123..124
+            NUMBER@123..124 "6"
+  WHITESPACE@124..125 "\n"

@@ -1,0 +1,98 @@
+MODULE@0..142
+  FN_DECL@0..17
+    FUNCTION_KW@0..8 "function"
+    WHITESPACE@8..9 " "
+    NAME@9..12
+      IDENT@9..12 "foo"
+    PARAMETER_LIST@12..14
+      L_PAREN@12..13 "("
+      R_PAREN@13..14 ")"
+    WHITESPACE@14..15 " "
+    BLOCK_STMT@15..17
+      L_CURLY@15..16 "{"
+      R_CURLY@16..17 "}"
+  WHITESPACE@17..18 "\n"
+  FN_DECL@18..36
+    FUNCTION_KW@18..26 "function"
+    WHITESPACE@26..27 " "
+    STAR@27..28 "*"
+    NAME@28..31
+      IDENT@28..31 "foo"
+    PARAMETER_LIST@31..33
+      L_PAREN@31..32 "("
+      R_PAREN@32..33 ")"
+    WHITESPACE@33..34 " "
+    BLOCK_STMT@34..36
+      L_CURLY@34..35 "{"
+      R_CURLY@35..36 "}"
+  WHITESPACE@36..37 "\n"
+  FN_DECL@37..59
+    FUNCTION_KW@37..45 "function"
+    WHITESPACE@45..46 " "
+    NAME@46..49
+      IDENT@46..49 "foo"
+    PARAMETER_LIST@49..56
+      L_PAREN@49..50 "("
+      SINGLE_PATTERN@50..55
+        NAME@50..55
+          IDENT@50..55 "await"
+      R_PAREN@55..56 ")"
+    WHITESPACE@56..57 " "
+    BLOCK_STMT@57..59
+      L_CURLY@57..58 "{"
+      R_CURLY@58..59 "}"
+  WHITESPACE@59..60 "\n"
+  FN_DECL@60..84
+    IDENT@60..65 "async"
+    WHITESPACE@65..66 " "
+    FUNCTION_KW@66..74 "function"
+    WHITESPACE@74..75 " "
+    STAR@75..76 "*"
+    NAME@76..79
+      IDENT@76..79 "foo"
+    PARAMETER_LIST@79..81
+      L_PAREN@79..80 "("
+      R_PAREN@80..81 ")"
+    WHITESPACE@81..82 " "
+    BLOCK_STMT@82..84
+      L_CURLY@82..83 "{"
+      R_CURLY@83..84 "}"
+  WHITESPACE@84..85 "\n"
+  FN_DECL@85..108
+    IDENT@85..90 "async"
+    WHITESPACE@90..91 " "
+    FUNCTION_KW@91..99 "function"
+    WHITESPACE@99..100 " "
+    NAME@100..103
+      IDENT@100..103 "foo"
+    PARAMETER_LIST@103..105
+      L_PAREN@103..104 "("
+      R_PAREN@104..105 ")"
+    WHITESPACE@105..106 " "
+    BLOCK_STMT@106..108
+      L_CURLY@106..107 "{"
+      R_CURLY@107..108 "}"
+  WHITESPACE@108..109 "\n"
+  FN_DECL@109..141
+    FUNCTION_KW@109..117 "function"
+    WHITESPACE@117..118 " "
+    STAR@118..119 "*"
+    NAME@119..122
+      IDENT@119..122 "foo"
+    PARAMETER_LIST@122..124
+      L_PAREN@122..123 "("
+      R_PAREN@123..124 ")"
+    WHITESPACE@124..125 " "
+    BLOCK_STMT@125..141
+      L_CURLY@125..126 "{"
+      WHITESPACE@126..129 "\n  "
+      EXPR_STMT@129..139
+        YIELD_EXPR@129..138
+          YIELD_KW@129..134 "yield"
+          WHITESPACE@134..135 " "
+          NAME_REF@135..138
+            IDENT@135..138 "foo"
+        SEMICOLON@138..139 ";"
+      WHITESPACE@139..140 "\n"
+      R_CURLY@140..141 "}"
+  WHITESPACE@141..142 "\n"

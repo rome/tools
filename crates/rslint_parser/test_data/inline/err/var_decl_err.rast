@@ -1,0 +1,59 @@
+MODULE@0..32
+  VAR_DECL@0..8
+    VAR_KW@0..3 "var"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..8
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      ERROR@7..8
+        SEMICOLON@7..8 ";"
+  WHITESPACE@8..9 "\n"
+  VAR_DECL@9..20
+    CONST_KW@9..14 "const"
+    WHITESPACE@14..15 " "
+    DECLARATOR@15..20
+      SINGLE_PATTERN@15..16
+        NAME@15..16
+          IDENT@15..16 "a"
+      WHITESPACE@16..17 " "
+      EQ@17..18 "="
+      WHITESPACE@18..19 " "
+      LITERAL@19..20
+        NUMBER@19..20 "5"
+  WHITESPACE@20..21 " "
+  VAR_DECL@21..31
+    IDENT@21..24 "let"
+    WHITESPACE@24..25 " "
+    DECLARATOR@25..30
+      SINGLE_PATTERN@25..26
+        NAME@25..26
+          IDENT@25..26 "b"
+      WHITESPACE@26..27 " "
+      EQ@27..28 "="
+      WHITESPACE@28..29 " "
+      LITERAL@29..30
+        NUMBER@29..30 "5"
+    SEMICOLON@30..31 ";"
+  WHITESPACE@31..32 "\n"
+--
+error[SyntaxError]: expected an expression, but found `;` instead
+  ┌─ var_decl_err.js:1:8
+  │
+1 │ var a =;
+  │        ^
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ var_decl_err.js:2:13
+  │
+2 │ const a = 5 let b = 5;
+  │ ------------^^^ An explicit or implicit semicolon is expected here...
+  │ │            
+  │ ...Which is required to end this statement
+
+--
+var a =;
+const a = 5 let b = 5;

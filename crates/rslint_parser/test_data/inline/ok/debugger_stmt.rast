@@ -1,0 +1,5 @@
+MODULE@0..10
+  DEBUGGER_STMT@0..9
+    DEBUGGER_KW@0..8 "debugger"
+    SEMICOLON@8..9 ";"
+  WHITESPACE@9..10 "\n"

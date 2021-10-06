@@ -1,0 +1,34 @@
+MODULE@0..27
+  BLOCK_STMT@0..2
+    L_CURLY@0..1 "{"
+    R_CURLY@1..2 "}"
+  WHITESPACE@2..3 "\n"
+  BLOCK_STMT@3..11
+    L_CURLY@3..4 "{"
+    BLOCK_STMT@4..10
+      L_CURLY@4..5 "{"
+      BLOCK_STMT@5..9
+        L_CURLY@5..6 "{"
+        BLOCK_STMT@6..8
+          L_CURLY@6..7 "{"
+          R_CURLY@7..8 "}"
+        R_CURLY@8..9 "}"
+      R_CURLY@9..10 "}"
+    R_CURLY@10..11 "}"
+  WHITESPACE@11..12 "\n"
+  BLOCK_STMT@12..26
+    L_CURLY@12..13 "{"
+    WHITESPACE@13..14 " "
+    EXPR_STMT@14..24
+      ASSIGN_EXPR@14..23
+        NAME_REF@14..17
+          IDENT@14..17 "foo"
+        WHITESPACE@17..18 " "
+        EQ@18..19 "="
+        WHITESPACE@19..20 " "
+        NAME_REF@20..23
+          IDENT@20..23 "bar"
+      SEMICOLON@23..24 ";"
+    WHITESPACE@24..25 " "
+    R_CURLY@25..26 "}"
+  WHITESPACE@26..27 "\n"

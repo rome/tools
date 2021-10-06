@@ -1,0 +1,19 @@
+MODULE@0..17
+  VAR_DECL@0..16
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..16
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      OBJECT_EXPR@8..16
+        L_CURLY@8..9 "{"
+        SPREAD_PROP@9..15
+          DOT2@9..12 "..."
+          NAME_REF@12..15
+            IDENT@12..15 "foo"
+        R_CURLY@15..16 "}"
+  WHITESPACE@16..17 "\n"

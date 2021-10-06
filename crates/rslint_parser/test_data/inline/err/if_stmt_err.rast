@@ -1,0 +1,108 @@
+MODULE@0..61
+  IF_STMT@0..17
+    IF_KW@0..2 "if"
+    WHITESPACE@2..3 " "
+    CONDITION@3..9
+      L_PAREN@3..4 "("
+      LITERAL@4..8
+        TRUE_KW@4..8 "true"
+      R_PAREN@8..9 ")"
+    WHITESPACE@9..10 " "
+    ELSE_KW@10..14 "else"
+    WHITESPACE@14..15 " "
+    BLOCK_STMT@15..17
+      L_CURLY@15..16 "{"
+      R_CURLY@16..17 "}"
+  WHITESPACE@17..18 "\n"
+  IF_STMT@18..43
+    IF_KW@18..20 "if"
+    WHITESPACE@20..21 " "
+    CONDITION@21..27
+      L_PAREN@21..22 "("
+      LITERAL@22..26
+        TRUE_KW@22..26 "true"
+      R_PAREN@26..27 ")"
+    WHITESPACE@27..28 " "
+    ELSE_KW@28..32 "else"
+    WHITESPACE@32..33 "\n"
+    IF_STMT@33..43
+      IF_KW@33..35 "if"
+      WHITESPACE@35..36 " "
+      CONDITION@36..36
+      ELSE_KW@36..40 "else"
+      WHITESPACE@40..41 " "
+      BLOCK_STMT@41..43
+        L_CURLY@41..42 "{"
+        R_CURLY@42..43 "}"
+  WHITESPACE@43..44 "\n"
+  IF_STMT@44..60
+    IF_KW@44..46 "if"
+    WHITESPACE@46..47 " "
+    CONDITION@47..49
+      L_PAREN@47..48 "("
+      R_PAREN@48..49 ")"
+    WHITESPACE@49..50 " "
+    BLOCK_STMT@50..52
+      L_CURLY@50..51 "{"
+      R_CURLY@51..52 "}"
+    WHITESPACE@52..53 " "
+    ELSE_KW@53..57 "else"
+    WHITESPACE@57..58 " "
+    BLOCK_STMT@58..60
+      L_CURLY@58..59 "{"
+      R_CURLY@59..60 "}"
+  WHITESPACE@60..61 "\n"
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_stmt_err.js:1:11
+  │
+1 │ if (true) else {}
+  │           ^^^^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_stmt_err.js:2:11
+  │
+2 │ if (true) else
+  │           ^^^^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: expected `'('` but instead found `else`
+  ┌─ if_stmt_err.js:3:4
+  │
+3 │ if else {}
+  │    ^^^^ unexpected
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ if_stmt_err.js:3:4
+  │
+3 │ if else {}
+  │    ^^^^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead found `else`
+  ┌─ if_stmt_err.js:3:4
+  │
+3 │ if else {}
+  │    ^^^^ unexpected
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_stmt_err.js:3:4
+  │
+3 │ if else {}
+  │    ^^^^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ if_stmt_err.js:4:5
+  │
+4 │ if () {} else {}
+  │     ^ Expected an expression here
+
+--
+if (true) else {}
+if (true) else
+if else {}
+if () {} else {}

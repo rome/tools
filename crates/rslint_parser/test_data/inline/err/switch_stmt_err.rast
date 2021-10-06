@@ -1,0 +1,56 @@
+MODULE@0..24
+  SWITCH_STMT@0..13
+    SWITCH_KW@0..6 "switch"
+    WHITESPACE@6..7 " "
+    CONDITION@7..10
+      NAME_REF@7..10
+        IDENT@7..10 "foo"
+    WHITESPACE@10..11 " "
+    L_CURLY@11..12 "{"
+    R_CURLY@12..13 "}"
+  WHITESPACE@13..14 "\n"
+  SWITCH_STMT@14..23
+    SWITCH_KW@14..20 "switch"
+    WHITESPACE@20..21 " "
+    CONDITION@21..21
+    L_CURLY@21..22 "{"
+    R_CURLY@22..23 "}"
+  WHITESPACE@23..24 "\n"
+--
+error[SyntaxError]: expected `'('` but instead found `foo`
+  ┌─ switch_stmt_err.js:1:8
+  │
+1 │ switch foo {}
+  │        ^^^ unexpected
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ switch_stmt_err.js:1:12
+  │
+1 │ switch foo {}
+  │            ^ unexpected
+
+--
+error[SyntaxError]: expected `'('` but instead found `{`
+  ┌─ switch_stmt_err.js:2:8
+  │
+2 │ switch {}
+  │        ^ unexpected
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ switch_stmt_err.js:2:8
+  │
+2 │ switch {}
+  │        ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ switch_stmt_err.js:2:8
+  │
+2 │ switch {}
+  │        ^ unexpected
+
+--
+switch foo {}
+switch {}

@@ -1,0 +1,66 @@
+MODULE@0..40
+  VAR_DECL@0..26
+    IDENT@0..3 "let"
+    WHITESPACE@3..4 " "
+    DECLARATOR@4..26
+      SINGLE_PATTERN@4..5
+        NAME@4..5
+          IDENT@4..5 "a"
+      WHITESPACE@5..6 " "
+      EQ@6..7 "="
+      WHITESPACE@7..8 " "
+      OBJECT_EXPR@8..26
+        L_CURLY@8..9 "{"
+        WHITESPACE@9..10 " "
+        LITERAL_PROP@10..24
+          ERROR@10..17
+            REGEX@10..17 "/: 6, /"
+          COLON@17..18 ":"
+          WHITESPACE@18..19 " "
+          LITERAL@19..24
+            REGEX@19..24 "/foo/"
+        WHITESPACE@24..25 " "
+        R_CURLY@25..26 "}"
+  WHITESPACE@26..27 "\n"
+  VAR_DECL@27..38
+    IDENT@27..30 "let"
+    WHITESPACE@30..31 " "
+    DECLARATOR@31..38
+      SINGLE_PATTERN@31..32
+        NAME@31..32
+          IDENT@31..32 "a"
+      WHITESPACE@32..33 " "
+      EQ@33..34 "="
+      WHITESPACE@34..35 " "
+      OBJECT_EXPR@35..38
+        L_CURLY@35..36 "{"
+        ERROR@36..37
+          L_CURLY@36..37 "{"
+        R_CURLY@37..38 "}"
+  ERROR@38..39
+    R_CURLY@38..39 "}"
+  WHITESPACE@39..40 "\n"
+--
+error[SyntaxError]: Expected an identifier or keyword
+  ┌─ object_expr_error_prop_name.js:1:11
+  │
+1 │ let a = { /: 6, /: /foo/ }
+  │           ^^^^^^^ Expected an identifier or keyword here
+
+--
+error[SyntaxError]: Expected an identifier or keyword
+  ┌─ object_expr_error_prop_name.js:2:10
+  │
+2 │ let a = {{}}
+  │          ^ Expected an identifier or keyword here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ object_expr_error_prop_name.js:2:12
+  │
+2 │ let a = {{}}
+  │            ^ Expected a statement or declaration here
+
+--
+let a = { /: 6, /: /foo/ }
+let a = {{}}

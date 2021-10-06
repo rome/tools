@@ -1,0 +1,3 @@
+foo;
+yield;
+await;

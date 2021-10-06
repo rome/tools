@@ -1,0 +1,18 @@
+MODULE@0..28
+  IMPORT_DECL@0..27
+    IMPORT_KW@0..6 "import"
+    WHITESPACE@6..7 " "
+    WILDCARD_IMPORT@7..15
+      STAR@7..8 "*"
+      WHITESPACE@8..9 " "
+      AS_KW@9..11 "as"
+      WHITESPACE@11..12 " "
+      NAME@12..15
+        IDENT@12..15 "foo"
+    WHITESPACE@15..16 " "
+    FROM_KW@16..20 "from"
+    WHITESPACE@20..21 " "
+    LITERAL@21..26
+      STRING@21..26 "\"bla\""
+    SEMICOLON@26..27 ";"
+  WHITESPACE@27..28 "\n"

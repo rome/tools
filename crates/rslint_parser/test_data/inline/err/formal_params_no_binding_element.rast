@@ -1,0 +1,25 @@
+MODULE@0..22
+  FN_DECL@0..21
+    FUNCTION_KW@0..8 "function"
+    WHITESPACE@8..9 " "
+    NAME@9..12
+      IDENT@9..12 "foo"
+    PARAMETER_LIST@12..18
+      L_PAREN@12..13 "("
+      ERROR@13..17
+        TRUE_KW@13..17 "true"
+      R_PAREN@17..18 ")"
+    WHITESPACE@18..19 " "
+    BLOCK_STMT@19..21
+      L_CURLY@19..20 "{"
+      R_CURLY@20..21 "}"
+  WHITESPACE@21..22 "\n"
+--
+error[SyntaxError]: Expected an identifier or pattern, but found none
+  ┌─ formal_params_no_binding_element.js:1:14
+  │
+1 │ function foo(true) {}
+  │              ^^^^
+
+--
+function foo(true) {}

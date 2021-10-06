@@ -1,0 +1,13 @@
+MODULE@0..14
+  EXPR_STMT@0..4
+    THIS_EXPR@0..4
+      THIS_KW@0..4 "this"
+  WHITESPACE@4..5 "\n"
+  EXPR_STMT@5..13
+    DOT_EXPR@5..13
+      THIS_EXPR@5..9
+        THIS_KW@5..9 "this"
+      DOT@9..10 "."
+      NAME@10..13
+        IDENT@10..13 "foo"
+  WHITESPACE@13..14 "\n"
