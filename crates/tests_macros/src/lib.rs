@@ -15,7 +15,7 @@ impl Arguments {
 		let mut files = vec![];
 
 		let base = std::env::var("CARGO_MANIFEST_DIR")
-			.map_err(|_| "Cannot find CARGO_MANIFEST_DIR. What we using cargo?")?;
+			.map_err(|_| "Cannot find CARGO_MANIFEST_DIR. Are you using cargo?")?;
 		let glob = match &self.pattern.lit {
 			syn::Lit::Str(v) => v.value(),
 			_ => return Err("Only string literals supported"),
