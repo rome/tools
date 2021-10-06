@@ -59,7 +59,7 @@ impl Arguments {
 		let test_expected_fullpath = test_expected_file.to_str()?;
 
 		Some((
-			test_name.to_string(),
+			test_name,
 			test_full_path,
 			test_expected_fullpath.to_string(),
 		))
@@ -111,6 +111,5 @@ pub fn gen_tests(input: TokenStream) -> TokenStream {
 	match args.gen() {
 		Ok(tokens) => tokens,
 		Err(e) => abort!(e, "{}", e),
-	};
-	args.gen().unwrap().into()
+	}
 }
