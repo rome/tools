@@ -1,4 +1,5 @@
 use case::CaseExt;
+use globwalk::{GlobWalker, GlobWalkerBuilder};
 use proc_macro::TokenStream;
 use proc_macro_error::*;
 use quote::*;
@@ -10,36 +11,74 @@ struct Arguments {
 	f: syn::Path,
 }
 
-impl Arguments {
-	fn get_all_files(&self) -> Result<Vec<PathBuf>, &str> {
-		let mut files = vec![];
+struct Variables {
+	test_name: String,
+	test_full_path: String,
+	test_expected_fullpath: String,
+}
 
+struct AllFiles(GlobWalker);
+
+impl Iterator for AllFiles {
+	type Item = Result<PathBuf, &'static str>;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		loop {
+			match self.0.next() {
+				Some(Ok(entry)) => {
+					let file_name = match entry.file_name().to_str().ok_or("File name not UTF8") {
+						Ok(v) => v,
+						Err(e) => return Some(Err(e)),
+					};
+
+					if file_name.contains("expected") {
+						continue;
+					}
+					let meta = match entry.metadata().map_err(|_| "Cannot open file") {
+						Ok(v) => v,
+						Err(e) => return Some(Err(e)),
+					};
+					if meta.is_file() {
+						let path = entry.path().to_path_buf();
+						break Some(Ok(path));
+					}
+				}
+				_ => break None,
+			}
+		}
+	}
+}
+
+impl Arguments {
+	fn get_all_files(&self) -> Result<AllFiles, &str> {
 		let base = std::env::var("CARGO_MANIFEST_DIR")
 			.map_err(|_| "Cannot find CARGO_MANIFEST_DIR. Are you using cargo?")?;
 		let glob = match &self.pattern.lit {
 			syn::Lit::Str(v) => v.value(),
 			_ => return Err("Only string literals supported"),
 		};
-		let walker = globwalk::GlobWalkerBuilder::new(base, &glob)
+		let walker = GlobWalkerBuilder::new(base, &glob)
 			.build()
 			.map_err(|_| "Cannot walk the requested glob")?;
 
-		for entry in walker.flatten() {
-			let file_name = entry.file_name().to_str().ok_or("File name not UTF8")?;
+		Ok(AllFiles(walker))
 
-			if file_name.contains("expected") {
-				continue;
-			}
-			let meta = entry.metadata().map_err(|_| "Cannot open file")?;
-			if meta.is_file() {
-				files.push(entry.path().to_path_buf());
-			}
-		}
+		// for entry in walker.flatten() {
+		// 	let file_name = entry.file_name().to_str().ok_or("File name not UTF8")?;
 
-		Ok(files)
+		// 	if file_name.contains("expected") {
+		// 		continue;
+		// 	}
+		// 	let meta = entry.metadata().map_err(|_| "Cannot open file")?;
+		// 	if meta.is_file() {
+		// 		files.push(entry.path().to_path_buf());
+		// 	}
+		// }
+
+		// Ok(files)
 	}
 
-	fn get_variables<P: AsRef<Path>>(path: P) -> Option<(String, String, String)> {
+	fn get_variables<P: AsRef<Path>>(path: P) -> Option<Variables> {
 		let path = path.as_ref();
 		let file_stem = path.file_stem()?;
 		let file_stem = file_stem.to_str()?;
@@ -47,31 +86,33 @@ impl Arguments {
 
 		let test_full_path = path.display().to_string();
 
-		let extension = if let Some(ext) = path.extension() {
-			format!(".{}", ext.to_str().unwrap_or(""))
-		} else {
-			"".into()
+		let extension = match path.extension() {
+			Some(ext) => format!(".{}", ext.to_str().unwrap_or("")),
+			None => "".into(),
 		};
 
 		let mut test_expected_file = path.to_path_buf();
 		test_expected_file.pop();
 		test_expected_file.push(format!("{}.expected{}", file_stem, extension));
-		let test_expected_fullpath = test_expected_file.to_str()?;
+		let test_expected_fullpath = test_expected_file.display().to_string();
 
-		Some((
+		Some(Variables {
 			test_name,
 			test_full_path,
-			test_expected_fullpath.to_string(),
-		))
+			test_expected_fullpath,
+		})
 	}
 
 	pub fn gen(&self) -> Result<TokenStream, &str> {
 		let files = self.get_all_files()?;
 
 		let mut q = quote! {};
-		for file in files {
-			let (test_name, test_full_path, test_expected_fullpath) =
-				Arguments::get_variables(&file).ok_or("Cannot generate variables for this file")?;
+		for file in files.flatten() {
+			let Variables {
+				test_name,
+				test_full_path,
+				test_expected_fullpath,
+			} = Arguments::get_variables(&file).ok_or("Cannot generate variables for this file")?;
 
 			let span = self.pattern.lit.span();
 			let test_name = syn::Ident::new(&test_name, span);
