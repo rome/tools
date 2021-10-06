@@ -236,7 +236,7 @@ impl Printer {
 				let calls = self.print_token(token, args);
 
 				// If the line is too long, break the group
-				if self.state.line_width > self.options.print_width {
+				if self.state.line_width > self.options.print_width as usize {
 					return Err(LineBreakRequiredError);
 				}
 
@@ -299,7 +299,7 @@ impl Printer {
 				self.state.generated_column += 1;
 
 				let char_width = if char == '\t' {
-					self.options.tab_width as u16
+					self.options.tab_width as usize
 				} else {
 					1
 				};
@@ -319,9 +319,9 @@ struct PrinterState {
 	pending_indent: u16,
 	pending_spaces: u16,
 	generated_index: usize,
-	generated_line: u16,
-	generated_column: u16,
-	line_width: u16,
+	generated_line: usize,
+	generated_column: usize,
+	line_width: usize,
 	// mappings: Mapping[];
 	// We'll need to clone the line suffixes tokens into the state.
 	// I guess that's fine. They're only used for comments and should, therefore, be very limited
@@ -360,9 +360,9 @@ struct PrinterStateSnapshot {
 	pending_indents: u16,
 	pending_spaces: u16,
 	generated_index: usize,
-	generated_column: u16,
-	generated_line: u16,
-	line_width: u16,
+	generated_column: usize,
+	generated_line: usize,
+	line_width: usize,
 	buffer_position: usize,
 }
 

@@ -1,184 +1,185 @@
 use crate::format_token::{GroupToken, LineToken};
-use crate::{format_token::FormatToken, FormatValue, ListToken};
-use serde_json::Value;
+use crate::{format_token::FormatToken, format_tokens};
+use rslint_parser::ast::{
+	ArrayExpr, GroupingExpr, Literal, LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
+};
+use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
 
-impl FormatValue for Value {
-	fn format(&self) -> FormatToken {
-		match self {
-			Value::String(string) => {
-				FormatToken::string(format!("\"{}\"", escape_string(string)).as_str())
-			}
-			Value::Number(number) => {
-				let number = number.as_f64().unwrap();
-				FormatToken::f64(number)
-			}
-			Value::Bool(value) => FormatToken::from(value),
-			Value::Object(value) => {
-				let separator = FormatToken::concat(vec![
-					FormatToken::string(","),
-					FormatToken::Line(LineToken::soft_or_space()),
-				]);
-
-				let properties_list: Vec<FormatToken> = value
-					.iter()
-					.map(|(key, value)| {
-						FormatToken::concat(vec![
-							FormatToken::string(format!("\"{}\":", escape_string(key)).as_str()),
-							FormatToken::Space,
-							value.format(),
-						])
-					})
-					.collect();
-
-				let properties = vec![
-					FormatToken::Line(LineToken::soft()),
-					FormatToken::join(separator, properties_list),
-				];
-
-				FormatToken::Group(GroupToken::new(vec![
-					FormatToken::string("{"),
-					FormatToken::indent(properties),
-					FormatToken::Line(LineToken::soft()),
-					FormatToken::string("}"),
-				]))
-			}
-			Value::Null => FormatToken::string("null"),
-			Value::Array(array) => {
-				let separator = FormatToken::concat(vec![
-					FormatToken::string(","),
-					FormatToken::Line(LineToken::soft_or_space()),
-				]);
-
-				let elements = vec![
-					FormatToken::Line(LineToken::soft()),
-					FormatToken::join(separator, array.iter().map(|element| element.format())),
-				];
-
-				FormatToken::Group(GroupToken::new(vec![
-					FormatToken::string("["),
-					FormatToken::indent(elements),
-					FormatToken::Line(LineToken::soft()),
-					FormatToken::string("]"),
-				]))
-			}
-		}
+fn tokenize_token(token: SyntaxToken) -> FormatToken {
+	match token.kind() {
+		SyntaxKind::NULL_KW => FormatToken::string("null"),
+		SyntaxKind::TRUE_KW => FormatToken::string("true"),
+		SyntaxKind::FALSE_KW => FormatToken::string("false"),
+		SyntaxKind::STRING => FormatToken::string(token.text().as_str()),
+		SyntaxKind::NUMBER => FormatToken::string(token.text().as_str()),
+		SyntaxKind::MINUS => FormatToken::string("-"),
+		_ => panic!("Unsupported JSON token {:?}", token),
 	}
 }
 
-fn escape_string(string: &str) -> String {
-	string
-		.replace("\\", "\\\\")
-		.replace('"', "\\\"")
-		.replace('\r', "\\r")
-		.replace('\t', "\\t")
-		.replace('\n', "\\n")
+fn tokenize_node(node: SyntaxNode) -> FormatToken {
+	match node.kind() {
+		SyntaxKind::LITERAL => {
+			let literal = Literal::cast(node).unwrap();
+			tokenize_token(literal.token())
+		}
+		SyntaxKind::UNARY_EXPR => {
+			let expr = UnaryExpr::cast(node).unwrap();
+			format_tokens![
+				tokenize_token(expr.op_token().unwrap()),
+				tokenize_node(expr.expr().unwrap().syntax().clone())
+			]
+		}
+
+		SyntaxKind::LITERAL_PROP => {
+			let prop = LiteralProp::cast(node).unwrap();
+			format_tokens![
+				tokenize_node(prop.key().unwrap().syntax().clone()),
+				":",
+				FormatToken::Space,
+				tokenize_node(prop.value().unwrap().syntax().clone()),
+			]
+		}
+
+		SyntaxKind::OBJECT_EXPR => {
+			let object = ObjectExpr::cast(node).unwrap();
+
+			let separator = format_tokens![",", LineToken::soft_or_space(),];
+
+			let properties_list: Vec<FormatToken> = object
+				.props()
+				.map(|prop| match prop {
+					ObjectProp::LiteralProp(prop) => {
+						format_tokens!(tokenize_node(prop.syntax().clone()))
+					}
+					_ => panic!("Unsupported prop type {:?}", prop),
+				})
+				.collect();
+
+			let properties = format_tokens![
+				LineToken::soft(),
+				FormatToken::join(separator, properties_list),
+			];
+
+			FormatToken::Group(GroupToken::new(format_tokens![
+				"{",
+				FormatToken::indent(properties),
+				LineToken::soft(),
+				"}",
+			]))
+		}
+		SyntaxKind::ARRAY_EXPR => {
+			let array = ArrayExpr::cast(node).unwrap();
+
+			let separator = format_tokens![",", LineToken::soft_or_space(),];
+
+			let elements = format_tokens![
+				LineToken::soft(),
+				FormatToken::join(
+					separator,
+					array
+						.elements()
+						.map(|element| tokenize_node(element.syntax().clone())),
+				),
+			];
+
+			FormatToken::Group(GroupToken::new(format_tokens![
+				"[",
+				FormatToken::indent(elements),
+				LineToken::soft(),
+				"]",
+			]))
+		}
+		_ => panic!("Unsupported JSON kind: {:?}", node.kind()),
+	}
 }
 
-pub fn json_to_tokens(content: &str) -> FormatToken {
-	let json: Value = serde_json::from_str(content).expect("cannot convert json to tokens");
+pub fn tokenize_json(content: &str) -> FormatToken {
+	let script = parse_text(format!("({})", content).as_str(), 0);
 
-	FormatToken::from(ListToken::concat(vec![
-		json.format(),
-		FormatToken::from(LineToken::hard()),
-	]))
+	// Unwrap the grouping to get to the JSON content. The grouping is only used as a trick to parse JSON
+	let json_content = GroupingExpr::cast(
+		script
+			.syntax()
+			.descendants()
+			.find(|e| e.kind() == SyntaxKind::GROUPING_EXPR)
+			.unwrap(),
+	)
+	.and_then(|grouping| grouping.inner())
+	.unwrap();
+
+	let tokenized_content = tokenize_node(json_content.syntax().clone());
+	format_tokens!(tokenized_content, LineToken::hard())
 }
 
 #[cfg(test)]
 mod test {
-	use crate::{FormatToken, ListToken};
+	use crate::format_tokens;
 
-	use super::json_to_tokens;
+	use super::tokenize_json;
 	use crate::format_token::{GroupToken, LineToken};
 
 	#[test]
 	fn tokenize_number() {
-		let result = json_to_tokens("6.45");
+		let result = tokenize_json("6.45");
 
-		assert_eq!(
-			FormatToken::List(ListToken::concat(vec![
-				FormatToken::string("6.45"),
-				FormatToken::Line(LineToken::hard())
-			])),
-			result
-		);
+		assert_eq!(format_tokens!["6.45", LineToken::hard()], result);
 	}
 
 	#[test]
 	fn tokenize_string() {
-		let result = json_to_tokens(r#""foo""#);
+		let result = tokenize_json(r#""foo""#);
 
-		assert_eq!(
-			FormatToken::List(ListToken::concat(vec![
-				FormatToken::string(r#""foo""#),
-				FormatToken::Line(LineToken::hard())
-			])),
-			result
-		);
+		assert_eq!(format_tokens![r#""foo""#, LineToken::hard()], result);
 	}
 
 	#[test]
 	fn tokenize_boolean_false() {
-		let result = json_to_tokens("false");
+		let result = tokenize_json("false");
 
-		assert_eq!(
-			FormatToken::List(ListToken::concat(vec![
-				FormatToken::string("false"),
-				FormatToken::Line(LineToken::hard())
-			])),
-			result
-		);
+		assert_eq!(format_tokens!["false", LineToken::hard()], result);
 	}
 
 	#[test]
 	fn tokenize_boolean_true() {
-		let result = json_to_tokens("true");
+		let result = tokenize_json("true");
 
-		assert_eq!(
-			FormatToken::List(ListToken::concat(vec![
-				FormatToken::string("true"),
-				FormatToken::Line(LineToken::hard())
-			])),
-			result
-		);
+		assert_eq!(format_tokens!["true", LineToken::hard()], result);
 	}
 
 	#[test]
 	fn tokenize_boolean_null() {
-		let result = json_to_tokens("null");
+		let result = tokenize_json("null");
 
-		assert_eq!(
-			FormatToken::List(ListToken::concat(vec![
-				FormatToken::string("null"),
-				FormatToken::Line(LineToken::hard())
-			])),
-			result
-		);
+		assert_eq!(format_tokens!["null", LineToken::hard()], result);
 	}
 
 	#[test]
 	fn tokenize_object() {
 		let input = r#"{ "foo": "bar", "num": 5 }"#;
-		let expected = FormatToken::List(ListToken::concat(vec![
-			FormatToken::Group(GroupToken::new(vec![
-				FormatToken::string("{"),
-				FormatToken::indent(FormatToken::concat(vec![
-					FormatToken::Line(LineToken::soft()),
-					FormatToken::string("\"foo\":"),
+		let expected = format_tokens![
+			GroupToken::new(format_tokens![
+				"{",
+				FormatToken::indent(format_tokens![
+					LineToken::soft(),
+					"\"foo\"",
+					":",
 					FormatToken::Space,
-					FormatToken::string("\"bar\""),
-					FormatToken::string(","),
-					FormatToken::Line(LineToken::soft_or_space()),
-					FormatToken::string("\"num\":"),
+					"\"bar\"",
+					",",
+					LineToken::soft_or_space(),
+					"\"num\"",
+					":",
 					FormatToken::Space,
-					FormatToken::string("5"),
-				])),
-				FormatToken::Line(LineToken::soft()),
-				FormatToken::string("}"),
-			])),
-			FormatToken::Line(LineToken::hard()),
-		]));
+					"5",
+				]),
+				LineToken::soft(),
+				"}",
+			]),
+			LineToken::hard(),
+		];
 
-		let result = json_to_tokens(input);
+		let result = tokenize_json(input);
 
 		assert_eq!(expected, result);
 	}
@@ -186,26 +187,26 @@ mod test {
 	#[test]
 	fn tokenize_array() {
 		let input = r#"[ "foo", "bar", 5 ]"#;
-		let expected = FormatToken::List(ListToken::concat(vec![
-			FormatToken::Group(GroupToken::new(vec![
-				FormatToken::string("["),
-				FormatToken::indent(FormatToken::concat(vec![
-					FormatToken::Line(LineToken::soft()),
-					FormatToken::string("\"foo\""),
-					FormatToken::string(","),
-					FormatToken::Line(LineToken::soft_or_space()),
-					FormatToken::string("\"bar\""),
-					FormatToken::string(","),
-					FormatToken::Line(LineToken::soft_or_space()),
-					FormatToken::string("5"),
-				])),
-				FormatToken::Line(LineToken::soft()),
-				FormatToken::string("]"),
-			])),
-			FormatToken::Line(LineToken::hard()),
-		]));
+		let expected = format_tokens![
+			GroupToken::new(format_tokens![
+				"[",
+				FormatToken::indent(format_tokens![
+					LineToken::soft(),
+					"\"foo\"",
+					",",
+					LineToken::soft_or_space(),
+					"\"bar\"",
+					",",
+					LineToken::soft_or_space(),
+					"5",
+				]),
+				LineToken::soft(),
+				"]",
+			]),
+			LineToken::hard(),
+		];
 
-		let result = json_to_tokens(input);
+		let result = tokenize_json(input);
 
 		assert_eq!(expected, result);
 	}

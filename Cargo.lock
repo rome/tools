@@ -867,8 +867,7 @@ checksum = "f497285884f3fcff424ffc933e56d7cbca511def0c9831a7f9b5f6153e3cc89b"
 name = "rome-formatter"
 version = "0.0.0"
 dependencies = [
- "serde",
- "serde_json",
+ "rslint_parser",
 ]
 
 [[package]]
@@ -1070,7 +1069,6 @@ version = "1.0.68"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0f690853975602e1bfe1ccbf50504d67174e3bcf340f23b5ea9992e0587a52d8"
 dependencies = [
- "indexmap",
  "itoa",
  "ryu",
  "serde",
