@@ -55,13 +55,18 @@ use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
 pub use format_context::FormatContext;
 
+use core::file_handlers::ExtensionHandler;
+use core::file_handlers::FileHandlers;
 pub use cst::syntax_token;
+use file::RomePath;
 pub use format_element::{
 	concat_elements, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
 	soft_line_break_or_space, space_token, token, FormatElement,
 };
-use printer::Printer;
+pub use printer::Printer;
+pub use printer::PrinterOptions;
+use rslint_parser::parse_text;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
@@ -141,24 +146,38 @@ impl FormatResult {
 
 // TODO: implement me + handle errors
 /// Main function
-pub fn format(path: PathBuf, options: FormatOptions) -> FormatResult {
+pub fn format(rome_path: RomePath, options: FormatOptions) -> FormatResult {
 	println!(
 		"Running formatter to:\n- file {:?}\n- with options {:?}",
-		path, options.indent_style
+		rome_path, options.indent_style
 	);
+
 	// we assume that file exists
-	let mut file = File::open(&path).expect("cannot open the file to format");
+	let mut file = rome_path.open();
 	let mut buffer = String::new();
 	// we assume we have permissions
 	file.read_to_string(&mut buffer)
 		.expect("cannot read the file to format");
 
-	let elements = tokenize_json(buffer.as_str());
-	let result = format_element(&elements, options);
+	if let Some(handler) = rome_path.get_handler() {
+		match handler {
+			FileHandlers::Json(handler) => {
+				if handler.capabilities().format {
+					let elements = tokenize_json(buffer.as_str());
+					let result = format_element(&elements, options);
 
-	println!("{}", result.code());
-
-	result
+					println!("{}", print_result.code());
+				}
+			}
+			FileHandlers::Js(handler) => {
+				if handler.capabilities().format {
+					// TODO: js format
+					let ast = parse_text(buffer.as_str(), 0);
+				}
+			}
+			_ => {}
+		}
+	}
 }
 
 pub fn format_str(content: &str, options: FormatOptions) -> FormatResult {

@@ -165,6 +165,8 @@ name = "cli"
 version = "0.0.0"
 dependencies = [
  "clap 3.0.0-beta.4",
+ "core",
+ "file",
  "rome-formatter",
 ]
 
@@ -199,6 +201,10 @@ name = "convert_case"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6245d59a3e82a7fc217c5828a6692dbc6dfb63a0c8c90495621f7b9d79704a0e"
+
+[[package]]
+name = "core"
+version = "0.0.0"
 
 [[package]]
 name = "countme"
@@ -356,6 +362,13 @@ checksum = "2300477aab3a378f2ca00a4fbd4dc713654ab7ed790e4017493cb33656280633"
 dependencies = [
  "dissimilar",
  "once_cell",
+]
+
+[[package]]
+name = "file"
+version = "0.0.0"
+dependencies = [
+ "core",
 ]
 
 [[package]]
@@ -921,6 +934,8 @@ checksum = "f497285884f3fcff424ffc933e56d7cbca511def0c9831a7f9b5f6153e3cc89b"
 name = "rome-formatter"
 version = "0.0.0"
 dependencies = [
+ "core",
+ "file",
  "rslint_parser",
  "rslint_rowan",
  "tests_macros",
