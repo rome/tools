@@ -48,7 +48,7 @@ mod format_tokens_macro;
 mod intersperse;
 mod printer;
 
-use crate::format_json::json_to_tokens;
+use crate::format_json::tokenize_json;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
 pub use format_token::{
@@ -115,14 +115,14 @@ pub fn format(path: PathBuf, options: FormatOptions) {
 	file.read_to_string(&mut buffer)
 		.expect("cannot read the file to format");
 
-	let tokens = json_to_tokens(buffer.as_str());
+	let tokens = tokenize_json(buffer.as_str());
 	let print_result = format_token(&tokens, options);
 
 	println!("{}", print_result.code());
 }
 
 pub fn format_str(content: &str, options: FormatOptions) -> PrintResult {
-	let tokens = json_to_tokens(content);
+	let tokens = tokenize_json(content);
 	format_token(&tokens, options)
 }
 

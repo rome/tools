@@ -9,7 +9,7 @@
 	null,
 	{
 		"integer": 1234567890,
-		"real": -9876.54321,
+		"real": -9876.543210,
 		"": 23456789012,
 		"zero": 0,
 		"one": 1,
@@ -17,7 +17,7 @@
 		"quote": "\"",
 		"backslash": "\\",
 		"controls": "\n\r\t",
-		"slash": "/ & /",
+		"slash": "/ & \/",
 		"alpha": "abcdefghijklmnopqrstuvwyz",
 		"ALPHA": "ABCDEFGHIJKLMNOPQRSTUVWYZ",
 		"digit": "0123456789",
@@ -34,7 +34,7 @@
 		" s p a c e d ": [1, 2, 3, 4, 5, 6, 7],
 		"compact": [1, 2, 3, 4, 5, 6, 7],
 		"jsontext": "{\"object with 1 member\":[\"array with 1 element\"]}",
-		"/\\\"\n\r\t`1~!@#$%^&*()_+-=[]{}|;:',./<>?": "A key can be any string"
+		"\/\\\"\n\r\t`1~!@#$%^&*()_+-=[]{}|;:',./<>?": "A key can be any string"
 	},
 	0.5,
 	98.6,
