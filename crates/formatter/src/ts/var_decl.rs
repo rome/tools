@@ -1,10 +1,10 @@
 use crate::{
-	concat_elements, space_token, token, ts::format_syntax_token, FormatToken, FormatValue,
+	concat_elements, space_token, token, ts::format_syntax_token, FormatElement, FormatValue,
 };
 use rslint_parser::ast::VarDecl;
 
 impl FormatValue for VarDecl {
-	fn format(&self) -> FormatToken {
+	fn format(&self) -> FormatElement {
 		let mut tokens = vec![];
 
 		if let Some(token) = self.const_token() {

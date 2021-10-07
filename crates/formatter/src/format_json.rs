@@ -1,6 +1,6 @@
-use crate::format_token::{join_elements, soft_line_break_or_space};
+use crate::format_element::{join_elements, soft_line_break_or_space};
 use crate::{
-	format_token::FormatToken, format_tokens, group_elements, hard_line_break, soft_indent,
+	format_element::FormatElement, format_elements, group_elements, hard_line_break, soft_indent,
 	space_token, token,
 };
 use rslint_parser::ast::{
@@ -8,7 +8,7 @@ use rslint_parser::ast::{
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
 
-fn tokenize_token(syntax_token: SyntaxToken) -> FormatToken {
+fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 	match syntax_token.kind() {
 		SyntaxKind::NULL_KW => token("null"),
 		SyntaxKind::TRUE_KW => token("true"),
@@ -20,7 +20,7 @@ fn tokenize_token(syntax_token: SyntaxToken) -> FormatToken {
 	}
 }
 
-fn tokenize_node(node: SyntaxNode) -> FormatToken {
+fn tokenize_node(node: SyntaxNode) -> FormatElement {
 	match node.kind() {
 		SyntaxKind::LITERAL => {
 			let literal = Literal::cast(node).unwrap();
@@ -28,7 +28,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 		}
 		SyntaxKind::UNARY_EXPR => {
 			let expr = UnaryExpr::cast(node).unwrap();
-			format_tokens![
+			format_elements![
 				tokenize_token(expr.op_token().unwrap()),
 				tokenize_node(expr.expr().unwrap().syntax().clone())
 			]
@@ -36,7 +36,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 
 		SyntaxKind::LITERAL_PROP => {
 			let prop = LiteralProp::cast(node).unwrap();
-			format_tokens![
+			format_elements![
 				tokenize_node(prop.key().unwrap().syntax().clone()),
 				token(":"),
 				space_token(),
@@ -47,13 +47,13 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 		SyntaxKind::OBJECT_EXPR => {
 			let object = ObjectExpr::cast(node).unwrap();
 
-			let separator = format_tokens![token(","), soft_line_break_or_space()];
+			let separator = format_elements![token(","), soft_line_break_or_space()];
 
-			let properties_list: Vec<FormatToken> = object
+			let properties_list: Vec<FormatElement> = object
 				.props()
 				.map(|prop| match prop {
 					ObjectProp::LiteralProp(prop) => {
-						format_tokens![tokenize_node(prop.syntax().clone())]
+						format_elements![tokenize_node(prop.syntax().clone())]
 					}
 					_ => panic!("Unsupported prop type {:?}", prop),
 				})
@@ -61,7 +61,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 
 			let properties = join_elements(separator, properties_list);
 
-			group_elements(format_tokens![
+			group_elements(format_elements![
 				token("{"),
 				soft_indent(properties),
 				token("}"),
@@ -70,7 +70,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 		SyntaxKind::ARRAY_EXPR => {
 			let array = ArrayExpr::cast(node).unwrap();
 
-			let separator = format_tokens![token(","), soft_line_break_or_space(),];
+			let separator = format_elements![token(","), soft_line_break_or_space(),];
 
 			let elements = join_elements(
 				separator,
@@ -79,7 +79,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 					.map(|element| tokenize_node(element.syntax().clone())),
 			);
 
-			group_elements(format_tokens![
+			group_elements(format_elements![
 				token("["),
 				soft_indent(elements),
 				token("]"),
@@ -89,7 +89,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 	}
 }
 
-pub fn tokenize_json(content: &str) -> FormatToken {
+pub fn tokenize_json(content: &str) -> FormatElement {
 	let script = parse_text(format!("({})", content).as_str(), 0);
 
 	// Unwrap the grouping to get to the JSON content. The grouping is only used as a trick to parse JSON
@@ -104,61 +104,64 @@ pub fn tokenize_json(content: &str) -> FormatToken {
 	.unwrap();
 
 	let tokenized_content = tokenize_node(json_content.syntax().clone());
-	format_tokens![tokenized_content, hard_line_break()]
+	format_elements![tokenized_content, hard_line_break()]
 }
 
 #[cfg(test)]
 mod test {
 	use crate::{
-		format_tokens, group_elements, hard_line_break, soft_line_break, soft_line_break_or_space,
-		space_token, token,
+		format_elements, group_elements, hard_line_break, soft_line_break,
+		soft_line_break_or_space, space_token, token,
 	};
 
 	use super::tokenize_json;
-	use crate::format_token::Indent;
+	use crate::format_element::Indent;
 
 	#[test]
 	fn tokenize_number() {
 		let result = tokenize_json("6.45");
 
-		assert_eq!(format_tokens![token("6.45"), hard_line_break()], result);
+		assert_eq!(format_elements![token("6.45"), hard_line_break()], result);
 	}
 
 	#[test]
 	fn tokenize_string() {
 		let result = tokenize_json(r#""foo""#);
 
-		assert_eq!(format_tokens![token(r#""foo""#), hard_line_break()], result);
+		assert_eq!(
+			format_elements![token(r#""foo""#), hard_line_break()],
+			result
+		);
 	}
 
 	#[test]
 	fn tokenize_boolean_false() {
 		let result = tokenize_json("false");
 
-		assert_eq!(format_tokens![token("false"), hard_line_break()], result);
+		assert_eq!(format_elements![token("false"), hard_line_break()], result);
 	}
 
 	#[test]
 	fn tokenize_boolean_true() {
 		let result = tokenize_json("true");
 
-		assert_eq!(format_tokens![token("true"), hard_line_break()], result);
+		assert_eq!(format_elements![token("true"), hard_line_break()], result);
 	}
 
 	#[test]
 	fn tokenize_boolean_null() {
 		let result = tokenize_json("null");
 
-		assert_eq!(format_tokens![token("null"), hard_line_break()], result);
+		assert_eq!(format_elements![token("null"), hard_line_break()], result);
 	}
 
 	#[test]
 	fn tokenize_object() {
 		let input = r#"{ "foo": "bar", "num": 5 }"#;
-		let expected = format_tokens![
-			group_elements(format_tokens![
+		let expected = format_elements![
+			group_elements(format_elements![
 				token("{"),
-				FormatToken::Indent(Indent::new(format_tokens![
+				FormatElement::Indent(Indent::new(format_elements![
 					soft_line_break(),
 					token("\"foo\""),
 					token(":"),
@@ -185,10 +188,10 @@ mod test {
 	#[test]
 	fn tokenize_array() {
 		let input = r#"[ "foo", "bar", 5 ]"#;
-		let expected = format_tokens![
-			group_elements(format_tokens![
+		let expected = format_elements![
+			group_elements(format_elements![
 				token("["),
-				FormatToken::Indent(Indent::new(format_tokens![
+				FormatElement::Indent(Indent::new(format_elements![
 					soft_line_break(),
 					token("\"foo\""),
 					token(","),

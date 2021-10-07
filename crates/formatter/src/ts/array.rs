@@ -1,11 +1,11 @@
 use crate::{
-	format_tokens, group_elements, indent, join_elements, space_token, token, FormatToken,
+	format_elements, group_elements, indent, join_elements, space_token, token, FormatElement,
 	FormatValue,
 };
 use rslint_parser::ast::{ArrayExpr, ExprOrSpread};
 
 impl FormatValue for ArrayExpr {
-	fn format(&self) -> FormatToken {
+	fn format(&self) -> FormatElement {
 		let elements = self.elements();
 		let mut tokens = vec![];
 
@@ -19,8 +19,8 @@ impl FormatValue for ArrayExpr {
 				}
 			}
 		}
-		let separator = format_tokens!(token(","), space_token());
-		format_tokens!(
+		let separator = format_elements!(token(","), space_token());
+		format_elements!(
 			token("["),
 			indent(group_elements(join_elements(separator, tokens))),
 			token(","),

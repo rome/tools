@@ -18,7 +18,7 @@
 //!
 //! Now, we do want to create this IR for the data structure:
 //! ```rust
-//! use rome_formatter::{format_tokens, format_element, FormatToken, FormatValue, FormatOptions, space_token, token};
+//! use rome_formatter::{format_elements, format_element, FormatElement, FormatValue, FormatOptions, space_token, token};
 //!
 //! struct KeyValue {
 //!     key: String,
@@ -26,8 +26,8 @@
 //! }
 //!
 //! impl FormatValue for KeyValue {
-//!     fn format(&self) -> FormatToken {
-//!         format_tokens![token(self.key.as_str()), space_token(), token("=>"), space_token(), token(self.value.as_str())]
+//!     fn format(&self) -> FormatElement {
+//!         format_elements![token(self.key.as_str()), space_token(), token("=>"), space_token(), token(self.value.as_str())]
 //!     }
 //! }
 //!
@@ -41,9 +41,9 @@
 //! ```
 //! [IR]: https://en.wikipedia.org/wiki/Intermediate_representation
 
+mod format_element;
+mod format_elements;
 mod format_json;
-mod format_token;
-mod format_tokens_macro;
 mod intersperse;
 mod printer;
 mod ts;
@@ -51,16 +51,16 @@ mod ts;
 use crate::format_json::tokenize_json;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
-pub use format_token::{
+pub use format_element::{
 	concat_elements, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
-	soft_line_break_or_space, space_token, token, FormatToken,
+	soft_line_break_or_space, space_token, token, FormatElement,
 };
 use printer::Printer;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait FormatValue {
-	fn format(&self) -> FormatToken;
+	fn format(&self) -> FormatElement;
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]
@@ -148,8 +148,8 @@ pub fn format(path: PathBuf, options: FormatOptions) -> FormatResult {
 	file.read_to_string(&mut buffer)
 		.expect("cannot read the file to format");
 
-	let tokens = tokenize_json(buffer.as_str());
-	let result = format_element(&tokens, options);
+	let elements = tokenize_json(buffer.as_str());
+	let result = format_element(&elements, options);
 
 	println!("{}", result.code());
 
@@ -157,11 +157,11 @@ pub fn format(path: PathBuf, options: FormatOptions) -> FormatResult {
 }
 
 pub fn format_str(content: &str, options: FormatOptions) -> FormatResult {
-	let tokens = tokenize_json(content);
-	format_element(&tokens, options)
+	let element = tokenize_json(content);
+	format_element(&element, options)
 }
 
-pub fn format_element(element: &FormatToken, options: FormatOptions) -> FormatResult {
+pub fn format_element(element: &FormatElement, options: FormatOptions) -> FormatResult {
 	let printer = Printer::new(options);
 	printer.print(element)
 }

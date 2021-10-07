@@ -8,8 +8,8 @@
 /// you would write:
 ///
 /// ```rust
-/// use rome_formatter::{format_tokens, space_token, token};
-/// let element = format_tokens![token("foo:"), space_token(), token("bar")];
+/// use rome_formatter::{format_elements, space_token, token};
+/// let element = format_elements![token("foo:"), space_token(), token("bar")];
 /// ```
 ///
 /// The macro can be also nested, although the macro needs to be decorated with the token you need.
@@ -21,8 +21,8 @@
 /// You would write it like the following:
 ///
 /// ```rust
-/// use rome_formatter::{format_tokens, format_element, FormatOptions, space_token, token};
-/// let element = format_tokens![
+/// use rome_formatter::{format_elements, format_element, FormatOptions, space_token, token};
+/// let element = format_elements![
 ///   token("foo:"),
 ///   space_token(),
 ///   token("{"),
@@ -35,28 +35,28 @@
 /// ];
 /// assert_eq!(r#"foo: { bar: lorem }"#, format_element(&element, FormatOptions::default()).code());
 /// ```
-/// Or you can also create single tokens:
+/// Or you can also create single element:
 /// ```
-/// use rome_formatter::{format_tokens, format_element, FormatOptions, token};
-/// let element = format_tokens![token("single")];
+/// use rome_formatter::{format_elements, format_element, FormatOptions, token};
+/// let element = format_elements![token("single")];
 /// assert_eq!(r#"single"#, format_element(&element, FormatOptions::default()).code());
 /// ```
 #[macro_export]
-macro_rules! format_tokens {
+macro_rules! format_elements {
 
 	// called for things like format_tokens!["hey"]
-	($token:expr) => {
+	($element:expr) => {
 		{
-			use $crate::FormatToken;
-			FormatToken::from($token)
+			use $crate::FormatElement;
+			FormatElement::from($element)
 		}
 	};
 
-	( $( $token:expr ),+ $(,)?) => {{
-		use $crate::{FormatToken, concat_elements};
+	( $( $element:expr ),+ $(,)?) => {{
+		use $crate::{FormatElement, concat_elements};
 		concat_elements(vec![
 			$(
-					 FormatToken::from($token)
+					 FormatElement::from($element)
 			),+
 
 		])

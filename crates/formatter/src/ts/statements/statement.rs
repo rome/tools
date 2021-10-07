@@ -3,7 +3,7 @@ use rslint_parser::ast::Stmt;
 use crate::FormatValue;
 
 impl FormatValue for Stmt {
-	fn format(&self) -> crate::FormatToken {
+	fn format(&self) -> crate::FormatElement {
 		match self {
 			Stmt::BlockStmt(_) => todo!(),
 			Stmt::EmptyStmt(_) => todo!(),

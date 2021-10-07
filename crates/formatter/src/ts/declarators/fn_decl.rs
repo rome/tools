@@ -1,8 +1,8 @@
-use crate::{concat_elements, space_token, ts::format_syntax_token, FormatToken, FormatValue};
+use crate::{concat_elements, space_token, ts::format_syntax_token, FormatElement, FormatValue};
 use rslint_parser::ast::FnDecl;
 
 impl FormatValue for FnDecl {
-	fn format(&self) -> FormatToken {
+	fn format(&self) -> FormatElement {
 		let mut tokens = vec![];
 
 		if let Some(token) = self.async_token() {
