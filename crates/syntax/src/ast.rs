@@ -76,16 +76,16 @@ impl<N: AstNode> Iterator for AstChildren<N> {
 pub mod support {
 	use super::{AstChildren, AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
 
-	pub(crate) fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
+	pub fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
 	}
 
-	pub(crate) fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {
+	pub fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {
 		AstChildren::new(parent)
 	}
 
 	#[allow(unused)]
-	pub(crate) fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
+	pub fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
 		parent
 			.children_with_tokens()
 			.filter_map(|it| it.into_token())
