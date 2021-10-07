@@ -1,30 +1,26 @@
 use crate::{
-	format_elements, group_elements, indent, join_elements, space_token, token, FormatElement,
-	ToFormatElement,
+	format_elements, group_elements, if_group_breaks, join_elements, soft_indent,
+	soft_line_break_or_space, token, FormatElement, ToFormatElement,
 };
 use rslint_parser::ast::{ArrayExpr, ExprOrSpread};
 
 impl ToFormatElement for ArrayExpr {
 	fn to_format_element(&self) -> FormatElement {
-		let elements = self.elements();
-		let mut tokens = vec![];
+		let tokens: Vec<_> = self
+			.elements()
+			// TODO: use context when introduced or .syntax()
+			.map(|element| match element {
+				ExprOrSpread::Expr(expr) => expr.to_format_element(),
+				ExprOrSpread::Spread(spread) => spread.to_format_element(),
+			})
+			.collect();
 
-		for element in elements {
-			match element {
-				ExprOrSpread::Expr(expr) => {
-					tokens.push(expr.to_format_element());
-				}
-				ExprOrSpread::Spread(spread) => {
-					tokens.push(spread.to_format_element());
-				}
-			}
-		}
-		let separator = format_elements!(token(","), space_token());
-		format_elements!(
+		let separator = format_elements!(token(","), soft_line_break_or_space());
+		group_elements(format_elements![
 			token("["),
-			indent(group_elements(join_elements(separator, tokens))),
-			token(","),
-			token("]"),
-		)
+			soft_indent(join_elements(separator, tokens)),
+			if_group_breaks(token(",")),
+			token("]")
+		])
 	}
 }
