@@ -42,21 +42,23 @@
 //! ```
 //! [IR]: https://en.wikipedia.org/wiki/Intermediate_representation
 
+use std::fs::File;
+use std::io::Read;
+use std::{path::PathBuf, str::FromStr};
+
+pub use format_token::{
+	FormatToken, GroupToken, IfBreakToken, IndentToken, LineMode, LineToken, ListToken,
+};
+pub use printer::Printer;
+pub use printer::PrinterOptions;
+
+use crate::format_json::tokenize_json;
+
 mod format_json;
 mod format_token;
 mod format_tokens_macro;
 mod intersperse;
 mod printer;
-
-use crate::format_json::tokenize_json;
-use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
-
-pub use format_token::{
-	FormatToken, GroupToken, IfBreakToken, IndentToken, LineMode, LineToken, ListToken,
-};
-pub use printer::PrintResult;
-pub use printer::Printer;
-pub use printer::PrinterOptions;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait FormatValue {
@@ -101,9 +103,27 @@ impl FormatOptions {
 		Self { indent_style }
 	}
 }
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct FormatResult {
+	code: String,
+}
+
+impl FormatResult {
+	pub fn new(code: &str) -> Self {
+		Self {
+			code: String::from(code),
+		}
+	}
+
+	pub fn code(&self) -> &String {
+		&self.code
+	}
+}
+
 // TODO: implement me + handle errors
 /// Main function
-pub fn format(path: PathBuf, options: FormatOptions) {
+pub fn format(path: PathBuf, options: FormatOptions) -> FormatResult {
 	println!(
 		"Running formatter to:\n- file {:?}\n- with options {:?}",
 		path, options.indent_style
@@ -116,17 +136,19 @@ pub fn format(path: PathBuf, options: FormatOptions) {
 		.expect("cannot read the file to format");
 
 	let tokens = tokenize_json(buffer.as_str());
-	let print_result = format_token(&tokens, options);
+	let result = format_token(&tokens, options);
 
-	println!("{}", print_result.code());
+	println!("{}", result.code());
+
+	result
 }
 
-pub fn format_str(content: &str, options: FormatOptions) -> PrintResult {
+pub fn format_str(content: &str, options: FormatOptions) -> FormatResult {
 	let tokens = tokenize_json(content);
 	format_token(&tokens, options)
 }
 
-pub fn format_token(token: &FormatToken, options: FormatOptions) -> PrintResult {
+pub fn format_token(token: &FormatToken, options: FormatOptions) -> FormatResult {
 	let printer = Printer::new(options);
 	printer.print(token)
 }
