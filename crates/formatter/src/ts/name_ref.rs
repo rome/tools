@@ -1,9 +1,9 @@
 use rslint_parser::ast::NameRef;
 
-use crate::{ts::format_syntax_token, FormatValue};
+use crate::{ts::format_syntax_token, ToFormatElement};
 
-impl FormatValue for NameRef {
-	fn format(&self) -> crate::FormatElement {
+impl ToFormatElement for NameRef {
+	fn to_format_element(&self) -> crate::FormatElement {
 		if let Some(name_ref) = self.ident_token() {
 			return format_syntax_token(name_ref);
 		}

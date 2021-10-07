@@ -1,11 +1,11 @@
 use crate::{
 	concat_elements, format_elements, join_elements, space_token, token, ts::format_syntax_token,
-	FormatElement, FormatValue,
+	FormatElement, ToFormatElement,
 };
 use rslint_parser::ast::{ParameterList, Pattern};
 
-impl FormatValue for ParameterList {
-	fn format(&self) -> FormatElement {
+impl ToFormatElement for ParameterList {
+	fn to_format_element(&self) -> FormatElement {
 		let mut tokens = vec![];
 		if let Some(paren) = self.l_paren_token() {
 			tokens.push(format_syntax_token(paren))
@@ -14,7 +14,7 @@ impl FormatValue for ParameterList {
 		let param_tokens: Vec<_> = self
 			.parameters()
 			.map(|param| match param {
-				Pattern::SinglePattern(single_pattern) => single_pattern.format(),
+				Pattern::SinglePattern(single_pattern) => single_pattern.to_format_element(),
 				Pattern::RestPattern(_) => todo!(),
 				Pattern::AssignPattern(_) => todo!(),
 				Pattern::ObjectPattern(_) => todo!(),

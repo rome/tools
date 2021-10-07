@@ -18,22 +18,22 @@
 //!
 //! Now, we do want to create this IR for the data structure:
 //! ```rust
-//! use rome_formatter::{format_elements, format_element, FormatElement, FormatValue, FormatOptions, space_token, token};
+//! use rome_formatter::{format_elements, format_element, FormatElement, ToFormatElement, FormatOptions, space_token, token};
 //!
 //! struct KeyValue {
 //!     key: String,
 //!     value: String
 //! }
 //!
-//! impl FormatValue for KeyValue {
-//!     fn format(&self) -> FormatElement {
+//! impl ToFormatElement for KeyValue {
+//!     fn to_format_element(&self) -> FormatElement {
 //!         format_elements![token(self.key.as_str()), space_token(), token("=>"), space_token(), token(self.value.as_str())]
 //!     }
 //! }
 //!
 //! fn my_function() {
 //!     let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
-//!     let element = key_value.format();
+//!     let element = key_value.to_format_element();
 //!     let result = format_element(&element, FormatOptions::default());
 //!     assert_eq!(result.code(), "lorem => ipsum");
 //! }
@@ -59,8 +59,8 @@ pub use format_element::{
 use printer::Printer;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
-pub trait FormatValue {
-	fn format(&self) -> FormatElement;
+pub trait ToFormatElement {
+	fn to_format_element(&self) -> FormatElement;
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]
