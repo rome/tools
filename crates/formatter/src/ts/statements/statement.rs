@@ -1,9 +1,9 @@
 use rslint_parser::ast::Stmt;
 
-use crate::FormatValue;
+use crate::ToFormatElement;
 
-impl FormatValue for Stmt {
-	fn format(&self) -> crate::FormatElement {
+impl ToFormatElement for Stmt {
+	fn to_format_element(&self) -> crate::FormatElement {
 		match self {
 			Stmt::BlockStmt(_) => todo!(),
 			Stmt::EmptyStmt(_) => todo!(),
@@ -15,7 +15,7 @@ impl FormatValue for Stmt {
 			Stmt::ForInStmt(_) => todo!(),
 			Stmt::ContinueStmt(_) => todo!(),
 			Stmt::BreakStmt(_) => todo!(),
-			Stmt::ReturnStmt(stmt) => stmt.format(),
+			Stmt::ReturnStmt(stmt) => stmt.to_format_element(),
 			Stmt::WithStmt(_) => todo!(),
 			Stmt::LabelledStmt(_) => todo!(),
 			Stmt::SwitchStmt(_) => todo!(),

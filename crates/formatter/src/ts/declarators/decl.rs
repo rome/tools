@@ -1,12 +1,12 @@
-use crate::{FormatElement, FormatValue};
+use crate::{FormatElement, ToFormatElement};
 use rslint_parser::ast::Decl;
 
-impl FormatValue for Decl {
-	fn format(&self) -> FormatElement {
+impl ToFormatElement for Decl {
+	fn to_format_element(&self) -> FormatElement {
 		match self {
-			Decl::FnDecl(fn_decl) => fn_decl.format(),
+			Decl::FnDecl(fn_decl) => fn_decl.to_format_element(),
 			Decl::ClassDecl(_) => todo!(),
-			Decl::VarDecl(var_decl) => var_decl.format(),
+			Decl::VarDecl(var_decl) => var_decl.to_format_element(),
 			Decl::TsEnum(_) => todo!(),
 			Decl::TsTypeAliasDecl(_) => todo!(),
 			Decl::TsNamespaceDecl(_) => todo!(),

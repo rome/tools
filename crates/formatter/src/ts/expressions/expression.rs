@@ -1,15 +1,15 @@
-use crate::{FormatElement, FormatValue};
+use crate::{FormatElement, ToFormatElement};
 use rslint_parser::ast::Expr;
 
-impl FormatValue for Expr {
-	fn format(&self) -> FormatElement {
+impl ToFormatElement for Expr {
+	fn to_format_element(&self) -> FormatElement {
 		match self {
-			Expr::ArrowExpr(arrow) => arrow.format(),
-			Expr::Literal(literal) => literal.format(),
+			Expr::ArrowExpr(arrow) => arrow.to_format_element(),
+			Expr::Literal(literal) => literal.to_format_element(),
 			Expr::Template(_) => todo!(),
-			Expr::NameRef(name_ref) => name_ref.format(),
+			Expr::NameRef(name_ref) => name_ref.to_format_element(),
 			Expr::ThisExpr(_) => todo!(),
-			Expr::ArrayExpr(array_expression) => array_expression.format(),
+			Expr::ArrayExpr(array_expression) => array_expression.to_format_element(),
 			Expr::ObjectExpr(_) => todo!(),
 			Expr::GroupingExpr(_) => todo!(),
 			Expr::BracketExpr(_) => todo!(),
