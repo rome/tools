@@ -1,8 +1,8 @@
-use crate::{format_tokens, FormatToken, FormatValue};
+use crate::{ts::format_syntax_token, FormatToken, FormatValue};
 use rslint_parser::ast::Name;
 
 impl FormatValue for Name {
 	fn format(&self) -> FormatToken {
-		format_tokens!(self.ident_token().unwrap().text().as_str())
+		format_syntax_token(self.ident_token().unwrap())
 	}
 }

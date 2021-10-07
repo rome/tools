@@ -1,6 +1,5 @@
+use crate::{concat_elements, FormatToken, FormatValue};
 use rslint_parser::ast::SinglePattern;
-
-use crate::{FormatToken, FormatValue};
 
 impl FormatValue for SinglePattern {
 	fn format(&self) -> FormatToken {
@@ -9,6 +8,6 @@ impl FormatValue for SinglePattern {
 			tokens.push(name.format());
 		}
 
-		FormatToken::concat(tokens)
+		concat_elements(tokens)
 	}
 }

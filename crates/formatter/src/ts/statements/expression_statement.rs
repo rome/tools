@@ -7,6 +7,7 @@ impl FormatValue for ExprStmt {
 		if let Some(expr) = self.expr() {
 			return expr.format();
 		}
-		FormatToken::Space
+		// TODO: understand what to do here
+		panic!("Strange error?")
 	}
 }

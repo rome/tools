@@ -1,4 +1,7 @@
-use crate::{format_tokens, FormatToken, FormatValue, GroupToken, ListToken};
+use crate::{
+	format_tokens, group_elements, indent, join_elements, space_token, token, FormatToken,
+	FormatValue,
+};
 use rslint_parser::ast::{ArrayExpr, ExprOrSpread};
 
 impl FormatValue for ArrayExpr {
@@ -16,12 +19,12 @@ impl FormatValue for ArrayExpr {
 				}
 			}
 		}
-		let separator = format_tokens!(",", FormatToken::Space);
+		let separator = format_tokens!(token(","), space_token());
 		format_tokens!(
-			"[",
-			FormatToken::indent(GroupToken::new(ListToken::join(separator, tokens))),
-			",",
-			"]",
+			token("["),
+			indent(group_elements(join_elements(separator, tokens))),
+			token(","),
+			token("]"),
 		)
 	}
 }

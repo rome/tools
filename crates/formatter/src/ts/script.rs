@@ -1,4 +1,4 @@
-use crate::{format_tokens, FormatToken, FormatValue, LineToken};
+use crate::{concat_elements, hard_line_break, ts::format_syntax_token, FormatToken, FormatValue};
 use rslint_parser::ast::{Script, Stmt};
 
 impl FormatValue for Script {
@@ -6,8 +6,8 @@ impl FormatValue for Script {
 		let mut tokens = vec![];
 
 		if let Some(shebang) = self.shebang_token() {
-			tokens.push(format_tokens!(shebang.text().as_str()));
-			tokens.push(format_tokens!(LineToken::hard()));
+			tokens.push(format_syntax_token(shebang));
+			tokens.push(hard_line_break());
 		}
 
 		for item in self.items() {
@@ -35,6 +35,6 @@ impl FormatValue for Script {
 			tokens.push(token);
 		}
 
-		FormatToken::concat(tokens)
+		concat_elements(tokens)
 	}
 }

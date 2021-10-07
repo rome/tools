@@ -1,6 +1,6 @@
 use rslint_parser::ast::Literal;
 
-use crate::{format_tokens, FormatToken, FormatValue};
+use crate::{token, FormatToken, FormatValue};
 
 impl FormatValue for Literal {
 	fn format(&self) -> FormatToken {
@@ -13,6 +13,6 @@ impl FormatValue for Literal {
 				_ => ch,
 			})
 			.collect();
-		format_tokens!(new_string.as_str())
+		token(new_string.as_str())
 	}
 }

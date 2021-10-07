@@ -925,6 +925,7 @@ dependencies = [
  "rowan",
  "rslint_parser",
  "syntax",
+ "tests_macros",
 ]
 
 [[package]]
@@ -1248,7 +1249,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "test_macros"
+name = "tests_macros"
 version = "0.0.0"
 dependencies = [
  "case",

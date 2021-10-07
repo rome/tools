@@ -1,4 +1,6 @@
-use crate::{format_tokens, FormatToken, FormatValue};
+use crate::{
+	concat_elements, space_token, token, ts::format_syntax_token, FormatToken, FormatValue,
+};
 use rslint_parser::ast::{Declarator, Pattern};
 
 impl FormatValue for Declarator {
@@ -18,17 +20,16 @@ impl FormatValue for Declarator {
 			tokens.push(token);
 		}
 		if let Some(equal) = self.eq_token() {
-			tokens.push(format_tokens!(FormatToken::Space));
-
-			tokens.push(format_tokens!(equal.text().as_str()));
-			tokens.push(format_tokens!(FormatToken::Space));
+			tokens.push(space_token());
+			tokens.push(format_syntax_token(equal));
+			tokens.push(space_token());
 		}
 
 		if let Some(expression) = self.value() {
 			tokens.push(expression.format());
 		}
-		tokens.push(format_tokens!(";"));
+		tokens.push(token(";"));
 
-		FormatToken::concat(tokens)
+		concat_elements(tokens)
 	}
 }

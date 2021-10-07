@@ -1,6 +1,9 @@
 use rslint_parser::ast::{ArrowExpr, ArrowExprParams};
 
-use crate::{format_tokens, FormatToken, FormatValue};
+use crate::{
+	concat_elements, format_tokens, space_token, token, ts::format_syntax_token, FormatToken,
+	FormatValue,
+};
 
 impl FormatValue for ArrowExpr {
 	fn format(&self) -> FormatToken {
@@ -8,29 +11,29 @@ impl FormatValue for ArrowExpr {
 
 		if let Some(async_token) = self.async_token() {
 			tokens.push(format_tokens!(
-				async_token.text().as_str(),
-				FormatToken::Space
+				format_syntax_token(async_token),
+				space_token()
 			));
 		}
 
 		if let Some(arrow_expression_params) = self.params() {
 			match arrow_expression_params {
 				ArrowExprParams::Name(name) => {
-					tokens.push(format_tokens!("("));
+					tokens.push(token("("));
 					tokens.push(name.format());
-					tokens.push(format_tokens!(")"));
+					tokens.push(token(")"));
 				}
 				ArrowExprParams::ParameterList(params) => tokens.push(params.format()),
 			}
 		}
 
-		tokens.push(format_tokens!(FormatToken::Space));
+		tokens.push(space_token());
 		if let Some(arrow) = self.fat_arrow_token() {
-			tokens.push(format_tokens!(arrow.text().as_str()));
+			tokens.push(format_syntax_token(arrow));
 		} else {
-			tokens.push(format_tokens!("=>"));
+			tokens.push(token("=>"));
 		}
-		tokens.push(format_tokens!(FormatToken::Space));
+		tokens.push(space_token());
 
 		let body = self.body();
 
@@ -43,6 +46,6 @@ impl FormatValue for ArrowExpr {
 			}
 		}
 
-		FormatToken::concat(tokens)
+		concat_elements(tokens)
 	}
 }

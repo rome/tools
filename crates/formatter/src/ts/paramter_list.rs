@@ -1,36 +1,37 @@
-use crate::{format_tokens, FormatToken, FormatValue, ListToken};
-use rslint_parser::ast::ParameterList;
+use crate::{
+	concat_elements, format_tokens, join_elements, space_token, token, ts::format_syntax_token,
+	FormatToken, FormatValue,
+};
+use rslint_parser::ast::{ParameterList, Pattern};
 
 impl FormatValue for ParameterList {
 	fn format(&self) -> FormatToken {
 		let mut tokens = vec![];
 		if let Some(paren) = self.l_paren_token() {
-			tokens.push(format_tokens!(paren.text().as_str()))
+			tokens.push(format_syntax_token(paren))
 		}
 
 		let param_tokens: Vec<_> = self
 			.parameters()
 			.map(|param| match param {
-				rslint_parser::ast::Pattern::SinglePattern(single_pattern) => {
-					single_pattern.format()
-				}
-				rslint_parser::ast::Pattern::RestPattern(_) => todo!(),
-				rslint_parser::ast::Pattern::AssignPattern(_) => todo!(),
-				rslint_parser::ast::Pattern::ObjectPattern(_) => todo!(),
-				rslint_parser::ast::Pattern::ArrayPattern(_) => todo!(),
-				rslint_parser::ast::Pattern::ExprPattern(_) => todo!(),
+				Pattern::SinglePattern(single_pattern) => single_pattern.format(),
+				Pattern::RestPattern(_) => todo!(),
+				Pattern::AssignPattern(_) => todo!(),
+				Pattern::ObjectPattern(_) => todo!(),
+				Pattern::ArrayPattern(_) => todo!(),
+				Pattern::ExprPattern(_) => todo!(),
 			})
 			.collect();
 
-		tokens.push(format_tokens!(ListToken::join(
-			format_tokens!(",", FormatToken::Space),
+		tokens.push(format_tokens!(join_elements(
+			format_tokens!(token(","), space_token()),
 			param_tokens,
 		)));
 
 		if let Some(paren) = self.r_paren_token() {
-			tokens.push(format_tokens!(paren.text().as_str()));
+			tokens.push(format_syntax_token(paren));
 		}
 
-		FormatToken::concat(tokens)
+		concat_elements(tokens)
 	}
 }
