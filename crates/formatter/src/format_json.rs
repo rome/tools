@@ -1,6 +1,7 @@
-use crate::format_token::{join_elements, soft_line_break_or_space, LineMode};
+use crate::format_token::{join_elements, soft_line_break_or_space};
 use crate::{
-	format_token::FormatToken, format_tokens, group, hard_line_break, indent, space_token, token,
+	format_token::FormatToken, format_tokens, group_elements, hard_line_break, soft_indent,
+	space_token, token,
 };
 use rslint_parser::ast::{
 	ArrayExpr, GroupingExpr, Literal, LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
@@ -52,7 +53,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 				.props()
 				.map(|prop| match prop {
 					ObjectProp::LiteralProp(prop) => {
-						format_tokens!(tokenize_node(prop.syntax().clone()))
+						format_tokens![tokenize_node(prop.syntax().clone())]
 					}
 					_ => panic!("Unsupported prop type {:?}", prop),
 				})
@@ -60,9 +61,9 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 
 			let properties = join_elements(separator, properties_list);
 
-			group(format_tokens![
+			group_elements(format_tokens![
 				token("{"),
-				indent(properties, LineMode::Soft),
+				soft_indent(properties),
 				token("}"),
 			])
 		}
@@ -78,9 +79,9 @@ fn tokenize_node(node: SyntaxNode) -> FormatToken {
 					.map(|element| tokenize_node(element.syntax().clone())),
 			);
 
-			group(format_tokens![
+			group_elements(format_tokens![
 				token("["),
-				indent(elements, LineMode::Soft),
+				soft_indent(elements),
 				token("]"),
 			])
 		}
@@ -103,13 +104,13 @@ pub fn tokenize_json(content: &str) -> FormatToken {
 	.unwrap();
 
 	let tokenized_content = tokenize_node(json_content.syntax().clone());
-	format_tokens!(tokenized_content, hard_line_break())
+	format_tokens![tokenized_content, hard_line_break()]
 }
 
 #[cfg(test)]
 mod test {
 	use crate::{
-		format_tokens, group, hard_line_break, soft_line_break, soft_line_break_or_space,
+		format_tokens, group_elements, hard_line_break, soft_line_break, soft_line_break_or_space,
 		space_token, token,
 	};
 
@@ -155,7 +156,7 @@ mod test {
 	fn tokenize_object() {
 		let input = r#"{ "foo": "bar", "num": 5 }"#;
 		let expected = format_tokens![
-			group(format_tokens![
+			group_elements(format_tokens![
 				token("{"),
 				FormatToken::Indent(Indent::new(format_tokens![
 					soft_line_break(),
@@ -185,7 +186,7 @@ mod test {
 	fn tokenize_array() {
 		let input = r#"[ "foo", "bar", 5 ]"#;
 		let expected = format_tokens![
-			group(format_tokens![
+			group_elements(format_tokens![
 				token("["),
 				FormatToken::Indent(Indent::new(format_tokens![
 					soft_line_break(),

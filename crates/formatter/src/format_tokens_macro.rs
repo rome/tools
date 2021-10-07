@@ -9,7 +9,7 @@
 ///
 /// ```rust
 /// use rome_formatter::{format_tokens, space_token, token};
-/// let element = format_tokens!(token("foo:"), space_token(), token("bar"));
+/// let element = format_tokens![token("foo:"), space_token(), token("bar")];
 /// ```
 ///
 /// The macro can be also nested, although the macro needs to be decorated with the token you need.
@@ -22,7 +22,7 @@
 ///
 /// ```rust
 /// use rome_formatter::{format_tokens, format_element, FormatOptions, space_token, token};
-/// let element = format_tokens!(
+/// let element = format_tokens![
 ///   token("foo:"),
 ///   space_token(),
 ///   token("{"),
@@ -32,19 +32,19 @@
 ///   token("lorem"),
 ///   space_token(),
 ///   token("}")
-/// );
+/// ];
 /// assert_eq!(r#"foo: { bar: lorem }"#, format_element(&element, FormatOptions::default()).code());
 /// ```
 /// Or you can also create single tokens:
 /// ```
 /// use rome_formatter::{format_tokens, format_element, FormatOptions, token};
-/// let element = format_tokens!(token("single"));
+/// let element = format_tokens![token("single")];
 /// assert_eq!(r#"single"#, format_element(&element, FormatOptions::default()).code());
 /// ```
 #[macro_export]
 macro_rules! format_tokens {
 
-	// called for things like format_tokens!("hey")
+	// called for things like format_tokens!["hey"]
 	($token:expr) => {
 		{
 			use $crate::FormatToken;

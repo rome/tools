@@ -434,11 +434,11 @@ impl<'a> TokenCallQueue<'a> {
 
 #[cfg(test)]
 mod tests {
-	use crate::format_token::{join_elements, LineMode};
-	use crate::printer::{LineEnding, PrintResult, Printer, PrinterOptions};
+	use crate::format_token::join_elements;
+	use crate::printer::{LineEnding, Printer, PrinterOptions};
 	use crate::{
-		format_tokens, group, hard_line_break, if_group_breaks, indent, soft_line_break,
-		soft_line_break_or_space, token, FormatResult, FormatToken,
+		format_tokens, group_elements, hard_line_break, if_group_breaks, indent, soft_indent,
+		soft_line_break, soft_line_break_or_space, token, FormatResult, FormatToken,
 	};
 
 	/// Prints the given token with the default printer options
@@ -467,24 +467,15 @@ mod tests {
 	fn it_tracks_the_indent_for_each_token() {
 		let tokens = format_tokens![
 			token("a"),
-			indent(
-				format_tokens![
-					token("b"),
-					indent(
-						format_tokens![
-							token("c"),
-							indent(
-								format_tokens![token("d"), soft_line_break(), token("d"),],
-								LineMode::Soft
-							),
-							token("c"),
-						],
-						LineMode::Soft
-					),
-					token("b"),
-				],
-				LineMode::Soft
-			),
+			soft_indent(format_tokens![
+				token("b"),
+				soft_indent(format_tokens![
+					token("c"),
+					soft_indent(format_tokens![token("d"), soft_line_break(), token("d"),],),
+					token("c"),
+				],),
+				token("b"),
+			],),
 			token("a"),
 		];
 
@@ -527,10 +518,7 @@ two lines`,
 
 		let program = format_tokens![
 			token("function main() {"),
-			indent(
-				token("let x = `This is a multiline\nstring`;"),
-				LineMode::Soft
-			),
+			indent(token("let x = `This is a multiline\nstring`;"),),
 			token("}"),
 			hard_line_break(),
 		];
@@ -595,9 +583,9 @@ two lines`,
 
 		let elements = format_tokens![join_elements(separator, items), if_group_breaks(token(","))];
 
-		group(format_tokens![
+		group_elements(format_tokens![
 			token("["),
-			indent(elements, LineMode::Soft),
+			soft_indent(elements),
 			token("]"),
 		])
 	}

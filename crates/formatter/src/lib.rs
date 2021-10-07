@@ -27,7 +27,7 @@
 //!
 //! impl FormatValue for KeyValue {
 //!     fn format(&self) -> FormatToken {
-//!         format_tokens!(token(self.key.as_str()), space_token(), token("=>"), space_token(), token(self.value.as_str()))
+//!         format_tokens![token(self.key.as_str()), space_token(), token("=>"), space_token(), token(self.value.as_str())]
 //!     }
 //! }
 //!
@@ -51,9 +51,9 @@ use crate::format_json::tokenize_json;
 use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
 pub use format_token::{
-	concat_elements, group, hard_line_break, if_group_breaks, if_group_fits_on_single_line, indent,
-	join_elements, soft_line_break, soft_line_break_or_space, space_token, token, FormatToken,
-	LineMode,
+	concat_elements, group_elements, hard_line_break, if_group_breaks,
+	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
+	soft_line_break_or_space, space_token, token, FormatToken,
 };
 use printer::Printer;
 
