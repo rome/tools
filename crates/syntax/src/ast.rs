@@ -94,7 +94,7 @@ impl<N> AstChildrenWithTokens<N> {
 impl<N: AstNode> Iterator for AstChildrenWithTokens<N> {
 	type Item = NodeOrToken;
 	fn next(&mut self) -> Option<NodeOrToken> {
-		self.inner.find_map(|node_or_token| Some(node_or_token))
+		self.inner.find_map(Some)
 	}
 }
 

@@ -11,4 +11,4 @@ parser = { path = "../parser" }
 syntax = { path = "../syntax" }
 rowan = "0.13.2"
 [dev-dependencies]
-
+tests_macros = { path = "../tests_macros" }

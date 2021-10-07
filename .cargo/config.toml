@@ -1,3 +1,4 @@
 [alias]
 xtask = "run --package xtask --bin xtask --"
 lint = "clippy --workspace --all-targets --verbose -- --deny warnings"
+format = "fmt --all --verbose"

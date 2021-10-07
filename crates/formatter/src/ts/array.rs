@@ -1,5 +1,5 @@
 use crate::{format_tokens, FormatToken, FormatValue, GroupToken, ListToken};
-use rslint_parser::ast::{ArrayExpr, ExprOrSpread, SpreadElement};
+use rslint_parser::ast::{ArrayExpr, ExprOrSpread};
 
 impl FormatValue for ArrayExpr {
 	fn format(&self) -> FormatToken {

@@ -1,6 +1,5 @@
-use crate::{format_tokens, ts::single_pattern, FormatToken, FormatValue, ListToken};
+use crate::{format_tokens, FormatToken, FormatValue, ListToken};
 use rslint_parser::ast::ParameterList;
-use syntax::ast::{FormalParameters, FormalParametersInnerChildren};
 
 impl FormatValue for ParameterList {
 	fn format(&self) -> FormatToken {
@@ -32,6 +31,6 @@ impl FormatValue for ParameterList {
 			tokens.push(format_tokens!(paren.text().as_str()));
 		}
 
-		return FormatToken::concat(tokens);
+		FormatToken::concat(tokens)
 	}
 }

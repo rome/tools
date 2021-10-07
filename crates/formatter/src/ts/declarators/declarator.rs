@@ -1,8 +1,5 @@
 use crate::{format_tokens, FormatToken, FormatValue};
-use rslint_parser::{
-	ast::{Declarator, Pattern},
-	AstNode,
-};
+use rslint_parser::ast::{Declarator, Pattern};
 
 impl FormatValue for Declarator {
 	fn format(&self) -> FormatToken {

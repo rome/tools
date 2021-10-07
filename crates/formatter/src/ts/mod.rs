@@ -1,5 +1,3 @@
-use crate::{FormatToken, FormatValue};
-
 mod array;
 mod arrow_function;
 mod declarators;
@@ -30,7 +28,7 @@ mod var_decl;
 
 #[cfg(test)]
 mod test {
-	use rslint_parser::{ast::Script, parse_text, AstNode, Parser};
+	use rslint_parser::{ast::Script, parse_text, AstNode};
 
 	use crate::{format_token, FormatOptions, FormatValue};
 
@@ -53,20 +51,22 @@ mod test {
 	}
 
 	#[test]
+	#[ignore = "to enable later"]
 	fn array() {
 		let src = r#"let users = [   'john', 'chandler', true ]"#;
-		let tree = parse_text(src, 0);
+		let _tree = parse_text(src, 0);
 		// let result = format_token(&tree.format(), FormatOptions::default());
 		// assert_eq!(result.code(), r#"let users = ["john", "chandler", true,];"#);
 	}
 
 	#[test]
+	#[ignore = "to enable later"]
 	fn poc() {
 		let src = r#"function foo { let var1 = [true, false]
 	let broken = [-, 45, 54]
 	let var2 = (var1, var2) => {}
 }"#;
-		let tree = parse_text(src, 0);
+		let _tree = parse_text(src, 0);
 		// 		let result = format_token(&tree.format(), FormatOptions::default());
 		// 		assert_eq!(
 		// 			result.code(),
