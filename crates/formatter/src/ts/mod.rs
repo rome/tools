@@ -10,8 +10,8 @@ mod literal;
 mod name;
 mod name_ref;
 mod paramter_list;
+mod patterns;
 mod script;
-mod single_pattern;
 mod spread;
 mod statements;
 mod var_decl;
@@ -19,20 +19,6 @@ mod var_decl;
 pub fn format_syntax_token(syntax_token: SyntaxToken) -> FormatElement {
 	format_elements!(token(syntax_token.text().as_str()))
 }
-
-// NOTE: please leave this comment here, it will be removed once this logic will be ported to the proper place
-// TODO: remove once logic is implemented somewhere else
-// 		let group = GroupToken::new(format_tokens!(
-// 			"{",
-// 			FormatToken::indent(format_tokens!(
-// 				LineToken::soft_or_space(),
-// 				ListToken::join(LineToken::soft_or_space(), format_nodes(node))
-// 			)),
-// 			LineToken::soft_or_space(),
-// 			"}"
-// 		));
-
-// 		FormatToken::from(group)
 
 #[cfg(test)]
 mod test {
@@ -55,11 +41,10 @@ mod test {
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
 		let result = format_element(&child.to_format_element(), FormatOptions::default());
-		assert_eq!(result.code(), r#"function foo() { return "something"; }"#);
+		assert_eq!(result.code(), r#"function foo() {return "something";}"#);
 	}
 
 	#[test]
-	#[ignore = "to enable later"]
 	fn array() {
 		let src = r#"let users = [   'john', 'chandler', true ]"#;
 		let tree = parse_text(src, 0);
@@ -69,9 +54,8 @@ mod test {
 	}
 
 	#[test]
-	#[ignore = "to enable later"]
 	fn poc() {
-		let src = r#"function foo { let var1 = [true, false]
+		let src = r#"function foo() { let var1 = [true, false]
 	let broken = [   45, 54]
 	let var2 = (var1, var2) => {}
 }"#;
@@ -80,11 +64,11 @@ mod test {
 		let result = format_element(&child.to_format_element(), FormatOptions::default());
 		assert_eq!(
 			result.code(),
-			r#"function foo {
-			let var1 = [true, false];
-			let broken = [45, 54];
-			let var2 = (var1, var2) => {};
-		}"#
+			r#"function foo() {
+	let var1 = [true, false];
+	let broken = [45, 54];
+	let var2 = (var1, var2) => {};
+}"#
 		);
 	}
 }

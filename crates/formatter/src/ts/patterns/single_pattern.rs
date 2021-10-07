@@ -1,4 +1,4 @@
-use crate::{concat_elements, FormatElement, ToFormatElement};
+use crate::{FormatElement, ToFormatElement};
 use rslint_parser::ast::SinglePattern;
 
 impl ToFormatElement for SinglePattern {
