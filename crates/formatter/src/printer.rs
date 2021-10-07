@@ -1,6 +1,5 @@
-use crate::format_token::IfBreakToken;
+use crate::format_token::{ConditionalGroupContent, Group, GroupPrintMode, LineMode};
 use crate::{FormatOptions, FormatResult, FormatToken, IndentStyle};
-use crate::{GroupToken, LineMode};
 
 /// Options that affect how the [Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -35,6 +34,7 @@ impl From<FormatOptions> for PrinterOptions {
 		PrinterOptions {
 			indent_string,
 			tab_width,
+			print_width: options.line_width,
 			..PrinterOptions::default()
 		}
 	}
@@ -118,7 +118,7 @@ impl Printer {
 				self.state.pending_spaces += 1;
 				vec![]
 			}
-			FormatToken::String(content) => {
+			FormatToken::Token(content) => {
 				if !content.is_empty() {
 					// Print pending indention
 					if self.state.pending_indent > 0 {
@@ -142,10 +142,7 @@ impl Printer {
 				vec![]
 			}
 
-			FormatToken::Group(GroupToken {
-				should_break: false,
-				content,
-			}) => {
+			FormatToken::Group(Group { content }) => {
 				match self.try_print_flat(token, args.clone()) {
 					Err(_) => {
 						// Flat printing didn't work, print with line breaks
@@ -153,10 +150,6 @@ impl Printer {
 					}
 					Ok(_) => vec![],
 				}
-			}
-
-			FormatToken::Group(group) => {
-				vec![PrintTokenCall::new(group.content.as_ref(), args)]
 			}
 
 			FormatToken::List(list) => list
@@ -171,8 +164,18 @@ impl Printer {
 				)]
 			}
 
-			FormatToken::IfBreak(if_break) => {
-				vec![PrintTokenCall::new(&if_break.break_contents, args)]
+			FormatToken::ConditionalGroupContent(ConditionalGroupContent {
+				mode: GroupPrintMode::Multiline,
+				content,
+			}) => {
+				vec![PrintTokenCall::new(content, args)]
+			}
+
+			FormatToken::ConditionalGroupContent(ConditionalGroupContent {
+				mode: GroupPrintMode::Flat,
+				..
+			}) => {
+				vec![]
 			}
 
 			FormatToken::Line { .. } => {
@@ -216,7 +219,7 @@ impl Printer {
 		args: PrintTokenArgs,
 	) -> Result<Vec<PrintTokenCall<'a>>, LineBreakRequiredError> {
 		let next_calls = match token {
-			FormatToken::String(_) => {
+			FormatToken::Token(_) => {
 				let current_line = self.state.generated_line;
 
 				// Delegate to generic string printing
@@ -245,19 +248,19 @@ impl Printer {
 					LineMode::Hard => return Err(LineBreakRequiredError),
 				}
 			}
-			FormatToken::Group(GroupToken {
-				should_break: true, ..
-			}) => return Err(LineBreakRequiredError),
 
 			FormatToken::Group(group) => vec![PrintTokenCall::new(group.content.as_ref(), args)],
 
-			FormatToken::IfBreak(IfBreakToken {
-				flat_contents: Some(content),
-				..
+			FormatToken::ConditionalGroupContent(ConditionalGroupContent {
+				mode: GroupPrintMode::Flat,
+				content,
 			}) => vec![PrintTokenCall::new(content, args)],
 
 			// Omit if there's no flat_contents
-			FormatToken::IfBreak(_) => vec![],
+			FormatToken::ConditionalGroupContent(ConditionalGroupContent {
+				mode: GroupPrintMode::Multiline,
+				..
+			}) => vec![],
 
 			FormatToken::Space | FormatToken::Indent { .. } | FormatToken::List { .. } => {
 				self.print_token(token, args)
@@ -431,9 +434,12 @@ impl<'a> TokenCallQueue<'a> {
 
 #[cfg(test)]
 mod tests {
-	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
+	use crate::format_token::join_elements;
 	use crate::printer::{LineEnding, Printer, PrinterOptions};
-	use crate::{FormatResult, FormatToken};
+	use crate::{
+		format_tokens, group_elements, hard_line_break, if_group_breaks, indent, soft_indent,
+		soft_line_break, soft_line_break_or_space, token, FormatResult, FormatToken,
+	};
 
 	/// Prints the given token with the default printer options
 	fn print_token<T: Into<FormatToken>>(token: T) -> FormatResult {
@@ -448,10 +454,10 @@ mod tests {
 	#[test]
 	fn it_prints_a_group_on_a_single_line_if_it_fits() {
 		let result = print_token(create_array_tokens(vec![
-			FormatToken::string("\"a\""),
-			FormatToken::string("\"b\""),
-			FormatToken::string("\"c\""),
-			FormatToken::string("\"d\""),
+			token("\"a\""),
+			token("\"b\""),
+			token("\"c\""),
+			token("\"d\""),
 		]));
 
 		assert_eq!(r#"["a", "b", "c", "d"]"#, result.code())
@@ -459,32 +465,19 @@ mod tests {
 
 	#[test]
 	fn it_tracks_the_indent_for_each_token() {
-		let tokens = FormatToken::concat(vec![
-			"a".into(),
-			IndentToken::new(vec![
-				LineToken::soft().into(),
-				"b".into(),
-				IndentToken::new(vec![
-					LineToken::soft().into(),
-					"c".into(),
-					IndentToken::new(vec![
-						LineToken::soft().into(),
-						"d".into(),
-						LineToken::soft().into(),
-						"d".into(),
-					])
-					.into(),
-					LineToken::soft().into(),
-					"c".into(),
-				])
-				.into(),
-				LineToken::soft().into(),
-				"b".into(),
-			])
-			.into(),
-			LineToken::soft().into(),
-			"a".into(),
-		]);
+		let tokens = format_tokens![
+			token("a"),
+			soft_indent(format_tokens![
+				token("b"),
+				soft_indent(format_tokens![
+					token("c"),
+					soft_indent(format_tokens![token("d"), soft_line_break(), token("d"),],),
+					token("c"),
+				],),
+				token("b"),
+			],),
+			token("a"),
+		];
 
 		assert_eq!(
 			r#"a
@@ -502,8 +495,8 @@ a"#,
 	#[test]
 	fn it_breaks_a_group_if_a_string_contains_a_newline() {
 		let result = print_token(create_array_tokens(vec![
-			FormatToken::string("`This is a string spanning\ntwo lines`"),
-			FormatToken::string("\"b\""),
+			token("`This is a string spanning\ntwo lines`"),
+			token("\"b\""),
 		]));
 
 		assert_eq!(
@@ -523,18 +516,14 @@ two lines`,
 			..PrinterOptions::default()
 		};
 
-		let program = ListToken::concat(vec![
-			FormatToken::string("function main() {"),
-			FormatToken::Indent(IndentToken::new(ListToken::concat(vec![
-				FormatToken::Line(LineToken::hard()),
-				FormatToken::string("let x = `This is a multiline\nstring`;"),
-			]))),
-			FormatToken::Line(LineToken::hard()),
-			FormatToken::string("}"),
-			FormatToken::Line(LineToken::hard()),
-		]);
+		let program = format_tokens![
+			token("function main() {"),
+			indent(token("let x = `This is a multiline\nstring`;"),),
+			token("}"),
+			hard_line_break(),
+		];
 
-		let result = Printer::new(options).print(&FormatToken::from(program));
+		let result = Printer::new(options).print(&program);
 
 		assert_eq!(
 			"function main() {\r\n\tlet x = `This is a multiline\r\nstring`;\r\n}\r\n",
@@ -545,16 +534,16 @@ two lines`,
 	#[test]
 	fn it_breaks_parent_groups_if_they_dont_fit_on_a_single_line() {
 		let result = print_token(create_array_tokens(vec![
-			FormatToken::string("\"a\""),
-			FormatToken::string("\"b\""),
-			FormatToken::string("\"c\""),
-			FormatToken::string("\"d\""),
+			token("\"a\""),
+			token("\"b\""),
+			token("\"c\""),
+			token("\"d\""),
 			create_array_tokens(vec![
-				FormatToken::string("\"0123456789\""),
-				FormatToken::string("\"0123456789\""),
-				FormatToken::string("\"0123456789\""),
-				FormatToken::string("\"0123456789\""),
-				FormatToken::string("\"0123456789\""),
+				token("\"0123456789\""),
+				token("\"0123456789\""),
+				token("\"0123456789\""),
+				token("\"0123456789\""),
+				token("\"0123456789\""),
 			]),
 		]));
 
@@ -580,32 +569,24 @@ two lines`,
 		});
 
 		let result = printer.print(&create_array_tokens(vec![
-			FormatToken::string("'a'"),
-			FormatToken::string("'b'"),
-			FormatToken::string("'c'"),
-			FormatToken::string("'d'"),
+			token("'a'"),
+			token("'b'"),
+			token("'c'"),
+			token("'d'"),
 		]));
 
 		assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.code());
 	}
 
 	fn create_array_tokens(items: Vec<FormatToken>) -> FormatToken {
-		let separator = vec![
-			FormatToken::string(","),
-			FormatToken::Line(LineToken::soft_or_space()),
-		];
+		let separator = format_tokens![token(","), soft_line_break_or_space(),];
 
-		let elements = vec![
-			FormatToken::Line(LineToken::soft()),
-			FormatToken::join(separator, items),
-			FormatToken::IfBreak(IfBreakToken::new(FormatToken::string(","))),
-		];
+		let elements = format_tokens![join_elements(separator, items), if_group_breaks(token(","))];
 
-		FormatToken::Group(GroupToken::new(vec![
-			FormatToken::string("["),
-			FormatToken::indent(elements),
-			FormatToken::Line(LineToken::soft()),
-			FormatToken::string("]"),
-		]))
+		group_elements(format_tokens![
+			token("["),
+			soft_indent(elements),
+			token("]"),
+		])
 	}
 }
