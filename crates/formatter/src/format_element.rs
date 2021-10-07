@@ -1,8 +1,8 @@
-use crate::format_tokens;
+use crate::format_elements;
 use crate::intersperse::Intersperse;
 use std::ops::Deref;
 
-type Content = Box<FormatToken>;
+type Content = Box<FormatElement>;
 
 /// A line break that only gets printed if the enclosing [Group] doesn't fit on a single line.
 /// It's omitted if the enclosing [Group] fits on a single line.
@@ -13,9 +13,9 @@ type Content = Box<FormatToken>;
 /// Soft line breaks are omitted if the enclosing [Group] fits on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("a,"),
 ///   soft_line_break(),
 ///   token("b"),
@@ -28,9 +28,9 @@ type Content = Box<FormatToken>;
 ///
 /// Soft line breaks are emitted if the enclosing [Group] doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break, FormatOptions};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("a long word,"),
 ///   soft_line_break(),
 ///   token("so that the group doesn't fit on a single line"),
@@ -44,8 +44,8 @@ type Content = Box<FormatToken>;
 /// assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).code());
 /// ```
 #[inline]
-pub const fn soft_line_break() -> FormatToken {
-	FormatToken::Line(Line::new(LineMode::Soft))
+pub const fn soft_line_break() -> FormatElement {
+	FormatElement::Line(Line::new(LineMode::Soft))
 }
 
 /// A forced line break that are always printed. A hard line break forces any enclosing [Group]
@@ -55,9 +55,9 @@ pub const fn soft_line_break() -> FormatToken {
 ///
 /// It forces a line break, even if the enclosing [Group] would otherwise fit on a single line.
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, FormatOptions, hard_line_break};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, FormatOptions, hard_line_break};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("a,"),
 ///   hard_line_break(),
 ///   token("b"),
@@ -67,8 +67,8 @@ pub const fn soft_line_break() -> FormatToken {
 /// assert_eq!("a,\nb\n", format_element(&elements, FormatOptions::default()).code());
 /// ```
 #[inline]
-pub const fn hard_line_break() -> FormatToken {
-	FormatToken::Line(Line::new(LineMode::Hard))
+pub const fn hard_line_break() -> FormatElement {
+	FormatElement::Line(Line::new(LineMode::Hard))
 }
 
 /// A line break if the enclosing [Group] doesn't fit on a single line, a space otherwise.
@@ -77,9 +77,9 @@ pub const fn hard_line_break() -> FormatToken {
 ///
 /// The line breaks are emitted as spaces if the enclosing [Group] fits on a a single line:
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("a,"),
 ///   soft_line_break_or_space(),
 ///   token("b"),
@@ -90,9 +90,9 @@ pub const fn hard_line_break() -> FormatToken {
 ///
 /// The printer breaks the lines if the enclosing [Group] doesn't fit on a single line:
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("a long word,"),
 ///   soft_line_break_or_space(),
 ///   token("so that the group doesn't fit on a single line"),
@@ -106,8 +106,8 @@ pub const fn hard_line_break() -> FormatToken {
 /// assert_eq!("a long word,\nso that the group doesn't fit on a single line", format_element(&elements, options).code());
 /// ```
 #[inline]
-pub const fn soft_line_break_or_space() -> FormatToken {
-	FormatToken::Line(Line::new(LineMode::SoftOrSpace))
+pub const fn soft_line_break_or_space() -> FormatElement {
+	FormatElement::Line(Line::new(LineMode::SoftOrSpace))
 }
 
 /// Creates a token that gets written as is to the output. Make sure to properly escape the text if
@@ -138,8 +138,8 @@ pub const fn soft_line_break_or_space() -> FormatToken {
 /// assert_eq!(r#""Hello\tWorld""#, format_element(&elements, FormatOptions::default()).code());
 /// ```
 #[inline]
-pub fn token(text: &str) -> FormatToken {
-	FormatToken::Token(Token::new(text))
+pub fn token(text: &str) -> FormatElement {
+	FormatElement::Token(Token::new(text))
 }
 
 /// Inserts a single space. Allows to separate different tokens.
@@ -147,16 +147,16 @@ pub fn token(text: &str) -> FormatToken {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{FormatOptions, token, format_element, space_token, format_tokens};
+/// use rome_formatter::{FormatOptions, token, format_element, space_token, format_elements};
 ///
 /// // the tab must be encoded as \\t to not literally print a tab character ("Hello{tab}World" vs "Hello\tWorld")
-/// let elements = format_tokens![token("a"), space_token(), token("b")];
+/// let elements = format_elements![token("a"), space_token(), token("b")];
 ///
 /// assert_eq!("a b", format_element(&elements, FormatOptions::default()).code());
 /// ```
 #[inline]
-pub const fn space_token() -> FormatToken {
-	FormatToken::Space
+pub const fn space_token() -> FormatElement {
+	FormatElement::Space
 }
 
 /// Concatenates the content of multiple [FormatToken]s.
@@ -164,18 +164,19 @@ pub const fn space_token() -> FormatToken {
 /// ## Examples
 ///
 /// ```rust
-/// use rome_formatter::{concat_elements, FormatToken, space_token, token, format_element, FormatOptions};
+/// use rome_formatter::{concat_elements, FormatElement, space_token, token, format_element, FormatOptions};
 /// let expr = concat_elements(vec![token("a"), space_token(), token("+"), space_token(), token("b")]);
 ///
 /// assert_eq!("a + b", format_element(&expr, FormatOptions::default()).code())
 /// ```
-pub fn concat_elements<I>(elements: I) -> FormatToken
+pub fn concat_elements<I>(elements: I) -> FormatElement
 where
-	I: IntoIterator<Item = FormatToken>,
+	I: IntoIterator<Item = FormatElement>,
 {
 	let elements = elements.into_iter();
 
-	let mut concatenated: Vec<FormatToken> = if let (_, Some(upper_bound)) = elements.size_hint() {
+	let mut concatenated: Vec<FormatElement> = if let (_, Some(upper_bound)) = elements.size_hint()
+	{
 		Vec::with_capacity(upper_bound)
 	} else {
 		vec![]
@@ -183,7 +184,7 @@ where
 
 	for element in elements {
 		match element {
-			FormatToken::List(list) => concatenated.extend(list.content),
+			FormatElement::List(list) => concatenated.extend(list.content),
 			_ => concatenated.push(element),
 		}
 	}
@@ -191,7 +192,7 @@ where
 	if concatenated.len() == 1 {
 		concatenated.pop().unwrap()
 	} else {
-		FormatToken::from(List::new(concatenated))
+		FormatElement::from(List::new(concatenated))
 	}
 }
 
@@ -210,10 +211,10 @@ where
 /// assert_eq!("1, 2, 3, 4", format_element(&elements, FormatOptions::default()).code());
 /// ```
 #[inline]
-pub fn join_elements<TSep, I>(separator: TSep, elements: I) -> FormatToken
+pub fn join_elements<TSep, I>(separator: TSep, elements: I) -> FormatElement
 where
-	TSep: Into<FormatToken>,
-	I: IntoIterator<Item = FormatToken>,
+	TSep: Into<FormatElement>,
+	I: IntoIterator<Item = FormatElement>,
 {
 	concat_elements(Intersperse::new(elements.into_iter(), separator.into()))
 }
@@ -223,11 +224,11 @@ where
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{format_element, format_tokens, token,FormatOptions, hard_line_break, indent};
+/// use rome_formatter::{format_element, format_elements, token,FormatOptions, hard_line_break, indent};
 ///
-/// let block = (format_tokens![
+/// let block = (format_elements![
 ///   token("{"),
-///   indent(format_tokens![
+///   indent(format_elements![
 ///     token("let a = 10;"),
 ///     hard_line_break(),
 ///     token("let c = a + 5;"),
@@ -241,9 +242,9 @@ where
 /// );
 /// ```
 #[inline]
-pub fn indent<T: Into<FormatToken>>(content: T) -> FormatToken {
-	format_tokens![
-		Indent::new(format_tokens![hard_line_break(), content.into()]),
+pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
+	format_elements![
+		Indent::new(format_elements![hard_line_break(), content.into()]),
 		hard_line_break(),
 	]
 }
@@ -257,11 +258,11 @@ pub fn indent<T: Into<FormatToken>>(content: T) -> FormatToken {
 /// Indents the content by one level and puts in new lines if the enclosing [Group] doesn't fit on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions, soft_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("["),
-///   soft_indent(format_tokens![
+///   soft_indent(format_elements![
 ///     token("'First string',"),
 ///     soft_line_break_or_space(),
 ///     token("'second string',"),
@@ -279,11 +280,11 @@ pub fn indent<T: Into<FormatToken>>(content: T) -> FormatToken {
 ///
 /// Doesn't change the formatting if the enclosing [Group] fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions, soft_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("["),
-///   soft_indent(format_tokens![
+///   soft_indent(format_elements![
 ///     token("5,"),
 ///     soft_line_break_or_space(),
 ///     token("10"),
@@ -298,9 +299,9 @@ pub fn indent<T: Into<FormatToken>>(content: T) -> FormatToken {
 /// ```
 ///
 #[inline]
-pub fn soft_indent<T: Into<FormatToken>>(content: T) -> FormatToken {
-	format_tokens![
-		Indent::new(format_tokens![soft_line_break(), content.into()]),
+pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
+	format_elements![
+		Indent::new(format_elements![soft_line_break(), content.into()]),
 		soft_line_break(),
 	]
 }
@@ -319,11 +320,11 @@ pub fn soft_indent<T: Into<FormatToken>>(content: T) -> FormatToken {
 /// [Group] that fits on a single line
 ///
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions, soft_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("["),
-///   soft_indent(format_tokens![
+///   soft_indent(format_elements![
 ///     token("1,"),
 ///     soft_line_break_or_space(),
 ///     token("2,"),
@@ -338,11 +339,11 @@ pub fn soft_indent<T: Into<FormatToken>>(content: T) -> FormatToken {
 ///
 /// The printer breaks the [Group] over multiple lines if its content doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions, soft_indent};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("["),
-///   soft_indent(format_tokens![
+///   soft_indent(format_elements![
 ///     token("'Good morning! How are you today?',"),
 ///     soft_line_break_or_space(),
 ///     token("2,"),
@@ -360,8 +361,8 @@ pub fn soft_indent<T: Into<FormatToken>>(content: T) -> FormatToken {
 /// assert_eq!("[\n\t'Good morning! How are you today?',\n\t2,\n\t3\n]", format_element(&elements, options).code());
 /// ```
 #[inline]
-pub fn group_elements<T: Into<FormatToken>>(content: T) -> FormatToken {
-	FormatToken::from(Group::new(content.into()))
+pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
+	FormatElement::from(Group::new(content.into()))
 }
 
 /// Adds a conditional content that is emitted only if it isn't inside an enclosing [Group] that
@@ -376,11 +377,11 @@ pub fn group_elements<T: Into<FormatToken>>(content: T) -> FormatToken {
 ///
 /// Omits the trailing comma for the last array element if the [Group] fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions, soft_indent, if_group_breaks};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent, if_group_breaks};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("["),
-///   soft_indent(format_tokens![
+///   soft_indent(format_elements![
 ///     token("1,"),
 ///     soft_line_break_or_space(),
 ///     token("2,"),
@@ -395,11 +396,11 @@ pub fn group_elements<T: Into<FormatToken>>(content: T) -> FormatToken {
 ///
 /// Prints the trailing comma for the last array element if the [Group] doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions, soft_indent, if_group_breaks};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent, if_group_breaks};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("["),
-///   soft_indent(format_tokens![
+///   soft_indent(format_elements![
 ///     token("'A somewhat longer string to force a line break',"),
 ///     soft_line_break_or_space(),
 ///     token("2,"),
@@ -417,8 +418,8 @@ pub fn group_elements<T: Into<FormatToken>>(content: T) -> FormatToken {
 /// );
 /// ```
 #[inline]
-pub fn if_group_breaks<T: Into<FormatToken>>(content: T) -> FormatToken {
-	FormatToken::from(ConditionalGroupContent::new(
+pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
+	FormatElement::from(ConditionalGroupContent::new(
 		content.into(),
 		GroupPrintMode::Multiline,
 	))
@@ -433,11 +434,11 @@ pub fn if_group_breaks<T: Into<FormatToken>>(content: T) -> FormatToken {
 ///
 /// Adds the trailing comma for the last array element if the [Group] fits on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions, soft_indent, if_group_fits_on_single_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent, if_group_fits_on_single_line};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("["),
-///   soft_indent(format_tokens![
+///   soft_indent(format_elements![
 ///     token("1,"),
 ///     soft_line_break_or_space(),
 ///     token("2,"),
@@ -452,11 +453,11 @@ pub fn if_group_breaks<T: Into<FormatToken>>(content: T) -> FormatToken {
 ///
 /// Omits the trailing comma for the last array element if the [Group] doesn't fit on a single line
 /// ```
-/// use rome_formatter::{group_elements, format_element, format_tokens, token, soft_line_break_or_space, FormatOptions, soft_indent, if_group_fits_on_single_line};
+/// use rome_formatter::{group_elements, format_element, format_elements, token, soft_line_break_or_space, FormatOptions, soft_indent, if_group_fits_on_single_line};
 ///
-/// let elements = group_elements(format_tokens![
+/// let elements = group_elements(format_elements![
 ///   token("["),
-///   soft_indent(format_tokens![
+///   soft_indent(format_elements![
 ///     token("'A somewhat longer string to force a line break',"),
 ///     soft_line_break_or_space(),
 ///     token("2,"),
@@ -474,11 +475,11 @@ pub fn if_group_breaks<T: Into<FormatToken>>(content: T) -> FormatToken {
 /// );
 /// ```
 #[inline]
-pub fn if_group_fits_on_single_line<TFlat>(flat_content: TFlat) -> FormatToken
+pub fn if_group_fits_on_single_line<TFlat>(flat_content: TFlat) -> FormatElement
 where
-	TFlat: Into<FormatToken>,
+	TFlat: Into<FormatElement>,
 {
-	FormatToken::from(ConditionalGroupContent::new(
+	FormatElement::from(ConditionalGroupContent::new(
 		flat_content.into(),
 		GroupPrintMode::Flat,
 	))
@@ -488,7 +489,7 @@ where
 ///
 /// Use the helper functions like [space], [soft_line_break] etc. defined in this file to create elements.
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub enum FormatToken {
+pub enum FormatElement {
 	/// A space token, see [space] for documentation.
 	Space,
 
@@ -545,7 +546,7 @@ pub struct Indent {
 }
 
 impl Indent {
-	pub fn new(content: FormatToken) -> Self {
+	pub fn new(content: FormatElement) -> Self {
 		Self {
 			content: Box::new(content),
 		}
@@ -555,17 +556,17 @@ impl Indent {
 /// A token used to gather a list of elements; see [concat_elements] and [join_elements].
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct List {
-	content: Vec<FormatToken>,
+	content: Vec<FormatElement>,
 }
 
 impl List {
-	fn new(content: Vec<FormatToken>) -> Self {
+	fn new(content: Vec<FormatElement>) -> Self {
 		Self { content }
 	}
 }
 
 impl Deref for List {
-	type Target = Vec<FormatToken>;
+	type Target = Vec<FormatElement>;
 
 	fn deref(&self) -> &Self::Target {
 		&self.content
@@ -582,7 +583,7 @@ pub struct Group {
 }
 
 impl Group {
-	pub fn new(content: FormatToken) -> Self {
+	pub fn new(content: FormatElement) -> Self {
 		Self {
 			content: Box::new(content),
 		}
@@ -606,7 +607,7 @@ pub struct ConditionalGroupContent {
 }
 
 impl ConditionalGroupContent {
-	pub fn new(content: FormatToken, mode: GroupPrintMode) -> Self {
+	pub fn new(content: FormatElement, mode: GroupPrintMode) -> Self {
 		Self {
 			content: Box::new(content),
 			mode,
@@ -633,41 +634,41 @@ impl Deref for Token {
 	}
 }
 
-impl From<Group> for FormatToken {
+impl From<Group> for FormatElement {
 	fn from(group: Group) -> Self {
-		FormatToken::Group(group)
+		FormatElement::Group(group)
 	}
 }
 
-impl From<List> for FormatToken {
+impl From<List> for FormatElement {
 	fn from(token: List) -> Self {
-		FormatToken::List(token)
+		FormatElement::List(token)
 	}
 }
 
-impl From<ConditionalGroupContent> for FormatToken {
+impl From<ConditionalGroupContent> for FormatElement {
 	fn from(token: ConditionalGroupContent) -> Self {
-		FormatToken::ConditionalGroupContent(token)
+		FormatElement::ConditionalGroupContent(token)
 	}
 }
 
-impl From<Line> for FormatToken {
+impl From<Line> for FormatElement {
 	fn from(token: Line) -> Self {
-		FormatToken::Line(token)
+		FormatElement::Line(token)
 	}
 }
 
-impl From<Indent> for FormatToken {
+impl From<Indent> for FormatElement {
 	fn from(token: Indent) -> Self {
-		FormatToken::Indent(token)
+		FormatElement::Indent(token)
 	}
 }
 
 #[cfg(test)]
 mod tests {
 
-	use crate::format_token::{join_elements, List};
-	use crate::{concat_elements, space_token, token, FormatToken};
+	use crate::format_element::{join_elements, List};
+	use crate::{concat_elements, space_token, token, FormatElement};
 
 	#[test]
 	fn concat_elements_returns_a_list_token_containing_the_passed_in_elements() {
@@ -675,7 +676,7 @@ mod tests {
 
 		assert_eq!(
 			concatenated,
-			FormatToken::List(List::new(vec![token("a"), space_token(), token("b")]))
+			FormatElement::List(List::new(vec![token("a"), space_token(), token("b")]))
 		);
 	}
 
@@ -699,7 +700,7 @@ mod tests {
 
 		assert_eq!(
 			concatenated,
-			FormatToken::List(List::new(vec![
+			FormatElement::List(List::new(vec![
 				token("a"),
 				space_token(),
 				token("1"),
@@ -747,7 +748,7 @@ mod tests {
 
 		assert_eq!(
 			joined,
-			FormatToken::List(List::new(vec![
+			FormatElement::List(List::new(vec![
 				token("a"),
 				space_token(),
 				token("1"),

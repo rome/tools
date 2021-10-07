@@ -1,6 +1,6 @@
 use rslint_parser::SyntaxToken;
 
-use crate::{format_tokens, token, FormatToken};
+use crate::{format_elements, token, FormatElement};
 
 mod array;
 mod arrow_function;
@@ -16,8 +16,8 @@ mod spread;
 mod statements;
 mod var_decl;
 
-pub fn format_syntax_token(syntax_token: SyntaxToken) -> FormatToken {
-	format_tokens!(token(syntax_token.text().as_str()))
+pub fn format_syntax_token(syntax_token: SyntaxToken) -> FormatElement {
+	format_elements!(token(syntax_token.text().as_str()))
 }
 
 // NOTE: please leave this comment here, it will be removed once this logic will be ported to the proper place

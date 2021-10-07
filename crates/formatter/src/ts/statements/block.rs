@@ -1,12 +1,12 @@
 use rslint_parser::ast::BlockStmt;
 
-use crate::{format_tokens, space_token, token, FormatToken, FormatValue};
+use crate::{format_elements, space_token, token, FormatElement, FormatValue};
 
 impl FormatValue for BlockStmt {
-	fn format(&self) -> FormatToken {
+	fn format(&self) -> FormatElement {
 		let body: Vec<_> = self.stmts().map(|stmt| stmt.format()).collect();
 
-		format_tokens![
+		format_elements![
 			token("{"),
 			space_token(),
 			concat_elements(body),

@@ -1,5 +1,5 @@
-use crate::format_token::{ConditionalGroupContent, Group, GroupPrintMode, LineMode};
-use crate::{FormatOptions, FormatResult, FormatToken, IndentStyle};
+use crate::format_element::{ConditionalGroupContent, Group, GroupPrintMode, LineMode};
+use crate::{FormatElement, FormatOptions, FormatResult, IndentStyle};
 
 /// Options that affect how the [Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -79,7 +79,7 @@ impl Default for PrinterOptions {
 /// explicit line breaks or would otherwise exceed the specified line width.
 struct LineBreakRequiredError;
 
-/// Prints the format tokens into a string
+/// Prints the format elements into a string
 #[derive(Debug, Clone, Default)]
 pub struct Printer {
 	options: PrinterOptions,
@@ -94,32 +94,32 @@ impl Printer {
 		}
 	}
 
-	/// Prints the passed in token as well as all its contained tokens
-	pub fn print(mut self, token: &FormatToken) -> FormatResult {
-		let mut queue = TokenCallQueue::new();
+	/// Prints the passed in element as well as all its content
+	pub fn print(mut self, element: &FormatElement) -> FormatResult {
+		let mut queue = ElementCallQueue::new();
 
-		queue.enqueue(PrintTokenCall::new(token, PrintTokenArgs::default()));
+		queue.enqueue(PrintElementCall::new(element, PrintElementArgs::default()));
 
-		while let Some(print_token_call) = queue.dequeue() {
-			queue.extend(self.print_token(print_token_call.token, print_token_call.args));
+		while let Some(print_element_call) = queue.dequeue() {
+			queue.extend(self.print_element(print_element_call.element, print_element_call.args));
 		}
 
 		FormatResult::new(self.state.buffer.as_str())
 	}
 
-	/// Prints a single token and returns the tokens to queue (that should be printed next).
-	fn print_token<'a>(
+	/// Prints a single element and returns the elements to queue (that should be printed next).
+	fn print_element<'a>(
 		&mut self,
-		token: &'a FormatToken,
-		args: PrintTokenArgs,
-	) -> Vec<PrintTokenCall<'a>> {
-		match token {
-			FormatToken::Space => {
+		element: &'a FormatElement,
+		args: PrintElementArgs,
+	) -> Vec<PrintElementCall<'a>> {
+		match element {
+			FormatElement::Space => {
 				self.state.pending_spaces += 1;
 				vec![]
 			}
-			FormatToken::Token(content) => {
-				if !content.is_empty() {
+			FormatElement::Token(token) => {
+				if !token.is_empty() {
 					// Print pending indention
 					if self.state.pending_indent > 0 {
 						self.print_str(
@@ -137,48 +137,48 @@ impl Printer {
 						self.state.pending_spaces = 0;
 					}
 
-					self.print_str(content);
+					self.print_str(token);
 				}
 				vec![]
 			}
 
-			FormatToken::Group(Group { content }) => {
-				match self.try_print_flat(token, args.clone()) {
+			FormatElement::Group(Group { content }) => {
+				match self.try_print_flat(element, args.clone()) {
 					Err(_) => {
 						// Flat printing didn't work, print with line breaks
-						vec![PrintTokenCall::new(content.as_ref(), args)]
+						vec![PrintElementCall::new(content.as_ref(), args)]
 					}
 					Ok(_) => vec![],
 				}
 			}
 
-			FormatToken::List(list) => list
+			FormatElement::List(list) => list
 				.iter()
-				.map(|t| PrintTokenCall::new(t, args.clone()))
+				.map(|t| PrintElementCall::new(t, args.clone()))
 				.collect(),
 
-			FormatToken::Indent(indent) => {
-				vec![PrintTokenCall::new(
+			FormatElement::Indent(indent) => {
+				vec![PrintElementCall::new(
 					&indent.content,
 					args.with_incremented_indent(),
 				)]
 			}
 
-			FormatToken::ConditionalGroupContent(ConditionalGroupContent {
+			FormatElement::ConditionalGroupContent(ConditionalGroupContent {
 				mode: GroupPrintMode::Multiline,
 				content,
 			}) => {
-				vec![PrintTokenCall::new(content, args)]
+				vec![PrintElementCall::new(content, args)]
 			}
 
-			FormatToken::ConditionalGroupContent(ConditionalGroupContent {
+			FormatElement::ConditionalGroupContent(ConditionalGroupContent {
 				mode: GroupPrintMode::Flat,
 				..
 			}) => {
 				vec![]
 			}
 
-			FormatToken::Line { .. } => {
+			FormatElement::Line { .. } => {
 				self.print_str("\n");
 				self.state.pending_spaces = 0;
 				self.state.pending_indent = args.indent;
@@ -187,21 +187,21 @@ impl Printer {
 		}
 	}
 
-	/// Tries to print a token without any line breaks. Reverts any made `state` changes (by this function)
-	/// and returns with a [LineBreakRequiredError] if the `token` contains any hard line breaks
+	/// Tries to print an element without any line breaks. Reverts any made `state` changes (by this function)
+	/// and returns with a [LineBreakRequiredError] if the `element` contains any hard line breaks
 	/// or printing the group exceeds the configured maximal print width.
 	fn try_print_flat(
 		&mut self,
-		token: &FormatToken,
-		args: PrintTokenArgs,
+		element: &FormatElement,
+		args: PrintElementArgs,
 	) -> Result<(), LineBreakRequiredError> {
 		let snapshot = self.state.snapshot();
 
-		let mut queue = TokenCallQueue::new();
-		queue.enqueue(PrintTokenCall::new(token, args));
+		let mut queue = ElementCallQueue::new();
+		queue.enqueue(PrintElementCall::new(element, args));
 
 		while let Some(call) = queue.dequeue() {
-			match self.try_print_flat_token(call.token, call.args) {
+			match self.try_print_flat_element(call.element, call.args) {
 				Ok(to_queue) => queue.extend(to_queue),
 				Err(err) => {
 					self.state.restore(snapshot);
@@ -213,17 +213,17 @@ impl Printer {
 		Ok(())
 	}
 
-	fn try_print_flat_token<'a>(
+	fn try_print_flat_element<'a>(
 		&mut self,
-		token: &'a FormatToken,
-		args: PrintTokenArgs,
-	) -> Result<Vec<PrintTokenCall<'a>>, LineBreakRequiredError> {
-		let next_calls = match token {
-			FormatToken::Token(_) => {
+		element: &'a FormatElement,
+		args: PrintElementArgs,
+	) -> Result<Vec<PrintElementCall<'a>>, LineBreakRequiredError> {
+		let next_calls = match element {
+			FormatElement::Token(_) => {
 				let current_line = self.state.generated_line;
 
 				// Delegate to generic string printing
-				let calls = self.print_token(token, args);
+				let calls = self.print_element(element, args);
 
 				// If the line is too long, break the group
 				if self.state.line_width > self.options.print_width as usize {
@@ -237,7 +237,7 @@ impl Printer {
 
 				calls
 			}
-			FormatToken::Line(line) => {
+			FormatElement::Line(line) => {
 				match line.mode {
 					LineMode::SoftOrSpace => {
 						self.state.pending_spaces += 1;
@@ -249,21 +249,23 @@ impl Printer {
 				}
 			}
 
-			FormatToken::Group(group) => vec![PrintTokenCall::new(group.content.as_ref(), args)],
+			FormatElement::Group(group) => {
+				vec![PrintElementCall::new(group.content.as_ref(), args)]
+			}
 
-			FormatToken::ConditionalGroupContent(ConditionalGroupContent {
+			FormatElement::ConditionalGroupContent(ConditionalGroupContent {
 				mode: GroupPrintMode::Flat,
 				content,
-			}) => vec![PrintTokenCall::new(content, args)],
+			}) => vec![PrintElementCall::new(content, args)],
 
 			// Omit if there's no flat_contents
-			FormatToken::ConditionalGroupContent(ConditionalGroupContent {
+			FormatElement::ConditionalGroupContent(ConditionalGroupContent {
 				mode: GroupPrintMode::Multiline,
 				..
 			}) => vec![],
 
-			FormatToken::Space | FormatToken::Indent { .. } | FormatToken::List { .. } => {
-				self.print_token(token, args)
+			FormatElement::Space | FormatElement::Indent { .. } | FormatElement::List { .. } => {
+				self.print_element(element, args)
 			}
 		};
 
@@ -300,7 +302,7 @@ impl Printer {
 	}
 }
 
-/// Printer state that is global to all tokens.
+/// Printer state that is global to all elements.
 /// Stores the result of the print operation (buffer and mappings) and at what
 /// position the printer currently is.
 #[derive(Default, Debug, Clone)]
@@ -313,10 +315,10 @@ struct PrinterState {
 	generated_column: usize,
 	line_width: usize,
 	// mappings: Mapping[];
-	// We'll need to clone the line suffixes tokens into the state.
+	// We'll need to clone the line suffixes elements into the state.
 	// I guess that's fine. They're only used for comments and should, therefore, be very limited
 	// in size.
-	// lineSuffixes: [FormatToken, PrintTokenArgs][];
+	// lineSuffixes: [FormatElement, PrintElementArgs][];
 }
 
 impl PrinterState {
@@ -356,18 +358,18 @@ struct PrinterStateSnapshot {
 	buffer_position: usize,
 }
 
-/// Stores arguments passed to `print_token` call, holding the state specific to printing a token.
+/// Stores arguments passed to `print_element` call, holding the state specific to printing an element.
 /// E.g. the `indent` depends on the token the Printer's currently processing. That's why
-/// it must be stored outside of the [PrinterState] that stores the state common to all tokens.
+/// it must be stored outside of the [PrinterState] that stores the state common to all elements.
 ///
 /// The state is passed by value, which is why it's important that it isn't storing any heavy
 /// data structures. Such structures should be stored on the [PrinterState] instead.
 #[derive(Debug, Default, Clone, Eq, PartialEq)]
-struct PrintTokenArgs {
+struct PrintElementArgs {
 	indent: u16,
 }
 
-impl PrintTokenArgs {
+impl PrintElementArgs {
 	pub fn new(indent: u16) -> Self {
 		Self { indent }
 	}
@@ -377,42 +379,42 @@ impl PrintTokenArgs {
 	}
 }
 
-/// The Printer uses a stack that emulates recursion. E.g. recursively processing the tokens:
+/// The Printer uses a stack that emulates recursion. E.g. recursively processing the elements:
 /// `indent(concat(string, string))` would result in the following call stack:
 ///
 /// ```plain
-/// print_token(indent, indent = 0);
-///   print_token(concat, indent = 1);
-///     print_token(string, indent = 1);
-///     print_token(string, indent = 1);
+/// print_element(indent, indent = 0);
+///   print_element(concat, indent = 1);
+///     print_element(string, indent = 1);
+///     print_element(string, indent = 1);
 /// ```
-/// The `PrintTokenCall` stores the data for a single `print_token` call consisting of the token
-/// and the `args` that's passed to `print_token`.
+/// The `PrintElementCall` stores the data for a single `print_element` call consisting of the element
+/// and the `args` that's passed to `print_element`.
 ///
 #[derive(Debug, Eq, PartialEq, Clone)]
-struct PrintTokenCall<'token> {
-	token: &'token FormatToken,
-	args: PrintTokenArgs,
+struct PrintElementCall<'element> {
+	element: &'element FormatElement,
+	args: PrintElementArgs,
 }
 
-impl<'token> PrintTokenCall<'token> {
-	pub fn new(token: &'token FormatToken, args: PrintTokenArgs) -> Self {
-		Self { token, args }
+impl<'element> PrintElementCall<'element> {
+	pub fn new(element: &'element FormatElement, args: PrintElementArgs) -> Self {
+		Self { element, args }
 	}
 }
 
-/// Small helper that manages the order in which the tokens should be visited.
+/// Small helper that manages the order in which the elements should be visited.
 #[derive(Debug, Default)]
-struct TokenCallQueue<'a>(Vec<PrintTokenCall<'a>>);
+struct ElementCallQueue<'a>(Vec<PrintElementCall<'a>>);
 
-impl<'a> TokenCallQueue<'a> {
+impl<'a> ElementCallQueue<'a> {
 	#[inline]
 	pub fn new() -> Self {
 		Self(Vec::new())
 	}
 
 	#[inline]
-	fn extend(&mut self, calls: Vec<PrintTokenCall<'a>>) {
+	fn extend(&mut self, calls: Vec<PrintElementCall<'a>>) {
 		let mut calls = calls;
 		// Reverse the calls because elements are removed from the back of the vec
 		// in reversed insertion order
@@ -422,38 +424,38 @@ impl<'a> TokenCallQueue<'a> {
 	}
 
 	#[inline]
-	pub fn enqueue(&mut self, call: PrintTokenCall<'a>) {
+	pub fn enqueue(&mut self, call: PrintElementCall<'a>) {
 		self.0.push(call);
 	}
 
 	#[inline]
-	pub fn dequeue(&mut self) -> Option<PrintTokenCall<'a>> {
+	pub fn dequeue(&mut self) -> Option<PrintElementCall<'a>> {
 		self.0.pop()
 	}
 }
 
 #[cfg(test)]
 mod tests {
-	use crate::format_token::join_elements;
+	use crate::format_element::join_elements;
 	use crate::printer::{LineEnding, Printer, PrinterOptions};
 	use crate::{
-		format_tokens, group_elements, hard_line_break, if_group_breaks, indent, soft_indent,
-		soft_line_break, soft_line_break_or_space, token, FormatResult, FormatToken,
+		format_elements, group_elements, hard_line_break, if_group_breaks, indent, soft_indent,
+		soft_line_break, soft_line_break_or_space, token, FormatElement, FormatResult,
 	};
 
-	/// Prints the given token with the default printer options
-	fn print_token<T: Into<FormatToken>>(token: T) -> FormatResult {
+	/// Prints the given element with the default printer options
+	fn print_element<T: Into<FormatElement>>(element: T) -> FormatResult {
 		let options = PrinterOptions {
 			indent_string: String::from("  "),
 			..PrinterOptions::default()
 		};
 
-		Printer::new(options).print(&token.into())
+		Printer::new(options).print(&element.into())
 	}
 
 	#[test]
 	fn it_prints_a_group_on_a_single_line_if_it_fits() {
-		let result = print_token(create_array_tokens(vec![
+		let result = print_element(create_array_element(vec![
 			token("\"a\""),
 			token("\"b\""),
 			token("\"c\""),
@@ -465,13 +467,13 @@ mod tests {
 
 	#[test]
 	fn it_tracks_the_indent_for_each_token() {
-		let tokens = format_tokens![
+		let element = format_elements![
 			token("a"),
-			soft_indent(format_tokens![
+			soft_indent(format_elements![
 				token("b"),
-				soft_indent(format_tokens![
+				soft_indent(format_elements![
 					token("c"),
-					soft_indent(format_tokens![token("d"), soft_line_break(), token("d"),],),
+					soft_indent(format_elements![token("d"), soft_line_break(), token("d"),],),
 					token("c"),
 				],),
 				token("b"),
@@ -488,13 +490,13 @@ mod tests {
     c
   b
 a"#,
-			print_token(tokens).code()
+			print_element(element).code()
 		)
 	}
 
 	#[test]
 	fn it_breaks_a_group_if_a_string_contains_a_newline() {
-		let result = print_token(create_array_tokens(vec![
+		let result = print_element(create_array_element(vec![
 			token("`This is a string spanning\ntwo lines`"),
 			token("\"b\""),
 		]));
@@ -516,7 +518,7 @@ two lines`,
 			..PrinterOptions::default()
 		};
 
-		let program = format_tokens![
+		let program = format_elements![
 			token("function main() {"),
 			indent(token("let x = `This is a multiline\nstring`;"),),
 			token("}"),
@@ -533,12 +535,12 @@ two lines`,
 
 	#[test]
 	fn it_breaks_parent_groups_if_they_dont_fit_on_a_single_line() {
-		let result = print_token(create_array_tokens(vec![
+		let result = print_element(create_array_element(vec![
 			token("\"a\""),
 			token("\"b\""),
 			token("\"c\""),
 			token("\"d\""),
-			create_array_tokens(vec![
+			create_array_element(vec![
 				token("\"0123456789\""),
 				token("\"0123456789\""),
 				token("\"0123456789\""),
@@ -568,7 +570,7 @@ two lines`,
 			..PrinterOptions::default()
 		});
 
-		let result = printer.print(&create_array_tokens(vec![
+		let result = printer.print(&create_array_element(vec![
 			token("'a'"),
 			token("'b'"),
 			token("'c'"),
@@ -578,12 +580,13 @@ two lines`,
 		assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.code());
 	}
 
-	fn create_array_tokens(items: Vec<FormatToken>) -> FormatToken {
-		let separator = format_tokens![token(","), soft_line_break_or_space(),];
+	fn create_array_element(items: Vec<FormatElement>) -> FormatElement {
+		let separator = format_elements![token(","), soft_line_break_or_space(),];
 
-		let elements = format_tokens![join_elements(separator, items), if_group_breaks(token(","))];
+		let elements =
+			format_elements![join_elements(separator, items), if_group_breaks(token(","))];
 
-		group_elements(format_tokens![
+		group_elements(format_elements![
 			token("["),
 			soft_indent(elements),
 			token("]"),

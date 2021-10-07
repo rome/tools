@@ -1,8 +1,8 @@
-use crate::{FormatToken, FormatValue};
+use crate::{FormatElement, FormatValue};
 use rslint_parser::ast::Expr;
 
 impl FormatValue for Expr {
-	fn format(&self) -> FormatToken {
+	fn format(&self) -> FormatElement {
 		match self {
 			Expr::ArrowExpr(arrow) => arrow.format(),
 			Expr::Literal(literal) => literal.format(),

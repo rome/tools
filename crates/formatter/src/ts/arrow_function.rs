@@ -1,16 +1,16 @@
 use rslint_parser::ast::{ArrowExpr, ArrowExprParams};
 
 use crate::{
-	concat_elements, format_tokens, space_token, token, ts::format_syntax_token, FormatToken,
+	concat_elements, format_elements, space_token, token, ts::format_syntax_token, FormatElement,
 	FormatValue,
 };
 
 impl FormatValue for ArrowExpr {
-	fn format(&self) -> FormatToken {
-		let mut tokens: Vec<FormatToken> = vec![];
+	fn format(&self) -> FormatElement {
+		let mut tokens: Vec<FormatElement> = vec![];
 
 		if let Some(async_token) = self.async_token() {
-			tokens.push(format_tokens!(
+			tokens.push(format_elements!(
 				format_syntax_token(async_token),
 				space_token()
 			));

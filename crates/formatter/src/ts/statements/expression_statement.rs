@@ -1,9 +1,9 @@
 use rslint_parser::ast::ExprStmt;
 
-use crate::{FormatToken, FormatValue};
+use crate::{FormatElement, FormatValue};
 
 impl FormatValue for ExprStmt {
-	fn format(&self) -> FormatToken {
+	fn format(&self) -> FormatElement {
 		if let Some(expr) = self.expr() {
 			return expr.format();
 		}
