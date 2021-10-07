@@ -1,5 +1,5 @@
 use crate::format_token::IfBreakToken;
-use crate::{FormatOptions, FormatToken, IndentStyle};
+use crate::{FormatOptions, FormatResult, FormatToken, IndentStyle};
 use crate::{GroupToken, LineMode};
 
 /// Options that affect how the [Printer] prints the format tokens
@@ -75,17 +75,6 @@ impl Default for PrinterOptions {
 	}
 }
 
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct PrintResult {
-	code: String,
-}
-
-impl PrintResult {
-	pub fn code(&self) -> &String {
-		&self.code
-	}
-}
-
 /// Error returned if printing an item as a flat string fails because it either contains
 /// explicit line breaks or would otherwise exceed the specified line width.
 struct LineBreakRequiredError;
@@ -106,7 +95,7 @@ impl Printer {
 	}
 
 	/// Prints the passed in token as well as all its contained tokens
-	pub fn print(mut self, token: &FormatToken) -> PrintResult {
+	pub fn print(mut self, token: &FormatToken) -> FormatResult {
 		let mut queue = TokenCallQueue::new();
 
 		queue.enqueue(PrintTokenCall::new(token, PrintTokenArgs::default()));
@@ -115,9 +104,7 @@ impl Printer {
 			queue.extend(self.print_token(print_token_call.token, print_token_call.args));
 		}
 
-		PrintResult {
-			code: self.state.buffer,
-		}
+		FormatResult::new(self.state.buffer.as_str())
 	}
 
 	/// Prints a single token and returns the tokens to queue (that should be printed next).
@@ -445,11 +432,11 @@ impl<'a> TokenCallQueue<'a> {
 #[cfg(test)]
 mod tests {
 	use crate::format_token::{GroupToken, IfBreakToken, IndentToken, LineToken, ListToken};
-	use crate::printer::{LineEnding, PrintResult, Printer, PrinterOptions};
-	use crate::FormatToken;
+	use crate::printer::{LineEnding, Printer, PrinterOptions};
+	use crate::{FormatResult, FormatToken};
 
 	/// Prints the given token with the default printer options
-	fn print_token<T: Into<FormatToken>>(token: T) -> PrintResult {
+	fn print_token<T: Into<FormatToken>>(token: T) -> FormatResult {
 		let options = PrinterOptions {
 			indent_string: String::from("  "),
 			..PrinterOptions::default()
@@ -467,7 +454,7 @@ mod tests {
 			FormatToken::string("\"d\""),
 		]));
 
-		assert_eq!(r#"["a", "b", "c", "d"]"#, result.code)
+		assert_eq!(r#"["a", "b", "c", "d"]"#, result.code())
 	}
 
 	#[test]
@@ -508,7 +495,7 @@ mod tests {
     c
   b
 a"#,
-			print_token(tokens).code
+			print_token(tokens).code()
 		)
 	}
 
@@ -525,7 +512,7 @@ a"#,
 two lines`,
   "b",
 ]"#,
-			result.code
+			result.code()
 		)
 	}
 
@@ -551,7 +538,7 @@ two lines`,
 
 		assert_eq!(
 			"function main() {\r\n\tlet x = `This is a multiline\r\nstring`;\r\n}\r\n",
-			result.code
+			result.code()
 		);
 	}
 
@@ -579,7 +566,7 @@ two lines`,
   "d",
   ["0123456789", "0123456789", "0123456789", "0123456789", "0123456789"],
 ]"#,
-			result.code
+			result.code()
 		);
 	}
 
@@ -599,7 +586,7 @@ two lines`,
 			FormatToken::string("'d'"),
 		]));
 
-		assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.code);
+		assert_eq!("[\n\t'a',\n\t\'b',\n\t\'c',\n\t'd',\n]", result.code());
 	}
 
 	fn create_array_tokens(items: Vec<FormatToken>) -> FormatToken {
