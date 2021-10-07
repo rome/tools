@@ -2,29 +2,47 @@
 
 A set of utilities that automatically generate unit tests from files.
 
-## Usage
+# Usage
 
-First argument: glob that will passed to https://github.com/gilnaa/globwalk. Crate's cargo.toml will be the base directory. To pattern format see here: https://git-scm.com/docs/gitignore#_pattern_format
-Second argument: method that will be called.
+First argument: glob that will passed to https://github.com/gilnaa/globwalk. Crate's cargo.toml will be the base directory. To pattern format see here: https://git-scm.com/docs/gitignore#_pattern_format  
+Second argument: method that will be called. 
 
-> The test name is the `snake_case` version of the file name.
+One suggestion to organize tests is to put the macro inside a module.
 
 ```rust
-tests_macros::gen_tests!{"tests/*.{js,json}", run_test}
+mod some_mod {
+    tests_macros::gen_tests!{"tests/*.{js,json}", run_test}
 
-fn run_test<S: AsRef<str> + std::fmt::Debug>(a: S, b: S) {
-    println!("{:?} {:?}", a, b);
+    fn run_test(input_file: &str, expected_file: &str) {
+        println!("{:?} {:?}", input_file, expected_file); 
+    }
 }
 ```
 
-This will generate the following for each file:
+Test name is the "snake case" version of the file name.
+this will generate the following for each file:
 
 ```rust
 #[test]
-pub fn some_test()
+pub fn somefilename()
 {
-    let test_file = "<SOMEDIR>/tests/sometest.txt";
-    let test_expected_file = "<SOMEDIR>/tests/sometest.expected.txt";
+    let test_file = "<crate's cargo.toml full path>/tests/sometest.txt";
+    let test_expected_file = "<crate's cargo.toml full path>/tests/sometest.expected.txt";
     run_test(test_file, test_expected_file);
 }
 ```
+
+## How to run
+
+```
+> cargo test                                            // all tests in all crates
+> cargo test -p crate-name                              // all tests of one crate
+> cargo test -p crate-name -- some_mod::                // all tests of one crate and one module
+> cargo test -p crate-name -- some_mod::somefilename    // just one test
+```
+## How to install
+
+```
+[dev-dependencies]
+tests_macros = { path = "../tests_macros" }
+``` 
