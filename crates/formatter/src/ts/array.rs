@@ -1,41 +1,27 @@
-use crate::{
-	format_tokens, ts::format_syntax_token, FormatToken, FormatValue, GroupToken, ListToken,
-};
-use parser::SyntaxKind;
-use syntax::{
-	ast::{self, AstNode},
-	NodeOrToken, SyntaxNode,
-};
+use crate::{format_tokens, FormatToken, FormatValue, GroupToken, ListToken};
+use rslint_parser::ast::{ArrayExpr, ExprOrSpread, SpreadElement};
 
-pub fn format_node(node: SyntaxNode) -> FormatToken {
-	let array = ast::Array::cast(node).unwrap();
-	let elements = array.elements();
-	let mut tokens = vec![];
+impl FormatValue for ArrayExpr {
+	fn format(&self) -> FormatToken {
+		let elements = self.elements();
+		let mut tokens = vec![];
 
-	for element in elements {
-		let token = match element {
-			NodeOrToken::Node(node) => Some(node.format()),
-			NodeOrToken::Token(token) => {
-				// this is an hack until we figure out a better API to retrieve
-				// token elements that are really part of an array
-				match token.kind() {
-					SyntaxKind::True | SyntaxKind::False | SyntaxKind::Number => {
-						Some(format_syntax_token(token))
-					}
-
-					_ => None,
+		for element in elements {
+			match element {
+				ExprOrSpread::Expr(expr) => {
+					tokens.push(expr.format());
+				}
+				ExprOrSpread::Spread(spread) => {
+					tokens.push(spread.format());
 				}
 			}
-		};
-		if let Some(token) = token {
-			tokens.push(token);
 		}
+		let separator = format_tokens!(",", FormatToken::Space);
+		format_tokens!(
+			"[",
+			FormatToken::indent(GroupToken::new(ListToken::join(separator, tokens))),
+			",",
+			"]",
+		)
 	}
-	let separator = format_tokens!(",", FormatToken::Space);
-	format_tokens!(
-		"[",
-		FormatToken::indent(GroupToken::new(ListToken::join(separator, tokens))),
-		",",
-		"]",
-	)
 }
