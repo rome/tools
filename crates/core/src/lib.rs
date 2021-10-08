@@ -11,15 +11,15 @@ pub struct App {
 	handlers: Handlers,
 }
 
+const UNKNOWN_EXTENSION: &str = "unknown";
+
 impl Default for App {
 	fn default() -> Self {
 		let mut map: Handlers = HashMap::new();
 		map.insert("js", Box::new(JsFileHandler {}));
-		map.insert("jsx", Box::new(JsFileHandler {}));
 		map.insert("ts", Box::new(JsFileHandler {}));
-		map.insert("tsx", Box::new(JsFileHandler {}));
 		map.insert("json", Box::new(JsonFileHandler {}));
-		map.insert("unknown", Box::new(UnknownFileHandler {}));
+		map.insert(UNKNOWN_EXTENSION, Box::new(UnknownFileHandler {}));
 		Self { handlers: map }
 	}
 }
@@ -30,13 +30,12 @@ impl App {
 	}
 
 	pub fn get_handler<'a>(&self, file_extension: &'a str) -> Option<&dyn ExtensionHandler> {
-		if self.handlers.contains_key(file_extension) {
-			self.handlers
-				.get(file_extension)
-				.map(|handler| handler.as_ref())
+		let handler = if self.handlers.contains_key(file_extension) {
+			self.handlers.get(file_extension)
 		} else {
-			None
-		}
+			self.handlers.get(UNKNOWN_EXTENSION)
+		};
+		handler.map(|handler| handler.as_ref())
 	}
 }
 

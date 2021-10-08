@@ -59,7 +59,6 @@ pub fn run_cli() {
 			let size = matches.value_of("indent_size");
 			let style = matches.value_of("indent_style");
 			let input = matches.value_of("input").unwrap();
-			// let input = PathBuf::from(&input);
 			let options: IndentStyle = style
 				.map(|s| match s {
 					"tab" => IndentStyle::Tab,

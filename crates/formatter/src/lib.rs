@@ -157,23 +157,24 @@ pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
 	if let Some(handler) = rome_path.get_handler() {
 		if handler.capabilities().format {
 			let context = FormatContext::default();
-			let result = match handler.language() {
+			let element = match handler.language() {
 				Language::Js => {
 					let parsed_result = parse_text(buffer.as_str(), 0);
-					let tree = Script::cast(parsed_result.syntax())
-						.unwrap()
-						.to_format_element(&context);
-					Some(format_element(&tree, options))
+					Some(
+						Script::cast(parsed_result.syntax())
+							.unwrap()
+							.to_format_element(&context),
+					)
 				}
-				Language::Json => {
-					let elements = tokenize_json(buffer.as_str());
-					Some(format_element(&elements, options))
-				}
-				Language::Unknown => None,
+				Language::Json => Some(tokenize_json(buffer.as_str())),
+				Language::Ts | Language::Unknown => None,
 			};
 
-			if let Some(result) = result {
-				rome_path.save(result.code()).unwrap();
+			if let Some(element) = element {
+				let result = format_element(&element, options);
+				rome_path
+					.save(result.code())
+					.expect("Could not write the formatted code on file");
 			}
 		};
 	}

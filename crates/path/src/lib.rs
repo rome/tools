@@ -77,6 +77,7 @@ impl<'handler> RomePath<'handler> {
 	/// Accepts a file opened in read mode and saves into it
 	pub fn save(&mut self, content: &str) -> Result<(), std::io::Error> {
 		let mut file_to_write = File::create(&self.file).unwrap();
+		// TODO: handle error with diagnostic
 		file_to_write.write_all(content.as_bytes())
 	}
 

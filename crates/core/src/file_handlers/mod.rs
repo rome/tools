@@ -4,6 +4,7 @@ pub mod unknown;
 pub enum Language {
 	Js,
 	Json,
+	Ts,
 	Unknown,
 }
 
@@ -33,14 +34,19 @@ pub struct Capabilities {
 
 /// Main trait to use to add a new language to Rome
 pub trait ExtensionHandler {
+	/// The language of the file. It can be a super language.
+	/// For example, a ".js" file can have [Language::Ts]
 	fn language(&self) -> Language;
 
+	/// MIME types used to identify a certain language
 	fn mime(&self) -> Mime;
 
+	/// A file that can support tabs inside its content
 	fn may_use_tabs(&self) -> bool {
 		true
 	}
 
+	/// Capabilities that can applied to a file
 	fn capabilities(&self) -> Capabilities {
 		Capabilities {
 			format: false,
@@ -48,6 +54,9 @@ pub trait ExtensionHandler {
 		}
 	}
 
+	/// How a file should be treated. Usually an asset doesn't posses a parser.
+	///
+	/// An image should me parked as asset.
 	fn is_asset(&self) -> bool {
 		false
 	}
