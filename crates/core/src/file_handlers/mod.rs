@@ -1,6 +1,4 @@
-use self::{base::BaseFileHandler, javascript::JsFileHandler, json::JsonFileHandler};
-
-pub mod base;
+pub mod unknown;
 pub mod javascript;
 pub mod json;
 pub enum Language {
@@ -53,11 +51,4 @@ pub trait ExtensionHandler {
 	fn is_asset(&self) -> bool {
 		false
 	}
-}
-
-#[derive(Debug, PartialEq, Eq)]
-pub enum FileHandlers {
-	Js(JsFileHandler),
-	Json(JsonFileHandler),
-	Base(BaseFileHandler),
 }

@@ -69,7 +69,6 @@ pub use printer::PrinterOptions;
 use rslint_parser::ast::Script;
 use rslint_parser::parse_text;
 use rslint_parser::AstNode;
-use std::io::Write;
 use std::{io::Read, str::FromStr};
 
 /// This trait should be implemented on each node/value that should have a formatted representation
@@ -150,7 +149,7 @@ impl FormatResult {
 
 // TODO: implement me + handle errors
 /// Main function
-pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> () {
+pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
 	// we assume that file exists
 	let mut file = rome_path.open();
 	let mut buffer = String::new();

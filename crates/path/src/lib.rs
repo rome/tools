@@ -8,7 +8,7 @@ use std::{fs::File, io::Write, ops::Deref, path::PathBuf};
 
 pub struct RomePath<'handler> {
 	file: PathBuf,
-
+	#[allow(clippy::borrowed_box)]
 	handler: Option<&'handler Box<dyn ExtensionHandler>>,
 }
 
@@ -43,13 +43,16 @@ impl<'handler> RomePath<'handler> {
 	/// assert_eq!(handler.unwrap(), expected)
 	/// ```
 	pub fn deduce_handler(mut self, app: &'handler App) -> Self {
-		if let None = self.extension() {
+		if self.extension().is_none() {
 			return self;
 		}
 		let extension = self.extension().unwrap().to_str().unwrap();
 
 		if let Some(handler) = app.get_handler(extension) {
 			self.handler = Some(handler);
+		} else {
+			// we know that unknown is hardcoded
+			self.handler = Some(app.get_handler("unknown").unwrap());
 		}
 
 		self
@@ -61,7 +64,6 @@ impl<'handler> RomePath<'handler> {
 		File::open(&self.file).expect("cannot open the file to format")
 	}
 
-
 	/// Accepts a file opened in read mode and saves into it
 	pub fn save(&mut self, content: &str) -> Result<(), std::io::Error> {
 		let mut file_to_write = File::create(&self.file).unwrap();
@@ -71,6 +73,7 @@ impl<'handler> RomePath<'handler> {
 	/// Returns the current handler associated to the file.
 	///
 	/// You need to call [deduce_handler] first in order to receive one. If not, [None] is always returned.
+	#[allow(clippy::borrowed_box)]
 	pub fn get_handler(&self) -> Option<&Box<dyn ExtensionHandler>> {
 		self.handler
 	}

@@ -1,4 +1,4 @@
-use crate::file_handlers::{base::BaseFileHandler, javascript::JsFileHandler};
+use crate::file_handlers::{unknown::UnknownFileHandler, javascript::JsFileHandler};
 use file_handlers::{json::JsonFileHandler, ExtensionHandler};
 use std::collections::HashMap;
 
@@ -19,11 +19,12 @@ impl Default for App {
 		map.insert("ts", Box::new(JsFileHandler {}));
 		map.insert("tsx", Box::new(JsFileHandler {}));
 		map.insert("json", Box::new(JsonFileHandler {}));
-		map.insert("css", Box::new(BaseFileHandler {}));
+		map.insert("unknown", Box::new(UnknownFileHandler {}));
 		Self { handlers: map }
 	}
 }
 
+#[allow(clippy::borrowed_box)]
 impl App {
 	pub fn new() -> Self {
 		Default::default()

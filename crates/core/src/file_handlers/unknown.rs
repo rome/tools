@@ -1,8 +1,8 @@
 use super::ExtensionHandler;
 #[derive(Debug, PartialEq, Eq)]
-pub struct BaseFileHandler {}
+pub struct UnknownFileHandler {}
 
-impl ExtensionHandler for BaseFileHandler {
+impl ExtensionHandler for UnknownFileHandler {
 	fn capabilities(&self) -> super::Capabilities {
 		super::Capabilities {
 			format: false,
