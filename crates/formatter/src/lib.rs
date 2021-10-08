@@ -51,13 +51,9 @@ mod printer;
 mod ts;
 
 use crate::format_json::tokenize_json;
-use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
-
-pub use format_context::FormatContext;
-
 use core::file_handlers::Language;
 pub use cst::syntax_token;
-use file::RomePath;
+pub use format_context::FormatContext;
 pub use format_element::{
 	concat_elements, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
@@ -69,7 +65,8 @@ pub use printer::PrinterOptions;
 use rslint_parser::ast::Script;
 use rslint_parser::parse_text;
 use rslint_parser::AstNode;
-use std::{io::Read, str::FromStr};
+use std::io::Read;
+use std::str::FromStr;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
@@ -159,12 +156,13 @@ pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
 
 	if let Some(handler) = rome_path.get_handler() {
 		if handler.capabilities().format {
+			let context = FormatContext::default();
 			let result = match handler.language() {
 				Language::Js => {
 					let parsed_result = parse_text(buffer.as_str(), 0);
 					let tree = Script::cast(parsed_result.syntax())
 						.unwrap()
-						.to_format_element();
+						.to_format_element(&context);
 					Some(format_element(&tree, options))
 				}
 				Language::Json => {

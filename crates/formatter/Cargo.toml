@@ -8,7 +8,7 @@ edition = "2018"
 [dependencies]
 rslint_parser = { path = "../rslint_parser" }
 rslint_rowan = { path = "../rslint_rowan" }
-file = { version = "0.0.0", path = "../file" }
+path = { version = "0.0.0", path = "../path" }
 core = { version = "0.0.0", path = "../core" }
 
 [dev-dependencies]
