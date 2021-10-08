@@ -1,4 +1,4 @@
-use crate::file_handlers::{unknown::UnknownFileHandler, javascript::JsFileHandler};
+use crate::file_handlers::{javascript::JsFileHandler, unknown::UnknownFileHandler};
 use file_handlers::{json::JsonFileHandler, ExtensionHandler};
 use std::collections::HashMap;
 
@@ -24,15 +24,16 @@ impl Default for App {
 	}
 }
 
-#[allow(clippy::borrowed_box)]
 impl App {
 	pub fn new() -> Self {
 		Default::default()
 	}
 
-	pub fn get_handler<'a>(&self, file_extension: &'a str) -> Option<&Box<dyn ExtensionHandler>> {
+	pub fn get_handler<'a>(&self, file_extension: &'a str) -> Option<&dyn ExtensionHandler> {
 		if self.handlers.contains_key(file_extension) {
-			self.handlers.get(file_extension)
+			self.handlers
+				.get(file_extension)
+				.map(|handler| handler.as_ref())
 		} else {
 			None
 		}

@@ -8,8 +8,7 @@ use std::{fs::File, io::Write, ops::Deref, path::PathBuf};
 
 pub struct RomePath<'handler> {
 	file: PathBuf,
-	#[allow(clippy::borrowed_box)]
-	handler: Option<&'handler Box<dyn ExtensionHandler>>,
+	handler: Option<&'handler dyn ExtensionHandler>,
 }
 
 impl<'handler> Deref for RomePath<'handler> {
@@ -35,12 +34,23 @@ impl<'handler> RomePath<'handler> {
 	///
 	/// ```rust
 	/// use path::RomePath;
-	/// use core::create_app;
+	/// use core::{
+	///   create_app,
+	///   file_handlers::{javascript::JsFileHandler, ExtensionHandler},
+	/// };
+	///
 	/// let app = create_app();
 	/// let file = RomePath::new("file.js").deduce_handler(&app);
 	/// let handler = file.get_handler();
-	/// let expected = app.get_js_handler("js").unwrap();
-	/// assert_eq!(handler.unwrap(), expected)
+	/// let expected = JsFileHandler {};
+	/// assert_eq!(
+	///   handler.unwrap().capabilities().format,
+	///   expected.capabilities().format
+	/// );
+	/// assert_eq!(
+	///  handler.unwrap().capabilities().lint,
+	///  expected.capabilities().lint
+	/// )
 	/// ```
 	pub fn deduce_handler(mut self, app: &'handler App) -> Self {
 		if self.extension().is_none() {
@@ -73,8 +83,7 @@ impl<'handler> RomePath<'handler> {
 	/// Returns the current handler associated to the file.
 	///
 	/// You need to call [deduce_handler] first in order to receive one. If not, [None] is always returned.
-	#[allow(clippy::borrowed_box)]
-	pub fn get_handler(&self) -> Option<&Box<dyn ExtensionHandler>> {
+	pub fn get_handler(&self) -> Option<&dyn ExtensionHandler> {
 		self.handler
 	}
 }
