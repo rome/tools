@@ -1,8 +1,8 @@
-use crate::{ts::format_syntax_token, FormatElement, ToFormatElement};
+use crate::{syntax_token, FormatContext, FormatElement, ToFormatElement};
 use rslint_parser::ast::Name;
 
 impl ToFormatElement for Name {
-	fn to_format_element(&self) -> FormatElement {
-		format_syntax_token(self.ident_token().unwrap())
+	fn to_format_element(&self, _context: &FormatContext) -> FormatElement {
+		syntax_token(&self.ident_token().unwrap())
 	}
 }

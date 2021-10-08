@@ -922,6 +922,7 @@ name = "rome-formatter"
 version = "0.0.0"
 dependencies = [
  "rslint_parser",
+ "rslint_rowan",
  "tests_macros",
 ]
 

@@ -1,11 +1,9 @@
-use crate::{FormatElement, ToFormatElement};
+use crate::{FormatContext, FormatElement, ToFormatElement};
 use rslint_parser::ast::SinglePattern;
 
 impl ToFormatElement for SinglePattern {
-	fn to_format_element(&self) -> FormatElement {
+	fn to_format_element(&self, context: &FormatContext) -> FormatElement {
 		// TODO: implementation not finished
-		self.name()
-			.expect("Name should always exist")
-			.to_format_element()
+		context.format_node(self.name().expect("Name should always exist"))
 	}
 }
