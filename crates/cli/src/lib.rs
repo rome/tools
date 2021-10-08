@@ -71,8 +71,8 @@ pub fn run_cli() {
 				})
 				.unwrap_or_default();
 
-			let file = RomePath::new(input).deduce_handler(&app);
-			format(file, FormatOptions::new(options));
+			let mut file = RomePath::new(input).deduce_handler(&app);
+			format(&mut file, FormatOptions::new(options));
 		}
 		// Thanks to the settings AppSettings::SubcommandRequiredElseHelp we should not be there
 		_ => clap::Error::with_description(

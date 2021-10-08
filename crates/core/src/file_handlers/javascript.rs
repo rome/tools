@@ -19,7 +19,7 @@ impl ExtensionHandler for JsFileHandler {
 		Mime::Javascript
 	}
 
-	fn use_tabs(&self) -> bool {
+	fn may_use_tabs(&self) -> bool {
 		true
 	}
 }

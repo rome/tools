@@ -27,6 +27,7 @@ impl std::fmt::Display for Mime {
 	}
 }
 
+#[derive(Debug)]
 pub struct Capabilities {
 	pub lint: bool,
 	pub format: bool,
@@ -38,7 +39,7 @@ pub trait ExtensionHandler {
 
 	fn mime(&self) -> Mime;
 
-	fn use_tabs(&self) -> bool {
+	fn may_use_tabs(&self) -> bool {
 		true
 	}
 
@@ -50,11 +51,6 @@ pub trait ExtensionHandler {
 	}
 
 	fn is_asset(&self) -> bool {
-		false
-	}
-
-	// TODO: what is this?
-	fn can_have_scale(&self) -> bool {
 		false
 	}
 }

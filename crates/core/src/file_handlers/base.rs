@@ -18,7 +18,7 @@ impl ExtensionHandler for BaseFileHandler {
 		super::Mime::Text
 	}
 
-	fn use_tabs(&self) -> bool {
+	fn may_use_tabs(&self) -> bool {
 		true
 	}
 }

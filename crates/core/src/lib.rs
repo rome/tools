@@ -1,21 +1,26 @@
 use crate::file_handlers::{base::BaseFileHandler, javascript::JsFileHandler};
-use file_handlers::{json::JsonFileHandler, FileHandlers};
+use file_handlers::{json::JsonFileHandler, ExtensionHandler};
+use std::collections::HashMap;
 
 pub mod file_handlers;
 
+// these strings will live for the whole App, so it makes sense to have them as static
+pub type Handlers = HashMap<&'static str, Box<dyn ExtensionHandler>>;
+
 pub struct App {
-	js_file_handler: FileHandlers,
-	base_file_handler: FileHandlers,
-	json_file_handler: FileHandlers,
+	handlers: Handlers,
 }
 
 impl Default for App {
 	fn default() -> Self {
-		Self {
-			js_file_handler: FileHandlers::Js(JsFileHandler {}),
-			base_file_handler: FileHandlers::Base(BaseFileHandler {}),
-			json_file_handler: FileHandlers::Json(JsonFileHandler {}),
-		}
+		let mut map: Handlers = HashMap::new();
+		map.insert("js", Box::new(JsFileHandler {}));
+		map.insert("jsx", Box::new(JsFileHandler {}));
+		map.insert("ts", Box::new(JsFileHandler {}));
+		map.insert("tsx", Box::new(JsFileHandler {}));
+		map.insert("json", Box::new(JsonFileHandler {}));
+		map.insert("css", Box::new(BaseFileHandler {}));
+		Self { handlers: map }
 	}
 }
 
@@ -24,22 +29,12 @@ impl App {
 		Default::default()
 	}
 
-	pub fn get_js_handler<'a>(&self, file_extension: &'a str) -> Option<&FileHandlers> {
-		match file_extension {
-			"js" | "ts" | "tsx" | "jsx" => Some(&self.js_file_handler),
-			_ => None,
+	pub fn get_handler<'a>(&self, file_extension: &'a str) -> Option<&Box<dyn ExtensionHandler>> {
+		if self.handlers.contains_key(file_extension) {
+			self.handlers.get(file_extension)
+		} else {
+			None
 		}
-	}
-
-	pub fn get_json_handler<'a>(&self, file_extension: &'a str) -> Option<&FileHandlers> {
-		match file_extension {
-			"json" => Some(&self.json_file_handler),
-			_ => None,
-		}
-	}
-
-	pub fn get_base_handler(&self) -> &FileHandlers {
-		&self.base_file_handler
 	}
 }
 

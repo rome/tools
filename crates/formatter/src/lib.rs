@@ -55,8 +55,7 @@ use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
 
 pub use format_context::FormatContext;
 
-use core::file_handlers::ExtensionHandler;
-use core::file_handlers::FileHandlers;
+use core::file_handlers::Language;
 pub use cst::syntax_token;
 use file::RomePath;
 pub use format_element::{
@@ -65,10 +64,13 @@ pub use format_element::{
 	soft_line_break_or_space, space_token, token, FormatElement,
 };
 use path::RomePath;
-pub use printer::PrintResult;
 pub use printer::Printer;
 pub use printer::PrinterOptions;
+use rslint_parser::ast::Script;
 use rslint_parser::parse_text;
+use rslint_parser::AstNode;
+use std::io::Write;
+use std::{io::Read, str::FromStr};
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
@@ -148,12 +150,7 @@ impl FormatResult {
 
 // TODO: implement me + handle errors
 /// Main function
-pub fn format(rome_path: RomePath, options: FormatOptions) -> FormatResult {
-	println!(
-		"Running formatter to:\n- file {:?}\n- with options {:?}",
-		rome_path, options.indent_style
-	);
-
+pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> () {
 	// we assume that file exists
 	let mut file = rome_path.open();
 	let mut buffer = String::new();
@@ -162,23 +159,26 @@ pub fn format(rome_path: RomePath, options: FormatOptions) -> FormatResult {
 		.expect("cannot read the file to format");
 
 	if let Some(handler) = rome_path.get_handler() {
-		match handler {
-			FileHandlers::Json(handler) => {
-				if handler.capabilities().format {
+		if handler.capabilities().format {
+			let result = match handler.language() {
+				Language::Js => {
+					let parsed_result = parse_text(buffer.as_str(), 0);
+					let tree = Script::cast(parsed_result.syntax())
+						.unwrap()
+						.to_format_element();
+					Some(format_element(&tree, options))
+				}
+				Language::Json => {
 					let elements = tokenize_json(buffer.as_str());
-					let result = format_element(&elements, options);
+					Some(format_element(&elements, options))
+				}
+				Language::Unknown => None,
+			};
 
-					println!("{}", print_result.code());
-				}
+			if let Some(result) = result {
+				rome_path.save(result.code()).unwrap();
 			}
-			FileHandlers::Js(handler) => {
-				if handler.capabilities().format {
-					// TODO: js format
-					let _ast = parse_text(buffer.as_str(), 0);
-				}
-			}
-			_ => {}
-		}
+		};
 	}
 }
 

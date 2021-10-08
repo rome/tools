@@ -19,6 +19,11 @@ use cli::run_cli;
 ///  cargo run --example run_cli format examples/input.json
 /// ```
 ///
+/// or
+///
+/// ```bash
+/// cargo run --example run_cli format examples/input.js
+/// ```
 fn main() {
 	run_cli();
 }
