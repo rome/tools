@@ -7,6 +7,5 @@ edition = "2018"
 
 [dependencies]
 rslint_parser = { path = "../rslint_parser" }
-
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }

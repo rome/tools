@@ -9,6 +9,7 @@ impl ToFormatElement for Literal {
 			.as_str()
 			.chars()
 			.map(|ch| match ch {
+				// TODO: this is the final solution and will need to find a clever way to do replacing
 				'\'' => '"',
 				_ => ch,
 			})

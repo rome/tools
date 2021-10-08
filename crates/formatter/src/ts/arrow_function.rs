@@ -1,4 +1,4 @@
-use rslint_parser::ast::{ArrowExpr, ArrowExprParams};
+use rslint_parser::ast::{ArrowExpr, ArrowExprParams, ExprOrBlock};
 
 use crate::{
 	concat_elements, format_elements, space_token, token, ts::format_syntax_token, FormatElement,
@@ -30,21 +30,18 @@ impl ToFormatElement for ArrowExpr {
 		tokens.push(space_token());
 		if let Some(arrow) = self.fat_arrow_token() {
 			tokens.push(format_syntax_token(arrow));
-		} else {
-			tokens.push(token("=>"));
 		}
+
 		tokens.push(space_token());
 
 		let body = self.body();
 
 		if let Some(body) = body {
 			match body {
-				rslint_parser::ast::ExprOrBlock::Expr(expression) => {
+				ExprOrBlock::Expr(expression) => {
 					tokens.push(expression.to_format_element());
 				}
-				rslint_parser::ast::ExprOrBlock::Block(block) => {
-					tokens.push(block.to_format_element())
-				}
+				ExprOrBlock::Block(block) => tokens.push(block.to_format_element()),
 			}
 		}
 

@@ -1,17 +1,19 @@
 use rslint_parser::ast::BlockStmt;
 
-use crate::{format_elements, space_token, token, FormatElement, ToFormatElement};
+use crate::{
+	format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space, token,
+	FormatElement, ToFormatElement,
+};
 
 impl ToFormatElement for BlockStmt {
 	fn to_format_element(&self) -> FormatElement {
-		let body: Vec<_> = self.stmts().map(|stmt| stmt.to_format_element()).collect();
-
-		format_elements![
+		group_elements(format_elements![
 			token("{"),
-			space_token(),
-			concat_elements(body),
-			space_token(),
+			soft_indent(join_elements(
+				soft_line_break_or_space(),
+				self.stmts().map(|stmt| stmt.to_format_element())
+			)),
 			token("}")
-		]
+		])
 	}
 }

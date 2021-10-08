@@ -16,7 +16,7 @@ impl ToFormatElement for ParameterList {
 			.map(|param| match param {
 				Pattern::SinglePattern(single_pattern) => single_pattern.to_format_element(),
 				Pattern::RestPattern(_) => todo!(),
-				Pattern::AssignPattern(_) => todo!(),
+				Pattern::AssignPattern(assign_pattern) => assign_pattern.to_format_element(),
 				Pattern::ObjectPattern(_) => todo!(),
 				Pattern::ArrayPattern(_) => todo!(),
 				Pattern::ExprPattern(_) => todo!(),

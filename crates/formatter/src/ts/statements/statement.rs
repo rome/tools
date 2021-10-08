@@ -22,7 +22,7 @@ impl ToFormatElement for Stmt {
 			Stmt::ThrowStmt(_) => todo!(),
 			Stmt::TryStmt(_) => todo!(),
 			Stmt::DebuggerStmt(_) => todo!(),
-			Stmt::Decl(_) => todo!(),
+			Stmt::Decl(decl) => decl.to_format_element(),
 		}
 	}
 }
