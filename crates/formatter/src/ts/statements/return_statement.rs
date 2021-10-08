@@ -1,20 +1,14 @@
-use crate::{
-	concat_elements, space_token, token, ts::format_syntax_token, FormatElement, ToFormatElement,
-};
+use crate::{concat_elements, space_token, token, FormatContext, FormatElement, ToFormatElement};
 use rslint_parser::ast::ReturnStmt;
 
 impl ToFormatElement for ReturnStmt {
-	fn to_format_element(&self) -> FormatElement {
-		let mut tokens = vec![];
-		if let Some(return_token) = self.return_token() {
-			tokens.push(format_syntax_token(return_token));
-		} else {
-			tokens.push(token("return"));
-		}
-		tokens.push(space_token());
+	fn to_format_element(&self, context: &FormatContext) -> FormatElement {
+		let mut tokens = vec![token("return"), space_token()];
+
 		if let Some(value) = self.value() {
-			tokens.push(value.to_format_element());
+			tokens.push(context.format_node(value));
 		}
+
 		tokens.push(token(";"));
 
 		concat_elements(tokens)
