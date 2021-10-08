@@ -7,14 +7,13 @@ use crate::{
 
 impl ToFormatElement for BlockStmt {
 	fn to_format_element(&self) -> FormatElement {
-		let body: Vec<_> = self.stmts().map(|stmt| stmt.to_format_element()).collect();
-		if !body.is_empty() {
-			return group_elements(format_elements![
-				token("{"),
-				soft_indent(join_elements(soft_line_break_or_space(), body)),
-				token("}")
-			]);
-		}
-		format_elements![token("{"), token("}")]
+		group_elements(format_elements![
+			token("{"),
+			soft_indent(join_elements(
+				soft_line_break_or_space(),
+				self.stmts().map(|stmt| stmt.to_format_element())
+			)),
+			token("}")
+		])
 	}
 }
