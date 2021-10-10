@@ -13,16 +13,14 @@ mod statements;
 mod test {
 	use rslint_parser::{ast::Script, parse_text, AstNode};
 
-	use crate::{format_element, FormatContext, FormatOptions};
+	use crate::Formatter;
 
 	#[test]
 	fn arrow_function() {
 		let src = "let v = (value  , second_value) =>    true";
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
-		let element = FormatContext::default().format_root(child.syntax());
-
-		let result = format_element(&element, FormatOptions::default());
+		let result = Formatter::default().format_root(child.syntax());
 		assert_eq!(result.code(), "let v = (value, second_value) => true;");
 	}
 
@@ -31,8 +29,7 @@ mod test {
 		let src = r#"function foo() { return 'something' }"#;
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
-		let element = FormatContext::default().format_root(child.syntax());
-		let result = format_element(&element, FormatOptions::default());
+		let result = Formatter::default().format_root(child.syntax());
 		assert_eq!(result.code(), r#"function foo() {return "something";}"#);
 	}
 
@@ -41,8 +38,7 @@ mod test {
 		let src = r#"let users = [   'john', 'chandler', true ]"#;
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
-		let element = FormatContext::default().format_root(child.syntax());
-		let result = format_element(&element, FormatOptions::default());
+		let result = Formatter::default().format_root(child.syntax());
 		assert_eq!(result.code(), r#"let users = ["john", "chandler", true];"#);
 	}
 
@@ -54,8 +50,7 @@ mod test {
 }"#;
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
-		let element = FormatContext::default().format_root(child.syntax());
-		let result = format_element(&element, FormatOptions::default());
+		let result = Formatter::default().format_root(child.syntax());
 		assert_eq!(
 			result.code(),
 			r#"function foo() {

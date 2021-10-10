@@ -1,12 +1,12 @@
 use rslint_parser::ast::{ArrowExpr, ArrowExprParams};
 
 use crate::{
-	concat_elements, format_elements, space_token, syntax_token, token, FormatContext,
-	FormatElement, ToFormatElement,
+	concat_elements, format_elements, space_token, syntax_token, token, FormatElement, Formatter,
+	ToFormatElement,
 };
 
 impl ToFormatElement for ArrowExpr {
-	fn to_format_element(&self, context: &FormatContext) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		let mut tokens: Vec<FormatElement> = vec![];
 
 		if let Some(async_token) = self.async_token() {
@@ -17,10 +17,12 @@ impl ToFormatElement for ArrowExpr {
 			match arrow_expression_params {
 				ArrowExprParams::Name(name) => {
 					tokens.push(token("("));
-					tokens.push(context.format_node(name));
+					tokens.push(formatter.format_node(name));
 					tokens.push(token(")"));
 				}
-				ArrowExprParams::ParameterList(params) => tokens.push(context.format_node(params)),
+				ArrowExprParams::ParameterList(params) => {
+					tokens.push(formatter.format_node(params))
+				}
 			}
 		}
 
@@ -34,7 +36,7 @@ impl ToFormatElement for ArrowExpr {
 		let body = self.body();
 
 		if let Some(body) = body {
-			tokens.push(context.format_node(body));
+			tokens.push(formatter.format_node(body));
 		}
 
 		concat_elements(tokens)

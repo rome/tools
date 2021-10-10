@@ -1,9 +1,9 @@
 use rslint_parser::ast::ExprStmt;
 
-use crate::{FormatContext, FormatElement, ToFormatElement};
+use crate::{FormatElement, Formatter, ToFormatElement};
 
 impl ToFormatElement for ExprStmt {
-	fn to_format_element(&self, context: &FormatContext) -> FormatElement {
-		context.format_node(self.expr().expect("Strange error?"))
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+		formatter.format_node(self.expr().expect("Strange error?"))
 	}
 }

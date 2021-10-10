@@ -1,14 +1,16 @@
-use crate::{concat_elements, FormatElement, FormatOptions, ToFormatElement};
+use crate::printer::Printer;
+use crate::{concat_elements, FormatElement, FormatOptions, FormatResult, ToFormatElement};
 use rslint_parser::{AstNode, SyntaxNode};
 
-/// Stores shared data relevant for formatting nodes in a CST and allows formatting sub-nodes.
-/// The context is passed to the [ToFormatElement] implementation of every node in the CST.
+/// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
+/// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
+/// can use it to format their children.
 #[derive(Debug, Default)]
-pub struct FormatContext {
+pub struct Formatter {
 	options: FormatOptions,
 }
 
-impl FormatContext {
+impl Formatter {
 	/// Creates a new context that uses the given formatter options
 	pub fn new(options: FormatOptions) -> Self {
 		Self { options }
@@ -20,13 +22,16 @@ impl FormatContext {
 		&self.options
 	}
 
-	/// Recursively formats the root syntax node and all its children
-	pub fn format_root(&self, root: &SyntaxNode) -> FormatElement {
-		concat_elements(vec![
+	/// Formats a CST
+	pub fn format_root(self, root: &SyntaxNode) -> FormatResult {
+		let element = concat_elements(vec![
 			self.format_node_start(root),
-			root.to_format_element(self),
+			root.to_format_element(&self),
 			self.format_node_end(root),
-		])
+		]);
+
+		let printer = Printer::new(self.options);
+		printer.print(&element)
 	}
 
 	/// Recursively formats the ast node and all its children

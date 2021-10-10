@@ -1,4 +1,4 @@
-use crate::{token, FormatContext, FormatElement, ToFormatElement};
+use crate::{token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, Declarator, ExprStmt, FnDecl, Literal, Name,
 	NameRef, ParameterList, ReturnStmt, Script, SequenceExpr, SinglePattern, VarDecl,
@@ -31,7 +31,7 @@ pub fn syntax_token(syntax_token: &SyntaxToken) -> FormatElement {
 }
 
 impl ToFormatElement for SyntaxNode {
-	fn to_format_element(&self, context: &FormatContext) -> FormatElement {
+	fn to_format_element(&self, context: &Formatter) -> FormatElement {
 		match self.kind() {
 			SyntaxKind::ARRAY_EXPR => ArrayExpr::cast(self.clone())
 				.unwrap()
