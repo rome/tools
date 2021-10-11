@@ -9,9 +9,8 @@ pub type Handlers = HashMap<&'static str, Box<dyn ExtensionHandler>>;
 
 pub struct App {
 	handlers: Handlers,
+	unknown_handler: Box<dyn ExtensionHandler>,
 }
-
-const UNKNOWN_EXTENSION: &str = "unknown";
 
 impl Default for App {
 	fn default() -> Self {
@@ -19,8 +18,10 @@ impl Default for App {
 		map.insert("js", Box::new(JsFileHandler {}));
 		map.insert("ts", Box::new(JsFileHandler {}));
 		map.insert("json", Box::new(JsonFileHandler {}));
-		map.insert(UNKNOWN_EXTENSION, Box::new(UnknownFileHandler {}));
-		Self { handlers: map }
+		Self {
+			handlers: map,
+			unknown_handler: Box::new(UnknownFileHandler {}),
+		}
 	}
 }
 
@@ -33,7 +34,7 @@ impl App {
 		let handler = if self.handlers.contains_key(file_extension) {
 			self.handlers.get(file_extension)
 		} else {
-			self.handlers.get(UNKNOWN_EXTENSION)
+			Some(&self.unknown_handler)
 		};
 		handler.map(|handler| handler.as_ref())
 	}

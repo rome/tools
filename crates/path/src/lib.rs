@@ -84,6 +84,7 @@ impl<'handler> RomePath<'handler> {
 	/// Returns the current handler associated to the file.
 	///
 	/// You need to call [deduce_handler] first in order to receive one. If not, [None] is always returned.
+	// TODO: move handler deduction inside the path crate
 	pub fn get_handler(&self) -> Option<&dyn ExtensionHandler> {
 		self.handler
 	}
