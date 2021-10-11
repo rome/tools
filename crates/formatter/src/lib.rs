@@ -26,14 +26,20 @@
 //! }
 //!
 //! impl ToFormatElement for KeyValue {
-//!     fn to_format_element(&self, _context: &Formatter) -> FormatElement {
-//!         format_elements![token(self.key.as_str()), space_token(), token("=>"), space_token(), token(self.value.as_str())]
+//!     fn to_format_element(&self, formatter: &Formatter)-> Option<FormatElement>  {
+//!         Some(format_elements![
+//!             token(self.key.as_str()),
+//!             space_token(),
+//!             token("=>"),
+//!             space_token(),
+//!             token(self.value.as_str())
+//!         ])
 //!     }
 //! }
 //!
 //! fn my_function() {
 //!     let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
-//!     let element = key_value.to_format_element(&Formatter::default());
+//!     let element = key_value.to_format_element(&Formatter::default()).unwrap();
 //!     let result = format_element(&element, FormatOptions::default());
 //!     assert_eq!(result.code(), "lorem => ipsum");
 //! }
@@ -70,7 +76,7 @@ use std::str::FromStr;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement;
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement>;
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]

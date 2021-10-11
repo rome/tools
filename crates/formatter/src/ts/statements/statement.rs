@@ -2,7 +2,7 @@ use crate::{FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::Stmt;
 
 impl ToFormatElement for Stmt {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
 			Stmt::BlockStmt(block) => block.to_format_element(formatter),
 			Stmt::EmptyStmt(empty_statement) => empty_statement.to_format_element(formatter),

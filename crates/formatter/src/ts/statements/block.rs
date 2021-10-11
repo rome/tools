@@ -7,7 +7,7 @@ use rslint_parser::ast::{BlockStmt, IfStmt};
 use rslint_parser::AstNode;
 
 impl ToFormatElement for BlockStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let stmts = format_statements(self.stmts(), formatter);
 
 		// Formatting of curly braces for an:
@@ -20,6 +20,6 @@ impl ToFormatElement for BlockStmt {
 			block_indent(stmts)
 		};
 
-		format_elements![token("{"), body, token("}")]
+		Some(format_elements![token("{"), body, token("}")])
 	}
 }

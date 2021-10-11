@@ -2,7 +2,7 @@ use crate::{FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::ObjectProp;
 
 impl ToFormatElement for ObjectProp {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
 			ObjectProp::LiteralProp(_) => todo!(),
 			ObjectProp::Getter(_) => todo!(),

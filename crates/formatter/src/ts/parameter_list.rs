@@ -5,13 +5,16 @@ use crate::{
 use rslint_parser::ast::ParameterList;
 
 impl ToFormatElement for ParameterList {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let mut elements = vec![];
 		if let Some(paren) = self.l_paren_token() {
-			elements.push(formatter.format_token(&paren))
+			elements.push(formatter.format_token(&paren)?)
 		}
 
-		let param_tokens = self.parameters().map(|param| formatter.format_node(param));
+		let param_tokens = self
+			.parameters()
+			.map(|param| formatter.format_node(param))
+			.flatten();
 
 		elements.push(format_elements!(join_elements(
 			format_elements!(token(","), space_token()),
@@ -19,9 +22,9 @@ impl ToFormatElement for ParameterList {
 		)));
 
 		if let Some(paren) = self.r_paren_token() {
-			elements.push(formatter.format_token(&paren));
+			elements.push(formatter.format_token(&paren)?);
 		}
 
-		concat_elements(elements)
+		Some(concat_elements(elements))
 	}
 }

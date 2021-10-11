@@ -1,5 +1,5 @@
 use crate::printer::Printer;
-use crate::{concat_elements, FormatElement, FormatOptions, FormatResult, ToFormatElement};
+use crate::{concat_elements, token, FormatElement, FormatOptions, FormatResult, ToFormatElement};
 use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
@@ -24,23 +24,25 @@ impl Formatter {
 
 	/// Formats a CST
 	pub fn format_root(self, root: &SyntaxNode) -> FormatResult {
-		let element = concat_elements(vec![
-			self.format_node_start(root),
-			root.to_format_element(&self),
-			self.format_node_end(root),
-		]);
+		let start = self.format_node_start(root);
+		// TODO we should still traverse all the nodes to ensure we add the necessary source mapping
+		// markers
+		let content = root
+			.to_format_element(&self)
+			.unwrap_or_else(|| token(root.to_string().as_str()));
+		let element = concat_elements(vec![start, content, self.format_node_end(root)]);
 
 		let printer = Printer::new(self.options);
 		printer.print(&element)
 	}
 
 	/// Recursively formats the ast node and all its children
-	pub fn format_node<T: AstNode + ToFormatElement>(&self, node: T) -> FormatElement {
-		concat_elements(vec![
+	pub fn format_node<T: AstNode + ToFormatElement>(&self, node: T) -> Option<FormatElement> {
+		Some(concat_elements(vec![
 			self.format_node_start(node.syntax()),
-			node.to_format_element(self),
+			node.to_format_element(self)?,
 			self.format_node_end(node.syntax()),
-		])
+		]))
 	}
 
 	/// Helper function that returns what should be printed before the node that work on
@@ -78,9 +80,9 @@ impl Formatter {
 	/// let formatter = Formatter::default();
 	/// let result = formatter.format_token(&syntax_token);
 	///
-	/// assert_eq!(token("=>"), result)
+	/// assert_eq!(Some(token("=>")), result)
 	/// ```
-	pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatElement {
+	pub fn format_token(&self, syntax_token: &SyntaxToken) -> Option<FormatElement> {
 		syntax_token.to_format_element(self)
 	}
 }

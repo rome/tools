@@ -17,6 +17,6 @@ mod while_statement;
 pub fn format_statements(stmts: AstChildren<Stmt>, formatter: &Formatter) -> FormatElement {
 	join_elements(
 		hard_line_break(),
-		stmts.map(|stmt| formatter.format_node(stmt)),
+		stmts.map(|stmt| formatter.format_node(stmt)).flatten(),
 	)
 }

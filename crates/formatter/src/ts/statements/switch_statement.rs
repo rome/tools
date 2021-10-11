@@ -1,3 +1,4 @@
+use crate::ts::statements::format_statements;
 use crate::{
 	block_indent, format_element::indent, format_elements, group_elements, hard_line_break,
 	join_elements, space_token, FormatElement, Formatter, ToFormatElement,
@@ -5,22 +6,19 @@ use crate::{
 use rslint_parser::ast::{CaseClause, DefaultClause, SwitchCase, SwitchStmt};
 
 impl ToFormatElement for SwitchStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
-		let switch =
-			formatter.format_token(&self.switch_token().expect("Switch token is mandatory"));
-		let condition = formatter.format_node(self.test().expect("Condition is missing"));
-		let l_curly =
-			formatter.format_token(&self.l_curly_token().expect("Left curly bracket is missing"));
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+		let switch = formatter.format_token(&self.switch_token()?)?;
+		let condition = formatter.format_node(self.test()?)?;
+		let l_curly = formatter.format_token(&self.l_curly_token()?)?;
 
-		let cases = self.cases().map(|case| formatter.format_node(case));
+		let cases = self
+			.cases()
+			.map(|case| formatter.format_node(case))
+			.flatten();
 
-		let r_curly = formatter.format_token(
-			&self
-				.r_curly_token()
-				.expect("Right curly bracket is missing"),
-		);
+		let r_curly = formatter.format_token(&self.r_curly_token()?)?;
 
-		format_elements![
+		Some(format_elements![
 			switch,
 			space_token(),
 			condition,
@@ -30,12 +28,12 @@ impl ToFormatElement for SwitchStmt {
 				block_indent(join_elements(hard_line_break(), cases)),
 				r_curly
 			])
-		]
+		])
 	}
 }
 
 impl ToFormatElement for SwitchCase {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
 			SwitchCase::CaseClause(case_clause) => case_clause.to_format_element(formatter),
 			SwitchCase::DefaultClause(default_clause) => {
@@ -46,47 +44,37 @@ impl ToFormatElement for SwitchCase {
 }
 
 impl ToFormatElement for DefaultClause {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
-		let default =
-			formatter.format_token(&self.default_token().expect("default token is missing"));
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+		let default = formatter.format_token(&self.default_token()?)?;
+		let colon = formatter.format_token(&self.colon_token()?)?;
+		let statements = format_statements(self.cons(), formatter);
 
-		let colon = formatter.format_token(&self.colon_token().expect("colon token is missing"));
-
-		let statements = self
-			.cons()
-			.map(|statement| formatter.format_node(statement));
-
-		format_elements![
+		Some(format_elements![
 			default,
 			colon,
 			space_token(),
 			// no line break needed after because it is added by the indent in the switch statement
-			indent(format_elements![
-				hard_line_break(),
-				concat_elements(statements)
-			])
-		]
+			indent(format_elements![hard_line_break(), statements])
+		])
 	}
 }
 
 impl ToFormatElement for CaseClause {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
-		let case_word = formatter.format_token(&self.case_token().expect("case token is missing"));
-		let colon = formatter.format_token(&self.colon_token().expect("colon token is missing"));
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+		let case_word = formatter.format_token(&self.case_token()?)?;
+		let colon = formatter.format_token(&self.colon_token()?)?;
 
-		let test = formatter.format_node(self.test().expect("Expression is missing"));
+		let test = formatter.format_node(self.test()?)?;
 
-		let cons = self
-			.cons()
-			.map(|statement| formatter.format_node(statement));
+		let cons = format_statements(self.cons(), formatter);
 
-		format_elements![
+		Some(format_elements![
 			case_word,
 			space_token(),
 			test,
 			colon,
 			// no line break needed after because it is added by the indent in the switch statement
-			indent(format_elements![hard_line_break(), concat_elements(cons)])
-		]
+			indent(format_elements![hard_line_break(), cons])
+		])
 	}
 }

@@ -5,17 +5,18 @@ use crate::{
 use rslint_parser::ast::ArrayExpr;
 
 impl ToFormatElement for ArrayExpr {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let elements = self
 			.elements()
-			.map(|element| formatter.format_node(element));
+			.map(|element| formatter.format_node(element))
+			.flatten();
 
 		let separator = format_elements!(token(","), soft_line_break_or_space());
-		group_elements(format_elements!(
+		Some(group_elements(format_elements!(
 			token("["),
 			soft_indent(join_elements(separator, elements)),
 			if_group_breaks(token(",")),
 			token("]"),
-		))
+		)))
 	}
 }
