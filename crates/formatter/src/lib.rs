@@ -56,7 +56,6 @@ pub use formatter::Formatter;
 
 use core::file_handlers::Language;
 pub use cst::syntax_token;
-pub use format_context::FormatContext;
 pub use format_element::{
 	concat_elements, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
@@ -65,9 +64,7 @@ pub use format_element::{
 use path::RomePath;
 pub use printer::Printer;
 pub use printer::PrinterOptions;
-use rslint_parser::ast::Script;
 use rslint_parser::parse_text;
-use rslint_parser::AstNode;
 use std::io::Read;
 use std::str::FromStr;
 
@@ -159,22 +156,19 @@ pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
 
 	if let Some(handler) = rome_path.get_handler() {
 		if handler.capabilities().format {
-			let context = FormatContext::default();
-			let element = match handler.language() {
+			let result = match handler.language() {
 				Language::Js => {
 					let parsed_result = parse_text(buffer.as_str(), 0);
-					Some(
-						Script::cast(parsed_result.syntax())
-							.unwrap()
-							.to_format_element(&context),
-					)
+					Some(Formatter::new(options).format_root(&parsed_result.syntax()))
 				}
-				Language::Json => Some(tokenize_json(buffer.as_str())),
+				Language::Json => {
+					let element = tokenize_json(buffer.as_str());
+					Some(format_element(&element, options))
+				}
 				Language::Ts | Language::Unknown => None,
 			};
 
-			if let Some(element) = element {
-				let result = format_element(&element, options);
+			if let Some(result) = result {
 				rome_path
 					.save(result.code())
 					.expect("Could not write the formatted code on file");
