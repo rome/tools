@@ -51,17 +51,22 @@ mod printer;
 mod ts;
 
 use crate::format_json::tokenize_json;
-use std::{fs::File, io::Read, path::PathBuf, str::FromStr};
-
-pub use format_context::FormatContext;
-
+use core::file_handlers::Language;
 pub use cst::syntax_token;
+pub use format_context::FormatContext;
 pub use format_element::{
 	concat_elements, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
 	soft_line_break_or_space, space_token, token, FormatElement,
 };
-use printer::Printer;
+use path::RomePath;
+pub use printer::Printer;
+pub use printer::PrinterOptions;
+use rslint_parser::ast::Script;
+use rslint_parser::parse_text;
+use rslint_parser::AstNode;
+use std::io::Read;
+use std::str::FromStr;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
@@ -141,24 +146,38 @@ impl FormatResult {
 
 // TODO: implement me + handle errors
 /// Main function
-pub fn format(path: PathBuf, options: FormatOptions) -> FormatResult {
-	println!(
-		"Running formatter to:\n- file {:?}\n- with options {:?}",
-		path, options.indent_style
-	);
+pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
 	// we assume that file exists
-	let mut file = File::open(&path).expect("cannot open the file to format");
+	let mut file = rome_path.open();
 	let mut buffer = String::new();
 	// we assume we have permissions
 	file.read_to_string(&mut buffer)
 		.expect("cannot read the file to format");
 
-	let elements = tokenize_json(buffer.as_str());
-	let result = format_element(&elements, options);
+	if let Some(handler) = rome_path.get_handler() {
+		if handler.capabilities().format {
+			let context = FormatContext::default();
+			let element = match handler.language() {
+				Language::Js => {
+					let parsed_result = parse_text(buffer.as_str(), 0);
+					Some(
+						Script::cast(parsed_result.syntax())
+							.unwrap()
+							.to_format_element(&context),
+					)
+				}
+				Language::Json => Some(tokenize_json(buffer.as_str())),
+				Language::Ts | Language::Unknown => None,
+			};
 
-	println!("{}", result.code());
-
-	result
+			if let Some(element) = element {
+				let result = format_element(&element, options);
+				rome_path
+					.save(result.code())
+					.expect("Could not write the formatted code on file");
+			}
+		};
+	}
 }
 
 pub fn format_str(content: &str, options: FormatOptions) -> FormatResult {

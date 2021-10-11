@@ -1,4 +1,6 @@
 use clap::{crate_version, App, AppSettings, Arg};
+use core::create_app;
+use path::RomePath;
 use rome_formatter::{format, FormatOptions, IndentStyle};
 use std::{path::PathBuf, str::FromStr};
 
@@ -50,12 +52,13 @@ pub fn run_cli() {
 		Err(err) => err.exit(),
 	};
 
+	let app = create_app();
+
 	match subcommand_matches {
 		Some(("format", matches)) => {
 			let size = matches.value_of("indent_size");
 			let style = matches.value_of("indent_style");
 			let input = matches.value_of("input").unwrap();
-			let input = PathBuf::from(&input);
 			let options: IndentStyle = style
 				.map(|s| match s {
 					"tab" => IndentStyle::Tab,
@@ -67,7 +70,8 @@ pub fn run_cli() {
 				})
 				.unwrap_or_default();
 
-			format(input, FormatOptions::new(options));
+			let mut file = RomePath::new(input).deduce_handler(&app);
+			format(&mut file, FormatOptions::new(options));
 		}
 		// Thanks to the settings AppSettings::SubcommandRequiredElseHelp we should not be there
 		_ => clap::Error::with_description(
