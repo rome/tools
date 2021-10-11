@@ -1,4 +1,6 @@
-use crate::{format_elements, hard_line_break, FormatElement, Formatter, ToFormatElement};
+use crate::{
+	format_elements, hard_line_break, join_elements, FormatElement, Formatter, ToFormatElement,
+};
 use rslint_parser::ast::Script;
 
 impl ToFormatElement for Script {
@@ -10,7 +12,9 @@ impl ToFormatElement for Script {
 			tokens.push(hard_line_break());
 		}
 
-		tokens.extend(self.items().map(|item| formatter.format_node(item)));
+		let elements = self.items().map(|item| formatter.format_node(item));
+
+		tokens.push(join_elements(hard_line_break(), elements));
 
 		format_elements![concat_elements(tokens), hard_line_break()]
 	}

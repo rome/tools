@@ -5,6 +5,7 @@ mod expressions;
 mod name;
 mod parameter_list;
 mod patterns;
+mod props;
 mod script;
 mod spread;
 mod statements;
@@ -59,20 +60,14 @@ mod test {
 
 	#[test]
 	fn poc() {
-		let src = r#"function foo() { let var1 = [true, false]
-	let broken = [   45, 54]
-	let var2 = (var1, var2) => {}
-}"#;
+		let src = r#"let a1 = [{}, {}];
+"#;
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
 		let result = Formatter::default().format_root(child.syntax());
 		assert_eq!(
 			result.code(),
-			r#"function foo() {
-	let var1 = [true, false];
-	let broken = [45, 54];
-	let var2 = (var1, var2) => {};
-}
+			r#"let a1 = [{}, {}];
 "#
 		);
 	}

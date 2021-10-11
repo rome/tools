@@ -10,7 +10,7 @@ impl ToFormatElement for Expr {
 			Expr::NameRef(name_ref) => name_ref.to_format_element(formatter),
 			Expr::ThisExpr(_) => todo!(),
 			Expr::ArrayExpr(array_expression) => array_expression.to_format_element(formatter),
-			Expr::ObjectExpr(_) => todo!(),
+			Expr::ObjectExpr(object_expression) => object_expression.to_format_element(formatter),
 			Expr::GroupingExpr(_) => todo!(),
 			Expr::BracketExpr(_) => todo!(),
 			Expr::DotExpr(_) => todo!(),
