@@ -1,6 +1,4 @@
-use crate::{
-	concat_elements, space_token, syntax_token, token, FormatElement, Formatter, ToFormatElement,
-};
+use crate::{concat_elements, space_token, token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::VarDecl;
 
 impl ToFormatElement for VarDecl {
@@ -8,11 +6,11 @@ impl ToFormatElement for VarDecl {
 		let mut tokens = vec![];
 
 		if let Some(token) = self.const_token() {
-			tokens.push(syntax_token(&token));
+			tokens.push(formatter.format_token(&token));
 		} else if let Some(token) = self.let_token() {
-			tokens.push(syntax_token(&token));
+			tokens.push(formatter.format_token(&token));
 		} else if let Some(token) = self.var_token() {
-			tokens.push(syntax_token(&token));
+			tokens.push(formatter.format_token(&token));
 		} else {
 			// TODO: Diagnostic?
 			tokens.push(token("var"));
