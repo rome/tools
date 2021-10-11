@@ -54,11 +54,10 @@ macro_rules! format_elements {
 
 	( $( $element:expr ),+ $(,)?) => {{
 		use $crate::{FormatElement, concat_elements};
-		concat_elements(vec![
+		concat_elements([
 			$(
 					 FormatElement::from($element)
 			),+
-
 		])
 	}};
 }
