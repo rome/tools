@@ -1,6 +1,7 @@
 pub mod javascript;
 pub mod json;
 pub mod unknown;
+
 pub enum Language {
 	Js,
 	Json,
