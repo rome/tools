@@ -1,19 +1,9 @@
 use rslint_parser::ast::Literal;
 
-use crate::{token, FormatElement, Formatter, ToFormatElement};
+use crate::{FormatElement, Formatter, ToFormatElement};
 
 impl ToFormatElement for Literal {
-	fn to_format_element(&self, _formatter: &Formatter) -> FormatElement {
-		let new_string: String = self
-			.to_string()
-			.as_str()
-			.chars()
-			.map(|ch| match ch {
-				// TODO: this is the final solution and will need to find a clever way to do replacing
-				'\'' => '"',
-				_ => ch,
-			})
-			.collect();
-		token(new_string.as_str())
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+		formatter.format_token(&self.token())
 	}
 }

@@ -1,6 +1,4 @@
-use crate::{
-	concat_elements, hard_line_break, syntax_token, FormatElement, Formatter, ToFormatElement,
-};
+use crate::{concat_elements, hard_line_break, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::Script;
 
 impl ToFormatElement for Script {
@@ -8,7 +6,7 @@ impl ToFormatElement for Script {
 		let mut tokens = vec![];
 
 		if let Some(shebang) = self.shebang_token() {
-			tokens.push(syntax_token(&shebang));
+			tokens.push(formatter.format_token(&shebang));
 			tokens.push(hard_line_break());
 		}
 

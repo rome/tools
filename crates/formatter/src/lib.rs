@@ -55,7 +55,6 @@ use crate::format_json::tokenize_json;
 pub use formatter::Formatter;
 
 use core::file_handlers::Language;
-pub use cst::syntax_token;
 pub use format_element::{
 	concat_elements, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,

@@ -1,6 +1,6 @@
 use crate::printer::Printer;
 use crate::{concat_elements, FormatElement, FormatOptions, FormatResult, ToFormatElement};
-use rslint_parser::{AstNode, SyntaxNode};
+use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -55,5 +55,32 @@ impl Formatter {
 	fn format_node_end(&self, _node: &SyntaxNode) -> FormatElement {
 		// TODO: Sets the marker for the end source map location, add trailing comments, ...
 		concat_elements(vec![])
+	}
+
+	/// Formats the passed in token
+	///
+	/// # Examples
+	///
+	/// ```
+	///
+	/// use rome_formatter::{Formatter, token};
+	/// use rslint_parser::{SyntaxNode, T, SyntaxToken};
+	/// use rslint_rowan::{GreenNode, GreenToken, SmolStr, NodeOrToken, SyntaxKind};
+	///
+	/// let node = SyntaxNode::new_root(
+	///   GreenNode::new(SyntaxKind(1), vec![
+	///     NodeOrToken::Token(GreenToken::new(SyntaxKind(T![=>].into()), SmolStr::new("=>")))
+	///   ])
+	/// );
+	///
+	/// let syntax_token = node.first_token().unwrap();
+	///
+	/// let formatter = Formatter::default();
+	/// let result = formatter.format_token(&syntax_token);
+	///
+	/// assert_eq!(token("=>"), result)
+	/// ```
+	pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatElement {
+		syntax_token.to_format_element(self)
 	}
 }

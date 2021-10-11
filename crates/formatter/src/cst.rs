@@ -3,32 +3,7 @@ use rslint_parser::ast::{
 	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, Declarator, ExprStmt, FnDecl, Literal, Name,
 	NameRef, ParameterList, ReturnStmt, Script, SequenceExpr, SinglePattern, VarDecl,
 };
-use rslint_parser::{AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
-
-/// Creates a format token representing the exact same text as the syntax token
-///
-/// # Examples
-///
-/// ```
-///
-/// use rome_formatter::{FormatOptions, syntax_token, format_element};
-/// use rslint_parser::{SyntaxNode, T};
-/// use rslint_rowan::{GreenNode, GreenToken, SmolStr, SyntaxKind, NodeOrToken};
-///
-/// let node = SyntaxNode::new_root(
-///   GreenNode::new(SyntaxKind(1), vec![
-///     NodeOrToken::Token(GreenToken::new(SyntaxKind(T![=>].into()), SmolStr::new("=>")))
-///   ])
-/// );
-///
-/// let token = node.first_token().unwrap();
-/// let element = syntax_token(&token);
-///
-/// assert_eq!("=>", format_element(&element, FormatOptions::default()).code())
-/// ```
-pub fn syntax_token(syntax_token: &SyntaxToken) -> FormatElement {
-	token(syntax_token.text().as_str())
-}
+use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
 impl ToFormatElement for SyntaxNode {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
@@ -88,6 +63,17 @@ impl ToFormatElement for SyntaxNode {
 				"Implement formatting for the {:?} syntax kind.",
 				self.kind()
 			),
+		}
+	}
+}
+
+impl ToFormatElement for SyntaxToken {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+		match self.kind() {
+			SyntaxKind::STRING => rslint_parser::ast::String::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			_ => token(self.text().as_str()),
 		}
 	}
 }

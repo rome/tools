@@ -8,6 +8,7 @@ mod patterns;
 mod script;
 mod spread;
 mod statements;
+mod tokens;
 
 #[cfg(test)]
 mod test {
