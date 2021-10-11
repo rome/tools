@@ -54,6 +54,7 @@ use crate::format_json::tokenize_json;
 
 pub use formatter::Formatter;
 
+use core::create_app;
 use core::file_handlers::Language;
 pub use format_element::{
 	concat_elements, empty_element, group_elements, hard_line_break, if_group_breaks,
@@ -145,7 +146,7 @@ impl FormatResult {
 
 // TODO: implement me + handle errors
 /// Main function
-pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
+pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> Option<FormatResult> {
 	// we assume that file exists
 	let mut file = rome_path.open();
 	let mut buffer = String::new();
@@ -157,6 +158,7 @@ pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
 		if handler.capabilities().format {
 			let result = match handler.language() {
 				Language::Js => {
+					dbg!("here");
 					let parsed_result = parse_text(buffer.as_str(), 0);
 					Some(Formatter::new(options).format_root(&parsed_result.syntax()))
 				}
@@ -167,18 +169,27 @@ pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
 				Language::Ts | Language::Unknown => None,
 			};
 
-			if let Some(result) = result {
-				rome_path
-					.save(result.code())
-					.expect("Could not write the formatted code on file");
-			}
+			return result;
 		};
+	}
+	None
+}
+
+pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions) {
+	let result = format(rome_path, options);
+	if let Some(result) = result {
+		rome_path
+			.save(result.code())
+			.expect("Could not write the formatted code on file");
 	}
 }
 
-pub fn format_str(content: &str, options: FormatOptions) -> FormatResult {
-	let element = tokenize_json(content);
-	format_element(&element, options)
+pub fn format_file(path_to_file: &str, options: FormatOptions) -> FormatResult {
+	// TODO: to remove once the app architecture will change
+	let app = create_app();
+	let mut rome_path = RomePath::new(path_to_file).deduce_handler(&app);
+	let element = format(&mut rome_path, options);
+	element.unwrap()
 }
 
 pub fn format_element(element: &FormatElement, options: FormatOptions) -> FormatResult {

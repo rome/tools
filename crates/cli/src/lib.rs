@@ -1,7 +1,7 @@
 use clap::{crate_version, App, AppSettings, Arg};
 use core::create_app;
 use path::RomePath;
-use rome_formatter::{format, FormatOptions, IndentStyle};
+use rome_formatter::{format_file_and_save, FormatOptions, IndentStyle};
 use std::{path::PathBuf, str::FromStr};
 
 /// Main function to run Rome CLI
@@ -71,7 +71,7 @@ pub fn run_cli() {
 				.unwrap_or_default();
 
 			let mut file = RomePath::new(input).deduce_handler(&app);
-			format(&mut file, FormatOptions::new(options));
+			format_file_and_save(&mut file, FormatOptions::new(options));
 		}
 		// Thanks to the settings AppSettings::SubcommandRequiredElseHelp we should not be there
 		_ => clap::Error::with_description(

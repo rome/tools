@@ -22,7 +22,11 @@ mod test {
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
 		let result = Formatter::default().format_root(child.syntax());
-		assert_eq!(result.code(), "let v = (value, second_value) => true;");
+		assert_eq!(
+			result.code(),
+			"let v = (value, second_value) => true;
+"
+		);
 	}
 
 	#[test]
@@ -33,9 +37,8 @@ mod test {
 		let result = Formatter::default().format_root(child.syntax());
 		assert_eq!(
 			result.code(),
-			r#"function foo() {
-	return "something";
-}"#
+			r#"function foo() {return "something";}
+"#
 		);
 	}
 
@@ -45,7 +48,11 @@ mod test {
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
 		let result = Formatter::default().format_root(child.syntax());
-		assert_eq!(result.code(), r#"let users = ["john", "chandler", true];"#);
+		assert_eq!(
+			result.code(),
+			r#"let users = ["john", "chandler", true];
+"#
+		);
 	}
 
 	#[test]
@@ -63,7 +70,8 @@ mod test {
 	let var1 = [true, false];
 	let broken = [45, 54];
 	let var2 = (var1, var2) => {};
-}"#
+}
+"#
 		);
 	}
 }
