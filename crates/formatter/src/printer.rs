@@ -118,27 +118,26 @@ impl Printer {
 				self.state.pending_spaces += 1;
 				vec![]
 			}
+			FormatElement::Empty => vec![],
 			FormatElement::Token(token) => {
-				if !token.is_empty() {
-					// Print pending indention
-					if self.state.pending_indent > 0 {
-						self.print_str(
-							self.options
-								.indent_string
-								.repeat(self.state.pending_indent as usize)
-								.as_str(),
-						);
-						self.state.pending_indent = 0;
-					}
-
-					// Print pending spaces
-					if self.state.pending_spaces > 0 {
-						self.print_str(" ".repeat(self.state.pending_spaces as usize).as_str());
-						self.state.pending_spaces = 0;
-					}
-
-					self.print_str(token);
+				// Print pending indention
+				if self.state.pending_indent > 0 {
+					self.print_str(
+						self.options
+							.indent_string
+							.repeat(self.state.pending_indent as usize)
+							.as_str(),
+					);
+					self.state.pending_indent = 0;
 				}
+
+				// Print pending spaces
+				if self.state.pending_spaces > 0 {
+					self.print_str(" ".repeat(self.state.pending_spaces as usize).as_str());
+					self.state.pending_spaces = 0;
+				}
+
+				self.print_str(token);
 				vec![]
 			}
 
@@ -264,9 +263,10 @@ impl Printer {
 				..
 			}) => vec![],
 
-			FormatElement::Space | FormatElement::Indent { .. } | FormatElement::List { .. } => {
-				self.print_element(element, args)
-			}
+			FormatElement::Empty
+			| FormatElement::Space
+			| FormatElement::Indent { .. }
+			| FormatElement::List { .. } => self.print_element(element, args),
 		};
 
 		Ok(next_calls)

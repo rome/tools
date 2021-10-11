@@ -31,7 +31,12 @@ mod test {
 		let tree = parse_text(src, 0);
 		let child = Script::cast(tree.syntax()).unwrap();
 		let result = Formatter::default().format_root(child.syntax());
-		assert_eq!(result.code(), r#"function foo() {return "something";}"#);
+		assert_eq!(
+			result.code(),
+			r#"function foo() {
+	return "something";
+}"#
+		);
 	}
 
 	#[test]
