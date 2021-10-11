@@ -4,6 +4,14 @@ use std::ops::Deref;
 
 type Content = Box<FormatElement>;
 
+/// Format element that doesn't represent any content.
+///
+/// Can be helpful if you need to return a `FormatElement` (e.g. in an else branch) but don't want
+/// to show any content.
+pub fn empty_element() -> FormatElement {
+	FormatElement::Empty
+}
+
 /// A line break that only gets printed if the enclosing [Group] doesn't fit on a single line.
 /// It's omitted if the enclosing [Group] fits on a single line.
 /// A soft line break is identical to a hard line break when not enclosed inside of a [Group].
@@ -139,7 +147,11 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// ```
 #[inline]
 pub fn token(text: &str) -> FormatElement {
-	FormatElement::Token(Token::new(text))
+	if text.is_empty() {
+		FormatElement::Empty
+	} else {
+		FormatElement::Token(Token::new(text))
+	}
 }
 
 /// Inserts a single space. Allows to separate different tokens.
@@ -185,11 +197,14 @@ where
 	for element in elements {
 		match element {
 			FormatElement::List(list) => concatenated.extend(list.content),
+			FormatElement::Empty => (),
 			_ => concatenated.push(element),
 		}
 	}
 
-	if concatenated.len() == 1 {
+	if concatenated.is_empty() {
+		empty_element()
+	} else if concatenated.len() == 1 {
 		concatenated.pop().unwrap()
 	} else {
 		FormatElement::from(List::new(concatenated))
@@ -216,10 +231,15 @@ where
 	TSep: Into<FormatElement>,
 	I: IntoIterator<Item = FormatElement>,
 {
-	concat_elements(Intersperse::new(elements.into_iter(), separator.into()))
+	concat_elements(Intersperse::new(
+		elements.into_iter().filter(|e| e != &FormatElement::Empty),
+		separator.into(),
+	))
 }
 
 /// Inserts a hard line break before and after the content and increases the indention level for the content by one.
+///
+/// Doesn't create an indention if the passed in content is [FormatElement::Empty].
 ///
 /// ## Examples
 ///
@@ -243,10 +263,16 @@ where
 /// ```
 #[inline]
 pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
-	format_elements![
-		Indent::new(format_elements![hard_line_break(), content.into()]),
-		hard_line_break(),
-	]
+	let content = content.into();
+
+	if content == FormatElement::Empty {
+		content
+	} else {
+		format_elements![
+			Indent::new(format_elements![hard_line_break(), content]),
+			hard_line_break(),
+		]
+	}
 }
 
 /// Indents the content by inserting a line break before and after the content and increasing
@@ -300,10 +326,16 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 ///
 #[inline]
 pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
-	format_elements![
-		Indent::new(format_elements![soft_line_break(), content.into()]),
-		soft_line_break(),
-	]
+	let content = content.into();
+
+	if content == FormatElement::Empty {
+		content
+	} else {
+		format_elements![
+			Indent::new(format_elements![soft_line_break(), content]),
+			soft_line_break(),
+		]
+	}
 }
 
 /// Creates a logical [Group] around the content that should either consistently be printed on a single line
@@ -362,7 +394,13 @@ pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 #[inline]
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
-	FormatElement::from(Group::new(content.into()))
+	let content = content.into();
+
+	if content == FormatElement::Empty {
+		content
+	} else {
+		FormatElement::from(Group::new(content))
+	}
 }
 
 /// Adds a conditional content that is emitted only if it isn't inside an enclosing [Group] that
@@ -419,10 +457,16 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ```
 #[inline]
 pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
-	FormatElement::from(ConditionalGroupContent::new(
-		content.into(),
-		GroupPrintMode::Multiline,
-	))
+	let content = content.into();
+
+	if content == FormatElement::Empty {
+		content
+	} else {
+		FormatElement::from(ConditionalGroupContent::new(
+			content,
+			GroupPrintMode::Multiline,
+		))
+	}
 }
 
 /// Adds a conditional content specific for [Group]s that fit on a single line. The content isn't
@@ -479,10 +523,16 @@ pub fn if_group_fits_on_single_line<TFlat>(flat_content: TFlat) -> FormatElement
 where
 	TFlat: Into<FormatElement>,
 {
-	FormatElement::from(ConditionalGroupContent::new(
-		flat_content.into(),
-		GroupPrintMode::Flat,
-	))
+	let flat_content = flat_content.into();
+
+	if flat_content == FormatElement::Empty {
+		flat_content
+	} else {
+		FormatElement::from(ConditionalGroupContent::new(
+			flat_content,
+			GroupPrintMode::Flat,
+		))
+	}
 }
 
 /// Language agnostic IR for formatting source code.
@@ -490,6 +540,8 @@ where
 /// Use the helper functions like [space], [soft_line_break] etc. defined in this file to create elements.
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum FormatElement {
+	Empty,
+
 	/// A space token, see [space] for documentation.
 	Space,
 
@@ -667,7 +719,7 @@ impl From<Indent> for FormatElement {
 #[cfg(test)]
 mod tests {
 
-	use crate::format_element::{join_elements, List};
+	use crate::format_element::{empty_element, join_elements, List};
 	use crate::{concat_elements, space_token, token, FormatElement};
 
 	#[test]
@@ -689,10 +741,18 @@ mod tests {
 	}
 
 	#[test]
-	fn concat_elements_flattens_sub_lists() {
+	fn concat_elements_the_empty_element_if_the_passed_vector_is_empty() {
+		let concatenated = concat_elements(vec![]);
+
+		assert_eq!(concatenated, empty_element());
+	}
+
+	#[test]
+	fn concat_elements_flattens_sub_lists_and_skips_empty_elements() {
 		let concatenated = concat_elements(vec![
 			token("a"),
 			space_token(),
+			empty_element(),
 			concat_elements(vec![token("1"), space_token(), token("2")]),
 			space_token(),
 			token("b"),
@@ -736,11 +796,19 @@ mod tests {
 	}
 
 	#[test]
-	fn join_flattens_sub_lists_without_inserting_separators() {
+	fn join_returns_the_empty_element_if_the_passed_vec_is_empty() {
+		let joined = join_elements(space_token(), vec![]);
+
+		assert_eq!(joined, empty_element());
+	}
+
+	#[test]
+	fn join_flattens_sub_lists_and_skips_empty_elements_without_inserting_separators() {
 		let joined = join_elements(
 			space_token(),
 			vec![
 				token("a"),
+				empty_element(),
 				concat_elements(vec![token("1"), token("+"), token("2")]),
 				token("b"),
 			],

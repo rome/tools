@@ -5,7 +5,7 @@ use crate::{FormatElement, Formatter, ToFormatElement};
 impl ToFormatElement for Stmt {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		match self {
-			Stmt::BlockStmt(_) => todo!(),
+			Stmt::BlockStmt(block) => block.to_format_element(formatter),
 			Stmt::EmptyStmt(_) => todo!(),
 			Stmt::ExprStmt(expr_stmt) => expr_stmt.to_format_element(formatter),
 			Stmt::IfStmt(_) => todo!(),
