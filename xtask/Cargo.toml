@@ -5,25 +5,25 @@ edition = "2018"
 publish = false
 
 [dependencies]
-quote = "1.0.2"
-proc-macro2 = { version = "1.0.19", features = ["span-locations"] }
-anyhow = "1.0.26"
-pico-args = "0.3.4"
-syn = { version = "1.0.39", features = ["full", "parsing"] }
-unindent = "0.1.6"
+quote = "1.0.10"
+proc-macro2 = { version = "1.0.29", features = ["span-locations"] }
+anyhow = "1.0.44"
+clap = "3.0.0-beta.4"
+syn = { version = "1.0.80", features = ["full", "parsing"] }
+unindent = "0.1.7"
 convert_case = "0.4.0"
-regex = "1.3.9"
-serde =  { version = "1.0.116", features = ["derive"] }
-serde_yaml = "0.8.13"
-once_cell = "1.4.1"
+regex = "1.5.4"
+serde =  { version = "1.0.130", features = ["derive"] }
+serde_yaml = "0.8.21"
+once_cell = "1.8.0"
 rslint_parser = { path = "../crates/rslint_parser", version = "0.3" }
 rslint_errors = { path = "../crates/rslint_errors", version = "0.2.0" }
 # rslint_config = { path = "../crates/rslint_config", version = "0.1", features = ["schema"] }
-ascii_table = "3.0.1"
+ascii_table = "3.0.2"
 colored = "2.0.0"
-indicatif = { version = "0.15.0", features = ["improved_unicode"] }
-walkdir = "2.3.1"
-serde_json = "1.0.59"
-schemars = "0.8"
-yastl = "0.1"
+indicatif = { version = "0.16.2", features = ["improved_unicode"] }
+walkdir = "2.3.2"
+serde_json = "1.0.68"
+schemars = "0.8.6"
+yastl = "0.1.2"
 num_cpus = "1.13"
