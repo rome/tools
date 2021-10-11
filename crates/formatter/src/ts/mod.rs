@@ -37,7 +37,9 @@ mod test {
 		let result = Formatter::default().format_root(child.syntax());
 		assert_eq!(
 			result.code(),
-			r#"function foo() {return "something";}
+			r#"function foo() {
+	return "something";
+}
 "#
 		);
 	}

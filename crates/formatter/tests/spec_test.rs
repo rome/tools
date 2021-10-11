@@ -1,3 +1,4 @@
+use core::create_app;
 use rome_formatter::{format_file, FormatOptions};
 use std::fs;
 use std::path::Path;
@@ -14,6 +15,7 @@ use std::path::Path;
 /// * `json/null` -> input: `tests/specs/json/null.json`, expected output: `tests/specs/json/null.expected.json`
 /// * `null` -> input: `tests/specs/null.json`, expected output: `tests/specs/null.expected.json`
 pub fn run(spec_input_file: &str, expected_file: &str) {
+	let app = create_app();
 	let file_path = &spec_input_file;
 	let spec_input_file = Path::new(spec_input_file);
 	let expected_file = Path::new(expected_file);
@@ -30,7 +32,7 @@ pub fn run(spec_input_file: &str, expected_file: &str) {
 		expected_file.display(),
 	);
 
-	let result = format_file(file_path, FormatOptions::default());
+	let result = format_file(file_path, FormatOptions::default(), &app);
 	let expected_output = fs::read_to_string(expected_file).unwrap();
 
 	assert_eq!(&expected_output, result.code());
