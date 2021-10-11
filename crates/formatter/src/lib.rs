@@ -18,7 +18,7 @@
 //!
 //! Now, we do want to create this IR for the data structure:
 //! ```rust
-//! use rome_formatter::{format_elements, format_element, FormatContext, ToFormatElement, FormatElement, FormatOptions, space_token, token };
+//! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatOptions, space_token, token };
 //!
 //! struct KeyValue {
 //!     key: String,
@@ -26,14 +26,14 @@
 //! }
 //!
 //! impl ToFormatElement for KeyValue {
-//!     fn to_format_element(&self, _context: &FormatContext) -> FormatElement {
+//!     fn to_format_element(&self, _context: &Formatter) -> FormatElement {
 //!         format_elements![token(self.key.as_str()), space_token(), token("=>"), space_token(), token(self.value.as_str())]
 //!     }
 //! }
 //!
 //! fn my_function() {
 //!     let key_value = KeyValue { key: String::from("lorem"), value: String::from("ipsum") };
-//!     let element = key_value.to_format_element(&FormatContext::default());
+//!     let element = key_value.to_format_element(&Formatter::default());
 //!     let result = format_element(&element, FormatOptions::default());
 //!     assert_eq!(result.code(), "lorem => ipsum");
 //! }
@@ -42,18 +42,20 @@
 //! [IR]: https://en.wikipedia.org/wiki/Intermediate_representation
 
 mod cst;
-mod format_context;
 mod format_element;
 mod format_elements;
 mod format_json;
+mod formatter;
 mod intersperse;
 mod printer;
 mod ts;
 
 use crate::format_json::tokenize_json;
+
+pub use formatter::Formatter;
+
 use core::file_handlers::Language;
 pub use cst::syntax_token;
-pub use format_context::FormatContext;
 pub use format_element::{
 	concat_elements, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
@@ -62,15 +64,13 @@ pub use format_element::{
 use path::RomePath;
 pub use printer::Printer;
 pub use printer::PrinterOptions;
-use rslint_parser::ast::Script;
 use rslint_parser::parse_text;
-use rslint_parser::AstNode;
 use std::io::Read;
 use std::str::FromStr;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
-	fn to_format_element(&self, context: &FormatContext) -> FormatElement;
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement;
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]
@@ -156,22 +156,19 @@ pub fn format(rome_path: &mut RomePath, options: FormatOptions) {
 
 	if let Some(handler) = rome_path.get_handler() {
 		if handler.capabilities().format {
-			let context = FormatContext::default();
-			let element = match handler.language() {
+			let result = match handler.language() {
 				Language::Js => {
 					let parsed_result = parse_text(buffer.as_str(), 0);
-					Some(
-						Script::cast(parsed_result.syntax())
-							.unwrap()
-							.to_format_element(&context),
-					)
+					Some(Formatter::new(options).format_root(&parsed_result.syntax()))
 				}
-				Language::Json => Some(tokenize_json(buffer.as_str())),
+				Language::Json => {
+					let element = tokenize_json(buffer.as_str());
+					Some(format_element(&element, options))
+				}
 				Language::Ts | Language::Unknown => None,
 			};
 
-			if let Some(element) = element {
-				let result = format_element(&element, options);
+			if let Some(result) = result {
 				rome_path
 					.save(result.code())
 					.expect("Could not write the formatted code on file");

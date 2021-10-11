@@ -1,15 +1,15 @@
-use crate::{FormatContext, FormatElement, ToFormatElement};
+use crate::{FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::Expr;
 
 impl ToFormatElement for Expr {
-	fn to_format_element(&self, context: &FormatContext) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		match self {
-			Expr::ArrowExpr(arrow) => arrow.to_format_element(context),
-			Expr::Literal(literal) => literal.to_format_element(context),
+			Expr::ArrowExpr(arrow) => arrow.to_format_element(formatter),
+			Expr::Literal(literal) => literal.to_format_element(formatter),
 			Expr::Template(_) => todo!(),
-			Expr::NameRef(name_ref) => name_ref.to_format_element(context),
+			Expr::NameRef(name_ref) => name_ref.to_format_element(formatter),
 			Expr::ThisExpr(_) => todo!(),
-			Expr::ArrayExpr(array_expression) => array_expression.to_format_element(context),
+			Expr::ArrayExpr(array_expression) => array_expression.to_format_element(formatter),
 			Expr::ObjectExpr(_) => todo!(),
 			Expr::GroupingExpr(_) => todo!(),
 			Expr::BracketExpr(_) => todo!(),
@@ -20,7 +20,7 @@ impl ToFormatElement for Expr {
 			Expr::BinExpr(_) => todo!(),
 			Expr::CondExpr(_) => todo!(),
 			Expr::AssignExpr(_) => todo!(),
-			Expr::SequenceExpr(expr) => expr.to_format_element(context),
+			Expr::SequenceExpr(expr) => expr.to_format_element(formatter),
 			Expr::FnExpr(_) => todo!(),
 			Expr::ClassExpr(_) => todo!(),
 			Expr::NewTarget(_) => todo!(),

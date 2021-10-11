@@ -1,9 +1,9 @@
 use rslint_parser::ast::Literal;
 
-use crate::{token, FormatContext, FormatElement, ToFormatElement};
+use crate::{token, FormatElement, Formatter, ToFormatElement};
 
 impl ToFormatElement for Literal {
-	fn to_format_element(&self, _context: &FormatContext) -> FormatElement {
+	fn to_format_element(&self, _formatter: &Formatter) -> FormatElement {
 		let new_string: String = self
 			.to_string()
 			.as_str()

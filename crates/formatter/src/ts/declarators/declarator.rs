@@ -1,15 +1,14 @@
 use crate::{
-	concat_elements, space_token, syntax_token, token, FormatContext, FormatElement,
-	ToFormatElement,
+	concat_elements, space_token, syntax_token, token, FormatElement, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::Declarator;
 
 impl ToFormatElement for Declarator {
-	fn to_format_element(&self, context: &FormatContext) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		let mut tokens = vec![];
 
 		if let Some(pattern) = self.pattern() {
-			tokens.push(context.format_node(pattern));
+			tokens.push(formatter.format_node(pattern));
 		}
 		if let Some(equal) = self.eq_token() {
 			tokens.push(space_token());
@@ -18,7 +17,7 @@ impl ToFormatElement for Declarator {
 		}
 
 		if let Some(expression) = self.value() {
-			tokens.push(context.format_node(expression));
+			tokens.push(formatter.format_node(expression));
 		}
 		tokens.push(token(";"));
 
