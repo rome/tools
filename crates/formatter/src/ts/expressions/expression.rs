@@ -17,7 +17,7 @@ impl ToFormatElement for Expr {
 			Expr::NewExpr(_) => todo!(),
 			Expr::CallExpr(_) => todo!(),
 			Expr::UnaryExpr(_) => todo!(),
-			Expr::BinExpr(_) => todo!(),
+			Expr::BinExpr(binary_expression) => binary_expression.to_format_element(formatter),
 			Expr::CondExpr(_) => todo!(),
 			Expr::AssignExpr(_) => todo!(),
 			Expr::SequenceExpr(expr) => expr.to_format_element(formatter),
