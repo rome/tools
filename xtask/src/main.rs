@@ -1,63 +1,54 @@
-use pico_args::Arguments;
+use clap::{App, Arg};
 use xtask::{
 	codegen::{self, Mode},
 	coverage,
-	// docgen,
 	glue::pushd,
-	project_root,
-	run_rustfmt,
-	Result,
+	project_root, run_rustfmt, Result,
 };
 
 fn main() -> Result<()> {
 	let _d = pushd(project_root());
 
-	let mut args = Arguments::from_env();
-	let subcommand = args.subcommand()?.unwrap_or_default();
+	let commands = App::new("xtask")
+		.about("Run custom build command.")
+		.subcommand(App::new("codegen"))
+		.subcommand(App::new("syntax"))
+		.subcommand(App::new("format"))
+		.subcommand(App::new("docgen"))
+		.subcommand(
+			App::new("coverage").arg(
+				Arg::new("coverage_query")
+					.about("Query parameter for coverage")
+					.index(1)
+					.required(true)
+					.takes_value(true),
+			),
+		)
+		.get_matches();
 
-	match subcommand.as_str() {
-		"codegen" => {
-			args.finish()?;
-			codegen::generate_parser_tests(Mode::Overwrite)?;
+	match commands.subcommand() {
+		Some(("codegen", _)) => {
+			codegen::generate_parser_tests(Mode::Overwrite).ok();
 			Ok(())
 		}
-		"syntax" => {
-			args.finish()?;
-			codegen::generate_syntax(Mode::Overwrite)?;
+		Some(("syntax", _)) => {
+			codegen::generate_syntax(Mode::Overwrite).ok();
 			Ok(())
 		}
-		"format" => {
-			args.finish()?;
-			run_rustfmt(Mode::Overwrite)
+		Some(("format", _)) => {
+			run_rustfmt(Mode::Overwrite).ok();
+			Ok(())
 		}
-		// "docgen" => {
-		//     args.finish()?;
-		//     docgen::run();
-		//     Ok(())
-		// }
-		"coverage" => {
-			let free = args.free()?;
-			let query = free.get(0).map(String::as_str);
-
+		Some(("docgen", _)) => {
+			// docgen::run();
+			Ok(())
+		}
+		Some(("coverage", coverage_matches)) => {
+			let query = coverage_matches.value_of("coverage_query");
 			let pool = yastl::ThreadConfig::new().stack_size(8 << 30);
 			coverage::run(query, yastl::Pool::with_config(num_cpus::get(), pool));
 			Ok(())
 		}
-		_ => {
-			eprintln!(
-				"\
-cargo xtask
-Run custom build command.
-USAGE:
-    cargo xtask <SUBCOMMAND>
-SUBCOMMANDS:
-    format
-    codegen
-    syntax
-    docgen
-    coverage"
-			);
-			Ok(())
-		}
+		_ => Ok(()),
 	}
 }
