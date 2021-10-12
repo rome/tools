@@ -1,4 +1,4 @@
-use crate::{concat_elements, space_token, token, FormatElement, Formatter, ToFormatElement};
+use crate::{concat_elements, space_token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::Declarator;
 
 impl ToFormatElement for Declarator {
@@ -17,7 +17,6 @@ impl ToFormatElement for Declarator {
 		if let Some(expression) = self.value() {
 			tokens.push(formatter.format_node(expression));
 		}
-		tokens.push(token(";"));
 
 		concat_elements(tokens)
 	}
