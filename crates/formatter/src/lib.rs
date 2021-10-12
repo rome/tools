@@ -57,7 +57,7 @@ pub use formatter::Formatter;
 use core::file_handlers::Language;
 use core::App;
 pub use format_element::{
-	concat_elements, empty_element, group_elements, hard_line_break, if_group_breaks,
+	concat_elements, empty_element, group_elements, hard_indent, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
 	soft_line_break_or_space, space_token, token, FormatElement,
 };

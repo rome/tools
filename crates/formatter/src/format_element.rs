@@ -237,6 +237,43 @@ where
 	))
 }
 
+/// It adds a level of indentation to the given content
+///
+/// It doesn't add any line breaks at the edges of the content, meaning that
+/// the line breaks have to be manually added.
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::{format_elements, format_element, FormatOptions, hard_line_break, token, indent};
+/// let block = (format_elements![
+///   token("{"),
+///   indent(format_elements![
+///     hard_line_break(),
+///     token("let a = 10;"),
+///     hard_line_break(),
+///     token("let c = a + 5;"),
+///   ]),
+///   hard_line_break(),
+///   token("}"),
+/// ]);
+///
+/// assert_eq!(
+///   "{\n\tlet a = 10;\n\tlet c = a + 5;\n}",
+///   format_element(&block, FormatOptions::default()).code()
+/// );
+/// ```
+#[inline]
+pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
+	let content = content.into();
+
+	if content == FormatElement::Empty {
+		content
+	} else {
+		format_elements![Indent::new(format_elements![content])]
+	}
+}
+
 /// Inserts a hard line break before and after the content and increases the indention level for the content by one.
 ///
 /// Doesn't create an indention if the passed in content is [FormatElement.is_empty].
@@ -244,11 +281,11 @@ where
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{format_element, format_elements, token,FormatOptions, hard_line_break, indent};
+/// use rome_formatter::{format_element, format_elements, token, FormatOptions, hard_line_break, hard_indent};
 ///
 /// let block = (format_elements![
 ///   token("{"),
-///   indent(format_elements![
+///   hard_indent(format_elements![
 ///     token("let a = 10;"),
 ///     hard_line_break(),
 ///     token("let c = a + 5;"),
@@ -262,7 +299,7 @@ where
 /// );
 /// ```
 #[inline]
-pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
+pub fn hard_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 	let content = content.into();
 
 	if content.is_empty() {

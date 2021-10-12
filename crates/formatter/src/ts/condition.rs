@@ -1,4 +1,4 @@
-use crate::{FormatElement, ToFormatElement, format_elements, group_elements, soft_indent};
+use crate::{format_elements, group_elements, soft_indent, FormatElement, ToFormatElement};
 use rslint_parser::ast::Condition;
 
 impl ToFormatElement for Condition {

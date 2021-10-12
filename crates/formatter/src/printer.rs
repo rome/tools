@@ -439,8 +439,8 @@ mod tests {
 	use crate::format_element::join_elements;
 	use crate::printer::{LineEnding, Printer, PrinterOptions};
 	use crate::{
-		format_elements, group_elements, hard_line_break, if_group_breaks, indent, soft_indent,
-		soft_line_break, soft_line_break_or_space, token, FormatElement, FormatResult,
+		format_elements, group_elements, hard_indent, hard_line_break, if_group_breaks,
+		soft_indent, soft_line_break, soft_line_break_or_space, token, FormatElement, FormatResult,
 	};
 
 	/// Prints the given element with the default printer options
@@ -520,7 +520,7 @@ two lines`,
 
 		let program = format_elements![
 			token("function main() {"),
-			indent(token("let x = `This is a multiline\nstring`;"),),
+			hard_indent(token("let x = `This is a multiline\nstring`;"),),
 			token("}"),
 			hard_line_break(),
 		];
