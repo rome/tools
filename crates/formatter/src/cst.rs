@@ -1,8 +1,8 @@
 use crate::{token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, Declarator, EmptyStmt, ExprStmt, FnDecl,
-	IdentProp, Literal, Name, NameRef, ObjectExpr, ParameterList, ReturnStmt, Script, SequenceExpr,
-	SinglePattern, VarDecl,
+	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, Condition, Declarator, EmptyStmt, ExprStmt,
+	FnDecl, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, IdentProp, IfStmt, Literal, Name,
+	NameRef, ObjectExpr, ParameterList, ReturnStmt, Script, SequenceExpr, SinglePattern, VarDecl,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -58,6 +58,24 @@ impl ToFormatElement for SyntaxNode {
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::RETURN_STMT => ReturnStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::IF_STMT => IfStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::CONDITION => Condition::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::FOR_STMT => ForStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::FOR_STMT_TEST => ForStmtTest::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::FOR_STMT_INIT => ForStmtInit::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::FOR_STMT_UPDATE => ForStmtUpdate::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::EMPTY_STMT => EmptyStmt::cast(self.clone())

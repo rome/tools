@@ -232,14 +232,14 @@ where
 	I: IntoIterator<Item = FormatElement>,
 {
 	concat_elements(Intersperse::new(
-		elements.into_iter().filter(|e| e != &FormatElement::Empty),
+		elements.into_iter().filter(|e| !e.is_empty()),
 		separator.into(),
 	))
 }
 
 /// Inserts a hard line break before and after the content and increases the indention level for the content by one.
 ///
-/// Doesn't create an indention if the passed in content is [FormatElement::Empty].
+/// Doesn't create an indention if the passed in content is [FormatElement.is_empty].
 ///
 /// ## Examples
 ///
@@ -265,7 +265,7 @@ where
 pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 	let content = content.into();
 
-	if content == FormatElement::Empty {
+	if content.is_empty() {
 		content
 	} else {
 		format_elements![
@@ -328,7 +328,7 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 	let content = content.into();
 
-	if content == FormatElement::Empty {
+	if content.is_empty() {
 		content
 	} else {
 		format_elements![
@@ -396,7 +396,7 @@ pub fn soft_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 	let content = content.into();
 
-	if content == FormatElement::Empty {
+	if content.is_empty() {
 		content
 	} else {
 		FormatElement::from(Group::new(content))
@@ -459,7 +459,7 @@ pub fn group_elements<T: Into<FormatElement>>(content: T) -> FormatElement {
 pub fn if_group_breaks<T: Into<FormatElement>>(content: T) -> FormatElement {
 	let content = content.into();
 
-	if content == FormatElement::Empty {
+	if content.is_empty() {
 		content
 	} else {
 		FormatElement::from(ConditionalGroupContent::new(
@@ -525,7 +525,7 @@ where
 {
 	let flat_content = flat_content.into();
 
-	if flat_content == FormatElement::Empty {
+	if flat_content.is_empty() {
 		flat_content
 	} else {
 		FormatElement::from(ConditionalGroupContent::new(
@@ -683,6 +683,13 @@ impl Deref for Token {
 
 	fn deref(&self) -> &Self::Target {
 		&self.0
+	}
+}
+
+impl FormatElement {
+	/// Returns true if the element contains no content.
+	pub fn is_empty(&self) -> bool {
+		self == &FormatElement::Empty
 	}
 }
 

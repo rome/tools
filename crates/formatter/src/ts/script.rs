@@ -1,21 +1,17 @@
-use crate::{
-	format_elements, hard_line_break, join_elements, FormatElement, Formatter, ToFormatElement,
-};
+use crate::{format_elements, hard_line_break, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::Script;
 
 impl ToFormatElement for Script {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
-		let mut tokens = vec![];
+		let mut elements = vec![];
 
 		if let Some(shebang) = self.shebang_token() {
-			tokens.push(formatter.format_token(&shebang));
-			tokens.push(hard_line_break());
+			elements.push(formatter.format_token(&shebang));
+			elements.push(hard_line_break());
 		}
 
-		let elements = self.items().map(|item| formatter.format_node(item));
+		elements.push(formatter.format_statements(self.items()));
 
-		tokens.push(join_elements(hard_line_break(), elements));
-
-		format_elements![concat_elements(tokens), hard_line_break()]
+		format_elements![concat_elements(elements), hard_line_break()]
 	}
 }

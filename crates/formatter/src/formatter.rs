@@ -1,5 +1,9 @@
 use crate::printer::Printer;
-use crate::{concat_elements, FormatElement, FormatOptions, FormatResult, ToFormatElement};
+use crate::{
+	concat_elements, hard_line_break, join_elements, FormatElement, FormatOptions, FormatResult,
+	ToFormatElement,
+};
+use rslint_parser::ast::{AstChildren, Stmt};
 use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
@@ -82,5 +86,10 @@ impl Formatter {
 	/// ```
 	pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatElement {
 		syntax_token.to_format_element(self)
+	}
+
+	/// Formats a list of statements
+	pub fn format_statements(&self, stmts: AstChildren<Stmt>) -> FormatElement {
+		join_elements(hard_line_break(), stmts.map(|stmt| self.format_node(stmt)))
 	}
 }

@@ -1,5 +1,6 @@
 use crate::{concat_elements, space_token, token, FormatElement, Formatter, ToFormatElement};
-use rslint_parser::ast::VarDecl;
+use rslint_parser::ast::{ForStmtInit, VarDecl};
+use rslint_parser::AstNode;
 
 impl ToFormatElement for VarDecl {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
@@ -19,6 +20,12 @@ impl ToFormatElement for VarDecl {
 
 		for declarator in self.declared() {
 			tokens.push(formatter.format_node(declarator));
+		}
+
+		if self.syntax().parent().and_then(ForStmtInit::cast).is_none() {
+			// don't add a semicolon if the var decl is in the init section of a for statement to avoid
+			// terminating the `init` with two semicolons.
+			tokens.push(token(";"));
 		}
 
 		concat_elements(tokens)
