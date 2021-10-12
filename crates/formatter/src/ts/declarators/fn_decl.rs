@@ -10,28 +10,17 @@ impl ToFormatElement for FnDecl {
 			tokens.push(space_token());
 		}
 
-		if let Some(token) = self.function_token() {
-			tokens.push(formatter.format_token(&token)?);
-		}
+		tokens.push(formatter.format_token(&self.function_token()?)?);
 
 		if let Some(token) = self.star_token() {
 			tokens.push(formatter.format_token(&token)?);
 		}
 
-		if let Some(name) = self.name() {
-			tokens.push(space_token());
-			tokens.push(formatter.format_node(name)?);
-		}
-
-		if let Some(params) = self.parameters() {
-			tokens.push(formatter.format_node(params)?);
-		}
-
 		tokens.push(space_token());
-
-		if let Some(body) = self.body() {
-			tokens.push(formatter.format_node(body)?);
-		}
+		tokens.push(formatter.format_node(self.name()?)?);
+		tokens.push(formatter.format_node(self.parameters()?)?);
+		tokens.push(space_token());
+		tokens.push(formatter.format_node(self.body()?)?);
 
 		Some(concat_elements(tokens))
 	}

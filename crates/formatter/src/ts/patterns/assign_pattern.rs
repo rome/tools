@@ -8,7 +8,7 @@ impl ToFormatElement for AssignPattern {
 			tokens.push(formatter.format_node(key)?);
 		}
 
-		tokens.push(formatter.format_node(self.value().expect("No value"))?);
+		tokens.push(formatter.format_node(self.value()?)?);
 
 		Some(concat_elements(tokens))
 	}

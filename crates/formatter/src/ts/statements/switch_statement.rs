@@ -11,11 +11,7 @@ impl ToFormatElement for SwitchStmt {
 		let condition = formatter.format_node(self.test()?)?;
 		let l_curly = formatter.format_token(&self.l_curly_token()?)?;
 
-		let cases = self
-			.cases()
-			.map(|case| formatter.format_node(case))
-			.flatten();
-
+		let cases = formatter.format_children(self.cases())?;
 		let r_curly = formatter.format_token(&self.r_curly_token()?)?;
 
 		Some(format_elements![

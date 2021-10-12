@@ -1,6 +1,8 @@
 use crate::printer::Printer;
 use crate::{concat_elements, token, FormatElement, FormatOptions, FormatResult, ToFormatElement};
+use rslint_parser::ast::AstChildren;
 use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
+use rslint_rowan::SyntaxElement;
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -24,19 +26,28 @@ impl Formatter {
 
 	/// Formats a CST
 	pub fn format_root(self, root: &SyntaxNode) -> FormatResult {
-		let start = self.format_node_start(root);
-		// TODO we should still traverse all the nodes to ensure we add the necessary source mapping
-		// markers
-		let content = root
-			.to_format_element(&self)
-			.unwrap_or_else(|| token(root.to_string().as_str()));
-		let element = concat_elements(vec![start, content, self.format_node_end(root)]);
+		let element = self
+			.format_syntax_node(root)
+			.unwrap_or_else(|| self.format_raw(root));
 
 		let printer = Printer::new(self.options);
 		printer.print(&element)
 	}
 
+	fn format_syntax_node(&self, node: &SyntaxNode) -> Option<FormatElement> {
+		let start = self.format_node_start(node);
+		let content = node.to_format_element(self)?;
+		Some(concat_elements(vec![
+			start,
+			content,
+			self.format_node_end(node),
+		]))
+	}
+
 	/// Recursively formats the ast node and all its children
+	///
+	/// Returns `None` if the node couldn't be formatted because of syntax errors in its sub tree.
+	/// The parent may use `format_raw` to insert the node content as is.
 	pub fn format_node<T: AstNode + ToFormatElement>(&self, node: T) -> Option<FormatElement> {
 		Some(concat_elements(vec![
 			self.format_node_start(node.syntax()),
@@ -59,7 +70,10 @@ impl Formatter {
 		concat_elements(vec![])
 	}
 
-	/// Formats the passed in token
+	/// Formats the passed in token.
+	///
+	/// May return `None` if the token wasn't present in the original source but was inserted
+	/// by the parser to "fix" a syntax error and generate a valid tree.
 	///
 	/// # Examples
 	///
@@ -84,5 +98,40 @@ impl Formatter {
 	/// ```
 	pub fn format_token(&self, syntax_token: &SyntaxToken) -> Option<FormatElement> {
 		syntax_token.to_format_element(self)
+	}
+
+	/// Formats each child and returns the result as a list.
+	///
+	/// Returns [None] if a child couldn't be formatted.
+	pub fn format_children<T: AstNode + ToFormatElement>(
+		&self,
+		children: AstChildren<T>,
+	) -> Option<impl Iterator<Item = FormatElement>> {
+		let mut result = Vec::new();
+
+		for child in children {
+			if let Some(formatted) = self.format_node(child) {
+				result.push(formatted);
+			} else {
+				return None;
+			}
+		}
+
+		Some(result.into_iter())
+	}
+
+	/// Creates a [FormatElement] for the passed in node that will represent the node exactly as it
+	/// is currently formatted in the source text (it actually doesn't change the formatting at all).
+	///
+	/// Calling this function rather than `node.text()` is required so that the formatter, for example,
+	/// can insert source map markers before and after the node.
+	pub fn format_raw(&self, node: &SyntaxNode) -> FormatElement {
+		concat_elements(node.children_with_tokens().map(|child| match child {
+			SyntaxElement::Node(child_node) => {
+				// Future: Add source map information
+				self.format_raw(&child_node)
+			}
+			SyntaxElement::Token(syntax_token) => token(syntax_token.text().as_str()),
+		}))
 	}
 }

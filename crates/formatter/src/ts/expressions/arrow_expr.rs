@@ -15,31 +15,19 @@ impl ToFormatElement for ArrowExpr {
 			));
 		}
 
-		if let Some(arrow_expression_params) = self.params() {
-			match arrow_expression_params {
-				ArrowExprParams::Name(name) => {
-					tokens.push(token("("));
-					tokens.push(formatter.format_node(name)?);
-					tokens.push(token(")"));
-				}
-				ArrowExprParams::ParameterList(params) => {
-					tokens.push(formatter.format_node(params)?)
-				}
+		match self.params()? {
+			ArrowExprParams::Name(name) => {
+				tokens.push(token("("));
+				tokens.push(formatter.format_node(name)?);
+				tokens.push(token(")"));
 			}
+			ArrowExprParams::ParameterList(params) => tokens.push(formatter.format_node(params)?),
 		}
 
 		tokens.push(space_token());
-		if let Some(arrow) = self.fat_arrow_token() {
-			tokens.push(formatter.format_token(&arrow)?);
-		}
-
+		tokens.push(formatter.format_token(&self.fat_arrow_token()?)?);
 		tokens.push(space_token());
-
-		let body = self.body();
-
-		if let Some(body) = body {
-			tokens.push(formatter.format_node(body)?);
-		}
+		tokens.push(formatter.format_node(self.body()?)?);
 
 		Some(concat_elements(tokens))
 	}

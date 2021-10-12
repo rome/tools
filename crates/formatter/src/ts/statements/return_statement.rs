@@ -3,9 +3,10 @@ use rslint_parser::ast::ReturnStmt;
 
 impl ToFormatElement for ReturnStmt {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
-		let mut tokens = vec![token("return"), space_token()];
+		let mut tokens = vec![token("return")];
 
 		if let Some(value) = self.value() {
+			tokens.push(space_token());
 			tokens.push(formatter.format_node(value)?);
 		}
 

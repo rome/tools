@@ -8,6 +8,7 @@ impl ToFormatElement for Declarator {
 		if let Some(pattern) = self.pattern() {
 			tokens.push(formatter.format_node(pattern)?);
 		}
+
 		if let Some(equal) = self.eq_token() {
 			tokens.push(space_token());
 			tokens.push(formatter.format_token(&equal)?);
