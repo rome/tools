@@ -1,11 +1,9 @@
-use clap::{Arg, App};
+use clap::{App, Arg};
 use xtask::{
 	codegen::{self, Mode},
 	coverage,
 	glue::pushd,
-	project_root,
-	run_rustfmt,
-	Result,
+	project_root, run_rustfmt, Result,
 };
 
 fn main() -> Result<()> {
@@ -17,7 +15,15 @@ fn main() -> Result<()> {
 		.subcommand(App::new("syntax"))
 		.subcommand(App::new("format"))
 		.subcommand(App::new("docgen"))
-		.subcommand(App::new("coverage").arg(Arg::new("coverage_query").about("Query parameter for coverage").index(1).required(true).takes_value(true)))
+		.subcommand(
+			App::new("coverage").arg(
+				Arg::new("coverage_query")
+					.about("Query parameter for coverage")
+					.index(1)
+					.required(true)
+					.takes_value(true),
+			),
+		)
 		.get_matches();
 
 	match commands.subcommand() {
@@ -43,6 +49,6 @@ fn main() -> Result<()> {
 			coverage::run(query, yastl::Pool::with_config(num_cpus::get(), pool));
 			Ok(())
 		}
-		_ => Ok(())
+		_ => Ok(()),
 	}
 }
