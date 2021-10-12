@@ -22,9 +22,9 @@ impl ToFormatElement for VarDecl {
 			tokens.push(formatter.format_node(declarator));
 		}
 
+		// don't add a semicolon if the var decl is in the init section of a for statement to avoid
+		// terminating the `init` with two semicolons.
 		if self.syntax().parent().and_then(ForStmtInit::cast).is_none() {
-			// don't add a semicolon if the var decl is in the init section of a for statement to avoid
-			// terminating the `init` with two semicolons.
 			tokens.push(token(";"));
 		}
 
