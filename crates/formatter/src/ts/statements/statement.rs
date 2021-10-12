@@ -10,7 +10,7 @@ impl ToFormatElement for Stmt {
 			Stmt::ExprStmt(expr_stmt) => expr_stmt.to_format_element(formatter),
 			Stmt::IfStmt(if_stmt) => if_stmt.to_format_element(formatter),
 			Stmt::DoWhileStmt(_) => todo!(),
-			Stmt::WhileStmt(_) => todo!(),
+			Stmt::WhileStmt(while_statement) => while_statement.to_format_element(formatter),
 			Stmt::ForStmt(for_stmt) => for_stmt.to_format_element(formatter),
 			Stmt::ForInStmt(_) => todo!(),
 			Stmt::ContinueStmt(_) => todo!(),

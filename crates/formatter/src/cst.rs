@@ -3,6 +3,7 @@ use rslint_parser::ast::{
 	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, Condition, Declarator, EmptyStmt, ExprStmt,
 	FnDecl, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, IdentProp, IfStmt, Literal, Name,
 	NameRef, ObjectExpr, ParameterList, ReturnStmt, Script, SequenceExpr, SinglePattern, VarDecl,
+	WhileStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -85,6 +86,9 @@ impl ToFormatElement for SyntaxNode {
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::OBJECT_EXPR => ObjectExpr::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::WHILE_STMT => WhileStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			_ => todo!(

@@ -9,6 +9,7 @@ mod for_stmt;
 mod if_stmt;
 mod return_statement;
 mod statement;
+mod while_statement;
 
 /// Formats a list of statements
 pub fn format_statements(stmts: AstChildren<Stmt>, formatter: &Formatter) -> FormatElement {
