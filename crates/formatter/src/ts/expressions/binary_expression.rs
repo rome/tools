@@ -1,7 +1,4 @@
-use crate::{
-	FormatElement,
-	ToFormatElement,
-};
+use crate::{FormatElement, ToFormatElement};
 use rslint_parser::ast::BinExpr;
 
 impl ToFormatElement for BinExpr {
