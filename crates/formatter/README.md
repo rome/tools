@@ -35,4 +35,14 @@ impl ToFormatElement for Buzz {
 
 ## Rules when formatting AST nodes
 
--
+1. if a token is mandatory and the AST has that information, please use that token instead, for example:
+
+	```rust
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	let l_paren_yes = formatter.format_token(&self.l_paren_token().unwrap()); // yes
+	let l_paren_no = toke("("); // no
+	}
+	```
+
+ 1. for tokens that are not mandatory, use our helpers
+ 1. do not attempt to "fix" the code. If you know a token/node is mandatory, throw an error instead
