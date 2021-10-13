@@ -113,7 +113,7 @@ pub fn get_test_files(query: Option<&str>, pool: &Pool) -> Vec<TestFile> {
 		.collect::<Vec<_>>();
 
 	let pb = ProgressBar::new(files.len() as u64);
-	pb.set_message(format!("{} test files", "Loading".bold().cyan()));
+	pb.set_message(&format!("{} test files", "Loading".bold().cyan()));
 	pb.set_style(super::default_bar_style());
 
 	let (tx, rx) = std::sync::mpsc::channel();
