@@ -1,9 +1,8 @@
+use crate::{FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::NameRef;
 
-use crate::{Formatter, ToFormatElement};
-
 impl ToFormatElement for NameRef {
-	fn to_format_element(&self, formatter: &Formatter) -> crate::FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		formatter.format_token(
 			&self
 				.ident_token()

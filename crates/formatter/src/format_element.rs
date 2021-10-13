@@ -237,6 +237,46 @@ where
 	))
 }
 
+/// It adds a level of indentation to the given content
+///
+/// It doesn't add any line breaks at the edges of the content, meaning that
+/// the line breaks have to be manually added.
+///
+/// This helper should be used only in rare cases, instead you should rely more on
+/// [indent_block] and [soft_indent]
+///
+/// ## Examples
+///
+/// ```
+/// use rome_formatter::{format_elements, format_element, FormatOptions, hard_line_break, block_indent, token, indent};
+/// let block = (format_elements![
+///   token("switch {"),
+///   block_indent(format_elements![
+///     token("default:"),
+///     indent(format_elements![ // this is where we want to use a
+///        hard_line_break(),
+///        token("break;"),
+///     ])
+///   ]),
+///   token("}"),
+/// ]);
+///
+/// assert_eq!(
+///   "switch {\n\tdefault:\n\t\tbreak;\n}",
+///   format_element(&block, FormatOptions::default()).code()
+/// );
+/// ```
+#[inline]
+pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
+	let content = content.into();
+
+	if content.is_empty() {
+		content
+	} else {
+		format_elements![Indent::new(format_elements![content])]
+	}
+}
+
 /// Inserts a hard line break before and after the content and increases the indention level for the content by one.
 ///
 /// Doesn't create an indention if the passed in content is [FormatElement.is_empty].
@@ -244,11 +284,11 @@ where
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{format_element, format_elements, token,FormatOptions, hard_line_break, indent};
+/// use rome_formatter::{format_element, format_elements, token, FormatOptions, hard_line_break, block_indent};
 ///
 /// let block = (format_elements![
 ///   token("{"),
-///   indent(format_elements![
+///   block_indent(format_elements![
 ///     token("let a = 10;"),
 ///     hard_line_break(),
 ///     token("let c = a + 5;"),
@@ -262,7 +302,7 @@ where
 /// );
 /// ```
 #[inline]
-pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
+pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 	let content = content.into();
 
 	if content.is_empty() {
