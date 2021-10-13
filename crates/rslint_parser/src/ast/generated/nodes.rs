@@ -984,7 +984,7 @@ impl ContinueStmt {
 	pub fn continue_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![continue])
 	}
-	pub fn ident_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
+	pub fn ident_token(&self) -> Option<NameRef> { support::child(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[doc = ""]

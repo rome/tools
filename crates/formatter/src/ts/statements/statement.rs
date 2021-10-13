@@ -13,16 +13,20 @@ impl ToFormatElement for Stmt {
 			}
 			Stmt::WhileStmt(while_statement) => while_statement.to_format_element(formatter),
 			Stmt::ForStmt(for_stmt) => for_stmt.to_format_element(formatter),
-			Stmt::ForInStmt(_) => todo!(),
-			Stmt::ContinueStmt(_) => todo!(),
+			Stmt::ForInStmt(for_in_statement) => for_in_statement.to_format_element(formatter),
+			Stmt::ContinueStmt(continue_statement) => {
+				continue_statement.to_format_element(formatter)
+			}
 			Stmt::BreakStmt(break_statement) => break_statement.to_format_element(formatter),
 			Stmt::ReturnStmt(stmt) => stmt.to_format_element(formatter),
-			Stmt::WithStmt(_) => todo!(),
-			Stmt::LabelledStmt(_) => todo!(),
+			Stmt::WithStmt(with_statement) => with_statement.to_format_element(formatter),
+			Stmt::LabelledStmt(label_statement) => label_statement.to_format_element(formatter),
 			Stmt::SwitchStmt(switch_statement) => switch_statement.to_format_element(formatter),
-			Stmt::ThrowStmt(_) => todo!(),
-			Stmt::TryStmt(_) => todo!(),
-			Stmt::DebuggerStmt(_) => todo!(),
+			Stmt::ThrowStmt(throw_statement) => throw_statement.to_format_element(formatter),
+			Stmt::TryStmt(try_statement) => try_statement.to_format_element(formatter),
+			Stmt::DebuggerStmt(debugger_statement) => {
+				debugger_statement.to_format_element(formatter)
+			}
 			Stmt::Decl(decl) => decl.to_format_element(formatter),
 		}
 	}
