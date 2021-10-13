@@ -1,9 +1,8 @@
+use crate::{FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::IdentProp;
 
-use crate::ToFormatElement;
-
 impl ToFormatElement for IdentProp {
-	fn to_format_element(&self, formatter: &crate::Formatter) -> crate::FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		formatter.format_node(self.name().unwrap())
 	}
 }

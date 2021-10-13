@@ -242,24 +242,27 @@ where
 /// It doesn't add any line breaks at the edges of the content, meaning that
 /// the line breaks have to be manually added.
 ///
+/// This helper should be used only in rare cases, instead you should rely more on
+/// [indent_block] and [soft_indent]
+///
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{format_elements, format_element, FormatOptions, hard_line_break, token, indent};
+/// use rome_formatter::{format_elements, format_element, FormatOptions, hard_line_break, block_indent, token, indent};
 /// let block = (format_elements![
-///   token("{"),
-///   indent(format_elements![
-///     hard_line_break(),
-///     token("let a = 10;"),
-///     hard_line_break(),
-///     token("let c = a + 5;"),
+///   token("switch {"),
+///   block_indent(format_elements![
+///     token("default:"),
+///     indent(format_elements![ // this is where we want to use a
+///        hard_line_break(),
+///        token("break;"),
+///     ])
 ///   ]),
-///   hard_line_break(),
 ///   token("}"),
 /// ]);
 ///
 /// assert_eq!(
-///   "{\n\tlet a = 10;\n\tlet c = a + 5;\n}",
+///   "switch {\n\tdefault:\n\t\tbreak;\n}",
 ///   format_element(&block, FormatOptions::default()).code()
 /// );
 /// ```
@@ -267,7 +270,7 @@ where
 pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 	let content = content.into();
 
-	if content == FormatElement::Empty {
+	if content.is_empty() {
 		content
 	} else {
 		format_elements![Indent::new(format_elements![content])]
@@ -281,11 +284,11 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{format_element, format_elements, token, FormatOptions, hard_line_break, hard_indent};
+/// use rome_formatter::{format_element, format_elements, token, FormatOptions, hard_line_break, block_indent};
 ///
 /// let block = (format_elements![
 ///   token("{"),
-///   hard_indent(format_elements![
+///   block_indent(format_elements![
 ///     token("let a = 10;"),
 ///     hard_line_break(),
 ///     token("let c = a + 5;"),
@@ -299,7 +302,7 @@ pub fn indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 /// );
 /// ```
 #[inline]
-pub fn hard_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
+pub fn block_indent<T: Into<FormatElement>>(content: T) -> FormatElement {
 	let content = content.into();
 
 	if content.is_empty() {

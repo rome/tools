@@ -4,4 +4,3 @@ while (true) {
 while (true) {
 	return 4;
 }
-while () {}

@@ -1,18 +1,14 @@
 use crate::{
-	format_element::indent, format_elements, group_elements, hard_indent, hard_line_break,
-	join_elements, space_token, token, FormatElement, ToFormatElement,
+	block_indent, empty_element, format_element::indent, format_elements, group_elements,
+	hard_line_break, join_elements, space_token, token, FormatElement, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{CaseClause, DefaultClause, SwitchCase, SwitchStmt};
 
 impl ToFormatElement for SwitchStmt {
-	fn to_format_element(&self, formatter: &crate::Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		let switch =
 			formatter.format_token(&self.switch_token().expect("Switch token is mandatory"));
-		let condition = if let Some(condition) = self.test() {
-			formatter.format_node(condition)
-		} else {
-			FormatElement::Empty
-		};
+		let condition = formatter.format_node(self.test().expect("Condition is missing"));
 		let l_curly =
 			formatter.format_token(&self.l_curly_token().expect("Left curly bracket is missing"));
 
@@ -31,7 +27,7 @@ impl ToFormatElement for SwitchStmt {
 			space_token(),
 			group_elements(format_elements![
 				l_curly,
-				hard_indent(join_elements(hard_line_break(), cases)),
+				block_indent(join_elements(hard_line_break(), cases)),
 				r_curly
 			])
 		]
@@ -39,7 +35,7 @@ impl ToFormatElement for SwitchStmt {
 }
 
 impl ToFormatElement for SwitchCase {
-	fn to_format_element(&self, formatter: &crate::Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		match self {
 			SwitchCase::CaseClause(case_clause) => case_clause.to_format_element(formatter),
 			SwitchCase::DefaultClause(default_clause) => {
@@ -50,18 +46,11 @@ impl ToFormatElement for SwitchCase {
 }
 
 impl ToFormatElement for DefaultClause {
-	fn to_format_element(&self, formatter: &crate::Formatter) -> FormatElement {
-		let default = if let Some(token) = self.default_token() {
-			formatter.format_token(&token)
-		} else {
-			token("default")
-		};
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+		let default =
+			formatter.format_token(&self.default_token().expect("default token is missing"));
 
-		let colon = if let Some(colon) = self.colon_token() {
-			formatter.format_token(&colon)
-		} else {
-			token(":")
-		};
+		let colon = formatter.format_token(&self.colon_token().expect("colon token is missing"));
 
 		let statements = self
 			.cons()
@@ -71,6 +60,7 @@ impl ToFormatElement for DefaultClause {
 			default,
 			colon,
 			space_token(),
+			// no line break needed after because it is added by the indent in the switch statement
 			indent(format_elements![
 				hard_line_break(),
 				concat_elements(statements)
@@ -80,17 +70,9 @@ impl ToFormatElement for DefaultClause {
 }
 
 impl ToFormatElement for CaseClause {
-	fn to_format_element(&self, formatter: &crate::Formatter) -> FormatElement {
-		let case_word = if let Some(token) = self.case_token() {
-			formatter.format_token(&token)
-		} else {
-			token("case")
-		};
-		let colon = if let Some(colon) = self.colon_token() {
-			formatter.format_token(&colon)
-		} else {
-			token(":")
-		};
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+		let case_word = formatter.format_token(&self.case_token().expect("case token is missing"));
+		let colon = formatter.format_token(&self.colon_token().expect("colon token is missing"));
 
 		let test = formatter.format_node(self.test().expect("Expression is missing"));
 
@@ -103,7 +85,7 @@ impl ToFormatElement for CaseClause {
 			space_token(),
 			test,
 			colon,
-			// no line break needed after because it is added by the parent
+			// no line break needed after because it is added by the indent in the switch statement
 			indent(format_elements![hard_line_break(), concat_elements(cons)])
 		]
 	}

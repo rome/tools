@@ -1,6 +1,7 @@
 use crate::ts::statements::format_statements;
 use crate::{
-	format_elements, hard_indent, hard_line_break, token, FormatElement, Formatter, ToFormatElement,
+	block_indent, format_elements, hard_line_break, token, FormatElement, Formatter,
+	ToFormatElement,
 };
 use rslint_parser::ast::{BlockStmt, IfStmt};
 use rslint_parser::AstNode;
@@ -16,7 +17,7 @@ impl ToFormatElement for BlockStmt {
 		let body = if stmts.is_empty() && self.syntax().parent().and_then(IfStmt::cast).is_some() {
 			hard_line_break()
 		} else {
-			hard_indent(stmts)
+			block_indent(stmts)
 		};
 
 		format_elements![token("{"), body, token("}")]

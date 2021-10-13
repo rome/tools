@@ -1,9 +1,11 @@
+use crate::{
+	empty_element, format_elements, group_elements, space_token, token, FormatElement, Formatter,
+	ToFormatElement,
+};
 use rslint_parser::ast::BreakStmt;
 
-use crate::{format_elements, group_elements, space_token, token, FormatElement, ToFormatElement};
-
 impl ToFormatElement for BreakStmt {
-	fn to_format_element(&self, formatter: &crate::Formatter) -> crate::FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
 		let break_element =
 			formatter.format_token(&self.break_token().expect("Break token missing"));
 		let ident = if let Some(ident_token) = self.ident_token() {
@@ -12,13 +14,9 @@ impl ToFormatElement for BreakStmt {
 				formatter.format_token(&ident_token)
 			])
 		} else {
-			FormatElement::Empty
+			empty_element()
 		};
-		let semicolon = if let Some(semicolon) = self.semicolon_token() {
-			formatter.format_token(&semicolon)
-		} else {
-			token(";")
-		};
+		let semicolon = token(";");
 
 		format_elements![break_element, ident, semicolon]
 	}
