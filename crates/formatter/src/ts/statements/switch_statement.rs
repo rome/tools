@@ -1,6 +1,6 @@
 use crate::{
-	block_indent, empty_element, format_element::indent, format_elements, group_elements,
-	hard_line_break, join_elements, space_token, token, FormatElement, Formatter, ToFormatElement,
+	block_indent, format_element::indent, format_elements, group_elements, hard_line_break,
+	join_elements, space_token, FormatElement, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{CaseClause, DefaultClause, SwitchCase, SwitchStmt};
 
