@@ -8,7 +8,7 @@ use rslint_parser::ast::{
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
 impl ToFormatElement for SyntaxNode {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self.kind() {
 			SyntaxKind::ARRAY_EXPR => ArrayExpr::cast(self.clone())
 				.unwrap()
@@ -112,12 +112,12 @@ impl ToFormatElement for SyntaxNode {
 }
 
 impl ToFormatElement for SyntaxToken {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self.kind() {
 			SyntaxKind::STRING => rslint_parser::ast::String::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			_ => token(self.text().as_str()),
+			_ => Some(token(self.text().as_str())),
 		}
 	}
 }

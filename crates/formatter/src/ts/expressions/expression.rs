@@ -2,7 +2,7 @@ use crate::{FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::Expr;
 
 impl ToFormatElement for Expr {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
 			Expr::ArrowExpr(arrow) => arrow.to_format_element(formatter),
 			Expr::Literal(literal) => literal.to_format_element(formatter),

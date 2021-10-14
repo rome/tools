@@ -1,13 +1,13 @@
-use crate::ts::statements::format_statements;
-use crate::{
-	block_indent, format_elements, hard_line_break, token, FormatElement, Formatter,
-	ToFormatElement,
-};
 use rslint_parser::ast::{BlockStmt, IfStmt};
 use rslint_parser::AstNode;
 
+use crate::ts::statements::format_statements;
+use crate::{
+	block_indent, format_elements, hard_line_break, FormatElement, Formatter, ToFormatElement,
+};
+
 impl ToFormatElement for BlockStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let stmts = format_statements(self.stmts(), formatter);
 
 		// Formatting of curly braces for an:
@@ -20,6 +20,10 @@ impl ToFormatElement for BlockStmt {
 			block_indent(stmts)
 		};
 
-		format_elements![token("{"), body, token("}")]
+		Some(format_elements![
+			formatter.format_token(&self.l_curly_token()?)?,
+			body,
+			formatter.format_token(&self.r_curly_token()?)?
+		])
 	}
 }

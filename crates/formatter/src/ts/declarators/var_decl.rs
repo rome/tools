@@ -1,25 +1,24 @@
 use crate::{concat_elements, space_token, token, FormatElement, Formatter, ToFormatElement};
-use rslint_parser::ast::{ForStmtInit, VarDecl};
-use rslint_parser::AstNode;
+use rslint_parser::ast::{AstNode, ForStmtInit, VarDecl};
 
 impl ToFormatElement for VarDecl {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let mut tokens = vec![];
 
 		if let Some(token) = self.const_token() {
-			tokens.push(formatter.format_token(&token));
+			tokens.push(formatter.format_token(&token)?);
 		} else if let Some(token) = self.let_token() {
-			tokens.push(formatter.format_token(&token));
+			tokens.push(formatter.format_token(&token)?);
 		} else if let Some(token) = self.var_token() {
-			tokens.push(formatter.format_token(&token));
+			tokens.push(formatter.format_token(&token)?);
 		} else {
-			// TODO: Diagnostic?
-			tokens.push(token("var"));
+			return None;
 		}
+
 		tokens.push(space_token());
 
 		for declarator in self.declared() {
-			tokens.push(formatter.format_node(declarator));
+			tokens.push(formatter.format_node(declarator)?);
 		}
 
 		// don't add a semicolon if the var decl is in the init section of a for statement to avoid
@@ -28,6 +27,6 @@ impl ToFormatElement for VarDecl {
 			tokens.push(token(";"));
 		}
 
-		concat_elements(tokens)
+		Some(concat_elements(tokens))
 	}
 }

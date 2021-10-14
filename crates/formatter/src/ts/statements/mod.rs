@@ -1,5 +1,6 @@
 use crate::{hard_line_break, join_elements, FormatElement, Formatter};
 use rslint_parser::ast::{AstChildren, Stmt};
+use rslint_parser::AstNode;
 
 mod block;
 mod break_statement;
@@ -17,6 +18,10 @@ mod while_statement;
 pub fn format_statements(stmts: AstChildren<Stmt>, formatter: &Formatter) -> FormatElement {
 	join_elements(
 		hard_line_break(),
-		stmts.map(|stmt| formatter.format_node(stmt)),
+		stmts.map(|stmt| {
+			formatter
+				.format_node(stmt.clone())
+				.unwrap_or_else(|| formatter.format_raw(stmt.syntax()))
+		}),
 	)
 }

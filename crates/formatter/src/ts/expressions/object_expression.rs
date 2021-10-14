@@ -5,15 +5,15 @@ use crate::{
 use rslint_parser::ast::ObjectExpr;
 
 impl ToFormatElement for ObjectExpr {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let separator = format_elements!(token(","), soft_line_break_or_space());
-		let props = self.props().map(|prop| formatter.format_node(prop));
+		let props = formatter.format_children(self.props())?;
 
-		group_elements(format_elements!(
-			token("{"),
+		Some(group_elements(format_elements!(
+			formatter.format_token(&self.l_curly_token()?)?,
 			soft_indent(join_elements(separator, props)),
 			if_group_breaks(token(",")),
-			token("}"),
-		))
+			formatter.format_token(&self.r_curly_token()?)?,
+		)))
 	}
 }

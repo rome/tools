@@ -14,7 +14,7 @@ mod tokens;
 
 #[cfg(test)]
 mod test {
-	use rslint_parser::{ast::Script, parse_text, AstNode};
+	use rslint_parser::parse_text;
 
 	use crate::Formatter;
 
@@ -22,8 +22,7 @@ mod test {
 	fn arrow_function() {
 		let src = "let v = (value  , second_value) =>    true";
 		let tree = parse_text(src, 0);
-		let child = Script::cast(tree.syntax()).unwrap();
-		let result = Formatter::default().format_root(child.syntax());
+		let result = Formatter::default().format_root(&tree.syntax());
 		assert_eq!(
 			result.code(),
 			"let v = (value, second_value) => true;
@@ -35,8 +34,7 @@ mod test {
 	fn function_block() {
 		let src = r#"function foo() { return 'something' }"#;
 		let tree = parse_text(src, 0);
-		let child = Script::cast(tree.syntax()).unwrap();
-		let result = Formatter::default().format_root(child.syntax());
+		let result = Formatter::default().format_root(&tree.syntax());
 		assert_eq!(
 			result.code(),
 			r#"function foo() {
@@ -50,8 +48,7 @@ mod test {
 	fn array() {
 		let src = r#"let users = [   'john', 'chandler', true ]"#;
 		let tree = parse_text(src, 0);
-		let child = Script::cast(tree.syntax()).unwrap();
-		let result = Formatter::default().format_root(child.syntax());
+		let result = Formatter::default().format_root(&tree.syntax());
 		assert_eq!(
 			result.code(),
 			r#"let users = ["john", "chandler", true];
@@ -64,8 +61,7 @@ mod test {
 		let src = r#"let a1 = [{}, {}];
 "#;
 		let tree = parse_text(src, 0);
-		let child = Script::cast(tree.syntax()).unwrap();
-		let result = Formatter::default().format_root(child.syntax());
+		let result = Formatter::default().format_root(&tree.syntax());
 		assert_eq!(
 			result.code(),
 			r#"let a1 = [{}, {}];

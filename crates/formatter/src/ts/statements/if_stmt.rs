@@ -4,27 +4,27 @@ use crate::{
 use rslint_parser::ast::IfStmt;
 
 impl ToFormatElement for IfStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let mut result = format_elements![
 			group_elements(format_elements![
-				formatter.format_token(&self.if_token().unwrap()),
+				formatter.format_token(&self.if_token()?)?,
 				space_token(),
-				formatter.format_node(self.condition().unwrap()),
+				formatter.format_node(self.condition()?)?,
 				space_token(),
 			]),
-			formatter.format_node(self.cons().unwrap())
+			formatter.format_node(self.cons()?)?
 		];
 
 		if let Some(else_token) = self.else_token() {
 			result = format_elements![
 				result,
 				space_token(),
-				formatter.format_token(&else_token),
+				formatter.format_token(&else_token)?,
 				space_token(),
-				formatter.format_node(self.alt().unwrap()),
+				formatter.format_node(self.alt()?)?,
 			]
 		};
 
-		result
+		Some(result)
 	}
 }
