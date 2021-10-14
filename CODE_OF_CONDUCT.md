@@ -11,8 +11,6 @@ The following people have access to the above email address:
 In the event that your report includes one of the people mentioned above please
 feel free to reach out to one of the other people listed instead.
 
-The moderation and review process can be found in [here](GOVERNANCE.md#moderation).
-
 Followed is an unmodified [Contributor Covenant Code of Conduct 2.0](https://www.contributor-covenant.org/).
 
 ## Our Pledge

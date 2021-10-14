@@ -8,8 +8,6 @@ layout: layouts/page.liquid
 
 ## Team
 
-Rome has a loose governance model that values core contributor autonomy. See [Governance](https://github.com/rome/tools/blob/main/GOVERNANCE.md) for the full governance document.
-
 <ul class="team-list">
 	<li>
 		<a href="https://github.com/EduardoLopes">

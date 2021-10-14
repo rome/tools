@@ -11,8 +11,6 @@
 
 **Rome** is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org/en/). **Rome** has zero dependencies, and has largely been written from scratch. See [credits](/credits) for more information.
 
-**Rome** is maintained by a [team of volunteers](/credits#team) under an established [governance model](https://github.com/rome/tools/blob/main/GOVERNANCE.md).
-
 **Rome** is [MIT licensed](https://github.com/rome/tools/tree/main/LICENSE) and moderated under the [Contributor Covenant Code of Conduct](https://github.com/rome/tools/tree/main/CODE_OF_CONDUCT.md).
 <!-- GENERATED:END(id:main) -->
 
