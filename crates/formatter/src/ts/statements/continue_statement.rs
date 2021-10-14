@@ -4,11 +4,13 @@ use crate::{
 use rslint_parser::ast::ContinueStmt;
 
 impl ToFormatElement for ContinueStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		// NOTE: rslint parser (upstream) is currently broken https://github.com/rslint/rslint/issues/126
-		let ident = self.ident_token().map_or(empty_element(), |ident_token| {
-			format_elements![space_token(), formatter.format_node(ident_token)]
-		});
-		format_elements![token("continue"), ident, token(";")]
+		let ident = if let Some(ident_token) = self.ident_token() {
+			format_elements![space_token(), formatter.format_node(ident_token)?]
+		} else {
+			empty_element()
+		};
+		Some(format_elements![token("continue"), ident, token(";")])
 	}
 }
