@@ -11,6 +11,7 @@ impl ToFormatElement for ContinueStmt {
 		} else {
 			empty_element()
 		};
-		Some(format_elements![token("continue"), ident, token(";")])
+		let continue_token = formatter.format_token(&self.continue_token()?)?;
+		Some(format_elements![continue_token, ident, token(";")])
 	}
 }

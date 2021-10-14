@@ -8,23 +8,22 @@ impl ToFormatElement for TryStmt {
 		let try_token = formatter.format_token(&self.try_token()?)?;
 		let test = formatter.format_node(self.test()?)?;
 		let handler = if let Some(catch_clause) = self.handler() {
-			formatter.format_node(catch_clause)?
+			format_elements![space_token(), formatter.format_node(catch_clause)?]
 		} else {
 			empty_element()
 		};
 		let finalizer = if let Some(finally_node) = self.finalizer() {
-			formatter.format_node(finally_node)?
+			format_elements![space_token(), formatter.format_node(finally_node)?]
 		} else {
 			empty_element()
 		};
-		if handler.is_empty() & finalizer.is_empty() {
+		if handler.is_empty() && finalizer.is_empty() {
 			None
 		} else {
 			Some(format_elements![
 				try_token,
 				space_token(),
 				test,
-				space_token(),
 				handler,
 				finalizer
 			])
@@ -35,7 +34,8 @@ impl ToFormatElement for TryStmt {
 impl ToFormatElement for Finalizer {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let cons = formatter.format_node(self.cons()?)?;
-		Some(format_elements![token("finally"), space_token(), cons])
+		let finally = formatter.format_token(&self.finally_token()?)?;
+		Some(format_elements![finally, space_token(), cons])
 	}
 }
 
@@ -45,10 +45,11 @@ impl ToFormatElement for CatchClause {
 		let r_paren = self.r_paren_token();
 		let error = self.error();
 		let cons = formatter.format_node(self.cons()?)?;
+		let catch_token = formatter.format_token(&self.catch_token()?)?;
 		match (l_paren, r_paren, error) {
 			(None, None, None) => Some(format_elements![token("catch"), space_token(), cons]),
 			(Some(l_paren), Some(r_paren), Some(error)) => Some(format_elements![
-				token("catch"),
+				catch_token,
 				space_token(),
 				formatter.format_token(&l_paren)?,
 				formatter.format_node(error)?,
@@ -57,11 +58,11 @@ impl ToFormatElement for CatchClause {
 				cons
 			]),
 			_ => {
-				// Here we panic because a valid catch clause needs to have all the tokens of none:
+				// Here we return None, because a valid catch clause must have a condition or no condition at all:
 				// - catch (e) {}
 				// - catch {}
 				//
-				// Other cases should fall into an error
+				// Other cases should fail.
 				None
 			}
 		}

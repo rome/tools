@@ -1,10 +1,10 @@
 use crate::{token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, CaseClause, CatchClause, Condition,
-	ContinueStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl,
-	ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, IdentProp, IfStmt, LabelledStmt, Literal,
-	Name, NameRef, ObjectExpr, ParameterList, ReturnStmt, Script, SequenceExpr, SinglePattern,
-	SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
+	ContinueStmt, DebuggerStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt,
+	Finalizer, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, IdentProp,
+	IfStmt, LabelledStmt, Literal, Name, NameRef, ObjectExpr, ParameterList, ReturnStmt, Script,
+	SequenceExpr, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -120,6 +120,12 @@ impl ToFormatElement for SyntaxNode {
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::WITH_STMT => WithStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::DEBUGGER_STMT => DebuggerStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::FOR_IN_STMT => ForInStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			_ => todo!(

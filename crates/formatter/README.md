@@ -12,7 +12,7 @@ formatter = { version = "0.0.0", path = "../formatter" }
 
 The foundation of the formatter relies on two pillars:
 
-- the usage of a single [*trait*](https://doc.rust-lang.org/reference/items/traits.html);
+- the usage of a [*trait*](https://doc.rust-lang.org/reference/items/traits.html) called `ToFormatElement`;
 - the creation of an intermediate IR via a series of helpers
 
 Import the `ToFormatElement` trait and implement it for the data structure you need.
