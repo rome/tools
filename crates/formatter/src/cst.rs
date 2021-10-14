@@ -1,9 +1,10 @@
 use crate::{token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, CaseClause, Condition, Declarator,
-	DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, FnDecl, ForStmt, ForStmtInit, ForStmtTest,
-	ForStmtUpdate, IdentProp, IfStmt, Literal, Name, NameRef, ObjectExpr, ParameterList,
-	ReturnStmt, Script, SequenceExpr, SinglePattern, SwitchStmt, VarDecl, WhileStmt,
+	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, CaseClause, CatchClause, Condition,
+	ContinueStmt, DebuggerStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt,
+	Finalizer, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, IdentProp,
+	IfStmt, LabelledStmt, Literal, Name, NameRef, ObjectExpr, ParameterList, ReturnStmt, Script,
+	SequenceExpr, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -101,6 +102,30 @@ impl ToFormatElement for SyntaxNode {
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CASE_CLAUSE => CaseClause::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::CONTINUE_STMT => ContinueStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::LABELLED_STMT => LabelledStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::TRY_STMT => TryStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::FINALIZER => Finalizer::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::CATCH_CLAUSE => CatchClause::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::WITH_STMT => WithStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::DEBUGGER_STMT => DebuggerStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::FOR_IN_STMT => ForInStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			_ => todo!(

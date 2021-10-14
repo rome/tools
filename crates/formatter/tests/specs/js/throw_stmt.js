@@ -1,0 +1,3 @@
+throw "Something";
+
+throw false
