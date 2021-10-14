@@ -120,15 +120,18 @@ impl Formatter {
 		Some(result.into_iter())
 	}
 
-	/// Creates a [FormatElement] for the passed in node that will represent the node exactly as it
-	/// is currently formatted in the source text (it actually doesn't change the formatting at all).
+	/// "Formats" a node according to its original formatting in the source text. Being able to format
+	/// a node "as is" is useful if a node contains syntax errors. Formatting a node with syntax errors
+	/// has the risk that Rome misinterprets the structure of the code and formatting it could
+	/// "mess up" the developers, yet incomplete, work or accidentally introduce new syntax errors.
 	///
-	/// Calling this function rather than `node.text()` is required so that the formatter, for example,
-	/// can insert source map markers before and after the node.
+	/// You may be inclined to call `node.text` directly. However, using `text` doesn't track the nodes
+	///nor its children source mapping information, resulting in incorrect source maps for this subtree.
 	pub fn format_raw(&self, node: &SyntaxNode) -> FormatElement {
 		concat_elements(node.children_with_tokens().map(|child| match child {
 			SyntaxElement::Node(child_node) => {
-				// Future: Add source map information
+				// TODO: Add source map markers before/after node as well as any additional elements that
+				// need to be tracked for every node.
 				self.format_raw(&child_node)
 			}
 			SyntaxElement::Token(syntax_token) => token(syntax_token.text().as_str()),
