@@ -10,16 +10,32 @@ impl ToFormatElement for ClassProp {
 		} else {
 			empty_element()
 		};
-		let value = if let Some(value) = self.value() {
-			let value = formatter.format_node(value)?;
+		let value = self.value();
+		let equal = self.eq();
 
-			format_elements![space_token(), token("="), space_token(), value]
-		} else {
-			empty_element()
+		let equal_and_value = match (value, equal) {
+			(None, None) => Some(empty_element()),
+			(Some(value), Some(equal)) => Some(format_elements![
+				space_token(),
+				formatter.format_token(&equal)?,
+				space_token(),
+				formatter.format_node(value)?,
+			]),
+			_ => None,
 		};
 
-		let key = formatter.format_node(self.key()?)?;
+		match equal_and_value {
+			Some(equal_and_value) => {
+				let key = formatter.format_node(self.key()?)?;
 
-		Some(format_elements![static_token, key, value, token(";")])
+				Some(format_elements![
+					static_token,
+					key,
+					equal_and_value,
+					token(";")
+				])
+			}
+			None => None,
+		}
 	}
 }

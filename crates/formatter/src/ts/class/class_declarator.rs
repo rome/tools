@@ -50,7 +50,9 @@ impl ToFormatElement for ClassBody {
 impl ToFormatElement for ClassElement {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
-			ClassElement::EmptyStmt(_) => todo!(),
+			ClassElement::EmptyStmt(empty_statement) => {
+				empty_statement.to_format_element(formatter)
+			}
 			ClassElement::Method(method) => method.to_format_element(formatter),
 			ClassElement::PrivateProp(_) => todo!(),
 			ClassElement::ClassProp(class_prop) => class_prop.to_format_element(formatter),
