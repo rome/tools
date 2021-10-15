@@ -7,7 +7,7 @@ impl ToFormatElement for Pattern {
 			Pattern::RestPattern(_) => todo!(),
 			Pattern::AssignPattern(pattern) => pattern.to_format_element(formatter),
 			Pattern::ObjectPattern(_) => todo!(),
-			Pattern::ArrayPattern(_) => todo!(),
+			Pattern::ArrayPattern(array_pattern) => array_pattern.to_format_element(formatter),
 			Pattern::ExprPattern(_) => todo!(),
 			Pattern::SinglePattern(single) => single.to_format_element(formatter),
 		}

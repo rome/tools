@@ -1,10 +1,11 @@
 use crate::{token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArrayExpr, ArrowExpr, AssignPattern, BlockStmt, CaseClause, CatchClause, Condition,
-	ContinueStmt, DebuggerStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt,
-	Finalizer, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, IdentProp,
-	IfStmt, LabelledStmt, Literal, Name, NameRef, ObjectExpr, ParameterList, ReturnStmt, Script,
-	SequenceExpr, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
+	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, BlockStmt, CallExpr, CaseClause,
+	CatchClause, ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt,
+	DebuggerStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl,
+	ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt,
+	LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList, ReturnStmt,
+	Script, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -126,6 +127,36 @@ impl ToFormatElement for SyntaxNode {
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::FOR_IN_STMT => ForInStmt::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::ARRAY_PATTERN => ArrayPattern::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::CALL_EXPR => CallExpr::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::ARG_LIST => ArgList::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::LITERAL_PROP => LiteralProp::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::CLASS_DECL => ClassDecl::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::CLASS_BODY => ClassBody::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::CONSTRUCTOR_PARAMETERS => ConstructorParameters::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::GETTER => Getter::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::SETTER => Setter::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::CLASS_PROP => ClassProp::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			_ => todo!(
