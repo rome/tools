@@ -2,7 +2,7 @@ use crate::{
 	format_elements, group_elements, join_elements, token, FormatElement, Formatter,
 	ToFormatElement,
 };
-use rslint_parser::{ast::ArgList, AstNode};
+use rslint_parser::ast::ArgList;
 
 impl ToFormatElement for ArgList {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {

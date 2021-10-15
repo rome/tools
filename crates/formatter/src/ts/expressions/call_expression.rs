@@ -1,5 +1,5 @@
 use crate::{format_elements, FormatElement, Formatter, ToFormatElement};
-use rslint_parser::{ast::CallExpr, AstNode};
+use rslint_parser::ast::CallExpr;
 
 impl ToFormatElement for CallExpr {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {

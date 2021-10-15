@@ -1,4 +1,7 @@
-use crate::{FormatElement, Formatter, ToFormatElement, format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space, space_token, token};
+use crate::{
+	format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space, token,
+	FormatElement, Formatter, ToFormatElement,
+};
 use rslint_parser::ast::ParameterList;
 
 impl ToFormatElement for ParameterList {
