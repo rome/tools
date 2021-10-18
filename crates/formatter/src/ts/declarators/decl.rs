@@ -5,7 +5,7 @@ impl ToFormatElement for Decl {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
 			Decl::FnDecl(fn_decl) => fn_decl.to_format_element(formatter),
-			Decl::ClassDecl(_) => todo!(),
+			Decl::ClassDecl(class_declarator) => class_declarator.to_format_element(formatter),
 			Decl::VarDecl(var_decl) => var_decl.to_format_element(formatter),
 			Decl::TsEnum(_) => todo!(),
 			Decl::TsTypeAliasDecl(_) => todo!(),

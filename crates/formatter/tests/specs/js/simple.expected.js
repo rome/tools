@@ -1,1 +1,7 @@
-let v = (value, second_value) => true;
+function foo() {
+	let [ref, setRef] = useState();
+	useEffect(() => {
+		setRef();
+	});
+	return ref;
+}
