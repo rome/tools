@@ -1,6 +1,6 @@
 use crate::{
-	syntax_node::GreenNode, ParserError, SmolStr, SyntaxKind, SyntaxTreeBuilder, TextRange,
-	TextSize, TreeSink,
+	syntax_node::GreenNode, ParserError, SyntaxKind, SyntaxTreeBuilder, TextRange, TextSize,
+	TreeSink,
 };
 use rslint_lexer::Token;
 use std::mem;
@@ -40,7 +40,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 		);
 
 		let range = TextRange::at(self.text_pos, len);
-		let text: SmolStr = self.text[range].into();
+		let text = &self.text[range];
 		self.text_pos += len;
 		self.token_pos += amount as usize;
 		self.inner.token(kind, text);
@@ -157,7 +157,7 @@ impl<'a> LossyTreeSink<'a> {
 
 	fn do_token(&mut self, kind: SyntaxKind, len: TextSize, skip: bool) {
 		let range = TextRange::at(self.text_pos, len);
-		let text: SmolStr = self.text[range].into();
+		let text = &self.text[range];
 		self.text_pos += len;
 		self.token_pos += 1;
 		if !skip {

@@ -1,15 +1,18 @@
 mod builder;
 mod element;
 mod node;
+mod node_cache;
 mod token;
 
-pub(crate) use self::element::GreenElementRef;
-use self::element::{GreenElement, PackedGreenElement};
+use self::element::GreenElement;
+
+pub(crate) use self::{element::GreenElementRef, node::GreenChild};
 
 pub use self::{
-	builder::{Checkpoint, GreenNodeBuilder, NodeCache},
-	node::{Children, GreenNode},
-	token::GreenToken,
+	builder::{Checkpoint, GreenNodeBuilder},
+	node::{Children, GreenNode, GreenNodeData},
+	node_cache::NodeCache,
+	token::{GreenToken, GreenTokenData},
 };
 
 /// SyntaxKind is a type tag for each token or node.
@@ -26,7 +29,6 @@ mod tests {
 		f::<GreenNode>();
 		f::<GreenToken>();
 		f::<GreenElement>();
-		f::<PackedGreenElement>();
 	}
 
 	#[test]
@@ -36,6 +38,5 @@ mod tests {
 		eprintln!("GreenNode          {}", size_of::<GreenNode>());
 		eprintln!("GreenToken         {}", size_of::<GreenToken>());
 		eprintln!("GreenElement       {}", size_of::<GreenElement>());
-		eprintln!("PackedGreenElement {}", size_of::<PackedGreenElement>());
 	}
 }

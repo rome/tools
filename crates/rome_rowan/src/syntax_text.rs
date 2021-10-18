@@ -44,6 +44,7 @@ impl SyntaxText {
 	}
 
 	pub fn char_at(&self, offset: TextSize) -> Option<char> {
+		let offset = offset.into();
 		let mut start: TextSize = 0.into();
 		let res = self.try_for_each_chunk(|chunk| {
 			let end = start + TextSize::of(chunk);
@@ -59,7 +60,7 @@ impl SyntaxText {
 
 	pub fn slice<R: private::SyntaxTextRange>(&self, range: R) -> SyntaxText {
 		let start = range.start().unwrap_or_default();
-		let end = range.end().unwrap_or_else(|| self.len());
+		let end = range.end().unwrap_or(self.len());
 		assert!(start <= end);
 		let len = end - start;
 		let start = self.range.start() + start;
@@ -102,10 +103,7 @@ impl SyntaxText {
 
 	pub fn for_each_chunk<F: FnMut(&str)>(&self, mut f: F) {
 		enum Void {}
-		match self.try_for_each_chunk(|chunk| {
-			f(chunk);
-			Ok::<(), Void>(())
-		}) {
+		match self.try_for_each_chunk(|chunk| Ok::<(), Void>(f(chunk))) {
 			Ok(()) => (),
 			Err(void) => match void {},
 		}
@@ -289,7 +287,6 @@ mod tests {
 	}
 
 	#[test]
-	#[allow(clippy::op_ref)]
 	fn test_text_equality() {
 		fn do_check(t1: &[&str], t2: &[&str]) {
 			let t1 = build_tree(t1).text();

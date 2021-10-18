@@ -83,7 +83,7 @@ pub fn check_assign_target(p: &mut Parser, target: &Expr, range: TextRange, deny
 // FIXME: Labels should not cross function boundaries
 pub fn check_label_use(p: &mut Parser, label: &CompletedMarker) {
 	let name = p.parse_marker::<NameRef>(label).ident_token().unwrap();
-	if p.state.labels.get(name.text().as_str()).is_none() {
+	if p.state.labels.get(name.text()).is_none() {
 		let err = p
 			.err_builder(&format!(
 				"Use of undefined statement label `{}`",

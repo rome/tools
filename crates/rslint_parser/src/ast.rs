@@ -10,7 +10,7 @@ mod generated;
 mod stmt_ext;
 mod ts_ext;
 
-use crate::{syntax_node::*, util::SyntaxNodeExt, SmolStr, SyntaxKind, TextRange};
+use crate::{syntax_node::*, util::SyntaxNodeExt, SyntaxKind, TextRange};
 use std::marker::PhantomData;
 
 pub use self::{
@@ -56,7 +56,7 @@ pub trait AstToken {
 
 	fn syntax(&self) -> &SyntaxToken;
 
-	fn text(&self) -> &SmolStr {
+	fn text(&self) -> &str {
 		self.syntax().text()
 	}
 }

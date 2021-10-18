@@ -1,8 +1,8 @@
 use crate::printer::Printer;
 use crate::{concat_elements, token, FormatElement, FormatOptions, FormatResult, ToFormatElement};
+use rome_rowan::SyntaxElement;
 use rslint_parser::ast::AstChildren;
 use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
-use rslint_rowan::SyntaxElement;
 
 /// Handles the formatting of a CST and stores the options how the CST should be formatted (user preferences).
 /// The formatter is passed to the [ToFormatElement] implementation of every node in the CST so that they
@@ -81,11 +81,11 @@ impl Formatter {
 	///
 	/// use rome_formatter::{Formatter, token};
 	/// use rslint_parser::{SyntaxNode, T, SyntaxToken};
-	/// use rslint_rowan::{GreenNode, GreenToken, SmolStr, NodeOrToken, SyntaxKind};
+	/// use rome_rowan::{GreenNode, GreenToken, NodeOrToken, SyntaxKind};
 	///
 	/// let node = SyntaxNode::new_root(
 	///   GreenNode::new(SyntaxKind(1), vec![
-	///     NodeOrToken::Token(GreenToken::new(SyntaxKind(T![=>].into()), SmolStr::new("=>")))
+	///     NodeOrToken::Token(GreenToken::new(SyntaxKind(T![=>].into()), "=>"))
 	///   ])
 	/// );
 	///
@@ -134,7 +134,7 @@ impl Formatter {
 				// need to be tracked for every node.
 				self.format_raw(&child_node)
 			}
-			SyntaxElement::Token(syntax_token) => token(syntax_token.text().as_str()),
+			SyntaxElement::Token(syntax_token) => token(syntax_token.text()),
 		}))
 	}
 }

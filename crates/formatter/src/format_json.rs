@@ -13,8 +13,8 @@ fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 		SyntaxKind::NULL_KW => token("null"),
 		SyntaxKind::TRUE_KW => token("true"),
 		SyntaxKind::FALSE_KW => token("false"),
-		SyntaxKind::STRING => token(syntax_token.text().as_str()),
-		SyntaxKind::NUMBER => token(syntax_token.text().as_str()),
+		SyntaxKind::STRING => token(syntax_token.text()),
+		SyntaxKind::NUMBER => token(syntax_token.text()),
 		SyntaxKind::MINUS => token("-"),
 		_ => panic!("Unsupported JSON token {:?}", syntax_token),
 	}

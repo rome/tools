@@ -173,7 +173,7 @@ impl ToFormatElement for SyntaxToken {
 			SyntaxKind::STRING => rslint_parser::ast::String::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			_ => Some(token(self.text().as_str())),
+			_ => Some(token(self.text())),
 		}
 	}
 }

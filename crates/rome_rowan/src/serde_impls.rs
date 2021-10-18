@@ -44,7 +44,7 @@ impl<L: Language> Serialize for SyntaxToken<L> {
 		let mut state = serializer.serialize_map(Some(3))?;
 		state.serialize_entry("kind", &SerDisplay(DisplayDebug(self.kind())))?;
 		state.serialize_entry("text_range", &self.text_range())?;
-		state.serialize_entry("text", &self.text().as_str())?;
+		state.serialize_entry("text", &self.text())?;
 		state.end()
 	}
 }

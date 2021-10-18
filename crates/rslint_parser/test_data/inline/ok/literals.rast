@@ -21,7 +21,7 @@ MODULE@0..33
   WHITESPACE@21..22 "\n"
   EXPR_STMT@22..27
     LITERAL@22..27
-      STRING@22..27 "\'bar\'"
+      STRING@22..27 "'bar'"
   WHITESPACE@27..28 "\n"
   EXPR_STMT@28..32
     LITERAL@28..32

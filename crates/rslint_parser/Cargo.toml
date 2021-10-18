@@ -11,7 +11,7 @@ repository = "https://github.com/rslint/rslint"
 rslint_errors = { path = "../rslint_errors", version = "0.2.0" }
 rslint_syntax = { path = "../rslint_syntax", version = "0.1" }
 rslint_lexer = { path = "../rslint_lexer", version = "0.2", features = ["highlight"] }
-rslint_rowan = { path = "../rslint_rowan", version = "0.10.0" }
+rome_rowan = { path = "../rome_rowan", version = "0.0.0" }
 num-bigint = "0.3.0"
 lexical = { version = "5.2.0", features = ["radix"] }
 
