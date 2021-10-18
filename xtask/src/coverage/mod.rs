@@ -16,7 +16,7 @@ pub fn run(query: Option<&str>, pool: Pool) {
 
 	let pb = indicatif::ProgressBar::new(num_ran as u64);
 	pb.set_position(1);
-	pb.set_message(format!("{} tests", "Running".bold().cyan()));
+	pb.set_message(&format!("{} tests", "Running".bold().cyan()));
 	pb.set_style(default_bar_style());
 
 	std::panic::set_hook(Box::new(|_| {}));

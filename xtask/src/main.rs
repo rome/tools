@@ -1,54 +1,63 @@
-use clap::{App, Arg};
+use pico_args::Arguments;
 use xtask::{
 	codegen::{self, Mode},
 	coverage,
+	// docgen,
 	glue::pushd,
-	project_root, run_rustfmt, Result,
+	project_root,
+	run_rustfmt,
+	Result,
 };
 
 fn main() -> Result<()> {
 	let _d = pushd(project_root());
 
-	let commands = App::new("xtask")
-		.about("Run custom build command.")
-		.subcommand(App::new("codegen"))
-		.subcommand(App::new("syntax"))
-		.subcommand(App::new("format"))
-		.subcommand(App::new("docgen"))
-		.subcommand(
-			App::new("coverage").arg(
-				Arg::new("coverage_query")
-					.about("Query parameter for coverage")
-					.index(1)
-					.required(true)
-					.takes_value(true),
-			),
-		)
-		.get_matches();
+	let mut args = Arguments::from_env();
+	let subcommand = args.subcommand()?.unwrap_or_default();
 
-	match commands.subcommand() {
-		Some(("codegen", _)) => {
-			codegen::generate_parser_tests(Mode::Overwrite).ok();
+	match subcommand.as_str() {
+		"codegen" => {
+			args.finish()?;
+			codegen::generate_parser_tests(Mode::Overwrite)?;
 			Ok(())
 		}
-		Some(("syntax", _)) => {
-			codegen::generate_syntax(Mode::Overwrite).ok();
+		"syntax" => {
+			args.finish()?;
+			codegen::generate_syntax(Mode::Overwrite)?;
 			Ok(())
 		}
-		Some(("format", _)) => {
-			run_rustfmt(Mode::Overwrite).ok();
-			Ok(())
+		"format" => {
+			args.finish()?;
+			run_rustfmt(Mode::Overwrite)
 		}
-		Some(("docgen", _)) => {
-			// docgen::run();
-			Ok(())
-		}
-		Some(("coverage", coverage_matches)) => {
-			let query = coverage_matches.value_of("coverage_query");
+		// "docgen" => {
+		//     args.finish()?;
+		//     docgen::run();
+		//     Ok(())
+		// }
+		"coverage" => {
+			let free = args.free()?;
+			let query = free.get(0).map(String::as_str);
+
 			let pool = yastl::ThreadConfig::new().stack_size(8 << 30);
 			coverage::run(query, yastl::Pool::with_config(num_cpus::get(), pool));
 			Ok(())
 		}
-		_ => Ok(()),
+		_ => {
+			eprintln!(
+				"\
+cargo xtask
+Run custom build command.
+USAGE:
+    cargo xtask <SUBCOMMAND>
+SUBCOMMANDS:
+    format
+    codegen
+    syntax
+    docgen
+    coverage"
+			);
+			Ok(())
+		}
 	}
 }
