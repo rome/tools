@@ -205,10 +205,6 @@ impl<T: ?Sized + PartialEq> PartialEq for Arc<T> {
 	fn eq(&self, other: &Arc<T>) -> bool {
 		Self::ptr_eq(self, other) || *(*self) == *(*other)
 	}
-
-	fn ne(&self, other: &Arc<T>) -> bool {
-		!Self::ptr_eq(self, other) && *(*self) != *(*other)
-	}
 }
 
 impl<T: ?Sized + PartialOrd> PartialOrd for Arc<T> {
@@ -325,10 +321,8 @@ impl<H, T> ThinArc<H, T> {
 		};
 
 		// Expose the transient Arc to the callback, which may clone it if it wants.
-		let result = f(&transient);
-
 		// Forward the result.
-		result
+		f(&transient)
 	}
 
 	/// Creates a `ThinArc` for a HeaderSlice using the given header struct and

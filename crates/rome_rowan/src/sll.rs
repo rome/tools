@@ -3,6 +3,9 @@
 use std::{cell::Cell, cmp::Ordering, ptr};
 
 use crate::utility_types::Delta;
+/// # Safety
+///
+/// This trait should be safe to call
 pub(crate) unsafe trait Elem {
 	fn prev(&self) -> &Cell<*const Self>;
 	fn next(&self) -> &Cell<*const Self>;
