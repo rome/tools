@@ -7,7 +7,7 @@ license = "MIT"
 description = "Pretty error reporting library based on codespan-reporting built for the RSLint project"
 
 [dependencies]
-rslint_rowan = { path = "../rslint_rowan", version = "0.10.0" }
+rome_rowan = { path = "../rome_rowan", version = "0.0.0" }
 unicode-width = "0.1.8"
 serde = { version = "1.0.117", optional = true, features = ["derive"] }
 lsp-types = { version = ">=0.79, <0.82", optional = true }

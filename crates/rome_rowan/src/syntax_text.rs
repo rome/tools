@@ -282,14 +282,13 @@ mod tests {
 		let mut builder = GreenNodeBuilder::new();
 		builder.start_node(SyntaxKind(62));
 		for &chunk in chunks.iter() {
-			builder.token(SyntaxKind(92), chunk.into())
+			builder.token(SyntaxKind(92), chunk)
 		}
 		builder.finish_node();
 		SyntaxNode::new_root(builder.finish())
 	}
 
 	#[test]
-	#[allow(clippy::op_ref)]
 	fn test_text_equality() {
 		fn do_check(t1: &[&str], t2: &[&str]) {
 			let t1 = build_tree(t1).text();
@@ -301,7 +300,7 @@ mod tests {
 				"`{}` (SyntaxText) `{}` (SyntaxText)",
 				t1, t2
 			);
-			let actual = t1 == &*t2.to_string();
+			let actual = t1 == *t2.to_string();
 			assert_eq!(expected, actual, "`{}` (SyntaxText) `{}` (&str)", t1, t2);
 		}
 		fn check(t1: &[&str], t2: &[&str]) {

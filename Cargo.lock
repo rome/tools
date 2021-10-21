@@ -86,12 +86,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d9df67f7bf9ef8498769f994239c45613ef0c5899415fb58e9add412d2c1a538"
 
 [[package]]
-name = "byteorder"
-version = "1.4.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "14c189c53d098945499cdfa7ecc63567cf3886b3332b312a5b4585d8d3a6a610"
-
-[[package]]
 name = "case"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -390,15 +384,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fxhash"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c31b6d751ae2c7f11320402d34e41349dd1016f8d5d45e48c4312bc8625af50c"
-dependencies = [
- "byteorder",
-]
-
-[[package]]
 name = "getrandom"
 version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -643,12 +628,6 @@ checksum = "59accc507f1338036a0477ef61afdae33cde60840f4dfe481319ce3ad116ddf9"
 dependencies = [
  "autocfg",
 ]
-
-[[package]]
-name = "nodrop"
-version = "0.1.14"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "72ef4a56884ca558e5ddb05a1d1e7e1bfd9a68d9ed024c21704cc98872dae1bb"
 
 [[package]]
 name = "num-bigint"
@@ -936,9 +915,22 @@ version = "0.0.0"
 dependencies = [
  "core",
  "path",
+ "rome_rowan",
  "rslint_parser",
- "rslint_rowan",
  "tests_macros",
+]
+
+[[package]]
+name = "rome_rowan"
+version = "0.0.0"
+dependencies = [
+ "countme",
+ "hashbrown",
+ "m_lexer",
+ "memoffset",
+ "rustc-hash",
+ "serde",
+ "text-size",
 ]
 
 [[package]]
@@ -960,7 +952,7 @@ version = "0.2.0"
 dependencies = [
  "colored",
  "lsp-types",
- "rslint_rowan",
+ "rome_rowan",
  "rslint_text_edit",
  "serde",
  "termcolor",
@@ -986,9 +978,9 @@ dependencies = [
  "expect-test",
  "lexical",
  "num-bigint",
+ "rome_rowan",
  "rslint_errors",
  "rslint_lexer",
- "rslint_rowan",
  "rslint_syntax",
 ]
 
@@ -1003,20 +995,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rslint_rowan"
-version = "0.10.0"
-dependencies = [
- "fxhash",
- "m_lexer",
- "nodrop",
- "serde",
- "smallvec",
- "smol_str",
- "stable_deref_trait",
- "text-size",
-]
-
-[[package]]
 name = "rslint_syntax"
 version = "0.1.4"
 
@@ -1024,7 +1002,7 @@ version = "0.1.4"
 name = "rslint_text_edit"
 version = "0.1.0"
 dependencies = [
- "rslint_rowan",
+ "rome_rowan",
 ]
 
 [[package]]
@@ -1169,18 +1147,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "smallvec"
-version = "1.7.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1ecab6c735a6bb4139c0caafd0cc3635748bbb3acf4550e8138122099251f309"
-
-[[package]]
-name = "smol_str"
-version = "0.1.18"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b203e79e90905594272c1c97c7af701533d42adaab0beb3859018e477d54a3b0"
-
-[[package]]
 name = "spin"
 version = "0.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1188,12 +1154,6 @@ checksum = "511254be0c5bcf062b019a6c89c01a664aa359ded62f78aa72c6fc137c0590e5"
 dependencies = [
  "lock_api",
 ]
-
-[[package]]
-name = "stable_deref_trait"
-version = "1.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
 
 [[package]]
 name = "static_assertions"

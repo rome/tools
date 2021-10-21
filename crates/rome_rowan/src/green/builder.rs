@@ -1,88 +1,8 @@
-use fxhash::FxHashMap;
-use smallvec::SmallVec;
-
 use crate::{
-	green::{GreenElement, GreenNode, GreenToken, SyntaxKind},
-	NodeOrToken, SmolStr,
+	cow_mut::CowMut,
+	green::{node_cache::NodeCache, GreenElement, GreenNode, SyntaxKind},
+	NodeOrToken,
 };
-
-use super::{node::GreenNodeHead, token::GreenTokenData};
-
-#[derive(Default, Debug)]
-pub struct NodeCache {
-	nodes: FxHashMap<GreenNodeHead, GreenNode>,
-	tokens: FxHashMap<GreenTokenData, GreenToken>,
-}
-
-impl NodeCache {
-	fn node<I>(&mut self, kind: SyntaxKind, children: I) -> GreenNode
-	where
-		I: IntoIterator<Item = GreenElement>,
-		I::IntoIter: ExactSizeIterator,
-	{
-		let children = children.into_iter();
-		// Green nodes are fully immutable, so it's ok to deduplicate them.
-		// This is the same optimization that Roslyn does
-		// https://github.com/KirillOsenkov/Bliki/wiki/Roslyn-Immutable-Trees
-		//
-		// For example, all `#[inline]` in this file share the same green node!
-		// For `libsyntax/parse/parser.rs`, measurements show that deduping saves
-		// 17% of the memory for green nodes!
-		if children.len() <= 3 {
-			let children: SmallVec<[_; 3]> = children.collect();
-			let head = GreenNodeHead::from_child_slice(kind, children.as_ref());
-			self.nodes
-				.entry(head.clone())
-				.or_insert_with(|| GreenNode::from_head_and_children(head, children))
-				.clone()
-		} else {
-			GreenNode::new(kind, children)
-		}
-	}
-
-	fn token(&mut self, kind: SyntaxKind, text: SmolStr) -> GreenToken {
-		let data = GreenTokenData { kind, text };
-		self.tokens
-			.entry(data.clone())
-			.or_insert_with(|| {
-				let GreenTokenData { kind, text } = data;
-				GreenToken::new(kind, text)
-			})
-			.clone()
-	}
-}
-
-#[derive(Debug)]
-enum MaybeOwned<'a, T> {
-	Owned(T),
-	Borrowed(&'a mut T),
-}
-
-impl<T> std::ops::Deref for MaybeOwned<'_, T> {
-	type Target = T;
-
-	fn deref(&self) -> &T {
-		match self {
-			MaybeOwned::Owned(it) => it,
-			MaybeOwned::Borrowed(it) => *it,
-		}
-	}
-}
-
-impl<T> std::ops::DerefMut for MaybeOwned<'_, T> {
-	fn deref_mut(&mut self) -> &mut T {
-		match self {
-			MaybeOwned::Owned(it) => it,
-			MaybeOwned::Borrowed(it) => *it,
-		}
-	}
-}
-
-impl<T: Default> Default for MaybeOwned<'_, T> {
-	fn default() -> Self {
-		MaybeOwned::Owned(T::default())
-	}
-}
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
 #[derive(Clone, Copy, Debug)]
@@ -91,9 +11,9 @@ pub struct Checkpoint(usize);
 /// A builder for a green tree.
 #[derive(Default, Debug)]
 pub struct GreenNodeBuilder<'cache> {
-	cache: MaybeOwned<'cache, NodeCache>,
+	cache: CowMut<'cache, NodeCache>,
 	parents: Vec<(SyntaxKind, usize)>,
-	children: Vec<GreenElement>,
+	children: Vec<(u64, GreenElement)>,
 }
 
 impl GreenNodeBuilder<'_> {
@@ -106,7 +26,7 @@ impl GreenNodeBuilder<'_> {
 	/// It allows to structurally share underlying trees.
 	pub fn with_cache(cache: &mut NodeCache) -> GreenNodeBuilder<'_> {
 		GreenNodeBuilder {
-			cache: MaybeOwned::Borrowed(cache),
+			cache: CowMut::Borrowed(cache),
 			parents: Vec::new(),
 			children: Vec::new(),
 		}
@@ -114,9 +34,9 @@ impl GreenNodeBuilder<'_> {
 
 	/// Adds new token to the current branch.
 	#[inline]
-	pub fn token(&mut self, kind: SyntaxKind, text: SmolStr) {
-		let token = self.cache.token(kind, text);
-		self.children.push(token.into());
+	pub fn token(&mut self, kind: SyntaxKind, text: &str) {
+		let (hash, token) = self.cache.token(kind, text);
+		self.children.push((hash, token.into()));
 	}
 
 	/// Start new node and make it current.
@@ -131,9 +51,8 @@ impl GreenNodeBuilder<'_> {
 	#[inline]
 	pub fn finish_node(&mut self) {
 		let (kind, first_child) = self.parents.pop().unwrap();
-		let children = self.children.drain(first_child..);
-		let node = self.cache.node(kind, children);
-		self.children.push(node.into());
+		let (hash, node) = self.cache.node(kind, &mut self.children, first_child);
+		self.children.push((hash, node.into()));
 	}
 
 	/// Prepare for maybe wrapping the next node.
@@ -142,7 +61,7 @@ impl GreenNodeBuilder<'_> {
 	/// `start_node_at`.
 	/// Example:
 	/// ```rust
-	/// # use rslint_rowan::{GreenNodeBuilder, SyntaxKind};
+	/// # use rome_rowan::{GreenNodeBuilder, SyntaxKind};
 	/// # const PLUS: SyntaxKind = SyntaxKind(0);
 	/// # const OPERATION: SyntaxKind = SyntaxKind(1);
 	/// # struct Parser;
@@ -155,10 +74,10 @@ impl GreenNodeBuilder<'_> {
 	/// let checkpoint = builder.checkpoint();
 	/// parser.parse_expr();
 	/// if parser.peek() == Some(PLUS) {
-	///     // 1 + 2 = Add(1, 2)
-	///     builder.start_node_at(checkpoint, OPERATION);
-	///     parser.parse_expr();
-	///     builder.finish_node();
+	///   // 1 + 2 = Add(1, 2)
+	///   builder.start_node_at(checkpoint, OPERATION);
+	///   parser.parse_expr();
+	///   builder.finish_node();
 	/// }
 	/// ```
 	#[inline]
@@ -192,7 +111,7 @@ impl GreenNodeBuilder<'_> {
 	#[inline]
 	pub fn finish(mut self) -> GreenNode {
 		assert_eq!(self.children.len(), 1);
-		match self.children.pop().unwrap() {
+		match self.children.pop().unwrap().1 {
 			NodeOrToken::Node(node) => node,
 			NodeOrToken::Token(_) => panic!(),
 		}

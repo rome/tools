@@ -1,4 +1,4 @@
-use rslint_rowan::{Language, SyntaxElement, SyntaxNode, SyntaxToken, TextRange};
+use rome_rowan::{Language, SyntaxElement, SyntaxNode, SyntaxToken, TextRange};
 use std::{collections::HashMap, ops::Range};
 
 /// A value which can be used as the range inside of a diagnostic.

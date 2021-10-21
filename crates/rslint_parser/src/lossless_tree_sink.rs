@@ -1,7 +1,7 @@
 use crate::{
 	ast,
 	syntax_node::GreenNode,
-	AstNode, ParserError, SmolStr,
+	AstNode, ParserError,
 	SyntaxKind::{self, *},
 	SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
@@ -45,7 +45,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 		);
 
 		let range = TextRange::at(self.text_pos, len);
-		let text: SmolStr = self.text[range].into();
+		let text = &self.text[range];
 		self.text_pos += len;
 		self.token_pos += amount as usize;
 		self.inner.token(kind, text);
@@ -191,7 +191,7 @@ impl<'a> LosslessTreeSink<'a> {
 
 	fn do_token(&mut self, kind: SyntaxKind, len: TextSize) {
 		let range = TextRange::at(self.text_pos, len);
-		let text: SmolStr = self.text[range].into();
+		let text = &self.text[range];
 		self.text_pos += len;
 		self.token_pos += 1;
 		self.inner.token(kind, text);
