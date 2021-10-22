@@ -24,22 +24,25 @@ Script = 'shebang'? Stmt*
 ///////////////
 
 Stmt =
-BlockStmt
-|	EmptyStmt
-|	ExprStmt
-// |	WhileStmt
-// |	ForStmt
-// |	ForInStmt
-// |	ContinueStmt
-// |	BreakStmt
-// |	ReturnStmt
-// |	WithStmt
-// |	LabelledStmt
-// |	SwitchStmt
-// |	ThrowStmt
-// |	TryStmt
-// |	DebuggerStmt
-// |	Decl
+	BlockStmt
+	| EmptyStmt
+	| ExprStmt
+	| IfStmt
+	| DoWhileStmt
+	| WhileStmt
+	| ForStmt
+	| ForInStmt
+	| ForOfStmt
+	| ContinueStmt
+	| BreakStmt
+	| ReturnStmt
+	| WithStmt
+	| LabelledStmt
+	| SwitchStmt
+	| ThrowStmt
+	| TryStmt
+	| DebuggerStmt
+	| Decl
 
 
 // Block statement
@@ -52,6 +55,91 @@ EmptyStmt = ';'?
 
 // Expression statement
 ExprStmt = Expr
+
+
+// while statement
+WhileStmt = 'while' condition:Condition cons:Stmt
+
+// do while statement
+DoWhileStmt = 'do'  cons:Stmt 'while' condition:Condition ';'
+
+
+// if statement
+IfStmt = 'if' condition:Condition cons:Stmt 'else' alt:Stmt
+
+
+// for statement
+ForStmt =
+	'for'
+	'('
+	init:ForStmtInit?
+	';'
+	test:ForStmtTest?
+	';'
+	update:ForStmtUpdate?
+	')'
+	cons:Stmt
+
+ForStmtInit = inner:ForHead
+ForHead = Decl | Expr
+
+ForStmtTest = expr:Expr
+
+ForStmtUpdate = expr:Expr
+
+
+// for..in statement
+ForInStmt = 'for' '(' left:ForStmtInit 'in' right:Expr ')' cons:Stmt
+
+// for..of statement
+ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:Expr ')' cons:Stmt
+
+
+// continue statement
+ContinueStmt = 'continue' Ident ';'?
+
+
+// break statement
+BreakStmt = 'break' ';'?
+
+
+// return statement
+ReturnStmt = 'return' value:Expr ';'?
+
+// with statement
+WithStmt = 'with' condition:Condition cons:Stmt
+
+// labelled statement
+LabelledStmt = label:Name ':' Stmt
+
+// switch statement
+SwitchStmt =
+	'switch'
+	test:Condition
+	'{'
+	cases:SwitchCase*
+	'}'
+
+SwitchCase = CaseClause | DefaultCase
+
+CaseClause = 'case' test:Expr ':' cons:Stmt*
+DefaultCase = 'default' ':' cons:Stmt*
+
+
+// throw statement
+ThrowStmt = 'throw' exception:Expr ';'
+
+// try..catch..finally statement
+
+TryStmt = 'try' test:BlockStmt handler:CatchClause finalizer:Finalizer
+
+// TODO: fix it, the pattern is not mandatory anymore
+CatchClause = 'catch' '(' error:Pattern ')' cons:BlockStmt
+Finalizer = 'finally' cons:BlockStmt
+
+
+// debugger statement
+DebuggerStmt = 'debugger' ';'?
 
 
 ///////////////
@@ -311,6 +399,33 @@ SpreadElement = '...' element:Expr
 PrivateName = '#' Name
 
 Name = Ident
+
+
+Condition = '(' condition:Expr ')'
+
+///////////////
+// DECLARATIONS
+///////////////
+
+Decl =
+	FnDecl
+	// | ClassDecl
+	// | VarDecl
+	// | TsEnum
+	// | TsTypeAliasDecl
+	// | TsNamespaceDecl
+	// | TsModuleDecl
+	// | TsInterfaceDecl
+
+
+// TODO: add typescript types
+FnDecl =
+	'async'?
+	'function'
+	'*'?
+	Name
+	parameters:ParameterList
+	body:BlockStmt
 
 ///////////////
 // TYPESCRIPT
