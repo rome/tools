@@ -202,13 +202,6 @@ impl DebuggerStmt {
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Decl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Decl {
-	pub fn fn_decl(&self) -> Option<FnDecl> { support::child(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Condition {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -282,6 +275,24 @@ pub struct Finalizer {
 impl Finalizer {
 	pub fn finally_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![finally]) }
 	pub fn cons(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Pattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl Pattern {
+	pub fn single_pattern(&self) -> Option<SinglePattern> { support::child(&self.syntax) }
+	pub fn rest_pattern(&self) -> Option<RestPattern> { support::child(&self.syntax) }
+	pub fn assign_pattern(&self) -> Option<AssignPattern> { support::child(&self.syntax) }
+	pub fn object_pattern(&self) -> Option<ObjectPattern> { support::child(&self.syntax) }
+	pub fn array_pattern(&self) -> Option<ArrayPattern> { support::child(&self.syntax) }
+	pub fn expr_pattern(&self) -> Option<ExprPattern> { support::child(&self.syntax) }
+	pub fn single_pattern(&self) -> Option<SinglePattern> { support::child(&self.syntax) }
+	pub fn rest_pattern(&self) -> Option<RestPattern> { support::child(&self.syntax) }
+	pub fn assign_pattern(&self) -> Option<AssignPattern> { support::child(&self.syntax) }
+	pub fn object_pattern(&self) -> Option<ObjectPattern> { support::child(&self.syntax) }
+	pub fn array_pattern(&self) -> Option<ArrayPattern> { support::child(&self.syntax) }
+	pub fn expr_pattern(&self) -> Option<ExprPattern> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrowExpr {
@@ -780,6 +791,40 @@ impl RestPattern {
 	pub fn pa(&self) -> Option<Pattern> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct AssignPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl AssignPattern {
+	pub fn key(&self) -> Option<Pattern> { support::child(&self.syntax) }
+	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ObjectPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ObjectPattern {
+	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
+	pub fn elements(&self) -> AstChildren<ObjectPatternProp> { support::children(&self.syntax) }
+	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ArrayPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ArrayPattern {
+	pub fn l_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['[']) }
+	pub fn elements(&self) -> AstChildren<Pattern> { support::children(&self.syntax) }
+	pub fn r_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![']']) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ExprPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ExprPattern {
+	pub fn expr(&self) -> Option<Expr> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct LiteralProp {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -787,6 +832,30 @@ impl LiteralProp {
 	pub fn key(&self) -> Option<PropName> { support::child(&self.syntax) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
 	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct SpreadProp {
+	pub(crate) syntax: SyntaxNode,
+}
+impl SpreadProp {
+	pub fn dotdotdot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [...]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct InitializedProp {
+	pub(crate) syntax: SyntaxNode,
+}
+impl InitializedProp {
+	pub fn key(&self) -> Option<Name> { support::child(&self.syntax) }
+	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct IdentProp {
+	pub(crate) syntax: SyntaxNode,
+}
+impl IdentProp {
+	pub fn name(&self) -> Option<Name> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ComputedPropertyName {
@@ -818,6 +887,26 @@ impl FnDecl {
 	pub fn name(&self) -> Option<Name> { support::child(&self.syntax) }
 	pub fn parameters(&self) -> Option<ParameterList> { support::child(&self.syntax) }
 	pub fn body(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct VarDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl VarDecl {
+	pub fn var_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![var]) }
+	pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![const]) }
+	pub fn let_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![let]) }
+	pub fn declarad(&self) -> AstChildren<Declarator> { support::children(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Declarator {
+	pub(crate) syntax: SyntaxNode,
+}
+impl Declarator {
+	pub fn pattern(&self) -> Option<Pattern> { support::child(&self.syntax) }
+	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsAny {
@@ -854,6 +943,11 @@ pub enum Stmt {
 	TryStmt(TryStmt),
 	DebuggerStmt(DebuggerStmt),
 	Decl(Decl),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum Decl {
+	FnDecl(FnDecl),
+	VarDecl(VarDecl),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Expr {
@@ -894,11 +988,6 @@ pub enum SwitchCase {
 	DefaultCase(DefaultCase),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum Pattern {
-	SinglePattern(SinglePattern),
-	RestPattern(RestPattern),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Literal {
 	StringValue(StringValue),
 	BooleanValue(BooleanValue),
@@ -927,6 +1016,11 @@ pub enum ExprOrBlock {
 pub enum ObjectProp {
 	LiteralProp(LiteralProp),
 	Getter(Getter),
+	Setter(Setter),
+	SpreadProp(SpreadProp),
+	InitializedProp(InitializedProp),
+	IdentProp(IdentProp),
+	Method(Method),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ClassElement {
@@ -947,6 +1041,12 @@ pub enum ExprOrSpread {
 pub enum PatternOrExpr {
 	Pattern(Pattern),
 	Expr(Expr),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum ObjectPatternProp {
+	AssignPattern(AssignPattern),
+	RestPattern(RestPattern),
+	SinglePattern(SinglePattern),
 }
 impl AstNode for Ident {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == IDENT }
@@ -1168,17 +1268,6 @@ impl AstNode for DebuggerStmt {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Decl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for Condition {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == CONDITION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -1269,6 +1358,17 @@ impl AstNode for CatchClause {
 }
 impl AstNode for Finalizer {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FINALIZER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for Pattern {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -1784,8 +1884,85 @@ impl AstNode for RestPattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for AssignPattern {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == ASSIGN_PATTERN }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ObjectPattern {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == OBJECT_PATTERN }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ArrayPattern {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == ARRAY_PATTERN }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ExprPattern {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPR_PATTERN }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for LiteralProp {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == LITERAL_PROP }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for SpreadProp {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == SPREAD_PROP }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for InitializedProp {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == INITIALIZED_PROP }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for IdentProp {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == IDENT_PROP }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -1819,6 +1996,28 @@ impl AstNode for PrivateName {
 }
 impl AstNode for FnDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FN_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for VarDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == VAR_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for Declarator {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == DECLARATOR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -1969,6 +2168,29 @@ impl AstNode for Stmt {
 			Stmt::TryStmt(it) => &it.syntax,
 			Stmt::DebuggerStmt(it) => &it.syntax,
 			Stmt::Decl(it) => &it.syntax,
+		}
+	}
+}
+impl From<FnDecl> for Decl {
+	fn from(node: FnDecl) -> Decl { Decl::FnDecl(node) }
+}
+impl From<VarDecl> for Decl {
+	fn from(node: VarDecl) -> Decl { Decl::VarDecl(node) }
+}
+impl AstNode for Decl {
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, FN_DECL | VAR_DECL) }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			FN_DECL => Decl::FnDecl(FnDecl { syntax }),
+			VAR_DECL => Decl::VarDecl(VarDecl { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			Decl::FnDecl(it) => &it.syntax,
+			Decl::VarDecl(it) => &it.syntax,
 		}
 	}
 }
@@ -2173,29 +2395,6 @@ impl AstNode for SwitchCase {
 		}
 	}
 }
-impl From<SinglePattern> for Pattern {
-	fn from(node: SinglePattern) -> Pattern { Pattern::SinglePattern(node) }
-}
-impl From<RestPattern> for Pattern {
-	fn from(node: RestPattern) -> Pattern { Pattern::RestPattern(node) }
-}
-impl AstNode for Pattern {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, SINGLE_PATTERN | REST_PATTERN) }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			SINGLE_PATTERN => Pattern::SinglePattern(SinglePattern { syntax }),
-			REST_PATTERN => Pattern::RestPattern(RestPattern { syntax }),
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			Pattern::SinglePattern(it) => &it.syntax,
-			Pattern::RestPattern(it) => &it.syntax,
-		}
-	}
-}
 impl From<StringValue> for Literal {
 	fn from(node: StringValue) -> Literal { Literal::StringValue(node) }
 }
@@ -2327,12 +2526,37 @@ impl From<LiteralProp> for ObjectProp {
 impl From<Getter> for ObjectProp {
 	fn from(node: Getter) -> ObjectProp { ObjectProp::Getter(node) }
 }
+impl From<Setter> for ObjectProp {
+	fn from(node: Setter) -> ObjectProp { ObjectProp::Setter(node) }
+}
+impl From<SpreadProp> for ObjectProp {
+	fn from(node: SpreadProp) -> ObjectProp { ObjectProp::SpreadProp(node) }
+}
+impl From<InitializedProp> for ObjectProp {
+	fn from(node: InitializedProp) -> ObjectProp { ObjectProp::InitializedProp(node) }
+}
+impl From<IdentProp> for ObjectProp {
+	fn from(node: IdentProp) -> ObjectProp { ObjectProp::IdentProp(node) }
+}
+impl From<Method> for ObjectProp {
+	fn from(node: Method) -> ObjectProp { ObjectProp::Method(node) }
+}
 impl AstNode for ObjectProp {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, LITERAL_PROP | GETTER) }
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(
+			kind,
+			LITERAL_PROP | GETTER | SETTER | SPREAD_PROP | INITIALIZED_PROP | IDENT_PROP | METHOD
+		)
+	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			LITERAL_PROP => ObjectProp::LiteralProp(LiteralProp { syntax }),
 			GETTER => ObjectProp::Getter(Getter { syntax }),
+			SETTER => ObjectProp::Setter(Setter { syntax }),
+			SPREAD_PROP => ObjectProp::SpreadProp(SpreadProp { syntax }),
+			INITIALIZED_PROP => ObjectProp::InitializedProp(InitializedProp { syntax }),
+			IDENT_PROP => ObjectProp::IdentProp(IdentProp { syntax }),
+			METHOD => ObjectProp::Method(Method { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -2341,6 +2565,11 @@ impl AstNode for ObjectProp {
 		match self {
 			ObjectProp::LiteralProp(it) => &it.syntax,
 			ObjectProp::Getter(it) => &it.syntax,
+			ObjectProp::Setter(it) => &it.syntax,
+			ObjectProp::SpreadProp(it) => &it.syntax,
+			ObjectProp::InitializedProp(it) => &it.syntax,
+			ObjectProp::IdentProp(it) => &it.syntax,
+			ObjectProp::Method(it) => &it.syntax,
 		}
 	}
 }
@@ -2443,7 +2672,42 @@ impl AstNode for PatternOrExpr {
 		}
 	}
 }
+impl From<AssignPattern> for ObjectPatternProp {
+	fn from(node: AssignPattern) -> ObjectPatternProp { ObjectPatternProp::AssignPattern(node) }
+}
+impl From<RestPattern> for ObjectPatternProp {
+	fn from(node: RestPattern) -> ObjectPatternProp { ObjectPatternProp::RestPattern(node) }
+}
+impl From<SinglePattern> for ObjectPatternProp {
+	fn from(node: SinglePattern) -> ObjectPatternProp { ObjectPatternProp::SinglePattern(node) }
+}
+impl AstNode for ObjectPatternProp {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(kind, ASSIGN_PATTERN | REST_PATTERN | SINGLE_PATTERN)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			ASSIGN_PATTERN => ObjectPatternProp::AssignPattern(AssignPattern { syntax }),
+			REST_PATTERN => ObjectPatternProp::RestPattern(RestPattern { syntax }),
+			SINGLE_PATTERN => ObjectPatternProp::SinglePattern(SinglePattern { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			ObjectPatternProp::AssignPattern(it) => &it.syntax,
+			ObjectPatternProp::RestPattern(it) => &it.syntax,
+			ObjectPatternProp::SinglePattern(it) => &it.syntax,
+		}
+	}
+}
 impl std::fmt::Display for Stmt {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for Decl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -2459,11 +2723,6 @@ impl std::fmt::Display for ForHead {
 	}
 }
 impl std::fmt::Display for SwitchCase {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for Pattern {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -2504,6 +2763,11 @@ impl std::fmt::Display for ExprOrSpread {
 	}
 }
 impl std::fmt::Display for PatternOrExpr {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ObjectPatternProp {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -2608,11 +2872,6 @@ impl std::fmt::Display for DebuggerStmt {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Decl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for Condition {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -2654,6 +2913,11 @@ impl std::fmt::Display for CatchClause {
 	}
 }
 impl std::fmt::Display for Finalizer {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for Pattern {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -2888,7 +3152,42 @@ impl std::fmt::Display for RestPattern {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for AssignPattern {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ObjectPattern {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ArrayPattern {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ExprPattern {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for LiteralProp {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for SpreadProp {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for InitializedProp {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for IdentProp {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -2904,6 +3203,16 @@ impl std::fmt::Display for PrivateName {
 	}
 }
 impl std::fmt::Display for FnDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for VarDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for Declarator {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

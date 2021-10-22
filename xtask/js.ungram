@@ -336,23 +336,56 @@ ParameterList = '(' Pattern* ')'
 ArgList = '(' Expr* ')'
 
 
-// Patterns
+///////////////
+// PATTERNS
+///////////////
+
 Pattern =
 	SinglePattern
 	| RestPattern
-	// | AssignPattern
-	// | ObjectPattern
-	// | ArrayPattern
-	// | ExprPattern
+	| AssignPattern
+	| ObjectPattern
+	| ArrayPattern
+	| ExprPattern
+
+SinglePattern
+	| RestPattern
+	| AssignPattern
+	| ObjectPattern
+	| ArrayPattern
+	| ExprPattern
 
 // TODO:  add here the typescript tokens and nodes
+// single pattern
 SinglePattern
 	= name:Ident
 
+// rest pattern
 RestPattern = '...' pa:Pattern
 
+// TODO: add typescript types
+// array pattern
+ArrayPattern = '[' elements:Pattern* ']'
 
-NameRef = Ident
+// object pattern
+ObjectPattern = '{' elements:ObjectPatternProp* '}'
+
+// object pattern prop
+ObjectPatternProp =
+	AssignPattern
+	// | KeyValuePattern
+	| RestPattern
+	| SinglePattern
+
+// assign pattern
+// TODO: add typescript types
+AssignPattern = key:Pattern '=' value:Expr
+
+
+// expression pattern
+ExprPattern = Expr
+
+
 
 
 ///////////////
@@ -361,13 +394,14 @@ NameRef = Ident
 ObjectProp =
 	LiteralProp
 	| Getter
-	// | Setter
-	// | SpreadProp
-	// | InitializedProp
-	// | IdentProp
-	// | Method
+	| Setter
+	| SpreadProp
+	| InitializedProp
+	| IdentProp
+	| Method
 
 
+// literal prop
 LiteralProp = key:PropName ':' value:Expr
 
 PropName =
@@ -376,10 +410,20 @@ PropName =
 	Ident
 
 
+// computed property
 ComputedPropertyName = '[' Expr ']'
 
-
+// private property access
 PrivatePropAccess = lhs:Expr '.' rhs:PrivateName
+
+// spread property
+SpreadProp = '...' value:Expr
+
+// initialised property
+InitializedProp = key:Name '=' value:Expr
+
+// property identifier
+IdentProp = Name
 
 ///////////////
 // MISCELLANEOUS
@@ -400,8 +444,9 @@ PrivateName = '#' Name
 
 Name = Ident
 
-
 Condition = '(' condition:Expr ')'
+
+NameRef = Ident
 
 ///////////////
 // DECLARATIONS
@@ -409,8 +454,8 @@ Condition = '(' condition:Expr ')'
 
 Decl =
 	FnDecl
-	// | ClassDecl
-	// | VarDecl
+	| ClassDecl
+	| VarDecl
 	// | TsEnum
 	// | TsTypeAliasDecl
 	// | TsNamespaceDecl
@@ -426,6 +471,15 @@ FnDecl =
 	Name
 	parameters:ParameterList
 	body:BlockStmt
+
+VarDecl = ('var' | 'const' | 'let') declarad:Declarator* ';'
+
+// @ematipico: should we consider ClassDecl = ClassExpr ?
+ClassDecl  = 'class' Name 'extends' parent:Name body:ClassBody
+
+
+// TODO: add typescript types
+Declarator = pattern:Pattern '=' value:Expr
 
 ///////////////
 // TYPESCRIPT
