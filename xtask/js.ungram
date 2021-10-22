@@ -19,7 +19,10 @@
 Ident = 'ident'
 Script = 'shebang'? Stmt*
 
-//
+///////////////
+// STATEMENTS
+///////////////
+
 Stmt =
 BlockStmt
 |	EmptyStmt
@@ -51,50 +54,172 @@ EmptyStmt = ';'?
 ExprStmt = Expr
 
 
+///////////////
+// EXPRESSIONS
+///////////////
+
 // Expression
 Expr =
 	ArrowExpr
 	| Literal
 	// | Template
-	// | NameRef
-	// | ThisExpr
-	// | ArrayExpr
-	// | ObjectExpr
-	// | GroupingExpr
-	// | BracketExpr
-	// | DotExpr
-	// | NewExpr
-	// | CallExpr
-	// | UnaryExpr
-	// | BinExpr
-	// | CondExpr
-	// | AssignExpr
-	// | SequenceExpr
-	// | FnExpr
-	// | ClassExpr
-	// | NewTarget
-	// | ImportMeta
-	// | SuperCall
-	// | ImportCall
-	// | YieldExpr
-	// | AwaitExpr
-	// | PrivatePropAccess
+	| NameRef
+	| ThisExpr
+	| ArrayExpr
+	| ObjectExpr
+	| GroupingExpr
+	| BracketExpr
+	| DotExpr
+	| NewExpr
+	| CallExpr
+	| UnaryExpr
+	| BinExpr
+	| CondExpr
+	| AssignExpr
+	| SequenceExpr
+	| FnExpr
+	| ClassExpr
+	| NewTarget
+	| ImportMeta
+	| SuperCall
+	| ImportCall
+	| YieldExpr
+	| AwaitExpr
+	| PrivatePropAccess
 	// | TsNonNull
 	// | TsAssertion
 	// | TsConstAssertion
 
 
 
+// This Expression
+ThisExpr = 'this'
+
+// Dot exprssion
+DotExpr = '.'
+
+// new expression
+// TODO: add typescript types
+NewExpr = 'new' object:Expr arguments:ArgList
+
+// call expression
+// TODO: add typescript types
+CallExpr = callee:Expr arguments:ArgList
+
+// await expression
+AwaitExpr = 'await' Expr
+
+// yield expressoin
+YieldExpr = 'yield' '*' value:Expr
+
+// super call expression
+SuperCall = 'super' arguments:ArgList
+
+// import call exression
+ImportCall = 'import' '(' argument:Expr ')'
+
+// new target expression
+NewTarget = 'new' '.' 'target'
+
+// conditional expression
+CondExpr = '?' ':'?
+
+// import meta expression
+ImportMeta = 'import' '.'
+
+// function expression
+// TODO: add typescript types
+FnExpr =
+	'async'? 'function' '*'? name:Name parameters:ArgList body:BlockStmt
+
 // Arrow expression
 ArrowExpr =
 	'async'? type_params:TsTypeParams? params:ArrowExprParams? '=>' (':' return_type:TsType)? body:ExprOrBlock
-
 ArrowExprParams =
 	Name
 	| ParameterList
 
+// Object expression
+ObjectExpr = '{' props:ObjectProp* '}'
 
-Name = Ident
+// class expression
+// TODO: add typescript types
+ClassExpr = 'class' Name 'extends' parent:Name body:ClassBody
+
+ClassBody =  '{' elements:ClassElement* '}'
+
+
+ClassElement =
+	EmptyStmt
+	| Method
+	// probably PrivateProp is not needed
+	| PrivateProp
+	| ClassProp
+	| Constructor
+	// | TsIndexSignature
+	| Getter
+	| Setter
+
+// TODO: add typescript types
+Constructor = name:PropName parameters:ParameterList body:BlockStmt
+
+// This type is here only to matain compatiblity with rslit_parser
+// A private property should only have the hash (#) or have the
+// keyword `private` in the typescript version
+PrivateProp = ClassProp
+// TODO: add typescript types
+// Note: they way it's written now is awful and can be improved a lot
+ClassProp = 'static'? '#'? key:PropName '='? value:Expr? ';'?
+
+// Array expression
+ArrayExpr = '[' elements:ExprOrSpread* ']'
+
+ExprOrSpread =
+	Expr
+	| SpreadElement
+
+
+// assign expression
+AssignExpr =
+  lhs:PatternOrExpr
+  op:(
+		'=' |'+=' | '-=' | '*=' | '%=' |
+		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
+		'|=' | '^=' | '&&=' | '||=' | '??='
+  )
+  rhs:PatternOrExpr
+
+
+PatternOrExpr = Pattern | Expr
+
+// sequence expression
+SequenceExpr = exprs:Expr*
+
+// grouping expression
+GroupingExpr = '(' inner:Expr ')'
+
+// bracket expression
+BracketExpr =  'super'? object:Expr '[' prop:Expr ']'
+
+
+// binary expression
+BinExpr =
+  lhs:Expr
+  op:(
+		'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
+		| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
+		| '&' | '|' | '^' | '??' | '||' | '&&' | 'in' | 'instanceof'
+  )
+  rhs:Expr
+
+// unary expression
+UnaryExpr =
+  lhs:Expr
+  op:(
+		'++' | '--' | 'delete' | 'void' | 'typeof' | '+' | '-' | '~'
+		| '!' | 'await'
+  )
+  rhs:Expr
 
 // Literals
 Literal =
@@ -120,7 +245,7 @@ ExprOrBlock =
 	| BlockStmt
 
 ParameterList = '(' Pattern* ')'
-
+ArgList = '(' Expr* ')'
 
 
 // Patterns
@@ -136,10 +261,64 @@ Pattern =
 SinglePattern
 	= name:Ident
 
-RestPattern = '...'
+RestPattern = '...' pa:Pattern
 
 
+NameRef = Ident
+
+
+///////////////
+// PROPS
+///////////////
+ObjectProp =
+	LiteralProp
+	| Getter
+	// | Setter
+	// | SpreadProp
+	// | InitializedProp
+	// | IdentProp
+	// | Method
+
+
+LiteralProp = key:PropName ':' value:Expr
+
+PropName =
+	ComputedPropertyName
+	Literal
+	Ident
+
+
+ComputedPropertyName = '[' Expr ']'
+
+
+PrivatePropAccess = lhs:Expr '.' rhs:PrivateName
+
+///////////////
+// MISCELLANEOUS
+///////////////
+
+// TODO: add typescript types
+Getter =  'get' key:PropName parameters:ParameterList  body:BlockStmt
+
+// TODO: add typescript types
+Setter = 'set' key:PropName parameters:ParameterList  body:BlockStmt
+
+// TODO: add typescript types
+Method = 'static'? 'async'? '*'? name:PropName parameters:ParameterList  body:BlockStmt
+
+SpreadElement = '...' element:Expr
+
+PrivateName = '#' Name
+
+Name = Ident
+
+///////////////
+// TYPESCRIPT
+///////////////
+//
+// Below here we want to keep all the TypeScript types
 // Typescript definitions
+//
 TsTypeParams = '<'  '>'
 TsType =
 	TsAny
