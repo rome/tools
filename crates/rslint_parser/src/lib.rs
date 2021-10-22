@@ -34,7 +34,7 @@
 //! The crate relies on a concept of untyped [`SyntaxNode`]s vs typed [`AstNode`]s.
 //! Syntax nodes represent the syntax tree in an untyped way. They represent a location in an immutable
 //! tree with two pointers. The syntax tree is composed of [`SyntaxNode`]s and [`SyntaxToken`]s in a nested
-//! tree structure. Each node can have parents, siblings, children, descendants, etc.  
+//! tree structure. Each node can have parents, siblings, children, descendants, etc.
 //!
 //! [`AstNode`]s represent a typed version of a syntax node. They have the same exact representation as syntax nodes
 //! therefore a conversion between either has zero runtime cost. Every piece of data of an ast node is optional,
@@ -95,9 +95,15 @@ pub use rome_rowan::{SyntaxText, TextRange, TextSize, WalkEvent};
 
 pub use rslint_syntax::*;
 
-/// The type of error emitted by the parser, this includes warnings, notes, and errors.  
+/// The type of error emitted by the parser, this includes warnings, notes, and errors.
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
+
+pub enum SyntaxError {
+	MissingElement,
+}
+
+pub type SyntaxResult<Node> = Result<Node, SyntaxError>;
 
 use std::ops::Range;
 

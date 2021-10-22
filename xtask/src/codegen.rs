@@ -1,5 +1,6 @@
 //! Codegen tools for generating Syntax and AST definitions. Derived from Rust analyzer's codegen
 
+mod ast;
 mod parser_tests;
 mod syntax;
 
@@ -7,14 +8,15 @@ use std::path::Path;
 
 use crate::{glue::fs2, Result};
 
-pub use self::{parser_tests::generate_parser_tests, syntax::generate_syntax};
+pub use self::ast::generate_ast;
+pub use self::parser_tests::generate_parser_tests;
 
 // const GRAMMAR_DIR: &str = "crates/ra_parser/src/grammar";
 // const OK_INLINE_TESTS_DIR: &str = "crates/ra_syntax/test_data/parser/inline/ok";
 // const ERR_INLINE_TESTS_DIR: &str = "crates/ra_syntax/test_data/parser/inline/err";
 
 const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/generated.rs";
-const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes.rs";
+const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes_new.rs";
 const AST_TOKENS: &str = "crates/rslint_parser/src/ast/generated/tokens.rs";
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]

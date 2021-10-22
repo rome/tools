@@ -1,0 +1,139 @@
+// Rust Un-Grammar.
+//
+// This grammar specifies the structure of Rust's concrete syntax tree.
+// It does not specify parsing rules (ambiguities, precedence, etc are out of scope).
+// Tokens are processed -- contextual keywords are recognised, compound operators glued.
+//
+// Legend:
+//
+//   //          -- comment
+//   Name =      -- non-terminal definition
+//   'ident'     -- token (terminal)
+//   A B         -- sequence
+//   A | B       -- alternation
+//   A*          -- zero or more repetition
+//   A?          -- zero or one repetition
+//   (A)         -- same as A
+//   label:A     -- suggested name for field of AST node
+
+Script = 'shebang'? Stmt*
+
+//
+Stmt =
+BlockStmt
+|	EmptyStmt
+|	ExprStmt
+// |	WhileStmt
+// |	ForStmt
+// |	ForInStmt
+// |	ContinueStmt
+// |	BreakStmt
+// |	ReturnStmt
+// |	WithStmt
+// |	LabelledStmt
+// |	SwitchStmt
+// |	ThrowStmt
+// |	TryStmt
+// |	DebuggerStmt
+// |	Decl
+
+
+// Block statement
+BlockStmt = '{' Stmt* '}'
+
+
+// Empty statemnet
+EmptyStmt = ';'?
+
+
+// Expression statement
+ExprStmt = Expr
+
+
+// Expression
+Expr =
+	ArrowExpr
+	| Literal
+	// | Template
+	// | NameRef
+	// | ThisExpr
+	// | ArrayExpr
+	// | ObjectExpr
+	// | GroupingExpr
+	// | BracketExpr
+	// | DotExpr
+	// | NewExpr
+	// | CallExpr
+	// | UnaryExpr
+	// | BinExpr
+	// | CondExpr
+	// | AssignExpr
+	// | SequenceExpr
+	// | FnExpr
+	// | ClassExpr
+	// | NewTarget
+	// | ImportMeta
+	// | SuperCall
+	// | ImportCall
+	// | YieldExpr
+	// | AwaitExpr
+	// | PrivatePropAccess
+	// | TsNonNull
+	// | TsAssertion
+	// | TsConstAssertion
+
+
+
+	// Arrow expression
+ArrowExpr =
+	'async'? TsTypeParams? Params? '=>' (':' TsType)? ExprOrBlock
+
+// Literal
+Literal =  'string'
+
+ExprOrBlock =
+	Expr
+	| BlockStmt
+
+Params = '(' ')'
+
+
+
+// Typescript definitions
+TsTypeParams = '<'  '>'
+TsType =
+	TsAny
+	| TsUnknown
+	// | TsNumber
+	// | TsObject
+	// | TsBoolean
+	// | TsBigint
+	// | TsString
+	// | TsSymbol
+	// | TsVoid
+	// | TsUndefined
+	// | TsNull
+	// | TsNever
+	// | TsThis
+	// | TsLiteral
+	// | TsPredicate
+	// | TsTuple
+	// | TsParen
+	// | TsTypeRef
+	// | TsTemplate
+	// | TsMappedType
+	// | TsImport
+	// | TsArray
+	// | TsIndexedArray
+	// | TsTypeOperator
+	// | TsIntersection
+	// | TsUnion
+	// | TsFnType
+	// | TsConstructorType
+	// | TsConditionalType
+	// | TsObjectType
+	// | TsInfer
+
+
+TsAny = 'any'
+TsUnknown = 'unknown'
