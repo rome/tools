@@ -153,8 +153,6 @@ pub(crate) const KINDS_SRC: KindsSrc = KindsSrc {
 	],
 	nodes: &[
 		"SCRIPT",
-		"JSROOT",
-		"JS_IF_STATEMENT",
 		"MODULE",
 		"ERROR",
 		"BLOCK_STMT",
@@ -377,12 +375,12 @@ impl Field {
 			Field::Token(name) => {
 				let name = match name.as_str() {
 					";" => "semicolon",
-					"{" => "l_curly",
-					"}" => "r_curly",
-					"(" => "l_paren",
-					")" => "r_paren",
-					"[" => "l_brack",
-					"]" => "r_brack",
+					"'{'" => "l_curly",
+					"'}'" => "r_curly",
+					"'('" => "l_paren",
+					"')'" => "r_paren",
+					"'['" => "l_brack",
+					"']'" => "r_brack",
 					"<" => "l_angle",
 					">" => "r_angle",
 					"=" => "eq",

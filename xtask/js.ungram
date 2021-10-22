@@ -16,6 +16,7 @@
 //   (A)         -- same as A
 //   label:A     -- suggested name for field of AST node
 
+Ident = 'ident'
 Script = 'shebang'? Stmt*
 
 //
@@ -84,19 +85,58 @@ Expr =
 
 
 
-	// Arrow expression
+// Arrow expression
 ArrowExpr =
-	'async'? TsTypeParams? Params? '=>' (':' TsType)? ExprOrBlock
+	'async'? type_params:TsTypeParams? params:ArrowExprParams? '=>' (':' return_type:TsType)? body:ExprOrBlock
 
-// Literal
-Literal =  'string'
+ArrowExprParams =
+	Name
+	| ParameterList
+
+
+Name = Ident
+
+// Literals
+Literal =
+	StringValue
+	| BooleanValue
+	| NumberValue
+	| RegexValue
+	| NumberValue
+	| FloatValue
+	| BigIntValue
+
+StringValue = 'string'
+BooleanValue = 'true' | 'false'
+NumberValue = 'number'
+FloatValue = 'float'
+BigIntValue = 'big_int'
+RegexValue = 'regex'
+NullValue = 'null'
+UndefinedValue = 'undefined'
 
 ExprOrBlock =
 	Expr
 	| BlockStmt
 
-Params = '(' ')'
+ParameterList = '(' Pattern* ')'
 
+
+
+// Patterns
+Pattern =
+	SinglePattern
+	| RestPattern
+	// | AssignPattern
+	// | ObjectPattern
+	// | ArrayPattern
+	// | ExprPattern
+
+// TODO:  add here the typescript tokens and nodes
+SinglePattern
+	= name:Ident
+
+RestPattern = '...'
 
 
 // Typescript definitions

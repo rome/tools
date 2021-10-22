@@ -19,9 +19,14 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 	let contents = generate_nodes(KINDS_SRC, &ast)?;
 	update(ast_nodes_file.as_path(), &contents, mode)?;
 
-	// let ast_tokens_file = project_root().join(codegen::AST_TOKENS);
-	// let contents = generate_tokens(KINDS_SRC, &ast)?;
-	// update(ast_tokens_file.as_path(), &contents, mode)?;
+	let tokens_file = project_root().join(codegen::AST_TOKENS);
+	let contents = generate_tokens( &ast)?;
+	update(tokens_file.as_path(), &contents, mode)?;
+
+
+	let syntax_kinds_file = project_root().join(codegen::SYNTAX_KINDS);
+	let contents = generate_syntax_kinds( KINDS_SRC)?;
+	update(syntax_kinds_file.as_path(), &contents, mode)?;
 
 	Ok(())
 }
@@ -89,17 +94,7 @@ fn handle_rule(
 ) -> () {
 	match rule {
 		Rule::Labeled { label, rule } => {
-			// let ty = grammar[*node].name.clone();
-			// let name = label.cloned().unwrap_or_else(|| to_lower_snake_case(&ty));
-
-			// dbg!(&ty);
-			// dbg!(&name);
-			// let field = Field::Node {
-			// 	name,
-			// 	ty,
-			// 	cardinality: Cardinality::Optional,
-			// };
-			// fields.push(field);
+			handle_rule(fields, grammar, rule, Some(label), optional, has_many)
 		}
 		Rule::Node(node) => {
 			let ty = grammar[*node].name.clone();
@@ -109,9 +104,14 @@ fn handle_rule(
 			fields.push(field);
 		}
 		Rule::Token(token) => {
-			let name = grammar[*token].name.clone();
-			let token = Field::Token(name);
-			fields.push(token);
+			let mut name = grammar[*token].name.clone();
+			if name != "int_number" && name != "string" {
+				if "[]{}()".contains(&name) {
+						name = format!("'{}'", name);
+				}
+				let field = Field::Token(name);
+				fields.push(field);
+			}
 		}
 
 		Rule::Rep(rule) => {
@@ -130,7 +130,7 @@ fn handle_rule(
 	()
 }
 
-fn generate_tokens(grammar: AstSrc) -> Result<String> {
+fn generate_tokens(grammar: &AstSrc) -> Result<String> {
 	let tokens = grammar.tokens.iter().map(|token| {
 		let name = format_ident!("{}", token);
 		let kind = format_ident!("{}", to_upper_snake_case(token));
@@ -177,9 +177,11 @@ fn generate_nodes(kinds: KindsSrc, ast: &AstSrc) -> Result<String> {
 					// TODO: make the mandatory/optional bit
 					let method_name = field.method_name();
 					let is_many = field.is_many();
+					let token_kind = field.token_kind();
+
 					quote! {
 						pub fn #method_name(&self) -> Option<SyntaxToken> {
-							support::token(&self.syntax)
+							support::token(&self.syntax, #token_kind)
 						}
 					}
 				}
