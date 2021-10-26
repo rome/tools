@@ -244,7 +244,7 @@ ClassElement =
 	| PrivateProp
 	| ClassProp
 	| Constructor
-	// | TsIndexSignature
+	| TsIndexSignature
 	| Getter
 	| Setter
 
@@ -456,11 +456,11 @@ Decl =
 	FnDecl
 	| ClassDecl
 	| VarDecl
-	// | TsEnum
-	// | TsTypeAliasDecl
-	// | TsNamespaceDecl
-	// | TsModuleDecl
-	// | TsInterfaceDecl
+	| TsEnum
+	| TsTypeAliasDecl
+	| TsNamespaceDecl
+	| TsModuleDecl
+	| TsInterfaceDecl
 
 
 // TODO: add typescript types
@@ -481,6 +481,80 @@ ClassDecl  = 'class' Name 'extends' parent:Name body:ClassBody
 // TODO: add typescript types
 Declarator = pattern:Pattern '=' value:Expr
 
+
+///////////////
+// MODULE SYNTAX
+///////////////
+
+// module item
+ModuleItem =
+	ImportDecl
+	| ExportNamed
+	| ExportDefaultDecl
+	| ExportDefaultExpr
+	| ExportWildcard
+	| ExportDecl
+	| TsImportEqualsDecl
+	| TsExportAssignment
+	| TsNamespaceExportDecl
+	| Stmt
+
+ImportDecl =
+	'import'
+	imports:ImportClause*
+	'type'?
+	'from'
+	asserted_object:ObjectExpr
+	'assert'?
+	';'?
+
+// export default declaration
+ExportDefaultDecl = 'export' 'default'? 'type'? decl:DefaultDecl
+DefaultDecl =
+	FnDecl
+	| ClassDecl
+
+
+// export default expression
+ExportDefaultExpr = 'export' 'type'? 'default'? expr:Expr
+
+// export wildcard
+ExportWildcard = 'export' 'type'? '*' 'as'? Ident? 'from'
+
+
+// export declaration
+ExportDecl = 'export' 'type'? Decl
+
+
+// typescript export assignment
+TsExportAssignment = 'export' '=' Expr ';'
+
+
+// typescript namespace export
+TsNamespaceExportDecl = 'export' 'as' 'namespace' Ident? ';'
+
+ImportClause =
+	WildcardImport
+	| NamedImports
+	| Name
+	| ImportStringSpecifier
+
+
+NamedImports = '{' specifiers:Specifier* '}'
+
+
+Specifier = name:Ident 'as'? alias:Name
+
+
+// this is not currently implemented in rslint parser
+ImportStringSpecifier = StringValue
+
+
+WildcardImport = '*' 'as'? Ident?
+
+// @ematipico this one is not entirly correct I think..
+ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:Specifier* '}'
+
 ///////////////
 // TYPESCRIPT
 ///////////////
@@ -488,40 +562,235 @@ Declarator = pattern:Pattern '=' value:Expr
 // Below here we want to keep all the TypeScript types
 // Typescript definitions
 //
-TsTypeParams = '<'  '>'
+
+TsImportEqualsDecl =
+	('import' | 'export') Ident '=' module:TsModuleRef ';'
+
+
+TsModuleRef =
+	TsExternalModuleRef |
+	TsEntityName
+
+
+TsExternalModuleRef = 'require' '(' string_token:StringValue ')'
+
 TsType =
 	TsAny
 	| TsUnknown
-	// | TsNumber
-	// | TsObject
-	// | TsBoolean
-	// | TsBigint
-	// | TsString
-	// | TsSymbol
-	// | TsVoid
-	// | TsUndefined
-	// | TsNull
-	// | TsNever
-	// | TsThis
-	// | TsLiteral
-	// | TsPredicate
-	// | TsTuple
-	// | TsParen
-	// | TsTypeRef
-	// | TsTemplate
-	// | TsMappedType
-	// | TsImport
-	// | TsArray
-	// | TsIndexedArray
-	// | TsTypeOperator
-	// | TsIntersection
-	// | TsUnion
-	// | TsFnType
-	// | TsConstructorType
-	// | TsConditionalType
-	// | TsObjectType
-	// | TsInfer
+	| TsNumber
+	| TsObject
+	| TsBoolean
+	| TsBigint
+	| TsString
+	| TsSymbol
+	| TsVoid
+	| TsUndefined
+	| TsNull
+	| TsNever
+	| TsThis
+	| TsLiteral
+	| TsPredicate
+	| TsTuple
+	| TsParen
+	| TsTypeRef
+	| TsTemplate
+	| TsMappedType
+	| TsImport
+	| TsArray
+	| TsIndexedArray
+	| TsTypeOperator
+	| TsIntersection
+	| TsUnion
+	| TsFnType
+	| TsConstructorType
+	| TsConditionalType
+	| TsObjectType
+	| TsInfer
 
 
 TsAny = 'any'
 TsUnknown = 'unknown'
+TsNumber = Ident
+TsObject = Ident
+TsBoolean = Ident
+TsBigint = Ident
+TsString = Ident
+TsSymbol = Ident
+TsVoid = 'void'
+TsUndefined = 'undefined'
+TsNull= 'null'
+TsNever = 'never'
+TsThis = 'this'
+TsLiteral = Ident
+
+
+// typescript tuples
+TsTuple = '[' elements:TsTupleElement ']'
+// @ematipico: this is ugly and it's here only to maintain compatibility
+// with the current parser API
+TsTupleElement = Ident ':' '?' '...'? ty:TsType
+
+TsParen = '(' ty:TsType ')'
+
+// typescript type reference
+TsTypeRef = name:TsEntityName type_args:TsTypeArgs
+
+
+// typescript enum
+TsEnum = 'const'? 'enum'  Ident '{' members:TsEnumMember* '}'
+TsEnumMember = Ident '=' value:Expr
+
+// typescript template literal types
+TsTemplate = elements:TsTemplateElement
+// @ematipico: this is broken and it's here only for compatibility
+TsTemplateElement = ty:TsType '}'
+
+
+// typescript mappend type
+// plus and minus should be mutually exclusive
+TsMappedType =
+	'{'
+	readonly_modifier:TsMappedTypeReadonly?
+	'-'?
+	'+'?
+	'?'?
+	param:TsMappedTypeParam
+	':'
+	ty:TsType
+	'}'
+	';'?
+
+TsMappedTypeReadonly = '-'? '+'? 'readonly'?
+
+// @ematipico: this type is correct and it's here only for compatibility
+TsMappedTypeParam = '['? name:TsTypeName? ']'? Ident? ty:TsType
+
+
+// typescript array
+TsArray = '[' ty:TsType ']'
+
+// typescript indexed array
+TsIndexedArray = '[' ty:TsType ']'
+
+
+// typescript predicate
+TsPredicate = lhs:TsThisOrMore rhs:TsType
+TsThisOrMore = TsThis | TsTypeName
+
+// typescript type operator
+TsTypeOperator = ty:TsType
+
+// typescript intersection
+// @ematipico this one should contains the "|" operator
+TsIntersection = types:TsType*
+
+// typescript union
+// @ematipico this one should contains the "&" operator
+TsUnion = types:TsType*
+
+
+// typescript function type
+// Example: (something: String) => bool
+TsFnType = params:ParameterList '=>' return_type:TsType
+
+
+// typescript constructor type
+// Exapmle: new (something: String): SomethingElse
+TsConstructorType = 'new' params:ParameterList ':' return_type:TsType
+
+
+// typescript conditional type
+// @ematipico example? can't understand what grammar it is
+TsConditionalType = ty:TsType '?' ':' extends:TsExtends
+TsExtends = 'extends' ty:TsType
+
+
+// typescript object type
+TsObjectType = '{' members:TsTypeElement* '}'
+
+
+// typescript infer
+TsInfer = 'infer' Ident
+
+// typescript import
+// @ematipico not sure where the dot token should be placed
+// @ematipico not sure where type_args should be placed
+// TsImport = 'import' '(' qualifier:TsEntityName '.' ')' type_args:TsTypeArgs
+
+
+// typescrit namesapce
+// TODO: not sure where to put the dot
+TsNamespaceDecl = 'declare' Ident '.'? TsNamespaceBody
+TsNamespaceBody = TsModuleBlock | TsNamespaceDecl
+TsModuleBlock = '{' items:ModuleItem '}'
+
+
+// type alias declaration
+TsTypeAliasDecl = 'type' type_params:TsTypeParams '=' TsType
+TsTypeParams = '<'? params:TsTypeParam '>'?
+TsTypeParam = Ident constraint:TsContraint default:TsDefault
+
+TsDefault = '=' ty:TsType
+TsContraint = 'extends' ty:TsType
+
+
+
+// typescript module declaration
+// TODO: where does the dot go exactly?
+TsModuleDecl = 'declare' 'global'? 'module' '.'? Ident body:TsNamespaceBody
+
+
+// typescript interface declaration
+// TODO: extends and its children should be optional, together
+TsInterfaceDecl =
+	'declare'? 'interface' type_params:TsTypeParams
+	'extends'? extends:TsExprWithTypeArgs?
+	'{' members:TsTypeElement '}'
+
+
+TsExprWithTypeArgs = item:TsEntityName type_params:TsTypeArgs
+TsTypeElement =
+	TsCallSignatureDecl
+	| TsConstructSignatureDecl
+	| TsPropertySignature
+	| TsMethodSignature
+	| TsIndexSignature
+
+TsEntityName =
+	TsTypeName
+	| TsQualifiedPath
+
+TsTypeName = Ident
+TsQualifiedPath = lhs:TsEntityName '.' rhs:TsTypeName
+
+
+TsTypeArgs = '<' args:TsType '>'
+
+
+// @ematipico we should make an example here
+TsCallSignatureDecl =  type_params:TsTypeParams parameters:ParameterList  ':' return_type:TsType
+TsConstructSignatureDecl =
+	'new'
+	type_params:TsTypeParams
+	parameters:ParameterList
+	// these two should be optional together
+	':'? return_type:TsType?
+
+// typescript property signature
+TsPropertySignature = 'readonly'? prop:Expr '?' ':' ty:TsType
+
+// typescript method signature
+TsMethodSignature =
+	'readonly'?
+	key:Expr
+	type_params:TsTypeParams
+	parameters:ParameterList
+	'?'
+	':'
+	return_type:TsType
+
+// @ematipico not sure where the dot goes here
+TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
+
+// typescript index signature
+TsIndexSignature = 'readonly'? '[' pat:SinglePattern ':' ty:TsType ']'
