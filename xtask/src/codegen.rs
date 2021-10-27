@@ -16,8 +16,8 @@ pub use self::parser_tests::generate_parser_tests;
 // const ERR_INLINE_TESTS_DIR: &str = "crates/ra_syntax/test_data/parser/inline/err";
 
 const SYNTAX_KINDS: &str = "crates/rslint_syntax/src/generated.rs";
-const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/nodes_new.rs";
-const AST_TOKENS: &str = "crates/rslint_parser/src/ast/generated/tokens.rs";
+const AST_NODES: &str = "crates/rslint_parser/src/ast/generated/new_nodes.rs";
+const AST_TOKENS: &str = "crates/rslint_parser/src/ast/generated/new_tokens.rs";
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Mode {

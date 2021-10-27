@@ -18,6 +18,7 @@
 
 Ident = 'ident'
 Script = 'shebang'? Stmt*
+Module = 'shebang'? items:ModuleItem*
 
 ///////////////
 // STATEMENTS
@@ -73,17 +74,15 @@ ForStmt =
 	'for'
 	'('
 	init:ForStmtInit?
-	';'
 	test:ForStmtTest?
-	';'
 	update:ForStmtUpdate?
 	')'
 	cons:Stmt
 
-ForStmtInit = inner:ForHead
-ForHead = Decl | Expr
+ForStmtInit = inner:ForHead ';'
+ForHead = VarDecl | Expr
 
-ForStmtTest = expr:Expr
+ForStmtTest = expr:Expr ';'
 
 ForStmtUpdate = expr:Expr
 
@@ -187,12 +186,10 @@ ThisExpr = 'this'
 DotExpr = '.'
 
 // new expression
-// TODO: add typescript types
-NewExpr = 'new' object:Expr arguments:ArgList
+NewExpr = 'new' type_args:TsTypeArgs? object:Expr arguments:ArgList
 
 // call expression
-// TODO: add typescript types
-CallExpr = callee:Expr arguments:ArgList
+CallExpr = type_args:TsTypeArgs? callee:Expr arguments:ArgList
 
 // await expression
 AwaitExpr = 'await' Expr
@@ -216,9 +213,14 @@ CondExpr = '?' ':'?
 ImportMeta = 'import' '.'
 
 // function expression
-// TODO: add typescript types
 FnExpr =
-	'async'? 'function' '*'? name:Name parameters:ArgList body:BlockStmt
+	'async'?
+	'function'
+	'*'?
+	name:Name
+	type_params:TsTypeParams?
+	parameters:ArgList body:BlockStmt
+	':'? return_type:TsType
 
 // Arrow expression
 ArrowExpr =
@@ -231,8 +233,15 @@ ArrowExprParams =
 ObjectExpr = '{' props:ObjectProp* '}'
 
 // class expression
-// TODO: add typescript types
-ClassExpr = 'class' Name 'extends' parent:Name body:ClassBody
+ClassExpr =
+	'class'
+	Name
+	type_params:TsTypeParams?
+	'extends'
+	parent:Name
+	'implements'?
+	implements:TsExprWithTypeArgs?
+	body:ClassBody
 
 ClassBody =  '{' elements:ClassElement* '}'
 
@@ -248,16 +257,42 @@ ClassElement =
 	| Getter
 	| Setter
 
-// TODO: add typescript types
-Constructor = name:PropName parameters:ParameterList body:BlockStmt
+Constructor =
+	accessibility:TsAccessibility
+	name:PropName
+	type_params:TsTypeParams
+	parameters:ParameterList
+	body:BlockStmt
+
+
+ConstructorParameters =
+		'(' parameters:ConstructorParamOrPat* ')'
+
+
+ConstructorParamOrPat =
+	TsConstructorParam
+	| Pattern
+
+
 
 // This type is here only to matain compatiblity with rslit_parser
 // A private property should only have the hash (#) or have the
 // keyword `private` in the typescript version
 PrivateProp = ClassProp
-// TODO: add typescript types
-// Note: they way it's written now is awful and can be improved a lot
-ClassProp = 'static'? '#'? key:PropName '='? value:Expr? ';'?
+// @ematipico: they way it's written now is awful and can be improved a lot
+ClassProp =
+	'declare'?
+	'abstract'?
+	'static'?
+	accessibility:TsAccessibility
+	'#'?
+	key:PropName
+	'?'?
+	'!'?
+	ty:TsType
+	'='?
+	value:Expr?
+	';'?
 
 // Array expression
 ArrayExpr = '[' elements:ExprOrSpread* ']'
@@ -315,7 +350,6 @@ Literal =
 	| BooleanValue
 	| NumberValue
 	| RegexValue
-	| NumberValue
 	| FloatValue
 	| BigIntValue
 
@@ -348,24 +382,16 @@ Pattern =
 	| ArrayPattern
 	| ExprPattern
 
-SinglePattern
-	| RestPattern
-	| AssignPattern
-	| ObjectPattern
-	| ArrayPattern
-	| ExprPattern
-
 // TODO:  add here the typescript tokens and nodes
 // single pattern
 SinglePattern
-	= name:Ident
+	= name:Ident '?'? '!'? ':'? ty:TsType
 
 // rest pattern
 RestPattern = '...' pa:Pattern
 
 // TODO: add typescript types
-// array pattern
-ArrayPattern = '[' elements:Pattern* ']'
+ArrayPattern = '[' elements:Pattern* ']' '!' ':' ty:TsType
 
 // object pattern
 ObjectPattern = '{' elements:ObjectPatternProp* '}'
@@ -373,13 +399,15 @@ ObjectPattern = '{' elements:ObjectPatternProp* '}'
 // object pattern prop
 ObjectPatternProp =
 	AssignPattern
-	// | KeyValuePattern
+	| KeyValuePattern
 	| RestPattern
 	| SinglePattern
 
 // assign pattern
-// TODO: add typescript types
-AssignPattern = key:Pattern '=' value:Expr
+AssignPattern = key:Pattern ':'? ty:TsType '=' value:Expr
+
+// key value pattern
+KeyValuePattern = key:PropName ':' value:Pattern
 
 
 // expression pattern
@@ -429,14 +457,20 @@ IdentProp = Name
 // MISCELLANEOUS
 ///////////////
 
-// TODO: add typescript types
 Getter =  'get' key:PropName parameters:ParameterList  body:BlockStmt
 
-// TODO: add typescript types
 Setter = 'set' key:PropName parameters:ParameterList  body:BlockStmt
 
-// TODO: add typescript types
-Method = 'static'? 'async'? '*'? name:PropName parameters:ParameterList  body:BlockStmt
+Method =
+	'static'?
+	'async'?
+	'*'?
+	name:PropName
+	type_params:TsTypeParams
+	parameters:ParameterList
+	':'?
+	return_type:TsType
+	body:BlockStmt
 
 SpreadElement = '...' element:Expr
 
@@ -462,14 +496,15 @@ Decl =
 	| TsModuleDecl
 	| TsInterfaceDecl
 
-
-// TODO: add typescript types
 FnDecl =
 	'async'?
 	'function'
 	'*'?
 	Name
+	type_parameters:TsTypeParams?
 	parameters:ParameterList
+	':'?
+	return_type:TsType
 	body:BlockStmt
 
 VarDecl = ('var' | 'const' | 'let') declarad:Declarator* ';'
@@ -477,9 +512,7 @@ VarDecl = ('var' | 'const' | 'let') declarad:Declarator* ';'
 // @ematipico: should we consider ClassDecl = ClassExpr ?
 ClassDecl  = 'class' Name 'extends' parent:Name body:ClassBody
 
-
-// TODO: add typescript types
-Declarator = pattern:Pattern '=' value:Expr
+Declarator = pattern:Pattern '!' '=' value:Expr
 
 
 ///////////////
@@ -728,10 +761,10 @@ TsModuleBlock = '{' items:ModuleItem '}'
 // type alias declaration
 TsTypeAliasDecl = 'type' type_params:TsTypeParams '=' TsType
 TsTypeParams = '<'? params:TsTypeParam '>'?
-TsTypeParam = Ident constraint:TsContraint default:TsDefault
+TsTypeParam = Ident constraint:TsConstraint default:TsDefault
 
 TsDefault = '=' ty:TsType
-TsContraint = 'extends' ty:TsType
+TsConstraint = 'extends' ty:TsType
 
 
 
@@ -794,3 +827,10 @@ TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
 
 // typescript index signature
 TsIndexSignature = 'readonly'? '[' pat:SinglePattern ':' ty:TsType ']'
+
+// typescript type of access
+TsAccessibility = 'private' | 'readonly'
+
+
+TsConstructorParam = 'readonly' pat:Pattern
+

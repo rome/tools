@@ -21,6 +21,14 @@ impl Script {
 	pub fn stmt(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Module {
+	pub(crate) syntax: SyntaxNode,
+}
+impl Module {
+	pub fn shebang_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![shebang]) }
+	pub fn items(&self) -> AstChildren<ModuleItem> { support::children(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct BlockStmt {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -82,9 +90,7 @@ impl ForStmt {
 	pub fn for_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![for]) }
 	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
 	pub fn init(&self) -> Option<ForStmtInit> { support::child(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 	pub fn test(&self) -> Option<ForStmtTest> { support::child(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 	pub fn update(&self) -> Option<ForStmtUpdate> { support::child(&self.syntax) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
 	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
@@ -216,6 +222,7 @@ pub struct ForStmtInit {
 }
 impl ForStmtInit {
 	pub fn inner(&self) -> Option<ForHead> { support::child(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmtTest {
@@ -223,6 +230,7 @@ pub struct ForStmtTest {
 }
 impl ForStmtTest {
 	pub fn expr(&self) -> Option<Expr> { support::child(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmtUpdate {
@@ -230,6 +238,17 @@ pub struct ForStmtUpdate {
 }
 impl ForStmtUpdate {
 	pub fn expr(&self) -> Option<Expr> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct VarDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl VarDecl {
+	pub fn var_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![var]) }
+	pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![const]) }
+	pub fn let_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![let]) }
+	pub fn declarad(&self) -> AstChildren<Declarator> { support::children(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Name {
@@ -275,24 +294,6 @@ pub struct Finalizer {
 impl Finalizer {
 	pub fn finally_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![finally]) }
 	pub fn cons(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Pattern {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Pattern {
-	pub fn single_pattern(&self) -> Option<SinglePattern> { support::child(&self.syntax) }
-	pub fn rest_pattern(&self) -> Option<RestPattern> { support::child(&self.syntax) }
-	pub fn assign_pattern(&self) -> Option<AssignPattern> { support::child(&self.syntax) }
-	pub fn object_pattern(&self) -> Option<ObjectPattern> { support::child(&self.syntax) }
-	pub fn array_pattern(&self) -> Option<ArrayPattern> { support::child(&self.syntax) }
-	pub fn expr_pattern(&self) -> Option<ExprPattern> { support::child(&self.syntax) }
-	pub fn single_pattern(&self) -> Option<SinglePattern> { support::child(&self.syntax) }
-	pub fn rest_pattern(&self) -> Option<RestPattern> { support::child(&self.syntax) }
-	pub fn assign_pattern(&self) -> Option<AssignPattern> { support::child(&self.syntax) }
-	pub fn object_pattern(&self) -> Option<ObjectPattern> { support::child(&self.syntax) }
-	pub fn array_pattern(&self) -> Option<ArrayPattern> { support::child(&self.syntax) }
-	pub fn expr_pattern(&self) -> Option<ExprPattern> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrowExpr {
@@ -372,6 +373,7 @@ pub struct NewExpr {
 }
 impl NewExpr {
 	pub fn new_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![new]) }
+	pub fn type_args(&self) -> Option<TsTypeArgs> { support::child(&self.syntax) }
 	pub fn object(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn arguments(&self) -> Option<ArgList> { support::child(&self.syntax) }
 }
@@ -380,6 +382,7 @@ pub struct CallExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl CallExpr {
+	pub fn type_args(&self) -> Option<TsTypeArgs> { support::child(&self.syntax) }
 	pub fn callee(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn arguments(&self) -> Option<ArgList> { support::child(&self.syntax) }
 }
@@ -529,8 +532,11 @@ impl FnExpr {
 	}
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
 	pub fn name(&self) -> Option<Name> { support::child(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::child(&self.syntax) }
 	pub fn parameters(&self) -> Option<ArgList> { support::child(&self.syntax) }
 	pub fn body(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> Option<TsType> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClassExpr {
@@ -539,8 +545,13 @@ pub struct ClassExpr {
 impl ClassExpr {
 	pub fn class_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![class]) }
 	pub fn name(&self) -> Option<Name> { support::child(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::child(&self.syntax) }
 	pub fn extends_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![extends]) }
 	pub fn parent(&self) -> Option<Name> { support::child(&self.syntax) }
+	pub fn implements_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T![implements])
+	}
+	pub fn implements(&self) -> Option<TsExprWithTypeArgs> { support::child(&self.syntax) }
 	pub fn body(&self) -> Option<ClassBody> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -605,6 +616,15 @@ impl PrivatePropAccess {
 	pub fn rhs(&self) -> Option<PrivateName> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsTypeArgs {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsTypeArgs {
+	pub fn l_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [<]) }
+	pub fn args(&self) -> Option<TsType> { support::child(&self.syntax) }
+	pub fn r_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [>]) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArgList {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -632,6 +652,14 @@ impl ParameterList {
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsExprWithTypeArgs {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsExprWithTypeArgs {
+	pub fn item(&self) -> Option<TsEntityName> { support::child(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeArgs> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClassBody {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -649,7 +677,10 @@ impl Method {
 	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
 	pub fn name(&self) -> Option<PropName> { support::child(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::child(&self.syntax) }
 	pub fn parameters(&self) -> Option<ParameterList> { support::child(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> Option<TsType> { support::child(&self.syntax) }
 	pub fn body(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -664,9 +695,19 @@ pub struct ClassProp {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ClassProp {
+	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
+	pub fn abstract_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T![abstract])
+	}
 	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
+	pub fn accessibility(&self) -> Option<TsAccessibility> { support::child(&self.syntax) }
 	pub fn hash_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [#]) }
 	pub fn key(&self) -> Option<PropName> { support::child(&self.syntax) }
+	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T ! [?])
+	}
+	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
+	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
 	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
@@ -676,7 +717,9 @@ pub struct Constructor {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Constructor {
+	pub fn accessibility(&self) -> Option<TsAccessibility> { support::child(&self.syntax) }
 	pub fn name(&self) -> Option<PropName> { support::child(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::child(&self.syntax) }
 	pub fn parameters(&self) -> Option<ParameterList> { support::child(&self.syntax) }
 	pub fn body(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
 }
@@ -715,6 +758,16 @@ impl Setter {
 	pub fn body(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsAccessibility {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsAccessibility {
+	pub fn private_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![private]) }
+	pub fn readonly_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T![readonly])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PropName {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -724,6 +777,27 @@ impl PropName {
 	}
 	pub fn literal(&self) -> Option<Literal> { support::child(&self.syntax) }
 	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ConstructorParameters {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ConstructorParameters {
+	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
+	pub fn parameters(&self) -> AstChildren<ConstructorParamOrPat> {
+		support::children(&self.syntax)
+	}
+	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsConstructorParam {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsConstructorParam {
+	pub fn readonly_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T![readonly])
+	}
+	pub fn pat(&self) -> Option<Pattern> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SpreadElement {
@@ -796,6 +870,12 @@ pub struct SinglePattern {
 }
 impl SinglePattern {
 	pub fn name(&self) -> Option<Ident> { support::child(&self.syntax) }
+	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T ! [?])
+	}
+	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct RestPattern {
@@ -811,6 +891,8 @@ pub struct AssignPattern {
 }
 impl AssignPattern {
 	pub fn key(&self) -> Option<Pattern> { support::child(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
 	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
@@ -831,6 +913,9 @@ impl ArrayPattern {
 	pub fn l_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['[']) }
 	pub fn elements(&self) -> AstChildren<Pattern> { support::children(&self.syntax) }
 	pub fn r_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![']']) }
+	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExprPattern {
@@ -838,6 +923,15 @@ pub struct ExprPattern {
 }
 impl ExprPattern {
 	pub fn expr(&self) -> Option<Expr> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct KeyValuePattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl KeyValuePattern {
+	pub fn key(&self) -> Option<PropName> { support::child(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn value(&self) -> Option<Pattern> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct LiteralProp {
@@ -900,7 +994,10 @@ impl FnDecl {
 	}
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
 	pub fn name(&self) -> Option<Name> { support::child(&self.syntax) }
+	pub fn type_parameters(&self) -> Option<TsTypeParams> { support::child(&self.syntax) }
 	pub fn parameters(&self) -> Option<ParameterList> { support::child(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> Option<TsType> { support::child(&self.syntax) }
 	pub fn body(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -913,17 +1010,6 @@ impl ClassDecl {
 	pub fn extends_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![extends]) }
 	pub fn parent(&self) -> Option<Name> { support::child(&self.syntax) }
 	pub fn body(&self) -> Option<ClassBody> { support::child(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct VarDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl VarDecl {
-	pub fn var_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![var]) }
-	pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![const]) }
-	pub fn let_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![let]) }
-	pub fn declarad(&self) -> AstChildren<Declarator> { support::children(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsEnum {
@@ -991,6 +1077,7 @@ pub struct Declarator {
 }
 impl Declarator {
 	pub fn pattern(&self) -> Option<Pattern> { support::child(&self.syntax) }
+	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
 	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
@@ -1411,15 +1498,6 @@ impl TsTupleElement {
 	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsTypeArgs {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsTypeArgs {
-	pub fn l_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [<]) }
-	pub fn args(&self) -> Option<TsType> { support::child(&self.syntax) }
-	pub fn r_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [>]) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsEnumMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1488,14 +1566,14 @@ pub struct TsTypeParam {
 }
 impl TsTypeParam {
 	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
-	pub fn constraint(&self) -> Option<TsContraint> { support::child(&self.syntax) }
+	pub fn constraint(&self) -> Option<TsConstraint> { support::child(&self.syntax) }
 	pub fn default(&self) -> Option<TsDefault> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsContraint {
+pub struct TsConstraint {
 	pub(crate) syntax: SyntaxNode,
 }
-impl TsContraint {
+impl TsConstraint {
 	pub fn extends_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![extends]) }
 	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
 }
@@ -1506,14 +1584,6 @@ pub struct TsDefault {
 impl TsDefault {
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
 	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsExprWithTypeArgs {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsExprWithTypeArgs {
-	pub fn item(&self) -> Option<TsEntityName> { support::child(&self.syntax) }
-	pub fn type_params(&self) -> Option<TsTypeArgs> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsCallSignatureDecl {
@@ -1600,6 +1670,19 @@ pub enum Stmt {
 	Decl(Decl),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum ModuleItem {
+	ImportDecl(ImportDecl),
+	ExportNamed(ExportNamed),
+	ExportDefaultDecl(ExportDefaultDecl),
+	ExportDefaultExpr(ExportDefaultExpr),
+	ExportWildcard(ExportWildcard),
+	ExportDecl(ExportDecl),
+	TsImportEqualsDecl(TsImportEqualsDecl),
+	TsExportAssignment(TsExportAssignment),
+	TsNamespaceExportDecl(TsNamespaceExportDecl),
+	Stmt(Stmt),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Decl {
 	FnDecl(FnDecl),
 	ClassDecl(ClassDecl),
@@ -1640,7 +1723,7 @@ pub enum Expr {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ForHead {
-	Decl(Decl),
+	VarDecl(VarDecl),
 	Expr(Expr),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1649,19 +1732,22 @@ pub enum SwitchCase {
 	DefaultCase(DefaultCase),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum Pattern {
+	SinglePattern(SinglePattern),
+	RestPattern(RestPattern),
+	AssignPattern(AssignPattern),
+	ObjectPattern(ObjectPattern),
+	ArrayPattern(ArrayPattern),
+	ExprPattern(ExprPattern),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Literal {
 	StringValue(StringValue),
 	BooleanValue(BooleanValue),
 	NumberValue(NumberValue),
 	RegexValue(RegexValue),
-	NumberValue(NumberValue),
 	FloatValue(FloatValue),
 	BigIntValue(BigIntValue),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ArrowExprParams {
-	Name(Name),
-	ParameterList(ParameterList),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsType {
@@ -1698,6 +1784,11 @@ pub enum TsType {
 	TsInfer(TsInfer),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum ArrowExprParams {
+	Name(Name),
+	ParameterList(ParameterList),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ExprOrBlock {
 	Expr(Expr),
 	BlockStmt(BlockStmt),
@@ -1724,6 +1815,11 @@ pub enum ClassElement {
 	Setter(Setter),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum ConstructorParamOrPat {
+	TsConstructorParam(TsConstructorParam),
+	Pattern(Pattern),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ExprOrSpread {
 	Expr(Expr),
 	SpreadElement(SpreadElement),
@@ -1736,21 +1832,9 @@ pub enum PatternOrExpr {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ObjectPatternProp {
 	AssignPattern(AssignPattern),
+	KeyValuePattern(KeyValuePattern),
 	RestPattern(RestPattern),
 	SinglePattern(SinglePattern),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ModuleItem {
-	ImportDecl(ImportDecl),
-	ExportNamed(ExportNamed),
-	ExportDefaultDecl(ExportDefaultDecl),
-	ExportDefaultExpr(ExportDefaultExpr),
-	ExportWildcard(ExportWildcard),
-	ExportDecl(ExportDecl),
-	TsImportEqualsDecl(TsImportEqualsDecl),
-	TsExportAssignment(TsExportAssignment),
-	TsNamespaceExportDecl(TsNamespaceExportDecl),
-	Stmt(Stmt),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ImportClause {
@@ -1805,6 +1889,17 @@ impl AstNode for Ident {
 }
 impl AstNode for Script {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == SCRIPT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for Module {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == MODULE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2056,6 +2151,17 @@ impl AstNode for ForStmtUpdate {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for VarDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == VAR_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for Name {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2102,17 +2208,6 @@ impl AstNode for CatchClause {
 }
 impl AstNode for Finalizer {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FINALIZER }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for Pattern {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2386,6 +2481,17 @@ impl AstNode for PrivatePropAccess {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for TsTypeArgs {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ARGS }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for ArgList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARG_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2410,6 +2516,17 @@ impl AstNode for TsTypeParams {
 }
 impl AstNode for ParameterList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == PARAMETER_LIST }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsExprWithTypeArgs {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2507,8 +2624,41 @@ impl AstNode for Setter {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for TsAccessibility {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ACCESSIBILITY }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for PropName {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == PROP_NAME }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ConstructorParameters {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == CONSTRUCTOR_PARAMETERS }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsConstructorParam {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCTOR_PARAM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2683,6 +2833,17 @@ impl AstNode for ExprPattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for KeyValuePattern {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == KEY_VALUE_PATTERN }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for LiteralProp {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == LITERAL_PROP }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2762,17 +2923,6 @@ impl AstNode for FnDecl {
 }
 impl AstNode for ClassDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == CLASS_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for VarDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == VAR_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3354,17 +3504,6 @@ impl AstNode for TsTupleElement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for TsTypeArgs {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ARGS }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for TsEnumMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3453,8 +3592,8 @@ impl AstNode for TsTypeParam {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for TsContraint {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONTRAINT }
+impl AstNode for TsConstraint {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRAINT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3466,17 +3605,6 @@ impl AstNode for TsContraint {
 }
 impl AstNode for TsDefault {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DEFAULT }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsExprWithTypeArgs {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3634,7 +3762,7 @@ impl AstNode for Stmt {
 			THROW_STMT => Stmt::ThrowStmt(ThrowStmt { syntax }),
 			TRY_STMT => Stmt::TryStmt(TryStmt { syntax }),
 			DEBUGGER_STMT => Stmt::DebuggerStmt(DebuggerStmt { syntax }),
-			DECL => Stmt::Decl(Decl { syntax }),
+			DECL => Stmt::Decl(Decl::cast(syntax)?),
 			_ => return None,
 		};
 		Some(res)
@@ -3659,7 +3787,84 @@ impl AstNode for Stmt {
 			Stmt::ThrowStmt(it) => &it.syntax,
 			Stmt::TryStmt(it) => &it.syntax,
 			Stmt::DebuggerStmt(it) => &it.syntax,
-			Stmt::Decl(it) => &it.syntax,
+			Stmt::Decl(it) => &it.syntax(),
+		}
+	}
+}
+impl From<ImportDecl> for ModuleItem {
+	fn from(node: ImportDecl) -> ModuleItem { ModuleItem::ImportDecl(node) }
+}
+impl From<ExportNamed> for ModuleItem {
+	fn from(node: ExportNamed) -> ModuleItem { ModuleItem::ExportNamed(node) }
+}
+impl From<ExportDefaultDecl> for ModuleItem {
+	fn from(node: ExportDefaultDecl) -> ModuleItem { ModuleItem::ExportDefaultDecl(node) }
+}
+impl From<ExportDefaultExpr> for ModuleItem {
+	fn from(node: ExportDefaultExpr) -> ModuleItem { ModuleItem::ExportDefaultExpr(node) }
+}
+impl From<ExportWildcard> for ModuleItem {
+	fn from(node: ExportWildcard) -> ModuleItem { ModuleItem::ExportWildcard(node) }
+}
+impl From<ExportDecl> for ModuleItem {
+	fn from(node: ExportDecl) -> ModuleItem { ModuleItem::ExportDecl(node) }
+}
+impl From<TsImportEqualsDecl> for ModuleItem {
+	fn from(node: TsImportEqualsDecl) -> ModuleItem { ModuleItem::TsImportEqualsDecl(node) }
+}
+impl From<TsExportAssignment> for ModuleItem {
+	fn from(node: TsExportAssignment) -> ModuleItem { ModuleItem::TsExportAssignment(node) }
+}
+impl From<TsNamespaceExportDecl> for ModuleItem {
+	fn from(node: TsNamespaceExportDecl) -> ModuleItem { ModuleItem::TsNamespaceExportDecl(node) }
+}
+impl From<Stmt> for ModuleItem {
+	fn from(node: Stmt) -> ModuleItem { ModuleItem::Stmt(node) }
+}
+impl AstNode for ModuleItem {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(
+			kind,
+			IMPORT_DECL
+				| EXPORT_NAMED | EXPORT_DEFAULT_DECL
+				| EXPORT_DEFAULT_EXPR
+				| EXPORT_WILDCARD
+				| EXPORT_DECL | TS_IMPORT_EQUALS_DECL
+				| TS_EXPORT_ASSIGNMENT
+				| TS_NAMESPACE_EXPORT_DECL
+				| STMT
+		)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			IMPORT_DECL => ModuleItem::ImportDecl(ImportDecl { syntax }),
+			EXPORT_NAMED => ModuleItem::ExportNamed(ExportNamed { syntax }),
+			EXPORT_DEFAULT_DECL => ModuleItem::ExportDefaultDecl(ExportDefaultDecl { syntax }),
+			EXPORT_DEFAULT_EXPR => ModuleItem::ExportDefaultExpr(ExportDefaultExpr { syntax }),
+			EXPORT_WILDCARD => ModuleItem::ExportWildcard(ExportWildcard { syntax }),
+			EXPORT_DECL => ModuleItem::ExportDecl(ExportDecl { syntax }),
+			TS_IMPORT_EQUALS_DECL => ModuleItem::TsImportEqualsDecl(TsImportEqualsDecl { syntax }),
+			TS_EXPORT_ASSIGNMENT => ModuleItem::TsExportAssignment(TsExportAssignment { syntax }),
+			TS_NAMESPACE_EXPORT_DECL => {
+				ModuleItem::TsNamespaceExportDecl(TsNamespaceExportDecl { syntax })
+			}
+			STMT => ModuleItem::Stmt(Stmt::cast(syntax)?),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			ModuleItem::ImportDecl(it) => &it.syntax,
+			ModuleItem::ExportNamed(it) => &it.syntax,
+			ModuleItem::ExportDefaultDecl(it) => &it.syntax,
+			ModuleItem::ExportDefaultExpr(it) => &it.syntax,
+			ModuleItem::ExportWildcard(it) => &it.syntax,
+			ModuleItem::ExportDecl(it) => &it.syntax,
+			ModuleItem::TsImportEqualsDecl(it) => &it.syntax,
+			ModuleItem::TsExportAssignment(it) => &it.syntax,
+			ModuleItem::TsNamespaceExportDecl(it) => &it.syntax,
+			ModuleItem::Stmt(it) => &it.syntax(),
 		}
 	}
 }
@@ -3822,7 +4027,7 @@ impl AstNode for Expr {
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			ARROW_EXPR => Expr::ArrowExpr(ArrowExpr { syntax }),
-			LITERAL => Expr::Literal(Literal { syntax }),
+			LITERAL => Expr::Literal(Literal::cast(syntax)?),
 			NAME_REF => Expr::NameRef(NameRef { syntax }),
 			THIS_EXPR => Expr::ThisExpr(ThisExpr { syntax }),
 			ARRAY_EXPR => Expr::ArrayExpr(ArrayExpr { syntax }),
@@ -3853,7 +4058,7 @@ impl AstNode for Expr {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			Expr::ArrowExpr(it) => &it.syntax,
-			Expr::Literal(it) => &it.syntax,
+			Expr::Literal(it) => &it.syntax(),
 			Expr::NameRef(it) => &it.syntax,
 			Expr::ThisExpr(it) => &it.syntax,
 			Expr::ArrayExpr(it) => &it.syntax,
@@ -3880,26 +4085,26 @@ impl AstNode for Expr {
 		}
 	}
 }
-impl From<Decl> for ForHead {
-	fn from(node: Decl) -> ForHead { ForHead::Decl(node) }
+impl From<VarDecl> for ForHead {
+	fn from(node: VarDecl) -> ForHead { ForHead::VarDecl(node) }
 }
 impl From<Expr> for ForHead {
 	fn from(node: Expr) -> ForHead { ForHead::Expr(node) }
 }
 impl AstNode for ForHead {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, DECL | EXPR) }
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, VAR_DECL | EXPR) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			DECL => ForHead::Decl(Decl { syntax }),
-			EXPR => ForHead::Expr(Expr { syntax }),
+			VAR_DECL => ForHead::VarDecl(VarDecl { syntax }),
+			EXPR => ForHead::Expr(Expr::cast(syntax)?),
 			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ForHead::Decl(it) => &it.syntax,
-			ForHead::Expr(it) => &it.syntax,
+			ForHead::VarDecl(it) => &it.syntax,
+			ForHead::Expr(it) => &it.syntax(),
 		}
 	}
 }
@@ -3926,6 +4131,57 @@ impl AstNode for SwitchCase {
 		}
 	}
 }
+impl From<SinglePattern> for Pattern {
+	fn from(node: SinglePattern) -> Pattern { Pattern::SinglePattern(node) }
+}
+impl From<RestPattern> for Pattern {
+	fn from(node: RestPattern) -> Pattern { Pattern::RestPattern(node) }
+}
+impl From<AssignPattern> for Pattern {
+	fn from(node: AssignPattern) -> Pattern { Pattern::AssignPattern(node) }
+}
+impl From<ObjectPattern> for Pattern {
+	fn from(node: ObjectPattern) -> Pattern { Pattern::ObjectPattern(node) }
+}
+impl From<ArrayPattern> for Pattern {
+	fn from(node: ArrayPattern) -> Pattern { Pattern::ArrayPattern(node) }
+}
+impl From<ExprPattern> for Pattern {
+	fn from(node: ExprPattern) -> Pattern { Pattern::ExprPattern(node) }
+}
+impl AstNode for Pattern {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(
+			kind,
+			SINGLE_PATTERN
+				| REST_PATTERN | ASSIGN_PATTERN
+				| OBJECT_PATTERN | ARRAY_PATTERN
+				| EXPR_PATTERN
+		)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			SINGLE_PATTERN => Pattern::SinglePattern(SinglePattern { syntax }),
+			REST_PATTERN => Pattern::RestPattern(RestPattern { syntax }),
+			ASSIGN_PATTERN => Pattern::AssignPattern(AssignPattern { syntax }),
+			OBJECT_PATTERN => Pattern::ObjectPattern(ObjectPattern { syntax }),
+			ARRAY_PATTERN => Pattern::ArrayPattern(ArrayPattern { syntax }),
+			EXPR_PATTERN => Pattern::ExprPattern(ExprPattern { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			Pattern::SinglePattern(it) => &it.syntax,
+			Pattern::RestPattern(it) => &it.syntax,
+			Pattern::AssignPattern(it) => &it.syntax,
+			Pattern::ObjectPattern(it) => &it.syntax,
+			Pattern::ArrayPattern(it) => &it.syntax,
+			Pattern::ExprPattern(it) => &it.syntax,
+		}
+	}
+}
 impl From<StringValue> for Literal {
 	fn from(node: StringValue) -> Literal { Literal::StringValue(node) }
 }
@@ -3938,9 +4194,6 @@ impl From<NumberValue> for Literal {
 impl From<RegexValue> for Literal {
 	fn from(node: RegexValue) -> Literal { Literal::RegexValue(node) }
 }
-impl From<NumberValue> for Literal {
-	fn from(node: NumberValue) -> Literal { Literal::NumberValue(node) }
-}
 impl From<FloatValue> for Literal {
 	fn from(node: FloatValue) -> Literal { Literal::FloatValue(node) }
 }
@@ -3951,10 +4204,7 @@ impl AstNode for Literal {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		matches!(
 			kind,
-			STRING_VALUE
-				| BOOLEAN_VALUE | NUMBER_VALUE
-				| REGEX_VALUE | NUMBER_VALUE
-				| FLOAT_VALUE | BIG_INT_VALUE
+			STRING_VALUE | BOOLEAN_VALUE | NUMBER_VALUE | REGEX_VALUE | FLOAT_VALUE | BIG_INT_VALUE
 		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3963,7 +4213,6 @@ impl AstNode for Literal {
 			BOOLEAN_VALUE => Literal::BooleanValue(BooleanValue { syntax }),
 			NUMBER_VALUE => Literal::NumberValue(NumberValue { syntax }),
 			REGEX_VALUE => Literal::RegexValue(RegexValue { syntax }),
-			NUMBER_VALUE => Literal::NumberValue(NumberValue { syntax }),
 			FLOAT_VALUE => Literal::FloatValue(FloatValue { syntax }),
 			BIG_INT_VALUE => Literal::BigIntValue(BigIntValue { syntax }),
 			_ => return None,
@@ -3976,32 +4225,8 @@ impl AstNode for Literal {
 			Literal::BooleanValue(it) => &it.syntax,
 			Literal::NumberValue(it) => &it.syntax,
 			Literal::RegexValue(it) => &it.syntax,
-			Literal::NumberValue(it) => &it.syntax,
 			Literal::FloatValue(it) => &it.syntax,
 			Literal::BigIntValue(it) => &it.syntax,
-		}
-	}
-}
-impl From<Name> for ArrowExprParams {
-	fn from(node: Name) -> ArrowExprParams { ArrowExprParams::Name(node) }
-}
-impl From<ParameterList> for ArrowExprParams {
-	fn from(node: ParameterList) -> ArrowExprParams { ArrowExprParams::ParameterList(node) }
-}
-impl AstNode for ArrowExprParams {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, NAME | PARAMETER_LIST) }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			NAME => ArrowExprParams::Name(Name { syntax }),
-			PARAMETER_LIST => ArrowExprParams::ParameterList(ParameterList { syntax }),
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ArrowExprParams::Name(it) => &it.syntax,
-			ArrowExprParams::ParameterList(it) => &it.syntax,
 		}
 	}
 }
@@ -4195,6 +4420,29 @@ impl AstNode for TsType {
 		}
 	}
 }
+impl From<Name> for ArrowExprParams {
+	fn from(node: Name) -> ArrowExprParams { ArrowExprParams::Name(node) }
+}
+impl From<ParameterList> for ArrowExprParams {
+	fn from(node: ParameterList) -> ArrowExprParams { ArrowExprParams::ParameterList(node) }
+}
+impl AstNode for ArrowExprParams {
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, NAME | PARAMETER_LIST) }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			NAME => ArrowExprParams::Name(Name { syntax }),
+			PARAMETER_LIST => ArrowExprParams::ParameterList(ParameterList { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			ArrowExprParams::Name(it) => &it.syntax,
+			ArrowExprParams::ParameterList(it) => &it.syntax,
+		}
+	}
+}
 impl From<Expr> for ExprOrBlock {
 	fn from(node: Expr) -> ExprOrBlock { ExprOrBlock::Expr(node) }
 }
@@ -4205,7 +4453,7 @@ impl AstNode for ExprOrBlock {
 	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, EXPR | BLOCK_STMT) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			EXPR => ExprOrBlock::Expr(Expr { syntax }),
+			EXPR => ExprOrBlock::Expr(Expr::cast(syntax)?),
 			BLOCK_STMT => ExprOrBlock::BlockStmt(BlockStmt { syntax }),
 			_ => return None,
 		};
@@ -4213,7 +4461,7 @@ impl AstNode for ExprOrBlock {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ExprOrBlock::Expr(it) => &it.syntax,
+			ExprOrBlock::Expr(it) => &it.syntax(),
 			ExprOrBlock::BlockStmt(it) => &it.syntax,
 		}
 	}
@@ -4333,6 +4581,33 @@ impl AstNode for ClassElement {
 		}
 	}
 }
+impl From<TsConstructorParam> for ConstructorParamOrPat {
+	fn from(node: TsConstructorParam) -> ConstructorParamOrPat {
+		ConstructorParamOrPat::TsConstructorParam(node)
+	}
+}
+impl From<Pattern> for ConstructorParamOrPat {
+	fn from(node: Pattern) -> ConstructorParamOrPat { ConstructorParamOrPat::Pattern(node) }
+}
+impl AstNode for ConstructorParamOrPat {
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, TS_CONSTRUCTOR_PARAM | PATTERN) }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			TS_CONSTRUCTOR_PARAM => {
+				ConstructorParamOrPat::TsConstructorParam(TsConstructorParam { syntax })
+			}
+			PATTERN => ConstructorParamOrPat::Pattern(Pattern::cast(syntax)?),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			ConstructorParamOrPat::TsConstructorParam(it) => &it.syntax,
+			ConstructorParamOrPat::Pattern(it) => &it.syntax(),
+		}
+	}
+}
 impl From<Expr> for ExprOrSpread {
 	fn from(node: Expr) -> ExprOrSpread { ExprOrSpread::Expr(node) }
 }
@@ -4343,7 +4618,7 @@ impl AstNode for ExprOrSpread {
 	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, EXPR | SPREAD_ELEMENT) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			EXPR => ExprOrSpread::Expr(Expr { syntax }),
+			EXPR => ExprOrSpread::Expr(Expr::cast(syntax)?),
 			SPREAD_ELEMENT => ExprOrSpread::SpreadElement(SpreadElement { syntax }),
 			_ => return None,
 		};
@@ -4351,7 +4626,7 @@ impl AstNode for ExprOrSpread {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ExprOrSpread::Expr(it) => &it.syntax,
+			ExprOrSpread::Expr(it) => &it.syntax(),
 			ExprOrSpread::SpreadElement(it) => &it.syntax,
 		}
 	}
@@ -4366,21 +4641,24 @@ impl AstNode for PatternOrExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, PATTERN | EXPR) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			PATTERN => PatternOrExpr::Pattern(Pattern { syntax }),
-			EXPR => PatternOrExpr::Expr(Expr { syntax }),
+			PATTERN => PatternOrExpr::Pattern(Pattern::cast(syntax)?),
+			EXPR => PatternOrExpr::Expr(Expr::cast(syntax)?),
 			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			PatternOrExpr::Pattern(it) => &it.syntax,
-			PatternOrExpr::Expr(it) => &it.syntax,
+			PatternOrExpr::Pattern(it) => &it.syntax(),
+			PatternOrExpr::Expr(it) => &it.syntax(),
 		}
 	}
 }
 impl From<AssignPattern> for ObjectPatternProp {
 	fn from(node: AssignPattern) -> ObjectPatternProp { ObjectPatternProp::AssignPattern(node) }
+}
+impl From<KeyValuePattern> for ObjectPatternProp {
+	fn from(node: KeyValuePattern) -> ObjectPatternProp { ObjectPatternProp::KeyValuePattern(node) }
 }
 impl From<RestPattern> for ObjectPatternProp {
 	fn from(node: RestPattern) -> ObjectPatternProp { ObjectPatternProp::RestPattern(node) }
@@ -4390,11 +4668,15 @@ impl From<SinglePattern> for ObjectPatternProp {
 }
 impl AstNode for ObjectPatternProp {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(kind, ASSIGN_PATTERN | REST_PATTERN | SINGLE_PATTERN)
+		matches!(
+			kind,
+			ASSIGN_PATTERN | KEY_VALUE_PATTERN | REST_PATTERN | SINGLE_PATTERN
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			ASSIGN_PATTERN => ObjectPatternProp::AssignPattern(AssignPattern { syntax }),
+			KEY_VALUE_PATTERN => ObjectPatternProp::KeyValuePattern(KeyValuePattern { syntax }),
 			REST_PATTERN => ObjectPatternProp::RestPattern(RestPattern { syntax }),
 			SINGLE_PATTERN => ObjectPatternProp::SinglePattern(SinglePattern { syntax }),
 			_ => return None,
@@ -4404,85 +4686,9 @@ impl AstNode for ObjectPatternProp {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			ObjectPatternProp::AssignPattern(it) => &it.syntax,
+			ObjectPatternProp::KeyValuePattern(it) => &it.syntax,
 			ObjectPatternProp::RestPattern(it) => &it.syntax,
 			ObjectPatternProp::SinglePattern(it) => &it.syntax,
-		}
-	}
-}
-impl From<ImportDecl> for ModuleItem {
-	fn from(node: ImportDecl) -> ModuleItem { ModuleItem::ImportDecl(node) }
-}
-impl From<ExportNamed> for ModuleItem {
-	fn from(node: ExportNamed) -> ModuleItem { ModuleItem::ExportNamed(node) }
-}
-impl From<ExportDefaultDecl> for ModuleItem {
-	fn from(node: ExportDefaultDecl) -> ModuleItem { ModuleItem::ExportDefaultDecl(node) }
-}
-impl From<ExportDefaultExpr> for ModuleItem {
-	fn from(node: ExportDefaultExpr) -> ModuleItem { ModuleItem::ExportDefaultExpr(node) }
-}
-impl From<ExportWildcard> for ModuleItem {
-	fn from(node: ExportWildcard) -> ModuleItem { ModuleItem::ExportWildcard(node) }
-}
-impl From<ExportDecl> for ModuleItem {
-	fn from(node: ExportDecl) -> ModuleItem { ModuleItem::ExportDecl(node) }
-}
-impl From<TsImportEqualsDecl> for ModuleItem {
-	fn from(node: TsImportEqualsDecl) -> ModuleItem { ModuleItem::TsImportEqualsDecl(node) }
-}
-impl From<TsExportAssignment> for ModuleItem {
-	fn from(node: TsExportAssignment) -> ModuleItem { ModuleItem::TsExportAssignment(node) }
-}
-impl From<TsNamespaceExportDecl> for ModuleItem {
-	fn from(node: TsNamespaceExportDecl) -> ModuleItem { ModuleItem::TsNamespaceExportDecl(node) }
-}
-impl From<Stmt> for ModuleItem {
-	fn from(node: Stmt) -> ModuleItem { ModuleItem::Stmt(node) }
-}
-impl AstNode for ModuleItem {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(
-			kind,
-			IMPORT_DECL
-				| EXPORT_NAMED | EXPORT_DEFAULT_DECL
-				| EXPORT_DEFAULT_EXPR
-				| EXPORT_WILDCARD
-				| EXPORT_DECL | TS_IMPORT_EQUALS_DECL
-				| TS_EXPORT_ASSIGNMENT
-				| TS_NAMESPACE_EXPORT_DECL
-				| STMT
-		)
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			IMPORT_DECL => ModuleItem::ImportDecl(ImportDecl { syntax }),
-			EXPORT_NAMED => ModuleItem::ExportNamed(ExportNamed { syntax }),
-			EXPORT_DEFAULT_DECL => ModuleItem::ExportDefaultDecl(ExportDefaultDecl { syntax }),
-			EXPORT_DEFAULT_EXPR => ModuleItem::ExportDefaultExpr(ExportDefaultExpr { syntax }),
-			EXPORT_WILDCARD => ModuleItem::ExportWildcard(ExportWildcard { syntax }),
-			EXPORT_DECL => ModuleItem::ExportDecl(ExportDecl { syntax }),
-			TS_IMPORT_EQUALS_DECL => ModuleItem::TsImportEqualsDecl(TsImportEqualsDecl { syntax }),
-			TS_EXPORT_ASSIGNMENT => ModuleItem::TsExportAssignment(TsExportAssignment { syntax }),
-			TS_NAMESPACE_EXPORT_DECL => {
-				ModuleItem::TsNamespaceExportDecl(TsNamespaceExportDecl { syntax })
-			}
-			STMT => ModuleItem::Stmt(Stmt { syntax }),
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ModuleItem::ImportDecl(it) => &it.syntax,
-			ModuleItem::ExportNamed(it) => &it.syntax,
-			ModuleItem::ExportDefaultDecl(it) => &it.syntax,
-			ModuleItem::ExportDefaultExpr(it) => &it.syntax,
-			ModuleItem::ExportWildcard(it) => &it.syntax,
-			ModuleItem::ExportDecl(it) => &it.syntax,
-			ModuleItem::TsImportEqualsDecl(it) => &it.syntax,
-			ModuleItem::TsExportAssignment(it) => &it.syntax,
-			ModuleItem::TsNamespaceExportDecl(it) => &it.syntax,
-			ModuleItem::Stmt(it) => &it.syntax,
 		}
 	}
 }
@@ -4566,7 +4772,7 @@ impl AstNode for TsModuleRef {
 			TS_EXTERNAL_MODULE_REF => {
 				TsModuleRef::TsExternalModuleRef(TsExternalModuleRef { syntax })
 			}
-			TS_ENTITY_NAME => TsModuleRef::TsEntityName(TsEntityName { syntax }),
+			TS_ENTITY_NAME => TsModuleRef::TsEntityName(TsEntityName::cast(syntax)?),
 			_ => return None,
 		};
 		Some(res)
@@ -4574,7 +4780,7 @@ impl AstNode for TsModuleRef {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			TsModuleRef::TsExternalModuleRef(it) => &it.syntax,
-			TsModuleRef::TsEntityName(it) => &it.syntax,
+			TsModuleRef::TsEntityName(it) => &it.syntax(),
 		}
 	}
 }
@@ -4707,6 +4913,11 @@ impl std::fmt::Display for Stmt {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for ModuleItem {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for Decl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -4727,17 +4938,22 @@ impl std::fmt::Display for SwitchCase {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for Pattern {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for Literal {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ArrowExprParams {
+impl std::fmt::Display for TsType {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for TsType {
+impl std::fmt::Display for ArrowExprParams {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -4757,6 +4973,11 @@ impl std::fmt::Display for ClassElement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for ConstructorParamOrPat {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for ExprOrSpread {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -4768,11 +4989,6 @@ impl std::fmt::Display for PatternOrExpr {
 	}
 }
 impl std::fmt::Display for ObjectPatternProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ModuleItem {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -4818,6 +5034,11 @@ impl std::fmt::Display for Ident {
 	}
 }
 impl std::fmt::Display for Script {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for Module {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -4932,6 +5153,11 @@ impl std::fmt::Display for ForStmtUpdate {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for VarDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for Name {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -4953,11 +5179,6 @@ impl std::fmt::Display for CatchClause {
 	}
 }
 impl std::fmt::Display for Finalizer {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for Pattern {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -5082,6 +5303,11 @@ impl std::fmt::Display for PrivatePropAccess {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for TsTypeArgs {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for ArgList {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -5093,6 +5319,11 @@ impl std::fmt::Display for TsTypeParams {
 	}
 }
 impl std::fmt::Display for ParameterList {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsExprWithTypeArgs {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -5137,7 +5368,22 @@ impl std::fmt::Display for Setter {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for TsAccessibility {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for PropName {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ConstructorParameters {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsConstructorParam {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -5217,6 +5463,11 @@ impl std::fmt::Display for ExprPattern {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for KeyValuePattern {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for LiteralProp {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -5253,11 +5504,6 @@ impl std::fmt::Display for FnDecl {
 	}
 }
 impl std::fmt::Display for ClassDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for VarDecl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -5522,11 +5768,6 @@ impl std::fmt::Display for TsTupleElement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for TsTypeArgs {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for TsEnumMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -5567,17 +5808,12 @@ impl std::fmt::Display for TsTypeParam {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for TsContraint {
+impl std::fmt::Display for TsConstraint {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
 impl std::fmt::Display for TsDefault {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsExprWithTypeArgs {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

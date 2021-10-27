@@ -60,12 +60,6 @@ impl TsMappedTypeParam {
 	}
 }
 
-impl TsExternalModuleRef {
-	pub fn string_token(&self) -> Option<SyntaxToken> {
-		support::token(self.syntax(), STRING)
-	}
-}
-
 #[derive(Debug, Clone, PartialEq)]
 pub enum TsModuleRef {
 	TsExternalModuleRef(TsExternalModuleRef),

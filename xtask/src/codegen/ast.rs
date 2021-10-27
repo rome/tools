@@ -20,12 +20,11 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 	update(ast_nodes_file.as_path(), &contents, mode)?;
 
 	let tokens_file = project_root().join(codegen::AST_TOKENS);
-	let contents = generate_tokens( &ast)?;
+	let contents = generate_tokens(&ast)?;
 	update(tokens_file.as_path(), &contents, mode)?;
 
-
 	let syntax_kinds_file = project_root().join(codegen::SYNTAX_KINDS);
-	let contents = generate_syntax_kinds( KINDS_SRC)?;
+	let contents = generate_syntax_kinds(KINDS_SRC)?;
 	update(syntax_kinds_file.as_path(), &contents, mode)?;
 
 	Ok(())
@@ -90,7 +89,7 @@ fn handle_rule(
 	rule: &Rule,
 	label: Option<&String>,
 	optional: bool,
-	has_many: bool
+	has_many: bool,
 ) -> () {
 	match rule {
 		Rule::Labeled { label, rule } => {
@@ -100,14 +99,19 @@ fn handle_rule(
 			let ty = grammar[*node].name.clone();
 			let name = label.cloned().unwrap_or_else(|| to_lower_snake_case(&ty));
 
-			let field = Field::Node { name, ty, optional, has_many };
+			let field = Field::Node {
+				name,
+				ty,
+				optional,
+				has_many,
+			};
 			fields.push(field);
 		}
 		Rule::Token(token) => {
 			let mut name = grammar[*token].name.clone();
 			if name != "int_number" && name != "string" {
 				if "[]{}()".contains(&name) {
-						name = format!("'{}'", name);
+					name = format!("'{}'", name);
 				}
 				let field = Field::Token(name);
 				fields.push(field);
@@ -155,7 +159,12 @@ fn generate_tokens(grammar: &AstSrc) -> Result<String> {
 	});
 
 	let pretty = crate::reformat(quote! {
-		use crate::{SyntaxKind::{self, *}, SyntaxToken, ast::AstToken};
+		use crate::{
+			ast::AstToken,
+			SyntaxKind::{self, *},
+			SyntaxToken,
+		};
+
 		#(#tokens)*
 	})?
 	.replace("#[derive", "\n#[derive");
@@ -185,7 +194,12 @@ fn generate_nodes(kinds: KindsSrc, ast: &AstSrc) -> Result<String> {
 						}
 					}
 				}
-				Field::Node { name, ty, optional, has_many } => {
+				Field::Node {
+					name,
+					ty,
+					optional,
+					has_many,
+				} => {
 					let ty = format_ident!("{}", &ty);
 					let method_name = field.method_name();
 					if *optional {
@@ -241,11 +255,24 @@ fn generate_nodes(kinds: KindsSrc, ast: &AstSrc) -> Result<String> {
 		.enums
 		.iter()
 		.map(|en| {
+			let variants_for_enum: Vec<_> = en
+				.variants
+				.iter()
+				.map(|en| {
+					let variant_name = format_ident!("{}", en);
+
+					quote! {
+						#variant_name(#variant_name)
+					}
+				})
+				.collect();
+
 			let variants: Vec<_> = en
 				.variants
 				.iter()
 				.map(|var| format_ident!("{}", var))
 				.collect();
+
 			let name = format_ident!("{}", en.name);
 			let kinds: Vec<_> = variants
 				.iter()
@@ -253,12 +280,49 @@ fn generate_nodes(kinds: KindsSrc, ast: &AstSrc) -> Result<String> {
 				.collect();
 			// let doc = en.documentation;
 
+			let variant_cast: Vec<_> = en
+				.variants
+				.iter()
+				.map(|current_enum| {
+					let variant_is_enum = ast.enums.iter().find(|e| &e.name == current_enum);
+					let variant_name = format_ident!("{}", current_enum);
+
+					if variant_is_enum.is_some() {
+						quote! {
+							#variant_name::cast(syntax)?
+						}
+					} else {
+						quote! {
+							#variant_name { syntax }
+						}
+					}
+				})
+				.collect();
+
+			let variant_can_cast: Vec<_> = en
+				.variants
+				.iter()
+				.map(|current_enum| {
+					let variant_is_enum = ast.enums.iter().find(|e| &e.name == current_enum);
+					let variant_name = format_ident!("{}", current_enum);
+
+					if variant_is_enum.is_some() {
+						quote! {
+							&it.syntax()
+						}
+					} else {
+						quote! {
+							&it.syntax
+						}
+					}
+				})
+				.collect();
 			(
 				quote! {
 					// #[doc = #doc]
 					#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 					pub enum #name {
-						#(#variants(#variants),)*
+						#(#variants_for_enum),*
 					}
 				},
 				quote! {
@@ -277,7 +341,7 @@ fn generate_nodes(kinds: KindsSrc, ast: &AstSrc) -> Result<String> {
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
 							let res = match syntax.kind() {
 								#(
-								#kinds => #name::#variants(#variants { syntax }),
+								#kinds => #name::#variants(#variant_cast),
 								)*
 								_ => return None,
 							};
@@ -286,7 +350,7 @@ fn generate_nodes(kinds: KindsSrc, ast: &AstSrc) -> Result<String> {
 						fn syntax(&self) -> &SyntaxNode {
 							match self {
 								#(
-								#name::#variants(it) => &it.syntax,
+								#name::#variants(it) => #variant_can_cast,
 								)*
 							}
 						}
@@ -313,18 +377,17 @@ fn generate_nodes(kinds: KindsSrc, ast: &AstSrc) -> Result<String> {
 		});
 
 	let ast = quote! {
-		use crate::{
-			SyntaxNode, SyntaxToken, SyntaxKind::{self, *},
-			ast::*,
-			T,
-		};
-
-		#(#node_defs)*
-		#(#enum_defs)*
-		#(#node_boilerplate_impls)*
-		#(#enum_boilerplate_impls)*
-		#(#display_impls)*
+	use crate::{
+		ast::*,
+		SyntaxKind::{self, *},
+		SyntaxNode, SyntaxToken, T,
 	};
+			#(#node_defs)*
+			#(#enum_defs)*
+			#(#node_boilerplate_impls)*
+			#(#enum_boilerplate_impls)*
+			#(#display_impls)*
+		};
 
 	let ast = ast
 		.to_string()

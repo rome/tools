@@ -39,10 +39,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "51f0a58f3b1453981b910b603a4a7346be14fccd50f8edd7c954725a9210c24f"
 
 [[package]]
-name = "ast"
-version = "0.1.0"
-
-[[package]]
 name = "atty"
 version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
