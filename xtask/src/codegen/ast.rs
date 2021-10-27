@@ -112,15 +112,12 @@ fn handle_rule(
 			// because they need a manual implementation
 			let manually_implemented = matches!(
 				label_to_check.as_str(),
-				"lhs"
-					| "rhs" | "object" | "prop"
-					| "start" | "end" | "op"
-					| "alias" | "alt" | "cons"
+				"lhs" | "rhs" | "object" | "prop" | "start" | "end" | "op" | "alias" | "alt"
 			);
 
 			let manually_implemented_type = matches!(
 				format!("{}_{}", &label_to_check.as_str(), &ty.as_str()).as_str(),
-				"body_ExprOrBlock" | "value_Expr"
+				"body_ExprOrBlock"
 			);
 
 			if manually_implemented || manually_implemented_type {

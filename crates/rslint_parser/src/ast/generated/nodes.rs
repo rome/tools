@@ -59,6 +59,7 @@ pub struct IfStmt {
 impl IfStmt {
 	pub fn if_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![if]) }
 	pub fn condition(&self) -> Option<Condition> { support::child(&self.syntax) }
+	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
 	pub fn else_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![else]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -67,6 +68,7 @@ pub struct DoWhileStmt {
 }
 impl DoWhileStmt {
 	pub fn do_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![do]) }
+	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
 	pub fn while_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![while]) }
 	pub fn condition(&self) -> Option<Condition> { support::child(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
@@ -78,6 +80,7 @@ pub struct WhileStmt {
 impl WhileStmt {
 	pub fn while_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![while]) }
 	pub fn condition(&self) -> Option<Condition> { support::child(&self.syntax) }
+	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmt {
@@ -90,6 +93,7 @@ impl ForStmt {
 	pub fn test(&self) -> Option<ForStmtTest> { support::child(&self.syntax) }
 	pub fn update(&self) -> Option<ForStmtUpdate> { support::child(&self.syntax) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
+	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForInStmt {
@@ -102,6 +106,7 @@ impl ForInStmt {
 	pub fn in_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![in]) }
 	pub fn right(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
+	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForOfStmt {
@@ -114,6 +119,7 @@ impl ForOfStmt {
 	pub fn of_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![of]) }
 	pub fn right(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
+	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ContinueStmt {
@@ -140,6 +146,7 @@ pub struct ReturnStmt {
 }
 impl ReturnStmt {
 	pub fn return_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![return]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -149,6 +156,7 @@ pub struct WithStmt {
 impl WithStmt {
 	pub fn with_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![with]) }
 	pub fn condition(&self) -> Option<Condition> { support::child(&self.syntax) }
+	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct LabelledStmt {
@@ -256,6 +264,7 @@ impl CaseClause {
 	pub fn case_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![case]) }
 	pub fn test(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn cons(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct DefaultCase {
@@ -264,6 +273,7 @@ pub struct DefaultCase {
 impl DefaultCase {
 	pub fn default_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![default]) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn cons(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct CatchClause {
@@ -274,6 +284,7 @@ impl CatchClause {
 	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
 	pub fn error(&self) -> Option<Pattern> { support::child(&self.syntax) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
+	pub fn cons(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Finalizer {
@@ -281,6 +292,7 @@ pub struct Finalizer {
 }
 impl Finalizer {
 	pub fn finally_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![finally]) }
+	pub fn cons(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrowExpr {
@@ -299,7 +311,7 @@ pub struct NameRef {
 	pub(crate) syntax: SyntaxNode,
 }
 impl NameRef {
-	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
+	pub fn ident_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ThisExpr {
@@ -574,6 +586,7 @@ pub struct YieldExpr {
 impl YieldExpr {
 	pub fn yield_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![yield]) }
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct AwaitExpr {
@@ -721,6 +734,7 @@ impl ClassProp {
 	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
 	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -883,7 +897,7 @@ pub struct RestPattern {
 }
 impl RestPattern {
 	pub fn dotdotdot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [...]) }
-	pub fn pa(&self) -> Option<Pattern> { support::child(&self.syntax) }
+	pub fn pat(&self) -> Option<Pattern> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct AssignPattern {
@@ -894,6 +908,7 @@ impl AssignPattern {
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
 	pub fn ty(&self) -> Option<TsType> { support::child(&self.syntax) }
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ObjectPattern {
@@ -930,6 +945,7 @@ pub struct KeyValuePattern {
 impl KeyValuePattern {
 	pub fn key(&self) -> Option<PropName> { support::child(&self.syntax) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn value(&self) -> Option<Pattern> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct LiteralProp {
@@ -938,6 +954,7 @@ pub struct LiteralProp {
 impl LiteralProp {
 	pub fn key(&self) -> Option<PropName> { support::child(&self.syntax) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SpreadProp {
@@ -945,6 +962,7 @@ pub struct SpreadProp {
 }
 impl SpreadProp {
 	pub fn dotdotdot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [...]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct InitializedProp {
@@ -953,6 +971,7 @@ pub struct InitializedProp {
 impl InitializedProp {
 	pub fn key(&self) -> Option<Name> { support::child(&self.syntax) }
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct IdentProp {
@@ -1074,6 +1093,7 @@ impl Declarator {
 	pub fn pattern(&self) -> Option<Pattern> { support::child(&self.syntax) }
 	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ImportDecl {
@@ -1490,6 +1510,7 @@ pub struct TsEnumMember {
 impl TsEnumMember {
 	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
 	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplateElement {

@@ -255,7 +255,7 @@ impl UnaryExpr {
 }
 
 impl KeyValuePattern {
-	pub fn value(&self) -> Option<Pattern> {
+	pub fn get_value(&self) -> Option<Pattern> {
 		// This is to easily handle both `NAME NAME` and `: NAME`
 		if self.syntax().children().count() == 2 {
 			Pattern::cast(self.syntax().last_child().unwrap())

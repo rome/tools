@@ -391,9 +391,9 @@ SinglePattern
 	= name:Ident '?'? '!'? ':'? ty:TsType
 
 // rest pattern
-RestPattern = '...' pa:Pattern
+RestPattern = '...' pat:Pattern
 
-// TODO: add typescript types
+// array pattern
 ArrayPattern = '[' elements:Pattern* ']' '!' ':' ty:TsType
 
 // object pattern
