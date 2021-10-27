@@ -2,7 +2,7 @@ use crate::{token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, BlockStmt, CallExpr, CaseClause,
 	CatchClause, ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt,
-	DebuggerStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl,
+	DebuggerStmt, Declarator, DefaultCase, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl,
 	ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt,
 	LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList, ReturnStmt,
 	Script, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
@@ -99,7 +99,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::SWITCH_STMT => SwitchStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::DEFAULT_CLAUSE => DefaultClause::cast(self.clone())
+			SyntaxKind::DEFAULT_CLAUSE => DefaultCase::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CASE_CLAUSE => CaseClause::cast(self.clone())
@@ -159,6 +159,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::CLASS_PROP => ClassProp::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
+
 			_ => todo!(
 				"Implement formatting for the {:?} syntax kind.",
 				self.kind()

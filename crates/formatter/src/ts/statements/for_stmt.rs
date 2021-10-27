@@ -52,7 +52,7 @@ impl ToFormatElement for ForStmtInit {
 impl ToFormatElement for ForHead {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
-			ForHead::Decl(decl) => decl.to_format_element(formatter),
+			ForHead::VarDecl(decl) => decl.to_format_element(formatter),
 			ForHead::Expr(expr) => expr.to_format_element(formatter),
 		}
 	}

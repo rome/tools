@@ -3,7 +3,7 @@ use crate::{
 	block_indent, format_element::indent, format_elements, group_elements, hard_line_break,
 	join_elements, space_token, FormatElement, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{CaseClause, DefaultClause, SwitchCase, SwitchStmt};
+use rslint_parser::ast::{CaseClause, DefaultCase, SwitchCase, SwitchStmt};
 
 impl ToFormatElement for SwitchStmt {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
@@ -32,14 +32,12 @@ impl ToFormatElement for SwitchCase {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
 			SwitchCase::CaseClause(case_clause) => case_clause.to_format_element(formatter),
-			SwitchCase::DefaultClause(default_clause) => {
-				default_clause.to_format_element(formatter)
-			}
+			SwitchCase::DefaultCase(default_clause) => default_clause.to_format_element(formatter),
 		}
 	}
 }
 
-impl ToFormatElement for DefaultClause {
+impl ToFormatElement for DefaultCase {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let default = formatter.format_token(&self.default_token()?)?;
 		let colon = formatter.format_token(&self.colon_token()?)?;

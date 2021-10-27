@@ -487,37 +487,6 @@ impl Literal {
 	}
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ExprOrBlock {
-	Expr(Expr),
-	Block(BlockStmt),
-}
-
-impl AstNode for ExprOrBlock {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		if kind == BLOCK_STMT {
-			true
-		} else {
-			Expr::can_cast(kind)
-		}
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if syntax.kind() == BLOCK_STMT {
-			Some(ExprOrBlock::Block(BlockStmt::cast(syntax).unwrap()))
-		} else {
-			Some(ExprOrBlock::Expr(Expr::cast(syntax)?))
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ExprOrBlock::Expr(it) => it.syntax(),
-			ExprOrBlock::Block(it) => it.syntax(),
-		}
-	}
-}
-
 impl ArrowExpr {
 	pub fn body(&self) -> Option<ExprOrBlock> {
 		ExprOrBlock::cast(self.syntax().children().last()?)

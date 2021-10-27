@@ -7,7 +7,7 @@ impl ToFormatElement for ContinueStmt {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		// NOTE: rslint parser (upstream) is currently broken https://github.com/rslint/rslint/issues/126
 		let ident = if let Some(ident_token) = self.ident_token() {
-			format_elements![space_token(), formatter.format_node(ident_token)?]
+			format_elements![space_token(), formatter.format_token(&ident_token)?]
 		} else {
 			empty_element()
 		};

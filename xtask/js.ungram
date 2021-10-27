@@ -1,4 +1,4 @@
-// Rust Un-Grammar.
+// Javascript Un-Grammar.
 //
 // This grammar specifies the structure of Rust's concrete syntax tree.
 // It does not specify parsing rules (ambiguities, precedence, etc are out of scope).
@@ -17,7 +17,7 @@
 //   label:A     -- suggested name for field of AST node
 
 Ident = 'ident'
-Script = 'shebang'? Stmt*
+Script = 'shebang'? items:Stmt*
 Module = 'shebang'? items:ModuleItem*
 
 ///////////////
@@ -47,7 +47,7 @@ Stmt =
 
 
 // Block statement
-BlockStmt = '{' Stmt* '}'
+BlockStmt = '{' stmts:Stmt* '}'
 
 
 // Empty statemnet
@@ -95,11 +95,11 @@ ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:Expr ')' cons:Stmt
 
 
 // continue statement
-ContinueStmt = 'continue' Ident ';'?
+ContinueStmt = 'continue' 'ident' ';'?
 
 
 // break statement
-BreakStmt = 'break' ';'?
+BreakStmt = 'break' 'ident'? ';'
 
 
 // return statement
@@ -149,7 +149,7 @@ DebuggerStmt = 'debugger' ';'?
 Expr =
 	ArrowExpr
 	| Literal
-	// | Template
+	| Template
 	| NameRef
 	| ThisExpr
 	| ArrayExpr
@@ -220,7 +220,8 @@ FnExpr =
 	'*'?
 	name:Name
 	type_params:TsTypeParams?
-	parameters:ArgList body:BlockStmt
+	parameters:ArgList
+	body:BlockStmt
 	':'? return_type:TsType
 
 // Arrow expression
@@ -369,8 +370,8 @@ ExprOrBlock =
 	Expr
 	| BlockStmt
 
-ParameterList = '(' Pattern* ')'
-ArgList = '(' Expr* ')'
+ParameterList = '(' parameters:Pattern* ')'
+ArgList = '(' args:Expr* ')'
 
 
 ///////////////
@@ -479,7 +480,7 @@ SpreadElement = '...' element:Expr
 
 PrivateName = '#' Name
 
-Name = Ident
+Name = 'ident'
 
 Condition = '(' condition:Expr ')'
 

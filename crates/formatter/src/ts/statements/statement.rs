@@ -28,6 +28,7 @@ impl ToFormatElement for Stmt {
 				debugger_statement.to_format_element(formatter)
 			}
 			Stmt::Decl(decl) => decl.to_format_element(formatter),
+			Stmt::ForOfStmt(_) => todo!(),
 		}
 	}
 }

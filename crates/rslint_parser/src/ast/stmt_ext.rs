@@ -30,34 +30,6 @@ impl AstNode for StmtListItem {
 	}
 }
 
-/// The beginning to a For or For..in statement which can either be a variable declaration or an expression
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ForHead {
-	Decl(VarDecl),
-	Expr(Expr),
-}
-
-impl AstNode for ForHead {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		VarDecl::can_cast(kind) || Expr::can_cast(kind)
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if VarDecl::can_cast(syntax.kind()) {
-			Some(ForHead::Decl(VarDecl::cast(syntax)?))
-		} else {
-			Some(ForHead::Expr(Expr::cast(syntax)?))
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ForHead::Decl(stmt) => stmt.syntax(),
-			ForHead::Expr(expr) => expr.syntax(),
-		}
-	}
-}
-
 impl VarDecl {
 	// TODO: switch this to a contextual keyword once the typescript pr lands
 	pub fn let_token(&self) -> Option<SyntaxToken> {
@@ -162,39 +134,6 @@ impl SwitchCase {
 			Some(clause)
 		} else {
 			None
-		}
-	}
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ConstructorParamOrPat {
-	TsConstructorParam(TsConstructorParam),
-	Pattern(Pattern),
-}
-
-impl AstNode for ConstructorParamOrPat {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		if kind == TS_CONSTRUCTOR_PARAM {
-			true
-		} else {
-			Pattern::can_cast(kind)
-		}
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if syntax.kind() == TS_CONSTRUCTOR_PARAM {
-			Some(ConstructorParamOrPat::TsConstructorParam(
-				TsConstructorParam::cast(syntax).unwrap(),
-			))
-		} else {
-			Some(ConstructorParamOrPat::Pattern(Pattern::cast(syntax)?))
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ConstructorParamOrPat::TsConstructorParam(it) => it.syntax(),
-			ConstructorParamOrPat::Pattern(it) => it.syntax(),
 		}
 	}
 }

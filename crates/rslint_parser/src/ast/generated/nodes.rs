@@ -19,7 +19,7 @@ pub struct Script {
 }
 impl Script {
 	pub fn shebang_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![shebang]) }
-	pub fn stmt(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
+	pub fn items(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Module {
@@ -35,7 +35,7 @@ pub struct BlockStmt {
 }
 impl BlockStmt {
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn stmt(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
+	pub fn stmts(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -129,7 +129,7 @@ impl ContinueStmt {
 	pub fn continue_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![continue])
 	}
-	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
+	pub fn ident_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -138,6 +138,7 @@ pub struct BreakStmt {
 }
 impl BreakStmt {
 	pub fn break_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![break]) }
+	pub fn ident_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -254,7 +255,7 @@ pub struct Name {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Name {
-	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
+	pub fn ident_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct CaseClause {
@@ -305,6 +306,13 @@ impl ArrowExpr {
 	pub fn fat_arrow_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=>]) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
 	pub fn return_type(&self) -> Option<TsType> { support::child(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Template {
+	pub(crate) syntax: SyntaxNode,
+}
+impl Template {
+	pub fn backtick_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['`']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NameRef {
@@ -634,13 +642,6 @@ impl TsConstAssertion {
 	pub fn r_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [>]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Template {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Template {
-	pub fn backtick_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['`']) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeArgs {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -655,7 +656,7 @@ pub struct ArgList {
 }
 impl ArgList {
 	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
-	pub fn expr(&self) -> AstChildren<Expr> { support::children(&self.syntax) }
+	pub fn args(&self) -> AstChildren<Expr> { support::children(&self.syntax) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -673,7 +674,7 @@ pub struct ParameterList {
 }
 impl ParameterList {
 	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
-	pub fn pattern(&self) -> AstChildren<Pattern> { support::children(&self.syntax) }
+	pub fn parameters(&self) -> AstChildren<Pattern> { support::children(&self.syntax) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1700,6 +1701,7 @@ pub enum Decl {
 pub enum Expr {
 	ArrowExpr(ArrowExpr),
 	Literal(Literal),
+	Template(Template),
 	NameRef(NameRef),
 	ThisExpr(ThisExpr),
 	ArrayExpr(ArrayExpr),
@@ -2240,6 +2242,17 @@ impl AstNode for ArrowExpr {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for Template {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for NameRef {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME_REF }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2517,17 +2530,6 @@ impl AstNode for TsAssertion {
 }
 impl AstNode for TsConstAssertion {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONST_ASSERTION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for Template {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3981,6 +3983,9 @@ impl From<ArrowExpr> for Expr {
 impl From<Literal> for Expr {
 	fn from(node: Literal) -> Expr { Expr::Literal(node) }
 }
+impl From<Template> for Expr {
+	fn from(node: Template) -> Expr { Expr::Template(node) }
+}
 impl From<NameRef> for Expr {
 	fn from(node: NameRef) -> Expr { Expr::NameRef(node) }
 }
@@ -4064,18 +4069,19 @@ impl AstNode for Expr {
 		matches!(
 			kind,
 			ARROW_EXPR
-				| LITERAL | NAME_REF
-				| THIS_EXPR | ARRAY_EXPR
-				| OBJECT_EXPR | GROUPING_EXPR
-				| BRACKET_EXPR | DOT_EXPR
-				| NEW_EXPR | CALL_EXPR
-				| UNARY_EXPR | BIN_EXPR
-				| COND_EXPR | ASSIGN_EXPR
-				| SEQUENCE_EXPR | FN_EXPR
-				| CLASS_EXPR | NEW_TARGET
-				| IMPORT_META | SUPER_CALL
-				| IMPORT_CALL | YIELD_EXPR
-				| AWAIT_EXPR | PRIVATE_PROP_ACCESS
+				| LITERAL | TEMPLATE
+				| NAME_REF | THIS_EXPR
+				| ARRAY_EXPR | OBJECT_EXPR
+				| GROUPING_EXPR | BRACKET_EXPR
+				| DOT_EXPR | NEW_EXPR
+				| CALL_EXPR | UNARY_EXPR
+				| BIN_EXPR | COND_EXPR
+				| ASSIGN_EXPR | SEQUENCE_EXPR
+				| FN_EXPR | CLASS_EXPR
+				| NEW_TARGET | IMPORT_META
+				| SUPER_CALL | IMPORT_CALL
+				| YIELD_EXPR | AWAIT_EXPR
+				| PRIVATE_PROP_ACCESS
 				| TS_NON_NULL | TS_ASSERTION
 				| TS_CONST_ASSERTION
 		)
@@ -4084,6 +4090,7 @@ impl AstNode for Expr {
 		let res = match syntax.kind() {
 			ARROW_EXPR => Expr::ArrowExpr(ArrowExpr { syntax }),
 			LITERAL => Expr::Literal(Literal::cast(syntax)?),
+			TEMPLATE => Expr::Template(Template { syntax }),
 			NAME_REF => Expr::NameRef(NameRef { syntax }),
 			THIS_EXPR => Expr::ThisExpr(ThisExpr { syntax }),
 			ARRAY_EXPR => Expr::ArrayExpr(ArrayExpr { syntax }),
@@ -4118,6 +4125,7 @@ impl AstNode for Expr {
 		match self {
 			Expr::ArrowExpr(it) => &it.syntax,
 			Expr::Literal(it) => it.syntax(),
+			Expr::Template(it) => &it.syntax,
 			Expr::NameRef(it) => &it.syntax,
 			Expr::ThisExpr(it) => &it.syntax,
 			Expr::ArrayExpr(it) => &it.syntax,
@@ -5287,6 +5295,11 @@ impl std::fmt::Display for ArrowExpr {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for Template {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for NameRef {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -5413,11 +5426,6 @@ impl std::fmt::Display for TsAssertion {
 	}
 }
 impl std::fmt::Display for TsConstAssertion {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for Template {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
