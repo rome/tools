@@ -288,7 +288,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 			for (idx, prop) in expr.props().enumerate() {
 				match prop {
 					ast::ObjectProp::LiteralProp(prop) => {
-						if let Some(expr) = prop.value() {
+						if let Some(expr) = prop.get_value() {
 							check_for_stmt_lhs(p, expr, marker);
 						}
 					}

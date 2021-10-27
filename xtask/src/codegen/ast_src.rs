@@ -3,15 +3,15 @@
 
 use quote::*;
 
-pub(crate) struct KindsSrc<'a> {
-	pub(crate) punct: &'a [(&'a str, &'a str)],
-	pub(crate) keywords: &'a [&'a str],
-	pub(crate) literals: &'a [&'a str],
-	pub(crate) tokens: &'a [&'a str],
-	pub(crate) nodes: &'a [&'a str],
+pub struct KindsSrc<'a> {
+	pub punct: &'a [(&'a str, &'a str)],
+	pub keywords: &'a [&'a str],
+	pub literals: &'a [&'a str],
+	pub tokens: &'a [&'a str],
+	pub nodes: &'a [&'a str],
 }
 
-pub(crate) const KINDS_SRC: KindsSrc = KindsSrc {
+pub const KINDS_SRC: KindsSrc = KindsSrc {
 	punct: &[
 		(";", "SEMICOLON"),
 		(",", "COMMA"),
@@ -73,6 +73,7 @@ pub(crate) const KINDS_SRC: KindsSrc = KindsSrc {
 		("**=", "STAR2EQ"),
 		("??=", "QUESTION2EQ"),
 		("@", "AT"),
+		("`", "BACKTICK"),
 	],
 	keywords: &[
 		"await",
@@ -155,7 +156,6 @@ pub(crate) const KINDS_SRC: KindsSrc = KindsSrc {
 		"HASH", // #
 		"TEMPLATE_CHUNK",
 		"DOLLARCURLY", // ${
-		"BACKTICK",
 		"ERROR_TOKEN",
 		"IDENT",
 		"WHITESPACE",
@@ -350,22 +350,22 @@ pub(crate) const KINDS_SRC: KindsSrc = KindsSrc {
 };
 
 #[derive(Default, Debug)]
-pub(crate) struct AstSrc {
-	pub(crate) tokens: Vec<String>,
-	pub(crate) nodes: Vec<AstNodeSrc>,
-	pub(crate) enums: Vec<AstEnumSrc>,
+pub struct AstSrc {
+	pub tokens: Vec<String>,
+	pub nodes: Vec<AstNodeSrc>,
+	pub enums: Vec<AstEnumSrc>,
 }
 
 #[derive(Debug)]
-pub(crate) struct AstNodeSrc {
-	pub(crate) documentation: Vec<String>,
-	pub(crate) name: String,
-	// pub(crate) traits: Vec<String>,
-	pub(crate) fields: Vec<Field>,
+pub struct AstNodeSrc {
+	pub documentation: Vec<String>,
+	pub name: String,
+	// pub traits: Vec<String>,
+	pub fields: Vec<Field>,
 }
 
 #[derive(Debug, Eq, PartialEq)]
-pub(crate) enum Field {
+pub enum Field {
 	Token(String),
 	Node {
 		name: String,
@@ -376,15 +376,16 @@ pub(crate) enum Field {
 }
 
 #[derive(Debug, Clone)]
-pub(crate) struct AstEnumSrc {
-	pub(crate) documentation: Vec<String>,
-	pub(crate) name: String,
-	// pub(crate) traits: Vec<String>,
-	pub(crate) variants: Vec<String>,
+pub struct AstEnumSrc {
+	pub documentation: Vec<String>,
+	pub name: String,
+	// pub traits: Vec<String>,
+	pub variants: Vec<String>,
 }
 
 impl Field {
-	pub(crate) fn is_many(&self) -> bool {
+	#[allow(dead_code)]
+	pub fn is_many(&self) -> bool {
 		matches!(self, Field::Node { .. })
 	}
 	pub fn token_kind(&self) -> Option<proc_macro2::TokenStream> {
@@ -396,7 +397,7 @@ impl Field {
 			_ => None,
 		}
 	}
-	pub(crate) fn method_name(&self) -> proc_macro2::Ident {
+	pub fn method_name(&self) -> proc_macro2::Ident {
 		match self {
 			Field::Token(name) => {
 				let name = match name.as_str() {
@@ -407,6 +408,7 @@ impl Field {
 					"')'" => "r_paren",
 					"'['" => "l_brack",
 					"']'" => "r_brack",
+					"'`'" => "backtick",
 					"<" => "l_angle",
 					">" => "r_angle",
 					"=" => "eq",
@@ -422,7 +424,6 @@ impl Field {
 					"-" => "minus",
 					"#" => "hash",
 					"@" => "at",
-					"`" => "tick",
 					"+=" => "add_assign",
 					"-=" => "subtract_assign",
 					"*=" => "times_assign",
@@ -470,7 +471,8 @@ impl Field {
 			}
 		}
 	}
-	pub(crate) fn ty(&self) -> proc_macro2::Ident {
+	#[allow(dead_code)]
+	pub fn ty(&self) -> proc_macro2::Ident {
 		match self {
 			Field::Token(_) => format_ident!("SyntaxToken"),
 			Field::Node { ty, .. } => format_ident!("{}", ty),

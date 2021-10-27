@@ -173,11 +173,12 @@ Expr =
 	| YieldExpr
 	| AwaitExpr
 	| PrivatePropAccess
-	// | TsNonNull
-	// | TsAssertion
-	// | TsConstAssertion
+	| TsNonNull
+	| TsAssertion
+	| TsConstAssertion
 
 
+Template = '`'
 
 // This Expression
 ThisExpr = 'this'
@@ -338,6 +339,8 @@ BinExpr =
 // unary expression
 UnaryExpr =
   lhs:Expr
+	// @ematipico this is here for compability
+	expr:Expr
   op:(
 		'++' | '--' | 'delete' | 'void' | 'typeof' | '+' | '-' | '~'
 		| '!' | 'await'
@@ -434,8 +437,8 @@ LiteralProp = key:PropName ':' value:Expr
 
 PropName =
 	ComputedPropertyName
-	Literal
-	Ident
+	| Literal
+	| Ident
 
 
 // computed property
@@ -480,7 +483,7 @@ Name = Ident
 
 Condition = '(' condition:Expr ')'
 
-NameRef = Ident
+NameRef = 'ident'
 
 ///////////////
 // DECLARATIONS
@@ -507,7 +510,7 @@ FnDecl =
 	return_type:TsType
 	body:BlockStmt
 
-VarDecl = ('var' | 'const' | 'let') declarad:Declarator* ';'
+VarDecl = ('var' | 'const' | 'let') declared:Declarator* ';'
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
 ClassDecl  = 'class' Name 'extends' parent:Name body:ClassBody
@@ -834,3 +837,8 @@ TsAccessibility = 'private' | 'readonly'
 
 TsConstructorParam = 'readonly' pat:Pattern
 
+TsNonNull = expr:Expr '!'
+
+TsAssertion = expr:Expr Ident '<' ty:TsType '>'
+
+TsConstAssertion = expr:Expr Ident '<' 'const' '>'

@@ -27,50 +27,8 @@ impl CondExpr {
 	}
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum PropName {
-	Computed(ComputedPropertyName),
-	Literal(Literal),
-	Ident(Name),
-}
-
-impl AstNode for PropName {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(kind, NAME | LITERAL | COMPUTED_PROPERTY_NAME)
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if !Self::can_cast(syntax.kind()) {
-			None
-		} else {
-			Some(match syntax.kind() {
-				LITERAL => PropName::Literal(Literal::cast(syntax).unwrap()),
-				NAME => PropName::Ident(Name::cast(syntax).unwrap()),
-				COMPUTED_PROPERTY_NAME => {
-					PropName::Computed(ComputedPropertyName::cast(syntax).unwrap())
-				}
-				_ => unreachable!(),
-			})
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			PropName::Ident(s) => s.syntax(),
-			PropName::Literal(s) => s.syntax(),
-			PropName::Computed(s) => s.syntax(),
-		}
-	}
-}
-
-impl PropName {
-	pub fn as_string(&self) -> Option<std::string::String> {
-		Some(self.syntax().text().to_string())
-	}
-}
-
 impl LiteralProp {
-	pub fn key(&self) -> Option<PropName> {
+	pub fn get_key(&self) -> Option<PropName> {
 		if PropName::can_cast(
 			support::children::<PropName>(self.syntax())
 				.next()?
@@ -89,7 +47,7 @@ impl LiteralProp {
 		}
 	}
 
-	pub fn value(&self) -> Option<Expr> {
+	pub fn get_value(&self) -> Option<Expr> {
 		self.syntax().children().nth(1)?.try_to()
 	}
 }
@@ -414,43 +372,9 @@ impl ArrayExpr {
 	}
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ExprOrSpread {
-	Expr(Expr),
-	Spread(SpreadElement),
-}
-
-impl AstNode for ExprOrSpread {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			SPREAD_ELEMENT => true,
-			_ => Expr::can_cast(kind),
-		}
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if !Self::can_cast(syntax.kind()) {
-			None
-		} else {
-			Some(if syntax.kind() == SPREAD_ELEMENT {
-				ExprOrSpread::Spread(SpreadElement::cast(syntax).unwrap())
-			} else {
-				ExprOrSpread::Expr(Expr::cast(syntax).unwrap())
-			})
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ExprOrSpread::Expr(it) => it.syntax(),
-			ExprOrSpread::Spread(it) => it.syntax(),
-		}
-	}
-}
-
 impl ExprOrSpread {
 	pub fn is_spread(&self) -> bool {
-		matches!(self, ExprOrSpread::Spread(_))
+		matches!(self, ExprOrSpread::SpreadElement(_))
 	}
 
 	pub fn is_expr(&self) -> bool {
@@ -660,7 +584,7 @@ impl ObjectProp {
 		Some(
 			match self {
 				ObjectProp::IdentProp(idt) => idt.syntax().clone(),
-				ObjectProp::LiteralProp(litprop) => prop_name_syntax(litprop.key()?)?,
+				ObjectProp::LiteralProp(litprop) => prop_name_syntax(litprop.get_key()?)?,
 				ObjectProp::Getter(getter) => prop_name_syntax(getter.key()?)?,
 				ObjectProp::Setter(setter) => prop_name_syntax(setter.key()?)?,
 				ObjectProp::Method(method) => prop_name_syntax(method.name()?)?,
@@ -676,7 +600,7 @@ fn prop_name_syntax(name: PropName) -> Option<SyntaxNode> {
 	Some(match name {
 		PropName::Ident(idt) => idt.syntax().clone(),
 		PropName::Literal(lit) => lit.syntax().clone(),
-		PropName::Computed(_) => return None,
+		PropName::ComputedPropertyName(_) => return None,
 	})
 }
 

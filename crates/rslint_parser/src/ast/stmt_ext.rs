@@ -283,10 +283,6 @@ impl Specifier {
 	pub fn alias(&self) -> Option<Name> {
 		self.syntax().children().nth(1).and_then(|x| x.try_to())
 	}
-
-	pub fn name(&self) -> Option<SyntaxNode> {
-		self.syntax().first_child()
-	}
 }
 
 impl WildcardImport {
