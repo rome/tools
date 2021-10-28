@@ -90,6 +90,7 @@ pub struct Lexer<'src> {
 	state: LexerState,
 	pub file_id: usize,
 	returned_eof: bool,
+	break_on_newline: bool,
 }
 
 impl<'src> Lexer<'src> {
@@ -104,6 +105,7 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
+			break_on_newline: true,
 		}
 	}
 
@@ -115,6 +117,7 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
+			break_on_newline: true,
 		}
 	}
 
@@ -136,6 +139,7 @@ impl<'src> Lexer<'src> {
 		}
 	}
 
+<<<<<<< HEAD
 	fn consume_whitespace_until_newline(&mut self) {
 		while let Some(current) = self.current().copied() {
 			let chr = self.get_unicode_char();
@@ -149,6 +153,49 @@ impl<'src> Lexer<'src> {
 				|| (UNICODE_WHITESPACE_STARTS.contains(&current) && UNICODE_SPACES.contains(&chr))
 			{
 				self.cur += chr.len_utf8();
+=======
+	// Consume all whitespace starting from the current byte
+	fn consume_whitespace(&mut self, break_on_newline: bool) {
+		unwind_loop! {
+			if let Some(byte) = self.next().copied() {
+				// This is the most likely scenario, unicode spaces are very uncommon
+				if DISPATCHER[byte as usize] != Dispatch::WHS {
+					// try to short circuit the branch by checking the first byte of the potential unicode space
+					if byte > 0xC1 && UNICODE_WHITESPACE_STARTS.contains(&byte) {
+						let chr = self.get_unicode_char();
+						let is_newline = is_linebreak(chr);
+						if is_newline {
+							self.state.had_linebreak = true;
+						}
+						if !UNICODE_SPACES.contains(&chr) {
+							return;
+						}
+						self.cur += chr.len_utf8() - 1;
+
+						if is_newline && self.should_break_whitespace_now(byte) {
+							self.next();
+							return
+						}
+					} else {
+						return;
+					}
+				}
+
+				if is_linebreak(byte as char) {
+					self.state.had_linebreak = true;
+<<<<<<< HEAD
+
+					if self.should_break_whitespace_now(byte) {
+						self.next();
+						return;
+=======
+					if break_on_newline {
+						self.next();
+						return
+>>>>>>> 66ba73769 (rslint_lexer breaking newline and space in two tokens)
+					}
+				}
+>>>>>>> ad8f1cf7a (rslint_lexer breaking newline and space in two tokens)
 			} else {
 				break;
 			}
