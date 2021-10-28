@@ -11,7 +11,8 @@ MODULE@0..48
       WHITESPACE@7..8 " "
       OBJECT_EXPR@8..47
         L_CURLY@8..9 "{"
-        WHITESPACE@9..12 "\n  "
+        WHITESPACE@9..10 "\n"
+        WHITESPACE@10..12 "  "
         GETTER@12..45
           GET_KW@12..15 "get"
           WHITESPACE@15..16 " "
@@ -26,14 +27,16 @@ MODULE@0..48
           WHITESPACE@23..24 " "
           BLOCK_STMT@24..45
             L_CURLY@24..25 "{"
-            WHITESPACE@25..30 "\n    "
+            WHITESPACE@25..26 "\n"
+            WHITESPACE@26..30 "    "
             RETURN_STMT@30..41
               RETURN_KW@30..36 "return"
               WHITESPACE@36..37 " "
               NAME_REF@37..40
                 IDENT@37..40 "foo"
               SEMICOLON@40..41 ";"
-            WHITESPACE@41..44 "\n  "
+            WHITESPACE@41..42 "\n"
+            WHITESPACE@42..44 "  "
             R_CURLY@44..45 "}"
         WHITESPACE@45..46 "\n"
         R_CURLY@46..47 "}"

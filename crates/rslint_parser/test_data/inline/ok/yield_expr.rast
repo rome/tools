@@ -11,7 +11,8 @@ MODULE@0..45
     WHITESPACE@15..16 " "
     BLOCK_STMT@16..44
       L_CURLY@16..17 "{"
-      WHITESPACE@17..19 "\n "
+      WHITESPACE@17..18 "\n"
+      WHITESPACE@18..19 " "
       EXPR_STMT@19..29
         YIELD_EXPR@19..28
           YIELD_KW@19..24 "yield"
@@ -19,7 +20,8 @@ MODULE@0..45
           NAME_REF@25..28
             IDENT@25..28 "foo"
         SEMICOLON@28..29 ";"
-      WHITESPACE@29..31 "\n "
+      WHITESPACE@29..30 "\n"
+      WHITESPACE@30..31 " "
       EXPR_STMT@31..42
         YIELD_EXPR@31..41
           YIELD_KW@31..36 "yield"

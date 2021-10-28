@@ -1,7 +1,8 @@
 MODULE@0..34
   BLOCK_STMT@0..33
     L_CURLY@0..1 "{"
-    WHITESPACE@1..3 "\n "
+    WHITESPACE@1..2 "\n"
+    WHITESPACE@2..3 " "
     ERROR@3..31
       EXPORT_KW@3..9 "export"
       WHITESPACE@9..10 " "

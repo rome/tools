@@ -4,7 +4,8 @@ MODULE@0..48
     WHITESPACE@5..6 " "
     CLASS_BODY@6..46
       L_CURLY@6..7 "{"
-      WHITESPACE@7..10 "\n  "
+      WHITESPACE@7..8 "\n"
+      WHITESPACE@8..10 "  "
       CLASS_PROP@10..44
         COMPUTED_PROPERTY_NAME@10..17
           L_BRACK@10..11 "["
@@ -29,7 +30,8 @@ MODULE@0..48
           WHITESPACE@25..26 " "
           BLOCK_STMT@26..43
             L_CURLY@26..27 "{"
-            WHITESPACE@27..32 "\n    "
+            WHITESPACE@27..28 "\n"
+            WHITESPACE@28..32 "    "
             VAR_DECL@32..39
               IDENT@32..35 "let"
               WHITESPACE@35..36 " "
@@ -40,7 +42,8 @@ MODULE@0..48
                 EQ@37..38 "="
                 ERROR@38..39
                   SEMICOLON@38..39 ";"
-            WHITESPACE@39..42 "\n  "
+            WHITESPACE@39..40 "\n"
+            WHITESPACE@40..42 "  "
             R_CURLY@42..43 "}"
         SEMICOLON@43..44 ";"
       WHITESPACE@44..45 "\n"

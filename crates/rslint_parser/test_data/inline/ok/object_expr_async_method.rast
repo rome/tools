@@ -11,7 +11,8 @@ MODULE@0..48
       WHITESPACE@7..8 " "
       OBJECT_EXPR@8..47
         L_CURLY@8..9 "{"
-        WHITESPACE@9..12 "\n  "
+        WHITESPACE@9..10 "\n"
+        WHITESPACE@10..12 "  "
         METHOD@12..26
           ASYNC_KW@12..17 "async"
           WHITESPACE@17..18 " "
@@ -25,7 +26,8 @@ MODULE@0..48
             L_CURLY@24..25 "{"
             R_CURLY@25..26 "}"
         COMMA@26..27 ","
-        WHITESPACE@27..30 "\n  "
+        WHITESPACE@27..28 "\n"
+        WHITESPACE@28..30 "  "
         METHOD@30..45
           ASYNC_KW@30..35 "async"
           WHITESPACE@35..36 " "

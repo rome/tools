@@ -19,18 +19,21 @@ MODULE@0..64
     WHITESPACE@20..21 " "
     BLOCK_STMT@21..63
       L_CURLY@21..22 "{"
-      WHITESPACE@22..25 "\n  "
+      WHITESPACE@22..23 "\n"
+      WHITESPACE@23..25 "  "
       CONTINUE_STMT@25..34
         CONTINUE_KW@25..33 "continue"
         SEMICOLON@33..34 ";"
-      WHITESPACE@34..37 "\n  "
+      WHITESPACE@34..35 "\n"
+      WHITESPACE@35..37 "  "
       CONTINUE_STMT@37..50
         CONTINUE_KW@37..45 "continue"
         WHITESPACE@45..46 " "
         NAME_REF@46..49
           IDENT@46..49 "foo"
         SEMICOLON@49..50 ";"
-      WHITESPACE@50..53 "\n  "
+      WHITESPACE@50..51 "\n"
+      WHITESPACE@51..53 "  "
       CONTINUE_STMT@53..61
         CONTINUE_KW@53..61 "continue"
       WHITESPACE@61..62 "\n"

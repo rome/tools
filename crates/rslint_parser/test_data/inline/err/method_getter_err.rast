@@ -7,7 +7,8 @@ MODULE@0..22
     WHITESPACE@9..10 " "
     CLASS_BODY@10..19
       L_CURLY@10..11 "{"
-      WHITESPACE@11..13 "\n "
+      WHITESPACE@11..12 "\n"
+      WHITESPACE@12..13 " "
       CLASS_PROP@13..16
         NAME@13..16
           IDENT@13..16 "get"

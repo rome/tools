@@ -35,7 +35,8 @@ MODULE@0..72
         WHITESPACE@35..36 " "
         CLASS_BODY@36..57
           L_CURLY@36..37 "{"
-          WHITESPACE@37..39 "\n "
+          WHITESPACE@37..38 "\n"
+          WHITESPACE@38..39 " "
           CONSTRUCTOR@39..55
             NAME@39..50
               IDENT@39..50 "constructor"
