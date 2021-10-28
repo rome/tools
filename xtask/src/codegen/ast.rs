@@ -102,27 +102,18 @@ fn handle_rule(
 ) {
 	match rule {
 		Rule::Labeled { label, rule } => {
+			// Some methods need to be manually implemented because they need some custom logic;
+			// we use the prefix "manual__" to exclude labelled nodes.
+			let manually_implemented = label.as_str().contains("manual__");
+
+			if manually_implemented {
+				return;
+			}
 			handle_rule(fields, grammar, rule, Some(label), optional, has_many)
 		}
 		Rule::Node(node) => {
 			let ty = grammar[*node].name.clone();
 			let name = label.cloned().unwrap_or_else(|| to_lower_snake_case(&ty));
-			let label_to_check = label.cloned().unwrap_or_else(|| String::new());
-			// these are methods that need to be excluded from the auto generation
-			// because they need a manual implementation
-			let manually_implemented = matches!(
-				label_to_check.as_str(),
-				"lhs" | "rhs" | "object" | "prop" | "start" | "end" | "op" | "alias" | "alt"
-			);
-
-			let manually_implemented_type = matches!(
-				format!("{}_{}", &label_to_check.as_str(), &ty.as_str()).as_str(),
-				"body_ExprOrBlock"
-			);
-
-			if manually_implemented || manually_implemented_type {
-				return;
-			}
 
 			let field = Field::Node {
 				name,
@@ -134,12 +125,7 @@ fn handle_rule(
 		}
 		Rule::Token(token) => {
 			let mut name = grammar[*token].name.clone();
-			// these are tokens that need to be excluded from the auto generation
-			// because they need a manual implementation
-			let manually_implemented = matches!(name.as_str(), "let" | "as");
-			if manually_implemented {
-				return;
-			}
+
 			if name != "int_number" && name != "string" {
 				if "[]{}()`".contains(&name) {
 					name = format!("'{}'", name);

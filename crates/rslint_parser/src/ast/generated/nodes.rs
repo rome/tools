@@ -59,7 +59,6 @@ pub struct IfStmt {
 impl IfStmt {
 	pub fn if_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![if]) }
 	pub fn condition(&self) -> Option<Condition> { support::child(&self.syntax) }
-	pub fn cons(&self) -> Option<Stmt> { support::child(&self.syntax) }
 	pub fn else_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![else]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -378,6 +377,7 @@ pub struct NewExpr {
 impl NewExpr {
 	pub fn new_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![new]) }
 	pub fn type_args(&self) -> Option<TsTypeArgs> { support::child(&self.syntax) }
+	pub fn object(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn arguments(&self) -> Option<ArgList> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -394,6 +394,7 @@ pub struct UnaryExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl UnaryExpr {
+	pub fn lhs(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn expr(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn increment_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [++]) }
 	pub fn decrement_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [--]) }
@@ -405,6 +406,7 @@ impl UnaryExpr {
 	pub fn bitwise_not_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [~]) }
 	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
 	pub fn await_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![await]) }
+	pub fn rhs(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct BinExpr {
@@ -518,6 +520,7 @@ pub struct SequenceExpr {
 }
 impl SequenceExpr {
 	pub fn exprs(&self) -> AstChildren<Expr> { support::children(&self.syntax) }
+	pub fn bin_expr(&self) -> Option<BinExpr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct FnExpr {
@@ -609,7 +612,9 @@ pub struct PrivatePropAccess {
 	pub(crate) syntax: SyntaxNode,
 }
 impl PrivatePropAccess {
+	pub fn lhs(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
+	pub fn rhs(&self) -> Option<PrivateName> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNonNull {
@@ -946,16 +951,13 @@ pub struct KeyValuePattern {
 impl KeyValuePattern {
 	pub fn key(&self) -> Option<PropName> { support::child(&self.syntax) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
-	pub fn value(&self) -> Option<Pattern> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct LiteralProp {
 	pub(crate) syntax: SyntaxNode,
 }
 impl LiteralProp {
-	pub fn key(&self) -> Option<PropName> { support::child(&self.syntax) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
-	pub fn value(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SpreadProp {
@@ -1149,6 +1151,7 @@ impl ExportWildcard {
 	pub fn export_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![export]) }
 	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn as_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![as]) }
 	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
 	pub fn from_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![from]) }
 }
@@ -1189,6 +1192,7 @@ pub struct TsNamespaceExportDecl {
 }
 impl TsNamespaceExportDecl {
 	pub fn export_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![export]) }
+	pub fn as_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![as]) }
 	pub fn namespace_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![namespace])
 	}
@@ -1201,6 +1205,7 @@ pub struct WildcardImport {
 }
 impl WildcardImport {
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn as_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![as]) }
 	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1340,7 +1345,10 @@ impl TsLiteral {
 pub struct TsPredicate {
 	pub(crate) syntax: SyntaxNode,
 }
-impl TsPredicate {}
+impl TsPredicate {
+	pub fn lhs(&self) -> Option<TsThisOrMore> { support::child(&self.syntax) }
+	pub fn rhs(&self) -> Option<TsType> { support::child(&self.syntax) }
+}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTuple {
 	pub(crate) syntax: SyntaxNode,
@@ -1621,6 +1629,7 @@ impl TsPropertySignature {
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![readonly])
 	}
+	pub fn prop(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T ! [?])
 	}
@@ -1649,7 +1658,9 @@ pub struct TsQualifiedPath {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsQualifiedPath {
+	pub fn lhs(&self) -> Option<TsEntityName> { support::child(&self.syntax) }
 	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
+	pub fn rhs(&self) -> Option<TsTypeName> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Stmt {

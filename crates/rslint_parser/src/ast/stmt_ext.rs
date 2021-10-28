@@ -93,7 +93,7 @@ impl WildcardImport {
 }
 
 impl IfStmt {
-	pub fn get_cons(&self) -> Option<Stmt> {
+	pub fn cons(&self) -> Option<Stmt> {
 		self.syntax().child_with_ast::<Stmt>().filter(|cons| {
 			cons.syntax().text_range().start()
 				<= self

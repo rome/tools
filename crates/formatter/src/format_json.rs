@@ -37,10 +37,10 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 		SyntaxKind::LITERAL_PROP => {
 			let prop = LiteralProp::cast(node).unwrap();
 			format_elements![
-				tokenize_node(prop.get_key().unwrap().syntax().clone()),
+				tokenize_node(prop.key().unwrap().syntax().clone()),
 				token(":"),
 				space_token(),
-				tokenize_node(prop.get_value().unwrap().syntax().clone()),
+				tokenize_node(prop.value().unwrap().syntax().clone()),
 			]
 		}
 

@@ -170,7 +170,7 @@ fn check_pat(
 				let pat = match subpat {
 					ast::ObjectPatternProp::AssignPattern(pat) => pat.into(),
 					ast::ObjectPatternProp::KeyValuePattern(pat) => {
-						if let Some(val) = pat.get_value() {
+						if let Some(val) = pat.value() {
 							val
 						} else {
 							return;
@@ -288,7 +288,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 			for (idx, prop) in expr.props().enumerate() {
 				match prop {
 					ast::ObjectProp::LiteralProp(prop) => {
-						if let Some(expr) = prop.get_value() {
+						if let Some(expr) = prop.value() {
 							check_for_stmt_lhs(p, expr, marker);
 						}
 					}

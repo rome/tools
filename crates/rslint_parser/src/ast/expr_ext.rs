@@ -28,7 +28,7 @@ impl CondExpr {
 }
 
 impl LiteralProp {
-	pub fn get_key(&self) -> Option<PropName> {
+	pub fn key(&self) -> Option<PropName> {
 		if PropName::can_cast(
 			support::children::<PropName>(self.syntax())
 				.next()?
@@ -47,7 +47,7 @@ impl LiteralProp {
 		}
 	}
 
-	pub fn get_value(&self) -> Option<Expr> {
+	pub fn value(&self) -> Option<Expr> {
 		self.syntax().children().nth(1)?.try_to()
 	}
 }
@@ -255,7 +255,7 @@ impl UnaryExpr {
 }
 
 impl KeyValuePattern {
-	pub fn get_value(&self) -> Option<Pattern> {
+	pub fn value(&self) -> Option<Pattern> {
 		// This is to easily handle both `NAME NAME` and `: NAME`
 		if self.syntax().children().count() == 2 {
 			Pattern::cast(self.syntax().last_child().unwrap())
@@ -553,7 +553,7 @@ impl ObjectProp {
 		Some(
 			match self {
 				ObjectProp::IdentProp(idt) => idt.syntax().clone(),
-				ObjectProp::LiteralProp(litprop) => prop_name_syntax(litprop.get_key()?)?,
+				ObjectProp::LiteralProp(litprop) => prop_name_syntax(litprop.key()?)?,
 				ObjectProp::Getter(getter) => prop_name_syntax(getter.key()?)?,
 				ObjectProp::Setter(setter) => prop_name_syntax(setter.key()?)?,
 				ObjectProp::Method(method) => prop_name_syntax(method.name()?)?,
