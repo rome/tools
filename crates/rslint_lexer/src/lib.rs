@@ -90,7 +90,7 @@ pub struct Lexer<'src> {
 	state: LexerState,
 	pub file_id: usize,
 	returned_eof: bool,
-	break_on_newline: bool,
+	break_trivia_on_newline: bool,
 }
 
 impl<'src> Lexer<'src> {
@@ -105,7 +105,7 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
-			break_on_newline: true,
+			break_trivia_on_newline: true,
 		}
 	}
 
@@ -117,7 +117,7 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
-			break_on_newline: true,
+			break_trivia_on_newline: true,
 		}
 	}
 
@@ -1249,11 +1249,11 @@ impl<'src> Lexer<'src> {
 
 		match dispatched {
 			WHS => {
-				if is_linebreak(byte as char) && self.break_on_newline {
+				if is_linebreak(byte as char) && self.break_trivia_on_newline {
 					self.next();
 					tok!(WHITESPACE, 1)
 				} else {
-					self.consume_whitespace(self.break_on_newline);
+					self.consume_whitespace(self.break_trivia_on_newline);
 					tok!(WHITESPACE, self.cur - start)
 				}
 			}
@@ -1370,7 +1370,7 @@ impl<'src> Lexer<'src> {
 					}
 
 					self.cur += chr.len_utf8() - 1;
-					self.consume_whitespace(self.break_on_newline);
+					self.consume_whitespace(self.break_trivia_on_newline);
 					tok!(WHITESPACE, self.cur - start)
 				} else {
 					self.cur += chr.len_utf8() - 1;
