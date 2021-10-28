@@ -333,19 +333,15 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"TS_DECORATOR",
 		"DEFAULT_CASE",
 		"TS_INFER",
-		"STRING_VALUE",
-		"BOOLEAN_VALUE",
-		"NUMBER_VALUE",
-		"REGEX_VALUE",
-		"FLOAT_VALUE",
-		"BIG_INT_VALUE",
-		"NULL_VALUE",
-		"UNDEFINED_VALUE",
+		"NULL",
+		"UNDEFINED",
 		"PROP_NAME",
 		"STMT",
 		"DECL",
 		"PATTERN",
 		"TS_ENTITY_NAME",
+		"BOOLEAN",
+		"BIG_INT_VALUE"
 	],
 };
 

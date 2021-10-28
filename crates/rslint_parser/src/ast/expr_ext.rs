@@ -417,6 +417,7 @@ impl Literal {
 	}
 
 	pub fn kind(&self) -> LiteralKind {
+		dbg!(self.token().kind());
 		match self.token().kind() {
 			T![null] => LiteralKind::Null,
 			NUMBER => match parse_js_num(self.to_string()).unwrap() {

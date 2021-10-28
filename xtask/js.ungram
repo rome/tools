@@ -307,6 +307,7 @@ ArrayExpr = '[' elements:ExprOrSpread* ']'
 ExprOrSpread =
 	Expr
 	| SpreadElement
+	| Literal
 
 
 // assign expression
@@ -355,21 +356,16 @@ UnaryExpr =
 
 // Literals
 Literal =
-	StringValue
-	| BooleanValue
-	| NumberValue
-	| RegexValue
-	| FloatValue
-	| BigIntValue
+	'string'
+	| 'true'
+	| 'false'
+	| 'number'
+	| 'regex'
+	| 'float'
+	| 'big_int'
 
-StringValue = 'string'
-BooleanValue = 'true' | 'false'
-NumberValue = 'number'
-FloatValue = 'float'
-BigIntValue = 'big_int'
-RegexValue = 'regex'
-NullValue = 'null'
-UndefinedValue = 'undefined'
+Null = 'null'
+Undefined = 'undefined'
 
 ExprOrBlock =
 	Expr
@@ -589,7 +585,7 @@ Specifier = name:Ident manual__:'as'? manual__alias:Name
 
 
 // this is not currently implemented in rslint parser
-ImportStringSpecifier = StringValue
+ImportStringSpecifier = 'string'
 
 
 WildcardImport = '*' 'as'? Ident?
@@ -614,7 +610,7 @@ TsModuleRef =
 	TsEntityName
 
 
-TsExternalModuleRef = 'require' '(' string_token:StringValue ')'
+TsExternalModuleRef = 'require' '(' 'string' ')'
 
 TsType =
 	TsAny

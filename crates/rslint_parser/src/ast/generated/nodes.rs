@@ -307,6 +307,18 @@ impl ArrowExpr {
 	pub fn return_type(&self) -> Option<TsType> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Literal {
+	pub(crate) syntax: SyntaxNode,
+}
+impl Literal {
+	pub fn true_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![true]) }
+	pub fn false_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![false]) }
+	pub fn number_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![number]) }
+	pub fn regex_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![regex]) }
+	pub fn float_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![float]) }
+	pub fn big_int_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![big_int]) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Template {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -828,58 +840,17 @@ impl SpreadElement {
 	pub fn element(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct StringValue {
+pub struct Null {
 	pub(crate) syntax: SyntaxNode,
 }
-impl StringValue {}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct BooleanValue {
-	pub(crate) syntax: SyntaxNode,
-}
-impl BooleanValue {
-	pub fn true_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![true]) }
-	pub fn false_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![false]) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct NumberValue {
-	pub(crate) syntax: SyntaxNode,
-}
-impl NumberValue {
-	pub fn number_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![number]) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct RegexValue {
-	pub(crate) syntax: SyntaxNode,
-}
-impl RegexValue {
-	pub fn regex_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![regex]) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct FloatValue {
-	pub(crate) syntax: SyntaxNode,
-}
-impl FloatValue {
-	pub fn float_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![float]) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct BigIntValue {
-	pub(crate) syntax: SyntaxNode,
-}
-impl BigIntValue {
-	pub fn big_int_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![big_int]) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct NullValue {
-	pub(crate) syntax: SyntaxNode,
-}
-impl NullValue {
+impl Null {
 	pub fn null_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![null]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct UndefinedValue {
+pub struct Undefined {
 	pub(crate) syntax: SyntaxNode,
 }
-impl UndefinedValue {
+impl Undefined {
 	pub fn undefined_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T![undefined])
 	}
@@ -1221,9 +1192,7 @@ impl NamedImports {
 pub struct ImportStringSpecifier {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ImportStringSpecifier {
-	pub fn string_value(&self) -> Option<StringValue> { support::child(&self.syntax) }
-}
+impl ImportStringSpecifier {}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Specifier {
 	pub(crate) syntax: SyntaxNode,
@@ -1238,7 +1207,6 @@ pub struct TsExternalModuleRef {
 impl TsExternalModuleRef {
 	pub fn require_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![require]) }
 	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
-	pub fn string_token(&self) -> Option<StringValue> { support::child(&self.syntax) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1760,15 +1728,6 @@ pub enum Pattern {
 	ExprPattern(ExprPattern),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum Literal {
-	StringValue(StringValue),
-	BooleanValue(BooleanValue),
-	NumberValue(NumberValue),
-	RegexValue(RegexValue),
-	FloatValue(FloatValue),
-	BigIntValue(BigIntValue),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsType {
 	TsAny(TsAny),
 	TsUnknown(TsUnknown),
@@ -1848,6 +1807,7 @@ pub enum ConstructorParamOrPat {
 pub enum ExprOrSpread {
 	Expr(Expr),
 	SpreadElement(SpreadElement),
+	Literal(Literal),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
@@ -2244,6 +2204,17 @@ impl AstNode for Finalizer {
 }
 impl AstNode for ArrowExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARROW_EXPR }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for Literal {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == LITERAL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2737,8 +2708,8 @@ impl AstNode for SpreadElement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for StringValue {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == STRING_VALUE }
+impl AstNode for Null {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == NULL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2748,74 +2719,8 @@ impl AstNode for StringValue {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for BooleanValue {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == BOOLEAN_VALUE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for NumberValue {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NUMBER_VALUE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for RegexValue {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == REGEX_VALUE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for FloatValue {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FLOAT_VALUE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for BigIntValue {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == BIG_INT_VALUE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for NullValue {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NULL_VALUE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for UndefinedValue {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == UNDEFINED_VALUE }
+impl AstNode for Undefined {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == UNDEFINED }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4100,7 +4005,7 @@ impl AstNode for Expr {
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			ARROW_EXPR => Expr::ArrowExpr(ArrowExpr { syntax }),
-			LITERAL => Expr::Literal(Literal::cast(syntax)?),
+			LITERAL => Expr::Literal(Literal { syntax }),
 			TEMPLATE => Expr::Template(Template { syntax }),
 			NAME_REF => Expr::NameRef(NameRef { syntax }),
 			THIS_EXPR => Expr::ThisExpr(ThisExpr { syntax }),
@@ -4135,7 +4040,7 @@ impl AstNode for Expr {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			Expr::ArrowExpr(it) => &it.syntax,
-			Expr::Literal(it) => it.syntax(),
+			Expr::Literal(it) => &it.syntax,
 			Expr::Template(it) => &it.syntax,
 			Expr::NameRef(it) => &it.syntax,
 			Expr::ThisExpr(it) => &it.syntax,
@@ -4260,54 +4165,6 @@ impl AstNode for Pattern {
 			Pattern::ObjectPattern(it) => &it.syntax,
 			Pattern::ArrayPattern(it) => &it.syntax,
 			Pattern::ExprPattern(it) => &it.syntax,
-		}
-	}
-}
-impl From<StringValue> for Literal {
-	fn from(node: StringValue) -> Literal { Literal::StringValue(node) }
-}
-impl From<BooleanValue> for Literal {
-	fn from(node: BooleanValue) -> Literal { Literal::BooleanValue(node) }
-}
-impl From<NumberValue> for Literal {
-	fn from(node: NumberValue) -> Literal { Literal::NumberValue(node) }
-}
-impl From<RegexValue> for Literal {
-	fn from(node: RegexValue) -> Literal { Literal::RegexValue(node) }
-}
-impl From<FloatValue> for Literal {
-	fn from(node: FloatValue) -> Literal { Literal::FloatValue(node) }
-}
-impl From<BigIntValue> for Literal {
-	fn from(node: BigIntValue) -> Literal { Literal::BigIntValue(node) }
-}
-impl AstNode for Literal {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(
-			kind,
-			STRING_VALUE | BOOLEAN_VALUE | NUMBER_VALUE | REGEX_VALUE | FLOAT_VALUE | BIG_INT_VALUE
-		)
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			STRING_VALUE => Literal::StringValue(StringValue { syntax }),
-			BOOLEAN_VALUE => Literal::BooleanValue(BooleanValue { syntax }),
-			NUMBER_VALUE => Literal::NumberValue(NumberValue { syntax }),
-			REGEX_VALUE => Literal::RegexValue(RegexValue { syntax }),
-			FLOAT_VALUE => Literal::FloatValue(FloatValue { syntax }),
-			BIG_INT_VALUE => Literal::BigIntValue(BigIntValue { syntax }),
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			Literal::StringValue(it) => &it.syntax,
-			Literal::BooleanValue(it) => &it.syntax,
-			Literal::NumberValue(it) => &it.syntax,
-			Literal::RegexValue(it) => &it.syntax,
-			Literal::FloatValue(it) => &it.syntax,
-			Literal::BigIntValue(it) => &it.syntax,
 		}
 	}
 }
@@ -4680,7 +4537,7 @@ impl AstNode for PropName {
 			COMPUTED_PROPERTY_NAME => {
 				PropName::ComputedPropertyName(ComputedPropertyName { syntax })
 			}
-			LITERAL => PropName::Literal(Literal::cast(syntax)?),
+			LITERAL => PropName::Literal(Literal { syntax }),
 			IDENT => PropName::Ident(Ident { syntax }),
 			_ => return None,
 		};
@@ -4689,7 +4546,7 @@ impl AstNode for PropName {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			PropName::ComputedPropertyName(it) => &it.syntax,
-			PropName::Literal(it) => it.syntax(),
+			PropName::Literal(it) => &it.syntax,
 			PropName::Ident(it) => &it.syntax,
 		}
 	}
@@ -4727,12 +4584,16 @@ impl From<Expr> for ExprOrSpread {
 impl From<SpreadElement> for ExprOrSpread {
 	fn from(node: SpreadElement) -> ExprOrSpread { ExprOrSpread::SpreadElement(node) }
 }
+impl From<Literal> for ExprOrSpread {
+	fn from(node: Literal) -> ExprOrSpread { ExprOrSpread::Literal(node) }
+}
 impl AstNode for ExprOrSpread {
-	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, EXPR | SPREAD_ELEMENT) }
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, EXPR | SPREAD_ELEMENT | LITERAL) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			EXPR => ExprOrSpread::Expr(Expr::cast(syntax)?),
 			SPREAD_ELEMENT => ExprOrSpread::SpreadElement(SpreadElement { syntax }),
+			LITERAL => ExprOrSpread::Literal(Literal { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -4741,6 +4602,7 @@ impl AstNode for ExprOrSpread {
 		match self {
 			ExprOrSpread::Expr(it) => it.syntax(),
 			ExprOrSpread::SpreadElement(it) => &it.syntax,
+			ExprOrSpread::Literal(it) => &it.syntax,
 		}
 	}
 }
@@ -5056,11 +4918,6 @@ impl std::fmt::Display for Pattern {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Literal {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for TsType {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -5306,6 +5163,11 @@ impl std::fmt::Display for ArrowExpr {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for Literal {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for Template {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -5526,42 +5388,12 @@ impl std::fmt::Display for SpreadElement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for StringValue {
+impl std::fmt::Display for Null {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for BooleanValue {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for NumberValue {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for RegexValue {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for FloatValue {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for BigIntValue {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for NullValue {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for UndefinedValue {
+impl std::fmt::Display for Undefined {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
