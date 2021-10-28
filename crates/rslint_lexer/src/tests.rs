@@ -162,7 +162,8 @@ fn all_whitespace() {
 	assert_lex! {
 		"
 		",
-		WHITESPACE:3
+		WHITESPACE:1
+		WHITESPACE:2
 	}
 }
 
@@ -839,7 +840,8 @@ fn single_line_comments() {
 		"//abc
 	",
 		COMMENT:5,
-		WHITESPACE:2
+		WHITESPACE:1
+		WHITESPACE:1
 	}
 
 	assert_lex! {
@@ -1046,5 +1048,48 @@ fn object_expr_getter() {
 		WHITESPACE:1
 		R_CURLY:1
 		R_PAREN:1
+	}
+}
+
+#[test]
+fn newline_space_must_be_two_tokens() {
+	assert_lex! {
+		"\n ",
+		WHITESPACE:1
+		WHITESPACE:1
+	}
+	assert_lex! {
+		" \n",
+		WHITESPACE:2
+	}
+	assert_lex! {
+		" \n ",
+		WHITESPACE:2
+		WHITESPACE:1
+	}
+
+	assert_lex! {
+		" a\n b \n ",
+		WHITESPACE:1
+		IDENT:1
+		WHITESPACE:1
+		WHITESPACE:1
+		IDENT:1
+		WHITESPACE:2
+		WHITESPACE:1
+	}
+
+	assert_lex! {
+		"a //COMMENT \n /*COMMENT*/ b /*COM\nMENT*/",
+		IDENT:1
+		WHITESPACE:1
+		COMMENT:10
+		WHITESPACE:1
+		WHITESPACE:1
+		COMMENT:11
+		WHITESPACE:1
+		IDENT:1
+		WHITESPACE:1
+		COMMENT:12
 	}
 }

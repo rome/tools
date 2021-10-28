@@ -90,6 +90,7 @@ pub struct Lexer<'src> {
 	state: LexerState,
 	pub file_id: usize,
 	returned_eof: bool,
+	break_on_newline: bool,
 }
 
 impl<'src> Lexer<'src> {
@@ -104,6 +105,7 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
+			break_on_newline: true,
 		}
 	}
 
@@ -115,6 +117,7 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
+			break_on_newline: true,
 		}
 	}
 
@@ -125,7 +128,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	// Consume all whitespace starting from the current byte
-	fn consume_whitespace(&mut self) {
+	fn consume_whitespace(&mut self, break_on_newline: bool) {
 		unwind_loop! {
 			if let Some(byte) = self.next().copied() {
 				// This is the most likely scenario, unicode spaces are very uncommon
@@ -133,19 +136,29 @@ impl<'src> Lexer<'src> {
 					// try to short circuit the branch by checking the first byte of the potential unicode space
 					if byte > 0xC1 && UNICODE_WHITESPACE_STARTS.contains(&byte) {
 						let chr = self.get_unicode_char();
-						if is_linebreak(chr) {
+						let is_newline = is_linebreak(chr);
+						if is_newline {
 							self.state.had_linebreak = true;
 						}
 						if !UNICODE_SPACES.contains(&chr) {
 							return;
 						}
 						self.cur += chr.len_utf8() - 1;
+
+						if is_newline && break_on_newline {
+							self.next();
+							return
+						}
 					} else {
 						return;
 					}
 				}
 				if is_linebreak(byte as char) {
 					self.state.had_linebreak = true;
+					if break_on_newline {
+						self.next();
+						return
+					}
 				}
 			} else {
 				return;
@@ -1236,8 +1249,13 @@ impl<'src> Lexer<'src> {
 
 		match dispatched {
 			WHS => {
-				self.consume_whitespace();
-				tok!(WHITESPACE, self.cur - start)
+				if is_linebreak(byte as char) && self.break_on_newline {
+					self.next();
+					tok!(WHITESPACE, 1)
+				} else {
+					self.consume_whitespace(self.break_on_newline);
+					tok!(WHITESPACE, self.cur - start)
+				}
 			}
 			EXL => self.resolve_bang(),
 			HAS => self.read_shebang(),
@@ -1343,15 +1361,16 @@ impl<'src> Lexer<'src> {
 			TLD => self.eat(tok![~]),
 			UNI => {
 				let chr = self.get_unicode_char();
+				let is_newline = is_linebreak(chr);
 				if UNICODE_WHITESPACE_STARTS.contains(&byte)
-					&& (is_linebreak(chr) || UNICODE_SPACES.contains(&chr))
+					&& (is_newline || UNICODE_SPACES.contains(&chr))
 				{
-					if is_linebreak(chr) {
+					if is_newline {
 						self.state.had_linebreak = true;
 					}
 
 					self.cur += chr.len_utf8() - 1;
-					self.consume_whitespace();
+					self.consume_whitespace(self.break_on_newline);
 					tok!(WHITESPACE, self.cur - start)
 				} else {
 					self.cur += chr.len_utf8() - 1;
