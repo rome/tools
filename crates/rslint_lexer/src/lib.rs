@@ -90,7 +90,7 @@ pub struct Lexer<'src> {
 	state: LexerState,
 	pub file_id: usize,
 	returned_eof: bool,
-	break_on_newline: bool,
+	break_trivia_on_newline: bool,
 }
 
 impl<'src> Lexer<'src> {
@@ -105,7 +105,7 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
-			break_on_newline: true,
+			break_trivia_on_newline: true,
 		}
 	}
 
@@ -117,7 +117,7 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
-			break_on_newline: true,
+			break_trivia_on_newline: true,
 		}
 	}
 
@@ -183,16 +183,10 @@ impl<'src> Lexer<'src> {
 
 				if is_linebreak(byte as char) {
 					self.state.had_linebreak = true;
-<<<<<<< HEAD
 
 					if self.should_break_whitespace_now(byte) {
 						self.next();
 						return;
-=======
-					if break_on_newline {
-						self.next();
-						return
->>>>>>> 66ba73769 (rslint_lexer breaking newline and space in two tokens)
 					}
 				}
 >>>>>>> ad8f1cf7a (rslint_lexer breaking newline and space in two tokens)
