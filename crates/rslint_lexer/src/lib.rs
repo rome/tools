@@ -129,7 +129,7 @@ impl<'src> Lexer<'src> {
 			false
 		} else {
 			!matches!(
-				(byte as char, self.bytes.get(self.cur + 1).copied()), 
+				(byte as char, self.bytes.get(self.cur + 1).copied()),
 				('\r', Some(next)) if (next as char) == '\n'
 			)
 		}
