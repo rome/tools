@@ -47,6 +47,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 		SyntaxKind::OBJECT_EXPR => {
 			let object = ObjectExpr::cast(node).unwrap();
 
+			dbg!(&object);
 			let separator = format_elements![token(","), soft_line_break_or_space()];
 
 			let properties_list: Vec<FormatElement> = object

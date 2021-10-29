@@ -6,6 +6,7 @@ use rslint_parser::ast::ObjectExpr;
 
 impl ToFormatElement for ObjectExpr {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+		dbg!(self);
 		let separator = format_elements!(token(","), soft_line_break_or_space());
 		let props = formatter.format_children(self.props())?;
 
