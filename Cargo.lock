@@ -101,12 +101,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cc"
-version = "1.0.70"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d26a6ce4b6a484fa3edb70f7efa6fc430fd2b87285fe8b84304fd0936faa0dc0"
-
-[[package]]
 name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -485,7 +479,6 @@ checksum = "bc633605454125dec4b66843673f01c7df2b89479b32e0ed634e43a91cff62a5"
 dependencies = [
  "autocfg",
  "hashbrown",
- "serde",
 ]
 
 [[package]]
@@ -692,15 +685,6 @@ name = "os_str_bytes"
 version = "3.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6acbef58a60fe69ab50510a55bc8cdd4d6cf2283d27ad338f54cb52747a9cf2d"
-
-[[package]]
-name = "parser"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "tree-sitter",
- "tree-sitter-typescript",
-]
 
 [[package]]
 name = "path"
@@ -930,19 +914,6 @@ dependencies = [
  "memoffset",
  "rustc-hash",
  "serde",
- "text-size",
-]
-
-[[package]]
-name = "rowan"
-version = "0.13.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4a938f42b9c73aeece236481f37adb3debb7dfe3ae347cd6a45b5797d9ce4250"
-dependencies = [
- "countme",
- "hashbrown",
- "memoffset",
- "rustc-hash",
  "text-size",
 ]
 
@@ -1179,30 +1150,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "syntax"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "parser",
- "rowan",
-]
-
-[[package]]
-name = "syntax_codegen"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "indexmap",
- "proc-macro2",
- "quote",
- "serde",
- "serde_json",
- "tree-sitter",
- "tree-sitter-typescript",
- "xshell",
-]
-
-[[package]]
 name = "termcolor"
 version = "1.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1293,26 +1240,6 @@ name = "tinyvec_macros"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cda74da7e1a664f795bb1f8a87ec406fb89a02522cf6e50620d016add6dbbf5c"
-
-[[package]]
-name = "tree-sitter"
-version = "0.19.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad726ec26496bf4c083fff0f43d4eb3a2ad1bba305323af5ff91383c0b6ecac0"
-dependencies = [
- "cc",
- "regex",
-]
-
-[[package]]
-name = "tree-sitter-typescript"
-version = "0.19.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d3f62d49c6e56bf291c412ee5e178ea14dff40f14a5f01a8847933f56d65bf3b"
-dependencies = [
- "cc",
- "tree-sitter",
-]
 
 [[package]]
 name = "unicode-bidi"
@@ -1489,21 +1416,6 @@ name = "winapi-x86_64-pc-windows-gnu"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
-
-[[package]]
-name = "xshell"
-version = "0.1.17"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eaad2035244c56da05573d4d7fda5f903c60a5f35b9110e157a14a1df45a9f14"
-dependencies = [
- "xshell-macros",
-]
-
-[[package]]
-name = "xshell-macros"
-version = "0.1.17"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4916a4a3cad759e499a3620523bf9545cc162d7a06163727dde97ce9aaa4cf39"
 
 [[package]]
 name = "xtask"
