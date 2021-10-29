@@ -129,7 +129,7 @@ impl<'src> Lexer<'src> {
 			false
 		} else {
 			!matches!(
-				(byte as char, self.bytes.get(self.cur + 1).copied()),
+				(byte as char, self.bytes.get(self.cur + 1).copied()), 
 				('\r', Some(next)) if (next as char) == '\n'
 			)
 		}
@@ -139,7 +139,6 @@ impl<'src> Lexer<'src> {
 	fn consume_whitespace(&mut self) {
 		unwind_loop! {
 			if let Some(byte) = self.next().copied() {
-				println!("consume_whitespace {}", byte);
 				// This is the most likely scenario, unicode spaces are very uncommon
 				if DISPATCHER[byte as usize] != Dispatch::WHS {
 					// try to short circuit the branch by checking the first byte of the potential unicode space
