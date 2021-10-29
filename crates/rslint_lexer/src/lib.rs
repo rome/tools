@@ -124,6 +124,17 @@ impl<'src> Lexer<'src> {
 		tok
 	}
 
+	fn should_break_whitespace_now(&self, byte: u8) -> bool {
+		if !is_linebreak(byte as char) {
+			false
+		} else {
+			!matches!(
+				(byte as char, self.bytes.get(self.cur + 1).copied()),
+				('\r', Some(next)) if (next as char) == '\n'
+			)
+		}
+	}
+
 	// Consume all whitespace starting from the current byte
 	fn consume_whitespace(&mut self) {
 		unwind_loop! {
@@ -133,19 +144,31 @@ impl<'src> Lexer<'src> {
 					// try to short circuit the branch by checking the first byte of the potential unicode space
 					if byte > 0xC1 && UNICODE_WHITESPACE_STARTS.contains(&byte) {
 						let chr = self.get_unicode_char();
-						if is_linebreak(chr) {
+						let is_newline = is_linebreak(chr);
+						if is_newline {
 							self.state.had_linebreak = true;
 						}
 						if !UNICODE_SPACES.contains(&chr) {
 							return;
 						}
 						self.cur += chr.len_utf8() - 1;
+
+						if is_newline && self.should_break_whitespace_now(byte) {
+							self.next();
+							return
+						}
 					} else {
 						return;
 					}
 				}
+
 				if is_linebreak(byte as char) {
 					self.state.had_linebreak = true;
+
+					if self.should_break_whitespace_now(byte) {
+						self.next();
+						return;
+					}
 				}
 			} else {
 				return;
@@ -1236,8 +1259,13 @@ impl<'src> Lexer<'src> {
 
 		match dispatched {
 			WHS => {
-				self.consume_whitespace();
-				tok!(WHITESPACE, self.cur - start)
+				if self.should_break_whitespace_now(byte) {
+					self.next();
+					tok!(WHITESPACE, 1)
+				} else {
+					self.consume_whitespace();
+					tok!(WHITESPACE, self.cur - start)
+				}
 			}
 			EXL => self.resolve_bang(),
 			HAS => self.read_shebang(),
@@ -1343,10 +1371,11 @@ impl<'src> Lexer<'src> {
 			TLD => self.eat(tok![~]),
 			UNI => {
 				let chr = self.get_unicode_char();
+				let is_newline = is_linebreak(chr);
 				if UNICODE_WHITESPACE_STARTS.contains(&byte)
-					&& (is_linebreak(chr) || UNICODE_SPACES.contains(&chr))
+					&& (is_newline || UNICODE_SPACES.contains(&chr))
 				{
-					if is_linebreak(chr) {
+					if is_newline {
 						self.state.had_linebreak = true;
 					}
 
@@ -1519,7 +1548,7 @@ use Dispatch::*;
 // This is taken from the ratel project lexer and modified
 // FIXME: Should we ignore the first ascii control chars which are nearly never seen instead of returning Err?
 static DISPATCHER: [Dispatch; 256] = [
-	//   0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F   //
+	//0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F   //
 	ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, WHS, WHS, WHS, WHS, WHS, ERR, ERR, // 0
 	ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, // 1
 	WHS, EXL, QOT, HAS, IDT, PRC, AMP, QOT, PNO, PNC, MUL, PLS, COM, MIN, PRD, SLH, // 2

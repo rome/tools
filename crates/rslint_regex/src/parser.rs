@@ -1062,13 +1062,10 @@ impl Parser<'_> {
 			's' | 'S' => Node::PerlClass(span, ir::ClassPerlKind::Space, c == 'S'),
 			'p' | 'P' if self.strict || self.state.u_flag => {
 				let inner_start = self.cur;
-				if let Ok(n) = self.property_escape(start, c == 'P') {
-					n
-				} else {
-					return Err(self
-						.error("invalid property escape")
-						.primary(self.span(inner_start), ""));
-				}
+				self.property_escape(start, c == 'P').map_err(|_| {
+					self.error("invalid property escape")
+						.primary(self.span(inner_start), "")
+				})?
 			}
 
 			// a back reference: `/(foo)\1/`
