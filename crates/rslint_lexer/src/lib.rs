@@ -128,10 +128,10 @@ impl<'src> Lexer<'src> {
 		if !is_linebreak(byte as char) {
 			false
 		} else {
-			match (byte as char, self.bytes.get(self.cur + 1).copied()) {
-				('\r', Some(next)) if (next as char) == '\n' => false,
-				_ => true,
-			}
+			!matches!(
+				(byte as char, self.bytes.get(self.cur + 1).copied()),
+				('\r', Some(next)) if (next as char) == '\n'
+			)
 		}
 	}
 
