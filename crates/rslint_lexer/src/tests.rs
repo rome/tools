@@ -13,6 +13,7 @@ macro_rules! assert_lex {
     ($src:expr, $($kind:ident:$len:expr $(,)?)*) => {{
         let mut lexer = Lexer::from_str($src, 0);
         let mut tokens = lexer.collect::<Vec<_>>();
+		println!("{:?}", tokens);
         let mut idx = 0;
         let mut tok_idx = 0;
 
@@ -1078,7 +1079,6 @@ fn newline_space_must_be_two_tokens() {
 		WHITESPACE:2
 		WHITESPACE:1
 	}
-
 	assert_lex! {
 		"a //COMMENT \n /*COMMENT*/ b /*COM\nMENT*/",
 		IDENT:1
@@ -1091,5 +1091,72 @@ fn newline_space_must_be_two_tokens() {
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:12
+	}
+	assert_lex! {
+		"a //COMMENT \n /*COMMENT*/ b /*COM\nMENT*/",
+		IDENT:1
+		WHITESPACE:1
+		COMMENT:10
+		WHITESPACE:1
+		WHITESPACE:1
+		COMMENT:11
+		WHITESPACE:1
+		IDENT:1
+		WHITESPACE:1
+		COMMENT:12
+	}
+
+	// Now with CR
+	assert_lex! {
+		"\r\n ",
+		WHITESPACE:2
+		WHITESPACE:1
+	}
+
+	assert_lex! {
+		" \r\n",
+		WHITESPACE:3
+	}
+	assert_lex! {
+		" \r\n ",
+		WHITESPACE:3
+		WHITESPACE:1
+	}
+
+	assert_lex! {
+		" a\r\n b \r\n ",
+		WHITESPACE:1
+		IDENT:1
+		WHITESPACE:2
+		WHITESPACE:1
+		IDENT:1
+		WHITESPACE:3
+		WHITESPACE:1
+	}
+	assert_lex! {
+		"a //COMMENT \r\n /*COMMENT*/ b /*COM\r\nMENT*/",
+		IDENT:1
+		WHITESPACE:1
+		COMMENT:10
+		WHITESPACE:2
+		WHITESPACE:1
+		COMMENT:11
+		WHITESPACE:1
+		IDENT:1
+		WHITESPACE:1
+		COMMENT:13
+	}
+	assert_lex! {
+		"a //COMMENT \r\n /*COMMENT*/ b /*COM\r\nMENT*/",
+		IDENT:1
+		WHITESPACE:1
+		COMMENT:10
+		WHITESPACE:2
+		WHITESPACE:1
+		COMMENT:11
+		WHITESPACE:1
+		IDENT:1
+		WHITESPACE:1
+		COMMENT:13
 	}
 }
