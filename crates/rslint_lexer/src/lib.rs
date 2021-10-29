@@ -90,7 +90,6 @@ pub struct Lexer<'src> {
 	state: LexerState,
 	pub file_id: usize,
 	returned_eof: bool,
-	break_trivia_on_newline: bool,
 }
 
 impl<'src> Lexer<'src> {
@@ -105,7 +104,6 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
-			break_trivia_on_newline: true,
 		}
 	}
 
@@ -117,7 +115,6 @@ impl<'src> Lexer<'src> {
 			file_id,
 			state: LexerState::new(),
 			returned_eof: false,
-			break_trivia_on_newline: true,
 		}
 	}
 
@@ -155,9 +152,10 @@ impl<'src> Lexer<'src> {
 				self.cur += chr.len_utf8();
 =======
 	// Consume all whitespace starting from the current byte
-	fn consume_whitespace(&mut self, break_on_newline: bool) {
+	fn consume_whitespace(&mut self) {
 		unwind_loop! {
 			if let Some(byte) = self.next().copied() {
+				println!("consume_whitespace {}", byte);
 				// This is the most likely scenario, unicode spaces are very uncommon
 				if DISPATCHER[byte as usize] != Dispatch::WHS {
 					// try to short circuit the branch by checking the first byte of the potential unicode space

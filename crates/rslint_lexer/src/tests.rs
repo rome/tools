@@ -13,6 +13,7 @@ macro_rules! assert_lex {
     ($src:expr, $($kind:ident:$len:expr $(,)?)*) => {{
         let mut lexer = Lexer::from_str($src, 0);
         let mut tokens = lexer.collect::<Vec<_>>();
+		println!("{:?}", tokens);
         let mut idx = 0;
         let mut tok_idx = 0;
 
