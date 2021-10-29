@@ -27,11 +27,9 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 	let contents = generate_tokens(&ast)?;
 	update(tokens_file.as_path(), &contents, mode)?;
 
-
 	let ast_nodes_file = project_root().join(codegen::AST_NODES);
 	let contents = generate_nodes(&ast)?;
 	update(ast_nodes_file.as_path(), &contents, mode)?;
-
 
 	let syntax_kinds_file = project_root().join(codegen::SYNTAX_KINDS);
 	let contents = generate_syntax_kinds(KINDS_SRC)?;

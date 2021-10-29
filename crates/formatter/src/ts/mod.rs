@@ -28,6 +28,7 @@ mod test {
 	fn arrow_function() {
 		let src = "let v = (value  , second_value) =>    true";
 		let tree = parse_text(src, 0);
+		dbg!(&tree.syntax());
 		let result = Formatter::default().format_root(&tree.syntax());
 		assert_eq!(
 			result.code(),
