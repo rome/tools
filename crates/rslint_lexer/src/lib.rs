@@ -136,7 +136,6 @@ impl<'src> Lexer<'src> {
 		}
 	}
 
-<<<<<<< HEAD
 	fn consume_whitespace_until_newline(&mut self) {
 		while let Some(current) = self.current().copied() {
 			let chr = self.get_unicode_char();
@@ -150,44 +149,6 @@ impl<'src> Lexer<'src> {
 				|| (UNICODE_WHITESPACE_STARTS.contains(&current) && UNICODE_SPACES.contains(&chr))
 			{
 				self.cur += chr.len_utf8();
-=======
-	// Consume all whitespace starting from the current byte
-	fn consume_whitespace(&mut self) {
-		unwind_loop! {
-			if let Some(byte) = self.next().copied() {
-				println!("consume_whitespace {}", byte);
-				// This is the most likely scenario, unicode spaces are very uncommon
-				if DISPATCHER[byte as usize] != Dispatch::WHS {
-					// try to short circuit the branch by checking the first byte of the potential unicode space
-					if byte > 0xC1 && UNICODE_WHITESPACE_STARTS.contains(&byte) {
-						let chr = self.get_unicode_char();
-						let is_newline = is_linebreak(chr);
-						if is_newline {
-							self.state.had_linebreak = true;
-						}
-						if !UNICODE_SPACES.contains(&chr) {
-							return;
-						}
-						self.cur += chr.len_utf8() - 1;
-
-						if is_newline && self.should_break_whitespace_now(byte) {
-							self.next();
-							return
-						}
-					} else {
-						return;
-					}
-				}
-
-				if is_linebreak(byte as char) {
-					self.state.had_linebreak = true;
-
-					if self.should_break_whitespace_now(byte) {
-						self.next();
-						return;
-					}
-				}
->>>>>>> ad8f1cf7a (rslint_lexer breaking newline and space in two tokens)
 			} else {
 				break;
 			}
