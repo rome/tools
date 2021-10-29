@@ -1,6 +1,6 @@
-use super::ast_src::AstSrc;
+use super::kinds_src::AstSrc;
 use crate::{
-	codegen::{ast_src::Field, to_upper_snake_case},
+	codegen::{kinds_src::Field, to_upper_snake_case},
 	Result,
 };
 use quote::{format_ident, quote};

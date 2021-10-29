@@ -1,7 +1,11 @@
 //! Codegen tools for generating Syntax and AST definitions. Derived from Rust analyzer's codegen
+//!
+//!
 mod ast;
-mod ast_src;
+mod kinds_src;
 mod generate_nodes;
+mod generate_tokens;
+mod generate_syntax_kinds;
 mod parser_tests;
 mod syntax;
 
