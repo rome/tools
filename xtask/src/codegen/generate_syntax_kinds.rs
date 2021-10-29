@@ -1,9 +1,8 @@
+use crate::codegen::{to_upper_snake_case, Result};
 use proc_macro2::{Punct, Spacing};
 use quote::{format_ident, quote};
-use crate::codegen::{to_upper_snake_case, Result};
 
 use super::kinds_src::KindsSrc;
-
 
 pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 	let (single_byte_tokens_values, single_byte_tokens): (Vec<_>, Vec<_>) = grammar

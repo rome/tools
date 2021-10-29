@@ -1,22 +1,22 @@
 //! Generate SyntaxKind definitions as well as typed AST definitions for nodes and tokens.
 //! This is derived from rust-analyzer/xtask/codegen
 
-use crate::{
-	codegen::{
-		self,
-		kinds_src::{AstEnumSrc, AstNodeSrc, KINDS_SRC},
-		generate_nodes::generate_nodes,
-		generate_tokens::generate_tokens,
-		generate_syntax_kinds::generate_syntax_kinds,
-		 update,
-	},
-	project_root, Result,
-};
-use ungrammar::{Grammar, Rule};
 use super::{
 	kinds_src::{AstSrc, Field},
 	to_lower_snake_case, Mode,
 };
+use crate::{
+	codegen::{
+		self,
+		generate_nodes::generate_nodes,
+		generate_syntax_kinds::generate_syntax_kinds,
+		generate_tokens::generate_tokens,
+		kinds_src::{AstEnumSrc, AstNodeSrc, KINDS_SRC},
+		update,
+	},
+	project_root, Result,
+};
+use ungrammar::{Grammar, Rule};
 
 pub fn generate_ast(mode: Mode) -> Result<()> {
 	let grammar_src = include_str!("../../js.ungram");
@@ -147,4 +147,3 @@ fn handle_rule(
 		}
 	};
 }
-

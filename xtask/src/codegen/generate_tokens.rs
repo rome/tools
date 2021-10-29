@@ -1,6 +1,6 @@
-use quote::{format_ident, quote};
-use crate::codegen::{to_upper_snake_case, Result};
 use super::kinds_src::AstSrc;
+use crate::codegen::{to_upper_snake_case, Result};
+use quote::{format_ident, quote};
 
 pub fn generate_tokens(grammar: &AstSrc) -> Result<String> {
 	let tokens = grammar.tokens.iter().map(|token| {

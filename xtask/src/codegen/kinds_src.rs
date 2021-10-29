@@ -341,7 +341,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"PATTERN",
 		"TS_ENTITY_NAME",
 		"BOOLEAN",
-		"BIG_INT_VALUE"
+		"BIG_INT_VALUE",
 	],
 };
 

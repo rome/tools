@@ -33,8 +33,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					optional,
 					has_many,
 				} => {
-
-
 					let ty = format_ident!("{}", &ty);
 
 					let method_name = field.method_name();

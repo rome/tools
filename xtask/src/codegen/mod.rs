@@ -2,10 +2,10 @@
 //!
 //!
 mod ast;
-mod kinds_src;
 mod generate_nodes;
-mod generate_tokens;
 mod generate_syntax_kinds;
+mod generate_tokens;
+mod kinds_src;
 mod parser_tests;
 mod syntax;
 
