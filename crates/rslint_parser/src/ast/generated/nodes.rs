@@ -468,7 +468,10 @@ pub struct DotExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl DotExpr {
+	pub fn super_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![super]) }
+	pub fn object(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
+	pub fn prop(&self) -> Option<Name> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NewExpr {
@@ -635,9 +638,9 @@ impl FnExpr {
 	pub fn name(&self) -> Option<Name> { support::child(&self.syntax) }
 	pub fn type_params(&self) -> Option<TsTypeParams> { support::child(&self.syntax) }
 	pub fn parameters(&self) -> Option<ArgList> { support::child(&self.syntax) }
-	pub fn body(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
 	pub fn return_type(&self) -> Option<TsType> { support::child(&self.syntax) }
+	pub fn body(&self) -> Option<BlockStmt> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClassExpr {

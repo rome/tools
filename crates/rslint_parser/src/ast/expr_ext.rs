@@ -417,7 +417,6 @@ impl Literal {
 	}
 
 	pub fn kind(&self) -> LiteralKind {
-		dbg!(self.token().kind());
 		match self.token().kind() {
 			T![null] => LiteralKind::Null,
 			NUMBER => match parse_js_num(self.to_string()).unwrap() {
@@ -490,7 +489,6 @@ impl Literal {
 
 impl ArrowExpr {
 	pub fn body(&self) -> Option<ExprOrBlock> {
-		dbg!("here", self.syntax().children().last());
 		ExprOrBlock::cast(self.syntax().children().last()?)
 	}
 }

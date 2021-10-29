@@ -13,6 +13,9 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 		.unzip();
 
 	let punctuation_values = grammar.punct.iter().map(|(token, _name)| {
+		// These tokens, when parsed to proc_macro2::TokenStream, generates a stream of bytes
+		// that can't be recognized by [quote].
+		// Hence, they need to be thread differently
 		if "{}[]()`".contains(token) {
 			let c = token.chars().next().unwrap();
 			quote! { #c }

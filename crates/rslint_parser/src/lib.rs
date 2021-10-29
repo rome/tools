@@ -99,12 +99,6 @@ pub use rslint_syntax::*;
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
 
-pub enum SyntaxError {
-	MissingElement,
-}
-
-pub type SyntaxResult<Node> = Result<Node, SyntaxError>;
-
 use std::ops::Range;
 
 /// Abstracted token for `TokenSource`

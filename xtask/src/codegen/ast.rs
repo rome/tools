@@ -23,13 +23,15 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 	let grammar: Grammar = grammar_src.parse().unwrap();
 	let ast = make_ast(&grammar);
 
+	let tokens_file = project_root().join(codegen::AST_TOKENS);
+	let contents = generate_tokens(&ast)?;
+	update(tokens_file.as_path(), &contents, mode)?;
+
+
 	let ast_nodes_file = project_root().join(codegen::AST_NODES);
 	let contents = generate_nodes(&ast)?;
 	update(ast_nodes_file.as_path(), &contents, mode)?;
 
-	let tokens_file = project_root().join(codegen::AST_TOKENS);
-	let contents = generate_tokens(&ast)?;
-	update(tokens_file.as_path(), &contents, mode)?;
 
 	let syntax_kinds_file = project_root().join(codegen::SYNTAX_KINDS);
 	let contents = generate_syntax_kinds(KINDS_SRC)?;
@@ -39,7 +41,7 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 }
 
 fn make_ast(grammar: &Grammar) -> AstSrc {
-	let tokens = "String Number"
+	let tokens = "String Number Whitespace Comment"
 		.split_ascii_whitespace()
 		.map(|it| it.to_string())
 		.collect::<Vec<_>>();
@@ -48,8 +50,7 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 		tokens,
 		..Default::default()
 	};
-	let nodes: Vec<_> = grammar.iter().collect();
-	for &node in &nodes {
+	for node in grammar.iter() {
 		let name = grammar[node].name.clone();
 		let rule = &grammar[node].rule;
 
@@ -126,6 +127,9 @@ fn handle_rule(
 			let mut name = grammar[*token].name.clone();
 
 			if name != "int_number" && name != "string" {
+				// These tokens, when parsed to proc_macro2::TokenStream, generates a stream of bytes
+				// that can't be recognized by [quote].
+				// Hence, they need to be decorated with single quotes.
 				if "[]{}()`".contains(&name) {
 					name = format!("'{}'", name);
 				}

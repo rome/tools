@@ -7,7 +7,6 @@ use rslint_parser::ast::{ForHead, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpda
 impl ToFormatElement for ForStmt {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let inner = if self.init().is_some() || self.test().is_some() || self.update().is_some() {
-			dbg!(self);
 			let mut inner = vec![];
 			if let Some(init) = self.init() {
 				inner.push(formatter.format_node(init)?);

@@ -37,7 +37,6 @@ impl ToFormatElement for ConstructorParameters {
 
 impl ToFormatElement for ConstructorParamOrPat {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
-		dbg!(self);
 		match self {
 			ConstructorParamOrPat::TsConstructorParam(_) => todo!(),
 			ConstructorParamOrPat::Pattern(pattern) => pattern.to_format_element(formatter),

@@ -6,7 +6,6 @@ use rslint_parser::ast::ContinueStmt;
 impl ToFormatElement for ContinueStmt {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		// NOTE: rslint parser (upstream) is currently broken https://github.com/rslint/rslint/issues/126
-		dbg!(self);
 		let ident = if let Some(name_ref) = self.name_ref() {
 			format_elements![space_token(), formatter.format_node(name_ref)?]
 		} else {

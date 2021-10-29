@@ -12,11 +12,9 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.map(|node| {
 			let name = format_ident!("{}", node.name);
 			let kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
-			// let documentation = node.documentation;
 
 			let methods = node.fields.iter().map(|field| match field {
 				Field::Token(_) => {
-					// let name = format_ident!("{}", to_lower_snake_case(node.name.as_str()));
 					// TODO: make the mandatory/optional bit
 					let method_name = field.method_name();
 					let token_kind = field.token_kind();
@@ -112,7 +110,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				.iter()
 				.map(|name| format_ident!("{}", to_upper_snake_case(&name.to_string())))
 				.collect();
-			// let doc = en.documentation;
 
 			let variant_cast: Vec<_> = en
 				.variants

@@ -46,7 +46,6 @@ impl Formatter for ShortFormatter {
 			ids.insert(d.file_id);
 		});
 		for id in ids {
-			dbg!(id);
 			let cur_diags = diagnostics
 				.iter()
 				.filter(|x| x.file_id == id && x.primary.is_some())

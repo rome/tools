@@ -1,6 +1,5 @@
 //! Codegen tools mostly used to generate ast and syntax definitions. Adapted from rust analyzer's codegen
 
-// pub mod ast;
 pub mod codegen;
 pub mod coverage;
 pub mod docgen;

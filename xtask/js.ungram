@@ -48,21 +48,6 @@ Stmt =
 	| ThrowStmt
 	| TryStmt
 	| DebuggerStmt
-	// | Decl
-	// @ematipico this should be a Decl, but rslint_parser does a manual implementation, which is difficult to bypass
-	// using the autogen without affecting the APIs of the rest of the nodes.
-	//
-	// Hence, I copied over the values of Decl here. A correct fix should to change logic GreenNode like this:
-	//
-	// From:
-	// SCRIPT@
-	// 	VAR_DECL@
-	//
-	// To:
-	// SCRIPT@
-	// 	DECL@
-	// 		VAR_DECL@
-
 	|	FnDecl
 	| ClassDecl
 	| VarDecl
@@ -86,14 +71,14 @@ ExprStmt = Expr
 
 
 // while statement
-WhileStmt = 'while' condition:Condition cons:Stmt
+WhileStmt = 'while' Condition cons:Stmt
 
 // do while statement
-DoWhileStmt = 'do'  cons:Stmt 'while' condition:Condition ';'
+DoWhileStmt = 'do'  cons:Stmt 'while' condition:Condition ';'?
 
 
 // if statement
-IfStmt = 'if' condition:Condition manual__cons:Stmt 'else' manual__alt:Stmt
+IfStmt = 'if' Condition manual__cons:Stmt 'else' manual__alt:Stmt
 
 
 // for..in statement
@@ -157,7 +142,7 @@ ThrowStmt = 'throw' exception:Expr ';'
 
 // try..catch..finally statement
 
-TryStmt = 'try' test:BlockStmt handler:CatchClause finalizer:Finalizer
+TryStmt = 'try' test:BlockStmt handler:CatchClause? finalizer:Finalizer?
 
 // TODO: fix it, the pattern is not mandatory anymore
 CatchClause = 'catch' '(' error:Pattern ')' cons:BlockStmt
@@ -205,13 +190,16 @@ Expr =
 	| TsConstAssertion
 
 
+// the backtick is just a placeholder, there's
 Template = '`'
 
 // This Expression
 ThisExpr = 'this'
 
 // Dot exprssion
-DotExpr = '.'
+// TODO: review the 'super' token
+// https://github.com/rome/tools/issues/1729
+DotExpr = 'super'? object:Expr '.' prop:Name
 
 // new expression
 NewExpr = 'new' type_args:TsTypeArgs? object:Expr arguments:ArgList
@@ -223,7 +211,7 @@ CallExpr = type_args:TsTypeArgs? callee:Expr arguments:ArgList
 AwaitExpr = 'await' Expr
 
 // yield expressoin
-YieldExpr = 'yield' '*' value:Expr
+YieldExpr = 'yield' '*'? value:Expr
 
 // super call expression
 SuperCall = 'super' arguments:ArgList
@@ -235,7 +223,7 @@ ImportCall = 'import' '(' argument:Expr ')'
 NewTarget = 'new' '.' 'target'
 
 // conditional expression
-CondExpr = '?' ':'?
+CondExpr = manual__test: Expr '?' manual__cons: Expr  ':' manual__alt: Expr
 
 // import meta expression
 ImportMeta = 'import' '.'
@@ -248,12 +236,20 @@ FnExpr =
 	name:Name
 	type_params:TsTypeParams?
 	parameters:ArgList
+	':'?
+	return_type:TsType?
 	body:BlockStmt
-	':'? return_type:TsType
 
 // Arrow expression
 ArrowExpr =
-	'async'? type_params:TsTypeParams? params:ArrowExprParams? '=>' (':' return_type:TsType)? manual__body:ExprOrBlock
+	'async'?
+	type_params:TsTypeParams?
+	params:ArrowExprParams?
+	'=>'
+	':'?
+	return_type:TsType?
+	manual__body:ExprOrBlock
+
 ArrowExprParams =
 	Name
 	| ParameterList
@@ -266,7 +262,7 @@ ClassExpr =
 	'class'
 	Name
 	type_params:TsTypeParams?
-	parent:Expr
+	parent:Expr?
 	'implements'?
 	implements:TsExprWithTypeArgs?
 	body:ClassBody
@@ -286,9 +282,9 @@ ClassElement =
 	| Setter
 
 Constructor =
-	accessibility:TsAccessibility
+	accessibility:TsAccessibility?
 	name:PropName
-	type_params:TsTypeParams
+	type_params:TsTypeParams?
 	parameters:ParameterList
 	body:BlockStmt
 
@@ -312,7 +308,7 @@ ClassProp =
 	'declare'?
 	'abstract'?
 	'static'?
-	accessibility:TsAccessibility
+	accessibility:TsAccessibility?
 	'#'?
 	key:PropName
 	'?'?
@@ -328,8 +324,7 @@ ArrayExpr = '[' elements:ExprOrSpread* ']'
 ExprOrSpread =
 	Expr
 	| SpreadElement
-	// @ematipico these have been added because the parser doesn't add an Expr green node, which means that
-	// we need to fallback to the direct children, which are Literal and ObjectExpr (for the tests we have)
+	// @ematipico these have been added because the current enums are not flatten
 	| Literal
 	| ObjectExpr
 	| ArrayExpr
@@ -349,8 +344,12 @@ AssignExpr =
 PatternOrExpr = Pattern | Expr
 
 // sequence expression
-SequenceExpr = exprs:Expr*
-BinExpr
+SequenceExpr =
+	// @ematipico correct grammar should be "exprs: (Expr (',' Expr)*)"
+	exprs:Expr*
+	BinExpr
+
+
 // grouping expression
 GroupingExpr = '(' inner:Expr ')'
 
@@ -413,7 +412,6 @@ Pattern =
 	| ArrayPattern
 	| ExprPattern
 
-// TODO:  add here the typescript tokens and nodes
 // single pattern
 SinglePattern
 	= name:Name '?'? '!'? ':'? ty:TsType
@@ -498,10 +496,10 @@ Method =
 	'async'?
 	'*'?
 	name:PropName
-	type_params:TsTypeParams
+	type_params:TsTypeParams?
 	parameters:ParameterList
 	':'?
-	return_type:TsType
+	return_type:TsType?
 	body:BlockStmt
 
 SpreadElement = '...' element:Expr
@@ -536,10 +534,10 @@ FnDecl =
 	type_parameters:TsTypeParams?
 	parameters:ParameterList
 	':'?
-	return_type:TsType
+	return_type:TsType?
 	body:BlockStmt
 
-VarDecl = 'var' 'const' manual__:'let' declared:Declarator* ';'
+VarDecl = 'var' 'const' manual__:'let' declared:Declarator* ';'?
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
 ClassDecl  = 'class' Name ('extends' parent:NameRef)? body:ClassBody
@@ -592,11 +590,11 @@ ExportDecl = 'export' 'type'? Decl
 
 
 // typescript export assignment
-TsExportAssignment = 'export' '=' Expr ';'
+TsExportAssignment = 'export' '=' Expr ';'?
 
 
 // typescript namespace export
-TsNamespaceExportDecl = 'export' 'as' 'namespace' Ident? ';'
+TsNamespaceExportDecl = 'export' 'as' 'namespace' Ident? ';'?
 
 ImportClause =
 	WildcardImport
@@ -629,7 +627,7 @@ ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:Specifier* '}'
 //
 
 TsImportEqualsDecl =
-	('import' | 'export') Ident '=' module:TsModuleRef ';'
+	('import' | 'export') Ident '=' module:TsModuleRef ';'?
 
 
 TsModuleRef =
@@ -756,12 +754,12 @@ TsUnion = types:TsType*
 
 // typescript function type
 // Example: (something: String) => bool
-TsFnType = params:ParameterList '=>' return_type:TsType
+TsFnType = params:ParameterList '=>' return_type:TsType?
 
 
 // typescript constructor type
 // Exapmle: new (something: String): SomethingElse
-TsConstructorType = 'new' params:ParameterList ':' return_type:TsType
+TsConstructorType = 'new' params:ParameterList ':' return_type:TsType?
 
 
 // typescript conditional type
@@ -785,6 +783,7 @@ TsInfer = 'infer' Ident
 
 // typescrit namesapce
 // TODO: not sure where to put the dot
+// https://github.com/rome/tools/issues/1729
 TsNamespaceDecl = 'declare' Ident '.'? TsNamespaceBody
 TsNamespaceBody = TsModuleBlock | TsNamespaceDecl
 TsModuleBlock = '{' items:ModuleItem '}'
@@ -839,7 +838,7 @@ TsConstructSignatureDecl =
 	type_params:TsTypeParams
 	parameters:ParameterList
 	// these two should be optional together
-	':'? return_type:TsType?
+	':'? return_type:TsType
 
 // typescript property signature
 TsPropertySignature = 'readonly'? prop:Expr '?' ':' ty:TsType
@@ -850,7 +849,7 @@ TsMethodSignature =
 	key:Expr
 	type_params:TsTypeParams
 	parameters:ParameterList
-	'?'
+	'?'?
 	':'
 	return_type:TsType
 

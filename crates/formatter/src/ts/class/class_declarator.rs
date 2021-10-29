@@ -6,7 +6,6 @@ use rslint_parser::ast::{ClassBody, ClassDecl, ClassElement, SuperCall};
 
 impl ToFormatElement for ClassDecl {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
-		dbg!(self);
 		let class_token = formatter.format_token(&self.class_token()?)?;
 		let name = formatter.format_node(self.name()?)?;
 		let extends = if let Some(parent) = self.parent() {

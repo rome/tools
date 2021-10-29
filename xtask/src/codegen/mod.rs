@@ -7,7 +7,6 @@ mod generate_syntax_kinds;
 mod generate_tokens;
 mod kinds_src;
 mod parser_tests;
-mod syntax;
 
 use std::path::Path;
 

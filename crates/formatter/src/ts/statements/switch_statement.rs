@@ -7,7 +7,6 @@ use rslint_parser::ast::{CaseClause, DefaultClause, SwitchCase, SwitchStmt};
 
 impl ToFormatElement for SwitchStmt {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
-		dbg!(self);
 		let switch = formatter.format_token(&self.switch_token()?)?;
 		let condition = formatter.format_node(self.test()?)?;
 		let l_curly = formatter.format_token(&self.l_curly_token()?)?;
