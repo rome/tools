@@ -332,6 +332,7 @@ ExprOrSpread =
 	// we need to fallback to the direct children, which are Literal and ObjectExpr (for the tests we have)
 	| Literal
 	| ObjectExpr
+	| ArrayExpr
 
 
 // assign expression

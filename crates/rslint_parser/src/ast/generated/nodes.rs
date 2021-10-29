@@ -1807,6 +1807,7 @@ pub enum ExprOrSpread {
 	SpreadElement(SpreadElement),
 	Literal(Literal),
 	ObjectExpr(ObjectExpr),
+	ArrayExpr(ArrayExpr),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
@@ -4592,9 +4593,15 @@ impl From<Literal> for ExprOrSpread {
 impl From<ObjectExpr> for ExprOrSpread {
 	fn from(node: ObjectExpr) -> ExprOrSpread { ExprOrSpread::ObjectExpr(node) }
 }
+impl From<ArrayExpr> for ExprOrSpread {
+	fn from(node: ArrayExpr) -> ExprOrSpread { ExprOrSpread::ArrayExpr(node) }
+}
 impl AstNode for ExprOrSpread {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(kind, EXPR | SPREAD_ELEMENT | LITERAL | OBJECT_EXPR)
+		matches!(
+			kind,
+			EXPR | SPREAD_ELEMENT | LITERAL | OBJECT_EXPR | ARRAY_EXPR
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -4602,6 +4609,7 @@ impl AstNode for ExprOrSpread {
 			SPREAD_ELEMENT => ExprOrSpread::SpreadElement(SpreadElement { syntax }),
 			LITERAL => ExprOrSpread::Literal(Literal { syntax }),
 			OBJECT_EXPR => ExprOrSpread::ObjectExpr(ObjectExpr { syntax }),
+			ARRAY_EXPR => ExprOrSpread::ArrayExpr(ArrayExpr { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -4612,6 +4620,7 @@ impl AstNode for ExprOrSpread {
 			ExprOrSpread::SpreadElement(it) => &it.syntax,
 			ExprOrSpread::Literal(it) => &it.syntax,
 			ExprOrSpread::ObjectExpr(it) => &it.syntax,
+			ExprOrSpread::ArrayExpr(it) => &it.syntax,
 		}
 	}
 }

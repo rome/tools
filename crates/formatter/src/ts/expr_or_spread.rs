@@ -10,6 +10,9 @@ impl ToFormatElement for ExprOrSpread {
 			ExprOrSpread::ObjectExpr(object_expression) => {
 				object_expression.to_format_element(formatter)
 			}
+			ExprOrSpread::ArrayExpr(array_expression) => {
+				array_expression.to_format_element(formatter)
+			}
 		}
 	}
 }
