@@ -67,6 +67,7 @@ mod test {
 		let src = r#"let a1 = [{}, {}];
 "#;
 		let tree = parse_text(src, 0);
+		dbg!(&tree.syntax());
 		let result = Formatter::default().format_root(&tree.syntax());
 		assert_eq!(
 			result.code(),

@@ -100,7 +100,7 @@ pub fn tokenize_json(content: &str) -> FormatElement {
 			.find(|e| e.kind() == SyntaxKind::GROUPING_EXPR)
 			.unwrap(),
 	)
-	.and_then(|grouping| {dbg!(&grouping); grouping.inner()})
+	.and_then(|grouping| grouping.inner())
 	.unwrap();
 
 	let tokenized_content = tokenize_node(json_content.syntax().clone());

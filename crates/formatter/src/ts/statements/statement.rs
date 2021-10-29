@@ -27,8 +27,16 @@ impl ToFormatElement for Stmt {
 			Stmt::DebuggerStmt(debugger_statement) => {
 				debugger_statement.to_format_element(formatter)
 			}
-			Stmt::Decl(decl) => decl.to_format_element(formatter),
+
 			Stmt::ForOfStmt(_) => todo!(),
+			Stmt::FnDecl(node) => node.to_format_element(formatter),
+			Stmt::ClassDecl(node) => node.to_format_element(formatter),
+			Stmt::VarDecl(node) => node.to_format_element(formatter),
+			Stmt::TsEnum(_) => todo!(),
+			Stmt::TsTypeAliasDecl(_) => todo!(),
+			Stmt::TsNamespaceDecl(_) => todo!(),
+			Stmt::TsModuleDecl(_) => todo!(),
+			Stmt::TsInterfaceDecl(_) => todo!(),
 		}
 	}
 }

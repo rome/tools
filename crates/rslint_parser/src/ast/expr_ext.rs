@@ -490,6 +490,7 @@ impl Literal {
 
 impl ArrowExpr {
 	pub fn body(&self) -> Option<ExprOrBlock> {
+		dbg!("here", self.syntax().children().last());
 		ExprOrBlock::cast(self.syntax().children().last()?)
 	}
 }
@@ -570,6 +571,7 @@ fn prop_name_syntax(name: PropName) -> Option<SyntaxNode> {
 	Some(match name {
 		PropName::Ident(idt) => idt.syntax().clone(),
 		PropName::Literal(lit) => lit.syntax().clone(),
+		PropName::Name(name) => name.syntax().clone(),
 		PropName::ComputedPropertyName(_) => return None,
 	})
 }

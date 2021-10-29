@@ -6,6 +6,7 @@ impl ToFormatElement for ExprOrBlock {
 		match self {
 			ExprOrBlock::BlockStmt(block) => block.to_format_element(formatter),
 			ExprOrBlock::Expr(expr) => expr.to_format_element(formatter),
+			ExprOrBlock::Literal(literal) => literal.to_format_element(formatter),
 		}
 	}
 }

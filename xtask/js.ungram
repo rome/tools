@@ -48,7 +48,29 @@ Stmt =
 	| ThrowStmt
 	| TryStmt
 	| DebuggerStmt
-	| Decl
+	// | Decl
+	// @ematipico this should be a Decl, but rslint_parser does a manual implementation, which is difficult to bypass
+	// using the autogen without affecting the APIs of the rest of the nodes.
+	//
+	// Hence, I copied over the values of Decl here. A correct fix should to change logic GreenNode like this:
+	//
+	// From:
+	// SCRIPT@
+	// 	VAR_DECL@
+	//
+	// To:
+	// SCRIPT@
+	// 	DECL@
+	// 		VAR_DECL@
+
+	|	FnDecl
+	| ClassDecl
+	| VarDecl
+	| TsEnum
+	| TsTypeAliasDecl
+	| TsNamespaceDecl
+	| TsModuleDecl
+	| TsInterfaceDecl
 
 
 // Block statement
@@ -74,7 +96,7 @@ DoWhileStmt = 'do'  cons:Stmt 'while' condition:Condition ';'
 IfStmt = 'if' condition:Condition manual__cons:Stmt 'else' manual__alt:Stmt
 
 
-// for statement
+// for..in statement
 ForStmt =
 	'for'
 	'('
@@ -85,7 +107,7 @@ ForStmt =
 	cons:Stmt
 
 ForStmtInit = inner:ForHead ';'
-ForHead = VarDecl | Expr
+ForHead = VarDecl | Expr | NameRef
 
 ForStmtTest = expr:Expr ';'
 
@@ -100,7 +122,7 @@ ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:Expr ')' cons:Stmt
 
 
 // continue statement
-ContinueStmt = 'continue' 'ident' ';'?
+ContinueStmt = 'continue' NameRef ';'?
 
 
 // break statement
@@ -124,10 +146,10 @@ SwitchStmt =
 	cases:SwitchCase*
 	'}'
 
-SwitchCase = CaseClause | DefaultCase
+SwitchCase = CaseClause | DefaultClause
 
 CaseClause = 'case' test:Expr ':' cons:Stmt*
-DefaultCase = 'default' ':' cons:Stmt*
+DefaultClause = 'default' ':' cons:Stmt*
 
 
 // throw statement
@@ -244,8 +266,7 @@ ClassExpr =
 	'class'
 	Name
 	type_params:TsTypeParams?
-	'extends'
-	parent:Name
+	parent:Expr
 	'implements'?
 	implements:TsExprWithTypeArgs?
 	body:ClassBody
@@ -307,7 +328,10 @@ ArrayExpr = '[' elements:ExprOrSpread* ']'
 ExprOrSpread =
 	Expr
 	| SpreadElement
+	// @ematipico these have been added because the parser doesn't add an Expr green node, which means that
+	// we need to fallback to the direct children, which are Literal and ObjectExpr (for the tests we have)
 	| Literal
+	| ObjectExpr
 
 
 // assign expression
@@ -370,6 +394,7 @@ Undefined = 'undefined'
 ExprOrBlock =
 	Expr
 	| BlockStmt
+	| Literal
 
 ParameterList = '(' parameters:Pattern* ')'
 ArgList = '(' args:Expr* ')'
@@ -390,7 +415,7 @@ Pattern =
 // TODO:  add here the typescript tokens and nodes
 // single pattern
 SinglePattern
-	= name:Ident '?'? '!'? ':'? ty:TsType
+	= name:Name '?'? '!'? ':'? ty:TsType
 
 // rest pattern
 RestPattern = '...' pat:Pattern
@@ -441,6 +466,7 @@ PropName =
 	ComputedPropertyName
 	| Literal
 	| Ident
+	| Name
 
 
 // computed property
@@ -515,7 +541,7 @@ FnDecl =
 VarDecl = 'var' 'const' manual__:'let' declared:Declarator* ';'
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
-ClassDecl  = 'class' Name 'extends' parent:Name body:ClassBody
+ClassDecl  = 'class' Name ('extends' parent:NameRef)? body:ClassBody
 
 Declarator = pattern:Pattern '!' '=' value:Expr
 

@@ -53,6 +53,15 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 	for &node in &nodes {
 		let name = grammar[node].name.clone();
 		let rule = &grammar[node].rule;
+		// let manually_implemented = matches! {
+		// 	name.as_str(),
+		// 	"Stmt" | "ModuleItem"
+		// };
+
+		// if manually_implemented == true {
+		// 	continue;
+		// }
+
 		match handle_alternatives(grammar, rule) {
 			Some(variants) => ast.enums.push(AstEnumSrc {
 				// TODO: to fill
@@ -109,12 +118,20 @@ fn handle_rule(
 			if manually_implemented {
 				return;
 			}
+
 			handle_rule(fields, grammar, rule, Some(label), optional, has_many)
 		}
 		Rule::Node(node) => {
 			let ty = grammar[*node].name.clone();
 			let name = label.cloned().unwrap_or_else(|| to_lower_snake_case(&ty));
+			// let manually_implemented = matches! {
+			// 	ty.as_str(),
+			// 	"Stmt" | "ModuleItem"
+			// };
 
+			// if manually_implemented {
+			// 	return;
+			// }
 			let field = Field::Node {
 				name,
 				ty,
