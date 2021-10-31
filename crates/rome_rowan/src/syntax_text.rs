@@ -274,18 +274,42 @@ mod private {
 
 #[cfg(test)]
 mod tests {
-	use crate::{green::SyntaxKind, GreenNodeBuilder};
+	use crate::{green::SyntaxKind, Language, SyntaxNode, TreeBuilder};
 
-	use super::*;
+	#[derive(Debug, Copy, Clone, PartialOrd, PartialEq, Ord, Eq, Hash)]
+	struct PlayLanguage {}
 
-	fn build_tree(chunks: &[&str]) -> SyntaxNode {
-		let mut builder = GreenNodeBuilder::new();
-		builder.start_node(SyntaxKind(62));
+	#[allow(unused)]
+	#[derive(Debug, Hash, Copy, Clone, Eq, PartialEq, PartialOrd)]
+	#[repr(u16)]
+	enum PlayKind {
+		List,
+		Child,
+		__LAST,
+	}
+
+	impl Language for PlayLanguage {
+		type Kind = PlayKind;
+
+		#[allow(unsafe_code)]
+		fn kind_from_raw(raw: SyntaxKind) -> Self::Kind {
+			assert!(raw.0 <= (PlayKind::__LAST as u16));
+			unsafe { std::mem::transmute::<u16, PlayKind>(raw.0) }
+		}
+
+		fn kind_to_raw(kind: Self::Kind) -> SyntaxKind {
+			SyntaxKind(kind as u16)
+		}
+	}
+
+	fn build_tree(chunks: &[&str]) -> SyntaxNode<PlayLanguage> {
+		let mut builder = TreeBuilder::new();
+		builder.start_node(SyntaxKind(1));
 		for &chunk in chunks.iter() {
-			builder.token(SyntaxKind(92), chunk)
+			builder.token(SyntaxKind(2), chunk)
 		}
 		builder.finish_node();
-		SyntaxNode::new_root(builder.finish())
+		builder.finish()
 	}
 
 	#[test]

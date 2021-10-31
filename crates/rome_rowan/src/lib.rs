@@ -24,6 +24,7 @@ mod cow_mut;
 mod serde_impls;
 #[allow(unsafe_code)]
 mod sll;
+mod tree_builder;
 
 pub use text_size::{TextLen, TextRange, TextSize};
 
@@ -31,10 +32,10 @@ pub use crate::{
 	api::{
 		Language, SyntaxElement, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren, SyntaxToken,
 	},
-	green::{
-		Checkpoint, Children, GreenNode, GreenNodeBuilder, GreenNodeData, GreenToken,
-		GreenTokenData, SyntaxKind,
-	},
+	green::SyntaxKind,
 	syntax_text::SyntaxText,
+	tree_builder::{Checkpoint, TreeBuilder},
 	utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };
+
+pub(crate) use crate::green::{GreenNode, GreenNodeData, GreenToken, GreenTokenData};

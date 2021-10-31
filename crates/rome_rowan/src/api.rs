@@ -1,8 +1,8 @@
-use std::{borrow::Cow, fmt, iter, marker::PhantomData, ops::Range};
+use std::{fmt, iter, marker::PhantomData, ops::Range};
 
 use crate::{
-	cursor, green::GreenTokenData, Direction, GreenNode, GreenNodeData, GreenToken, NodeOrToken,
-	SyntaxKind, SyntaxText, TextRange, TextSize, TokenAtOffset, WalkEvent,
+	cursor, Direction, GreenNode, NodeOrToken, SyntaxKind, SyntaxText, TextRange, TextSize,
+	TokenAtOffset, WalkEvent,
 };
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {
@@ -95,14 +95,8 @@ impl<L: Language> From<SyntaxToken<L>> for SyntaxElement<L> {
 }
 
 impl<L: Language> SyntaxNode<L> {
-	pub fn new_root(green: GreenNode) -> SyntaxNode<L> {
+	pub(crate) fn new_root(green: GreenNode) -> SyntaxNode<L> {
 		SyntaxNode::from(cursor::SyntaxNode::new_root(green))
-	}
-	/// Returns a green tree, equal to the green tree this node
-	/// belongs two, except with this node substitute. The complexity
-	/// of operation is proportional to the depth of the tree
-	pub fn replace_with(&self, replacement: GreenNode) -> GreenNode {
-		self.raw.replace_with(replacement)
 	}
 
 	pub fn kind(&self) -> L::Kind {
@@ -119,10 +113,6 @@ impl<L: Language> SyntaxNode<L> {
 
 	pub fn text(&self) -> SyntaxText {
 		self.raw.text()
-	}
-
-	pub fn green(&self) -> Cow<'_, GreenNodeData> {
-		self.raw.green()
 	}
 
 	pub fn parent(&self) -> Option<SyntaxNode<L>> {
@@ -274,13 +264,6 @@ impl<L: Language> SyntaxNode<L> {
 }
 
 impl<L: Language> SyntaxToken<L> {
-	/// Returns a green tree, equal to the green tree this token
-	/// belongs two, except with this token substitute. The complexity
-	/// of operation is proportional to the depth of the tree
-	pub fn replace_with(&self, new_token: GreenToken) -> GreenNode {
-		self.raw.replace_with(new_token)
-	}
-
 	pub fn kind(&self) -> L::Kind {
 		L::kind_from_raw(self.raw.kind())
 	}
@@ -295,10 +278,6 @@ impl<L: Language> SyntaxToken<L> {
 
 	pub fn text(&self) -> &str {
 		self.raw.text()
-	}
-
-	pub fn green(&self) -> &GreenTokenData {
-		self.raw.green()
 	}
 
 	pub fn parent(&self) -> Option<SyntaxNode<L>> {

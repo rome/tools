@@ -6,9 +6,7 @@
 //! This is a simple wrapper around the `rowan` crate which does most of the heavy lifting and is language agnostic.
 
 use crate::SyntaxKind;
-use rome_rowan::{GreenNodeBuilder, Language};
-
-pub use rome_rowan::GreenNode;
+use rome_rowan::{Language, TreeBuilder};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct JsLanguage;
@@ -36,11 +34,11 @@ pub use rome_rowan::{Direction, NodeOrToken};
 /// Simple wrapper around a rome_rowan [`GreenNodeBuilder`]
 #[derive(Default, Debug)]
 pub struct SyntaxTreeBuilder {
-	inner: GreenNodeBuilder<'static>,
+	inner: TreeBuilder<'static>,
 }
 
 impl SyntaxTreeBuilder {
-	pub fn finish(self) -> GreenNode {
+	pub fn finish(self) -> SyntaxNode {
 		self.inner.finish()
 	}
 

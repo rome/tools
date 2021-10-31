@@ -1,31 +1,31 @@
 use crate::{
 	cow_mut::CowMut,
-	green::{node_cache::NodeCache, GreenElement, GreenNode, SyntaxKind},
-	NodeOrToken,
+	green::{GreenElement, NodeCache, SyntaxKind},
+	Language, NodeOrToken, SyntaxNode,
 };
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
 #[derive(Clone, Copy, Debug)]
 pub struct Checkpoint(usize);
 
-/// A builder for a green tree.
+/// A builder for a syntax tree.
 #[derive(Default, Debug)]
-pub struct GreenNodeBuilder<'cache> {
+pub struct TreeBuilder<'cache> {
 	cache: CowMut<'cache, NodeCache>,
 	parents: Vec<(SyntaxKind, usize)>,
 	children: Vec<(u64, GreenElement)>,
 }
 
-impl GreenNodeBuilder<'_> {
+impl TreeBuilder<'_> {
 	/// Creates new builder.
-	pub fn new() -> GreenNodeBuilder<'static> {
-		GreenNodeBuilder::default()
+	pub fn new() -> TreeBuilder<'static> {
+		TreeBuilder::default()
 	}
 
-	/// Reusing `NodeCache` between different `GreenNodeBuilder`s saves memory.
+	/// Reusing `NodeCache` between different [TreeBuilder]`s saves memory.
 	/// It allows to structurally share underlying trees.
-	pub fn with_cache(cache: &mut NodeCache) -> GreenNodeBuilder<'_> {
-		GreenNodeBuilder {
+	pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_> {
+		TreeBuilder {
 			cache: CowMut::Borrowed(cache),
 			parents: Vec::new(),
 			children: Vec::new(),
@@ -61,7 +61,7 @@ impl GreenNodeBuilder<'_> {
 	/// `start_node_at`.
 	/// Example:
 	/// ```rust
-	/// # use rome_rowan::{GreenNodeBuilder, SyntaxKind};
+	/// # use rome_rowan::{TreeBuilder, SyntaxKind};
 	/// # const PLUS: SyntaxKind = SyntaxKind(0);
 	/// # const OPERATION: SyntaxKind = SyntaxKind(1);
 	/// # struct Parser;
@@ -69,7 +69,7 @@ impl GreenNodeBuilder<'_> {
 	/// #     fn peek(&self) -> Option<SyntaxKind> { None }
 	/// #     fn parse_expr(&mut self) {}
 	/// # }
-	/// # let mut builder = GreenNodeBuilder::new();
+	/// # let mut builder = TreeBuilder::new();
 	/// # let mut parser = Parser;
 	/// let checkpoint = builder.checkpoint();
 	/// parser.parse_expr();
@@ -109,10 +109,10 @@ impl GreenNodeBuilder<'_> {
 	/// `start_node_at` and `finish_node` calls
 	/// are paired!
 	#[inline]
-	pub fn finish(mut self) -> GreenNode {
+	pub fn finish<L: Language>(mut self) -> SyntaxNode<L> {
 		assert_eq!(self.children.len(), 1);
 		match self.children.pop().unwrap().1 {
-			NodeOrToken::Node(node) => node,
+			NodeOrToken::Node(node) => SyntaxNode::new_root(node),
 			NodeOrToken::Token(_) => panic!(),
 		}
 	}

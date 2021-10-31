@@ -10,7 +10,7 @@ use std::marker::PhantomData;
 /// A utility struct for managing the result of a parser job
 #[derive(Debug)]
 pub struct Parse<T> {
-	green: GreenNode,
+	root: SyntaxNode,
 	errors: Vec<ParserError>,
 	_ty: PhantomData<fn() -> T>,
 }
@@ -18,7 +18,7 @@ pub struct Parse<T> {
 impl<T> Clone for Parse<T> {
 	fn clone(&self) -> Parse<T> {
 		Parse {
-			green: self.green.clone(),
+			root: self.root.clone(),
 			errors: self.errors.clone(),
 			_ty: PhantomData,
 		}
@@ -26,19 +26,12 @@ impl<T> Clone for Parse<T> {
 }
 
 impl<T> Parse<T> {
-	pub fn new(green: GreenNode, errors: Vec<ParserError>) -> Parse<T> {
+	pub fn new(root: SyntaxNode, errors: Vec<ParserError>) -> Parse<T> {
 		Parse {
-			green,
+			root,
 			errors,
 			_ty: PhantomData,
 		}
-	}
-
-	/// Consume the parse result and get its green node.
-	/// This is useful for multithreaded accesses to the tree as
-	/// syntax nodes are not sync but green nodes are.
-	pub fn green(self) -> GreenNode {
-		self.green
 	}
 
 	/// The syntax node represented by this Parse result
@@ -63,7 +56,7 @@ impl<T> Parse<T> {
 	/// assert_eq!(if_stmt.to::<IfStmt>().condition().unwrap().syntax().text(), "(a > 5)");
 	/// ```
 	pub fn syntax(&self) -> SyntaxNode {
-		SyntaxNode::new_root(self.green.clone())
+		self.root.clone()
 	}
 
 	/// Get the errors which ocurred when parsing
@@ -77,7 +70,7 @@ impl<T: AstNode> Parse<T> {
 	#[allow(clippy::wrong_self_convention)]
 	pub fn to_syntax(self) -> Parse<SyntaxNode> {
 		Parse {
-			green: self.green,
+			root: self.root,
 			errors: self.errors,
 			_ty: PhantomData,
 		}
@@ -88,12 +81,12 @@ impl<T: AstNode> Parse<T> {
 	/// # Panics
 	/// Panics if the node represented by this parse result mismatches.
 	pub fn tree(&self) -> T {
-		T::cast(self.syntax()).unwrap()
+		self.try_tree().unwrap()
 	}
 
 	/// Try to convert this parse's untyped syntax node into an AST node.
 	pub fn try_tree(&self) -> Option<T> {
-		T::cast(self.syntax())
+		T::cast(self.syntax().clone())
 	}
 
 	/// Convert this parse into a result
@@ -177,7 +170,7 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<Script> {
 ///
 /// Unlike [`parse_text`], the final parse result includes no whitespace, it does however include errors.
 ///
-/// Note however that the ranges and text of nodes still includes whitespace! Therefore you should trim text before rendering it.  
+/// Note however that the ranges and text of nodes still includes whitespace! Therefore you should trim text before rendering it.
 /// The [`util`](crate::util) module has utility functions for dealing with this easily.
 ///
 /// ```

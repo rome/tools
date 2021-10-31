@@ -81,13 +81,13 @@ impl Formatter {
 	///
 	/// use rome_formatter::{Formatter, token};
 	/// use rslint_parser::{SyntaxNode, T, SyntaxToken};
-	/// use rome_rowan::{GreenNode, GreenToken, NodeOrToken, SyntaxKind};
+	/// use rome_rowan::{NodeOrToken, SyntaxKind, TreeBuilder};
 	///
-	/// let node = SyntaxNode::new_root(
-	///   GreenNode::new(SyntaxKind(1), vec![
-	///     NodeOrToken::Token(GreenToken::new(SyntaxKind(T![=>].into()), "=>"))
-	///   ])
-	/// );
+	/// let mut builder = TreeBuilder::new();
+	/// builder.start_node(SyntaxKind(1));
+	/// builder.token(SyntaxKind(T![=>].into()), "=>");
+	/// builder.finish_node();
+	/// let node = builder.finish();
 	///
 	/// let syntax_token = node.first_token().unwrap();
 	///

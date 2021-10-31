@@ -39,7 +39,7 @@ static_assert!(mem::size_of::<GreenChild>() == mem::size_of::<usize>() * 2);
 type Repr = HeaderSlice<GreenNodeHead, [GreenChild]>;
 type ReprThin = HeaderSlice<GreenNodeHead, [GreenChild; 0]>;
 #[repr(transparent)]
-pub struct GreenNodeData {
+pub(crate) struct GreenNodeData {
 	data: ReprThin,
 }
 
@@ -53,7 +53,7 @@ impl PartialEq for GreenNodeData {
 /// It has other nodes and tokens as children.
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[repr(transparent)]
-pub struct GreenNode {
+pub(crate) struct GreenNode {
 	ptr: ThinArc<GreenNodeHead, GreenChild>,
 }
 
@@ -290,7 +290,7 @@ impl GreenChild {
 }
 
 #[derive(Debug, Clone)]
-pub struct Children<'a> {
+pub(crate) struct Children<'a> {
 	pub(crate) raw: slice::Iter<'a, GreenChild>,
 }
 

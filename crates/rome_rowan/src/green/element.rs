@@ -7,7 +7,7 @@ use crate::{
 
 use super::GreenTokenData;
 
-pub(super) type GreenElement = NodeOrToken<GreenNode, GreenToken>;
+pub(crate) type GreenElement = NodeOrToken<GreenNode, GreenToken>;
 pub(crate) type GreenElementRef<'a> = NodeOrToken<&'a GreenNodeData, &'a GreenTokenData>;
 
 impl From<GreenNode> for GreenElement {
