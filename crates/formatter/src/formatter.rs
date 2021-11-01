@@ -80,12 +80,12 @@ impl Formatter {
 	/// ```
 	///
 	/// use rome_formatter::{Formatter, token};
-	/// use rslint_parser::{SyntaxNode, T, SyntaxToken};
-	/// use rome_rowan::{NodeOrToken, SyntaxKind, TreeBuilder};
+	/// use rslint_parser::{SyntaxNode, T, SyntaxToken, JsLanguage, SyntaxKind};
+	/// use rome_rowan::{NodeOrToken, TreeBuilder};
 	///
-	/// let mut builder = TreeBuilder::new();
-	/// builder.start_node(SyntaxKind(1));
-	/// builder.token(SyntaxKind(T![=>].into()), "=>");
+	/// let mut builder = TreeBuilder::<'_, JsLanguage>::new();
+	/// builder.start_node(SyntaxKind::LITERAL);
+	/// builder.token(SyntaxKind::STRING, "'abc'");
 	/// builder.finish_node();
 	/// let node = builder.finish();
 	///
@@ -94,7 +94,7 @@ impl Formatter {
 	/// let formatter = Formatter::default();
 	/// let result = formatter.format_token(&syntax_token);
 	///
-	/// assert_eq!(Some(token("=>")), result)
+	/// assert_eq!(Some(token("\"abc\"")), result)
 	/// ```
 	pub fn format_token(&self, syntax_token: &SyntaxToken) -> Option<FormatElement> {
 		syntax_token.to_format_element(self)

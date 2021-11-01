@@ -12,6 +12,21 @@ pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Ha
 	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind;
 }
 
+#[derive(Debug, Hash, Copy, Eq, Ord, PartialEq, PartialOrd, Clone)]
+pub struct RawLanguage {}
+
+impl Language for RawLanguage {
+	type Kind = SyntaxKind;
+
+	fn kind_from_raw(raw: SyntaxKind) -> Self::Kind {
+		raw
+	}
+
+	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind {
+		kind
+	}
+}
+
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxNode<L: Language> {
 	raw: cursor::SyntaxNode,

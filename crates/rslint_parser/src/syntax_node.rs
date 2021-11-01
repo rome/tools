@@ -31,28 +31,4 @@ pub type SyntaxElementChildren = rome_rowan::SyntaxElementChildren<JsLanguage>;
 
 pub use rome_rowan::{Direction, NodeOrToken};
 
-/// Simple wrapper around a rome_rowan [`GreenNodeBuilder`]
-#[derive(Default, Debug)]
-pub struct SyntaxTreeBuilder {
-	inner: TreeBuilder<'static>,
-}
-
-impl SyntaxTreeBuilder {
-	pub fn finish(self) -> SyntaxNode {
-		self.inner.finish()
-	}
-
-	pub fn token(&mut self, kind: SyntaxKind, text: &str) {
-		let kind = JsLanguage::kind_to_raw(kind);
-		self.inner.token(kind, text)
-	}
-
-	pub fn start_node(&mut self, kind: SyntaxKind) {
-		let kind = JsLanguage::kind_to_raw(kind);
-		self.inner.start_node(kind)
-	}
-
-	pub fn finish_node(&mut self) {
-		self.inner.finish_node()
-	}
-}
+pub type SyntaxTreeBuilder = TreeBuilder<'static, JsLanguage>;
