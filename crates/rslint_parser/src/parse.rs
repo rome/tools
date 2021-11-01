@@ -164,7 +164,7 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<JsScript> {
 }
 
 #[test]
-pub fn test_parse_text() {
+pub fn test_trivia_attached_to_tokens() {
 	let text = "let a = 1; // nice variable \n /*hey*/ let b = 2; // another nice variable";
 	let (mut tokens, mut errors) = tokenize(text, 0);
 

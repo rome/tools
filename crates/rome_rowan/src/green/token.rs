@@ -127,6 +127,16 @@ impl GreenTokenData {
 	pub fn text_len(&self) -> TextSize {
 		TextSize::of(self.text())
 	}
+
+	#[inline]
+	pub fn leading(&self) -> &[GreenTokenTrivia] {
+		self.data.header.leading_trivia.as_slice()
+	}
+
+	#[inline]
+	pub fn trailing(&self) -> &[GreenTokenTrivia] {
+		self.data.header.trailing_trivia.as_slice()
+	}
 }
 
 impl GreenToken {

@@ -58,7 +58,10 @@ impl<L: Language> fmt::Debug for SyntaxNode<L> {
 						}
 						match element {
 							NodeOrToken::Node(node) => writeln!(f, "{:?}", node)?,
-							NodeOrToken::Token(token) => writeln!(f, "{:?}", token)?,
+							NodeOrToken::Token(token) => {
+								let g = token.green();
+								writeln!(f, "{:?} {:?} {:?}", g.leading(), token, g.trailing())?;
+							},
 						}
 						level += 1;
 					}
