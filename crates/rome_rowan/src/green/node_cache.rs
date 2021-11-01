@@ -147,11 +147,19 @@ impl NodeCache {
 		(hash, node)
 	}
 
-	pub(crate) fn token(&mut self, kind: SyntaxKind, text: &str) -> (u64, GreenToken) {
+	pub(crate) fn token(
+		&mut self,
+		kind: SyntaxKind,
+		text: &str,
+		leading: Vec<super::token::GreenTokenTrivia>,
+		trailing: Vec<super::token::GreenTokenTrivia>,
+	) -> (u64, GreenToken) {
 		let hash = {
 			let mut h = FxHasher::default();
 			kind.hash(&mut h);
 			text.hash(&mut h);
+			leading.hash(&mut h);
+			trailing.hash(&mut h);
 			h.finish()
 		};
 
@@ -162,7 +170,7 @@ impl NodeCache {
 		let token = match entry {
 			RawEntryMut::Occupied(entry) => entry.key().0.clone(),
 			RawEntryMut::Vacant(entry) => {
-				let token = GreenToken::new(kind, text);
+				let token = GreenToken::new(kind, text, leading, trailing);
 				entry.insert_with_hasher(hash, NoHash(token.clone()), (), |t| token_hash(&t.0));
 				token
 			}

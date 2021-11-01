@@ -22,6 +22,7 @@ use crate::{
 pub(super) struct GreenNodeHead {
 	kind: SyntaxKind,
 	text_len: TextSize,
+
 	_c: Count<GreenNode>,
 }
 
@@ -261,6 +262,7 @@ impl GreenNode {
 		let mut text_len: TextSize = 0.into();
 		let slots = slots.into_iter().map(|el| {
 			let rel_offset = text_len;
+			text_len += el.text_len();
 			match el {
 				Some(el) => {
 					text_len += el.text_len();

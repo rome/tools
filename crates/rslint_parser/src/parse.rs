@@ -163,6 +163,49 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<JsScript> {
 	Parse::new(green, parse_errors)
 }
 
+#[test]
+pub fn test_parse_text() {
+	let text = "let a = 1; // nice variable \n /*hey*/ let b = 2; // another nice variable";
+	let (mut tokens, mut errors) = tokenize(text, 0);
+
+	// let tokens: Vec<_> = tokens
+	// 	.drain(..)
+	// 	.filter(|x| (x.kind != SyntaxKind::WHITESPACE) && (x.kind != SyntaxKind::COMMENT))
+	// 	.collect();
+	let mut i = 0;
+	for token in &tokens {
+		println!("{:?} {:?}", &text[i..(i + token.len)], token);
+		i += token.len;
+	}
+
+	let tok_source = TokenSource::new(text, &tokens);
+
+	let syntax = Syntax::default();
+	let mut parser = crate::Parser::new(tok_source, 0, syntax);
+	crate::syntax::program::parse(&mut parser);
+
+	let (events, p_errs) = parser.finish();
+
+	// println!("{:?}", events);
+
+	let mut tree_sink = LosslessTreeSink::new(text, &tokens);
+	crate::process(&mut tree_sink, events, errors);
+
+	let (green, parse_errors) = tree_sink.finish();
+
+	let syntax = SyntaxNode::new_root(green);
+	for item in syntax.descendants_with_tokens() {
+		// println!("{}{:?}", "\t".repeat(token.ancestors().count() - 1), item);
+		let qty = item.ancestors().count() - 1;
+		match item {
+			NodeOrToken::Node(n) => println!("{}{:?}", "\t".repeat(qty), n.green()),
+			NodeOrToken::Token(t) => println!("{}{:?}", "\t".repeat(qty), t.green()),
+		}
+	}
+
+	// errors.extend(p_errs);
+}
+
 /// Lossly parse text into a [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
 /// Or turned into a typed [`Script`](Script) with [`tree`](Parse::tree).
 ///

@@ -13,10 +13,17 @@ use crate::{
 	TextSize,
 };
 
+#[derive(PartialEq, Eq, Hash, Debug)]
+pub enum GreenTokenTrivia {
+	Whitespace,
+}
+
 #[derive(PartialEq, Eq, Hash)]
 struct GreenTokenHead {
 	kind: SyntaxKind,
 	_c: Count<GreenToken>,
+	leading_trivia: Vec<GreenTokenTrivia>,
+	trailing_trivia: Vec<GreenTokenTrivia>,
 }
 
 type Repr = HeaderSlice<GreenTokenHead, [u8]>;
@@ -28,7 +35,19 @@ pub(crate) struct GreenTokenData {
 
 impl PartialEq for GreenTokenData {
 	fn eq(&self, other: &Self) -> bool {
-		self.kind() == other.kind() && self.text() == other.text()
+		//TODO is the compiler smart enought to optimize here?
+		let kind_eq = self.kind() == other.kind() && self.text() == other.text();
+		let leading_eq = self
+			.data
+			.header
+			.leading_trivia
+			.eq(&other.data.header.leading_trivia);
+		let trailing_eq = self
+			.data
+			.header
+			.trailing_trivia
+			.eq(&other.data.header.trailing_trivia);
+		kind_eq && leading_eq && trailing_eq
 	}
 }
 
@@ -64,6 +83,8 @@ impl fmt::Debug for GreenTokenData {
 		f.debug_struct("GreenToken")
 			.field("kind", &self.kind())
 			.field("text", &self.text())
+			.field("leading_trivia", &self.data.header.leading_trivia)
+			.field("trailing_trivia", &self.data.header.trailing_trivia)
 			.finish()
 	}
 }
@@ -111,14 +132,22 @@ impl GreenTokenData {
 impl GreenToken {
 	/// Creates new Token.
 	#[inline]
-	pub fn new(kind: SyntaxKind, text: &str) -> GreenToken {
+	pub fn new(
+		kind: SyntaxKind,
+		text: &str,
+		leading_trivia: Vec<GreenTokenTrivia>,
+		trailing_trivia: Vec<GreenTokenTrivia>,
+	) -> GreenToken {
 		let head = GreenTokenHead {
 			kind,
 			_c: Count::new(),
+			leading_trivia,
+			trailing_trivia,
 		};
 		let ptr = ThinArc::from_header_and_iter(head, text.bytes());
 		GreenToken { ptr }
 	}
+
 	#[inline]
 	pub(crate) fn into_raw(this: GreenToken) -> ptr::NonNull<GreenTokenData> {
 		let green = ManuallyDrop::new(this);

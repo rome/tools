@@ -42,7 +42,7 @@ impl<L: Language> TreeBuilder<'_, L> {
 		}
 	}
 
-	/// Adds new token to the current branch.
+	// Adds new token to the current branch.
 	#[inline]
 	pub fn token(&mut self, kind: L::Kind, text: &str) {
 		let (hash, token) = self.cache.token(L::kind_to_raw(kind), text);
@@ -68,6 +68,7 @@ impl<L: Language> TreeBuilder<'_, L> {
 	/// branch as current.
 	#[inline]
 	pub fn finish_node(&mut self) {
+		// println!("GreenNodeBuilder::finish_node");
 		let (kind, first_child) = self.parents.pop().unwrap();
 		let (hash, node) = self
 			.cache
@@ -103,6 +104,7 @@ impl<L: Language> TreeBuilder<'_, L> {
 	/// ```
 	#[inline]
 	pub fn checkpoint(&self) -> Checkpoint {
+		// println!("GreenNodeBuilder::checkpoint");
 		Checkpoint(self.children.len())
 	}
 
