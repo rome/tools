@@ -86,7 +86,7 @@ impl<T: AstNode> Parse<T> {
 
 	/// Try to convert this parse's untyped syntax node into an AST node.
 	pub fn try_tree(&self) -> Option<T> {
-		T::cast(self.syntax().clone())
+		T::cast(self.syntax())
 	}
 
 	/// Convert this parse into a result
