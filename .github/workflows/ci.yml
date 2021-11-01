@@ -21,10 +21,9 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          toolchain: 1.56.1
           profile: minimal
-          toolchain: stable
-          override: true
-          components: rustfmt, clippy
+          components: rustfmt
       - name: Run rustfmt
         uses: actions-rs/cargo@v1
         with:
@@ -40,9 +39,8 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          toolchain: 1.56.1
           profile: minimal
-          toolchain: nightly # get nightly lints
-          override: true
           components: clippy
       - name: Run clippy
         uses: actions-rs/cargo@v1
@@ -60,8 +58,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
-          override: true
+          toolchain: 1.56.1
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Compile for tests
@@ -88,8 +85,8 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
+          toolchain: 1.56.1
           profile: minimal
-          toolchain: stable
       - name: Cache
         uses: Swatinem/rust-cache@v1
       - name: Run Test262 suite
