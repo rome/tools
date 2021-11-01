@@ -3,7 +3,6 @@ use crate::{
 	green::{GreenElement, NodeCache},
 	Language, NodeOrToken, SyntaxNode,
 };
-use std::marker::PhantomData;
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
 #[derive(Clone, Copy, Debug)]
@@ -15,7 +14,6 @@ pub struct TreeBuilder<'cache, L: Language> {
 	cache: CowMut<'cache, NodeCache>,
 	parents: Vec<(L::Kind, usize)>,
 	children: Vec<(u64, GreenElement)>,
-	ph: PhantomData<L>,
 }
 
 impl<L: Language> Default for TreeBuilder<'_, L> {
@@ -24,7 +22,6 @@ impl<L: Language> Default for TreeBuilder<'_, L> {
 			cache: CowMut::default(),
 			parents: Vec::default(),
 			children: Vec::default(),
-			ph: PhantomData,
 		}
 	}
 }
@@ -42,7 +39,6 @@ impl<L: Language> TreeBuilder<'_, L> {
 			cache: CowMut::Borrowed(cache),
 			parents: Vec::new(),
 			children: Vec::new(),
-			ph: PhantomData,
 		}
 	}
 
