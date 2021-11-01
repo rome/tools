@@ -11,7 +11,7 @@ impl ToFormatElement for ClassProp {
 			empty_element()
 		};
 		let value = self.value();
-		let equal = self.eq();
+		let equal = self.eq_token();
 
 		let equal_and_value = match (value, equal) {
 			(None, None) => Some(empty_element()),

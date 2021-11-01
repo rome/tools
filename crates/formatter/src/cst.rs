@@ -159,6 +159,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::CLASS_PROP => ClassProp::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
+
 			_ => todo!(
 				"Implement formatting for the {:?} syntax kind.",
 				self.kind()

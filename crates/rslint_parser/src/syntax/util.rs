@@ -252,7 +252,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 			let elem_count = expr.elements().count();
 
 			for (idx, elem) in expr.elements().enumerate() {
-				if let ast::ExprOrSpread::Spread(ref spread) = elem {
+				if let ast::ExprOrSpread::SpreadElement(ref spread) = elem {
 					if idx != elem_count - 1 {
 						let err = p.err_builder("Spread element may only occur as the last element of an assignment target")
                             .primary(marker.offset_range(p, spread.syntax().trimmed_range()), "");

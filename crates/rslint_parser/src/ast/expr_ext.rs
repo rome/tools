@@ -27,48 +27,6 @@ impl CondExpr {
 	}
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum PropName {
-	Computed(ComputedPropertyName),
-	Literal(Literal),
-	Ident(Name),
-}
-
-impl AstNode for PropName {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		matches!(kind, NAME | LITERAL | COMPUTED_PROPERTY_NAME)
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if !Self::can_cast(syntax.kind()) {
-			None
-		} else {
-			Some(match syntax.kind() {
-				LITERAL => PropName::Literal(Literal::cast(syntax).unwrap()),
-				NAME => PropName::Ident(Name::cast(syntax).unwrap()),
-				COMPUTED_PROPERTY_NAME => {
-					PropName::Computed(ComputedPropertyName::cast(syntax).unwrap())
-				}
-				_ => unreachable!(),
-			})
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			PropName::Ident(s) => s.syntax(),
-			PropName::Literal(s) => s.syntax(),
-			PropName::Computed(s) => s.syntax(),
-		}
-	}
-}
-
-impl PropName {
-	pub fn as_string(&self) -> Option<std::string::String> {
-		Some(self.syntax().text().to_string())
-	}
-}
-
 impl LiteralProp {
 	pub fn key(&self) -> Option<PropName> {
 		if PropName::can_cast(
@@ -414,43 +372,9 @@ impl ArrayExpr {
 	}
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ExprOrSpread {
-	Expr(Expr),
-	Spread(SpreadElement),
-}
-
-impl AstNode for ExprOrSpread {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			SPREAD_ELEMENT => true,
-			_ => Expr::can_cast(kind),
-		}
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if !Self::can_cast(syntax.kind()) {
-			None
-		} else {
-			Some(if syntax.kind() == SPREAD_ELEMENT {
-				ExprOrSpread::Spread(SpreadElement::cast(syntax).unwrap())
-			} else {
-				ExprOrSpread::Expr(Expr::cast(syntax).unwrap())
-			})
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ExprOrSpread::Expr(it) => it.syntax(),
-			ExprOrSpread::Spread(it) => it.syntax(),
-		}
-	}
-}
-
 impl ExprOrSpread {
 	pub fn is_spread(&self) -> bool {
-		matches!(self, ExprOrSpread::Spread(_))
+		matches!(self, ExprOrSpread::SpreadElement(_))
 	}
 
 	pub fn is_expr(&self) -> bool {
@@ -563,37 +487,6 @@ impl Literal {
 	}
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ExprOrBlock {
-	Expr(Expr),
-	Block(BlockStmt),
-}
-
-impl AstNode for ExprOrBlock {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		if kind == BLOCK_STMT {
-			true
-		} else {
-			Expr::can_cast(kind)
-		}
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if syntax.kind() == BLOCK_STMT {
-			Some(ExprOrBlock::Block(BlockStmt::cast(syntax).unwrap()))
-		} else {
-			Some(ExprOrBlock::Expr(Expr::cast(syntax)?))
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ExprOrBlock::Expr(it) => it.syntax(),
-			ExprOrBlock::Block(it) => it.syntax(),
-		}
-	}
-}
-
 impl ArrowExpr {
 	pub fn body(&self) -> Option<ExprOrBlock> {
 		ExprOrBlock::cast(self.syntax().children().last()?)
@@ -676,7 +569,8 @@ fn prop_name_syntax(name: PropName) -> Option<SyntaxNode> {
 	Some(match name {
 		PropName::Ident(idt) => idt.syntax().clone(),
 		PropName::Literal(lit) => lit.syntax().clone(),
-		PropName::Computed(_) => return None,
+		PropName::Name(name) => name.syntax().clone(),
+		PropName::ComputedPropertyName(_) => return None,
 	})
 }
 

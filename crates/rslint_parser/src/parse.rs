@@ -177,7 +177,7 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<Script> {
 ///
 /// Unlike [`parse_text`], the final parse result includes no whitespace, it does however include errors.
 ///
-/// Note however that the ranges and text of nodes still includes whitespace! Therefore you should trim text before rendering it.  
+/// Note however that the ranges and text of nodes still includes whitespace! Therefore you should trim text before rendering it.
 /// The [`util`](crate::util) module has utility functions for dealing with this easily.
 ///
 /// ```

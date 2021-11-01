@@ -1242,6 +1242,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cda74da7e1a664f795bb1f8a87ec406fb89a02522cf6e50620d016add6dbbf5c"
 
 [[package]]
+name = "ungrammar"
+version = "1.14.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "66be59c2fd880e3d76d1a6cf6d34114008f1d8af2748d4ad9d39ea712f14fda9"
+
+[[package]]
 name = "unicode-bidi"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1439,6 +1445,7 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "syn",
+ "ungrammar",
  "unindent",
  "walkdir",
  "yastl",

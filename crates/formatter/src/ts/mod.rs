@@ -6,6 +6,7 @@ mod expr_or_block;
 mod expr_or_spread;
 mod expressions;
 mod getter;
+mod ident;
 mod method;
 mod name;
 mod parameter_list;

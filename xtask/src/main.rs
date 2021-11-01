@@ -23,7 +23,7 @@ fn main() -> Result<()> {
 		}
 		"syntax" => {
 			args.finish()?;
-			codegen::generate_syntax(Mode::Overwrite)?;
+			codegen::generate_ast(Mode::Overwrite)?;
 			Ok(())
 		}
 		"format" => {
