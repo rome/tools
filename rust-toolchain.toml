@@ -1,7 +1,7 @@
 [toolchain]
-channel = "stable"
 profile = "default"
-components = []
+channel = "1.56.1"
+components = ["clippy", "rustfmt"]
 targets = [
 	"x86_64-apple-darwin",
 	"x86_64-pc-windows-msvc",
