@@ -135,6 +135,7 @@ fn handle_rule(
 				ty,
 				optional,
 				has_many,
+				separated: false,
 			};
 			fields.push(field);
 		}
@@ -157,12 +158,70 @@ fn handle_rule(
 		Rule::Opt(rule) => {
 			handle_rule(fields, grammar, rule, label, true, false);
 		}
-		Rule::Seq(rules) | Rule::Alt(rules) => {
+		Rule::Alt(rules) => {
+			for rule in rules {
+				handle_rule(fields, grammar, rule, label, false, false);
+			}
+		}
+
+		Rule::Seq(rules) => {
+			if lower_comma_list(fields, grammar, label, rules) {
+				return;
+			}
+
 			for rule in rules {
 				handle_rule(fields, grammar, rule, label, false, false);
 			}
 		}
 	};
+
+	// (T (',' T)* ','?)
+	fn lower_comma_list(
+		acc: &mut Vec<Field>,
+		grammar: &Grammar,
+		label: Option<&String>,
+		rules: &Vec<Rule>,
+	) -> bool {
+		// Does it match (T * ',')?
+		let (node, repeat, trailing_separator) = match rules.as_slice() {
+			[Rule::Node(node), Rule::Rep(repeat), Rule::Opt(trailing_separator)] => {
+				(node, repeat, trailing_separator)
+			}
+			_ => return false,
+		};
+
+		// Is the repeat a ()*?
+		let repeat = match &**repeat {
+			Rule::Seq(it) => it,
+			_ => return false,
+		};
+
+		// Does the repeat match (token node))
+		match repeat.as_slice() {
+			[comma, Rule::Node(n)] if comma == &**trailing_separator && n == node => (),
+			_ => return false,
+		}
+
+		let ty = grammar[*node].name.clone();
+
+		let name = label
+			.cloned()
+			.unwrap_or_else(|| pluralize(&to_lower_snake_case(&ty)));
+
+		acc.push(Field::Node {
+			name,
+			ty,
+			optional: false,
+			has_many: true,
+			separated: true,
+		});
+
+		true
+	}
+
+	fn pluralize(s: &str) -> String {
+		format!("{}s", s)
+	}
 }
 
 // handle cases like:  `op: ('-' | '+' | '*')`
