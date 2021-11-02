@@ -399,8 +399,8 @@ impl Field {
 
 	pub fn extract_tokens(&self) -> Option<proc_macro2::TokenStream> {
 		match self {
-			Field::Token { tokens, .. } => match tokens {
-				Some(tokens) => {
+			Field::Token { tokens, .. } => {
+				if let Some(tokens) = tokens {
 					let streamed_tokens: Vec<proc_macro2::TokenStream> = tokens
 						.iter()
 						.map(|token| {
@@ -413,20 +413,15 @@ impl Field {
 						})
 						.collect();
 
-					// for some reason proc_macro2::TokenStream doesn't implement quote::ToTokens
-					// workaround: https://stackoverflow.com/a/65353489/273355
-					// let streamed_tokens = streamed_tokens
-					// 	.iter()
-					// 	.fold(quote! {}, |acc, new| quote! {#acc #new});
-
 					let q = quote! {
 							&[#(#streamed_tokens),*]
 					};
 
 					Some(q)
+				} else {
+					None
 				}
-				None => None,
-			},
+			}
 			_ => None,
 		}
 	}

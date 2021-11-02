@@ -164,17 +164,14 @@ fn handle_tokens_in_unions(
 	fields: &mut Vec<Field>,
 	grammar: &Grammar,
 	rule: &Rule,
-	label: &String,
+	label: &str,
 ) -> bool {
 	let rule = match rule {
 		Rule::Alt(rule) => rule,
 		_ => return false,
 	};
 
-	let all_tokens = rule.iter().all(|rule| match rule {
-		Rule::Token(_) => true,
-		_ => false,
-	});
+	let all_tokens = rule.iter().all(|rule| matches!(rule, Rule::Token(_)));
 
 	// we don't have only tokens, so we can't implode operations in one single method call
 	if !all_tokens {
@@ -193,7 +190,7 @@ fn handle_tokens_in_unions(
 		.collect();
 
 	let field = Field::Token {
-		name: label.clone(),
+		name: label.to_string(),
 		tokens: Some(tokens),
 	};
 	fields.push(field);
