@@ -14,14 +14,17 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			let kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
 
 			let methods = node.fields.iter().map(|field| match field {
-				Field::Token { tokens, name } => {
+				Field::Token {
+					token_kinds: tokens,
+					name,
+				} => {
 					// TODO: make the mandatory/optional bit
 					let method_name = field.method_name();
 					let token_kind = field.token_kind();
 
 					match tokens {
 						Some(_) => {
-							let tokens = field.extract_tokens().unwrap();
+							let tokens = field.token_kinds().unwrap();
 							let method_name = format_ident!("{}", name);
 							quote! {
 								pub fn #method_name(&self) -> Option<SyntaxToken> {

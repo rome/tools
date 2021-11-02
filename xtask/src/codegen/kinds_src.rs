@@ -364,7 +364,7 @@ pub struct AstNodeSrc {
 pub enum Field {
 	Token {
 		name: String,
-		tokens: Option<Vec<String>>,
+		token_kinds: Option<Vec<String>>,
 	},
 	Node {
 		name: String,
@@ -397,9 +397,12 @@ impl Field {
 		}
 	}
 
-	pub fn extract_tokens(&self) -> Option<proc_macro2::TokenStream> {
+	pub fn token_kinds(&self) -> Option<proc_macro2::TokenStream> {
 		match self {
-			Field::Token { tokens, .. } => {
+			Field::Token {
+				token_kinds: tokens,
+				..
+			} => {
 				if let Some(tokens) = tokens {
 					let streamed_tokens: Vec<proc_macro2::TokenStream> = tokens
 						.iter()

@@ -499,7 +499,7 @@ pub struct UnaryExpr {
 impl UnaryExpr {
 	pub fn lhs(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn expr(&self) -> Option<Expr> { support::child(&self.syntax) }
-	pub fn operation(&self) -> Option<SyntaxToken> {
+	pub fn operator(&self) -> Option<SyntaxToken> {
 		support::find_token(
 			&self.syntax,
 			&[
@@ -523,7 +523,7 @@ pub struct BinExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl BinExpr {
-	pub fn operation(&self) -> Option<SyntaxToken> {
+	pub fn operator(&self) -> Option<SyntaxToken> {
 		support::find_token(
 			&self.syntax,
 			&[
@@ -571,7 +571,7 @@ pub struct AssignExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl AssignExpr {
-	pub fn operation(&self) -> Option<SyntaxToken> {
+	pub fn operator(&self) -> Option<SyntaxToken> {
 		support::find_token(
 			&self.syntax,
 			&[

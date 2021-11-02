@@ -1,6 +1,8 @@
 //! Generate SyntaxKind definitions as well as typed AST definitions for nodes and tokens.
 //! This is derived from rust-analyzer/xtask/codegen
 
+use std::vec;
+
 use super::{
 	kinds_src::{AstSrc, Field},
 	to_lower_snake_case, Mode,
@@ -140,7 +142,10 @@ fn handle_rule(
 			let name = clean_token_name(grammar, token);
 
 			if name != "int_number" && name != "string" {
-				let field = Field::Token { name, tokens: None };
+				let field = Field::Token {
+					name,
+					token_kinds: None,
+				};
 				fields.push(field);
 			}
 		}
@@ -171,29 +176,17 @@ fn handle_tokens_in_unions(
 		_ => return false,
 	};
 
-	let all_tokens = rule.iter().all(|rule| matches!(rule, Rule::Token(_)));
-
-	// we don't have only tokens, so we can't implode operations in one single method call
-	if !all_tokens {
-		return false;
+	let mut token_kinds = vec![];
+	for rule in rule.iter() {
+		match rule {
+			Rule::Token(token) => token_kinds.push(clean_token_name(grammar, token)),
+			_ => return false,
+		}
 	}
-
-	let tokens: Vec<_> = rule
-		.iter()
-		.map(|rule| {
-			match rule {
-				Rule::Token(token) => clean_token_name(grammar, token),
-				// it should not go here, we checked if they all have token rules
-				_ => {
-					panic!("Something wrong happened. It seems there's some error in your grammar.")
-				}
-			}
-		})
-		.collect();
 
 	let field = Field::Token {
 		name: label.to_string(),
-		tokens: Some(tokens),
+		token_kinds: Some(token_kinds),
 	};
 	fields.push(field);
 	true
