@@ -76,7 +76,12 @@ use std::str::FromStr;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement>;
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError>;
+}
+
+pub enum FormatError {
+	MissingNode,
+	UnknownNode,
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]

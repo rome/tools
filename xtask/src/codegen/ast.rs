@@ -145,6 +145,7 @@ fn handle_rule(
 				let field = Field::Token {
 					name,
 					token_kinds: vec![],
+					optional,
 				};
 				fields.push(field);
 			}

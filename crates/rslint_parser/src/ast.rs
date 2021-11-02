@@ -189,8 +189,13 @@ mod support {
 	use super::{AstNode, AstNodeList, SyntaxKind, SyntaxNode, SyntaxToken};
 	use crate::ast::AstChildren;
 	use crate::SyntaxList;
+	use crate::{SyntaxError, SyntaxResult};
 
 	pub(super) fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
+		parent.children().find_map(N::cast)
+	}
+
+	pub(super) fn as_optional_node<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
 	}
 
@@ -217,6 +222,40 @@ mod support {
 			.filter_map(|it| it.into_token())
 			.find(|it| it.kind() == kind)
 	}
+
+	pub(super) fn as_optional_token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
+		parent
+			.children_with_tokens()
+			.filter_map(|it| it.into_token())
+			.find(|it| it.kind() == kind)
+	}
+
+	pub(super) fn as_mandatory_node<N: AstNode>(parent: &SyntaxNode) -> SyntaxResult<N> {
+		parent
+			.children()
+			.find_map(N::cast)
+			.ok_or_else(|| SyntaxError::MissingElement(parent.kind()))
+	}
+
+	pub(super) fn as_mandatory_token(
+		parent: &SyntaxNode,
+		kind: SyntaxKind,
+	) -> SyntaxResult<SyntaxToken> {
+		parent
+			.children_with_tokens()
+			.filter_map(|it| it.into_token())
+			.find(|it| it.kind() == kind)
+			.ok_or_else(|| SyntaxError::MissingElement(parent.kind()))
+	}
+}
+
+/// Specific result used when navigating nodes using AST APIs
+pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
+
+#[derive(Debug)]
+pub enum SyntaxError {
+	/// Error thrown when a mandatory node is not found
+	MissingElement(SyntaxKind),
 
 	pub(super) fn find_token(
 		parent: &SyntaxNode,

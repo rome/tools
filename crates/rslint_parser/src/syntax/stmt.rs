@@ -590,7 +590,7 @@ pub(crate) fn block_items(
 					let parsed = p
 						.parse_marker::<ast::ExprStmt>(complete.as_ref().unwrap())
 						.expr();
-					if let Some(LITERAL) = parsed.as_ref().map(|it| it.syntax().kind()) {
+					if let Ok(LITERAL) = parsed.as_ref().map(|it| it.syntax().kind()) {
 						let unwrapped = parsed.unwrap().syntax().to::<ast::Literal>();
 						if unwrapped.is_string() {
 							if unwrapped.inner_string_text().unwrap() == "use strict" {

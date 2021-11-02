@@ -365,6 +365,7 @@ pub enum Field {
 	Token {
 		name: String,
 		token_kinds: Vec<String>,
+		optional: bool,
 	},
 	Node {
 		name: String,
@@ -506,6 +507,13 @@ impl Field {
 		match self {
 			Field::Token { .. } => format_ident!("SyntaxToken"),
 			Field::Node { ty, .. } => format_ident!("{}", ty),
+		}
+	}
+
+	pub fn is_optional(&self) -> bool {
+		match self {
+			Field::Node { optional, .. } => *optional,
+			Field::Token { optional, .. } => *optional,
 		}
 	}
 }
