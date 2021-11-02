@@ -40,6 +40,14 @@ Here's a list of internal conventions that we follow to write grammar:
 	impl BinExpr {
 		fn op(self) -> Option<SyntaxToken> {
 			// custom logic goes here
+			support::find_token(
+			&self.syntax,
+			&[
+				T![+],
+				T![-],
+				T![*],
+			],
+		)
 		}
 	}
 	```
