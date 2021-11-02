@@ -1,3 +1,0 @@
-# `cli`
-
-Rome's CLI

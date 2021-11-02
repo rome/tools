@@ -1,4 +1,4 @@
-use cli::run_cli;
+use rome_cli::run_cli;
 
 ///
 /// To run this example, run:

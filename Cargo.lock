@@ -149,16 +149,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cli"
-version = "0.0.0"
-dependencies = [
- "clap 3.0.0-beta.4",
- "core",
- "path",
- "rome-formatter",
-]
-
-[[package]]
 name = "colored"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -902,6 +892,16 @@ dependencies = [
  "rome_rowan",
  "rslint_parser",
  "tests_macros",
+]
+
+[[package]]
+name = "rome_cli"
+version = "0.0.0"
+dependencies = [
+ "clap 3.0.0-beta.4",
+ "core",
+ "path",
+ "rome-formatter",
 ]
 
 [[package]]
