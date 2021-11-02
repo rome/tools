@@ -16,7 +16,7 @@ use crate::{
 	},
 	project_root, Result,
 };
-use ungrammar::{Grammar, Rule};
+use ungrammar::{Grammar, Rule, Token};
 
 pub fn generate_ast(mode: Mode) -> Result<()> {
 	let grammar_src = include_str!("../../js.ungram");
@@ -90,6 +90,18 @@ fn handle_alternatives(grammar: &Grammar, rule: &Rule) -> Option<Vec<String>> {
 	}
 }
 
+fn clean_token_name(grammar: &Grammar, token: &Token) -> String {
+	let mut name = grammar[*token].name.clone();
+
+	// These tokens, when parsed to proc_macro2::TokenStream, generates a stream of bytes
+	// that can't be recognized by [quote].
+	// Hence, they need to be decorated with single quotes.
+	if "[]{}()`".contains(&name) {
+		name = format!("'{}'", name);
+	}
+	name
+}
+
 fn handle_rule(
 	fields: &mut Vec<Field>,
 	grammar: &Grammar,
@@ -107,6 +119,9 @@ fn handle_rule(
 			if manually_implemented {
 				return;
 			}
+			if handle_tokens_in_unions(fields, grammar, rule, label) {
+				return;
+			}
 
 			handle_rule(fields, grammar, rule, Some(label), optional, has_many)
 		}
@@ -122,16 +137,10 @@ fn handle_rule(
 			fields.push(field);
 		}
 		Rule::Token(token) => {
-			let mut name = grammar[*token].name.clone();
+			let name = clean_token_name(grammar, token);
 
 			if name != "int_number" && name != "string" {
-				// These tokens, when parsed to proc_macro2::TokenStream, generates a stream of bytes
-				// that can't be recognized by [quote].
-				// Hence, they need to be decorated with single quotes.
-				if "[]{}()`".contains(&name) {
-					name = format!("'{}'", name);
-				}
-				let field = Field::Token(name);
+				let field = Field::Token { name, tokens: None };
 				fields.push(field);
 			}
 		}
@@ -148,4 +157,45 @@ fn handle_rule(
 			}
 		}
 	};
+}
+
+// handle cases like:  `op: ('-' | '+' | '*')`
+fn handle_tokens_in_unions(
+	fields: &mut Vec<Field>,
+	grammar: &Grammar,
+	rule: &Rule,
+	label: &String,
+) -> bool {
+	let rule = match rule {
+		Rule::Alt(rule) => rule,
+		_ => return false,
+	};
+
+	let all_tokens = rule.iter().all(|rule| match rule {
+		Rule::Token(_) => true,
+		_ => false,
+	});
+
+	// we don't have only tokens, so we can't implode operations in one single method call
+	if !all_tokens {
+		return false;
+	}
+
+	let tokens: Vec<_> = rule
+		.iter()
+		.map(|rule| {
+			match rule {
+				Rule::Token(token) => clean_token_name(grammar, token),
+				// it should not go here, we checked if they all have token rules
+				_ => "".to_owned(),
+			}
+		})
+		.collect();
+
+	let field = Field::Token {
+		name: label.clone(),
+		tokens: Some(tokens),
+	};
+	fields.push(field);
+	true
 }

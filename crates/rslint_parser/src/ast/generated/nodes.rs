@@ -499,16 +499,23 @@ pub struct UnaryExpr {
 impl UnaryExpr {
 	pub fn lhs(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn expr(&self) -> Option<Expr> { support::child(&self.syntax) }
-	pub fn increment_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [++]) }
-	pub fn decrement_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [--]) }
-	pub fn delete_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![delete]) }
-	pub fn void_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![void]) }
-	pub fn typeof_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![typeof]) }
-	pub fn plus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [+]) }
-	pub fn minus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [-]) }
-	pub fn bitwise_not_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [~]) }
-	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
-	pub fn await_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![await]) }
+	pub fn operation(&self) -> Option<SyntaxToken> {
+		support::find_token(
+			&self.syntax,
+			&[
+				T ! [++],
+				T ! [--],
+				T![delete],
+				T![void],
+				T![typeof],
+				T ! [+],
+				T ! [-],
+				T ! [~],
+				T![!],
+				T![await],
+			],
+		)
+	}
 	pub fn rhs(&self) -> Option<Expr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -516,48 +523,37 @@ pub struct BinExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl BinExpr {
-	pub fn l_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [<]) }
-	pub fn r_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [>]) }
-	pub fn less_than_equal_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [<=])
-	}
-	pub fn greater_than_equal_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [>=])
-	}
-	pub fn equality_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [==]) }
-	pub fn strict_equality_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [===])
-	}
-	pub fn inequality_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [!=]) }
-	pub fn strict_inequality_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [!==])
-	}
-	pub fn plus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [+]) }
-	pub fn minus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [-]) }
-	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
-	pub fn divide_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [/]) }
-	pub fn reminder_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [%]) }
-	pub fn exponent_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [**]) }
-	pub fn left_shift_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [<<]) }
-	pub fn right_shift_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [>>])
-	}
-	pub fn unsigned_right_shift_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [>>>])
-	}
-	pub fn amp_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [&]) }
-	pub fn bitwise_or_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [|]) }
-	pub fn bitwise_xor_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [^]) }
-	pub fn nullish_coalescing_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [??])
-	}
-	pub fn logical_or_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [||]) }
-	pub fn logical_and_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [&&])
-	}
-	pub fn in_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![in]) }
-	pub fn instanceof_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T![instanceof])
+	pub fn operation(&self) -> Option<SyntaxToken> {
+		support::find_token(
+			&self.syntax,
+			&[
+				T ! [<],
+				T ! [>],
+				T ! [<=],
+				T ! [>=],
+				T ! [==],
+				T ! [===],
+				T ! [!=],
+				T ! [!==],
+				T ! [+],
+				T ! [-],
+				T ! [*],
+				T ! [/],
+				T ! [%],
+				T ! [**],
+				T ! [<<],
+				T ! [>>],
+				T ! [>>>],
+				T ! [&],
+				T ! [|],
+				T ! [^],
+				T ! [??],
+				T ! [||],
+				T ! [&&],
+				T![in],
+				T![instanceof],
+			],
+		)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -575,46 +571,27 @@ pub struct AssignExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl AssignExpr {
-	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
-	pub fn add_assign_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [+=]) }
-	pub fn subtract_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [-=])
-	}
-	pub fn times_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [*=])
-	}
-	pub fn remainder_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [%=])
-	}
-	pub fn exponent_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [**=])
-	}
-	pub fn left_shift_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [>>=])
-	}
-	pub fn right_shift_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [<<=])
-	}
-	pub fn unsigned_right_shift_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [>>>=])
-	}
-	pub fn bitwise_and_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [&=])
-	}
-	pub fn bitwise_or_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [|=])
-	}
-	pub fn bitwise_xor_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [^=])
-	}
-	pub fn bitwise_logical_and_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [&&=])
-	}
-	pub fn bitwise_logical_or_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [||=])
-	}
-	pub fn bitwise_nullish_coalescing_assign_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, T ! [??=])
+	pub fn operation(&self) -> Option<SyntaxToken> {
+		support::find_token(
+			&self.syntax,
+			&[
+				T ! [=],
+				T ! [+=],
+				T ! [-=],
+				T ! [*=],
+				T ! [%=],
+				T ! [**=],
+				T ! [>>=],
+				T ! [<<=],
+				T ! [>>>=],
+				T ! [&=],
+				T ! [|=],
+				T ! [^=],
+				T ! [&&=],
+				T ! [||=],
+				T ! [??=],
+			],
+		)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
