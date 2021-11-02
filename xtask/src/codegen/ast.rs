@@ -184,7 +184,9 @@ fn handle_tokens_in_unions(
 			match rule {
 				Rule::Token(token) => clean_token_name(grammar, token),
 				// it should not go here, we checked if they all have token rules
-				_ => "".to_owned(),
+				_ => {
+					panic!("Something wrong happened. It seems there's some error in your grammar.")
+				}
 			}
 		})
 		.collect();
