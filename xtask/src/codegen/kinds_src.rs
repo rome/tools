@@ -405,8 +405,6 @@ impl Field {
 						.iter()
 						.map(|token| {
 							let token: proc_macro2::TokenStream = token.parse().unwrap();
-							// format_ident!("{}", token)
-							// quote! {}
 							quote! {
 								T![#token]
 							}
