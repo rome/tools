@@ -37,6 +37,7 @@ fn named_list(p: &mut Parser) -> Marker {
 	let m = p.start();
 	p.expect(T!['{']);
 	let mut first = true;
+	let specifiers_list = p.start();
 	while !p.at(EOF) && !p.at(T!['}']) {
 		if first {
 			first = false;
@@ -49,6 +50,7 @@ fn named_list(p: &mut Parser) -> Marker {
 
 		specifier(p);
 	}
+	specifiers_list.complete(p, LIST);
 	p.expect(T!['}']);
 	m
 }
@@ -109,11 +111,15 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 		return complete;
 	}
 
+	let list = p.start();
+
 	if p.at(STRING) {
 		let inner = p.start();
 		p.bump_any();
 		inner.complete(p, IMPORT_STRING_SPECIFIER);
 		semi(p, start..p.cur_tok().range.start);
+
+		list.complete(p, LIST);
 		return m.complete(p, IMPORT_DECL);
 	}
 
@@ -159,6 +165,8 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 	} else if p.at(T!['{']) {
 		named_list(p).complete(p, NAMED_IMPORTS);
 	}
+
+	list.complete(p, LIST);
 
 	if p.cur_src() != "from" {
 		let err = p
@@ -481,6 +489,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		p.expect(T!['{']);
 
 		let mut first = true;
+		let specifiers = p.start();
 
 		while (!p.at(EOF) && p.at(T![,])) || crate::at_ident_name!(p) {
 			if first {
@@ -490,7 +499,10 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			}
 			named_export_specifier(p);
 		}
+
+		specifiers.complete(p, LIST);
 		p.expect(T!['}']);
+
 		if p.cur_src() == "from" {
 			from_clause_and_semi(p, start);
 		} else {

@@ -1190,7 +1190,7 @@ impl Iterator for SyntaxNodeChildren {
 	}
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub(crate) struct SyntaxElementChildren {
 	next: Option<SyntaxElement>,
 }

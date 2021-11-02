@@ -10,7 +10,8 @@ mod generated;
 mod stmt_ext;
 mod ts_ext;
 
-use crate::{syntax_node::*, util::SyntaxNodeExt, SyntaxKind, TextRange};
+use crate::{syntax_node::*, util::SyntaxNodeExt, SyntaxKind, SyntaxList, TextRange};
+use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
 pub use self::{
@@ -84,8 +85,110 @@ impl<N: AstNode> Iterator for AstChildren<N> {
 	}
 }
 
+/// List of homogenous nodes
+#[derive(Debug, Clone)]
+pub struct AstNodeList<N> {
+	inner: SyntaxList,
+	ph: PhantomData<N>,
+}
+
+impl<N> Default for AstNodeList<N> {
+	fn default() -> Self {
+		AstNodeList {
+			inner: SyntaxList::default(),
+			ph: PhantomData,
+		}
+	}
+}
+
+impl<N: AstNode> AstNodeList<N> {
+	/// Creates a new node list wrapping the passed in syntax list
+	fn new(list: SyntaxList) -> Self {
+		AstNodeList {
+			inner: list,
+			ph: PhantomData,
+		}
+	}
+
+	pub fn iter(&self) -> AstNodeListIterator<N> {
+		AstNodeListIterator {
+			inner: self.inner.iter(),
+			ph: PhantomData,
+		}
+	}
+
+	#[inline]
+	pub fn len(&self) -> usize {
+		self.inner.len()
+	}
+
+	/// Returns the first node from this list or None
+	#[inline]
+	pub fn first(&self) -> Option<N> {
+		// TODO 1724: Use inner once trivia is attached to tokens (not safe yet)
+		self.iter().next()
+	}
+
+	/// Returns the last node from this list or None
+	pub fn last(&self) -> Option<N> {
+		// TODO 1724: Use inner once trivia is attached to tokens (not safe yet)
+		self.iter().last()
+	}
+
+	#[inline]
+	pub fn is_empty(&self) -> bool {
+		self.inner.is_empty()
+	}
+}
+
+#[derive(Debug, Clone)]
+pub struct AstNodeListIterator<N> {
+	inner: SyntaxElementChildren,
+	ph: PhantomData<N>,
+}
+
+impl<N: AstNode> Iterator for AstNodeListIterator<N> {
+	type Item = N;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		// TODO 1724: Replace find map with force cast element into `N`.
+		// The code gen guarantees us that all elements must be of type N
+		self.inner.find_map(|e| {
+			let syntax = e.into_node()?;
+
+			if syntax.kind() == SyntaxKind::ERROR {
+				None
+			} else {
+				Some(syntax.to::<N>())
+			}
+		})
+	}
+}
+
+impl<N: AstNode> FusedIterator for AstNodeListIterator<N> {}
+
+impl<N: AstNode> IntoIterator for &AstNodeList<N> {
+	type Item = N;
+	type IntoIter = AstNodeListIterator<N>;
+
+	fn into_iter(self) -> Self::IntoIter {
+		self.iter()
+	}
+}
+
+impl<N: AstNode> IntoIterator for AstNodeList<N> {
+	type Item = N;
+	type IntoIter = AstNodeListIterator<N>;
+
+	fn into_iter(self) -> Self::IntoIter {
+		self.iter()
+	}
+}
+
 mod support {
-	use super::{AstChildren, AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
+	use super::{AstNode, AstNodeList, SyntaxKind, SyntaxNode, SyntaxToken};
+	use crate::ast::AstChildren;
+	use crate::SyntaxList;
 
 	pub(super) fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
@@ -93,6 +196,19 @@ mod support {
 
 	pub(super) fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {
 		AstChildren::new(parent)
+	}
+
+	fn nth_syntax_list(parent: &SyntaxNode, index: usize) -> SyntaxList {
+		// TODO 1724 change parser to insert a missing for empty lists. Gracefully handle this here.
+		parent
+			.children()
+			.filter_map(|node| node.into_list())
+			.nth(index)
+			.unwrap_or_default()
+	}
+
+	pub(super) fn node_list<N: AstNode>(parent: &SyntaxNode, index: usize) -> AstNodeList<N> {
+		AstNodeList::new(nth_syntax_list(parent, index))
 	}
 
 	pub(super) fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {

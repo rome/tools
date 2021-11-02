@@ -6,14 +6,15 @@ use crate::{
 };
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {
-	type Kind: fmt::Debug;
+	type Kind: fmt::Debug + PartialEq;
 
 	fn kind_from_raw(raw: SyntaxKind) -> Self::Kind;
 	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind;
+	fn list_kind() -> Self::Kind;
 }
 
-#[derive(Debug, Hash, Copy, Eq, Ord, PartialEq, PartialOrd, Clone)]
-pub struct RawLanguage {}
+#[derive(Debug, Default, Hash, Copy, Eq, Ord, PartialEq, PartialOrd, Clone)]
+pub struct RawLanguage;
 
 impl Language for RawLanguage {
 	type Kind = SyntaxKind;
@@ -24,6 +25,10 @@ impl Language for RawLanguage {
 
 	fn kind_to_raw(kind: Self::Kind) -> SyntaxKind {
 		kind
+	}
+
+	fn list_kind() -> Self::Kind {
+		SyntaxKind(0)
 	}
 }
 
@@ -276,6 +281,14 @@ impl<L: Language> SyntaxNode<L> {
 			.collect::<Vec<_>>();
 		self.raw.splice_children(to_delete, to_insert)
 	}
+
+	pub fn into_list(self) -> Option<SyntaxList<L>> {
+		if self.kind() == L::list_kind() {
+			Some(SyntaxList::new(self))
+		} else {
+			None
+		}
+	}
 }
 
 impl<L: Language> SyntaxToken<L> {
@@ -409,6 +422,15 @@ pub struct SyntaxElementChildren<L: Language> {
 	_p: PhantomData<L>,
 }
 
+impl<L: Language> Default for SyntaxElementChildren<L> {
+	fn default() -> Self {
+		SyntaxElementChildren {
+			raw: cursor::SyntaxElementChildren::default(),
+			_p: PhantomData,
+		}
+	}
+}
+
 impl<L: Language> Iterator for SyntaxElementChildren<L> {
 	type Item = SyntaxElement<L>;
 	fn next(&mut self) -> Option<Self::Item> {
@@ -497,5 +519,173 @@ impl<L: Language> From<SyntaxElement<L>> for cursor::SyntaxElement {
 			NodeOrToken::Node(it) => NodeOrToken::Node(it.into()),
 			NodeOrToken::Token(it) => NodeOrToken::Token(it.into()),
 		}
+	}
+}
+
+/// A list of `SyntaxNode`s and/or `SyntaxToken`s
+#[derive(Debug, Clone, Default)]
+pub struct SyntaxList<L: Language> {
+	list: Option<SyntaxNode<L>>,
+}
+
+impl<L: Language> SyntaxList<L> {
+	/// Creates a new list wrapping a List `SyntaxNode`
+	fn new(node: SyntaxNode<L>) -> Self {
+		assert_eq!(node.kind(), L::list_kind());
+
+		Self { list: Some(node) }
+	}
+
+	/// Iterates over the elements in the list.
+	pub fn iter(&self) -> SyntaxElementChildren<L> {
+		if let Some(list) = &self.list {
+			list.children_with_tokens()
+		} else {
+			SyntaxElementChildren::<L>::default()
+		}
+	}
+
+	/// Returns the number of items in this list
+	pub fn len(&self) -> usize {
+		if let Some(list) = &self.list {
+			list.raw.green().children().len()
+		} else {
+			0
+		}
+	}
+
+	pub fn is_empty(&self) -> bool {
+		self.len() == 0
+	}
+
+	pub fn first(&self) -> Option<SyntaxElement<L>> {
+		if let Some(list) = &self.list {
+			list.first_child_or_token()
+		} else {
+			None
+		}
+	}
+
+	pub fn last(&self) -> Option<SyntaxElement<L>> {
+		if let Some(list) = &self.list {
+			list.last_child_or_token()
+		} else {
+			None
+		}
+	}
+}
+
+impl<L: Language> IntoIterator for &SyntaxList<L> {
+	type Item = SyntaxElement<L>;
+	type IntoIter = SyntaxElementChildren<L>;
+
+	fn into_iter(self) -> Self::IntoIter {
+		self.iter()
+	}
+}
+
+impl<L: Language> IntoIterator for SyntaxList<L> {
+	type Item = SyntaxElement<L>;
+	type IntoIter = SyntaxElementChildren<L>;
+
+	fn into_iter(self) -> Self::IntoIter {
+		self.iter()
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use crate::api::RawLanguage;
+	use crate::{Language, SyntaxKind, SyntaxList, TreeBuilder};
+
+	#[test]
+	fn empty_list() {
+		let list = SyntaxList::<RawLanguage>::default();
+
+		assert!(list.is_empty());
+		assert_eq!(list.len(), 0);
+
+		assert_eq!(list.first(), None);
+		assert_eq!(list.last(), None);
+
+		assert_eq!(list.iter().collect::<Vec<_>>(), Vec::default());
+	}
+
+	#[test]
+	fn node_list() {
+		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+
+		builder.start_node(RawLanguage::list_kind());
+
+		builder.start_node(SyntaxKind(1));
+		builder.token(SyntaxKind(2), "1");
+		builder.finish_node();
+
+		builder.start_node(SyntaxKind(1));
+		builder.token(SyntaxKind(2), "2");
+		builder.finish_node();
+
+		builder.finish_node();
+
+		let node = builder.finish();
+		let list = node.into_list().unwrap();
+
+		assert!(!list.is_empty());
+		assert_eq!(list.len(), 2);
+
+		let first = list.first().and_then(|e| e.into_node()).unwrap();
+		assert_eq!(first.kind(), SyntaxKind(1));
+		assert_eq!(first.text(), "1");
+
+		let last = list.last().and_then(|e| e.into_node()).unwrap();
+		assert_eq!(last.kind(), SyntaxKind(1));
+		assert_eq!(last.text(), "2");
+
+		let node_texts: Vec<_> = list
+			.iter()
+			.map(|e| e.into_node().map(|n| n.text().to_string()))
+			.collect();
+
+		assert_eq!(
+			node_texts,
+			vec![Some(String::from("1")), Some(String::from("2"))]
+		)
+	}
+
+	#[test]
+	fn node_or_token_list() {
+		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+
+		builder.start_node(RawLanguage::list_kind());
+
+		builder.start_node(SyntaxKind(1));
+		builder.token(SyntaxKind(2), "1");
+		builder.finish_node();
+
+		builder.token(SyntaxKind(3), ",");
+
+		builder.start_node(SyntaxKind(1));
+		builder.token(SyntaxKind(2), "2");
+		builder.finish_node();
+
+		builder.finish_node();
+
+		let node = builder.finish();
+		let list = node.into_list().unwrap();
+
+		assert!(!list.is_empty());
+		assert_eq!(list.len(), 3);
+
+		let first = list.first().and_then(|e| e.into_node()).unwrap();
+		assert_eq!(first.kind(), SyntaxKind(1));
+		assert_eq!(first.text(), "1");
+
+		let last = list.last().and_then(|e| e.into_node()).unwrap();
+		assert_eq!(last.kind(), SyntaxKind(1));
+		assert_eq!(last.text(), "2");
+
+		let kinds: Vec<_> = list.iter().map(|e| e.kind()).collect();
+
+		assert_eq!(kinds, vec![SyntaxKind(1), SyntaxKind(3), SyntaxKind(1)])
 	}
 }

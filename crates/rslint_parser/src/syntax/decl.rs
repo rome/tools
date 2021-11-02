@@ -309,6 +309,8 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 
 	p.state.allow_object_expr = p.expect(T!['(']);
 
+	let parameters_list = p.start();
+
 	while !p.at(EOF) && !p.at(T![')']) {
 		if first {
 			first = false;
@@ -425,6 +427,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 		}
 	}
 
+	parameters_list.complete(p, LIST);
 	p.state.allow_object_expr = true;
 	p.expect(T![')']);
 	m.complete(p, PARAMETER_LIST)
@@ -542,10 +545,13 @@ pub fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 		m.complete(&mut *guard, ERROR);
 	}
 
+	let mut implements_list = None;
 	if guard.cur_src() == "implements" {
 		let start = guard.cur_tok().range.start;
 		let maybe_err = guard.start();
 		guard.bump_remap(T![implements]);
+
+		implements_list = Some(guard.start());
 		let elems = ts_heritage_clause(&mut *guard, false);
 		if !guard.typescript() {
 			let err = guard
@@ -573,6 +579,10 @@ pub fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 		m.complete(&mut *guard, ERROR);
 	}
 
+	if let Some(implements_list) = implements_list {
+		implements_list.complete(&mut guard, LIST);
+	}
+
 	class_body(&mut *guard);
 
 	m.complete(&mut *guard, CLASS_DECL)
@@ -581,6 +591,7 @@ pub fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 pub(crate) fn class_body(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T!['{']);
+	let elements_list = p.start();
 
 	while !p.at(EOF) && !p.at(T!['}']) {
 		match p.cur() {
@@ -603,6 +614,8 @@ pub(crate) fn class_body(p: &mut Parser) -> CompletedMarker {
 			}
 		}
 	}
+	elements_list.complete(p, LIST);
+
 	p.expect(T!['}']);
 	m.complete(p, CLASS_BODY)
 }

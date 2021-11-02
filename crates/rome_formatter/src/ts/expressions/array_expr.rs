@@ -6,7 +6,7 @@ use rslint_parser::ast::ArrayExpr;
 
 impl ToFormatElement for ArrayExpr {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
-		let elements = formatter.format_children(self.elements())?;
+		let elements = formatter.format_nodes(self.elements())?;
 
 		Some(group_elements(format_elements!(
 			formatter.format_token(&self.l_brack_token()?)?,

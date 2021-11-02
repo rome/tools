@@ -609,12 +609,13 @@ pub fn identifier_name(p: &mut Parser) -> Option<CompletedMarker> {
 ///
 /// `"(" (AssignExpr ",")* ")"`
 
-// test_err invalid_arg_list
+// test_err invalid_arg_LIST
 // foo(a,b;
 // foo(a,b var
 pub fn args(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T!['(']);
+	let args_list = p.start();
 
 	while !p.at(EOF) && !p.at(T![')']) {
 		if p.at(T![...]) {
@@ -630,6 +631,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 		}
 	}
 
+	args_list.complete(p, LIST);
 	p.expect(T![')']);
 	m.complete(p, ARG_LIST)
 }
@@ -842,7 +844,9 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 	let first = assign_expr(p)?;
 
 	if p.at(T![,]) {
-		let m = first.precede(p);
+		let list_marker = first.precede(p);
+
+		// let m = LIST.precede(p);
 		p.bump_any();
 		assign_expr(p)?;
 
@@ -850,6 +854,9 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 			p.bump_any();
 			assign_expr(p)?;
 		}
+
+		let list = list_marker.complete(p, LIST);
+		let m = list.precede(p);
 
 		return Some(m.complete(p, SEQUENCE_EXPR));
 	}
@@ -1072,6 +1079,7 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker {
 	let m = tag.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
 	p.expect(BACKTICK);
+	let elements_list = p.start();
 
 	while !p.at(EOF) && !p.at(BACKTICK) {
 		match p.cur() {
@@ -1086,6 +1094,8 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
         }
 	}
+
+	elements_list.complete(p, LIST);
 
 	// test_err template_literal_unterminated
 	// let a = `${foo} bar
@@ -1106,6 +1116,7 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
 pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T!['[']);
+	let elements_list = p.start();
 
 	while !p.at(EOF) {
 		while p.eat(T![,]) {}
@@ -1126,6 +1137,7 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 
 		p.expect(T![,]);
 	}
+	elements_list.complete(p, LIST);
 
 	p.expect(T![']']);
 	m.complete(p, ARRAY_EXPR)
@@ -1146,6 +1158,7 @@ pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 pub fn object_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T!['{']);
+	let props_list = p.start();
 	let mut first = true;
 
 	while !p.at(EOF) && !p.at(T!['}']) {
@@ -1159,6 +1172,7 @@ pub fn object_expr(p: &mut Parser) -> CompletedMarker {
 		}
 		object_property(p);
 	}
+	props_list.complete(p, LIST);
 
 	p.expect(T!['}']);
 	m.complete(p, OBJECT_EXPR)

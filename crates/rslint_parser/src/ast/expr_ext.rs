@@ -5,7 +5,7 @@ use SyntaxKind::*;
 
 impl BracketExpr {
 	pub fn object(&self) -> Option<Expr> {
-		support::children(self.syntax()).next()
+		support::child(self.syntax())
 	}
 
 	pub fn prop(&self) -> Option<Expr> {
@@ -15,7 +15,7 @@ impl BracketExpr {
 
 impl CondExpr {
 	pub fn test(&self) -> Option<Expr> {
-		support::children(self.syntax()).next()
+		support::child(self.syntax())
 	}
 
 	pub fn cons(&self) -> Option<Expr> {
@@ -29,22 +29,7 @@ impl CondExpr {
 
 impl LiteralProp {
 	pub fn key(&self) -> Option<PropName> {
-		if PropName::can_cast(
-			support::children::<PropName>(self.syntax())
-				.next()?
-				.syntax()
-				.kind(),
-		) {
-			PropName::cast(
-				support::children::<PropName>(self.syntax())
-					.next()
-					.unwrap()
-					.syntax()
-					.to_owned(),
-			)
-		} else {
-			None
-		}
+		support::child::<PropName>(self.syntax())
 	}
 
 	pub fn value(&self) -> Option<Expr> {
@@ -154,7 +139,7 @@ impl BinExpr {
 	}
 
 	pub fn lhs(&self) -> Option<Expr> {
-		support::children(self.syntax()).next()
+		support::child(self.syntax())
 	}
 
 	pub fn rhs(&self) -> Option<Expr> {

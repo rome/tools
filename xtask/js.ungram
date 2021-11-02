@@ -328,7 +328,7 @@ ExprOrSpread =
 	| Literal
 	| ObjectExpr
 	| ArrayExpr
-
+	| GroupingExpr
 
 // assign expression
 AssignExpr =

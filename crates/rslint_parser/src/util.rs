@@ -45,8 +45,9 @@ pub trait SyntaxNodeExt {
 	fn to<T: AstNode>(&self) -> T {
 		T::cast(self.to_node().to_owned()).unwrap_or_else(|| {
 			panic!(
-				"Tried to cast node as `{:?}` but was unable to cast",
-				stringify!(T)
+				"Tried to cast node {:?} as `{:?}` but was unable to cast",
+				self.to_node(),
+				std::any::type_name::<T>()
 			)
 		})
 	}
@@ -240,7 +241,7 @@ pub trait SyntaxNodeExt {
 		}
 	}
 
-	/// Get the first child in this node that can be casted to an AST node
+	/// Get the first direct-child in this node that can be casted to an AST node
 	fn child_with_ast<T: AstNode>(&self) -> Option<T> {
 		self.to_node().children().find_map(|child| child.try_to())
 	}

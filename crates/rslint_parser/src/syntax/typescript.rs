@@ -359,8 +359,10 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		ts_type_params(p);
 	}
 
+	let mut extends_list = None;
 	if p.cur_src() == "extends" {
 		p.bump_any();
+		extends_list = Some(p.start());
 		ts_heritage_clause(p, false);
 	};
 
@@ -379,10 +381,19 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		p.error(err);
 		m.complete(p, ERROR);
 	}
+
+	if let Some(extends_list) = extends_list {
+		extends_list.complete(p, LIST);
+	}
+
 	p.expect(T!['{']);
+
+	let members_list = p.start();
 	while !p.at(EOF) && !p.at(T!['}']) {
 		ts_type_member(p);
 	}
+	members_list.complete(p, LIST);
+
 	p.expect(T!['}']);
 	Some(m.complete(p, TS_INTERFACE_DECL))
 }
@@ -555,6 +566,8 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 	p.expect(T!['{']);
 	let mut first = true;
 
+	let members_list = p.start();
+
 	while !p.at(EOF) && !p.at(T!['}']) {
 		if first {
 			first = false;
@@ -596,6 +609,8 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 			member.complete(p, TS_ENUM_MEMBER);
 		}
 	}
+
+	members_list.complete(p, LIST);
 
 	p.expect(T!['}']);
 	m.complete(p, TS_ENUM)
@@ -772,6 +787,7 @@ fn intersection_or_union(
 		TS_UNION
 	};
 	let m = p.start();
+	let types_list = p.start();
 	let saw_op = p.eat(op);
 	let ty = constituent(p);
 	if p.at(op) {
@@ -779,6 +795,7 @@ fn intersection_or_union(
 			constituent(p);
 		}
 
+		types_list.complete(p, LIST);
 		Some(m.complete(p, kind))
 	} else if !saw_op && ty.is_none() {
 		m.abandon(p);
@@ -918,6 +935,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_any();
 
+			let elements_list = p.start();
 			while !p.at(EOF) && !p.at(BACKTICK) {
 				match p.cur() {
                     TEMPLATE_CHUNK => p.bump_any(),
@@ -932,6 +950,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
                 }
 			}
 
+			elements_list.complete(p, LIST);
 			p.eat(BACKTICK);
 			Some(m.complete(p, TS_TEMPLATE))
 		}
@@ -964,10 +983,12 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 			} else {
 				let m = p.start();
 				p.bump_any();
+				let members_list = p.start();
 				while !p.at(EOF) && !p.at(T!['}']) {
 					ts_type_member(p);
 					type_member_semi(p);
 				}
+				members_list.complete(p, LIST);
 				p.expect(T!['}']);
 				Some(m.complete(p, TS_OBJECT_TYPE))
 			}
@@ -1016,6 +1037,8 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 	p.expect_no_recover(T![<])?;
 	let mut first = true;
 
+	let args_list = p.start();
+
 	while !p.at(EOF) && !p.at(T![>]) {
 		if first {
 			first = false;
@@ -1034,6 +1057,8 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 		}
 		no_recover!(p, ts_type(p));
 	}
+	args_list.complete(p, LIST);
+
 	p.expect_no_recover(T![>])?;
 	Some(m.complete(p, TS_TYPE_ARGS))
 }
@@ -1044,6 +1069,7 @@ pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 	p.expect_no_recover(T![<])?;
 	let mut first = true;
 
+	let params_list = p.start();
 	while !p.at(EOF) && !p.at(T![>]) {
 		if first {
 			first = false;
@@ -1056,6 +1082,8 @@ pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 		}
 		no_recover!(p, type_param(p));
 	}
+	params_list.complete(p, LIST);
+
 	p.expect_no_recover(T![>])?;
 	Some(m.complete(p, TS_TYPE_PARAMS))
 }
