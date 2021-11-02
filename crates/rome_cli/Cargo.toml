@@ -7,6 +7,6 @@ edition = "2018"
 
 [dependencies]
 clap = "3.0.0-beta.4"
-rome-formatter = { path = "../formatter" }
+rome_formatter = { path = "../rome_formatter" }
 rome_core = { path = "../rome_core", version = "0.0.0" }
 path = { path = "../path", version = "0.0.0" }

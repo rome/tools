@@ -1,11 +1,11 @@
-# `formatter`
+# `rome_formatter`
 
 The official formatter used by Rome.
 
 ## Internal installation
 
 ```toml
-formatter = { version = "0.0.0", path = "../formatter" }
+rome_formatter = { version = "0.0.0", path = "../rome_formatter" }
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ The foundation of the formatter relies on two pillars:
 Import the `ToFormatElement` trait and implement it for the data structure you need.
 
 ```rust
-use formatter::{ToFormatElement, FormatElement, format_elements, token}
+use rome_formatter::{ToFormatElement, FormatElement, format_elements, token}
 
 struct Buzz {
  blast: String
