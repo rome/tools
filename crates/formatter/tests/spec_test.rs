@@ -1,4 +1,4 @@
-use core::create_app;
+use rome_core::create_app;
 use rome_formatter::{format_file, FormatOptions};
 use std::fs;
 use std::path::Path;

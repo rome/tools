@@ -181,10 +181,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6245d59a3e82a7fc217c5828a6692dbc6dfb63a0c8c90495621f7b9d79704a0e"
 
 [[package]]
-name = "core"
-version = "0.0.0"
-
-[[package]]
 name = "countme"
 version = "2.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -680,7 +676,7 @@ checksum = "6acbef58a60fe69ab50510a55bc8cdd4d6cf2283d27ad338f54cb52747a9cf2d"
 name = "path"
 version = "0.0.0"
 dependencies = [
- "core",
+ "rome_core",
 ]
 
 [[package]]
@@ -887,8 +883,8 @@ checksum = "f497285884f3fcff424ffc933e56d7cbca511def0c9831a7f9b5f6153e3cc89b"
 name = "rome-formatter"
 version = "0.0.0"
 dependencies = [
- "core",
  "path",
+ "rome_core",
  "rome_rowan",
  "rslint_parser",
  "tests_macros",
@@ -899,10 +895,14 @@ name = "rome_cli"
 version = "0.0.0"
 dependencies = [
  "clap 3.0.0-beta.4",
- "core",
  "path",
  "rome-formatter",
+ "rome_core",
 ]
+
+[[package]]
+name = "rome_core"
+version = "0.0.0"
 
 [[package]]
 name = "rome_rowan"

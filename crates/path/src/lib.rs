@@ -3,7 +3,7 @@
 //! give additional information around the the file that holds:
 //! - the [FileHandlers] for the specific file
 //! - shortcuts to open/write to the file
-use core::{file_handlers::ExtensionHandler, App};
+use rome_core::{file_handlers::ExtensionHandler, App};
 use std::{fs::File, io::Write, ops::Deref, path::PathBuf};
 
 pub struct RomePath<'handler> {
@@ -34,7 +34,7 @@ impl<'handler> RomePath<'handler> {
 	///
 	/// ```rust
 	/// use path::RomePath;
-	/// use core::{
+	/// use rome_core::{
 	///   create_app,
 	///   file_handlers::{javascript::JsFileHandler, ExtensionHandler},
 	/// };
@@ -93,7 +93,7 @@ impl<'handler> RomePath<'handler> {
 #[cfg(test)]
 mod test {
 	use crate::RomePath;
-	use core::{
+	use rome_core::{
 		create_app,
 		file_handlers::{javascript::JsFileHandler, ExtensionHandler},
 	};

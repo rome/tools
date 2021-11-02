@@ -9,7 +9,7 @@ edition = "2018"
 rslint_parser = { path = "../rslint_parser" }
 rome_rowan = { path = "../rome_rowan" }
 path = { version = "0.0.0", path = "../path" }
-core = { version = "0.0.0", path = "../core" }
+rome_core = { version = "0.0.0", path = "../rome_core" }
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }

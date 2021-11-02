@@ -60,8 +60,8 @@ use crate::format_json::tokenize_json;
 
 pub use formatter::Formatter;
 
-use core::file_handlers::Language;
-use core::App;
+use rome_core::file_handlers::Language;
+use rome_core::App;
 pub use format_element::{
 	block_indent, concat_elements, empty_element, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
