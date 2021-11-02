@@ -80,21 +80,21 @@ impl Formatter {
 	/// ```
 	///
 	/// use rome_formatter::{Formatter, token};
-	/// use rslint_parser::{SyntaxNode, T, SyntaxToken};
-	/// use rome_rowan::{GreenNode, GreenToken, NodeOrToken, SyntaxKind};
+	/// use rslint_parser::{SyntaxNode, T, SyntaxToken, JsLanguage, SyntaxKind};
+	/// use rome_rowan::{NodeOrToken, TreeBuilder};
 	///
-	/// let node = SyntaxNode::new_root(
-	///   GreenNode::new(SyntaxKind(1), vec![
-	///     NodeOrToken::Token(GreenToken::new(SyntaxKind(T![=>].into()), "=>"))
-	///   ])
-	/// );
+	/// let mut builder = TreeBuilder::<'_, JsLanguage>::new();
+	/// builder.start_node(SyntaxKind::LITERAL);
+	/// builder.token(SyntaxKind::STRING, "'abc'");
+	/// builder.finish_node();
+	/// let node = builder.finish();
 	///
 	/// let syntax_token = node.first_token().unwrap();
 	///
 	/// let formatter = Formatter::default();
 	/// let result = formatter.format_token(&syntax_token);
 	///
-	/// assert_eq!(Some(token("=>")), result)
+	/// assert_eq!(Some(token("\"abc\"")), result)
 	/// ```
 	pub fn format_token(&self, syntax_token: &SyntaxToken) -> Option<FormatElement> {
 		syntax_token.to_format_element(self)

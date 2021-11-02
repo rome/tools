@@ -1,31 +1,41 @@
 use crate::{
 	cow_mut::CowMut,
-	green::{node_cache::NodeCache, GreenElement, GreenNode, SyntaxKind},
-	NodeOrToken,
+	green::{GreenElement, NodeCache},
+	Language, NodeOrToken, SyntaxNode,
 };
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
 #[derive(Clone, Copy, Debug)]
 pub struct Checkpoint(usize);
 
-/// A builder for a green tree.
-#[derive(Default, Debug)]
-pub struct GreenNodeBuilder<'cache> {
+/// A builder for a syntax tree.
+#[derive(Debug)]
+pub struct TreeBuilder<'cache, L: Language> {
 	cache: CowMut<'cache, NodeCache>,
-	parents: Vec<(SyntaxKind, usize)>,
+	parents: Vec<(L::Kind, usize)>,
 	children: Vec<(u64, GreenElement)>,
 }
 
-impl GreenNodeBuilder<'_> {
+impl<L: Language> Default for TreeBuilder<'_, L> {
+	fn default() -> Self {
+		Self {
+			cache: CowMut::default(),
+			parents: Vec::default(),
+			children: Vec::default(),
+		}
+	}
+}
+
+impl<L: Language> TreeBuilder<'_, L> {
 	/// Creates new builder.
-	pub fn new() -> GreenNodeBuilder<'static> {
-		GreenNodeBuilder::default()
+	pub fn new() -> TreeBuilder<'static, L> {
+		TreeBuilder::default()
 	}
 
-	/// Reusing `NodeCache` between different `GreenNodeBuilder`s saves memory.
+	/// Reusing `NodeCache` between different [TreeBuilder]`s saves memory.
 	/// It allows to structurally share underlying trees.
-	pub fn with_cache(cache: &mut NodeCache) -> GreenNodeBuilder<'_> {
-		GreenNodeBuilder {
+	pub fn with_cache(cache: &mut NodeCache) -> TreeBuilder<'_, L> {
+		TreeBuilder {
 			cache: CowMut::Borrowed(cache),
 			parents: Vec::new(),
 			children: Vec::new(),
@@ -34,14 +44,14 @@ impl GreenNodeBuilder<'_> {
 
 	/// Adds new token to the current branch.
 	#[inline]
-	pub fn token(&mut self, kind: SyntaxKind, text: &str) {
-		let (hash, token) = self.cache.token(kind, text);
+	pub fn token(&mut self, kind: L::Kind, text: &str) {
+		let (hash, token) = self.cache.token(L::kind_to_raw(kind), text);
 		self.children.push((hash, token.into()));
 	}
 
 	/// Start new node and make it current.
 	#[inline]
-	pub fn start_node(&mut self, kind: SyntaxKind) {
+	pub fn start_node(&mut self, kind: L::Kind) {
 		let len = self.children.len();
 		self.parents.push((kind, len));
 	}
@@ -51,7 +61,9 @@ impl GreenNodeBuilder<'_> {
 	#[inline]
 	pub fn finish_node(&mut self) {
 		let (kind, first_child) = self.parents.pop().unwrap();
-		let (hash, node) = self.cache.node(kind, &mut self.children, first_child);
+		let (hash, node) = self
+			.cache
+			.node(L::kind_to_raw(kind), &mut self.children, first_child);
 		self.children.push((hash, node.into()));
 	}
 
@@ -61,7 +73,8 @@ impl GreenNodeBuilder<'_> {
 	/// `start_node_at`.
 	/// Example:
 	/// ```rust
-	/// # use rome_rowan::{GreenNodeBuilder, SyntaxKind};
+	/// # use rome_rowan::{TreeBuilder, SyntaxKind};
+	/// # use rome_rowan::api::RawLanguage;
 	/// # const PLUS: SyntaxKind = SyntaxKind(0);
 	/// # const OPERATION: SyntaxKind = SyntaxKind(1);
 	/// # struct Parser;
@@ -69,7 +82,7 @@ impl GreenNodeBuilder<'_> {
 	/// #     fn peek(&self) -> Option<SyntaxKind> { None }
 	/// #     fn parse_expr(&mut self) {}
 	/// # }
-	/// # let mut builder = GreenNodeBuilder::new();
+	/// # let mut builder = TreeBuilder::<'_, RawLanguage>::new();
 	/// # let mut parser = Parser;
 	/// let checkpoint = builder.checkpoint();
 	/// parser.parse_expr();
@@ -88,7 +101,7 @@ impl GreenNodeBuilder<'_> {
 	/// Wrap the previous branch marked by `checkpoint` in a new branch and
 	/// make it current.
 	#[inline]
-	pub fn start_node_at(&mut self, checkpoint: Checkpoint, kind: SyntaxKind) {
+	pub fn start_node_at(&mut self, checkpoint: Checkpoint, kind: L::Kind) {
 		let Checkpoint(checkpoint) = checkpoint;
 		assert!(
 			checkpoint <= self.children.len(),
@@ -109,10 +122,10 @@ impl GreenNodeBuilder<'_> {
 	/// `start_node_at` and `finish_node` calls
 	/// are paired!
 	#[inline]
-	pub fn finish(mut self) -> GreenNode {
+	pub fn finish(mut self) -> SyntaxNode<L> {
 		assert_eq!(self.children.len(), 1);
 		match self.children.pop().unwrap().1 {
-			NodeOrToken::Node(node) => node,
+			NodeOrToken::Node(node) => SyntaxNode::new_root(node),
 			NodeOrToken::Token(_) => panic!(),
 		}
 	}

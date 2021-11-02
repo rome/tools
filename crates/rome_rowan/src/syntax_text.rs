@@ -274,18 +274,17 @@ mod private {
 
 #[cfg(test)]
 mod tests {
-	use crate::{green::SyntaxKind, GreenNodeBuilder};
+	use crate::api::RawLanguage;
+	use crate::{SyntaxKind, SyntaxNode, TreeBuilder};
 
-	use super::*;
-
-	fn build_tree(chunks: &[&str]) -> SyntaxNode {
-		let mut builder = GreenNodeBuilder::new();
-		builder.start_node(SyntaxKind(62));
+	fn build_tree(chunks: &[&str]) -> SyntaxNode<RawLanguage> {
+		let mut builder = TreeBuilder::<'_, RawLanguage>::new();
+		builder.start_node(SyntaxKind(1));
 		for &chunk in chunks.iter() {
-			builder.token(SyntaxKind(92), chunk)
+			builder.token(SyntaxKind(2), chunk)
 		}
 		builder.finish_node();
-		SyntaxNode::new_root(builder.finish())
+		builder.finish()
 	}
 
 	#[test]

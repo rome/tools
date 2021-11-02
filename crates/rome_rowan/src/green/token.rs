@@ -22,7 +22,7 @@ struct GreenTokenHead {
 type Repr = HeaderSlice<GreenTokenHead, [u8]>;
 type ReprThin = HeaderSlice<GreenTokenHead, [u8; 0]>;
 #[repr(transparent)]
-pub struct GreenTokenData {
+pub(crate) struct GreenTokenData {
 	data: ReprThin,
 }
 
@@ -35,7 +35,7 @@ impl PartialEq for GreenTokenData {
 /// Leaf node in the immutable tree.
 #[derive(PartialEq, Eq, Hash, Clone)]
 #[repr(transparent)]
-pub struct GreenToken {
+pub(crate) struct GreenToken {
 	ptr: ThinArc<GreenTokenHead, u8>,
 }
 

@@ -62,12 +62,9 @@ use crate::*;
 /// let (events, errors) = parser.finish();
 /// process(&mut sink, events, errors);
 ///
-/// let (green, errors) = sink.finish();
+/// let (untyped_node, errors) = sink.finish();
 ///
 /// assert!(errors.is_empty());
-///
-/// // Make a new SyntaxNode from the green node
-/// let untyped_node = SyntaxNode::new_root(green);
 ///
 /// assert!(GroupingExpr::can_cast(untyped_node.kind()));
 ///
@@ -151,12 +148,12 @@ impl<'t> Parser<'t> {
 		self.nth_tok(0)
 	}
 
-	/// Look ahead at a token and get its kind, **The max lookahead is 4**.  
+	/// Look ahead at a token and get its kind, **The max lookahead is 4**.
 	pub fn nth(&self, n: usize) -> SyntaxKind {
 		self.tokens.lookahead_nth(n).kind
 	}
 
-	/// Look ahead at a token, **The max lookahead is 4**.  
+	/// Look ahead at a token, **The max lookahead is 4**.
 	pub fn nth_tok(&self, n: usize) -> Token {
 		self.overflow_check();
 		self.tokens.lookahead_nth(n)
@@ -368,8 +365,7 @@ impl<'t> Parser<'t> {
 		let mut sink =
 			LosslessTreeSink::with_offset(self.tokens.source(), self.tokens.raw_tokens, start);
 		process(&mut sink, events, vec![]);
-		T::cast(SyntaxNode::new_root(sink.finish().0))
-			.expect("Marker was parsed to the wrong ast node")
+		T::cast(sink.finish().0).expect("Marker was parsed to the wrong ast node")
 	}
 
 	/// Get the source code of a range

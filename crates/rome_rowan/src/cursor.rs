@@ -145,9 +145,9 @@ unsafe impl sll::Elem for NodeData {
 	}
 }
 
-pub type SyntaxElement = NodeOrToken<SyntaxNode, SyntaxToken>;
+pub(crate) type SyntaxElement = NodeOrToken<SyntaxNode, SyntaxToken>;
 
-pub struct SyntaxNode {
+pub(crate) struct SyntaxNode {
 	ptr: ptr::NonNull<NodeData>,
 }
 
@@ -169,7 +169,7 @@ impl Drop for SyntaxNode {
 }
 
 #[derive(Debug)]
-pub struct SyntaxToken {
+pub(crate) struct SyntaxToken {
 	ptr: ptr::NonNull<NodeData>,
 }
 
@@ -544,7 +544,7 @@ impl NodeData {
 }
 
 impl SyntaxNode {
-	pub fn new_root(green: GreenNode) -> SyntaxNode {
+	pub(crate) fn new_root(green: GreenNode) -> SyntaxNode {
 		let green = GreenNode::into_raw(green);
 		let green = Green::Node {
 			ptr: Cell::new(green),
@@ -554,7 +554,7 @@ impl SyntaxNode {
 		}
 	}
 
-	pub fn new_root_mut(green: GreenNode) -> SyntaxNode {
+	pub(crate) fn new_root_mut(green: GreenNode) -> SyntaxNode {
 		let green = GreenNode::into_raw(green);
 		let green = Green::Node {
 			ptr: Cell::new(green),
@@ -599,19 +599,6 @@ impl SyntaxNode {
 		unsafe { self.ptr.as_ref() }
 	}
 
-	pub fn replace_with(&self, replacement: GreenNode) -> GreenNode {
-		assert_eq!(self.kind(), replacement.kind());
-		match &self.parent() {
-			None => replacement,
-			Some(parent) => {
-				let new_parent = parent
-					.green_ref()
-					.replace_child(self.data().index() as usize, replacement.into());
-				parent.replace_with(new_parent)
-			}
-		}
-	}
-
 	#[inline]
 	pub fn kind(&self) -> SyntaxKind {
 		self.data().kind()
@@ -638,7 +625,7 @@ impl SyntaxNode {
 	}
 
 	#[inline]
-	pub fn green(&self) -> Cow<'_, GreenNodeData> {
+	pub(crate) fn green(&self) -> Cow<'_, GreenNodeData> {
 		let green_ref = self.green_ref();
 		match self.data().mutable {
 			false => Cow::Borrowed(green_ref),
@@ -916,17 +903,6 @@ impl SyntaxToken {
 		unsafe { self.ptr.as_ref() }
 	}
 
-	pub fn replace_with(&self, replacement: GreenToken) -> GreenNode {
-		assert_eq!(self.kind(), replacement.kind());
-		let parent = self.parent().unwrap();
-		let me: u32 = self.data().index();
-
-		let new_parent = parent
-			.green_ref()
-			.replace_child(me as usize, replacement.into());
-		parent.replace_with(new_parent)
-	}
-
 	#[inline]
 	pub fn kind(&self) -> SyntaxKind {
 		self.data().kind()
@@ -955,11 +931,6 @@ impl SyntaxToken {
 				""
 			}
 		}
-	}
-
-	#[inline]
-	pub fn green(&self) -> &GreenTokenData {
-		self.data().green().into_token().unwrap()
 	}
 
 	#[inline]
@@ -1197,7 +1168,7 @@ impl From<SyntaxToken> for SyntaxElement {
 // region: iterators
 
 #[derive(Clone, Debug)]
-pub struct SyntaxNodeChildren {
+pub(crate) struct SyntaxNodeChildren {
 	next: Option<SyntaxNode>,
 }
 
@@ -1220,7 +1191,7 @@ impl Iterator for SyntaxNodeChildren {
 }
 
 #[derive(Clone, Debug)]
-pub struct SyntaxElementChildren {
+pub(crate) struct SyntaxElementChildren {
 	next: Option<SyntaxElement>,
 }
 
@@ -1242,7 +1213,7 @@ impl Iterator for SyntaxElementChildren {
 	}
 }
 
-pub struct Preorder {
+pub(crate) struct Preorder {
 	start: SyntaxNode,
 	next: Option<WalkEvent<SyntaxNode>>,
 	skip_subtree: bool,
@@ -1301,7 +1272,7 @@ impl Iterator for Preorder {
 	}
 }
 
-pub struct PreorderWithTokens {
+pub(crate) struct PreorderWithTokens {
 	start: SyntaxElement,
 	next: Option<WalkEvent<SyntaxElement>>,
 	skip_subtree: bool,

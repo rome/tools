@@ -1,9 +1,7 @@
 use crate::{
-	ast,
-	syntax_node::GreenNode,
-	AstNode, ParserError,
+	ast, AstNode, ParserError,
 	SyntaxKind::{self, *},
-	SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
+	SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
 use rslint_lexer::Token;
 use std::mem;
@@ -160,7 +158,7 @@ impl<'a> LosslessTreeSink<'a> {
 		panic!("Token start does not line up to a token or is out of bounds")
 	}
 
-	pub fn finish(mut self) -> (GreenNode, Vec<ParserError>) {
+	pub fn finish(mut self) -> (SyntaxNode, Vec<ParserError>) {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingFinish => {
 				self.eat_trivias();
