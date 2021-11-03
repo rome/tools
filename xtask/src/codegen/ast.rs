@@ -21,7 +21,7 @@ use crate::{
 use ungrammar::{Grammar, Rule, Token};
 
 pub fn generate_ast(mode: Mode) -> Result<()> {
-	let grammar_src = include_str!("../../js.ungram");
+	let grammar_src = include_str!("../../dummy.ungram");
 	let grammar: Grammar = grammar_src.parse().unwrap();
 	let ast = make_ast(&grammar);
 
@@ -81,7 +81,15 @@ fn handle_alternatives(grammar: &Grammar, rule: &Rule) -> Option<Vec<String>> {
 			let mut all_alternatives = vec![];
 			for alternative in alternatives {
 				match alternative {
-					Rule::Node(it) => all_alternatives.push(grammar[*it].name.clone()),
+					Rule::Node(it) => {
+						let rule = &grammar[*it].rule;
+						let name = &grammar[*it].name.clone();
+						dbg!(rule, name);
+						match rule {
+							Rule::Alt(rules) => for rule in rules {},
+							_ => all_alternatives.push(grammar[*it].name.clone()),
+						}
+					}
 					Rule::Token(it) if grammar[*it].name == ";" => (),
 					_ => return None,
 				}
@@ -90,6 +98,31 @@ fn handle_alternatives(grammar: &Grammar, rule: &Rule) -> Option<Vec<String>> {
 		}
 		_ => None,
 	}
+}
+
+fn push_to_variants(
+	variants: &mut Vec<String>,
+	alternatives: Vec<&Rule>,
+	grammar: &Grammar,
+	rule: &Rule,
+) -> Option<Vec<String>> {
+	for alternative in alternatives {
+		match alternative {
+			Rule::Node(it) => {
+				let rule = &grammar[*it].rule;
+				let name = &grammar[*it].name.clone();
+				dbg!(rule, name);
+				match rule {
+					Rule::Alt(rules) => for rule in rules {},
+					_ => variants.push(grammar[*it].name.clone()),
+				}
+			}
+			Rule::Token(it) if grammar[*it].name == ";" => (),
+			_ => return None,
+		}
+	}
+
+	Some(variants)
 }
 
 fn clean_token_name(grammar: &Grammar, token: &Token) -> String {
@@ -189,5 +222,32 @@ fn handle_tokens_in_unions(
 		token_kinds,
 	};
 	fields.push(field);
+	true
+}
+
+/// It flattens cases where there are unions of unions:
+///
+/// A = B | C
+/// B = D | E
+/// C = 'lorem'
+/// D = 'ipsum'
+/// E = 'foo'
+///
+/// This function should remove "B" and replace it with "D | E"
+fn handle_unions_of_unions(fields: &mut Vec<Field>, grammar: &Grammar, rule: &Rule) -> bool {
+	let rule = match rule {
+		Rule::Alt(it) => it,
+		_ => return false,
+	};
+
+	for rule in rule.iter() {
+		match rule {
+			Rule::Node(node) => {
+				dbg!(node);
+			}
+			_ => continue,
+		}
+	}
+
 	true
 }
