@@ -188,6 +188,8 @@ fn handle_tokens_in_unions(
 	let field = Field::Token {
 		name: label.to_string(),
 		token_kinds,
+		// TODO: review this, it's not correct
+		optional: false,
 	};
 	fields.push(field);
 	true

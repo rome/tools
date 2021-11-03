@@ -20,6 +20,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				Field::Token {
 					token_kinds: tokens,
 					name,
+					..
 				} => {
 					// TODO: make the mandatory/optional bit
 					let method_name = field.method_name();
@@ -34,10 +35,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 								support::find_token(&self.syntax, #tokens)
 							}
 						}
-					} else {
+					} else if is_optional {
 						quote! {
 							pub fn #method_name(&self) -> Option<SyntaxToken> {
-								support::token(&self.syntax, #token_kind)
+								support::as_optional_token(&self.syntax, #token_kind)
+							}
+						}
+					} else {
+						quote! {
+							pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
+								support::as_mandatory_token(&self.syntax, #token_kind)
 							}
 						}
 					}

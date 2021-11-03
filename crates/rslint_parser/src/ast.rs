@@ -247,15 +247,6 @@ mod support {
 			.find(|it| it.kind() == kind)
 			.ok_or_else(|| SyntaxError::MissingElement(parent.kind()))
 	}
-}
-
-/// Specific result used when navigating nodes using AST APIs
-pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
-
-#[derive(Debug)]
-pub enum SyntaxError {
-	/// Error thrown when a mandatory node is not found
-	MissingElement(SyntaxKind),
 
 	pub(super) fn find_token(
 		parent: &SyntaxNode,
@@ -270,4 +261,13 @@ pub enum SyntaxError {
 					.any(|possible_kind| *possible_kind == it.kind())
 			})
 	}
+}
+
+/// Specific result used when navigating nodes using AST APIs
+pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
+
+#[derive(Debug)]
+pub enum SyntaxError {
+	/// Error thrown when a mandatory node is not found
+	MissingElement(SyntaxKind),
 }
