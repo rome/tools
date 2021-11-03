@@ -268,19 +268,9 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 			}
 		}
 		Expr::ObjectExpr(expr) => {
-			// TODO replace with expr.props().trailing_comma()
-			if expr.has_trailing_comma() {
+			if let Some(trailing_comma) = expr.props().trailing_separator() {
 				// Untyped node machine go brr
-				let comma_range = expr
-					.props()
-					.last()
-					.unwrap()
-					.syntax()
-					.next_sibling_or_token()
-					.unwrap()
-					.into_token()
-					.unwrap()
-					.text_range();
+				let comma_range = trailing_comma.text_range();
 				let err = p
 					.err_builder("Illegal trailing comma in assignment target")
 					.primary(comma_range, "");

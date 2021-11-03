@@ -6,15 +6,17 @@
 //
 // Legend:
 //
-//   //          -- comment
-//   Name =      -- non-terminal definition
-//   'ident'     -- token (terminal)
-//   A B         -- sequence
-//   A | B       -- alternation
-//   A*          -- zero or more repetition
-//   A?          -- zero or one repetition
-//   (A)         -- same as A
-//   label:A     -- suggested name for field of AST node
+//   //          				-- comment
+//   Name =      				-- non-terminal definition
+//   'ident'     				-- token (terminal)
+//   A B         				-- sequence
+//   A | B       				-- alternation
+//   A*          				-- zero or more repetition
+//   (A (',' A)* ','?)	        -- repetition of node A separated by ',' and allowing a trailing comma
+//   (A (',' A)*)	            -- repetition of node A separated by ',' without a trailing comma
+//   A?          				-- zero or one repetition
+//   (A)         				-- same as A
+//   label:A     				-- suggested name for field of AST node
 
 // NOTES
 //
@@ -273,7 +275,7 @@ ArrowExprParams =
 	| ParameterList
 
 // Object expression
-ObjectExpr = '{' props:ObjectProp* '}'
+ObjectExpr = '{' props:(ObjectProp (',' ObjectProp)* ','?) '}'
 
 // class expression
 ClassExpr =
@@ -309,7 +311,7 @@ Constructor =
 
 
 ConstructorParameters =
-		'(' parameters:ConstructorParamOrPat* ')'
+		'(' parameters:(ConstructorParamOrPat (',' ConstructorParamOrPat)* ','?) ')'
 
 
 ConstructorParamOrPat =
@@ -360,8 +362,7 @@ PatternOrExpr = Pattern | Expr
 
 // sequence expression
 SequenceExpr =
-	// @ematipico correct grammar should be "exprs: (Expr (',' Expr)*)"
-	exprs:Expr*
+	exprs:(Expr (',' Expr)*)
 	BinExpr
 
 
@@ -410,8 +411,8 @@ ExprOrBlock =
 	Expr
 	| BlockStmt
 
-ParameterList = '(' parameters:Pattern* ')'
-ArgList = '(' args:Expr* ')'
+ParameterList = '(' parameters:(Pattern (',' Pattern)* ','?) ')'
+ArgList = '(' args:(Expr (',' Expr)* ','?) ')'
 
 
 ///////////////
@@ -438,7 +439,7 @@ RestPattern = '...' pat:Pattern
 ArrayPattern = '[' elements:Pattern* ']' '!' ':' ty:TsType
 
 // object pattern
-ObjectPattern = '{' elements:ObjectPatternProp* '}'
+ObjectPattern = '{' elements:(ObjectPatternProp (',' ObjectPatternProp)* ','?) '}'
 
 // object pattern prop
 ObjectPatternProp =
@@ -555,7 +556,7 @@ FnDecl =
 	return_type:TsType?
 	body:BlockStmt
 
-VarDecl = ('var' | 'const' | manual__:'let') declared:Declarator* ';'?
+VarDecl = ('var' | 'const' | manual__:'let') declared:(Declarator (',' Declarator)*) ';'?
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
 ClassDecl  = 'class' Name ('extends' parent:NameRef)? body:ClassBody
@@ -621,7 +622,7 @@ ImportClause =
 	| ImportStringSpecifier
 
 
-NamedImports = '{' specifiers:Specifier* '}'
+NamedImports = '{' specifiers:(Specifier (',' Specifier)* ','?) '}'
 
 
 Specifier = name:Ident manual__:'as'? manual__alias:Name
@@ -633,8 +634,8 @@ ImportStringSpecifier = 'string'
 
 WildcardImport = '*' 'as'? Ident?
 
-// @ematipico this one is not entirly correct I think..
-ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:Specifier* '}'
+// @ematipico this one is not entirely correct I think..
+ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
 
 ///////////////
 // TYPESCRIPT

@@ -165,7 +165,7 @@ fn handle_rule(
 		}
 
 		Rule::Seq(rules) => {
-			if lower_comma_list(fields, grammar, label, rules) {
+			if lower_comma_list(fields, grammar, label, rules.as_slice()) {
 				return;
 			}
 
@@ -180,13 +180,14 @@ fn handle_rule(
 		acc: &mut Vec<Field>,
 		grammar: &Grammar,
 		label: Option<&String>,
-		rules: &Vec<Rule>,
+		rules: &[Rule],
 	) -> bool {
 		// Does it match (T * ',')?
-		let (node, repeat, trailing_separator) = match rules.as_slice() {
+		let (node, repeat, trailing_separator) = match rules {
 			[Rule::Node(node), Rule::Rep(repeat), Rule::Opt(trailing_separator)] => {
-				(node, repeat, trailing_separator)
+				(node, repeat, Some(trailing_separator))
 			}
+			[Rule::Node(node), Rule::Rep(repeat)] => (node, repeat, None),
 			_ => return false,
 		};
 
@@ -198,7 +199,17 @@ fn handle_rule(
 
 		// Does the repeat match (token node))
 		match repeat.as_slice() {
-			[comma, Rule::Node(n)] if comma == &**trailing_separator && n == node => (),
+			[comma, Rule::Node(n)] => {
+				let separator_matches_trailing = if let Some(trailing) = trailing_separator {
+					&**trailing == comma
+				} else {
+					true
+				};
+
+				if n != node || !separator_matches_trailing {
+					return false;
+				}
+			}
 			_ => return false,
 		}
 

@@ -191,6 +191,8 @@ pub struct AstSeparatedElement<N> {
 	trailing_separator: Option<SyntaxToken>,
 }
 
+/// List of nodes where every two nodes are separated by a token.
+/// For example, the elements of an array where every two elements are separated by a comma token.
 #[derive(Debug, Clone)]
 pub struct AstSeparatedList<N> {
 	list: SyntaxList,
@@ -254,7 +256,7 @@ pub struct AstSeparatedListElementsIterator<N> {
 }
 
 impl<N> AstSeparatedListElementsIterator<N> {
-	// TODO 1724: Replace with call to next once trivia are no longer stored in tokens.
+	// TODO 1724: Replace with call to next once trivia are no longer stored in tokens and errors are part of the union types.
 	fn next_non_trivia_or_error(&mut self) -> Option<SyntaxElement> {
 		self.next.find_map(|element| match &element {
 			NodeOrToken::Node(node) => {
@@ -282,14 +284,21 @@ impl<N: AstNode> Iterator for AstSeparatedListElementsIterator<N> {
 		let node_or_token = self.next_non_trivia_or_error()?;
 
 		let element = match node_or_token {
-			// The node for this element is missing if there's right a separator token
+			// The node for this element is missing if the next child is a token instead of a node.
 			NodeOrToken::Token(token) => panic!(
 				"Missing element in separated list, found {:?} token instead",
 				token
 			),
 			NodeOrToken::Node(node) => {
-				let separator = self.next.next().map(|element| {
-					element.into_token().expect("Expected separator but found node. Two nodes must always be separated by a separator token.")
+				let separator = self.next.find_map(|element| {
+					match element {
+						NodeOrToken::Node(_) => panic!("Expected separator but found node. Two nodes must always be separated by a separator token."),
+						NodeOrToken::Token(token) => if token.kind().is_trivia() {
+							None
+						} else {
+							Some(token)
+						}
+					}
 				});
 
 				AstSeparatedElement {
@@ -347,9 +356,12 @@ pub enum SyntaxError {
 }
 
 mod support {
-	use super::{AstNode, AstNodeList, SyntaxElementChildren, SyntaxKind, SyntaxNode, SyntaxToken};
+	use super::{
+		AstNode, AstNodeList, AstSeparatedList, SyntaxElementChildren, SyntaxKind, SyntaxNode,
+		SyntaxToken,
+	};
 	use crate::ast::AstChildren;
-	use crate::{AstSeparatedList, SyntaxList};
+	use crate::SyntaxList;
 	use crate::{SyntaxError, SyntaxResult};
 
 	// TODO: #1725 remove once API are set in stone
@@ -505,6 +517,19 @@ mod tests {
 	}
 
 	#[test]
+	fn empty() {
+		let list = build_list(vec![]);
+
+		assert_eq!(list.len(), 0);
+		assert!(list.is_empty());
+		assert_eq!(list.separators().count(), 0);
+
+		assert_nodes(list.iter(), vec![]);
+		assert_elements(list.elements(), vec![]);
+		assert_eq!(list.trailing_separator(), None);
+	}
+
+	#[test]
 	fn separated_list() {
 		let list = build_list(vec![
 			(Some(1), Some(",")),
@@ -564,6 +589,19 @@ mod tests {
 	fn separated_with_two_successive_separators() {
 		// list([1,,])
 		let list = build_list(vec![(Some(1), Some(",")), (None, Some(","))]);
+
+		// This should panic because having two successive separators is invalid.
+		// Grammars should instead model a "hole" node if this is a valid language construct.
+		let _ = list.elements().collect::<Vec<_>>();
+	}
+
+	#[test]
+	#[should_panic(
+		expected = "Missing element in separated list, found COMMA@0..1 \",\" token instead"
+	)]
+	fn separated_with_leading_separator() {
+		// list([,3])
+		let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
 
 		// This should panic because having two successive separators is invalid.
 		// Grammars should instead model a "hole" node if this is a valid language construct.
