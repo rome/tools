@@ -1,8 +1,8 @@
 use std::{fmt, iter, marker::PhantomData, ops::Range};
 
 use crate::{
-	cursor, Direction, GreenNode, NodeOrToken, SyntaxKind, SyntaxText, TextRange, TextSize,
-	TokenAtOffset, WalkEvent,
+	cursor, green::GreenTokenTrivia, Direction, GreenNode, NodeOrToken, SyntaxKind, SyntaxText,
+	TextRange, TextSize, TokenAtOffset, WalkEvent,
 };
 
 pub trait Language: Sized + Clone + Copy + fmt::Debug + Eq + Ord + std::hash::Hash {
@@ -59,9 +59,14 @@ impl<L: Language> fmt::Debug for SyntaxNode<L> {
 						match element {
 							NodeOrToken::Node(node) => writeln!(f, "{:?}", node)?,
 							NodeOrToken::Token(token) => {
-								let g = token.green();
-								writeln!(f, "{:?} {:?} {:?}", g.leading(), token, g.trailing())?;
-							},
+								writeln!(
+									f,
+									"{:?} {:?} {:?}",
+									token.leading(),
+									token,
+									token.trailing()
+								)?;
+							}
 						}
 						level += 1;
 					}
@@ -350,6 +355,16 @@ impl<L: Language> SyntaxToken<L> {
 
 	pub fn detach(&self) {
 		self.raw.detach()
+	}
+
+	//TODO we don't wanna Green stuff leaking here
+	// should we return &str?
+	pub fn leading(&self) -> &[GreenTokenTrivia] {
+		self.raw.leading()
+	}
+
+	pub fn trailing(&self) -> &[GreenTokenTrivia] {
+		self.raw.trailing()
 	}
 }
 

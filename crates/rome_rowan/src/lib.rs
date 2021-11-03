@@ -39,4 +39,7 @@ pub use crate::{
 	utility_types::{Direction, NodeOrToken, TokenAtOffset, WalkEvent},
 };
 
+//TODO
+pub use crate::green::GreenTokenTrivia;
+
 pub(crate) use crate::green::{GreenNode, GreenNodeData, GreenToken, GreenTokenData};

@@ -1,7 +1,7 @@
 use crate::{
 	cow_mut::CowMut,
-	green::{GreenElement, NodeCache},
-	GreenNode, Language, NodeOrToken, SyntaxNode,
+	green::{GreenElement, GreenTokenTrivia, NodeCache},
+	GreenNode, Language, Language, NodeOrToken, NodeOrToken, SyntaxNode, SyntaxNode,
 };
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
@@ -55,6 +55,22 @@ impl<L: Language> TreeBuilder<'_, L> {
 	#[inline]
 	pub fn missing(&mut self) {
 		self.children.push(NodeCache::empty());
+	}
+
+	// Adds new token to the current branch.
+	// TODO we don't wanna Green stuff leaking here.
+	#[inline]
+	pub fn token_with_trivia(
+		&mut self,
+		kind: L::Kind,
+		text: &str,
+		leading: Vec<GreenTokenTrivia>,
+		trailing: Vec<GreenTokenTrivia>,
+	) {
+		let (hash, token) =
+			self.cache
+				.token_with_trivia(L::kind_to_raw(kind), text, leading, trailing);
+		self.children.push((hash, token.into()));
 	}
 
 	/// Start new node and make it current.

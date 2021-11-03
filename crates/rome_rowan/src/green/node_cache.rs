@@ -147,7 +147,11 @@ impl NodeCache {
 		(hash, node)
 	}
 
-	pub(crate) fn token(
+	pub(crate) fn token(&mut self, kind: SyntaxKind, text: &str) -> (u64, GreenToken) {
+		self.token_with_trivia(kind, text, vec![], vec![])
+	}
+
+	pub(crate) fn token_with_trivia(
 		&mut self,
 		kind: SyntaxKind,
 		text: &str,

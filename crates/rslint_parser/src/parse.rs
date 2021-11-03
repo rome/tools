@@ -191,15 +191,14 @@ pub fn test_trivia_attached_to_tokens() {
 	let mut tree_sink = LosslessTreeSink::new(text, &tokens);
 	crate::process(&mut tree_sink, events, errors);
 
-	let (green, parse_errors) = tree_sink.finish();
+	let (syntax, parse_errors) = tree_sink.finish();
 
-	let syntax = SyntaxNode::new_root(green);
 	for item in syntax.descendants_with_tokens() {
 		// println!("{}{:?}", "\t".repeat(token.ancestors().count() - 1), item);
 		let qty = item.ancestors().count() - 1;
 		match item {
-			NodeOrToken::Node(n) => println!("{}{:?}", "\t".repeat(qty), n.green()),
-			NodeOrToken::Token(t) => println!("{}{:?}", "\t".repeat(qty), t.green()),
+			NodeOrToken::Node(n) => println!("{}{:?}", "\t".repeat(qty), n),
+			NodeOrToken::Token(t) => println!("{}{:?}", "\t".repeat(qty), t),
 		}
 	}
 

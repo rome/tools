@@ -46,7 +46,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 		let text = &self.text[range];
 		self.text_pos += len;
 		self.token_pos += amount as usize;
-		self.inner.token(kind, text, vec![], vec![]);
+		self.inner.token(kind, text);
 	}
 
 	fn token(&mut self, kind: SyntaxKind) {
@@ -166,7 +166,7 @@ impl<'a> LosslessTreeSink<'a> {
 			.map(|x| rome_rowan::GreenTokenTrivia::Whitespace)
 			.collect();
 
-		self.inner.token(kind, text, leading, trailing);
+		self.inner.token_with_trivia(kind, text, leading, trailing);
 	}
 
 	fn get_trivia(&mut self, break_on_newline: bool) -> Vec<Token> {

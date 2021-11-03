@@ -42,7 +42,7 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 		let text = &self.text[range];
 		self.text_pos += len;
 		self.token_pos += amount as usize;
-		self.inner.token(kind, text, vec![], vec![]);
+		self.inner.token(kind, text);
 	}
 
 	fn token(&mut self, kind: SyntaxKind) {
@@ -170,7 +170,7 @@ impl<'a> LossyTreeSink<'a> {
 		self.text_pos += len;
 		self.token_pos += 1;
 		if !skip {
-			self.inner.token(kind, text, vec![], vec![]);
+			self.inner.token(kind, text);
 		}
 	}
 }

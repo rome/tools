@@ -993,6 +993,22 @@ impl SyntaxToken {
 		assert!(self.data().mutable, "immutable tree: {}", self);
 		self.data().detach()
 	}
+
+	pub fn leading(&self) -> &[crate::GreenTokenTrivia] {
+		let g = self.data().green();
+		match g {
+			NodeOrToken::Node(_) => unreachable!("SyntaxToken should not point to a GreenNode"),
+			NodeOrToken::Token(t) => t.leading(),
+		}
+	}
+
+	pub fn trailing(&self) -> &[crate::GreenTokenTrivia] {
+		let g = self.data().green();
+		match g {
+			NodeOrToken::Node(_) => unreachable!("SyntaxToken should not point to a GreenNode"),
+			NodeOrToken::Token(t) => t.trailing(),
+		}
+	}
 }
 
 impl SyntaxElement {
