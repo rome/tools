@@ -33,7 +33,7 @@ pub enum Mode {
 /// With verify = false,
 fn update(path: &Path, contents: &str, mode: Mode) -> Result<()> {
 	match fs2::read_to_string(path) {
-		Ok(old_contents) if normalize(&old_contents) == normalize(contents) => {
+		Ok(old_contents) if old_contents == contents => {
 			return Ok(());
 		}
 		_ => (),
@@ -43,11 +43,7 @@ fn update(path: &Path, contents: &str, mode: Mode) -> Result<()> {
 	}
 	eprintln!("updating {}", path.display());
 	fs2::write(path, contents)?;
-	return Ok(());
-
-	fn normalize(s: &str) -> String {
-		s.replace("\r\n", "\n")
-	}
+	Ok(())
 }
 
 pub fn to_upper_snake_case(s: &str) -> String {
