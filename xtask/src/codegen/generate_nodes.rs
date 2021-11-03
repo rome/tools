@@ -223,19 +223,21 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		});
 
 	let ast = quote! {
+	#![allow(clippy::enum_variant_names)]
+
 	use crate::{
 		ast::*,
 		SyntaxKind::{self, *},
 		SyntaxNode, SyntaxToken, T,
 	};
-			#[allow(clippy::enum_variant_names)]
 
-			#(#node_defs)*
-			#(#enum_defs)*
-			#(#node_boilerplate_impls)*
-			#(#enum_boilerplate_impls)*
-			#(#display_impls)*
-		};
+
+		#(#node_defs)*
+		#(#enum_defs)*
+		#(#node_boilerplate_impls)*
+		#(#enum_boilerplate_impls)*
+		#(#display_impls)*
+	};
 
 	let ast = ast
 		.to_string()

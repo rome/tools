@@ -56,7 +56,6 @@ impl ToFormatElement for ForHead {
 			ForHead::NameRef(name_ref) => name_ref.to_format_element(formatter),
 			ForHead::ArrowExpr(node) => node.to_format_element(formatter),
 			ForHead::Template(_) => todo!(),
-			ForHead::NameRef(node) => node.to_format_element(formatter),
 			ForHead::ThisExpr(_) => todo!(),
 			ForHead::ArrayExpr(node) => node.to_format_element(formatter),
 			ForHead::ObjectExpr(node) => node.to_format_element(formatter),

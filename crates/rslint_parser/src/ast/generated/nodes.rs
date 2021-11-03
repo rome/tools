@@ -1,11 +1,11 @@
 //! Generated file, do not edit by hand, see `xtask/src/codegen`
 
+#![allow(clippy::enum_variant_names)]
 use crate::{
 	ast::*,
 	SyntaxKind::{self, *},
 	SyntaxNode, SyntaxToken, T,
 };
-#[allow(clippy::enum_variant_names)]
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Ident {
 	pub(crate) syntax: SyntaxNode,

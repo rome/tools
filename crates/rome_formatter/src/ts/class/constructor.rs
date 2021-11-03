@@ -39,7 +39,12 @@ impl ToFormatElement for ConstructorParamOrPat {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		match self {
 			ConstructorParamOrPat::TsConstructorParam(_) => todo!(),
-			ConstructorParamOrPat::Pattern(pattern) => pattern.to_format_element(formatter),
+			ConstructorParamOrPat::SinglePattern(pattern) => pattern.to_format_element(formatter),
+			ConstructorParamOrPat::RestPattern(_) => todo!(),
+			ConstructorParamOrPat::AssignPattern(pattern) => pattern.to_format_element(formatter),
+			ConstructorParamOrPat::ObjectPattern(_) => todo!(),
+			ConstructorParamOrPat::ArrayPattern(pattern) => pattern.to_format_element(formatter),
+			ConstructorParamOrPat::ExprPattern(_) => todo!(),
 		}
 	}
 }
