@@ -1,40 +1,45 @@
 MODULE@0..48
-  VAR_DECL@0..47
-    IDENT@0..3 "let"
-    WHITESPACE@3..4 " "
-    DECLARATOR@4..47
-      SINGLE_PATTERN@4..5
-        NAME@4..5
-          IDENT@4..5 "a"
-      WHITESPACE@5..6 " "
-      EQ@6..7 "="
-      WHITESPACE@7..8 " "
-      OBJECT_EXPR@8..47
-        L_CURLY@8..9 "{"
-        WHITESPACE@9..12 "\n  "
-        GETTER@12..45
-          GET_KW@12..15 "get"
-          WHITESPACE@15..16 " "
-          COMPUTED_PROPERTY_NAME@16..21
-            L_BRACK@16..17 "["
-            NAME_REF@17..20
-              IDENT@17..20 "foo"
-            R_BRACK@20..21 "]"
-          PARAMETER_LIST@21..23
-            L_PAREN@21..22 "("
-            R_PAREN@22..23 ")"
-          WHITESPACE@23..24 " "
-          BLOCK_STMT@24..45
-            L_CURLY@24..25 "{"
-            WHITESPACE@25..30 "\n    "
-            RETURN_STMT@30..41
-              RETURN_KW@30..36 "return"
-              WHITESPACE@36..37 " "
-              NAME_REF@37..40
-                IDENT@37..40 "foo"
-              SEMICOLON@40..41 ";"
-            WHITESPACE@41..44 "\n  "
-            R_CURLY@44..45 "}"
-        WHITESPACE@45..46 "\n"
-        R_CURLY@46..47 "}"
+  LIST@0..47
+    VAR_DECL@0..47
+      IDENT@0..3 "let"
+      WHITESPACE@3..4 " "
+      LIST@4..47
+        DECLARATOR@4..47
+          SINGLE_PATTERN@4..5
+            NAME@4..5
+              IDENT@4..5 "a"
+          WHITESPACE@5..6 " "
+          EQ@6..7 "="
+          WHITESPACE@7..8 " "
+          OBJECT_EXPR@8..47
+            L_CURLY@8..9 "{"
+            WHITESPACE@9..12 "\n  "
+            LIST@12..45
+              GETTER@12..45
+                GET_KW@12..15 "get"
+                WHITESPACE@15..16 " "
+                COMPUTED_PROPERTY_NAME@16..21
+                  L_BRACK@16..17 "["
+                  NAME_REF@17..20
+                    IDENT@17..20 "foo"
+                  R_BRACK@20..21 "]"
+                PARAMETER_LIST@21..23
+                  L_PAREN@21..22 "("
+                  LIST@22..22
+                  R_PAREN@22..23 ")"
+                WHITESPACE@23..24 " "
+                BLOCK_STMT@24..45
+                  L_CURLY@24..25 "{"
+                  WHITESPACE@25..30 "\n    "
+                  LIST@30..41
+                    RETURN_STMT@30..41
+                      RETURN_KW@30..36 "return"
+                      WHITESPACE@36..37 " "
+                      NAME_REF@37..40
+                        IDENT@37..40 "foo"
+                      SEMICOLON@40..41 ";"
+                  WHITESPACE@41..44 "\n  "
+                  R_CURLY@44..45 "}"
+            WHITESPACE@45..46 "\n"
+            R_CURLY@46..47 "}"
   WHITESPACE@47..48 "\n"
