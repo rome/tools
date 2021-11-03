@@ -2,7 +2,7 @@ use crate::{token, FormatElement, Formatter, ToFormatElement};
 use rslint_parser::ast::String as JsString;
 
 impl ToFormatElement for JsString {
-	fn to_format_element(&self, _formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, _formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let mut content = self.to_string();
 
 		// uses single quotes

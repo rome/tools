@@ -2,7 +2,7 @@ use crate::{empty_element, format_elements, FormatElement, Formatter, ToFormatEl
 use rslint_parser::ast::AssignPattern;
 
 impl ToFormatElement for AssignPattern {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let key = if let Some(key) = self.key() {
 			formatter.format_node(key)?
 		} else {

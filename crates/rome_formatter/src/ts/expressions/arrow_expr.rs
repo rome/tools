@@ -1,11 +1,12 @@
 use rslint_parser::ast::{ArrowExpr, ArrowExprParams};
 
 use crate::{
-	concat_elements, format_elements, space_token, token, FormatElement, Formatter, ToFormatElement,
+	concat_elements, format_elements, space_token, token, FormatElement, FormatError, Formatter,
+	ToFormatElement,
 };
 
 impl ToFormatElement for ArrowExpr {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let mut tokens: Vec<FormatElement> = vec![];
 
 		if let Some(async_token) = self.async_token() {
@@ -15,20 +16,26 @@ impl ToFormatElement for ArrowExpr {
 			));
 		}
 
-		match self.params()? {
-			ArrowExprParams::Name(name) => {
-				tokens.push(token("("));
-				tokens.push(formatter.format_node(name)?);
-				tokens.push(token(")"));
+		if let Some(params) = self.params() {
+			match params {
+				ArrowExprParams::Name(name) => {
+					tokens.push(token("("));
+					tokens.push(formatter.format_node(name)?);
+					tokens.push(token(")"));
+				}
+				ArrowExprParams::ParameterList(params) => {
+					tokens.push(formatter.format_node(params)?)
+				}
 			}
-			ArrowExprParams::ParameterList(params) => tokens.push(formatter.format_node(params)?),
 		}
 
 		tokens.push(space_token());
 		tokens.push(formatter.format_token(&self.fat_arrow_token()?)?);
 		tokens.push(space_token());
-		tokens.push(formatter.format_node(self.body()?)?);
+		if let Some(body) = self.body() {
+			tokens.push(formatter.format_node(body)?);
+		}
 
-		Some(concat_elements(tokens))
+		Ok(concat_elements(tokens))
 	}
 }

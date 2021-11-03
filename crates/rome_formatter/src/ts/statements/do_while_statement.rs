@@ -2,7 +2,7 @@ use crate::{format_elements, space_token, token, FormatElement, Formatter, ToFor
 use rslint_parser::ast::DoWhileStmt;
 
 impl ToFormatElement for DoWhileStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let do_token = formatter.format_token(&self.do_token()?)?;
 
 		let condition = formatter.format_node(self.condition()?)?;

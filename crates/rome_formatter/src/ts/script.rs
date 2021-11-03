@@ -3,7 +3,7 @@ use crate::{format_elements, hard_line_break, FormatElement, Formatter, ToFormat
 use rslint_parser::ast::Script;
 
 impl ToFormatElement for Script {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let mut elements = vec![];
 
 		if let Some(shebang) = self.shebang_token() {

@@ -6,7 +6,7 @@ use crate::{
 };
 
 impl ToFormatElement for ForInStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let for_token = formatter.format_token(&self.for_token()?)?;
 		let l_paren = formatter.format_token(&self.l_paren_token()?)?;
 		let left = formatter.format_node(self.left()?)?;

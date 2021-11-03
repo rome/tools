@@ -4,7 +4,7 @@ use crate::{
 use rslint_parser::ast::Method;
 
 impl ToFormatElement for Method {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let private_token = if let Some(static_token) = self.static_token() {
 			format_elements![formatter.format_token(&static_token)?, space_token()]
 		} else {

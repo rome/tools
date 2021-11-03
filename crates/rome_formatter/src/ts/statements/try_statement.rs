@@ -4,7 +4,7 @@ use crate::{
 use rslint_parser::ast::{CatchClause, Finalizer, TryStmt};
 
 impl ToFormatElement for TryStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let try_token = formatter.format_token(&self.try_token()?)?;
 		let test = formatter.format_node(self.test()?)?;
 		let handler = if let Some(catch_clause) = self.handler() {
@@ -32,7 +32,7 @@ impl ToFormatElement for TryStmt {
 }
 
 impl ToFormatElement for Finalizer {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let cons = formatter.format_node(self.cons()?)?;
 		let finally = formatter.format_token(&self.finally_token()?)?;
 		Some(format_elements![finally, space_token(), cons])
@@ -40,7 +40,7 @@ impl ToFormatElement for Finalizer {
 }
 
 impl ToFormatElement for CatchClause {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let l_paren = self.l_paren_token();
 		let r_paren = self.r_paren_token();
 		let error = self.error();

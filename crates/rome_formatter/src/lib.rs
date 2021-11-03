@@ -59,6 +59,8 @@ mod ts;
 use crate::format_json::tokenize_json;
 
 pub use formatter::Formatter;
+use rslint_parser::SyntaxError;
+use rslint_parser::SyntaxKind;
 
 pub use format_element::{
 	block_indent, concat_elements, empty_element, group_elements, hard_line_break, if_group_breaks,
@@ -79,9 +81,19 @@ pub trait ToFormatElement {
 	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError>;
 }
 
+/// Series of errors encountered during formatting
 pub enum FormatError {
-	MissingNode,
+	/// Node is missing and it should be required for a correct formatting
+	MissingNode(SyntaxKind),
 	UnknownNode,
+}
+
+impl From<SyntaxError> for FormatError {
+	fn from(syntax_error: SyntaxError) -> Self {
+		match syntax_error {
+			SyntaxError::MissingElement(kind) => FormatError::MissingNode(kind),
+		}
+	}
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]

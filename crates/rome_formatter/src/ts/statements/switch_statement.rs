@@ -6,7 +6,7 @@ use crate::{
 use rslint_parser::ast::{CaseClause, DefaultClause, SwitchCase, SwitchStmt};
 
 impl ToFormatElement for SwitchStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let switch = formatter.format_token(&self.switch_token()?)?;
 		let condition = formatter.format_node(self.test()?)?;
 		let l_curly = formatter.format_token(&self.l_curly_token()?)?;
@@ -29,7 +29,7 @@ impl ToFormatElement for SwitchStmt {
 }
 
 impl ToFormatElement for SwitchCase {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		match self {
 			SwitchCase::CaseClause(case_clause) => case_clause.to_format_element(formatter),
 			SwitchCase::DefaultClause(default_clause) => {
@@ -40,7 +40,7 @@ impl ToFormatElement for SwitchCase {
 }
 
 impl ToFormatElement for DefaultClause {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let default = formatter.format_token(&self.default_token()?)?;
 		let colon = formatter.format_token(&self.colon_token()?)?;
 		let statements = format_statements(self.cons(), formatter);
@@ -56,7 +56,7 @@ impl ToFormatElement for DefaultClause {
 }
 
 impl ToFormatElement for CaseClause {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let case_word = formatter.format_token(&self.case_token()?)?;
 		let colon = formatter.format_token(&self.colon_token()?)?;
 

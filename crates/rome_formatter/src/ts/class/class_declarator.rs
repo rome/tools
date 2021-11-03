@@ -1,14 +1,14 @@
 use crate::{
 	block_indent, empty_element, format_elements, group_elements, hard_line_break, join_elements,
-	space_token, FormatElement, Formatter, ToFormatElement,
+	space_token, FormatElement, FormatError, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{ClassBody, ClassDecl, ClassElement, SuperCall};
 
 impl ToFormatElement for ClassDecl {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let class_token = formatter.format_token(&self.class_token()?)?;
 		let name = formatter.format_node(self.name()?)?;
-		let extends = if let Some(parent) = self.parent() {
+		let extends = if let Ok(parent) = self.parent() {
 			let extends_token = formatter.format_token(&self.extends_token()?)?;
 			format_elements![
 				extends_token,
@@ -22,7 +22,7 @@ impl ToFormatElement for ClassDecl {
 
 		let body = formatter.format_node(self.body()?)?;
 
-		Some(format_elements![
+		Ok(format_elements![
 			class_token,
 			space_token(),
 			name,
@@ -34,12 +34,12 @@ impl ToFormatElement for ClassDecl {
 }
 
 impl ToFormatElement for ClassBody {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let l_paren = formatter.format_token(&self.l_curly_token()?)?;
 		let elements = formatter.format_nodes(self.elements())?;
 		let r_paren = formatter.format_token(&self.r_curly_token()?)?;
 
-		Some(group_elements(format_elements![
+		Ok(group_elements(format_elements![
 			l_paren,
 			block_indent(join_elements(hard_line_break(), elements)),
 			r_paren
@@ -48,7 +48,7 @@ impl ToFormatElement for ClassBody {
 }
 
 impl ToFormatElement for ClassElement {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		match self {
 			ClassElement::EmptyStmt(empty_statement) => {
 				empty_statement.to_format_element(formatter)
@@ -65,9 +65,9 @@ impl ToFormatElement for ClassElement {
 }
 
 impl ToFormatElement for SuperCall {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let super_token = formatter.format_token(&self.super_token()?)?;
 		let arguments = formatter.format_node(self.arguments()?)?;
-		Some(format_elements![super_token, arguments])
+		Ok(format_elements![super_token, arguments])
 	}
 }

@@ -4,7 +4,7 @@ use crate::{
 use rslint_parser::ast::IfStmt;
 
 impl ToFormatElement for IfStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let mut result = format_elements![
 			group_elements(format_elements![
 				formatter.format_token(&self.if_token()?)?,

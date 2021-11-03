@@ -5,7 +5,7 @@ use crate::{
 use rslint_parser::ast::ParameterList;
 
 impl ToFormatElement for ParameterList {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let param_tokens = formatter.format_nodes(self.parameters())?;
 
 		Some(group_elements(format_elements![

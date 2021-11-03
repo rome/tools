@@ -7,7 +7,7 @@ use crate::{
 };
 
 impl ToFormatElement for BlockStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let stmts = format_statements(self.stmts(), formatter);
 
 		// Formatting of curly braces for an:

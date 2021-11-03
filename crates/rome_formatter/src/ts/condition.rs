@@ -4,7 +4,7 @@ use crate::{
 use rslint_parser::ast::Condition;
 
 impl ToFormatElement for Condition {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		Some(group_elements(format_elements![
 			formatter.format_token(&self.l_paren_token()?)?,
 			soft_indent(formatter.format_node(self.condition()?)?),
