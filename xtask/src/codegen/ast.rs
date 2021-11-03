@@ -239,4 +239,3 @@ fn handle_tokens_in_unions(
 	fields.push(field);
 	true
 }
-
