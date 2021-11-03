@@ -22,21 +22,18 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					let method_name = field.method_name();
 					let token_kind = field.token_kind();
 
-					match tokens {
-						Some(_) => {
-							let tokens = field.token_kinds().unwrap();
-							let method_name = format_ident!("{}", name);
-							quote! {
-								pub fn #method_name(&self) -> Option<SyntaxToken> {
-									support::find_token(&self.syntax, #tokens)
-								}
+					if !tokens.is_empty() {
+						let tokens = field.token_kinds().unwrap();
+						let method_name = format_ident!("{}", name);
+						quote! {
+							pub fn #method_name(&self) -> Option<SyntaxToken> {
+								support::find_token(&self.syntax, #tokens)
 							}
 						}
-						None => {
-							quote! {
-								pub fn #method_name(&self) -> Option<SyntaxToken> {
-									support::token(&self.syntax, #token_kind)
-								}
+					} else {
+						quote! {
+							pub fn #method_name(&self) -> Option<SyntaxToken> {
+								support::token(&self.syntax, #token_kind)
 							}
 						}
 					}

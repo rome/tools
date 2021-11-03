@@ -144,7 +144,7 @@ fn handle_rule(
 			if name != "int_number" && name != "string" {
 				let field = Field::Token {
 					name,
-					token_kinds: None,
+					token_kinds: vec![],
 				};
 				fields.push(field);
 			}
@@ -186,7 +186,7 @@ fn handle_tokens_in_unions(
 
 	let field = Field::Token {
 		name: label.to_string(),
-		token_kinds: Some(token_kinds),
+		token_kinds,
 	};
 	fields.push(field);
 	true

@@ -364,7 +364,7 @@ pub struct AstNodeSrc {
 pub enum Field {
 	Token {
 		name: String,
-		token_kinds: Option<Vec<String>>,
+		token_kinds: Vec<String>,
 	},
 	Node {
 		name: String,
@@ -403,7 +403,7 @@ impl Field {
 				token_kinds: tokens,
 				..
 			} => {
-				if let Some(tokens) = tokens {
+				if !tokens.is_empty() {
 					let streamed_tokens: Vec<proc_macro2::TokenStream> = tokens
 						.iter()
 						.map(|token| {
