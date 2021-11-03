@@ -333,7 +333,7 @@ ExprOrSpread =
 // assign expression
 AssignExpr =
   manual__lhs:PatternOrExpr
-  op:(
+  operator:(
 		'=' |'+=' | '-=' | '*=' | '%=' |
 		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
 		'|=' | '^=' | '&&=' | '||=' | '??='
@@ -360,7 +360,7 @@ BracketExpr =  'super'? manual__object:Expr '[' manual__prop:Expr ']'
 // binary expression
 BinExpr =
   manual__lhs:Expr
-  op:(
+  operator:(
 		'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
 		| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
 		| '&' | '|' | '^' | '??' | '||' | '&&' | 'in' | 'instanceof'
@@ -372,7 +372,7 @@ UnaryExpr =
   lhs:Expr
 	// @ematipico this is here for compability
 	expr:Expr
-  op:(
+  operator:(
 		'++' | '--' | 'delete' | 'void' | 'typeof' | '+' | '-' | '~'
 		| '!' | 'await'
   )

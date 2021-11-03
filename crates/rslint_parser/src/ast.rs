@@ -101,4 +101,18 @@ mod support {
 			.filter_map(|it| it.into_token())
 			.find(|it| it.kind() == kind)
 	}
+
+	pub(super) fn find_token(
+		parent: &SyntaxNode,
+		possible_kinds: &[SyntaxKind],
+	) -> Option<SyntaxToken> {
+		parent
+			.children_with_tokens()
+			.filter_map(|it| it.into_token())
+			.find(|it| {
+				possible_kinds
+					.iter()
+					.any(|possible_kind| *possible_kind == it.kind())
+			})
+	}
 }

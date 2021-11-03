@@ -1,7 +1,7 @@
 //! Definitions for the ECMAScript AST used for codegen
 //! Based on the rust analyzer parser and ast definitions
 
-use quote::*;
+use quote::{format_ident, quote};
 
 pub struct KindsSrc<'a> {
 	pub punct: &'a [(&'a str, &'a str)],
@@ -362,7 +362,10 @@ pub struct AstNodeSrc {
 
 #[derive(Debug, Eq, PartialEq)]
 pub enum Field {
-	Token(String),
+	Token {
+		name: String,
+		token_kinds: Vec<String>,
+	},
 	Node {
 		name: String,
 		ty: String,
@@ -386,16 +389,47 @@ impl Field {
 	}
 	pub fn token_kind(&self) -> Option<proc_macro2::TokenStream> {
 		match self {
-			Field::Token(token) => {
-				let token: proc_macro2::TokenStream = token.parse().unwrap();
+			Field::Token { name, .. } => {
+				let token: proc_macro2::TokenStream = name.parse().unwrap();
 				Some(quote! { T![#token] })
 			}
 			_ => None,
 		}
 	}
+
+	pub fn token_kinds(&self) -> Option<proc_macro2::TokenStream> {
+		match self {
+			Field::Token {
+				token_kinds: tokens,
+				..
+			} => {
+				if !tokens.is_empty() {
+					let streamed_tokens: Vec<proc_macro2::TokenStream> = tokens
+						.iter()
+						.map(|token| {
+							let token: proc_macro2::TokenStream = token.parse().unwrap();
+							quote! {
+								T![#token]
+							}
+						})
+						.collect();
+
+					let q = quote! {
+							&[#(#streamed_tokens),*]
+					};
+
+					Some(q)
+				} else {
+					None
+				}
+			}
+			_ => None,
+		}
+	}
+
 	pub fn method_name(&self) -> proc_macro2::Ident {
 		match self {
-			Field::Token(name) => {
+			Field::Token { name, .. } => {
 				let name = match name.as_str() {
 					";" => "semicolon",
 					"'{'" => "l_curly",
@@ -470,7 +504,7 @@ impl Field {
 	#[allow(dead_code)]
 	pub fn ty(&self) -> proc_macro2::Ident {
 		match self {
-			Field::Token(_) => format_ident!("SyntaxToken"),
+			Field::Token { .. } => format_ident!("SyntaxToken"),
 			Field::Node { ty, .. } => format_ident!("{}", ty),
 		}
 	}
