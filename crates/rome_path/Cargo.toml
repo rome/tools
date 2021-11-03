@@ -1,5 +1,5 @@
 [package]
-name = "path"
+name = "rome_path"
 version = "0.0.0"
 edition = "2018"
 

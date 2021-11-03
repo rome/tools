@@ -33,7 +33,7 @@ impl<'handler> RomePath<'handler> {
 	///
 	///
 	/// ```rust
-	/// use path::RomePath;
+	/// use rome_path::RomePath;
 	/// use rome_core::{
 	///   create_app,
 	///   file_handlers::{javascript::JsFileHandler, ExtensionHandler},
