@@ -36,7 +36,7 @@ impl LiteralProp {
 		let child = self.syntax().children().nth(1);
 		match child {
 			Some(child) => {
-				Expr::cast(child).ok_or(SyntaxError::MissingElement(self.syntax().kind()))
+				Expr::cast(child).ok_or_else(|| SyntaxError::MissingElement(self.syntax().kind()))
 			}
 			None => Err(SyntaxError::MissingElement(self.syntax().kind())),
 		}
@@ -552,19 +552,19 @@ impl ObjectProp {
 		Some(
 			match self {
 				ObjectProp::IdentProp(idt) => idt.syntax().clone(),
-				ObjectProp::LiteralProp(litprop) => litprop
-					.key()
-					.map_or_else(|_| None, |key| prop_name_syntax(key))?,
+				ObjectProp::LiteralProp(litprop) => {
+					litprop.key().map_or_else(|_| None, prop_name_syntax)?
+				}
 
-				ObjectProp::Getter(getter) => getter
-					.key()
-					.map_or_else(|_| None, |key| prop_name_syntax(key))?,
-				ObjectProp::Setter(setter) => setter
-					.key()
-					.map_or_else(|_| None, |key| prop_name_syntax(key))?,
-				ObjectProp::Method(method) => method
-					.name()
-					.map_or_else(|_| None, |name| prop_name_syntax(name))?,
+				ObjectProp::Getter(getter) => {
+					getter.key().map_or_else(|_| None, prop_name_syntax)?
+				}
+				ObjectProp::Setter(setter) => {
+					setter.key().map_or_else(|_| None, prop_name_syntax)?
+				}
+				ObjectProp::Method(method) => {
+					method.name().map_or_else(|_| None, prop_name_syntax)?
+				}
 				ObjectProp::InitializedProp(init) => init
 					.key()
 					.map_or_else(|_| None, |key| Some(key.syntax().clone()))?,
