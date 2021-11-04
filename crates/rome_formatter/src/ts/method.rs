@@ -1,5 +1,6 @@
 use crate::{
-	empty_element, format_elements, space_token, FormatElement, Formatter, ToFormatElement,
+	empty_element, format_elements, space_token, FormatElement, FormatError, Formatter,
+	ToFormatElement,
 };
 use rslint_parser::ast::Method;
 
@@ -13,7 +14,7 @@ impl ToFormatElement for Method {
 		let name = formatter.format_node(self.name()?)?;
 		let params = formatter.format_node(self.parameters()?)?;
 		let body = formatter.format_node(self.body()?)?;
-		Some(format_elements![
+		Ok(format_elements![
 			private_token,
 			name,
 			params,

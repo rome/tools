@@ -1,5 +1,7 @@
 use crate::ts::statements::format_statements;
-use crate::{format_elements, hard_line_break, FormatElement, Formatter, ToFormatElement};
+use crate::{
+	format_elements, hard_line_break, FormatElement, FormatError, Formatter, ToFormatElement,
+};
 use rslint_parser::ast::Script;
 
 impl ToFormatElement for Script {
@@ -13,7 +15,7 @@ impl ToFormatElement for Script {
 
 		elements.push(format_statements(self.items(), formatter));
 
-		Some(format_elements![
+		Ok(format_elements![
 			concat_elements(elements),
 			hard_line_break()
 		])

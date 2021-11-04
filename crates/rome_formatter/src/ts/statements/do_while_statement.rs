@@ -1,4 +1,6 @@
-use crate::{format_elements, space_token, token, FormatElement, Formatter, ToFormatElement};
+use crate::{
+	format_elements, space_token, token, FormatElement, FormatError, Formatter, ToFormatElement,
+};
 use rslint_parser::ast::DoWhileStmt;
 
 impl ToFormatElement for DoWhileStmt {
@@ -9,7 +11,7 @@ impl ToFormatElement for DoWhileStmt {
 		let cons = formatter.format_node(self.cons()?)?;
 		let while_token = formatter.format_token(&self.while_token()?)?;
 
-		Some(format_elements![
+		Ok(format_elements![
 			do_token,
 			space_token(),
 			cons,

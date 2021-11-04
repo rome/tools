@@ -1,6 +1,6 @@
 use crate::{
 	concat_elements, format_elements, group_elements, soft_indent, soft_line_break_or_space,
-	space_token, token, FormatElement, Formatter, ToFormatElement,
+	space_token, token, FormatElement, FormatError, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{ForHead, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate};
 
@@ -31,7 +31,7 @@ impl ToFormatElement for ForStmt {
 			token(";;")
 		};
 
-		Some(group_elements(format_elements![
+		Ok(group_elements(format_elements![
 			formatter.format_token(&self.for_token()?)?,
 			space_token(),
 			formatter.format_token(&self.l_paren_token()?)?,

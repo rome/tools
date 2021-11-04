@@ -1,5 +1,5 @@
 use crate::{
-	format_elements, group_elements, join_elements, token, FormatElement, Formatter,
+	format_elements, group_elements, join_elements, token, FormatElement, FormatError, Formatter,
 	ToFormatElement,
 };
 use rslint_parser::ast::ArgList;
@@ -10,7 +10,7 @@ impl ToFormatElement for ArgList {
 		let args = formatter.format_nodes(self.args())?;
 		let r_bracket = formatter.format_token(&self.r_paren_token()?)?;
 
-		Some(group_elements(format_elements![
+		Ok(group_elements(format_elements![
 			l_bracket,
 			join_elements(token(", "), args),
 			r_bracket

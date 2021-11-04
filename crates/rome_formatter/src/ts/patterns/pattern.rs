@@ -1,4 +1,4 @@
-use crate::{FormatElement, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatError, Formatter, ToFormatElement};
 use rslint_parser::ast::Pattern;
 
 impl ToFormatElement for Pattern {

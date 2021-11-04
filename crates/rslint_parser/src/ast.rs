@@ -191,6 +191,8 @@ mod support {
 	use crate::SyntaxList;
 	use crate::{SyntaxError, SyntaxResult};
 
+	// TODO: #1725 remove once API are set in stone
+	#[allow(dead_code)]
 	pub(super) fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
 	}

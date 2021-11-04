@@ -1,4 +1,5 @@
 use crate::ts::statements::format_statements;
+use crate::FormatError;
 use crate::{
 	block_indent, format_element::indent, format_elements, group_elements, hard_line_break,
 	join_elements, space_token, FormatElement, Formatter, ToFormatElement,
@@ -14,7 +15,7 @@ impl ToFormatElement for SwitchStmt {
 		let cases = formatter.format_nodes(self.cases())?;
 		let r_curly = formatter.format_token(&self.r_curly_token()?)?;
 
-		Some(format_elements![
+		Ok(format_elements![
 			switch,
 			space_token(),
 			condition,
@@ -45,7 +46,7 @@ impl ToFormatElement for DefaultClause {
 		let colon = formatter.format_token(&self.colon_token()?)?;
 		let statements = format_statements(self.cons(), formatter);
 
-		Some(format_elements![
+		Ok(format_elements![
 			default,
 			colon,
 			space_token(),
@@ -64,7 +65,7 @@ impl ToFormatElement for CaseClause {
 
 		let cons = format_statements(self.cons(), formatter);
 
-		Some(format_elements![
+		Ok(format_elements![
 			case_word,
 			space_token(),
 			test,

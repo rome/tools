@@ -1,5 +1,6 @@
 use crate::{
-	format_elements, group_elements, space_token, FormatElement, Formatter, ToFormatElement,
+	format_elements, group_elements, space_token, FormatElement, FormatError, Formatter,
+	ToFormatElement,
 };
 use rslint_parser::ast::IfStmt;
 
@@ -12,19 +13,22 @@ impl ToFormatElement for IfStmt {
 				formatter.format_node(self.condition()?)?,
 				space_token(),
 			]),
-			formatter.format_node(self.cons()?)?
+			// TODO: #1725 this will change when we will review the grammar
+			formatter.format_node(self.cons().unwrap())?
 		];
 
-		if let Some(else_token) = self.else_token() {
-			result = format_elements![
-				result,
-				space_token(),
-				formatter.format_token(&else_token)?,
-				space_token(),
-				formatter.format_node(self.alt()?)?,
-			]
+		if let Ok(else_token) = self.else_token() {
+			if let Some(alt) = self.alt() {
+				result = format_elements![
+					result,
+					space_token(),
+					formatter.format_token(&else_token)?,
+					space_token(),
+					formatter.format_node(alt)?,
+				]
+			}
 		};
 
-		Some(result)
+		Ok(result)
 	}
 }

@@ -32,8 +32,14 @@ impl LiteralProp {
 		support::child::<PropName>(self.syntax())
 	}
 
-	pub fn value(&self) -> Option<Expr> {
-		self.syntax().children().nth(1)?.try_to()
+	pub fn value(&self) -> SyntaxResult<Expr> {
+		let child = self.syntax().children().nth(1);
+		match child {
+			Some(child) => {
+				Expr::cast(child).ok_or(SyntaxError::MissingElement(self.syntax().kind()))
+			}
+			None => Err(SyntaxError::MissingElement(self.syntax().kind())),
+		}
 	}
 }
 
@@ -546,7 +552,10 @@ impl ObjectProp {
 		Some(
 			match self {
 				ObjectProp::IdentProp(idt) => idt.syntax().clone(),
-				ObjectProp::LiteralProp(litprop) => prop_name_syntax(litprop.key()?)?,
+				ObjectProp::LiteralProp(litprop) => litprop
+					.key()
+					.map_or_else(|_| None, |key| prop_name_syntax(key))?,
+
 				ObjectProp::Getter(getter) => getter
 					.key()
 					.map_or_else(|_| None, |key| prop_name_syntax(key))?,

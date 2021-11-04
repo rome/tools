@@ -1,4 +1,4 @@
-use crate::{format_elements, space_token, FormatElement, Formatter, ToFormatElement};
+use crate::{format_elements, space_token, FormatElement, FormatError, Formatter, ToFormatElement};
 use rslint_parser::ast::WithStmt;
 
 impl ToFormatElement for WithStmt {
@@ -7,7 +7,7 @@ impl ToFormatElement for WithStmt {
 		let condition = formatter.format_node(self.condition()?)?;
 		let cons = formatter.format_node(self.cons()?)?;
 
-		Some(format_elements![
+		Ok(format_elements![
 			with_token,
 			space_token(),
 			condition,

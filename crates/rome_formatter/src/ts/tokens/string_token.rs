@@ -1,4 +1,4 @@
-use crate::{token, FormatElement, Formatter, ToFormatElement};
+use crate::{token, FormatElement, FormatError, Formatter, ToFormatElement};
 use rslint_parser::ast::String as JsString;
 
 impl ToFormatElement for JsString {
@@ -11,6 +11,6 @@ impl ToFormatElement for JsString {
 			content.replace_range(content.len() - 1..content.len(), "\"");
 		}
 
-		Some(token(content.as_str()))
+		Ok(token(content.as_str()))
 	}
 }

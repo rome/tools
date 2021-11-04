@@ -2,7 +2,7 @@ use rslint_parser::ast::ForInStmt;
 
 use crate::{
 	format_elements, group_elements, soft_indent, soft_line_break_or_space, space_token,
-	FormatElement, Formatter, ToFormatElement,
+	FormatElement, FormatError, Formatter, ToFormatElement,
 };
 
 impl ToFormatElement for ForInStmt {
@@ -15,7 +15,7 @@ impl ToFormatElement for ForInStmt {
 		let r_paren = formatter.format_token(&self.r_paren_token()?)?;
 		let cons = formatter.format_node(self.cons()?)?;
 
-		Some(format_elements![
+		Ok(format_elements![
 			for_token,
 			space_token(),
 			l_paren,

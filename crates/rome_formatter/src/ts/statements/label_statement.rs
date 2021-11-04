@@ -1,4 +1,4 @@
-use crate::{format_elements, space_token, FormatElement, Formatter, ToFormatElement};
+use crate::{format_elements, space_token, FormatElement, FormatError, Formatter, ToFormatElement};
 use rslint_parser::ast::LabelledStmt;
 
 impl ToFormatElement for LabelledStmt {
@@ -7,6 +7,6 @@ impl ToFormatElement for LabelledStmt {
 		let statement = formatter.format_node(self.stmt()?)?;
 		let colon = formatter.format_token(&self.colon_token()?)?;
 
-		Some(format_elements![label, colon, space_token(), statement])
+		Ok(format_elements![label, colon, space_token(), statement])
 	}
 }

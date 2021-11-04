@@ -18,7 +18,7 @@
 //!
 //! Now, we do want to create this IR for the data structure:
 //! ```rust
-//! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatOptions, space_token, token };
+//! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatError, FormatOptions, space_token, token };
 //!
 //! struct KeyValue {
 //!     key: String,
@@ -26,8 +26,8 @@
 //! }
 //!
 //! impl ToFormatElement for KeyValue {
-//!     fn to_format_element(&self, formatter: &Formatter)-> Option<FormatElement>  {
-//!         Some(format_elements![
+//!     fn to_format_element(&self, formatter: &Formatter)-> Result<FormatElement, FormatError>  {
+//!         Ok(format_elements![
 //!             token(self.key.as_str()),
 //!             space_token(),
 //!             token("=>"),
@@ -81,6 +81,7 @@ pub trait ToFormatElement {
 	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError>;
 }
 
+#[derive(Debug, PartialEq)]
 /// Series of errors encountered during formatting
 pub enum FormatError {
 	/// Node is missing and it should be required for a correct formatting

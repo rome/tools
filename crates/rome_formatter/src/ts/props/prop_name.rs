@@ -1,6 +1,6 @@
 use rslint_parser::ast::PropName;
 
-use crate::{FormatElement, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatError, Formatter, ToFormatElement};
 
 impl ToFormatElement for PropName {
 	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {

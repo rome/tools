@@ -3,7 +3,8 @@ use rslint_parser::AstNode;
 
 use crate::ts::statements::format_statements;
 use crate::{
-	block_indent, format_elements, hard_line_break, FormatElement, Formatter, ToFormatElement,
+	block_indent, format_elements, hard_line_break, FormatElement, FormatError, Formatter,
+	ToFormatElement,
 };
 
 impl ToFormatElement for BlockStmt {
@@ -20,7 +21,7 @@ impl ToFormatElement for BlockStmt {
 			block_indent(stmts)
 		};
 
-		Some(format_elements![
+		Ok(format_elements![
 			formatter.format_token(&self.l_curly_token()?)?,
 			body,
 			formatter.format_token(&self.r_curly_token()?)?

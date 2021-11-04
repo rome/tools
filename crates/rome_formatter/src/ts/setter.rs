@@ -1,4 +1,4 @@
-use crate::{format_elements, space_token, FormatElement, Formatter, ToFormatElement};
+use crate::{format_elements, space_token, FormatElement, FormatError, Formatter, ToFormatElement};
 use rslint_parser::ast::Setter;
 
 impl ToFormatElement for Setter {
@@ -7,7 +7,7 @@ impl ToFormatElement for Setter {
 		let name = formatter.format_node(self.key()?)?;
 		let params = formatter.format_node(self.parameters()?)?;
 		let body = formatter.format_node(self.body()?)?;
-		Some(format_elements![
+		Ok(format_elements![
 			token,
 			space_token(),
 			name,

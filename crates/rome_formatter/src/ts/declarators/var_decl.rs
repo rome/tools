@@ -7,16 +7,16 @@ impl ToFormatElement for VarDecl {
 	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
 		let mut tokens = vec![];
 
-		//  TODO review
-		// if let Some(token) = self.const_token() {
-		// 	tokens.push(formatter.format_token(&token)?);
-		// } else if let Some(token) = self.let_token() {
-		// 	tokens.push(formatter.format_token(&token)?);
-		// } else if let Some(token) = self.var_token() {
-		// 	tokens.push(formatter.format_token(&token)?);
-		// } else {
-		// 	return None;
-		// }
+		if self.is_const() {
+			tokens.push(formatter.format_token(&self.const_token()?)?);
+		} else if self.is_var() {
+			tokens.push(formatter.format_token(&self.var_token()?)?);
+		} else if self.is_let() {
+			// TODO: #1725 remove this custom code once #1745 is merged
+			tokens.push(formatter.format_token(&self.let_token().unwrap())?);
+		} else {
+			return Err(FormatError::MissingNode(self.syntax().kind()));
+		}
 
 		tokens.push(space_token());
 

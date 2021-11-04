@@ -100,7 +100,7 @@ impl Formatter {
 	/// let formatter = Formatter::default();
 	/// let result = formatter.format_token(&syntax_token);
 	///
-	/// assert_eq!(Some(token("\"abc\"")), result)
+	/// assert_eq!(Ok(token("\"abc\"")), result)
 	/// ```
 	pub fn format_token(&self, syntax_token: &SyntaxToken) -> Result<FormatElement, FormatError> {
 		syntax_token.to_format_element(self)
