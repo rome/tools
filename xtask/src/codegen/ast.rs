@@ -21,7 +21,7 @@ use crate::{
 use ungrammar::{Grammar, Rule, Token};
 
 pub fn generate_ast(mode: Mode) -> Result<()> {
-	let grammar_src = include_str!("../../js.ungram");
+	let grammar_src = include_str!("../../dummy.ungram");
 	let grammar: Grammar = grammar_src.parse().unwrap();
 	let ast = make_ast(&grammar);
 
@@ -71,7 +71,7 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 			}
 		}
 	}
-	flatten_unions_of_unions(&mut ast);
+	// flatten_unions_of_unions(&mut ast);
 	ast
 }
 
@@ -90,53 +90,6 @@ fn handle_alternatives(grammar: &Grammar, rule: &Rule) -> Option<Vec<String>> {
 			Some(all_alternatives)
 		}
 		_ => None,
-	}
-}
-
-/// It flattens cases where there are unions of unions:
-///
-/// A = B | C
-/// B = D | E
-/// C = 'lorem'
-/// D = 'ipsum'
-/// E = 'foo'
-///
-/// This function should remove "B" and replace it with "D | E"
-fn flatten_unions_of_unions(ast: &mut AstSrc) {
-	let mut variations = vec![];
-	for current_enum in ast.enums.iter() {
-		for (variant_index, variant) in current_enum.variants.iter().enumerate() {
-			let variant_is_enum = ast.enums.iter().find(|e| e.name.eq(variant));
-			if let Some(variant_is_enum) = variant_is_enum {
-				variations.push((
-					// this is the union that we need to edit, which contains other unions
-					current_enum.name.clone(),
-					// this is the index of the enum (variant) we plan to edit
-					variant_index,
-					// the union (variant) we plan to edit
-					variant_is_enum.clone(),
-				))
-			}
-		}
-	}
-	for (variant_to_edit, index_to_remove, union_to_remove) in variations {
-		ast.enums = ast
-			.enums
-			.iter()
-			.map(|this_enum| {
-				if this_enum.name.eq(&variant_to_edit) {
-					let mut this_enum = this_enum.to_owned();
-					this_enum.variants.remove(index_to_remove);
-					for variant_to_add in &union_to_remove.variants {
-						this_enum.variants.push(variant_to_add.clone());
-					}
-					this_enum
-				} else {
-					this_enum.to_owned()
-				}
-			})
-			.collect::<Vec<AstEnumSrc>>();
-		// ast.enums.remove(index_to_remove);
 	}
 }
 

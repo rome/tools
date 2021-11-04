@@ -1,6 +1,6 @@
 use super::kinds_src::AstSrc;
 use crate::{
-	codegen::{kinds_src::Field, to_upper_snake_case},
+	codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
 	Result,
 };
 use quote::{format_ident, quote};
@@ -103,8 +103,20 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.enums
 		.iter()
 		.map(|en| {
-			let variants_for_enum: Vec<_> = en
-				.variants
+			// here we make the partition
+			// inside an enum, we can have variants that point to a "flat" type or to another enum
+			// we want to divide these variants as we will generate a different code based on these requirements
+			let (variant_of_variants, simple_variants): (Vec<_>, Vec<_>) =
+				en.variants.iter().partition(|current_enum| {
+					let this_variant_has_variants = ast
+						.enums
+						.iter()
+						.any(|v| v.name.eq(*current_enum) && v.variants.len() > 0);
+
+					this_variant_has_variants
+				});
+
+			let variants_for_enum: Vec<_> = simple_variants
 				.iter()
 				.map(|en| {
 					let variant_name = format_ident!("{}", en);
@@ -115,8 +127,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
-			let variants: Vec<_> = en
-				.variants
+			let variants: Vec<_> = simple_variants
 				.iter()
 				.map(|var| format_ident!("{}", var))
 				.collect();
@@ -127,11 +138,10 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				.map(|name| format_ident!("{}", to_upper_snake_case(&name.to_string())))
 				.collect();
 
-			let variant_cast: Vec<_> = en
-				.variants
+			let variant_cast: Vec<_> = simple_variants
 				.iter()
 				.map(|current_enum| {
-					let variant_is_enum = ast.enums.iter().find(|e| &e.name == current_enum);
+					let variant_is_enum = ast.enums.iter().find(|e| &e.name == *current_enum);
 					let variant_name = format_ident!("{}", current_enum);
 
 					if variant_is_enum.is_some() {
@@ -145,6 +155,35 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					}
 				})
 				.collect();
+
+			// variant of variants
+			let vv: Vec<_> = variant_of_variants
+				.iter()
+				.map(|en| {
+					let variant_name = format_ident!("{}", en);
+					let variable_name = format_ident!("{}", to_lower_snake_case(en.as_str()));
+					(
+						// cast() code
+						quote! {
+							if let Some(#variable_name) = #variant_name::cast(syntax.clone()) {
+									return Some(Expr::#variant_name(#variable_name));
+							}
+						},
+						// can_cast() code
+						quote! {
+							k if #variant_name::can_cast(k) => true,
+						},
+						// syntax() code
+						quote! {
+							Expr::#variant_name(it) => it.syntax()
+						},
+					)
+				})
+				.collect();
+
+			let vv_cast = vv.iter().map(|v| v.0.clone());
+			let vv_can_cast = vv.iter().map(|v| v.1.clone());
+			let vv_syntax = vv.iter().map(|v| v.2.clone());
 
 			let variant_can_cast: Vec<_> = en
 				.variants
@@ -182,14 +221,25 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 					impl AstNode for #name {
 						fn can_cast(kind: SyntaxKind) -> bool {
-							matches!(kind, #(#kinds)|*)
+							// matches!(kind, #(#kinds)|*)
+							match kind {
+								#(#kinds)|* => true,
+								#(#vv_can_cast)*
+								_ => false
+							}
 						}
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
 							let res = match syntax.kind() {
 								#(
 								#kinds => #name::#variants(#variant_cast),
 								)*
-								_ => return None,
+								_ =>  {
+									#(
+										#vv_cast
+									)*
+									return None
+								}
+								// _ => return None,
 							};
 							Some(res)
 						}
@@ -198,6 +248,10 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 								#(
 								#name::#variants(it) => #variant_can_cast,
 								)*
+								#(
+									#vv_syntax
+								),*
+
 							}
 						}
 					}
