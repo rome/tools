@@ -9,21 +9,18 @@ MODULE@0..43
       WHITESPACE@5..6 " "
       BLOCK_STMT@6..42
         L_CURLY@6..7 "{"
-        WHITESPACE@7..8 "\n"
-        WHITESPACE@8..10 "  "
+        WHITESPACE@7..10 "\n  "
         RETURN_STMT@10..17
           RETURN_KW@10..16 "return"
           SEMICOLON@16..17 ";"
-        WHITESPACE@17..18 "\n"
-        WHITESPACE@18..20 "  "
+        WHITESPACE@17..20 "\n  "
         RETURN_STMT@20..31
           RETURN_KW@20..26 "return"
           WHITESPACE@26..27 " "
           NAME_REF@27..30
             IDENT@27..30 "foo"
           SEMICOLON@30..31 ";"
-        WHITESPACE@31..32 "\n"
-        WHITESPACE@32..34 "  "
+        WHITESPACE@31..34 "\n  "
         RETURN_STMT@34..40
           RETURN_KW@34..40 "return"
         WHITESPACE@40..41 "\n"

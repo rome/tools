@@ -124,56 +124,41 @@ impl<'src> Lexer<'src> {
 		tok
 	}
 
-	fn should_break_whitespace_now(&self, byte: u8) -> bool {
-		if !is_linebreak(byte as char) {
-			false
-		} else {
-			!matches!(
-				(byte as char, self.bytes.get(self.cur + 1).copied()),
-				('\r', Some(next)) if (next as char) == '\n'
-			)
+	fn consume_newlines(&mut self) {
+		while let Some(_) = self.current().copied() {
+			let chr = self.get_unicode_char();
+			if is_linebreak(chr) {
+				self.state.had_linebreak = true;
+				self.cur += chr.len_utf8();
+			} else {
+				break;
+			}
+		}
+	}
+
+	fn consume_whitespace_until_newline(&mut self) {
+		while let Some(current) = self.current().copied() {
+			let chr = self.get_unicode_char();
+
+			if is_linebreak(chr) {
+				break;
+			}
+
+			let dispatcher = DISPATCHER[current as usize];
+			if dispatcher == Dispatch::WHS
+				|| (UNICODE_WHITESPACE_STARTS.contains(&current) && UNICODE_SPACES.contains(&chr))
+			{
+				self.cur += chr.len_utf8();
+			} else {
+				break;
+			}
 		}
 	}
 
 	// Consume all whitespace starting from the current byte
 	fn consume_whitespace(&mut self) {
-		unwind_loop! {
-			if let Some(byte) = self.next().copied() {
-				// This is the most likely scenario, unicode spaces are very uncommon
-				if DISPATCHER[byte as usize] != Dispatch::WHS {
-					// try to short circuit the branch by checking the first byte of the potential unicode space
-					if byte > 0xC1 && UNICODE_WHITESPACE_STARTS.contains(&byte) {
-						let chr = self.get_unicode_char();
-						let is_newline = is_linebreak(chr);
-						if is_newline {
-							self.state.had_linebreak = true;
-						}
-						if !UNICODE_SPACES.contains(&chr) {
-							return;
-						}
-						self.cur += chr.len_utf8() - 1;
-
-						if is_newline && self.should_break_whitespace_now(byte) {
-							self.next();
-							return
-						}
-					} else {
-						return;
-					}
-				}
-
-				if is_linebreak(byte as char) {
-					self.state.had_linebreak = true;
-
-					if self.should_break_whitespace_now(byte) {
-						self.next();
-						return;
-					}
-				}
-			} else {
-				return;
-			}
-		}
+		self.consume_newlines();
+		self.consume_whitespace_until_newline();
 	}
 
 	// Get the unicode char which starts at the current byte and advance the lexer's cursor
@@ -193,6 +178,12 @@ impl<'src> Lexer<'src> {
 		};
 
 		chr
+	}
+
+	// Get the next byte and advance the index
+	#[inline]
+	fn current(&mut self) -> Option<&u8> {
+		self.bytes.get(self.cur)
 	}
 
 	// Get the next byte and advance the index
@@ -1259,13 +1250,8 @@ impl<'src> Lexer<'src> {
 
 		match dispatched {
 			WHS => {
-				if self.should_break_whitespace_now(byte) {
-					self.next();
-					tok!(WHITESPACE, 1)
-				} else {
-					self.consume_whitespace();
-					tok!(WHITESPACE, self.cur - start)
-				}
+				self.consume_whitespace();
+				tok!(WHITESPACE, self.cur - start)
 			}
 			EXL => self.resolve_bang(),
 			HAS => self.read_shebang(),
@@ -1371,16 +1357,11 @@ impl<'src> Lexer<'src> {
 			TLD => self.eat(tok![~]),
 			UNI => {
 				let chr = self.get_unicode_char();
-				let is_newline = is_linebreak(chr);
-				if UNICODE_WHITESPACE_STARTS.contains(&byte)
-					&& (is_newline || UNICODE_SPACES.contains(&chr))
+				if is_linebreak(chr)
+					|| (UNICODE_WHITESPACE_STARTS.contains(&byte) && UNICODE_SPACES.contains(&chr))
 				{
-					if is_newline {
-						self.state.had_linebreak = true;
-					}
-
-					self.cur += chr.len_utf8() - 1;
 					self.consume_whitespace();
+					println!("{}", self.cur - start);
 					tok!(WHITESPACE, self.cur - start)
 				} else {
 					self.cur += chr.len_utf8() - 1;

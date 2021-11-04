@@ -7,8 +7,7 @@ MODULE@0..99
     WHITESPACE@9..10 " "
     CLASS_BODY@10..98
       L_CURLY@10..11 "{"
-      WHITESPACE@11..12 "\n"
-      WHITESPACE@12..13 " "
+      WHITESPACE@11..13 "\n "
       METHOD@13..31
         STATIC_KW@13..19 "static"
         WHITESPACE@19..20 " "
@@ -24,8 +23,7 @@ MODULE@0..99
         BLOCK_STMT@29..31
           L_CURLY@29..30 "{"
           R_CURLY@30..31 "}"
-      WHITESPACE@31..32 "\n"
-      WHITESPACE@32..33 " "
+      WHITESPACE@31..33 "\n "
       METHOD@33..49
         STATIC_KW@33..39 "static"
         WHITESPACE@39..40 " "
@@ -39,8 +37,7 @@ MODULE@0..99
         BLOCK_STMT@47..49
           L_CURLY@47..48 "{"
           R_CURLY@48..49 "}"
-      WHITESPACE@49..50 "\n"
-      WHITESPACE@50..51 " "
+      WHITESPACE@49..51 "\n "
       METHOD@51..72
         STATIC_KW@51..57 "static"
         WHITESPACE@57..58 " "
@@ -55,8 +52,7 @@ MODULE@0..99
         BLOCK_STMT@70..72
           L_CURLY@70..71 "{"
           R_CURLY@71..72 "}"
-      WHITESPACE@72..73 "\n"
-      WHITESPACE@73..74 " "
+      WHITESPACE@72..74 "\n "
       METHOD@74..96
         STATIC_KW@74..80 "static"
         WHITESPACE@80..81 " "

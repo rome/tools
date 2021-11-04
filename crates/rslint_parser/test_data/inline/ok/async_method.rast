@@ -7,8 +7,7 @@ MODULE@0..47
     WHITESPACE@9..10 " "
     CLASS_BODY@10..46
       L_CURLY@10..11 "{"
-      WHITESPACE@11..12 "\n"
-      WHITESPACE@12..13 " "
+      WHITESPACE@11..13 "\n "
       METHOD@13..27
         ASYNC_KW@13..18 "async"
         WHITESPACE@18..19 " "
@@ -21,8 +20,7 @@ MODULE@0..47
         BLOCK_STMT@25..27
           L_CURLY@25..26 "{"
           R_CURLY@26..27 "}"
-      WHITESPACE@27..28 "\n"
-      WHITESPACE@28..29 " "
+      WHITESPACE@27..29 "\n "
       METHOD@29..44
         ASYNC_KW@29..34 "async"
         WHITESPACE@34..35 " "

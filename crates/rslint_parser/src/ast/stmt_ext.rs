@@ -145,6 +145,7 @@ mod tests {
 	#[test]
 	fn var_decl_let_token() {
 		let parsed = parse_text("/* */let a = 5;", 0).syntax();
+		println!("{:#?}", parsed);
 
 		assert!(parsed
 			.child_with_ast::<ast::VarDecl>()

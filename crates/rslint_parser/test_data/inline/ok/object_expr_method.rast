@@ -11,8 +11,7 @@ MODULE@0..23
       WHITESPACE@7..8 " "
       OBJECT_EXPR@8..22
         L_CURLY@8..9 "{"
-        WHITESPACE@9..10 "\n"
-        WHITESPACE@10..11 " "
+        WHITESPACE@9..11 "\n "
         METHOD@11..19
           NAME@11..14
             IDENT@11..14 "foo"
