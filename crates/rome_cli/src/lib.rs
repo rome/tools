@@ -1,7 +1,7 @@
 use clap::{crate_version, App, AppSettings, Arg};
-use core::create_app;
-use path::RomePath;
+use rome_core::create_app;
 use rome_formatter::{format_file_and_save, FormatOptions, IndentStyle};
+use rome_path::RomePath;
 use std::{path::PathBuf, str::FromStr};
 
 /// Main function to run Rome CLI

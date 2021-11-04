@@ -149,16 +149,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cli"
-version = "0.0.0"
-dependencies = [
- "clap 3.0.0-beta.4",
- "core",
- "path",
- "rome-formatter",
-]
-
-[[package]]
 name = "colored"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -189,10 +179,6 @@ name = "convert_case"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6245d59a3e82a7fc217c5828a6692dbc6dfb63a0c8c90495621f7b9d79704a0e"
-
-[[package]]
-name = "core"
-version = "0.0.0"
 
 [[package]]
 name = "countme"
@@ -687,13 +673,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6acbef58a60fe69ab50510a55bc8cdd4d6cf2283d27ad338f54cb52747a9cf2d"
 
 [[package]]
-name = "path"
-version = "0.0.0"
-dependencies = [
- "core",
-]
-
-[[package]]
 name = "percent-encoding"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -894,14 +873,35 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f497285884f3fcff424ffc933e56d7cbca511def0c9831a7f9b5f6153e3cc89b"
 
 [[package]]
-name = "rome-formatter"
+name = "rome_cli"
 version = "0.0.0"
 dependencies = [
- "core",
- "path",
+ "clap 3.0.0-beta.4",
+ "rome_core",
+ "rome_formatter",
+ "rome_path",
+]
+
+[[package]]
+name = "rome_core"
+version = "0.0.0"
+
+[[package]]
+name = "rome_formatter"
+version = "0.0.0"
+dependencies = [
+ "rome_core",
+ "rome_path",
  "rome_rowan",
  "rslint_parser",
  "tests_macros",
+]
+
+[[package]]
+name = "rome_path"
+version = "0.0.0"
+dependencies = [
+ "rome_core",
 ]
 
 [[package]]

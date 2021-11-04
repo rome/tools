@@ -60,16 +60,16 @@ use crate::format_json::tokenize_json;
 
 pub use formatter::Formatter;
 
-use core::file_handlers::Language;
-use core::App;
 pub use format_element::{
 	block_indent, concat_elements, empty_element, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
 	soft_line_break_or_space, space_token, token, FormatElement,
 };
-use path::RomePath;
 pub use printer::Printer;
 pub use printer::PrinterOptions;
+use rome_core::file_handlers::Language;
+use rome_core::App;
+use rome_path::RomePath;
 use rslint_parser::parse_text;
 use std::io::Read;
 use std::str::FromStr;
