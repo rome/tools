@@ -34,7 +34,7 @@ impl VarDecl {
 	// TODO: switch this to a contextual keyword once the typescript pr lands
 	pub fn let_token(&self) -> Option<SyntaxToken> {
 		self.syntax()
-			.first_lossy_token()
+			.first_token()
 			.filter(|t| t.kind() == T![ident] && t.text() == "let")
 	}
 

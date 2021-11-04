@@ -89,7 +89,7 @@ impl SyntaxText {
 	{
 		self.tokens_with_ranges()
 			.try_fold(init, move |acc, (token, range)| {
-				f(acc, &token.text()[range])
+				f(acc, &token.text_with_trivia())
 			})
 	}
 

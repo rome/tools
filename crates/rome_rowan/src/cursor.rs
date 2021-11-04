@@ -939,6 +939,21 @@ impl SyntaxToken {
 	}
 
 	#[inline]
+	pub fn text_with_trivia(&self) -> String {
+		match self.data().green().as_token() {
+			Some(it) => it.text_with_trivia(),
+			None => {
+				debug_assert!(
+					false,
+					"corrupted tree: a node thinks it is a token: {:?}",
+					self.data().green().as_node().unwrap().to_string()
+				);
+				String::new()
+			}
+		}
+	}
+
+	#[inline]
 	pub fn parent(&self) -> Option<SyntaxNode> {
 		self.data().parent_node()
 	}
@@ -994,7 +1009,7 @@ impl SyntaxToken {
 		self.data().detach()
 	}
 
-	pub fn leading(&self) -> &[crate::GreenTokenTrivia] {
+	pub fn leading(&self) -> &crate::GreenTokenTrivia {
 		let g = self.data().green();
 		match g {
 			NodeOrToken::Node(_) => unreachable!("SyntaxToken should not point to a GreenNode"),
@@ -1002,7 +1017,7 @@ impl SyntaxToken {
 		}
 	}
 
-	pub fn trailing(&self) -> &[crate::GreenTokenTrivia] {
+	pub fn trailing(&self) -> &crate::GreenTokenTrivia {
 		let g = self.data().green();
 		match g {
 			NodeOrToken::Node(_) => unreachable!("SyntaxToken should not point to a GreenNode"),

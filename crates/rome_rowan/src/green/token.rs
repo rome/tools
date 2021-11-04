@@ -1,11 +1,12 @@
 use std::{
 	borrow::Borrow,
-	fmt,
+	fmt::{self, Pointer},
 	mem::{self, ManuallyDrop},
 	ops, ptr,
 };
 
 use countme::Count;
+use text_size::TextLen;
 
 use crate::{
 	arc::{Arc, HeaderSlice, ThinArc},
@@ -13,17 +14,88 @@ use crate::{
 	TextSize,
 };
 
-#[derive(PartialEq, Eq, Hash, Debug)]
+#[derive(Clone, PartialEq, Eq, Hash, Debug)]
+pub enum Trivia {
+	Whitespace(usize),
+	Comment(usize),
+}
+
+impl Trivia {
+	pub fn as_thin(self, text: &str) -> ThinTrivia {
+		let ptr = ThinArc::from_header_and_iter(self, text.bytes());
+		ThinTrivia(ptr)
+	}
+
+	fn text_len(&self) -> TextSize {
+		match self {
+			Trivia::Whitespace(n) => (*n as u32).into(),
+			Trivia::Comment(n) => (*n as u32).into(),
+		}
+	}
+}
+
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct ThinTrivia(ThinArc<Trivia, u8>);
+
+impl ThinTrivia {
+	#[inline]
+	pub fn trivia(&self) -> &Trivia {
+		&self.0.header
+	}
+
+	#[inline]
+	pub fn text(&self) -> &str {
+		unsafe { std::str::from_utf8_unchecked(self.0.slice()) }
+	}
+
+	#[inline]
+	fn text_len(&self) -> TextSize {
+		self.0.header.text_len()
+	}
+}
+
+impl fmt::Debug for ThinTrivia {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{:?}", self.0.slice())
+	}
+}
+
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub enum GreenTokenTrivia {
-	Whitespace,
+	None,
+	One(ThinTrivia),
+	Many(Vec<ThinTrivia>),
+}
+
+impl GreenTokenTrivia {
+	fn text_len(&self) -> TextSize {
+		match self {
+			GreenTokenTrivia::None => 0.into(),
+			GreenTokenTrivia::One(x) => x.text_len(),
+			GreenTokenTrivia::Many(v) => v.iter().fold(0.into(), |len, x| len + x.text_len()),
+		}
+	}
+}
+
+impl fmt::Debug for GreenTokenTrivia {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		match self {
+			Self::None => Ok(()),
+			Self::One(trivia) => write!(f, "{:?}", trivia.text()),
+			Self::Many(trivia) => {
+				let items: Vec<_> = trivia.iter().map(|x| x.text()).collect();
+				f.debug_list().entries(items).finish()
+			}
+		}
+	}
 }
 
 #[derive(PartialEq, Eq, Hash)]
 struct GreenTokenHead {
 	kind: SyntaxKind,
 	_c: Count<GreenToken>,
-	leading_trivia: Vec<GreenTokenTrivia>,
-	trailing_trivia: Vec<GreenTokenTrivia>,
+	leading_trivia: GreenTokenTrivia,
+	trailing_trivia: GreenTokenTrivia,
 }
 
 type Repr = HeaderSlice<GreenTokenHead, [u8]>;
@@ -122,31 +194,64 @@ impl GreenTokenData {
 		unsafe { std::str::from_utf8_unchecked(self.data.slice()) }
 	}
 
+	/// Text of this Token with trivia.
+	/// TODO do we need String here?
+	#[inline]
+	pub fn text_with_trivia(&self) -> String {
+		let mut txt = String::new();
+		match self.leading() {
+			GreenTokenTrivia::None => {}
+			GreenTokenTrivia::One(t) => txt.push_str(t.text()),
+			GreenTokenTrivia::Many(v) => {
+				for t in v {
+					txt.push_str(t.text())
+				}
+			}
+		}
+		txt.push_str(self.text());
+		match self.trailing() {
+			GreenTokenTrivia::None => {}
+			GreenTokenTrivia::One(t) => txt.push_str(t.text()),
+			GreenTokenTrivia::Many(v) => {
+				for t in v {
+					txt.push_str(t.text())
+				}
+			}
+		}
+
+		txt
+	}
+
 	/// Returns the length of the text covered by this token.
 	#[inline]
 	pub fn text_len(&self) -> TextSize {
-		TextSize::of(self.text())
+		TextSize::of(self.text()) + self.leading().text_len() + self.trailing().text_len()
 	}
 
 	#[inline]
-	pub fn leading(&self) -> &[GreenTokenTrivia] {
-		self.data.header.leading_trivia.as_slice()
+	pub fn leading(&self) -> &GreenTokenTrivia {
+		&self.data.header.leading_trivia
 	}
 
 	#[inline]
-	pub fn trailing(&self) -> &[GreenTokenTrivia] {
-		self.data.header.trailing_trivia.as_slice()
+	pub fn trailing(&self) -> &GreenTokenTrivia {
+		&self.data.header.trailing_trivia
 	}
 }
 
 impl GreenToken {
 	/// Creates new Token.
 	#[inline]
-	pub fn new(
+	pub fn new(kind: SyntaxKind, text: &str) -> GreenToken {
+		Self::with_trivia(kind, text, GreenTokenTrivia::None, GreenTokenTrivia::None)
+	}
+
+	#[inline]
+	pub fn with_trivia(
 		kind: SyntaxKind,
 		text: &str,
-		leading_trivia: Vec<GreenTokenTrivia>,
-		trailing_trivia: Vec<GreenTokenTrivia>,
+		leading_trivia: GreenTokenTrivia,
+		trailing_trivia: GreenTokenTrivia,
 	) -> GreenToken {
 		let head = GreenTokenHead {
 			kind,

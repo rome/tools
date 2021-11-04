@@ -320,6 +320,10 @@ impl<L: Language> SyntaxToken<L> {
 		self.raw.text()
 	}
 
+	pub fn text_with_trivia(&self) -> String {
+		self.raw.text_with_trivia()
+	}
+
 	pub fn parent(&self) -> Option<SyntaxNode<L>> {
 		self.raw.parent().map(SyntaxNode::from)
 	}
@@ -359,11 +363,11 @@ impl<L: Language> SyntaxToken<L> {
 
 	//TODO we don't wanna Green stuff leaking here
 	// should we return &str?
-	pub fn leading(&self) -> &[GreenTokenTrivia] {
+	pub fn leading(&self) -> &GreenTokenTrivia {
 		self.raw.leading()
 	}
 
-	pub fn trailing(&self) -> &[GreenTokenTrivia] {
+	pub fn trailing(&self) -> &GreenTokenTrivia {
 		self.raw.trailing()
 	}
 }

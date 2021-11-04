@@ -148,15 +148,20 @@ impl NodeCache {
 	}
 
 	pub(crate) fn token(&mut self, kind: SyntaxKind, text: &str) -> (u64, GreenToken) {
-		self.token_with_trivia(kind, text, vec![], vec![])
+		self.token_with_trivia(
+			kind,
+			text,
+			super::token::GreenTokenTrivia::None,
+			super::token::GreenTokenTrivia::None,
+		)
 	}
 
 	pub(crate) fn token_with_trivia(
 		&mut self,
 		kind: SyntaxKind,
 		text: &str,
-		leading: Vec<super::token::GreenTokenTrivia>,
-		trailing: Vec<super::token::GreenTokenTrivia>,
+		leading: super::token::GreenTokenTrivia,
+		trailing: super::token::GreenTokenTrivia,
 	) -> (u64, GreenToken) {
 		let hash = {
 			let mut h = FxHasher::default();
@@ -174,7 +179,7 @@ impl NodeCache {
 		let token = match entry {
 			RawEntryMut::Occupied(entry) => entry.key().0.clone(),
 			RawEntryMut::Vacant(entry) => {
-				let token = GreenToken::new(kind, text, leading, trailing);
+				let token = GreenToken::with_trivia(kind, text, leading, trailing);
 				entry.insert_with_hasher(hash, NoHash(token.clone()), (), |t| token_hash(&t.0));
 				token
 			}

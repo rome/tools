@@ -3,6 +3,7 @@ use crate::{
 	SyntaxKind::{self, *},
 	SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
+use rome_rowan::{GreenTokenTrivia, Trivia};
 use rslint_lexer::Token;
 use std::mem;
 
@@ -18,7 +19,7 @@ pub struct LosslessTreeSink<'a> {
 	state: State,
 	errors: Vec<ParserError>,
 	inner: SyntaxTreeBuilder,
-	next_token_leading_trivia: Vec<Token>,
+	next_token_leading_trivia: GreenTokenTrivia,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -30,6 +31,10 @@ enum State {
 
 impl<'a> TreeSink for LosslessTreeSink<'a> {
 	fn consume_multiple_tokens(&mut self, amount: u8, kind: SyntaxKind) {
+		//println!(
+		// 	"LosslessTreeSink::consume_multiple_tokens: {} {:?} {:?}",
+		// 	amount, kind, self.state
+		// );
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => unreachable!(),
 			State::PendingFinish => self.inner.finish_node(),
@@ -50,6 +55,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 	}
 
 	fn token(&mut self, kind: SyntaxKind) {
+		println!("LosslessTreeSink::token: {:?} {:?}", kind, self.text_pos);
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => unreachable!(),
 			State::PendingFinish => self.inner.finish_node(),
@@ -57,7 +63,6 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 		}
 		let len = TextSize::from(self.tokens[self.token_pos].len as u32);
 
-		// println!("Leading trivia: {:?}", leading);
 		self.do_token(kind, len);
 	}
 
@@ -73,10 +78,11 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 
 	// TODO: Attach comment whitespace to nodes
 	fn start_node(&mut self, kind: SyntaxKind) {
-		// println!("LosslessTreeSink::start_node: {:?} {:?}", kind, self.state);
+		//println!("LosslessTreeSink::start_node: {:?} {:?}", kind, self.state);
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => {
 				self.inner.start_node(kind);
+				self.next_token_leading_trivia = self.get_trivia(false);
 				return;
 			}
 			State::PendingFinish => self.inner.finish_node(),
@@ -87,6 +93,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 	}
 
 	fn finish_node(&mut self) {
+		//println!("LosslessTreeSink::finish_node");
 		match mem::replace(&mut self.state, State::PendingFinish) {
 			State::PendingStart => unreachable!(),
 			State::PendingFinish => self.inner.finish_node(),
@@ -109,7 +116,7 @@ impl<'a> LosslessTreeSink<'a> {
 			state: State::PendingStart,
 			inner: SyntaxTreeBuilder::default(),
 			errors: vec![],
-			next_token_leading_trivia: vec![],
+			next_token_leading_trivia: GreenTokenTrivia::None,
 		}
 	}
 
@@ -130,7 +137,7 @@ impl<'a> LosslessTreeSink<'a> {
 					state: State::PendingStart,
 					inner: SyntaxTreeBuilder::default(),
 					errors: vec![],
-					next_token_leading_trivia: vec![],
+					next_token_leading_trivia: GreenTokenTrivia::None,
 				};
 			}
 			len += tok.len;
@@ -148,7 +155,10 @@ impl<'a> LosslessTreeSink<'a> {
 	}
 
 	fn do_token(&mut self, kind: SyntaxKind, len: TextSize) {
-		// println!("LosslessTreeSink::do_token {:?} {:?}", kind, len);
+		println!(
+			"LosslessTreeSink::do_token: {:?} len {:?} pos {:?}",
+			kind, len, self.text_pos
+		);
 		let range = TextRange::at(self.text_pos, len);
 		let text = &self.text[range];
 		self.text_pos += len;
@@ -157,27 +167,15 @@ impl<'a> LosslessTreeSink<'a> {
 		let trailing = self.get_trivia(true);
 		let leading = self.get_trivia(false);
 		let leading = std::mem::replace(&mut self.next_token_leading_trivia, leading);
-		let leading = leading
-			.iter()
-			.map(|x| rome_rowan::GreenTokenTrivia::Whitespace)
-			.collect();
-		let trailing: Vec<_> = trailing
-			.iter()
-			.map(|x| rome_rowan::GreenTokenTrivia::Whitespace)
-			.collect();
-
 		self.inner.token_with_trivia(kind, text, leading, trailing);
 	}
 
-	fn get_trivia(&mut self, break_on_newline: bool) -> Vec<Token> {
-		let mut trivia = Vec::new();
+	fn get_trivia(&mut self, break_on_newline: bool) -> rome_rowan::GreenTokenTrivia {
+		use rome_rowan::{GreenTokenTrivia, Trivia};
 
-		let mut should_break = false;
+		let mut trivia = GreenTokenTrivia::None;
+
 		while let Some(&token) = self.tokens.get(self.token_pos) {
-			if should_break {
-				break;
-			}
-
 			if !token.kind.is_trivia() {
 				break;
 			}
@@ -186,15 +184,28 @@ impl<'a> LosslessTreeSink<'a> {
 			let pos: u32 = self.text_pos.into();
 			let pos = pos as usize;
 			let text = &self.text[pos..(pos + token.len)];
-			if break_on_newline && text.ends_with("\n") {
-				should_break = true
+			if break_on_newline && text.contains("\n") {
+				break;
 			}
 
 			self.token_pos += 1;
 			let len = TextSize::from(token.len as u32);
 			self.text_pos += len;
 
-			trivia.push(token);
+			let current_trivia = match token.kind {
+				WHITESPACE => Trivia::Whitespace(token.len).as_thin(text),
+				COMMENT => Trivia::Comment(token.len).as_thin(text),
+				_ => unreachable!("Not Trivia"),
+			};
+
+			trivia = match (trivia, current_trivia) {
+				(GreenTokenTrivia::None, fist) => GreenTokenTrivia::One(fist),
+				(GreenTokenTrivia::One(fist), second) => GreenTokenTrivia::Many(vec![fist, second]),
+				(GreenTokenTrivia::Many(mut v), second) => {
+					v.push(second);
+					GreenTokenTrivia::Many(v)
+				}
+			}
 		}
 
 		trivia

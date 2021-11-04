@@ -17,21 +17,21 @@ pub trait SyntaxNodeExt {
 			.collect()
 	}
 
-	/// Get all the tokens of this node, recursively, not including whitespace and comments.
-	fn lossy_tokens(&self) -> Vec<SyntaxToken> {
-		self.to_node()
-			.descendants_with_tokens()
-			.filter_map(|x| x.into_token().filter(|token| !token.kind().is_trivia()))
-			.collect()
-	}
+	// /// Get all the tokens of this node, recursively, not including whitespace and comments.
+	// fn lossy_tokens(&self) -> Vec<SyntaxToken> {
+	// 	self.to_node()
+	// 		.descendants_with_tokens()
+	// 		.filter_map(|x| x.into_token().filter(|token| !token.kind().is_trivia()))
+	// 		.collect()
+	// }
 
-	/// Get the first non-whitespace child token.
-	fn first_lossy_token(&self) -> Option<SyntaxToken> {
-		self.to_node()
-			.children_with_tokens()
-			.filter_map(|it| it.into_token().filter(|x| !x.kind().is_trivia()))
-			.next()
-	}
+	// /// Get the first non-whitespace child token.
+	// fn first_lossy_token(&self) -> Option<SyntaxToken> {
+	// 	self.to_node()
+	// 		.children_with_tokens()
+	// 		.filter_map(|it| it.into_token().filter(|x| !x.kind().is_trivia()))
+	// 		.next()
+	// }
 
 	/// Check if the node is a certain AST node and that it can be casted to it.
 	fn is<T: AstNode>(&self) -> bool {
@@ -75,8 +75,8 @@ pub trait SyntaxNodeExt {
 	/// assert_ne!(left.text(), right.text());
 	/// ```
 	fn lexical_eq(&self, right: &SyntaxNode) -> bool {
-		let left = self.lossy_tokens();
-		let right = right.lossy_tokens();
+		let left = self.tokens();
+		let right = right.tokens();
 
 		if left.len() == right.len() {
 			left.iter()
@@ -101,7 +101,7 @@ pub trait SyntaxNodeExt {
 	/// ```
 	/// use rslint_parser::{SyntaxNodeExt, parse_expr, TextRange};
 	///
-	/// let node = parse_expr(" foo. bar  ", 0).syntax();
+	/// let node = dbg!(parse_expr(" foo. bar  ", 0).syntax());
 	///
 	/// assert_eq!(node.trimmed_range(), TextRange::new(1.into(), 9.into()));
 	///
@@ -109,7 +109,7 @@ pub trait SyntaxNodeExt {
 	/// ```
 	fn trimmed_range(&self) -> TextRange {
 		let node = self.to_node();
-		let tokens = node.lossy_tokens();
+		let tokens = dbg!(node.tokens());
 		let start = tokens
 			.first()
 			.map(|t| t.text_range().start())
@@ -208,7 +208,7 @@ pub trait SyntaxNodeExt {
 	/// Separate all the lossy tokens of this node, then compare each token's text with the corresponding
 	/// text in `tokens`.
 	fn structural_lossy_token_eq(&self, tokens: &[impl AsRef<str>]) -> bool {
-		let node_tokens = self.to_node().lossy_tokens();
+		let node_tokens = self.to_node().tokens();
 		if node_tokens.len() == tokens.len() {
 			node_tokens
 				.iter()
@@ -374,7 +374,7 @@ pub enum CommentKind {
 pub fn concat_tokens(tokens: &[SyntaxToken]) -> String {
 	tokens
 		.iter()
-		.map(|token| token.text().to_string())
+		.map(|token| token.text_with_trivia())
 		.collect()
 }
 

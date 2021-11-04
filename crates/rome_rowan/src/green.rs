@@ -10,6 +10,8 @@ pub(crate) use self::{
 };
 
 pub use token::GreenTokenTrivia;
+pub use token::ThinTrivia;
+pub use token::Trivia;
 
 pub use self::node_cache::NodeCache;
 

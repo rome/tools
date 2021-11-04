@@ -41,5 +41,7 @@ pub use crate::{
 
 //TODO
 pub use crate::green::GreenTokenTrivia;
+pub use crate::green::ThinTrivia;
+pub use crate::green::Trivia;
 
 pub(crate) use crate::green::{GreenNode, GreenNodeData, GreenToken, GreenTokenData};

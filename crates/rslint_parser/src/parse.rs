@@ -164,8 +164,26 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<JsScript> {
 }
 
 #[test]
+pub fn test_parse_display() {
+	let code = " let a = 1;";
+	let m = parse_module(code, 0);
+	let s = dbg!(m.syntax());
+	let str = s.text();
+	assert_eq!(format!("{}", str), code);
+}
+
+#[test]
+pub fn token_range_must_be_correct() {
+	let code = " let a = 1;";
+	let m = parse_module(code, 0);
+	let s = dbg!(m.syntax());
+	let t = s.first_token().unwrap();
+	dbg!(t);
+}
+
+#[test]
 pub fn test_trivia_attached_to_tokens() {
-	let text = "let a = 1; // nice variable \n /*hey*/ let b = 2; // another nice variable";
+	let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
 	let (mut tokens, mut errors) = tokenize(text, 0);
 
 	// let tokens: Vec<_> = tokens
@@ -193,16 +211,25 @@ pub fn test_trivia_attached_to_tokens() {
 
 	let (syntax, parse_errors) = tree_sink.finish();
 
-	for item in syntax.descendants_with_tokens() {
-		// println!("{}{:?}", "\t".repeat(token.ancestors().count() - 1), item);
-		let qty = item.ancestors().count() - 1;
-		match item {
-			NodeOrToken::Node(n) => println!("{}{:?}", "\t".repeat(qty), n),
-			NodeOrToken::Token(t) => println!("{}{:?}", "\t".repeat(qty), t),
-		}
-	}
+	dbg!(&syntax);
 
-	// errors.extend(p_errs);
+	let tokens = syntax.tokens();
+	dbg!(&tokens);
+
+	use rome_rowan::GreenTokenTrivia::*;
+	use rome_rowan::Trivia::*;
+	assert!(matches!(
+		tokens.iter().nth(0).unwrap().leading(), // first let
+		One(x) if x.trivia() == &Comment(4)
+	));
+
+	let second_let = tokens.iter().nth(5).unwrap();
+	assert!(matches!(second_let.leading(),
+		Many(v) if v[0].trivia() == &Whitespace(2) && v[1].trivia() == &Comment(7) && v[2].trivia() == &Whitespace(1)
+	));
+	assert!(matches!(second_let.trailing(),
+		One(v) if v.trivia() == &Whitespace(3)
+	));
 }
 
 /// Lossly parse text into a [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).

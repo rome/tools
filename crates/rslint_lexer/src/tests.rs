@@ -1050,7 +1050,7 @@ fn object_expr_getter() {
 }
 
 #[test]
-fn newline_space_must_be_two_tokens() {
+fn space_newline_must_be_two_tokens() {
 	assert_lex! {
 		"\n ",
 		WHITESPACE:2
