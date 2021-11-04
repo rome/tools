@@ -103,20 +103,9 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.enums
 		.iter()
 		.map(|en| {
-			// here we make the partition
-			// inside an enum, we can have variants that point to a "flat" type or to another enum
-			// we want to divide these variants as we will generate a different code based on these requirements
-			let (variant_of_variants, simple_variants): (Vec<_>, Vec<_>) =
-				en.variants.iter().partition(|current_enum| {
-					let this_variant_has_variants = ast
-						.enums
-						.iter()
-						.any(|v| v.name.eq(*current_enum) && v.variants.len() > 0);
-
-					this_variant_has_variants
-				});
-
-			let variants_for_enum: Vec<_> = simple_variants
+			// here we collect all the variants, regardless
+			let variants_for_enum: Vec<_> = en
+				.variants
 				.iter()
 				.map(|en| {
 					let variant_name = format_ident!("{}", en);
@@ -126,6 +115,19 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					}
 				})
 				.collect();
+
+			// here we make the partition
+			// inside an enum, we can have variants that point to a "flat" type or to another enum
+			// we want to divide these variants as we will generate a different code based on these requirements
+			let (variant_of_variants, simple_variants): (Vec<_>, Vec<_>) =
+				en.variants.iter().partition(|current_enum| {
+					let this_variant_has_variants = ast
+						.enums
+						.iter()
+						.any(|v| v.name.eq(*current_enum) && !v.variants.is_empty());
+
+					this_variant_has_variants
+				});
 
 			let variants: Vec<_> = simple_variants
 				.iter()
@@ -166,7 +168,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						// cast() code
 						quote! {
 							if let Some(#variable_name) = #variant_name::cast(syntax.clone()) {
-									return Some(Expr::#variant_name(#variable_name));
+									return Some(#name::#variant_name(#variable_name));
 							}
 						},
 						// can_cast() code
@@ -175,33 +177,57 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						},
 						// syntax() code
 						quote! {
-							Expr::#variant_name(it) => it.syntax()
+							#name::#variant_name(it) => it.syntax()
 						},
 					)
 				})
 				.collect();
 
 			let vv_cast = vv.iter().map(|v| v.0.clone());
+
 			let vv_can_cast = vv.iter().map(|v| v.1.clone());
 			let vv_syntax = vv.iter().map(|v| v.2.clone());
 
-			let variant_can_cast: Vec<_> = en
-				.variants
-				.iter()
-				.map(|current_enum| {
-					let variant_is_enum = ast.enums.iter().find(|e| &e.name == current_enum);
+			let all_kinds = if !kinds.is_empty() {
+				quote! {
+					#(#kinds)|* => true,
+				}
+			} else {
+				quote! {}
+			};
 
-					if variant_is_enum.is_some() {
-						quote! {
-							it.syntax()
+			let cast_fn = if !kinds.is_empty() {
+				quote! {
+					let res = match syntax.kind() {
+						#(
+							#kinds => #name::#variants(#variant_cast),
+						)*
+						_ =>  {
+							#(
+								#vv_cast
+							)*
+							return None
 						}
-					} else {
-						quote! {
-							&it.syntax
-						}
+					};
+					Some(res)
+				}
+			} else {
+				quote! {
+						#(
+						#vv_cast
+					)*
+					None
+				}
+			};
+			let variant_can_cast: Vec<_> = simple_variants
+				.iter()
+				.map(|_| {
+					quote! {
+						&it.syntax
 					}
 				})
 				.collect();
+
 			(
 				quote! {
 					// #[doc = #doc]
@@ -223,25 +249,13 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						fn can_cast(kind: SyntaxKind) -> bool {
 							// matches!(kind, #(#kinds)|*)
 							match kind {
-								#(#kinds)|* => true,
+								#all_kinds
 								#(#vv_can_cast)*
 								_ => false
 							}
 						}
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
-							let res = match syntax.kind() {
-								#(
-								#kinds => #name::#variants(#variant_cast),
-								)*
-								_ =>  {
-									#(
-										#vv_cast
-									)*
-									return None
-								}
-								// _ => return None,
-							};
-							Some(res)
+								#cast_fn
 						}
 						fn syntax(&self) -> &SyntaxNode {
 							match self {
@@ -278,6 +292,11 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 	let ast = quote! {
 	#![allow(clippy::enum_variant_names)]
+	// sometimes we generate comparison of simple tokens
+	#![allow(clippy::match_like_matches_macro)]
+	// sometimes we have only one enum and the .clone() is redundant.
+	// It's needed when we match against multiple enums
+	#![allow(clippy::redundant_clone)]
 
 	use crate::{
 		ast::*,
