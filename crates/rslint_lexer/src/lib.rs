@@ -1361,7 +1361,6 @@ impl<'src> Lexer<'src> {
 					|| (UNICODE_WHITESPACE_STARTS.contains(&byte) && UNICODE_SPACES.contains(&chr))
 				{
 					self.consume_whitespace();
-					println!("{}", self.cur - start);
 					tok!(WHITESPACE, self.cur - start)
 				} else {
 					self.cur += chr.len_utf8() - 1;
