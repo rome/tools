@@ -125,7 +125,7 @@ impl<'src> Lexer<'src> {
 	}
 
 	fn consume_newlines(&mut self) {
-		while let Some(_) = self.current().copied() {
+		while self.current().is_some() {
 			let chr = self.get_unicode_char();
 			if is_linebreak(chr) {
 				self.state.had_linebreak = true;
