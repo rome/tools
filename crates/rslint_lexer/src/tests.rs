@@ -162,8 +162,7 @@ fn all_whitespace() {
 	assert_lex! {
 		"
 		",
-		WHITESPACE:1
-		WHITESPACE:2
+		WHITESPACE:3
 	}
 }
 
@@ -840,8 +839,7 @@ fn single_line_comments() {
 		"//abc
 	",
 		COMMENT:5,
-		WHITESPACE:1
-		WHITESPACE:1
+		WHITESPACE:2
 	}
 
 	assert_lex! {
@@ -1055,36 +1053,34 @@ fn object_expr_getter() {
 fn newline_space_must_be_two_tokens() {
 	assert_lex! {
 		"\n ",
-		WHITESPACE:1
-		WHITESPACE:1
+		WHITESPACE:2
 	}
 	assert_lex! {
 		" \n",
-		WHITESPACE:2
+		WHITESPACE:1
+		WHITESPACE:1
 	}
 	assert_lex! {
 		" \n ",
-		WHITESPACE:2
 		WHITESPACE:1
+		WHITESPACE:2
 	}
 
 	assert_lex! {
 		" a\n b \n ",
 		WHITESPACE:1
 		IDENT:1
-		WHITESPACE:1
-		WHITESPACE:1
-		IDENT:1
 		WHITESPACE:2
+		IDENT:1
 		WHITESPACE:1
+		WHITESPACE:2
 	}
 	assert_lex! {
 		"a //COMMENT \n /*COMMENT*/ b /*COM\nMENT*/",
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:10
-		WHITESPACE:1
-		WHITESPACE:1
+		WHITESPACE:2
 		COMMENT:11
 		WHITESPACE:1
 		IDENT:1
@@ -1096,8 +1092,7 @@ fn newline_space_must_be_two_tokens() {
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:10
-		WHITESPACE:1
-		WHITESPACE:1
+		WHITESPACE:2
 		COMMENT:11
 		WHITESPACE:1
 		IDENT:1
@@ -1105,40 +1100,38 @@ fn newline_space_must_be_two_tokens() {
 		COMMENT:12
 	}
 
-	// Now with CR
+	//Now with CR
 	assert_lex! {
 		"\r\n ",
-		WHITESPACE:2
-		WHITESPACE:1
+		WHITESPACE:3
 	}
 
 	assert_lex! {
 		" \r\n",
-		WHITESPACE:3
+		WHITESPACE:1
+		WHITESPACE:2
 	}
 	assert_lex! {
 		" \r\n ",
-		WHITESPACE:3
 		WHITESPACE:1
+		WHITESPACE:3
 	}
 
 	assert_lex! {
 		" a\r\n b \r\n ",
 		WHITESPACE:1
 		IDENT:1
-		WHITESPACE:2
-		WHITESPACE:1
-		IDENT:1
 		WHITESPACE:3
+		IDENT:1
 		WHITESPACE:1
+		WHITESPACE:3
 	}
 	assert_lex! {
 		"a //COMMENT \r\n /*COMMENT*/ b /*COM\r\nMENT*/",
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:10
-		WHITESPACE:2
-		WHITESPACE:1
+		WHITESPACE:3
 		COMMENT:11
 		WHITESPACE:1
 		IDENT:1
@@ -1150,8 +1143,7 @@ fn newline_space_must_be_two_tokens() {
 		IDENT:1
 		WHITESPACE:1
 		COMMENT:10
-		WHITESPACE:2
-		WHITESPACE:1
+		WHITESPACE:3
 		COMMENT:11
 		WHITESPACE:1
 		IDENT:1

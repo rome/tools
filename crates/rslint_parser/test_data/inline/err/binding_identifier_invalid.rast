@@ -40,8 +40,7 @@ MODULE@0..83
     WHITESPACE@46..47 " "
     BLOCK_STMT@47..68
       L_CURLY@47..48 "{"
-      WHITESPACE@48..49 "\n"
-      WHITESPACE@49..52 "   "
+      WHITESPACE@48..52 "\n   "
       VAR_DECL@52..66
         IDENT@52..55 "let"
         WHITESPACE@55..56 " "

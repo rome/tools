@@ -7,8 +7,7 @@ MODULE@0..28
     WHITESPACE@9..10 " "
     CLASS_BODY@10..27
       L_CURLY@10..11 "{"
-      WHITESPACE@11..12 "\n"
-      WHITESPACE@12..13 " "
+      WHITESPACE@11..13 "\n "
       SETTER@13..25
         SET_KW@13..16 "set"
         WHITESPACE@16..17 " "

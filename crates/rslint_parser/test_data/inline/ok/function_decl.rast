@@ -85,8 +85,7 @@ MODULE@0..142
     WHITESPACE@124..125 " "
     BLOCK_STMT@125..141
       L_CURLY@125..126 "{"
-      WHITESPACE@126..127 "\n"
-      WHITESPACE@127..129 "  "
+      WHITESPACE@126..129 "\n  "
       EXPR_STMT@129..139
         YIELD_EXPR@129..138
           YIELD_KW@129..134 "yield"
