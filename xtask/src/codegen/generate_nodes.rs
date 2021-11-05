@@ -347,7 +347,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	use crate::{
 		ast::*,
 		SyntaxKind::{self, *},
-		SyntaxNode, SyntaxToken, SyntaxElement, T,
+		SyntaxNode, SyntaxToken, T,
 		SyntaxResult
 	};
 

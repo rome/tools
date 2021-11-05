@@ -569,6 +569,7 @@ impl ObjectProp {
 					.key()
 					.map_or_else(|_| None, |key| Some(key.syntax().clone()))?,
 				ObjectProp::SpreadProp(_) => return None,
+    ObjectProp::JsUnknownMember(_) => todo!(),
 			}
 			.into(),
 		)
@@ -581,6 +582,7 @@ fn prop_name_syntax(name: PropName) -> Option<SyntaxNode> {
 		PropName::Literal(lit) => lit.syntax().clone(),
 		PropName::Name(name) => name.syntax().clone(),
 		PropName::ComputedPropertyName(_) => return None,
+    PropName::JsUnknownBinding(_) => todo!(),
 	})
 }
 
