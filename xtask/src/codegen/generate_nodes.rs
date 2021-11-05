@@ -7,11 +7,30 @@ use crate::{
 };
 use quote::{format_ident, quote};
 
+// these nodes won't generate any
+const DENIED_NODES: [&str; 3] = ["SyntaxNode", "SyntaxToken", "SyntaxElement"];
+
 pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
+	let filtered_enums: Vec<_> = ast
+		.enums
+		.iter()
+		.filter(|e| !DENIED_NODES.contains(&e.name.as_str()))
+		.collect();
+
+	let filtered_nodes: Vec<_> = ast
+		.nodes
+		.iter()
+		.filter(|e| !DENIED_NODES.contains(&e.name.as_str()))
+		.collect();
+
 	let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = ast
 		.nodes
 		.iter()
-		.map(|node| {
+		.filter_map(|node| {
+			if DENIED_NODES.contains(&node.name.as_str()) {
+				return None;
+			}
+
 			let name = format_ident!("{}", node.name);
 			let kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
 			let mut slot = 0usize;
@@ -55,10 +74,20 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					optional,
 					has_many,
 				} => {
+					let is_unknown_node = &ty.eq("SyntaxElement");
 					let ty = format_ident!("{}", &ty);
 
 					let method_name = field.method_name();
-					if *optional {
+					// this is when we encounter a node that has "Unknown" in its name
+					// it will return tokens a and nodes regardless because there's an error
+					// inside the code
+					if *is_unknown_node {
+						quote! {
+							pub fn #method_name(&self) -> SyntaxElementChildren {
+								support::element(&self.syntax)
+							}
+						}
+					} else if *optional {
 						quote! {
 							pub fn #method_name(&self) -> Option<#ty> {
 								support::as_optional_node(&self.syntax)
@@ -81,7 +110,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					}
 				}
 			});
-			(
+			Some((
 				quote! {
 					// TODO: review documentation
 					// #[doc = #documentation]
@@ -105,7 +134,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						fn syntax(&self) -> &SyntaxNode { &self.syntax }
 					}
 				},
-			)
+			))
 		})
 		.unzip();
 
@@ -116,8 +145,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.map(|current_enum| (current_enum.name.clone(), current_enum.variants.clone()))
 		.collect();
 
-	let (enum_defs, enum_boilerplate_impls): (Vec<_>, Vec<_>) = ast
-		.enums
+	let (enum_defs, enum_boilerplate_impls): (Vec<_>, Vec<_>) = filtered_enums
 		.iter()
 		.map(|en| {
 			// here we collect all the variants because this will generate the enums
@@ -161,7 +189,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			let variant_cast: Vec<_> = simple_variants
 				.iter()
 				.map(|current_enum| {
-					let variant_is_enum = ast.enums.iter().find(|e| &e.name == *current_enum);
+					let variant_is_enum = filtered_enums.iter().find(|e| &e.name == *current_enum);
 					let variant_name = format_ident!("{}", current_enum);
 
 					if variant_is_enum.is_some() {
@@ -292,8 +320,8 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		})
 		.unzip();
 
-	let enum_names = ast.enums.iter().map(|it| &it.name);
-	let node_names = ast.nodes.iter().map(|it| &it.name);
+	let enum_names = filtered_enums.iter().map(|it| &it.name);
+	let node_names = filtered_nodes.iter().map(|it| &it.name);
 
 	let display_impls = enum_names
 		.chain(node_names.clone())
@@ -319,7 +347,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	use crate::{
 		ast::*,
 		SyntaxKind::{self, *},
-		SyntaxNode, SyntaxToken, T,
+		SyntaxNode, SyntaxToken, SyntaxElement, T,
 		SyntaxResult
 	};
 
