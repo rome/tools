@@ -375,6 +375,8 @@ pub enum Field {
 		name: String,
 		token_kinds: Vec<String>,
 		optional: bool,
+		/// if the name was generated from a label
+		name_from_label: bool,
 	},
 	Node {
 		name: String,
@@ -503,7 +505,15 @@ impl Field {
 				};
 				format_ident!("{}_token", name)
 			}
-			Field::Node { name, .. } => {
+			Field::Node {
+				name,
+				name_from_label,
+				ty,
+				..
+			} => {
+				if !name_from_label {
+					panic!("The node {} doesn't have a label", ty);
+				}
 				if name == "type" {
 					format_ident!("ty")
 				} else {

@@ -136,6 +136,7 @@ fn handle_rule(
 				optional,
 				has_many,
 				separated: false,
+				name_from_label: label.is_some(),
 			};
 			fields.push(field);
 		}
@@ -147,15 +148,18 @@ fn handle_rule(
 					name: label.cloned().unwrap_or(name),
 					token_kinds: vec![],
 					optional,
+					name_from_label: label.is_some(),
 				};
 				fields.push(field);
 			}
 		}
 
 		Rule::Rep(rule) => {
+			// during repetition, we need to check the label
 			handle_rule(fields, grammar, rule, label, false, true);
 		}
 		Rule::Opt(rule) => {
+			// when an option rule is defined, we need to check the label
 			handle_rule(fields, grammar, rule, label, true, false);
 		}
 		Rule::Alt(rules) => {
@@ -266,6 +270,7 @@ fn handle_tokens_in_unions(
 		name: label.to_string(),
 		token_kinds,
 		optional,
+		name_from_label: true,
 	};
 	fields.push(field);
 	true

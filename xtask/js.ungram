@@ -78,7 +78,7 @@ Stmt =
 
 
 // Block statement
-BlockStmt = '{' stmts:Stmt* '}'
+BlockStmt = '{' stmts: Stmt* '}'
 
 
 // Empty statemnet
@@ -86,18 +86,18 @@ EmptyStmt = ';'?
 
 
 // Expression statement
-ExprStmt = Expr
+ExprStmt = expr: Expr
 
 
 // while statement
-WhileStmt = 'while' Condition cons:Stmt
+WhileStmt = 'while' condition: Condition cons:Stmt
 
 // do while statement
 DoWhileStmt = 'do'  cons:Stmt 'while' condition:Condition ';'?
 
 
 // if statement
-IfStmt = 'if' Condition manual__cons:Stmt 'else' manual__alt:Stmt
+IfStmt = 'if' condition: Condition manual__cons:Stmt 'else' manual__alt:Stmt
 
 
 // for..in statement
@@ -126,7 +126,7 @@ ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:Expr ')' cons:Stmt
 
 
 // continue statement
-ContinueStmt = 'continue' NameRef ';'?
+ContinueStmt = 'continue' name_ref: NameRef ';'?
 
 
 // break statement
@@ -140,7 +140,7 @@ ReturnStmt = 'return' value:Expr ';'?
 WithStmt = 'with' condition:Condition cons:Stmt
 
 // labelled statement
-LabelledStmt = label:Name ':' Stmt
+LabelledStmt = label:Name ':' stmt: Stmt
 
 // switch statement
 SwitchStmt =
@@ -230,7 +230,7 @@ NewExpr = 'new' type_args:TsTypeArgs? object:Expr arguments:ArgList
 CallExpr = type_args:TsTypeArgs? callee:Expr arguments:ArgList
 
 // await expression
-AwaitExpr = 'await' Expr
+AwaitExpr = 'await' expr: Expr
 
 // yield expressoin
 YieldExpr = 'yield' '*'? value:Expr
@@ -282,7 +282,7 @@ ObjectExpr = '{' props:(ObjectProp (',' ObjectProp)* ','?) '}'
 // class expression
 ClassExpr =
 	'class'
-	Name
+	name: Name
 	type_params:TsTypeParams?
 	parent:Expr?
 	'implements'?
@@ -325,7 +325,7 @@ ConstructorParamOrPat =
 // This type is here only to matain compatiblity with rslit_parser
 // A private property should only have the hash (#) or have the
 // keyword `private` in the typescript version
-PrivateProp = ClassProp
+PrivateProp = class_prop: ClassProp
 // @ematipico: they way it's written now is awful and can be improved a lot
 ClassProp =
 	'declare'?
@@ -365,7 +365,7 @@ PatternOrExpr = Pattern | Expr
 // sequence expression
 SequenceExpr =
 	exprs:(Expr (',' Expr)*)
-	BinExpr
+	bin_expr: BinExpr
 
 
 // grouping expression
@@ -463,7 +463,7 @@ KeyValuePattern = key:PropName ':' manual__value:Pattern
 
 
 // expression pattern
-ExprPattern = Expr
+ExprPattern = expr: Expr
 
 
 
@@ -494,7 +494,7 @@ PropName =
 
 
 // computed property
-ComputedPropertyName = '[' Expr ']'
+ComputedPropertyName = '[' expr: Expr ']'
 
 // private property access
 PrivatePropAccess = lhs:Expr '.' rhs:PrivateName
@@ -506,7 +506,7 @@ SpreadProp = '...' value:Expr
 InitializedProp = key:Name '=' value:Expr
 
 // property identifier
-IdentProp = Name
+IdentProp = name: Name
 
 ///////////////
 // MISCELLANEOUS
@@ -529,7 +529,7 @@ Method =
 
 SpreadElement = '...' element:Expr
 
-PrivateName = '#' Name
+PrivateName = '#' name: Name
 
 Name = 'ident'
 
@@ -555,7 +555,7 @@ FnDecl =
 	'async'?
 	'function'
 	'*'?
-	Name
+	name: Name
 	type_parameters:TsTypeParams?
 	parameters:ParameterList
 	':'?
@@ -565,7 +565,7 @@ FnDecl =
 VarDecl = ('var' | 'const' | manual__:'let') declared:(Declarator (',' Declarator)*) ';'?
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
-ClassDecl  = 'class' Name ('extends' parent:NameRef)? body:ClassBody
+ClassDecl  = 'class' name: Name ('extends' parent:NameRef)? body:ClassBody
 
 Declarator = pattern:Pattern '!' '=' value:Expr
 
@@ -607,19 +607,19 @@ DefaultDecl =
 ExportDefaultExpr = 'export' 'type'? 'default'? expr:Expr
 
 // export wildcard
-ExportWildcard = 'export' 'type'? '*' 'as'? Ident? 'from'
+ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from'
 
 
 // export declaration
-ExportDecl = 'export' 'type'? Decl
+ExportDecl = 'export' 'type'? decl: Decl
 
 
 // typescript export assignment
-TsExportAssignment = 'export' '=' Expr ';'?
+TsExportAssignment = 'export' '=' expr: Expr ';'?
 
 
 // typescript namespace export
-TsNamespaceExportDecl = 'export' 'as' 'namespace' Ident? ';'?
+TsNamespaceExportDecl = 'export' 'as' 'namespace' ident: Ident? ';'?
 
 ImportClause =
 	WildcardImport
@@ -638,7 +638,7 @@ Specifier = name:Ident manual__:'as'? manual__alias:Name
 ImportStringSpecifier = 'string'
 
 
-WildcardImport = '*' 'as'? Ident?
+WildcardImport = '*' 'as'? ident: Ident?
 
 // @ematipico this one is not entirely correct I think..
 ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
@@ -652,7 +652,7 @@ ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier
 //
 
 TsImportEqualsDecl =
-	('import' | 'export') Ident '=' module:TsModuleRef ';'?
+	('import' | 'export') ident: Ident '=' module:TsModuleRef ';'?
 
 
 TsModuleRef =
@@ -698,25 +698,25 @@ TsType =
 
 TsAny = 'any'
 TsUnknown = 'unknown'
-TsNumber = Ident
-TsObject = Ident
-TsBoolean = Ident
-TsBigint = Ident
-TsString = Ident
-TsSymbol = Ident
+TsNumber = ident: Ident
+TsObject = ident: Ident
+TsBoolean = ident: Ident
+TsBigint = ident: Ident
+TsString = ident: Ident
+TsSymbol = ident: Ident
 TsVoid = 'void'
 TsUndefined = 'undefined'
 TsNull= 'null'
 TsNever = 'never'
 TsThis = 'this'
-TsLiteral = Ident
+TsLiteral = ident: Ident
 
 
 // typescript tuples
 TsTuple = '[' elements:TsTupleElement ']'
 // @ematipico: this is ugly and it's here only to maintain compatibility
 // with the current parser API
-TsTupleElement = Ident ':' '?' '...'? ty:TsType
+TsTupleElement = ident: Ident ':' '?' '...'? ty:TsType
 
 TsParen = '(' ty:TsType ')'
 
@@ -725,8 +725,8 @@ TsTypeRef = name:TsEntityName type_args:TsTypeArgs
 
 
 // typescript enum
-TsEnum = 'const'? 'enum'  Ident '{' members:TsEnumMember* '}'
-TsEnumMember = Ident '=' value:Expr
+TsEnum = 'const'? 'enum'  ident: Ident '{' members:TsEnumMember* '}'
+TsEnumMember = ident: Ident '=' value:Expr
 
 // typescript template literal types
 TsTemplate = elements:TsTemplateElement
@@ -751,7 +751,7 @@ TsMappedType =
 TsMappedTypeReadonly = '-'? '+'? 'readonly'?
 
 // @ematipico: this type is correct and it's here only for compatibility
-TsMappedTypeParam = '['? name:TsTypeName? ']'? Ident? ty:TsType
+TsMappedTypeParam = '['? name:TsTypeName? ']'? ident: Ident? ty:TsType
 
 
 // typescript array
@@ -798,7 +798,7 @@ TsObjectType = '{' members:TsTypeElement* '}'
 
 
 // typescript infer
-TsInfer = 'infer' Ident
+TsInfer = 'infer' ident: Ident
 
 // typescript import
 // @ematipico not sure where the dot token should be placed
@@ -809,15 +809,15 @@ TsInfer = 'infer' Ident
 // typescrit namesapce
 // TODO: not sure where to put the dot
 // https://github.com/rome/tools/issues/1729
-TsNamespaceDecl = 'declare' Ident '.'? TsNamespaceBody
+TsNamespaceDecl = 'declare' ident: Ident '.'? body: TsNamespaceBody
 TsNamespaceBody = TsModuleBlock | TsNamespaceDecl
 TsModuleBlock = '{' items:ModuleItem '}'
 
 
 // type alias declaration
-TsTypeAliasDecl = 'type' type_params:TsTypeParams '=' TsType
+TsTypeAliasDecl = 'type' type_params:TsTypeParams '=' ty:TsType
 TsTypeParams = '<'? params:TsTypeParam '>'?
-TsTypeParam = Ident constraint:TsConstraint default:TsDefault
+TsTypeParam = ident: Ident constraint:TsConstraint default:TsDefault
 
 TsDefault = '=' ty:TsType
 TsConstraint = 'extends' ty:TsType
@@ -826,7 +826,7 @@ TsConstraint = 'extends' ty:TsType
 
 // typescript module declaration
 // TODO: where does the dot go exactly?
-TsModuleDecl = 'declare' 'global'? 'module' '.'? Ident body:TsNamespaceBody
+TsModuleDecl = 'declare' 'global'? 'module' '.'? ident: Ident body:TsNamespaceBody
 
 
 // typescript interface declaration
@@ -849,7 +849,7 @@ TsEntityName =
 	TsTypeName
 	| TsQualifiedPath
 
-TsTypeName = Ident
+TsTypeName = ident: Ident
 TsQualifiedPath = lhs:TsEntityName '.' rhs:TsTypeName
 
 
@@ -892,6 +892,6 @@ TsConstructorParam = 'readonly' pat:Pattern
 
 TsNonNull = expr:Expr '!'
 
-TsAssertion = expr:Expr Ident '<' ty:TsType '>'
+TsAssertion = expr:Expr ident: Ident '<' ty:TsType '>'
 
-TsConstAssertion = expr:Expr Ident '<' 'const' '>'
+TsConstAssertion = expr:Expr ident: Ident '<' 'const' '>'
