@@ -3,6 +3,8 @@
 
 use quote::{format_ident, quote};
 
+const LANGUAGE_PREFIXES: [&str; 4] = ["js_", "ts_", "jsx_", "tsx_"];
+
 pub struct KindsSrc<'a> {
 	pub punct: &'a [(&'a str, &'a str)],
 	pub keywords: &'a [&'a str],
@@ -514,10 +516,14 @@ impl Field {
 				if !name_from_label {
 					panic!("The node {} doesn't have a label", ty);
 				}
-				if name == "type" {
+				let mut final_name = name.clone();
+				for prefix in LANGUAGE_PREFIXES {
+					final_name = final_name.replace(prefix, "");
+				}
+				if final_name == "type" {
 					format_ident!("ty")
 				} else {
-					format_ident!("{}", name)
+					format_ident!("{}", final_name)
 				}
 			}
 		}
