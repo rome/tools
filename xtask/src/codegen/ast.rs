@@ -71,7 +71,6 @@ fn make_ast(grammar: &Grammar) -> AstSrc {
 			}
 		}
 	}
-	// flatten_unions_of_unions(&mut ast);
 	ast
 }
 
