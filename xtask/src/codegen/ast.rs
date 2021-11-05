@@ -155,11 +155,9 @@ fn handle_rule(
 		}
 
 		Rule::Rep(rule) => {
-			// during repetition, we need to check the label
 			handle_rule(fields, grammar, rule, label, false, true);
 		}
 		Rule::Opt(rule) => {
-			// when an option rule is defined, we need to check the label
 			handle_rule(fields, grammar, rule, label, true, false);
 		}
 		Rule::Alt(rules) => {
