@@ -1,12 +1,11 @@
 use std::{
 	borrow::Borrow,
-	fmt::{self, Pointer},
+	fmt,
 	mem::{self, ManuallyDrop},
 	ops, ptr,
 };
 
 use countme::Count;
-use text_size::TextLen;
 
 use crate::{
 	arc::{Arc, HeaderSlice, ThinArc},
@@ -68,7 +67,7 @@ pub enum GreenTokenTrivia {
 }
 
 impl GreenTokenTrivia {
-	fn text_len(&self) -> TextSize {
+	pub fn text_len(&self) -> TextSize {
 		match self {
 			GreenTokenTrivia::None => 0.into(),
 			GreenTokenTrivia::One(x) => x.text_len(),
@@ -242,6 +241,7 @@ impl GreenTokenData {
 impl GreenToken {
 	/// Creates new Token.
 	#[inline]
+	#[allow(dead_code)]
 	pub fn new(kind: SyntaxKind, text: &str) -> GreenToken {
 		Self::with_trivia(kind, text, GreenTokenTrivia::None, GreenTokenTrivia::None)
 	}

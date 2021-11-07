@@ -181,20 +181,21 @@ pub fn token_range_must_be_correct() {
 	dbg!(t);
 }
 
+//TODO Tidy up this test
 #[test]
 pub fn test_trivia_attached_to_tokens() {
 	let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
-	let (mut tokens, mut errors) = tokenize(text, 0);
+	let (tokens, errors) = tokenize(text, 0);
 
 	// let tokens: Vec<_> = tokens
 	// 	.drain(..)
 	// 	.filter(|x| (x.kind != SyntaxKind::WHITESPACE) && (x.kind != SyntaxKind::COMMENT))
 	// 	.collect();
-	let mut i = 0;
-	for token in &tokens {
-		println!("{:?} {:?}", &text[i..(i + token.len)], token);
-		i += token.len;
-	}
+	// let mut i = 0;
+	// for token in &tokens {
+	// 	// println!("{:?} {:?}", &text[i..(i + token.len)], token);
+	// 	i += token.len;
+	// }
 
 	let tok_source = TokenSource::new(text, &tokens);
 
@@ -202,19 +203,19 @@ pub fn test_trivia_attached_to_tokens() {
 	let mut parser = crate::Parser::new(tok_source, 0, syntax);
 	crate::syntax::program::parse(&mut parser);
 
-	let (events, p_errs) = parser.finish();
+	let (events, _p_errs) = parser.finish();
 
 	// println!("{:?}", events);
 
 	let mut tree_sink = LosslessTreeSink::new(text, &tokens);
 	crate::process(&mut tree_sink, events, errors);
 
-	let (syntax, parse_errors) = tree_sink.finish();
+	let (syntax, _parse_errors) = tree_sink.finish();
 
-	dbg!(&syntax);
+	// dbg!(&syntax);
 
 	let tokens = syntax.tokens();
-	dbg!(&tokens);
+	// dbg!(&tokens);
 
 	use rome_rowan::GreenTokenTrivia::*;
 	use rome_rowan::Trivia::*;

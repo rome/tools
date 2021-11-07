@@ -109,14 +109,14 @@ pub trait SyntaxNodeExt {
 	/// ```
 	fn trimmed_range(&self) -> TextRange {
 		let node = self.to_node();
-		let tokens = dbg!(node.tokens());
+		let tokens = node.tokens();
 		let start = tokens
 			.first()
-			.map(|t| t.text_range().start())
+			.map(|t| t.text_range().start() + t.leading().text_len())
 			.unwrap_or_else(|| 0.into());
 		let end = tokens
 			.last()
-			.map(|t| t.text_range().end())
+			.map(|t| t.text_range().end() - t.trailing().text_len())
 			.unwrap_or_else(|| 0.into());
 
 		TextRange::new(start, end)
@@ -133,12 +133,26 @@ pub trait SyntaxNodeExt {
 	/// assert_eq!(node.trimmed_text(), "foo. bar");
 	/// ```
 	fn trimmed_text(&self) -> SyntaxText {
+		let not_trimmed_start = self.to_node().text_range().start();
 		let trimmed = self.to_node().trimmed_range();
-		let offset = self.to_node().text_range().start();
-		self.to_node().text().slice(TextRange::new(
-			trimmed.start().checked_sub(offset).unwrap_or_default(),
-			trimmed.end().checked_sub(offset).unwrap_or_default(),
-		))
+		// println!(
+		// 	"NOT TRIMMED: {:?} TRIMMED: {:?} - {:?}",
+		// 	self.to_node().text_range(),
+		// 	trimmed,
+		// 	self.to_node()
+		// 		.text()
+		// 		.slice(TextRange::new(1.into(), 9.into()))
+		// );
+		let start = trimmed
+			.start()
+			.checked_sub(not_trimmed_start)
+			.unwrap_or_default();
+		let end = trimmed
+			.end()
+			.checked_sub(not_trimmed_start)
+			.unwrap_or_default();
+		// println!("{:?} {:?}", start, end);
+		self.to_node().text().slice(TextRange::new(start, end))
 	}
 
 	/// Check whether this node's kind is contained in a token set.

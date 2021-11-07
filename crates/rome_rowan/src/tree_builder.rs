@@ -67,18 +67,18 @@ impl<L: Language> TreeBuilder<'_, L> {
 		leading: GreenTokenTrivia,
 		trailing: GreenTokenTrivia,
 	) {
-		println!("TreeBuilder::token_with_trivia {:?}", kind);
+		// println!("TreeBuilder::token_with_trivia {:?}", kind);
 		let (hash, token) =
 			self.cache
 				.token_with_trivia(L::kind_to_raw(kind), text, leading, trailing);
-		println!("\ttoken: {:?}", token);
+		// println!("\ttoken: {:?}", token);
 		self.children.push((hash, token.into()));
 	}
 
 	/// Start new node and make it current.
 	#[inline]
 	pub fn start_node(&mut self, kind: L::Kind) {
-		println!("TreeBuilder::start_node {:?}", kind);
+		// println!("TreeBuilder::start_node {:?}", kind);
 		let len = self.children.len();
 		self.parents.push((kind, len));
 	}
@@ -87,7 +87,7 @@ impl<L: Language> TreeBuilder<'_, L> {
 	/// branch as current.
 	#[inline]
 	pub fn finish_node(&mut self) {
-		println!("TreeBuilder::finish_node");
+		// println!("TreeBuilder::finish_node");
 		let (kind, first_child) = self.parents.pop().unwrap();
 		let (hash, node) = self
 			.cache

@@ -1,9 +1,9 @@
 use crate::{
-	ast, AstNode, ParserError,
+	ParserError,
 	SyntaxKind::{self, *},
 	SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
-use rome_rowan::{GreenTokenTrivia, Trivia};
+use rome_rowan::GreenTokenTrivia;
 use rslint_lexer::Token;
 use std::mem;
 
@@ -55,7 +55,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 	}
 
 	fn token(&mut self, kind: SyntaxKind) {
-		println!("LosslessTreeSink::token: {:?} {:?}", kind, self.text_pos);
+		// println!("LosslessTreeSink::token: {:?} {:?}", kind, self.text_pos);
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => unreachable!(),
 			State::PendingFinish => self.inner.finish_node(),
@@ -155,10 +155,10 @@ impl<'a> LosslessTreeSink<'a> {
 	}
 
 	fn do_token(&mut self, kind: SyntaxKind, len: TextSize) {
-		println!(
-			"LosslessTreeSink::do_token: {:?} len {:?} pos {:?}",
-			kind, len, self.text_pos
-		);
+		// println!(
+		// 	"LosslessTreeSink::do_token: {:?} len {:?} pos {:?}",
+		// 	kind, len, self.text_pos
+		// );
 		let range = TextRange::at(self.text_pos, len);
 		let text = &self.text[range];
 		self.text_pos += len;
@@ -171,7 +171,7 @@ impl<'a> LosslessTreeSink<'a> {
 	}
 
 	fn get_trivia(&mut self, break_on_newline: bool) -> rome_rowan::GreenTokenTrivia {
-		use rome_rowan::{GreenTokenTrivia, Trivia};
+		use rome_rowan::Trivia;
 
 		let mut trivia = GreenTokenTrivia::None;
 
@@ -180,11 +180,10 @@ impl<'a> LosslessTreeSink<'a> {
 				break;
 			}
 
-			//TODO ask if is new line
 			let pos: u32 = self.text_pos.into();
 			let pos = pos as usize;
 			let text = &self.text[pos..(pos + token.len)];
-			if break_on_newline && text.contains("\n") {
+			if break_on_newline && text.chars().any(rslint_lexer::is_linebreak) {
 				break;
 			}
 
