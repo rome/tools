@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use super::kinds_src::AstSrc;
 use crate::{
 	codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
@@ -99,11 +101,19 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		})
 		.unzip();
 
+	// it maps enum name A and its corresponding variants
+	let name_to_variants: HashMap<_, _> = ast
+		.enums
+		.iter()
+		.map(|current_enum| (current_enum.name.clone(), current_enum.variants.clone()))
+		.collect();
+
 	let (enum_defs, enum_boilerplate_impls): (Vec<_>, Vec<_>) = ast
 		.enums
 		.iter()
 		.map(|en| {
-			// here we collect all the variants, regardless
+			// here we collect all the variants because this will generate the enums
+			// so we don't care about filtered variants
 			let variants_for_enum: Vec<_> = en
 				.variants
 				.iter()
@@ -116,17 +126,17 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
-			// here we make the partition
-			// inside an enum, we can have variants that point to a "flat" type or to another enum
+			// Here we make the partition
+			//
+			// Inside an enum, we can have variants that point to a "flat" type or to another enum;
 			// we want to divide these variants as we will generate a different code based on these requirements
 			let (variant_of_variants, simple_variants): (Vec<_>, Vec<_>) =
 				en.variants.iter().partition(|current_enum| {
-					let this_variant_has_variants = ast
-						.enums
-						.iter()
-						.any(|v| v.name.eq(*current_enum) && !v.variants.is_empty());
-
-					this_variant_has_variants
+					if let Some(variants) = name_to_variants.get(*current_enum) {
+						!variants.is_empty()
+					} else {
+						false
+					}
 				});
 
 			let variants: Vec<_> = simple_variants

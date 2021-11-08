@@ -317,10 +317,6 @@ ArrayExpr = '[' elements:ExprOrSpread* ']'
 ExprOrSpread =
 	Expr
 	| SpreadElement
-	// @ematipico these have been added because the current enums are not flatten
-	// | Literal
-	// | ObjectExpr
-	// | ArrayExpr
 	| GroupingExpr
 
 // assign expression
