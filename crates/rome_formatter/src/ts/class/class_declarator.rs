@@ -60,6 +60,7 @@ impl ToFormatElement for ClassElement {
 			ClassElement::TsIndexSignature(_) => todo!(),
 			ClassElement::Getter(getter) => getter.to_format_element(formatter),
 			ClassElement::Setter(setter) => setter.to_format_element(formatter),
+			ClassElement::JsUnknownMember(_) => todo!(),
 		}
 	}
 }

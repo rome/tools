@@ -10,6 +10,7 @@ impl ToFormatElement for Pattern {
 			Pattern::ArrayPattern(array_pattern) => array_pattern.to_format_element(formatter),
 			Pattern::ExprPattern(_) => todo!(),
 			Pattern::SinglePattern(single) => single.to_format_element(formatter),
+			Pattern::JsUnknownPattern(_) => todo!(),
 		}
 	}
 }
