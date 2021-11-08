@@ -1,6 +1,8 @@
+use std::collections::HashMap;
+
 use super::kinds_src::AstSrc;
 use crate::{
-	codegen::{kinds_src::Field, to_upper_snake_case},
+	codegen::{kinds_src::Field, to_lower_snake_case, to_upper_snake_case},
 	Result,
 };
 use quote::{format_ident, quote};
@@ -99,10 +101,19 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		})
 		.unzip();
 
+	// it maps enum name A and its corresponding variants
+	let name_to_variants: HashMap<_, _> = ast
+		.enums
+		.iter()
+		.map(|current_enum| (current_enum.name.clone(), current_enum.variants.clone()))
+		.collect();
+
 	let (enum_defs, enum_boilerplate_impls): (Vec<_>, Vec<_>) = ast
 		.enums
 		.iter()
 		.map(|en| {
+			// here we collect all the variants because this will generate the enums
+			// so we don't care about filtered variants
 			let variants_for_enum: Vec<_> = en
 				.variants
 				.iter()
@@ -115,8 +126,20 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
-			let variants: Vec<_> = en
-				.variants
+			// Here we make the partition
+			//
+			// Inside an enum, we can have variants that point to a "flat" type or to another enum;
+			// we want to divide these variants as we will generate a different code based on these requirements
+			let (variant_of_variants, simple_variants): (Vec<_>, Vec<_>) =
+				en.variants.iter().partition(|current_enum| {
+					if let Some(variants) = name_to_variants.get(*current_enum) {
+						!variants.is_empty()
+					} else {
+						false
+					}
+				});
+
+			let variants: Vec<_> = simple_variants
 				.iter()
 				.map(|var| format_ident!("{}", var))
 				.collect();
@@ -127,11 +150,10 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				.map(|name| format_ident!("{}", to_upper_snake_case(&name.to_string())))
 				.collect();
 
-			let variant_cast: Vec<_> = en
-				.variants
+			let variant_cast: Vec<_> = simple_variants
 				.iter()
 				.map(|current_enum| {
-					let variant_is_enum = ast.enums.iter().find(|e| &e.name == current_enum);
+					let variant_is_enum = ast.enums.iter().find(|e| &e.name == *current_enum);
 					let variant_name = format_ident!("{}", current_enum);
 
 					if variant_is_enum.is_some() {
@@ -146,23 +168,76 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
-			let variant_can_cast: Vec<_> = en
-				.variants
+			// variant of variants
+			let vv: Vec<_> = variant_of_variants
 				.iter()
-				.map(|current_enum| {
-					let variant_is_enum = ast.enums.iter().find(|e| &e.name == current_enum);
+				.map(|en| {
+					let variant_name = format_ident!("{}", en);
+					let variable_name = format_ident!("{}", to_lower_snake_case(en.as_str()));
+					(
+						// cast() code
+						quote! {
+							if let Some(#variable_name) = #variant_name::cast(syntax.clone()) {
+									return Some(#name::#variant_name(#variable_name));
+							}
+						},
+						// can_cast() code
+						quote! {
+							k if #variant_name::can_cast(k) => true,
+						},
+						// syntax() code
+						quote! {
+							#name::#variant_name(it) => it.syntax()
+						},
+					)
+				})
+				.collect();
 
-					if variant_is_enum.is_some() {
-						quote! {
-							it.syntax()
+			let vv_cast = vv.iter().map(|v| v.0.clone());
+
+			let vv_can_cast = vv.iter().map(|v| v.1.clone());
+			let vv_syntax = vv.iter().map(|v| v.2.clone());
+
+			let all_kinds = if !kinds.is_empty() {
+				quote! {
+					#(#kinds)|* => true,
+				}
+			} else {
+				quote! {}
+			};
+
+			let cast_fn = if !kinds.is_empty() {
+				quote! {
+					let res = match syntax.kind() {
+						#(
+							#kinds => #name::#variants(#variant_cast),
+						)*
+						_ =>  {
+							#(
+								#vv_cast
+							)*
+							return None
 						}
-					} else {
-						quote! {
-							&it.syntax
-						}
+					};
+					Some(res)
+				}
+			} else {
+				quote! {
+						#(
+						#vv_cast
+					)*
+					None
+				}
+			};
+			let variant_can_cast: Vec<_> = simple_variants
+				.iter()
+				.map(|_| {
+					quote! {
+						&it.syntax
 					}
 				})
 				.collect();
+
 			(
 				quote! {
 					// #[doc = #doc]
@@ -182,22 +257,25 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 					impl AstNode for #name {
 						fn can_cast(kind: SyntaxKind) -> bool {
-							matches!(kind, #(#kinds)|*)
+							// matches!(kind, #(#kinds)|*)
+							match kind {
+								#all_kinds
+								#(#vv_can_cast)*
+								_ => false
+							}
 						}
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
-							let res = match syntax.kind() {
-								#(
-								#kinds => #name::#variants(#variant_cast),
-								)*
-								_ => return None,
-							};
-							Some(res)
+								#cast_fn
 						}
 						fn syntax(&self) -> &SyntaxNode {
 							match self {
 								#(
 								#name::#variants(it) => #variant_can_cast,
 								)*
+								#(
+									#vv_syntax
+								),*
+
 							}
 						}
 					}
@@ -223,19 +301,26 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		});
 
 	let ast = quote! {
+	#![allow(clippy::enum_variant_names)]
+	// sometimes we generate comparison of simple tokens
+	#![allow(clippy::match_like_matches_macro)]
+	// sometimes we have only one enum and the .clone() is redundant.
+	// It's needed when we match against multiple enums
+	#![allow(clippy::redundant_clone)]
+
 	use crate::{
 		ast::*,
 		SyntaxKind::{self, *},
 		SyntaxNode, SyntaxToken, T,
 	};
-			#[allow(clippy::enum_variant_names)]
 
-			#(#node_defs)*
-			#(#enum_defs)*
-			#(#node_boilerplate_impls)*
-			#(#enum_boilerplate_impls)*
-			#(#display_impls)*
-		};
+
+		#(#node_defs)*
+		#(#enum_defs)*
+		#(#node_boilerplate_impls)*
+		#(#enum_boilerplate_impls)*
+		#(#display_impls)*
+	};
 
 	let ast = ast
 		.to_string()

@@ -363,7 +363,7 @@ impl ExprOrSpread {
 	}
 
 	pub fn is_expr(&self) -> bool {
-		matches!(self, ExprOrSpread::Expr(_))
+		!self.is_spread()
 	}
 }
 

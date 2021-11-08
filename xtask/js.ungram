@@ -48,14 +48,7 @@ Stmt =
 	| ThrowStmt
 	| TryStmt
 	| DebuggerStmt
-	|	FnDecl
-	| ClassDecl
-	| VarDecl
-	| TsEnum
-	| TsTypeAliasDecl
-	| TsNamespaceDecl
-	| TsModuleDecl
-	| TsInterfaceDecl
+	| Decl
 
 
 // Block statement
@@ -92,7 +85,7 @@ ForStmt =
 	cons:Stmt
 
 ForStmtInit = inner:ForHead ';'
-ForHead = VarDecl | Expr | NameRef
+ForHead = VarDecl | Expr
 
 ForStmtTest = expr:Expr ';'
 
@@ -324,10 +317,6 @@ ArrayExpr = '[' elements:ExprOrSpread* ']'
 ExprOrSpread =
 	Expr
 	| SpreadElement
-	// @ematipico these have been added because the current enums are not flatten
-	| Literal
-	| ObjectExpr
-	| ArrayExpr
 	| GroupingExpr
 
 // assign expression
@@ -394,7 +383,6 @@ Undefined = 'undefined'
 ExprOrBlock =
 	Expr
 	| BlockStmt
-	| Literal
 
 ParameterList = '(' parameters:Pattern* ')'
 ArgList = '(' args:Expr* ')'

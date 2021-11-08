@@ -54,7 +54,6 @@ impl ToFormatElement for ForHead {
 		match self {
 			ForHead::VarDecl(decl) => decl.to_format_element(formatter),
 			ForHead::Expr(expr) => expr.to_format_element(formatter),
-			ForHead::NameRef(name_ref) => name_ref.to_format_element(formatter),
 		}
 	}
 }
