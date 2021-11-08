@@ -35,9 +35,8 @@ impl LiteralProp {
 	pub fn value(&self) -> SyntaxResult<Expr> {
 		let child = self.syntax().children().nth(1);
 		match child {
-			Some(child) => {
-				Expr::cast(child).ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
-			}
+			Some(child) => Expr::cast(child)
+				.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone())),
 			None => Err(SyntaxError::MissingRequiredChild(self.syntax().clone())),
 		}
 	}
