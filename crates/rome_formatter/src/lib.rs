@@ -18,7 +18,7 @@
 //!
 //! Now, we do want to create this IR for the data structure:
 //! ```rust
-//! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatError, FormatOptions, space_token, token };
+//! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatResult, FormatOptions, space_token, token };
 //!
 //! struct KeyValue {
 //!     key: String,
@@ -26,7 +26,7 @@
 //! }
 //!
 //! impl ToFormatElement for KeyValue {
-//!     fn to_format_element(&self, formatter: &Formatter)-> Result<FormatElement, FormatError>  {
+//!     fn to_format_element(&self, formatter: &Formatter)-> FormatResult<FormatElement>  {
 //!         Ok(format_elements![
 //!             token(self.key.as_str()),
 //!             space_token(),

@@ -34,7 +34,7 @@ impl Formatter {
 		Ok(printer.print(&element))
 	}
 
-	fn format_syntax_node(&self, node: &SyntaxNode) -> Result<FormatElement, FormatError> {
+	fn format_syntax_node(&self, node: &SyntaxNode) -> FormatResult<FormatElement> {
 		let start = self.format_node_start(node);
 		let content = node.to_format_element(self)?;
 		Ok(concat_elements(vec![
@@ -51,7 +51,7 @@ impl Formatter {
 	pub fn format_node<T: AstNode + ToFormatElement>(
 		&self,
 		node: T,
-	) -> Result<FormatElement, FormatError> {
+	) -> FormatResult<FormatElement> {
 		Ok(concat_elements(vec![
 			self.format_node_start(node.syntax()),
 			node.to_format_element(self)?,
@@ -99,7 +99,7 @@ impl Formatter {
 	///
 	/// assert_eq!(Ok(token("\"abc\"")), result)
 	/// ```
-	pub fn format_token(&self, syntax_token: &SyntaxToken) -> Result<FormatElement, FormatError> {
+	pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatResult<FormatElement> {
 		syntax_token.to_format_element(self)
 	}
 

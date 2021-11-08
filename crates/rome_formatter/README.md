@@ -25,7 +25,7 @@ struct Buzz {
 }
 
 impl ToFormatElement for Buzz {
- fn to_format_element(&self, formatter: &Formatter) -> FormatElement {
+ fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
  // implementation goes here
  format_elements![token("_"), blast.as_str(), token("_")]
  }
@@ -38,7 +38,7 @@ impl ToFormatElement for Buzz {
 1. if a token is mandatory and the AST has that information, please use that token instead, for example:
 
 	```rust
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let l_paren_yes = formatter.format_token(&self.l_paren_token()?)?; // yes
 		let l_paren_no = toke("("); // no
 	}
