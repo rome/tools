@@ -165,7 +165,7 @@ fn handle_rule(
 		}
 
 		Rule::Seq(rules) => {
-			if lower_comma_list(fields, grammar, label, rules.as_slice()) {
+			if handle_comma_list(fields, grammar, label, rules.as_slice()) {
 				return;
 			}
 
@@ -176,7 +176,8 @@ fn handle_rule(
 	};
 
 	// (T (',' T)* ','?)
-	fn lower_comma_list(
+	// (T (',' T)*)
+	fn handle_comma_list(
 		acc: &mut Vec<Field>,
 		grammar: &Grammar,
 		label: Option<&String>,

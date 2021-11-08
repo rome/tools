@@ -603,8 +603,7 @@ mod tests {
 		// list([,3])
 		let list = build_list(vec![(None, Some(",")), (Some(3), None)]);
 
-		// This should panic because having two successive separators is invalid.
-		// Grammars should instead model a "hole" node if this is a valid language construct.
+		// This should panic because the first element is a separator instead of a node.
 		let _ = list.elements().collect::<Vec<_>>();
 	}
 
