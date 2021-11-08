@@ -36,8 +36,7 @@ impl ToFormatElement for ClassProp {
 					token(";")
 				])
 			}
-			// TODO: review, we can have a better error
-			None => Err(FormatError::UnknownNode),
+			None => Err(FormatError::MissingRequiredChild),
 		}
 	}
 }

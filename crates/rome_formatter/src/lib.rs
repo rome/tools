@@ -90,9 +90,6 @@ pub enum FormatError {
 	/// Node is missing and it should be required for a correct formatting
 	MissingRequiredChild,
 
-	/// Cases where the parser can't figure out the type of node.
-	UnknownNode,
-
 	/// In case our formatter doesn't know how to format a certain language
 	UnsupportedLanguage,
 
@@ -103,7 +100,7 @@ pub enum FormatError {
 impl From<SyntaxError> for FormatError {
 	fn from(syntax_error: SyntaxError) -> Self {
 		match syntax_error {
-			SyntaxError::MissingElement(_node) => FormatError::MissingRequiredChild,
+			SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
 		}
 	}
 }
