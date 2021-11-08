@@ -1,11 +1,11 @@
 use crate::ts::statements::format_statements;
 use crate::{
-	format_elements, hard_line_break, FormatElement, FormatError, Formatter, ToFormatElement,
+	format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::Script;
 
 impl ToFormatElement for Script {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut elements = vec![];
 
 		if let Some(shebang) = self.shebang_token() {

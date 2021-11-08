@@ -1,11 +1,11 @@
 use crate::{
-	empty_element, format_elements, space_token, token, FormatElement, FormatError, Formatter,
-	ToFormatElement,
+	empty_element, format_elements, space_token, token, FormatElement, FormatError, FormatResult,
+	Formatter, ToFormatElement,
 };
 use rslint_parser::ast::ClassProp;
 
 impl ToFormatElement for ClassProp {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let static_token = if let Some(static_token) = self.static_token() {
 			format_elements![formatter.format_token(&static_token)?, space_token()]
 		} else {

@@ -28,17 +28,17 @@ impl CondExpr {
 }
 
 impl LiteralProp {
-	pub fn key(&self) -> Option<PropName> {
-		support::child::<PropName>(self.syntax())
+	pub fn key(&self) -> SyntaxResult<PropName> {
+		support::as_mandatory_node::<PropName>(self.syntax())
 	}
 
 	pub fn value(&self) -> SyntaxResult<Expr> {
 		let child = self.syntax().children().nth(1);
 		match child {
 			Some(child) => {
-				Expr::cast(child).ok_or_else(|| SyntaxError::MissingElement(self.syntax().kind()))
+				Expr::cast(child).ok_or_else(|| SyntaxError::MissingElement(self.syntax().clone()))
 			}
-			None => Err(SyntaxError::MissingElement(self.syntax().kind())),
+			None => Err(SyntaxError::MissingElement(self.syntax().clone())),
 		}
 	}
 }

@@ -1,8 +1,8 @@
-use crate::{FormatElement, FormatError, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::Pattern;
 
 impl ToFormatElement for Pattern {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
 			Pattern::RestPattern(_) => todo!(),
 			Pattern::AssignPattern(pattern) => pattern.to_format_element(formatter),

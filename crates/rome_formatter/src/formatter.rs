@@ -1,6 +1,6 @@
 use crate::printer::Printer;
 use crate::{
-	concat_elements, token, FormatElement, FormatError, FormatOptions, FormatResult,
+	concat_elements, token, FormatElement, FormatError, FormatOptions, FormatResult, Formatted,
 	ToFormatElement,
 };
 use rome_rowan::SyntaxElement;
@@ -27,14 +27,11 @@ impl Formatter {
 	}
 
 	/// Formats a CST
-	pub fn format_root(self, root: &SyntaxNode) -> FormatResult {
-		let element = self
-			.format_syntax_node(root)
-			// TODO: we have an error here. Diagnostic?
-			.unwrap_or_else(|_| self.format_raw(root));
+	pub fn format_root(self, root: &SyntaxNode) -> FormatResult<Formatted> {
+		let element = self.format_syntax_node(root)?;
 
 		let printer = Printer::new(self.options);
-		printer.print(&element)
+		Ok(printer.print(&element))
 	}
 
 	fn format_syntax_node(&self, node: &SyntaxNode) -> Result<FormatElement, FormatError> {

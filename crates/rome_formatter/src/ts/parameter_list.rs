@@ -1,11 +1,11 @@
 use crate::{
 	format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space, token,
-	FormatElement, FormatError, Formatter, ToFormatElement,
+	FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::ParameterList;
 
 impl ToFormatElement for ParameterList {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let param_tokens = formatter.format_nodes(self.parameters())?;
 
 		Ok(group_elements(format_elements![

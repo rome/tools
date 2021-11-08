@@ -1,10 +1,11 @@
 use crate::{
-	concat_elements, space_token, token, FormatElement, FormatError, Formatter, ToFormatElement,
+	concat_elements, space_token, token, FormatElement, FormatError, FormatResult, Formatter,
+	ToFormatElement,
 };
 use rslint_parser::ast::{AstNode, ForStmtInit, VarDecl};
 
 impl ToFormatElement for VarDecl {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut tokens = vec![];
 
 		if self.is_const() {
@@ -15,7 +16,7 @@ impl ToFormatElement for VarDecl {
 			// TODO: #1725 remove this custom code once #1745 is merged
 			tokens.push(formatter.format_token(&self.let_token().unwrap())?);
 		} else {
-			return Err(FormatError::MissingNode(self.syntax().kind()));
+			return Err(FormatError::MissingRequiredChild);
 		}
 
 		tokens.push(space_token());

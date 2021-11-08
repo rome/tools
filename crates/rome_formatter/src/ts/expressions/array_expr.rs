@@ -1,11 +1,11 @@
 use crate::{
 	format_elements, group_elements, if_group_breaks, join_elements, soft_indent,
-	soft_line_break_or_space, token, FormatElement, FormatError, Formatter, ToFormatElement,
+	soft_line_break_or_space, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::ArrayExpr;
 
 impl ToFormatElement for ArrayExpr {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let elements = formatter.format_nodes(self.elements())?;
 
 		Ok(group_elements(format_elements!(

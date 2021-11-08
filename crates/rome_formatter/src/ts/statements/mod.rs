@@ -26,7 +26,7 @@ pub fn format_statements(stmts: AstNodeList<Stmt>, formatter: &Formatter) -> For
 	join_elements(
 		hard_line_break(),
 		stmts.iter().map(|stmt| {
-			formatter.format_node(stmt.clone()).unwrap_or_else(|| {
+			formatter.format_node(stmt.clone()).unwrap_or_else(|_| {
 				let verbatim = formatter.format_raw(stmt.syntax());
 
 				match verbatim {

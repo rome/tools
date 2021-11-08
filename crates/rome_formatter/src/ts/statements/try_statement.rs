@@ -1,14 +1,11 @@
 use crate::{
-	empty_element, format_elements, space_token, token, FormatElement, FormatError, Formatter,
-	ToFormatElement,
+	empty_element, format_elements, space_token, token, FormatElement, FormatError, FormatResult,
+	Formatter, ToFormatElement,
 };
-use rslint_parser::{
-	ast::{CatchClause, Finalizer, TryStmt},
-	AstNode,
-};
+use rslint_parser::ast::{CatchClause, Finalizer, TryStmt};
 
 impl ToFormatElement for TryStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let try_token = formatter.format_token(&self.try_token()?)?;
 		let test = formatter.format_node(self.test()?)?;
 		let handler = if let Some(catch_clause) = self.handler() {
@@ -22,7 +19,7 @@ impl ToFormatElement for TryStmt {
 			empty_element()
 		};
 		if handler.is_empty() && finalizer.is_empty() {
-			Err(FormatError::MissingNode(self.syntax().kind()))
+			Err(FormatError::MissingRequiredChild)
 		} else {
 			Ok(format_elements![
 				try_token,
@@ -36,7 +33,7 @@ impl ToFormatElement for TryStmt {
 }
 
 impl ToFormatElement for Finalizer {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let cons = formatter.format_node(self.cons()?)?;
 		let finally = formatter.format_token(&self.finally_token()?)?;
 		Ok(format_elements![finally, space_token(), cons])
@@ -44,7 +41,7 @@ impl ToFormatElement for Finalizer {
 }
 
 impl ToFormatElement for CatchClause {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let l_paren = self.l_paren_token();
 		let r_paren = self.r_paren_token();
 		let error = self.error();
@@ -68,7 +65,7 @@ impl ToFormatElement for CatchClause {
 				// - catch {}
 				//
 				// Other cases should fail.
-				Err(FormatError::MissingNode(self.syntax().kind()))
+				Err(FormatError::MissingRequiredChild)
 			}
 		}
 	}

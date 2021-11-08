@@ -1,11 +1,11 @@
 use crate::{
-	empty_element, format_elements, space_token, token, FormatElement, FormatError, Formatter,
+	empty_element, format_elements, space_token, token, FormatElement, FormatResult, Formatter,
 	ToFormatElement,
 };
 use rslint_parser::ast::ContinueStmt;
 
 impl ToFormatElement for ContinueStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		// NOTE: rslint parser (upstream) is currently broken https://github.com/rslint/rslint/issues/126
 		let ident = if let Ok(name_ref) = self.name_ref() {
 			format_elements![space_token(), formatter.format_node(name_ref)?]

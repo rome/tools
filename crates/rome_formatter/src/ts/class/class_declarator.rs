@@ -1,11 +1,11 @@
 use crate::{
 	block_indent, empty_element, format_elements, group_elements, hard_line_break, join_elements,
-	space_token, FormatElement, FormatError, Formatter, ToFormatElement,
+	space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{ClassBody, ClassDecl, ClassElement, SuperCall};
 
 impl ToFormatElement for ClassDecl {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let class_token = formatter.format_token(&self.class_token()?)?;
 		let name = formatter.format_node(self.name()?)?;
 		let extends = if let Ok(parent) = self.parent() {
@@ -34,7 +34,7 @@ impl ToFormatElement for ClassDecl {
 }
 
 impl ToFormatElement for ClassBody {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let l_paren = formatter.format_token(&self.l_curly_token()?)?;
 		let elements = formatter.format_nodes(self.elements())?;
 		let r_paren = formatter.format_token(&self.r_curly_token()?)?;
@@ -48,7 +48,7 @@ impl ToFormatElement for ClassBody {
 }
 
 impl ToFormatElement for ClassElement {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
 			ClassElement::EmptyStmt(empty_statement) => {
 				empty_statement.to_format_element(formatter)
@@ -65,7 +65,7 @@ impl ToFormatElement for ClassElement {
 }
 
 impl ToFormatElement for SuperCall {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let super_token = formatter.format_token(&self.super_token()?)?;
 		let arguments = formatter.format_node(self.arguments()?)?;
 		Ok(format_elements![super_token, arguments])

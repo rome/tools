@@ -1,8 +1,8 @@
-use crate::{token, FormatElement, FormatError, Formatter, ToFormatElement};
+use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::String as JsString;
 
 impl ToFormatElement for JsString {
-	fn to_format_element(&self, _formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, _formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut content = self.to_string();
 
 		// uses single quotes

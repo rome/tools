@@ -1,11 +1,11 @@
 use crate::{
-	format_elements, group_elements, space_token, FormatElement, FormatError, Formatter,
+	format_elements, group_elements, space_token, FormatElement, FormatResult, Formatter,
 	ToFormatElement,
 };
 use rslint_parser::ast::IfStmt;
 
 impl ToFormatElement for IfStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Result<FormatElement, FormatError> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut result = format_elements![
 			group_elements(format_elements![
 				formatter.format_token(&self.if_token()?)?,

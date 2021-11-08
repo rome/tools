@@ -1,5 +1,5 @@
 use crate::format_element::{ConditionalGroupContent, Group, GroupPrintMode, LineMode};
-use crate::{FormatElement, FormatOptions, FormatResult, IndentStyle};
+use crate::{FormatElement, FormatOptions, Formatted, IndentStyle};
 
 /// Options that affect how the [Printer] prints the format tokens
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -95,7 +95,7 @@ impl Printer {
 	}
 
 	/// Prints the passed in element as well as all its content
-	pub fn print(mut self, element: &FormatElement) -> FormatResult {
+	pub fn print(mut self, element: &FormatElement) -> Formatted {
 		let mut queue = ElementCallQueue::new();
 
 		queue.enqueue(PrintElementCall::new(element, PrintElementArgs::default()));
@@ -104,7 +104,7 @@ impl Printer {
 			queue.extend(self.print_element(print_element_call.element, print_element_call.args));
 		}
 
-		FormatResult::new(self.state.buffer.as_str())
+		Formatted::new(self.state.buffer.as_str())
 	}
 
 	/// Prints a single element and returns the elements to queue (that should be printed next).
@@ -440,11 +440,11 @@ mod tests {
 	use crate::printer::{LineEnding, Printer, PrinterOptions};
 	use crate::{
 		block_indent, format_elements, group_elements, hard_line_break, if_group_breaks,
-		soft_indent, soft_line_break, soft_line_break_or_space, token, FormatElement, FormatResult,
+		soft_indent, soft_line_break, soft_line_break_or_space, token, FormatElement, Formatted,
 	};
 
 	/// Prints the given element with the default printer options
-	fn print_element<T: Into<FormatElement>>(element: T) -> FormatResult {
+	fn print_element<T: Into<FormatElement>>(element: T) -> Formatted {
 		let options = PrinterOptions {
 			indent_string: String::from("  "),
 			..PrinterOptions::default()

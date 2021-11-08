@@ -236,7 +236,7 @@ mod support {
 		parent
 			.children()
 			.find_map(N::cast)
-			.ok_or_else(|| SyntaxError::MissingElement(parent.kind()))
+			.ok_or_else(|| SyntaxError::MissingElement(parent.clone()))
 	}
 
 	pub(super) fn as_mandatory_token(
@@ -247,7 +247,7 @@ mod support {
 			.children_with_tokens()
 			.filter_map(|it| it.into_token())
 			.find(|it| it.kind() == kind)
-			.ok_or_else(|| SyntaxError::MissingElement(parent.kind()))
+			.ok_or_else(|| SyntaxError::MissingElement(parent.clone()))
 	}
 
 	pub(super) fn find_token(
@@ -271,5 +271,5 @@ pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 #[derive(Debug)]
 pub enum SyntaxError {
 	/// Error thrown when a mandatory node is not found
-	MissingElement(SyntaxKind),
+	MissingElement(SyntaxNode),
 }
