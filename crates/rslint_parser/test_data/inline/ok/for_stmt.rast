@@ -32,7 +32,7 @@ MODULE@0..95
       SEMICOLON@22..23 ";"
       WHITESPACE@23..24 " "
       FOR_STMT_UPDATE@24..27
-        UNARY_EXPR@24..27
+        POST_UPDATE_EXPRESSION@24..27
           NAME_REF@24..25
             IDENT@24..25 "i"
           PLUS2@25..27 "++"

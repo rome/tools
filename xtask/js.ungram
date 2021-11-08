@@ -191,6 +191,8 @@ Expr =
 	| NewExpr
 	| CallExpr
 	| UnaryExpr
+	| PreUpdateExpression
+	| PostUpdateExpression
 	| BinExpr
 	| CondExpr
 	| AssignExpr
@@ -385,14 +387,18 @@ BinExpr =
 
 // unary expression
 UnaryExpr =
-  lhs:Expr
-	// @ematipico this is here for compability
-	expr:Expr
   operator:(
-		'++' | '--' | 'delete' | 'void' | 'typeof' | '+' | '-' | '~'
-		| '!' | 'await'
+		'delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!' | 'await'
   )
-  rhs:Expr
+  argument:Expr
+
+PreUpdateExpression =
+    operator:('++' | '--')
+    operand:Expr
+
+PostUpdateExpression =
+    operand:Expr
+    operator:('++' | '--')
 
 // Literals
 Literal =

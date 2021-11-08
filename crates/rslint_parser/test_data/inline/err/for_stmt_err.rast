@@ -43,10 +43,10 @@ MODULE@0..40
         SEMICOLON@31..32 ";"
         WHITESPACE@32..33 " "
         FOR_STMT_UPDATE@33..36
-          UNARY_EXPR@33..36
-            NAME_REF@33..34
-              IDENT@33..34 "i"
-            PLUS2@34..36 "++"
+          PRE_UPDATE_EXPRESSION@33..36
+            PLUS2@33..35 "++"
+            NAME_REF@35..36
+              IDENT@35..36 "i"
         WHITESPACE@36..37 " "
         BLOCK_STMT@37..39
           L_CURLY@37..38 "{"
@@ -64,23 +64,23 @@ error[SyntaxError]: expected `'('` but instead found `;`
 error[SyntaxError]: expected `')'` but instead found `for`
   ┌─ for_stmt_err.js:2:1
   │
-2 │ for let i = 5; i < 10; i++ {}
+2 │ for let i = 5; i < 10; ++i {}
   │ ^^^ unexpected
 
 --
 error[SyntaxError]: expected `'('` but instead found `let`
   ┌─ for_stmt_err.js:2:5
   │
-2 │ for let i = 5; i < 10; i++ {}
+2 │ for let i = 5; i < 10; ++i {}
   │     ^^^ unexpected
 
 --
 error[SyntaxError]: expected `')'` but instead found `{`
   ┌─ for_stmt_err.js:2:28
   │
-2 │ for let i = 5; i < 10; i++ {}
+2 │ for let i = 5; i < 10; ++i {}
   │                            ^ unexpected
 
 --
 for ;; {}
-for let i = 5; i < 10; i++ {}
+for let i = 5; i < 10; ++i {}

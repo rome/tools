@@ -613,14 +613,10 @@ pub struct UnaryExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl UnaryExpr {
-	pub fn lhs(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
 	pub fn operator(&self) -> Option<SyntaxToken> {
 		support::find_token(
 			&self.syntax,
 			&[
-				T ! [++],
-				T ! [--],
 				T![delete],
 				T![void],
 				T![typeof],
@@ -632,7 +628,27 @@ impl UnaryExpr {
 			],
 		)
 	}
-	pub fn rhs(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn argument(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct PreUpdateExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl PreUpdateExpression {
+	pub fn operator(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T ! [++], T ! [--]])
+	}
+	pub fn operand(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct PostUpdateExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl PostUpdateExpression {
+	pub fn operand(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn operator(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T ! [++], T ! [--]])
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct BinExpr {
@@ -2307,6 +2323,8 @@ pub enum Expr {
 	NewExpr(NewExpr),
 	CallExpr(CallExpr),
 	UnaryExpr(UnaryExpr),
+	PreUpdateExpression(PreUpdateExpression),
+	PostUpdateExpression(PostUpdateExpression),
 	BinExpr(BinExpr),
 	CondExpr(CondExpr),
 	AssignExpr(AssignExpr),
@@ -3025,6 +3043,28 @@ impl AstNode for CallExpr {
 }
 impl AstNode for UnaryExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == UNARY_EXPR }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for PreUpdateExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == PRE_UPDATE_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for PostUpdateExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == POST_UPDATE_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4622,6 +4662,12 @@ impl From<CallExpr> for Expr {
 impl From<UnaryExpr> for Expr {
 	fn from(node: UnaryExpr) -> Expr { Expr::UnaryExpr(node) }
 }
+impl From<PreUpdateExpression> for Expr {
+	fn from(node: PreUpdateExpression) -> Expr { Expr::PreUpdateExpression(node) }
+}
+impl From<PostUpdateExpression> for Expr {
+	fn from(node: PostUpdateExpression) -> Expr { Expr::PostUpdateExpression(node) }
+}
 impl From<BinExpr> for Expr {
 	fn from(node: BinExpr) -> Expr { Expr::BinExpr(node) }
 }
@@ -4689,6 +4735,8 @@ impl AstNode for Expr {
 			| NEW_EXPR
 			| CALL_EXPR
 			| UNARY_EXPR
+			| PRE_UPDATE_EXPRESSION
+			| POST_UPDATE_EXPRESSION
 			| BIN_EXPR
 			| COND_EXPR
 			| ASSIGN_EXPR
@@ -4724,6 +4772,8 @@ impl AstNode for Expr {
 			NEW_EXPR => Expr::NewExpr(NewExpr { syntax }),
 			CALL_EXPR => Expr::CallExpr(CallExpr { syntax }),
 			UNARY_EXPR => Expr::UnaryExpr(UnaryExpr { syntax }),
+			PRE_UPDATE_EXPRESSION => Expr::PreUpdateExpression(PreUpdateExpression { syntax }),
+			POST_UPDATE_EXPRESSION => Expr::PostUpdateExpression(PostUpdateExpression { syntax }),
 			BIN_EXPR => Expr::BinExpr(BinExpr { syntax }),
 			COND_EXPR => Expr::CondExpr(CondExpr { syntax }),
 			ASSIGN_EXPR => Expr::AssignExpr(AssignExpr { syntax }),
@@ -4760,6 +4810,8 @@ impl AstNode for Expr {
 			Expr::NewExpr(it) => &it.syntax,
 			Expr::CallExpr(it) => &it.syntax,
 			Expr::UnaryExpr(it) => &it.syntax,
+			Expr::PreUpdateExpression(it) => &it.syntax,
+			Expr::PostUpdateExpression(it) => &it.syntax,
 			Expr::BinExpr(it) => &it.syntax,
 			Expr::CondExpr(it) => &it.syntax,
 			Expr::AssignExpr(it) => &it.syntax,
@@ -6042,6 +6094,16 @@ impl std::fmt::Display for CallExpr {
 	}
 }
 impl std::fmt::Display for UnaryExpr {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for PreUpdateExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for PostUpdateExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
