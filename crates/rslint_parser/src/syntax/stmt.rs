@@ -483,6 +483,8 @@ pub(crate) fn block_items(
 
 	let mut could_be_directive = directives;
 
+	let list_start = p.start();
+
 	while !p.at(EOF) {
 		if stop_on_r_curly && p.at(T!['}']) {
 			break;
@@ -608,6 +610,9 @@ pub(crate) fn block_items(
 			}
 		}
 	}
+
+	list_start.complete(p, LIST);
+
 	p.state = old;
 }
 
@@ -729,6 +734,8 @@ pub fn var_decl(p: &mut Parser, no_semi: bool) -> CompletedMarker {
 		}
 	}
 
+	let declared_list = p.start();
+
 	declarator(p, &is_const, no_semi, is_let);
 
 	if p.eat(T![,]) {
@@ -737,6 +744,8 @@ pub fn var_decl(p: &mut Parser, no_semi: bool) -> CompletedMarker {
 			declarator(p, &is_const, no_semi, is_let);
 		}
 	}
+
+	declared_list.complete(p, LIST);
 
 	if !no_semi {
 		semi(p, start..p.cur_tok().range.start);
@@ -977,9 +986,11 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			// We stop the range here because we dont want to include the entire clause
 			// including the statement list following it
 			let end = p.cur_tok().range.end;
+			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
 				stmt(p, None, None);
 			}
+			cons_list.complete(p, LIST);
 			m.complete(p, DEFAULT_CLAUSE);
 			return Some(start..end);
 		}
@@ -987,9 +998,11 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			p.bump_any();
 			expr(p);
 			p.expect(T![:]);
+			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
 				stmt(p, None, None);
 			}
+			cons_list.complete(p, LIST);
 			m.complete(p, CASE_CLAUSE);
 		}
 		_ => {
@@ -1029,6 +1042,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 	p.expect(T![switch]);
 	condition(p);
 	p.expect(T!['{']);
+	let cases_list = p.start();
 	let mut first_default: Option<Range<usize>> = None;
 
 	while !p.at(EOF) && !p.at(T!['}']) {
@@ -1054,6 +1068,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 			}
 		}
 	}
+	cases_list.complete(p, LIST);
 	p.expect(T!['}']);
 	m.complete(p, SWITCH_STMT)
 }

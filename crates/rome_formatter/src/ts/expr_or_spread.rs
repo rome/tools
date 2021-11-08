@@ -13,6 +13,7 @@ impl ToFormatElement for ExprOrSpread {
 			ExprOrSpread::ArrayExpr(array_expression) => {
 				array_expression.to_format_element(formatter)
 			}
+			ExprOrSpread::GroupingExpr(_) => todo!(),
 		}
 	}
 }

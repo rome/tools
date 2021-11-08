@@ -10,6 +10,8 @@ pub enum SyntaxKind {
 	TOMBSTONE,
 	#[doc(hidden)]
 	EOF,
+	#[doc = r" Polymorph list type"]
+	LIST,
 	SEMICOLON,
 	COMMA,
 	L_PAREN,

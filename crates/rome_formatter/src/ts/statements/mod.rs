@@ -1,5 +1,5 @@
-use crate::{hard_line_break, join_elements, FormatElement, Formatter};
-use rslint_parser::ast::{AstChildren, Stmt};
+use crate::{concat_elements, hard_line_break, join_elements, FormatElement, Formatter};
+use rslint_parser::ast::{AstNodeList, Stmt};
 use rslint_parser::AstNode;
 
 mod block;
@@ -20,14 +20,32 @@ mod throw_statement;
 mod try_statement;
 mod while_statement;
 mod with_statement;
+
 /// Formats a list of statements
-pub fn format_statements(stmts: AstChildren<Stmt>, formatter: &Formatter) -> FormatElement {
+pub fn format_statements(stmts: AstNodeList<Stmt>, formatter: &Formatter) -> FormatElement {
 	join_elements(
 		hard_line_break(),
-		stmts.map(|stmt| {
-			formatter
-				.format_node(stmt.clone())
-				.unwrap_or_else(|| formatter.format_raw(stmt.syntax()))
+		stmts.iter().map(|stmt| {
+			formatter.format_node(stmt.clone()).unwrap_or_else(|| {
+				let verbatim = formatter.format_raw(stmt.syntax());
+
+				match verbatim {
+					FormatElement::List(list) => {
+						if let Some(FormatElement::Token(token)) = list.last() {
+							if token.as_str() == "\n" {
+								let mut elements = (*list).clone();
+								elements.pop(); // Pop the last new line
+								concat_elements(elements)
+							} else {
+								FormatElement::List(list)
+							}
+						} else {
+							FormatElement::List(list)
+						}
+					}
+					_ => verbatim,
+				}
+			})
 		}),
 	)
 }

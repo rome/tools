@@ -51,6 +51,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 
 			let properties_list: Vec<FormatElement> = object
 				.props()
+				.iter()
 				.map(|prop| match prop {
 					ObjectProp::LiteralProp(prop) => {
 						format_elements![tokenize_node(prop.syntax().clone())]
@@ -76,6 +77,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 				separator,
 				array
 					.elements()
+					.iter()
 					.map(|element| tokenize_node(element.syntax().clone())),
 			);
 

@@ -1,27 +1,30 @@
 MODULE@0..26
-  VAR_DECL@0..13
-    IDENT@0..3 "let"
-    WHITESPACE@3..4 " "
-    DECLARATOR@4..13
-      SINGLE_PATTERN@4..5
-        NAME@4..5
-          IDENT@4..5 "a"
-      WHITESPACE@5..6 " "
-      EQ@6..7 "="
-      WHITESPACE@7..8 " "
-      NAME_REF@8..13
-        IDENT@8..13 "async"
-  WHITESPACE@13..14 " "
-  EXPR_STMT@14..25
-    ARROW_EXPR@14..25
-      NAME@14..19
-        IDENT@14..19 "await"
-      WHITESPACE@19..20 " "
-      FAT_ARROW@20..22 "=>"
-      WHITESPACE@22..23 " "
-      BLOCK_STMT@23..25
-        L_CURLY@23..24 "{"
-        R_CURLY@24..25 "}"
+  LIST@0..25
+    VAR_DECL@0..13
+      IDENT@0..3 "let"
+      WHITESPACE@3..4 " "
+      LIST@4..13
+        DECLARATOR@4..13
+          SINGLE_PATTERN@4..5
+            NAME@4..5
+              IDENT@4..5 "a"
+          WHITESPACE@5..6 " "
+          EQ@6..7 "="
+          WHITESPACE@7..8 " "
+          NAME_REF@8..13
+            IDENT@8..13 "async"
+    WHITESPACE@13..14 " "
+    EXPR_STMT@14..25
+      ARROW_EXPR@14..25
+        NAME@14..19
+          IDENT@14..19 "await"
+        WHITESPACE@19..20 " "
+        FAT_ARROW@20..22 "=>"
+        WHITESPACE@22..23 " "
+        BLOCK_STMT@23..25
+          L_CURLY@23..24 "{"
+          LIST@24..24
+          R_CURLY@24..25 "}"
   WHITESPACE@25..26 "\n"
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none

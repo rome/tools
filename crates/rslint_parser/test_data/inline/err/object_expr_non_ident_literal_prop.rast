@@ -1,20 +1,23 @@
 MODULE@0..12
-  VAR_DECL@0..11
-    IDENT@0..3 "let"
-    WHITESPACE@3..4 " "
-    DECLARATOR@4..11
-      SINGLE_PATTERN@4..5
-        NAME@4..5
-          IDENT@4..5 "b"
-      WHITESPACE@5..6 " "
-      EQ@6..7 "="
-      WHITESPACE@7..8 " "
-      OBJECT_EXPR@8..11
-        L_CURLY@8..9 "{"
-        LITERAL_PROP@9..10
-          LITERAL@9..10
-            NUMBER@9..10 "5"
-        R_CURLY@10..11 "}"
+  LIST@0..11
+    VAR_DECL@0..11
+      IDENT@0..3 "let"
+      WHITESPACE@3..4 " "
+      LIST@4..11
+        DECLARATOR@4..11
+          SINGLE_PATTERN@4..5
+            NAME@4..5
+              IDENT@4..5 "b"
+          WHITESPACE@5..6 " "
+          EQ@6..7 "="
+          WHITESPACE@7..8 " "
+          OBJECT_EXPR@8..11
+            L_CURLY@8..9 "{"
+            LIST@9..10
+              LITERAL_PROP@9..10
+                LITERAL@9..10
+                  NUMBER@9..10 "5"
+            R_CURLY@10..11 "}"
   WHITESPACE@11..12 "\n"
 --
 error[SyntaxError]: expected `:` but instead found `}`

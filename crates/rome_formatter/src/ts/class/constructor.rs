@@ -21,7 +21,7 @@ impl ToFormatElement for Constructor {
 impl ToFormatElement for ConstructorParameters {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let l_bracket = formatter.format_token(&self.l_paren_token()?)?;
-		let params = formatter.format_children(self.parameters())?;
+		let params = formatter.format_nodes(self.parameters())?;
 		let r_bracket = formatter.format_token(&self.r_paren_token()?)?;
 
 		Some(format_elements![group_elements(format_elements![

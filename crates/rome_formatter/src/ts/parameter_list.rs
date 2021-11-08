@@ -6,7 +6,7 @@ use rslint_parser::ast::ParameterList;
 
 impl ToFormatElement for ParameterList {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
-		let param_tokens = formatter.format_children(self.parameters())?;
+		let param_tokens = formatter.format_nodes(self.parameters())?;
 
 		Some(group_elements(format_elements![
 			formatter.format_token(&self.l_paren_token()?)?,

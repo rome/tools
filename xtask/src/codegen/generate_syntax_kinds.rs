@@ -75,6 +75,8 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			TOMBSTONE,
 			#[doc(hidden)]
 			EOF,
+			/// Polymorph list type
+			LIST,
 			#(#punctuation,)*
 			#(#all_keywords,)*
 			#(#literals,)*

@@ -8,7 +8,7 @@
 use crate::SyntaxKind;
 use rome_rowan::{Language, TreeBuilder};
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub struct JsLanguage;
 
 impl Language for JsLanguage {
@@ -21,6 +21,10 @@ impl Language for JsLanguage {
 	fn kind_to_raw(kind: SyntaxKind) -> rome_rowan::SyntaxKind {
 		rome_rowan::SyntaxKind(kind.into())
 	}
+
+	fn list_kind() -> Self::Kind {
+		SyntaxKind::LIST
+	}
 }
 
 pub type SyntaxNode = rome_rowan::SyntaxNode<JsLanguage>;
@@ -28,6 +32,7 @@ pub type SyntaxToken = rome_rowan::SyntaxToken<JsLanguage>;
 pub type SyntaxElement = rome_rowan::SyntaxElement<JsLanguage>;
 pub type SyntaxNodeChildren = rome_rowan::SyntaxNodeChildren<JsLanguage>;
 pub type SyntaxElementChildren = rome_rowan::SyntaxElementChildren<JsLanguage>;
+pub type SyntaxList = rome_rowan::SyntaxList<JsLanguage>;
 
 pub use rome_rowan::{Direction, NodeOrToken};
 

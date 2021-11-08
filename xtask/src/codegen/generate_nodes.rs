@@ -12,6 +12,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.map(|node| {
 			let name = format_ident!("{}", node.name);
 			let kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
+			let mut slot = 0usize;
 
 			let methods = node.fields.iter().map(|field| match field {
 				Field::Token {
@@ -54,11 +55,13 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 							}
 						}
 					} else if *has_many {
-						quote! {
-							pub fn #method_name(&self) -> AstChildren<#ty> {
-								support::children(&self.syntax)
+						let field = quote! {
+							pub fn #method_name(&self) -> AstNodeList<#ty> {
+								support::node_list(&self.syntax, #slot)
 							}
-						}
+						};
+						slot += 1;
+						field
 					} else {
 						quote! {
 							pub fn #method_name(&self) -> Option<#ty> {

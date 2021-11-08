@@ -153,6 +153,7 @@ pub(crate) const KINDS_SRC: KindsSrc = KindsSrc {
 		"SCRIPT",
 		"MODULE",
 		"ERROR",
+		"LIST",
 		"BLOCK_STMT",
 		"VAR_DECL",
 		"DECLARATOR",

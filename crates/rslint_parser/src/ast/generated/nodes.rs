@@ -19,7 +19,7 @@ pub struct Script {
 }
 impl Script {
 	pub fn shebang_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![shebang]) }
-	pub fn items(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
+	pub fn items(&self) -> AstNodeList<Stmt> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Module {
@@ -27,7 +27,7 @@ pub struct Module {
 }
 impl Module {
 	pub fn shebang_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![shebang]) }
-	pub fn items(&self) -> AstChildren<ModuleItem> { support::children(&self.syntax) }
+	pub fn items(&self) -> AstNodeList<ModuleItem> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct BlockStmt {
@@ -35,7 +35,7 @@ pub struct BlockStmt {
 }
 impl BlockStmt {
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn stmts(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
+	pub fn stmts(&self) -> AstNodeList<Stmt> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -175,7 +175,7 @@ impl SwitchStmt {
 	pub fn switch_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![switch]) }
 	pub fn test(&self) -> Option<Condition> { support::child(&self.syntax) }
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn cases(&self) -> AstChildren<SwitchCase> { support::children(&self.syntax) }
+	pub fn cases(&self) -> AstNodeList<SwitchCase> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -242,7 +242,7 @@ pub struct VarDecl {
 impl VarDecl {
 	pub fn var_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![var]) }
 	pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![const]) }
-	pub fn declared(&self) -> AstChildren<Declarator> { support::children(&self.syntax) }
+	pub fn declared(&self) -> AstNodeList<Declarator> { support::node_list(&self.syntax, 0usize) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -254,7 +254,7 @@ impl TsEnum {
 	pub fn enum_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![enum]) }
 	pub fn ident(&self) -> Option<Ident> { support::child(&self.syntax) }
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn members(&self) -> AstChildren<TsEnumMember> { support::children(&self.syntax) }
+	pub fn members(&self) -> AstNodeList<TsEnumMember> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -359,7 +359,7 @@ impl CaseClause {
 	pub fn case_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![case]) }
 	pub fn test(&self) -> Option<Expr> { support::child(&self.syntax) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
-	pub fn cons(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
+	pub fn cons(&self) -> AstNodeList<Stmt> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct DefaultClause {
@@ -368,7 +368,7 @@ pub struct DefaultClause {
 impl DefaultClause {
 	pub fn default_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![default]) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
-	pub fn cons(&self) -> AstChildren<Stmt> { support::children(&self.syntax) }
+	pub fn cons(&self) -> AstNodeList<Stmt> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct CatchClause {
@@ -433,7 +433,7 @@ pub struct ArrayExpr {
 }
 impl ArrayExpr {
 	pub fn l_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['[']) }
-	pub fn elements(&self) -> AstChildren<ExprOrSpread> { support::children(&self.syntax) }
+	pub fn elements(&self) -> AstNodeList<ExprOrSpread> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![']']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -442,7 +442,7 @@ pub struct ObjectExpr {
 }
 impl ObjectExpr {
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn props(&self) -> AstChildren<ObjectProp> { support::children(&self.syntax) }
+	pub fn props(&self) -> AstNodeList<ObjectProp> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -599,7 +599,7 @@ pub struct SequenceExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl SequenceExpr {
-	pub fn exprs(&self) -> AstChildren<Expr> { support::children(&self.syntax) }
+	pub fn exprs(&self) -> AstNodeList<Expr> { support::node_list(&self.syntax, 0usize) }
 	pub fn bin_expr(&self) -> Option<BinExpr> { support::child(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -740,7 +740,7 @@ pub struct ArgList {
 }
 impl ArgList {
 	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
-	pub fn args(&self) -> AstChildren<Expr> { support::children(&self.syntax) }
+	pub fn args(&self) -> AstNodeList<Expr> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -758,7 +758,7 @@ pub struct ParameterList {
 }
 impl ParameterList {
 	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
-	pub fn parameters(&self) -> AstChildren<Pattern> { support::children(&self.syntax) }
+	pub fn parameters(&self) -> AstNodeList<Pattern> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -775,7 +775,7 @@ pub struct ClassBody {
 }
 impl ClassBody {
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn elements(&self) -> AstChildren<ClassElement> { support::children(&self.syntax) }
+	pub fn elements(&self) -> AstNodeList<ClassElement> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -883,8 +883,8 @@ pub struct ConstructorParameters {
 }
 impl ConstructorParameters {
 	pub fn l_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['(']) }
-	pub fn parameters(&self) -> AstChildren<ConstructorParamOrPat> {
-		support::children(&self.syntax)
+	pub fn parameters(&self) -> AstNodeList<ConstructorParamOrPat> {
+		support::node_list(&self.syntax, 0usize)
 	}
 	pub fn r_paren_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![')']) }
 }
@@ -960,7 +960,9 @@ pub struct ObjectPattern {
 }
 impl ObjectPattern {
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn elements(&self) -> AstChildren<ObjectPatternProp> { support::children(&self.syntax) }
+	pub fn elements(&self) -> AstNodeList<ObjectPatternProp> {
+		support::node_list(&self.syntax, 0usize)
+	}
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -969,7 +971,7 @@ pub struct ArrayPattern {
 }
 impl ArrayPattern {
 	pub fn l_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['[']) }
-	pub fn elements(&self) -> AstChildren<Pattern> { support::children(&self.syntax) }
+	pub fn elements(&self) -> AstNodeList<Pattern> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![']']) }
 	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
@@ -1054,7 +1056,7 @@ pub struct ImportDecl {
 }
 impl ImportDecl {
 	pub fn import_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![import]) }
-	pub fn imports(&self) -> AstChildren<ImportClause> { support::children(&self.syntax) }
+	pub fn imports(&self) -> AstNodeList<ImportClause> { support::node_list(&self.syntax, 0usize) }
 	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
 	pub fn from_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![from]) }
 	pub fn asserted_object(&self) -> Option<ObjectExpr> { support::child(&self.syntax) }
@@ -1070,7 +1072,7 @@ impl ExportNamed {
 	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
 	pub fn from_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![from]) }
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn specifiers(&self) -> AstChildren<Specifier> { support::children(&self.syntax) }
+	pub fn specifiers(&self) -> AstNodeList<Specifier> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1164,7 +1166,7 @@ pub struct NamedImports {
 }
 impl NamedImports {
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn specifiers(&self) -> AstChildren<Specifier> { support::children(&self.syntax) }
+	pub fn specifiers(&self) -> AstNodeList<Specifier> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1389,14 +1391,14 @@ pub struct TsIntersection {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsIntersection {
-	pub fn types(&self) -> AstChildren<TsType> { support::children(&self.syntax) }
+	pub fn types(&self) -> AstNodeList<TsType> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsUnion {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsUnion {
-	pub fn types(&self) -> AstChildren<TsType> { support::children(&self.syntax) }
+	pub fn types(&self) -> AstNodeList<TsType> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsFnType {
@@ -1435,7 +1437,7 @@ pub struct TsObjectType {
 }
 impl TsObjectType {
 	pub fn l_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['{']) }
-	pub fn members(&self) -> AstChildren<TsTypeElement> { support::children(&self.syntax) }
+	pub fn members(&self) -> AstNodeList<TsTypeElement> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['}']) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1788,6 +1790,7 @@ pub enum ExprOrSpread {
 	Literal(Literal),
 	ObjectExpr(ObjectExpr),
 	ArrayExpr(ArrayExpr),
+	GroupingExpr(GroupingExpr),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
@@ -4576,11 +4579,14 @@ impl From<ObjectExpr> for ExprOrSpread {
 impl From<ArrayExpr> for ExprOrSpread {
 	fn from(node: ArrayExpr) -> ExprOrSpread { ExprOrSpread::ArrayExpr(node) }
 }
+impl From<GroupingExpr> for ExprOrSpread {
+	fn from(node: GroupingExpr) -> ExprOrSpread { ExprOrSpread::GroupingExpr(node) }
+}
 impl AstNode for ExprOrSpread {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		matches!(
 			kind,
-			EXPR | SPREAD_ELEMENT | LITERAL | OBJECT_EXPR | ARRAY_EXPR
+			EXPR | SPREAD_ELEMENT | LITERAL | OBJECT_EXPR | ARRAY_EXPR | GROUPING_EXPR
 		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4590,6 +4596,7 @@ impl AstNode for ExprOrSpread {
 			LITERAL => ExprOrSpread::Literal(Literal { syntax }),
 			OBJECT_EXPR => ExprOrSpread::ObjectExpr(ObjectExpr { syntax }),
 			ARRAY_EXPR => ExprOrSpread::ArrayExpr(ArrayExpr { syntax }),
+			GROUPING_EXPR => ExprOrSpread::GroupingExpr(GroupingExpr { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -4601,6 +4608,7 @@ impl AstNode for ExprOrSpread {
 			ExprOrSpread::Literal(it) => &it.syntax,
 			ExprOrSpread::ObjectExpr(it) => &it.syntax,
 			ExprOrSpread::ArrayExpr(it) => &it.syntax,
+			ExprOrSpread::GroupingExpr(it) => &it.syntax,
 		}
 	}
 }

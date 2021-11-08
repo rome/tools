@@ -36,7 +36,7 @@ impl ToFormatElement for ClassDecl {
 impl ToFormatElement for ClassBody {
 	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
 		let l_paren = formatter.format_token(&self.l_curly_token()?)?;
-		let elements = formatter.format_children(self.elements())?;
+		let elements = formatter.format_nodes(self.elements())?;
 		let r_paren = formatter.format_token(&self.r_curly_token()?)?;
 
 		Some(group_elements(format_elements![

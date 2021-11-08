@@ -153,6 +153,8 @@ pub fn array_binding_pattern(
 	let m = p.start();
 	p.expect(T!['[']);
 
+	let elements_list = p.start();
+
 	while !p.at(EOF) && !p.at(T![']']) {
 		if p.eat(T![,]) {
 			continue;
@@ -176,6 +178,8 @@ pub fn array_binding_pattern(
 		}
 	}
 
+	elements_list.complete(p, LIST);
+
 	p.expect(T![']']);
 	m.complete(p, ARRAY_PATTERN)
 }
@@ -183,6 +187,7 @@ pub fn array_binding_pattern(
 pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T!['{']);
+	let props_list = p.start();
 	let mut first = true;
 
 	while !p.at(EOF) && !p.at(T!['}']) {
@@ -206,6 +211,8 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 
 		object_binding_prop(p, parameters);
 	}
+	props_list.complete(p, LIST);
+
 	p.expect(T!['}']);
 	m.complete(p, OBJECT_PATTERN)
 }

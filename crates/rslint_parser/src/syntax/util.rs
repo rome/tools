@@ -249,9 +249,9 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 			}
 		}
 		Expr::ArrayExpr(expr) => {
-			let elem_count = expr.elements().count();
+			let elem_count = expr.elements().len();
 
-			for (idx, elem) in expr.elements().enumerate() {
+			for (idx, elem) in expr.elements().iter().enumerate() {
 				if let ast::ExprOrSpread::SpreadElement(ref spread) = elem {
 					if idx != elem_count - 1 {
 						let err = p.err_builder("Spread element may only occur as the last element of an assignment target")
@@ -266,6 +266,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 			}
 		}
 		Expr::ObjectExpr(expr) => {
+			// TODO replace with expr.props().trailing_comma()
 			if expr.has_trailing_comma() {
 				// Untyped node machine go brr
 				let comma_range = expr
@@ -285,14 +286,14 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 				p.error(err);
 			}
 
-			for (idx, prop) in expr.props().enumerate() {
+			for (idx, prop) in expr.props().iter().enumerate() {
 				match prop {
 					ast::ObjectProp::LiteralProp(prop) => {
 						if let Some(expr) = prop.value() {
 							check_for_stmt_lhs(p, expr, marker);
 						}
 					}
-					ast::ObjectProp::SpreadProp(prop) if idx != expr.props().count() - 1 => {
+					ast::ObjectProp::SpreadProp(prop) if idx != expr.props().len() - 1 => {
 						if let Some(lhs) = prop.value() {
 							check_spread_element(p, lhs, marker);
 						}
@@ -345,7 +346,7 @@ pub fn check_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) {
 /// Check if the var declaration in a for statement has multiple declarators, which is invalid
 pub fn check_for_stmt_declarators(p: &mut Parser, marker: &CompletedMarker) {
 	let parsed = p.parse_marker::<ast::VarDecl>(marker);
-	let excess = parsed.declared().skip(1).collect::<Vec<_>>();
+	let excess = parsed.declared().iter().skip(1).collect::<Vec<_>>();
 
 	if !excess.is_empty() {
 		let start = marker

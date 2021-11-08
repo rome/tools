@@ -46,14 +46,10 @@ impl<T> Parse<T> {
 	///     }
 	/// ", 0);
 	///
-	/// // The first child of the root syntax node (Script) is the if statement.
-	/// let if_stmt = parse.syntax().first_child().unwrap();
+	/// // The first stmt in the root syntax node (Script) is the if statement.
+	/// let if_stmt = parse.tree().items().first().unwrap();
 	///
-	/// assert_eq!(if_stmt.kind(), SyntaxKind::IF_STMT);
-	///
-	/// // The if statement node is untyped, we must first cast it to a typed ast node
-	/// // to be able to get properties of it in an easy way.
-	/// assert_eq!(if_stmt.to::<IfStmt>().condition().unwrap().syntax().text(), "(a > 5)");
+	/// assert_eq!(if_stmt.syntax().kind(), SyntaxKind::IF_STMT);
 	/// ```
 	pub fn syntax(&self) -> SyntaxNode {
 		self.root.clone()
@@ -134,17 +130,19 @@ fn parse_common(
 /// Or turned into a typed [`Script`](Script) with [`tree`](Parse::tree).
 ///
 /// ```
-/// use rslint_parser::{ast::BracketExpr, parse_text, AstNode, SyntaxToken, SyntaxNodeExt, util};
+/// use rslint_parser::{ast::BracketExpr, parse_text, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
 ///
-/// let parse = parse_text("foo. bar[2]", 0);
+/// let parse = parse_text("foo.bar[2]", 0);
+/// // Parse returns a list, get the first statement
+/// let stmt = parse.syntax().first_child().unwrap();
 /// // The untyped syntax node of `foo.bar[2]`, the root node is `Script`.
-/// let untyped_expr_node = parse.syntax().first_child().unwrap();
+/// let untyped_expr_node = stmt.first_child().unwrap();
 ///
 /// // SyntaxNodes can be turned into a nice string representation.
 /// println!("{:#?}", untyped_expr_node);
 ///
 /// // You can then cast syntax nodes into a typed AST node.
-/// let typed_ast_node = BracketExpr::cast(untyped_expr_node.first_child().unwrap().to_owned()).unwrap();
+/// let typed_ast_node = BracketExpr::cast(untyped_expr_node.first_child().unwrap()).unwrap();
 ///
 /// // Everything on every ast node is optional because of error recovery.
 /// let prop = dbg!(typed_ast_node.prop()).unwrap();
@@ -155,7 +153,7 @@ fn parse_common(
 /// // Util has a function for yielding all tokens of a node.
 /// let tokens = untyped_expr_node.tokens();
 ///
-/// assert_eq!(&util::concat_tokens(&tokens), "foo. bar[2]")
+/// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
 /// ```
 pub fn parse_text(text: &str, file_id: usize) -> Parse<Script> {
 	let (events, errors, tokens) = parse_common(text, file_id, Syntax::default());
@@ -174,11 +172,12 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<Script> {
 /// The [`util`](crate::util) module has utility functions for dealing with this easily.
 ///
 /// ```
-/// use rslint_parser::{ast::BracketExpr, parse_text_lossy, AstNode, SyntaxToken, SyntaxNodeExt, util};
+/// use rslint_parser::{ast::BracketExpr, parse_text_lossy, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
 ///
-/// let parse = parse_text_lossy("foo. bar[2]", 0);
+/// let parse = parse_text_lossy("foo.bar[2]", 0);
+/// let stmt = parse.syntax().first_child().unwrap();
 /// // The untyped syntax node of `foo.bar[2]`, the root node is `Script`.
-/// let untyped_expr_node = parse.syntax().first_child().unwrap();
+/// let untyped_expr_node = stmt.first_child().unwrap();
 ///
 /// // SyntaxNodes can be turned into a nice string representation.
 /// println!("{:#?}", untyped_expr_node);
