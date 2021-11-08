@@ -7,27 +7,26 @@ use crate::{
 };
 use quote::{format_ident, quote};
 
-// these nodes won't generate any
-const DENIED_NODES: [&str; 3] = ["SyntaxNode", "SyntaxToken", "SyntaxElement"];
+// these node won't generate any code
+const BUILT_IN_TYPE: &str = "SyntaxElement";
 
 pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	let filtered_enums: Vec<_> = ast
 		.enums
 		.iter()
-		.filter(|e| !DENIED_NODES.contains(&e.name.as_str()))
+		.filter(|e| e.name.as_str() != BUILT_IN_TYPE)
 		.collect();
 
 	let filtered_nodes: Vec<_> = ast
 		.nodes
 		.iter()
-		.filter(|e| !DENIED_NODES.contains(&e.name.as_str()))
+		.filter(|e| e.name.as_str() != BUILT_IN_TYPE)
 		.collect();
 
-	let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = ast
-		.nodes
+	let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = filtered_nodes
 		.iter()
 		.filter_map(|node| {
-			if DENIED_NODES.contains(&node.name.as_str()) {
+			if node.name.as_str() == BUILT_IN_TYPE {
 				return None;
 			}
 
@@ -74,17 +73,17 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					optional,
 					has_many,
 				} => {
-					let is_unknown_node = &ty.eq("SyntaxElement");
+					let is_built_in_tpe = &ty.eq(BUILT_IN_TYPE);
 					let ty = format_ident!("{}", &ty);
 
 					let method_name = field.method_name();
 					// this is when we encounter a node that has "Unknown" in its name
 					// it will return tokens a and nodes regardless because there's an error
 					// inside the code
-					if *is_unknown_node {
+					if *is_built_in_tpe {
 						quote! {
 							pub fn #method_name(&self) -> SyntaxElementChildren {
-								support::element(&self.syntax)
+								support::elements(&self.syntax)
 							}
 						}
 					} else if *optional {

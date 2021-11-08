@@ -201,7 +201,7 @@ mod support {
 		parent.children().find_map(N::cast)
 	}
 
-	pub(super) fn element(parent: &SyntaxNode) -> SyntaxElementChildren {
+	pub(super) fn elements(parent: &SyntaxNode) -> SyntaxElementChildren {
 		parent.children_with_tokens()
 	}
 
