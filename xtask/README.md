@@ -28,7 +28,7 @@ Here's a list of internal conventions that we follow to write grammar:
 	}
 	```
 
-2. unions of tokens have to have a label. In this way, the code generation can handle it properly and generate a better AST.
+1. unions of tokens have to have a label. In this way, the code generation can handle it properly and generate a better AST.
 
 	```text
 	BinExpr = left: Expr op: ('+' | '-' | '*') right: Expr
@@ -51,3 +51,6 @@ Here's a list of internal conventions that we follow to write grammar:
 		}
 	}
 	```
+
+1. Nodes used to track broken code should contain the **Unknown** word in its name (it's case sensitive).
+This is needed because it will generate a different type of code, useful in case of errors inside the source code Rome will parse.

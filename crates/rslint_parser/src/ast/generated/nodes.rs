@@ -9,6 +9,48 @@ use crate::{
 	SyntaxNode, SyntaxResult, SyntaxToken, T,
 };
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknownStatement {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsUnknownStatement {
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknownExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsUnknownExpression {
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknownPattern {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsUnknownPattern {
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknownMember {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsUnknownMember {
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknownBinding {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsUnknownBinding {
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsUnknownAssignmentTarget {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsUnknownAssignmentTarget {
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Ident {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2214,6 +2256,7 @@ pub enum Stmt {
 	TryStmt(TryStmt),
 	DebuggerStmt(DebuggerStmt),
 	Decl(Decl),
+	JsUnknownStatement(JsUnknownStatement),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ModuleItem {
@@ -2270,6 +2313,7 @@ pub enum Expr {
 	TsNonNull(TsNonNull),
 	TsAssertion(TsAssertion),
 	TsConstAssertion(TsConstAssertion),
+	JsUnknownExpression(JsUnknownExpression),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ForHead {
@@ -2289,6 +2333,7 @@ pub enum Pattern {
 	ObjectPattern(ObjectPattern),
 	ArrayPattern(ArrayPattern),
 	ExprPattern(ExprPattern),
+	JsUnknownPattern(JsUnknownPattern),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsType {
@@ -2343,6 +2388,7 @@ pub enum ObjectProp {
 	InitializedProp(InitializedProp),
 	IdentProp(IdentProp),
 	Method(Method),
+	JsUnknownMember(JsUnknownMember),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ClassElement {
@@ -2354,6 +2400,7 @@ pub enum ClassElement {
 	TsIndexSignature(TsIndexSignature),
 	Getter(Getter),
 	Setter(Setter),
+	JsUnknownMember(JsUnknownMember),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PropName {
@@ -2361,6 +2408,7 @@ pub enum PropName {
 	Literal(Literal),
 	Ident(Ident),
 	Name(Name),
+	JsUnknownBinding(JsUnknownBinding),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ConstructorParamOrPat {
@@ -2384,6 +2432,7 @@ pub enum ObjectPatternProp {
 	KeyValuePattern(KeyValuePattern),
 	RestPattern(RestPattern),
 	SinglePattern(SinglePattern),
+	JsUnknownPattern(JsUnknownPattern),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ImportClause {
@@ -2424,6 +2473,72 @@ pub enum TsTypeElement {
 pub enum TsNamespaceBody {
 	TsModuleBlock(TsModuleBlock),
 	TsNamespaceDecl(TsNamespaceDecl),
+}
+impl AstNode for JsUnknownStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_STATEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsUnknownExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsUnknownPattern {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_PATTERN }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsUnknownMember {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_MEMBER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsUnknownBinding {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_BINDING }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsUnknownAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_ASSIGNMENT_TARGET }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl AstNode for Ident {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == IDENT }
@@ -4250,12 +4365,16 @@ impl From<TryStmt> for Stmt {
 impl From<DebuggerStmt> for Stmt {
 	fn from(node: DebuggerStmt) -> Stmt { Stmt::DebuggerStmt(node) }
 }
+impl From<JsUnknownStatement> for Stmt {
+	fn from(node: JsUnknownStatement) -> Stmt { Stmt::JsUnknownStatement(node) }
+}
 impl AstNode for Stmt {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			BLOCK_STMT | EMPTY_STMT | EXPR_STMT | IF_STMT | DO_WHILE_STMT | WHILE_STMT
 			| FOR_STMT | FOR_IN_STMT | FOR_OF_STMT | CONTINUE_STMT | BREAK_STMT | RETURN_STMT
-			| WITH_STMT | LABELLED_STMT | SWITCH_STMT | THROW_STMT | TRY_STMT | DEBUGGER_STMT => true,
+			| WITH_STMT | LABELLED_STMT | SWITCH_STMT | THROW_STMT | TRY_STMT | DEBUGGER_STMT
+			| JS_UNKNOWN_STATEMENT => true,
 			k if Decl::can_cast(k) => true,
 			_ => false,
 		}
@@ -4280,6 +4399,7 @@ impl AstNode for Stmt {
 			THROW_STMT => Stmt::ThrowStmt(ThrowStmt { syntax }),
 			TRY_STMT => Stmt::TryStmt(TryStmt { syntax }),
 			DEBUGGER_STMT => Stmt::DebuggerStmt(DebuggerStmt { syntax }),
+			JS_UNKNOWN_STATEMENT => Stmt::JsUnknownStatement(JsUnknownStatement { syntax }),
 			_ => {
 				if let Some(decl) = Decl::cast(syntax.clone()) {
 					return Some(Stmt::Decl(decl));
@@ -4309,6 +4429,7 @@ impl AstNode for Stmt {
 			Stmt::ThrowStmt(it) => &it.syntax,
 			Stmt::TryStmt(it) => &it.syntax,
 			Stmt::DebuggerStmt(it) => &it.syntax,
+			Stmt::JsUnknownStatement(it) => &it.syntax,
 			Stmt::Decl(it) => it.syntax(),
 		}
 	}
@@ -4539,14 +4660,42 @@ impl From<TsAssertion> for Expr {
 impl From<TsConstAssertion> for Expr {
 	fn from(node: TsConstAssertion) -> Expr { Expr::TsConstAssertion(node) }
 }
+impl From<JsUnknownExpression> for Expr {
+	fn from(node: JsUnknownExpression) -> Expr { Expr::JsUnknownExpression(node) }
+}
 impl AstNode for Expr {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			ARROW_EXPR | LITERAL | TEMPLATE | NAME_REF | THIS_EXPR | ARRAY_EXPR | OBJECT_EXPR
-			| GROUPING_EXPR | BRACKET_EXPR | DOT_EXPR | NEW_EXPR | CALL_EXPR | UNARY_EXPR
-			| BIN_EXPR | COND_EXPR | ASSIGN_EXPR | SEQUENCE_EXPR | FN_EXPR | CLASS_EXPR
-			| NEW_TARGET | IMPORT_META | SUPER_CALL | IMPORT_CALL | YIELD_EXPR | AWAIT_EXPR
-			| PRIVATE_PROP_ACCESS | TS_NON_NULL | TS_ASSERTION | TS_CONST_ASSERTION => true,
+			ARROW_EXPR
+			| LITERAL
+			| TEMPLATE
+			| NAME_REF
+			| THIS_EXPR
+			| ARRAY_EXPR
+			| OBJECT_EXPR
+			| GROUPING_EXPR
+			| BRACKET_EXPR
+			| DOT_EXPR
+			| NEW_EXPR
+			| CALL_EXPR
+			| UNARY_EXPR
+			| BIN_EXPR
+			| COND_EXPR
+			| ASSIGN_EXPR
+			| SEQUENCE_EXPR
+			| FN_EXPR
+			| CLASS_EXPR
+			| NEW_TARGET
+			| IMPORT_META
+			| SUPER_CALL
+			| IMPORT_CALL
+			| YIELD_EXPR
+			| AWAIT_EXPR
+			| PRIVATE_PROP_ACCESS
+			| TS_NON_NULL
+			| TS_ASSERTION
+			| TS_CONST_ASSERTION
+			| JS_UNKNOWN_EXPRESSION => true,
 			_ => false,
 		}
 	}
@@ -4581,6 +4730,7 @@ impl AstNode for Expr {
 			TS_NON_NULL => Expr::TsNonNull(TsNonNull { syntax }),
 			TS_ASSERTION => Expr::TsAssertion(TsAssertion { syntax }),
 			TS_CONST_ASSERTION => Expr::TsConstAssertion(TsConstAssertion { syntax }),
+			JS_UNKNOWN_EXPRESSION => Expr::JsUnknownExpression(JsUnknownExpression { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -4616,6 +4766,7 @@ impl AstNode for Expr {
 			Expr::TsNonNull(it) => &it.syntax,
 			Expr::TsAssertion(it) => &it.syntax,
 			Expr::TsConstAssertion(it) => &it.syntax,
+			Expr::JsUnknownExpression(it) => &it.syntax,
 		}
 	}
 }
@@ -4695,11 +4846,14 @@ impl From<ArrayPattern> for Pattern {
 impl From<ExprPattern> for Pattern {
 	fn from(node: ExprPattern) -> Pattern { Pattern::ExprPattern(node) }
 }
+impl From<JsUnknownPattern> for Pattern {
+	fn from(node: JsUnknownPattern) -> Pattern { Pattern::JsUnknownPattern(node) }
+}
 impl AstNode for Pattern {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			SINGLE_PATTERN | REST_PATTERN | ASSIGN_PATTERN | OBJECT_PATTERN | ARRAY_PATTERN
-			| EXPR_PATTERN => true,
+			| EXPR_PATTERN | JS_UNKNOWN_PATTERN => true,
 			_ => false,
 		}
 	}
@@ -4711,6 +4865,7 @@ impl AstNode for Pattern {
 			OBJECT_PATTERN => Pattern::ObjectPattern(ObjectPattern { syntax }),
 			ARRAY_PATTERN => Pattern::ArrayPattern(ArrayPattern { syntax }),
 			EXPR_PATTERN => Pattern::ExprPattern(ExprPattern { syntax }),
+			JS_UNKNOWN_PATTERN => Pattern::JsUnknownPattern(JsUnknownPattern { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -4723,6 +4878,7 @@ impl AstNode for Pattern {
 			Pattern::ObjectPattern(it) => &it.syntax,
 			Pattern::ArrayPattern(it) => &it.syntax,
 			Pattern::ExprPattern(it) => &it.syntax,
+			Pattern::JsUnknownPattern(it) => &it.syntax,
 		}
 	}
 }
@@ -4983,11 +5139,14 @@ impl From<IdentProp> for ObjectProp {
 impl From<Method> for ObjectProp {
 	fn from(node: Method) -> ObjectProp { ObjectProp::Method(node) }
 }
+impl From<JsUnknownMember> for ObjectProp {
+	fn from(node: JsUnknownMember) -> ObjectProp { ObjectProp::JsUnknownMember(node) }
+}
 impl AstNode for ObjectProp {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			LITERAL_PROP | GETTER | SETTER | SPREAD_PROP | INITIALIZED_PROP | IDENT_PROP
-			| METHOD => true,
+			| METHOD | JS_UNKNOWN_MEMBER => true,
 			_ => false,
 		}
 	}
@@ -5000,6 +5159,7 @@ impl AstNode for ObjectProp {
 			INITIALIZED_PROP => ObjectProp::InitializedProp(InitializedProp { syntax }),
 			IDENT_PROP => ObjectProp::IdentProp(IdentProp { syntax }),
 			METHOD => ObjectProp::Method(Method { syntax }),
+			JS_UNKNOWN_MEMBER => ObjectProp::JsUnknownMember(JsUnknownMember { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -5013,6 +5173,7 @@ impl AstNode for ObjectProp {
 			ObjectProp::InitializedProp(it) => &it.syntax,
 			ObjectProp::IdentProp(it) => &it.syntax,
 			ObjectProp::Method(it) => &it.syntax,
+			ObjectProp::JsUnknownMember(it) => &it.syntax,
 		}
 	}
 }
@@ -5040,11 +5201,14 @@ impl From<Getter> for ClassElement {
 impl From<Setter> for ClassElement {
 	fn from(node: Setter) -> ClassElement { ClassElement::Setter(node) }
 }
+impl From<JsUnknownMember> for ClassElement {
+	fn from(node: JsUnknownMember) -> ClassElement { ClassElement::JsUnknownMember(node) }
+}
 impl AstNode for ClassElement {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			EMPTY_STMT | METHOD | PRIVATE_PROP | CLASS_PROP | CONSTRUCTOR | TS_INDEX_SIGNATURE
-			| GETTER | SETTER => true,
+			| GETTER | SETTER | JS_UNKNOWN_MEMBER => true,
 			_ => false,
 		}
 	}
@@ -5058,6 +5222,7 @@ impl AstNode for ClassElement {
 			TS_INDEX_SIGNATURE => ClassElement::TsIndexSignature(TsIndexSignature { syntax }),
 			GETTER => ClassElement::Getter(Getter { syntax }),
 			SETTER => ClassElement::Setter(Setter { syntax }),
+			JS_UNKNOWN_MEMBER => ClassElement::JsUnknownMember(JsUnknownMember { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -5072,6 +5237,7 @@ impl AstNode for ClassElement {
 			ClassElement::TsIndexSignature(it) => &it.syntax,
 			ClassElement::Getter(it) => &it.syntax,
 			ClassElement::Setter(it) => &it.syntax,
+			ClassElement::JsUnknownMember(it) => &it.syntax,
 		}
 	}
 }
@@ -5087,10 +5253,13 @@ impl From<Ident> for PropName {
 impl From<Name> for PropName {
 	fn from(node: Name) -> PropName { PropName::Name(node) }
 }
+impl From<JsUnknownBinding> for PropName {
+	fn from(node: JsUnknownBinding) -> PropName { PropName::JsUnknownBinding(node) }
+}
 impl AstNode for PropName {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			COMPUTED_PROPERTY_NAME | LITERAL | IDENT | NAME => true,
+			COMPUTED_PROPERTY_NAME | LITERAL | IDENT | NAME | JS_UNKNOWN_BINDING => true,
 			_ => false,
 		}
 	}
@@ -5102,6 +5271,7 @@ impl AstNode for PropName {
 			LITERAL => PropName::Literal(Literal { syntax }),
 			IDENT => PropName::Ident(Ident { syntax }),
 			NAME => PropName::Name(Name { syntax }),
+			JS_UNKNOWN_BINDING => PropName::JsUnknownBinding(JsUnknownBinding { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -5112,6 +5282,7 @@ impl AstNode for PropName {
 			PropName::Literal(it) => &it.syntax,
 			PropName::Ident(it) => &it.syntax,
 			PropName::Name(it) => &it.syntax,
+			PropName::JsUnknownBinding(it) => &it.syntax,
 		}
 	}
 }
@@ -5220,10 +5391,16 @@ impl From<RestPattern> for ObjectPatternProp {
 impl From<SinglePattern> for ObjectPatternProp {
 	fn from(node: SinglePattern) -> ObjectPatternProp { ObjectPatternProp::SinglePattern(node) }
 }
+impl From<JsUnknownPattern> for ObjectPatternProp {
+	fn from(node: JsUnknownPattern) -> ObjectPatternProp {
+		ObjectPatternProp::JsUnknownPattern(node)
+	}
+}
 impl AstNode for ObjectPatternProp {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			ASSIGN_PATTERN | KEY_VALUE_PATTERN | REST_PATTERN | SINGLE_PATTERN => true,
+			ASSIGN_PATTERN | KEY_VALUE_PATTERN | REST_PATTERN | SINGLE_PATTERN
+			| JS_UNKNOWN_PATTERN => true,
 			_ => false,
 		}
 	}
@@ -5233,6 +5410,7 @@ impl AstNode for ObjectPatternProp {
 			KEY_VALUE_PATTERN => ObjectPatternProp::KeyValuePattern(KeyValuePattern { syntax }),
 			REST_PATTERN => ObjectPatternProp::RestPattern(RestPattern { syntax }),
 			SINGLE_PATTERN => ObjectPatternProp::SinglePattern(SinglePattern { syntax }),
+			JS_UNKNOWN_PATTERN => ObjectPatternProp::JsUnknownPattern(JsUnknownPattern { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -5243,6 +5421,7 @@ impl AstNode for ObjectPatternProp {
 			ObjectPatternProp::KeyValuePattern(it) => &it.syntax,
 			ObjectPatternProp::RestPattern(it) => &it.syntax,
 			ObjectPatternProp::SinglePattern(it) => &it.syntax,
+			ObjectPatternProp::JsUnknownPattern(it) => &it.syntax,
 		}
 	}
 }
@@ -5603,6 +5782,36 @@ impl std::fmt::Display for TsTypeElement {
 	}
 }
 impl std::fmt::Display for TsNamespaceBody {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsUnknownStatement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsUnknownExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsUnknownPattern {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsUnknownMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsUnknownBinding {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsUnknownAssignmentTarget {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

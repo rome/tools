@@ -186,7 +186,7 @@ impl<N: AstNode> IntoIterator for AstNodeList<N> {
 }
 
 mod support {
-	use super::{AstNode, AstNodeList, SyntaxKind, SyntaxNode, SyntaxToken};
+	use super::{AstNode, AstNodeList, SyntaxElementChildren, SyntaxKind, SyntaxNode, SyntaxToken};
 	use crate::ast::AstChildren;
 	use crate::SyntaxList;
 	use crate::{SyntaxError, SyntaxResult};
@@ -199,6 +199,10 @@ mod support {
 
 	pub(super) fn as_optional_node<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
+	}
+
+	pub(super) fn elements(parent: &SyntaxNode) -> SyntaxElementChildren {
+		parent.children_with_tokens()
 	}
 
 	pub(super) fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {

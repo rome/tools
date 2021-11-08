@@ -11,6 +11,7 @@ impl ToFormatElement for ObjectProp {
 			ObjectProp::InitializedProp(_) => todo!(),
 			ObjectProp::IdentProp(ident) => ident.to_format_element(formatter),
 			ObjectProp::Method(_) => todo!(),
+			ObjectProp::JsUnknownMember(_) => todo!(),
 		}
 	}
 }

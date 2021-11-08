@@ -9,6 +9,7 @@ impl ToFormatElement for PropName {
 			PropName::Literal(literal) => literal.to_format_element(formatter),
 			PropName::Ident(ident) => ident.to_format_element(formatter),
 			PropName::Name(name) => name.to_format_element(formatter),
+			PropName::JsUnknownBinding(_) => todo!(),
 		}
 	}
 }

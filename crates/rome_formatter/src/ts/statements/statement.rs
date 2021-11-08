@@ -30,6 +30,7 @@ impl ToFormatElement for Stmt {
 
 			Stmt::ForOfStmt(_) => todo!(),
 			Stmt::Decl(decl) => decl.to_format_element(formatter),
+			Stmt::JsUnknownStatement(_) => todo!(),
 		}
 	}
 }

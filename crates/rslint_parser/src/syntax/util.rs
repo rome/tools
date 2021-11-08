@@ -178,6 +178,7 @@ fn check_pat(
 					}
 					ast::ObjectPatternProp::RestPattern(pat) => pat.into(),
 					ast::ObjectPatternProp::SinglePattern(pat) => pat.into(),
+					ast::ObjectPatternProp::JsUnknownPattern(_) => todo!(),
 				};
 				check_pat(p, pat, map, marker);
 			}
@@ -193,6 +194,7 @@ fn check_pat(
 			}
 		}
 		ast::Pattern::ExprPattern(_) => unreachable!(),
+		ast::Pattern::JsUnknownPattern(_) => todo!(),
 	}
 }
 
