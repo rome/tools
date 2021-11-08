@@ -1,4 +1,4 @@
-use crate::{token, FormatElement, Formatter, ToFormatElement};
+use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, BlockStmt, CallExpr, CaseClause,
 	CatchClause, ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt,
@@ -10,7 +10,7 @@ use rslint_parser::ast::{
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
 impl ToFormatElement for SyntaxNode {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self.kind() {
 			SyntaxKind::ARRAY_EXPR => ArrayExpr::cast(self.clone())
 				.unwrap()
@@ -169,12 +169,12 @@ impl ToFormatElement for SyntaxNode {
 }
 
 impl ToFormatElement for SyntaxToken {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self.kind() {
 			SyntaxKind::STRING => rslint_parser::ast::String::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			_ => Some(token(self.text())),
+			_ => Ok(token(self.text())),
 		}
 	}
 }

@@ -1,22 +1,17 @@
-use crate::{empty_element, format_elements, FormatElement, Formatter, ToFormatElement};
+use crate::{format_elements, token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::AssignPattern;
 
 impl ToFormatElement for AssignPattern {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
-		let key = if let Some(key) = self.key() {
-			formatter.format_node(key)?
-		} else {
-			empty_element()
-		};
-		let assign = if let Some(eq_token) = self.eq_token() {
-			formatter.format_token(&eq_token)?
-		} else if let Some(colon_token) = self.colon_token() {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		let key = formatter.format_node(self.key()?)?;
+		let assign = formatter.format_token(&self.eq_token()?)?;
+		if let Some(colon_token) = self.colon_token() {
 			formatter.format_token(&colon_token)?
 		} else {
-			empty_element()
+			token(":")
 		};
 
 		let value = formatter.format_node(self.value()?)?;
-		Some(format_elements![key, assign, value])
+		Ok(format_elements![key, assign, value])
 	}
 }

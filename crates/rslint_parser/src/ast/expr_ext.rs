@@ -28,12 +28,18 @@ impl CondExpr {
 }
 
 impl LiteralProp {
-	pub fn key(&self) -> Option<PropName> {
-		support::child::<PropName>(self.syntax())
+	pub fn key(&self) -> SyntaxResult<PropName> {
+		support::as_mandatory_node::<PropName>(self.syntax())
 	}
 
-	pub fn value(&self) -> Option<Expr> {
-		self.syntax().children().nth(1)?.try_to()
+	pub fn value(&self) -> SyntaxResult<Expr> {
+		let child = self.syntax().children().nth(1);
+		match child {
+			Some(child) => {
+				Expr::cast(child).ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
+			}
+			None => Err(SyntaxError::MissingRequiredChild(self.syntax().clone())),
+		}
 	}
 }
 
@@ -235,7 +241,12 @@ impl UnaryExpr {
 			return None;
 		}
 
-		Some(self.op_token()?.text_range().start() > self.expr()?.syntax().text_range().end())
+		match self.expr() {
+			Err(_) => None,
+			Ok(expr) => {
+				Some(self.op_token()?.text_range().start() > expr.syntax().text_range().end())
+			}
+		}
 	}
 }
 
@@ -245,10 +256,13 @@ impl KeyValuePattern {
 		if self.syntax().children().count() == 2 {
 			Pattern::cast(self.syntax().last_child().unwrap())
 		} else {
-			self.colon_token()?
-				.next_sibling_or_token()?
-				.into_node()?
-				.try_to::<Pattern>()
+			match self.colon_token() {
+				Ok(colon_token) => colon_token
+					.next_sibling_or_token()?
+					.into_node()?
+					.try_to::<Pattern>(),
+				Err(_) => None,
+			}
 		}
 	}
 }
@@ -538,11 +552,22 @@ impl ObjectProp {
 		Some(
 			match self {
 				ObjectProp::IdentProp(idt) => idt.syntax().clone(),
-				ObjectProp::LiteralProp(litprop) => prop_name_syntax(litprop.key()?)?,
-				ObjectProp::Getter(getter) => prop_name_syntax(getter.key()?)?,
-				ObjectProp::Setter(setter) => prop_name_syntax(setter.key()?)?,
-				ObjectProp::Method(method) => prop_name_syntax(method.name()?)?,
-				ObjectProp::InitializedProp(init) => init.key()?.syntax().clone(),
+				ObjectProp::LiteralProp(litprop) => {
+					litprop.key().map_or_else(|_| None, prop_name_syntax)?
+				}
+
+				ObjectProp::Getter(getter) => {
+					getter.key().map_or_else(|_| None, prop_name_syntax)?
+				}
+				ObjectProp::Setter(setter) => {
+					setter.key().map_or_else(|_| None, prop_name_syntax)?
+				}
+				ObjectProp::Method(method) => {
+					method.name().map_or_else(|_| None, prop_name_syntax)?
+				}
+				ObjectProp::InitializedProp(init) => init
+					.key()
+					.map_or_else(|_| None, |key| Some(key.syntax().clone()))?,
 				ObjectProp::SpreadProp(_) => return None,
 			}
 			.into(),

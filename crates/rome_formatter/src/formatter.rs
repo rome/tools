@@ -1,5 +1,8 @@
 use crate::printer::Printer;
-use crate::{concat_elements, token, FormatElement, FormatOptions, FormatResult, ToFormatElement};
+use crate::{
+	concat_elements, token, FormatElement, FormatError, FormatOptions, FormatResult, Formatted,
+	ToFormatElement,
+};
 use rome_rowan::SyntaxElement;
 use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
 
@@ -24,19 +27,17 @@ impl Formatter {
 	}
 
 	/// Formats a CST
-	pub fn format_root(self, root: &SyntaxNode) -> FormatResult {
-		let element = self
-			.format_syntax_node(root)
-			.unwrap_or_else(|| self.format_raw(root));
+	pub fn format_root(self, root: &SyntaxNode) -> FormatResult<Formatted> {
+		let element = self.format_syntax_node(root)?;
 
 		let printer = Printer::new(self.options);
-		printer.print(&element)
+		Ok(printer.print(&element))
 	}
 
-	fn format_syntax_node(&self, node: &SyntaxNode) -> Option<FormatElement> {
+	fn format_syntax_node(&self, node: &SyntaxNode) -> FormatResult<FormatElement> {
 		let start = self.format_node_start(node);
 		let content = node.to_format_element(self)?;
-		Some(concat_elements(vec![
+		Ok(concat_elements(vec![
 			start,
 			content,
 			self.format_node_end(node),
@@ -47,8 +48,11 @@ impl Formatter {
 	///
 	/// Returns `None` if the node couldn't be formatted because of syntax errors in its sub tree.
 	/// The parent may use `format_raw` to insert the node content as is.
-	pub fn format_node<T: AstNode + ToFormatElement>(&self, node: T) -> Option<FormatElement> {
-		Some(concat_elements(vec![
+	pub fn format_node<T: AstNode + ToFormatElement>(
+		&self,
+		node: T,
+	) -> FormatResult<FormatElement> {
+		Ok(concat_elements(vec![
 			self.format_node_start(node.syntax()),
 			node.to_format_element(self)?,
 			self.format_node_end(node.syntax()),
@@ -93,9 +97,9 @@ impl Formatter {
 	/// let formatter = Formatter::default();
 	/// let result = formatter.format_token(&syntax_token);
 	///
-	/// assert_eq!(Some(token("\"abc\"")), result)
+	/// assert_eq!(Ok(token("\"abc\"")), result)
 	/// ```
-	pub fn format_token(&self, syntax_token: &SyntaxToken) -> Option<FormatElement> {
+	pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatResult<FormatElement> {
 		syntax_token.to_format_element(self)
 	}
 
@@ -105,18 +109,19 @@ impl Formatter {
 	pub fn format_nodes<T: AstNode + ToFormatElement>(
 		&self,
 		nodes: impl IntoIterator<Item = T>,
-	) -> Option<impl Iterator<Item = FormatElement>> {
+	) -> Result<impl Iterator<Item = FormatElement>, FormatError> {
 		let mut result = Vec::new();
 
 		for node in nodes {
-			if let Some(formatted) = self.format_node(node) {
-				result.push(formatted);
-			} else {
-				return None;
+			match self.format_node(node) {
+				Ok(formatted) => {
+					result.push(formatted);
+				}
+				Err(err) => return Err(err),
 			}
 		}
 
-		Some(result.into_iter())
+		Ok(result.into_iter())
 	}
 
 	/// "Formats" a node according to its original formatting in the source text. Being able to format

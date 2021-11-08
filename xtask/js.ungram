@@ -525,7 +525,7 @@ FnDecl =
 	return_type:TsType?
 	body:BlockStmt
 
-VarDecl = 'var' 'const' manual__:'let' declared:Declarator* ';'?
+VarDecl = ('var' | 'const' | manual__:'let') declared:Declarator* ';'?
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
 ClassDecl  = 'class' Name ('extends' parent:NameRef)? body:ClassBody

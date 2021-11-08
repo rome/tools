@@ -18,7 +18,7 @@
 //!
 //! Now, we do want to create this IR for the data structure:
 //! ```rust
-//! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatOptions, space_token, token };
+//! use rome_formatter::{format_elements, format_element, Formatter, ToFormatElement, FormatElement, FormatResult, FormatOptions, space_token, token };
 //!
 //! struct KeyValue {
 //!     key: String,
@@ -26,8 +26,8 @@
 //! }
 //!
 //! impl ToFormatElement for KeyValue {
-//!     fn to_format_element(&self, formatter: &Formatter)-> Option<FormatElement>  {
-//!         Some(format_elements![
+//!     fn to_format_element(&self, formatter: &Formatter)-> FormatResult<FormatElement>  {
+//!         Ok(format_elements![
 //!             token(self.key.as_str()),
 //!             space_token(),
 //!             token("=>"),
@@ -59,6 +59,7 @@ mod ts;
 use crate::format_json::tokenize_json;
 
 pub use formatter::Formatter;
+use rslint_parser::SyntaxError;
 
 pub use format_element::{
 	block_indent, concat_elements, empty_element, group_elements, hard_line_break, if_group_breaks,
@@ -71,12 +72,37 @@ use rome_core::file_handlers::Language;
 use rome_core::App;
 use rome_path::RomePath;
 use rslint_parser::parse_text;
+
 use std::io::Read;
 use std::str::FromStr;
 
 /// This trait should be implemented on each node/value that should have a formatted representation
 pub trait ToFormatElement {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement>;
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement>;
+}
+
+/// Public return type of the formatter
+pub type FormatResult<F> = Result<F, FormatError>;
+
+#[derive(Debug, PartialEq)]
+/// Series of errors encountered during formatting
+pub enum FormatError {
+	/// Node is missing and it should be required for a correct formatting
+	MissingRequiredChild,
+
+	/// In case our formatter doesn't know how to format a certain language
+	UnsupportedLanguage,
+
+	/// When the ability to format the current file has been turned off on purpose
+	CapabilityDisabled,
+}
+
+impl From<SyntaxError> for FormatError {
+	fn from(syntax_error: SyntaxError) -> Self {
+		match syntax_error {
+			SyntaxError::MissingRequiredChild(_node) => FormatError::MissingRequiredChild,
+		}
+	}
 }
 
 #[derive(Debug, Eq, PartialEq, Clone)]
@@ -134,11 +160,11 @@ impl Default for FormatOptions {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct FormatResult {
+pub struct Formatted {
 	code: String,
 }
 
-impl FormatResult {
+impl Formatted {
 	pub fn new(code: &str) -> Self {
 		Self {
 			code: String::from(code),
@@ -152,7 +178,7 @@ impl FormatResult {
 
 // TODO: implement me + handle errors
 /// Main function
-pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> Option<FormatResult> {
+pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> FormatResult<Formatted> {
 	// we assume that file exists
 	let mut file = rome_path.open();
 	let mut buffer = String::new();
@@ -165,40 +191,40 @@ pub fn format(rome_path: &mut RomePath, options: FormatOptions) -> Option<Format
 			let result = match handler.language() {
 				Language::Js => {
 					let parsed_result = parse_text(buffer.as_str(), 0);
-					Some(Formatter::new(options).format_root(&parsed_result.syntax()))
+					Formatter::new(options).format_root(&parsed_result.syntax())
 				}
 				Language::Json => {
 					let element = tokenize_json(buffer.as_str());
-					Some(format_element(&element, options))
+					Ok(format_element(&element, options))
 				}
-				Language::Ts | Language::Unknown => None,
+				Language::Ts | Language::Unknown => Err(FormatError::UnsupportedLanguage),
 			};
 
 			result
 		} else {
-			None
+			Err(FormatError::CapabilityDisabled)
 		}
 	} else {
-		None
+		Err(FormatError::UnsupportedLanguage)
 	}
 }
 
 pub fn format_file_and_save(rome_path: &mut RomePath, options: FormatOptions) {
 	let result = format(rome_path, options);
-	if let Some(result) = result {
+	if let Ok(result) = result {
 		rome_path
 			.save(result.code())
 			.expect("Could not write the formatted code on file");
 	}
 }
 
-pub fn format_file(path_to_file: &str, options: FormatOptions, app: &App) -> FormatResult {
+pub fn format_file(path_to_file: &str, options: FormatOptions, app: &App) -> Formatted {
 	let mut rome_path = RomePath::new(path_to_file).deduce_handler(app);
 	let element = format(&mut rome_path, options);
 	element.unwrap()
 }
 
-pub fn format_element(element: &FormatElement, options: FormatOptions) -> FormatResult {
+pub fn format_element(element: &FormatElement, options: FormatOptions) -> Formatted {
 	let printer = Printer::new(options);
 	printer.print(element)
 }

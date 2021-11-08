@@ -1,4 +1,5 @@
 use crate::ts::statements::format_statements;
+use crate::FormatResult;
 use crate::{
 	block_indent, format_element::indent, format_elements, group_elements, hard_line_break,
 	join_elements, space_token, FormatElement, Formatter, ToFormatElement,
@@ -6,7 +7,7 @@ use crate::{
 use rslint_parser::ast::{CaseClause, DefaultClause, SwitchCase, SwitchStmt};
 
 impl ToFormatElement for SwitchStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let switch = formatter.format_token(&self.switch_token()?)?;
 		let condition = formatter.format_node(self.test()?)?;
 		let l_curly = formatter.format_token(&self.l_curly_token()?)?;
@@ -14,7 +15,7 @@ impl ToFormatElement for SwitchStmt {
 		let cases = formatter.format_nodes(self.cases())?;
 		let r_curly = formatter.format_token(&self.r_curly_token()?)?;
 
-		Some(format_elements![
+		Ok(format_elements![
 			switch,
 			space_token(),
 			condition,
@@ -29,7 +30,7 @@ impl ToFormatElement for SwitchStmt {
 }
 
 impl ToFormatElement for SwitchCase {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
 			SwitchCase::CaseClause(case_clause) => case_clause.to_format_element(formatter),
 			SwitchCase::DefaultClause(default_clause) => {
@@ -40,12 +41,12 @@ impl ToFormatElement for SwitchCase {
 }
 
 impl ToFormatElement for DefaultClause {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let default = formatter.format_token(&self.default_token()?)?;
 		let colon = formatter.format_token(&self.colon_token()?)?;
 		let statements = format_statements(self.cons(), formatter);
 
-		Some(format_elements![
+		Ok(format_elements![
 			default,
 			colon,
 			space_token(),
@@ -56,7 +57,7 @@ impl ToFormatElement for DefaultClause {
 }
 
 impl ToFormatElement for CaseClause {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let case_word = formatter.format_token(&self.case_token()?)?;
 		let colon = formatter.format_token(&self.colon_token()?)?;
 
@@ -64,7 +65,7 @@ impl ToFormatElement for CaseClause {
 
 		let cons = format_statements(self.cons(), formatter);
 
-		Some(format_elements![
+		Ok(format_elements![
 			case_word,
 			space_token(),
 			test,

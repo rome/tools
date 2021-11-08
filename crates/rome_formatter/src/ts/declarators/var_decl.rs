@@ -1,18 +1,22 @@
-use crate::{concat_elements, space_token, token, FormatElement, Formatter, ToFormatElement};
+use crate::{
+	concat_elements, space_token, token, FormatElement, FormatError, FormatResult, Formatter,
+	ToFormatElement,
+};
 use rslint_parser::ast::{AstNode, ForStmtInit, VarDecl};
 
 impl ToFormatElement for VarDecl {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut tokens = vec![];
 
-		if let Some(token) = self.const_token() {
-			tokens.push(formatter.format_token(&token)?);
-		} else if let Some(token) = self.let_token() {
-			tokens.push(formatter.format_token(&token)?);
-		} else if let Some(token) = self.var_token() {
-			tokens.push(formatter.format_token(&token)?);
+		if self.is_const() {
+			tokens.push(formatter.format_token(&self.const_token()?)?);
+		} else if self.is_var() {
+			tokens.push(formatter.format_token(&self.var_token()?)?);
+		} else if self.is_let() {
+			// TODO: #1725 remove this custom code once #1745 is merged
+			tokens.push(formatter.format_token(&self.let_token().unwrap())?);
 		} else {
-			return None;
+			return Err(FormatError::MissingRequiredChild);
 		}
 
 		tokens.push(space_token());
@@ -27,6 +31,6 @@ impl ToFormatElement for VarDecl {
 			tokens.push(token(";"));
 		}
 
-		Some(concat_elements(tokens))
+		Ok(concat_elements(tokens))
 	}
 }

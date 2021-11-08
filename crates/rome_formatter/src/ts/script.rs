@@ -1,9 +1,11 @@
 use crate::ts::statements::format_statements;
-use crate::{format_elements, hard_line_break, FormatElement, Formatter, ToFormatElement};
+use crate::{
+	format_elements, hard_line_break, FormatElement, FormatResult, Formatter, ToFormatElement,
+};
 use rslint_parser::ast::Script;
 
 impl ToFormatElement for Script {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut elements = vec![];
 
 		if let Some(shebang) = self.shebang_token() {
@@ -13,7 +15,7 @@ impl ToFormatElement for Script {
 
 		elements.push(format_statements(self.items(), formatter));
 
-		Some(format_elements![
+		Ok(format_elements![
 			concat_elements(elements),
 			hard_line_break()
 		])

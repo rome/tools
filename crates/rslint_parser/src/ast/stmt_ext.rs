@@ -40,7 +40,7 @@ impl VarDecl {
 
 	/// Whether the declaration is a const declaration
 	pub fn is_const(&self) -> bool {
-		self.const_token().is_some()
+		self.const_token().is_ok()
 	}
 
 	/// Whether the declaration is a let declaration
@@ -50,7 +50,7 @@ impl VarDecl {
 
 	/// Whether the declaration is a let declaration
 	pub fn is_var(&self) -> bool {
-		self.var_token().is_some()
+		self.var_token().is_ok()
 	}
 }
 
@@ -99,7 +99,7 @@ impl IfStmt {
 				<= self
 					.else_token()
 					.map(|x| x.text_range().start())
-					.unwrap_or_else(|| cons.syntax().text_range().start())
+					.unwrap_or_else(|_| cons.syntax().text_range().start())
 		})
 	}
 
@@ -121,7 +121,7 @@ impl IfStmt {
 						> self
 							.else_token()
 							.map(|x| x.text_range().start())
-							.unwrap_or_else(|| node.text_range().start())
+							.unwrap_or_else(|_| node.text_range().start())
 				})
 				.map(|x| x.to())
 		}

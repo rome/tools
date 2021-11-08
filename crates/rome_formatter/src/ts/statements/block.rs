@@ -3,11 +3,12 @@ use rslint_parser::AstNode;
 
 use crate::ts::statements::format_statements;
 use crate::{
-	block_indent, format_elements, hard_line_break, FormatElement, Formatter, ToFormatElement,
+	block_indent, format_elements, hard_line_break, FormatElement, FormatResult, Formatter,
+	ToFormatElement,
 };
 
 impl ToFormatElement for BlockStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let stmts = format_statements(self.stmts(), formatter);
 
 		// Formatting of curly braces for an:
@@ -20,7 +21,7 @@ impl ToFormatElement for BlockStmt {
 			block_indent(stmts)
 		};
 
-		Some(format_elements![
+		Ok(format_elements![
 			formatter.format_token(&self.l_curly_token()?)?,
 			body,
 			formatter.format_token(&self.r_curly_token()?)?

@@ -1,17 +1,17 @@
-use crate::{concat_elements, space_token, token, FormatElement, Formatter, ToFormatElement};
+use crate::{
+	concat_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+};
 use rslint_parser::ast::ReturnStmt;
 
 impl ToFormatElement for ReturnStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut tokens = vec![token("return")];
 
-		if let Some(value) = self.value() {
-			tokens.push(space_token());
-			tokens.push(formatter.format_node(value)?);
-		}
+		tokens.push(space_token());
+		tokens.push(formatter.format_node(self.value()?)?);
 
 		tokens.push(token(";"));
 
-		Some(concat_elements(tokens))
+		Ok(concat_elements(tokens))
 	}
 }

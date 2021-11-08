@@ -31,7 +31,7 @@ fn is_simple_assign_target(p: &mut Parser, target: &Expr) -> bool {
 			let inner = GroupingExpr::cast(target.syntax().to_owned())
 				.unwrap()
 				.inner();
-			if let Some(inner) = inner {
+			if let Ok(inner) = inner {
 				is_simple_assign_target(p, &inner)
 			} else {
 				// avoid throwing extra errors for empty grouping exprs
@@ -133,7 +133,7 @@ pub fn check_var_decl_bound_names(p: &mut Parser, marker: &CompletedMarker) {
 	let decl = p.parse_marker::<ast::VarDecl>(marker);
 	if decl.is_let() || decl.is_const() {
 		for declarator in decl.declared() {
-			if let Some(pattern) = declarator.pattern() {
+			if let Ok(pattern) = declarator.pattern() {
 				check_pat(p, pattern, &mut map, marker)
 			}
 		}
@@ -148,12 +148,12 @@ fn check_pat(
 ) {
 	match pattern {
 		ast::Pattern::SinglePattern(name) => {
-			if let Some(ident) = name.name().map(|x| x.ident_token()).flatten() {
+			if let Some(ident) = name.name().map_or_else(|_| None, |x| x.ident_token().ok()) {
 				check_name_pat(p, &ident, map, marker);
 			}
 		}
 		ast::Pattern::AssignPattern(pat) => {
-			if let Some(subpat) = pat.value() {
+			if let Ok(subpat) = pat.value() {
 				// This should always be a pattern
 				if ast::Pattern::can_cast(subpat.syntax().kind()) {
 					check_pat(
@@ -188,7 +188,7 @@ fn check_pat(
 			}
 		}
 		ast::Pattern::RestPattern(pat) => {
-			if let Some(subpat) = pat.pat() {
+			if let Ok(subpat) = pat.pat() {
 				check_pat(p, subpat, map, marker);
 			}
 		}
@@ -244,7 +244,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 			}
 		}
 		Expr::GroupingExpr(expr) => {
-			if let Some(inner) = expr.inner() {
+			if let Ok(inner) = expr.inner() {
 				check_for_stmt_lhs(p, inner, marker);
 			}
 		}
@@ -258,7 +258,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
                             .primary(marker.offset_range(p, spread.syntax().trimmed_range()), "");
 
 						p.error(err);
-					} else if let Some(element) = spread.element() {
+					} else if let Ok(element) = spread.element() {
 						check_spread_element(p, element, marker);
 					}
 				}
@@ -289,12 +289,12 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 			for (idx, prop) in expr.props().iter().enumerate() {
 				match prop {
 					ast::ObjectProp::LiteralProp(prop) => {
-						if let Some(expr) = prop.value() {
+						if let Ok(expr) = prop.value() {
 							check_for_stmt_lhs(p, expr, marker);
 						}
 					}
 					ast::ObjectProp::SpreadProp(prop) if idx != expr.props().len() - 1 => {
-						if let Some(lhs) = prop.value() {
+						if let Ok(lhs) = prop.value() {
 							check_spread_element(p, lhs, marker);
 						}
 					}

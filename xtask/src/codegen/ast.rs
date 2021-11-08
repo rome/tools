@@ -121,7 +121,7 @@ fn handle_rule(
 			if manually_implemented {
 				return;
 			}
-			if handle_tokens_in_unions(fields, grammar, rule, label) {
+			if handle_tokens_in_unions(fields, grammar, rule, label, optional) {
 				return;
 			}
 
@@ -145,6 +145,7 @@ fn handle_rule(
 				let field = Field::Token {
 					name,
 					token_kinds: vec![],
+					optional,
 				};
 				fields.push(field);
 			}
@@ -170,6 +171,7 @@ fn handle_tokens_in_unions(
 	grammar: &Grammar,
 	rule: &Rule,
 	label: &str,
+	optional: bool,
 ) -> bool {
 	let rule = match rule {
 		Rule::Alt(rule) => rule,
@@ -187,6 +189,7 @@ fn handle_tokens_in_unions(
 	let field = Field::Token {
 		name: label.to_string(),
 		token_kinds,
+		optional,
 	};
 	fields.push(field);
 	true

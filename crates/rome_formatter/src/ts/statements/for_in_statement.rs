@@ -2,11 +2,11 @@ use rslint_parser::ast::ForInStmt;
 
 use crate::{
 	format_elements, group_elements, soft_indent, soft_line_break_or_space, space_token,
-	FormatElement, Formatter, ToFormatElement,
+	FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 
 impl ToFormatElement for ForInStmt {
-	fn to_format_element(&self, formatter: &Formatter) -> Option<FormatElement> {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let for_token = formatter.format_token(&self.for_token()?)?;
 		let l_paren = formatter.format_token(&self.l_paren_token()?)?;
 		let left = formatter.format_node(self.left()?)?;
@@ -15,7 +15,7 @@ impl ToFormatElement for ForInStmt {
 		let r_paren = formatter.format_token(&self.r_paren_token()?)?;
 		let cons = formatter.format_node(self.cons()?)?;
 
-		Some(format_elements![
+		Ok(format_elements![
 			for_token,
 			space_token(),
 			l_paren,
