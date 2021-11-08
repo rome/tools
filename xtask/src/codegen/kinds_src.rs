@@ -377,8 +377,6 @@ pub enum Field {
 		name: String,
 		token_kinds: Vec<String>,
 		optional: bool,
-		/// if the name was generated from a label
-		name_from_label: bool,
 	},
 	Node {
 		name: String,
@@ -507,18 +505,14 @@ impl Field {
 				};
 				format_ident!("{}_token", name)
 			}
-			Field::Node {
-				name,
-				name_from_label,
-				ty,
-				..
-			} => {
-				if !name_from_label {
-					panic!("The node {} doesn't have a label", ty);
-				}
+			Field::Node { name, .. } => {
 				let mut final_name = name.clone();
 				for prefix in LANGUAGE_PREFIXES {
-					final_name = final_name.replace(prefix, "");
+					final_name = String::from(
+						final_name
+							.strip_prefix(prefix)
+							.unwrap_or_else(|| final_name.as_str()),
+					);
 				}
 				if final_name == "type" {
 					format_ident!("ty")
