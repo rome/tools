@@ -72,6 +72,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					ty,
 					optional,
 					has_many,
+					separated,
 				} => {
 					let is_built_in_tpe = &ty.eq(BUILT_IN_TYPE);
 					let ty = format_ident!("{}", &ty);
@@ -93,11 +94,20 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 							}
 						}
 					} else if *has_many {
-						let field = quote! {
-							pub fn #method_name(&self) -> AstNodeList<#ty> {
-								support::node_list(&self.syntax, #slot)
+						let field = if *separated {
+							quote! {
+								pub fn #method_name(&self) -> AstSeparatedList<#ty> {
+									support::separated_list(&self.syntax, #slot)
+								}
+							}
+						} else {
+							quote! {
+								pub fn #method_name(&self) -> AstNodeList<#ty> {
+									support::node_list(&self.syntax, #slot)
+								}
 							}
 						};
+
 						slot += 1;
 						field
 					} else {

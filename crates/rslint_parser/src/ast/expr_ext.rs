@@ -382,16 +382,7 @@ impl ExprOrSpread {
 
 impl ObjectExpr {
 	pub fn has_trailing_comma(&self) -> bool {
-		if let Some(last) = self.props().last().map(|it| it.syntax().to_owned()) {
-			if let Some(tok) = last
-				.next_sibling_or_token()
-				.map(|it| it.into_token())
-				.flatten()
-			{
-				return tok.kind() == T![,];
-			}
-		}
-		false
+		self.props().trailing_separator().is_some()
 	}
 }
 

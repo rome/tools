@@ -379,6 +379,7 @@ pub enum Field {
 		ty: String,
 		optional: bool,
 		has_many: bool,
+		separated: bool,
 	},
 }
 
