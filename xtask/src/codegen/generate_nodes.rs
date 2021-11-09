@@ -71,6 +71,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					ty,
 					optional,
 					has_many,
+					separated,
 					..
 				} => {
 					let is_built_in_tpe = &ty.eq(BUILT_IN_TYPE);
