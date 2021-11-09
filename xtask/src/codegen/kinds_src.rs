@@ -506,14 +506,16 @@ impl Field {
 				format_ident!("{}_token", name)
 			}
 			Field::Node { name, .. } => {
-				let mut final_name = name.clone();
-				for prefix in LANGUAGE_PREFIXES {
-					final_name = String::from(
-						final_name
-							.strip_prefix(prefix)
-							.unwrap_or_else(|| final_name.as_str()),
-					);
-				}
+				let name = name;
+				let (prefix, tail) = name.split_once('_').unwrap_or(("", name));
+				let final_name = if LANGUAGE_PREFIXES.contains(&prefix) {
+					tail
+				} else {
+					name.as_str()
+				};
+
+				// this check here is to avoid emitting methods called "type()",
+				// where "type" is a reserved word
 				if final_name == "type" {
 					format_ident!("ty")
 				} else {
