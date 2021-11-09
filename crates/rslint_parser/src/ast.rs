@@ -16,7 +16,7 @@ use std::marker::PhantomData;
 
 pub use self::{
 	expr_ext::*,
-	generated::{nodes::*, tokens::*},
+	generated::{nodes::*, tokens::*, utils::*},
 	stmt_ext::*,
 	ts_ext::*,
 };
@@ -156,7 +156,7 @@ impl<N: AstNode> Iterator for AstNodeListIterator<N> {
 		self.inner.find_map(|e| {
 			let syntax = e.into_node()?;
 
-			if syntax.kind() == SyntaxKind::ERROR {
+			if syntax.kind() == SyntaxKind::ERROR || is_unknown_kind(syntax.kind()) {
 				None
 			} else {
 				Some(syntax.to::<N>())
@@ -260,7 +260,7 @@ impl<N> AstSeparatedListElementsIterator<N> {
 	fn next_non_trivia_or_error(&mut self) -> Option<SyntaxElement> {
 		self.next.find_map(|element| match &element {
 			NodeOrToken::Node(node) => {
-				if node.kind() == SyntaxKind::ERROR {
+				if node.kind() == SyntaxKind::ERROR || is_unknown_kind(node.kind()) {
 					None
 				} else {
 					Some(element)

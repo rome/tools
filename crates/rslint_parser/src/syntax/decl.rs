@@ -111,7 +111,7 @@ fn fn_body(p: &mut Parser) {
 					.primary(block.range(p), "");
 
 				p.error(err);
-				block.change_kind(p, ERROR);
+				block.change_kind(p, JS_UNKNOWN_EXPRESSION);
 			}
 		}
 	}
@@ -190,12 +190,12 @@ fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 			_ if p.state.in_declare => {
 				let m = p.start();
 				p.bump_any();
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN_BINDING);
 			}
 			_ => {
 				let m = p.start();
 				p.bump_any();
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN_BINDING);
 				let err = p
 					.err_builder("Binding patterns cannot be optional")
 					.primary(pat_range, "");
@@ -203,6 +203,7 @@ fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 				p.error(err);
 			}
 		}
+		// TODO: not valid anymore, evaluate removing the error/check
 		if !p.typescript() {
 			let err = p
 				.err_builder(
@@ -257,7 +258,8 @@ fn constructor_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 				.primary(range, "");
 
 			p.error(err);
-			maybe_err.complete(p, ERROR);
+			// TODO: this should be a typescript unknown kind
+			maybe_err.complete(p, JS_UNKNOWN_BINDING);
 		} else {
 			maybe_err.abandon(p);
 		}
@@ -274,7 +276,8 @@ fn constructor_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 				.primary(range, "");
 
 			p.error(err);
-			maybe_err.complete(p, ERROR);
+			// TODO: this should be a typescript unknown kind
+			maybe_err.complete(p, JS_UNKNOWN_BINDING);
 		} else {
 			maybe_err.abandon(p);
 		}
@@ -341,7 +344,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				p.error(err);
 				let m = p.start();
 				p.bump_any();
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN_EXPRESSION);
 			}
 
 			// type annotation `...foo: number[]`
@@ -365,7 +368,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 					.primary(start..end, "");
 
 				p.error(err);
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN_PATTERN);
 			}
 			let complete = m.complete(p, REST_PATTERN);
 
@@ -375,7 +378,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				let m = p.start();
 				let range = p.cur_tok().range;
 				p.bump_any();
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN_EXPRESSION);
 				let err = p
 					.err_builder("rest elements may not have trailing commas")
 					.primary(range, "");
@@ -403,6 +406,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				}
 				Some(res)
 			} else {
+				// TODO: #1759
 				p.err_recover_no_err(
 					token_set![
 						T![ident],
@@ -414,6 +418,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 						T![')'],
 					],
 					true,
+					JS_UNKNOWN_PATTERN,
 				);
 				None
 			}
@@ -542,7 +547,7 @@ pub fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 			.primary(guard.marker_vec_range(&elems), "");
 
 		guard.error(err);
-		m.complete(&mut *guard, ERROR);
+		m.complete(&mut *guard, JS_UNKNOWN_EXPRESSION);
 	}
 
 	let mut implements_list = None;
@@ -559,7 +564,8 @@ pub fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 				.primary(start..(guard.marker_vec_range(&elems).end), "");
 
 			guard.error(err);
-			maybe_err.complete(&mut *guard, ERROR);
+			// TODO: this should be a typescript unknown kind
+			maybe_err.complete(&mut *guard, JS_UNKNOWN_BINDING);
 		} else {
 			maybe_err.abandon(&mut *guard)
 		}
@@ -576,7 +582,7 @@ pub fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 			.primary(start..guard.marker_vec_range(&elems).end, "");
 
 		guard.error(err);
-		m.complete(&mut *guard, ERROR);
+		m.complete(&mut *guard, JS_UNKNOWN_BINDING);
 	}
 
 	if let Some(implements_list) = implements_list {
@@ -629,7 +635,8 @@ fn maybe_opt(p: &mut Parser) -> Option<Range<usize>> {
 				.primary(p.cur_tok().range, "");
 
 			p.error(err);
-			p.bump_remap(ERROR);
+			// TODO: this should be a typescript unknown kind
+			p.bump_remap(JS_UNKNOWN_EXPRESSION);
 		} else {
 			p.bump_any();
 		}
@@ -686,7 +693,8 @@ fn make_prop(
 			is_err = true;
 		}
 		if is_err {
-			p.bump_remap(ERROR);
+			// TODO: this should be a typescript unknown kind
+			p.bump_remap(JS_UNKNOWN_EXPRESSION);
 		} else {
 			p.bump_any();
 		}
@@ -757,7 +765,8 @@ fn consume_leading_tokens(
 
 			p.error(err);
 			p.bump_any();
-			m.complete(p, ERROR);
+			// TODO: this should be a typescript unknown kind
+			m.complete(p, JS_UNKNOWN_BINDING);
 		} else {
 			p.bump_remap(kind);
 		}
@@ -805,7 +814,8 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 			p.error(err);
 			let m = p.start();
 			p.bump_any();
-			m.complete(p, ERROR);
+			// TODO: this should be a typescript unknown kind
+			m.complete(p, JS_UNKNOWN_BINDING);
 		}
 	};
 
@@ -826,7 +836,8 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 				p.error(err);
 				let m = p.start();
 				p.bump_any();
-				m.complete(p, ERROR);
+				// TODO: this should be a typescript unknown kind
+				m.complete(p, JS_UNKNOWN_BINDING);
 			}
 			identifier_name(p);
 			maybe_opt(p);
@@ -884,7 +895,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 				.primary(range, "");
 
 			p.error(err);
-			maybe_err.complete(p, ERROR);
+			maybe_err.complete(p, JS_UNKNOWN_BINDING);
 		} else {
 			maybe_err.abandon(p);
 		}
@@ -1005,7 +1016,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 						.primary(ty.range(p), "");
 
 					p.error(err);
-					ty.change_kind(p, ERROR);
+					ty.change_kind(p, JS_UNKNOWN_BINDING);
 				}
 			}
 			constructor_params(p);
@@ -1086,10 +1097,12 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 	let err = p
 		.err_builder("expected `;`, a property, or a method for a class body, but found none")
 		.primary(p.cur_tok().range, "");
+	// TODO: #1759
 	p.err_recover(
 		err,
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
 		false,
+		JS_UNKNOWN_MEMBER,
 	);
 	None
 }
@@ -1177,11 +1190,12 @@ pub fn method(
 			let err = p
 				.err_builder("expected a method definition, but found none")
 				.primary(p.cur_tok().range, "");
-
+			// TODO: #1759
 			p.err_recover(
 				err,
 				recovery_set.into().unwrap_or(BASE_METHOD_RECOVERY_SET),
 				false,
+				JS_UNKNOWN_MEMBER,
 			);
 			return None;
 		}

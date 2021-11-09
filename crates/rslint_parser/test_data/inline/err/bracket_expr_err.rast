@@ -21,7 +21,7 @@ JS_MODULE@0..19
           IDENT@14..17 "foo"
         L_BRACK@17..18 "["
         WHITESPACE@18..19 "\n"
-        ERROR@19..19
+        JS_UNKNOWN_EXPRESSION@19..19
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ bracket_expr_err.js:1:5

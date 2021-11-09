@@ -16,7 +16,7 @@ JS_MODULE@0..40
             WHITESPACE@9..10 " "
             LIST@10..24
               LITERAL_PROP@10..24
-                ERROR@10..17
+                JS_UNKNOWN_BINDING@10..17
                   REGEX@10..17 "/: 6, /"
                 COLON@17..18 ":"
                 WHITESPACE@18..19 " "
@@ -39,7 +39,7 @@ JS_MODULE@0..40
           OBJECT_EXPR@35..38
             L_CURLY@35..36 "{"
             LIST@36..37
-              ERROR@36..37
+              JS_UNKNOWN_BINDING@36..37
                 L_CURLY@36..37 "{"
             R_CURLY@37..38 "}"
     ERROR@38..39

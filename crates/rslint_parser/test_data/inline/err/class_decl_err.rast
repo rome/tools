@@ -36,20 +36,20 @@ JS_MODULE@0..74
           NAME@47..52
             IDENT@47..52 "class"
           WHITESPACE@52..53 "\n"
-          ERROR@53..58
+          JS_UNKNOWN_MEMBER@53..58
             CLASS_KW@53..58 "class"
           WHITESPACE@58..59 " "
           NAME@59..62
             IDENT@59..62 "foo"
           WHITESPACE@62..63 " "
-          ERROR@63..64
+          JS_UNKNOWN_MEMBER@63..64
             L_CURLY@63..64 "{"
           WHITESPACE@64..65 " "
           CLASS_PROP@65..68
             NAME@65..68
               IDENT@65..68 "set"
           WHITESPACE@68..69 " "
-          ERROR@69..70
+          JS_UNKNOWN_MEMBER@69..70
             L_CURLY@69..70 "{"
         R_CURLY@70..71 "}"
     WHITESPACE@71..72 " "

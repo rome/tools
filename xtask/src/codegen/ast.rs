@@ -14,6 +14,7 @@ use crate::{
 		generate_nodes::generate_nodes,
 		generate_syntax_kinds::generate_syntax_kinds,
 		generate_tokens::generate_tokens,
+		generate_utils::generate_utils,
 		kinds_src::{AstEnumSrc, AstNodeSrc, KINDS_SRC},
 		update,
 	},
@@ -36,6 +37,10 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 
 	let syntax_kinds_file = project_root().join(codegen::SYNTAX_KINDS);
 	let contents = generate_syntax_kinds(KINDS_SRC)?;
+	update(syntax_kinds_file.as_path(), &contents, mode)?;
+
+	let syntax_kinds_file = project_root().join(codegen::UTILS);
+	let contents = generate_utils(&ast, KINDS_SRC)?;
 	update(syntax_kinds_file.as_path(), &contents, mode)?;
 
 	Ok(())

@@ -70,7 +70,8 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			p.err_recover(err, ts, false);
+			// TODO: #1759
+			p.err_recover(err, ts, false, JS_UNKNOWN_PATTERN);
 			return None;
 		}
 	})
@@ -168,9 +169,11 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
+			// TODO: #1759
 			p.err_recover_no_err(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				false,
+				JS_UNKNOWN_PATTERN,
 			);
 		}
 		if !p.at(T![']']) {
@@ -236,9 +239,11 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	let name = if let Some(n) = name {
 		n
 	} else {
+		// TODO: #1759
 		p.err_recover_no_err(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			false,
+			JS_UNKNOWN_ASSIGNMENT_TARGET,
 		);
 		return None;
 	};

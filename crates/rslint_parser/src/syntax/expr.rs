@@ -689,7 +689,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
                     .primary(temp.cur_tok().range, "");
 
-						temp.err_recover(err, EXPR_RECOVERY_SET, false);
+						// TODO: #1759
+						temp.err_recover(err, EXPR_RECOVERY_SET, false, JS_UNKNOWN_EXPRESSION);
 					}
 				}
 				break;
@@ -1044,7 +1045,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
-			p.err_recover(err, p.state.expr_recovery_set, true);
+			// TODO: #1759
+			p.err_recover(err, p.state.expr_recovery_set, true, JS_UNKNOWN_EXPRESSION);
 			return None;
 		}
 	};
@@ -1064,7 +1066,8 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.err_recover(err, p.state.expr_recovery_set, true);
+			// TODO: #1759
+			p.err_recover(err, p.state.expr_recovery_set, true, JS_UNKNOWN_BINDING);
 			None
 		}
 	}
@@ -1251,7 +1254,8 @@ pub fn object_property(p: &mut Parser) -> Option<CompletedMarker> {
 				// let a = { /: 6, /: /foo/ }
 				// let a = {{}}
 				if prop.is_none() {
-					p.err_recover_no_err(token_set![T![:], T![,]], false);
+					// TODO: #1759
+					p.err_recover_no_err(token_set![T![:], T![,]], false, JS_UNKNOWN_BINDING);
 				}
 				// test_err object_expr_non_ident_literal_prop
 				// let b = {5}

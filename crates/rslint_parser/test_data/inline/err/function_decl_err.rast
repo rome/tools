@@ -17,17 +17,17 @@ JS_MODULE@0..114
       WHITESPACE@22..23 " "
       PARAMETER_LIST@23..38
         LIST@23..37
-          ERROR@23..24
+          JS_UNKNOWN_PATTERN@23..24
             L_CURLY@23..24 "{"
-          ERROR@24..25
+          JS_UNKNOWN_PATTERN@24..25
             R_CURLY@24..25 "}"
           WHITESPACE@25..26 "\n"
-          ERROR@26..34
+          JS_UNKNOWN_PATTERN@26..34
             FUNCTION_KW@26..34 "function"
           WHITESPACE@34..35 " "
-          ERROR@35..36
+          JS_UNKNOWN_PATTERN@35..36
             STAR@35..36 "*"
-          ERROR@36..37
+          JS_UNKNOWN_PATTERN@36..37
             L_PAREN@36..37 "("
         R_PAREN@37..38 ")"
       WHITESPACE@38..39 " "

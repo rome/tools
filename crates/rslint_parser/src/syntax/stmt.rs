@@ -159,7 +159,12 @@ pub fn stmt(
 				return None;
 			}
 
-			p.err_recover(err, recovery_set.into().unwrap_or(STMT_RECOVERY_SET), false);
+			p.err_recover(
+				err,
+				recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
+				false,
+				JS_UNKNOWN_STATEMENT,
+			);
 			return None;
 		}
 	};
@@ -225,7 +230,8 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 		let m = p.start();
 		p.bump_any();
 		ts_interface(p);
-		m.complete(p, ERROR);
+		// TODO: this should be an unknown token for typescript?
+		m.complete(p, JS_UNKNOWN_STATEMENT);
 	}
 
 	let mut expr = p.expr_with_semi_recovery(false)?;
@@ -519,7 +525,7 @@ pub(crate) fn block_items(
 						.primary(m.range(p), "not allowed inside scripts");
 
 					p.error(err);
-					m.change_kind(p, ERROR);
+					m.change_kind(p, JS_UNKNOWN_STATEMENT);
 				}
 				if !top_level {
 					let err = p
@@ -527,7 +533,7 @@ pub(crate) fn block_items(
 						.primary(m.range(p), "move this declaration to the top level");
 
 					p.error(err);
-					m.change_kind(p, ERROR);
+					m.change_kind(p, JS_UNKNOWN_STATEMENT);
 				}
 				Some(m)
 			}
@@ -550,7 +556,7 @@ pub(crate) fn block_items(
 						.primary(m.range(p), "not allowed inside scripts");
 
 					p.error(err);
-					m.change_kind(p, ERROR);
+					m.change_kind(p, JS_UNKNOWN_STATEMENT);
 				}
 				if !top_level {
 					let err = p
@@ -558,7 +564,7 @@ pub(crate) fn block_items(
 						.primary(m.range(p), "move this declaration to the top level");
 
 					p.error(err);
-					m.change_kind(p, ERROR);
+					m.change_kind(p, JS_UNKNOWN_STATEMENT);
 				}
 				Some(m)
 			}
@@ -666,7 +672,7 @@ pub fn with_stmt(p: &mut Parser) -> CompletedMarker {
 			.primary(complete.range(p), "");
 
 		p.error(err);
-		complete.change_kind(p, ERROR);
+		complete.change_kind(p, JS_UNKNOWN_STATEMENT);
 	}
 
 	complete
@@ -1015,7 +1021,8 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			p.err_recover(err, STMT_RECOVERY_SET, true);
+			// TODO: #1759
+			p.err_recover(err, STMT_RECOVERY_SET, true, JS_UNKNOWN_STATEMENT);
 		}
 	}
 	None
@@ -1099,7 +1106,11 @@ fn catch_clause(p: &mut Parser) {
 			let end = ty
 				.map(|x| usize::from(x.range(p).end()))
 				.unwrap_or(p.cur_tok().range.start);
-			m.complete(p, kind.filter(|_| p.typescript()).unwrap_or(ERROR));
+			m.complete(
+				p,
+				kind.filter(|_| p.typescript())
+					.unwrap_or(JS_UNKNOWN_STATEMENT),
+			);
 			if !p.typescript() {
 				let err = p
 					.err_builder("type annotations can only be used in TypeScript files")

@@ -8,7 +8,7 @@ JS_MODULE@0..12
       CLASS_BODY@7..10
         L_CURLY@7..8 "{"
         LIST@8..9
-          ERROR@8..9
+          JS_UNKNOWN_MEMBER@8..9
             L_CURLY@8..9 "{"
         R_CURLY@9..10 "}"
     ERROR@10..11

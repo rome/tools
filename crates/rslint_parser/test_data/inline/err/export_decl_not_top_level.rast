@@ -4,7 +4,7 @@ JS_MODULE@0..34
       L_CURLY@0..1 "{"
       WHITESPACE@1..3 "\n "
       LIST@3..31
-        ERROR@3..31
+        JS_UNKNOWN_STATEMENT@3..31
           EXPORT_KW@3..9 "export"
           WHITESPACE@9..10 " "
           EXPORT_NAMED@10..31

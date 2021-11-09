@@ -32,13 +32,13 @@ JS_MODULE@0..42
                   LITERAL@37..41
                     TRUE_KW@37..41 "true"
                 WHITESPACE@41..42 "\n"
-                ERROR@42..42
+                JS_UNKNOWN_STATEMENT@42..42
               CONDITION@42..42
-                ERROR@42..42
+                JS_UNKNOWN_EXPRESSION@42..42
           CONDITION@42..42
-            ERROR@42..42
+            JS_UNKNOWN_EXPRESSION@42..42
       CONDITION@42..42
-        ERROR@42..42
+        JS_UNKNOWN_EXPRESSION@42..42
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ do_while_stmt_err.js:2:11
