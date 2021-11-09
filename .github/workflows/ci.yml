@@ -76,7 +76,11 @@ jobs:
 
   coverage:
     name: Test262 coverage
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
