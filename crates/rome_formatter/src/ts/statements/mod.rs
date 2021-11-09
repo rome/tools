@@ -31,7 +31,7 @@ pub fn format_statements(
 		stmts.iter().map(|stmt| {
 			formatter
 				.format_node(stmt.clone())
-				.unwrap_or_else(|| formatter.format_raw(stmt.syntax()).trim_start().trim_end())
+				.unwrap_or_else(|_| formatter.format_raw(stmt.syntax()).trim_start().trim_end())
 		}),
 	)
 }

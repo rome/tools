@@ -49,10 +49,10 @@ MODULE@0..39
                NUMBER@29..31 "10" 
          SEMICOLON@31..33 ";" " "
         FOR_STMT_UPDATE@33..37
-          UNARY_EXPR@33..37
-            NAME_REF@33..34
-               IDENT@33..34 "i" 
-             PLUS2@34..37 "++" " "
+          PRE_UPDATE_EXPRESSION@33..37
+             PLUS2@33..35 "++" 
+            NAME_REF@35..37
+               IDENT@35..37 "i" " "
         BLOCK_STMT@37..39
            L_CURLY@37..38 "{" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)

@@ -1,14 +1,24 @@
+<<<<<<< HEAD
 JS_MODULE@0..12
+=======
+MODULE@0..11
+>>>>>>> 28a4e2282 (rebase)
   LIST@0..11
     JS_EXPRESSION_STATEMENT@0..5
       PRE_UPDATE_EXPRESSION@0..5
-        PLUS2@0..2 "++"
+         PLUS2@0..2 "++" 
         NAME_REF@2..5
+<<<<<<< HEAD
           IDENT@2..5 "foo"
     WHITESPACE@5..6 "\n"
     JS_EXPRESSION_STATEMENT@6..11
       PRE_UPDATE_EXPRESSION@6..11
         MINUS2@6..8 "--"
+=======
+           IDENT@2..5 "foo" 
+    EXPR_STMT@5..11
+      PRE_UPDATE_EXPRESSION@5..11
+        "\n" MINUS2@5..8 "--" 
+>>>>>>> 28a4e2282 (rebase)
         NAME_REF@8..11
-          IDENT@8..11 "foo"
-  WHITESPACE@11..12 "\n"
+           IDENT@8..11 "foo" 

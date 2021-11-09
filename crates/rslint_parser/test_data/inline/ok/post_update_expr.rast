@@ -21,7 +21,7 @@ MODULE@0..11
            IDENT@0..3 "foo" 
          PLUS2@3..5 "++" 
     EXPR_STMT@5..11
-      UNARY_EXPR@5..11
+      POST_UPDATE_EXPRESSION@5..11
         NAME_REF@5..9
           "\n" IDENT@5..9 "foo" 
          MINUS2@9..11 "--" 
