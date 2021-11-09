@@ -1,19 +1,30 @@
+<<<<<<< HEAD
 JS_MODULE@0..24
+=======
+MODULE@0..23
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..23
     JS_EXPRESSION_STATEMENT@0..10
       ERROR@0..10
-        IMPORT_KW@0..6 "import"
-        DOT@6..7 "."
+         IMPORT_KW@0..6 "import" 
+         DOT@6..7 "." 
         ERROR@7..10
+<<<<<<< HEAD
           IDENT@7..10 "foo"
     WHITESPACE@10..11 "\n"
     JS_EXPRESSION_STATEMENT@11..23
       ERROR@11..23
         IMPORT_KW@11..17 "import"
         DOT@17..18 "."
+=======
+           IDENT@7..10 "foo" 
+    EXPR_STMT@10..23
+      ERROR@10..23
+        "\n" IMPORT_KW@10..17 "import" 
+         DOT@17..18 "." 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         ERROR@18..23
-          IDENT@18..23 "metaa"
-  WHITESPACE@23..24 "\n"
+           IDENT@18..23 "metaa" 
 --
 error[SyntaxError]: Expected `meta` following an import keyword, but found `foo`
   ┌─ import_no_meta.js:1:8

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 JS_MODULE@0..19
   LIST@0..19
     JS_EXPRESSION_STATEMENT@0..5
@@ -22,6 +23,29 @@ JS_MODULE@0..19
         L_BRACK@17..18 "["
         WHITESPACE@18..19 "\n"
         ERROR@19..19
+=======
+MODULE@0..18
+  LIST@0..18
+    EXPR_STMT@0..5
+      BRACKET_EXPR@0..5
+        NAME_REF@0..3
+           IDENT@0..3 "foo" 
+         L_BRACK@3..4 "[" 
+         R_BRACK@4..5 "]" 
+    EXPR_STMT@5..13
+      BRACKET_EXPR@5..13
+        NAME_REF@5..9
+          "\n" IDENT@5..9 "foo" 
+         QUESTIONDOT@9..11 "?." 
+         L_BRACK@11..12 "[" 
+         R_BRACK@12..13 "]" 
+    EXPR_STMT@13..18
+      BRACKET_EXPR@13..18
+        NAME_REF@13..17
+          "\n" IDENT@13..17 "foo" 
+         L_BRACK@17..18 "[" 
+        ERROR@18..18
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ bracket_expr_err.js:1:5

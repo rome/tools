@@ -1,17 +1,19 @@
+<<<<<<< HEAD
 JS_MODULE@0..82
+=======
+MODULE@0..81
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..81
     VAR_DECL@0..23
-      IDENT@0..3 "let"
-      WHITESPACE@3..4 " "
+       IDENT@0..4 "let" " "
       LIST@4..23
         DECLARATOR@4..23
-          SINGLE_PATTERN@4..5
-            NAME@4..5
-              IDENT@4..5 "a"
-          WHITESPACE@5..6 " "
-          EQ@6..7 "="
-          WHITESPACE@7..8 " "
+          SINGLE_PATTERN@4..6
+            NAME@4..6
+               IDENT@4..6 "a" " "
+           EQ@6..8 "=" " "
           ARROW_EXPR@8..23
+<<<<<<< HEAD
             ASYNC_KW@8..13 "async"
             WHITESPACE@13..14 " "
             NAME@14..17
@@ -21,28 +23,32 @@ JS_MODULE@0..82
             WHITESPACE@20..21 " "
             JS_BLOCK_STATEMENT@21..23
               L_CURLY@21..22 "{"
+=======
+             ASYNC_KW@8..14 "async" " "
+            NAME@14..18
+               IDENT@14..18 "foo" " "
+             FAT_ARROW@18..21 "=>" " "
+            BLOCK_STMT@21..23
+               L_CURLY@21..22 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
               LIST@22..22
-              R_CURLY@22..23 "}"
-    WHITESPACE@23..24 "\n"
-    VAR_DECL@24..49
-      IDENT@24..27 "let"
-      WHITESPACE@27..28 " "
+               R_CURLY@22..23 "}" 
+    VAR_DECL@23..49
+      "\n" IDENT@23..28 "let" " "
       LIST@28..49
         DECLARATOR@28..49
-          SINGLE_PATTERN@28..29
-            NAME@28..29
-              IDENT@28..29 "b"
-          WHITESPACE@29..30 " "
-          EQ@30..31 "="
-          WHITESPACE@31..32 " "
+          SINGLE_PATTERN@28..30
+            NAME@28..30
+               IDENT@28..30 "b" " "
+           EQ@30..32 "=" " "
           ARROW_EXPR@32..49
-            ASYNC_KW@32..37 "async"
-            WHITESPACE@37..38 " "
-            PARAMETER_LIST@38..43
-              L_PAREN@38..39 "("
+             ASYNC_KW@32..38 "async" " "
+            PARAMETER_LIST@38..44
+               L_PAREN@38..39 "(" 
               LIST@39..42
                 SINGLE_PATTERN@39..42
                   NAME@39..42
+<<<<<<< HEAD
                     IDENT@39..42 "bar"
               R_PAREN@42..43 ")"
             WHITESPACE@43..44 " "
@@ -59,26 +65,35 @@ JS_MODULE@0..82
         WHITESPACE@55..56 " "
         PARAMETER_LIST@56..74
           L_PAREN@56..57 "("
+=======
+                     IDENT@39..42 "bar" 
+               R_PAREN@42..44 ")" " "
+             FAT_ARROW@44..47 "=>" " "
+            BLOCK_STMT@47..49
+               L_CURLY@47..48 "{" 
+              LIST@48..48
+               R_CURLY@48..49 "}" 
+    EXPR_STMT@49..81
+      ARROW_EXPR@49..81
+        "\n" ASYNC_KW@49..56 "async" " "
+        PARAMETER_LIST@56..75
+           L_PAREN@56..57 "(" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
           LIST@57..73
             SINGLE_PATTERN@57..60
               NAME@57..60
-                IDENT@57..60 "foo"
-            COMMA@60..61 ","
-            WHITESPACE@61..62 " "
+                 IDENT@57..60 "foo" 
+             COMMA@60..62 "," " "
             SINGLE_PATTERN@62..65
               NAME@62..65
-                IDENT@62..65 "bar"
-            COMMA@65..66 ","
-            WHITESPACE@66..67 " "
+                 IDENT@62..65 "bar" 
+             COMMA@65..67 "," " "
             REST_PATTERN@67..73
-              DOT2@67..70 "..."
+               DOT2@67..70 "..." 
               SINGLE_PATTERN@70..73
                 NAME@70..73
-                  IDENT@70..73 "baz"
-          R_PAREN@73..74 ")"
-        WHITESPACE@74..75 " "
-        FAT_ARROW@75..77 "=>"
-        WHITESPACE@77..78 " "
+                   IDENT@70..73 "baz" 
+           R_PAREN@73..75 ")" " "
+         FAT_ARROW@75..78 "=>" " "
         NAME_REF@78..81
-          IDENT@78..81 "foo"
-  WHITESPACE@81..82 "\n"
+           IDENT@78..81 "foo" 

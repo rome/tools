@@ -138,7 +138,7 @@ impl Formatter {
 				// need to be tracked for every node.
 				self.format_raw(&child_node)
 			}
-			SyntaxElement::Token(syntax_token) => token(syntax_token.text()),
+			SyntaxElement::Token(syntax_token) => token(&syntax_token.text_with_trivia()),
 		}))
 	}
 }

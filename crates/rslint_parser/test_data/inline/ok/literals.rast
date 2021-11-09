@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 JS_MODULE@0..33
+=======
+MODULE@0..32
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..32
     JS_EXPRESSION_STATEMENT@0..1
       LITERAL@0..1
+<<<<<<< HEAD
         NUMBER@0..1 "5"
     WHITESPACE@1..2 "\n"
     JS_EXPRESSION_STATEMENT@2..6
@@ -28,3 +33,24 @@ JS_MODULE@0..33
       LITERAL@28..32
         NULL_KW@28..32 "null"
   WHITESPACE@32..33 "\n"
+=======
+         NUMBER@0..1 "5" 
+    EXPR_STMT@1..6
+      LITERAL@1..6
+        "\n" TRUE_KW@1..6 "true" 
+    EXPR_STMT@6..12
+      LITERAL@6..12
+        "\n" FALSE_KW@6..12 "false" 
+    EXPR_STMT@12..15
+      LITERAL@12..15
+        "\n" NUMBER@12..15 "5n" 
+    EXPR_STMT@15..21
+      LITERAL@15..21
+        "\n" STRING@15..21 "\"foo\"" 
+    EXPR_STMT@21..27
+      LITERAL@21..27
+        "\n" STRING@21..27 "'bar'" 
+    EXPR_STMT@27..32
+      LITERAL@27..32
+        "\n" NULL_KW@27..32 "null" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)

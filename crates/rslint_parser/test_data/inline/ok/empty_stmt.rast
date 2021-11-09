@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 JS_MODULE@0..2
   LIST@0..1
     JS_EMPTY_STATEMENT@0..1
       SEMICOLON@0..1 ";"
   WHITESPACE@1..2 "\n"
+=======
+MODULE@0..1
+  LIST@0..1
+    EMPTY_STMT@0..1
+       SEMICOLON@0..1 ";" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)

@@ -1,17 +1,24 @@
+<<<<<<< HEAD
 JS_MODULE@0..36
   LIST@0..35
     JS_THROW_STATEMENT@0..23
       THROW_KW@0..5 "throw"
       WHITESPACE@5..6 " "
+=======
+MODULE@0..35
+  LIST@0..35
+    THROW_STMT@0..23
+       THROW_KW@0..6 "throw" " "
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
       NEW_EXPR@6..22
-        NEW_KW@6..9 "new"
-        WHITESPACE@9..10 " "
+         NEW_KW@6..10 "new" " "
         NAME_REF@10..15
-          IDENT@10..15 "Error"
+           IDENT@10..15 "Error" 
         ARG_LIST@15..22
-          L_PAREN@15..16 "("
+           L_PAREN@15..16 "(" 
           LIST@16..21
             LITERAL@16..21
+<<<<<<< HEAD
               STRING@16..21 "\"foo\""
           R_PAREN@21..22 ")"
       SEMICOLON@22..23 ";"
@@ -19,6 +26,12 @@ JS_MODULE@0..36
     JS_THROW_STATEMENT@24..35
       THROW_KW@24..29 "throw"
       WHITESPACE@29..30 " "
+=======
+               STRING@16..21 "\"foo\"" 
+           R_PAREN@21..22 ")" 
+       SEMICOLON@22..23 ";" 
+    THROW_STMT@23..35
+      "\n" THROW_KW@23..30 "throw" " "
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
       LITERAL@30..35
-        STRING@30..35 "\"foo\""
-  WHITESPACE@35..36 "\n"
+         STRING@30..35 "\"foo\"" 

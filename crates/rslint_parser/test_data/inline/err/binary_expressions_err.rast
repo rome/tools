@@ -1,13 +1,18 @@
+<<<<<<< HEAD
 JS_MODULE@0..35
+=======
+MODULE@0..34
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..34
     JS_EXPRESSION_STATEMENT@0..11
       CALL_EXPR@0..10
         NAME_REF@0..3
-          IDENT@0..3 "foo"
+           IDENT@0..3 "foo" 
         ARG_LIST@3..10
-          L_PAREN@3..4 "("
+           L_PAREN@3..4 "(" 
           LIST@4..9
             BIN_EXPR@4..9
+<<<<<<< HEAD
               NAME_REF@4..7
                 IDENT@4..7 "foo"
               WHITESPACE@7..8 " "
@@ -22,10 +27,22 @@ JS_MODULE@0..35
         WHITESPACE@15..16 " "
         PLUS@16..17 "+"
         WHITESPACE@17..18 " "
+=======
+              NAME_REF@4..8
+                 IDENT@4..8 "foo" " "
+               PLUS@8..9 "+" 
+           R_PAREN@9..10 ")" 
+       SEMICOLON@10..11 ";" 
+    EXPR_STMT@11..22
+      BIN_EXPR@11..21
+        NAME_REF@11..16
+          "\n" IDENT@11..16 "foo" " "
+         PLUS@16..18 "+" " "
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         BIN_EXPR@18..21
-          STAR@18..19 "*"
-          WHITESPACE@19..20 " "
+           STAR@18..20 "*" " "
           LITERAL@20..21
+<<<<<<< HEAD
             NUMBER@20..21 "2"
       SEMICOLON@21..22 ";"
     WHITESPACE@22..23 "\n"
@@ -38,10 +55,20 @@ JS_MODULE@0..35
         WHITESPACE@27..28 " "
         STAR@28..29 "*"
         WHITESPACE@29..30 " "
+=======
+             NUMBER@20..21 "2" 
+       SEMICOLON@21..22 ";" 
+    EXPR_STMT@22..34
+      BIN_EXPR@22..33
+        UNARY_EXPR@22..28
+          "\n" BANG@22..24 "!" 
+          NAME_REF@24..28
+             IDENT@24..28 "foo" " "
+         STAR@28..30 "*" " "
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         NAME_REF@30..33
-          IDENT@30..33 "bar"
-      SEMICOLON@33..34 ";"
-  WHITESPACE@34..35 "\n"
+           IDENT@30..33 "bar" 
+       SEMICOLON@33..34 ";" 
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ binary_expressions_err.js:1:10

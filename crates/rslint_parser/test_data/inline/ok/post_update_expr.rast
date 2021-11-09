@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 JS_MODULE@0..12
+=======
+MODULE@0..11
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..11
     JS_EXPRESSION_STATEMENT@0..5
       POST_UPDATE_EXPRESSION@0..5
         NAME_REF@0..3
+<<<<<<< HEAD
           IDENT@0..3 "foo"
         PLUS2@3..5 "++"
     WHITESPACE@5..6 "\n"
@@ -12,3 +17,12 @@ JS_MODULE@0..12
           IDENT@6..9 "foo"
         MINUS2@9..11 "--"
   WHITESPACE@11..12 "\n"
+=======
+           IDENT@0..3 "foo" 
+         PLUS2@3..5 "++" 
+    EXPR_STMT@5..11
+      UNARY_EXPR@5..11
+        NAME_REF@5..9
+          "\n" IDENT@5..9 "foo" 
+         MINUS2@9..11 "--" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)

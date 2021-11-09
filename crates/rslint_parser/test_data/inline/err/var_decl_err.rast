@@ -1,47 +1,40 @@
+<<<<<<< HEAD
 JS_MODULE@0..32
+=======
+MODULE@0..31
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..31
     VAR_DECL@0..8
-      VAR_KW@0..3 "var"
-      WHITESPACE@3..4 " "
+       VAR_KW@0..4 "var" " "
       LIST@4..8
         DECLARATOR@4..8
-          SINGLE_PATTERN@4..5
-            NAME@4..5
-              IDENT@4..5 "a"
-          WHITESPACE@5..6 " "
-          EQ@6..7 "="
+          SINGLE_PATTERN@4..6
+            NAME@4..6
+               IDENT@4..6 "a" " "
+           EQ@6..7 "=" 
           ERROR@7..8
-            SEMICOLON@7..8 ";"
-    WHITESPACE@8..9 "\n"
-    VAR_DECL@9..20
-      CONST_KW@9..14 "const"
-      WHITESPACE@14..15 " "
-      LIST@15..20
-        DECLARATOR@15..20
-          SINGLE_PATTERN@15..16
-            NAME@15..16
-              IDENT@15..16 "a"
-          WHITESPACE@16..17 " "
-          EQ@17..18 "="
-          WHITESPACE@18..19 " "
-          LITERAL@19..20
-            NUMBER@19..20 "5"
-    WHITESPACE@20..21 " "
+             SEMICOLON@7..8 ";" 
+    VAR_DECL@8..21
+      "\n" CONST_KW@8..15 "const" " "
+      LIST@15..21
+        DECLARATOR@15..21
+          SINGLE_PATTERN@15..17
+            NAME@15..17
+               IDENT@15..17 "a" " "
+           EQ@17..19 "=" " "
+          LITERAL@19..21
+             NUMBER@19..21 "5" " "
     VAR_DECL@21..31
-      IDENT@21..24 "let"
-      WHITESPACE@24..25 " "
+       IDENT@21..25 "let" " "
       LIST@25..30
         DECLARATOR@25..30
-          SINGLE_PATTERN@25..26
-            NAME@25..26
-              IDENT@25..26 "b"
-          WHITESPACE@26..27 " "
-          EQ@27..28 "="
-          WHITESPACE@28..29 " "
+          SINGLE_PATTERN@25..27
+            NAME@25..27
+               IDENT@25..27 "b" " "
+           EQ@27..29 "=" " "
           LITERAL@29..30
-            NUMBER@29..30 "5"
-      SEMICOLON@30..31 ";"
-  WHITESPACE@31..32 "\n"
+             NUMBER@29..30 "5" 
+       SEMICOLON@30..31 ";" 
 --
 error[SyntaxError]: expected an expression, but found `;` instead
   ┌─ var_decl_err.js:1:8

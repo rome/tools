@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 JS_MODULE@0..14
+=======
+MODULE@0..13
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..6
       ARROW_EXPR@0..6
+<<<<<<< HEAD
         PARAMETER_LIST@0..4
           L_PAREN@0..1 "("
           LIST@1..4
@@ -20,9 +25,24 @@ JS_MODULE@0..14
     WHITESPACE@10..11 " "
     JS_BLOCK_STATEMENT@11..13
       L_CURLY@11..12 "{"
+=======
+        PARAMETER_LIST@0..5
+           L_PAREN@0..1 "(" 
+          LIST@1..5
+            ERROR@1..3
+               NUMBER@1..3 "5" " "
+            ERROR@3..5
+               PLUS@3..5 "+" " "
+         NUMBER@5..6 "5" 
+    ERROR@6..8
+       R_PAREN@6..8 ")" " "
+    ERROR@8..11
+       FAT_ARROW@8..11 "=>" " "
+    BLOCK_STMT@11..13
+       L_CURLY@11..12 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
       LIST@12..12
-      R_CURLY@12..13 "}"
-  WHITESPACE@13..14 "\n"
+       R_CURLY@12..13 "}" 
 --
 error[SyntaxError]: Expected an identifier or pattern, but found none
   ┌─ paren_or_arrow_expr_invalid_params.js:1:2

@@ -1,29 +1,33 @@
+<<<<<<< HEAD
 JS_MODULE@0..28
+=======
+MODULE@0..27
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..27
     CLASS_DECL@0..27
-      CLASS_KW@0..5 "class"
-      WHITESPACE@5..6 " "
-      NAME@6..9
-        IDENT@6..9 "foo"
-      WHITESPACE@9..10 " "
+       CLASS_KW@0..6 "class" " "
+      NAME@6..10
+         IDENT@6..10 "foo" " "
       CLASS_BODY@10..27
-        L_CURLY@10..11 "{"
-        WHITESPACE@11..13 "\n "
-        LIST@13..25
-          SETTER@13..25
-            SET_KW@13..16 "set"
-            WHITESPACE@16..17 " "
+         L_CURLY@10..11 "{" 
+        LIST@11..25
+          SETTER@11..25
+            "\n " SET_KW@11..17 "set" " "
             NAME@17..20
-              IDENT@17..20 "bar"
-            PARAMETER_LIST@20..22
-              L_PAREN@20..21 "("
+               IDENT@17..20 "bar" 
+            PARAMETER_LIST@20..23
+               L_PAREN@20..21 "(" 
               LIST@21..21
+<<<<<<< HEAD
               R_PAREN@21..22 ")"
             WHITESPACE@22..23 " "
             JS_BLOCK_STATEMENT@23..25
               L_CURLY@23..24 "{"
+=======
+               R_PAREN@21..23 ")" " "
+            BLOCK_STMT@23..25
+               L_CURLY@23..24 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
               LIST@24..24
-              R_CURLY@24..25 "}"
-        WHITESPACE@25..26 "\n"
-        R_CURLY@26..27 "}"
-  WHITESPACE@27..28 "\n"
+               R_CURLY@24..25 "}" 
+        "\n" R_CURLY@25..27 "}" 

@@ -1,30 +1,36 @@
+<<<<<<< HEAD
 JS_MODULE@0..18
+=======
+MODULE@0..17
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..17
-    VAR_DECL@0..10
-      IDENT@0..3 "let"
-      WHITESPACE@3..4 " "
+    VAR_DECL@0..11
+       IDENT@0..4 "let" " "
       LIST@4..9
         DECLARATOR@4..9
-          SINGLE_PATTERN@4..5
-            NAME@4..5
-              IDENT@4..5 "a"
-          WHITESPACE@5..6 " "
-          EQ@6..7 "="
-          WHITESPACE@7..8 " "
+          SINGLE_PATTERN@4..6
+            NAME@4..6
+               IDENT@4..6 "a" " "
+           EQ@6..8 "=" " "
           ERROR@8..9
+<<<<<<< HEAD
             ERROR_TOKEN@8..9 "\\"
       SEMICOLON@9..10 ";"
     WHITESPACE@10..11 " "
     JS_EXPRESSION_STATEMENT@11..17
+=======
+             ERROR_TOKEN@8..9 "\\" 
+       SEMICOLON@9..11 ";" " "
+    EXPR_STMT@11..17
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
       CALL_EXPR@11..16
         NAME_REF@11..14
-          IDENT@11..14 "foo"
+           IDENT@11..14 "foo" 
         ARG_LIST@14..16
-          L_PAREN@14..15 "("
+           L_PAREN@14..15 "(" 
           LIST@15..15
-          R_PAREN@15..16 ")"
-      SEMICOLON@16..17 ";"
-  WHITESPACE@17..18 "\n"
+           R_PAREN@15..16 ")" 
+       SEMICOLON@16..17 ";" 
 --
 error: unexpected token `\`
   ┌─ primary_expr_invalid_recovery.js:1:9

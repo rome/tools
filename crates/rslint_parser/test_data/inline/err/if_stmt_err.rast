@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 JS_MODULE@0..61
   LIST@0..60
     JS_IF_STATEMENT@0..17
@@ -57,6 +58,52 @@ JS_MODULE@0..61
           LIST@59..59
           R_CURLY@59..60 "}"
   WHITESPACE@60..61 "\n"
+=======
+MODULE@0..60
+  LIST@0..60
+    IF_STMT@0..17
+       IF_KW@0..3 "if" " "
+      CONDITION@3..10
+         L_PAREN@3..4 "(" 
+        LITERAL@4..8
+           TRUE_KW@4..8 "true" 
+         R_PAREN@8..10 ")" " "
+       ELSE_KW@10..15 "else" " "
+      BLOCK_STMT@15..17
+         L_CURLY@15..16 "{" 
+        LIST@16..16
+         R_CURLY@16..17 "}" 
+    IF_STMT@17..43
+      "\n" IF_KW@17..21 "if" " "
+      CONDITION@21..28
+         L_PAREN@21..22 "(" 
+        LITERAL@22..26
+           TRUE_KW@22..26 "true" 
+         R_PAREN@26..28 ")" " "
+       ELSE_KW@28..32 "else" 
+      IF_STMT@32..43
+        "\n" IF_KW@32..36 "if" " "
+        CONDITION@36..36
+         ELSE_KW@36..41 "else" " "
+        BLOCK_STMT@41..43
+           L_CURLY@41..42 "{" 
+          LIST@42..42
+           R_CURLY@42..43 "}" 
+    IF_STMT@43..60
+      "\n" IF_KW@43..47 "if" " "
+      CONDITION@47..50
+         L_PAREN@47..48 "(" 
+         R_PAREN@48..50 ")" " "
+      BLOCK_STMT@50..53
+         L_CURLY@50..51 "{" 
+        LIST@51..51
+         R_CURLY@51..53 "}" " "
+       ELSE_KW@53..58 "else" " "
+      BLOCK_STMT@58..60
+         L_CURLY@58..59 "{" 
+        LIST@59..59
+         R_CURLY@59..60 "}" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 --
 error[SyntaxError]: Expected a statement or declaration, but found none
   ┌─ if_stmt_err.js:1:11

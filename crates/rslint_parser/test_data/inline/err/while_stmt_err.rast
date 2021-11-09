@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 JS_MODULE@0..52
   LIST@0..51
     WHILE_STMT@0..13
@@ -9,13 +10,23 @@ JS_MODULE@0..52
       WHITESPACE@10..11 " "
       JS_BLOCK_STATEMENT@11..13
         L_CURLY@11..12 "{"
+=======
+MODULE@0..51
+  LIST@0..51
+    WHILE_STMT@0..13
+       WHILE_KW@0..6 "while" " "
+      CONDITION@6..11
+        LITERAL@6..11
+           TRUE_KW@6..11 "true" " "
+      BLOCK_STMT@11..13
+         L_CURLY@11..12 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         LIST@12..12
-        R_CURLY@12..13 "}"
-    WHITESPACE@13..14 "\n"
-    WHILE_STMT@14..22
-      WHILE_KW@14..19 "while"
-      WHITESPACE@19..20 " "
+         R_CURLY@12..13 "}" 
+    WHILE_STMT@13..22
+      "\n" WHILE_KW@13..20 "while" " "
       CONDITION@20..20
+<<<<<<< HEAD
       JS_BLOCK_STATEMENT@20..22
         L_CURLY@20..21 "{"
         LIST@21..21
@@ -31,20 +42,30 @@ JS_MODULE@0..52
       WHITESPACE@34..35 " "
       JS_BLOCK_STATEMENT@35..37
         L_CURLY@35..36 "{"
+=======
+      BLOCK_STMT@20..22
+         L_CURLY@20..21 "{" 
+        LIST@21..21
+         R_CURLY@21..22 "}" 
+    WHILE_STMT@22..37
+      "\n" WHILE_KW@22..29 "while" " "
+      CONDITION@29..35
+         L_PAREN@29..30 "(" 
+        LITERAL@30..35
+           TRUE_KW@30..35 "true" " "
+      BLOCK_STMT@35..37
+         L_CURLY@35..36 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         LIST@36..36
-        R_CURLY@36..37 "}"
-    WHITESPACE@37..38 "\n"
-    WHILE_STMT@38..51
-      WHILE_KW@38..43 "while"
-      WHITESPACE@43..44 " "
-      CONDITION@44..49
+         R_CURLY@36..37 "}" 
+    WHILE_STMT@37..51
+      "\n" WHILE_KW@37..44 "while" " "
+      CONDITION@44..50
         LITERAL@44..48
-          TRUE_KW@44..48 "true"
-        R_PAREN@48..49 ")"
-      WHITESPACE@49..50 " "
+           TRUE_KW@44..48 "true" 
+         R_PAREN@48..50 ")" " "
       ERROR@50..51
-        R_CURLY@50..51 "}"
-  WHITESPACE@51..52 "\n"
+         R_CURLY@50..51 "}" 
 --
 error[SyntaxError]: expected `'('` but instead found `true`
   ┌─ while_stmt_err.js:1:7

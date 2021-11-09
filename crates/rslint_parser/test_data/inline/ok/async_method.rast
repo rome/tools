@@ -1,45 +1,53 @@
+<<<<<<< HEAD
 JS_MODULE@0..47
+=======
+MODULE@0..46
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..46
     CLASS_DECL@0..46
-      CLASS_KW@0..5 "class"
-      WHITESPACE@5..6 " "
-      NAME@6..9
-        IDENT@6..9 "foo"
-      WHITESPACE@9..10 " "
+       CLASS_KW@0..6 "class" " "
+      NAME@6..10
+         IDENT@6..10 "foo" " "
       CLASS_BODY@10..46
-        L_CURLY@10..11 "{"
-        WHITESPACE@11..13 "\n "
-        LIST@13..44
-          METHOD@13..27
-            ASYNC_KW@13..18 "async"
-            WHITESPACE@18..19 " "
+         L_CURLY@10..11 "{" 
+        LIST@11..44
+          METHOD@11..27
+            "\n " ASYNC_KW@11..19 "async" " "
             NAME@19..22
-              IDENT@19..22 "foo"
-            PARAMETER_LIST@22..24
-              L_PAREN@22..23 "("
+               IDENT@19..22 "foo" 
+            PARAMETER_LIST@22..25
+               L_PAREN@22..23 "(" 
               LIST@23..23
+<<<<<<< HEAD
               R_PAREN@23..24 ")"
             WHITESPACE@24..25 " "
             JS_BLOCK_STATEMENT@25..27
               L_CURLY@25..26 "{"
+=======
+               R_PAREN@23..25 ")" " "
+            BLOCK_STMT@25..27
+               L_CURLY@25..26 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
               LIST@26..26
-              R_CURLY@26..27 "}"
-          WHITESPACE@27..29 "\n "
-          METHOD@29..44
-            ASYNC_KW@29..34 "async"
-            WHITESPACE@34..35 " "
-            STAR@35..36 "*"
+               R_CURLY@26..27 "}" 
+          METHOD@27..44
+            "\n " ASYNC_KW@27..35 "async" " "
+             STAR@35..36 "*" 
             NAME@36..39
-              IDENT@36..39 "foo"
-            PARAMETER_LIST@39..41
-              L_PAREN@39..40 "("
+               IDENT@36..39 "foo" 
+            PARAMETER_LIST@39..42
+               L_PAREN@39..40 "(" 
               LIST@40..40
+<<<<<<< HEAD
               R_PAREN@40..41 ")"
             WHITESPACE@41..42 " "
             JS_BLOCK_STATEMENT@42..44
               L_CURLY@42..43 "{"
+=======
+               R_PAREN@40..42 ")" " "
+            BLOCK_STMT@42..44
+               L_CURLY@42..43 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
               LIST@43..43
-              R_CURLY@43..44 "}"
-        WHITESPACE@44..45 "\n"
-        R_CURLY@45..46 "}"
-  WHITESPACE@46..47 "\n"
+               R_CURLY@43..44 "}" 
+        "\n" R_CURLY@44..46 "}" 

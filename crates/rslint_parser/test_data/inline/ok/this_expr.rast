@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 JS_MODULE@0..14
+=======
+MODULE@0..13
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..4
       THIS_EXPR@0..4
+<<<<<<< HEAD
         THIS_KW@0..4 "this"
     WHITESPACE@4..5 "\n"
     JS_EXPRESSION_STATEMENT@5..13
@@ -9,6 +14,13 @@ JS_MODULE@0..14
         THIS_EXPR@5..9
           THIS_KW@5..9 "this"
         DOT@9..10 "."
+=======
+         THIS_KW@0..4 "this" 
+    EXPR_STMT@4..13
+      DOT_EXPR@4..13
+        THIS_EXPR@4..9
+          "\n" THIS_KW@4..9 "this" 
+         DOT@9..10 "." 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         NAME@10..13
-          IDENT@10..13 "foo"
-  WHITESPACE@13..14 "\n"
+           IDENT@10..13 "foo" 

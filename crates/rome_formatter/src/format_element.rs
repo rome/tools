@@ -731,6 +731,76 @@ impl FormatElement {
 	pub fn is_empty(&self) -> bool {
 		self == &FormatElement::Empty
 	}
+
+	pub fn trim_start(&self) -> FormatElement {
+		dbg!(self);
+		match self {
+			FormatElement::Empty => FormatElement::Empty,
+			FormatElement::Space => FormatElement::Empty,
+			FormatElement::Line(_) => FormatElement::Empty,
+			FormatElement::Indent(_) => FormatElement::Empty,
+			FormatElement::Group(_) => todo!(),
+			FormatElement::ConditionalGroupContent(_) => todo!(),
+			FormatElement::List(list) => {
+				let mut content: Vec<_> = list
+					.iter()
+					.skip_while(|e| match e {
+						FormatElement::Empty => true,
+						FormatElement::Space => true,
+						FormatElement::Line(_) => true,
+						FormatElement::Indent(_) => true,
+						FormatElement::Token(t) => {
+							let s = t.trim_start();
+							s.is_empty()
+						}
+						_ => false,
+					})
+					.map(Clone::clone)
+					.collect();
+				if let Some(FormatElement::Token(s)) = content.get_mut(0) {
+					s.0 = s.trim_start().to_string()
+				}
+				FormatElement::List(List::new(content))
+			}
+			FormatElement::Token(s) => token(s.trim_start()),
+		}
+	}
+
+	pub fn trim_end(&self) -> FormatElement {
+		dbg!(self);
+		match self {
+			FormatElement::Empty => FormatElement::Empty,
+			FormatElement::Space => FormatElement::Empty,
+			FormatElement::Line(_) => FormatElement::Empty,
+			FormatElement::Indent(_) => FormatElement::Empty,
+			FormatElement::Group(_) => todo!(),
+			FormatElement::ConditionalGroupContent(_) => todo!(),
+			FormatElement::List(list) => {
+				let mut content: Vec<_> = list
+					.iter()
+					.rev()
+					.skip_while(|e| match e {
+						FormatElement::Empty => true,
+						FormatElement::Space => true,
+						FormatElement::Line(_) => true,
+						FormatElement::Indent(_) => true,
+						FormatElement::Token(t) => {
+							let s = t.trim_end();
+							s.is_empty()
+						}
+						_ => false,
+					})
+					.map(Clone::clone)
+					.collect();
+				content.reverse();
+				if let Some(FormatElement::Token(s)) = content.last_mut() {
+					s.0 = s.trim_end().to_string()
+				}
+				FormatElement::List(List::new(content))
+			}
+			FormatElement::Token(s) => token(s.trim_end()),
+		}
+	}
 }
 
 impl From<Group> for FormatElement {

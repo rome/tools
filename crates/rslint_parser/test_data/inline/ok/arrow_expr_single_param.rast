@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 JS_MODULE@0..44
+=======
+MODULE@0..43
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..43
     JS_EXPRESSION_STATEMENT@0..9
       ARROW_EXPR@0..9
+<<<<<<< HEAD
         NAME@0..3
           IDENT@0..3 "foo"
         WHITESPACE@3..4 " "
@@ -45,6 +50,39 @@ JS_MODULE@0..44
         WHITESPACE@40..41 "\n"
         JS_BLOCK_STATEMENT@41..43
           L_CURLY@41..42 "{"
+=======
+        NAME@0..4
+           IDENT@0..4 "foo" " "
+         FAT_ARROW@4..7 "=>" " "
+        BLOCK_STMT@7..9
+           L_CURLY@7..8 "{" 
+          LIST@8..8
+           R_CURLY@8..9 "}" 
+    EXPR_STMT@9..21
+      ARROW_EXPR@9..21
+        NAME@9..16
+          "\n" IDENT@9..16 "yield" " "
+         FAT_ARROW@16..19 "=>" " "
+        BLOCK_STMT@19..21
+           L_CURLY@19..20 "{" 
+          LIST@20..20
+           R_CURLY@20..21 "}" 
+    EXPR_STMT@21..33
+      ARROW_EXPR@21..33
+        NAME@21..28
+          "\n" IDENT@21..28 "await" " "
+         FAT_ARROW@28..31 "=>" " "
+        BLOCK_STMT@31..33
+           L_CURLY@31..32 "{" 
+          LIST@32..32
+           R_CURLY@32..33 "}" 
+    EXPR_STMT@33..43
+      ARROW_EXPR@33..43
+        NAME@33..38
+          "\n" IDENT@33..38 "foo" " "
+         FAT_ARROW@38..40 "=>" 
+        BLOCK_STMT@40..43
+          "\n" L_CURLY@40..42 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
           LIST@42..42
-          R_CURLY@42..43 "}"
-  WHITESPACE@43..44 "\n"
+           R_CURLY@42..43 "}" 

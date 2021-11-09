@@ -1,15 +1,17 @@
+<<<<<<< HEAD
 JS_MODULE@0..41
+=======
+MODULE@0..40
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..40
     CLASS_DECL@0..40
-      CLASS_KW@0..5 "class"
-      WHITESPACE@5..6 " "
-      NAME@6..9
-        IDENT@6..9 "foo"
-      WHITESPACE@9..10 " "
+       CLASS_KW@0..6 "class" " "
+      NAME@6..10
+         IDENT@6..10 "foo" " "
       CLASS_BODY@10..40
-        L_CURLY@10..11 "{"
-        WHITESPACE@11..12 " "
+         L_CURLY@10..12 "{" " "
         LIST@12..39
+<<<<<<< HEAD
           JS_EMPTY_STATEMENT@12..13
             SEMICOLON@12..13 ";"
           JS_EMPTY_STATEMENT@13..14
@@ -31,14 +33,36 @@ JS_MODULE@0..41
           JS_EMPTY_STATEMENT@21..22
             SEMICOLON@21..22 ";"
           WHITESPACE@22..23 " "
+=======
+          EMPTY_STMT@12..13
+             SEMICOLON@12..13 ";" 
+          EMPTY_STMT@13..14
+             SEMICOLON@13..14 ";" 
+          EMPTY_STMT@14..15
+             SEMICOLON@14..15 ";" 
+          EMPTY_STMT@15..16
+             SEMICOLON@15..16 ";" 
+          EMPTY_STMT@16..17
+             SEMICOLON@16..17 ";" 
+          EMPTY_STMT@17..18
+             SEMICOLON@17..18 ";" 
+          EMPTY_STMT@18..19
+             SEMICOLON@18..19 ";" 
+          EMPTY_STMT@19..20
+             SEMICOLON@19..20 ";" 
+          EMPTY_STMT@20..21
+             SEMICOLON@20..21 ";" 
+          EMPTY_STMT@21..23
+             SEMICOLON@21..23 ";" " "
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
           GETTER@23..35
-            GET_KW@23..26 "get"
-            WHITESPACE@26..27 " "
+             GET_KW@23..27 "get" " "
             NAME@27..30
-              IDENT@27..30 "foo"
-            PARAMETER_LIST@30..32
-              L_PAREN@30..31 "("
+               IDENT@27..30 "foo" 
+            PARAMETER_LIST@30..33
+               L_PAREN@30..31 "(" 
               LIST@31..31
+<<<<<<< HEAD
               R_PAREN@31..32 ")"
             WHITESPACE@32..33 " "
             JS_BLOCK_STATEMENT@33..35
@@ -55,3 +79,19 @@ JS_MODULE@0..41
             SEMICOLON@38..39 ";"
         R_CURLY@39..40 "}"
   WHITESPACE@40..41 "\n"
+=======
+               R_PAREN@31..33 ")" " "
+            BLOCK_STMT@33..35
+               L_CURLY@33..34 "{" 
+              LIST@34..34
+               R_CURLY@34..35 "}" 
+          EMPTY_STMT@35..36
+             SEMICOLON@35..36 ";" 
+          EMPTY_STMT@36..37
+             SEMICOLON@36..37 ";" 
+          EMPTY_STMT@37..38
+             SEMICOLON@37..38 ";" 
+          EMPTY_STMT@38..39
+             SEMICOLON@38..39 ";" 
+         R_CURLY@39..40 "}" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)

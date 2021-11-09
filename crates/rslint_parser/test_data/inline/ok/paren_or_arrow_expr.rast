@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 JS_MODULE@0..85
+=======
+MODULE@0..84
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..84
     JS_EXPRESSION_STATEMENT@0..6
       GROUPING_EXPR@0..5
-        L_PAREN@0..1 "("
+         L_PAREN@0..1 "(" 
         NAME_REF@1..4
+<<<<<<< HEAD
           IDENT@1..4 "foo"
         R_PAREN@4..5 ")"
       SEMICOLON@5..6 ";"
@@ -29,13 +34,35 @@ JS_MODULE@0..85
     JS_EXPRESSION_STATEMENT@20..28
       GROUPING_EXPR@20..27
         L_PAREN@20..21 "("
+=======
+           IDENT@1..4 "foo" 
+         R_PAREN@4..5 ")" 
+       SEMICOLON@5..6 ";" 
+    EXPR_STMT@6..19
+      ARROW_EXPR@6..18
+        PARAMETER_LIST@6..13
+          "\n" L_PAREN@6..8 "(" 
+          LIST@8..11
+            SINGLE_PATTERN@8..11
+              NAME@8..11
+                 IDENT@8..11 "foo" 
+           R_PAREN@11..13 ")" " "
+         FAT_ARROW@13..16 "=>" " "
+        BLOCK_STMT@16..18
+           L_CURLY@16..17 "{" 
+          LIST@17..17
+           R_CURLY@17..18 "}" 
+       SEMICOLON@18..19 ";" 
+    EXPR_STMT@19..28
+      GROUPING_EXPR@19..27
+        "\n" L_PAREN@19..21 "(" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         BIN_EXPR@21..26
-          LITERAL@21..22
-            NUMBER@21..22 "5"
-          WHITESPACE@22..23 " "
-          PLUS@23..24 "+"
-          WHITESPACE@24..25 " "
+          LITERAL@21..23
+             NUMBER@21..23 "5" " "
+           PLUS@23..25 "+" " "
           LITERAL@25..26
+<<<<<<< HEAD
             NUMBER@25..26 "5"
         R_PAREN@26..27 ")"
       SEMICOLON@27..28 ";"
@@ -44,37 +71,43 @@ JS_MODULE@0..85
       ARROW_EXPR@29..63
         PARAMETER_LIST@29..57
           L_PAREN@29..30 "("
+=======
+             NUMBER@25..26 "5" 
+         R_PAREN@26..27 ")" 
+       SEMICOLON@27..28 ";" 
+    EXPR_STMT@28..64
+      ARROW_EXPR@28..63
+        PARAMETER_LIST@28..58
+          "\n" L_PAREN@28..30 "(" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
           LIST@30..56
             OBJECT_PATTERN@30..56
-              L_CURLY@30..31 "{"
+               L_CURLY@30..31 "{" 
               LIST@31..55
                 SINGLE_PATTERN@31..34
                   NAME@31..34
-                    IDENT@31..34 "foo"
-                COMMA@34..35 ","
-                WHITESPACE@35..36 " "
+                     IDENT@31..34 "foo" 
+                 COMMA@34..36 "," " "
                 SINGLE_PATTERN@36..39
                   NAME@36..39
-                    IDENT@36..39 "bar"
-                COMMA@39..40 ","
-                WHITESPACE@40..41 " "
+                     IDENT@36..39 "bar" 
+                 COMMA@39..41 "," " "
                 KEY_VALUE_PATTERN@41..55
                   NAME@41..42
-                    IDENT@41..42 "b"
-                  COLON@42..43 ":"
-                  WHITESPACE@43..44 " "
+                     IDENT@41..42 "b" 
+                   COLON@42..44 ":" " "
                   ARRAY_PATTERN@44..55
-                    L_BRACK@44..45 "["
+                     L_BRACK@44..45 "[" 
                     LIST@45..54
                       SINGLE_PATTERN@45..46
                         NAME@45..46
-                          IDENT@45..46 "f"
-                      COMMA@46..47 ","
-                      WHITESPACE@47..48 " "
+                           IDENT@45..46 "f" 
+                       COMMA@46..48 "," " "
                       REST_PATTERN@48..54
-                        DOT2@48..51 "..."
+                         DOT2@48..51 "..." 
                         SINGLE_PATTERN@51..54
                           NAME@51..54
+<<<<<<< HEAD
                             IDENT@51..54 "baz"
                     R_BRACK@54..55 "]"
               R_CURLY@55..56 "}"
@@ -92,16 +125,32 @@ JS_MODULE@0..85
       ARROW_EXPR@65..84
         PARAMETER_LIST@65..78
           L_PAREN@65..66 "("
+=======
+                             IDENT@51..54 "baz" 
+                     R_BRACK@54..55 "]" 
+               R_CURLY@55..56 "}" 
+           R_PAREN@56..58 ")" " "
+         FAT_ARROW@58..61 "=>" " "
+        BLOCK_STMT@61..63
+           L_CURLY@61..62 "{" 
+          LIST@62..62
+           R_CURLY@62..63 "}" 
+       SEMICOLON@63..64 ";" 
+    EXPR_STMT@64..84
+      ARROW_EXPR@64..84
+        PARAMETER_LIST@64..79
+          "\n" L_PAREN@64..66 "(" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
           LIST@66..77
             SINGLE_PATTERN@66..69
               NAME@66..69
-                IDENT@66..69 "foo"
-            COMMA@69..70 ","
-            WHITESPACE@70..71 " "
+                 IDENT@66..69 "foo" 
+             COMMA@69..71 "," " "
             REST_PATTERN@71..77
-              DOT2@71..74 "..."
+               DOT2@71..74 "..." 
               SINGLE_PATTERN@74..77
                 NAME@74..77
+<<<<<<< HEAD
                   IDENT@74..77 "bar"
           R_PAREN@77..78 ")"
         WHITESPACE@78..79 " "
@@ -109,6 +158,12 @@ JS_MODULE@0..85
         WHITESPACE@81..82 " "
         JS_BLOCK_STATEMENT@82..84
           L_CURLY@82..83 "{"
+=======
+                   IDENT@74..77 "bar" 
+           R_PAREN@77..79 ")" " "
+         FAT_ARROW@79..82 "=>" " "
+        BLOCK_STMT@82..84
+           L_CURLY@82..83 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
           LIST@83..83
-          R_CURLY@83..84 "}"
-  WHITESPACE@84..85 "\n"
+           R_CURLY@83..84 "}" 

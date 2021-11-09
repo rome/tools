@@ -1,51 +1,58 @@
+<<<<<<< HEAD
 JS_MODULE@0..48
+=======
+MODULE@0..47
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..47
     VAR_DECL@0..21
-      IDENT@0..3 "let"
-      WHITESPACE@3..4 " "
+       IDENT@0..4 "let" " "
       LIST@4..21
         DECLARATOR@4..21
-          SINGLE_PATTERN@4..5
-            NAME@4..5
-              IDENT@4..5 "a"
-          WHITESPACE@5..6 " "
-          EQ@6..7 "="
-          WHITESPACE@7..8 " "
+          SINGLE_PATTERN@4..6
+            NAME@4..6
+               IDENT@4..6 "a" " "
+           EQ@6..8 "=" " "
           FN_EXPR@8..21
-            FUNCTION_KW@8..16 "function"
-            PARAMETER_LIST@16..18
-              L_PAREN@16..17 "("
+             FUNCTION_KW@8..16 "function" 
+            PARAMETER_LIST@16..19
+               L_PAREN@16..17 "(" 
               LIST@17..17
+<<<<<<< HEAD
               R_PAREN@17..18 ")"
             WHITESPACE@18..19 " "
             JS_BLOCK_STATEMENT@19..21
               L_CURLY@19..20 "{"
+=======
+               R_PAREN@17..19 ")" " "
+            BLOCK_STMT@19..21
+               L_CURLY@19..20 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
               LIST@20..20
-              R_CURLY@20..21 "}"
-    WHITESPACE@21..22 "\n"
-    VAR_DECL@22..47
-      IDENT@22..25 "let"
-      WHITESPACE@25..26 " "
+               R_CURLY@20..21 "}" 
+    VAR_DECL@21..47
+      "\n" IDENT@21..26 "let" " "
       LIST@26..47
         DECLARATOR@26..47
-          SINGLE_PATTERN@26..27
-            NAME@26..27
-              IDENT@26..27 "b"
-          WHITESPACE@27..28 " "
-          EQ@28..29 "="
-          WHITESPACE@29..30 " "
+          SINGLE_PATTERN@26..28
+            NAME@26..28
+               IDENT@26..28 "b" " "
+           EQ@28..30 "=" " "
           FN_EXPR@30..47
-            FUNCTION_KW@30..38 "function"
-            WHITESPACE@38..39 " "
+             FUNCTION_KW@30..39 "function" " "
             NAME@39..42
-              IDENT@39..42 "foo"
-            PARAMETER_LIST@42..44
-              L_PAREN@42..43 "("
+               IDENT@39..42 "foo" 
+            PARAMETER_LIST@42..45
+               L_PAREN@42..43 "(" 
               LIST@43..43
+<<<<<<< HEAD
               R_PAREN@43..44 ")"
             WHITESPACE@44..45 " "
             JS_BLOCK_STATEMENT@45..47
               L_CURLY@45..46 "{"
+=======
+               R_PAREN@43..45 ")" " "
+            BLOCK_STMT@45..47
+               L_CURLY@45..46 "{" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
               LIST@46..46
-              R_CURLY@46..47 "}"
-  WHITESPACE@47..48 "\n"
+               R_CURLY@46..47 "}" 

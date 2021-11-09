@@ -1,18 +1,19 @@
+<<<<<<< HEAD
 JS_MODULE@0..44
+=======
+MODULE@0..43
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..43
     JS_EXPRESSION_STATEMENT@0..15
       COND_EXPR@0..15
-        NAME_REF@0..3
-          IDENT@0..3 "foo"
-        WHITESPACE@3..4 " "
-        QUESTION@4..5 "?"
-        WHITESPACE@5..6 " "
-        NAME_REF@6..9
-          IDENT@6..9 "bar"
-        WHITESPACE@9..10 " "
-        COLON@10..11 ":"
-        WHITESPACE@11..12 " "
+        NAME_REF@0..4
+           IDENT@0..4 "foo" " "
+         QUESTION@4..6 "?" " "
+        NAME_REF@6..10
+           IDENT@6..10 "bar" " "
+         COLON@10..12 ":" " "
         NAME_REF@12..15
+<<<<<<< HEAD
           IDENT@12..15 "baz"
     WHITESPACE@15..16 "\n"
     JS_EXPRESSION_STATEMENT@16..43
@@ -27,17 +28,23 @@ JS_MODULE@0..44
         WHITESPACE@25..26 " "
         COLON@26..27 ":"
         WHITESPACE@27..28 " "
+=======
+           IDENT@12..15 "baz" 
+    EXPR_STMT@15..43
+      COND_EXPR@15..43
+        NAME_REF@15..20
+          "\n" IDENT@15..20 "foo" " "
+         QUESTION@20..22 "?" " "
+        NAME_REF@22..26
+           IDENT@22..26 "bar" " "
+         COLON@26..28 ":" " "
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         COND_EXPR@28..43
-          NAME_REF@28..31
-            IDENT@28..31 "baz"
-          WHITESPACE@31..32 " "
-          QUESTION@32..33 "?"
-          WHITESPACE@33..34 " "
-          NAME_REF@34..37
-            IDENT@34..37 "bar"
-          WHITESPACE@37..38 " "
-          COLON@38..39 ":"
-          WHITESPACE@39..40 " "
+          NAME_REF@28..32
+             IDENT@28..32 "baz" " "
+           QUESTION@32..34 "?" " "
+          NAME_REF@34..38
+             IDENT@34..38 "bar" " "
+           COLON@38..40 ":" " "
           NAME_REF@40..43
-            IDENT@40..43 "baz"
-  WHITESPACE@43..44 "\n"
+             IDENT@40..43 "baz" 

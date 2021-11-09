@@ -1,11 +1,16 @@
+<<<<<<< HEAD
 JS_MODULE@0..54
+=======
+MODULE@0..53
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..53
     JS_EXPRESSION_STATEMENT@0..7
       DOT_EXPR@0..7
         NAME_REF@0..3
-          IDENT@0..3 "foo"
-        DOT@3..4 "."
+           IDENT@0..3 "foo" 
+         DOT@3..4 "." 
         NAME@4..7
+<<<<<<< HEAD
           IDENT@4..7 "bar"
     WHITESPACE@7..8 "\n"
     JS_EXPRESSION_STATEMENT@8..17
@@ -45,6 +50,41 @@ JS_MODULE@0..54
         NAME_REF@45..48
           IDENT@45..48 "foo"
         QUESTIONDOT@48..50 "?."
+=======
+           IDENT@4..7 "bar" 
+    EXPR_STMT@7..17
+      DOT_EXPR@7..17
+        NAME_REF@7..11
+          "\n" IDENT@7..11 "foo" 
+         DOT@11..12 "." 
+        NAME@12..17
+           IDENT@12..17 "await" 
+    EXPR_STMT@17..27
+      DOT_EXPR@17..27
+        NAME_REF@17..21
+          "\n" IDENT@17..21 "foo" 
+         DOT@21..22 "." 
+        NAME@22..27
+           IDENT@22..27 "yield" 
+    EXPR_STMT@27..35
+      DOT_EXPR@27..35
+        NAME_REF@27..31
+          "\n" IDENT@27..31 "foo" 
+         DOT@31..32 "." 
+        NAME@32..35
+           IDENT@32..35 "for" 
+    EXPR_STMT@35..44
+      DOT_EXPR@35..44
+        NAME_REF@35..39
+          "\n" IDENT@35..39 "foo" 
+         QUESTIONDOT@39..41 "?." 
+        NAME@41..44
+           IDENT@41..44 "for" 
+    EXPR_STMT@44..53
+      DOT_EXPR@44..53
+        NAME_REF@44..48
+          "\n" IDENT@44..48 "foo" 
+         QUESTIONDOT@48..50 "?." 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         NAME@50..53
-          IDENT@50..53 "bar"
-  WHITESPACE@53..54 "\n"
+           IDENT@50..53 "bar" 

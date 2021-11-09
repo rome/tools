@@ -1,17 +1,17 @@
+<<<<<<< HEAD
 JS_MODULE@0..15
+=======
+MODULE@0..14
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..14
     VAR_DECL@0..14
-      IDENT@0..3 "let"
-      WHITESPACE@3..4 " "
+       IDENT@0..4 "let" " "
       LIST@4..13
         DECLARATOR@4..13
-          SINGLE_PATTERN@4..5
-            NAME@4..5
-              IDENT@4..5 "a"
-          WHITESPACE@5..6 " "
-          EQ@6..7 "="
-          WHITESPACE@7..8 " "
+          SINGLE_PATTERN@4..6
+            NAME@4..6
+               IDENT@4..6 "a" " "
+           EQ@6..8 "=" " "
           NAME_REF@8..13
-            IDENT@8..13 "async"
-      SEMICOLON@13..14 ";"
-  WHITESPACE@14..15 "\n"
+             IDENT@8..13 "async" 
+       SEMICOLON@13..14 ";" 

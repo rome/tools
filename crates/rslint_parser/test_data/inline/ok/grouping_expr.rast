@@ -1,20 +1,22 @@
+<<<<<<< HEAD
 JS_MODULE@0..14
+=======
+MODULE@0..13
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..13
       CALL_EXPR@0..13
         GROUPING_EXPR@0..7
-          L_PAREN@0..1 "("
+           L_PAREN@0..1 "(" 
           GROUPING_EXPR@1..6
-            L_PAREN@1..2 "("
+             L_PAREN@1..2 "(" 
             NAME_REF@2..5
-              IDENT@2..5 "foo"
-            R_PAREN@5..6 ")"
-          R_PAREN@6..7 ")"
-        WHITESPACE@7..8 "\n"
-        ARG_LIST@8..13
-          L_PAREN@8..9 "("
+               IDENT@2..5 "foo" 
+             R_PAREN@5..6 ")" 
+           R_PAREN@6..7 ")" 
+        ARG_LIST@7..13
+          "\n" L_PAREN@7..9 "(" 
           LIST@9..12
             NAME_REF@9..12
-              IDENT@9..12 "foo"
-          R_PAREN@12..13 ")"
-  WHITESPACE@13..14 "\n"
+               IDENT@9..12 "foo" 
+           R_PAREN@12..13 ")" 

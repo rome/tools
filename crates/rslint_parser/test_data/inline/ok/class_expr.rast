@@ -1,52 +1,46 @@
+<<<<<<< HEAD
 JS_MODULE@0..72
+=======
+MODULE@0..71
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..71
     VAR_DECL@0..17
-      IDENT@0..3 "let"
-      WHITESPACE@3..4 " "
+       IDENT@0..4 "let" " "
       LIST@4..16
         DECLARATOR@4..16
-          SINGLE_PATTERN@4..5
-            NAME@4..5
-              IDENT@4..5 "a"
-          WHITESPACE@5..6 " "
-          EQ@6..7 "="
-          WHITESPACE@7..8 " "
+          SINGLE_PATTERN@4..6
+            NAME@4..6
+               IDENT@4..6 "a" " "
+           EQ@6..8 "=" " "
           CLASS_EXPR@8..16
-            CLASS_KW@8..13 "class"
-            WHITESPACE@13..14 " "
+             CLASS_KW@8..14 "class" " "
             CLASS_BODY@14..16
-              L_CURLY@14..15 "{"
+               L_CURLY@14..15 "{" 
               LIST@15..15
-              R_CURLY@15..16 "}"
-      SEMICOLON@16..17 ";"
-    WHITESPACE@17..18 "\n"
-    VAR_DECL@18..57
-      IDENT@18..21 "let"
-      WHITESPACE@21..22 " "
+               R_CURLY@15..16 "}" 
+       SEMICOLON@16..17 ";" 
+    VAR_DECL@17..57
+      "\n" IDENT@17..22 "let" " "
       LIST@22..57
         DECLARATOR@22..57
-          SINGLE_PATTERN@22..23
-            NAME@22..23
-              IDENT@22..23 "a"
-          WHITESPACE@23..24 " "
-          EQ@24..25 "="
-          WHITESPACE@25..26 " "
+          SINGLE_PATTERN@22..24
+            NAME@22..24
+               IDENT@22..24 "a" " "
+           EQ@24..26 "=" " "
           CLASS_EXPR@26..57
-            CLASS_KW@26..31 "class"
-            WHITESPACE@31..32 " "
-            NAME@32..35
-              IDENT@32..35 "foo"
-            WHITESPACE@35..36 " "
+             CLASS_KW@26..32 "class" " "
+            NAME@32..36
+               IDENT@32..36 "foo" " "
             CLASS_BODY@36..57
-              L_CURLY@36..37 "{"
-              WHITESPACE@37..39 "\n "
-              LIST@39..55
-                CONSTRUCTOR@39..55
-                  NAME@39..50
-                    IDENT@39..50 "constructor"
-                  PARAMETER_LIST@50..52
-                    L_PAREN@50..51 "("
+               L_CURLY@36..37 "{" 
+              LIST@37..55
+                CONSTRUCTOR@37..55
+                  NAME@37..50
+                    "\n " IDENT@37..50 "constructor" 
+                  PARAMETER_LIST@50..53
+                     L_PAREN@50..51 "(" 
                     LIST@51..51
+<<<<<<< HEAD
                     R_PAREN@51..52 ")"
                   WHITESPACE@52..53 " "
                   JS_BLOCK_STATEMENT@53..55
@@ -61,12 +55,23 @@ JS_MODULE@0..72
         NAME_REF@58..61
           IDENT@58..61 "foo"
         L_BRACK@61..62 "["
+=======
+                     R_PAREN@51..53 ")" " "
+                  BLOCK_STMT@53..55
+                     L_CURLY@53..54 "{" 
+                    LIST@54..54
+                     R_CURLY@54..55 "}" 
+              "\n" R_CURLY@55..57 "}" 
+    EXPR_STMT@57..71
+      BRACKET_EXPR@57..71
+        NAME_REF@57..61
+          "\n" IDENT@57..61 "foo" 
+         L_BRACK@61..62 "[" 
+>>>>>>> 56d750195 (trim format_raw when formatter finds an error)
         CLASS_EXPR@62..70
-          CLASS_KW@62..67 "class"
-          WHITESPACE@67..68 " "
+           CLASS_KW@62..68 "class" " "
           CLASS_BODY@68..70
-            L_CURLY@68..69 "{"
+             L_CURLY@68..69 "{" 
             LIST@69..69
-            R_CURLY@69..70 "}"
-        R_BRACK@70..71 "]"
-  WHITESPACE@71..72 "\n"
+             R_CURLY@69..70 "}" 
+         R_BRACK@70..71 "]" 
