@@ -220,11 +220,11 @@ pub fn test_trivia_attached_to_tokens() {
 	use rome_rowan::GreenTokenTrivia::*;
 	use rome_rowan::Trivia::*;
 	assert!(matches!(
-		tokens.iter().nth(0).unwrap().leading(), // first let
+		tokens.get(0).unwrap().leading(), // first let
 		One(x) if x.trivia() == &Comment(4)
 	));
 
-	let second_let = tokens.iter().nth(5).unwrap();
+	let second_let = tokens.get(5).unwrap();
 	assert!(matches!(second_let.leading(),
 		Many(v) if v[0].trivia() == &Whitespace(2) && v[1].trivia() == &Comment(7) && v[2].trivia() == &Whitespace(1)
 	));
