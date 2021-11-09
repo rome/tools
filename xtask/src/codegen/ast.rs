@@ -144,7 +144,7 @@ fn handle_rule(
 
 			if name != "int_number" && name != "string" {
 				let field = Field::Token {
-					name,
+					name: label.cloned().unwrap_or(name),
 					token_kinds: vec![],
 					optional,
 				};
@@ -244,6 +244,11 @@ fn handle_tokens_in_unions(
 	label: &str,
 	optional: bool,
 ) -> bool {
+	let (rule, optional) = match rule {
+		Rule::Opt(rule) => (&**rule, true),
+		_ => (rule, optional),
+	};
+
 	let rule = match rule {
 		Rule::Alt(rule) => rule,
 		_ => return false,
