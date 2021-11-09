@@ -196,59 +196,6 @@ pub enum UnaryOp {
 	Await,
 }
 
-impl UnaryExpr {
-	pub fn op_details(&self) -> Option<(SyntaxToken, UnaryOp)> {
-		self.syntax()
-			.children_with_tokens()
-			.filter_map(|x| x.into_token())
-			.find_map(|t| {
-				let op = match t.kind() {
-					T![++] => UnaryOp::Increment,
-					T![--] => UnaryOp::Decrement,
-					T![delete] => UnaryOp::Delete,
-					T![void] => UnaryOp::Void,
-					T![typeof] => UnaryOp::Typeof,
-					T![+] => UnaryOp::Plus,
-					T![-] => UnaryOp::Minus,
-					T![~] => UnaryOp::BitwiseNot,
-					T![!] => UnaryOp::LogicalNot,
-					T![await] => UnaryOp::Await,
-					_ => return None,
-				};
-				Some((t, op))
-			})
-	}
-
-	pub fn op(&self) -> Option<UnaryOp> {
-		self.op_details().map(|t| t.1)
-	}
-
-	pub fn op_token(&self) -> Option<SyntaxToken> {
-		self.op_details().map(|t| t.0)
-	}
-
-	/// Whether this is an update expression.
-	pub fn is_update(&self) -> bool {
-		self.op().map_or(false, |op| {
-			op == UnaryOp::Increment || op == UnaryOp::Decrement
-		})
-	}
-
-	/// Whether this is an update expression and it is a prefix update expression
-	pub fn is_prefix(&self) -> Option<bool> {
-		if !self.is_update() {
-			return None;
-		}
-
-		match self.expr() {
-			Err(_) => None,
-			Ok(expr) => {
-				Some(self.op_token()?.text_range().start() > expr.syntax().text_range().end())
-			}
-		}
-	}
-}
-
 impl KeyValuePattern {
 	pub fn value(&self) -> Option<Pattern> {
 		// This is to easily handle both `NAME NAME` and `: NAME`

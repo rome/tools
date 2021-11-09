@@ -207,6 +207,8 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"DOT_EXPR",
 		"CALL_EXPR",
 		"UNARY_EXPR",
+		"PRE_UPDATE_EXPRESSION",
+		"POST_UPDATE_EXPRESSION",
 		"BIN_EXPR",
 		"COND_EXPR",
 		"ASSIGN_EXPR",

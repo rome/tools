@@ -1,7 +1,7 @@
 //! General utility functions for parsing and error checking.
 
 use crate::{
-	ast::{Expr, GroupingExpr, NameRef, UnaryExpr},
+	ast::{Expr, GroupingExpr, NameRef},
 	SyntaxKind::*,
 	*,
 };
@@ -114,13 +114,6 @@ pub fn get_precedence(tok: SyntaxKind) -> Option<u8> {
 		T![%] | T![**] => 11,
 		_ => return None,
 	})
-}
-
-pub fn is_update_expr(p: &Parser, marker: &CompletedMarker) -> bool {
-	match marker.kind() {
-		UNARY_EXPR => p.parse_marker::<UnaryExpr>(marker).is_update(),
-		_ => false,
-	}
 }
 
 /// Check the bound names of a variable declaration and issue errors according to `13.3.1.1`

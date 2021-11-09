@@ -33,6 +33,8 @@ impl ToFormatElement for Expr {
 			Expr::TsNonNull(_) => todo!(),
 			Expr::TsAssertion(_) => todo!(),
 			Expr::TsConstAssertion(_) => todo!(),
+			Expr::PreUpdateExpression(_) => todo!(),
+			Expr::PostUpdateExpression(_) => todo!(),
 			Expr::JsUnknownExpression(_) => todo!(),
 		}
 	}
