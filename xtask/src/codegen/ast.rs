@@ -21,7 +21,7 @@ use crate::{
 use ungrammar::{Grammar, Rule, Token};
 
 pub fn generate_ast(mode: Mode) -> Result<()> {
-	let grammar_src = include_str!("../../js.ungram");
+	let grammar_src = include_str!("../../../rfcs/001-js-grammar.ungram");
 	let grammar: Grammar = grammar_src.parse().unwrap();
 	let ast = make_ast(&grammar);
 
