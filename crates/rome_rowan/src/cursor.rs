@@ -89,13 +89,14 @@ use std::{
 	iter,
 	mem::{self, ManuallyDrop},
 	ops::Range,
-	ptr, slice,
+	ptr,
 };
 
 use countme::Count;
 
+use crate::green::{Child, Children};
 use crate::{
-	green::{GreenChild, GreenElementRef, GreenNodeData, GreenTokenData, SyntaxKind},
+	green::{GreenElementRef, GreenNodeData, GreenTokenData, SyntaxKind},
 	sll,
 	utility_types::Delta,
 	Direction, GreenNode, GreenToken, NodeOrToken, SyntaxText, TextRange, TextSize, TokenAtOffset,
@@ -118,7 +119,7 @@ struct NodeData {
 
 	rc: Cell<u32>,
 	parent: Cell<Option<ptr::NonNull<NodeData>>>,
-	index: Cell<u32>,
+	slot: Cell<u32>,
 	green: Green,
 
 	/// Invariant: never changes after NodeData is created.
@@ -141,7 +142,7 @@ unsafe impl sll::Elem for NodeData {
 		&self.next
 	}
 	fn key(&self) -> &Cell<u32> {
-		&self.index
+		&self.slot
 	}
 }
 
@@ -227,7 +228,7 @@ impl NodeData {
 	#[inline]
 	fn new(
 		parent: Option<SyntaxNode>,
-		index: u32,
+		slot: u32,
 		offset: TextSize,
 		green: Green,
 		mutable: bool,
@@ -237,7 +238,7 @@ impl NodeData {
 			_c: Count::new(),
 			rc: Cell::new(1),
 			parent: Cell::new(parent.as_ref().map(|it| it.ptr)),
-			index: Cell::new(index),
+			slot: Cell::new(slot),
 			green,
 
 			mutable,
@@ -255,7 +256,7 @@ impl NodeData {
 				) {
 					sll::AddToSllResult::AlreadyInSll(node) => {
 						if cfg!(debug_assertions) {
-							assert_eq!((*node).index(), (*res_ptr).index());
+							assert_eq!((*node).slot(), (*res_ptr).slot());
 							match ((*node).green(), (*res_ptr).green()) {
 								(NodeOrToken::Node(lhs), NodeOrToken::Node(rhs)) => {
 									assert!(ptr::eq(lhs, rhs))
@@ -332,20 +333,28 @@ impl NodeData {
 			Green::Token { ptr } => GreenElementRef::Token(unsafe { &*ptr.as_ref() }),
 		}
 	}
+
+	/// Returns an iterator over the siblings of this node. The iterator is positioned at the current node.
 	#[inline]
-	fn green_siblings(&self) -> slice::Iter<GreenChild> {
-		match &self.parent().map(|it| &it.green) {
-			Some(Green::Node { ptr }) => unsafe { &*ptr.get().as_ptr() }.children().raw,
-			Some(Green::Token { .. }) => {
-				debug_assert!(false);
-				[].iter()
+	fn green_siblings(&self) -> Option<Siblings> {
+		match &self.parent()?.green {
+			Green::Node { ptr } => {
+				let parent = unsafe { &*ptr.get().as_ptr() };
+
+				Some(Siblings::new(parent, self.slot()))
 			}
-			None => [].iter(),
+			Green::Token { .. } => {
+				debug_assert!(
+					false,
+					"A token should never be a parent of a token or node."
+				);
+				None
+			}
 		}
 	}
 	#[inline]
-	fn index(&self) -> u32 {
-		self.index.get()
+	fn slot(&self) -> u32 {
+		self.slot.get()
 	}
 
 	#[inline]
@@ -365,9 +374,8 @@ impl NodeData {
 		while let Some(parent) = node.parent() {
 			let green = parent.green().into_node().unwrap();
 			res += green
-				.children()
-				.raw
-				.nth(node.index() as usize)
+				.slots()
+				.nth(node.slot() as usize)
 				.unwrap()
 				.rel_offset();
 			node = parent;
@@ -389,58 +397,50 @@ impl NodeData {
 	}
 
 	fn next_sibling(&self) -> Option<SyntaxNode> {
-		let mut siblings = self.green_siblings().enumerate();
-		let index = self.index() as usize;
-
-		siblings.nth(index);
-		siblings.find_map(|(index, child)| {
-			child.as_ref().into_node().and_then(|green| {
+		let siblings = self.green_siblings()?;
+		siblings.following().find_map(|child| {
+			child.element().into_node().and_then(|green| {
 				let parent = self.parent_node()?;
 				let offset = parent.offset() + child.rel_offset();
-				Some(SyntaxNode::new_child(green, parent, index as u32, offset))
+				Some(SyntaxNode::new_child(green, parent, child.slot(), offset))
 			})
 		})
 	}
 	fn prev_sibling(&self) -> Option<SyntaxNode> {
-		let mut rev_siblings = self.green_siblings().enumerate().rev();
-		let index = rev_siblings.len() - (self.index() as usize);
-
-		rev_siblings.nth(index);
-		rev_siblings.find_map(|(index, child)| {
-			child.as_ref().into_node().and_then(|green| {
+		let siblings = self.green_siblings()?;
+		siblings.previous().find_map(|child| {
+			child.element().into_node().and_then(|green| {
 				let parent = self.parent_node()?;
 				let offset = parent.offset() + child.rel_offset();
-				Some(SyntaxNode::new_child(green, parent, index as u32, offset))
+				Some(SyntaxNode::new_child(green, parent, child.slot(), offset))
 			})
 		})
 	}
 
 	fn next_sibling_or_token(&self) -> Option<SyntaxElement> {
-		let mut siblings = self.green_siblings().enumerate();
-		let index = self.index() as usize + 1;
+		let siblings = self.green_siblings()?;
 
-		siblings.nth(index).and_then(|(index, child)| {
+		siblings.following().next().and_then(|child| {
 			let parent = self.parent_node()?;
 			let offset = parent.offset() + child.rel_offset();
 			Some(SyntaxElement::new(
-				child.as_ref(),
+				child.element(),
 				parent,
-				index as u32,
+				child.slot(),
 				offset,
 			))
 		})
 	}
 	fn prev_sibling_or_token(&self) -> Option<SyntaxElement> {
-		let mut siblings = self.green_siblings().enumerate();
-		let index = self.index().checked_sub(1)? as usize;
+		let siblings = self.green_siblings()?;
 
-		siblings.nth(index).and_then(|(index, child)| {
+		siblings.previous().next().and_then(|child| {
 			let parent = self.parent_node()?;
 			let offset = parent.offset() + child.rel_offset();
 			Some(SyntaxElement::new(
-				child.as_ref(),
+				child.element(),
 				parent,
-				index as u32,
+				child.slot(),
 				offset,
 			))
 		})
@@ -455,7 +455,7 @@ impl NodeData {
 		};
 
 		unsafe {
-			sll::adjust(self, self.index() + 1, Delta::Sub(1));
+			sll::adjust(self, self.slot() + 1, Delta::Sub(1));
 			let parent = parent_ptr.as_ref();
 			sll::unlink(&parent.first, self);
 
@@ -471,7 +471,7 @@ impl NodeData {
 
 			match parent.green() {
 				NodeOrToken::Node(green) => {
-					let green = green.remove_child(self.index() as usize);
+					let green = green.remove_slot(self.slot() as usize);
 					parent.respine(green)
 				}
 				NodeOrToken::Token(_) => unreachable!(),
@@ -487,7 +487,7 @@ impl NodeData {
 		assert!(self.rc.get() > 0 && child.rc.get() > 0);
 
 		unsafe {
-			child.index.set(index as u32);
+			child.slot.set(index as u32);
 			child.parent.set(Some(self.into()));
 			self.inc_rc();
 
@@ -504,13 +504,13 @@ impl NodeData {
 
 			match self.green() {
 				NodeOrToken::Node(green) => {
-					// Child is root, so it ownes the green node. Steal it!
+					// Child is root, so it owns the green node. Steal it!
 					let child_green = match &child.green {
 						Green::Node { ptr } => GreenNode::from_raw(ptr.get()).into(),
 						Green::Token { ptr } => GreenToken::from_raw(*ptr).into(),
 					};
 
-					let green = green.insert_child(index, child_green);
+					let green = green.insert_slot(index, Some(child_green));
 					self.respine(green);
 				}
 				NodeOrToken::Token(_) => unreachable!(),
@@ -527,8 +527,8 @@ impl NodeData {
 			match node.parent() {
 				Some(parent) => match parent.green() {
 					NodeOrToken::Node(parent_green) => {
-						new_green =
-							parent_green.replace_child(node.index() as usize, new_green.into());
+						new_green = parent_green
+							.replace_child(node.slot() as usize, Some(new_green.into()));
 						node = parent;
 					}
 					_ => unreachable!(),
@@ -567,7 +567,7 @@ impl SyntaxNode {
 	fn new_child(
 		green: &GreenNodeData,
 		parent: SyntaxNode,
-		index: u32,
+		slot: u32,
 		offset: TextSize,
 	) -> SyntaxNode {
 		let mutable = parent.data().mutable;
@@ -575,7 +575,7 @@ impl SyntaxNode {
 			ptr: Cell::new(green.into()),
 		};
 		SyntaxNode {
-			ptr: NodeData::new(Some(parent), index, offset, green, mutable),
+			ptr: NodeData::new(Some(parent), slot, offset, green, mutable),
 		}
 	}
 
@@ -584,7 +584,7 @@ impl SyntaxNode {
 		match self.parent() {
 			Some(parent) => {
 				let parent = parent.clone_for_update();
-				SyntaxNode::new_child(self.green_ref(), parent, self.data().index(), self.offset())
+				SyntaxNode::new_child(self.green_ref(), parent, self.data().slot(), self.offset())
 			}
 			None => SyntaxNode::new_root_mut(self.green_ref().to_owned()),
 		}
@@ -616,7 +616,7 @@ impl SyntaxNode {
 
 	#[inline]
 	pub fn index(&self) -> usize {
-		self.data().index() as usize
+		self.data().slot() as usize
 	}
 
 	#[inline]
@@ -658,63 +658,49 @@ impl SyntaxNode {
 	}
 
 	pub fn first_child(&self) -> Option<SyntaxNode> {
-		self.green_ref()
-			.children()
-			.raw
-			.enumerate()
-			.find_map(|(index, child)| {
-				child.as_ref().into_node().map(|green| {
-					SyntaxNode::new_child(
-						green,
-						self.clone(),
-						index as u32,
-						self.offset() + child.rel_offset(),
-					)
-				})
+		self.green_ref().children().find_map(|child| {
+			child.element().into_node().map(|green| {
+				SyntaxNode::new_child(
+					green,
+					self.clone(),
+					child.slot() as u32,
+					self.offset() + child.rel_offset(),
+				)
 			})
+		})
 	}
 	pub fn last_child(&self) -> Option<SyntaxNode> {
-		self.green_ref()
-			.children()
-			.raw
-			.enumerate()
-			.rev()
-			.find_map(|(index, child)| {
-				child.as_ref().into_node().map(|green| {
-					SyntaxNode::new_child(
-						green,
-						self.clone(),
-						index as u32,
-						self.offset() + child.rel_offset(),
-					)
-				})
+		self.green_ref().children().rev().find_map(|child| {
+			child.element().into_node().map(|green| {
+				SyntaxNode::new_child(
+					green,
+					self.clone(),
+					child.slot(),
+					self.offset() + child.rel_offset(),
+				)
 			})
+		})
 	}
 
 	pub fn first_child_or_token(&self) -> Option<SyntaxElement> {
-		self.green_ref().children().raw.next().map(|child| {
+		self.green_ref().children().next().map(|child| {
 			SyntaxElement::new(
-				child.as_ref(),
+				child.element(),
 				self.clone(),
-				0,
+				child.slot(),
 				self.offset() + child.rel_offset(),
 			)
 		})
 	}
 	pub fn last_child_or_token(&self) -> Option<SyntaxElement> {
-		self.green_ref()
-			.children()
-			.raw
-			.enumerate()
-			.next_back()
-			.map(|(index, child)| {
-				SyntaxElement::new(
-					child.as_ref(),
-					self.clone(),
-					index as u32,
-					self.offset() + child.rel_offset(),
-				)
-			})
+		self.green_ref().children().next_back().map(|child| {
+			SyntaxElement::new(
+				child.element(),
+				self.clone(),
+				child.slot(),
+				self.offset() + child.rel_offset(),
+			)
+		})
 	}
 
 	pub fn next_sibling(&self) -> Option<SyntaxNode> {
@@ -843,14 +829,16 @@ impl SyntaxNode {
 	pub fn child_or_token_at_range(&self, range: TextRange) -> Option<SyntaxElement> {
 		let rel_range = range - self.offset();
 		self.green_ref()
-			.child_at_range(rel_range)
-			.map(|(index, rel_offset, green)| {
-				SyntaxElement::new(
-					green,
-					self.clone(),
-					index as u32,
-					self.offset() + rel_offset,
-				)
+			.slot_at_range(rel_range)
+			.and_then(|(index, rel_offset, slot)| {
+				slot.as_ref().map(|green| {
+					SyntaxElement::new(
+						green,
+						self.clone(),
+						index as u32,
+						self.offset() + rel_offset,
+					)
+				})
 			})
 	}
 
@@ -915,7 +903,7 @@ impl SyntaxToken {
 
 	#[inline]
 	pub fn index(&self) -> usize {
-		self.data().index() as usize
+		self.data().slot() as usize
 	}
 
 	#[inline]
@@ -991,15 +979,15 @@ impl SyntaxElement {
 	fn new(
 		element: GreenElementRef<'_>,
 		parent: SyntaxNode,
-		index: u32,
+		slot: u32,
 		offset: TextSize,
 	) -> SyntaxElement {
 		match element {
 			NodeOrToken::Node(node) => {
-				SyntaxNode::new_child(node, parent, index as u32, offset).into()
+				SyntaxNode::new_child(node, parent, slot as u32, offset).into()
 			}
 			NodeOrToken::Token(token) => {
-				SyntaxToken::new(token, parent, index as u32, offset).into()
+				SyntaxToken::new(token, parent, slot as u32, offset).into()
 			}
 		}
 	}
@@ -1329,4 +1317,51 @@ impl Iterator for PreorderWithTokens {
 		next
 	}
 }
+
+#[derive(Debug, Clone)]
+pub(crate) struct Siblings<'a> {
+	parent: &'a GreenNodeData,
+	start_slot: u32,
+}
+
+impl<'a> Siblings<'a> {
+	pub fn new(parent: &'a GreenNodeData, start_slot: u32) -> Self {
+		assert!(
+			(start_slot as usize) < parent.slots().len(),
+			"Start slot {} out of bounds {}",
+			start_slot,
+			parent.slots().len()
+		);
+
+		Self { parent, start_slot }
+	}
+
+	/// Creates an iterator over the siblings following the start node.
+	/// For example, the following siblings of the if statement's condition are
+	/// * the consequence
+	/// * potentially the else clause
+	pub fn following(&self) -> Children<'a> {
+		let mut slots = self.parent.slots().enumerate();
+
+		// Navigate to the start slot so that calling `next` returns the first following sibling
+		slots.nth(self.start_slot as usize);
+
+		Children::new(slots)
+	}
+
+	/// Creates an iterator over the siblings preceding the start node in reverse order.
+	/// For example, the preceding siblings of the if statement's condition are:
+	/// * opening parentheses: (
+	/// * if keyword: if
+	pub fn previous(&self) -> impl Iterator<Item = Child<'a>> {
+		let mut slots = self.parent.slots().enumerate();
+
+		// Navigate to the start slot from the back so that calling `next_back` (or rev().next()) returns
+		// the first slot preceding the start node
+		slots.nth_back(slots.len() - 1 - self.start_slot as usize);
+
+		Children::new(slots).rev()
+	}
+}
+
 // endregion

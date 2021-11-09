@@ -1,7 +1,10 @@
+use std::convert::TryFrom;
+use std::fmt::Formatter;
+use std::iter::Enumerate;
 use std::{
 	borrow::{Borrow, Cow},
-	fmt,
-	iter::{self, FusedIterator},
+	fmt, iter,
+	iter::FusedIterator,
 	mem::{self, ManuallyDrop},
 	ops, ptr, slice,
 };
@@ -23,7 +26,7 @@ pub(super) struct GreenNodeHead {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub(crate) enum GreenChild {
+pub(crate) enum Slot {
 	Node {
 		rel_offset: TextSize,
 		node: GreenNode,
@@ -32,12 +35,27 @@ pub(crate) enum GreenChild {
 		rel_offset: TextSize,
 		token: GreenToken,
 	},
+	/// An empty slot for a child that was missing in the source because:
+	/// * it's an optional child which is missing for this node
+	/// * it's a mandatory child but it's missing because of a syntax error
+	Empty { rel_offset: TextSize },
 }
-#[cfg(target_pointer_width = "64")]
-static_assert!(mem::size_of::<GreenChild>() == mem::size_of::<usize>() * 2);
 
-type Repr = HeaderSlice<GreenNodeHead, [GreenChild]>;
-type ReprThin = HeaderSlice<GreenNodeHead, [GreenChild; 0]>;
+impl std::fmt::Display for Slot {
+	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+		match self {
+			Slot::Empty { .. } => write!(f, "∅"),
+			Slot::Node { node, .. } => std::fmt::Display::fmt(node, f),
+			Slot::Token { token, .. } => std::fmt::Display::fmt(token, f),
+		}
+	}
+}
+
+#[cfg(target_pointer_width = "64")]
+static_assert!(mem::size_of::<Slot>() == mem::size_of::<usize>() * 2);
+
+type Repr = HeaderSlice<GreenNodeHead, [Slot]>;
+type ReprThin = HeaderSlice<GreenNodeHead, [Slot; 0]>;
 #[repr(transparent)]
 pub(crate) struct GreenNodeData {
 	data: ReprThin,
@@ -54,7 +72,7 @@ impl PartialEq for GreenNodeData {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[repr(transparent)]
 pub(crate) struct GreenNode {
-	ptr: ThinArc<GreenNodeHead, GreenChild>,
+	ptr: ThinArc<GreenNodeHead, Slot>,
 }
 
 impl ToOwned for GreenNodeData {
@@ -89,7 +107,7 @@ impl fmt::Debug for GreenNodeData {
 		f.debug_struct("GreenNode")
 			.field("kind", &self.kind())
 			.field("text_len", &self.text_len())
-			.field("n_children", &self.children().len())
+			.field("n_slots", &self.slots().len())
 			.finish()
 	}
 }
@@ -110,7 +128,7 @@ impl fmt::Display for GreenNode {
 
 impl fmt::Display for GreenNodeData {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		for child in self.children() {
+		for child in self.slots() {
 			write!(f, "{}", child)?;
 		}
 		Ok(())
@@ -124,7 +142,7 @@ impl GreenNodeData {
 	}
 
 	#[inline]
-	fn slice(&self) -> &[GreenChild] {
+	fn slice(&self) -> &[Slot] {
 		self.data.slice()
 	}
 
@@ -143,15 +161,22 @@ impl GreenNodeData {
 	/// Children of this node.
 	#[inline]
 	pub fn children(&self) -> Children<'_> {
-		Children {
+		Children::new(self.slots().enumerate())
+	}
+
+	/// Returns the slots of this node. Every node of a specific kind has the same number of slots
+	/// to allow using fixed offsets to retrieve a specific child even if some other child is missing.
+	#[inline]
+	pub fn slots(&self) -> Slots<'_> {
+		Slots {
 			raw: self.slice().iter(),
 		}
 	}
 
-	pub(crate) fn child_at_range(
+	pub(crate) fn slot_at_range(
 		&self,
 		rel_range: TextRange,
-	) -> Option<(usize, TextSize, GreenElementRef<'_>)> {
+	) -> Option<(usize, TextSize, &'_ Slot)> {
 		let idx = self
 			.slice()
 			.binary_search_by(|it| {
@@ -160,43 +185,55 @@ impl GreenNodeData {
 			})
 			// XXX: this handles empty ranges
 			.unwrap_or_else(|it| it.saturating_sub(1));
-		let child = &self
+		let slot = &self
 			.slice()
 			.get(idx)
 			.filter(|it| it.rel_range().contains_range(rel_range))?;
-		Some((idx, child.rel_offset(), child.as_ref()))
+		Some((idx, slot.rel_offset(), slot))
+	}
+
+	/// Replaces the child in a slot with a new element or removes it
+	#[must_use]
+	pub fn replace_child(&self, index: usize, replacement: Option<GreenElement>) -> GreenNode {
+		let mut replacement = replacement;
+		let slots = self.slots().enumerate().map(|(i, child)| {
+			if i == index {
+				replacement.take()
+			} else {
+				child.as_ref().map(|elem| elem.to_owned())
+			}
+		});
+		GreenNode::new(self.kind(), slots)
 	}
 
 	#[must_use]
-	pub fn replace_child(&self, index: usize, new_child: GreenElement) -> GreenNode {
-		let mut replacement = Some(new_child);
-		let children = self.children().enumerate().map(|(i, child)| {
-			if i == index {
-				replacement.take().unwrap()
-			} else {
-				child.to_owned()
-			}
-		});
-		GreenNode::new(self.kind(), children)
-	}
-	#[must_use]
-	pub fn insert_child(&self, index: usize, new_child: GreenElement) -> GreenNode {
+	pub fn insert_slot(&self, index: usize, new_slot: Option<GreenElement>) -> GreenNode {
 		// https://github.com/rust-lang/rust/issues/34433
-		self.splice_children(index..index, iter::once(new_child))
+		self.splice_slots(index..index, iter::once(new_slot))
 	}
+
 	#[must_use]
-	pub fn remove_child(&self, index: usize) -> GreenNode {
-		self.splice_children(index..=index, iter::empty())
+	pub fn remove_slot(&self, index: usize) -> GreenNode {
+		self.splice_slots(index..=index, iter::empty())
 	}
+
 	#[must_use]
-	pub fn splice_children<R, I>(&self, range: R, replace_with: I) -> GreenNode
+	pub fn splice_slots<R, I>(&self, range: R, replace_with: I) -> GreenNode
 	where
 		R: ops::RangeBounds<usize>,
-		I: IntoIterator<Item = GreenElement>,
+		I: IntoIterator<Item = Option<GreenElement>>,
 	{
-		let mut children: Vec<_> = self.children().map(|it| it.to_owned()).collect();
-		children.splice(range, replace_with);
-		GreenNode::new(self.kind(), children)
+		let mut slots: Vec<_> = self
+			.slots()
+			.map(|slot| match slot {
+				Slot::Empty { .. } => None,
+				Slot::Node { node, .. } => Some(NodeOrToken::Node(node.to_owned())),
+				Slot::Token { token, .. } => Some(NodeOrToken::Token(token.to_owned())),
+			})
+			.collect();
+
+		slots.splice(range, replace_with);
+		GreenNode::new(self.kind(), slots)
 	}
 }
 
@@ -216,18 +253,23 @@ impl ops::Deref for GreenNode {
 impl GreenNode {
 	/// Creates new Node.
 	#[inline]
-	pub fn new<I>(kind: SyntaxKind, children: I) -> GreenNode
+	pub fn new<I>(kind: SyntaxKind, slots: I) -> GreenNode
 	where
-		I: IntoIterator<Item = GreenElement>,
+		I: IntoIterator<Item = Option<GreenElement>>,
 		I::IntoIter: ExactSizeIterator,
 	{
 		let mut text_len: TextSize = 0.into();
-		let children = children.into_iter().map(|el| {
+		let slots = slots.into_iter().map(|el| {
 			let rel_offset = text_len;
-			text_len += el.text_len();
 			match el {
-				NodeOrToken::Node(node) => GreenChild::Node { rel_offset, node },
-				NodeOrToken::Token(token) => GreenChild::Token { rel_offset, token },
+				Some(el) => {
+					text_len += el.text_len();
+					match el {
+						NodeOrToken::Node(node) => Slot::Node { rel_offset, node },
+						NodeOrToken::Token(token) => Slot::Token { rel_offset, token },
+					}
+				}
+				None => Slot::Empty { rel_offset },
 			}
 		});
 
@@ -237,11 +279,11 @@ impl GreenNode {
 				text_len: 0.into(),
 				_c: Count::new(),
 			},
-			children,
+			slots,
 		);
 
 		// XXX: fixup `text_len` after construction, because we can't iterate
-		// `children` twice.
+		// `slots` twice.
 		let data = {
 			let mut data = Arc::from_thin(data);
 			Arc::get_mut(&mut data).unwrap().header.text_len = text_len;
@@ -261,53 +303,58 @@ impl GreenNode {
 	#[inline]
 	pub(crate) unsafe fn from_raw(ptr: ptr::NonNull<GreenNodeData>) -> GreenNode {
 		let arc = Arc::from_raw(&ptr.as_ref().data as *const ReprThin);
-		let arc = mem::transmute::<Arc<ReprThin>, ThinArc<GreenNodeHead, GreenChild>>(arc);
+		let arc = mem::transmute::<Arc<ReprThin>, ThinArc<GreenNodeHead, Slot>>(arc);
 		GreenNode { ptr: arc }
 	}
 }
 
-impl GreenChild {
+impl Slot {
 	#[inline]
-	pub(crate) fn as_ref(&self) -> GreenElementRef {
+	pub(crate) fn as_ref(&self) -> Option<GreenElementRef> {
 		match self {
-			GreenChild::Node { node, .. } => NodeOrToken::Node(node),
-			GreenChild::Token { token, .. } => NodeOrToken::Token(token),
+			Slot::Node { node, .. } => Some(NodeOrToken::Node(node)),
+			Slot::Token { token, .. } => Some(NodeOrToken::Token(token)),
+			Slot::Empty { .. } => None,
 		}
 	}
 	#[inline]
 	pub(crate) fn rel_offset(&self) -> TextSize {
 		match self {
-			GreenChild::Node { rel_offset, .. } | GreenChild::Token { rel_offset, .. } => {
-				*rel_offset
-			}
+			Slot::Node { rel_offset, .. }
+			| Slot::Token { rel_offset, .. }
+			| Slot::Empty { rel_offset } => *rel_offset,
 		}
 	}
 	#[inline]
 	fn rel_range(&self) -> TextRange {
-		let len = self.as_ref().text_len();
-		TextRange::at(self.rel_offset(), len)
+		let text_len = match self.as_ref() {
+			None => TextSize::from(0),
+			Some(element) => element.text_len(),
+		};
+
+		TextRange::at(self.rel_offset(), text_len)
 	}
 }
 
 #[derive(Debug, Clone)]
-pub(crate) struct Children<'a> {
-	pub(crate) raw: slice::Iter<'a, GreenChild>,
+pub(crate) struct Slots<'a> {
+	pub(crate) raw: slice::Iter<'a, Slot>,
 }
 
 // NB: forward everything stable that iter::Slice specializes as of Rust 1.39.0
-impl ExactSizeIterator for Children<'_> {
+impl ExactSizeIterator for Slots<'_> {
 	#[inline(always)]
 	fn len(&self) -> usize {
 		self.raw.len()
 	}
 }
 
-impl<'a> Iterator for Children<'a> {
-	type Item = GreenElementRef<'a>;
+impl<'a> Iterator for Slots<'a> {
+	type Item = &'a Slot;
 
 	#[inline]
-	fn next(&mut self) -> Option<GreenElementRef<'a>> {
-		self.raw.next().map(GreenChild::as_ref)
+	fn next(&mut self) -> Option<&'a Slot> {
+		self.raw.next()
 	}
 
 	#[inline]
@@ -324,16 +371,16 @@ impl<'a> Iterator for Children<'a> {
 	}
 
 	#[inline]
-	fn nth(&mut self, n: usize) -> Option<Self::Item> {
-		self.raw.nth(n).map(GreenChild::as_ref)
-	}
-
-	#[inline]
 	fn last(mut self) -> Option<Self::Item>
 	where
 		Self: Sized,
 	{
 		self.next_back()
+	}
+
+	#[inline]
+	fn nth(&mut self, n: usize) -> Option<Self::Item> {
+		self.raw.nth(n)
 	}
 
 	#[inline]
@@ -349,15 +396,15 @@ impl<'a> Iterator for Children<'a> {
 	}
 }
 
-impl<'a> DoubleEndedIterator for Children<'a> {
+impl<'a> DoubleEndedIterator for Slots<'a> {
 	#[inline]
 	fn next_back(&mut self) -> Option<Self::Item> {
-		self.raw.next_back().map(GreenChild::as_ref)
+		self.raw.next_back()
 	}
 
 	#[inline]
 	fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
-		self.raw.nth_back(n).map(GreenChild::as_ref)
+		self.raw.nth_back(n)
 	}
 
 	#[inline]
@@ -373,4 +420,147 @@ impl<'a> DoubleEndedIterator for Children<'a> {
 	}
 }
 
+impl FusedIterator for Slots<'_> {}
+
+#[derive(Debug, Clone)]
+pub(crate) struct Child<'a> {
+	slot: u32,
+	rel_offset: TextSize,
+	element: GreenElementRef<'a>,
+}
+
+impl<'a> Child<'a> {
+	pub fn slot(&self) -> u32 {
+		self.slot
+	}
+	pub fn rel_offset(&self) -> TextSize {
+		self.rel_offset
+	}
+	pub fn element(&self) -> GreenElementRef<'a> {
+		self.element
+	}
+}
+
+impl<'a> TryFrom<(usize, &'a Slot)> for Child<'a> {
+	type Error = ();
+
+	fn try_from((index, slot): (usize, &'a Slot)) -> Result<Self, Self::Error> {
+		match slot {
+			Slot::Empty { .. } => Err(()),
+			Slot::Node { node, rel_offset } => Ok(Child {
+				element: NodeOrToken::Node(node),
+				slot: index as u32,
+				rel_offset: *rel_offset,
+			}),
+			Slot::Token { token, rel_offset } => Ok(Child {
+				element: NodeOrToken::Token(token),
+				slot: index as u32,
+				rel_offset: *rel_offset,
+			}),
+		}
+	}
+}
+
+#[derive(Debug, Clone)]
+pub(crate) struct Children<'a> {
+	slots: Enumerate<Slots<'a>>,
+}
+
+impl<'a> Children<'a> {
+	pub fn new(slots: Enumerate<Slots<'a>>) -> Self {
+		Self { slots }
+	}
+}
+
+impl<'a> Iterator for Children<'a> {
+	type Item = Child<'a>;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		self.slots.find_map(|it| Child::try_from(it).ok())
+	}
+
+	fn size_hint(&self) -> (usize, Option<usize>) {
+		self.slots.size_hint()
+	}
+}
+
+impl<'a> DoubleEndedIterator for Children<'a> {
+	fn next_back(&mut self) -> Option<Self::Item> {
+		loop {
+			let next = self.slots.next_back()?;
+
+			if let Ok(child) = Child::try_from(next) {
+				return Some(child);
+			}
+		}
+	}
+}
+
 impl FusedIterator for Children<'_> {}
+
+#[cfg(test)]
+mod tests {
+	use crate::api::RawLanguage;
+	use crate::{GreenNode, SyntaxKind, TreeBuilder};
+
+	fn build_test_list() -> GreenNode {
+		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+
+		// list
+		builder.start_node(SyntaxKind(1));
+
+		// element 1
+		builder.start_node(SyntaxKind(2));
+		builder.token(SyntaxKind(3), "a");
+		builder.finish_node();
+
+		// Missing ,
+		builder.missing();
+
+		// element 2
+		builder.start_node(SyntaxKind(2));
+		builder.token(SyntaxKind(3), "b");
+		builder.finish_node();
+
+		builder.finish_node();
+
+		builder.finish_green()
+	}
+
+	#[test]
+	fn children() {
+		let root = build_test_list();
+
+		// Test that children skips missing
+		assert_eq!(root.children().count(), 2);
+		assert_eq!(
+			root.children()
+				.map(|child| child.element.to_string())
+				.collect::<Vec<_>>(),
+			vec!["a", "b"]
+		);
+
+		// Slot 2 (index 1) is empty
+		assert_eq!(
+			root.children().map(|child| child.slot).collect::<Vec<_>>(),
+			vec![0, 2]
+		);
+
+		// Same when reverse
+		assert_eq!(
+			root.children()
+				.rev()
+				.map(|child| child.slot)
+				.collect::<Vec<_>>(),
+			vec![2, 0]
+		);
+	}
+
+	#[test]
+	fn slots() {
+		let root = build_test_list();
+
+		// Has 3 slots, one is missing
+		assert_eq!(root.slots().len(), 3);
+	}
+}
