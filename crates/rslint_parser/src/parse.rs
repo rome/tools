@@ -1,7 +1,7 @@
 //! Utilities for high level parsing of js code.
 
 use crate::{
-	ast::{Expr, Module, Script},
+	ast::{JsAnyExpression, JsModule, JsScript},
 	*,
 };
 use rslint_errors::Severity;
@@ -47,7 +47,7 @@ impl<T> Parse<T> {
 	/// ", 0);
 	///
 	/// // The first stmt in the root syntax node (Script) is the if statement.
-	/// let if_stmt = parse.tree().items().first().unwrap();
+	/// let if_stmt = parse.tree().statements().first().unwrap();
 	///
 	/// assert_eq!(if_stmt.syntax().kind(), SyntaxKind::IF_STMT);
 	/// ```
@@ -155,7 +155,7 @@ fn parse_common(
 ///
 /// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
 /// ```
-pub fn parse_text(text: &str, file_id: usize) -> Parse<Script> {
+pub fn parse_text(text: &str, file_id: usize) -> Parse<JsScript> {
 	let (events, errors, tokens) = parse_common(text, file_id, Syntax::default());
 	let mut tree_sink = LosslessTreeSink::new(text, &tokens);
 	crate::process(&mut tree_sink, events, errors);
@@ -197,7 +197,7 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<Script> {
 /// // End result does not include whitespace because the parsing is lossy in this case
 /// assert_eq!(&util::concat_tokens(&tokens), "foo.bar[2]")
 /// ```
-pub fn parse_text_lossy(text: &str, file_id: usize) -> Parse<Script> {
+pub fn parse_text_lossy(text: &str, file_id: usize) -> Parse<JsScript> {
 	let (events, errors, tokens) = parse_common(text, file_id, Syntax::default());
 	let mut tree_sink = LossyTreeSink::new(text, &tokens);
 	crate::process(&mut tree_sink, events, errors);
@@ -206,7 +206,7 @@ pub fn parse_text_lossy(text: &str, file_id: usize) -> Parse<Script> {
 }
 
 /// Same as [`parse_text_lossy`] but configures the parser to parse an ECMAScript module instead of a Script
-pub fn parse_module_lossy(text: &str, file_id: usize) -> Parse<Module> {
+pub fn parse_module_lossy(text: &str, file_id: usize) -> Parse<JsModule> {
 	let (events, errors, tokens) = parse_common(text, file_id, Syntax::default().module());
 	let mut tree_sink = LossyTreeSink::new(text, &tokens);
 	crate::process(&mut tree_sink, events, errors);
@@ -215,7 +215,7 @@ pub fn parse_module_lossy(text: &str, file_id: usize) -> Parse<Module> {
 }
 
 /// Same as [`parse_text`] but configures the parser to parse an ECMAScript module instead of a script
-pub fn parse_module(text: &str, file_id: usize) -> Parse<Module> {
+pub fn parse_module(text: &str, file_id: usize) -> Parse<JsModule> {
 	let (events, errors, tokens) = parse_common(text, file_id, Syntax::default().module());
 	let mut tree_sink = LosslessTreeSink::new(text, &tokens);
 	crate::process(&mut tree_sink, events, errors);
@@ -225,7 +225,7 @@ pub fn parse_module(text: &str, file_id: usize) -> Parse<Module> {
 
 /// Losslessly Parse text into an expression [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).
 /// Or turned into a typed [`Expr`](Expr) with [`tree`](Parse::tree).
-pub fn parse_expr(text: &str, file_id: usize) -> Parse<Expr> {
+pub fn parse_expr(text: &str, file_id: usize) -> Parse<JsAnyExpression> {
 	let (tokens, mut errors) = tokenize(text, file_id);
 	let tok_source = TokenSource::new(text, &tokens);
 	let mut parser = crate::Parser::new(tok_source, file_id, Syntax::default());

@@ -10,7 +10,7 @@ pub enum JsNum {
 	BigInt(BigInt),
 }
 
-/// Parse a js number as a string into a number.  
+/// Parse a js number as a string into a number.
 pub fn parse_js_num(num: String) -> Option<JsNum> {
 	let (radix, mut raw) = match num.get(0..2) {
 		Some("0x") | Some("0X") => (16, num.get(2..).unwrap().replace("_", "")),
@@ -45,7 +45,7 @@ pub fn parse_js_num(num: String) -> Option<JsNum> {
 #[cfg(test)]
 mod tests {
 	use crate::{
-		ast::{Expr, LiteralKind},
+		ast::{JsAnyExpression, LiteralKind},
 		parse_expr,
 	};
 	use num_bigint::ToBigInt;
@@ -53,7 +53,7 @@ mod tests {
 	macro_rules! assert_float {
 		($literal:literal, $value:expr) => {
 			let parsed = parse_expr($literal, 0);
-			if let Expr::Literal(literal) = parsed.tree() {
+			if let JsAnyExpression::Literal(literal) = parsed.tree() {
 				assert_eq!(literal.as_number(), Some($value));
 			} else {
 				panic!("Parsed expression is not a literal");
@@ -64,7 +64,7 @@ mod tests {
 	macro_rules! assert_bigint {
 		($literal:literal, $value:expr) => {
 			let parsed = parse_expr($literal, 0);
-			if let Expr::Literal(literal) = parsed.tree() {
+			if let JsAnyExpression::Literal(literal) = parsed.tree() {
 				let val = ($value as u64).to_bigint().unwrap();
 				assert_eq!(literal.kind(), LiteralKind::BigInt(val));
 			} else {

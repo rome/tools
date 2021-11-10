@@ -160,7 +160,7 @@ pub trait SyntaxNodeExt {
 			string.as_bytes_mut()[0] = string.as_bytes()[0] - 32;
 		}
 
-		if self.to_node().is::<ast::Stmt>() {
+		if self.to_node().is::<ast::JsAnyStatement>() {
 			string = string.replace("stmt", "statement");
 		}
 

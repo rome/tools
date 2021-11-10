@@ -1,5 +1,5 @@
 use crate::ast::ArgList;
-use crate::{ast::Module, parse_module, AstNode, Parse, ParserError};
+use crate::{ast::JsModule, parse_module, AstNode, Parse, ParserError};
 use expect_test::expect_file;
 use rslint_errors::{file::SimpleFiles, Emitter};
 use rslint_syntax::SyntaxKind;
@@ -43,7 +43,7 @@ fn test_data_dir() -> PathBuf {
 	project_dir().join("rslint_parser/test_data")
 }
 
-fn try_parse(path: &str, text: &str) -> Parse<Module> {
+fn try_parse(path: &str, text: &str) -> Parse<JsModule> {
 	let res = catch_unwind(|| parse_module(text, 0));
 	assert!(
 		!res.is_err(),

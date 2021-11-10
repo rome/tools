@@ -14,12 +14,12 @@
 JsScript =
     interpreter: 'js_shebang'? // rslint: shebang
     directives: 'js_directive'* // Or a directive node?
-    stmts: JsAnyStatement* // Called items
+    statements: JsAnyStatement* // Called items
 
 JsModule =
     interpreter: 'js_shebang'?
     directives: 'js_directive'*
-    stmts: JsAnyStatement*
+    statements: JsAnyStatement*
 
 // --------------------- Unknowns ---------------------
 // Hack to make ungrammar happy. Let's hope they never ban recursive types xD
@@ -65,7 +65,7 @@ JsAnyStatement = JsBlockStatement       // BlockStmt
     | JsUnknownStatement
 
 JsBlockStatement =
-    '{' stmts: JsAnyStatement* '}'
+    '{' statements: JsAnyStatement* '}'
 
 JsBreakStatement =
     'break'

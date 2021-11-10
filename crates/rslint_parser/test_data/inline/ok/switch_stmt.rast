@@ -1,4 +1,4 @@
-MODULE@0..38
+JS_MODULE@0..38
   LIST@0..37
     SWITCH_STMT@0..37
       SWITCH_KW@0..6 "switch"

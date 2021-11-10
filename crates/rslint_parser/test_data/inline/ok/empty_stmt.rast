@@ -1,4 +1,4 @@
-MODULE@0..2
+JS_MODULE@0..2
   LIST@0..1
     EMPTY_STMT@0..1
       SEMICOLON@0..1 ";"

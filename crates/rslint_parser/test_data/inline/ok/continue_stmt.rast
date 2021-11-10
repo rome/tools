@@ -1,4 +1,4 @@
-MODULE@0..64
+JS_MODULE@0..64
   LIST@0..63
     LABELLED_STMT@0..7
       NAME@0..3

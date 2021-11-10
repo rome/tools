@@ -1,4 +1,4 @@
-MODULE@0..22
+JS_MODULE@0..22
   LIST@0..21
     FN_DECL@0..21
       FUNCTION_KW@0..8 "function"

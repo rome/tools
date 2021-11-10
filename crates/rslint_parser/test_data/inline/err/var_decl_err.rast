@@ -1,4 +1,4 @@
-MODULE@0..32
+JS_MODULE@0..32
   LIST@0..31
     VAR_DECL@0..8
       VAR_KW@0..3 "var"

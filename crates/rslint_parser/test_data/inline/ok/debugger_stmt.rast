@@ -1,4 +1,4 @@
-MODULE@0..10
+JS_MODULE@0..10
   LIST@0..9
     DEBUGGER_STMT@0..9
       DEBUGGER_KW@0..8 "debugger"

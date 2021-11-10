@@ -5,18 +5,18 @@ use crate::{ast::*, syntax_node::SyntaxNode, SyntaxKind, SyntaxKind::*, SyntaxNo
 /// Either a statement or a declaration such as a function
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum StmtListItem {
-	Stmt(Stmt),
+	Stmt(JsAnyStatement),
 	Decl(Decl),
 }
 
 impl AstNode for StmtListItem {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		Stmt::can_cast(kind) || Decl::can_cast(kind)
+		JsAnyStatement::can_cast(kind) || Decl::can_cast(kind)
 	}
 
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Stmt::can_cast(syntax.kind()) {
-			Some(StmtListItem::Stmt(Stmt::cast(syntax)?))
+		if JsAnyStatement::can_cast(syntax.kind()) {
+			Some(StmtListItem::Stmt(JsAnyStatement::cast(syntax)?))
 		} else {
 			Some(StmtListItem::Decl(Decl::cast(syntax)?))
 		}
@@ -93,21 +93,23 @@ impl WildcardImport {
 }
 
 impl IfStmt {
-	pub fn cons(&self) -> Option<Stmt> {
-		self.syntax().child_with_ast::<Stmt>().filter(|cons| {
-			cons.syntax().text_range().start()
-				<= self
-					.else_token()
-					.map(|x| x.text_range().start())
-					.unwrap_or_else(|_| cons.syntax().text_range().start())
-		})
+	pub fn cons(&self) -> Option<JsAnyStatement> {
+		self.syntax()
+			.child_with_ast::<JsAnyStatement>()
+			.filter(|cons| {
+				cons.syntax().text_range().start()
+					<= self
+						.else_token()
+						.map(|x| x.text_range().start())
+						.unwrap_or_else(|_| cons.syntax().text_range().start())
+			})
 	}
 
-	pub fn alt(&self) -> Option<Stmt> {
+	pub fn alt(&self) -> Option<JsAnyStatement> {
 		let possible_blocks = self
 			.syntax()
 			.children()
-			.filter(|child| child.is::<Stmt>())
+			.filter(|child| child.is::<JsAnyStatement>())
 			.collect::<Vec<_>>();
 
 		// handle if (true) else {}
@@ -146,7 +148,7 @@ mod tests {
 	fn var_decl_let_token() {
 		let parsed = parse_text("/* */let a = 5;", 0).tree();
 		let var_decl = parsed
-			.items()
+			.statements()
 			.iter()
 			.find_map(|stmt| ast::VarDecl::cast(stmt.syntax().clone()));
 

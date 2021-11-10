@@ -1,7 +1,7 @@
 //! General utility functions for parsing and error checking.
 
 use crate::{
-	ast::{Expr, GroupingExpr, NameRef},
+	ast::{GroupingExpr, JsAnyExpression, NameRef},
 	SyntaxKind::*,
 	*,
 };
@@ -11,7 +11,7 @@ use std::collections::HashMap;
 /// Check if assignment to an expression is invalid and report an error if so.
 ///
 /// For example: `++true` is invalid.
-pub fn check_simple_assign_target(p: &mut Parser, target: &Expr, range: TextRange) {
+pub fn check_simple_assign_target(p: &mut Parser, target: &JsAnyExpression, range: TextRange) {
 	let err = p
 		.err_builder(&format!(
 			"Invalid assignment to `{}`",
@@ -24,7 +24,7 @@ pub fn check_simple_assign_target(p: &mut Parser, target: &Expr, range: TextRang
 	}
 }
 
-fn is_simple_assign_target(p: &mut Parser, target: &Expr) -> bool {
+fn is_simple_assign_target(p: &mut Parser, target: &JsAnyExpression) -> bool {
 	match target.syntax().kind() {
 		NAME_REF | BRACKET_EXPR | DOT_EXPR | PRIVATE_PROP_ACCESS => true,
 		GROUPING_EXPR => {
@@ -42,7 +42,12 @@ fn is_simple_assign_target(p: &mut Parser, target: &Expr) -> bool {
 	}
 }
 
-pub fn check_assign_target(p: &mut Parser, target: &Expr, range: TextRange, deny_call: bool) {
+pub fn check_assign_target(
+	p: &mut Parser,
+	target: &JsAnyExpression,
+	range: TextRange,
+	deny_call: bool,
+) {
 	if p.typescript() {
 		let is_eval_or_args = target.text() == "eval" || target.text() == "arguments";
 		if is_eval_or_args && p.state.strict.is_some() {
@@ -53,12 +58,14 @@ pub fn check_assign_target(p: &mut Parser, target: &Expr, range: TextRange, deny
 			p.error(err);
 		}
 
-		fn should_deny(e: &Expr, deny_call: bool) -> bool {
+		fn should_deny(e: &JsAnyExpression, deny_call: bool) -> bool {
 			match e {
-				Expr::Literal(_) => false,
-				Expr::CallExpr(_) => deny_call,
-				Expr::BinExpr(_) => false,
-				Expr::GroupingExpr(it) => it.inner().map_or(false, |i| should_deny(&i, deny_call)),
+				JsAnyExpression::Literal(_) => false,
+				JsAnyExpression::CallExpr(_) => deny_call,
+				JsAnyExpression::BinExpr(_) => false,
+				JsAnyExpression::GroupingExpr(it) => {
+					it.inner().map_or(false, |i| should_deny(&i, deny_call))
+				}
 				_ => true,
 			}
 		}
@@ -229,21 +236,23 @@ fn check_name_pat(
 }
 
 /// Check the LHS expression inside of a for...in or for...of statement according to
-pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) {
+pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker) {
 	match expr {
-		Expr::NameRef(ident) => check_simple_assign_target(p, &Expr::from(ident), marker.range(p)),
-		Expr::DotExpr(_) | Expr::BracketExpr(_) => {}
-		Expr::AssignExpr(expr) => {
+		JsAnyExpression::NameRef(ident) => {
+			check_simple_assign_target(p, &JsAnyExpression::from(ident), marker.range(p))
+		}
+		JsAnyExpression::DotExpr(_) | JsAnyExpression::BracketExpr(_) => {}
+		JsAnyExpression::AssignExpr(expr) => {
 			if let Some(rhs) = expr.rhs() {
 				check_for_stmt_lhs(p, rhs, marker);
 			}
 		}
-		Expr::GroupingExpr(expr) => {
+		JsAnyExpression::GroupingExpr(expr) => {
 			if let Ok(inner) = expr.inner() {
 				check_for_stmt_lhs(p, inner, marker);
 			}
 		}
-		Expr::ArrayExpr(expr) => {
+		JsAnyExpression::ArrayExpr(expr) => {
 			let elem_count = expr.elements().len();
 
 			for (idx, elem) in expr.elements().iter().enumerate() {
@@ -257,10 +266,10 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 						check_spread_element(p, element, marker);
 					}
 				}
-				check_for_stmt_lhs(p, elem.syntax().to::<Expr>(), marker);
+				check_for_stmt_lhs(p, elem.syntax().to::<JsAnyExpression>(), marker);
 			}
 		}
-		Expr::ObjectExpr(expr) => {
+		JsAnyExpression::ObjectExpr(expr) => {
 			if let Some(trailing_comma) = expr.props().trailing_separator() {
 				// Untyped node machine go brr
 				let comma_range = trailing_comma.text_range();
@@ -304,8 +313,8 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) 
 	}
 }
 
-fn check_spread_element(p: &mut Parser, lhs: Expr, marker: &CompletedMarker) {
-	if let Expr::AssignExpr(expr) = lhs {
+fn check_spread_element(p: &mut Parser, lhs: JsAnyExpression, marker: &CompletedMarker) {
+	if let JsAnyExpression::AssignExpr(expr) = lhs {
 		let err = p
 			.err_builder("Illegal spread element in assignment target")
 			.primary(marker.offset_range(p, expr.syntax().trimmed_range()), "");
@@ -316,7 +325,7 @@ fn check_spread_element(p: &mut Parser, lhs: Expr, marker: &CompletedMarker) {
 	}
 }
 
-pub fn check_lhs(p: &mut Parser, expr: Expr, marker: &CompletedMarker) {
+pub fn check_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker) {
 	if expr.syntax().kind() == ASSIGN_EXPR {
 		let err = p
 			.err_builder("Illegal assignment expression in for statement")

@@ -1,4 +1,4 @@
-MODULE@0..36
+JS_MODULE@0..36
   LIST@0..35
     THROW_STMT@0..23
       THROW_KW@0..5 "throw"

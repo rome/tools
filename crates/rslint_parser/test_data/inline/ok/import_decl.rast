@@ -1,4 +1,4 @@
-MODULE@0..28
+JS_MODULE@0..28
   LIST@0..27
     IMPORT_DECL@0..27
       IMPORT_KW@0..6 "import"

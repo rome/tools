@@ -1,4 +1,4 @@
-MODULE@0..26
+JS_MODULE@0..26
   LIST@0..25
     VAR_DECL@0..25
       CONST_KW@0..5 "const"

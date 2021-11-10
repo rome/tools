@@ -1,4 +1,4 @@
-MODULE@0..95
+JS_MODULE@0..95
   LIST@0..94
     FOR_STMT@0..31
       FOR_KW@0..3 "for"

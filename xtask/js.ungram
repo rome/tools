@@ -47,14 +47,22 @@ JsUnknownBinding = SyntaxElement*
 JsUnknownAssignmentTarget = SyntaxElement*
 
 Ident = 'ident'
-Script = 'shebang'? items:Stmt*
-Module = 'shebang'? items:ModuleItem*
+
+// TODO #1725 add directives (JsDirective (';' JsDirective)*)
+JsScript =
+	interpreter: 'js_shebang'?
+	statements: JsAnyStatement*
+
+// TODO #1725 add directives (JsDirective (';' JsDirective)*)
+JsModule =
+	interpreter: 'js_shebang'?
+	statements: JsAnyStatement*
 
 ///////////////
 // STATEMENTS
 ///////////////
 
-Stmt =
+JsAnyStatement =
 	BlockStmt
 	| EmptyStmt
 	| ExprStmt
@@ -74,11 +82,20 @@ Stmt =
 	| TryStmt
 	| DebuggerStmt
 	| Decl
+	| ImportDecl
+	| ExportNamed
+	| ExportDefaultDecl
+	| ExportDefaultExpr
+	| ExportWildcard
+	| ExportDecl
+	| TsImportEqualsDecl
+	| TsExportAssignment
+	| TsNamespaceExportDecl
 	| JsUnknownStatement
 
 
 // Block statement
-BlockStmt = '{' stmts: Stmt* '}'
+BlockStmt = '{' stmts: JsAnyStatement* '}'
 
 
 // Empty statemnet
@@ -86,18 +103,18 @@ EmptyStmt = ';'?
 
 
 // Expression statement
-ExprStmt = expr: Expr
+ExprStmt = expr: JsAnyExpression
 
 
 // while statement
-WhileStmt = 'while' condition: Condition cons:Stmt
+WhileStmt = 'while' condition: Condition cons: JsAnyStatement
 
 // do while statement
-DoWhileStmt = 'do'  cons:Stmt 'while' condition:Condition ';'?
+DoWhileStmt = 'do'  cons:JsAnyStatement 'while' condition:Condition ';'?
 
 
 // if statement
-IfStmt = 'if' condition: Condition manual__cons:Stmt 'else' manual__alt:Stmt
+IfStmt = 'if' condition: Condition manual__cons: JsAnyStatement 'else' manual__alt: JsAnyStatement
 
 
 // for..in statement
@@ -108,21 +125,21 @@ ForStmt =
 	test:ForStmtTest?
 	update:ForStmtUpdate?
 	')'
-	cons:Stmt
+	cons:JsAnyStatement
 
 ForStmtInit = inner:ForHead ';'
-ForHead = VarDecl | Expr
+ForHead = VarDecl | JsAnyExpression
 
-ForStmtTest = expr:Expr ';'
+ForStmtTest = expr:JsAnyExpression ';'
 
-ForStmtUpdate = expr:Expr
+ForStmtUpdate = expr:JsAnyExpression
 
 
 // for..in statement
-ForInStmt = 'for' '(' left:ForStmtInit 'in' right:Expr ')' cons:Stmt
+ForInStmt = 'for' '(' left:ForStmtInit 'in' right:JsAnyExpression ')' cons:JsAnyStatement
 
 // for..of statement
-ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:Expr ')' cons:Stmt
+ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:JsAnyExpression ')' cons:JsAnyStatement
 
 
 // continue statement
@@ -134,13 +151,13 @@ BreakStmt = 'break' 'ident'? ';'
 
 
 // return statement
-ReturnStmt = 'return' value:Expr ';'?
+ReturnStmt = 'return' value:JsAnyExpression ';'?
 
 // with statement
-WithStmt = 'with' condition:Condition cons:Stmt
+WithStmt = 'with' condition:Condition cons:JsAnyStatement
 
 // labelled statement
-LabelledStmt = label:Name ':' stmt: Stmt
+LabelledStmt = label:Name ':' stmt: JsAnyStatement
 
 // switch statement
 SwitchStmt =
@@ -152,12 +169,12 @@ SwitchStmt =
 
 SwitchCase = CaseClause | DefaultClause
 
-CaseClause = 'case' test:Expr ':' cons:Stmt*
-DefaultClause = 'default' ':' cons:Stmt*
+CaseClause = 'case' test:JsAnyExpression ':' cons:JsAnyStatement*
+DefaultClause = 'default' ':' cons:JsAnyStatement*
 
 
 // throw statement
-ThrowStmt = 'throw' exception:Expr ';'
+ThrowStmt = 'throw' exception:JsAnyExpression ';'
 
 // try..catch..finally statement
 
@@ -177,7 +194,7 @@ DebuggerStmt = 'debugger' ';'?
 ///////////////
 
 // Expression
-Expr =
+JsAnyExpression =
 	ArrowExpr
 	| Literal
 	| Template
@@ -221,31 +238,31 @@ ThisExpr = 'this'
 // Dot exprssion
 // TODO: review the 'super' token
 // https://github.com/rome/tools/issues/1729
-DotExpr = 'super'? object:Expr '.' prop:Name
+DotExpr = 'super'? object:JsAnyExpression '.' prop:Name
 
 // new expression
-NewExpr = 'new' type_args:TsTypeArgs? object:Expr arguments:ArgList
+NewExpr = 'new' type_args:TsTypeArgs? object:JsAnyExpression arguments:ArgList
 
 // call expression
-CallExpr = type_args:TsTypeArgs? callee:Expr arguments:ArgList
+CallExpr = type_args:TsTypeArgs? callee:JsAnyExpression arguments:ArgList
 
 // await expression
-AwaitExpr = 'await' expr: Expr
+AwaitExpr = 'await' expr: JsAnyExpression
 
 // yield expressoin
-YieldExpr = 'yield' '*'? value:Expr
+YieldExpr = 'yield' '*'? value:JsAnyExpression
 
 // super call expression
 SuperCall = 'super' arguments:ArgList
 
 // import call exression
-ImportCall = 'import' '(' argument:Expr ')'
+ImportCall = 'import' '(' argument:JsAnyExpression ')'
 
 // new target expression
 NewTarget = 'new' '.' 'target'
 
 // conditional expression
-CondExpr = manual__test: Expr '?' manual__cons: Expr  ':' manual__alt: Expr
+CondExpr = manual__test: JsAnyExpression '?' manual__cons: JsAnyExpression  ':' manual__alt: JsAnyExpression
 
 // import meta expression
 ImportMeta = 'import' '.'
@@ -284,7 +301,7 @@ ClassExpr =
 	'class'
 	name: Name
 	type_params:TsTypeParams?
-	parent:Expr?
+	parent:JsAnyExpression?
 	'implements'?
 	implements:TsExprWithTypeArgs?
 	body:ClassBody
@@ -338,14 +355,14 @@ ClassProp =
 	'!'?
 	ty:TsType
 	'='?
-	value:Expr?
+	value:JsAnyExpression?
 	';'?
 
 // Array expression
 ArrayExpr = '[' elements:ExprOrSpread* ']'
 
 ExprOrSpread =
-	Expr
+	JsAnyExpression
 	| SpreadElement
 	| GroupingExpr
 
@@ -360,44 +377,44 @@ AssignExpr =
   manual__rhs:PatternOrExpr
 
 
-PatternOrExpr = Pattern | Expr
+PatternOrExpr = Pattern | JsAnyExpression
 
 // sequence expression
 SequenceExpr =
-	exprs:(Expr (',' Expr)*)
+	exprs:(JsAnyExpression (',' JsAnyExpression)*)
 	bin_expr: BinExpr
 
 
 // grouping expression
-GroupingExpr = '(' inner:Expr ')'
+GroupingExpr = '(' inner:JsAnyExpression ')'
 
 // bracket expression
-BracketExpr =  'super'? manual__object:Expr '[' manual__prop:Expr ']'
+BracketExpr =  'super'? manual__object:JsAnyExpression '[' manual__prop:JsAnyExpression ']'
 
 
 // binary expression
 BinExpr =
-  manual__lhs:Expr
+  manual__lhs:JsAnyExpression
   operator:(
 		'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
 		| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
 		| '&' | '|' | '^' | '??' | '||' | '&&' | 'in' | 'instanceof'
   )
-  manual__rhs:Expr
+  manual__rhs:JsAnyExpression
 
 // unary expression
 UnaryExpr =
   operator:(
 		'delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!' | 'await'
   )
-  argument:Expr
+  argument:JsAnyExpression
 
 PreUpdateExpression =
     operator:('++' | '--')
-    operand:Expr
+    operand:JsAnyExpression
 
 PostUpdateExpression =
-    operand:Expr
+    operand:JsAnyExpression
     operator:('++' | '--')
 
 // Literals
@@ -414,11 +431,11 @@ Null = 'null'
 Undefined = 'undefined'
 
 ExprOrBlock =
-	Expr
+	JsAnyExpression
 	| BlockStmt
 
 ParameterList = '(' parameters:(Pattern (',' Pattern)* ','?) ')'
-ArgList = '(' args:(Expr (',' Expr)* ','?) ')'
+ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
 
 
 ///////////////
@@ -456,14 +473,14 @@ ObjectPatternProp =
 	| JsUnknownPattern
 
 // assign pattern
-AssignPattern = key:Pattern ':'? ty:TsType '=' value:Expr
+AssignPattern = key:Pattern ':'? ty:TsType '=' value:JsAnyExpression
 
 // key value pattern
 KeyValuePattern = key:PropName ':' manual__value:Pattern
 
 
 // expression pattern
-ExprPattern = expr: Expr
+ExprPattern = expr: JsAnyExpression
 
 
 
@@ -483,7 +500,7 @@ ObjectProp =
 
 
 // literal prop
-LiteralProp = manual__key:PropName ':' manual__value:Expr
+LiteralProp = manual__key:PropName ':' manual__value:JsAnyExpression
 
 PropName =
 	ComputedPropertyName
@@ -494,16 +511,16 @@ PropName =
 
 
 // computed property
-ComputedPropertyName = '[' expr: Expr ']'
+ComputedPropertyName = '[' expr: JsAnyExpression ']'
 
 // private property access
-PrivatePropAccess = lhs:Expr '.' rhs:PrivateName
+PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
 
 // spread property
-SpreadProp = '...' value:Expr
+SpreadProp = '...' value:JsAnyExpression
 
 // initialised property
-InitializedProp = key:Name '=' value:Expr
+InitializedProp = key:Name '=' value:JsAnyExpression
 
 // property identifier
 IdentProp = name: Name
@@ -527,13 +544,13 @@ Method =
 	return_type:TsType?
 	body:BlockStmt
 
-SpreadElement = '...' element:Expr
+SpreadElement = '...' element:JsAnyExpression
 
 PrivateName = '#' name: Name
 
 Name = 'ident'
 
-Condition = '(' condition:Expr ')'
+Condition = '(' condition:JsAnyExpression ')'
 
 NameRef = 'ident'
 
@@ -567,25 +584,12 @@ VarDecl = ('var' | 'const' | manual__:'let') declared:(Declarator (',' Declarato
 // @ematipico: should we consider ClassDecl = ClassExpr ?
 ClassDecl  = 'class' name: Name ('extends' parent:NameRef)? body:ClassBody
 
-Declarator = pattern:Pattern '!' '=' value:Expr
+Declarator = pattern:Pattern '!' '=' value:JsAnyExpression
 
 
 ///////////////
 // MODULE SYNTAX
 ///////////////
-
-// module item
-ModuleItem =
-	ImportDecl
-	| ExportNamed
-	| ExportDefaultDecl
-	| ExportDefaultExpr
-	| ExportWildcard
-	| ExportDecl
-	| TsImportEqualsDecl
-	| TsExportAssignment
-	| TsNamespaceExportDecl
-	| Stmt
 
 ImportDecl =
 	'import'
@@ -604,7 +608,7 @@ DefaultDecl =
 
 
 // export default expression
-ExportDefaultExpr = 'export' 'type'? 'default'? expr:Expr
+ExportDefaultExpr = 'export' 'type'? 'default'? expr:JsAnyExpression
 
 // export wildcard
 ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from'
@@ -615,7 +619,7 @@ ExportDecl = 'export' 'type'? decl: Decl
 
 
 // typescript export assignment
-TsExportAssignment = 'export' '=' expr: Expr ';'?
+TsExportAssignment = 'export' '=' expr: JsAnyExpression ';'?
 
 
 // typescript namespace export
@@ -726,7 +730,7 @@ TsTypeRef = name:TsEntityName type_args:TsTypeArgs
 
 // typescript enum
 TsEnum = 'const'? 'enum'  ident: Ident '{' members:TsEnumMember* '}'
-TsEnumMember = ident: Ident '=' value:Expr
+TsEnumMember = ident: Ident '=' value:JsAnyExpression
 
 // typescript template literal types
 TsTemplate = elements:TsTemplateElement
@@ -811,7 +815,7 @@ TsInfer = 'infer' ident: Ident
 // https://github.com/rome/tools/issues/1729
 TsNamespaceDecl = 'declare' ident: Ident '.'? body: TsNamespaceBody
 TsNamespaceBody = TsModuleBlock | TsNamespaceDecl
-TsModuleBlock = '{' items:ModuleItem '}'
+TsModuleBlock = '{' items: JsAnyStatement '}'
 
 
 // type alias declaration
@@ -866,12 +870,12 @@ TsConstructSignatureDecl =
 	':'? return_type:TsType
 
 // typescript property signature
-TsPropertySignature = 'readonly'? prop:Expr '?' ':' ty:TsType
+TsPropertySignature = 'readonly'? prop:JsAnyExpression '?' ':' ty:TsType
 
 // typescript method signature
 TsMethodSignature =
 	'readonly'?
-	key:Expr
+	key:JsAnyExpression
 	type_params:TsTypeParams
 	parameters:ParameterList
 	'?'?
@@ -890,8 +894,8 @@ TsAccessibility = 'private' | 'readonly'
 
 TsConstructorParam = 'readonly' pat:Pattern
 
-TsNonNull = expr:Expr '!'
+TsNonNull = expr:JsAnyExpression '!'
 
-TsAssertion = expr:Expr ident: Ident '<' ty:TsType '>'
+TsAssertion = expr:JsAnyExpression ident: Ident '<' ty:TsType '>'
 
-TsConstAssertion = expr:Expr ident: Ident '<' 'const' '>'
+TsConstAssertion = expr:JsAnyExpression ident: Ident '<' 'const' '>'

@@ -1,4 +1,4 @@
-MODULE@0..19
+JS_MODULE@0..19
   LIST@0..18
     EXPR_STMT@0..4
       NAME_REF@0..3

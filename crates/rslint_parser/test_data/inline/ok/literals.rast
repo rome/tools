@@ -1,4 +1,4 @@
-MODULE@0..33
+JS_MODULE@0..33
   LIST@0..32
     EXPR_STMT@0..1
       LITERAL@0..1

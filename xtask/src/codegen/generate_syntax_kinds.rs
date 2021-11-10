@@ -154,7 +154,7 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			#([#punctuation_values] => { $crate::SyntaxKind::#punctuation };)*
 			#([#all_keywords_idents] => { $crate::SyntaxKind::#all_keywords };)*
 			[ident] => { $crate::SyntaxKind::IDENT };
-			[shebang] => { $crate::SyntaxKind::SHEBANG };
+			[js_shebang] => { $crate::SyntaxKind::JS_SHEBANG };
 			[#] => { $crate::SyntaxKind::HASH };
 		}
 	};

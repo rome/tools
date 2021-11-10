@@ -1,41 +1,47 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::Expr;
+use rslint_parser::ast::JsAnyExpression;
 
-impl ToFormatElement for Expr {
+impl ToFormatElement for JsAnyExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			Expr::ArrowExpr(arrow) => arrow.to_format_element(formatter),
-			Expr::Literal(literal) => literal.to_format_element(formatter),
-			Expr::Template(_) => todo!(),
-			Expr::NameRef(name_ref) => name_ref.to_format_element(formatter),
-			Expr::ThisExpr(_) => todo!(),
-			Expr::ArrayExpr(array_expression) => array_expression.to_format_element(formatter),
-			Expr::ObjectExpr(object_expression) => object_expression.to_format_element(formatter),
-			Expr::GroupingExpr(_) => todo!(),
-			Expr::BracketExpr(_) => todo!(),
-			Expr::DotExpr(_) => todo!(),
-			Expr::NewExpr(_) => todo!(),
-			Expr::CallExpr(call_expression) => call_expression.to_format_element(formatter),
-			Expr::UnaryExpr(_) => todo!(),
-			Expr::BinExpr(_) => todo!(),
-			Expr::CondExpr(_) => todo!(),
-			Expr::AssignExpr(_) => todo!(),
-			Expr::SequenceExpr(expr) => expr.to_format_element(formatter),
-			Expr::FnExpr(_) => todo!(),
-			Expr::ClassExpr(_) => todo!(),
-			Expr::NewTarget(_) => todo!(),
-			Expr::ImportMeta(_) => todo!(),
-			Expr::SuperCall(super_call) => super_call.to_format_element(formatter),
-			Expr::ImportCall(_) => todo!(),
-			Expr::YieldExpr(_) => todo!(),
-			Expr::AwaitExpr(_) => todo!(),
-			Expr::PrivatePropAccess(_) => todo!(),
-			Expr::TsNonNull(_) => todo!(),
-			Expr::TsAssertion(_) => todo!(),
-			Expr::TsConstAssertion(_) => todo!(),
-			Expr::PreUpdateExpression(_) => todo!(),
-			Expr::PostUpdateExpression(_) => todo!(),
-			Expr::JsUnknownExpression(_) => todo!(),
+			JsAnyExpression::ArrowExpr(arrow) => arrow.to_format_element(formatter),
+			JsAnyExpression::Literal(literal) => literal.to_format_element(formatter),
+			JsAnyExpression::Template(_) => todo!(),
+			JsAnyExpression::NameRef(name_ref) => name_ref.to_format_element(formatter),
+			JsAnyExpression::ThisExpr(_) => todo!(),
+			JsAnyExpression::ArrayExpr(array_expression) => {
+				array_expression.to_format_element(formatter)
+			}
+			JsAnyExpression::ObjectExpr(object_expression) => {
+				object_expression.to_format_element(formatter)
+			}
+			JsAnyExpression::GroupingExpr(_) => todo!(),
+			JsAnyExpression::BracketExpr(_) => todo!(),
+			JsAnyExpression::DotExpr(_) => todo!(),
+			JsAnyExpression::NewExpr(_) => todo!(),
+			JsAnyExpression::CallExpr(call_expression) => {
+				call_expression.to_format_element(formatter)
+			}
+			JsAnyExpression::UnaryExpr(_) => todo!(),
+			JsAnyExpression::BinExpr(_) => todo!(),
+			JsAnyExpression::CondExpr(_) => todo!(),
+			JsAnyExpression::AssignExpr(_) => todo!(),
+			JsAnyExpression::SequenceExpr(expr) => expr.to_format_element(formatter),
+			JsAnyExpression::FnExpr(_) => todo!(),
+			JsAnyExpression::ClassExpr(_) => todo!(),
+			JsAnyExpression::NewTarget(_) => todo!(),
+			JsAnyExpression::ImportMeta(_) => todo!(),
+			JsAnyExpression::SuperCall(super_call) => super_call.to_format_element(formatter),
+			JsAnyExpression::ImportCall(_) => todo!(),
+			JsAnyExpression::YieldExpr(_) => todo!(),
+			JsAnyExpression::AwaitExpr(_) => todo!(),
+			JsAnyExpression::PrivatePropAccess(_) => todo!(),
+			JsAnyExpression::TsNonNull(_) => todo!(),
+			JsAnyExpression::TsAssertion(_) => todo!(),
+			JsAnyExpression::TsConstAssertion(_) => todo!(),
+			JsAnyExpression::PreUpdateExpression(_) => todo!(),
+			JsAnyExpression::PostUpdateExpression(_) => todo!(),
+			JsAnyExpression::JsUnknownExpression(_) => todo!(),
 		}
 	}
 }

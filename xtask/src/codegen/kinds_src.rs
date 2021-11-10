@@ -1,7 +1,7 @@
 //! Definitions for the ECMAScript AST used for codegen
 //! Based on the rust analyzer parser and ast definitions
 
-use quote::{format_ident, quote};
+use quote::format_ident;
 
 const LANGUAGE_PREFIXES: [&str; 4] = ["js_", "ts_", "jsx_", "tsx_"];
 
@@ -162,11 +162,12 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"IDENT",
 		"WHITESPACE",
 		"COMMENT",
-		"SHEBANG",
+		"JS_SHEBANG",
 	],
 	nodes: &[
-		"SCRIPT",
-		"MODULE",
+		"JS_SCRIPT",
+		"JS_MODULE",
+		"JS_DIRECTIVE",
 		"ERROR",
 		"BLOCK_STMT",
 		"VAR_DECL",
@@ -372,10 +373,16 @@ pub struct AstNodeSrc {
 }
 
 #[derive(Debug, Eq, PartialEq)]
+pub enum TokenKind {
+	Single(String),
+	Many(Vec<String>),
+}
+
+#[derive(Debug, Eq, PartialEq)]
 pub enum Field {
 	Token {
 		name: String,
-		token_kinds: Vec<String>,
+		kind: TokenKind,
 		optional: bool,
 	},
 	Node {
@@ -399,45 +406,6 @@ impl Field {
 	#[allow(dead_code)]
 	pub fn is_many(&self) -> bool {
 		matches!(self, Field::Node { .. })
-	}
-	pub fn token_kind(&self) -> Option<proc_macro2::TokenStream> {
-		match self {
-			Field::Token { name, .. } => {
-				let token: proc_macro2::TokenStream = name.parse().unwrap();
-				Some(quote! { T![#token] })
-			}
-			_ => None,
-		}
-	}
-
-	pub fn token_kinds(&self) -> Option<proc_macro2::TokenStream> {
-		match self {
-			Field::Token {
-				token_kinds: tokens,
-				..
-			} => {
-				if !tokens.is_empty() {
-					let streamed_tokens: Vec<proc_macro2::TokenStream> = tokens
-						.iter()
-						.map(|token| {
-							let token: proc_macro2::TokenStream = token.parse().unwrap();
-							quote! {
-								T![#token]
-							}
-						})
-						.collect();
-
-					let q = quote! {
-							&[#(#streamed_tokens),*]
-					};
-
-					Some(q)
-				} else {
-					None
-				}
-			}
-			_ => None,
-		}
 	}
 
 	pub fn method_name(&self) -> proc_macro2::Ident {

@@ -211,7 +211,7 @@ fn n_attached_trivias<'a>(
 	kind: SyntaxKind,
 	trivias: impl Iterator<Item = (SyntaxKind, &'a str)>,
 ) -> usize {
-	if ast::ModuleItem::can_cast(kind) {
+	if ast::JsAnyStatement::can_cast(kind) {
 		let mut trivias = trivias.enumerate().peekable();
 
 		match trivias.next() {

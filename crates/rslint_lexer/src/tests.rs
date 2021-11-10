@@ -803,18 +803,18 @@ fn bigint_literals() {
 fn shebang() {
 	assert_lex! {
 		"#! /bin/node",
-		SHEBANG:12
+		JS_SHEBANG:12
 	}
 
 	assert_lex! {
 		"#!/bin/node\n",
-		SHEBANG:11,
+		JS_SHEBANG:11,
 		WHITESPACE:1
 	}
 
 	assert_lex! {
 		"#!/usr/bin/env deno\u{2028}",
-		SHEBANG:19,
+		JS_SHEBANG:19,
 		WHITESPACE:3
 	}
 

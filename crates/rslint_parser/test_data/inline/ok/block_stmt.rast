@@ -1,4 +1,4 @@
-MODULE@0..27
+JS_MODULE@0..27
   LIST@0..26
     BLOCK_STMT@0..2
       L_CURLY@0..1 "{"
