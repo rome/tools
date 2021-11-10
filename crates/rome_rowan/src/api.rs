@@ -398,6 +398,13 @@ impl<L: Language> SyntaxElement<L> {
 			NodeOrToken::Token(it) => it.detach(),
 		}
 	}
+
+	pub fn into_list(self) -> Option<SyntaxList<L>> {
+		match self {
+			NodeOrToken::Node(it) => it.into_list(),
+			_ => None,
+		}
+	}
 }
 
 #[derive(Debug, Clone)]

@@ -21,7 +21,7 @@ macro_rules! at_ident_name {
 
 pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.eat(T![js_shebang]);
+	p.eat_optional(T![js_shebang]);
 	block_items(p, true, true, false, None);
 	m.complete(
 		p,

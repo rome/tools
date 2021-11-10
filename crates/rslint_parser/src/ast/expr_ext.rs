@@ -4,30 +4,36 @@ use crate::{ast::*, numbers::*, util::*, SyntaxText, TextRange, TextSize, TokenS
 use SyntaxKind::*;
 
 impl BracketExpr {
+	#[allow(deprecated)]
 	pub fn object(&self) -> Option<JsAnyExpression> {
 		support::child(self.syntax())
 	}
 
+	#[allow(deprecated)]
 	pub fn prop(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(1)
 	}
 }
 
 impl CondExpr {
+	#[allow(deprecated)]
 	pub fn test(&self) -> Option<JsAnyExpression> {
 		support::child(self.syntax())
 	}
 
+	#[allow(deprecated)]
 	pub fn cons(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(1)
 	}
 
+	#[allow(deprecated)]
 	pub fn alt(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(2)
 	}
 }
 
 impl LiteralProp {
+	#[allow(deprecated)]
 	pub fn key(&self) -> SyntaxResult<PropName> {
 		support::as_mandatory_node::<PropName>(self.syntax())
 	}
@@ -143,10 +149,12 @@ impl BinExpr {
 		self.op_details().map(|t| t.0)
 	}
 
+	#[allow(deprecated)]
 	pub fn lhs(&self) -> Option<JsAnyExpression> {
 		support::child(self.syntax())
 	}
 
+	#[allow(deprecated)]
 	pub fn rhs(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(1)
 	}

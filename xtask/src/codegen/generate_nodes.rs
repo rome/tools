@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use super::kinds_src::AstSrc;
 use crate::codegen::kinds_src::TokenKind;
@@ -24,6 +24,8 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 		.filter(|e| e.name.as_str() != BUILT_IN_TYPE)
 		.collect();
 
+	let nodes_using_slots: HashSet<&str> = HashSet::from(["Script", "Module"]);
+
 	let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = filtered_nodes
 		.iter()
 		.filter_map(|node| {
@@ -31,95 +33,155 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				return None;
 			}
 
+			let uses_slots = nodes_using_slots.contains(node.name.as_str());
 			let name = format_ident!("{}", node.name);
 			let node_kind = format_ident!("{}", to_upper_snake_case(node.name.as_str()));
-			let mut slot = 0usize;
+			let mut slot = 0u32;
 
-			let methods = node.fields.iter().map(|field| match field {
-				Field::Token { kind, name, .. } => {
-					// TODO: make the mandatory/optional bit
-					let method_name = field.method_name();
-					let is_optional = field.is_optional();
+			let methods = node.fields.iter().map(|field| {
+				let method = match field {
+					Field::Token { kind, name, .. } => {
+						// TODO: make the mandatory/optional bit
+						let method_name = field.method_name();
+						let is_optional = field.is_optional();
 
-					match kind {
-						TokenKind::Many(kinds) => {
-							let tokens = token_kinds_to_code(kinds.as_slice());
-							let method_name = format_ident!("{}", name);
-							quote! {
-								pub fn #method_name(&self) -> Option<SyntaxToken> {
-									support::find_token(&self.syntax, #tokens)
+						match kind {
+							TokenKind::Many(kinds) => {
+								let tokens = token_kinds_to_code(kinds.as_slice());
+								let method_name = format_ident!("{}", name);
+								if uses_slots {
+									quote! {
+										pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
+											support::nth_required_token(&self.syntax, #slot)
+										}
+									}
+								} else {
+									quote! {
+										#[allow(deprecated)]
+										pub fn #method_name(&self) -> Option<SyntaxToken> {
+											support::find_token(&self.syntax, #tokens)
+										}
+									}
+								}
+							}
+							TokenKind::Single(kind) => {
+								let token_kind_code = token_kind_to_code(kind.as_str());
+
+								if is_optional {
+									if uses_slots {
+										quote! {
+											pub fn #method_name(&self) -> Option<SyntaxToken> {
+												support::nth_token(&self.syntax, #slot)
+											}
+										}
+									} else {
+										quote! {
+											#[allow(deprecated)]
+											pub fn #method_name(&self) -> Option<SyntaxToken> {
+												support::as_optional_token(&self.syntax, #token_kind_code)
+											}
+										}
+									}
+								} else if uses_slots {
+									quote! {
+										pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
+											support::nth_required_token(&self.syntax, #slot)
+										}
+									}
+								} else {
+									quote! {
+										#[allow(deprecated)]
+										pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
+											support::as_mandatory_token(&self.syntax, #token_kind_code)
+										}
+									}
 								}
 							}
 						}
-						TokenKind::Single(kind) => {
-							let token_kind_code = token_kind_to_code(kind.as_str());
-							if is_optional {
+					}
+					Field::Node {
+						ty,
+						optional,
+						has_many,
+						separated,
+						..
+					} => {
+						let is_built_in_tpe = &ty.eq(BUILT_IN_TYPE);
+						let ty = format_ident!("{}", &ty);
+
+						let method_name = field.method_name();
+						// this is when we encounter a node that has "Unknown" in its name
+						// it will return tokens a and nodes regardless because there's an error
+						// inside the code
+						if *is_built_in_tpe {
+							quote! {
+								pub fn #method_name(&self) -> SyntaxElementChildren {
+									support::elements(&self.syntax)
+								}
+							}
+						} else if *optional {
+							if uses_slots {
 								quote! {
-									pub fn #method_name(&self) -> Option<SyntaxToken> {
-										support::as_optional_token(&self.syntax, #token_kind_code)
+									pub fn #method_name(&self) -> Option<#ty> {
+										support::nth_node(&self.syntax, #slot)
 									}
 								}
 							} else {
 								quote! {
-									pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
-										support::as_mandatory_token(&self.syntax, #token_kind_code)
+									#[allow(deprecated)]
+									pub fn #method_name(&self) -> Option<#ty> {
+										support::as_optional_node(&self.syntax)
 									}
 								}
 							}
-						}
-					}
-				}
-				Field::Node {
-					ty,
-					optional,
-					has_many,
-					separated,
-					..
-				} => {
-					let is_built_in_tpe = &ty.eq(BUILT_IN_TYPE);
-					let ty = format_ident!("{}", &ty);
-
-					let method_name = field.method_name();
-					// this is when we encounter a node that has "Unknown" in its name
-					// it will return tokens a and nodes regardless because there's an error
-					// inside the code
-					if *is_built_in_tpe {
-						quote! {
-							pub fn #method_name(&self) -> SyntaxElementChildren {
-								support::elements(&self.syntax)
+						} else if *has_many {
+							if uses_slots {
+								if *separated {
+									quote! {
+										pub fn #method_name(&self) -> AstSeparatedList<#ty> {
+											support::nth_separated_list(&self.syntax, #slot)
+										}
+									}
+								} else {
+									quote! {
+										pub fn #method_name(&self) -> AstNodeList<#ty> {
+											support::nth_node_list(&self.syntax, #slot)
+										}
+									}
+								}
+							} else if *separated {
+								quote! {
+									#[allow(deprecated)]
+									pub fn #method_name(&self) -> AstSeparatedList<#ty> {
+										support::separated_list(&self.syntax)
+									}
+								}
+							} else {
+								quote! {
+										 #[allow(deprecated)]
+									pub fn #method_name(&self) -> AstNodeList<#ty> {
+										support::node_list(&self.syntax)
+									}
+								}
 							}
-						}
-					} else if *optional {
-						quote! {
-							pub fn #method_name(&self) -> Option<#ty> {
-								support::as_optional_node(&self.syntax)
-							}
-						}
-					} else if *has_many {
-						let field = if *separated {
+						} else if uses_slots {
 							quote! {
-								pub fn #method_name(&self) -> AstSeparatedList<#ty> {
-									support::separated_list(&self.syntax, #slot)
+								pub fn #method_name(&self) -> SyntaxResult<#ty> {
+									support::nth_required_slot(&self.syntax, #slot)
 								}
 							}
 						} else {
 							quote! {
-								pub fn #method_name(&self) -> AstNodeList<#ty> {
-									support::node_list(&self.syntax, #slot)
+								#[allow(deprecated)]
+								pub fn #method_name(&self) -> SyntaxResult<#ty> {
+									support::as_mandatory_node(&self.syntax)
 								}
-							}
-						};
-
-						slot += 1;
-						field
-					} else {
-						quote! {
-							pub fn #method_name(&self) -> SyntaxResult<#ty> {
-								support::as_mandatory_node(&self.syntax)
 							}
 						}
 					}
-				}
+				};
+				slot += 1;
+				method
 			});
 			Some((
 				quote! {

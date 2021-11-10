@@ -361,15 +361,68 @@ mod support {
 		SyntaxToken,
 	};
 	use crate::ast::AstChildren;
-	use crate::SyntaxList;
 	use crate::{SyntaxError, SyntaxResult};
+	use crate::{SyntaxList, SyntaxNodeExt};
+	use rome_rowan::NodeOrToken;
 
-	// TODO: #1725 remove once API are set in stone
-	#[allow(dead_code)]
+	#[deprecated]
 	pub(super) fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
 	}
 
+	pub(super) fn nth_child<N: AstNode>(parent: &SyntaxNode, index: u32) -> Option<N> {
+		parent.element_in_slot(index).map(|element| match element {
+			NodeOrToken::Node(node) => node.to::<N>(),
+			NodeOrToken::Token(token) => panic!(
+				"Expected node {} but found token {:?}",
+				std::any::type_name::<N>(),
+				token
+			),
+		})
+	}
+
+	pub(super) fn nth_required_child<N: AstNode>(
+		parent: &SyntaxNode,
+		index: u32,
+	) -> SyntaxResult<N> {
+		nth_child(parent, index).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
+	}
+
+	pub(super) fn nth_token(parent: &SyntaxNode, index: u32) -> Option<SyntaxToken> {
+		parent.element_in_slot(index).map(|element| match element {
+			NodeOrToken::Token(token) => token,
+			NodeOrToken::Node(node) => panic!("Expected token but found node {:?}", node),
+		})
+	}
+
+	pub(super) fn nth_required_token(parent: &SyntaxNode, index: u32) -> SyntaxResult<SyntaxToken> {
+		nth_token(parent, index).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
+	}
+
+	fn nth_syntax_list(parent: &SyntaxNode, index: u32) -> SyntaxList {
+		parent
+			.element_in_slot(index)
+			.map(|element| {
+				element
+					.clone()
+					.into_list()
+					.unwrap_or_else(|| panic!("Expected list node but found element {:?}", element))
+			})
+			.unwrap_or_else(SyntaxList::default)
+	}
+
+	pub(super) fn nth_node_list<N: AstNode>(parent: &SyntaxNode, index: u32) -> AstNodeList<N> {
+		AstNodeList::new(nth_syntax_list(parent, index))
+	}
+
+	pub(super) fn nth_separated_list<N: AstNode>(
+		parent: &SyntaxNode,
+		index: u32,
+	) -> AstSeparatedList<N> {
+		AstSeparatedList::new(nth_syntax_list(parent, index))
+	}
+
+	#[deprecated]
 	pub(super) fn as_optional_node<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
 	}
@@ -378,30 +431,34 @@ mod support {
 		parent.children_with_tokens()
 	}
 
+	#[deprecated]
 	pub(super) fn children<N: AstNode>(parent: &SyntaxNode) -> AstChildren<N> {
 		AstChildren::new(parent)
 	}
 
-	fn nth_syntax_list(parent: &SyntaxNode, index: usize) -> SyntaxList {
+	#[deprecated]
+	fn syntax_list(parent: &SyntaxNode) -> SyntaxList {
 		// TODO 1724 change parser to insert a missing for empty lists. Gracefully handle this here.
 		parent
 			.children()
 			.filter_map(|node| node.into_list())
-			.nth(index)
+			.next()
 			.unwrap_or_default()
 	}
 
-	pub(super) fn node_list<N: AstNode>(parent: &SyntaxNode, index: usize) -> AstNodeList<N> {
-		AstNodeList::new(nth_syntax_list(parent, index))
+	#[allow(deprecated)]
+	#[deprecated]
+	pub(super) fn node_list<N: AstNode>(parent: &SyntaxNode) -> AstNodeList<N> {
+		AstNodeList::new(syntax_list(parent))
 	}
 
-	pub(super) fn separated_list<N: AstNode>(
-		parent: &SyntaxNode,
-		index: usize,
-	) -> AstSeparatedList<N> {
-		AstSeparatedList::new(nth_syntax_list(parent, index))
+	#[allow(deprecated)]
+	#[deprecated]
+	pub(super) fn separated_list<N: AstNode>(parent: &SyntaxNode) -> AstSeparatedList<N> {
+		AstSeparatedList::new(syntax_list(parent))
 	}
 
+	#[deprecated]
 	pub(super) fn token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
 		parent
 			.children_with_tokens()
@@ -409,6 +466,7 @@ mod support {
 			.find(|it| it.kind() == kind)
 	}
 
+	#[deprecated]
 	pub(super) fn as_optional_token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
 		parent
 			.children_with_tokens()
@@ -416,6 +474,7 @@ mod support {
 			.find(|it| it.kind() == kind)
 	}
 
+	#[deprecated]
 	pub(super) fn as_mandatory_node<N: AstNode>(parent: &SyntaxNode) -> SyntaxResult<N> {
 		parent
 			.children()
@@ -423,6 +482,7 @@ mod support {
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 
+	#[deprecated]
 	pub(super) fn as_mandatory_token(
 		parent: &SyntaxNode,
 		kind: SyntaxKind,
@@ -434,6 +494,7 @@ mod support {
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 
+	#[deprecated]
 	pub(super) fn find_token(
 		parent: &SyntaxNode,
 		possible_kinds: &[SyntaxKind],

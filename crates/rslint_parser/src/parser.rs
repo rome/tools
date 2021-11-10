@@ -179,6 +179,16 @@ impl<'t> Parser<'t> {
 		true
 	}
 
+	/// Eats an optional token if it matches kind or emits a missing event.
+	pub fn eat_optional(&mut self, kind: SyntaxKind) -> bool {
+		if self.eat(kind) {
+			true
+		} else {
+			self.missing();
+			false
+		}
+	}
+
 	/// Recover from an error with a recovery set or by using a `{` or `}`.
 	pub fn err_recover(
 		&mut self,
