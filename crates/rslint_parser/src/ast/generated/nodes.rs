@@ -2,7 +2,6 @@
 
 #![allow(clippy::enum_variant_names)]
 #![allow(clippy::match_like_matches_macro)]
-#![allow(clippy::redundant_clone)]
 use crate::{
 	ast::*,
 	SyntaxKind::{self, *},
@@ -4451,7 +4450,7 @@ impl AstNode for Stmt {
 			DEBUGGER_STMT => Stmt::DebuggerStmt(DebuggerStmt { syntax }),
 			JS_UNKNOWN_STATEMENT => Stmt::JsUnknownStatement(JsUnknownStatement { syntax }),
 			_ => {
-				if let Some(decl) = Decl::cast(syntax.clone()) {
+				if let Some(decl) = Decl::cast(syntax) {
 					return Some(Stmt::Decl(decl));
 				}
 				return None;
@@ -4541,7 +4540,7 @@ impl AstNode for ModuleItem {
 				ModuleItem::TsNamespaceExportDecl(TsNamespaceExportDecl { syntax })
 			}
 			_ => {
-				if let Some(stmt) = Stmt::cast(syntax.clone()) {
+				if let Some(stmt) = Stmt::cast(syntax) {
 					return Some(ModuleItem::Stmt(stmt));
 				}
 				return None;
@@ -4847,7 +4846,7 @@ impl AstNode for ForHead {
 		let res = match syntax.kind() {
 			VAR_DECL => ForHead::VarDecl(VarDecl { syntax }),
 			_ => {
-				if let Some(expr) = Expr::cast(syntax.clone()) {
+				if let Some(expr) = Expr::cast(syntax) {
 					return Some(ForHead::Expr(expr));
 				}
 				return None;
@@ -5165,7 +5164,7 @@ impl AstNode for ExprOrBlock {
 		let res = match syntax.kind() {
 			BLOCK_STMT => ExprOrBlock::BlockStmt(BlockStmt { syntax }),
 			_ => {
-				if let Some(expr) = Expr::cast(syntax.clone()) {
+				if let Some(expr) = Expr::cast(syntax) {
 					return Some(ExprOrBlock::Expr(expr));
 				}
 				return None;
@@ -5367,7 +5366,7 @@ impl AstNode for ConstructorParamOrPat {
 				ConstructorParamOrPat::TsConstructorParam(TsConstructorParam { syntax })
 			}
 			_ => {
-				if let Some(pattern) = Pattern::cast(syntax.clone()) {
+				if let Some(pattern) = Pattern::cast(syntax) {
 					return Some(ConstructorParamOrPat::Pattern(pattern));
 				}
 				return None;
@@ -5401,7 +5400,7 @@ impl AstNode for ExprOrSpread {
 			SPREAD_ELEMENT => ExprOrSpread::SpreadElement(SpreadElement { syntax }),
 			GROUPING_EXPR => ExprOrSpread::GroupingExpr(GroupingExpr { syntax }),
 			_ => {
-				if let Some(expr) = Expr::cast(syntax.clone()) {
+				if let Some(expr) = Expr::cast(syntax) {
 					return Some(ExprOrSpread::Expr(expr));
 				}
 				return None;
@@ -5429,7 +5428,7 @@ impl AstNode for PatternOrExpr {
 		if let Some(pattern) = Pattern::cast(syntax.clone()) {
 			return Some(PatternOrExpr::Pattern(pattern));
 		}
-		if let Some(expr) = Expr::cast(syntax.clone()) {
+		if let Some(expr) = Expr::cast(syntax) {
 			return Some(PatternOrExpr::Expr(expr));
 		}
 		None
@@ -5574,7 +5573,7 @@ impl AstNode for TsModuleRef {
 				TsModuleRef::TsExternalModuleRef(TsExternalModuleRef { syntax })
 			}
 			_ => {
-				if let Some(ts_entity_name) = TsEntityName::cast(syntax.clone()) {
+				if let Some(ts_entity_name) = TsEntityName::cast(syntax) {
 					return Some(TsModuleRef::TsEntityName(ts_entity_name));
 				}
 				return None;

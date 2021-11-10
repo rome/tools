@@ -216,15 +216,23 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			// variant of variants
 			let vv: Vec<_> = variant_of_variants
 				.iter()
-				.map(|en| {
+				.enumerate()
+				.map(|(i, en)| {
 					let variant_name = format_ident!("{}", en);
 					let variable_name = format_ident!("{}", to_lower_snake_case(en.as_str()));
 					(
 						// cast() code
-						quote! {
+						if i != variant_of_variants.len() - 1 {
+							quote! {
 							if let Some(#variable_name) = #variant_name::cast(syntax.clone()) {
 									return Some(#name::#variant_name(#variable_name));
-							}
+							}}
+						} else {
+							// if this is the last variant, do not clone syntax
+							quote! {
+								if let Some(#variable_name) = #variant_name::cast(syntax) {
+									return Some(#name::#variant_name(#variable_name));
+							}}
 						},
 						// can_cast() code
 						quote! {
@@ -349,9 +357,6 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	#![allow(clippy::enum_variant_names)]
 	// sometimes we generate comparison of simple tokens
 	#![allow(clippy::match_like_matches_macro)]
-	// sometimes we have only one enum and the .clone() is redundant.
-	// It's needed when we match against multiple enums
-	#![allow(clippy::redundant_clone)]
 
 	use crate::{
 		ast::*,
