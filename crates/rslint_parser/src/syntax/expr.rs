@@ -102,7 +102,11 @@ pub fn assign_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			}
 		});
 		if let Some(mut res) = res {
-			res.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
+			res.err_if_not_ts(
+				p,
+				"type parameters can only be used in TypeScript files",
+				JS_UNKNOWN_EXPRESSION,
+			);
 			return Some(res);
 		}
 	}
@@ -296,7 +300,11 @@ fn binary_expr_recursive(
 			ts_type(p);
 			m.complete(p, TS_ASSERTION)
 		};
-		res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
+		res.err_if_not_ts(
+			p,
+			"type assertions can only be used in TypeScript files",
+			JS_UNKNOWN_EXPRESSION,
+		);
 		return binary_expr_recursive(p, Some(res), min_prec);
 	}
 	let kind = match p.cur() {
@@ -413,6 +421,7 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 				complete.err_if_not_ts(
 					p,
 					"`new` expressions can only have type arguments in TypeScript files",
+					JS_UNKNOWN_MEMBER,
 				);
 			}
 		}
@@ -496,6 +505,7 @@ pub fn subscripts(p: &mut Parser, mut lhs: CompletedMarker, no_call: bool) -> Co
 					comp.err_if_not_ts(
 						p,
 						"non-null assertions can only be used in TypeScript files",
+						JS_UNKNOWN_STATEMENT,
 					);
 					comp
 				}
@@ -549,7 +559,7 @@ pub fn dot_expr(p: &mut Parser, lhs: CompletedMarker, optional_chain: bool) -> C
 				.primary(priv_range.range(p), "");
 
 			p.error(err);
-			return m.complete(p, ERROR);
+			return m.complete(p, JS_UNKNOWN_MEMBER);
 		}
 		if let Some(range) = range {
 			let err = p
@@ -557,7 +567,7 @@ pub fn dot_expr(p: &mut Parser, lhs: CompletedMarker, optional_chain: bool) -> C
 				.primary(range, "");
 
 			p.error(err);
-			m.complete(p, ERROR)
+			m.complete(p, JS_UNKNOWN_BINDING)
 		} else {
 			m.complete(p, PRIVATE_PROP_ACCESS)
 		}
@@ -675,6 +685,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						ty.err_if_not_ts(
 							&mut *temp,
 							"spread elements can only have type annotations in TypeScript files",
+							JS_UNKNOWN_PATTERN,
 						);
 					}
 				}
@@ -689,7 +700,6 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
                     .primary(temp.cur_tok().range, "");
 
-						// TODO: #1759
 						temp.err_recover(err, EXPR_RECOVERY_SET, false, JS_UNKNOWN_EXPRESSION);
 					}
 				}
@@ -705,7 +715,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			let sub_m = temp.start();
 			if temp.eat(T![,]) {
 				if temp.at(T![')']) {
-					trailing_comma_marker = Some(sub_m.complete(&mut *temp, ERROR));
+					trailing_comma_marker = Some(sub_m.complete(&mut *temp, JS_UNKNOWN_EXPRESSION));
 					temp.bump_any();
 					break;
 				} else {
@@ -738,6 +748,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 					ret.err_if_not_ts(
 						p,
 						"arrow functions can only have return types in TypeScript files",
+						JS_UNKNOWN_STATEMENT,
 					);
 				}
 			}
@@ -780,6 +791,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 					complete.err_if_not_ts(
 						p,
 						"arrow functions can only have return types in TypeScript files",
+						JS_UNKNOWN_STATEMENT,
 					);
 				}
 			}
@@ -796,7 +808,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			.primary(params.range(p), "");
 
 		p.error(err);
-		return m.complete(p, ERROR);
+		return m.complete(p, JS_UNKNOWN_EXPRESSION);
 	}
 
 	if is_empty {
@@ -936,6 +948,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 							complete.err_if_not_ts(
 								p,
 								"arrow functions can only have return types in TypeScript files",
+								JS_UNKNOWN_STATEMENT,
 							);
 						}
 					}
@@ -1010,15 +1023,15 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						))
 						.primary(p.cur_tok().range, "");
 
-					p.err_and_bump(err);
-					m.complete(p, ERROR)
+					p.err_and_bump(err, JS_UNKNOWN_BINDING);
+					m.complete(p, JS_UNKNOWN_BINDING)
 				} else {
 					let err = p
 						.err_builder("Expected `meta` following an import keyword, but found none")
 						.primary(p.cur_tok().range, "");
 
 					p.error(err);
-					m.complete(p, ERROR)
+					m.complete(p, JS_UNKNOWN_BINDING)
 				}
 			} else {
 				// test_err import_call_no_arg
@@ -1037,7 +1050,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		ERROR_TOKEN => {
 			let m = p.start();
 			p.bump_any();
-			m.complete(p, ERROR)
+			m.complete(p, JS_UNKNOWN_EXPRESSION)
 		}
 		// test_err primary_expr_invalid_recovery
 		// let a = \; foo();
@@ -1045,7 +1058,6 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
-			// TODO: #1759
 			p.err_recover(err, p.state.expr_recovery_set, true, JS_UNKNOWN_EXPRESSION);
 			return None;
 		}
@@ -1066,7 +1078,6 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
-			// TODO: #1759
 			p.err_recover(err, p.state.expr_recovery_set, true, JS_UNKNOWN_BINDING);
 			None
 		}
@@ -1254,7 +1265,6 @@ pub fn object_property(p: &mut Parser) -> Option<CompletedMarker> {
 				// let a = { /: 6, /: /foo/ }
 				// let a = {{}}
 				if prop.is_none() {
-					// TODO: #1759
 					p.err_recover_no_err(token_set![T![:], T![,]], false, JS_UNKNOWN_BINDING);
 				}
 				// test_err object_expr_non_ident_literal_prop
@@ -1317,7 +1327,11 @@ pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			None
 		} else {
 			if let Some(ref mut comp) = complete {
-				comp.err_if_not_ts(p, "type arguments can only be used in TypeScript files");
+				comp.err_if_not_ts(
+					p,
+					"type arguments can only be used in TypeScript files",
+					JS_UNKNOWN_STATEMENT,
+				);
 			}
 			complete
 		}
@@ -1388,14 +1402,22 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			p.expect(T![>]);
 			unary_expr(p);
 			let mut res = m.complete(p, TS_CONST_ASSERTION);
-			res.err_if_not_ts(p, "const assertions can only be used in TypeScript files");
+			res.err_if_not_ts(
+				p,
+				"const assertions can only be used in TypeScript files",
+				JS_UNKNOWN_EXPRESSION,
+			);
 			return Some(res);
 		} else {
 			ts_type(p);
 			p.expect(T![>]);
 			unary_expr(p);
 			let mut res = m.complete(p, TS_ASSERTION);
-			res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
+			res.err_if_not_ts(
+				p,
+				"type assertions can only be used in TypeScript files",
+				JS_UNKNOWN_EXPRESSION,
+			);
 			return Some(res);
 		}
 	}

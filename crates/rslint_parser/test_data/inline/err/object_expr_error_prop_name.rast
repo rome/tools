@@ -42,7 +42,7 @@ JS_MODULE@0..40
               JS_UNKNOWN_BINDING@36..37
                 L_CURLY@36..37 "{"
             R_CURLY@37..38 "}"
-    ERROR@38..39
+    JS_UNKNOWN_STATEMENT@38..39
       R_CURLY@38..39 "}"
   WHITESPACE@39..40 "\n"
 --

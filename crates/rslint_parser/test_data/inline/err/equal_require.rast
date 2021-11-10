@@ -1,0 +1,25 @@
+MODULE@0..24
+  LIST@0..23
+    JS_UNKNOWN_EXPRESSION@0..23
+      IMPORT_KW@0..6 "import"
+      WHITESPACE@6..7 " "
+      NAME@7..8
+        IDENT@7..8 "b"
+      WHITESPACE@8..9 " "
+      EQ@9..10 "="
+      WHITESPACE@10..11 " "
+      TS_EXTERNAL_MODULE_REF@11..23
+        REQUIRE_KW@11..18 "require"
+        L_PAREN@18..19 "("
+        STRING@19..22 "\"a\""
+        R_PAREN@22..23 ")"
+  WHITESPACE@23..24 "\n"
+--
+error[SyntaxError]: import equals declarations can only be used in TypeScript files
+  ┌─ equal_require.js:1:1
+  │
+1 │ import b = require("a")
+  │ ^^^^^^^^^^^^^^^^^^^^^^^
+
+--
+import b = require("a")

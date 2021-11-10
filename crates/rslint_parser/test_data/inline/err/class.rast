@@ -1,0 +1,99 @@
+MODULE@0..72
+  LIST@0..71
+    JS_UNKNOWN_STATEMENT@0..71
+      ABSTRACT_KW@0..8 "abstract"
+      WHITESPACE@8..9 " "
+      CLASS_KW@9..14 "class"
+      WHITESPACE@14..15 " "
+      NAME@15..16
+        IDENT@15..16 "B"
+      WHITESPACE@16..17 " "
+      JS_UNKNOWN_EXPRESSION@17..29
+        IMPLEMENTS_KW@17..27 "implements"
+        WHITESPACE@27..28 " "
+        LIST@28..29
+          TS_EXPR_WITH_TYPE_ARGS@28..29
+            TS_TYPE_NAME@28..29
+              IDENT@28..29 "A"
+      WHITESPACE@29..30 " "
+      CLASS_BODY@30..71
+        L_CURLY@30..31 "{"
+        WHITESPACE@31..33 "\n\t"
+        LIST@33..69
+          METHOD@33..50
+            JS_UNKNOWN_MEMBER@33..41
+              ABSTRACT_KW@33..41 "abstract"
+            WHITESPACE@41..42 " "
+            NAME@42..45
+              IDENT@42..45 "foo"
+            PARAMETER_LIST@45..47
+              L_PAREN@45..46 "("
+              LIST@46..46
+              R_PAREN@46..47 ")"
+            WHITESPACE@47..48 " "
+            BLOCK_STMT@48..50
+              L_CURLY@48..49 "{"
+              LIST@49..49
+              R_CURLY@49..50 "}"
+          WHITESPACE@50..52 "\n\t"
+          METHOD@52..69
+            JS_UNKNOWN_MEMBER@52..60
+              READONLY_KW@52..60 "readonly"
+            WHITESPACE@60..61 " "
+            NAME@61..64
+              IDENT@61..64 "bar"
+            PARAMETER_LIST@64..66
+              L_PAREN@64..65 "("
+              LIST@65..65
+              R_PAREN@65..66 ")"
+            WHITESPACE@66..67 " "
+            BLOCK_STMT@67..69
+              L_CURLY@67..68 "{"
+              LIST@68..68
+              R_CURLY@68..69 "}"
+        WHITESPACE@69..70 "\n"
+        R_CURLY@70..71 "}"
+  WHITESPACE@71..72 "\n"
+--
+error[SyntaxError]: classes can only implement interfaces in TypeScript files
+  ┌─ class.js:1:18
+  │
+1 │ abstract class B implements A {
+  │                  ^^^^^^^^^^^^
+
+--
+error[SyntaxError]: `abstract` and `readonly` modifiers can only be used in TypeScript files
+  ┌─ class.js:2:2
+  │
+2 │     abstract foo() {}
+  │     ^^^^^^^^
+
+--
+error[SyntaxError]: `abstract` and `readonly` modifiers can only be used in TypeScript files
+  ┌─ class.js:3:2
+  │
+3 │     readonly bar() {}
+  │     ^^^^^^^^
+
+--
+error[SyntaxError]: class methods cannot be readonly
+  ┌─ class.js:3:2
+  │
+3 │     readonly bar() {}
+  │     ^^^^^^^^
+
+--
+error[SyntaxError]: TypeScript declarations for functions and classes can only be used in TypeScript files
+  ┌─ class.js:1:1
+  │  
+1 │ ┌ abstract class B implements A {
+2 │ │     abstract foo() {}
+3 │ │     readonly bar() {}
+4 │ │ }
+  │ └─^
+
+--
+abstract class B implements A {
+	abstract foo() {}
+	readonly bar() {}
+}

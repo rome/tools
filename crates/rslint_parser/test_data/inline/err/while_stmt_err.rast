@@ -42,7 +42,7 @@ JS_MODULE@0..52
           TRUE_KW@44..48 "true"
         R_PAREN@48..49 ")"
       WHITESPACE@49..50 " "
-      ERROR@50..51
+      JS_UNKNOWN_STATEMENT@50..51
         R_CURLY@50..51 "}"
   WHITESPACE@51..52 "\n"
 --

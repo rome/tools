@@ -84,13 +84,21 @@ fn class_prop_name(p: &mut Parser) -> Option<(CompletedMarker, Option<usize>)> {
 fn args_body(p: &mut Parser) {
 	if p.at(T![<]) {
 		if let Some(ref mut ty) = ts_type_params(p) {
-			ty.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
+			ty.err_if_not_ts(
+				p,
+				"type parameters can only be used in TypeScript files",
+				JS_UNKNOWN_EXPRESSION,
+			);
 		}
 	}
 	formal_parameters(p);
 	if p.at(T![:]) {
 		if let Some(ref mut ty) = ts_type_or_type_predicate_ann(p, T![:]) {
-			ty.err_if_not_ts(p, "return types can only be used in TypeScript files");
+			ty.err_if_not_ts(
+				p,
+				"return types can only be used in TypeScript files",
+				JS_UNKNOWN_STATEMENT,
+			);
 		}
 	}
 	fn_body(p);
@@ -258,7 +266,6 @@ fn constructor_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 				.primary(range, "");
 
 			p.error(err);
-			// TODO: this should be a typescript unknown kind
 			maybe_err.complete(p, JS_UNKNOWN_BINDING);
 		} else {
 			maybe_err.abandon(p);
@@ -276,7 +283,6 @@ fn constructor_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 				.primary(range, "");
 
 			p.error(err);
-			// TODO: this should be a typescript unknown kind
 			maybe_err.complete(p, JS_UNKNOWN_BINDING);
 		} else {
 			maybe_err.abandon(p);
@@ -351,7 +357,11 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 			if p.eat(T![:]) {
 				let complete = ts_type(p);
 				if let Some(mut res) = complete {
-					res.err_if_not_ts(p, "type annotations can only be used in TypeScript files");
+					res.err_if_not_ts(
+						p,
+						"type annotations can only be used in TypeScript files",
+						JS_UNKNOWN_PATTERN,
+					);
 				}
 			}
 
@@ -406,7 +416,6 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				}
 				Some(res)
 			} else {
-				// TODO: #1759
 				p.err_recover_no_err(
 					token_set![
 						T![ident],
@@ -511,6 +520,7 @@ pub fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 			complete.err_if_not_ts(
 				&mut *guard,
 				"classes can only have type parameters in TypeScript files",
+				JS_UNKNOWN_MEMBER,
 			);
 		}
 	}
@@ -564,8 +574,7 @@ pub fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 				.primary(start..(guard.marker_vec_range(&elems).end), "");
 
 			guard.error(err);
-			// TODO: this should be a typescript unknown kind
-			maybe_err.complete(&mut *guard, JS_UNKNOWN_BINDING);
+			maybe_err.complete(&mut *guard, JS_UNKNOWN_EXPRESSION);
 		} else {
 			maybe_err.abandon(&mut *guard)
 		}
@@ -635,7 +644,6 @@ fn maybe_opt(p: &mut Parser) -> Option<Range<usize>> {
 				.primary(p.cur_tok().range, "");
 
 			p.error(err);
-			// TODO: this should be a typescript unknown kind
 			p.bump_remap(JS_UNKNOWN_EXPRESSION);
 		} else {
 			p.bump_any();
@@ -693,7 +701,6 @@ fn make_prop(
 			is_err = true;
 		}
 		if is_err {
-			// TODO: this should be a typescript unknown kind
 			p.bump_remap(JS_UNKNOWN_EXPRESSION);
 		} else {
 			p.bump_any();
@@ -765,7 +772,6 @@ fn consume_leading_tokens(
 
 			p.error(err);
 			p.bump_any();
-			// TODO: this should be a typescript unknown kind
 			m.complete(p, JS_UNKNOWN_BINDING);
 		} else {
 			p.bump_remap(kind);
@@ -814,7 +820,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 			p.error(err);
 			let m = p.start();
 			p.bump_any();
-			// TODO: this should be a typescript unknown kind
+			// TODO: this should be a typescript unknown kind based on the language
 			m.complete(p, JS_UNKNOWN_BINDING);
 		}
 	};
@@ -836,7 +842,6 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 				p.error(err);
 				let m = p.start();
 				p.bump_any();
-				// TODO: this should be a typescript unknown kind
 				m.complete(p, JS_UNKNOWN_BINDING);
 			}
 			identifier_name(p);
@@ -895,7 +900,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 				.primary(range, "");
 
 			p.error(err);
-			maybe_err.complete(p, JS_UNKNOWN_BINDING);
+			maybe_err.complete(p, JS_UNKNOWN_MEMBER);
 		} else {
 			maybe_err.abandon(p);
 		}
@@ -916,6 +921,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 			sig.err_if_not_ts(
 				p,
 				"class index signatures can only be used in TypeScript files",
+				JS_UNKNOWN_MEMBER,
 			);
 			return Some(sig);
 		} else {
@@ -1010,7 +1016,11 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 
 			if p.at(T![<]) {
 				if let Some(ref mut ty) = ts_type_params(p) {
-					ty.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
+					ty.err_if_not_ts(
+						p,
+						"type parameters can only be used in TypeScript files",
+						JS_UNKNOWN_EXPRESSION,
+					);
 					let err = p
 						.err_builder("constructors cannot have type parameters")
 						.primary(ty.range(p), "");
@@ -1097,7 +1107,6 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 	let err = p
 		.err_builder("expected `;`, a property, or a method for a class body, but found none")
 		.primary(p.cur_tok().range, "");
-	// TODO: #1759
 	p.err_recover(
 		err,
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
@@ -1190,7 +1199,6 @@ pub fn method(
 			let err = p
 				.err_builder("expected a method definition, but found none")
 				.primary(p.cur_tok().range, "");
-			// TODO: #1759
 			p.err_recover(
 				err,
 				recovery_set.into().unwrap_or(BASE_METHOD_RECOVERY_SET),

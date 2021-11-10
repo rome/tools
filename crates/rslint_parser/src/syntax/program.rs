@@ -107,6 +107,7 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 		complete.err_if_not_ts(
 			p,
 			"import equals declarations can only be used in TypeScript files",
+			JS_UNKNOWN_EXPRESSION,
 		);
 		return complete;
 	}
@@ -135,7 +136,7 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 			p.error(err);
 			let m = p.start();
 			p.bump_any();
-			m.complete(p, ERROR);
+			m.complete(p, JS_UNKNOWN_EXPRESSION);
 		} else {
 			p.bump_remap(T![type]);
 		}
@@ -228,6 +229,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			res.err_if_not_ts(
 				p,
 				"TypeScript declarations can only be used in TypeScript files",
+				JS_UNKNOWN_BINDING,
 			);
 			return m.complete(p, EXPORT_DECL);
 		}
@@ -240,6 +242,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			res.err_if_not_ts(
 				p,
 				"TypeScript declarations can only be used in TypeScript files",
+				JS_UNKNOWN_STATEMENT,
 			);
 			return m.complete(p, EXPORT_DECL);
 		}
@@ -269,6 +272,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			complete.err_if_not_ts(
 				p,
 				"import equals declarations can only be used in TypeScript files",
+				JS_UNKNOWN_STATEMENT,
 			);
 			return complete;
 		}
@@ -285,6 +289,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			complete.err_if_not_ts(
 				p,
 				"export equals declarations can only be used in TypeScript files",
+				JS_UNKNOWN_STATEMENT,
 			);
 			return complete;
 		}
@@ -312,6 +317,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			complete.err_if_not_ts(
 				p,
 				"export as namespace declarations can only be used in TypeScript files",
+				JS_UNKNOWN_STATEMENT,
 			);
 			return complete;
 		}
@@ -330,7 +336,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 			p.error(err);
 			p.bump_any();
-			m.complete(p, ERROR);
+			m.complete(p, JS_UNKNOWN_BINDING);
 		} else {
 			p.bump_remap(T![declare]);
 		}
@@ -372,7 +378,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				p.error(err);
 				let m = p.start();
 				p.bump_any();
-				m.complete(p, ERROR);
+				m.complete(p, JS_UNKNOWN_BINDING);
 			} else {
 				p.bump_remap(T![abstract]);
 			}
@@ -390,7 +396,11 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 		if p.cur_src() == "interface" {
 			if let Some(ref mut compl) = ts_interface(p) {
-				compl.err_if_not_ts(p, "interfaces can only be used in TypeScript files");
+				compl.err_if_not_ts(
+					p,
+					"interfaces can only be used in TypeScript files",
+					JS_UNKNOWN_STATEMENT,
+				);
 			}
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
@@ -449,7 +459,11 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		let m = p.start();
 		function_decl(p, m, false);
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
-		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");
+		ts_enum(p).err_if_not_ts(
+			p,
+			"enums can only be used in TypeScript files",
+			JS_UNKNOWN_STATEMENT,
+		);
 	} else if !only_ty
 		&& (p.at(T![var])
 			|| p.at(T![const])

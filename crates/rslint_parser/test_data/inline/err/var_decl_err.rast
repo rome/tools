@@ -10,7 +10,7 @@ JS_MODULE@0..32
               IDENT@4..5 "a"
           WHITESPACE@5..6 " "
           EQ@6..7 "="
-          ERROR@7..8
+          JS_UNKNOWN_EXPRESSION@7..8
             SEMICOLON@7..8 ";"
     WHITESPACE@8..9 "\n"
     VAR_DECL@9..20

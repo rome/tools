@@ -1,0 +1,32 @@
+MODULE@0..21
+  LIST@0..20
+    FN_DECL@0..20
+      FUNCTION_KW@0..8 "function"
+      WHITESPACE@8..9 " "
+      NAME@9..12
+        IDENT@9..12 "foo"
+      JS_UNKNOWN_EXPRESSION@12..15
+        L_ANGLE@12..13 "<"
+        LIST@13..14
+          TS_TYPE_PARAM@13..14
+            IDENT@13..14 "T"
+        R_ANGLE@14..15 ">"
+      PARAMETER_LIST@15..17
+        L_PAREN@15..16 "("
+        LIST@16..16
+        R_PAREN@16..17 ")"
+      WHITESPACE@17..18 " "
+      BLOCK_STMT@18..20
+        L_CURLY@18..19 "{"
+        LIST@19..19
+        R_CURLY@19..20 "}"
+  WHITESPACE@20..21 "\n"
+--
+error[SyntaxError]: type parameters can only be used in TypeScript files
+  ┌─ typed_parameters.js:1:13
+  │
+1 │ function foo<T>() {}
+  │             ^^^
+
+--
+function foo<T>() {}

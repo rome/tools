@@ -46,6 +46,8 @@ JsUnknownMember = SyntaxElement*
 JsUnknownBinding = SyntaxElement*
 JsUnknownAssignmentTarget = SyntaxElement*
 
+TsUnknownBinding = SyntaxElement*
+
 Ident = 'ident'
 
 // TODO #1725 add directives (JsDirective (';' JsDirective)*)

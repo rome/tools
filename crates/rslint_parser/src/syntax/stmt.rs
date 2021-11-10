@@ -83,7 +83,11 @@ pub fn stmt(
 		T![while] => while_stmt(p),
 		t if (t == T![const] && p.nth_at(1, T![enum])) || t == T![enum] => {
 			let mut res = ts_enum(p);
-			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
+			res.err_if_not_ts(
+				p,
+				"enums can only be declared in TypeScript files",
+				JS_UNKNOWN_BINDING,
+			);
 			res
 		}
 		T![var] | T![const] => var_decl(p, false),
@@ -155,7 +159,7 @@ pub fn stmt(
 
 			// We must explicitly handle this case or else infinite recursion can happen
 			if p.at_ts(token_set![T!['}'], T![import], T![export]]) {
-				p.err_and_bump(err);
+				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
 				return None;
 			}
 
@@ -201,7 +205,8 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 			}
 			res.err_if_not_ts(
 				p,
-				"TypeScript declarations can only be used in TypeScript files",
+				"TypeScript declarations for functions and classes can only be used in TypeScript files",
+				JS_UNKNOWN_STATEMENT,
 			);
 			return Some(res);
 		}
@@ -212,7 +217,8 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 		if let Some(mut res) = try_parse_ts(p, ts_expr_stmt) {
 			res.err_if_not_ts(
 				p,
-				"TypeScript declarations can only be used in TypeScript files",
+				"TypeScript declarations 1 can only be used in TypeScript files",
+				JS_UNKNOWN_STATEMENT,
 			);
 			return Some(res);
 		}
@@ -1021,7 +1027,6 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			// TODO: #1759
 			p.err_recover(err, STMT_RECOVERY_SET, true, JS_UNKNOWN_STATEMENT);
 		}
 	}
@@ -1109,7 +1114,7 @@ fn catch_clause(p: &mut Parser) {
 			m.complete(
 				p,
 				kind.filter(|_| p.typescript())
-					.unwrap_or(JS_UNKNOWN_STATEMENT),
+					.unwrap_or(JS_UNKNOWN_EXPRESSION),
 			);
 			if !p.typescript() {
 				let err = p

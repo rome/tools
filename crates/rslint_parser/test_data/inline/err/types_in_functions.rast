@@ -1,0 +1,107 @@
+MODULE@0..113
+  LIST@0..112
+    FN_DECL@0..112
+      FUNCTION_KW@0..8 "function"
+      WHITESPACE@8..9 " "
+      NAME@9..12
+        IDENT@9..12 "foo"
+      JS_UNKNOWN_EXPRESSION@12..15
+        L_ANGLE@12..13 "<"
+        LIST@13..14
+          TS_TYPE_PARAM@13..14
+            IDENT@13..14 "T"
+        R_ANGLE@14..15 ">"
+      PARAMETER_LIST@15..17
+        L_PAREN@15..16 "("
+        LIST@16..16
+        R_PAREN@16..17 ")"
+      COLON@17..18 ":"
+      WHITESPACE@18..19 " "
+      JS_UNKNOWN_STATEMENT@19..28
+        TS_TYPE_NAME@19..28
+          IDENT@19..28 "Something"
+      WHITESPACE@28..29 " "
+      BLOCK_STMT@29..112
+        L_CURLY@29..30 "{"
+        WHITESPACE@30..32 "\n\t"
+        LIST@32..110
+          VAR_DECL@32..72
+            IDENT@32..35 "let"
+            WHITESPACE@35..36 " "
+            LIST@36..71
+              DECLARATOR@36..71
+                SINGLE_PATTERN@36..55
+                  NAME@36..47
+                    IDENT@36..47 "some_string"
+                  COLON@47..48 ":"
+                  WHITESPACE@48..49 " "
+                  TS_TYPE_REF@49..55
+                    TS_TYPE_NAME@49..55
+                      IDENT@49..55 "String"
+                WHITESPACE@55..56 " "
+                EQ@56..57 "="
+                WHITESPACE@57..58 " "
+                LITERAL@58..71
+                  STRING@58..71 "\"some_string\""
+            SEMICOLON@71..72 ";"
+          WHITESPACE@72..74 "\n\t"
+          VAR_DECL@74..110
+            CONST_KW@74..79 "const"
+            WHITESPACE@79..80 " "
+            LIST@80..109
+              DECLARATOR@80..109
+                SINGLE_PATTERN@80..91
+                  NAME@80..91
+                    IDENT@80..91 "fuss_result"
+                WHITESPACE@91..92 " "
+                EQ@92..93 "="
+                WHITESPACE@93..94 " "
+                JS_UNKNOWN_EXPRESSION@94..109
+                  CALL_EXPR@94..100
+                    NAME_REF@94..98
+                      IDENT@94..98 "fuss"
+                    ARG_LIST@98..100
+                      L_PAREN@98..99 "("
+                      LIST@99..99
+                      R_PAREN@99..100 ")"
+                  WHITESPACE@100..101 " "
+                  IDENT@101..103 "as"
+                  WHITESPACE@103..104 " "
+                  CONST_KW@104..109 "const"
+            SEMICOLON@109..110 ";"
+        WHITESPACE@110..111 "\n"
+        R_CURLY@111..112 "}"
+  WHITESPACE@112..113 "\n"
+--
+error[SyntaxError]: type parameters can only be used in TypeScript files
+  ┌─ types_in_functions.js:1:13
+  │
+1 │ function foo<T>(): Something {
+  │             ^^^
+
+--
+error[SyntaxError]: return types can only be used in TypeScript files
+  ┌─ types_in_functions.js:1:20
+  │
+1 │ function foo<T>(): Something {
+  │                    ^^^^^^^^^
+
+--
+error[SyntaxError]: type annotations can only be used in TypeScript files
+  ┌─ types_in_functions.js:2:19
+  │
+2 │     let some_string: String = "some_string";
+  │                      ^^^^^^
+
+--
+error[SyntaxError]: type assertions can only be used in TypeScript files
+  ┌─ types_in_functions.js:3:22
+  │
+3 │     const fuss_result = fuss() as const;
+  │                         ^^^^^^^^^^^^^^^
+
+--
+function foo<T>(): Something {
+	let some_string: String = "some_string";
+	const fuss_result = fuss() as const;
+}

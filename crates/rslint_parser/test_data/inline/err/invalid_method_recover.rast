@@ -43,7 +43,7 @@ JS_MODULE@0..48
                           NAME@36..37
                             IDENT@36..37 "a"
                         EQ@37..38 "="
-                        ERROR@38..39
+                        JS_UNKNOWN_EXPRESSION@38..39
                           SEMICOLON@38..39 ";"
                 WHITESPACE@39..42 "\n  "
                 R_CURLY@42..43 "}"
