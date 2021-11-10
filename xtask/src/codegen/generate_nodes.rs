@@ -68,11 +68,11 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					}
 				}
 				Field::Node {
-					name: _,
 					ty,
 					optional,
 					has_many,
 					separated,
+					..
 				} => {
 					let is_built_in_tpe = &ty.eq(BUILT_IN_TYPE);
 					let ty = format_ident!("{}", &ty);

@@ -1409,7 +1409,7 @@ impl TsTypeAliasDecl {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [=])
 	}
-	pub fn ts_type(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNamespaceDecl {
@@ -1423,9 +1423,7 @@ impl TsNamespaceDecl {
 	pub fn dot_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T ! [.])
 	}
-	pub fn ts_namespace_body(&self) -> SyntaxResult<TsNamespaceBody> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsModuleDecl {

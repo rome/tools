@@ -3,6 +3,8 @@
 
 use quote::{format_ident, quote};
 
+const LANGUAGE_PREFIXES: [&str; 4] = ["js_", "ts_", "jsx_", "tsx_"];
+
 pub struct KindsSrc<'a> {
 	pub punct: &'a [(&'a str, &'a str)],
 	pub keywords: &'a [&'a str],
@@ -504,10 +506,20 @@ impl Field {
 				format_ident!("{}_token", name)
 			}
 			Field::Node { name, .. } => {
-				if name == "type" {
+				let name = name;
+				let (prefix, tail) = name.split_once('_').unwrap_or(("", name));
+				let final_name = if LANGUAGE_PREFIXES.contains(&prefix) {
+					tail
+				} else {
+					name.as_str()
+				};
+
+				// this check here is to avoid emitting methods called "type()",
+				// where "type" is a reserved word
+				if final_name == "type" {
 					format_ident!("ty")
 				} else {
-					format_ident!("{}", name)
+					format_ident!("{}", final_name)
 				}
 			}
 		}
