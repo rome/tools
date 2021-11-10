@@ -2,6 +2,7 @@ use hashbrown::hash_map::RawEntryMut;
 use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 
+use crate::green::Slot;
 use crate::{
 	green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
 	SyntaxKind,
@@ -49,10 +50,11 @@ fn token_hash(token: &GreenTokenData) -> u64 {
 fn node_hash(node: &GreenNodeData) -> u64 {
 	let mut h = FxHasher::default();
 	node.kind().hash(&mut h);
-	for child in node.children() {
-		match child {
-			NodeOrToken::Node(it) => node_hash(it),
-			NodeOrToken::Token(it) => token_hash(it),
+	for slot in node.slots() {
+		match slot {
+			Slot::Empty { .. } => NodeCache::EMPTY_SLOT_HASH,
+			Slot::Node { node, .. } => node_hash(node),
+			Slot::Token { token, .. } => token_hash(token),
 		}
 		.hash(&mut h)
 	}
@@ -67,29 +69,41 @@ fn element_id(elem: GreenElementRef<'_>) -> *const () {
 }
 
 impl NodeCache {
+	/// Hash used for nodes that haven't been cached because it has too many slots or
+	/// one of its children wasn't cached.
+	const UNCACHED_NODE_HASH: u64 = 0;
+
+	/// Hash for an empty slot
+	const EMPTY_SLOT_HASH: u64 = 1;
+
+	pub(crate) const fn empty() -> (u64, Option<GreenElement>) {
+		(Self::EMPTY_SLOT_HASH, None)
+	}
+
 	pub(crate) fn node(
 		&mut self,
 		kind: SyntaxKind,
-		children: &mut Vec<(u64, GreenElement)>,
+		// u64 is the hash of the slot
+		slots: &mut Vec<(u64, Option<GreenElement>)>,
 		first_child: usize,
 	) -> (u64, GreenNode) {
-		let build_node = move |children: &mut Vec<(u64, GreenElement)>| {
-			GreenNode::new(kind, children.drain(first_child..).map(|(_, it)| it))
+		let build_node = move |slots: &mut Vec<(u64, Option<GreenElement>)>| {
+			GreenNode::new(kind, slots.drain(first_child..).map(|(_, it)| it))
 		};
 
-		let children_ref = &children[first_child..];
-		if children_ref.len() > 3 {
-			let node = build_node(children);
-			return (0, node);
+		let slots_ref = &slots[first_child..];
+		if slots_ref.len() > 3 {
+			let node = build_node(slots);
+			return (Self::UNCACHED_NODE_HASH, node);
 		}
 
 		let hash = {
 			let mut h = FxHasher::default();
 			kind.hash(&mut h);
-			for &(hash, _) in children_ref {
-				if hash == 0 {
-					let node = build_node(children);
-					return (0, node);
+			for &(hash, _) in slots_ref {
+				if hash == Self::UNCACHED_NODE_HASH {
+					let node = build_node(slots);
+					return (Self::UNCACHED_NODE_HASH, node);
 				}
 				hash.hash(&mut h);
 			}
@@ -104,12 +118,15 @@ impl NodeCache {
 		// For `libsyntax/parse/parser.rs`, measurements show that deduping saves
 		// 17% of the memory for green nodes!
 		let entry = self.nodes.raw_entry_mut().from_hash(hash, |node| {
-			node.0.kind() == kind && node.0.children().len() == children_ref.len() && {
-				let lhs = node.0.children();
-				let rhs = children_ref.iter().map(|(_, it)| it.as_deref());
+			node.0.kind() == kind && node.0.slots().len() == slots_ref.len() && {
+				let lhs = node.0.slots();
+				let lhs = lhs.map(|slot| slot.as_ref().map(element_id));
 
-				let lhs = lhs.map(element_id);
-				let rhs = rhs.map(element_id);
+				let rhs = slots_ref.iter().map(|(_, element)| {
+					element
+						.as_ref()
+						.map(|element| element_id(element.as_deref()))
+				});
 
 				lhs.eq(rhs)
 			}
@@ -117,11 +134,11 @@ impl NodeCache {
 
 		let node = match entry {
 			RawEntryMut::Occupied(entry) => {
-				drop(children.drain(first_child..));
+				drop(slots.drain(first_child..));
 				entry.key().0.clone()
 			}
 			RawEntryMut::Vacant(entry) => {
-				let node = build_node(children);
+				let node = build_node(slots);
 				entry.insert_with_hasher(hash, NoHash(node.clone()), (), |n| node_hash(&n.0));
 				node
 			}

@@ -1,9 +1,8 @@
-use std::borrow::Cow;
-
 use crate::{
 	green::{GreenNode, GreenToken, SyntaxKind},
 	GreenNodeData, NodeOrToken, TextSize,
 };
+use std::borrow::Cow;
 
 use super::GreenTokenData;
 

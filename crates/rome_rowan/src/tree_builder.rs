@@ -1,7 +1,7 @@
 use crate::{
 	cow_mut::CowMut,
 	green::{GreenElement, NodeCache},
-	Language, NodeOrToken, SyntaxNode,
+	GreenNode, Language, NodeOrToken, SyntaxNode,
 };
 
 /// A checkpoint for maybe wrapping a node. See `GreenNodeBuilder::checkpoint` for details.
@@ -13,7 +13,7 @@ pub struct Checkpoint(usize);
 pub struct TreeBuilder<'cache, L: Language> {
 	cache: CowMut<'cache, NodeCache>,
 	parents: Vec<(L::Kind, usize)>,
-	children: Vec<(u64, GreenElement)>,
+	children: Vec<(u64, Option<GreenElement>)>,
 }
 
 impl<L: Language> Default for TreeBuilder<'_, L> {
@@ -46,7 +46,15 @@ impl<L: Language> TreeBuilder<'_, L> {
 	#[inline]
 	pub fn token(&mut self, kind: L::Kind, text: &str) {
 		let (hash, token) = self.cache.token(L::kind_to_raw(kind), text);
-		self.children.push((hash, token.into()));
+		self.children.push((hash, Some(token.into())));
+	}
+
+	/// Inserts a placeholder for a child that is missing in a parent node either because
+	/// it's an optional node that isn't present or it's a mandatory child that is missing
+	/// because of a syntax error.
+	#[inline]
+	pub fn missing(&mut self) {
+		self.children.push(NodeCache::empty());
 	}
 
 	/// Start new node and make it current.
@@ -64,7 +72,7 @@ impl<L: Language> TreeBuilder<'_, L> {
 		let (hash, node) = self
 			.cache
 			.node(L::kind_to_raw(kind), &mut self.children, first_child);
-		self.children.push((hash, node.into()));
+		self.children.push((hash, Some(node.into())));
 	}
 
 	/// Prepare for maybe wrapping the next node.
@@ -122,11 +130,101 @@ impl<L: Language> TreeBuilder<'_, L> {
 	/// `start_node_at` and `finish_node` calls
 	/// are paired!
 	#[inline]
-	pub fn finish(mut self) -> SyntaxNode<L> {
+	#[must_use]
+	pub fn finish(self) -> SyntaxNode<L> {
+		SyntaxNode::new_root(self.finish_green())
+	}
+
+	// For tests
+	#[must_use]
+	pub(crate) fn finish_green(mut self) -> GreenNode {
 		assert_eq!(self.children.len(), 1);
 		match self.children.pop().unwrap().1 {
-			NodeOrToken::Node(node) => SyntaxNode::new_root(node),
-			NodeOrToken::Token(_) => panic!(),
+			Some(NodeOrToken::Node(node)) => node,
+			_ => panic!(),
 		}
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use crate::api::RawLanguage;
+	use crate::green::GreenElementRef;
+	use crate::{GreenNodeData, GreenTokenData, NodeOrToken, SyntaxKind, TreeBuilder};
+
+	// Builds a "Condition" like structure where the closing ) is missing
+	fn build_condition_with_missing_closing_parenthesis(builder: &mut TreeBuilder<RawLanguage>) {
+		builder.start_node(SyntaxKind(2));
+
+		builder.token(SyntaxKind(3), "(");
+
+		builder.start_node(SyntaxKind(4));
+		builder.token(SyntaxKind(5), "a");
+		builder.finish_node();
+
+		// missing )
+		builder.missing();
+
+		builder.finish_node();
+	}
+
+	#[test]
+	fn caches_identical_nodes_with_empty_slots() {
+		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+
+		builder.start_node(SyntaxKind(1)); // Root
+		build_condition_with_missing_closing_parenthesis(&mut builder);
+		build_condition_with_missing_closing_parenthesis(&mut builder);
+		builder.finish_node();
+
+		let root = builder.finish_green();
+
+		let first = root.children().next().unwrap();
+		let last = root.children().last().unwrap();
+
+		assert_eq!(first.element(), last.element());
+		assert_same_elements(first.element(), last.element());
+	}
+
+	#[test]
+	fn doesnt_cache_node_if_empty_slots_differ() {
+		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+
+		builder.start_node(SyntaxKind(1)); // Root
+		build_condition_with_missing_closing_parenthesis(&mut builder); // misses the ')'
+
+		// Create a well formed condition
+		builder.start_node(SyntaxKind(2));
+
+		builder.token(SyntaxKind(3), "(");
+
+		builder.start_node(SyntaxKind(4));
+		builder.token(SyntaxKind(5), "a");
+		builder.finish_node();
+
+		// missing )
+		builder.token(SyntaxKind(5), ")");
+
+		builder.finish_node();
+
+		// finish root
+		builder.finish_node();
+
+		let root = builder.finish_green();
+		let first_condition = root.children().next().unwrap();
+		let last_condition = root.children().last().unwrap();
+
+		assert_ne!(first_condition.element(), last_condition.element());
+	}
+
+	fn assert_same_elements(left: GreenElementRef<'_>, right: GreenElementRef<'_>) {
+		fn element_id(element: GreenElementRef<'_>) -> *const () {
+			match element {
+				NodeOrToken::Node(node) => node as *const GreenNodeData as *const (),
+				NodeOrToken::Token(token) => token as *const GreenTokenData as *const (),
+			}
+		}
+
+		assert_eq!(element_id(left), element_id(right),);
 	}
 }

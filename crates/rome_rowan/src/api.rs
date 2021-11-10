@@ -127,10 +127,6 @@ impl<L: Language> SyntaxNode<L> {
 		self.raw.text_range()
 	}
 
-	pub fn index(&self) -> usize {
-		self.raw.index()
-	}
-
 	pub fn text(&self) -> SyntaxText {
 		self.raw.text()
 	}
@@ -354,13 +350,6 @@ impl<L: Language> SyntaxElement<L> {
 		}
 	}
 
-	pub fn index(&self) -> usize {
-		match self {
-			NodeOrToken::Node(it) => it.index(),
-			NodeOrToken::Token(it) => it.index(),
-		}
-	}
-
 	pub fn kind(&self) -> L::Kind {
 		match self {
 			NodeOrToken::Node(it) => it.kind(),
@@ -548,7 +537,7 @@ impl<L: Language> SyntaxList<L> {
 	/// Returns the number of items in this list
 	pub fn len(&self) -> usize {
 		if let Some(list) = &self.list {
-			list.raw.green().children().len()
+			list.raw.green().slots().len()
 		} else {
 			0
 		}
@@ -596,7 +585,7 @@ impl<L: Language> IntoIterator for SyntaxList<L> {
 #[cfg(test)]
 mod tests {
 	use crate::api::RawLanguage;
-	use crate::{Language, SyntaxKind, SyntaxList, TreeBuilder};
+	use crate::{Direction, Language, SyntaxKind, SyntaxList, TreeBuilder};
 
 	#[test]
 	fn empty_list() {
@@ -687,5 +676,79 @@ mod tests {
 		let kinds: Vec<_> = list.iter().map(|e| e.kind()).collect();
 
 		assert_eq!(kinds, vec![SyntaxKind(1), SyntaxKind(3), SyntaxKind(1)])
+	}
+
+	#[test]
+	fn siblings() {
+		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+
+		// list
+		builder.start_node(SyntaxKind(1));
+
+		// element 1
+		builder.start_node(SyntaxKind(2));
+		builder.token(SyntaxKind(3), "a");
+		builder.finish_node();
+
+		// element 2
+		builder.start_node(SyntaxKind(2));
+		builder.token(SyntaxKind(3), "b");
+		builder.finish_node();
+
+		// Missing ,
+		builder.missing();
+
+		// element 3
+		builder.start_node(SyntaxKind(2));
+		builder.token(SyntaxKind(3), "c");
+		builder.finish_node();
+
+		builder.finish_node();
+
+		let root = builder.finish();
+
+		let first = root.children().next().unwrap();
+		assert_eq!(first.text().to_string(), "a");
+		assert_eq!(
+			first.next_sibling().map(|e| e.text().to_string()),
+			Some(String::from("b"))
+		);
+
+		let second = root.children().nth(1).unwrap();
+		assert_eq!(second.text().to_string(), "b");
+
+		// Skips the missing element
+		assert_eq!(
+			second.next_sibling().map(|e| e.text().to_string()),
+			Some(String::from("c"))
+		);
+
+		assert_eq!(
+			second.prev_sibling().map(|e| e.text().to_string()),
+			Some(String::from("a"))
+		);
+
+		let last = root.children().last().unwrap();
+		assert_eq!(last.text(), "c");
+		assert_eq!(last.next_sibling(), None);
+		assert_eq!(
+			last.prev_sibling().map(|e| e.text().to_string()),
+			Some(String::from("b"))
+		);
+
+		assert_eq!(
+			first
+				.siblings(Direction::Next)
+				.map(|s| s.text().to_string())
+				.collect::<Vec<_>>(),
+			vec!["a", "b", "c"]
+		);
+
+		assert_eq!(
+			last.siblings(Direction::Prev)
+				.map(|s| s.text().to_string())
+				.collect::<Vec<_>>(),
+			vec!["c", "b", "a"]
+		);
 	}
 }
