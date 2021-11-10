@@ -609,6 +609,23 @@ impl SyntaxNode {
 		self.data().offset()
 	}
 
+	pub(crate) fn element_in_slot(&self, slot_index: u32) -> Option<SyntaxElement> {
+		let slot = self
+			.green_ref()
+			.slots()
+			.nth(slot_index as usize)
+			.expect("Slot index out of bounds");
+
+		slot.as_ref().map(|element| {
+			SyntaxElement::new(
+				element,
+				self.clone(),
+				slot_index,
+				self.offset() + slot.rel_offset(),
+			)
+		})
+	}
+
 	#[inline]
 	pub fn text_range(&self) -> TextRange {
 		self.data().text_range()

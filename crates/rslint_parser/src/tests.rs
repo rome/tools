@@ -1,6 +1,8 @@
-use crate::{ast::Module, parse_module, Parse, ParserError};
+use crate::ast::ArgList;
+use crate::{ast::Module, parse_module, AstNode, Parse, ParserError};
 use expect_test::expect_file;
 use rslint_errors::{file::SimpleFiles, Emitter};
+use rslint_syntax::SyntaxKind;
 use std::fs;
 use std::panic::catch_unwind;
 use std::path::{Path, PathBuf};
@@ -12,6 +14,29 @@ fn parser_smoke_test() {
     "#;
 
 	assert!(parse_module(src, 0).ok().is_ok());
+}
+
+#[test]
+fn parser_missing_smoke_test() {
+	let src = r#"
+		console.log("Hello world";
+	"#;
+
+	let module = parse_module(src, 0);
+
+	let arg_list = module
+		.syntax()
+		.descendants()
+		.find_map(ArgList::cast)
+		.unwrap();
+
+	let opening = arg_list.syntax.element_in_slot(0);
+	let list = arg_list.syntax.element_in_slot(1);
+	let closing = arg_list.syntax().element_in_slot(2);
+
+	assert_eq!(opening.map(|o| o.to_string()), Some(String::from("(")));
+	assert_eq!(list.map(|l| l.kind()), Some(SyntaxKind::LIST));
+	assert_eq!(closing, None);
 }
 
 fn test_data_dir() -> PathBuf {

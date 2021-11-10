@@ -130,6 +130,9 @@ pub trait TreeSink {
 	/// branch as current.
 	fn finish_node(&mut self);
 
+	/// Expected a token or child node that wasn't present and adds it to the current branch.
+	fn missing(&mut self);
+
 	/// Emit errors
 	fn errors(&mut self, errors: Vec<ParserError>);
 

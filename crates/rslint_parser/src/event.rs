@@ -39,6 +39,10 @@ pub enum Event {
 		range: Range<usize>,
 	},
 
+	/// Missing child element, either because the child is optional and wasn't present in the source
+	/// or a required child is missing because of a syntax error
+	Missing,
+
 	MultipleTokens {
 		amount: u8,
 		kind: SyntaxKind,
@@ -104,6 +108,7 @@ pub fn process(sink: &mut impl TreeSink, mut events: Vec<Event>, errors: Vec<Par
 				}
 			}
 			Event::Finish { .. } => sink.finish_node(),
+			Event::Missing => sink.missing(),
 			Event::Token { kind, .. } => {
 				sink.token(kind);
 			}

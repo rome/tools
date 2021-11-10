@@ -285,6 +285,12 @@ impl<'t> Parser<'t> {
 		self.push_event(Event::Token { kind, range });
 	}
 
+	/// Inserts a marker for a missing child element because the child is optional and wasn't present in the source
+	/// or it's a mandatory child that wasn't present in the source because of a syntax error.
+	pub fn missing(&mut self) {
+		self.push_event(Event::Missing);
+	}
+
 	fn push_event(&mut self, event: Event) {
 		self.events.push(event)
 	}
@@ -307,7 +313,7 @@ impl<'t> Parser<'t> {
 			.expect("Parser source and tokens mismatch")
 	}
 
-	/// Try to eat a specific token kind, if the kind is not there then add an error to the events stack.
+	/// Try to eat a specific token kind, if the kind is not there then add a missing marker and add an error to the events stack.
 	pub fn expect(&mut self, kind: SyntaxKind) -> bool {
 		if self.eat(kind) {
 			true
@@ -331,6 +337,7 @@ impl<'t> Parser<'t> {
 				.primary(self.cur_tok().range, "unexpected")
 			};
 
+			self.missing();
 			self.error(err);
 			false
 		}
