@@ -63,7 +63,7 @@ JsModule =
 ///////////////
 
 JsAnyStatement =
-	BlockStmt
+	JsBlockStatement
 	| EmptyStmt
 	| ExprStmt
 	| IfStmt
@@ -95,7 +95,7 @@ JsAnyStatement =
 
 
 // Block statement
-BlockStmt = '{' stmts: JsAnyStatement* '}'
+JsBlockStatement = '{' stmts: JsAnyStatement* '}'
 
 
 // Empty statemnet
@@ -178,11 +178,11 @@ ThrowStmt = 'throw' exception:JsAnyExpression ';'
 
 // try..catch..finally statement
 
-TryStmt = 'try' test:BlockStmt handler:CatchClause? finalizer:Finalizer?
+TryStmt = 'try' test:JsBlockStatement handler:CatchClause? finalizer:Finalizer?
 
 // TODO: fix it, the pattern is not mandatory anymore
-CatchClause = 'catch' '(' error:Pattern ')' cons:BlockStmt
-Finalizer = 'finally' cons:BlockStmt
+CatchClause = 'catch' '(' error:Pattern ')' cons:JsBlockStatement
+Finalizer = 'finally' cons:JsBlockStatement
 
 
 // debugger statement
@@ -277,7 +277,7 @@ FnExpr =
 	parameters:ArgList
 	':'?
 	return_type:TsType?
-	body:BlockStmt
+	body:JsBlockStatement
 
 // Arrow expression
 ArrowExpr =
@@ -326,7 +326,7 @@ Constructor =
 	name:PropName
 	type_params:TsTypeParams?
 	parameters:ParameterList
-	body:BlockStmt
+	body:JsBlockStatement
 
 
 ConstructorParameters =
@@ -432,7 +432,7 @@ Undefined = 'undefined'
 
 ExprOrBlock =
 	JsAnyExpression
-	| BlockStmt
+	| JsBlockStatement
 
 ParameterList = '(' parameters:(Pattern (',' Pattern)* ','?) ')'
 ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
@@ -529,9 +529,9 @@ IdentProp = name: Name
 // MISCELLANEOUS
 ///////////////
 
-Getter =  'get' key:PropName parameters:ParameterList  body:BlockStmt
+Getter =  'get' key:PropName parameters:ParameterList  body:JsBlockStatement
 
-Setter = 'set' key:PropName parameters:ParameterList  body:BlockStmt
+Setter = 'set' key:PropName parameters:ParameterList  body:JsBlockStatement
 
 Method =
 	'static'?
@@ -542,7 +542,7 @@ Method =
 	parameters:ParameterList
 	':'?
 	return_type:TsType?
-	body:BlockStmt
+	body:JsBlockStatement
 
 SpreadElement = '...' element:JsAnyExpression
 
@@ -577,7 +577,7 @@ FnDecl =
 	parameters:ParameterList
 	':'?
 	return_type:TsType?
-	body:BlockStmt
+	body:JsBlockStatement
 
 VarDecl = ('var' | 'const' | manual__:'let') declared:(Declarator (',' Declarator)*) ';'?
 

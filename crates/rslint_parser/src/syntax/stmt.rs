@@ -458,7 +458,7 @@ pub fn block_stmt(
 	guard.bump(T!['{']);
 	block_items(&mut *guard, function_body, false, true, recovery_set);
 	guard.expect(T!['}']);
-	Some(m.complete(&mut *guard, BLOCK_STMT))
+	Some(m.complete(&mut *guard, JS_BLOCK_STATEMENT))
 }
 
 pub fn block_stmt_unchecked(p: &mut Parser, function_body: bool) -> CompletedMarker {
@@ -466,7 +466,7 @@ pub fn block_stmt_unchecked(p: &mut Parser, function_body: bool) -> CompletedMar
 	p.bump(T!['{']);
 	block_items(p, function_body, false, true, None);
 	p.expect(T!['}']);
-	m.complete(p, BLOCK_STMT)
+	m.complete(p, JS_BLOCK_STATEMENT)
 }
 
 /// Top level items or items inside of a block statement, this also handles module items so we can

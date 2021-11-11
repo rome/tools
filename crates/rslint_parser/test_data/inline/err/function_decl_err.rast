@@ -7,7 +7,7 @@ JS_MODULE@0..114
         LIST@9..9
         R_PAREN@9..10 ")"
       WHITESPACE@10..11 " "
-      BLOCK_STMT@11..13
+      JS_BLOCK_STATEMENT@11..13
         L_CURLY@11..12 "{"
         LIST@12..12
         R_CURLY@12..13 "}"
@@ -31,7 +31,7 @@ JS_MODULE@0..114
             L_PAREN@36..37 "("
         R_PAREN@37..38 ")"
       WHITESPACE@38..39 " "
-      BLOCK_STMT@39..41
+      JS_BLOCK_STATEMENT@39..41
         L_CURLY@39..40 "{"
         LIST@40..40
         R_CURLY@40..41 "}"
@@ -45,7 +45,7 @@ JS_MODULE@0..114
         LIST@57..57
         R_PAREN@57..58 ")"
       WHITESPACE@58..59 " "
-      BLOCK_STMT@59..61
+      JS_BLOCK_STATEMENT@59..61
         L_CURLY@59..60 "{"
         LIST@60..60
         R_CURLY@60..61 "}"
@@ -61,7 +61,7 @@ JS_MODULE@0..114
         LIST@79..79
         R_PAREN@79..80 ")"
       WHITESPACE@80..81 " "
-      BLOCK_STMT@81..83
+      JS_BLOCK_STATEMENT@81..83
         L_CURLY@81..82 "{"
         LIST@82..82
         R_CURLY@82..83 "}"
@@ -77,7 +77,7 @@ JS_MODULE@0..114
         LIST@98..98
         R_PAREN@98..99 ")"
       WHITESPACE@99..100 " "
-      BLOCK_STMT@100..102
+      JS_BLOCK_STATEMENT@100..102
         L_CURLY@100..101 "{"
         LIST@101..101
         R_CURLY@101..102 "}"

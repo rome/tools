@@ -7,7 +7,7 @@ JS_MODULE@0..44
         WHITESPACE@3..4 " "
         FAT_ARROW@4..6 "=>"
         WHITESPACE@6..7 " "
-        BLOCK_STMT@7..9
+        JS_BLOCK_STATEMENT@7..9
           L_CURLY@7..8 "{"
           LIST@8..8
           R_CURLY@8..9 "}"
@@ -19,7 +19,7 @@ JS_MODULE@0..44
         WHITESPACE@15..16 " "
         FAT_ARROW@16..18 "=>"
         WHITESPACE@18..19 " "
-        BLOCK_STMT@19..21
+        JS_BLOCK_STATEMENT@19..21
           L_CURLY@19..20 "{"
           LIST@20..20
           R_CURLY@20..21 "}"
@@ -31,7 +31,7 @@ JS_MODULE@0..44
         WHITESPACE@27..28 " "
         FAT_ARROW@28..30 "=>"
         WHITESPACE@30..31 " "
-        BLOCK_STMT@31..33
+        JS_BLOCK_STATEMENT@31..33
           L_CURLY@31..32 "{"
           LIST@32..32
           R_CURLY@32..33 "}"
@@ -43,7 +43,7 @@ JS_MODULE@0..44
         WHITESPACE@37..38 " "
         FAT_ARROW@38..40 "=>"
         WHITESPACE@40..41 "\n"
-        BLOCK_STMT@41..43
+        JS_BLOCK_STATEMENT@41..43
           L_CURLY@41..42 "{"
           LIST@42..42
           R_CURLY@42..43 "}"

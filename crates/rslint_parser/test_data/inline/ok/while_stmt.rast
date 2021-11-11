@@ -9,7 +9,7 @@ JS_MODULE@0..29
           TRUE_KW@7..11 "true"
         R_PAREN@11..12 ")"
       WHITESPACE@12..13 " "
-      BLOCK_STMT@13..15
+      JS_BLOCK_STATEMENT@13..15
         L_CURLY@13..14 "{"
         LIST@14..14
         R_CURLY@14..15 "}"
@@ -23,7 +23,7 @@ JS_MODULE@0..29
           NUMBER@23..24 "5"
         R_PAREN@24..25 ")"
       WHITESPACE@25..26 " "
-      BLOCK_STMT@26..28
+      JS_BLOCK_STATEMENT@26..28
         L_CURLY@26..27 "{"
         LIST@27..27
         R_CURLY@27..28 "}"

@@ -96,7 +96,7 @@ JS_MODULE@0..113
                   WHITESPACE@94..95 " "
                   FAT_ARROW@95..97 "=>"
                   WHITESPACE@97..98 " "
-                  BLOCK_STMT@98..100
+                  JS_BLOCK_STATEMENT@98..100
                     L_CURLY@98..99 "{"
                     LIST@99..99
                     R_CURLY@99..100 "}"

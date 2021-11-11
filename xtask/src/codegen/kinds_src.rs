@@ -169,7 +169,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_MODULE",
 		"JS_DIRECTIVE",
 		"ERROR",
-		"BLOCK_STMT",
+		"JS_BLOCK_STATEMENT",
 		"VAR_DECL",
 		"DECLARATOR",
 		"EMPTY_STMT",

@@ -18,7 +18,7 @@ JS_MODULE@0..14
     ERROR@8..10
       FAT_ARROW@8..10 "=>"
     WHITESPACE@10..11 " "
-    BLOCK_STMT@11..13
+    JS_BLOCK_STATEMENT@11..13
       L_CURLY@11..12 "{"
       LIST@12..12
       R_CURLY@12..13 "}"

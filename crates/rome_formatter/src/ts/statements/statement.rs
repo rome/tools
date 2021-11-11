@@ -4,7 +4,7 @@ use rslint_parser::ast::JsAnyStatement;
 impl ToFormatElement for JsAnyStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			JsAnyStatement::BlockStmt(block) => block.to_format_element(formatter),
+			JsAnyStatement::JsBlockStatement(block) => block.to_format_element(formatter),
 			JsAnyStatement::EmptyStmt(empty_statement) => {
 				empty_statement.to_format_element(formatter)
 			}

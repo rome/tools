@@ -18,7 +18,7 @@ JS_MODULE@0..48
               LIST@17..17
               R_PAREN@17..18 ")"
             WHITESPACE@18..19 " "
-            BLOCK_STMT@19..21
+            JS_BLOCK_STATEMENT@19..21
               L_CURLY@19..20 "{"
               LIST@20..20
               R_CURLY@20..21 "}"
@@ -44,7 +44,7 @@ JS_MODULE@0..48
               LIST@43..43
               R_PAREN@43..44 ")"
             WHITESPACE@44..45 " "
-            BLOCK_STMT@45..47
+            JS_BLOCK_STATEMENT@45..47
               L_CURLY@45..46 "{"
               LIST@46..46
               R_CURLY@46..47 "}"

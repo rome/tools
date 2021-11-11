@@ -1,6 +1,6 @@
 JS_MODULE@0..28
   LIST@0..27
-    BLOCK_STMT@0..27
+    JS_BLOCK_STATEMENT@0..27
       L_CURLY@0..1 "{"
       WHITESPACE@1..3 "\n "
       LIST@3..25

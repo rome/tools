@@ -5,7 +5,7 @@ JS_MODULE@0..46
         IDENT@0..3 "foo"
       COLON@3..4 ":"
       WHITESPACE@4..5 " "
-      BLOCK_STMT@5..7
+      JS_BLOCK_STATEMENT@5..7
         L_CURLY@5..6 "{"
         LIST@6..6
         R_CURLY@6..7 "}"
@@ -15,7 +15,7 @@ JS_MODULE@0..46
         IDENT@8..12 "rust"
       COLON@12..13 ":"
       WHITESPACE@13..14 " "
-      BLOCK_STMT@14..16
+      JS_BLOCK_STATEMENT@14..16
         L_CURLY@14..15 "{"
         LIST@15..15
         R_CURLY@15..16 "}"

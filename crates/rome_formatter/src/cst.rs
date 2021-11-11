@@ -1,9 +1,9 @@
 use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, BlockStmt, CallExpr, CaseClause,
-	CatchClause, ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt,
-	DebuggerStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl,
-	ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt,
+	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, CaseClause, CatchClause,
+	ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, DebuggerStmt,
+	Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl, ForInStmt,
+	ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement,
 	JsScript, LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList,
 	ReturnStmt, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt,
 	WithStmt,
@@ -55,7 +55,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::SEQUENCE_EXPR => SequenceExpr::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::BLOCK_STMT => BlockStmt::cast(self.clone())
+			SyntaxKind::JS_BLOCK_STATEMENT => JsBlockStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::EXPR_STMT => ExprStmt::cast(self.clone())

@@ -38,7 +38,7 @@ JS_MODULE@0..95
           PLUS2@25..27 "++"
       R_PAREN@27..28 ")"
       WHITESPACE@28..29 " "
-      BLOCK_STMT@29..31
+      JS_BLOCK_STATEMENT@29..31
         L_CURLY@29..30 "{"
         LIST@30..30
         R_CURLY@30..31 "}"
@@ -76,7 +76,7 @@ JS_MODULE@0..95
         R_CURLY@58..59 "}"
       R_PAREN@59..60 ")"
       WHITESPACE@60..61 " "
-      BLOCK_STMT@61..63
+      JS_BLOCK_STATEMENT@61..63
         L_CURLY@61..62 "{"
         LIST@62..62
         R_CURLY@62..63 "}"
@@ -97,7 +97,7 @@ JS_MODULE@0..95
         R_CURLY@77..78 "}"
       R_PAREN@78..79 ")"
       WHITESPACE@79..80 " "
-      BLOCK_STMT@80..82
+      JS_BLOCK_STATEMENT@80..82
         L_CURLY@80..81 "{"
         LIST@81..81
         R_CURLY@81..82 "}"
@@ -110,7 +110,7 @@ JS_MODULE@0..95
       SEMICOLON@89..90 ";"
       R_PAREN@90..91 ")"
       WHITESPACE@91..92 " "
-      BLOCK_STMT@92..94
+      JS_BLOCK_STATEMENT@92..94
         L_CURLY@92..93 "{"
         LIST@93..93
         R_CURLY@93..94 "}"

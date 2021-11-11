@@ -48,7 +48,7 @@ JS_MODULE@0..40
             NAME_REF@35..36
               IDENT@35..36 "i"
         WHITESPACE@36..37 " "
-        BLOCK_STMT@37..39
+        JS_BLOCK_STATEMENT@37..39
           L_CURLY@37..38 "{"
           LIST@38..38
           R_CURLY@38..39 "}"
