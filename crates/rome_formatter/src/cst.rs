@@ -4,8 +4,8 @@ use rslint_parser::ast::{
 	ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator,
 	DefaultClause, DoWhileStmt, Finalizer, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
 	ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement, JsDebuggerStatement,
-	JsEmptyStatement, JsExpressionStatement, JsScript, LabelledStmt, Literal, LiteralProp, Name,
-	NameRef, ObjectExpr, ParameterList, ReturnStmt, SequenceExpr, Setter, SinglePattern,
+	JsEmptyStatement, JsExpressionStatement, JsReturnStatement, JsScript, LabelledStmt, Literal,
+	LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
 	SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
@@ -61,7 +61,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_EXPRESSION_STATEMENT => JsExpressionStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::RETURN_STMT => ReturnStmt::cast(self.clone())
+			SyntaxKind::JS_RETURN_STATEMENT => JsReturnStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::IF_STMT => IfStmt::cast(self.clone())

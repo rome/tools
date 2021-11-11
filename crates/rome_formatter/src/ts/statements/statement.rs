@@ -28,7 +28,7 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::BreakStmt(break_statement) => {
 				break_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::ReturnStmt(stmt) => stmt.to_format_element(formatter),
+			JsAnyStatement::JsReturnStatement(stmt) => stmt.to_format_element(formatter),
 			JsAnyStatement::WithStmt(with_statement) => with_statement.to_format_element(formatter),
 			JsAnyStatement::LabelledStmt(label_statement) => {
 				label_statement.to_format_element(formatter)

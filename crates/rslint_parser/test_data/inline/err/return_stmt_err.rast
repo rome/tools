@@ -1,10 +1,10 @@
 JS_MODULE@0..20
   LIST@0..19
-    RETURN_STMT@0..7
+    JS_RETURN_STATEMENT@0..7
       RETURN_KW@0..6 "return"
       SEMICOLON@6..7 ";"
     WHITESPACE@7..8 "\n"
-    RETURN_STMT@8..19
+    JS_RETURN_STATEMENT@8..19
       RETURN_KW@8..14 "return"
       WHITESPACE@14..15 " "
       NAME_REF@15..18

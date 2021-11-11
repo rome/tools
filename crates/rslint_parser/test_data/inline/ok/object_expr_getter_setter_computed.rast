@@ -32,7 +32,7 @@ JS_MODULE@0..48
                   L_CURLY@24..25 "{"
                   WHITESPACE@25..30 "\n    "
                   LIST@30..41
-                    RETURN_STMT@30..41
+                    JS_RETURN_STATEMENT@30..41
                       RETURN_KW@30..36 "return"
                       WHITESPACE@36..37 " "
                       NAME_REF@37..40

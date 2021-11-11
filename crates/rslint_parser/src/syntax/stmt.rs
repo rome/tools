@@ -408,7 +408,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 		p.expr_with_semi_recovery(false);
 	}
 	semi(p, start..p.cur_tok().range.end);
-	let complete = m.complete(p, RETURN_STMT);
+	let complete = m.complete(p, JS_RETURN_STATEMENT);
 
 	if !p.state.in_function && !p.syntax.global_return {
 		let err = p

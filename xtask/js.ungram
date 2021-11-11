@@ -74,7 +74,7 @@ JsAnyStatement =
 	| ForOfStmt
 	| ContinueStmt
 	| BreakStmt
-	| ReturnStmt
+	| JsReturnStatement
 	| WithStmt
 	| LabelledStmt
 	| SwitchStmt
@@ -151,8 +151,10 @@ ContinueStmt = 'continue' name_ref: NameRef ';'?
 BreakStmt = 'break' 'ident'? ';'
 
 
-// return statement
-ReturnStmt = 'return' value:JsAnyExpression ';'?
+JsReturnStatement =
+    'return'
+    argument: JsAnyExpression?
+    ';'?
 
 // with statement
 WithStmt = 'with' condition:Condition cons:JsAnyStatement

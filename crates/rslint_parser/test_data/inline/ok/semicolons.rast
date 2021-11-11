@@ -72,7 +72,7 @@ JS_MODULE@0..84
         L_CURLY@68..69 "{"
         WHITESPACE@69..70 " "
         LIST@70..81
-          RETURN_STMT@70..81
+          JS_RETURN_STATEMENT@70..81
             RETURN_KW@70..76 "return"
             WHITESPACE@76..77 " "
             LITERAL@77..81

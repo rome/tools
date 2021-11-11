@@ -13,18 +13,18 @@ JS_MODULE@0..43
           L_CURLY@6..7 "{"
           WHITESPACE@7..10 "\n  "
           LIST@10..40
-            RETURN_STMT@10..17
+            JS_RETURN_STATEMENT@10..17
               RETURN_KW@10..16 "return"
               SEMICOLON@16..17 ";"
             WHITESPACE@17..20 "\n  "
-            RETURN_STMT@20..31
+            JS_RETURN_STATEMENT@20..31
               RETURN_KW@20..26 "return"
               WHITESPACE@26..27 " "
               NAME_REF@27..30
                 IDENT@27..30 "foo"
               SEMICOLON@30..31 ";"
             WHITESPACE@31..34 "\n  "
-            RETURN_STMT@34..40
+            JS_RETURN_STATEMENT@34..40
               RETURN_KW@34..40 "return"
           WHITESPACE@40..41 "\n"
           R_CURLY@41..42 "}"

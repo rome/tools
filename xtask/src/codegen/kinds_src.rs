@@ -182,7 +182,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"FOR_IN_STMT",
 		"CONTINUE_STMT",
 		"BREAK_STMT",
-		"RETURN_STMT",
+		"JS_RETURN_STATEMENT",
 		"WITH_STMT",
 		"SWITCH_STMT",
 		"CASE_CLAUSE",
