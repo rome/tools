@@ -79,7 +79,8 @@ JsAnyStatement =
 	| JsLabeledStatement
 	| SwitchStmt
 	| ThrowStmt
-	| TryStmt
+	| JsTryStatement
+	| JsTryFinallyStatement
 	| JsDebuggerStatement
 	| Decl
 	| ImportDecl
@@ -185,12 +186,28 @@ DefaultClause = 'default' ':' cons:JsAnyStatement*
 ThrowStmt = 'throw' exception:JsAnyExpression ';'
 
 // try..catch..finally statement
+JsTryStatement =
+    'try'
+    body: JsBlockStatement
+    catch_clause: JsCatchClause
 
-TryStmt = 'try' test:JsBlockStatement handler:CatchClause? finalizer:Finalizer?
+JsTryFinallyStatement =
+    'try'
+    body: JsBlockStatement
+    catch_clause: JsCatchClause?
+    finally_clause: JsFinallyClause
 
-// TODO: fix it, the pattern is not mandatory anymore
-CatchClause = 'catch' '(' error:Pattern ')' cons:JsBlockStatement
-Finalizer = 'finally' cons:JsBlockStatement
+JsCatchClause =
+    'catch'
+    declaration: JsCatchDeclaration?
+    body: JsBlockStatement
+
+JsCatchDeclaration =
+    '(' binding: Pattern ')'
+
+JsFinallyClause =
+    'finally'
+    body: JsBlockStatement
 
 
 // debugger statement

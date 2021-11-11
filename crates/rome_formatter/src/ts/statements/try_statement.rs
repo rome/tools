@@ -1,72 +1,78 @@
 use crate::{
-	empty_element, format_elements, space_token, token, FormatElement, FormatError, FormatResult,
-	Formatter, ToFormatElement,
+	empty_element, format_elements, group_elements, soft_indent, space_token, FormatElement,
+	FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{CatchClause, Finalizer, TryStmt};
+use rslint_parser::ast::{
+	JsCatchClause, JsCatchDeclaration, JsFinallyClause, JsTryFinallyStatement, JsTryStatement,
+};
 
-impl ToFormatElement for TryStmt {
+impl ToFormatElement for JsTryStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let try_token = formatter.format_token(&self.try_token()?)?;
-		let test = formatter.format_node(self.test()?)?;
-		let handler = if let Some(catch_clause) = self.handler() {
+		Ok(format_elements![
+			formatter.format_token(&self.try_token()?)?,
+			space_token(),
+			formatter.format_node(self.body()?)?,
+			space_token(),
+			formatter.format_node(self.catch_clause()?)?
+		])
+	}
+}
+
+impl ToFormatElement for JsTryFinallyStatement {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		let formatted_catch_clause = if let Some(catch_clause) = self.catch_clause() {
 			format_elements![space_token(), formatter.format_node(catch_clause)?]
 		} else {
 			empty_element()
 		};
-		let finalizer = if let Some(finally_node) = self.finalizer() {
-			format_elements![space_token(), formatter.format_node(finally_node)?]
-		} else {
-			empty_element()
-		};
-		if handler.is_empty() && finalizer.is_empty() {
-			Err(FormatError::MissingRequiredChild)
+
+		Ok(format_elements![
+			formatter.format_token(&self.try_token()?)?,
+			space_token(),
+			formatter.format_node(self.body()?)?,
+			formatted_catch_clause,
+			space_token(),
+			formatter.format_node(self.finally_clause()?)?
+		])
+	}
+}
+
+impl ToFormatElement for JsCatchClause {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		if let Some(declaration) = self.declaration() {
+			Ok(format_elements![
+				formatter.format_token(&self.catch_token()?)?,
+				space_token(),
+				formatter.format_node(declaration)?,
+				space_token(),
+				formatter.format_node(self.body()?)?
+			])
 		} else {
 			Ok(format_elements![
-				try_token,
+				formatter.format_token(&self.catch_token()?)?,
 				space_token(),
-				test,
-				handler,
-				finalizer
+				formatter.format_node(self.body()?)?
 			])
 		}
 	}
 }
 
-impl ToFormatElement for Finalizer {
+impl ToFormatElement for JsCatchDeclaration {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let cons = formatter.format_node(self.cons()?)?;
-		let finally = formatter.format_token(&self.finally_token()?)?;
-		Ok(format_elements![finally, space_token(), cons])
+		Ok(group_elements(format_elements![
+			formatter.format_token(&self.l_paren_token()?)?,
+			soft_indent(formatter.format_node(self.binding()?)?),
+			formatter.format_token(&self.r_paren_token()?)?
+		]))
 	}
 }
 
-impl ToFormatElement for CatchClause {
+impl ToFormatElement for JsFinallyClause {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let l_paren = self.l_paren_token();
-		let r_paren = self.r_paren_token();
-		let error = self.error();
-		let cons = formatter.format_node(self.cons()?)?;
-		let catch_token = formatter.format_token(&self.catch_token()?)?;
-		// TODO: #1725 this will change once we have a better grammar
-		match (l_paren, r_paren, error) {
-			(Err(_), Err(_), Err(_)) => Ok(format_elements![token("catch"), space_token(), cons]),
-			(Ok(l_paren), Ok(r_paren), Ok(error)) => Ok(format_elements![
-				catch_token,
-				space_token(),
-				formatter.format_token(&l_paren)?,
-				formatter.format_node(error)?,
-				formatter.format_token(&r_paren)?,
-				space_token(),
-				cons
-			]),
-			_ => {
-				// Here we return None, because a valid catch clause must have a condition or no condition at all:
-				// - catch (e) {}
-				// - catch {}
-				//
-				// Other cases should fail.
-				Err(FormatError::MissingRequiredChild)
-			}
-		}
+		Ok(format_elements![
+			formatter.format_token(&self.finally_token()?)?,
+			space_token(),
+			formatter.format_node(self.body()?)?
+		])
 	}
 }
