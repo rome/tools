@@ -1,5 +1,5 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::JsAnyStatement;
+use rslint_parser::{ast::JsAnyStatement, AstNode};
 
 impl ToFormatElement for JsAnyStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {

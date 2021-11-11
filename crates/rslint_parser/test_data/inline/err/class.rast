@@ -1,4 +1,4 @@
-MODULE@0..72
+JS_MODULE@0..72
   LIST@0..71
     JS_UNKNOWN_STATEMENT@0..71
       ABSTRACT_KW@0..8 "abstract"

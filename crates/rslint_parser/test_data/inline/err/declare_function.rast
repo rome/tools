@@ -1,4 +1,4 @@
-MODULE@0..24
+JS_MODULE@0..24
   LIST@0..23
     JS_UNKNOWN_STATEMENT@0..22
       DECLARE_KW@0..7 "declare"
