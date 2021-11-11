@@ -92,9 +92,9 @@ impl WildcardImport {
 	}
 }
 
-impl SwitchCase {
-	pub fn into_case(self) -> Option<CaseClause> {
-		if let SwitchCase::CaseClause(clause) = self {
+impl JsAnySwitchClause {
+	pub fn into_case(self) -> Option<JsCaseClause> {
+		if let JsAnySwitchClause::JsCaseClause(clause) = self {
 			Some(clause)
 		} else {
 			None

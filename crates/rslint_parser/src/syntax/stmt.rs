@@ -1007,7 +1007,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 				stmt(p, None, None);
 			}
 			cons_list.complete(p, LIST);
-			m.complete(p, DEFAULT_CLAUSE);
+			m.complete(p, JS_DEFAULT_CLAUSE);
 			return Some(start..end);
 		}
 		T![case] => {
@@ -1019,7 +1019,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 				stmt(p, None, None);
 			}
 			cons_list.complete(p, LIST);
-			m.complete(p, CASE_CLAUSE);
+			m.complete(p, JS_CASE_CLAUSE);
 		}
 		_ => {
 			let err = p
@@ -1056,7 +1056,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 	// switch {}
 	let m = p.start();
 	p.expect(T![switch]);
-	condition(p);
+	parenthesized_expression(p);
 	p.expect(T!['{']);
 	let cases_list = p.start();
 	let mut first_default: Option<Range<usize>> = None;
@@ -1086,7 +1086,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 	}
 	cases_list.complete(p, LIST);
 	p.expect(T!['}']);
-	m.complete(p, SWITCH_STMT)
+	m.complete(p, JS_SWITCH_STATEMENT)
 }
 
 fn catch_clause(p: &mut Parser) {

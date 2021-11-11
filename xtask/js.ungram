@@ -77,7 +77,7 @@ JsAnyStatement =
 	| JsReturnStatement
 	| JsWithStatement
 	| JsLabeledStatement
-	| SwitchStmt
+	| JsSwitchStatement
 	| JsThrowStatement
 	| JsTryStatement
 	| JsTryFinallyStatement
@@ -175,18 +175,15 @@ JsLabeledStatement =
     body: JsAnyStatement
 
 
-// switch statement
-SwitchStmt =
-	'switch'
-	test:Condition
-	'{'
-	cases:SwitchCase*
-	'}'
+JsSwitchStatement =
+    'switch' '(' discriminant: JsAnyExpression ')'
+    '{'
+    cases: JsAnySwitchClause*
+    '}'
 
-SwitchCase = CaseClause | DefaultClause
-
-CaseClause = 'case' test:JsAnyExpression ':' cons:JsAnyStatement*
-DefaultClause = 'default' ':' cons:JsAnyStatement*
+JsAnySwitchClause = JsCaseClause | JsDefaultClause
+JsCaseClause = 'case' test: JsAnyExpression ':' consequence: JsAnyStatement*
+JsDefaultClause = 'default' ':' consequence: JsAnyStatement*
 
 
 JsThrowStatement =

@@ -35,7 +35,7 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::JsLabeledStatement(label_statement) => {
 				label_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::SwitchStmt(switch_statement) => {
+			JsAnyStatement::JsSwitchStatement(switch_statement) => {
 				switch_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::JsThrowStatement(throw_statement) => {

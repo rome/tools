@@ -305,18 +305,28 @@ impl JsLabeledStatement {
 	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct SwitchStmt {
+pub struct JsSwitchStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl SwitchStmt {
+impl JsSwitchStatement {
 	pub fn switch_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![switch])
 	}
-	pub fn test(&self) -> SyntaxResult<Condition> { support::as_mandatory_node(&self.syntax) }
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T!['('])
+	}
+	pub fn discriminant(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![')'])
+	}
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['{'])
 	}
-	pub fn cases(&self) -> AstNodeList<SwitchCase> { support::node_list(&self.syntax, 0usize) }
+	pub fn cases(&self) -> AstNodeList<JsAnySwitchClause> {
+		support::node_list(&self.syntax, 0usize)
+	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['}'])
 	}
@@ -632,10 +642,10 @@ impl NameRef {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct CaseClause {
+pub struct JsCaseClause {
 	pub(crate) syntax: SyntaxNode,
 }
-impl CaseClause {
+impl JsCaseClause {
 	pub fn case_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![case])
 	}
@@ -643,20 +653,24 @@ impl CaseClause {
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [:])
 	}
-	pub fn cons(&self) -> AstNodeList<JsAnyStatement> { support::node_list(&self.syntax, 0usize) }
+	pub fn consequence(&self) -> AstNodeList<JsAnyStatement> {
+		support::node_list(&self.syntax, 0usize)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct DefaultClause {
+pub struct JsDefaultClause {
 	pub(crate) syntax: SyntaxNode,
 }
-impl DefaultClause {
+impl JsDefaultClause {
 	pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![default])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [:])
 	}
-	pub fn cons(&self) -> AstNodeList<JsAnyStatement> { support::node_list(&self.syntax, 0usize) }
+	pub fn consequence(&self) -> AstNodeList<JsAnyStatement> {
+		support::node_list(&self.syntax, 0usize)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsCatchClause {
@@ -2400,7 +2414,7 @@ pub enum JsAnyStatement {
 	JsReturnStatement(JsReturnStatement),
 	JsWithStatement(JsWithStatement),
 	JsLabeledStatement(JsLabeledStatement),
-	SwitchStmt(SwitchStmt),
+	JsSwitchStatement(JsSwitchStatement),
 	JsThrowStatement(JsThrowStatement),
 	JsTryStatement(JsTryStatement),
 	JsTryFinallyStatement(JsTryFinallyStatement),
@@ -2469,9 +2483,9 @@ pub enum ForHead {
 	JsAnyExpression(JsAnyExpression),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum SwitchCase {
-	CaseClause(CaseClause),
-	DefaultClause(DefaultClause),
+pub enum JsAnySwitchClause {
+	JsCaseClause(JsCaseClause),
+	JsDefaultClause(JsDefaultClause),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Pattern {
@@ -2875,8 +2889,8 @@ impl AstNode for JsLabeledStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for SwitchStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SWITCH_STMT }
+impl AstNode for JsSwitchStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SWITCH_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3106,8 +3120,8 @@ impl AstNode for NameRef {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for CaseClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == CASE_CLAUSE }
+impl AstNode for JsCaseClause {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CASE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3117,8 +3131,8 @@ impl AstNode for CaseClause {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for DefaultClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == DEFAULT_CLAUSE }
+impl AstNode for JsDefaultClause {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEFAULT_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4558,8 +4572,8 @@ impl From<JsWithStatement> for JsAnyStatement {
 impl From<JsLabeledStatement> for JsAnyStatement {
 	fn from(node: JsLabeledStatement) -> JsAnyStatement { JsAnyStatement::JsLabeledStatement(node) }
 }
-impl From<SwitchStmt> for JsAnyStatement {
-	fn from(node: SwitchStmt) -> JsAnyStatement { JsAnyStatement::SwitchStmt(node) }
+impl From<JsSwitchStatement> for JsAnyStatement {
+	fn from(node: JsSwitchStatement) -> JsAnyStatement { JsAnyStatement::JsSwitchStatement(node) }
 }
 impl From<JsThrowStatement> for JsAnyStatement {
 	fn from(node: JsThrowStatement) -> JsAnyStatement { JsAnyStatement::JsThrowStatement(node) }
@@ -4626,7 +4640,7 @@ impl AstNode for JsAnyStatement {
 			| JS_RETURN_STATEMENT
 			| JS_WITH_STATEMENT
 			| JS_LABELED_STATEMENT
-			| SWITCH_STMT
+			| JS_SWITCH_STATEMENT
 			| JS_THROW_STATEMENT
 			| JS_TRY_STATEMENT
 			| JS_TRY_FINALLY_STATEMENT
@@ -4665,7 +4679,7 @@ impl AstNode for JsAnyStatement {
 			JS_LABELED_STATEMENT => {
 				JsAnyStatement::JsLabeledStatement(JsLabeledStatement { syntax })
 			}
-			SWITCH_STMT => JsAnyStatement::SwitchStmt(SwitchStmt { syntax }),
+			JS_SWITCH_STATEMENT => JsAnyStatement::JsSwitchStatement(JsSwitchStatement { syntax }),
 			JS_THROW_STATEMENT => JsAnyStatement::JsThrowStatement(JsThrowStatement { syntax }),
 			JS_TRY_STATEMENT => JsAnyStatement::JsTryStatement(JsTryStatement { syntax }),
 			JS_TRY_FINALLY_STATEMENT => {
@@ -4717,7 +4731,7 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsReturnStatement(it) => &it.syntax,
 			JsAnyStatement::JsWithStatement(it) => &it.syntax,
 			JsAnyStatement::JsLabeledStatement(it) => &it.syntax,
-			JsAnyStatement::SwitchStmt(it) => &it.syntax,
+			JsAnyStatement::JsSwitchStatement(it) => &it.syntax,
 			JsAnyStatement::JsThrowStatement(it) => &it.syntax,
 			JsAnyStatement::JsTryStatement(it) => &it.syntax,
 			JsAnyStatement::JsTryFinallyStatement(it) => &it.syntax,
@@ -5046,31 +5060,31 @@ impl AstNode for ForHead {
 		}
 	}
 }
-impl From<CaseClause> for SwitchCase {
-	fn from(node: CaseClause) -> SwitchCase { SwitchCase::CaseClause(node) }
+impl From<JsCaseClause> for JsAnySwitchClause {
+	fn from(node: JsCaseClause) -> JsAnySwitchClause { JsAnySwitchClause::JsCaseClause(node) }
 }
-impl From<DefaultClause> for SwitchCase {
-	fn from(node: DefaultClause) -> SwitchCase { SwitchCase::DefaultClause(node) }
+impl From<JsDefaultClause> for JsAnySwitchClause {
+	fn from(node: JsDefaultClause) -> JsAnySwitchClause { JsAnySwitchClause::JsDefaultClause(node) }
 }
-impl AstNode for SwitchCase {
+impl AstNode for JsAnySwitchClause {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			CASE_CLAUSE | DEFAULT_CLAUSE => true,
+			JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			CASE_CLAUSE => SwitchCase::CaseClause(CaseClause { syntax }),
-			DEFAULT_CLAUSE => SwitchCase::DefaultClause(DefaultClause { syntax }),
+			JS_CASE_CLAUSE => JsAnySwitchClause::JsCaseClause(JsCaseClause { syntax }),
+			JS_DEFAULT_CLAUSE => JsAnySwitchClause::JsDefaultClause(JsDefaultClause { syntax }),
 			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			SwitchCase::CaseClause(it) => &it.syntax,
-			SwitchCase::DefaultClause(it) => &it.syntax,
+			JsAnySwitchClause::JsCaseClause(it) => &it.syntax,
+			JsAnySwitchClause::JsDefaultClause(it) => &it.syntax,
 		}
 	}
 }
@@ -5932,7 +5946,7 @@ impl std::fmt::Display for ForHead {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for SwitchCase {
+impl std::fmt::Display for JsAnySwitchClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6142,7 +6156,7 @@ impl std::fmt::Display for JsLabeledStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for SwitchStmt {
+impl std::fmt::Display for JsSwitchStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6247,12 +6261,12 @@ impl std::fmt::Display for NameRef {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for CaseClause {
+impl std::fmt::Display for JsCaseClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for DefaultClause {
+impl std::fmt::Display for JsDefaultClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
