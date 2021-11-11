@@ -266,15 +266,23 @@ impl JsReturnStatement {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct WithStmt {
+pub struct JsWithStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl WithStmt {
+impl JsWithStatement {
 	pub fn with_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![with])
 	}
-	pub fn condition(&self) -> SyntaxResult<Condition> { support::as_mandatory_node(&self.syntax) }
-	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T!['('])
+	}
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![')'])
+	}
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsLabeledStatement {
@@ -2345,7 +2353,7 @@ pub enum JsAnyStatement {
 	ContinueStmt(ContinueStmt),
 	BreakStmt(BreakStmt),
 	JsReturnStatement(JsReturnStatement),
-	WithStmt(WithStmt),
+	JsWithStatement(JsWithStatement),
 	JsLabeledStatement(JsLabeledStatement),
 	SwitchStmt(SwitchStmt),
 	ThrowStmt(ThrowStmt),
@@ -2799,8 +2807,8 @@ impl AstNode for JsReturnStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for WithStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == WITH_STMT }
+impl AstNode for JsWithStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_WITH_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4465,8 +4473,8 @@ impl From<BreakStmt> for JsAnyStatement {
 impl From<JsReturnStatement> for JsAnyStatement {
 	fn from(node: JsReturnStatement) -> JsAnyStatement { JsAnyStatement::JsReturnStatement(node) }
 }
-impl From<WithStmt> for JsAnyStatement {
-	fn from(node: WithStmt) -> JsAnyStatement { JsAnyStatement::WithStmt(node) }
+impl From<JsWithStatement> for JsAnyStatement {
+	fn from(node: JsWithStatement) -> JsAnyStatement { JsAnyStatement::JsWithStatement(node) }
 }
 impl From<JsLabeledStatement> for JsAnyStatement {
 	fn from(node: JsLabeledStatement) -> JsAnyStatement { JsAnyStatement::JsLabeledStatement(node) }
@@ -4532,7 +4540,7 @@ impl AstNode for JsAnyStatement {
 			| CONTINUE_STMT
 			| BREAK_STMT
 			| JS_RETURN_STATEMENT
-			| WITH_STMT
+			| JS_WITH_STATEMENT
 			| JS_LABELED_STATEMENT
 			| SWITCH_STMT
 			| THROW_STMT
@@ -4568,7 +4576,7 @@ impl AstNode for JsAnyStatement {
 			CONTINUE_STMT => JsAnyStatement::ContinueStmt(ContinueStmt { syntax }),
 			BREAK_STMT => JsAnyStatement::BreakStmt(BreakStmt { syntax }),
 			JS_RETURN_STATEMENT => JsAnyStatement::JsReturnStatement(JsReturnStatement { syntax }),
-			WITH_STMT => JsAnyStatement::WithStmt(WithStmt { syntax }),
+			JS_WITH_STATEMENT => JsAnyStatement::JsWithStatement(JsWithStatement { syntax }),
 			JS_LABELED_STATEMENT => {
 				JsAnyStatement::JsLabeledStatement(JsLabeledStatement { syntax })
 			}
@@ -4619,7 +4627,7 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::ContinueStmt(it) => &it.syntax,
 			JsAnyStatement::BreakStmt(it) => &it.syntax,
 			JsAnyStatement::JsReturnStatement(it) => &it.syntax,
-			JsAnyStatement::WithStmt(it) => &it.syntax,
+			JsAnyStatement::JsWithStatement(it) => &it.syntax,
 			JsAnyStatement::JsLabeledStatement(it) => &it.syntax,
 			JsAnyStatement::SwitchStmt(it) => &it.syntax,
 			JsAnyStatement::ThrowStmt(it) => &it.syntax,
@@ -6035,7 +6043,7 @@ impl std::fmt::Display for JsReturnStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for WithStmt {
+impl std::fmt::Display for JsWithStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

@@ -75,7 +75,7 @@ JsAnyStatement =
 	| ContinueStmt
 	| BreakStmt
 	| JsReturnStatement
-	| WithStmt
+	| JsWithStatement
 	| JsLabeledStatement
 	| SwitchStmt
 	| ThrowStmt
@@ -156,13 +156,16 @@ JsReturnStatement =
     argument: JsAnyExpression?
     ';'?
 
-// with statement
-WithStmt = 'with' condition:Condition cons:JsAnyStatement
+
+JsWithStatement =
+    'with' '(' object: JsAnyExpression ')'
+    body: JsAnyStatement
 
 
 JsLabeledStatement =
     label: 'ident' ':'
     body: JsAnyStatement
+
 
 // switch statement
 SwitchStmt =

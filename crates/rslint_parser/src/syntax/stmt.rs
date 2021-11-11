@@ -656,10 +656,14 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 pub fn with_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![with]);
-	condition(p);
+
+	p.expect(T!['(']);
+	expr(p);
+	p.expect(T![')']);
+
 	stmt(p, None, None);
 
-	let mut complete = m.complete(p, WITH_STMT);
+	let mut complete = m.complete(p, JS_WITH_STATEMENT);
 	if p.state.strict.is_some() {
 		let err = p
 			.err_builder("`with` statements are not allowed in strict mode")
