@@ -50,6 +50,8 @@ struct ParseResult {
 
 fn try_parse(path: &str, text: &str) -> ParseResult {
 	let res = catch_unwind(|| {
+		// Files containing a // SCRIPT comment are parsed as script and not as module
+		// This is needed to test features that are restricted in strict mode.
 		if text.contains("// SCRIPT") {
 			let script = parse_text(text, 0);
 			ParseResult {
