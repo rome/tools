@@ -5,7 +5,7 @@ MODULE@0..11
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..11
     CLASS_DECL@0..10
-      None CLASS_KW@0..6 "class" Whitespace(1)
+      None CLASS_KW@0..5 "class" Whitespace(1)
       NAME@6..7
         None IDENT@6..7 "S" None
       CLASS_BODY@7..10

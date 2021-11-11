@@ -5,12 +5,13 @@ MODULE@0..141
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..141
     FN_DECL@0..17
-      None FUNCTION_KW@0..9 "function" Whitespace(1)
+      None FUNCTION_KW@0..8 "function" Whitespace(1)
       NAME@9..12
         None IDENT@9..12 "foo" None
       PARAMETER_LIST@12..15
         None L_PAREN@12..13 "(" None
         LIST@13..13
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         R_PAREN@13..14 ")"
@@ -24,19 +25,23 @@ MODULE@0..141
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
         None R_PAREN@13..15 ")" Whitespace(1)
+=======
+        None R_PAREN@13..14 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
       BLOCK_STMT@15..17
         None L_CURLY@15..16 "{" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@16..16
         None R_CURLY@16..17 "}" None
     FN_DECL@17..36
-      Whitespace(1) FUNCTION_KW@17..27 "function" Whitespace(1)
+      Whitespace(1) FUNCTION_KW@18..26 "function" Whitespace(1)
       None STAR@27..28 "*" None
       NAME@28..31
         None IDENT@28..31 "foo" None
       PARAMETER_LIST@31..34
         None L_PAREN@31..32 "(" None
         LIST@32..32
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         R_PAREN@32..33 ")"
@@ -50,13 +55,16 @@ MODULE@0..141
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
         None R_PAREN@32..34 ")" Whitespace(1)
+=======
+        None R_PAREN@32..33 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
       BLOCK_STMT@34..36
         None L_CURLY@34..35 "{" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@35..35
         None R_CURLY@35..36 "}" None
     FN_DECL@36..59
-      Whitespace(1) FUNCTION_KW@36..46 "function" Whitespace(1)
+      Whitespace(1) FUNCTION_KW@37..45 "function" Whitespace(1)
       NAME@46..49
         None IDENT@46..49 "foo" None
       PARAMETER_LIST@49..57
@@ -79,21 +87,22 @@ MODULE@0..141
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
               None IDENT@50..55 "await" None
-        None R_PAREN@55..57 ")" Whitespace(1)
+        None R_PAREN@55..56 ")" Whitespace(1)
       BLOCK_STMT@57..59
         None L_CURLY@57..58 "{" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@58..58
         None R_CURLY@58..59 "}" None
     FN_DECL@59..84
-      Whitespace(1) IDENT@59..66 "async" Whitespace(1)
-      None FUNCTION_KW@66..75 "function" Whitespace(1)
+      Whitespace(1) IDENT@60..65 "async" Whitespace(1)
+      None FUNCTION_KW@66..74 "function" Whitespace(1)
       None STAR@75..76 "*" None
       NAME@76..79
         None IDENT@76..79 "foo" None
       PARAMETER_LIST@79..82
         None L_PAREN@79..80 "(" None
         LIST@80..80
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         R_PAREN@80..81 ")"
@@ -107,19 +116,23 @@ MODULE@0..141
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
         None R_PAREN@80..82 ")" Whitespace(1)
+=======
+        None R_PAREN@80..81 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
       BLOCK_STMT@82..84
         None L_CURLY@82..83 "{" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@83..83
         None R_CURLY@83..84 "}" None
     FN_DECL@84..108
-      Whitespace(1) IDENT@84..91 "async" Whitespace(1)
-      None FUNCTION_KW@91..100 "function" Whitespace(1)
+      Whitespace(1) IDENT@85..90 "async" Whitespace(1)
+      None FUNCTION_KW@91..99 "function" Whitespace(1)
       NAME@100..103
         None IDENT@100..103 "foo" None
       PARAMETER_LIST@103..106
         None L_PAREN@103..104 "(" None
         LIST@104..104
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         R_PAREN@104..105 ")"
@@ -133,19 +146,23 @@ MODULE@0..141
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
         None R_PAREN@104..106 ")" Whitespace(1)
+=======
+        None R_PAREN@104..105 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
       BLOCK_STMT@106..108
         None L_CURLY@106..107 "{" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@107..107
         None R_CURLY@107..108 "}" None
     FN_DECL@108..141
-      Whitespace(1) FUNCTION_KW@108..118 "function" Whitespace(1)
+      Whitespace(1) FUNCTION_KW@109..117 "function" Whitespace(1)
       None STAR@118..119 "*" None
       NAME@119..122
         None IDENT@119..122 "foo" None
       PARAMETER_LIST@122..125
         None L_PAREN@122..123 "(" None
         LIST@123..123
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         R_PAREN@123..124 ")"
@@ -163,18 +180,25 @@ MODULE@0..141
 =======
         None R_PAREN@123..125 ")" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+        None R_PAREN@123..124 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
       BLOCK_STMT@125..141
         None L_CURLY@125..126 "{" None
         LIST@126..139
           EXPR_STMT@126..139
             YIELD_EXPR@126..138
 <<<<<<< HEAD
+<<<<<<< HEAD
               "\n  " YIELD_KW@126..135 "yield" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
               Whitespace(3) YIELD_KW@126..135 "yield" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+              Whitespace(3) YIELD_KW@129..134 "yield" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
               NAME_REF@135..138
                 None IDENT@135..138 "foo" None
             None SEMICOLON@138..139 ";" None
-        Whitespace(1) R_CURLY@139..141 "}" None
+        Whitespace(1) R_CURLY@140..141 "}" None

@@ -19,15 +19,15 @@ JS_MODULE@0..24
 MODULE@0..23
   LIST@0..23
     SWITCH_STMT@0..13
-      None SWITCH_KW@0..7 "switch" Whitespace(1)
+      None SWITCH_KW@0..6 "switch" Whitespace(1)
       CONDITION@7..11
         NAME_REF@7..11
-          None IDENT@7..11 "foo" Whitespace(1)
+          None IDENT@7..10 "foo" Whitespace(1)
       None L_CURLY@11..12 "{" None
       LIST@12..12
       None R_CURLY@12..13 "}" None
     SWITCH_STMT@13..23
-      Whitespace(1) SWITCH_KW@13..21 "switch" Whitespace(1)
+      Whitespace(1) SWITCH_KW@14..20 "switch" Whitespace(1)
       CONDITION@21..21
 <<<<<<< HEAD
        L_CURLY@21..22 "{" 

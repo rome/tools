@@ -39,7 +39,7 @@ MODULE@0..20
     EXPR_STMT@8..17
       CALL_EXPR@8..17
         NAME_REF@8..12
-          Whitespace(1) IDENT@8..12 "foo" None
+          Whitespace(1) IDENT@9..12 "foo" None
         ARG_LIST@12..17
           None L_PAREN@12..13 "(" None
           LIST@13..17
@@ -48,7 +48,7 @@ MODULE@0..20
               None IDENT@13..14 "a" None
             None COMMA@14..15 "," None
             NAME_REF@15..17
-              None IDENT@15..17 "b" Whitespace(1)
+              None IDENT@15..16 "b" Whitespace(1)
     VAR_DECL@17..20
       None VAR_KW@17..20 "var" None
       LIST@20..20

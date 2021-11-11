@@ -6,7 +6,7 @@ MODULE@0..112
   LIST@0..112
     JS_EXPRESSION_STATEMENT@0..9
       NEW_EXPR@0..9
-        None NEW_KW@0..4 "new" Whitespace(1)
+        None NEW_KW@0..3 "new" Whitespace(1)
         NAME_REF@4..7
           None IDENT@4..7 "Foo" None
         ARG_LIST@7..9
@@ -41,29 +41,33 @@ MODULE@0..112
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
     EXPR_STMT@9..18
       NEW_EXPR@9..17
-        Whitespace(1) NEW_KW@9..14 "new" Whitespace(1)
+        Whitespace(1) NEW_KW@10..13 "new" Whitespace(1)
         NAME_REF@14..17
           None IDENT@14..17 "foo" None
       None SEMICOLON@17..18 ";" None
     EXPR_STMT@18..29
       NEW_TARGET@18..29
-        Whitespace(1) NEW_KW@18..22 "new" None
+        Whitespace(1) NEW_KW@19..22 "new" None
         None DOT@22..23 "." None
         None IDENT@23..29 "target" None
     EXPR_STMT@29..52
       NEW_EXPR@29..51
+<<<<<<< HEAD
 <<<<<<< HEAD
         "\n" NEW_KW@29..34 "new" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
         Whitespace(1) NEW_KW@29..34 "new" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+        Whitespace(1) NEW_KW@30..33 "new" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         NEW_EXPR@34..51
-          None NEW_KW@34..38 "new" Whitespace(1)
+          None NEW_KW@34..37 "new" Whitespace(1)
           NEW_EXPR@38..51
-            None NEW_KW@38..42 "new" Whitespace(1)
+            None NEW_KW@38..41 "new" Whitespace(1)
             NEW_EXPR@42..51
-              None NEW_KW@42..46 "new" Whitespace(1)
+              None NEW_KW@42..45 "new" Whitespace(1)
               NAME_REF@46..49
                 None IDENT@46..49 "Foo" None
               ARG_LIST@49..51
@@ -90,8 +94,12 @@ MODULE@0..112
       None SEMICOLON@51..52 ";" None
     EXPR_STMT@52..112
       NEW_EXPR@52..112
+<<<<<<< HEAD
         Whitespace(1) NEW_KW@52..57 "new" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+        Whitespace(1) NEW_KW@53..56 "new" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         NAME_REF@57..60
           None IDENT@57..60 "Foo" None
         ARG_LIST@60..112
@@ -99,17 +107,17 @@ MODULE@0..112
           LIST@61..111
             NAME_REF@61..64
               None IDENT@61..64 "bar" None
-            None COMMA@64..66 "," Whitespace(1)
+            None COMMA@64..65 "," Whitespace(1)
             NAME_REF@66..69
               None IDENT@66..69 "baz" None
-            None COMMA@69..71 "," Whitespace(1)
+            None COMMA@69..70 "," Whitespace(1)
             BIN_EXPR@71..76
               LITERAL@71..73
-                None NUMBER@71..73 "6" Whitespace(1)
-              None PLUS@73..75 "+" Whitespace(1)
+                None NUMBER@71..72 "6" Whitespace(1)
+              None PLUS@73..74 "+" Whitespace(1)
               LITERAL@75..76
                 None NUMBER@75..76 "6" None
-            None COMMA@76..78 "," Whitespace(1)
+            None COMMA@76..77 "," Whitespace(1)
             BIN_EXPR@78..111
               BRACKET_EXPR@78..87
                 NAME_REF@78..81
@@ -117,8 +125,8 @@ MODULE@0..112
                 None L_BRACK@81..82 "[" None
                 NAME_REF@82..85
                   None IDENT@82..85 "bar" None
-                None R_BRACK@85..87 "]" Whitespace(1)
-              None PLUS@87..89 "+" Whitespace(1)
+                None R_BRACK@85..86 "]" Whitespace(1)
+              None PLUS@87..88 "+" Whitespace(1)
               BIN_EXPR@89..111
                 ARROW_EXPR@89..101
                   PARAMETER_LIST@89..95
@@ -144,14 +152,14 @@ MODULE@0..112
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
                           None IDENT@90..93 "foo" None
-                    None R_PAREN@93..95 ")" Whitespace(1)
-                  None FAT_ARROW@95..98 "=>" Whitespace(1)
+                    None R_PAREN@93..94 ")" Whitespace(1)
+                  None FAT_ARROW@95..97 "=>" Whitespace(1)
                   BLOCK_STMT@98..101
                     None L_CURLY@98..99 "{" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
                     LIST@99..99
-                    None R_CURLY@99..101 "}" Whitespace(1)
-                None STAR@101..103 "*" Whitespace(1)
+                    None R_CURLY@99..100 "}" Whitespace(1)
+                None STAR@101..102 "*" Whitespace(1)
                 DOT_EXPR@103..111
                   NAME_REF@103..106
                     None IDENT@103..106 "foo" None

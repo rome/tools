@@ -88,21 +88,21 @@ where
 
 impl<T: Language> Span for SyntaxNode<T> {
 	fn as_range(&self) -> Range<usize> {
-		self.text_range().into()
+		self.text_with_trivia_range().into()
 	}
 }
 
 impl<T: Language> Span for SyntaxToken<T> {
 	fn as_range(&self) -> Range<usize> {
-		self.text_range().into()
+		self.text_with_trivia_range().into()
 	}
 }
 
 impl<T: Language> Span for SyntaxElement<T> {
 	fn as_range(&self) -> Range<usize> {
 		match self {
-			SyntaxElement::Node(n) => n.text_range(),
-			SyntaxElement::Token(t) => t.text_range(),
+			SyntaxElement::Node(n) => n.text_with_trivia_range(),
+			SyntaxElement::Token(t) => t.text_with_trivia_range(),
 		}
 		.into()
 	}

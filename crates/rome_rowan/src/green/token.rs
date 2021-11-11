@@ -152,6 +152,7 @@ impl GreenTokenData {
 
 	/// Returns the length of the text covered by this token.
 	#[inline]
+	#[allow(dead_code)]
 	pub fn text_len(&self) -> TextSize {
 		TextSize::of(self.text())
 	}
@@ -181,6 +182,13 @@ impl GreenTokenData {
 
 	pub(crate) fn cache_hash(&self) -> u64 {
 		Self::cache_hash_of(self.kind(), self.text_with_trivia())
+	}
+
+	pub fn leading_trailing_total_len(&self) -> (TextSize, TextSize, TextSize) {
+		let leading_len = self.data.header.leading_trivia.text_len();
+		let trailing_len = self.data.header.trailing_trivia.text_len();
+		let total_len = self.data.slice().len() as u32;
+		(leading_len, trailing_len, total_len.into())
 	}
 }
 

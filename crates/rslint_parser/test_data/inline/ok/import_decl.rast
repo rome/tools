@@ -5,14 +5,14 @@ MODULE@0..27
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..27
     IMPORT_DECL@0..27
-      None IMPORT_KW@0..7 "import" Whitespace(1)
+      None IMPORT_KW@0..6 "import" Whitespace(1)
       LIST@7..16
         WILDCARD_IMPORT@7..16
-          None STAR@7..9 "*" Whitespace(1)
-          None AS_KW@9..12 "as" Whitespace(1)
+          None STAR@7..8 "*" Whitespace(1)
+          None AS_KW@9..11 "as" Whitespace(1)
           NAME@12..16
-            None IDENT@12..16 "foo" Whitespace(1)
-      None FROM_KW@16..21 "from" Whitespace(1)
+            None IDENT@12..15 "foo" Whitespace(1)
+      None FROM_KW@16..20 "from" Whitespace(1)
       LITERAL@21..26
         None STRING@21..26 "\"bla\"" None
       None SEMICOLON@26..27 ";" None

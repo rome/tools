@@ -167,65 +167,84 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<JsScript> {
 pub fn test_parse_display() {
 	let code = " let a = 1;";
 	let m = parse_module(code, 0);
-	let str = m.syntax().text();
+
+	let str = m.syntax().text_with_trivia();
 	assert_eq!(format!("{}", str), code);
+
+	let str = m.syntax().text();
+	assert_eq!(format!("{}", str), code.trim());
 }
 
 #[test]
 pub fn token_range_must_be_correct() {
+	//               0123456789A
 	let code = " let a = 1;";
 	let m = parse_module(code, 0);
 	let s = dbg!(m.syntax());
+
 	let first_let = s.first_token().unwrap();
+	let range = first_let.text_with_trivia_range();
+	assert_eq!(0usize, range.start().into());
+	assert_eq!(5usize, range.end().into());
 
 	let range = first_let.text_range();
 	assert_eq!(1usize, range.start().into());
 	assert_eq!(4usize, range.end().into());
+
+	let eq = s
+		.tokens()
+		.iter()
+		.filter(|x| x.text() == "=")
+		.nth(0)
+		.map(Clone::clone)
+		.unwrap();
+	let range = eq.text_with_trivia_range();
+	assert_eq!(7usize, range.start().into());
+	assert_eq!(9usize, range.end().into());
+
+	let range = eq.text_range();
+	assert_eq!(7usize, range.start().into());
+	assert_eq!(8usize, range.end().into());
 }
 
-//TODO Tidy up this test
+#[test]
+pub fn node_range_must_be_correct() {
+	//               0123456789A123456789B123456789
+	let text = " function foo() { let a = 1; }";
+	let m = parse_module(text, 0);
+
+	let var_decl = m
+		.syntax()
+		.descendants()
+		.filter(|x| x.kind() == SyntaxKind::VAR_DECL)
+		.nth(0)
+		.unwrap();
+
+	let range = var_decl.text_with_trivia_range();
+	assert_eq!(18usize, range.start().into());
+	assert_eq!(29usize, range.end().into());
+
+	let range = var_decl.text_range();
+	assert_eq!(18usize, range.start().into());
+	assert_eq!(28usize, range.end().into());
+}
+
 #[test]
 pub fn test_trivia_attached_to_tokens() {
 	let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
-	let (tokens, errors) = tokenize(text, 0);
+	let m = parse_module(text, 0);
+	let s = m.syntax();
+	let lets = s.tokens();
 
-	// let tokens: Vec<_> = tokens
-	// 	.drain(..)
-	// 	.filter(|x| (x.kind != SyntaxKind::WHITESPACE) && (x.kind != SyntaxKind::COMMENT))
-	// 	.collect();
-	// let mut i = 0;
-	// for token in &tokens {
-	// 	// println!("{:?} {:?}", &text[i..(i + token.len)], token);
-	// 	i += token.len;
-	// }
-
-	let tok_source = TokenSource::new(text, &tokens);
-
-	let syntax = Syntax::default();
-	let mut parser = crate::Parser::new(tok_source, 0, syntax);
-	crate::syntax::program::parse(&mut parser);
-
-	let (events, _p_errs) = parser.finish();
-
-	// println!("{:?}", events);
-
-	let mut tree_sink = LosslessTreeSink::new(text, &tokens);
-	crate::process(&mut tree_sink, events, errors);
-
-	let (syntax, _parse_errors) = tree_sink.finish();
-
-	// dbg!(&syntax);
-
-	let tokens = syntax.tokens();
-	// dbg!(&tokens);
+	let predicate = |x: &&SyntaxToken| x.text() == "let";
 
 	use rome_rowan::GreenTokenTrivia::*;
 	use rome_rowan::Trivia;
-	// first let
-	let first_let = tokens.get(0).unwrap();
+	let first_let = lets.iter().filter(predicate).nth(0).unwrap();
 	assert!(matches!(first_let.leading(), Comment(4)));
+	assert!(matches!(first_let.trailing(), Whitespace(1)));
 
-	let second_let = tokens.get(5).unwrap();
+	let second_let = lets.iter().filter(predicate).nth(1).unwrap();
 	assert!(matches!(second_let.leading(),
 		Many(v) if v[0] == Trivia::Whitespace(2) && v[1] == Trivia::Comment(7) && v[2] == Trivia::Whitespace(1)
 	));

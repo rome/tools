@@ -408,12 +408,12 @@ impl Literal {
 			.char_at(self.syntax().text().len() - TextSize::from(1))
 			.unwrap();
 		let end = if end_char == '"' || end_char == '\'' {
-			self.syntax().text_range().end() - TextSize::from(1)
+			self.syntax().text_with_trivia_range().end() - TextSize::from(1)
 		} else {
-			self.syntax().text_range().end()
+			self.syntax().text_with_trivia_range().end()
 		};
 
-		let offset = self.syntax().text_range().start();
+		let offset = self.syntax().text_with_trivia_range().start();
 
 		Some(
 			self.syntax()
@@ -475,7 +475,7 @@ impl Template {
 			.find(|tok| tok.kind() == BACKTICK)?;
 		Some(TextRange::new(
 			start.text_range().start(),
-			self.syntax().text_range().end(),
+			self.syntax().text_with_trivia_range().end(),
 		))
 	}
 }

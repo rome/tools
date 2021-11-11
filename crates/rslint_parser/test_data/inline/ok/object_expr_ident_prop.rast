@@ -5,13 +5,13 @@ MODULE@0..13
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..13
     VAR_DECL@0..13
-      None IDENT@0..4 "let" Whitespace(1)
+      None IDENT@0..3 "let" Whitespace(1)
       LIST@4..13
         DECLARATOR@4..13
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "b" Whitespace(1)
-          None EQ@6..8 "=" Whitespace(1)
+              None IDENT@4..5 "b" Whitespace(1)
+          None EQ@6..7 "=" Whitespace(1)
           OBJECT_EXPR@8..13
             None L_CURLY@8..9 "{" None
             LIST@9..12

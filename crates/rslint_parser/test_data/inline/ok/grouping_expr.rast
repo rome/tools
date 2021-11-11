@@ -15,7 +15,7 @@ MODULE@0..13
             None R_PAREN@5..6 ")" None
           None R_PAREN@6..7 ")" None
         ARG_LIST@7..13
-          Whitespace(1) L_PAREN@7..9 "(" None
+          Whitespace(1) L_PAREN@8..9 "(" None
           LIST@9..12
             NAME_REF@9..12
               None IDENT@9..12 "foo" None

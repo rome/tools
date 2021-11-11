@@ -21,7 +21,7 @@ use crate::{
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub(super) struct GreenNodeHead {
 	kind: SyntaxKind,
-	text_len: TextSize,
+	text_with_trivia_len: TextSize,
 
 	_c: Count<GreenNode>,
 }
@@ -107,7 +107,7 @@ impl fmt::Debug for GreenNodeData {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		f.debug_struct("GreenNode")
 			.field("kind", &self.kind())
-			.field("text_len", &self.text_len())
+			.field("text_with_trivia_len", &self.text_with_trivia_len())
 			.field("n_slots", &self.slots().len())
 			.finish()
 	}
@@ -155,8 +155,28 @@ impl GreenNodeData {
 
 	/// Returns the length of the text covered by this node.
 	#[inline]
-	pub fn text_len(&self) -> TextSize {
-		self.header().text_len
+	pub fn text_with_trivia_len(&self) -> TextSize {
+		self.header().text_with_trivia_len
+	}
+
+	pub fn leading_trailing_total_len(&self) -> (TextSize, TextSize, TextSize) {
+		let leading_len = match self.slice().first() {
+			Some(GreenChild::Node { node, .. }) => node.leading_trailing_total_len().0,
+			Some(GreenChild::Token { token, .. }) => token.leading_trailing_total_len().0,
+			None => 0.into(),
+		};
+
+		let trailing_len = match self.slice().last() {
+			Some(GreenChild::Node { node, .. }) => node.leading_trailing_total_len().1,
+			Some(GreenChild::Token { token, .. }) => token.leading_trailing_total_len().1,
+			None => 0.into(),
+		};
+
+		(
+			leading_len,
+			trailing_len,
+			self.data.header.text_with_trivia_len,
+		)
 	}
 
 	/// Children of this node.
@@ -259,10 +279,19 @@ impl GreenNode {
 		I: IntoIterator<Item = Option<GreenElement>>,
 		I::IntoIter: ExactSizeIterator,
 	{
+<<<<<<< HEAD
 		let mut text_len: TextSize = 0.into();
 		let slots = slots.into_iter().map(|el| {
 			let rel_offset = text_len;
 			text_len += el.text_len();
+=======
+		// println!("GreenNode: {:?}", kind);
+		let mut text_with_trivia_len: TextSize = 0.into();
+		let children = children.into_iter().map(|el| {
+			let rel_offset = text_with_trivia_len;
+			text_with_trivia_len += el.text_with_trivia_len();
+			// println!("\t\t{:?} text_len:{:?}", el, el.text_len());
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
 			match el {
 				Some(el) => {
 					text_len += el.text_len();
@@ -278,7 +307,7 @@ impl GreenNode {
 		let data = ThinArc::from_header_and_iter(
 			GreenNodeHead {
 				kind,
-				text_len: 0.into(),
+				text_with_trivia_len: 0.into(),
 				_c: Count::new(),
 			},
 			slots,
@@ -288,7 +317,7 @@ impl GreenNode {
 		// `slots` twice.
 		let data = {
 			let mut data = Arc::from_thin(data);
-			Arc::get_mut(&mut data).unwrap().header.text_len = text_len;
+			Arc::get_mut(&mut data).unwrap().header.text_with_trivia_len = text_with_trivia_len;
 			Arc::into_thin(data)
 		};
 
@@ -329,12 +358,17 @@ impl Slot {
 	}
 	#[inline]
 	fn rel_range(&self) -> TextRange {
+<<<<<<< HEAD
 		let text_len = match self.as_ref() {
 			None => TextSize::from(0),
 			Some(element) => element.text_len(),
 		};
 
 		TextRange::at(self.rel_offset(), text_len)
+=======
+		let len = self.as_ref().text_with_trivia_len();
+		TextRange::at(self.rel_offset(), len)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
 	}
 }
 

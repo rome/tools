@@ -5,18 +5,18 @@ MODULE@0..47
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..47
     VAR_DECL@0..47
-      None IDENT@0..4 "let" Whitespace(1)
+      None IDENT@0..3 "let" Whitespace(1)
       LIST@4..47
         DECLARATOR@4..47
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "a" Whitespace(1)
-          None EQ@6..8 "=" Whitespace(1)
+              None IDENT@4..5 "a" Whitespace(1)
+          None EQ@6..7 "=" Whitespace(1)
           OBJECT_EXPR@8..47
             None L_CURLY@8..9 "{" None
             LIST@9..45
               GETTER@9..45
-                Whitespace(3) GET_KW@9..16 "get" Whitespace(1)
+                Whitespace(3) GET_KW@12..15 "get" Whitespace(1)
                 COMPUTED_PROPERTY_NAME@16..21
                   None L_BRACK@16..17 "[" None
                   NAME_REF@17..20
@@ -25,6 +25,7 @@ MODULE@0..47
                 PARAMETER_LIST@21..24
                   None L_PAREN@21..22 "(" None
                   LIST@22..22
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                   R_PAREN@22..23 ")"
@@ -41,18 +42,25 @@ MODULE@0..47
 =======
                   None R_PAREN@22..24 ")" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+                  None R_PAREN@22..23 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
                 BLOCK_STMT@24..45
                   None L_CURLY@24..25 "{" None
                   LIST@25..41
                     RETURN_STMT@25..41
+<<<<<<< HEAD
 <<<<<<< HEAD
                       "\n    " RETURN_KW@25..37 "return" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
                       Whitespace(5) RETURN_KW@25..37 "return" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+                      Whitespace(5) RETURN_KW@30..36 "return" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
                       NAME_REF@37..40
                         None IDENT@37..40 "foo" None
                       None SEMICOLON@40..41 ";" None
-                  Whitespace(3) R_CURLY@41..45 "}" None
-            Whitespace(1) R_CURLY@45..47 "}" None
+                  Whitespace(3) R_CURLY@44..45 "}" None
+            Whitespace(1) R_CURLY@46..47 "}" None

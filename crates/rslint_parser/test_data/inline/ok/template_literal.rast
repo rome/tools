@@ -5,13 +5,13 @@ MODULE@0..66
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..66
     VAR_DECL@0..21
-      None IDENT@0..4 "let" Whitespace(1)
+      None IDENT@0..3 "let" Whitespace(1)
       LIST@4..20
         DECLARATOR@4..20
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "a" Whitespace(1)
-          None EQ@6..8 "=" Whitespace(1)
+              None IDENT@4..5 "a" Whitespace(1)
+          None EQ@6..7 "=" Whitespace(1)
           TEMPLATE@8..20
             None BACKTICK@8..9 "`" None
             LIST@9..19
@@ -24,26 +24,26 @@ MODULE@0..66
             None BACKTICK@19..20 "`" None
       None SEMICOLON@20..21 ";" None
     VAR_DECL@21..33
-      Whitespace(1) IDENT@21..26 "let" Whitespace(1)
+      Whitespace(1) IDENT@22..25 "let" Whitespace(1)
       LIST@26..32
         DECLARATOR@26..32
           SINGLE_PATTERN@26..28
             NAME@26..28
-              None IDENT@26..28 "a" Whitespace(1)
-          None EQ@28..30 "=" Whitespace(1)
+              None IDENT@26..27 "a" Whitespace(1)
+          None EQ@28..29 "=" Whitespace(1)
           TEMPLATE@30..32
             None BACKTICK@30..31 "`" None
             LIST@31..31
             None BACKTICK@31..32 "`" None
       None SEMICOLON@32..33 ";" None
     VAR_DECL@33..51
-      Whitespace(1) IDENT@33..38 "let" Whitespace(1)
+      Whitespace(1) IDENT@34..37 "let" Whitespace(1)
       LIST@38..50
         DECLARATOR@38..50
           SINGLE_PATTERN@38..40
             NAME@38..40
-              None IDENT@38..40 "a" Whitespace(1)
-          None EQ@40..42 "=" Whitespace(1)
+              None IDENT@38..39 "a" Whitespace(1)
+          None EQ@40..41 "=" Whitespace(1)
           TEMPLATE@42..50
             None BACKTICK@42..43 "`" None
             LIST@43..49
@@ -55,13 +55,13 @@ MODULE@0..66
             None BACKTICK@49..50 "`" None
       None SEMICOLON@50..51 ";" None
     VAR_DECL@51..66
-      Whitespace(1) IDENT@51..56 "let" Whitespace(1)
+      Whitespace(1) IDENT@52..55 "let" Whitespace(1)
       LIST@56..65
         DECLARATOR@56..65
           SINGLE_PATTERN@56..58
             NAME@56..58
-              None IDENT@56..58 "a" Whitespace(1)
-          None EQ@58..60 "=" Whitespace(1)
+              None IDENT@56..57 "a" Whitespace(1)
+          None EQ@58..59 "=" Whitespace(1)
           TEMPLATE@60..65
             None BACKTICK@60..61 "`" None
             LIST@61..64

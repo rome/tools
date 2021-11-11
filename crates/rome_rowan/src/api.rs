@@ -76,7 +76,7 @@ impl<L: Language> fmt::Debug for SyntaxNode<L> {
 			assert_eq!(level, 0);
 			Ok(())
 		} else {
-			write!(f, "{:?}@{:?}", self.kind(), self.text_range())
+			write!(f, "{:?}@{:?}", self.kind(), self.text_with_trivia_range())
 		}
 	}
 }
@@ -143,8 +143,23 @@ impl<L: Language> SyntaxNode<L> {
 		self.raw.text_range()
 	}
 
+<<<<<<< HEAD
+=======
+	pub fn text_with_trivia_range(&self) -> TextRange {
+		self.raw.text_with_trivia_range()
+	}
+
+	pub fn index(&self) -> usize {
+		self.raw.index()
+	}
+
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
 	pub fn text(&self) -> SyntaxText {
 		self.raw.text()
+	}
+
+	pub fn text_with_trivia(&self) -> SyntaxText {
+		self.raw.text_with_trivia()
 	}
 
 	pub fn parent(&self) -> Option<SyntaxNode<L>> {
@@ -312,6 +327,10 @@ impl<L: Language> SyntaxToken<L> {
 		self.raw.text_range()
 	}
 
+	pub fn text_with_trivia_range(&self) -> TextRange {
+		self.raw.text_with_trivia_range()
+	}
+
 	pub fn index(&self) -> usize {
 		self.raw.index()
 	}
@@ -375,7 +394,7 @@ impl<L: Language> SyntaxToken<L> {
 impl<L: Language> SyntaxElement<L> {
 	pub fn text_range(&self) -> TextRange {
 		match self {
-			NodeOrToken::Node(it) => it.text_range(),
+			NodeOrToken::Node(it) => it.text_with_trivia_range(),
 			NodeOrToken::Token(it) => it.text_range(),
 		}
 	}

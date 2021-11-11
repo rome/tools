@@ -13,7 +13,11 @@ pub struct SyntaxText {
 
 impl SyntaxText {
 	pub(crate) fn new(node: SyntaxNode) -> SyntaxText {
-		let range = node.text_range();
+		let range = node.text_with_trivia_range();
+		SyntaxText { node, range }
+	}
+
+	pub(crate) fn with_range(node: SyntaxNode, range: TextRange) -> SyntaxText {
 		SyntaxText { node, range }
 	}
 
@@ -118,7 +122,7 @@ impl SyntaxText {
 			.descendants_with_tokens()
 			.filter_map(|element| element.into_token())
 			.filter_map(move |token| {
-				let token_range = token.text_range();
+				let token_range = token.text_with_trivia_range();
 				let range = text_range.intersect(token_range)?;
 				Some((token, range - token_range.start()))
 			})

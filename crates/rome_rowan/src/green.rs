@@ -38,6 +38,4 @@ mod tests {
 		eprintln!("GreenToken         {}", size_of::<GreenToken>());
 		eprintln!("GreenElement       {}", size_of::<GreenElement>());
 	}
-
-	
 }

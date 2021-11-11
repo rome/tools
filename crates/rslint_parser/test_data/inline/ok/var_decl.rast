@@ -5,70 +5,70 @@ MODULE@0..91
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..91
     VAR_DECL@0..10
-      None VAR_KW@0..4 "var" Whitespace(1)
+      None VAR_KW@0..3 "var" Whitespace(1)
       LIST@4..9
         DECLARATOR@4..9
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "a" Whitespace(1)
-          None EQ@6..8 "=" Whitespace(1)
+              None IDENT@4..5 "a" Whitespace(1)
+          None EQ@6..7 "=" Whitespace(1)
           LITERAL@8..9
             None NUMBER@8..9 "5" None
       None SEMICOLON@9..10 ";" None
     VAR_DECL@10..32
-      Whitespace(1) IDENT@10..15 "let" Whitespace(1)
+      Whitespace(1) IDENT@11..14 "let" Whitespace(1)
       LIST@15..31
         DECLARATOR@15..31
           OBJECT_PATTERN@15..28
-            None L_CURLY@15..17 "{" Whitespace(1)
+            None L_CURLY@15..16 "{" Whitespace(1)
             LIST@17..26
               SINGLE_PATTERN@17..20
                 NAME@17..20
                   None IDENT@17..20 "foo" None
-              None COMMA@20..22 "," Whitespace(1)
+              None COMMA@20..21 "," Whitespace(1)
               SINGLE_PATTERN@22..26
                 NAME@22..26
-                  None IDENT@22..26 "bar" Whitespace(1)
-            None R_CURLY@26..28 "}" Whitespace(1)
-          None EQ@28..30 "=" Whitespace(1)
+                  None IDENT@22..25 "bar" Whitespace(1)
+            None R_CURLY@26..27 "}" Whitespace(1)
+          None EQ@28..29 "=" Whitespace(1)
           LITERAL@30..31
             None NUMBER@30..31 "5" None
       None SEMICOLON@31..32 ";" None
     VAR_DECL@32..46
-      Whitespace(1) IDENT@32..37 "let" Whitespace(1)
+      Whitespace(1) IDENT@33..36 "let" Whitespace(1)
       LIST@37..45
         DECLARATOR@37..40
           SINGLE_PATTERN@37..40
             NAME@37..40
               None IDENT@37..40 "bar" None
-        None COMMA@40..42 "," Whitespace(1)
+        None COMMA@40..41 "," Whitespace(1)
         DECLARATOR@42..45
           SINGLE_PATTERN@42..45
             NAME@42..45
               None IDENT@42..45 "foo" None
       None SEMICOLON@45..46 ";" None
     VAR_DECL@46..59
-      Whitespace(1) CONST_KW@46..53 "const" Whitespace(1)
+      Whitespace(1) CONST_KW@47..52 "const" Whitespace(1)
       LIST@53..58
         DECLARATOR@53..58
           SINGLE_PATTERN@53..55
             NAME@53..55
-              None IDENT@53..55 "a" Whitespace(1)
-          None EQ@55..57 "=" Whitespace(1)
+              None IDENT@53..54 "a" Whitespace(1)
+          None EQ@55..56 "=" Whitespace(1)
           LITERAL@57..58
             None NUMBER@57..58 "5" None
       None SEMICOLON@58..59 ";" None
     VAR_DECL@59..91
-      Whitespace(1) CONST_KW@59..66 "const" Whitespace(1)
+      Whitespace(1) CONST_KW@60..65 "const" Whitespace(1)
       LIST@66..90
         DECLARATOR@66..90
           OBJECT_PATTERN@66..86
-            None L_CURLY@66..68 "{" Whitespace(1)
+            None L_CURLY@66..67 "{" Whitespace(1)
             LIST@68..84
               KEY_VALUE_PATTERN@68..78
                 NAME@68..71
                   None IDENT@68..71 "foo" None
-                None COLON@71..73 ":" Whitespace(1)
+                None COLON@71..72 ":" Whitespace(1)
                 ARRAY_PATTERN@73..78
                   None L_BRACK@73..74 "[" None
                   LIST@74..77
@@ -76,12 +76,12 @@ MODULE@0..91
                       NAME@74..77
                         None IDENT@74..77 "bar" None
                   None R_BRACK@77..78 "]" None
-              None COMMA@78..80 "," Whitespace(1)
+              None COMMA@78..79 "," Whitespace(1)
               SINGLE_PATTERN@80..84
                 NAME@80..84
-                  None IDENT@80..84 "baz" Whitespace(1)
-            None R_CURLY@84..86 "}" Whitespace(1)
-          None EQ@86..88 "=" Whitespace(1)
+                  None IDENT@80..83 "baz" Whitespace(1)
+            None R_CURLY@84..85 "}" Whitespace(1)
+          None EQ@86..87 "=" Whitespace(1)
           OBJECT_EXPR@88..90
             None L_CURLY@88..89 "{" None
             LIST@89..89

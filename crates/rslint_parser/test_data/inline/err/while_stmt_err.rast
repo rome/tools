@@ -14,10 +14,10 @@ JS_MODULE@0..52
 MODULE@0..51
   LIST@0..51
     WHILE_STMT@0..13
-      None WHILE_KW@0..6 "while" Whitespace(1)
+      None WHILE_KW@0..5 "while" Whitespace(1)
       CONDITION@6..11
         LITERAL@6..11
-          None TRUE_KW@6..11 "true" Whitespace(1)
+          None TRUE_KW@6..10 "true" Whitespace(1)
       BLOCK_STMT@11..13
 <<<<<<< HEAD
          L_CURLY@11..12 "{" 
@@ -28,7 +28,7 @@ MODULE@0..51
         LIST@12..12
         None R_CURLY@12..13 "}" None
     WHILE_STMT@13..22
-      Whitespace(1) WHILE_KW@13..20 "while" Whitespace(1)
+      Whitespace(1) WHILE_KW@14..19 "while" Whitespace(1)
       CONDITION@20..20
 <<<<<<< HEAD
       JS_BLOCK_STATEMENT@20..22
@@ -52,11 +52,11 @@ MODULE@0..51
         LIST@21..21
         None R_CURLY@21..22 "}" None
     WHILE_STMT@22..37
-      Whitespace(1) WHILE_KW@22..29 "while" Whitespace(1)
+      Whitespace(1) WHILE_KW@23..28 "while" Whitespace(1)
       CONDITION@29..35
         None L_PAREN@29..30 "(" None
         LITERAL@30..35
-          None TRUE_KW@30..35 "true" Whitespace(1)
+          None TRUE_KW@30..34 "true" Whitespace(1)
       BLOCK_STMT@35..37
 <<<<<<< HEAD
          L_CURLY@35..36 "{" 
@@ -67,11 +67,11 @@ MODULE@0..51
         LIST@36..36
         None R_CURLY@36..37 "}" None
     WHILE_STMT@37..51
-      Whitespace(1) WHILE_KW@37..44 "while" Whitespace(1)
+      Whitespace(1) WHILE_KW@38..43 "while" Whitespace(1)
       CONDITION@44..50
         LITERAL@44..48
           None TRUE_KW@44..48 "true" None
-        None R_PAREN@48..50 ")" Whitespace(1)
+        None R_PAREN@48..49 ")" Whitespace(1)
       ERROR@50..51
         None R_CURLY@50..51 "}" None
 --

@@ -7,16 +7,16 @@ MODULE@0..100
     JS_EXPRESSION_STATEMENT@0..21
       ASSIGN_EXPR@0..20
         NAME_REF@0..4
-          None IDENT@0..4 "foo" Whitespace(1)
-        None PLUSEQ@4..7 "+=" Whitespace(1)
+          None IDENT@0..3 "foo" Whitespace(1)
+        None PLUSEQ@4..6 "+=" Whitespace(1)
         ASSIGN_EXPR@7..20
           NAME_REF@7..11
-            None IDENT@7..11 "bar" Whitespace(1)
-          None EQ@11..13 "=" Whitespace(1)
+            None IDENT@7..10 "bar" Whitespace(1)
+          None EQ@11..12 "=" Whitespace(1)
           ASSIGN_EXPR@13..20
             NAME_REF@13..15
-              None IDENT@13..15 "b" Whitespace(1)
-            None QUESTION2EQ@15..19 "??=" Whitespace(1)
+              None IDENT@13..14 "b" Whitespace(1)
+            None QUESTION2EQ@15..18 "??=" Whitespace(1)
             LITERAL@19..20
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -48,8 +48,8 @@ MODULE@0..100
     EXPR_STMT@21..33
       ASSIGN_EXPR@21..32
         NAME_REF@21..26
-          Whitespace(1) IDENT@21..26 "foo" Whitespace(1)
-        None MINUSEQ@26..29 "-=" Whitespace(1)
+          Whitespace(1) IDENT@22..25 "foo" Whitespace(1)
+        None MINUSEQ@26..28 "-=" Whitespace(1)
         NAME_REF@29..32
           None IDENT@29..32 "bar" None
       None SEMICOLON@32..33 ";" None
@@ -57,21 +57,25 @@ MODULE@0..100
       ASSIGN_EXPR@33..50
         ARRAY_PATTERN@33..45
 <<<<<<< HEAD
+<<<<<<< HEAD
           "\n" L_BRACK@33..35 "[" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
           Whitespace(1) L_BRACK@33..35 "[" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+          Whitespace(1) L_BRACK@34..35 "[" None
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
           LIST@35..43
             SINGLE_PATTERN@35..38
               NAME@35..38
                 None IDENT@35..38 "foo" None
-            None COMMA@38..40 "," Whitespace(1)
+            None COMMA@38..39 "," Whitespace(1)
             SINGLE_PATTERN@40..43
               NAME@40..43
                 None IDENT@40..43 "bar" None
-          None R_BRACK@43..45 "]" Whitespace(1)
-        None EQ@45..47 "=" Whitespace(1)
+          None R_BRACK@43..44 "]" Whitespace(1)
+        None EQ@45..46 "=" Whitespace(1)
         NAME_REF@47..50
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -93,21 +97,25 @@ MODULE@0..100
       None SEMICOLON@50..51 ";" None
     EXPR_STMT@51..72
       GROUPING_EXPR@51..71
+<<<<<<< HEAD
         Whitespace(1) L_PAREN@51..53 "(" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+        Whitespace(1) L_PAREN@52..53 "(" None
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         ASSIGN_EXPR@53..70
           OBJECT_PATTERN@53..66
-            None L_CURLY@53..55 "{" Whitespace(1)
+            None L_CURLY@53..54 "{" Whitespace(1)
             LIST@55..64
               SINGLE_PATTERN@55..58
                 NAME@55..58
                   None IDENT@55..58 "bar" None
-              None COMMA@58..60 "," Whitespace(1)
+              None COMMA@58..59 "," Whitespace(1)
               SINGLE_PATTERN@60..64
                 NAME@60..64
-                  None IDENT@60..64 "baz" Whitespace(1)
-            None R_CURLY@64..66 "}" Whitespace(1)
-          None EQ@66..68 "=" Whitespace(1)
+                  None IDENT@60..63 "baz" Whitespace(1)
+            None R_CURLY@64..65 "}" Whitespace(1)
+          None EQ@66..67 "=" Whitespace(1)
           OBJECT_EXPR@68..70
             None L_CURLY@68..69 "{" None
             LIST@69..69
@@ -134,16 +142,20 @@ MODULE@0..100
       None SEMICOLON@71..72 ";" None
     EXPR_STMT@72..100
       GROUPING_EXPR@72..99
+<<<<<<< HEAD
         Whitespace(1) L_PAREN@72..74 "(" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+        Whitespace(1) L_PAREN@73..74 "(" None
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         ASSIGN_EXPR@74..98
           OBJECT_PATTERN@74..94
-            None L_CURLY@74..76 "{" Whitespace(1)
+            None L_CURLY@74..75 "{" Whitespace(1)
             LIST@76..92
               KEY_VALUE_PATTERN@76..86
                 NAME@76..79
                   None IDENT@76..79 "bar" None
-                None COLON@79..81 ":" Whitespace(1)
+                None COLON@79..80 ":" Whitespace(1)
                 ARRAY_PATTERN@81..86
                   None L_BRACK@81..82 "[" None
                   LIST@82..85
@@ -151,12 +163,12 @@ MODULE@0..100
                       NAME@82..85
                         None IDENT@82..85 "baz" None
                   None R_BRACK@85..86 "]" None
-              None COMMA@86..88 "," Whitespace(1)
+              None COMMA@86..87 "," Whitespace(1)
               SINGLE_PATTERN@88..92
                 NAME@88..92
-                  None IDENT@88..92 "foo" Whitespace(1)
-            None R_CURLY@92..94 "}" Whitespace(1)
-          None EQ@94..96 "=" Whitespace(1)
+                  None IDENT@88..91 "foo" Whitespace(1)
+            None R_CURLY@92..93 "}" Whitespace(1)
+          None EQ@94..95 "=" Whitespace(1)
           OBJECT_EXPR@96..98
             None L_CURLY@96..97 "{" None
             LIST@97..97

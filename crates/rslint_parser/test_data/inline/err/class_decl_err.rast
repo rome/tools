@@ -5,23 +5,23 @@ MODULE@0..73
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..73
     CLASS_DECL@0..8
-      None CLASS_KW@0..6 "class" Whitespace(1)
+      None CLASS_KW@0..5 "class" Whitespace(1)
       CLASS_BODY@6..8
         None L_CURLY@6..7 "{" None
         LIST@7..7
         None R_CURLY@7..8 "}" None
     CLASS_DECL@8..29
-      Whitespace(1) CLASS_KW@8..15 "class" Whitespace(1)
-      None EXTENDS_KW@15..23 "extends" Whitespace(1)
+      Whitespace(1) CLASS_KW@9..14 "class" Whitespace(1)
+      None EXTENDS_KW@15..22 "extends" Whitespace(1)
       NAME_REF@23..27
-        None IDENT@23..27 "bar" Whitespace(1)
+        None IDENT@23..26 "bar" Whitespace(1)
       CLASS_BODY@27..29
         None L_CURLY@27..28 "{" None
         LIST@28..28
         None R_CURLY@28..29 "}" None
     CLASS_DECL@29..72
-      Whitespace(1) CLASS_KW@29..36 "class" Whitespace(1)
-      None EXTENDS_KW@36..44 "extends" Whitespace(1)
+      Whitespace(1) CLASS_KW@30..35 "class" Whitespace(1)
+      None EXTENDS_KW@36..43 "extends" Whitespace(1)
       OBJECT_EXPR@44..46
         None L_CURLY@44..45 "{" None
         LIST@45..45
@@ -29,19 +29,19 @@ MODULE@0..73
       CLASS_BODY@46..72
         LIST@46..70
           NAME@46..52
-            Whitespace(1) IDENT@46..52 "class" None
+            Whitespace(1) IDENT@47..52 "class" None
           ERROR@52..59
-            Whitespace(1) CLASS_KW@52..59 "class" Whitespace(1)
+            Whitespace(1) CLASS_KW@53..58 "class" Whitespace(1)
           NAME@59..63
-            None IDENT@59..63 "foo" Whitespace(1)
+            None IDENT@59..62 "foo" Whitespace(1)
           ERROR@63..65
-            None L_CURLY@63..65 "{" Whitespace(1)
+            None L_CURLY@63..64 "{" Whitespace(1)
           CLASS_PROP@65..69
             NAME@65..69
-              None IDENT@65..69 "set" Whitespace(1)
+              None IDENT@65..68 "set" Whitespace(1)
           ERROR@69..70
             None L_CURLY@69..70 "{" None
-        None R_CURLY@70..72 "}" Whitespace(1)
+        None R_CURLY@70..71 "}" Whitespace(1)
     ERROR@72..73
       None R_CURLY@72..73 "}" None
 --

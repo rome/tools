@@ -5,41 +5,42 @@ MODULE@0..71
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..71
     VAR_DECL@0..17
-      None IDENT@0..4 "let" Whitespace(1)
+      None IDENT@0..3 "let" Whitespace(1)
       LIST@4..16
         DECLARATOR@4..16
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "a" Whitespace(1)
-          None EQ@6..8 "=" Whitespace(1)
+              None IDENT@4..5 "a" Whitespace(1)
+          None EQ@6..7 "=" Whitespace(1)
           CLASS_EXPR@8..16
-            None CLASS_KW@8..14 "class" Whitespace(1)
+            None CLASS_KW@8..13 "class" Whitespace(1)
             CLASS_BODY@14..16
               None L_CURLY@14..15 "{" None
               LIST@15..15
               None R_CURLY@15..16 "}" None
       None SEMICOLON@16..17 ";" None
     VAR_DECL@17..57
-      Whitespace(1) IDENT@17..22 "let" Whitespace(1)
+      Whitespace(1) IDENT@18..21 "let" Whitespace(1)
       LIST@22..57
         DECLARATOR@22..57
           SINGLE_PATTERN@22..24
             NAME@22..24
-              None IDENT@22..24 "a" Whitespace(1)
-          None EQ@24..26 "=" Whitespace(1)
+              None IDENT@22..23 "a" Whitespace(1)
+          None EQ@24..25 "=" Whitespace(1)
           CLASS_EXPR@26..57
-            None CLASS_KW@26..32 "class" Whitespace(1)
+            None CLASS_KW@26..31 "class" Whitespace(1)
             NAME@32..36
-              None IDENT@32..36 "foo" Whitespace(1)
+              None IDENT@32..35 "foo" Whitespace(1)
             CLASS_BODY@36..57
               None L_CURLY@36..37 "{" None
               LIST@37..55
                 CONSTRUCTOR@37..55
                   NAME@37..50
-                    Whitespace(2) IDENT@37..50 "constructor" None
+                    Whitespace(2) IDENT@39..50 "constructor" None
                   PARAMETER_LIST@50..53
                     None L_PAREN@50..51 "(" None
                     LIST@51..51
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                     R_PAREN@51..52 ")"
@@ -61,24 +62,31 @@ MODULE@0..71
 =======
                     None R_PAREN@51..53 ")" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+                    None R_PAREN@51..52 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
                   BLOCK_STMT@53..55
                     None L_CURLY@53..54 "{" None
                     LIST@54..54
                     None R_CURLY@54..55 "}" None
-              Whitespace(1) R_CURLY@55..57 "}" None
+              Whitespace(1) R_CURLY@56..57 "}" None
     EXPR_STMT@57..71
       BRACKET_EXPR@57..71
         NAME_REF@57..61
+<<<<<<< HEAD
 <<<<<<< HEAD
           "\n" IDENT@57..61 "foo" 
          L_BRACK@61..62 "[" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
           Whitespace(1) IDENT@57..61 "foo" None
+=======
+          Whitespace(1) IDENT@58..61 "foo" None
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         None L_BRACK@61..62 "[" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         CLASS_EXPR@62..70
-          None CLASS_KW@62..68 "class" Whitespace(1)
+          None CLASS_KW@62..67 "class" Whitespace(1)
           CLASS_BODY@68..70
             None L_CURLY@68..69 "{" None
             LIST@69..69

@@ -5,20 +5,20 @@ MODULE@0..21
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..21
     CLASS_DECL@0..19
-      None CLASS_KW@0..6 "class" Whitespace(1)
+      None CLASS_KW@0..5 "class" Whitespace(1)
       NAME@6..10
-        None IDENT@6..10 "foo" Whitespace(1)
+        None IDENT@6..9 "foo" Whitespace(1)
       CLASS_BODY@10..19
         None L_CURLY@10..11 "{" None
         LIST@11..18
           CLASS_PROP@11..17
             NAME@11..17
-              Whitespace(2) IDENT@11..17 "get" Whitespace(1)
+              Whitespace(2) IDENT@13..16 "get" Whitespace(1)
           ERROR@17..18
             None L_CURLY@17..18 "{" None
         None R_CURLY@18..19 "}" None
     ERROR@19..21
-      Whitespace(1) R_CURLY@19..21 "}" None
+      Whitespace(1) R_CURLY@20..21 "}" None
 --
 error[SyntaxError]: expected a semicolon for a class property, but found none
   ┌─ method_getter_err.js:2:2

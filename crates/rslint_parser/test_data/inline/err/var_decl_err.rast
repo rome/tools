@@ -5,33 +5,33 @@ MODULE@0..31
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..31
     VAR_DECL@0..8
-      None VAR_KW@0..4 "var" Whitespace(1)
+      None VAR_KW@0..3 "var" Whitespace(1)
       LIST@4..8
         DECLARATOR@4..8
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "a" Whitespace(1)
+              None IDENT@4..5 "a" Whitespace(1)
           None EQ@6..7 "=" None
           ERROR@7..8
             None SEMICOLON@7..8 ";" None
     VAR_DECL@8..21
-      Whitespace(1) CONST_KW@8..15 "const" Whitespace(1)
+      Whitespace(1) CONST_KW@9..14 "const" Whitespace(1)
       LIST@15..21
         DECLARATOR@15..21
           SINGLE_PATTERN@15..17
             NAME@15..17
-              None IDENT@15..17 "a" Whitespace(1)
-          None EQ@17..19 "=" Whitespace(1)
+              None IDENT@15..16 "a" Whitespace(1)
+          None EQ@17..18 "=" Whitespace(1)
           LITERAL@19..21
-            None NUMBER@19..21 "5" Whitespace(1)
+            None NUMBER@19..20 "5" Whitespace(1)
     VAR_DECL@21..31
-      None IDENT@21..25 "let" Whitespace(1)
+      None IDENT@21..24 "let" Whitespace(1)
       LIST@25..30
         DECLARATOR@25..30
           SINGLE_PATTERN@25..27
             NAME@25..27
-              None IDENT@25..27 "b" Whitespace(1)
-          None EQ@27..29 "=" Whitespace(1)
+              None IDENT@25..26 "b" Whitespace(1)
+          None EQ@27..28 "=" Whitespace(1)
           LITERAL@29..30
             None NUMBER@29..30 "5" None
       None SEMICOLON@30..31 ";" None

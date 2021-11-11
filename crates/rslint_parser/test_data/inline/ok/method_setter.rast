@@ -5,19 +5,20 @@ MODULE@0..27
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..27
     CLASS_DECL@0..27
-      None CLASS_KW@0..6 "class" Whitespace(1)
+      None CLASS_KW@0..5 "class" Whitespace(1)
       NAME@6..10
-        None IDENT@6..10 "foo" Whitespace(1)
+        None IDENT@6..9 "foo" Whitespace(1)
       CLASS_BODY@10..27
         None L_CURLY@10..11 "{" None
         LIST@11..25
           SETTER@11..25
-            Whitespace(2) SET_KW@11..17 "set" Whitespace(1)
+            Whitespace(2) SET_KW@13..16 "set" Whitespace(1)
             NAME@17..20
               None IDENT@17..20 "bar" None
             PARAMETER_LIST@20..23
               None L_PAREN@20..21 "(" None
               LIST@21..21
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
               R_PAREN@21..22 ")"
@@ -31,9 +32,12 @@ MODULE@0..27
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
               None R_PAREN@21..23 ")" Whitespace(1)
+=======
+              None R_PAREN@21..22 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
             BLOCK_STMT@23..25
               None L_CURLY@23..24 "{" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               LIST@24..24
               None R_CURLY@24..25 "}" None
-        Whitespace(1) R_CURLY@25..27 "}" None
+        Whitespace(1) R_CURLY@26..27 "}" None

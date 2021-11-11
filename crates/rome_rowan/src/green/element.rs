@@ -60,10 +60,9 @@ impl GreenElement {
 		self.as_deref().kind()
 	}
 
-	/// Returns the length of the text covered by this element.
 	#[inline]
-	pub fn text_len(&self) -> TextSize {
-		self.as_deref().text_len()
+	pub fn text_with_trivia_len(&self) -> TextSize {
+		self.as_deref().text_with_trivia_len()
 	}
 }
 
@@ -79,10 +78,17 @@ impl GreenElementRef<'_> {
 
 	/// Returns the length of the text covered by this element.
 	#[inline]
-	pub fn text_len(self) -> TextSize {
+	pub fn text_with_trivia_len(&self) -> TextSize {
 		match self {
-			NodeOrToken::Node(it) => it.text_len(),
+			NodeOrToken::Node(it) => it.text_with_trivia_len(),
 			NodeOrToken::Token(it) => it.text_with_trivia_len(),
+		}
+	}
+
+	pub fn leading_trailing_total_len(&self) -> (TextSize, TextSize, TextSize) {
+		match self {
+			NodeOrToken::Node(it) => it.leading_trailing_total_len(),
+			NodeOrToken::Token(it) => it.leading_trailing_total_len(),
 		}
 	}
 }

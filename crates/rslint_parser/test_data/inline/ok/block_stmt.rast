@@ -36,7 +36,7 @@ MODULE@0..26
       LIST@1..1
       None R_CURLY@1..2 "}" None
     BLOCK_STMT@2..11
-      Whitespace(1) L_CURLY@2..4 "{" None
+      Whitespace(1) L_CURLY@3..4 "{" None
       LIST@4..10
         BLOCK_STMT@4..10
           None L_CURLY@4..5 "{" None
@@ -52,15 +52,15 @@ MODULE@0..26
           None R_CURLY@9..10 "}" None
       None R_CURLY@10..11 "}" None
     BLOCK_STMT@11..26
-      Whitespace(1) L_CURLY@11..14 "{" Whitespace(1)
+      Whitespace(1) L_CURLY@12..13 "{" Whitespace(1)
       LIST@14..25
         EXPR_STMT@14..25
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
           ASSIGN_EXPR@14..23
             NAME_REF@14..18
-              None IDENT@14..18 "foo" Whitespace(1)
-            None EQ@18..20 "=" Whitespace(1)
+              None IDENT@14..17 "foo" Whitespace(1)
+            None EQ@18..19 "=" Whitespace(1)
             NAME_REF@20..23
               None IDENT@20..23 "bar" None
-          None SEMICOLON@23..25 ";" Whitespace(1)
+          None SEMICOLON@23..24 ";" Whitespace(1)
       None R_CURLY@25..26 "}" None

@@ -105,21 +105,11 @@ pub trait SyntaxNodeExt {
 	///
 	/// assert_eq!(node.trimmed_range(), TextRange::new(1.into(), 9.into()));
 	///
-	/// assert_eq!(node.text_range(), TextRange::new(0.into(), 11.into()));
+	/// assert_eq!(node.text_with_trivia_range(), TextRange::new(0.into(), 11.into()));
 	/// ```
 	fn trimmed_range(&self) -> TextRange {
 		let node = self.to_node();
-		let tokens = node.tokens();
-		let start = tokens
-			.first()
-			.map(|t| t.text_range().start() + t.leading().text_len())
-			.unwrap_or_else(|| 0.into());
-		let end = tokens
-			.last()
-			.map(|t| t.text_range().end() - t.trailing().text_len())
-			.unwrap_or_else(|| 0.into());
-
-		TextRange::new(start, end)
+		node.text_range()
 	}
 
 	/// Get the text of this node, not including leading or trailing whitespace
@@ -133,26 +123,22 @@ pub trait SyntaxNodeExt {
 	/// assert_eq!(node.trimmed_text(), "foo. bar");
 	/// ```
 	fn trimmed_text(&self) -> SyntaxText {
-		let not_trimmed_start = self.to_node().text_range().start();
+		let not_trimmed_start = self.to_node().text_with_trivia_range().start();
 		let trimmed = self.to_node().trimmed_range();
-		// println!(
-		// 	"NOT TRIMMED: {:?} TRIMMED: {:?} - {:?}",
-		// 	self.to_node().text_range(),
-		// 	trimmed,
-		// 	self.to_node()
-		// 		.text()
-		// 		.slice(TextRange::new(1.into(), 9.into()))
-		// );
+
 		let start = trimmed
 			.start()
 			.checked_sub(not_trimmed_start)
 			.unwrap_or_default();
+
 		let end = trimmed
 			.end()
 			.checked_sub(not_trimmed_start)
 			.unwrap_or_default();
-		// println!("{:?} {:?}", start, end);
-		self.to_node().text().slice(TextRange::new(start, end))
+
+		self.to_node()
+			.text_with_trivia()
+			.slice(TextRange::new(start, end))
 	}
 
 	/// Check whether this node's kind is contained in a token set.

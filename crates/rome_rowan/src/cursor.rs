@@ -384,18 +384,17 @@ impl NodeData {
 		res
 	}
 
-	//TODO we have to skip the leading trivia here
 	#[inline]
 	fn text_range(&self) -> TextRange {
 		let offset = self.offset();
-		let len = self.green().text_len();
-		TextRange::at(offset, len)
+		let (leading_len, trailing_len, total_len) = self.green().leading_trailing_total_len();
+		TextRange::at(offset + leading_len, total_len - leading_len - trailing_len)
 	}
 
 	#[inline]
 	fn text_with_trivia_range(&self) -> TextRange {
 		let offset = self.offset();
-		let len = self.green().text_len();
+		let len = self.green().text_with_trivia_len();
 		TextRange::at(offset, len)
 	}
 
@@ -640,12 +639,22 @@ impl SyntaxNode {
 	}
 
 	#[inline]
+	pub fn text_with_trivia_range(&self) -> TextRange {
+		self.data().text_with_trivia_range()
+	}
+
+	#[inline]
 	pub fn index(&self) -> usize {
 		self.data().slot() as usize
 	}
 
 	#[inline]
 	pub fn text(&self) -> SyntaxText {
+		SyntaxText::with_range(self.clone(), self.text_range())
+	}
+
+	#[inline]
+	pub fn text_with_trivia(&self) -> SyntaxText {
 		SyntaxText::new(self.clone())
 	}
 
@@ -799,7 +808,7 @@ impl SyntaxNode {
 		// TODO: this could be faster if we first drill-down to node, and only
 		// then switch to token search. We should also replace explicit
 		// recursion with a loop.
-		let range = self.text_range();
+		let range = self.text_with_trivia_range();
 		assert!(
 			range.start() <= offset && offset <= range.end(),
 			"Bad offset: range {:?} offset {:?}",
@@ -1162,7 +1171,7 @@ impl fmt::Debug for SyntaxNode {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		f.debug_struct("SyntaxNode")
 			.field("kind", &self.kind())
-			.field("text_range", &self.text_range())
+			.field("text_with_trivia_range", &self.text_with_trivia_range())
 			.finish()
 	}
 }

@@ -115,36 +115,36 @@ JS_MODULE@0..112
 MODULE@0..46
   LIST@0..46
     TRY_STMT@0..19
-      None TRY_KW@0..4 "try" Whitespace(1)
+      None TRY_KW@0..3 "try" Whitespace(1)
       BLOCK_STMT@4..7
         None L_CURLY@4..5 "{" None
         LIST@5..5
-        None R_CURLY@5..7 "}" Whitespace(1)
+        None R_CURLY@5..6 "}" Whitespace(1)
       CATCH_CLAUSE@7..19
-        None CATCH_KW@7..13 "catch" Whitespace(1)
+        None CATCH_KW@7..12 "catch" Whitespace(1)
         None L_PAREN@13..14 "(" None
         SINGLE_PATTERN@14..15
           NAME@14..15
             None IDENT@14..15 "e" None
-        None R_PAREN@15..17 ")" Whitespace(1)
+        None R_PAREN@15..16 ")" Whitespace(1)
         BLOCK_STMT@17..19
           None L_CURLY@17..18 "{" None
           LIST@18..18
           None R_CURLY@18..19 "}" None
     TRY_STMT@19..46
-      Whitespace(1) TRY_KW@19..24 "try" Whitespace(1)
+      Whitespace(1) TRY_KW@20..23 "try" Whitespace(1)
       BLOCK_STMT@24..27
         None L_CURLY@24..25 "{" None
         LIST@25..25
-        None R_CURLY@25..27 "}" Whitespace(1)
+        None R_CURLY@25..26 "}" Whitespace(1)
       CATCH_CLAUSE@27..36
-        None CATCH_KW@27..33 "catch" Whitespace(1)
+        None CATCH_KW@27..32 "catch" Whitespace(1)
         BLOCK_STMT@33..36
           None L_CURLY@33..34 "{" None
           LIST@34..34
-          None R_CURLY@34..36 "}" Whitespace(1)
+          None R_CURLY@34..35 "}" Whitespace(1)
       FINALIZER@36..46
-        None FINALLY_KW@36..44 "finally" Whitespace(1)
+        None FINALLY_KW@36..43 "finally" Whitespace(1)
         BLOCK_STMT@44..46
           None L_CURLY@44..45 "{" None
           LIST@45..45

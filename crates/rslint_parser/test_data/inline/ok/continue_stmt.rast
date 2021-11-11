@@ -13,7 +13,7 @@ MODULE@0..63
     LABELLED_STMT@0..7
       NAME@0..3
         None IDENT@0..3 "foo" None
-      None COLON@3..5 ":" Whitespace(1)
+      None COLON@3..4 ":" Whitespace(1)
       BLOCK_STMT@5..7
 <<<<<<< HEAD
          L_CURLY@5..6 "{" 
@@ -24,7 +24,7 @@ MODULE@0..63
         LIST@6..6
         None R_CURLY@6..7 "}" None
     WHILE_STMT@7..63
-      Whitespace(1) WHILE_KW@7..14 "while" Whitespace(1)
+      Whitespace(1) WHILE_KW@8..13 "while" Whitespace(1)
       CONDITION@14..21
         None L_PAREN@14..15 "(" None
         LITERAL@15..19
@@ -49,24 +49,32 @@ MODULE@0..63
          R_PAREN@19..21 ")" " "
 =======
           None TRUE_KW@15..19 "true" None
+<<<<<<< HEAD
         None R_PAREN@19..21 ")" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+        None R_PAREN@19..20 ")" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
       BLOCK_STMT@21..63
         None L_CURLY@21..22 "{" None
         LIST@22..61
           CONTINUE_STMT@22..34
-            Whitespace(3) CONTINUE_KW@22..33 "continue" None
+            Whitespace(3) CONTINUE_KW@25..33 "continue" None
             None SEMICOLON@33..34 ";" None
           CONTINUE_STMT@34..50
+<<<<<<< HEAD
 <<<<<<< HEAD
             "\n  " CONTINUE_KW@34..46 "continue" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
             Whitespace(3) CONTINUE_KW@34..46 "continue" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+            Whitespace(3) CONTINUE_KW@37..45 "continue" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
             NAME_REF@46..49
               None IDENT@46..49 "foo" None
             None SEMICOLON@49..50 ";" None
           CONTINUE_STMT@50..61
-            Whitespace(3) CONTINUE_KW@50..61 "continue" None
-        Whitespace(1) R_CURLY@61..63 "}" None
+            Whitespace(3) CONTINUE_KW@53..61 "continue" None
+        Whitespace(1) R_CURLY@62..63 "}" None

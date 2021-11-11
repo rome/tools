@@ -62,43 +62,43 @@ JS_MODULE@0..61
 MODULE@0..60
   LIST@0..60
     IF_STMT@0..17
-      None IF_KW@0..3 "if" Whitespace(1)
+      None IF_KW@0..2 "if" Whitespace(1)
       CONDITION@3..10
         None L_PAREN@3..4 "(" None
         LITERAL@4..8
           None TRUE_KW@4..8 "true" None
-        None R_PAREN@8..10 ")" Whitespace(1)
-      None ELSE_KW@10..15 "else" Whitespace(1)
+        None R_PAREN@8..9 ")" Whitespace(1)
+      None ELSE_KW@10..14 "else" Whitespace(1)
       BLOCK_STMT@15..17
         None L_CURLY@15..16 "{" None
         LIST@16..16
         None R_CURLY@16..17 "}" None
     IF_STMT@17..43
-      Whitespace(1) IF_KW@17..21 "if" Whitespace(1)
+      Whitespace(1) IF_KW@18..20 "if" Whitespace(1)
       CONDITION@21..28
         None L_PAREN@21..22 "(" None
         LITERAL@22..26
           None TRUE_KW@22..26 "true" None
-        None R_PAREN@26..28 ")" Whitespace(1)
+        None R_PAREN@26..27 ")" Whitespace(1)
       None ELSE_KW@28..32 "else" None
       IF_STMT@32..43
-        Whitespace(1) IF_KW@32..36 "if" Whitespace(1)
+        Whitespace(1) IF_KW@33..35 "if" Whitespace(1)
         CONDITION@36..36
-        None ELSE_KW@36..41 "else" Whitespace(1)
+        None ELSE_KW@36..40 "else" Whitespace(1)
         BLOCK_STMT@41..43
           None L_CURLY@41..42 "{" None
           LIST@42..42
           None R_CURLY@42..43 "}" None
     IF_STMT@43..60
-      Whitespace(1) IF_KW@43..47 "if" Whitespace(1)
+      Whitespace(1) IF_KW@44..46 "if" Whitespace(1)
       CONDITION@47..50
         None L_PAREN@47..48 "(" None
-        None R_PAREN@48..50 ")" Whitespace(1)
+        None R_PAREN@48..49 ")" Whitespace(1)
       BLOCK_STMT@50..53
         None L_CURLY@50..51 "{" None
         LIST@51..51
-        None R_CURLY@51..53 "}" Whitespace(1)
-      None ELSE_KW@53..58 "else" Whitespace(1)
+        None R_CURLY@51..52 "}" Whitespace(1)
+      None ELSE_KW@53..57 "else" Whitespace(1)
       BLOCK_STMT@58..60
         None L_CURLY@58..59 "{" None
         LIST@59..59

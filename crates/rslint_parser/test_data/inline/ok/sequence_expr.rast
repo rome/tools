@@ -9,15 +9,15 @@ MODULE@0..13
         LIST@0..13
           LITERAL@0..1
             None NUMBER@0..1 "1" None
-          None COMMA@1..3 "," Whitespace(1)
+          None COMMA@1..2 "," Whitespace(1)
           LITERAL@3..4
             None NUMBER@3..4 "2" None
-          None COMMA@4..6 "," Whitespace(1)
+          None COMMA@4..5 "," Whitespace(1)
           LITERAL@6..7
             None NUMBER@6..7 "3" None
-          None COMMA@7..9 "," Whitespace(1)
+          None COMMA@7..8 "," Whitespace(1)
           LITERAL@9..10
             None NUMBER@9..10 "4" None
-          None COMMA@10..12 "," Whitespace(1)
+          None COMMA@10..11 "," Whitespace(1)
           LITERAL@12..13
             None NUMBER@12..13 "5" None

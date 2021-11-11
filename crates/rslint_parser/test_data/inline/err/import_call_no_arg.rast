@@ -5,13 +5,13 @@ MODULE@0..24
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..24
     VAR_DECL@0..17
-      None IDENT@0..4 "let" Whitespace(1)
+      None IDENT@0..3 "let" Whitespace(1)
       LIST@4..16
         DECLARATOR@4..16
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "a" Whitespace(1)
-          None EQ@6..8 "=" Whitespace(1)
+              None IDENT@4..5 "a" Whitespace(1)
+          None EQ@6..7 "=" Whitespace(1)
           IMPORT_CALL@8..16
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -42,8 +42,12 @@ MODULE@0..24
     EXPR_STMT@17..24
       CALL_EXPR@17..23
         NAME_REF@17..21
+<<<<<<< HEAD
           Whitespace(1) IDENT@17..21 "foo" None
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+          Whitespace(1) IDENT@18..21 "foo" None
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         ARG_LIST@21..23
           None L_PAREN@21..22 "(" None
           LIST@22..22

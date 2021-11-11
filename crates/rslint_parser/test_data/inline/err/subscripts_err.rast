@@ -19,7 +19,7 @@ JS_MODULE@0..20
             None R_BRACK@11..12 "]" None
           None DOT@12..13 "." None
           NAME@13..17
-            Whitespace(1) IDENT@13..17 "BAR" None
+            Whitespace(1) IDENT@14..17 "BAR" None
         None BACKTICK@17..18 "`" None
         LIST@18..20
           None TEMPLATE_CHUNK@18..20 "b\n" None

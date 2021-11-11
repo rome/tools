@@ -1,13 +1,13 @@
 JS_MODULE@0..20
   LIST@0..20
     VAR_DECL@0..20
-      None IDENT@0..4 "let" Whitespace(1)
+      None IDENT@0..3 "let" Whitespace(1)
       LIST@4..20
         DECLARATOR@4..20
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "a" Whitespace(1)
-          None EQ@6..8 "=" Whitespace(1)
+              None IDENT@4..5 "a" Whitespace(1)
+          None EQ@6..7 "=" Whitespace(1)
           TEMPLATE@8..20
             None BACKTICK@8..9 "`" None
             LIST@9..20

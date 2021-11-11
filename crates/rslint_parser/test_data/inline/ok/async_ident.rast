@@ -5,13 +5,13 @@ MODULE@0..14
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..14
     VAR_DECL@0..14
-      None IDENT@0..4 "let" Whitespace(1)
+      None IDENT@0..3 "let" Whitespace(1)
       LIST@4..13
         DECLARATOR@4..13
           SINGLE_PATTERN@4..6
             NAME@4..6
-              None IDENT@4..6 "a" Whitespace(1)
-          None EQ@6..8 "=" Whitespace(1)
+              None IDENT@4..5 "a" Whitespace(1)
+          None EQ@6..7 "=" Whitespace(1)
           NAME_REF@8..13
             None IDENT@8..13 "async" None
       None SEMICOLON@13..14 ";" None

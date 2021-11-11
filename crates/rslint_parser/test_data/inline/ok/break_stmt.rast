@@ -22,15 +22,15 @@ MODULE@0..45
     LABELLED_STMT@0..7
       NAME@0..3
         None IDENT@0..3 "foo" None
-      None COLON@3..5 ":" Whitespace(1)
+      None COLON@3..4 ":" Whitespace(1)
       BLOCK_STMT@5..7
         None L_CURLY@5..6 "{" None
         LIST@6..6
         None R_CURLY@6..7 "}" None
     LABELLED_STMT@7..16
       NAME@7..12
-        Whitespace(1) IDENT@7..12 "rust" None
-      None COLON@12..14 ":" Whitespace(1)
+        Whitespace(1) IDENT@8..12 "rust" None
+      None COLON@12..13 ":" Whitespace(1)
       BLOCK_STMT@14..16
 <<<<<<< HEAD
          L_CURLY@14..15 "{" 
@@ -41,14 +41,14 @@ MODULE@0..45
         LIST@15..15
         None R_CURLY@15..16 "}" None
     BREAK_STMT@16..23
-      Whitespace(1) BREAK_KW@16..22 "break" None
+      Whitespace(1) BREAK_KW@17..22 "break" None
       None SEMICOLON@22..23 ";" None
     BREAK_STMT@23..34
-      Whitespace(1) BREAK_KW@23..30 "break" Whitespace(1)
+      Whitespace(1) BREAK_KW@24..29 "break" Whitespace(1)
       NAME_REF@30..33
         None IDENT@30..33 "foo" None
       None SEMICOLON@33..34 ";" None
     BREAK_STMT@34..45
-      Whitespace(1) BREAK_KW@34..41 "break" Whitespace(1)
+      Whitespace(1) BREAK_KW@35..40 "break" Whitespace(1)
       NAME_REF@41..45
         None IDENT@41..45 "rust" None

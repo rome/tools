@@ -11,30 +11,34 @@ JS_MODULE@0..42
 MODULE@0..41
   LIST@0..41
     DO_WHILE_STMT@0..41
-      None DO_KW@0..3 "do" Whitespace(1)
+      None DO_KW@0..2 "do" Whitespace(1)
       WHILE_STMT@3..41
+<<<<<<< HEAD
 <<<<<<< HEAD
          WHILE_KW@3..9 "while" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 =======
         None WHILE_KW@3..9 "while" Whitespace(1)
 >>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+=======
+        None WHILE_KW@3..8 "while" Whitespace(1)
+>>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         CONDITION@9..15
           None L_PAREN@9..10 "(" None
           LITERAL@10..14
             None TRUE_KW@10..14 "true" None
           None R_PAREN@14..15 ")" None
         DO_WHILE_STMT@15..41
-          Whitespace(1) DO_KW@15..19 "do" Whitespace(1)
+          Whitespace(1) DO_KW@16..18 "do" Whitespace(1)
           WHILE_STMT@19..41
-            None WHILE_KW@19..25 "while" Whitespace(1)
+            None WHILE_KW@19..24 "while" Whitespace(1)
             CONDITION@25..27
               None L_PAREN@25..26 "(" None
               None R_PAREN@26..27 ")" None
             DO_WHILE_STMT@27..41
-              Whitespace(1) DO_KW@27..31 "do" Whitespace(1)
+              Whitespace(1) DO_KW@28..30 "do" Whitespace(1)
               WHILE_STMT@31..41
-                None WHILE_KW@31..37 "while" Whitespace(1)
+                None WHILE_KW@31..36 "while" Whitespace(1)
                 CONDITION@37..41
                   LITERAL@37..41
                     None TRUE_KW@37..41 "true" None
