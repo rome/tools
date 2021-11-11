@@ -139,18 +139,24 @@ impl JsIfStatement {
 	pub fn else_clause(&self) -> Option<JsElseClause> { support::as_optional_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct DoWhileStmt {
+pub struct JsDoWhileStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl DoWhileStmt {
+impl JsDoWhileStatement {
 	pub fn do_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![do])
 	}
-	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 	pub fn while_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![while])
 	}
-	pub fn condition(&self) -> SyntaxResult<Condition> { support::as_mandatory_node(&self.syntax) }
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T!['('])
+	}
+	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![')'])
+	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T ! [;])
 	}
@@ -2404,7 +2410,7 @@ pub enum JsAnyStatement {
 	JsEmptyStatement(JsEmptyStatement),
 	JsExpressionStatement(JsExpressionStatement),
 	JsIfStatement(JsIfStatement),
-	DoWhileStmt(DoWhileStmt),
+	JsDoWhileStatement(JsDoWhileStatement),
 	WhileStmt(WhileStmt),
 	ForStmt(ForStmt),
 	ForInStmt(ForInStmt),
@@ -2779,8 +2785,8 @@ impl AstNode for JsIfStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for DoWhileStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == DO_WHILE_STMT }
+impl AstNode for JsDoWhileStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DO_WHILE_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4542,8 +4548,8 @@ impl From<JsExpressionStatement> for JsAnyStatement {
 impl From<JsIfStatement> for JsAnyStatement {
 	fn from(node: JsIfStatement) -> JsAnyStatement { JsAnyStatement::JsIfStatement(node) }
 }
-impl From<DoWhileStmt> for JsAnyStatement {
-	fn from(node: DoWhileStmt) -> JsAnyStatement { JsAnyStatement::DoWhileStmt(node) }
+impl From<JsDoWhileStatement> for JsAnyStatement {
+	fn from(node: JsDoWhileStatement) -> JsAnyStatement { JsAnyStatement::JsDoWhileStatement(node) }
 }
 impl From<WhileStmt> for JsAnyStatement {
 	fn from(node: WhileStmt) -> JsAnyStatement { JsAnyStatement::WhileStmt(node) }
@@ -4630,7 +4636,7 @@ impl AstNode for JsAnyStatement {
 			| JS_EMPTY_STATEMENT
 			| JS_EXPRESSION_STATEMENT
 			| JS_IF_STATEMENT
-			| DO_WHILE_STMT
+			| JS_DO_WHILE_STATEMENT
 			| WHILE_STMT
 			| FOR_STMT
 			| FOR_IN_STMT
@@ -4667,7 +4673,9 @@ impl AstNode for JsAnyStatement {
 				JsAnyStatement::JsExpressionStatement(JsExpressionStatement { syntax })
 			}
 			JS_IF_STATEMENT => JsAnyStatement::JsIfStatement(JsIfStatement { syntax }),
-			DO_WHILE_STMT => JsAnyStatement::DoWhileStmt(DoWhileStmt { syntax }),
+			JS_DO_WHILE_STATEMENT => {
+				JsAnyStatement::JsDoWhileStatement(JsDoWhileStatement { syntax })
+			}
 			WHILE_STMT => JsAnyStatement::WhileStmt(WhileStmt { syntax }),
 			FOR_STMT => JsAnyStatement::ForStmt(ForStmt { syntax }),
 			FOR_IN_STMT => JsAnyStatement::ForInStmt(ForInStmt { syntax }),
@@ -4721,7 +4729,7 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsEmptyStatement(it) => &it.syntax,
 			JsAnyStatement::JsExpressionStatement(it) => &it.syntax,
 			JsAnyStatement::JsIfStatement(it) => &it.syntax,
-			JsAnyStatement::DoWhileStmt(it) => &it.syntax,
+			JsAnyStatement::JsDoWhileStatement(it) => &it.syntax,
 			JsAnyStatement::WhileStmt(it) => &it.syntax,
 			JsAnyStatement::ForStmt(it) => &it.syntax,
 			JsAnyStatement::ForInStmt(it) => &it.syntax,
@@ -6106,7 +6114,7 @@ impl std::fmt::Display for JsIfStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for DoWhileStmt {
+impl std::fmt::Display for JsDoWhileStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

@@ -866,9 +866,9 @@ pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
 		None,
 	);
 	p.expect(T![while]);
-	condition(p);
+	parenthesized_expression(p);
 	semi(p, start..p.cur_tok().range.end);
-	m.complete(p, DO_WHILE_STMT)
+	m.complete(p, JS_DO_WHILE_STATEMENT)
 }
 
 fn for_head(p: &mut Parser) -> SyntaxKind {

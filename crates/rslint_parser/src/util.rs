@@ -175,7 +175,7 @@ pub trait SyntaxNodeExt {
 			SyntaxKind::FOR_OF_STMT,
 			SyntaxKind::FOR_STMT,
 			SyntaxKind::WHILE_STMT,
-			SyntaxKind::DO_WHILE_STMT,
+			SyntaxKind::JS_DO_WHILE_STATEMENT,
 		];
 		ITERATION_STMT.contains(&self.to_node().kind())
 	}

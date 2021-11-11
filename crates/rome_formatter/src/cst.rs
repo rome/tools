@@ -1,9 +1,9 @@
 use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl,
-	ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator, DoWhileStmt, FnDecl,
-	ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp,
-	JsBlockStatement, JsCaseClause, JsCatchClause, JsDebuggerStatement, JsDefaultClause,
+	ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator, FnDecl, ForInStmt,
+	ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement,
+	JsCaseClause, JsCatchClause, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
 	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement, JsLabeledStatement,
 	JsReturnStatement, JsScript, JsSwitchStatement, JsTryStatement, JsWithStatement, Literal,
 	LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
@@ -95,7 +95,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::WHILE_STMT => WhileStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::DO_WHILE_STMT => DoWhileStmt::cast(self.clone())
+			SyntaxKind::JS_DO_WHILE_STATEMENT => JsDoWhileStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_SWITCH_STATEMENT => JsSwitchStatement::cast(self.clone())

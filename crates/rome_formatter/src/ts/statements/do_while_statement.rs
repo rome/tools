@@ -1,24 +1,23 @@
 use crate::{
-	format_elements, space_token, token, FormatElement, FormatResult, Formatter, ToFormatElement,
+	format_elements, group_elements, soft_indent, space_token, token, FormatElement, FormatResult,
+	Formatter, ToFormatElement,
 };
-use rslint_parser::ast::DoWhileStmt;
+use rslint_parser::ast::JsDoWhileStatement;
 
-impl ToFormatElement for DoWhileStmt {
+impl ToFormatElement for JsDoWhileStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let do_token = formatter.format_token(&self.do_token()?)?;
-
-		let condition = formatter.format_node(self.condition()?)?;
-		let cons = formatter.format_node(self.cons()?)?;
-		let while_token = formatter.format_token(&self.while_token()?)?;
-
 		Ok(format_elements![
-			do_token,
+			formatter.format_token(&self.do_token()?)?,
 			space_token(),
-			cons,
+			formatter.format_node(self.body()?)?,
 			space_token(),
-			while_token,
+			formatter.format_token(&self.while_token()?)?,
 			space_token(),
-			condition,
+			group_elements(format_elements![
+				formatter.format_token(&self.l_paren_token()?)?,
+				soft_indent(formatter.format_node(self.test()?)?),
+				formatter.format_token(&self.r_paren_token()?)?
+			]),
 			token(";")
 		])
 	}

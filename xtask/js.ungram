@@ -67,7 +67,7 @@ JsAnyStatement =
 	| JsEmptyStatement
 	| JsExpressionStatement
 	| JsIfStatement
-	| DoWhileStmt
+	| JsDoWhileStatement
 	| WhileStmt
 	| ForStmt
 	| ForInStmt
@@ -111,8 +111,12 @@ JsExpressionStatement =
 // while statement
 WhileStmt = 'while' condition: Condition cons: JsAnyStatement
 
-// do while statement
-DoWhileStmt = 'do'  cons:JsAnyStatement 'while' condition:Condition ';'?
+
+JsDoWhileStatement =
+    'do'
+    body: JsAnyStatement
+    'while' '(' test: JsAnyExpression ')'
+    ';'?
 
 
 // if statement

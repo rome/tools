@@ -12,7 +12,7 @@ impl ToFormatElement for JsAnyStatement {
 				expr_stmt.to_format_element(formatter)
 			}
 			JsAnyStatement::JsIfStatement(if_stmt) => if_stmt.to_format_element(formatter),
-			JsAnyStatement::DoWhileStmt(do_while_statement) => {
+			JsAnyStatement::JsDoWhileStatement(do_while_statement) => {
 				do_while_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::WhileStmt(while_statement) => {

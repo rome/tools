@@ -1,6 +1,6 @@
 JS_MODULE@0..42
   LIST@0..42
-    DO_WHILE_STMT@0..42
+    JS_DO_WHILE_STATEMENT@0..42
       DO_KW@0..2 "do"
       WHITESPACE@2..3 " "
       WHILE_STMT@3..42
@@ -12,7 +12,7 @@ JS_MODULE@0..42
             TRUE_KW@10..14 "true"
           R_PAREN@14..15 ")"
         WHITESPACE@15..16 "\n"
-        DO_WHILE_STMT@16..42
+        JS_DO_WHILE_STATEMENT@16..42
           DO_KW@16..18 "do"
           WHITESPACE@18..19 " "
           WHILE_STMT@19..42
@@ -22,7 +22,7 @@ JS_MODULE@0..42
               L_PAREN@25..26 "("
               R_PAREN@26..27 ")"
             WHITESPACE@27..28 "\n"
-            DO_WHILE_STMT@28..42
+            JS_DO_WHILE_STATEMENT@28..42
               DO_KW@28..30 "do"
               WHITESPACE@30..31 " "
               WHILE_STMT@31..42
@@ -33,12 +33,9 @@ JS_MODULE@0..42
                     TRUE_KW@37..41 "true"
                 WHITESPACE@41..42 "\n"
                 ERROR@42..42
-              CONDITION@42..42
-                ERROR@42..42
-          CONDITION@42..42
-            ERROR@42..42
-      CONDITION@42..42
-        ERROR@42..42
+              ERROR@42..42
+          ERROR@42..42
+      ERROR@42..42
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ do_while_stmt_err.js:2:11
