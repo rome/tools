@@ -64,7 +64,7 @@ JsModule =
 
 JsAnyStatement =
 	JsBlockStatement
-	| EmptyStmt
+	| JsEmptyStatement
 	| ExprStmt
 	| IfStmt
 	| DoWhileStmt
@@ -102,7 +102,8 @@ JsBlockStatement =
 
 
 // Empty statemnet
-EmptyStmt = ';'?
+JsEmptyStatement =
+    ';'
 
 
 // Expression statement
@@ -314,7 +315,7 @@ ClassBody =  '{' elements:ClassElement* '}'
 
 
 ClassElement =
-	EmptyStmt
+	JsEmptyStatement
 	| Method
 	// probably PrivateProp is not needed
 	| PrivateProp

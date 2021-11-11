@@ -2,9 +2,9 @@ use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, CaseClause, CatchClause,
 	ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator,
-	DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl, ForInStmt, ForStmt,
-	ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement,
-	JsDebuggerStatement, JsScript, LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr,
+	DefaultClause, DoWhileStmt, ExprStmt, Finalizer, FnDecl, ForInStmt, ForStmt, ForStmtInit,
+	ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement, JsDebuggerStatement,
+	JsEmptyStatement, JsScript, LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr,
 	ParameterList, ReturnStmt, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl,
 	WhileStmt, WithStmt,
 };
@@ -82,7 +82,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::FOR_STMT_UPDATE => ForStmtUpdate::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::EMPTY_STMT => EmptyStmt::cast(self.clone())
+			SyntaxKind::JS_EMPTY_STATEMENT => JsEmptyStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::IDENT_PROP => IdentProp::cast(self.clone())

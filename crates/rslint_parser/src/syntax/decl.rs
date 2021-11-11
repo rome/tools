@@ -600,7 +600,7 @@ pub(crate) fn class_body(p: &mut Parser) -> CompletedMarker {
 			T![;] => {
 				let inner = p.start();
 				p.bump_any();
-				inner.complete(p, EMPTY_STMT);
+				inner.complete(p, JS_EMPTY_STATEMENT);
 			}
 			// test static_method
 			// class foo {

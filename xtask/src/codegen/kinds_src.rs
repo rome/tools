@@ -172,7 +172,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"JS_BLOCK_STATEMENT",
 		"VAR_DECL",
 		"DECLARATOR",
-		"EMPTY_STMT",
+		"JS_EMPTY_STATEMENT",
 		"EXPR",
 		"EXPR_STMT",
 		"IF_STMT",

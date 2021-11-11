@@ -50,7 +50,7 @@ JS_MODULE@0..48
             SEMICOLON@43..44 ";"
         WHITESPACE@44..45 "\n"
         R_CURLY@45..46 "}"
-    EMPTY_STMT@46..47
+    JS_EMPTY_STATEMENT@46..47
       SEMICOLON@46..47 ";"
   WHITESPACE@47..48 "\n"
 --

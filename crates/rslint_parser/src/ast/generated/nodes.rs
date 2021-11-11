@@ -98,12 +98,12 @@ impl JsBlockStatement {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct EmptyStmt {
+pub struct JsEmptyStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl EmptyStmt {
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
+impl JsEmptyStatement {
+	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T ! [;])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2329,7 +2329,7 @@ impl TsQualifiedPath {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyStatement {
 	JsBlockStatement(JsBlockStatement),
-	EmptyStmt(EmptyStmt),
+	JsEmptyStatement(JsEmptyStatement),
 	ExprStmt(ExprStmt),
 	IfStmt(IfStmt),
 	DoWhileStmt(DoWhileStmt),
@@ -2481,7 +2481,7 @@ pub enum ObjectProp {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ClassElement {
-	EmptyStmt(EmptyStmt),
+	JsEmptyStatement(JsEmptyStatement),
 	Method(Method),
 	PrivateProp(PrivateProp),
 	ClassProp(ClassProp),
@@ -2673,8 +2673,8 @@ impl AstNode for JsBlockStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for EmptyStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EMPTY_STMT }
+impl AstNode for JsEmptyStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EMPTY_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4425,8 +4425,8 @@ impl AstNode for TsQualifiedPath {
 impl From<JsBlockStatement> for JsAnyStatement {
 	fn from(node: JsBlockStatement) -> JsAnyStatement { JsAnyStatement::JsBlockStatement(node) }
 }
-impl From<EmptyStmt> for JsAnyStatement {
-	fn from(node: EmptyStmt) -> JsAnyStatement { JsAnyStatement::EmptyStmt(node) }
+impl From<JsEmptyStatement> for JsAnyStatement {
+	fn from(node: JsEmptyStatement) -> JsAnyStatement { JsAnyStatement::JsEmptyStatement(node) }
 }
 impl From<ExprStmt> for JsAnyStatement {
 	fn from(node: ExprStmt) -> JsAnyStatement { JsAnyStatement::ExprStmt(node) }
@@ -4514,7 +4514,7 @@ impl AstNode for JsAnyStatement {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			JS_BLOCK_STATEMENT
-			| EMPTY_STMT
+			| JS_EMPTY_STATEMENT
 			| EXPR_STMT
 			| IF_STMT
 			| DO_WHILE_STMT
@@ -4548,7 +4548,7 @@ impl AstNode for JsAnyStatement {
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_BLOCK_STATEMENT => JsAnyStatement::JsBlockStatement(JsBlockStatement { syntax }),
-			EMPTY_STMT => JsAnyStatement::EmptyStmt(EmptyStmt { syntax }),
+			JS_EMPTY_STATEMENT => JsAnyStatement::JsEmptyStatement(JsEmptyStatement { syntax }),
 			EXPR_STMT => JsAnyStatement::ExprStmt(ExprStmt { syntax }),
 			IF_STMT => JsAnyStatement::IfStmt(IfStmt { syntax }),
 			DO_WHILE_STMT => JsAnyStatement::DoWhileStmt(DoWhileStmt { syntax }),
@@ -4597,7 +4597,7 @@ impl AstNode for JsAnyStatement {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyStatement::JsBlockStatement(it) => &it.syntax,
-			JsAnyStatement::EmptyStmt(it) => &it.syntax,
+			JsAnyStatement::JsEmptyStatement(it) => &it.syntax,
 			JsAnyStatement::ExprStmt(it) => &it.syntax,
 			JsAnyStatement::IfStmt(it) => &it.syntax,
 			JsAnyStatement::DoWhileStmt(it) => &it.syntax,
@@ -5315,8 +5315,8 @@ impl AstNode for ObjectProp {
 		}
 	}
 }
-impl From<EmptyStmt> for ClassElement {
-	fn from(node: EmptyStmt) -> ClassElement { ClassElement::EmptyStmt(node) }
+impl From<JsEmptyStatement> for ClassElement {
+	fn from(node: JsEmptyStatement) -> ClassElement { ClassElement::JsEmptyStatement(node) }
 }
 impl From<Method> for ClassElement {
 	fn from(node: Method) -> ClassElement { ClassElement::Method(node) }
@@ -5345,14 +5345,14 @@ impl From<JsUnknownMember> for ClassElement {
 impl AstNode for ClassElement {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			EMPTY_STMT | METHOD | PRIVATE_PROP | CLASS_PROP | CONSTRUCTOR | TS_INDEX_SIGNATURE
-			| GETTER | SETTER | JS_UNKNOWN_MEMBER => true,
+			JS_EMPTY_STATEMENT | METHOD | PRIVATE_PROP | CLASS_PROP | CONSTRUCTOR
+			| TS_INDEX_SIGNATURE | GETTER | SETTER | JS_UNKNOWN_MEMBER => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			EMPTY_STMT => ClassElement::EmptyStmt(EmptyStmt { syntax }),
+			JS_EMPTY_STATEMENT => ClassElement::JsEmptyStatement(JsEmptyStatement { syntax }),
 			METHOD => ClassElement::Method(Method { syntax }),
 			PRIVATE_PROP => ClassElement::PrivateProp(PrivateProp { syntax }),
 			CLASS_PROP => ClassElement::ClassProp(ClassProp { syntax }),
@@ -5367,7 +5367,7 @@ impl AstNode for ClassElement {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ClassElement::EmptyStmt(it) => &it.syntax,
+			ClassElement::JsEmptyStatement(it) => &it.syntax,
 			ClassElement::Method(it) => &it.syntax,
 			ClassElement::PrivateProp(it) => &it.syntax,
 			ClassElement::ClassProp(it) => &it.syntax,
@@ -5969,7 +5969,7 @@ impl std::fmt::Display for JsBlockStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for EmptyStmt {
+impl std::fmt::Display for JsEmptyStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

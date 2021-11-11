@@ -5,7 +5,7 @@ impl ToFormatElement for JsAnyStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
 			JsAnyStatement::JsBlockStatement(block) => block.to_format_element(formatter),
-			JsAnyStatement::EmptyStmt(empty_statement) => {
+			JsAnyStatement::JsEmptyStatement(empty_statement) => {
 				empty_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::ExprStmt(expr_stmt) => expr_stmt.to_format_element(formatter),

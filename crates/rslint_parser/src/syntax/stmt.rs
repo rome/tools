@@ -426,7 +426,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 pub fn empty_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![;]);
-	m.complete(p, EMPTY_STMT)
+	m.complete(p, JS_EMPTY_STATEMENT)
 }
 
 /// A block statement consisting of statements wrapped in curly brackets.
