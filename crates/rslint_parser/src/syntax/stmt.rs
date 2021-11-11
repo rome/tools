@@ -285,7 +285,7 @@ pub fn debugger_stmt(p: &mut Parser) -> CompletedMarker {
 	let range = p.cur_tok().range;
 	p.expect(T![debugger]);
 	semi(p, range);
-	m.complete(p, DEBUGGER_STMT)
+	m.complete(p, JS_DEBUGGER_STATEMENT)
 }
 
 /// A throw statement such as `throw new Error("uh oh");`

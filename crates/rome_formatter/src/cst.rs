@@ -1,12 +1,12 @@
 use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, CaseClause, CatchClause,
-	ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, DebuggerStmt,
-	Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl, ForInStmt,
-	ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement,
-	JsScript, LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList,
-	ReturnStmt, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt,
-	WithStmt,
+	ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator,
+	DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl, ForInStmt, ForStmt,
+	ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement,
+	JsDebuggerStatement, JsScript, LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr,
+	ParameterList, ReturnStmt, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl,
+	WhileStmt, WithStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -124,7 +124,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::WITH_STMT => WithStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::DEBUGGER_STMT => DebuggerStmt::cast(self.clone())
+			SyntaxKind::JS_DEBUGGER_STATEMENT => JsDebuggerStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::FOR_IN_STMT => ForInStmt::cast(self.clone())

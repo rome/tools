@@ -192,7 +192,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"TRY_STMT",
 		"CATCH_CLAUSE",
 		"FINALIZER",
-		"DEBUGGER_STMT",
+		"JS_DEBUGGER_STATEMENT",
 		"FN_DECL",
 		"NAME",
 		"NAME_REF",

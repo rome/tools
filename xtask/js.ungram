@@ -80,7 +80,7 @@ JsAnyStatement =
 	| SwitchStmt
 	| ThrowStmt
 	| TryStmt
-	| DebuggerStmt
+	| JsDebuggerStatement
 	| Decl
 	| ImportDecl
 	| ExportNamed
@@ -189,7 +189,8 @@ Finalizer = 'finally' cons:JsBlockStatement
 
 
 // debugger statement
-DebuggerStmt = 'debugger' ';'?
+JsDebuggerStatement =
+	'debugger' ';'?
 
 
 ///////////////

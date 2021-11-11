@@ -38,7 +38,7 @@ impl ToFormatElement for JsAnyStatement {
 				throw_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::TryStmt(try_statement) => try_statement.to_format_element(formatter),
-			JsAnyStatement::DebuggerStmt(debugger_statement) => {
+			JsAnyStatement::JsDebuggerStatement(debugger_statement) => {
 				debugger_statement.to_format_element(formatter)
 			}
 
