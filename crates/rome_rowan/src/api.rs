@@ -114,6 +114,20 @@ impl<L: Language> SyntaxNode<L> {
 		SyntaxNode::from(cursor::SyntaxNode::new_root(green))
 	}
 
+	pub fn replace_nodes(&self, replacements: &[(SyntaxNode<L>, SyntaxNode<L>)]) -> SyntaxNode<L> {
+		let replacer = cursor::SyntaxNodeReplacer::from_pairs(replacements);
+		SyntaxNode::new_root(self.raw.replace_nodes(&replacer))
+	}
+
+	pub fn replace_nodes_with(
+		&self,
+		nodes: &[SyntaxNode<L>],
+		compute: impl Fn(&SyntaxNode<L>) -> SyntaxNode<L>,
+	) -> SyntaxNode<L> {
+		let replacer = cursor::SyntaxNodeReplacer::from_fn(nodes, compute);
+		SyntaxNode::new_root(self.raw.replace_nodes(&replacer))
+	}
+
 	pub fn kind(&self) -> L::Kind {
 		L::kind_from_raw(self.raw.kind())
 	}

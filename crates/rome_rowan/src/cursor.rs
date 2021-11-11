@@ -882,6 +882,152 @@ impl SyntaxNode {
 		};
 		self.data().attach_child(index, data)
 	}
+
+	pub(crate) fn replace_nodes(&self, replacer: &SyntaxNodeReplacer) -> GreenNode {
+		let range = 0..replacer.replacements.len();
+		self.replace_nodes_with_range(replacer, range)
+	}
+
+	pub(crate) fn replace_nodes_with_range(
+		&self,
+		replacer: &SyntaxNodeReplacer,
+		range: Range<usize>,
+	) -> GreenNode {
+		match replacer.matches(self, range) {
+			ReplacerMatch::Exact(syntax) => syntax.green().into_owned(),
+			ReplacerMatch::None => self.green().into_owned(),
+			ReplacerMatch::Overlap(new_range) => {
+				let children = self.children_with_tokens().map(|c| match c {
+					NodeOrToken::Token(t) => NodeOrToken::Token(t.green().to_owned()),
+					NodeOrToken::Node(n) => {
+						NodeOrToken::Node(n.replace_nodes_with_range(replacer, new_range.clone()))
+					}
+				});
+				return GreenNode::new(self.kind(), children);
+			}
+		}
+	}
+}
+
+struct SyntaxNodeReplacement {
+	old: SyntaxNode,
+	new: SyntaxNode,
+}
+
+pub(crate) struct SyntaxNodeReplacer {
+	replacements: Vec<SyntaxNodeReplacement>,
+}
+
+impl SyntaxNodeReplacer {
+	pub fn from_pairs<N>(pairs: &[(N, N)]) -> Self
+	where
+		N: ToOwned,
+		N::Owned: Into<SyntaxNode>,
+	{
+		let mut replacements: Vec<SyntaxNodeReplacement> = pairs
+			.iter()
+			.map(|(old, new)| SyntaxNodeReplacement {
+				old: old.to_owned().into(),
+				new: new.to_owned().into(),
+			})
+			.collect();
+
+		replacements.sort_unstable_by_key(|replace| {
+			(
+				replace.old.text_range().start(),
+				replace.old.text_range().end(),
+			)
+		});
+
+		Self { replacements }
+	}
+
+	pub fn from_fn<N, C>(nodes: &[N], compute: C) -> Self
+	where
+		N: ToOwned,
+		N::Owned: Into<SyntaxNode>,
+		C: Fn(&N) -> N,
+	{
+		let mut replacements: Vec<SyntaxNodeReplacement> = nodes
+			.iter()
+			.map(|node| SyntaxNodeReplacement {
+				old: node.to_owned().into(),
+				new: compute(node).to_owned().into(),
+			})
+			.collect();
+
+		replacements.sort_unstable_by_key(|replace| {
+			(
+				replace.old.text_range().start(),
+				replace.old.text_range().end(),
+			)
+		});
+
+		Self { replacements }
+	}
+}
+
+impl SyntaxNodeReplacer {
+	fn matches(&self, node: &SyntaxNode, search_range: Range<usize>) -> ReplacerMatch {
+		let mut overlap_range = search_range.clone();
+		let mut has_overlap = false;
+
+		// Replacements are ordered by:
+		//   1. the start offset of the target node
+		//   2. the end offset of the target node
+		//
+		// Use binary search to find the exclusive upper bound of replacements that
+		// start before the end of the current node. If all replacements start
+		// before this node ends, the offset will be the length of this slice.
+		// If no replacements do, the offset will be zero.
+		let current_node_end = node.text_range().end();
+		let replacements_slice = &self.replacements[search_range.clone()];
+		let partition_offset =
+			replacements_slice.partition_point(|r| r.old.text_range().start() < current_node_end);
+
+		// If no replacements could overlap with the current node, return.
+		if partition_offset == 0 {
+			return ReplacerMatch::None;
+		}
+
+		// Exclude non-overlapping replacements from current slice and possible overlap range
+		let replacements_slice = &replacements_slice[..partition_offset];
+		overlap_range.end = overlap_range.start + partition_offset;
+
+		// Starting from the last replacement that could overlap with the current node,
+		// iterate backwards until either finding a match or finding a replacement that
+		// ends before the current node starts.
+		for (index, replacement) in replacements_slice.iter().enumerate().rev() {
+			// If the current node exactly matches the target node of a replacement,
+			// then return the new syntax node.
+			if node == &replacement.old {
+				return ReplacerMatch::Exact(replacement.new.to_owned());
+			}
+
+			// If the target node ends before the current node starts, exclude it and all earlier
+			// replacements from the possible overlap range.
+			if replacement.old.text_range().end() < node.text_range().start() {
+				overlap_range.start += index;
+				break;
+			}
+
+			// If the loop never reaches here, then there was either an exact match or
+			// no possible overlap.
+			has_overlap = true;
+		}
+
+		if has_overlap {
+			ReplacerMatch::Overlap(overlap_range)
+		} else {
+			ReplacerMatch::None
+		}
+	}
+}
+
+enum ReplacerMatch {
+	Exact(SyntaxNode),
+	None,
+	Overlap(Range<usize>),
 }
 
 impl SyntaxToken {
@@ -931,6 +1077,11 @@ impl SyntaxToken {
 				""
 			}
 		}
+	}
+
+	#[inline]
+	fn green(&self) -> &GreenTokenData {
+		self.data().green().into_token().unwrap()
 	}
 
 	#[inline]
@@ -1193,12 +1344,14 @@ impl Iterator for SyntaxNodeChildren {
 #[derive(Clone, Debug)]
 pub(crate) struct SyntaxElementChildren {
 	next: Option<SyntaxElement>,
+	length: usize,
 }
 
 impl SyntaxElementChildren {
 	fn new(parent: SyntaxNode) -> SyntaxElementChildren {
 		SyntaxElementChildren {
 			next: parent.first_child_or_token(),
+			length: parent.green_ref().children().len(),
 		}
 	}
 }
@@ -1210,6 +1363,12 @@ impl Iterator for SyntaxElementChildren {
 			self.next = next.next_sibling_or_token();
 			next
 		})
+	}
+}
+
+impl ExactSizeIterator for SyntaxElementChildren {
+	fn len(&self) -> usize {
+		self.length
 	}
 }
 
