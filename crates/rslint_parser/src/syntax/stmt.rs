@@ -315,7 +315,7 @@ pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 		p.expr_with_semi_recovery(false);
 	}
 	semi(p, start..p.cur_tok().range.end);
-	m.complete(p, THROW_STMT)
+	m.complete(p, JS_THROW_STATEMENT)
 }
 
 /// A break statement with an optional label such as `break a;`
@@ -1081,44 +1081,56 @@ fn catch_clause(p: &mut Parser) {
 	let m = p.start();
 	p.expect(T![catch]);
 
-	if p.eat(T!['(']) {
-		let m = p.start();
-		let kind = pattern(p, false, false).map(|x| x.kind());
-		if p.at(T![:]) {
-			let start = p.cur_tok().range.start;
-			p.bump_any();
-			let ty = ts_type(p);
-			if !matches!(
-				ty.as_ref().map(|x| p.span_text(x.range(p))),
-				Some("unknown") | Some("any")
-			) && p.typescript()
-				&& ty.is_some()
-			{
-				let err = p.err_builder("type annotations for catch parameters can only be `unknown` or `any` if specified")
-                    .primary(ty.as_ref().unwrap().range(p), "");
-
-				p.error(err);
-			}
-
-			let end = ty
-				.map(|x| usize::from(x.range(p).end()))
-				.unwrap_or(p.cur_tok().range.start);
-			m.complete(p, kind.filter(|_| p.typescript()).unwrap_or(ERROR));
-			if !p.typescript() {
-				let err = p
-					.err_builder("type annotations can only be used in TypeScript files")
-					.primary(start..end, "");
-
-				p.error(err);
-			}
-		} else {
-			m.abandon(p);
-		}
-		p.expect(T![')']);
+	if p.at(T!['(']) {
+		catch_declaration(p);
 	}
 
 	block_stmt(p, false, STMT_RECOVERY_SET);
-	m.complete(p, CATCH_CLAUSE);
+	m.complete(p, JS_CATCH_CLAUSE);
+}
+
+fn catch_declaration(p: &mut Parser) {
+	let declaration_marker = p.start();
+
+	p.eat(T!['(']);
+
+	let error_marker = p.start();
+	let kind = pattern(p, false, false).map(|x| x.kind());
+
+	if p.at(T![:]) {
+		let start = p.cur_tok().range.start;
+		p.bump_any();
+		let ty = ts_type(p);
+		if !matches!(
+			ty.as_ref().map(|x| p.span_text(x.range(p))),
+			Some("unknown") | Some("any")
+		) && p.typescript()
+			&& ty.is_some()
+		{
+			let err = p.err_builder("type annotations for catch parameters can only be `unknown` or `any` if specified")
+					.primary(ty.as_ref().unwrap().range(p), "");
+
+			p.error(err);
+		}
+
+		let end = ty
+			.map(|x| usize::from(x.range(p).end()))
+			.unwrap_or(p.cur_tok().range.start);
+		error_marker.complete(p, kind.filter(|_| p.typescript()).unwrap_or(ERROR));
+
+		if !p.typescript() {
+			let err = p
+				.err_builder("type annotations can only be used in TypeScript files")
+				.primary(start..end, "");
+
+			p.error(err);
+		}
+	} else {
+		error_marker.abandon(p);
+	}
+	p.expect(T![')']);
+
+	declaration_marker.complete(p, JS_CATCH_DECLARATION);
 }
 
 /// A try statement such as
@@ -1141,14 +1153,20 @@ pub fn try_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![try]);
 	block_stmt(p, false, None);
+
 	if p.at(T![catch]) {
 		catch_clause(p);
-	}
-	if p.at(T![finally]) {
+	};
+
+	let kind = if p.at(T![finally]) {
 		let finalizer = p.start();
 		p.bump_any();
 		block_stmt(p, false, None);
-		finalizer.complete(p, FINALIZER);
-	}
-	m.complete(p, TRY_STMT)
+		finalizer.complete(p, JS_FINALLY_CLAUSE);
+		JS_TRY_FINALLY_STATEMENT
+	} else {
+		JS_TRY_STATEMENT
+	};
+
+	m.complete(p, kind)
 }

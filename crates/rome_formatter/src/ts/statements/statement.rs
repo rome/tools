@@ -38,10 +38,12 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::SwitchStmt(switch_statement) => {
 				switch_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::ThrowStmt(throw_statement) => {
+			JsAnyStatement::JsThrowStatement(throw_statement) => {
 				throw_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::TryStmt(try_statement) => try_statement.to_format_element(formatter),
+			JsAnyStatement::JsTryStatement(try_statement) => {
+				try_statement.to_format_element(formatter)
+			}
 			JsAnyStatement::JsDebuggerStatement(debugger_statement) => {
 				debugger_statement.to_format_element(formatter)
 			}
@@ -58,6 +60,9 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::TsImportEqualsDecl(_) => todo!(),
 			JsAnyStatement::TsExportAssignment(_) => todo!(),
 			JsAnyStatement::TsNamespaceExportDecl(_) => todo!(),
+			JsAnyStatement::JsTryFinallyStatement(try_finally) => {
+				try_finally.to_format_element(formatter)
+			}
 		}
 	}
 }

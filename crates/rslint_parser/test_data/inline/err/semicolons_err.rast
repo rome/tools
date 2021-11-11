@@ -14,7 +14,7 @@ JS_MODULE@0..24
           NAME_REF@10..13
             IDENT@10..13 "bar"
     WHITESPACE@13..14 " "
-    THROW_STMT@14..23
+    JS_THROW_STATEMENT@14..23
       THROW_KW@14..19 "throw"
       WHITESPACE@19..20 " "
       NAME_REF@20..23

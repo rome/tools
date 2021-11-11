@@ -315,33 +315,50 @@ impl SwitchStmt {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ThrowStmt {
+pub struct JsThrowStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ThrowStmt {
+impl JsThrowStatement {
 	pub fn throw_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![throw])
 	}
-	pub fn exception(&self) -> SyntaxResult<JsAnyExpression> {
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
 		support::as_mandatory_node(&self.syntax)
 	}
-	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [;])
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T ! [;])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TryStmt {
+pub struct JsTryStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl TryStmt {
+impl JsTryStatement {
 	pub fn try_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![try])
 	}
-	pub fn test(&self) -> SyntaxResult<JsBlockStatement> {
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
 		support::as_mandatory_node(&self.syntax)
 	}
-	pub fn handler(&self) -> Option<CatchClause> { support::as_optional_node(&self.syntax) }
-	pub fn finalizer(&self) -> Option<Finalizer> { support::as_optional_node(&self.syntax) }
+	pub fn catch_clause(&self) -> SyntaxResult<JsCatchClause> {
+		support::as_mandatory_node(&self.syntax)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsTryFinallyStatement {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsTryFinallyStatement {
+	pub fn try_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![try])
+	}
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
+		support::as_mandatory_node(&self.syntax)
+	}
+	pub fn catch_clause(&self) -> Option<JsCatchClause> { support::as_optional_node(&self.syntax) }
+	pub fn finally_clause(&self) -> SyntaxResult<JsFinallyClause> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsDebuggerStatement {
@@ -623,34 +640,43 @@ impl DefaultClause {
 	pub fn cons(&self) -> AstNodeList<JsAnyStatement> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct CatchClause {
+pub struct JsCatchClause {
 	pub(crate) syntax: SyntaxNode,
 }
-impl CatchClause {
+impl JsCatchClause {
 	pub fn catch_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![catch])
 	}
-	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+	pub fn declaration(&self) -> Option<JsCatchDeclaration> {
+		support::as_optional_node(&self.syntax)
 	}
-	pub fn error(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
-	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
-	}
-	pub fn cons(&self) -> SyntaxResult<JsBlockStatement> {
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
 		support::as_mandatory_node(&self.syntax)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Finalizer {
+pub struct JsFinallyClause {
 	pub(crate) syntax: SyntaxNode,
 }
-impl Finalizer {
+impl JsFinallyClause {
 	pub fn finally_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![finally])
 	}
-	pub fn cons(&self) -> SyntaxResult<JsBlockStatement> {
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
 		support::as_mandatory_node(&self.syntax)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsCatchDeclaration {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsCatchDeclaration {
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T!['('])
+	}
+	pub fn binding(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2356,8 +2382,9 @@ pub enum JsAnyStatement {
 	JsWithStatement(JsWithStatement),
 	JsLabeledStatement(JsLabeledStatement),
 	SwitchStmt(SwitchStmt),
-	ThrowStmt(ThrowStmt),
-	TryStmt(TryStmt),
+	JsThrowStatement(JsThrowStatement),
+	JsTryStatement(JsTryStatement),
+	JsTryFinallyStatement(JsTryFinallyStatement),
 	JsDebuggerStatement(JsDebuggerStatement),
 	Decl(Decl),
 	ImportDecl(ImportDecl),
@@ -2840,8 +2867,8 @@ impl AstNode for SwitchStmt {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for ThrowStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == THROW_STMT }
+impl AstNode for JsThrowStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THROW_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2851,8 +2878,19 @@ impl AstNode for ThrowStmt {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for TryStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TRY_STMT }
+impl AstNode for JsTryStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TRY_STATEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsTryFinallyStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TRY_FINALLY_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3060,8 +3098,8 @@ impl AstNode for DefaultClause {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for CatchClause {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == CATCH_CLAUSE }
+impl AstNode for JsCatchClause {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CATCH_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3071,8 +3109,19 @@ impl AstNode for CatchClause {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Finalizer {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FINALIZER }
+impl AstNode for JsFinallyClause {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FINALLY_CLAUSE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsCatchDeclaration {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CATCH_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4482,11 +4531,16 @@ impl From<JsLabeledStatement> for JsAnyStatement {
 impl From<SwitchStmt> for JsAnyStatement {
 	fn from(node: SwitchStmt) -> JsAnyStatement { JsAnyStatement::SwitchStmt(node) }
 }
-impl From<ThrowStmt> for JsAnyStatement {
-	fn from(node: ThrowStmt) -> JsAnyStatement { JsAnyStatement::ThrowStmt(node) }
+impl From<JsThrowStatement> for JsAnyStatement {
+	fn from(node: JsThrowStatement) -> JsAnyStatement { JsAnyStatement::JsThrowStatement(node) }
 }
-impl From<TryStmt> for JsAnyStatement {
-	fn from(node: TryStmt) -> JsAnyStatement { JsAnyStatement::TryStmt(node) }
+impl From<JsTryStatement> for JsAnyStatement {
+	fn from(node: JsTryStatement) -> JsAnyStatement { JsAnyStatement::JsTryStatement(node) }
+}
+impl From<JsTryFinallyStatement> for JsAnyStatement {
+	fn from(node: JsTryFinallyStatement) -> JsAnyStatement {
+		JsAnyStatement::JsTryFinallyStatement(node)
+	}
 }
 impl From<JsDebuggerStatement> for JsAnyStatement {
 	fn from(node: JsDebuggerStatement) -> JsAnyStatement {
@@ -4543,8 +4597,9 @@ impl AstNode for JsAnyStatement {
 			| JS_WITH_STATEMENT
 			| JS_LABELED_STATEMENT
 			| SWITCH_STMT
-			| THROW_STMT
-			| TRY_STMT
+			| JS_THROW_STATEMENT
+			| JS_TRY_STATEMENT
+			| JS_TRY_FINALLY_STATEMENT
 			| JS_DEBUGGER_STATEMENT
 			| IMPORT_DECL
 			| EXPORT_NAMED
@@ -4581,8 +4636,11 @@ impl AstNode for JsAnyStatement {
 				JsAnyStatement::JsLabeledStatement(JsLabeledStatement { syntax })
 			}
 			SWITCH_STMT => JsAnyStatement::SwitchStmt(SwitchStmt { syntax }),
-			THROW_STMT => JsAnyStatement::ThrowStmt(ThrowStmt { syntax }),
-			TRY_STMT => JsAnyStatement::TryStmt(TryStmt { syntax }),
+			JS_THROW_STATEMENT => JsAnyStatement::JsThrowStatement(JsThrowStatement { syntax }),
+			JS_TRY_STATEMENT => JsAnyStatement::JsTryStatement(JsTryStatement { syntax }),
+			JS_TRY_FINALLY_STATEMENT => {
+				JsAnyStatement::JsTryFinallyStatement(JsTryFinallyStatement { syntax })
+			}
 			JS_DEBUGGER_STATEMENT => {
 				JsAnyStatement::JsDebuggerStatement(JsDebuggerStatement { syntax })
 			}
@@ -4630,8 +4688,9 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsWithStatement(it) => &it.syntax,
 			JsAnyStatement::JsLabeledStatement(it) => &it.syntax,
 			JsAnyStatement::SwitchStmt(it) => &it.syntax,
-			JsAnyStatement::ThrowStmt(it) => &it.syntax,
-			JsAnyStatement::TryStmt(it) => &it.syntax,
+			JsAnyStatement::JsThrowStatement(it) => &it.syntax,
+			JsAnyStatement::JsTryStatement(it) => &it.syntax,
+			JsAnyStatement::JsTryFinallyStatement(it) => &it.syntax,
 			JsAnyStatement::JsDebuggerStatement(it) => &it.syntax,
 			JsAnyStatement::ImportDecl(it) => &it.syntax,
 			JsAnyStatement::ExportNamed(it) => &it.syntax,
@@ -6058,12 +6117,17 @@ impl std::fmt::Display for SwitchStmt {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ThrowStmt {
+impl std::fmt::Display for JsThrowStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for TryStmt {
+impl std::fmt::Display for JsTryStatement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsTryFinallyStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6158,12 +6222,17 @@ impl std::fmt::Display for DefaultClause {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for CatchClause {
+impl std::fmt::Display for JsCatchClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Finalizer {
+impl std::fmt::Display for JsFinallyClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsCatchDeclaration {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
