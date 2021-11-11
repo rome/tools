@@ -31,23 +31,27 @@ JS_MODULE@0..38
 MODULE@0..37
   LIST@0..37
     SWITCH_STMT@0..37
-       SWITCH_KW@0..7 "switch" " "
+      None SWITCH_KW@0..7 "switch" Whitespace(1)
       CONDITION@7..13
-         L_PAREN@7..8 "(" 
+        None L_PAREN@7..8 "(" None
         NAME_REF@8..11
-           IDENT@8..11 "foo" 
-         R_PAREN@11..13 ")" " "
-       L_CURLY@13..14 "{" 
+          None IDENT@8..11 "foo" None
+        None R_PAREN@11..13 ")" Whitespace(1)
+      None L_CURLY@13..14 "{" None
       LIST@14..35
         CASE_CLAUSE@14..25
-          "\n " CASE_KW@14..21 "case" " "
+          Whitespace(2) CASE_KW@14..21 "case" Whitespace(1)
           NAME_REF@21..24
-             IDENT@21..24 "bar" 
-           COLON@24..25 ":" 
+            None IDENT@21..24 "bar" None
+          None COLON@24..25 ":" None
           LIST@25..25
         DEFAULT_CLAUSE@25..35
-          "\n " DEFAULT_KW@25..34 "default" 
-           COLON@34..35 ":" 
+          Whitespace(2) DEFAULT_KW@25..34 "default" None
+          None COLON@34..35 ":" None
           LIST@35..35
+<<<<<<< HEAD
       "\n" R_CURLY@35..37 "}" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+      Whitespace(1) R_CURLY@35..37 "}" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)

@@ -20,11 +20,6 @@ pub enum Trivia {
 }
 
 impl Trivia {
-	pub fn as_thin(self, text: &str) -> ThinTrivia {
-		let ptr = ThinArc::from_header_and_iter(self, text.bytes());
-		ThinTrivia(ptr)
-	}
-
 	fn text_len(&self) -> TextSize {
 		match self {
 			Trivia::Whitespace(n) => (*n as u32).into(),
@@ -33,58 +28,21 @@ impl Trivia {
 	}
 }
 
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct ThinTrivia(ThinArc<Trivia, u8>);
-
-impl ThinTrivia {
-	#[inline]
-	pub fn trivia(&self) -> &Trivia {
-		&self.0.header
-	}
-
-	#[inline]
-	pub fn text(&self) -> &str {
-		unsafe { std::str::from_utf8_unchecked(self.0.slice()) }
-	}
-
-	#[inline]
-	fn text_len(&self) -> TextSize {
-		self.0.header.text_len()
-	}
-}
-
-impl fmt::Debug for ThinTrivia {
-	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{:?}", self.0.slice())
-	}
-}
-
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum GreenTokenTrivia {
 	None,
-	One(ThinTrivia),
-	Many(Vec<ThinTrivia>),
+	Whitespace(usize),
+	Comment(usize),
+	Many(Box<Vec<Trivia>>),
 }
 
 impl GreenTokenTrivia {
 	pub fn text_len(&self) -> TextSize {
 		match self {
 			GreenTokenTrivia::None => 0.into(),
-			GreenTokenTrivia::One(x) => x.text_len(),
+			GreenTokenTrivia::Whitespace(len) => (*len as u32).into(),
+			GreenTokenTrivia::Comment(len) => (*len as u32).into(),
 			GreenTokenTrivia::Many(v) => v.iter().fold(0.into(), |len, x| len + x.text_len()),
-		}
-	}
-}
-
-impl fmt::Debug for GreenTokenTrivia {
-	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		match self {
-			Self::None => Ok(()),
-			Self::One(trivia) => write!(f, "{:?}", trivia.text()),
-			Self::Many(trivia) => {
-				let items: Vec<_> = trivia.iter().map(|x| x.text()).collect();
-				f.debug_list().entries(items).finish()
-			}
 		}
 	}
 }
@@ -92,13 +50,14 @@ impl fmt::Debug for GreenTokenTrivia {
 #[derive(PartialEq, Eq, Hash)]
 struct GreenTokenHead {
 	kind: SyntaxKind,
-	_c: Count<GreenToken>,
 	leading_trivia: GreenTokenTrivia,
 	trailing_trivia: GreenTokenTrivia,
+	_c: Count<GreenToken>,
 }
 
 type Repr = HeaderSlice<GreenTokenHead, [u8]>;
 type ReprThin = HeaderSlice<GreenTokenHead, [u8; 0]>;
+
 #[repr(transparent)]
 pub(crate) struct GreenTokenData {
 	data: ReprThin,
@@ -106,19 +65,7 @@ pub(crate) struct GreenTokenData {
 
 impl PartialEq for GreenTokenData {
 	fn eq(&self, other: &Self) -> bool {
-		//TODO is the compiler smart enought to optimize here?
-		let kind_eq = self.kind() == other.kind() && self.text() == other.text();
-		let leading_eq = self
-			.data
-			.header
-			.leading_trivia
-			.eq(&other.data.header.leading_trivia);
-		let trailing_eq = self
-			.data
-			.header
-			.trailing_trivia
-			.eq(&other.data.header.trailing_trivia);
-		kind_eq && leading_eq && trailing_eq
+		self.kind() == other.kind() && self.text() == other.text()
 	}
 }
 
@@ -153,9 +100,7 @@ impl fmt::Debug for GreenTokenData {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		f.debug_struct("GreenToken")
 			.field("kind", &self.kind())
-			.field("text", &self.text())
-			.field("leading_trivia", &self.data.header.leading_trivia)
-			.field("trailing_trivia", &self.data.header.trailing_trivia)
+			.field("text", &self.text_with_trivia())
 			.finish()
 	}
 }
@@ -176,7 +121,7 @@ impl fmt::Display for GreenToken {
 
 impl fmt::Display for GreenTokenData {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{}", self.text())
+		write!(f, "{}", self.text_with_trivia())
 	}
 }
 
@@ -190,41 +135,30 @@ impl GreenTokenData {
 	/// Text of this Token.
 	#[inline]
 	pub fn text(&self) -> &str {
-		unsafe { std::str::from_utf8_unchecked(self.data.slice()) }
+		let token_start: usize = self.data.header.leading_trivia.text_len().into();
+
+		let trailing_len: usize = self.data.header.trailing_trivia.text_len().into();
+		let token_end = self.data.slice().len() - trailing_len;
+
+		let s = unsafe { std::str::from_utf8_unchecked(self.data.slice()) };
+		&s[token_start..token_end]
 	}
 
 	/// Text of this Token with trivia.
-	/// TODO do we need String here?
 	#[inline]
-	pub fn text_with_trivia(&self) -> String {
-		let mut txt = String::new();
-		match self.leading() {
-			GreenTokenTrivia::None => {}
-			GreenTokenTrivia::One(t) => txt.push_str(t.text()),
-			GreenTokenTrivia::Many(v) => {
-				for t in v {
-					txt.push_str(t.text())
-				}
-			}
-		}
-		txt.push_str(self.text());
-		match self.trailing() {
-			GreenTokenTrivia::None => {}
-			GreenTokenTrivia::One(t) => txt.push_str(t.text()),
-			GreenTokenTrivia::Many(v) => {
-				for t in v {
-					txt.push_str(t.text())
-				}
-			}
-		}
-
-		txt
+	pub fn text_with_trivia(&self) -> &str {
+		unsafe { std::str::from_utf8_unchecked(self.data.slice()) }
 	}
 
 	/// Returns the length of the text covered by this token.
 	#[inline]
 	pub fn text_len(&self) -> TextSize {
-		TextSize::of(self.text()) + self.leading().text_len() + self.trailing().text_len()
+		TextSize::of(self.text())
+	}
+
+	#[inline]
+	pub fn text_with_trivia_len(&self) -> TextSize {
+		TextSize::of(self.text_with_trivia())
 	}
 
 	#[inline]
@@ -235,6 +169,18 @@ impl GreenTokenData {
 	#[inline]
 	pub fn trailing(&self) -> &GreenTokenTrivia {
 		&self.data.header.trailing_trivia
+	}
+
+	pub(crate) fn cache_hash_of(kind: SyntaxKind, text: &str) -> u64 {
+		use std::hash::{Hash, Hasher};
+		let mut h = rustc_hash::FxHasher::default();
+		kind.hash(&mut h);
+		text.hash(&mut h);
+		h.finish()
+	}
+
+	pub(crate) fn cache_hash(&self) -> u64 {
+		Self::cache_hash_of(self.kind(), self.text_with_trivia())
 	}
 }
 
@@ -289,4 +235,51 @@ impl ops::Deref for GreenToken {
 			mem::transmute::<&ReprThin, &GreenTokenData>(repr)
 		}
 	}
+}
+
+#[test]
+fn green_token_text_and_len() {
+	let t = GreenToken::with_trivia(
+		SyntaxKind(0),
+		" let ",
+		GreenTokenTrivia::Whitespace(1),
+		GreenTokenTrivia::Whitespace(1),
+	);
+
+	assert_eq!("let", t.text());
+	assert_eq!(text_size::TextSize::from(3), t.text_len());
+
+	assert_eq!(" let ", t.text_with_trivia());
+	assert_eq!(text_size::TextSize::from(5), t.text_with_trivia_len());
+
+	assert_eq!(" let ", format!("{}", t));
+}
+
+#[test]
+fn green_token_hash() {
+	let kind = SyntaxKind(0);
+	let text = " let ";
+	let t1 = GreenToken::with_trivia(
+		kind,
+		text,
+		GreenTokenTrivia::Whitespace(1),
+		GreenTokenTrivia::Whitespace(1),
+	);
+	let t2 = GreenToken::with_trivia(
+		kind,
+		text,
+		GreenTokenTrivia::Whitespace(1),
+		GreenTokenTrivia::Whitespace(1),
+	);
+
+	assert_eq!(t1.cache_hash(), t2.cache_hash());
+	assert_eq!(GreenTokenData::cache_hash_of(kind, text), t1.cache_hash());
+
+	let t3 = GreenToken::with_trivia(
+		kind,
+		"\n\tlet ",
+		GreenTokenTrivia::Whitespace(2),
+		GreenTokenTrivia::Whitespace(1),
+	);
+	assert_ne!(t1.cache_hash(), t3.cache_hash());
 }

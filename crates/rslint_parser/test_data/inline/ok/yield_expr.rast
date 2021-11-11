@@ -5,13 +5,14 @@ MODULE@0..44
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..44
     FN_DECL@0..44
-       FUNCTION_KW@0..9 "function" " "
-       STAR@9..10 "*" 
+      None FUNCTION_KW@0..9 "function" Whitespace(1)
+      None STAR@9..10 "*" None
       NAME@10..13
-         IDENT@10..13 "foo" 
+        None IDENT@10..13 "foo" None
       PARAMETER_LIST@13..16
-         L_PAREN@13..14 "(" 
+        None L_PAREN@13..14 "(" None
         LIST@14..14
+<<<<<<< HEAD
 <<<<<<< HEAD
         R_PAREN@14..15 ")"
       WHITESPACE@15..16 " "
@@ -34,21 +35,29 @@ MODULE@0..44
               WHITESPACE@37..38 " "
 =======
          R_PAREN@14..16 ")" " "
+=======
+        None R_PAREN@14..16 ")" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
       BLOCK_STMT@16..44
-         L_CURLY@16..17 "{" 
+        None L_CURLY@16..17 "{" None
         LIST@17..42
           EXPR_STMT@17..29
             YIELD_EXPR@17..28
-              "\n " YIELD_KW@17..25 "yield" " "
+              Whitespace(2) YIELD_KW@17..25 "yield" Whitespace(1)
               NAME_REF@25..28
-                 IDENT@25..28 "foo" 
-             SEMICOLON@28..29 ";" 
+                None IDENT@25..28 "foo" None
+            None SEMICOLON@28..29 ";" None
           EXPR_STMT@29..42
             YIELD_EXPR@29..41
+<<<<<<< HEAD
               "\n " YIELD_KW@29..36 "yield" 
                STAR@36..38 "*" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+              Whitespace(2) YIELD_KW@29..36 "yield" None
+              None STAR@36..38 "*" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               NAME_REF@38..41
-                 IDENT@38..41 "foo" 
-             SEMICOLON@41..42 ";" 
-        "\n" R_CURLY@42..44 "}" 
+                None IDENT@38..41 "foo" None
+            None SEMICOLON@41..42 ";" None
+        Whitespace(1) R_CURLY@42..44 "}" None

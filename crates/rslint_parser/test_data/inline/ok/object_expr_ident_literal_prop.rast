@@ -5,20 +5,20 @@ MODULE@0..19
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..19
     VAR_DECL@0..19
-       IDENT@0..4 "let" " "
+      None IDENT@0..4 "let" Whitespace(1)
       LIST@4..19
         DECLARATOR@4..19
           SINGLE_PATTERN@4..6
             NAME@4..6
-               IDENT@4..6 "b" " "
-           EQ@6..8 "=" " "
+              None IDENT@4..6 "b" Whitespace(1)
+          None EQ@6..8 "=" Whitespace(1)
           OBJECT_EXPR@8..19
-             L_CURLY@8..10 "{" " "
+            None L_CURLY@8..10 "{" Whitespace(1)
             LIST@10..18
               LITERAL_PROP@10..18
                 NAME@10..11
-                   IDENT@10..11 "a" 
-                 COLON@11..13 ":" " "
+                  None IDENT@10..11 "a" None
+                None COLON@11..13 ":" Whitespace(1)
                 LITERAL@13..18
-                   TRUE_KW@13..18 "true" " "
-             R_CURLY@18..19 "}" 
+                  None TRUE_KW@13..18 "true" Whitespace(1)
+            None R_CURLY@18..19 "}" None

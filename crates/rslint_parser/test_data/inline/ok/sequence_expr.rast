@@ -8,16 +8,16 @@ MODULE@0..13
       SEQUENCE_EXPR@0..13
         LIST@0..13
           LITERAL@0..1
-             NUMBER@0..1 "1" 
-           COMMA@1..3 "," " "
+            None NUMBER@0..1 "1" None
+          None COMMA@1..3 "," Whitespace(1)
           LITERAL@3..4
-             NUMBER@3..4 "2" 
-           COMMA@4..6 "," " "
+            None NUMBER@3..4 "2" None
+          None COMMA@4..6 "," Whitespace(1)
           LITERAL@6..7
-             NUMBER@6..7 "3" 
-           COMMA@7..9 "," " "
+            None NUMBER@6..7 "3" None
+          None COMMA@7..9 "," Whitespace(1)
           LITERAL@9..10
-             NUMBER@9..10 "4" 
-           COMMA@10..12 "," " "
+            None NUMBER@9..10 "4" None
+          None COMMA@10..12 "," Whitespace(1)
           LITERAL@12..13
-             NUMBER@12..13 "5" 
+            None NUMBER@12..13 "5" None

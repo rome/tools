@@ -6,12 +6,13 @@ MODULE@0..64
   LIST@0..64
     JS_EXPRESSION_STATEMENT@0..11
       ARRAY_EXPR@0..10
-         L_BRACK@0..1 "[" 
+        None L_BRACK@0..1 "[" None
         LIST@1..9
           NAME_REF@1..4
-             IDENT@1..4 "foo" 
-           COMMA@4..6 "," " "
+            None IDENT@1..4 "foo" None
+          None COMMA@4..6 "," Whitespace(1)
           NAME_REF@6..9
+<<<<<<< HEAD
 <<<<<<< HEAD
             IDENT@6..9 "bar"
         R_BRACK@9..10 "]"
@@ -33,21 +34,31 @@ MODULE@0..64
              IDENT@6..9 "bar" 
          R_BRACK@9..10 "]" 
        SEMICOLON@10..11 ";" 
+=======
+            None IDENT@6..9 "bar" None
+        None R_BRACK@9..10 "]" None
+      None SEMICOLON@10..11 ";" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
     EXPR_STMT@11..18
       ARRAY_EXPR@11..17
-        "\n" L_BRACK@11..13 "[" 
+        Whitespace(1) L_BRACK@11..13 "[" None
         LIST@13..16
           NAME_REF@13..16
-             IDENT@13..16 "foo" 
-         R_BRACK@16..17 "]" 
-       SEMICOLON@17..18 ";" 
+            None IDENT@13..16 "foo" None
+        None R_BRACK@16..17 "]" None
+      None SEMICOLON@17..18 ";" None
     EXPR_STMT@18..26
       ARRAY_EXPR@18..25
+<<<<<<< HEAD
         "\n" L_BRACK@18..20 "[" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+        Whitespace(1) L_BRACK@18..20 "[" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@20..24
-           COMMA@20..21 "," 
+          None COMMA@20..21 "," None
           NAME_REF@21..24
+<<<<<<< HEAD
 <<<<<<< HEAD
             IDENT@21..24 "foo"
         R_BRACK@24..25 "]"
@@ -70,26 +81,36 @@ MODULE@0..64
              IDENT@21..24 "foo" 
          R_BRACK@24..25 "]" 
        SEMICOLON@25..26 ";" 
+=======
+            None IDENT@21..24 "foo" None
+        None R_BRACK@24..25 "]" None
+      None SEMICOLON@25..26 ";" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
     EXPR_STMT@26..34
       ARRAY_EXPR@26..33
-        "\n" L_BRACK@26..28 "[" 
+        Whitespace(1) L_BRACK@26..28 "[" None
         LIST@28..32
           NAME_REF@28..31
-             IDENT@28..31 "foo" 
-           COMMA@31..32 "," 
-         R_BRACK@32..33 "]" 
-       SEMICOLON@33..34 ";" 
+            None IDENT@28..31 "foo" None
+          None COMMA@31..32 "," None
+        None R_BRACK@32..33 "]" None
+      None SEMICOLON@33..34 ";" None
     EXPR_STMT@34..50
       ARRAY_EXPR@34..49
+<<<<<<< HEAD
         "\n" L_BRACK@34..36 "[" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+        Whitespace(1) L_BRACK@34..36 "[" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@36..48
-           COMMA@36..37 "," 
-           COMMA@37..38 "," 
-           COMMA@38..39 "," 
-           COMMA@39..40 "," 
-           COMMA@40..41 "," 
+          None COMMA@36..37 "," None
+          None COMMA@37..38 "," None
+          None COMMA@38..39 "," None
+          None COMMA@39..40 "," None
+          None COMMA@40..41 "," None
           NAME_REF@41..44
+<<<<<<< HEAD
 <<<<<<< HEAD
             IDENT@41..44 "foo"
           COMMA@44..45 ","
@@ -114,15 +135,27 @@ MODULE@0..64
       ARRAY_EXPR@50..63
         "\n" L_BRACK@50..52 "[" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+            None IDENT@41..44 "foo" None
+          None COMMA@44..45 "," None
+          None COMMA@45..46 "," None
+          None COMMA@46..47 "," None
+          None COMMA@47..48 "," None
+        None R_BRACK@48..49 "]" None
+      None SEMICOLON@49..50 ";" None
+    EXPR_STMT@50..64
+      ARRAY_EXPR@50..63
+        Whitespace(1) L_BRACK@50..52 "[" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@52..62
           SPREAD_ELEMENT@52..56
-             DOT2@52..55 "..." 
+            None DOT2@52..55 "..." None
             NAME_REF@55..56
-               IDENT@55..56 "a" 
-           COMMA@56..58 "," " "
+              None IDENT@55..56 "a" None
+          None COMMA@56..58 "," Whitespace(1)
           SPREAD_ELEMENT@58..62
-             DOT2@58..61 "..." 
+            None DOT2@58..61 "..." None
             NAME_REF@61..62
-               IDENT@61..62 "b" 
-         R_BRACK@62..63 "]" 
-       SEMICOLON@63..64 ";" 
+              None IDENT@61..62 "b" None
+        None R_BRACK@62..63 "]" None
+      None SEMICOLON@63..64 ";" None

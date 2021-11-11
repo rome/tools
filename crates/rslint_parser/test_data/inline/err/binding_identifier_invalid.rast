@@ -6,10 +6,11 @@ MODULE@0..82
   LIST@0..82
     JS_EXPRESSION_STATEMENT@0..30
       ARROW_EXPR@0..30
-         ASYNC_KW@0..6 "async" " "
+        None ASYNC_KW@0..6 "async" Whitespace(1)
         PARAMETER_LIST@6..9
-           L_PAREN@6..7 "(" 
+          None L_PAREN@6..7 "(" None
           LIST@7..7
+<<<<<<< HEAD
 <<<<<<< HEAD
           R_PAREN@7..8 ")"
         WHITESPACE@8..9 " "
@@ -25,30 +26,39 @@ MODULE@0..82
 =======
            R_PAREN@7..9 ")" " "
          FAT_ARROW@9..12 "=>" " "
+=======
+          None R_PAREN@7..9 ")" Whitespace(1)
+        None FAT_ARROW@9..12 "=>" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         BLOCK_STMT@12..30
-           L_CURLY@12..14 "{" " "
+          None L_CURLY@12..14 "{" Whitespace(1)
           LIST@14..29
             VAR_DECL@14..29
+<<<<<<< HEAD
                IDENT@14..18 "let" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+              None IDENT@14..18 "let" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               LIST@18..27
                 DECLARATOR@18..27
                   SINGLE_PATTERN@18..24
                     NAME@18..24
-                       IDENT@18..24 "await" " "
-                   EQ@24..26 "=" " "
+                      None IDENT@18..24 "await" Whitespace(1)
+                  None EQ@24..26 "=" Whitespace(1)
                   LITERAL@26..27
-                     NUMBER@26..27 "5" 
-               SEMICOLON@27..29 ";" " "
-           R_CURLY@29..30 "}" 
+                    None NUMBER@26..27 "5" None
+              None SEMICOLON@27..29 ";" Whitespace(1)
+          None R_CURLY@29..30 "}" None
     FN_DECL@30..68
-      "\n" FUNCTION_KW@30..40 "function" " "
-       STAR@40..41 "*" 
+      Whitespace(1) FUNCTION_KW@30..40 "function" Whitespace(1)
+      None STAR@40..41 "*" None
       NAME@41..44
-         IDENT@41..44 "foo" 
+        None IDENT@41..44 "foo" None
       PARAMETER_LIST@44..47
-         L_PAREN@44..45 "(" 
+        None L_PAREN@44..45 "(" None
         LIST@45..45
+<<<<<<< HEAD
 <<<<<<< HEAD
         R_PAREN@45..46 ")"
       WHITESPACE@46..47 " "
@@ -61,33 +71,40 @@ MODULE@0..82
             WHITESPACE@55..56 " "
 =======
          R_PAREN@45..47 ")" " "
+=======
+        None R_PAREN@45..47 ")" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
       BLOCK_STMT@47..68
-         L_CURLY@47..48 "{" 
+        None L_CURLY@47..48 "{" None
         LIST@48..66
           VAR_DECL@48..66
+<<<<<<< HEAD
             "\n   " IDENT@48..56 "let" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+            Whitespace(4) IDENT@48..56 "let" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
             LIST@56..65
               DECLARATOR@56..65
                 SINGLE_PATTERN@56..62
                   NAME@56..62
-                     IDENT@56..62 "yield" " "
-                 EQ@62..64 "=" " "
+                    None IDENT@56..62 "yield" Whitespace(1)
+                None EQ@62..64 "=" Whitespace(1)
                 LITERAL@64..65
-                   NUMBER@64..65 "5" 
-             SEMICOLON@65..66 ";" 
-        "\n" R_CURLY@66..68 "}" 
+                  None NUMBER@64..65 "5" None
+            None SEMICOLON@65..66 ";" None
+        Whitespace(1) R_CURLY@66..68 "}" None
     VAR_DECL@68..82
-      "\n" IDENT@68..73 "let" " "
+      Whitespace(1) IDENT@68..73 "let" Whitespace(1)
       LIST@73..81
         DECLARATOR@73..81
           SINGLE_PATTERN@73..78
             NAME@73..78
-               IDENT@73..78 "eval" " "
-           EQ@78..80 "=" " "
+              None IDENT@73..78 "eval" Whitespace(1)
+          None EQ@78..80 "=" Whitespace(1)
           LITERAL@80..81
-             NUMBER@80..81 "5" 
-       SEMICOLON@81..82 ";" 
+            None NUMBER@80..81 "5" None
+      None SEMICOLON@81..82 ";" None
 --
 error[SyntaxError]: Illegal use of `await` as an identifier in an async context
   ┌─ binding_identifier_invalid.js:1:19

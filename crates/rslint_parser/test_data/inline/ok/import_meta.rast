@@ -6,6 +6,6 @@ MODULE@0..11
   LIST@0..11
     JS_EXPRESSION_STATEMENT@0..11
       IMPORT_META@0..11
-         IMPORT_KW@0..6 "import" 
-         DOT@6..7 "." 
-         IDENT@7..11 "meta" 
+        None IMPORT_KW@0..6 "import" None
+        None DOT@6..7 "." None
+        None IDENT@7..11 "meta" None

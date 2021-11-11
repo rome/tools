@@ -5,56 +5,57 @@ MODULE@0..83
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..83
     VAR_DECL@0..14
-       IDENT@0..4 "let" " "
+      None IDENT@0..4 "let" Whitespace(1)
       LIST@4..13
         DECLARATOR@4..13
           SINGLE_PATTERN@4..8
             NAME@4..8
-               IDENT@4..8 "foo" " "
-           EQ@8..10 "=" " "
+              None IDENT@4..8 "foo" Whitespace(1)
+          None EQ@8..10 "=" Whitespace(1)
           NAME_REF@10..13
-             IDENT@10..13 "bar" 
-       SEMICOLON@13..14 ";" 
+            None IDENT@10..13 "bar" None
+      None SEMICOLON@13..14 ";" None
     VAR_DECL@14..27
-      "\n" IDENT@14..19 "let" " "
+      Whitespace(1) IDENT@14..19 "let" Whitespace(1)
       LIST@19..26
         DECLARATOR@19..26
           SINGLE_PATTERN@19..23
             NAME@19..23
-               IDENT@19..23 "foo" " "
-           EQ@23..25 "=" " "
+              None IDENT@19..23 "foo" Whitespace(1)
+          None EQ@23..25 "=" Whitespace(1)
           NAME_REF@25..26
-             IDENT@25..26 "b" 
-       SEMICOLON@26..27 ";" 
+            None IDENT@25..26 "b" None
+      None SEMICOLON@26..27 ";" None
     VAR_DECL@27..36
-      "\n" IDENT@27..32 "let" " "
+      Whitespace(1) IDENT@27..32 "let" Whitespace(1)
       LIST@32..35
         DECLARATOR@32..35
           SINGLE_PATTERN@32..35
             NAME@32..35
-               IDENT@32..35 "foo" 
-       SEMICOLON@35..36 ";" 
+              None IDENT@32..35 "foo" None
+      None SEMICOLON@35..36 ";" None
     VAR_DECL@36..44
-      "\n" IDENT@36..41 "let" " "
+      Whitespace(1) IDENT@36..41 "let" Whitespace(1)
       LIST@41..44
         DECLARATOR@41..44
           SINGLE_PATTERN@41..44
             NAME@41..44
-               IDENT@41..44 "foo" 
+              None IDENT@41..44 "foo" None
     VAR_DECL@44..52
-      "\n" IDENT@44..49 "let" " "
+      Whitespace(1) IDENT@44..49 "let" Whitespace(1)
       LIST@49..52
         DECLARATOR@49..52
           SINGLE_PATTERN@49..52
             NAME@49..52
-               IDENT@49..52 "foo" 
+              None IDENT@49..52 "foo" None
     FN_DECL@52..83
-      "\n" FUNCTION_KW@52..62 "function" " "
+      Whitespace(1) FUNCTION_KW@52..62 "function" Whitespace(1)
       NAME@62..65
-         IDENT@62..65 "foo" 
+        None IDENT@62..65 "foo" None
       PARAMETER_LIST@65..68
-         L_PAREN@65..66 "(" 
+        None L_PAREN@65..66 "(" None
         LIST@66..66
+<<<<<<< HEAD
 <<<<<<< HEAD
         R_PAREN@66..67 ")"
       WHITESPACE@67..68 " "
@@ -72,12 +73,20 @@ MODULE@0..83
   WHITESPACE@83..84 "\n"
 =======
          R_PAREN@66..68 ")" " "
+=======
+        None R_PAREN@66..68 ")" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
       BLOCK_STMT@68..83
-         L_CURLY@68..70 "{" " "
+        None L_CURLY@68..70 "{" Whitespace(1)
         LIST@70..82
           RETURN_STMT@70..82
-             RETURN_KW@70..77 "return" " "
+            None RETURN_KW@70..77 "return" Whitespace(1)
             LITERAL@77..82
+<<<<<<< HEAD
                TRUE_KW@77..82 "true" " "
          R_CURLY@82..83 "}" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+              None TRUE_KW@77..82 "true" Whitespace(1)
+        None R_CURLY@82..83 "}" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)

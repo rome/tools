@@ -5,31 +5,32 @@ MODULE@0..94
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..94
     FOR_STMT@0..31
-       FOR_KW@0..4 "for" " "
-       L_PAREN@4..5 "(" 
+      None FOR_KW@0..4 "for" Whitespace(1)
+      None L_PAREN@4..5 "(" None
       FOR_STMT_INIT@5..14
         VAR_DECL@5..14
-           IDENT@5..9 "let" " "
+          None IDENT@5..9 "let" Whitespace(1)
           LIST@9..14
             DECLARATOR@9..14
               SINGLE_PATTERN@9..11
                 NAME@9..11
-                   IDENT@9..11 "i" " "
-               EQ@11..13 "=" " "
+                  None IDENT@9..11 "i" Whitespace(1)
+              None EQ@11..13 "=" Whitespace(1)
               LITERAL@13..14
-                 NUMBER@13..14 "5" 
-       SEMICOLON@14..16 ";" " "
+                None NUMBER@13..14 "5" None
+      None SEMICOLON@14..16 ";" Whitespace(1)
       FOR_STMT_TEST@16..22
         BIN_EXPR@16..22
           NAME_REF@16..18
-             IDENT@16..18 "i" " "
-           L_ANGLE@18..20 "<" " "
+            None IDENT@16..18 "i" Whitespace(1)
+          None L_ANGLE@18..20 "<" Whitespace(1)
           LITERAL@20..22
-             NUMBER@20..22 "10" 
-       SEMICOLON@22..24 ";" " "
+            None NUMBER@20..22 "10" None
+      None SEMICOLON@22..24 ";" Whitespace(1)
       FOR_STMT_UPDATE@24..27
         POST_UPDATE_EXPRESSION@24..27
           NAME_REF@24..25
+<<<<<<< HEAD
 <<<<<<< HEAD
             IDENT@24..25 "i"
           PLUS2@25..27 "++"
@@ -44,31 +45,39 @@ MODULE@0..94
       BLOCK_STMT@29..31
          L_CURLY@29..30 "{" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+            None IDENT@24..25 "i" None
+          None PLUS2@25..27 "++" None
+      None R_PAREN@27..29 ")" Whitespace(1)
+      BLOCK_STMT@29..31
+        None L_CURLY@29..30 "{" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@30..30
-         R_CURLY@30..31 "}" 
+        None R_CURLY@30..31 "}" None
     FOR_OF_STMT@31..63
-      "\n" FOR_KW@31..36 "for" " "
-       L_PAREN@36..37 "(" 
+      Whitespace(1) FOR_KW@31..36 "for" Whitespace(1)
+      None L_PAREN@36..37 "(" None
       FOR_STMT_INIT@37..54
         VAR_DECL@37..54
-           IDENT@37..41 "let" " "
+          None IDENT@37..41 "let" Whitespace(1)
           LIST@41..54
             DECLARATOR@41..54
               OBJECT_PATTERN@41..54
-                 L_CURLY@41..43 "{" " "
+                None L_CURLY@41..43 "{" Whitespace(1)
                 LIST@43..52
                   SINGLE_PATTERN@43..46
                     NAME@43..46
-                       IDENT@43..46 "foo" 
-                   COMMA@46..48 "," " "
+                      None IDENT@43..46 "foo" None
+                  None COMMA@46..48 "," Whitespace(1)
                   SINGLE_PATTERN@48..52
                     NAME@48..52
-                       IDENT@48..52 "bar" " "
-                 R_CURLY@52..54 "}" " "
-       IDENT@54..57 "of" " "
+                      None IDENT@48..52 "bar" Whitespace(1)
+                None R_CURLY@52..54 "}" Whitespace(1)
+      None IDENT@54..57 "of" Whitespace(1)
       OBJECT_EXPR@57..59
-         L_CURLY@57..58 "{" 
+        None L_CURLY@57..58 "{" None
         LIST@58..58
+<<<<<<< HEAD
 <<<<<<< HEAD
         R_CURLY@58..59 "}"
       R_PAREN@59..60 ")"
@@ -81,18 +90,25 @@ MODULE@0..94
       BLOCK_STMT@61..63
          L_CURLY@61..62 "{" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+        None R_CURLY@58..59 "}" None
+      None R_PAREN@59..61 ")" Whitespace(1)
+      BLOCK_STMT@61..63
+        None L_CURLY@61..62 "{" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@62..62
-         R_CURLY@62..63 "}" 
+        None R_CURLY@62..63 "}" None
     FOR_IN_STMT@63..82
-      "\n" FOR_KW@63..68 "for" " "
-       L_PAREN@68..69 "(" 
+      Whitespace(1) FOR_KW@63..68 "for" Whitespace(1)
+      None L_PAREN@68..69 "(" None
       FOR_STMT_INIT@69..73
         NAME_REF@69..73
-           IDENT@69..73 "foo" " "
-       IN_KW@73..76 "in" " "
+          None IDENT@69..73 "foo" Whitespace(1)
+      None IN_KW@73..76 "in" Whitespace(1)
       OBJECT_EXPR@76..78
-         L_CURLY@76..77 "{" 
+        None L_CURLY@76..77 "{" None
         LIST@77..77
+<<<<<<< HEAD
 <<<<<<< HEAD
         R_CURLY@77..78 "}"
       R_PAREN@78..79 ")"
@@ -115,18 +131,26 @@ MODULE@0..94
 =======
          R_CURLY@77..78 "}" 
        R_PAREN@78..80 ")" " "
+=======
+        None R_CURLY@77..78 "}" None
+      None R_PAREN@78..80 ")" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
       BLOCK_STMT@80..82
-         L_CURLY@80..81 "{" 
+        None L_CURLY@80..81 "{" None
         LIST@81..81
-         R_CURLY@81..82 "}" 
+        None R_CURLY@81..82 "}" None
     FOR_STMT@82..94
-      "\n" FOR_KW@82..87 "for" " "
-       L_PAREN@87..88 "(" 
-       SEMICOLON@88..89 ";" 
-       SEMICOLON@89..90 ";" 
-       R_PAREN@90..92 ")" " "
+      Whitespace(1) FOR_KW@82..87 "for" Whitespace(1)
+      None L_PAREN@87..88 "(" None
+      None SEMICOLON@88..89 ";" None
+      None SEMICOLON@89..90 ";" None
+      None R_PAREN@90..92 ")" Whitespace(1)
       BLOCK_STMT@92..94
+<<<<<<< HEAD
          L_CURLY@92..93 "{" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+        None L_CURLY@92..93 "{" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@93..93
-         R_CURLY@93..94 "}" 
+        None R_CURLY@93..94 "}" None

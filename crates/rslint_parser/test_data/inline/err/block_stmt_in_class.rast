@@ -5,17 +5,17 @@ MODULE@0..11
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..11
     CLASS_DECL@0..10
-       CLASS_KW@0..6 "class" " "
+      None CLASS_KW@0..6 "class" Whitespace(1)
       NAME@6..7
-         IDENT@6..7 "S" 
+        None IDENT@6..7 "S" None
       CLASS_BODY@7..10
-         L_CURLY@7..8 "{" 
+        None L_CURLY@7..8 "{" None
         LIST@8..9
           ERROR@8..9
-             L_CURLY@8..9 "{" 
-         R_CURLY@9..10 "}" 
+            None L_CURLY@8..9 "{" None
+        None R_CURLY@9..10 "}" None
     ERROR@10..11
-       R_CURLY@10..11 "}" 
+      None R_CURLY@10..11 "}" None
 --
 error[SyntaxError]: Expected an identifier or keyword
   ┌─ block_stmt_in_class.js:1:9

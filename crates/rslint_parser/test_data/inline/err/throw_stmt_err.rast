@@ -12,19 +12,23 @@ JS_MODULE@0..28
 MODULE@0..27
   LIST@0..27
     THROW_STMT@0..5
-       THROW_KW@0..5 "throw" 
+      None THROW_KW@0..5 "throw" None
     EXPR_STMT@5..27
       NEW_EXPR@5..27
+<<<<<<< HEAD
         "\n" NEW_KW@5..10 "new" " "
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+        Whitespace(1) NEW_KW@5..10 "new" Whitespace(1)
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         NAME_REF@10..15
-           IDENT@10..15 "Error" 
+          None IDENT@10..15 "Error" None
         ARG_LIST@15..27
-           L_PAREN@15..16 "(" 
+          None L_PAREN@15..16 "(" None
           LIST@16..26
             LITERAL@16..26
-               STRING@16..26 "\"oh no :(\"" 
-           R_PAREN@26..27 ")" 
+              None STRING@16..26 "\"oh no :(\"" None
+          None R_PAREN@26..27 ")" None
 --
 error[SyntaxError]: Linebreaks between a throw statement and the error to be thrown are not allowed
   ┌─ throw_stmt_err.js:2:1

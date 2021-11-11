@@ -7,22 +7,22 @@ JS_MODULE@0..20
             DOT_EXPR@0..10
               CALL_EXPR@0..5
                 NAME_REF@0..3
-                   IDENT@0..3 "foo" 
+                  None IDENT@0..3 "foo" None
                 ARG_LIST@3..5
-                   L_PAREN@3..4 "(" 
+                  None L_PAREN@3..4 "(" None
                   LIST@4..4
-                   R_PAREN@4..5 ")" 
-               QUESTIONDOT@5..7 "?." 
+                  None R_PAREN@4..5 ")" None
+              None QUESTIONDOT@5..7 "?." None
               NAME@7..10
-                 IDENT@7..10 "baz" 
-             L_BRACK@10..11 "[" 
-             R_BRACK@11..12 "]" 
-           DOT@12..13 "." 
+                None IDENT@7..10 "baz" None
+            None L_BRACK@10..11 "[" None
+            None R_BRACK@11..12 "]" None
+          None DOT@12..13 "." None
           NAME@13..17
-            "\n" IDENT@13..17 "BAR" 
-         BACKTICK@17..18 "`" 
+            Whitespace(1) IDENT@13..17 "BAR" None
+        None BACKTICK@17..18 "`" None
         LIST@18..20
-           TEMPLATE_CHUNK@18..20 "b\n" 
+          None TEMPLATE_CHUNK@18..20 "b\n" None
 --
 error: unterminated template literal
   ┌─ subscripts_err.js:3:1

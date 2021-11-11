@@ -82,7 +82,7 @@ impl GreenElementRef<'_> {
 	pub fn text_len(self) -> TextSize {
 		match self {
 			NodeOrToken::Node(it) => it.text_len(),
-			NodeOrToken::Token(it) => it.text_len(),
+			NodeOrToken::Token(it) => it.text_with_trivia_len(),
 		}
 	}
 }

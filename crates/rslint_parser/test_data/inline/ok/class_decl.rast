@@ -5,36 +5,36 @@ MODULE@0..66
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..66
     CLASS_DECL@0..12
-       CLASS_KW@0..6 "class" " "
+      None CLASS_KW@0..6 "class" Whitespace(1)
       NAME@6..10
-         IDENT@6..10 "foo" " "
+        None IDENT@6..10 "foo" Whitespace(1)
       CLASS_BODY@10..12
-         L_CURLY@10..11 "{" 
+        None L_CURLY@10..11 "{" None
         LIST@11..11
-         R_CURLY@11..12 "}" 
+        None R_CURLY@11..12 "}" None
     CLASS_DECL@12..37
-      "\n" CLASS_KW@12..19 "class" " "
+      Whitespace(1) CLASS_KW@12..19 "class" Whitespace(1)
       NAME@19..23
-         IDENT@19..23 "foo" " "
-       EXTENDS_KW@23..31 "extends" " "
+        None IDENT@19..23 "foo" Whitespace(1)
+      None EXTENDS_KW@23..31 "extends" Whitespace(1)
       NAME_REF@31..35
-         IDENT@31..35 "bar" " "
+        None IDENT@31..35 "bar" Whitespace(1)
       CLASS_BODY@35..37
-         L_CURLY@35..36 "{" 
+        None L_CURLY@35..36 "{" None
         LIST@36..36
-         R_CURLY@36..37 "}" 
+        None R_CURLY@36..37 "}" None
     CLASS_DECL@37..66
-      "\n" CLASS_KW@37..44 "class" " "
+      Whitespace(1) CLASS_KW@37..44 "class" Whitespace(1)
       NAME@44..48
-         IDENT@44..48 "foo" " "
-       EXTENDS_KW@48..56 "extends" " "
+        None IDENT@44..48 "foo" Whitespace(1)
+      None EXTENDS_KW@48..56 "extends" Whitespace(1)
       DOT_EXPR@56..64
         NAME_REF@56..59
-           IDENT@56..59 "foo" 
-         DOT@59..60 "." 
+          None IDENT@56..59 "foo" None
+        None DOT@59..60 "." None
         NAME@60..64
-           IDENT@60..64 "bar" " "
+          None IDENT@60..64 "bar" Whitespace(1)
       CLASS_BODY@64..66
-         L_CURLY@64..65 "{" 
+        None L_CURLY@64..65 "{" None
         LIST@65..65
-         R_CURLY@65..66 "}" 
+        None R_CURLY@65..66 "}" None

@@ -7,9 +7,10 @@ MODULE@0..53
     JS_EXPRESSION_STATEMENT@0..7
       DOT_EXPR@0..7
         NAME_REF@0..3
-           IDENT@0..3 "foo" 
-         DOT@3..4 "." 
+          None IDENT@0..3 "foo" None
+        None DOT@3..4 "." None
         NAME@4..7
+<<<<<<< HEAD
 <<<<<<< HEAD
           IDENT@4..7 "bar"
     WHITESPACE@7..8 "\n"
@@ -52,39 +53,47 @@ MODULE@0..53
         QUESTIONDOT@48..50 "?."
 =======
            IDENT@4..7 "bar" 
+=======
+          None IDENT@4..7 "bar" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
     EXPR_STMT@7..17
       DOT_EXPR@7..17
         NAME_REF@7..11
-          "\n" IDENT@7..11 "foo" 
-         DOT@11..12 "." 
+          Whitespace(1) IDENT@7..11 "foo" None
+        None DOT@11..12 "." None
         NAME@12..17
-           IDENT@12..17 "await" 
+          None IDENT@12..17 "await" None
     EXPR_STMT@17..27
       DOT_EXPR@17..27
         NAME_REF@17..21
-          "\n" IDENT@17..21 "foo" 
-         DOT@21..22 "." 
+          Whitespace(1) IDENT@17..21 "foo" None
+        None DOT@21..22 "." None
         NAME@22..27
-           IDENT@22..27 "yield" 
+          None IDENT@22..27 "yield" None
     EXPR_STMT@27..35
       DOT_EXPR@27..35
         NAME_REF@27..31
-          "\n" IDENT@27..31 "foo" 
-         DOT@31..32 "." 
+          Whitespace(1) IDENT@27..31 "foo" None
+        None DOT@31..32 "." None
         NAME@32..35
-           IDENT@32..35 "for" 
+          None IDENT@32..35 "for" None
     EXPR_STMT@35..44
       DOT_EXPR@35..44
         NAME_REF@35..39
-          "\n" IDENT@35..39 "foo" 
-         QUESTIONDOT@39..41 "?." 
+          Whitespace(1) IDENT@35..39 "foo" None
+        None QUESTIONDOT@39..41 "?." None
         NAME@41..44
-           IDENT@41..44 "for" 
+          None IDENT@41..44 "for" None
     EXPR_STMT@44..53
       DOT_EXPR@44..53
         NAME_REF@44..48
+<<<<<<< HEAD
           "\n" IDENT@44..48 "foo" 
          QUESTIONDOT@48..50 "?." 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+          Whitespace(1) IDENT@44..48 "foo" None
+        None QUESTIONDOT@48..50 "?." None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         NAME@50..53
-           IDENT@50..53 "bar" 
+          None IDENT@50..53 "bar" None

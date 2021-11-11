@@ -40,13 +40,6 @@ pub struct NodeCache {
 	tokens: HashMap<NoHash<GreenToken>, ()>,
 }
 
-fn token_hash(token: &GreenTokenData) -> u64 {
-	let mut h = FxHasher::default();
-	token.kind().hash(&mut h);
-	token.text().hash(&mut h);
-	h.finish()
-}
-
 fn node_hash(node: &GreenNodeData) -> u64 {
 	let mut h = FxHasher::default();
 	node.kind().hash(&mut h);
@@ -54,7 +47,7 @@ fn node_hash(node: &GreenNodeData) -> u64 {
 		match slot {
 			Slot::Empty { .. } => NodeCache::EMPTY_SLOT_HASH,
 			Slot::Node { node, .. } => node_hash(node),
-			Slot::Token { token, .. } => token_hash(token),
+			Slot::Token { token, .. } => token.cache_hash(),
 		}
 		.hash(&mut h)
 	}
@@ -163,15 +156,7 @@ impl NodeCache {
 		leading: super::token::GreenTokenTrivia,
 		trailing: super::token::GreenTokenTrivia,
 	) -> (u64, GreenToken) {
-		let hash = {
-			let mut h = FxHasher::default();
-			kind.hash(&mut h);
-			text.hash(&mut h);
-			leading.hash(&mut h);
-			trailing.hash(&mut h);
-			h.finish()
-		};
-
+		let hash = GreenTokenData::cache_hash_of(kind, text);
 		let entry = self.tokens.raw_entry_mut().from_hash(hash, |token| {
 			token.0.kind() == kind && token.0.text() == text
 		});
@@ -180,7 +165,7 @@ impl NodeCache {
 			RawEntryMut::Occupied(entry) => entry.key().0.clone(),
 			RawEntryMut::Vacant(entry) => {
 				let token = GreenToken::with_trivia(kind, text, leading, trailing);
-				entry.insert_with_hasher(hash, NoHash(token.clone()), (), |t| token_hash(&t.0));
+				entry.insert_with_hasher(hash, NoHash(token.clone()), (), |t| t.0.cache_hash());
 				token
 			}
 		};

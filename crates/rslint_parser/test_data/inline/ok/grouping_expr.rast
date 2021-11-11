@@ -7,16 +7,16 @@ MODULE@0..13
     JS_EXPRESSION_STATEMENT@0..13
       CALL_EXPR@0..13
         GROUPING_EXPR@0..7
-           L_PAREN@0..1 "(" 
+          None L_PAREN@0..1 "(" None
           GROUPING_EXPR@1..6
-             L_PAREN@1..2 "(" 
+            None L_PAREN@1..2 "(" None
             NAME_REF@2..5
-               IDENT@2..5 "foo" 
-             R_PAREN@5..6 ")" 
-           R_PAREN@6..7 ")" 
+              None IDENT@2..5 "foo" None
+            None R_PAREN@5..6 ")" None
+          None R_PAREN@6..7 ")" None
         ARG_LIST@7..13
-          "\n" L_PAREN@7..9 "(" 
+          Whitespace(1) L_PAREN@7..9 "(" None
           LIST@9..12
             NAME_REF@9..12
-               IDENT@9..12 "foo" 
-           R_PAREN@12..13 ")" 
+              None IDENT@9..12 "foo" None
+          None R_PAREN@12..13 ")" None

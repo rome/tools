@@ -8,6 +8,7 @@ MODULE@0..11
       POST_UPDATE_EXPRESSION@0..5
         NAME_REF@0..3
 <<<<<<< HEAD
+<<<<<<< HEAD
           IDENT@0..3 "foo"
         PLUS2@3..5 "++"
     WHITESPACE@5..6 "\n"
@@ -26,3 +27,12 @@ MODULE@0..11
           "\n" IDENT@5..9 "foo" 
          MINUS2@9..11 "--" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+          None IDENT@0..3 "foo" None
+        None PLUS2@3..5 "++" None
+    EXPR_STMT@5..11
+      POST_UPDATE_EXPRESSION@5..11
+        NAME_REF@5..9
+          Whitespace(1) IDENT@5..9 "foo" None
+        None MINUS2@9..11 "--" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)

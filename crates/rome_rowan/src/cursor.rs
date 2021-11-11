@@ -384,8 +384,16 @@ impl NodeData {
 		res
 	}
 
+	//TODO we have to skip the leading trivia here
 	#[inline]
 	fn text_range(&self) -> TextRange {
+		let offset = self.offset();
+		let len = self.green().text_len();
+		TextRange::at(offset, len)
+	}
+
+	#[inline]
+	fn text_with_trivia_range(&self) -> TextRange {
 		let offset = self.offset();
 		let len = self.green().text_len();
 		TextRange::at(offset, len)
@@ -919,6 +927,11 @@ impl SyntaxToken {
 	}
 
 	#[inline]
+	pub fn text_with_trivia_range(&self) -> TextRange {
+		self.data().text_with_trivia_range()
+	}
+
+	#[inline]
 	pub fn index(&self) -> usize {
 		self.data().slot() as usize
 	}
@@ -939,7 +952,7 @@ impl SyntaxToken {
 	}
 
 	#[inline]
-	pub fn text_with_trivia(&self) -> String {
+	pub fn text_with_trivia(&self) -> &str {
 		match self.data().green().as_token() {
 			Some(it) => it.text_with_trivia(),
 			None => {
@@ -948,7 +961,7 @@ impl SyntaxToken {
 					"corrupted tree: a node thinks it is a token: {:?}",
 					self.data().green().as_node().unwrap().to_string()
 				);
-				String::new()
+				""
 			}
 		}
 	}

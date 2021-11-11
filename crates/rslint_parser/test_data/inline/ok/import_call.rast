@@ -6,8 +6,8 @@ MODULE@0..13
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..13
       IMPORT_CALL@0..13
-         IMPORT_KW@0..6 "import" 
-         L_PAREN@6..7 "(" 
+        None IMPORT_KW@0..6 "import" None
+        None L_PAREN@6..7 "(" None
         LITERAL@7..12
-           STRING@7..12 "\"foo\"" 
-         R_PAREN@12..13 ")" 
+          None STRING@7..12 "\"foo\"" None
+        None R_PAREN@12..13 ")" None

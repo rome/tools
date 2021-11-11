@@ -5,48 +5,48 @@ MODULE@0..52
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..52
     VAR_DECL@0..52
-       IDENT@0..4 "let" " "
+      None IDENT@0..4 "let" Whitespace(1)
       LIST@4..52
         DECLARATOR@4..52
           SINGLE_PATTERN@4..6
             NAME@4..6
-               IDENT@4..6 "a" " "
-           EQ@6..8 "=" " "
+              None IDENT@4..6 "a" Whitespace(1)
+          None EQ@6..8 "=" Whitespace(1)
           OBJECT_EXPR@8..52
-             L_CURLY@8..9 "{" 
+            None L_CURLY@8..9 "{" None
             LIST@9..51
               LITERAL_PROP@9..19
                 LITERAL@9..14
-                   STRING@9..14 "\"foo\"" 
-                 COLON@14..16 ":" " "
+                  None STRING@9..14 "\"foo\"" None
+                None COLON@14..16 ":" Whitespace(1)
                 NAME_REF@16..19
-                   IDENT@16..19 "foo" 
-               COMMA@19..21 "," " "
+                  None IDENT@16..19 "foo" None
+              None COMMA@19..21 "," Whitespace(1)
               LITERAL_PROP@21..33
                 COMPUTED_PROPERTY_NAME@21..28
-                   L_BRACK@21..22 "[" 
+                  None L_BRACK@21..22 "[" None
                   BIN_EXPR@22..27
                     LITERAL@22..24
-                       NUMBER@22..24 "6" " "
-                     PLUS@24..26 "+" " "
+                      None NUMBER@22..24 "6" Whitespace(1)
+                    None PLUS@24..26 "+" Whitespace(1)
                     LITERAL@26..27
-                       NUMBER@26..27 "6" 
-                   R_BRACK@27..28 "]" 
-                 COLON@28..30 ":" " "
+                      None NUMBER@26..27 "6" None
+                  None R_BRACK@27..28 "]" None
+                None COLON@28..30 ":" Whitespace(1)
                 NAME_REF@30..33
-                   IDENT@30..33 "foo" 
-               COMMA@33..35 "," " "
+                  None IDENT@30..33 "foo" None
+              None COMMA@33..35 "," Whitespace(1)
               LITERAL_PROP@35..43
                 NAME@35..38
-                   IDENT@35..38 "bar" 
-                 COLON@38..40 ":" " "
+                  None IDENT@35..38 "bar" None
+                None COLON@38..40 ":" Whitespace(1)
                 NAME_REF@40..43
-                   IDENT@40..43 "foo" 
-               COMMA@43..45 "," " "
+                  None IDENT@40..43 "foo" None
+              None COMMA@43..45 "," Whitespace(1)
               LITERAL_PROP@45..51
                 LITERAL@45..46
-                   NUMBER@45..46 "7" 
-                 COLON@46..48 ":" " "
+                  None NUMBER@45..46 "7" None
+                None COLON@46..48 ":" Whitespace(1)
                 NAME_REF@48..51
-                   IDENT@48..51 "foo" 
-             R_CURLY@51..52 "}" 
+                  None IDENT@48..51 "foo" None
+            None R_CURLY@51..52 "}" None

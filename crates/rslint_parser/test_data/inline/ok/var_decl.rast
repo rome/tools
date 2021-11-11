@@ -5,85 +5,85 @@ MODULE@0..91
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..91
     VAR_DECL@0..10
-       VAR_KW@0..4 "var" " "
+      None VAR_KW@0..4 "var" Whitespace(1)
       LIST@4..9
         DECLARATOR@4..9
           SINGLE_PATTERN@4..6
             NAME@4..6
-               IDENT@4..6 "a" " "
-           EQ@6..8 "=" " "
+              None IDENT@4..6 "a" Whitespace(1)
+          None EQ@6..8 "=" Whitespace(1)
           LITERAL@8..9
-             NUMBER@8..9 "5" 
-       SEMICOLON@9..10 ";" 
+            None NUMBER@8..9 "5" None
+      None SEMICOLON@9..10 ";" None
     VAR_DECL@10..32
-      "\n" IDENT@10..15 "let" " "
+      Whitespace(1) IDENT@10..15 "let" Whitespace(1)
       LIST@15..31
         DECLARATOR@15..31
           OBJECT_PATTERN@15..28
-             L_CURLY@15..17 "{" " "
+            None L_CURLY@15..17 "{" Whitespace(1)
             LIST@17..26
               SINGLE_PATTERN@17..20
                 NAME@17..20
-                   IDENT@17..20 "foo" 
-               COMMA@20..22 "," " "
+                  None IDENT@17..20 "foo" None
+              None COMMA@20..22 "," Whitespace(1)
               SINGLE_PATTERN@22..26
                 NAME@22..26
-                   IDENT@22..26 "bar" " "
-             R_CURLY@26..28 "}" " "
-           EQ@28..30 "=" " "
+                  None IDENT@22..26 "bar" Whitespace(1)
+            None R_CURLY@26..28 "}" Whitespace(1)
+          None EQ@28..30 "=" Whitespace(1)
           LITERAL@30..31
-             NUMBER@30..31 "5" 
-       SEMICOLON@31..32 ";" 
+            None NUMBER@30..31 "5" None
+      None SEMICOLON@31..32 ";" None
     VAR_DECL@32..46
-      "\n" IDENT@32..37 "let" " "
+      Whitespace(1) IDENT@32..37 "let" Whitespace(1)
       LIST@37..45
         DECLARATOR@37..40
           SINGLE_PATTERN@37..40
             NAME@37..40
-               IDENT@37..40 "bar" 
-         COMMA@40..42 "," " "
+              None IDENT@37..40 "bar" None
+        None COMMA@40..42 "," Whitespace(1)
         DECLARATOR@42..45
           SINGLE_PATTERN@42..45
             NAME@42..45
-               IDENT@42..45 "foo" 
-       SEMICOLON@45..46 ";" 
+              None IDENT@42..45 "foo" None
+      None SEMICOLON@45..46 ";" None
     VAR_DECL@46..59
-      "\n" CONST_KW@46..53 "const" " "
+      Whitespace(1) CONST_KW@46..53 "const" Whitespace(1)
       LIST@53..58
         DECLARATOR@53..58
           SINGLE_PATTERN@53..55
             NAME@53..55
-               IDENT@53..55 "a" " "
-           EQ@55..57 "=" " "
+              None IDENT@53..55 "a" Whitespace(1)
+          None EQ@55..57 "=" Whitespace(1)
           LITERAL@57..58
-             NUMBER@57..58 "5" 
-       SEMICOLON@58..59 ";" 
+            None NUMBER@57..58 "5" None
+      None SEMICOLON@58..59 ";" None
     VAR_DECL@59..91
-      "\n" CONST_KW@59..66 "const" " "
+      Whitespace(1) CONST_KW@59..66 "const" Whitespace(1)
       LIST@66..90
         DECLARATOR@66..90
           OBJECT_PATTERN@66..86
-             L_CURLY@66..68 "{" " "
+            None L_CURLY@66..68 "{" Whitespace(1)
             LIST@68..84
               KEY_VALUE_PATTERN@68..78
                 NAME@68..71
-                   IDENT@68..71 "foo" 
-                 COLON@71..73 ":" " "
+                  None IDENT@68..71 "foo" None
+                None COLON@71..73 ":" Whitespace(1)
                 ARRAY_PATTERN@73..78
-                   L_BRACK@73..74 "[" 
+                  None L_BRACK@73..74 "[" None
                   LIST@74..77
                     SINGLE_PATTERN@74..77
                       NAME@74..77
-                         IDENT@74..77 "bar" 
-                   R_BRACK@77..78 "]" 
-               COMMA@78..80 "," " "
+                        None IDENT@74..77 "bar" None
+                  None R_BRACK@77..78 "]" None
+              None COMMA@78..80 "," Whitespace(1)
               SINGLE_PATTERN@80..84
                 NAME@80..84
-                   IDENT@80..84 "baz" " "
-             R_CURLY@84..86 "}" " "
-           EQ@86..88 "=" " "
+                  None IDENT@80..84 "baz" Whitespace(1)
+            None R_CURLY@84..86 "}" Whitespace(1)
+          None EQ@86..88 "=" Whitespace(1)
           OBJECT_EXPR@88..90
-             L_CURLY@88..89 "{" 
+            None L_CURLY@88..89 "{" None
             LIST@89..89
-             R_CURLY@89..90 "}" 
-       SEMICOLON@90..91 ";" 
+            None R_CURLY@89..90 "}" None
+      None SEMICOLON@90..91 ";" None

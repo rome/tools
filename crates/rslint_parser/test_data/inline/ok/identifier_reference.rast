@@ -7,6 +7,7 @@ MODULE@0..18
     JS_EXPRESSION_STATEMENT@0..4
       NAME_REF@0..3
 <<<<<<< HEAD
+<<<<<<< HEAD
         IDENT@0..3 "foo"
       SEMICOLON@3..4 ";"
     WHITESPACE@4..5 "\n"
@@ -23,12 +24,21 @@ MODULE@0..18
 =======
          IDENT@0..3 "foo" 
        SEMICOLON@3..4 ";" 
+=======
+        None IDENT@0..3 "foo" None
+      None SEMICOLON@3..4 ";" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
     EXPR_STMT@4..11
       NAME_REF@4..10
-        "\n" IDENT@4..10 "yield" 
-       SEMICOLON@10..11 ";" 
+        Whitespace(1) IDENT@4..10 "yield" None
+      None SEMICOLON@10..11 ";" None
     EXPR_STMT@11..18
       NAME_REF@11..17
+<<<<<<< HEAD
         "\n" IDENT@11..17 "await" 
        SEMICOLON@17..18 ";" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+        Whitespace(1) IDENT@11..17 "await" None
+      None SEMICOLON@17..18 ";" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)

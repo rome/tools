@@ -5,66 +5,66 @@ MODULE@0..66
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..66
     VAR_DECL@0..21
-       IDENT@0..4 "let" " "
+      None IDENT@0..4 "let" Whitespace(1)
       LIST@4..20
         DECLARATOR@4..20
           SINGLE_PATTERN@4..6
             NAME@4..6
-               IDENT@4..6 "a" " "
-           EQ@6..8 "=" " "
+              None IDENT@4..6 "a" Whitespace(1)
+          None EQ@6..8 "=" Whitespace(1)
           TEMPLATE@8..20
-             BACKTICK@8..9 "`" 
+            None BACKTICK@8..9 "`" None
             LIST@9..19
-               TEMPLATE_CHUNK@9..13 "foo " 
+              None TEMPLATE_CHUNK@9..13 "foo " None
               TEMPLATE_ELEMENT@13..19
-                 DOLLARCURLY@13..15 "${" 
+                None DOLLARCURLY@13..15 "${" None
                 NAME_REF@15..18
-                   IDENT@15..18 "bar" 
-                 R_CURLY@18..19 "}" 
-             BACKTICK@19..20 "`" 
-       SEMICOLON@20..21 ";" 
+                  None IDENT@15..18 "bar" None
+                None R_CURLY@18..19 "}" None
+            None BACKTICK@19..20 "`" None
+      None SEMICOLON@20..21 ";" None
     VAR_DECL@21..33
-      "\n" IDENT@21..26 "let" " "
+      Whitespace(1) IDENT@21..26 "let" Whitespace(1)
       LIST@26..32
         DECLARATOR@26..32
           SINGLE_PATTERN@26..28
             NAME@26..28
-               IDENT@26..28 "a" " "
-           EQ@28..30 "=" " "
+              None IDENT@26..28 "a" Whitespace(1)
+          None EQ@28..30 "=" Whitespace(1)
           TEMPLATE@30..32
-             BACKTICK@30..31 "`" 
+            None BACKTICK@30..31 "`" None
             LIST@31..31
-             BACKTICK@31..32 "`" 
-       SEMICOLON@32..33 ";" 
+            None BACKTICK@31..32 "`" None
+      None SEMICOLON@32..33 ";" None
     VAR_DECL@33..51
-      "\n" IDENT@33..38 "let" " "
+      Whitespace(1) IDENT@33..38 "let" Whitespace(1)
       LIST@38..50
         DECLARATOR@38..50
           SINGLE_PATTERN@38..40
             NAME@38..40
-               IDENT@38..40 "a" " "
-           EQ@40..42 "=" " "
+              None IDENT@38..40 "a" Whitespace(1)
+          None EQ@40..42 "=" Whitespace(1)
           TEMPLATE@42..50
-             BACKTICK@42..43 "`" 
+            None BACKTICK@42..43 "`" None
             LIST@43..49
               TEMPLATE_ELEMENT@43..49
-                 DOLLARCURLY@43..45 "${" 
+                None DOLLARCURLY@43..45 "${" None
                 NAME_REF@45..48
-                   IDENT@45..48 "foo" 
-                 R_CURLY@48..49 "}" 
-             BACKTICK@49..50 "`" 
-       SEMICOLON@50..51 ";" 
+                  None IDENT@45..48 "foo" None
+                None R_CURLY@48..49 "}" None
+            None BACKTICK@49..50 "`" None
+      None SEMICOLON@50..51 ";" None
     VAR_DECL@51..66
-      "\n" IDENT@51..56 "let" " "
+      Whitespace(1) IDENT@51..56 "let" Whitespace(1)
       LIST@56..65
         DECLARATOR@56..65
           SINGLE_PATTERN@56..58
             NAME@56..58
-               IDENT@56..58 "a" " "
-           EQ@58..60 "=" " "
+              None IDENT@56..58 "a" Whitespace(1)
+          None EQ@58..60 "=" Whitespace(1)
           TEMPLATE@60..65
-             BACKTICK@60..61 "`" 
+            None BACKTICK@60..61 "`" None
             LIST@61..64
-               TEMPLATE_CHUNK@61..64 "foo" 
-             BACKTICK@64..65 "`" 
-       SEMICOLON@65..66 ";" 
+              None TEMPLATE_CHUNK@61..64 "foo" None
+            None BACKTICK@64..65 "`" None
+      None SEMICOLON@65..66 ";" None

@@ -5,45 +5,45 @@ MODULE@0..73
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..73
     CLASS_DECL@0..8
-       CLASS_KW@0..6 "class" " "
+      None CLASS_KW@0..6 "class" Whitespace(1)
       CLASS_BODY@6..8
-         L_CURLY@6..7 "{" 
+        None L_CURLY@6..7 "{" None
         LIST@7..7
-         R_CURLY@7..8 "}" 
+        None R_CURLY@7..8 "}" None
     CLASS_DECL@8..29
-      "\n" CLASS_KW@8..15 "class" " "
-       EXTENDS_KW@15..23 "extends" " "
+      Whitespace(1) CLASS_KW@8..15 "class" Whitespace(1)
+      None EXTENDS_KW@15..23 "extends" Whitespace(1)
       NAME_REF@23..27
-         IDENT@23..27 "bar" " "
+        None IDENT@23..27 "bar" Whitespace(1)
       CLASS_BODY@27..29
-         L_CURLY@27..28 "{" 
+        None L_CURLY@27..28 "{" None
         LIST@28..28
-         R_CURLY@28..29 "}" 
+        None R_CURLY@28..29 "}" None
     CLASS_DECL@29..72
-      "\n" CLASS_KW@29..36 "class" " "
-       EXTENDS_KW@36..44 "extends" " "
+      Whitespace(1) CLASS_KW@29..36 "class" Whitespace(1)
+      None EXTENDS_KW@36..44 "extends" Whitespace(1)
       OBJECT_EXPR@44..46
-         L_CURLY@44..45 "{" 
+        None L_CURLY@44..45 "{" None
         LIST@45..45
-         R_CURLY@45..46 "}" 
+        None R_CURLY@45..46 "}" None
       CLASS_BODY@46..72
         LIST@46..70
           NAME@46..52
-            "\n" IDENT@46..52 "class" 
+            Whitespace(1) IDENT@46..52 "class" None
           ERROR@52..59
-            "\n" CLASS_KW@52..59 "class" " "
+            Whitespace(1) CLASS_KW@52..59 "class" Whitespace(1)
           NAME@59..63
-             IDENT@59..63 "foo" " "
+            None IDENT@59..63 "foo" Whitespace(1)
           ERROR@63..65
-             L_CURLY@63..65 "{" " "
+            None L_CURLY@63..65 "{" Whitespace(1)
           CLASS_PROP@65..69
             NAME@65..69
-               IDENT@65..69 "set" " "
+              None IDENT@65..69 "set" Whitespace(1)
           ERROR@69..70
-             L_CURLY@69..70 "{" 
-         R_CURLY@70..72 "}" " "
+            None L_CURLY@69..70 "{" None
+        None R_CURLY@70..72 "}" Whitespace(1)
     ERROR@72..73
-       R_CURLY@72..73 "}" 
+      None R_CURLY@72..73 "}" None
 --
 error[SyntaxError]: class declarations must have a name
   ┌─ class_decl_err.js:1:7

@@ -7,9 +7,10 @@ MODULE@0..55
     JS_EXPRESSION_STATEMENT@0..8
       BRACKET_EXPR@0..8
         NAME_REF@0..3
-           IDENT@0..3 "foo" 
-         L_BRACK@3..4 "[" 
+          None IDENT@0..3 "foo" None
+        None L_BRACK@3..4 "[" None
         NAME_REF@4..7
+<<<<<<< HEAD
 <<<<<<< HEAD
           IDENT@4..7 "bar"
         R_BRACK@7..8 "]"
@@ -28,11 +29,21 @@ MODULE@0..55
           "\n" IDENT@8..12 "foo" 
          L_BRACK@12..13 "[" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+          None IDENT@4..7 "bar" None
+        None R_BRACK@7..8 "]" None
+    EXPR_STMT@8..19
+      BRACKET_EXPR@8..19
+        NAME_REF@8..12
+          Whitespace(1) IDENT@8..12 "foo" None
+        None L_BRACK@12..13 "[" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         BIN_EXPR@13..18
           LITERAL@13..15
-             NUMBER@13..15 "5" " "
-           PLUS@15..17 "+" " "
+            None NUMBER@13..15 "5" Whitespace(1)
+          None PLUS@15..17 "+" Whitespace(1)
           LITERAL@17..18
+<<<<<<< HEAD
 <<<<<<< HEAD
             NUMBER@17..18 "5"
         R_BRACK@18..19 "]"
@@ -55,26 +66,36 @@ MODULE@0..55
 =======
              NUMBER@17..18 "5" 
          R_BRACK@18..19 "]" 
+=======
+            None NUMBER@17..18 "5" None
+        None R_BRACK@18..19 "]" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
     EXPR_STMT@19..30
       BRACKET_EXPR@19..30
         NAME_REF@19..23
-          "\n" IDENT@19..23 "foo" 
-         L_BRACK@23..24 "[" 
+          Whitespace(1) IDENT@19..23 "foo" None
+        None L_BRACK@23..24 "[" None
         LITERAL@24..29
-           STRING@24..29 "\"bar\"" 
-         R_BRACK@29..30 "]" 
+          None STRING@24..29 "\"bar\"" None
+        None R_BRACK@29..30 "]" None
     EXPR_STMT@30..44
       BRACKET_EXPR@30..44
         BRACKET_EXPR@30..39
           NAME_REF@30..34
+<<<<<<< HEAD
             "\n" IDENT@30..34 "foo" 
            L_BRACK@34..35 "[" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+            Whitespace(1) IDENT@30..34 "foo" None
+          None L_BRACK@34..35 "[" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
           NAME_REF@35..38
-             IDENT@35..38 "bar" 
-           R_BRACK@38..39 "]" 
-         L_BRACK@39..40 "[" 
+            None IDENT@35..38 "bar" None
+          None R_BRACK@38..39 "]" None
+        None L_BRACK@39..40 "[" None
         NAME_REF@40..43
+<<<<<<< HEAD
 <<<<<<< HEAD
           IDENT@40..43 "baz"
         R_BRACK@43..44 "]"
@@ -95,6 +116,16 @@ MODULE@0..55
          QUESTIONDOT@48..50 "?." 
          L_BRACK@50..51 "[" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+          None IDENT@40..43 "baz" None
+        None R_BRACK@43..44 "]" None
+    EXPR_STMT@44..55
+      BRACKET_EXPR@44..55
+        NAME_REF@44..48
+          Whitespace(1) IDENT@44..48 "foo" None
+        None QUESTIONDOT@48..50 "?." None
+        None L_BRACK@50..51 "[" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         NAME_REF@51..54
-           IDENT@51..54 "bar" 
-         R_BRACK@54..55 "]" 
+          None IDENT@51..54 "bar" None
+        None R_BRACK@54..55 "]" None

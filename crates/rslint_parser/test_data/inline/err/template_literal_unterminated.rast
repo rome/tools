@@ -1,22 +1,22 @@
 JS_MODULE@0..20
   LIST@0..20
     VAR_DECL@0..20
-       IDENT@0..4 "let" " "
+      None IDENT@0..4 "let" Whitespace(1)
       LIST@4..20
         DECLARATOR@4..20
           SINGLE_PATTERN@4..6
             NAME@4..6
-               IDENT@4..6 "a" " "
-           EQ@6..8 "=" " "
+              None IDENT@4..6 "a" Whitespace(1)
+          None EQ@6..8 "=" Whitespace(1)
           TEMPLATE@8..20
-             BACKTICK@8..9 "`" 
+            None BACKTICK@8..9 "`" None
             LIST@9..20
               TEMPLATE_ELEMENT@9..15
-                 DOLLARCURLY@9..11 "${" 
+                None DOLLARCURLY@9..11 "${" None
                 NAME_REF@11..14
-                   IDENT@11..14 "foo" 
-                 R_CURLY@14..15 "}" 
-               TEMPLATE_CHUNK@15..20 " bar\n" 
+                  None IDENT@11..14 "foo" None
+                None R_CURLY@14..15 "}" None
+              None TEMPLATE_CHUNK@15..20 " bar\n" None
 --
 error: unterminated template literal
   ┌─ template_literal_unterminated.js:2:1

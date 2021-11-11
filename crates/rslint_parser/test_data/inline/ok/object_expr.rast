@@ -5,31 +5,31 @@ MODULE@0..26
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..26
     VAR_DECL@0..11
-       IDENT@0..4 "let" " "
+      None IDENT@0..4 "let" Whitespace(1)
       LIST@4..10
         DECLARATOR@4..10
           SINGLE_PATTERN@4..6
             NAME@4..6
-               IDENT@4..6 "a" " "
-           EQ@6..8 "=" " "
+              None IDENT@4..6 "a" Whitespace(1)
+          None EQ@6..8 "=" Whitespace(1)
           OBJECT_EXPR@8..10
-             L_CURLY@8..9 "{" 
+            None L_CURLY@8..9 "{" None
             LIST@9..9
-             R_CURLY@9..10 "}" 
-       SEMICOLON@10..11 ";" 
+            None R_CURLY@9..10 "}" None
+      None SEMICOLON@10..11 ";" None
     VAR_DECL@11..26
-      "\n" IDENT@11..16 "let" " "
+      Whitespace(1) IDENT@11..16 "let" Whitespace(1)
       LIST@16..26
         DECLARATOR@16..26
           SINGLE_PATTERN@16..18
             NAME@16..18
-               IDENT@16..18 "b" " "
-           EQ@18..20 "=" " "
+              None IDENT@16..18 "b" Whitespace(1)
+          None EQ@18..20 "=" Whitespace(1)
           OBJECT_EXPR@20..26
-             L_CURLY@20..21 "{" 
+            None L_CURLY@20..21 "{" None
             LIST@21..25
               IDENT_PROP@21..24
                 NAME@21..24
-                   IDENT@21..24 "foo" 
-               COMMA@24..25 "," 
-             R_CURLY@25..26 "}" 
+                  None IDENT@21..24 "foo" None
+              None COMMA@24..25 "," None
+            None R_CURLY@25..26 "}" None

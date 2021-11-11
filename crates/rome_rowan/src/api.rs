@@ -320,7 +320,7 @@ impl<L: Language> SyntaxToken<L> {
 		self.raw.text()
 	}
 
-	pub fn text_with_trivia(&self) -> String {
+	pub fn text_with_trivia(&self) -> &str {
 		self.raw.text_with_trivia()
 	}
 

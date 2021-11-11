@@ -6,8 +6,9 @@ MODULE@0..11
   LIST@0..11
     JS_EXPRESSION_STATEMENT@0..5
       PRE_UPDATE_EXPRESSION@0..5
-         PLUS2@0..2 "++" 
+        None PLUS2@0..2 "++" None
         NAME_REF@2..5
+<<<<<<< HEAD
 <<<<<<< HEAD
           IDENT@2..5 "foo"
     WHITESPACE@5..6 "\n"
@@ -20,5 +21,11 @@ MODULE@0..11
       PRE_UPDATE_EXPRESSION@5..11
         "\n" MINUS2@5..8 "--" 
 >>>>>>> 28a4e2282 (rebase)
+=======
+          None IDENT@2..5 "foo" None
+    EXPR_STMT@5..11
+      PRE_UPDATE_EXPRESSION@5..11
+        Whitespace(1) MINUS2@5..8 "--" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         NAME_REF@8..11
-           IDENT@8..11 "foo" 
+          None IDENT@8..11 "foo" None

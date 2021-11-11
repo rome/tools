@@ -29,21 +29,21 @@ MODULE@0..18
     EXPR_STMT@0..5
       BRACKET_EXPR@0..5
         NAME_REF@0..3
-           IDENT@0..3 "foo" 
-         L_BRACK@3..4 "[" 
-         R_BRACK@4..5 "]" 
+          None IDENT@0..3 "foo" None
+        None L_BRACK@3..4 "[" None
+        None R_BRACK@4..5 "]" None
     EXPR_STMT@5..13
       BRACKET_EXPR@5..13
         NAME_REF@5..9
-          "\n" IDENT@5..9 "foo" 
-         QUESTIONDOT@9..11 "?." 
-         L_BRACK@11..12 "[" 
-         R_BRACK@12..13 "]" 
+          Whitespace(1) IDENT@5..9 "foo" None
+        None QUESTIONDOT@9..11 "?." None
+        None L_BRACK@11..12 "[" None
+        None R_BRACK@12..13 "]" None
     EXPR_STMT@13..18
       BRACKET_EXPR@13..18
         NAME_REF@13..17
-          "\n" IDENT@13..17 "foo" 
-         L_BRACK@17..18 "[" 
+          Whitespace(1) IDENT@13..17 "foo" None
+        None L_BRACK@17..18 "[" None
         ERROR@18..18
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 --

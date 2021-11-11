@@ -5,39 +5,39 @@ MODULE@0..39
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..39
     VAR_DECL@0..26
-       IDENT@0..4 "let" " "
+      None IDENT@0..4 "let" Whitespace(1)
       LIST@4..26
         DECLARATOR@4..26
           SINGLE_PATTERN@4..6
             NAME@4..6
-               IDENT@4..6 "a" " "
-           EQ@6..8 "=" " "
+              None IDENT@4..6 "a" Whitespace(1)
+          None EQ@6..8 "=" Whitespace(1)
           OBJECT_EXPR@8..26
-             L_CURLY@8..10 "{" " "
+            None L_CURLY@8..10 "{" Whitespace(1)
             LIST@10..25
               LITERAL_PROP@10..25
                 ERROR@10..17
-                   REGEX@10..17 "/: 6, /" 
-                 COLON@17..19 ":" " "
+                  None REGEX@10..17 "/: 6, /" None
+                None COLON@17..19 ":" Whitespace(1)
                 LITERAL@19..25
-                   REGEX@19..25 "/foo/" " "
-             R_CURLY@25..26 "}" 
+                  None REGEX@19..25 "/foo/" Whitespace(1)
+            None R_CURLY@25..26 "}" None
     VAR_DECL@26..38
-      "\n" IDENT@26..31 "let" " "
+      Whitespace(1) IDENT@26..31 "let" Whitespace(1)
       LIST@31..38
         DECLARATOR@31..38
           SINGLE_PATTERN@31..33
             NAME@31..33
-               IDENT@31..33 "a" " "
-           EQ@33..35 "=" " "
+              None IDENT@31..33 "a" Whitespace(1)
+          None EQ@33..35 "=" Whitespace(1)
           OBJECT_EXPR@35..38
-             L_CURLY@35..36 "{" 
+            None L_CURLY@35..36 "{" None
             LIST@36..37
               ERROR@36..37
-                 L_CURLY@36..37 "{" 
-             R_CURLY@37..38 "}" 
+                None L_CURLY@36..37 "{" None
+            None R_CURLY@37..38 "}" None
     ERROR@38..39
-       R_CURLY@38..39 "}" 
+      None R_CURLY@38..39 "}" None
 --
 error[SyntaxError]: Expected an identifier or keyword
   ┌─ object_expr_error_prop_name.js:1:11

@@ -32,35 +32,35 @@ JS_MODULE@0..27
 MODULE@0..26
   LIST@0..26
     BLOCK_STMT@0..2
-       L_CURLY@0..1 "{" 
+      None L_CURLY@0..1 "{" None
       LIST@1..1
-       R_CURLY@1..2 "}" 
+      None R_CURLY@1..2 "}" None
     BLOCK_STMT@2..11
-      "\n" L_CURLY@2..4 "{" 
+      Whitespace(1) L_CURLY@2..4 "{" None
       LIST@4..10
         BLOCK_STMT@4..10
-           L_CURLY@4..5 "{" 
+          None L_CURLY@4..5 "{" None
           LIST@5..9
             BLOCK_STMT@5..9
-               L_CURLY@5..6 "{" 
+              None L_CURLY@5..6 "{" None
               LIST@6..8
                 BLOCK_STMT@6..8
-                   L_CURLY@6..7 "{" 
+                  None L_CURLY@6..7 "{" None
                   LIST@7..7
-                   R_CURLY@7..8 "}" 
-               R_CURLY@8..9 "}" 
-           R_CURLY@9..10 "}" 
-       R_CURLY@10..11 "}" 
+                  None R_CURLY@7..8 "}" None
+              None R_CURLY@8..9 "}" None
+          None R_CURLY@9..10 "}" None
+      None R_CURLY@10..11 "}" None
     BLOCK_STMT@11..26
-      "\n" L_CURLY@11..14 "{" " "
+      Whitespace(1) L_CURLY@11..14 "{" Whitespace(1)
       LIST@14..25
         EXPR_STMT@14..25
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
           ASSIGN_EXPR@14..23
             NAME_REF@14..18
-               IDENT@14..18 "foo" " "
-             EQ@18..20 "=" " "
+              None IDENT@14..18 "foo" Whitespace(1)
+            None EQ@18..20 "=" Whitespace(1)
             NAME_REF@20..23
-               IDENT@20..23 "bar" 
-           SEMICOLON@23..25 ";" " "
-       R_CURLY@25..26 "}" 
+              None IDENT@20..23 "bar" None
+          None SEMICOLON@23..25 ";" Whitespace(1)
+      None R_CURLY@25..26 "}" None

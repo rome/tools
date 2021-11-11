@@ -5,22 +5,22 @@ MODULE@0..25
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..25
     VAR_DECL@0..25
-       CONST_KW@0..6 "const" " "
+      None CONST_KW@0..6 "const" Whitespace(1)
       LIST@6..24
         DECLARATOR@6..24
           SINGLE_PATTERN@6..10
             NAME@6..10
-               IDENT@6..10 "foo" " "
-           EQ@10..12 "=" " "
+              None IDENT@6..10 "foo" Whitespace(1)
+          None EQ@10..12 "=" Whitespace(1)
           OBJECT_EXPR@12..24
-             L_CURLY@12..14 "{" " "
+            None L_CURLY@12..14 "{" Whitespace(1)
             LIST@14..23
               IDENT_PROP@14..17
                 NAME@14..17
-                   IDENT@14..17 "set" 
-               COMMA@17..19 "," " "
+                  None IDENT@14..17 "set" None
+              None COMMA@17..19 "," Whitespace(1)
               IDENT_PROP@19..23
                 NAME@19..23
-                   IDENT@19..23 "get" " "
-             R_CURLY@23..24 "}" 
-       SEMICOLON@24..25 ";" 
+                  None IDENT@19..23 "get" Whitespace(1)
+            None R_CURLY@23..24 "}" None
+      None SEMICOLON@24..25 ";" None

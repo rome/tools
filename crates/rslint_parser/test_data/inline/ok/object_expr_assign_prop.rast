@@ -5,27 +5,27 @@ MODULE@0..30
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
   LIST@0..30
     VAR_DECL@0..30
-       IDENT@0..4 "let" " "
+      None IDENT@0..4 "let" Whitespace(1)
       LIST@4..30
         DECLARATOR@4..30
           SINGLE_PATTERN@4..6
             NAME@4..6
-               IDENT@4..6 "b" " "
-           EQ@6..8 "=" " "
+              None IDENT@4..6 "b" Whitespace(1)
+          None EQ@6..8 "=" Whitespace(1)
           OBJECT_EXPR@8..30
-             L_CURLY@8..10 "{" " "
+            None L_CURLY@8..10 "{" Whitespace(1)
             LIST@10..29
               INITIALIZED_PROP@10..17
                 NAME@10..14
-                   IDENT@10..14 "foo" " "
-                 EQ@14..16 "=" " "
+                  None IDENT@10..14 "foo" Whitespace(1)
+                None EQ@14..16 "=" Whitespace(1)
                 LITERAL@16..17
-                   NUMBER@16..17 "4" 
-               COMMA@17..19 "," " "
+                  None NUMBER@16..17 "4" None
+              None COMMA@17..19 "," Whitespace(1)
               INITIALIZED_PROP@19..29
                 NAME@19..23
-                   IDENT@19..23 "foo" " "
-                 EQ@23..25 "=" " "
+                  None IDENT@19..23 "foo" Whitespace(1)
+                None EQ@23..25 "=" Whitespace(1)
                 NAME_REF@25..29
-                   IDENT@25..29 "bar" " "
-             R_CURLY@29..30 "}" 
+                  None IDENT@25..29 "bar" Whitespace(1)
+            None R_CURLY@29..30 "}" None

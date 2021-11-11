@@ -115,38 +115,42 @@ JS_MODULE@0..112
 MODULE@0..46
   LIST@0..46
     TRY_STMT@0..19
-       TRY_KW@0..4 "try" " "
+      None TRY_KW@0..4 "try" Whitespace(1)
       BLOCK_STMT@4..7
-         L_CURLY@4..5 "{" 
+        None L_CURLY@4..5 "{" None
         LIST@5..5
-         R_CURLY@5..7 "}" " "
+        None R_CURLY@5..7 "}" Whitespace(1)
       CATCH_CLAUSE@7..19
-         CATCH_KW@7..13 "catch" " "
-         L_PAREN@13..14 "(" 
+        None CATCH_KW@7..13 "catch" Whitespace(1)
+        None L_PAREN@13..14 "(" None
         SINGLE_PATTERN@14..15
           NAME@14..15
-             IDENT@14..15 "e" 
-         R_PAREN@15..17 ")" " "
+            None IDENT@14..15 "e" None
+        None R_PAREN@15..17 ")" Whitespace(1)
         BLOCK_STMT@17..19
-           L_CURLY@17..18 "{" 
+          None L_CURLY@17..18 "{" None
           LIST@18..18
-           R_CURLY@18..19 "}" 
+          None R_CURLY@18..19 "}" None
     TRY_STMT@19..46
-      "\n" TRY_KW@19..24 "try" " "
+      Whitespace(1) TRY_KW@19..24 "try" Whitespace(1)
       BLOCK_STMT@24..27
-         L_CURLY@24..25 "{" 
+        None L_CURLY@24..25 "{" None
         LIST@25..25
-         R_CURLY@25..27 "}" " "
+        None R_CURLY@25..27 "}" Whitespace(1)
       CATCH_CLAUSE@27..36
-         CATCH_KW@27..33 "catch" " "
+        None CATCH_KW@27..33 "catch" Whitespace(1)
         BLOCK_STMT@33..36
-           L_CURLY@33..34 "{" 
+          None L_CURLY@33..34 "{" None
           LIST@34..34
-           R_CURLY@34..36 "}" " "
+          None R_CURLY@34..36 "}" Whitespace(1)
       FINALIZER@36..46
-         FINALLY_KW@36..44 "finally" " "
+        None FINALLY_KW@36..44 "finally" Whitespace(1)
         BLOCK_STMT@44..46
-           L_CURLY@44..45 "{" 
+          None L_CURLY@44..45 "{" None
           LIST@45..45
+<<<<<<< HEAD
            R_CURLY@45..46 "}" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+          None R_CURLY@45..46 "}" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)

@@ -167,8 +167,7 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<JsScript> {
 pub fn test_parse_display() {
 	let code = " let a = 1;";
 	let m = parse_module(code, 0);
-	let s = dbg!(m.syntax());
-	let str = s.text();
+	let str = m.syntax().text();
 	assert_eq!(format!("{}", str), code);
 }
 
@@ -177,8 +176,11 @@ pub fn token_range_must_be_correct() {
 	let code = " let a = 1;";
 	let m = parse_module(code, 0);
 	let s = dbg!(m.syntax());
-	let t = s.first_token().unwrap();
-	dbg!(t);
+	let first_let = s.first_token().unwrap();
+
+	let range = first_let.text_range();
+	assert_eq!(1usize, range.start().into());
+	assert_eq!(4usize, range.end().into());
 }
 
 //TODO Tidy up this test
@@ -218,19 +220,16 @@ pub fn test_trivia_attached_to_tokens() {
 	// dbg!(&tokens);
 
 	use rome_rowan::GreenTokenTrivia::*;
-	use rome_rowan::Trivia::*;
-	assert!(matches!(
-		tokens.get(0).unwrap().leading(), // first let
-		One(x) if x.trivia() == &Comment(4)
-	));
+	use rome_rowan::Trivia;
+	// first let
+	let first_let = tokens.get(0).unwrap();
+	assert!(matches!(first_let.leading(), Comment(4)));
 
 	let second_let = tokens.get(5).unwrap();
 	assert!(matches!(second_let.leading(),
-		Many(v) if v[0].trivia() == &Whitespace(2) && v[1].trivia() == &Comment(7) && v[2].trivia() == &Whitespace(1)
+		Many(v) if v[0] == Trivia::Whitespace(2) && v[1] == Trivia::Comment(7) && v[2] == Trivia::Whitespace(1)
 	));
-	assert!(matches!(second_let.trailing(),
-		One(v) if v.trivia() == &Whitespace(3)
-	));
+	assert!(matches!(second_let.trailing(), Whitespace(3)));
 }
 
 /// Lossly parse text into a [`Parse`](Parse) which can then be turned into an untyped root [`SyntaxNode`](SyntaxNode).

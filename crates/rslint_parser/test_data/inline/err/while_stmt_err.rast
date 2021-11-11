@@ -14,17 +14,21 @@ JS_MODULE@0..52
 MODULE@0..51
   LIST@0..51
     WHILE_STMT@0..13
-       WHILE_KW@0..6 "while" " "
+      None WHILE_KW@0..6 "while" Whitespace(1)
       CONDITION@6..11
         LITERAL@6..11
-           TRUE_KW@6..11 "true" " "
+          None TRUE_KW@6..11 "true" Whitespace(1)
       BLOCK_STMT@11..13
+<<<<<<< HEAD
          L_CURLY@11..12 "{" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+        None L_CURLY@11..12 "{" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@12..12
-         R_CURLY@12..13 "}" 
+        None R_CURLY@12..13 "}" None
     WHILE_STMT@13..22
-      "\n" WHILE_KW@13..20 "while" " "
+      Whitespace(1) WHILE_KW@13..20 "while" Whitespace(1)
       CONDITION@20..20
 <<<<<<< HEAD
       JS_BLOCK_STATEMENT@20..22
@@ -44,28 +48,32 @@ MODULE@0..51
         L_CURLY@35..36 "{"
 =======
       BLOCK_STMT@20..22
-         L_CURLY@20..21 "{" 
+        None L_CURLY@20..21 "{" None
         LIST@21..21
-         R_CURLY@21..22 "}" 
+        None R_CURLY@21..22 "}" None
     WHILE_STMT@22..37
-      "\n" WHILE_KW@22..29 "while" " "
+      Whitespace(1) WHILE_KW@22..29 "while" Whitespace(1)
       CONDITION@29..35
-         L_PAREN@29..30 "(" 
+        None L_PAREN@29..30 "(" None
         LITERAL@30..35
-           TRUE_KW@30..35 "true" " "
+          None TRUE_KW@30..35 "true" Whitespace(1)
       BLOCK_STMT@35..37
+<<<<<<< HEAD
          L_CURLY@35..36 "{" 
 >>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+=======
+        None L_CURLY@35..36 "{" None
+>>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@36..36
-         R_CURLY@36..37 "}" 
+        None R_CURLY@36..37 "}" None
     WHILE_STMT@37..51
-      "\n" WHILE_KW@37..44 "while" " "
+      Whitespace(1) WHILE_KW@37..44 "while" Whitespace(1)
       CONDITION@44..50
         LITERAL@44..48
-           TRUE_KW@44..48 "true" 
-         R_PAREN@48..50 ")" " "
+          None TRUE_KW@44..48 "true" None
+        None R_PAREN@48..50 ")" Whitespace(1)
       ERROR@50..51
-         R_CURLY@50..51 "}" 
+        None R_CURLY@50..51 "}" None
 --
 error[SyntaxError]: expected `'('` but instead found `true`
   ┌─ while_stmt_err.js:1:7
