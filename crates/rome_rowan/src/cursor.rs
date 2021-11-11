@@ -960,11 +960,14 @@ impl SyntaxToken {
 		&self,
 		direction: Direction,
 	) -> impl Iterator<Item = SyntaxElement> {
-		let me: SyntaxElement = self.clone().into();
-		iter::successors(Some(me), move |el| match direction {
+		let next = move |el: &SyntaxElement| match direction {
 			Direction::Next => el.next_sibling_or_token(),
 			Direction::Prev => el.prev_sibling_or_token(),
-		})
+		};
+
+		let me: SyntaxElement = self.clone().into();
+
+		iter::successors(next(&me), next)
 	}
 
 	pub fn next_token(&self) -> Option<SyntaxToken> {
