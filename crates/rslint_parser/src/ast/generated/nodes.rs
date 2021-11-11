@@ -107,11 +107,16 @@ impl JsEmptyStatement {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ExprStmt {
+pub struct JsExpressionStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ExprStmt {
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+impl JsExpressionStatement {
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T ! [;])
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct IfStmt {
@@ -2330,7 +2335,7 @@ impl TsQualifiedPath {
 pub enum JsAnyStatement {
 	JsBlockStatement(JsBlockStatement),
 	JsEmptyStatement(JsEmptyStatement),
-	ExprStmt(ExprStmt),
+	JsExpressionStatement(JsExpressionStatement),
 	IfStmt(IfStmt),
 	DoWhileStmt(DoWhileStmt),
 	WhileStmt(WhileStmt),
@@ -2684,8 +2689,8 @@ impl AstNode for JsEmptyStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for ExprStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPR_STMT }
+impl AstNode for JsExpressionStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPRESSION_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4428,8 +4433,10 @@ impl From<JsBlockStatement> for JsAnyStatement {
 impl From<JsEmptyStatement> for JsAnyStatement {
 	fn from(node: JsEmptyStatement) -> JsAnyStatement { JsAnyStatement::JsEmptyStatement(node) }
 }
-impl From<ExprStmt> for JsAnyStatement {
-	fn from(node: ExprStmt) -> JsAnyStatement { JsAnyStatement::ExprStmt(node) }
+impl From<JsExpressionStatement> for JsAnyStatement {
+	fn from(node: JsExpressionStatement) -> JsAnyStatement {
+		JsAnyStatement::JsExpressionStatement(node)
+	}
 }
 impl From<IfStmt> for JsAnyStatement {
 	fn from(node: IfStmt) -> JsAnyStatement { JsAnyStatement::IfStmt(node) }
@@ -4515,7 +4522,7 @@ impl AstNode for JsAnyStatement {
 		match kind {
 			JS_BLOCK_STATEMENT
 			| JS_EMPTY_STATEMENT
-			| EXPR_STMT
+			| JS_EXPRESSION_STATEMENT
 			| IF_STMT
 			| DO_WHILE_STMT
 			| WHILE_STMT
@@ -4549,7 +4556,9 @@ impl AstNode for JsAnyStatement {
 		let res = match syntax.kind() {
 			JS_BLOCK_STATEMENT => JsAnyStatement::JsBlockStatement(JsBlockStatement { syntax }),
 			JS_EMPTY_STATEMENT => JsAnyStatement::JsEmptyStatement(JsEmptyStatement { syntax }),
-			EXPR_STMT => JsAnyStatement::ExprStmt(ExprStmt { syntax }),
+			JS_EXPRESSION_STATEMENT => {
+				JsAnyStatement::JsExpressionStatement(JsExpressionStatement { syntax })
+			}
 			IF_STMT => JsAnyStatement::IfStmt(IfStmt { syntax }),
 			DO_WHILE_STMT => JsAnyStatement::DoWhileStmt(DoWhileStmt { syntax }),
 			WHILE_STMT => JsAnyStatement::WhileStmt(WhileStmt { syntax }),
@@ -4598,7 +4607,7 @@ impl AstNode for JsAnyStatement {
 		match self {
 			JsAnyStatement::JsBlockStatement(it) => &it.syntax,
 			JsAnyStatement::JsEmptyStatement(it) => &it.syntax,
-			JsAnyStatement::ExprStmt(it) => &it.syntax,
+			JsAnyStatement::JsExpressionStatement(it) => &it.syntax,
 			JsAnyStatement::IfStmt(it) => &it.syntax,
 			JsAnyStatement::DoWhileStmt(it) => &it.syntax,
 			JsAnyStatement::WhileStmt(it) => &it.syntax,
@@ -5974,7 +5983,7 @@ impl std::fmt::Display for JsEmptyStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ExprStmt {
+impl std::fmt::Display for JsExpressionStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

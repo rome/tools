@@ -65,7 +65,7 @@ JsModule =
 JsAnyStatement =
 	JsBlockStatement
 	| JsEmptyStatement
-	| ExprStmt
+	| JsExpressionStatement
 	| IfStmt
 	| DoWhileStmt
 	| WhileStmt
@@ -94,20 +94,17 @@ JsAnyStatement =
 	| JsUnknownStatement
 
 
-// Block statement
 JsBlockStatement =
 	'{'
 	statements: JsAnyStatement*
 	'}'
 
 
-// Empty statemnet
 JsEmptyStatement =
     ';'
 
-
-// Expression statement
-ExprStmt = expr: JsAnyExpression
+JsExpressionStatement =
+    expression: JsAnyExpression ';'?
 
 
 // while statement

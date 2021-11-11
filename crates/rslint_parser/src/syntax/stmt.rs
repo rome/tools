@@ -274,7 +274,7 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 
 	let m = expr.precede(p);
 	semi(p, start..p.cur_tok().range.end);
-	Some(m.complete(p, EXPR_STMT))
+	Some(m.complete(p, JS_EXPRESSION_STATEMENT))
 }
 
 /// A debugger statement such as `debugger;`
@@ -586,10 +586,10 @@ pub(crate) fn block_items(
 		// Still makes the function body strict
 		if let Some(kind) = complete.map(|x| x.kind()).filter(|_| could_be_directive) {
 			match kind {
-				EXPR_STMT => {
+				JS_EXPRESSION_STATEMENT => {
 					let parsed = p
-						.parse_marker::<ast::ExprStmt>(complete.as_ref().unwrap())
-						.expr();
+						.parse_marker::<ast::JsExpressionStatement>(complete.as_ref().unwrap())
+						.expression();
 					if let Ok(LITERAL) = parsed.as_ref().map(|it| it.syntax().kind()) {
 						let unwrapped = parsed.unwrap().syntax().to::<ast::Literal>();
 						if unwrapped.is_string() {

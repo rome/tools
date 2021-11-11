@@ -14,7 +14,7 @@ JS_MODULE@0..26
           NAME_REF@8..13
             IDENT@8..13 "async"
     WHITESPACE@13..14 " "
-    EXPR_STMT@14..25
+    JS_EXPRESSION_STATEMENT@14..25
       ARROW_EXPR@14..25
         NAME@14..19
           IDENT@14..19 "await"

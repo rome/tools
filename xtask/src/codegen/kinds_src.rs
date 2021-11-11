@@ -174,7 +174,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"DECLARATOR",
 		"JS_EMPTY_STATEMENT",
 		"EXPR",
-		"EXPR_STMT",
+		"JS_EXPRESSION_STATEMENT",
 		"IF_STMT",
 		"DO_WHILE_STMT",
 		"WHILE_STMT",

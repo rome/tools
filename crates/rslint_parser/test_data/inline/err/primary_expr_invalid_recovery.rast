@@ -15,7 +15,7 @@ JS_MODULE@0..18
             ERROR_TOKEN@8..9 "\\"
       SEMICOLON@9..10 ";"
     WHITESPACE@10..11 " "
-    EXPR_STMT@11..17
+    JS_EXPRESSION_STATEMENT@11..17
       CALL_EXPR@11..16
         NAME_REF@11..14
           IDENT@11..14 "foo"

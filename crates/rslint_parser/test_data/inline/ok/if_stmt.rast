@@ -44,7 +44,7 @@ JS_MODULE@0..88
           TRUE_KW@38..42 "true"
         R_PAREN@42..43 ")"
       WHITESPACE@43..44 " "
-      EXPR_STMT@44..49
+      JS_EXPRESSION_STATEMENT@44..49
         LITERAL@44..49
           FALSE_KW@44..49 "false"
     WHITESPACE@49..50 "\n"

@@ -26,7 +26,7 @@ JS_MODULE@0..27
       L_CURLY@12..13 "{"
       WHITESPACE@13..14 " "
       LIST@14..24
-        EXPR_STMT@14..24
+        JS_EXPRESSION_STATEMENT@14..24
           ASSIGN_EXPR@14..23
             NAME_REF@14..17
               IDENT@14..17 "foo"

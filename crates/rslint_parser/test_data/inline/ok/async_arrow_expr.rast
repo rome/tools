@@ -53,7 +53,7 @@ JS_MODULE@0..82
               LIST@48..48
               R_CURLY@48..49 "}"
     WHITESPACE@49..50 "\n"
-    EXPR_STMT@50..81
+    JS_EXPRESSION_STATEMENT@50..81
       ARROW_EXPR@50..81
         ASYNC_KW@50..55 "async"
         WHITESPACE@55..56 " "
