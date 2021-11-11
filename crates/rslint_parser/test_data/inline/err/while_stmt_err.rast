@@ -1,4 +1,4 @@
-MODULE@0..52
+JS_MODULE@0..52
   LIST@0..51
     WHILE_STMT@0..13
       WHILE_KW@0..5 "while"

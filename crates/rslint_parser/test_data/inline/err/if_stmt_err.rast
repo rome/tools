@@ -1,4 +1,4 @@
-MODULE@0..61
+JS_MODULE@0..61
   LIST@0..60
     IF_STMT@0..17
       IF_KW@0..2 "if"

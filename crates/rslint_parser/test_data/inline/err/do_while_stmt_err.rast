@@ -1,4 +1,4 @@
-MODULE@0..42
+JS_MODULE@0..42
   LIST@0..42
     DO_WHILE_STMT@0..42
       DO_KW@0..2 "do"

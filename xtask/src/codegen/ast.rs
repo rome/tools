@@ -7,6 +7,7 @@ use super::{
 	kinds_src::{AstSrc, Field},
 	to_lower_snake_case, Mode,
 };
+use crate::codegen::kinds_src::TokenKind;
 use crate::{
 	codegen::{
 		self,
@@ -144,8 +145,8 @@ fn handle_rule(
 
 			if name != "int_number" && name != "string" {
 				let field = Field::Token {
-					name: label.cloned().unwrap_or(name),
-					token_kinds: vec![],
+					name: label.cloned().unwrap_or_else(|| name.clone()),
+					kind: TokenKind::Single(name),
 					optional,
 				};
 				fields.push(field);
@@ -264,7 +265,7 @@ fn handle_tokens_in_unions(
 
 	let field = Field::Token {
 		name: label.to_string(),
-		token_kinds,
+		kind: TokenKind::Many(token_kinds),
 		optional,
 	};
 	fields.push(field);

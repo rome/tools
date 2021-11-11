@@ -1,5 +1,5 @@
-//! An extremely fast, lookup table based, ECMAScript lexer which yields SyntaxKind tokens used by the rslint_parse parser.  
-//! For the purposes of error recovery, tokens may have an error attached to them, which is reflected in the Iterator Item.  
+//! An extremely fast, lookup table based, ECMAScript lexer which yields SyntaxKind tokens used by the rslint_parse parser.
+//! For the purposes of error recovery, tokens may have an error attached to them, which is reflected in the Iterator Item.
 //! The lexer will also yield `COMMENT` and `WHITESPACE` tokens.
 //!
 //! The lexer operates on raw bytes to take full advantage of lookup table optimizations, these bytes **must** be valid utf8,
@@ -879,11 +879,11 @@ impl<'src> Lexer<'src> {
 				let chr = self.get_unicode_char();
 
 				if is_linebreak(chr) {
-					return tok!(SHEBANG, self.cur);
+					return tok!(JS_SHEBANG, self.cur);
 				}
 				self.cur += chr.len_utf8() - 1;
 			}
-			tok!(SHEBANG, self.cur)
+			tok!(JS_SHEBANG, self.cur)
 		} else {
 			let err = Diagnostic::error(
 				self.file_id,

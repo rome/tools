@@ -4,8 +4,9 @@ use rslint_parser::ast::{
 	CatchClause, ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt,
 	DebuggerStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl,
 	ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt,
-	LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList, ReturnStmt,
-	Script, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
+	JsScript, LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList,
+	ReturnStmt, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt,
+	WithStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -33,7 +34,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::PARAMETER_LIST => ParameterList::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::SCRIPT => Script::cast(self.clone())
+			SyntaxKind::JS_SCRIPT => JsScript::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::SINGLE_PATTERN => SinglePattern::cast(self.clone())

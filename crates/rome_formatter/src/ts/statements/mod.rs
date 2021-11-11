@@ -1,5 +1,5 @@
 use crate::{concat_elements, hard_line_break, join_elements, FormatElement, Formatter};
-use rslint_parser::ast::{AstNodeList, Stmt};
+use rslint_parser::ast::{AstNodeList, JsAnyStatement};
 use rslint_parser::AstNode;
 
 mod block;
@@ -22,7 +22,10 @@ mod while_statement;
 mod with_statement;
 
 /// Formats a list of statements
-pub fn format_statements(stmts: AstNodeList<Stmt>, formatter: &Formatter) -> FormatElement {
+pub fn format_statements(
+	stmts: AstNodeList<JsAnyStatement>,
+	formatter: &Formatter,
+) -> FormatElement {
 	join_elements(
 		hard_line_break(),
 		stmts.iter().map(|stmt| {

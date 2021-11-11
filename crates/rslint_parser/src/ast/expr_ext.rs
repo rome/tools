@@ -4,25 +4,25 @@ use crate::{ast::*, numbers::*, util::*, SyntaxText, TextRange, TextSize, TokenS
 use SyntaxKind::*;
 
 impl BracketExpr {
-	pub fn object(&self) -> Option<Expr> {
+	pub fn object(&self) -> Option<JsAnyExpression> {
 		support::child(self.syntax())
 	}
 
-	pub fn prop(&self) -> Option<Expr> {
+	pub fn prop(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(1)
 	}
 }
 
 impl CondExpr {
-	pub fn test(&self) -> Option<Expr> {
+	pub fn test(&self) -> Option<JsAnyExpression> {
 		support::child(self.syntax())
 	}
 
-	pub fn cons(&self) -> Option<Expr> {
+	pub fn cons(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(1)
 	}
 
-	pub fn alt(&self) -> Option<Expr> {
+	pub fn alt(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(2)
 	}
 }
@@ -32,10 +32,10 @@ impl LiteralProp {
 		support::as_mandatory_node::<PropName>(self.syntax())
 	}
 
-	pub fn value(&self) -> SyntaxResult<Expr> {
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
 		let child = self.syntax().children().nth(1);
 		match child {
-			Some(child) => Expr::cast(child)
+			Some(child) => JsAnyExpression::cast(child)
 				.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone())),
 			None => Err(SyntaxError::MissingRequiredChild(self.syntax().clone())),
 		}
@@ -143,11 +143,11 @@ impl BinExpr {
 		self.op_details().map(|t| t.0)
 	}
 
-	pub fn lhs(&self) -> Option<Expr> {
+	pub fn lhs(&self) -> Option<JsAnyExpression> {
 		support::child(self.syntax())
 	}
 
-	pub fn rhs(&self) -> Option<Expr> {
+	pub fn rhs(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(1)
 	}
 
@@ -272,7 +272,7 @@ impl AssignExpr {
 		self.syntax.children().next().and_then(|n| n.try_to())
 	}
 
-	pub fn rhs(&self) -> Option<Expr> {
+	pub fn rhs(&self) -> Option<JsAnyExpression> {
 		self.syntax.children().nth(1).and_then(|n| n.try_to())
 	}
 }
@@ -432,19 +432,19 @@ impl ArrowExpr {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
 	Pattern(Pattern),
-	Expr(Expr),
+	Expr(JsAnyExpression),
 }
 
 impl AstNode for PatternOrExpr {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		Expr::can_cast(kind) || Pattern::can_cast(kind)
+		JsAnyExpression::can_cast(kind) || Pattern::can_cast(kind)
 	}
 
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		Some(if Pattern::can_cast(syntax.kind()) {
 			PatternOrExpr::Pattern(Pattern::cast(syntax).unwrap())
 		} else {
-			PatternOrExpr::Expr(Expr::cast(syntax).unwrap())
+			PatternOrExpr::Expr(JsAnyExpression::cast(syntax).unwrap())
 		})
 	}
 
@@ -523,13 +523,13 @@ fn prop_name_syntax(name: PropName) -> Option<SyntaxNode> {
 	})
 }
 
-impl Expr {
+impl JsAnyExpression {
 	/// Whether this is an optional chain expression.
 	pub fn opt_chain(&self) -> bool {
 		match self {
-			Expr::DotExpr(dotexpr) => dotexpr.opt_chain_token(),
-			Expr::CallExpr(callexpr) => callexpr.opt_chain_token(),
-			Expr::BracketExpr(bracketexpr) => bracketexpr.opt_chain_token(),
+			JsAnyExpression::DotExpr(dotexpr) => dotexpr.opt_chain_token(),
+			JsAnyExpression::CallExpr(callexpr) => callexpr.opt_chain_token(),
+			JsAnyExpression::BracketExpr(bracketexpr) => bracketexpr.opt_chain_token(),
 			_ => return false,
 		}
 		.is_some()

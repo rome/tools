@@ -1,4 +1,4 @@
-MODULE@0..47
+JS_MODULE@0..47
   LIST@0..46
     TRY_STMT@0..19
       TRY_KW@0..3 "try"

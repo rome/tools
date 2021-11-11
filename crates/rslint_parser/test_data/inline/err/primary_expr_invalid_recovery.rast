@@ -1,4 +1,4 @@
-MODULE@0..18
+JS_MODULE@0..18
   LIST@0..17
     VAR_DECL@0..10
       IDENT@0..3 "let"

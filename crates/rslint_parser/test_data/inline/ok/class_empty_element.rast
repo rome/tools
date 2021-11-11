@@ -1,4 +1,4 @@
-MODULE@0..41
+JS_MODULE@0..41
   LIST@0..40
     CLASS_DECL@0..40
       CLASS_KW@0..5 "class"

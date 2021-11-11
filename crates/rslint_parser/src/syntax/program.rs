@@ -21,14 +21,14 @@ macro_rules! at_ident_name {
 
 pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.eat(T![shebang]);
+	p.eat(T![js_shebang]);
 	block_items(p, true, true, false, None);
 	m.complete(
 		p,
 		if p.syntax.file_kind == FileKind::Script {
-			SyntaxKind::SCRIPT
+			SyntaxKind::JS_SCRIPT
 		} else {
-			SyntaxKind::MODULE
+			SyntaxKind::JS_MODULE
 		},
 	)
 }

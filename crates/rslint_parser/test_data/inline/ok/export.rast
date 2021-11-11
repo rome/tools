@@ -1,4 +1,4 @@
-MODULE@0..27
+JS_MODULE@0..27
   LIST@0..26
     EXPORT_DECL@0..26
       EXPORT_KW@0..6 "export"

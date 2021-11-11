@@ -59,24 +59,28 @@ impl Ident {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Script {
+pub struct JsScript {
 	pub(crate) syntax: SyntaxNode,
 }
-impl Script {
-	pub fn shebang_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![shebang])
+impl JsScript {
+	pub fn interpreter_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![js_shebang])
 	}
-	pub fn items(&self) -> AstNodeList<Stmt> { support::node_list(&self.syntax, 0usize) }
+	pub fn statements(&self) -> AstNodeList<JsAnyStatement> {
+		support::node_list(&self.syntax, 0usize)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Module {
+pub struct JsModule {
 	pub(crate) syntax: SyntaxNode,
 }
-impl Module {
-	pub fn shebang_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![shebang])
+impl JsModule {
+	pub fn interpreter_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![js_shebang])
 	}
-	pub fn items(&self) -> AstNodeList<ModuleItem> { support::node_list(&self.syntax, 0usize) }
+	pub fn statements(&self) -> AstNodeList<JsAnyStatement> {
+		support::node_list(&self.syntax, 0usize)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct BlockStmt {
@@ -86,7 +90,7 @@ impl BlockStmt {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['{'])
 	}
-	pub fn stmts(&self) -> AstNodeList<Stmt> { support::node_list(&self.syntax, 0usize) }
+	pub fn stmts(&self) -> AstNodeList<JsAnyStatement> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['}'])
 	}
@@ -105,7 +109,7 @@ pub struct ExprStmt {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ExprStmt {
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct IfStmt {
@@ -128,7 +132,7 @@ impl DoWhileStmt {
 	pub fn do_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![do])
 	}
-	pub fn cons(&self) -> SyntaxResult<Stmt> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 	pub fn while_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![while])
 	}
@@ -146,7 +150,7 @@ impl WhileStmt {
 		support::as_mandatory_token(&self.syntax, T![while])
 	}
 	pub fn condition(&self) -> SyntaxResult<Condition> { support::as_mandatory_node(&self.syntax) }
-	pub fn cons(&self) -> SyntaxResult<Stmt> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmt {
@@ -165,7 +169,7 @@ impl ForStmt {
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![')'])
 	}
-	pub fn cons(&self) -> SyntaxResult<Stmt> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForInStmt {
@@ -182,11 +186,13 @@ impl ForInStmt {
 	pub fn in_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![in])
 	}
-	pub fn right(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![')'])
 	}
-	pub fn cons(&self) -> SyntaxResult<Stmt> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForOfStmt {
@@ -203,11 +209,13 @@ impl ForOfStmt {
 	pub fn of_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![of])
 	}
-	pub fn right(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![')'])
 	}
-	pub fn cons(&self) -> SyntaxResult<Stmt> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ContinueStmt {
@@ -245,7 +253,9 @@ impl ReturnStmt {
 	pub fn return_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![return])
 	}
-	pub fn value(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T ! [;])
 	}
@@ -259,7 +269,7 @@ impl WithStmt {
 		support::as_mandatory_token(&self.syntax, T![with])
 	}
 	pub fn condition(&self) -> SyntaxResult<Condition> { support::as_mandatory_node(&self.syntax) }
-	pub fn cons(&self) -> SyntaxResult<Stmt> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct LabelledStmt {
@@ -270,7 +280,7 @@ impl LabelledStmt {
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [:])
 	}
-	pub fn stmt(&self) -> SyntaxResult<Stmt> { support::as_mandatory_node(&self.syntax) }
+	pub fn stmt(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SwitchStmt {
@@ -297,7 +307,9 @@ impl ThrowStmt {
 	pub fn throw_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![throw])
 	}
-	pub fn exception(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn exception(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [;])
 	}
@@ -327,6 +339,177 @@ impl DebuggerStmt {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ImportDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ImportDecl {
+	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![import])
+	}
+	pub fn imports(&self) -> AstNodeList<ImportClause> { support::node_list(&self.syntax, 0usize) }
+	pub fn type_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![type])
+	}
+	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![from])
+	}
+	pub fn asserted_object(&self) -> SyntaxResult<ObjectExpr> {
+		support::as_mandatory_node(&self.syntax)
+	}
+	pub fn assert_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![assert])
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T ! [;])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ExportNamed {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ExportNamed {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![export])
+	}
+	pub fn type_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![type])
+	}
+	pub fn from_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![from])
+	}
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T!['{'])
+	}
+	pub fn specifiers(&self) -> AstSeparatedList<Specifier> {
+		support::separated_list(&self.syntax, 0usize)
+	}
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T!['}'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ExportDefaultDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ExportDefaultDecl {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![export])
+	}
+	pub fn default_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![default])
+	}
+	pub fn type_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![type])
+	}
+	pub fn decl(&self) -> SyntaxResult<DefaultDecl> { support::as_mandatory_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ExportDefaultExpr {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ExportDefaultExpr {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![export])
+	}
+	pub fn type_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![type])
+	}
+	pub fn default_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![default])
+	}
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ExportWildcard {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ExportWildcard {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![export])
+	}
+	pub fn type_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![type])
+	}
+	pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T ! [*])
+	}
+	pub fn as_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![as])
+	}
+	pub fn ident(&self) -> Option<Ident> { support::as_optional_node(&self.syntax) }
+	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![from])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ExportDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ExportDecl {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![export])
+	}
+	pub fn type_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T![type])
+	}
+	pub fn decl(&self) -> SyntaxResult<Decl> { support::as_mandatory_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsImportEqualsDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsImportEqualsDecl {
+	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![import])
+	}
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![export])
+	}
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T ! [=])
+	}
+	pub fn module(&self) -> SyntaxResult<TsModuleRef> { support::as_mandatory_node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T ! [;])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsExportAssignment {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsExportAssignment {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![export])
+	}
+	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T ! [=])
+	}
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T ! [;])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsNamespaceExportDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsNamespaceExportDecl {
+	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![export])
+	}
+	pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![as])
+	}
+	pub fn namespace_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![namespace])
+	}
+	pub fn ident(&self) -> Option<Ident> { support::as_optional_node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T ! [;])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Condition {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -334,7 +517,9 @@ impl Condition {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['('])
 	}
-	pub fn condition(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn condition(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![')'])
 	}
@@ -354,7 +539,7 @@ pub struct ForStmtTest {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ForStmtTest {
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [;])
 	}
@@ -364,7 +549,7 @@ pub struct ForStmtUpdate {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ForStmtUpdate {
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct VarDecl {
@@ -410,11 +595,11 @@ impl CaseClause {
 	pub fn case_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![case])
 	}
-	pub fn test(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [:])
 	}
-	pub fn cons(&self) -> AstNodeList<Stmt> { support::node_list(&self.syntax, 0usize) }
+	pub fn cons(&self) -> AstNodeList<JsAnyStatement> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct DefaultClause {
@@ -427,7 +612,7 @@ impl DefaultClause {
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [:])
 	}
-	pub fn cons(&self) -> AstNodeList<Stmt> { support::node_list(&self.syntax, 0usize) }
+	pub fn cons(&self) -> AstNodeList<JsAnyStatement> { support::node_list(&self.syntax, 0usize) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct CatchClause {
@@ -552,7 +737,9 @@ impl GroupingExpr {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['('])
 	}
-	pub fn inner(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn inner(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![')'])
 	}
@@ -580,7 +767,9 @@ impl DotExpr {
 	pub fn super_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T![super])
 	}
-	pub fn object(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [.])
 	}
@@ -595,7 +784,9 @@ impl NewExpr {
 		support::as_mandatory_token(&self.syntax, T![new])
 	}
 	pub fn type_args(&self) -> Option<TsTypeArgs> { support::as_optional_node(&self.syntax) }
-	pub fn object(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -604,7 +795,9 @@ pub struct CallExpr {
 }
 impl CallExpr {
 	pub fn type_args(&self) -> Option<TsTypeArgs> { support::as_optional_node(&self.syntax) }
-	pub fn callee(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -627,7 +820,9 @@ impl UnaryExpr {
 			],
 		)
 	}
-	pub fn argument(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PreUpdateExpression {
@@ -637,14 +832,18 @@ impl PreUpdateExpression {
 	pub fn operator(&self) -> Option<SyntaxToken> {
 		support::find_token(&self.syntax, &[T ! [++], T ! [--]])
 	}
-	pub fn operand(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PostUpdateExpression {
 	pub(crate) syntax: SyntaxNode,
 }
 impl PostUpdateExpression {
-	pub fn operand(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn operator(&self) -> Option<SyntaxToken> {
 		support::find_token(&self.syntax, &[T ! [++], T ! [--]])
 	}
@@ -732,7 +931,9 @@ pub struct SequenceExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl SequenceExpr {
-	pub fn exprs(&self) -> AstSeparatedList<Expr> { support::separated_list(&self.syntax, 0usize) }
+	pub fn exprs(&self) -> AstSeparatedList<JsAnyExpression> {
+		support::separated_list(&self.syntax, 0usize)
+	}
 	pub fn bin_expr(&self) -> SyntaxResult<BinExpr> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -768,7 +969,7 @@ impl ClassExpr {
 	}
 	pub fn name(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
 	pub fn type_params(&self) -> Option<TsTypeParams> { support::as_optional_node(&self.syntax) }
-	pub fn parent(&self) -> Option<Expr> { support::as_optional_node(&self.syntax) }
+	pub fn parent(&self) -> Option<JsAnyExpression> { support::as_optional_node(&self.syntax) }
 	pub fn implements_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T![implements])
 	}
@@ -825,7 +1026,9 @@ impl ImportCall {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['('])
 	}
-	pub fn argument(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![')'])
 	}
@@ -841,7 +1044,9 @@ impl YieldExpr {
 	pub fn star_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T ! [*])
 	}
-	pub fn value(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct AwaitExpr {
@@ -851,14 +1056,14 @@ impl AwaitExpr {
 	pub fn await_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![await])
 	}
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PrivatePropAccess {
 	pub(crate) syntax: SyntaxNode,
 }
 impl PrivatePropAccess {
-	pub fn lhs(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn lhs(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [.])
 	}
@@ -869,7 +1074,7 @@ pub struct TsNonNull {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsNonNull {
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![!])
 	}
@@ -879,7 +1084,7 @@ pub struct TsAssertion {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsAssertion {
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
 	pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [<])
@@ -894,7 +1099,7 @@ pub struct TsConstAssertion {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsConstAssertion {
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
 	pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [<])
@@ -927,7 +1132,9 @@ impl ArgList {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['('])
 	}
-	pub fn args(&self) -> AstSeparatedList<Expr> { support::separated_list(&self.syntax, 0usize) }
+	pub fn args(&self) -> AstSeparatedList<JsAnyExpression> {
+		support::separated_list(&self.syntax, 0usize)
+	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![')'])
 	}
@@ -1046,7 +1253,7 @@ impl ClassProp {
 	pub fn eq_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> Option<Expr> { support::as_optional_node(&self.syntax) }
+	pub fn value(&self) -> Option<JsAnyExpression> { support::as_optional_node(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T ! [;])
 	}
@@ -1159,7 +1366,9 @@ impl SpreadElement {
 	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [...])
 	}
-	pub fn element(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn element(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Null {
@@ -1219,7 +1428,9 @@ impl AssignPattern {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ObjectPattern {
@@ -1261,7 +1472,7 @@ pub struct ExprPattern {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ExprPattern {
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct KeyValuePattern {
@@ -1290,7 +1501,9 @@ impl SpreadProp {
 	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [...])
 	}
-	pub fn value(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct InitializedProp {
@@ -1301,7 +1514,9 @@ impl InitializedProp {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct IdentProp {
@@ -1318,7 +1533,7 @@ impl ComputedPropertyName {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['['])
 	}
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![']'])
 	}
@@ -1485,177 +1700,8 @@ impl Declarator {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ImportDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ImportDecl {
-	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![import])
-	}
-	pub fn imports(&self) -> AstNodeList<ImportClause> { support::node_list(&self.syntax, 0usize) }
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![from])
-	}
-	pub fn asserted_object(&self) -> SyntaxResult<ObjectExpr> {
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
 		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn assert_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![assert])
-	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ExportNamed {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ExportNamed {
-	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
-	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn from_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![from])
-	}
-	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
-	}
-	pub fn specifiers(&self) -> AstSeparatedList<Specifier> {
-		support::separated_list(&self.syntax, 0usize)
-	}
-	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ExportDefaultDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ExportDefaultDecl {
-	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
-	}
-	pub fn default_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![default])
-	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn decl(&self) -> SyntaxResult<DefaultDecl> { support::as_mandatory_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ExportDefaultExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ExportDefaultExpr {
-	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
-	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn default_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![default])
-	}
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ExportWildcard {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ExportWildcard {
-	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
-	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [*])
-	}
-	pub fn as_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![as])
-	}
-	pub fn ident(&self) -> Option<Ident> { support::as_optional_node(&self.syntax) }
-	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![from])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ExportDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ExportDecl {
-	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
-	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn decl(&self) -> SyntaxResult<Decl> { support::as_mandatory_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsImportEqualsDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsImportEqualsDecl {
-	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![import])
-	}
-	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
-	}
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
-	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
-	}
-	pub fn module(&self) -> SyntaxResult<TsModuleRef> { support::as_mandatory_node(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsExportAssignment {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsExportAssignment {
-	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
-	}
-	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
-	}
-	pub fn expr(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsNamespaceExportDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsNamespaceExportDecl {
-	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
-	}
-	pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![as])
-	}
-	pub fn namespace_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![namespace])
-	}
-	pub fn ident(&self) -> Option<Ident> { support::as_optional_node(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2069,7 +2115,9 @@ impl TsEnumMember {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
+		support::as_mandatory_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplateElement {
@@ -2136,7 +2184,7 @@ impl TsModuleBlock {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['{'])
 	}
-	pub fn items(&self) -> SyntaxResult<ModuleItem> { support::as_mandatory_node(&self.syntax) }
+	pub fn items(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T!['}'])
 	}
@@ -2215,7 +2263,7 @@ impl TsPropertySignature {
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T![readonly])
 	}
-	pub fn prop(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn prop(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [?])
 	}
@@ -2232,7 +2280,7 @@ impl TsMethodSignature {
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
 		support::as_optional_token(&self.syntax, T![readonly])
 	}
-	pub fn key(&self) -> SyntaxResult<Expr> { support::as_mandatory_node(&self.syntax) }
+	pub fn key(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> {
 		support::as_mandatory_node(&self.syntax)
 	}
@@ -2259,7 +2307,7 @@ impl TsQualifiedPath {
 	pub fn rhs(&self) -> SyntaxResult<TsTypeName> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum Stmt {
+pub enum JsAnyStatement {
 	BlockStmt(BlockStmt),
 	EmptyStmt(EmptyStmt),
 	ExprStmt(ExprStmt),
@@ -2279,10 +2327,6 @@ pub enum Stmt {
 	TryStmt(TryStmt),
 	DebuggerStmt(DebuggerStmt),
 	Decl(Decl),
-	JsUnknownStatement(JsUnknownStatement),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ModuleItem {
 	ImportDecl(ImportDecl),
 	ExportNamed(ExportNamed),
 	ExportDefaultDecl(ExportDefaultDecl),
@@ -2292,7 +2336,7 @@ pub enum ModuleItem {
 	TsImportEqualsDecl(TsImportEqualsDecl),
 	TsExportAssignment(TsExportAssignment),
 	TsNamespaceExportDecl(TsNamespaceExportDecl),
-	Stmt(Stmt),
+	JsUnknownStatement(JsUnknownStatement),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Decl {
@@ -2306,7 +2350,7 @@ pub enum Decl {
 	TsInterfaceDecl(TsInterfaceDecl),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum Expr {
+pub enum JsAnyExpression {
 	ArrowExpr(ArrowExpr),
 	Literal(Literal),
 	Template(Template),
@@ -2343,7 +2387,7 @@ pub enum Expr {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ForHead {
 	VarDecl(VarDecl),
-	Expr(Expr),
+	JsAnyExpression(JsAnyExpression),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum SwitchCase {
@@ -2401,7 +2445,7 @@ pub enum ArrowExprParams {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ExprOrBlock {
-	Expr(Expr),
+	JsAnyExpression(JsAnyExpression),
 	BlockStmt(BlockStmt),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2442,14 +2486,14 @@ pub enum ConstructorParamOrPat {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ExprOrSpread {
-	Expr(Expr),
+	JsAnyExpression(JsAnyExpression),
 	SpreadElement(SpreadElement),
 	GroupingExpr(GroupingExpr),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
 	Pattern(Pattern),
-	Expr(Expr),
+	JsAnyExpression(JsAnyExpression),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ObjectPatternProp {
@@ -2576,8 +2620,8 @@ impl AstNode for Ident {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Script {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SCRIPT }
+impl AstNode for JsScript {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SCRIPT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2587,8 +2631,8 @@ impl AstNode for Script {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Module {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == MODULE }
+impl AstNode for JsModule {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_MODULE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -2787,6 +2831,105 @@ impl AstNode for TryStmt {
 }
 impl AstNode for DebuggerStmt {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == DEBUGGER_STMT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ImportDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ExportNamed {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_NAMED }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ExportDefaultDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DEFAULT_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ExportDefaultExpr {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DEFAULT_EXPR }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ExportWildcard {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_WILDCARD }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ExportDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsImportEqualsDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT_EQUALS_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsExportAssignment {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPORT_ASSIGNMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsNamespaceExportDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMESPACE_EXPORT_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3687,105 +3830,6 @@ impl AstNode for Declarator {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for ImportDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ExportNamed {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_NAMED }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ExportDefaultDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DEFAULT_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ExportDefaultExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DEFAULT_EXPR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ExportWildcard {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_WILDCARD }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ExportDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsImportEqualsDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT_EQUALS_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsExportAssignment {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPORT_ASSIGNMENT }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsNamespaceExportDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMESPACE_EXPORT_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for WildcardImport {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == WILDCARD_IMPORT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4358,160 +4402,114 @@ impl AstNode for TsQualifiedPath {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl From<BlockStmt> for Stmt {
-	fn from(node: BlockStmt) -> Stmt { Stmt::BlockStmt(node) }
+impl From<BlockStmt> for JsAnyStatement {
+	fn from(node: BlockStmt) -> JsAnyStatement { JsAnyStatement::BlockStmt(node) }
 }
-impl From<EmptyStmt> for Stmt {
-	fn from(node: EmptyStmt) -> Stmt { Stmt::EmptyStmt(node) }
+impl From<EmptyStmt> for JsAnyStatement {
+	fn from(node: EmptyStmt) -> JsAnyStatement { JsAnyStatement::EmptyStmt(node) }
 }
-impl From<ExprStmt> for Stmt {
-	fn from(node: ExprStmt) -> Stmt { Stmt::ExprStmt(node) }
+impl From<ExprStmt> for JsAnyStatement {
+	fn from(node: ExprStmt) -> JsAnyStatement { JsAnyStatement::ExprStmt(node) }
 }
-impl From<IfStmt> for Stmt {
-	fn from(node: IfStmt) -> Stmt { Stmt::IfStmt(node) }
+impl From<IfStmt> for JsAnyStatement {
+	fn from(node: IfStmt) -> JsAnyStatement { JsAnyStatement::IfStmt(node) }
 }
-impl From<DoWhileStmt> for Stmt {
-	fn from(node: DoWhileStmt) -> Stmt { Stmt::DoWhileStmt(node) }
+impl From<DoWhileStmt> for JsAnyStatement {
+	fn from(node: DoWhileStmt) -> JsAnyStatement { JsAnyStatement::DoWhileStmt(node) }
 }
-impl From<WhileStmt> for Stmt {
-	fn from(node: WhileStmt) -> Stmt { Stmt::WhileStmt(node) }
+impl From<WhileStmt> for JsAnyStatement {
+	fn from(node: WhileStmt) -> JsAnyStatement { JsAnyStatement::WhileStmt(node) }
 }
-impl From<ForStmt> for Stmt {
-	fn from(node: ForStmt) -> Stmt { Stmt::ForStmt(node) }
+impl From<ForStmt> for JsAnyStatement {
+	fn from(node: ForStmt) -> JsAnyStatement { JsAnyStatement::ForStmt(node) }
 }
-impl From<ForInStmt> for Stmt {
-	fn from(node: ForInStmt) -> Stmt { Stmt::ForInStmt(node) }
+impl From<ForInStmt> for JsAnyStatement {
+	fn from(node: ForInStmt) -> JsAnyStatement { JsAnyStatement::ForInStmt(node) }
 }
-impl From<ForOfStmt> for Stmt {
-	fn from(node: ForOfStmt) -> Stmt { Stmt::ForOfStmt(node) }
+impl From<ForOfStmt> for JsAnyStatement {
+	fn from(node: ForOfStmt) -> JsAnyStatement { JsAnyStatement::ForOfStmt(node) }
 }
-impl From<ContinueStmt> for Stmt {
-	fn from(node: ContinueStmt) -> Stmt { Stmt::ContinueStmt(node) }
+impl From<ContinueStmt> for JsAnyStatement {
+	fn from(node: ContinueStmt) -> JsAnyStatement { JsAnyStatement::ContinueStmt(node) }
 }
-impl From<BreakStmt> for Stmt {
-	fn from(node: BreakStmt) -> Stmt { Stmt::BreakStmt(node) }
+impl From<BreakStmt> for JsAnyStatement {
+	fn from(node: BreakStmt) -> JsAnyStatement { JsAnyStatement::BreakStmt(node) }
 }
-impl From<ReturnStmt> for Stmt {
-	fn from(node: ReturnStmt) -> Stmt { Stmt::ReturnStmt(node) }
+impl From<ReturnStmt> for JsAnyStatement {
+	fn from(node: ReturnStmt) -> JsAnyStatement { JsAnyStatement::ReturnStmt(node) }
 }
-impl From<WithStmt> for Stmt {
-	fn from(node: WithStmt) -> Stmt { Stmt::WithStmt(node) }
+impl From<WithStmt> for JsAnyStatement {
+	fn from(node: WithStmt) -> JsAnyStatement { JsAnyStatement::WithStmt(node) }
 }
-impl From<LabelledStmt> for Stmt {
-	fn from(node: LabelledStmt) -> Stmt { Stmt::LabelledStmt(node) }
+impl From<LabelledStmt> for JsAnyStatement {
+	fn from(node: LabelledStmt) -> JsAnyStatement { JsAnyStatement::LabelledStmt(node) }
 }
-impl From<SwitchStmt> for Stmt {
-	fn from(node: SwitchStmt) -> Stmt { Stmt::SwitchStmt(node) }
+impl From<SwitchStmt> for JsAnyStatement {
+	fn from(node: SwitchStmt) -> JsAnyStatement { JsAnyStatement::SwitchStmt(node) }
 }
-impl From<ThrowStmt> for Stmt {
-	fn from(node: ThrowStmt) -> Stmt { Stmt::ThrowStmt(node) }
+impl From<ThrowStmt> for JsAnyStatement {
+	fn from(node: ThrowStmt) -> JsAnyStatement { JsAnyStatement::ThrowStmt(node) }
 }
-impl From<TryStmt> for Stmt {
-	fn from(node: TryStmt) -> Stmt { Stmt::TryStmt(node) }
+impl From<TryStmt> for JsAnyStatement {
+	fn from(node: TryStmt) -> JsAnyStatement { JsAnyStatement::TryStmt(node) }
 }
-impl From<DebuggerStmt> for Stmt {
-	fn from(node: DebuggerStmt) -> Stmt { Stmt::DebuggerStmt(node) }
+impl From<DebuggerStmt> for JsAnyStatement {
+	fn from(node: DebuggerStmt) -> JsAnyStatement { JsAnyStatement::DebuggerStmt(node) }
 }
-impl From<JsUnknownStatement> for Stmt {
-	fn from(node: JsUnknownStatement) -> Stmt { Stmt::JsUnknownStatement(node) }
+impl From<ImportDecl> for JsAnyStatement {
+	fn from(node: ImportDecl) -> JsAnyStatement { JsAnyStatement::ImportDecl(node) }
 }
-impl AstNode for Stmt {
+impl From<ExportNamed> for JsAnyStatement {
+	fn from(node: ExportNamed) -> JsAnyStatement { JsAnyStatement::ExportNamed(node) }
+}
+impl From<ExportDefaultDecl> for JsAnyStatement {
+	fn from(node: ExportDefaultDecl) -> JsAnyStatement { JsAnyStatement::ExportDefaultDecl(node) }
+}
+impl From<ExportDefaultExpr> for JsAnyStatement {
+	fn from(node: ExportDefaultExpr) -> JsAnyStatement { JsAnyStatement::ExportDefaultExpr(node) }
+}
+impl From<ExportWildcard> for JsAnyStatement {
+	fn from(node: ExportWildcard) -> JsAnyStatement { JsAnyStatement::ExportWildcard(node) }
+}
+impl From<ExportDecl> for JsAnyStatement {
+	fn from(node: ExportDecl) -> JsAnyStatement { JsAnyStatement::ExportDecl(node) }
+}
+impl From<TsImportEqualsDecl> for JsAnyStatement {
+	fn from(node: TsImportEqualsDecl) -> JsAnyStatement { JsAnyStatement::TsImportEqualsDecl(node) }
+}
+impl From<TsExportAssignment> for JsAnyStatement {
+	fn from(node: TsExportAssignment) -> JsAnyStatement { JsAnyStatement::TsExportAssignment(node) }
+}
+impl From<TsNamespaceExportDecl> for JsAnyStatement {
+	fn from(node: TsNamespaceExportDecl) -> JsAnyStatement {
+		JsAnyStatement::TsNamespaceExportDecl(node)
+	}
+}
+impl From<JsUnknownStatement> for JsAnyStatement {
+	fn from(node: JsUnknownStatement) -> JsAnyStatement { JsAnyStatement::JsUnknownStatement(node) }
+}
+impl AstNode for JsAnyStatement {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			BLOCK_STMT | EMPTY_STMT | EXPR_STMT | IF_STMT | DO_WHILE_STMT | WHILE_STMT
-			| FOR_STMT | FOR_IN_STMT | FOR_OF_STMT | CONTINUE_STMT | BREAK_STMT | RETURN_STMT
-			| WITH_STMT | LABELLED_STMT | SWITCH_STMT | THROW_STMT | TRY_STMT | DEBUGGER_STMT
-			| JS_UNKNOWN_STATEMENT => true,
-			k if Decl::can_cast(k) => true,
-			_ => false,
-		}
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			BLOCK_STMT => Stmt::BlockStmt(BlockStmt { syntax }),
-			EMPTY_STMT => Stmt::EmptyStmt(EmptyStmt { syntax }),
-			EXPR_STMT => Stmt::ExprStmt(ExprStmt { syntax }),
-			IF_STMT => Stmt::IfStmt(IfStmt { syntax }),
-			DO_WHILE_STMT => Stmt::DoWhileStmt(DoWhileStmt { syntax }),
-			WHILE_STMT => Stmt::WhileStmt(WhileStmt { syntax }),
-			FOR_STMT => Stmt::ForStmt(ForStmt { syntax }),
-			FOR_IN_STMT => Stmt::ForInStmt(ForInStmt { syntax }),
-			FOR_OF_STMT => Stmt::ForOfStmt(ForOfStmt { syntax }),
-			CONTINUE_STMT => Stmt::ContinueStmt(ContinueStmt { syntax }),
-			BREAK_STMT => Stmt::BreakStmt(BreakStmt { syntax }),
-			RETURN_STMT => Stmt::ReturnStmt(ReturnStmt { syntax }),
-			WITH_STMT => Stmt::WithStmt(WithStmt { syntax }),
-			LABELLED_STMT => Stmt::LabelledStmt(LabelledStmt { syntax }),
-			SWITCH_STMT => Stmt::SwitchStmt(SwitchStmt { syntax }),
-			THROW_STMT => Stmt::ThrowStmt(ThrowStmt { syntax }),
-			TRY_STMT => Stmt::TryStmt(TryStmt { syntax }),
-			DEBUGGER_STMT => Stmt::DebuggerStmt(DebuggerStmt { syntax }),
-			JS_UNKNOWN_STATEMENT => Stmt::JsUnknownStatement(JsUnknownStatement { syntax }),
-			_ => {
-				if let Some(decl) = Decl::cast(syntax) {
-					return Some(Stmt::Decl(decl));
-				}
-				return None;
-			}
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			Stmt::BlockStmt(it) => &it.syntax,
-			Stmt::EmptyStmt(it) => &it.syntax,
-			Stmt::ExprStmt(it) => &it.syntax,
-			Stmt::IfStmt(it) => &it.syntax,
-			Stmt::DoWhileStmt(it) => &it.syntax,
-			Stmt::WhileStmt(it) => &it.syntax,
-			Stmt::ForStmt(it) => &it.syntax,
-			Stmt::ForInStmt(it) => &it.syntax,
-			Stmt::ForOfStmt(it) => &it.syntax,
-			Stmt::ContinueStmt(it) => &it.syntax,
-			Stmt::BreakStmt(it) => &it.syntax,
-			Stmt::ReturnStmt(it) => &it.syntax,
-			Stmt::WithStmt(it) => &it.syntax,
-			Stmt::LabelledStmt(it) => &it.syntax,
-			Stmt::SwitchStmt(it) => &it.syntax,
-			Stmt::ThrowStmt(it) => &it.syntax,
-			Stmt::TryStmt(it) => &it.syntax,
-			Stmt::DebuggerStmt(it) => &it.syntax,
-			Stmt::JsUnknownStatement(it) => &it.syntax,
-			Stmt::Decl(it) => it.syntax(),
-		}
-	}
-}
-impl From<ImportDecl> for ModuleItem {
-	fn from(node: ImportDecl) -> ModuleItem { ModuleItem::ImportDecl(node) }
-}
-impl From<ExportNamed> for ModuleItem {
-	fn from(node: ExportNamed) -> ModuleItem { ModuleItem::ExportNamed(node) }
-}
-impl From<ExportDefaultDecl> for ModuleItem {
-	fn from(node: ExportDefaultDecl) -> ModuleItem { ModuleItem::ExportDefaultDecl(node) }
-}
-impl From<ExportDefaultExpr> for ModuleItem {
-	fn from(node: ExportDefaultExpr) -> ModuleItem { ModuleItem::ExportDefaultExpr(node) }
-}
-impl From<ExportWildcard> for ModuleItem {
-	fn from(node: ExportWildcard) -> ModuleItem { ModuleItem::ExportWildcard(node) }
-}
-impl From<ExportDecl> for ModuleItem {
-	fn from(node: ExportDecl) -> ModuleItem { ModuleItem::ExportDecl(node) }
-}
-impl From<TsImportEqualsDecl> for ModuleItem {
-	fn from(node: TsImportEqualsDecl) -> ModuleItem { ModuleItem::TsImportEqualsDecl(node) }
-}
-impl From<TsExportAssignment> for ModuleItem {
-	fn from(node: TsExportAssignment) -> ModuleItem { ModuleItem::TsExportAssignment(node) }
-}
-impl From<TsNamespaceExportDecl> for ModuleItem {
-	fn from(node: TsNamespaceExportDecl) -> ModuleItem { ModuleItem::TsNamespaceExportDecl(node) }
-}
-impl AstNode for ModuleItem {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			IMPORT_DECL
+			BLOCK_STMT
+			| EMPTY_STMT
+			| EXPR_STMT
+			| IF_STMT
+			| DO_WHILE_STMT
+			| WHILE_STMT
+			| FOR_STMT
+			| FOR_IN_STMT
+			| FOR_OF_STMT
+			| CONTINUE_STMT
+			| BREAK_STMT
+			| RETURN_STMT
+			| WITH_STMT
+			| LABELLED_STMT
+			| SWITCH_STMT
+			| THROW_STMT
+			| TRY_STMT
+			| DEBUGGER_STMT
+			| IMPORT_DECL
 			| EXPORT_NAMED
 			| EXPORT_DEFAULT_DECL
 			| EXPORT_DEFAULT_EXPR
@@ -4519,27 +4517,53 @@ impl AstNode for ModuleItem {
 			| EXPORT_DECL
 			| TS_IMPORT_EQUALS_DECL
 			| TS_EXPORT_ASSIGNMENT
-			| TS_NAMESPACE_EXPORT_DECL => true,
-			k if Stmt::can_cast(k) => true,
+			| TS_NAMESPACE_EXPORT_DECL
+			| JS_UNKNOWN_STATEMENT => true,
+			k if Decl::can_cast(k) => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			IMPORT_DECL => ModuleItem::ImportDecl(ImportDecl { syntax }),
-			EXPORT_NAMED => ModuleItem::ExportNamed(ExportNamed { syntax }),
-			EXPORT_DEFAULT_DECL => ModuleItem::ExportDefaultDecl(ExportDefaultDecl { syntax }),
-			EXPORT_DEFAULT_EXPR => ModuleItem::ExportDefaultExpr(ExportDefaultExpr { syntax }),
-			EXPORT_WILDCARD => ModuleItem::ExportWildcard(ExportWildcard { syntax }),
-			EXPORT_DECL => ModuleItem::ExportDecl(ExportDecl { syntax }),
-			TS_IMPORT_EQUALS_DECL => ModuleItem::TsImportEqualsDecl(TsImportEqualsDecl { syntax }),
-			TS_EXPORT_ASSIGNMENT => ModuleItem::TsExportAssignment(TsExportAssignment { syntax }),
+			BLOCK_STMT => JsAnyStatement::BlockStmt(BlockStmt { syntax }),
+			EMPTY_STMT => JsAnyStatement::EmptyStmt(EmptyStmt { syntax }),
+			EXPR_STMT => JsAnyStatement::ExprStmt(ExprStmt { syntax }),
+			IF_STMT => JsAnyStatement::IfStmt(IfStmt { syntax }),
+			DO_WHILE_STMT => JsAnyStatement::DoWhileStmt(DoWhileStmt { syntax }),
+			WHILE_STMT => JsAnyStatement::WhileStmt(WhileStmt { syntax }),
+			FOR_STMT => JsAnyStatement::ForStmt(ForStmt { syntax }),
+			FOR_IN_STMT => JsAnyStatement::ForInStmt(ForInStmt { syntax }),
+			FOR_OF_STMT => JsAnyStatement::ForOfStmt(ForOfStmt { syntax }),
+			CONTINUE_STMT => JsAnyStatement::ContinueStmt(ContinueStmt { syntax }),
+			BREAK_STMT => JsAnyStatement::BreakStmt(BreakStmt { syntax }),
+			RETURN_STMT => JsAnyStatement::ReturnStmt(ReturnStmt { syntax }),
+			WITH_STMT => JsAnyStatement::WithStmt(WithStmt { syntax }),
+			LABELLED_STMT => JsAnyStatement::LabelledStmt(LabelledStmt { syntax }),
+			SWITCH_STMT => JsAnyStatement::SwitchStmt(SwitchStmt { syntax }),
+			THROW_STMT => JsAnyStatement::ThrowStmt(ThrowStmt { syntax }),
+			TRY_STMT => JsAnyStatement::TryStmt(TryStmt { syntax }),
+			DEBUGGER_STMT => JsAnyStatement::DebuggerStmt(DebuggerStmt { syntax }),
+			IMPORT_DECL => JsAnyStatement::ImportDecl(ImportDecl { syntax }),
+			EXPORT_NAMED => JsAnyStatement::ExportNamed(ExportNamed { syntax }),
+			EXPORT_DEFAULT_DECL => JsAnyStatement::ExportDefaultDecl(ExportDefaultDecl { syntax }),
+			EXPORT_DEFAULT_EXPR => JsAnyStatement::ExportDefaultExpr(ExportDefaultExpr { syntax }),
+			EXPORT_WILDCARD => JsAnyStatement::ExportWildcard(ExportWildcard { syntax }),
+			EXPORT_DECL => JsAnyStatement::ExportDecl(ExportDecl { syntax }),
+			TS_IMPORT_EQUALS_DECL => {
+				JsAnyStatement::TsImportEqualsDecl(TsImportEqualsDecl { syntax })
+			}
+			TS_EXPORT_ASSIGNMENT => {
+				JsAnyStatement::TsExportAssignment(TsExportAssignment { syntax })
+			}
 			TS_NAMESPACE_EXPORT_DECL => {
-				ModuleItem::TsNamespaceExportDecl(TsNamespaceExportDecl { syntax })
+				JsAnyStatement::TsNamespaceExportDecl(TsNamespaceExportDecl { syntax })
+			}
+			JS_UNKNOWN_STATEMENT => {
+				JsAnyStatement::JsUnknownStatement(JsUnknownStatement { syntax })
 			}
 			_ => {
-				if let Some(stmt) = Stmt::cast(syntax) {
-					return Some(ModuleItem::Stmt(stmt));
+				if let Some(decl) = Decl::cast(syntax) {
+					return Some(JsAnyStatement::Decl(decl));
 				}
 				return None;
 			}
@@ -4548,16 +4572,35 @@ impl AstNode for ModuleItem {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ModuleItem::ImportDecl(it) => &it.syntax,
-			ModuleItem::ExportNamed(it) => &it.syntax,
-			ModuleItem::ExportDefaultDecl(it) => &it.syntax,
-			ModuleItem::ExportDefaultExpr(it) => &it.syntax,
-			ModuleItem::ExportWildcard(it) => &it.syntax,
-			ModuleItem::ExportDecl(it) => &it.syntax,
-			ModuleItem::TsImportEqualsDecl(it) => &it.syntax,
-			ModuleItem::TsExportAssignment(it) => &it.syntax,
-			ModuleItem::TsNamespaceExportDecl(it) => &it.syntax,
-			ModuleItem::Stmt(it) => it.syntax(),
+			JsAnyStatement::BlockStmt(it) => &it.syntax,
+			JsAnyStatement::EmptyStmt(it) => &it.syntax,
+			JsAnyStatement::ExprStmt(it) => &it.syntax,
+			JsAnyStatement::IfStmt(it) => &it.syntax,
+			JsAnyStatement::DoWhileStmt(it) => &it.syntax,
+			JsAnyStatement::WhileStmt(it) => &it.syntax,
+			JsAnyStatement::ForStmt(it) => &it.syntax,
+			JsAnyStatement::ForInStmt(it) => &it.syntax,
+			JsAnyStatement::ForOfStmt(it) => &it.syntax,
+			JsAnyStatement::ContinueStmt(it) => &it.syntax,
+			JsAnyStatement::BreakStmt(it) => &it.syntax,
+			JsAnyStatement::ReturnStmt(it) => &it.syntax,
+			JsAnyStatement::WithStmt(it) => &it.syntax,
+			JsAnyStatement::LabelledStmt(it) => &it.syntax,
+			JsAnyStatement::SwitchStmt(it) => &it.syntax,
+			JsAnyStatement::ThrowStmt(it) => &it.syntax,
+			JsAnyStatement::TryStmt(it) => &it.syntax,
+			JsAnyStatement::DebuggerStmt(it) => &it.syntax,
+			JsAnyStatement::ImportDecl(it) => &it.syntax,
+			JsAnyStatement::ExportNamed(it) => &it.syntax,
+			JsAnyStatement::ExportDefaultDecl(it) => &it.syntax,
+			JsAnyStatement::ExportDefaultExpr(it) => &it.syntax,
+			JsAnyStatement::ExportWildcard(it) => &it.syntax,
+			JsAnyStatement::ExportDecl(it) => &it.syntax,
+			JsAnyStatement::TsImportEqualsDecl(it) => &it.syntax,
+			JsAnyStatement::TsExportAssignment(it) => &it.syntax,
+			JsAnyStatement::TsNamespaceExportDecl(it) => &it.syntax,
+			JsAnyStatement::JsUnknownStatement(it) => &it.syntax,
+			JsAnyStatement::Decl(it) => it.syntax(),
 		}
 	}
 }
@@ -4620,103 +4663,109 @@ impl AstNode for Decl {
 		}
 	}
 }
-impl From<ArrowExpr> for Expr {
-	fn from(node: ArrowExpr) -> Expr { Expr::ArrowExpr(node) }
+impl From<ArrowExpr> for JsAnyExpression {
+	fn from(node: ArrowExpr) -> JsAnyExpression { JsAnyExpression::ArrowExpr(node) }
 }
-impl From<Literal> for Expr {
-	fn from(node: Literal) -> Expr { Expr::Literal(node) }
+impl From<Literal> for JsAnyExpression {
+	fn from(node: Literal) -> JsAnyExpression { JsAnyExpression::Literal(node) }
 }
-impl From<Template> for Expr {
-	fn from(node: Template) -> Expr { Expr::Template(node) }
+impl From<Template> for JsAnyExpression {
+	fn from(node: Template) -> JsAnyExpression { JsAnyExpression::Template(node) }
 }
-impl From<NameRef> for Expr {
-	fn from(node: NameRef) -> Expr { Expr::NameRef(node) }
+impl From<NameRef> for JsAnyExpression {
+	fn from(node: NameRef) -> JsAnyExpression { JsAnyExpression::NameRef(node) }
 }
-impl From<ThisExpr> for Expr {
-	fn from(node: ThisExpr) -> Expr { Expr::ThisExpr(node) }
+impl From<ThisExpr> for JsAnyExpression {
+	fn from(node: ThisExpr) -> JsAnyExpression { JsAnyExpression::ThisExpr(node) }
 }
-impl From<ArrayExpr> for Expr {
-	fn from(node: ArrayExpr) -> Expr { Expr::ArrayExpr(node) }
+impl From<ArrayExpr> for JsAnyExpression {
+	fn from(node: ArrayExpr) -> JsAnyExpression { JsAnyExpression::ArrayExpr(node) }
 }
-impl From<ObjectExpr> for Expr {
-	fn from(node: ObjectExpr) -> Expr { Expr::ObjectExpr(node) }
+impl From<ObjectExpr> for JsAnyExpression {
+	fn from(node: ObjectExpr) -> JsAnyExpression { JsAnyExpression::ObjectExpr(node) }
 }
-impl From<GroupingExpr> for Expr {
-	fn from(node: GroupingExpr) -> Expr { Expr::GroupingExpr(node) }
+impl From<GroupingExpr> for JsAnyExpression {
+	fn from(node: GroupingExpr) -> JsAnyExpression { JsAnyExpression::GroupingExpr(node) }
 }
-impl From<BracketExpr> for Expr {
-	fn from(node: BracketExpr) -> Expr { Expr::BracketExpr(node) }
+impl From<BracketExpr> for JsAnyExpression {
+	fn from(node: BracketExpr) -> JsAnyExpression { JsAnyExpression::BracketExpr(node) }
 }
-impl From<DotExpr> for Expr {
-	fn from(node: DotExpr) -> Expr { Expr::DotExpr(node) }
+impl From<DotExpr> for JsAnyExpression {
+	fn from(node: DotExpr) -> JsAnyExpression { JsAnyExpression::DotExpr(node) }
 }
-impl From<NewExpr> for Expr {
-	fn from(node: NewExpr) -> Expr { Expr::NewExpr(node) }
+impl From<NewExpr> for JsAnyExpression {
+	fn from(node: NewExpr) -> JsAnyExpression { JsAnyExpression::NewExpr(node) }
 }
-impl From<CallExpr> for Expr {
-	fn from(node: CallExpr) -> Expr { Expr::CallExpr(node) }
+impl From<CallExpr> for JsAnyExpression {
+	fn from(node: CallExpr) -> JsAnyExpression { JsAnyExpression::CallExpr(node) }
 }
-impl From<UnaryExpr> for Expr {
-	fn from(node: UnaryExpr) -> Expr { Expr::UnaryExpr(node) }
+impl From<UnaryExpr> for JsAnyExpression {
+	fn from(node: UnaryExpr) -> JsAnyExpression { JsAnyExpression::UnaryExpr(node) }
 }
-impl From<PreUpdateExpression> for Expr {
-	fn from(node: PreUpdateExpression) -> Expr { Expr::PreUpdateExpression(node) }
+impl From<PreUpdateExpression> for JsAnyExpression {
+	fn from(node: PreUpdateExpression) -> JsAnyExpression {
+		JsAnyExpression::PreUpdateExpression(node)
+	}
 }
-impl From<PostUpdateExpression> for Expr {
-	fn from(node: PostUpdateExpression) -> Expr { Expr::PostUpdateExpression(node) }
+impl From<PostUpdateExpression> for JsAnyExpression {
+	fn from(node: PostUpdateExpression) -> JsAnyExpression {
+		JsAnyExpression::PostUpdateExpression(node)
+	}
 }
-impl From<BinExpr> for Expr {
-	fn from(node: BinExpr) -> Expr { Expr::BinExpr(node) }
+impl From<BinExpr> for JsAnyExpression {
+	fn from(node: BinExpr) -> JsAnyExpression { JsAnyExpression::BinExpr(node) }
 }
-impl From<CondExpr> for Expr {
-	fn from(node: CondExpr) -> Expr { Expr::CondExpr(node) }
+impl From<CondExpr> for JsAnyExpression {
+	fn from(node: CondExpr) -> JsAnyExpression { JsAnyExpression::CondExpr(node) }
 }
-impl From<AssignExpr> for Expr {
-	fn from(node: AssignExpr) -> Expr { Expr::AssignExpr(node) }
+impl From<AssignExpr> for JsAnyExpression {
+	fn from(node: AssignExpr) -> JsAnyExpression { JsAnyExpression::AssignExpr(node) }
 }
-impl From<SequenceExpr> for Expr {
-	fn from(node: SequenceExpr) -> Expr { Expr::SequenceExpr(node) }
+impl From<SequenceExpr> for JsAnyExpression {
+	fn from(node: SequenceExpr) -> JsAnyExpression { JsAnyExpression::SequenceExpr(node) }
 }
-impl From<FnExpr> for Expr {
-	fn from(node: FnExpr) -> Expr { Expr::FnExpr(node) }
+impl From<FnExpr> for JsAnyExpression {
+	fn from(node: FnExpr) -> JsAnyExpression { JsAnyExpression::FnExpr(node) }
 }
-impl From<ClassExpr> for Expr {
-	fn from(node: ClassExpr) -> Expr { Expr::ClassExpr(node) }
+impl From<ClassExpr> for JsAnyExpression {
+	fn from(node: ClassExpr) -> JsAnyExpression { JsAnyExpression::ClassExpr(node) }
 }
-impl From<NewTarget> for Expr {
-	fn from(node: NewTarget) -> Expr { Expr::NewTarget(node) }
+impl From<NewTarget> for JsAnyExpression {
+	fn from(node: NewTarget) -> JsAnyExpression { JsAnyExpression::NewTarget(node) }
 }
-impl From<ImportMeta> for Expr {
-	fn from(node: ImportMeta) -> Expr { Expr::ImportMeta(node) }
+impl From<ImportMeta> for JsAnyExpression {
+	fn from(node: ImportMeta) -> JsAnyExpression { JsAnyExpression::ImportMeta(node) }
 }
-impl From<SuperCall> for Expr {
-	fn from(node: SuperCall) -> Expr { Expr::SuperCall(node) }
+impl From<SuperCall> for JsAnyExpression {
+	fn from(node: SuperCall) -> JsAnyExpression { JsAnyExpression::SuperCall(node) }
 }
-impl From<ImportCall> for Expr {
-	fn from(node: ImportCall) -> Expr { Expr::ImportCall(node) }
+impl From<ImportCall> for JsAnyExpression {
+	fn from(node: ImportCall) -> JsAnyExpression { JsAnyExpression::ImportCall(node) }
 }
-impl From<YieldExpr> for Expr {
-	fn from(node: YieldExpr) -> Expr { Expr::YieldExpr(node) }
+impl From<YieldExpr> for JsAnyExpression {
+	fn from(node: YieldExpr) -> JsAnyExpression { JsAnyExpression::YieldExpr(node) }
 }
-impl From<AwaitExpr> for Expr {
-	fn from(node: AwaitExpr) -> Expr { Expr::AwaitExpr(node) }
+impl From<AwaitExpr> for JsAnyExpression {
+	fn from(node: AwaitExpr) -> JsAnyExpression { JsAnyExpression::AwaitExpr(node) }
 }
-impl From<PrivatePropAccess> for Expr {
-	fn from(node: PrivatePropAccess) -> Expr { Expr::PrivatePropAccess(node) }
+impl From<PrivatePropAccess> for JsAnyExpression {
+	fn from(node: PrivatePropAccess) -> JsAnyExpression { JsAnyExpression::PrivatePropAccess(node) }
 }
-impl From<TsNonNull> for Expr {
-	fn from(node: TsNonNull) -> Expr { Expr::TsNonNull(node) }
+impl From<TsNonNull> for JsAnyExpression {
+	fn from(node: TsNonNull) -> JsAnyExpression { JsAnyExpression::TsNonNull(node) }
 }
-impl From<TsAssertion> for Expr {
-	fn from(node: TsAssertion) -> Expr { Expr::TsAssertion(node) }
+impl From<TsAssertion> for JsAnyExpression {
+	fn from(node: TsAssertion) -> JsAnyExpression { JsAnyExpression::TsAssertion(node) }
 }
-impl From<TsConstAssertion> for Expr {
-	fn from(node: TsConstAssertion) -> Expr { Expr::TsConstAssertion(node) }
+impl From<TsConstAssertion> for JsAnyExpression {
+	fn from(node: TsConstAssertion) -> JsAnyExpression { JsAnyExpression::TsConstAssertion(node) }
 }
-impl From<JsUnknownExpression> for Expr {
-	fn from(node: JsUnknownExpression) -> Expr { Expr::JsUnknownExpression(node) }
+impl From<JsUnknownExpression> for JsAnyExpression {
+	fn from(node: JsUnknownExpression) -> JsAnyExpression {
+		JsAnyExpression::JsUnknownExpression(node)
+	}
 }
-impl AstNode for Expr {
+impl AstNode for JsAnyExpression {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			ARROW_EXPR
@@ -4756,76 +4805,82 @@ impl AstNode for Expr {
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			ARROW_EXPR => Expr::ArrowExpr(ArrowExpr { syntax }),
-			LITERAL => Expr::Literal(Literal { syntax }),
-			TEMPLATE => Expr::Template(Template { syntax }),
-			NAME_REF => Expr::NameRef(NameRef { syntax }),
-			THIS_EXPR => Expr::ThisExpr(ThisExpr { syntax }),
-			ARRAY_EXPR => Expr::ArrayExpr(ArrayExpr { syntax }),
-			OBJECT_EXPR => Expr::ObjectExpr(ObjectExpr { syntax }),
-			GROUPING_EXPR => Expr::GroupingExpr(GroupingExpr { syntax }),
-			BRACKET_EXPR => Expr::BracketExpr(BracketExpr { syntax }),
-			DOT_EXPR => Expr::DotExpr(DotExpr { syntax }),
-			NEW_EXPR => Expr::NewExpr(NewExpr { syntax }),
-			CALL_EXPR => Expr::CallExpr(CallExpr { syntax }),
-			UNARY_EXPR => Expr::UnaryExpr(UnaryExpr { syntax }),
-			PRE_UPDATE_EXPRESSION => Expr::PreUpdateExpression(PreUpdateExpression { syntax }),
-			POST_UPDATE_EXPRESSION => Expr::PostUpdateExpression(PostUpdateExpression { syntax }),
-			BIN_EXPR => Expr::BinExpr(BinExpr { syntax }),
-			COND_EXPR => Expr::CondExpr(CondExpr { syntax }),
-			ASSIGN_EXPR => Expr::AssignExpr(AssignExpr { syntax }),
-			SEQUENCE_EXPR => Expr::SequenceExpr(SequenceExpr { syntax }),
-			FN_EXPR => Expr::FnExpr(FnExpr { syntax }),
-			CLASS_EXPR => Expr::ClassExpr(ClassExpr { syntax }),
-			NEW_TARGET => Expr::NewTarget(NewTarget { syntax }),
-			IMPORT_META => Expr::ImportMeta(ImportMeta { syntax }),
-			SUPER_CALL => Expr::SuperCall(SuperCall { syntax }),
-			IMPORT_CALL => Expr::ImportCall(ImportCall { syntax }),
-			YIELD_EXPR => Expr::YieldExpr(YieldExpr { syntax }),
-			AWAIT_EXPR => Expr::AwaitExpr(AwaitExpr { syntax }),
-			PRIVATE_PROP_ACCESS => Expr::PrivatePropAccess(PrivatePropAccess { syntax }),
-			TS_NON_NULL => Expr::TsNonNull(TsNonNull { syntax }),
-			TS_ASSERTION => Expr::TsAssertion(TsAssertion { syntax }),
-			TS_CONST_ASSERTION => Expr::TsConstAssertion(TsConstAssertion { syntax }),
-			JS_UNKNOWN_EXPRESSION => Expr::JsUnknownExpression(JsUnknownExpression { syntax }),
+			ARROW_EXPR => JsAnyExpression::ArrowExpr(ArrowExpr { syntax }),
+			LITERAL => JsAnyExpression::Literal(Literal { syntax }),
+			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
+			NAME_REF => JsAnyExpression::NameRef(NameRef { syntax }),
+			THIS_EXPR => JsAnyExpression::ThisExpr(ThisExpr { syntax }),
+			ARRAY_EXPR => JsAnyExpression::ArrayExpr(ArrayExpr { syntax }),
+			OBJECT_EXPR => JsAnyExpression::ObjectExpr(ObjectExpr { syntax }),
+			GROUPING_EXPR => JsAnyExpression::GroupingExpr(GroupingExpr { syntax }),
+			BRACKET_EXPR => JsAnyExpression::BracketExpr(BracketExpr { syntax }),
+			DOT_EXPR => JsAnyExpression::DotExpr(DotExpr { syntax }),
+			NEW_EXPR => JsAnyExpression::NewExpr(NewExpr { syntax }),
+			CALL_EXPR => JsAnyExpression::CallExpr(CallExpr { syntax }),
+			UNARY_EXPR => JsAnyExpression::UnaryExpr(UnaryExpr { syntax }),
+			PRE_UPDATE_EXPRESSION => {
+				JsAnyExpression::PreUpdateExpression(PreUpdateExpression { syntax })
+			}
+			POST_UPDATE_EXPRESSION => {
+				JsAnyExpression::PostUpdateExpression(PostUpdateExpression { syntax })
+			}
+			BIN_EXPR => JsAnyExpression::BinExpr(BinExpr { syntax }),
+			COND_EXPR => JsAnyExpression::CondExpr(CondExpr { syntax }),
+			ASSIGN_EXPR => JsAnyExpression::AssignExpr(AssignExpr { syntax }),
+			SEQUENCE_EXPR => JsAnyExpression::SequenceExpr(SequenceExpr { syntax }),
+			FN_EXPR => JsAnyExpression::FnExpr(FnExpr { syntax }),
+			CLASS_EXPR => JsAnyExpression::ClassExpr(ClassExpr { syntax }),
+			NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
+			IMPORT_META => JsAnyExpression::ImportMeta(ImportMeta { syntax }),
+			SUPER_CALL => JsAnyExpression::SuperCall(SuperCall { syntax }),
+			IMPORT_CALL => JsAnyExpression::ImportCall(ImportCall { syntax }),
+			YIELD_EXPR => JsAnyExpression::YieldExpr(YieldExpr { syntax }),
+			AWAIT_EXPR => JsAnyExpression::AwaitExpr(AwaitExpr { syntax }),
+			PRIVATE_PROP_ACCESS => JsAnyExpression::PrivatePropAccess(PrivatePropAccess { syntax }),
+			TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
+			TS_ASSERTION => JsAnyExpression::TsAssertion(TsAssertion { syntax }),
+			TS_CONST_ASSERTION => JsAnyExpression::TsConstAssertion(TsConstAssertion { syntax }),
+			JS_UNKNOWN_EXPRESSION => {
+				JsAnyExpression::JsUnknownExpression(JsUnknownExpression { syntax })
+			}
 			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			Expr::ArrowExpr(it) => &it.syntax,
-			Expr::Literal(it) => &it.syntax,
-			Expr::Template(it) => &it.syntax,
-			Expr::NameRef(it) => &it.syntax,
-			Expr::ThisExpr(it) => &it.syntax,
-			Expr::ArrayExpr(it) => &it.syntax,
-			Expr::ObjectExpr(it) => &it.syntax,
-			Expr::GroupingExpr(it) => &it.syntax,
-			Expr::BracketExpr(it) => &it.syntax,
-			Expr::DotExpr(it) => &it.syntax,
-			Expr::NewExpr(it) => &it.syntax,
-			Expr::CallExpr(it) => &it.syntax,
-			Expr::UnaryExpr(it) => &it.syntax,
-			Expr::PreUpdateExpression(it) => &it.syntax,
-			Expr::PostUpdateExpression(it) => &it.syntax,
-			Expr::BinExpr(it) => &it.syntax,
-			Expr::CondExpr(it) => &it.syntax,
-			Expr::AssignExpr(it) => &it.syntax,
-			Expr::SequenceExpr(it) => &it.syntax,
-			Expr::FnExpr(it) => &it.syntax,
-			Expr::ClassExpr(it) => &it.syntax,
-			Expr::NewTarget(it) => &it.syntax,
-			Expr::ImportMeta(it) => &it.syntax,
-			Expr::SuperCall(it) => &it.syntax,
-			Expr::ImportCall(it) => &it.syntax,
-			Expr::YieldExpr(it) => &it.syntax,
-			Expr::AwaitExpr(it) => &it.syntax,
-			Expr::PrivatePropAccess(it) => &it.syntax,
-			Expr::TsNonNull(it) => &it.syntax,
-			Expr::TsAssertion(it) => &it.syntax,
-			Expr::TsConstAssertion(it) => &it.syntax,
-			Expr::JsUnknownExpression(it) => &it.syntax,
+			JsAnyExpression::ArrowExpr(it) => &it.syntax,
+			JsAnyExpression::Literal(it) => &it.syntax,
+			JsAnyExpression::Template(it) => &it.syntax,
+			JsAnyExpression::NameRef(it) => &it.syntax,
+			JsAnyExpression::ThisExpr(it) => &it.syntax,
+			JsAnyExpression::ArrayExpr(it) => &it.syntax,
+			JsAnyExpression::ObjectExpr(it) => &it.syntax,
+			JsAnyExpression::GroupingExpr(it) => &it.syntax,
+			JsAnyExpression::BracketExpr(it) => &it.syntax,
+			JsAnyExpression::DotExpr(it) => &it.syntax,
+			JsAnyExpression::NewExpr(it) => &it.syntax,
+			JsAnyExpression::CallExpr(it) => &it.syntax,
+			JsAnyExpression::UnaryExpr(it) => &it.syntax,
+			JsAnyExpression::PreUpdateExpression(it) => &it.syntax,
+			JsAnyExpression::PostUpdateExpression(it) => &it.syntax,
+			JsAnyExpression::BinExpr(it) => &it.syntax,
+			JsAnyExpression::CondExpr(it) => &it.syntax,
+			JsAnyExpression::AssignExpr(it) => &it.syntax,
+			JsAnyExpression::SequenceExpr(it) => &it.syntax,
+			JsAnyExpression::FnExpr(it) => &it.syntax,
+			JsAnyExpression::ClassExpr(it) => &it.syntax,
+			JsAnyExpression::NewTarget(it) => &it.syntax,
+			JsAnyExpression::ImportMeta(it) => &it.syntax,
+			JsAnyExpression::SuperCall(it) => &it.syntax,
+			JsAnyExpression::ImportCall(it) => &it.syntax,
+			JsAnyExpression::YieldExpr(it) => &it.syntax,
+			JsAnyExpression::AwaitExpr(it) => &it.syntax,
+			JsAnyExpression::PrivatePropAccess(it) => &it.syntax,
+			JsAnyExpression::TsNonNull(it) => &it.syntax,
+			JsAnyExpression::TsAssertion(it) => &it.syntax,
+			JsAnyExpression::TsConstAssertion(it) => &it.syntax,
+			JsAnyExpression::JsUnknownExpression(it) => &it.syntax,
 		}
 	}
 }
@@ -4836,7 +4891,7 @@ impl AstNode for ForHead {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			VAR_DECL => true,
-			k if Expr::can_cast(k) => true,
+			k if JsAnyExpression::can_cast(k) => true,
 			_ => false,
 		}
 	}
@@ -4844,8 +4899,8 @@ impl AstNode for ForHead {
 		let res = match syntax.kind() {
 			VAR_DECL => ForHead::VarDecl(VarDecl { syntax }),
 			_ => {
-				if let Some(expr) = Expr::cast(syntax) {
-					return Some(ForHead::Expr(expr));
+				if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
+					return Some(ForHead::JsAnyExpression(js_any_expression));
 				}
 				return None;
 			}
@@ -4855,7 +4910,7 @@ impl AstNode for ForHead {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			ForHead::VarDecl(it) => &it.syntax,
-			ForHead::Expr(it) => it.syntax(),
+			ForHead::JsAnyExpression(it) => it.syntax(),
 		}
 	}
 }
@@ -5154,7 +5209,7 @@ impl AstNode for ExprOrBlock {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			BLOCK_STMT => true,
-			k if Expr::can_cast(k) => true,
+			k if JsAnyExpression::can_cast(k) => true,
 			_ => false,
 		}
 	}
@@ -5162,8 +5217,8 @@ impl AstNode for ExprOrBlock {
 		let res = match syntax.kind() {
 			BLOCK_STMT => ExprOrBlock::BlockStmt(BlockStmt { syntax }),
 			_ => {
-				if let Some(expr) = Expr::cast(syntax) {
-					return Some(ExprOrBlock::Expr(expr));
+				if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
+					return Some(ExprOrBlock::JsAnyExpression(js_any_expression));
 				}
 				return None;
 			}
@@ -5173,7 +5228,7 @@ impl AstNode for ExprOrBlock {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			ExprOrBlock::BlockStmt(it) => &it.syntax,
-			ExprOrBlock::Expr(it) => it.syntax(),
+			ExprOrBlock::JsAnyExpression(it) => it.syntax(),
 		}
 	}
 }
@@ -5389,7 +5444,7 @@ impl AstNode for ExprOrSpread {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			SPREAD_ELEMENT | GROUPING_EXPR => true,
-			k if Expr::can_cast(k) => true,
+			k if JsAnyExpression::can_cast(k) => true,
 			_ => false,
 		}
 	}
@@ -5398,8 +5453,8 @@ impl AstNode for ExprOrSpread {
 			SPREAD_ELEMENT => ExprOrSpread::SpreadElement(SpreadElement { syntax }),
 			GROUPING_EXPR => ExprOrSpread::GroupingExpr(GroupingExpr { syntax }),
 			_ => {
-				if let Some(expr) = Expr::cast(syntax) {
-					return Some(ExprOrSpread::Expr(expr));
+				if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
+					return Some(ExprOrSpread::JsAnyExpression(js_any_expression));
 				}
 				return None;
 			}
@@ -5410,7 +5465,7 @@ impl AstNode for ExprOrSpread {
 		match self {
 			ExprOrSpread::SpreadElement(it) => &it.syntax,
 			ExprOrSpread::GroupingExpr(it) => &it.syntax,
-			ExprOrSpread::Expr(it) => it.syntax(),
+			ExprOrSpread::JsAnyExpression(it) => it.syntax(),
 		}
 	}
 }
@@ -5418,7 +5473,7 @@ impl AstNode for PatternOrExpr {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			k if Pattern::can_cast(k) => true,
-			k if Expr::can_cast(k) => true,
+			k if JsAnyExpression::can_cast(k) => true,
 			_ => false,
 		}
 	}
@@ -5426,15 +5481,15 @@ impl AstNode for PatternOrExpr {
 		if let Some(pattern) = Pattern::cast(syntax.clone()) {
 			return Some(PatternOrExpr::Pattern(pattern));
 		}
-		if let Some(expr) = Expr::cast(syntax) {
-			return Some(PatternOrExpr::Expr(expr));
+		if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
+			return Some(PatternOrExpr::JsAnyExpression(js_any_expression));
 		}
 		None
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			PatternOrExpr::Pattern(it) => it.syntax(),
-			PatternOrExpr::Expr(it) => it.syntax(),
+			PatternOrExpr::JsAnyExpression(it) => it.syntax(),
 		}
 	}
 }
@@ -5725,12 +5780,7 @@ impl AstNode for TsNamespaceBody {
 		}
 	}
 }
-impl std::fmt::Display for Stmt {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ModuleItem {
+impl std::fmt::Display for JsAnyStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -5740,7 +5790,7 @@ impl std::fmt::Display for Decl {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Expr {
+impl std::fmt::Display for JsAnyExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -5880,12 +5930,12 @@ impl std::fmt::Display for Ident {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Script {
+impl std::fmt::Display for JsScript {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Module {
+impl std::fmt::Display for JsModule {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -5976,6 +6026,51 @@ impl std::fmt::Display for TryStmt {
 	}
 }
 impl std::fmt::Display for DebuggerStmt {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ImportDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ExportNamed {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ExportDefaultDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ExportDefaultExpr {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ExportWildcard {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ExportDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsImportEqualsDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsExportAssignment {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsNamespaceExportDecl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6381,51 +6476,6 @@ impl std::fmt::Display for TsInterfaceDecl {
 	}
 }
 impl std::fmt::Display for Declarator {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ImportDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ExportNamed {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ExportDefaultDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ExportDefaultExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ExportWildcard {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ExportDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsImportEqualsDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsExportAssignment {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsNamespaceExportDecl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
