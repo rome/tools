@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..45
-=======
-MODULE@0..44
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..44
   LIST@0..44
     FN_DECL@0..44
       None FUNCTION_KW@0..8 "function" Whitespace(1)
@@ -12,60 +8,20 @@ MODULE@0..44
       PARAMETER_LIST@13..16
         None L_PAREN@13..14 "(" None
         LIST@14..14
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        R_PAREN@14..15 ")"
-      WHITESPACE@15..16 " "
-      JS_BLOCK_STATEMENT@16..44
-        L_CURLY@16..17 "{"
-        WHITESPACE@17..19 "\n "
-        LIST@19..42
-          JS_EXPRESSION_STATEMENT@19..29
-            YIELD_EXPR@19..28
-              YIELD_KW@19..24 "yield"
-              WHITESPACE@24..25 " "
-              NAME_REF@25..28
-                IDENT@25..28 "foo"
-            SEMICOLON@28..29 ";"
-          WHITESPACE@29..31 "\n "
-          JS_EXPRESSION_STATEMENT@31..42
-            YIELD_EXPR@31..41
-              YIELD_KW@31..36 "yield"
-              STAR@36..37 "*"
-              WHITESPACE@37..38 " "
-=======
-         R_PAREN@14..16 ")" " "
-=======
-        None R_PAREN@14..16 ")" Whitespace(1)
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
         None R_PAREN@14..15 ")" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-      BLOCK_STMT@16..44
+      JS_BLOCK_STATEMENT@16..44
         None L_CURLY@16..17 "{" None
         LIST@17..42
-          EXPR_STMT@17..29
+          JS_EXPRESSION_STATEMENT@17..29
             YIELD_EXPR@17..28
               Whitespace(2) YIELD_KW@19..24 "yield" Whitespace(1)
               NAME_REF@25..28
                 None IDENT@25..28 "foo" None
             None SEMICOLON@28..29 ";" None
-          EXPR_STMT@29..42
+          JS_EXPRESSION_STATEMENT@29..42
             YIELD_EXPR@29..41
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "\n " YIELD_KW@29..36 "yield" 
-               STAR@36..38 "*" " "
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-              Whitespace(2) YIELD_KW@29..36 "yield" None
-              None STAR@36..38 "*" Whitespace(1)
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
               Whitespace(2) YIELD_KW@31..36 "yield" None
               None STAR@36..37 "*" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
               NAME_REF@38..41
                 None IDENT@38..41 "foo" None
             None SEMICOLON@41..42 ";" None

@@ -29,6 +29,7 @@ impl Trivia {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[allow(clippy::box_vec)]
 pub enum GreenTokenTrivia {
 	None,
 	Whitespace(usize),

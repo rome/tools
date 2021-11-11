@@ -1,33 +1,14 @@
-<<<<<<< HEAD
-JS_MODULE@0..29
-=======
-MODULE@0..28
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..28
   LIST@0..28
     WHILE_STMT@0..15
       None WHILE_KW@0..5 "while" Whitespace(1)
       CONDITION@6..13
         None L_PAREN@6..7 "(" None
         LITERAL@7..11
-<<<<<<< HEAD
-<<<<<<< HEAD
-          TRUE_KW@7..11 "true"
-        R_PAREN@11..12 ")"
-      WHITESPACE@12..13 " "
-      JS_BLOCK_STATEMENT@13..15
-        L_CURLY@13..14 "{"
-=======
-           TRUE_KW@7..11 "true" 
-         R_PAREN@11..13 ")" " "
-      BLOCK_STMT@13..15
-         L_CURLY@13..14 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
           None TRUE_KW@7..11 "true" None
         None R_PAREN@11..12 ")" Whitespace(1)
-      BLOCK_STMT@13..15
+      JS_BLOCK_STATEMENT@13..15
         None L_CURLY@13..14 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@14..14
         None R_CURLY@14..15 "}" None
     WHILE_STMT@15..28
@@ -35,24 +16,9 @@ MODULE@0..28
       CONDITION@22..26
         None L_PAREN@22..23 "(" None
         LITERAL@23..24
-<<<<<<< HEAD
-<<<<<<< HEAD
-          NUMBER@23..24 "5"
-        R_PAREN@24..25 ")"
-      WHITESPACE@25..26 " "
-      JS_BLOCK_STATEMENT@26..28
-        L_CURLY@26..27 "{"
-=======
-           NUMBER@23..24 "5" 
-         R_PAREN@24..26 ")" " "
-      BLOCK_STMT@26..28
-         L_CURLY@26..27 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
           None NUMBER@23..24 "5" None
         None R_PAREN@24..25 ")" Whitespace(1)
-      BLOCK_STMT@26..28
+      JS_BLOCK_STATEMENT@26..28
         None L_CURLY@26..27 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@27..27
         None R_CURLY@27..28 "}" None

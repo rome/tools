@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..28
-=======
-MODULE@0..27
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..27
   LIST@0..27
     IMPORT_DECL@0..27
       None IMPORT_KW@0..6 "import" Whitespace(1)

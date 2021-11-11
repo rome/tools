@@ -1,74 +1,23 @@
-<<<<<<< HEAD
-JS_MODULE@0..43
-=======
-MODULE@0..42
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..42
   LIST@0..42
     JS_EXPRESSION_STATEMENT@0..42
       ARROW_EXPR@0..42
         PARAMETER_LIST@0..3
           None L_PAREN@0..1 "(" None
           LIST@1..1
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          R_PAREN@1..2 ")"
-        WHITESPACE@2..3 " "
-        FAT_ARROW@3..5 "=>"
-        WHITESPACE@5..6 " "
-        JS_BLOCK_STATEMENT@6..42
-          L_CURLY@6..7 "{"
-          WHITESPACE@7..10 "\n  "
-          LIST@10..40
-            JS_RETURN_STATEMENT@10..17
-              RETURN_KW@10..16 "return"
-              SEMICOLON@16..17 ";"
-            WHITESPACE@17..20 "\n  "
-            JS_RETURN_STATEMENT@20..31
-              RETURN_KW@20..26 "return"
-              WHITESPACE@26..27 " "
-              NAME_REF@27..30
-                IDENT@27..30 "foo"
-              SEMICOLON@30..31 ";"
-            WHITESPACE@31..34 "\n  "
-            JS_RETURN_STATEMENT@34..40
-              RETURN_KW@34..40 "return"
-          WHITESPACE@40..41 "\n"
-          R_CURLY@41..42 "}"
-  WHITESPACE@42..43 "\n"
-=======
-           R_PAREN@1..3 ")" " "
-         FAT_ARROW@3..6 "=>" " "
-=======
-          None R_PAREN@1..3 ")" Whitespace(1)
-        None FAT_ARROW@3..6 "=>" Whitespace(1)
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
           None R_PAREN@1..2 ")" Whitespace(1)
         None FAT_ARROW@3..5 "=>" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-        BLOCK_STMT@6..42
+        JS_BLOCK_STATEMENT@6..42
           None L_CURLY@6..7 "{" None
           LIST@7..40
-            RETURN_STMT@7..17
+            JS_RETURN_STATEMENT@7..17
               Whitespace(3) RETURN_KW@10..16 "return" None
               None SEMICOLON@16..17 ";" None
-            RETURN_STMT@17..31
+            JS_RETURN_STATEMENT@17..31
               Whitespace(3) RETURN_KW@20..26 "return" Whitespace(1)
               NAME_REF@27..30
                 None IDENT@27..30 "foo" None
               None SEMICOLON@30..31 ";" None
-            RETURN_STMT@31..40
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "\n  " RETURN_KW@31..40 "return" 
-          "\n" R_CURLY@40..42 "}" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-              Whitespace(3) RETURN_KW@31..40 "return" None
-          Whitespace(1) R_CURLY@40..42 "}" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
+            JS_RETURN_STATEMENT@31..40
               Whitespace(3) RETURN_KW@34..40 "return" None
           Whitespace(1) R_CURLY@41..42 "}" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)

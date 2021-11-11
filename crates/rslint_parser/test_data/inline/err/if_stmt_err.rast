@@ -1,113 +1,47 @@
-<<<<<<< HEAD
-JS_MODULE@0..61
+JS_MODULE@0..60
   LIST@0..60
     JS_IF_STATEMENT@0..17
-      IF_KW@0..2 "if"
-      WHITESPACE@2..3 " "
-      L_PAREN@3..4 "("
-      LITERAL@4..8
-        TRUE_KW@4..8 "true"
-      R_PAREN@8..9 ")"
-      WHITESPACE@9..10 " "
-      JS_ELSE_CLAUSE@10..17
-        ELSE_KW@10..14 "else"
-        WHITESPACE@14..15 " "
-        JS_BLOCK_STATEMENT@15..17
-          L_CURLY@15..16 "{"
-          LIST@16..16
-          R_CURLY@16..17 "}"
-    WHITESPACE@17..18 "\n"
-    JS_IF_STATEMENT@18..43
-      IF_KW@18..20 "if"
-      WHITESPACE@20..21 " "
-      L_PAREN@21..22 "("
-      LITERAL@22..26
-        TRUE_KW@22..26 "true"
-      R_PAREN@26..27 ")"
-      WHITESPACE@27..28 " "
-      JS_ELSE_CLAUSE@28..43
-        ELSE_KW@28..32 "else"
-        WHITESPACE@32..33 "\n"
-        JS_IF_STATEMENT@33..43
-          IF_KW@33..35 "if"
-          WHITESPACE@35..36 " "
-          JS_ELSE_CLAUSE@36..43
-            ELSE_KW@36..40 "else"
-            WHITESPACE@40..41 " "
-            JS_BLOCK_STATEMENT@41..43
-              L_CURLY@41..42 "{"
-              LIST@42..42
-              R_CURLY@42..43 "}"
-    WHITESPACE@43..44 "\n"
-    JS_IF_STATEMENT@44..60
-      IF_KW@44..46 "if"
-      WHITESPACE@46..47 " "
-      L_PAREN@47..48 "("
-      R_PAREN@48..49 ")"
-      WHITESPACE@49..50 " "
-      JS_BLOCK_STATEMENT@50..52
-        L_CURLY@50..51 "{"
-        LIST@51..51
-        R_CURLY@51..52 "}"
-      WHITESPACE@52..53 " "
-      JS_ELSE_CLAUSE@53..60
-        ELSE_KW@53..57 "else"
-        WHITESPACE@57..58 " "
-        JS_BLOCK_STATEMENT@58..60
-          L_CURLY@58..59 "{"
-          LIST@59..59
-          R_CURLY@59..60 "}"
-  WHITESPACE@60..61 "\n"
-=======
-MODULE@0..60
-  LIST@0..60
-    IF_STMT@0..17
       None IF_KW@0..2 "if" Whitespace(1)
-      CONDITION@3..10
-        None L_PAREN@3..4 "(" None
-        LITERAL@4..8
-          None TRUE_KW@4..8 "true" None
-        None R_PAREN@8..9 ")" Whitespace(1)
-      None ELSE_KW@10..14 "else" Whitespace(1)
-      BLOCK_STMT@15..17
-        None L_CURLY@15..16 "{" None
-        LIST@16..16
-        None R_CURLY@16..17 "}" None
-    IF_STMT@17..43
+      None L_PAREN@3..4 "(" None
+      LITERAL@4..8
+        None TRUE_KW@4..8 "true" None
+      None R_PAREN@8..9 ")" Whitespace(1)
+      JS_ELSE_CLAUSE@10..17
+        None ELSE_KW@10..14 "else" Whitespace(1)
+        JS_BLOCK_STATEMENT@15..17
+          None L_CURLY@15..16 "{" None
+          LIST@16..16
+          None R_CURLY@16..17 "}" None
+    JS_IF_STATEMENT@17..43
       Whitespace(1) IF_KW@18..20 "if" Whitespace(1)
-      CONDITION@21..28
-        None L_PAREN@21..22 "(" None
-        LITERAL@22..26
-          None TRUE_KW@22..26 "true" None
-        None R_PAREN@26..27 ")" Whitespace(1)
-      None ELSE_KW@28..32 "else" None
-      IF_STMT@32..43
-        Whitespace(1) IF_KW@33..35 "if" Whitespace(1)
-        CONDITION@36..36
-        None ELSE_KW@36..40 "else" Whitespace(1)
-        BLOCK_STMT@41..43
-          None L_CURLY@41..42 "{" None
-          LIST@42..42
-          None R_CURLY@42..43 "}" None
-    IF_STMT@43..60
+      None L_PAREN@21..22 "(" None
+      LITERAL@22..26
+        None TRUE_KW@22..26 "true" None
+      None R_PAREN@26..27 ")" Whitespace(1)
+      JS_ELSE_CLAUSE@28..43
+        None ELSE_KW@28..32 "else" None
+        JS_IF_STATEMENT@32..43
+          Whitespace(1) IF_KW@33..35 "if" Whitespace(1)
+          JS_ELSE_CLAUSE@36..43
+            None ELSE_KW@36..40 "else" Whitespace(1)
+            JS_BLOCK_STATEMENT@41..43
+              None L_CURLY@41..42 "{" None
+              LIST@42..42
+              None R_CURLY@42..43 "}" None
+    JS_IF_STATEMENT@43..60
       Whitespace(1) IF_KW@44..46 "if" Whitespace(1)
-      CONDITION@47..50
-        None L_PAREN@47..48 "(" None
-        None R_PAREN@48..49 ")" Whitespace(1)
-      BLOCK_STMT@50..53
+      None L_PAREN@47..48 "(" None
+      None R_PAREN@48..49 ")" Whitespace(1)
+      JS_BLOCK_STATEMENT@50..53
         None L_CURLY@50..51 "{" None
         LIST@51..51
         None R_CURLY@51..52 "}" Whitespace(1)
-      None ELSE_KW@53..57 "else" Whitespace(1)
-      BLOCK_STMT@58..60
-        None L_CURLY@58..59 "{" None
-        LIST@59..59
-<<<<<<< HEAD
-         R_CURLY@59..60 "}" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-        None R_CURLY@59..60 "}" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
+      JS_ELSE_CLAUSE@53..60
+        None ELSE_KW@53..57 "else" Whitespace(1)
+        JS_BLOCK_STATEMENT@58..60
+          None L_CURLY@58..59 "{" None
+          LIST@59..59
+          None R_CURLY@59..60 "}" None
 --
 error[SyntaxError]: Expected a statement or declaration, but found none
   ┌─ if_stmt_err.js:1:11

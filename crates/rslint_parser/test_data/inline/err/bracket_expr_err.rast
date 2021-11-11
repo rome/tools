@@ -1,51 +1,24 @@
-<<<<<<< HEAD
-JS_MODULE@0..19
-  LIST@0..19
-    JS_EXPRESSION_STATEMENT@0..5
-      BRACKET_EXPR@0..5
-        NAME_REF@0..3
-          IDENT@0..3 "foo"
-        L_BRACK@3..4 "["
-        R_BRACK@4..5 "]"
-    WHITESPACE@5..6 "\n"
-    JS_EXPRESSION_STATEMENT@6..13
-      BRACKET_EXPR@6..13
-        NAME_REF@6..9
-          IDENT@6..9 "foo"
-        QUESTIONDOT@9..11 "?."
-        L_BRACK@11..12 "["
-        R_BRACK@12..13 "]"
-    WHITESPACE@13..14 "\n"
-    JS_EXPRESSION_STATEMENT@14..19
-      BRACKET_EXPR@14..19
-        NAME_REF@14..17
-          IDENT@14..17 "foo"
-        L_BRACK@17..18 "["
-        WHITESPACE@18..19 "\n"
-        ERROR@19..19
-=======
-MODULE@0..18
+JS_MODULE@0..18
   LIST@0..18
-    EXPR_STMT@0..5
+    JS_EXPRESSION_STATEMENT@0..5
       BRACKET_EXPR@0..5
         NAME_REF@0..3
           None IDENT@0..3 "foo" None
         None L_BRACK@3..4 "[" None
         None R_BRACK@4..5 "]" None
-    EXPR_STMT@5..13
+    JS_EXPRESSION_STATEMENT@5..13
       BRACKET_EXPR@5..13
         NAME_REF@5..9
           Whitespace(1) IDENT@6..9 "foo" None
         None QUESTIONDOT@9..11 "?." None
         None L_BRACK@11..12 "[" None
         None R_BRACK@12..13 "]" None
-    EXPR_STMT@13..18
+    JS_EXPRESSION_STATEMENT@13..18
       BRACKET_EXPR@13..18
         NAME_REF@13..17
           Whitespace(1) IDENT@14..17 "foo" None
         None L_BRACK@17..18 "[" None
         ERROR@18..18
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ bracket_expr_err.js:1:5

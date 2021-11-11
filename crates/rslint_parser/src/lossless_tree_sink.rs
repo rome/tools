@@ -207,8 +207,8 @@ impl<'a> LosslessTreeSink<'a> {
 			};
 
 			use GreenTokenTrivia::*;
-			use Trivia::Whitespace as TWhitespace;
 			use Trivia::Comment as TComments;
+			use Trivia::Whitespace as TWhitespace;
 			trivia = match (trivia, current_trivia) {
 				(None, TWhitespace(len)) => Whitespace(len),
 				(None, TComments(len)) => Comment(len),

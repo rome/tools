@@ -1,25 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..24
-  LIST@0..23
-    VAR_DECL@0..13
-      IDENT@0..3 "let"
-      WHITESPACE@3..4 " "
-      LIST@4..13
-        DECLARATOR@4..13
-          SINGLE_PATTERN@4..7
-            NAME@4..7
-              IDENT@4..7 "foo"
-          WHITESPACE@7..8 " "
-          EQ@8..9 "="
-          WHITESPACE@9..10 " "
-          NAME_REF@10..13
-            IDENT@10..13 "bar"
-    WHITESPACE@13..14 " "
-    JS_THROW_STATEMENT@14..23
-      THROW_KW@14..19 "throw"
-      WHITESPACE@19..20 " "
-=======
-MODULE@0..23
+JS_MODULE@0..23
   LIST@0..23
     VAR_DECL@0..14
       None IDENT@0..3 "let" Whitespace(1)
@@ -31,17 +10,8 @@ MODULE@0..23
           None EQ@8..9 "=" Whitespace(1)
           NAME_REF@10..14
             None IDENT@10..13 "bar" Whitespace(1)
-    THROW_STMT@14..23
-<<<<<<< HEAD
-<<<<<<< HEAD
-       THROW_KW@14..20 "throw" " "
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-      None THROW_KW@14..20 "throw" Whitespace(1)
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
+    JS_THROW_STATEMENT@14..23
       None THROW_KW@14..19 "throw" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
       NAME_REF@20..23
         None IDENT@20..23 "foo" None
 --

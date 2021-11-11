@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..99
-=======
-MODULE@0..98
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..98
   LIST@0..98
     CLASS_DECL@0..98
       None CLASS_KW@0..5 "class" Whitespace(1)
@@ -20,25 +16,10 @@ MODULE@0..98
               LIST@24..27
                 SINGLE_PATTERN@24..27
                   NAME@24..27
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    IDENT@24..27 "bar"
-              R_PAREN@27..28 ")"
-            WHITESPACE@28..29 " "
-            JS_BLOCK_STATEMENT@29..31
-              L_CURLY@29..30 "{"
-=======
-                     IDENT@24..27 "bar" 
-               R_PAREN@27..29 ")" " "
-            BLOCK_STMT@29..31
-               L_CURLY@29..30 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
                     None IDENT@24..27 "bar" None
               None R_PAREN@27..28 ")" Whitespace(1)
-            BLOCK_STMT@29..31
+            JS_BLOCK_STATEMENT@29..31
               None L_CURLY@29..30 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               LIST@30..30
               None R_CURLY@30..31 "}" None
           METHOD@31..49
@@ -49,26 +30,9 @@ MODULE@0..98
             PARAMETER_LIST@44..47
               None L_PAREN@44..45 "(" None
               LIST@45..45
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              R_PAREN@45..46 ")"
-            WHITESPACE@46..47 " "
-            JS_BLOCK_STATEMENT@47..49
-              L_CURLY@47..48 "{"
-=======
-               R_PAREN@45..47 ")" " "
-            BLOCK_STMT@47..49
-               L_CURLY@47..48 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-              None R_PAREN@45..47 ")" Whitespace(1)
-=======
               None R_PAREN@45..46 ")" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-            BLOCK_STMT@47..49
+            JS_BLOCK_STATEMENT@47..49
               None L_CURLY@47..48 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               LIST@48..48
               None R_CURLY@48..49 "}" None
           METHOD@49..72
@@ -79,26 +43,9 @@ MODULE@0..98
             PARAMETER_LIST@67..70
               None L_PAREN@67..68 "(" None
               LIST@68..68
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              R_PAREN@68..69 ")"
-            WHITESPACE@69..70 " "
-            JS_BLOCK_STATEMENT@70..72
-              L_CURLY@70..71 "{"
-=======
-               R_PAREN@68..70 ")" " "
-            BLOCK_STMT@70..72
-               L_CURLY@70..71 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-              None R_PAREN@68..70 ")" Whitespace(1)
-=======
               None R_PAREN@68..69 ")" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-            BLOCK_STMT@70..72
+            JS_BLOCK_STATEMENT@70..72
               None L_CURLY@70..71 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               LIST@71..71
               None R_CURLY@71..72 "}" None
           METHOD@72..96
@@ -110,26 +57,9 @@ MODULE@0..98
             PARAMETER_LIST@91..94
               None L_PAREN@91..92 "(" None
               LIST@92..92
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              R_PAREN@92..93 ")"
-            WHITESPACE@93..94 " "
-            JS_BLOCK_STATEMENT@94..96
-              L_CURLY@94..95 "{"
-=======
-               R_PAREN@92..94 ")" " "
-            BLOCK_STMT@94..96
-               L_CURLY@94..95 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-              None R_PAREN@92..94 ")" Whitespace(1)
-=======
               None R_PAREN@92..93 ")" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-            BLOCK_STMT@94..96
+            JS_BLOCK_STATEMENT@94..96
               None L_CURLY@94..95 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               LIST@95..95
               None R_CURLY@95..96 "}" None
         Whitespace(1) R_CURLY@97..98 "}" None

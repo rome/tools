@@ -1,53 +1,18 @@
-<<<<<<< HEAD
-JS_MODULE@0..52
-  LIST@0..51
-    WHILE_STMT@0..13
-      WHILE_KW@0..5 "while"
-      WHITESPACE@5..6 " "
-      CONDITION@6..10
-        LITERAL@6..10
-          TRUE_KW@6..10 "true"
-      WHITESPACE@10..11 " "
-      JS_BLOCK_STATEMENT@11..13
-        L_CURLY@11..12 "{"
-=======
-MODULE@0..51
+JS_MODULE@0..51
   LIST@0..51
     WHILE_STMT@0..13
       None WHILE_KW@0..5 "while" Whitespace(1)
       CONDITION@6..11
         LITERAL@6..11
           None TRUE_KW@6..10 "true" Whitespace(1)
-      BLOCK_STMT@11..13
-<<<<<<< HEAD
-         L_CURLY@11..12 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
+      JS_BLOCK_STATEMENT@11..13
         None L_CURLY@11..12 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@12..12
         None R_CURLY@12..13 "}" None
     WHILE_STMT@13..22
       Whitespace(1) WHILE_KW@14..19 "while" Whitespace(1)
       CONDITION@20..20
-<<<<<<< HEAD
       JS_BLOCK_STATEMENT@20..22
-        L_CURLY@20..21 "{"
-        LIST@21..21
-        R_CURLY@21..22 "}"
-    WHITESPACE@22..23 "\n"
-    WHILE_STMT@23..37
-      WHILE_KW@23..28 "while"
-      WHITESPACE@28..29 " "
-      CONDITION@29..34
-        L_PAREN@29..30 "("
-        LITERAL@30..34
-          TRUE_KW@30..34 "true"
-      WHITESPACE@34..35 " "
-      JS_BLOCK_STATEMENT@35..37
-        L_CURLY@35..36 "{"
-=======
-      BLOCK_STMT@20..22
         None L_CURLY@20..21 "{" None
         LIST@21..21
         None R_CURLY@21..22 "}" None
@@ -57,13 +22,8 @@ MODULE@0..51
         None L_PAREN@29..30 "(" None
         LITERAL@30..35
           None TRUE_KW@30..34 "true" Whitespace(1)
-      BLOCK_STMT@35..37
-<<<<<<< HEAD
-         L_CURLY@35..36 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
+      JS_BLOCK_STATEMENT@35..37
         None L_CURLY@35..36 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@36..36
         None R_CURLY@36..37 "}" None
     WHILE_STMT@37..51

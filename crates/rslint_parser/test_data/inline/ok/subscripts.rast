@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..33
-=======
-MODULE@0..32
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..32
   LIST@0..32
     JS_EXPRESSION_STATEMENT@0..8
       TEMPLATE@0..8
@@ -10,41 +6,15 @@ MODULE@0..32
           None IDENT@0..3 "foo" None
         None BACKTICK@3..4 "`" None
         LIST@4..7
-<<<<<<< HEAD
-<<<<<<< HEAD
-          TEMPLATE_CHUNK@4..7 "bar"
-        BACKTICK@7..8 "`"
-    WHITESPACE@8..9 "\n"
-    JS_EXPRESSION_STATEMENT@9..32
-      BRACKET_EXPR@9..32
-        CALL_EXPR@9..27
-          CALL_EXPR@9..22
-            CALL_EXPR@9..17
-              NAME_REF@9..12
-                IDENT@9..12 "foo"
-=======
-           TEMPLATE_CHUNK@4..7 "bar" 
-         BACKTICK@7..8 "`" 
-=======
           None TEMPLATE_CHUNK@4..7 "bar" None
         None BACKTICK@7..8 "`" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-    EXPR_STMT@8..32
+    JS_EXPRESSION_STATEMENT@8..32
       BRACKET_EXPR@8..32
         CALL_EXPR@8..27
           CALL_EXPR@8..22
             CALL_EXPR@8..17
               NAME_REF@8..12
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "\n" IDENT@8..12 "foo" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-                Whitespace(1) IDENT@8..12 "foo" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
                 Whitespace(1) IDENT@9..12 "foo" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
               ARG_LIST@12..17
                 None L_PAREN@12..13 "(" None
                 LIST@13..16

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..95
-=======
-MODULE@0..94
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..94
   LIST@0..94
     FOR_STMT@0..31
       None FOR_KW@0..3 "for" Whitespace(1)
@@ -30,28 +26,11 @@ MODULE@0..94
       FOR_STMT_UPDATE@24..27
         POST_UPDATE_EXPRESSION@24..27
           NAME_REF@24..25
-<<<<<<< HEAD
-<<<<<<< HEAD
-            IDENT@24..25 "i"
-          PLUS2@25..27 "++"
-      R_PAREN@27..28 ")"
-      WHITESPACE@28..29 " "
-      JS_BLOCK_STATEMENT@29..31
-        L_CURLY@29..30 "{"
-=======
-             IDENT@24..25 "i" 
-           PLUS2@25..27 "++" 
-       R_PAREN@27..29 ")" " "
-      BLOCK_STMT@29..31
-         L_CURLY@29..30 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
             None IDENT@24..25 "i" None
           None PLUS2@25..27 "++" None
       None R_PAREN@27..28 ")" Whitespace(1)
-      BLOCK_STMT@29..31
+      JS_BLOCK_STATEMENT@29..31
         None L_CURLY@29..30 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@30..30
         None R_CURLY@30..31 "}" None
     FOR_OF_STMT@31..63
@@ -77,25 +56,10 @@ MODULE@0..94
       OBJECT_EXPR@57..59
         None L_CURLY@57..58 "{" None
         LIST@58..58
-<<<<<<< HEAD
-<<<<<<< HEAD
-        R_CURLY@58..59 "}"
-      R_PAREN@59..60 ")"
-      WHITESPACE@60..61 " "
-      JS_BLOCK_STATEMENT@61..63
-        L_CURLY@61..62 "{"
-=======
-         R_CURLY@58..59 "}" 
-       R_PAREN@59..61 ")" " "
-      BLOCK_STMT@61..63
-         L_CURLY@61..62 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
         None R_CURLY@58..59 "}" None
       None R_PAREN@59..60 ")" Whitespace(1)
-      BLOCK_STMT@61..63
+      JS_BLOCK_STATEMENT@61..63
         None L_CURLY@61..62 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@62..62
         None R_CURLY@62..63 "}" None
     FOR_IN_STMT@63..82
@@ -108,38 +72,9 @@ MODULE@0..94
       OBJECT_EXPR@76..78
         None L_CURLY@76..77 "{" None
         LIST@77..77
-<<<<<<< HEAD
-<<<<<<< HEAD
-        R_CURLY@77..78 "}"
-      R_PAREN@78..79 ")"
-      WHITESPACE@79..80 " "
-      JS_BLOCK_STATEMENT@80..82
-        L_CURLY@80..81 "{"
-        LIST@81..81
-        R_CURLY@81..82 "}"
-    WHITESPACE@82..83 "\n"
-    FOR_STMT@83..94
-      FOR_KW@83..86 "for"
-      WHITESPACE@86..87 " "
-      L_PAREN@87..88 "("
-      SEMICOLON@88..89 ";"
-      SEMICOLON@89..90 ";"
-      R_PAREN@90..91 ")"
-      WHITESPACE@91..92 " "
-      JS_BLOCK_STATEMENT@92..94
-        L_CURLY@92..93 "{"
-=======
-         R_CURLY@77..78 "}" 
-       R_PAREN@78..80 ")" " "
-=======
         None R_CURLY@77..78 "}" None
-<<<<<<< HEAD
-      None R_PAREN@78..80 ")" Whitespace(1)
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
       None R_PAREN@78..79 ")" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-      BLOCK_STMT@80..82
+      JS_BLOCK_STATEMENT@80..82
         None L_CURLY@80..81 "{" None
         LIST@81..81
         None R_CURLY@81..82 "}" None
@@ -149,12 +84,7 @@ MODULE@0..94
       None SEMICOLON@88..89 ";" None
       None SEMICOLON@89..90 ";" None
       None R_PAREN@90..91 ")" Whitespace(1)
-      BLOCK_STMT@92..94
-<<<<<<< HEAD
-         L_CURLY@92..93 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
+      JS_BLOCK_STATEMENT@92..94
         None L_CURLY@92..93 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         LIST@93..93
         None R_CURLY@93..94 "}" None

@@ -161,15 +161,15 @@ impl GreenNodeData {
 
 	pub fn leading_trailing_total_len(&self) -> (TextSize, TextSize, TextSize) {
 		let leading_len = match self.slice().first() {
-			Some(GreenChild::Node { node, .. }) => node.leading_trailing_total_len().0,
-			Some(GreenChild::Token { token, .. }) => token.leading_trailing_total_len().0,
-			None => 0.into(),
+			Some(Slot::Node { node, .. }) => node.leading_trailing_total_len().0,
+			Some(Slot::Token { token, .. }) => token.leading_trailing_total_len().0,
+			_ => 0.into(),
 		};
 
 		let trailing_len = match self.slice().last() {
-			Some(GreenChild::Node { node, .. }) => node.leading_trailing_total_len().1,
-			Some(GreenChild::Token { token, .. }) => token.leading_trailing_total_len().1,
-			None => 0.into(),
+			Some(Slot::Node { node, .. }) => node.leading_trailing_total_len().1,
+			Some(Slot::Token { token, .. }) => token.leading_trailing_total_len().1,
+			_ => 0.into(),
 		};
 
 		(
@@ -279,22 +279,12 @@ impl GreenNode {
 		I: IntoIterator<Item = Option<GreenElement>>,
 		I::IntoIter: ExactSizeIterator,
 	{
-<<<<<<< HEAD
-		let mut text_len: TextSize = 0.into();
-		let slots = slots.into_iter().map(|el| {
-			let rel_offset = text_len;
-			text_len += el.text_len();
-=======
-		// println!("GreenNode: {:?}", kind);
 		let mut text_with_trivia_len: TextSize = 0.into();
-		let children = children.into_iter().map(|el| {
+		let slots = slots.into_iter().map(|el| {
 			let rel_offset = text_with_trivia_len;
-			text_with_trivia_len += el.text_with_trivia_len();
-			// println!("\t\t{:?} text_len:{:?}", el, el.text_len());
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
 			match el {
 				Some(el) => {
-					text_len += el.text_len();
+					text_with_trivia_len += el.text_with_trivia_len();
 					match el {
 						NodeOrToken::Node(node) => Slot::Node { rel_offset, node },
 						NodeOrToken::Token(token) => Slot::Token { rel_offset, token },
@@ -358,17 +348,12 @@ impl Slot {
 	}
 	#[inline]
 	fn rel_range(&self) -> TextRange {
-<<<<<<< HEAD
-		let text_len = match self.as_ref() {
-			None => TextSize::from(0),
-			Some(element) => element.text_len(),
+		let len = match self {
+			Slot::Node { node, .. } => node.text_with_trivia_len(),
+			Slot::Token { token, .. } => token.text_with_trivia_len(),
+			_ => 0.into(),
 		};
-
-		TextRange::at(self.rel_offset(), text_len)
-=======
-		let len = self.as_ref().text_with_trivia_len();
 		TextRange::at(self.rel_offset(), len)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
 	}
 }
 

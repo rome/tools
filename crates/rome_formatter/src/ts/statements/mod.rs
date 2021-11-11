@@ -1,4 +1,4 @@
-use crate::{concat_elements, hard_line_break, join_elements, FormatElement, Formatter};
+use crate::{hard_line_break, join_elements, FormatElement, Formatter};
 use rslint_parser::ast::{AstNodeList, JsAnyStatement};
 use rslint_parser::AstNode;
 

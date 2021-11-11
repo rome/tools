@@ -1,30 +1,10 @@
-<<<<<<< HEAD
-JS_MODULE@0..34
+JS_MODULE@0..33
   LIST@0..33
     JS_BLOCK_STATEMENT@0..33
-      L_CURLY@0..1 "{"
-      WHITESPACE@1..3 "\n "
-      LIST@3..31
-        ERROR@3..31
-          EXPORT_KW@3..9 "export"
-          WHITESPACE@9..10 " "
-=======
-MODULE@0..33
-  LIST@0..33
-    BLOCK_STMT@0..33
       None L_CURLY@0..1 "{" None
       LIST@1..31
         ERROR@1..31
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "\n " EXPORT_KW@1..10 "export" " "
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-          Whitespace(2) EXPORT_KW@1..10 "export" Whitespace(1)
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
           Whitespace(2) EXPORT_KW@3..9 "export" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
           EXPORT_NAMED@10..31
             None L_CURLY@10..11 "{" Whitespace(1)
             LIST@12..17

@@ -1,96 +1,38 @@
-<<<<<<< HEAD
-JS_MODULE@0..44
-=======
-MODULE@0..43
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..43
   LIST@0..43
     JS_EXPRESSION_STATEMENT@0..9
       ARROW_EXPR@0..9
-<<<<<<< HEAD
-        NAME@0..3
-          IDENT@0..3 "foo"
-        WHITESPACE@3..4 " "
-        FAT_ARROW@4..6 "=>"
-        WHITESPACE@6..7 " "
-        JS_BLOCK_STATEMENT@7..9
-          L_CURLY@7..8 "{"
-          LIST@8..8
-          R_CURLY@8..9 "}"
-    WHITESPACE@9..10 "\n"
-    JS_EXPRESSION_STATEMENT@10..21
-      ARROW_EXPR@10..21
-        NAME@10..15
-          IDENT@10..15 "yield"
-        WHITESPACE@15..16 " "
-        FAT_ARROW@16..18 "=>"
-        WHITESPACE@18..19 " "
-        JS_BLOCK_STATEMENT@19..21
-          L_CURLY@19..20 "{"
-          LIST@20..20
-          R_CURLY@20..21 "}"
-    WHITESPACE@21..22 "\n"
-    JS_EXPRESSION_STATEMENT@22..33
-      ARROW_EXPR@22..33
-        NAME@22..27
-          IDENT@22..27 "await"
-        WHITESPACE@27..28 " "
-        FAT_ARROW@28..30 "=>"
-        WHITESPACE@30..31 " "
-        JS_BLOCK_STATEMENT@31..33
-          L_CURLY@31..32 "{"
-          LIST@32..32
-          R_CURLY@32..33 "}"
-    WHITESPACE@33..34 "\n"
-    JS_EXPRESSION_STATEMENT@34..43
-      ARROW_EXPR@34..43
-        NAME@34..37
-          IDENT@34..37 "foo"
-        WHITESPACE@37..38 " "
-        FAT_ARROW@38..40 "=>"
-        WHITESPACE@40..41 "\n"
-        JS_BLOCK_STATEMENT@41..43
-          L_CURLY@41..42 "{"
-=======
         NAME@0..4
           None IDENT@0..3 "foo" Whitespace(1)
         None FAT_ARROW@4..6 "=>" Whitespace(1)
-        BLOCK_STMT@7..9
+        JS_BLOCK_STATEMENT@7..9
           None L_CURLY@7..8 "{" None
           LIST@8..8
           None R_CURLY@8..9 "}" None
-    EXPR_STMT@9..21
+    JS_EXPRESSION_STATEMENT@9..21
       ARROW_EXPR@9..21
         NAME@9..16
           Whitespace(1) IDENT@10..15 "yield" Whitespace(1)
         None FAT_ARROW@16..18 "=>" Whitespace(1)
-        BLOCK_STMT@19..21
+        JS_BLOCK_STATEMENT@19..21
           None L_CURLY@19..20 "{" None
           LIST@20..20
           None R_CURLY@20..21 "}" None
-    EXPR_STMT@21..33
+    JS_EXPRESSION_STATEMENT@21..33
       ARROW_EXPR@21..33
         NAME@21..28
           Whitespace(1) IDENT@22..27 "await" Whitespace(1)
         None FAT_ARROW@28..30 "=>" Whitespace(1)
-        BLOCK_STMT@31..33
+        JS_BLOCK_STATEMENT@31..33
           None L_CURLY@31..32 "{" None
           LIST@32..32
           None R_CURLY@32..33 "}" None
-    EXPR_STMT@33..43
+    JS_EXPRESSION_STATEMENT@33..43
       ARROW_EXPR@33..43
         NAME@33..38
           Whitespace(1) IDENT@34..37 "foo" Whitespace(1)
         None FAT_ARROW@38..40 "=>" None
-        BLOCK_STMT@40..43
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "\n" L_CURLY@40..42 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-          Whitespace(1) L_CURLY@40..42 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
+        JS_BLOCK_STATEMENT@40..43
           Whitespace(1) L_CURLY@41..42 "{" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
           LIST@42..42
           None R_CURLY@42..43 "}" None

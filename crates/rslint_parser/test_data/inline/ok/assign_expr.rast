@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..101
-=======
-MODULE@0..100
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..100
   LIST@0..100
     JS_EXPRESSION_STATEMENT@0..21
       ASSIGN_EXPR@0..20
@@ -18,34 +14,9 @@ MODULE@0..100
               None IDENT@13..14 "b" Whitespace(1)
             None QUESTION2EQ@15..18 "??=" Whitespace(1)
             LITERAL@19..20
-<<<<<<< HEAD
-<<<<<<< HEAD
-              NUMBER@19..20 "3"
-      SEMICOLON@20..21 ";"
-    WHITESPACE@21..22 "\n"
-    JS_EXPRESSION_STATEMENT@22..33
-      ASSIGN_EXPR@22..32
-        NAME_REF@22..25
-          IDENT@22..25 "foo"
-        WHITESPACE@25..26 " "
-        MINUSEQ@26..28 "-="
-        WHITESPACE@28..29 " "
-        NAME_REF@29..32
-          IDENT@29..32 "bar"
-      SEMICOLON@32..33 ";"
-    WHITESPACE@33..34 "\n"
-    JS_EXPRESSION_STATEMENT@34..51
-      ASSIGN_EXPR@34..50
-        ARRAY_PATTERN@34..44
-          L_BRACK@34..35 "["
-=======
-               NUMBER@19..20 "3" 
-       SEMICOLON@20..21 ";" 
-=======
               None NUMBER@19..20 "3" None
       None SEMICOLON@20..21 ";" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-    EXPR_STMT@21..33
+    JS_EXPRESSION_STATEMENT@21..33
       ASSIGN_EXPR@21..32
         NAME_REF@21..26
           Whitespace(1) IDENT@22..25 "foo" Whitespace(1)
@@ -53,19 +24,10 @@ MODULE@0..100
         NAME_REF@29..32
           None IDENT@29..32 "bar" None
       None SEMICOLON@32..33 ";" None
-    EXPR_STMT@33..51
+    JS_EXPRESSION_STATEMENT@33..51
       ASSIGN_EXPR@33..50
         ARRAY_PATTERN@33..45
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "\n" L_BRACK@33..35 "[" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-          Whitespace(1) L_BRACK@33..35 "[" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
           Whitespace(1) L_BRACK@34..35 "[" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
           LIST@35..43
             SINGLE_PATTERN@35..38
               NAME@35..38
@@ -77,32 +39,11 @@ MODULE@0..100
           None R_BRACK@43..44 "]" Whitespace(1)
         None EQ@45..46 "=" Whitespace(1)
         NAME_REF@47..50
-<<<<<<< HEAD
-<<<<<<< HEAD
-          IDENT@47..50 "baz"
-      SEMICOLON@50..51 ";"
-    WHITESPACE@51..52 "\n"
-    JS_EXPRESSION_STATEMENT@52..72
-      GROUPING_EXPR@52..71
-        L_PAREN@52..53 "("
-=======
-           IDENT@47..50 "baz" 
-       SEMICOLON@50..51 ";" 
-    EXPR_STMT@51..72
-      GROUPING_EXPR@51..71
-        "\n" L_PAREN@51..53 "(" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
           None IDENT@47..50 "baz" None
       None SEMICOLON@50..51 ";" None
-    EXPR_STMT@51..72
+    JS_EXPRESSION_STATEMENT@51..72
       GROUPING_EXPR@51..71
-<<<<<<< HEAD
-        Whitespace(1) L_PAREN@51..53 "(" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
         Whitespace(1) L_PAREN@52..53 "(" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         ASSIGN_EXPR@53..70
           OBJECT_PATTERN@53..66
             None L_CURLY@53..54 "{" Whitespace(1)
@@ -119,35 +60,12 @@ MODULE@0..100
           OBJECT_EXPR@68..70
             None L_CURLY@68..69 "{" None
             LIST@69..69
-<<<<<<< HEAD
-<<<<<<< HEAD
-            R_CURLY@69..70 "}"
-        R_PAREN@70..71 ")"
-      SEMICOLON@71..72 ";"
-    WHITESPACE@72..73 "\n"
-    JS_EXPRESSION_STATEMENT@73..100
-      GROUPING_EXPR@73..99
-        L_PAREN@73..74 "("
-=======
-             R_CURLY@69..70 "}" 
-         R_PAREN@70..71 ")" 
-       SEMICOLON@71..72 ";" 
-    EXPR_STMT@72..100
-      GROUPING_EXPR@72..99
-        "\n" L_PAREN@72..74 "(" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
             None R_CURLY@69..70 "}" None
         None R_PAREN@70..71 ")" None
       None SEMICOLON@71..72 ";" None
-    EXPR_STMT@72..100
+    JS_EXPRESSION_STATEMENT@72..100
       GROUPING_EXPR@72..99
-<<<<<<< HEAD
-        Whitespace(1) L_PAREN@72..74 "(" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
         Whitespace(1) L_PAREN@73..74 "(" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         ASSIGN_EXPR@74..98
           OBJECT_PATTERN@74..94
             None L_CURLY@74..75 "{" Whitespace(1)

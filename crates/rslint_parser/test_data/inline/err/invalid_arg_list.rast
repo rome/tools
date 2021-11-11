@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-JS_MODULE@0..21
-  LIST@0..21
-    JS_EXPRESSION_STATEMENT@0..8
-=======
-MODULE@0..20
+JS_MODULE@0..20
   LIST@0..20
-    EXPR_STMT@0..8
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+    JS_EXPRESSION_STATEMENT@0..8
       CALL_EXPR@0..7
         NAME_REF@0..3
           None IDENT@0..3 "foo" None
@@ -17,33 +11,15 @@ MODULE@0..20
               None IDENT@4..5 "a" None
             None COMMA@5..6 "," None
             NAME_REF@6..7
-<<<<<<< HEAD
-<<<<<<< HEAD
-              IDENT@6..7 "b"
-      SEMICOLON@7..8 ";"
-    WHITESPACE@8..9 "\n"
-    JS_EXPRESSION_STATEMENT@9..16
-      CALL_EXPR@9..16
-        NAME_REF@9..12
-          IDENT@9..12 "foo"
-        ARG_LIST@12..16
-          L_PAREN@12..13 "("
-          LIST@13..16
-=======
-               IDENT@6..7 "b" 
-       SEMICOLON@7..8 ";" 
-=======
               None IDENT@6..7 "b" None
       None SEMICOLON@7..8 ";" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-    EXPR_STMT@8..17
+    JS_EXPRESSION_STATEMENT@8..17
       CALL_EXPR@8..17
         NAME_REF@8..12
           Whitespace(1) IDENT@9..12 "foo" None
         ARG_LIST@12..17
           None L_PAREN@12..13 "(" None
           LIST@13..17
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
             NAME_REF@13..14
               None IDENT@13..14 "a" None
             None COMMA@14..15 "," None

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..40
-=======
-MODULE@0..39
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..39
   LIST@0..39
     FOR_STMT@0..39
       None FOR_KW@0..3 "for" Whitespace(1)
@@ -33,42 +29,15 @@ MODULE@0..39
               None IDENT@25..26 "i" Whitespace(1)
             None L_ANGLE@27..28 "<" Whitespace(1)
             LITERAL@29..31
-<<<<<<< HEAD
-<<<<<<< HEAD
-              NUMBER@29..31 "10"
-        SEMICOLON@31..32 ";"
-        WHITESPACE@32..33 " "
-        FOR_STMT_UPDATE@33..36
-          PRE_UPDATE_EXPRESSION@33..36
-            PLUS2@33..35 "++"
-            NAME_REF@35..36
-              IDENT@35..36 "i"
-        WHITESPACE@36..37 " "
-        JS_BLOCK_STATEMENT@37..39
-          L_CURLY@37..38 "{"
-=======
-               NUMBER@29..31 "10" 
-         SEMICOLON@31..33 ";" " "
-=======
               None NUMBER@29..31 "10" None
-<<<<<<< HEAD
-        None SEMICOLON@31..33 ";" Whitespace(1)
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
         None SEMICOLON@31..32 ";" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         FOR_STMT_UPDATE@33..37
           PRE_UPDATE_EXPRESSION@33..37
             None PLUS2@33..35 "++" None
             NAME_REF@35..37
               None IDENT@35..36 "i" Whitespace(1)
-        BLOCK_STMT@37..39
-<<<<<<< HEAD
-           L_CURLY@37..38 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
+        JS_BLOCK_STATEMENT@37..39
           None L_CURLY@37..38 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
           LIST@38..38
           None R_CURLY@38..39 "}" None
 --

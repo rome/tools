@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..54
-=======
-MODULE@0..53
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..53
   LIST@0..53
     JS_EXPRESSION_STATEMENT@0..7
       DOT_EXPR@0..7
@@ -10,94 +6,39 @@ MODULE@0..53
           None IDENT@0..3 "foo" None
         None DOT@3..4 "." None
         NAME@4..7
-<<<<<<< HEAD
-<<<<<<< HEAD
-          IDENT@4..7 "bar"
-    WHITESPACE@7..8 "\n"
-    JS_EXPRESSION_STATEMENT@8..17
-      DOT_EXPR@8..17
-        NAME_REF@8..11
-          IDENT@8..11 "foo"
-        DOT@11..12 "."
-        NAME@12..17
-          IDENT@12..17 "await"
-    WHITESPACE@17..18 "\n"
-    JS_EXPRESSION_STATEMENT@18..27
-      DOT_EXPR@18..27
-        NAME_REF@18..21
-          IDENT@18..21 "foo"
-        DOT@21..22 "."
-        NAME@22..27
-          IDENT@22..27 "yield"
-    WHITESPACE@27..28 "\n"
-    JS_EXPRESSION_STATEMENT@28..35
-      DOT_EXPR@28..35
-        NAME_REF@28..31
-          IDENT@28..31 "foo"
-        DOT@31..32 "."
-        NAME@32..35
-          IDENT@32..35 "for"
-    WHITESPACE@35..36 "\n"
-    JS_EXPRESSION_STATEMENT@36..44
-      DOT_EXPR@36..44
-        NAME_REF@36..39
-          IDENT@36..39 "foo"
-        QUESTIONDOT@39..41 "?."
-        NAME@41..44
-          IDENT@41..44 "for"
-    WHITESPACE@44..45 "\n"
-    JS_EXPRESSION_STATEMENT@45..53
-      DOT_EXPR@45..53
-        NAME_REF@45..48
-          IDENT@45..48 "foo"
-        QUESTIONDOT@48..50 "?."
-=======
-           IDENT@4..7 "bar" 
-=======
           None IDENT@4..7 "bar" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-    EXPR_STMT@7..17
+    JS_EXPRESSION_STATEMENT@7..17
       DOT_EXPR@7..17
         NAME_REF@7..11
           Whitespace(1) IDENT@8..11 "foo" None
         None DOT@11..12 "." None
         NAME@12..17
           None IDENT@12..17 "await" None
-    EXPR_STMT@17..27
+    JS_EXPRESSION_STATEMENT@17..27
       DOT_EXPR@17..27
         NAME_REF@17..21
           Whitespace(1) IDENT@18..21 "foo" None
         None DOT@21..22 "." None
         NAME@22..27
           None IDENT@22..27 "yield" None
-    EXPR_STMT@27..35
+    JS_EXPRESSION_STATEMENT@27..35
       DOT_EXPR@27..35
         NAME_REF@27..31
           Whitespace(1) IDENT@28..31 "foo" None
         None DOT@31..32 "." None
         NAME@32..35
           None IDENT@32..35 "for" None
-    EXPR_STMT@35..44
+    JS_EXPRESSION_STATEMENT@35..44
       DOT_EXPR@35..44
         NAME_REF@35..39
           Whitespace(1) IDENT@36..39 "foo" None
         None QUESTIONDOT@39..41 "?." None
         NAME@41..44
           None IDENT@41..44 "for" None
-    EXPR_STMT@44..53
+    JS_EXPRESSION_STATEMENT@44..53
       DOT_EXPR@44..53
         NAME_REF@44..48
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "\n" IDENT@44..48 "foo" 
-         QUESTIONDOT@48..50 "?." 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-          Whitespace(1) IDENT@44..48 "foo" None
-=======
           Whitespace(1) IDENT@45..48 "foo" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         None QUESTIONDOT@48..50 "?." None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         NAME@50..53
           None IDENT@50..53 "bar" None

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..48
-=======
-MODULE@0..47
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..47
   LIST@0..47
     VAR_DECL@0..21
       None IDENT@0..3 "let" Whitespace(1)
@@ -17,26 +13,9 @@ MODULE@0..47
             PARAMETER_LIST@16..19
               None L_PAREN@16..17 "(" None
               LIST@17..17
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              R_PAREN@17..18 ")"
-            WHITESPACE@18..19 " "
-            JS_BLOCK_STATEMENT@19..21
-              L_CURLY@19..20 "{"
-=======
-               R_PAREN@17..19 ")" " "
-            BLOCK_STMT@19..21
-               L_CURLY@19..20 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-              None R_PAREN@17..19 ")" Whitespace(1)
-=======
               None R_PAREN@17..18 ")" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-            BLOCK_STMT@19..21
+            JS_BLOCK_STATEMENT@19..21
               None L_CURLY@19..20 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               LIST@20..20
               None R_CURLY@20..21 "}" None
     VAR_DECL@21..47
@@ -54,25 +33,8 @@ MODULE@0..47
             PARAMETER_LIST@42..45
               None L_PAREN@42..43 "(" None
               LIST@43..43
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              R_PAREN@43..44 ")"
-            WHITESPACE@44..45 " "
-            JS_BLOCK_STATEMENT@45..47
-              L_CURLY@45..46 "{"
-=======
-               R_PAREN@43..45 ")" " "
-            BLOCK_STMT@45..47
-               L_CURLY@45..46 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-              None R_PAREN@43..45 ")" Whitespace(1)
-=======
               None R_PAREN@43..44 ")" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-            BLOCK_STMT@45..47
+            JS_BLOCK_STATEMENT@45..47
               None L_CURLY@45..46 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
               LIST@46..46
               None R_CURLY@46..47 "}" None

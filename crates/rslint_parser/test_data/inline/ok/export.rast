@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..27
-=======
-MODULE@0..26
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..26
   LIST@0..26
     EXPORT_DECL@0..26
       None EXPORT_KW@0..6 "export" Whitespace(1)

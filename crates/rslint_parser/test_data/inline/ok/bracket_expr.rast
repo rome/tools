@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..56
-=======
-MODULE@0..55
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..55
   LIST@0..55
     JS_EXPRESSION_STATEMENT@0..8
       BRACKET_EXPR@0..8
@@ -10,67 +6,21 @@ MODULE@0..55
           None IDENT@0..3 "foo" None
         None L_BRACK@3..4 "[" None
         NAME_REF@4..7
-<<<<<<< HEAD
-<<<<<<< HEAD
-          IDENT@4..7 "bar"
-        R_BRACK@7..8 "]"
-    WHITESPACE@8..9 "\n"
-    JS_EXPRESSION_STATEMENT@9..19
-      BRACKET_EXPR@9..19
-        NAME_REF@9..12
-          IDENT@9..12 "foo"
-        L_BRACK@12..13 "["
-=======
-           IDENT@4..7 "bar" 
-         R_BRACK@7..8 "]" 
-    EXPR_STMT@8..19
-      BRACKET_EXPR@8..19
-        NAME_REF@8..12
-          "\n" IDENT@8..12 "foo" 
-         L_BRACK@12..13 "[" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
           None IDENT@4..7 "bar" None
         None R_BRACK@7..8 "]" None
-    EXPR_STMT@8..19
+    JS_EXPRESSION_STATEMENT@8..19
       BRACKET_EXPR@8..19
         NAME_REF@8..12
           Whitespace(1) IDENT@9..12 "foo" None
         None L_BRACK@12..13 "[" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         BIN_EXPR@13..18
           LITERAL@13..15
             None NUMBER@13..14 "5" Whitespace(1)
           None PLUS@15..16 "+" Whitespace(1)
           LITERAL@17..18
-<<<<<<< HEAD
-<<<<<<< HEAD
-            NUMBER@17..18 "5"
-        R_BRACK@18..19 "]"
-    WHITESPACE@19..20 "\n"
-    JS_EXPRESSION_STATEMENT@20..30
-      BRACKET_EXPR@20..30
-        NAME_REF@20..23
-          IDENT@20..23 "foo"
-        L_BRACK@23..24 "["
-        LITERAL@24..29
-          STRING@24..29 "\"bar\""
-        R_BRACK@29..30 "]"
-    WHITESPACE@30..31 "\n"
-    JS_EXPRESSION_STATEMENT@31..44
-      BRACKET_EXPR@31..44
-        BRACKET_EXPR@31..39
-          NAME_REF@31..34
-            IDENT@31..34 "foo"
-          L_BRACK@34..35 "["
-=======
-             NUMBER@17..18 "5" 
-         R_BRACK@18..19 "]" 
-=======
             None NUMBER@17..18 "5" None
         None R_BRACK@18..19 "]" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-    EXPR_STMT@19..30
+    JS_EXPRESSION_STATEMENT@19..30
       BRACKET_EXPR@19..30
         NAME_REF@19..23
           Whitespace(1) IDENT@20..23 "foo" None
@@ -78,58 +28,25 @@ MODULE@0..55
         LITERAL@24..29
           None STRING@24..29 "\"bar\"" None
         None R_BRACK@29..30 "]" None
-    EXPR_STMT@30..44
+    JS_EXPRESSION_STATEMENT@30..44
       BRACKET_EXPR@30..44
         BRACKET_EXPR@30..39
           NAME_REF@30..34
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "\n" IDENT@30..34 "foo" 
-           L_BRACK@34..35 "[" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-            Whitespace(1) IDENT@30..34 "foo" None
-=======
             Whitespace(1) IDENT@31..34 "foo" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
           None L_BRACK@34..35 "[" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
           NAME_REF@35..38
             None IDENT@35..38 "bar" None
           None R_BRACK@38..39 "]" None
         None L_BRACK@39..40 "[" None
         NAME_REF@40..43
-<<<<<<< HEAD
-<<<<<<< HEAD
-          IDENT@40..43 "baz"
-        R_BRACK@43..44 "]"
-    WHITESPACE@44..45 "\n"
-    JS_EXPRESSION_STATEMENT@45..55
-      BRACKET_EXPR@45..55
-        NAME_REF@45..48
-          IDENT@45..48 "foo"
-        QUESTIONDOT@48..50 "?."
-        L_BRACK@50..51 "["
-=======
-           IDENT@40..43 "baz" 
-         R_BRACK@43..44 "]" 
-    EXPR_STMT@44..55
-      BRACKET_EXPR@44..55
-        NAME_REF@44..48
-          "\n" IDENT@44..48 "foo" 
-         QUESTIONDOT@48..50 "?." 
-         L_BRACK@50..51 "[" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
           None IDENT@40..43 "baz" None
         None R_BRACK@43..44 "]" None
-    EXPR_STMT@44..55
+    JS_EXPRESSION_STATEMENT@44..55
       BRACKET_EXPR@44..55
         NAME_REF@44..48
           Whitespace(1) IDENT@45..48 "foo" None
         None QUESTIONDOT@48..50 "?." None
         None L_BRACK@50..51 "[" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
         NAME_REF@51..54
           None IDENT@51..54 "bar" None
         None R_BRACK@54..55 "]" None

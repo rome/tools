@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..65
-=======
-MODULE@0..64
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..64
   LIST@0..64
     JS_EXPRESSION_STATEMENT@0..11
       ARRAY_EXPR@0..10
@@ -12,34 +8,10 @@ MODULE@0..64
             None IDENT@1..4 "foo" None
           None COMMA@4..5 "," Whitespace(1)
           NAME_REF@6..9
-<<<<<<< HEAD
-<<<<<<< HEAD
-            IDENT@6..9 "bar"
-        R_BRACK@9..10 "]"
-      SEMICOLON@10..11 ";"
-    WHITESPACE@11..12 "\n"
-    JS_EXPRESSION_STATEMENT@12..18
-      ARRAY_EXPR@12..17
-        L_BRACK@12..13 "["
-        LIST@13..16
-          NAME_REF@13..16
-            IDENT@13..16 "foo"
-        R_BRACK@16..17 "]"
-      SEMICOLON@17..18 ";"
-    WHITESPACE@18..19 "\n"
-    JS_EXPRESSION_STATEMENT@19..26
-      ARRAY_EXPR@19..25
-        L_BRACK@19..20 "["
-=======
-             IDENT@6..9 "bar" 
-         R_BRACK@9..10 "]" 
-       SEMICOLON@10..11 ";" 
-=======
             None IDENT@6..9 "bar" None
         None R_BRACK@9..10 "]" None
       None SEMICOLON@10..11 ";" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-    EXPR_STMT@11..18
+    JS_EXPRESSION_STATEMENT@11..18
       ARRAY_EXPR@11..17
         Whitespace(1) L_BRACK@12..13 "[" None
         LIST@13..16
@@ -47,50 +19,16 @@ MODULE@0..64
             None IDENT@13..16 "foo" None
         None R_BRACK@16..17 "]" None
       None SEMICOLON@17..18 ";" None
-    EXPR_STMT@18..26
+    JS_EXPRESSION_STATEMENT@18..26
       ARRAY_EXPR@18..25
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "\n" L_BRACK@18..20 "[" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-        Whitespace(1) L_BRACK@18..20 "[" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
         Whitespace(1) L_BRACK@19..20 "[" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         LIST@20..24
           None COMMA@20..21 "," None
           NAME_REF@21..24
-<<<<<<< HEAD
-<<<<<<< HEAD
-            IDENT@21..24 "foo"
-        R_BRACK@24..25 "]"
-      SEMICOLON@25..26 ";"
-    WHITESPACE@26..27 "\n"
-    JS_EXPRESSION_STATEMENT@27..34
-      ARRAY_EXPR@27..33
-        L_BRACK@27..28 "["
-        LIST@28..32
-          NAME_REF@28..31
-            IDENT@28..31 "foo"
-          COMMA@31..32 ","
-        R_BRACK@32..33 "]"
-      SEMICOLON@33..34 ";"
-    WHITESPACE@34..35 "\n"
-    JS_EXPRESSION_STATEMENT@35..50
-      ARRAY_EXPR@35..49
-        L_BRACK@35..36 "["
-=======
-             IDENT@21..24 "foo" 
-         R_BRACK@24..25 "]" 
-       SEMICOLON@25..26 ";" 
-=======
             None IDENT@21..24 "foo" None
         None R_BRACK@24..25 "]" None
       None SEMICOLON@25..26 ";" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-    EXPR_STMT@26..34
+    JS_EXPRESSION_STATEMENT@26..34
       ARRAY_EXPR@26..33
         Whitespace(1) L_BRACK@27..28 "[" None
         LIST@28..32
@@ -99,18 +37,9 @@ MODULE@0..64
           None COMMA@31..32 "," None
         None R_BRACK@32..33 "]" None
       None SEMICOLON@33..34 ";" None
-    EXPR_STMT@34..50
+    JS_EXPRESSION_STATEMENT@34..50
       ARRAY_EXPR@34..49
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "\n" L_BRACK@34..36 "[" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-        Whitespace(1) L_BRACK@34..36 "[" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
         Whitespace(1) L_BRACK@35..36 "[" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         LIST@36..48
           None COMMA@36..37 "," None
           None COMMA@37..38 "," None
@@ -118,32 +47,6 @@ MODULE@0..64
           None COMMA@39..40 "," None
           None COMMA@40..41 "," None
           NAME_REF@41..44
-<<<<<<< HEAD
-<<<<<<< HEAD
-            IDENT@41..44 "foo"
-          COMMA@44..45 ","
-          COMMA@45..46 ","
-          COMMA@46..47 ","
-          COMMA@47..48 ","
-        R_BRACK@48..49 "]"
-      SEMICOLON@49..50 ";"
-    WHITESPACE@50..51 "\n"
-    JS_EXPRESSION_STATEMENT@51..64
-      ARRAY_EXPR@51..63
-        L_BRACK@51..52 "["
-=======
-             IDENT@41..44 "foo" 
-           COMMA@44..45 "," 
-           COMMA@45..46 "," 
-           COMMA@46..47 "," 
-           COMMA@47..48 "," 
-         R_BRACK@48..49 "]" 
-       SEMICOLON@49..50 ";" 
-    EXPR_STMT@50..64
-      ARRAY_EXPR@50..63
-        "\n" L_BRACK@50..52 "[" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
             None IDENT@41..44 "foo" None
           None COMMA@44..45 "," None
           None COMMA@45..46 "," None
@@ -151,14 +54,9 @@ MODULE@0..64
           None COMMA@47..48 "," None
         None R_BRACK@48..49 "]" None
       None SEMICOLON@49..50 ";" None
-    EXPR_STMT@50..64
+    JS_EXPRESSION_STATEMENT@50..64
       ARRAY_EXPR@50..63
-<<<<<<< HEAD
-        Whitespace(1) L_BRACK@50..52 "[" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
         Whitespace(1) L_BRACK@51..52 "[" None
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         LIST@52..62
           SPREAD_ELEMENT@52..56
             None DOT2@52..55 "..." None

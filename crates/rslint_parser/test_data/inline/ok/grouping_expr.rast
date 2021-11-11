@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..14
-=======
-MODULE@0..13
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..13
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..13
       CALL_EXPR@0..13

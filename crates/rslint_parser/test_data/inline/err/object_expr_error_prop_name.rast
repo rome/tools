@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..40
-=======
-MODULE@0..39
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..39
   LIST@0..39
     VAR_DECL@0..26
       None IDENT@0..3 "let" Whitespace(1)

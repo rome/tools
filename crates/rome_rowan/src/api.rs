@@ -143,8 +143,6 @@ impl<L: Language> SyntaxNode<L> {
 		self.raw.text_range()
 	}
 
-<<<<<<< HEAD
-=======
 	pub fn text_with_trivia_range(&self) -> TextRange {
 		self.raw.text_with_trivia_range()
 	}
@@ -153,7 +151,6 @@ impl<L: Language> SyntaxNode<L> {
 		self.raw.index()
 	}
 
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
 	pub fn text(&self) -> SyntaxText {
 		self.raw.text()
 	}

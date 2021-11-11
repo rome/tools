@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..44
-=======
-MODULE@0..43
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..43
   LIST@0..43
     JS_EXPRESSION_STATEMENT@0..15
       COND_EXPR@0..15
@@ -13,46 +9,15 @@ MODULE@0..43
           None IDENT@6..9 "bar" Whitespace(1)
         None COLON@10..11 ":" Whitespace(1)
         NAME_REF@12..15
-<<<<<<< HEAD
-<<<<<<< HEAD
-          IDENT@12..15 "baz"
-    WHITESPACE@15..16 "\n"
-    JS_EXPRESSION_STATEMENT@16..43
-      COND_EXPR@16..43
-        NAME_REF@16..19
-          IDENT@16..19 "foo"
-        WHITESPACE@19..20 " "
-        QUESTION@20..21 "?"
-        WHITESPACE@21..22 " "
-        NAME_REF@22..25
-          IDENT@22..25 "bar"
-        WHITESPACE@25..26 " "
-        COLON@26..27 ":"
-        WHITESPACE@27..28 " "
-=======
-           IDENT@12..15 "baz" 
-=======
           None IDENT@12..15 "baz" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-    EXPR_STMT@15..43
+    JS_EXPRESSION_STATEMENT@15..43
       COND_EXPR@15..43
         NAME_REF@15..20
           Whitespace(1) IDENT@16..19 "foo" Whitespace(1)
         None QUESTION@20..21 "?" Whitespace(1)
         NAME_REF@22..26
-<<<<<<< HEAD
-<<<<<<< HEAD
-           IDENT@22..26 "bar" " "
-         COLON@26..28 ":" " "
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-          None IDENT@22..26 "bar" Whitespace(1)
-        None COLON@26..28 ":" Whitespace(1)
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
-=======
           None IDENT@22..25 "bar" Whitespace(1)
         None COLON@26..27 ":" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
         COND_EXPR@28..43
           NAME_REF@28..32
             None IDENT@28..31 "baz" Whitespace(1)

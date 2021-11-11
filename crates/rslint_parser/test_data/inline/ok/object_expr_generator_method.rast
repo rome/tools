@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-JS_MODULE@0..22
-=======
-MODULE@0..21
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
+JS_MODULE@0..21
   LIST@0..21
     VAR_DECL@0..21
       None IDENT@0..3 "let" Whitespace(1)
@@ -22,26 +18,9 @@ MODULE@0..21
                 PARAMETER_LIST@14..17
                   None L_PAREN@14..15 "(" None
                   LIST@15..15
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  R_PAREN@15..16 ")"
-                WHITESPACE@16..17 " "
-                JS_BLOCK_STATEMENT@17..19
-                  L_CURLY@17..18 "{"
-=======
-                   R_PAREN@15..17 ")" " "
-                BLOCK_STMT@17..20
-                   L_CURLY@17..18 "{" 
->>>>>>> 56d750195 (trim format_raw when formatter finds an error)
-=======
-                  None R_PAREN@15..17 ")" Whitespace(1)
-=======
                   None R_PAREN@15..16 ")" Whitespace(1)
->>>>>>> c96756449 (fixing text and text_with_trivia and ranges)
-                BLOCK_STMT@17..20
+                JS_BLOCK_STATEMENT@17..20
                   None L_CURLY@17..18 "{" None
->>>>>>> 03257ad46 (greentoken slice contains everything from first leading to last trailing trivia)
                   LIST@18..18
                   None R_CURLY@18..19 "}" Whitespace(1)
             None R_CURLY@20..21 "}" None
