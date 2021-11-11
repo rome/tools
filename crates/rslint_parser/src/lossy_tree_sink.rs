@@ -56,6 +56,16 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 		self.do_token(kind, len, false);
 	}
 
+	fn missing(&mut self) {
+		match mem::replace(&mut self.state, State::Normal) {
+			State::PendingStart => unreachable!(),
+			State::PendingFinish => self.inner.finish_node(),
+			State::Normal => (),
+		}
+
+		self.inner.missing();
+	}
+
 	fn start_node(&mut self, kind: SyntaxKind) {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => {

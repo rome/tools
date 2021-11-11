@@ -119,6 +119,14 @@ impl<L: Language> SyntaxNode<L> {
 		SyntaxNode::from(cursor::SyntaxNode::new_root(green))
 	}
 
+	/// Returns the element stored in the slot with the given index. Returns [None] if the slot is empty.
+	///
+	/// ## Panics
+	/// If the slot index is out of bounds
+	pub fn element_in_slot(&self, slot: u32) -> Option<SyntaxElement<L>> {
+		self.raw.element_in_slot(slot).map(SyntaxElement::from)
+	}
+
 	pub fn kind(&self) -> L::Kind {
 		L::kind_from_raw(self.raw.kind())
 	}

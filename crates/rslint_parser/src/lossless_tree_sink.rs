@@ -63,6 +63,16 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 		self.do_token(kind, len);
 	}
 
+	fn missing(&mut self) {
+		match mem::replace(&mut self.state, State::Normal) {
+			State::PendingStart => unreachable!(),
+			State::PendingFinish => self.inner.finish_node(),
+			State::Normal => (),
+		}
+
+		self.inner.missing();
+	}
+
 	// TODO: Attach comment whitespace to nodes
 	fn start_node(&mut self, kind: SyntaxKind) {
 		match mem::replace(&mut self.state, State::Normal) {
