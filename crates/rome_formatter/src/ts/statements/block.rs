@@ -9,7 +9,7 @@ use crate::{
 
 impl ToFormatElement for JsBlockStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let stmts = format_statements(self.stmts(), formatter);
+		let stmts = format_statements(self.statements(), formatter);
 
 		// Formatting of curly braces for an:
 		// * empty block: same line `{}`,

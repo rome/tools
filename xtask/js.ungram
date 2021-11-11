@@ -95,7 +95,10 @@ JsAnyStatement =
 
 
 // Block statement
-JsBlockStatement = '{' stmts: JsAnyStatement* '}'
+JsBlockStatement =
+	'{'
+	statements: JsAnyStatement*
+	'}'
 
 
 // Empty statemnet
