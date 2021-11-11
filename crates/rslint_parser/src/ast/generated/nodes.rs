@@ -277,15 +277,17 @@ impl WithStmt {
 	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct LabelledStmt {
+pub struct JsLabeledStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl LabelledStmt {
-	pub fn label(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
+impl JsLabeledStatement {
+	pub fn label_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![ident])
+	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [:])
 	}
-	pub fn stmt(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SwitchStmt {
@@ -581,15 +583,6 @@ pub struct NameRef {
 	pub(crate) syntax: SyntaxNode,
 }
 impl NameRef {
-	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![ident])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Name {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Name {
 	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![ident])
 	}
@@ -1122,6 +1115,15 @@ impl TsConstAssertion {
 	}
 	pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [>])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct Name {
+	pub(crate) syntax: SyntaxNode,
+}
+impl Name {
+	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![ident])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2344,7 +2346,7 @@ pub enum JsAnyStatement {
 	BreakStmt(BreakStmt),
 	JsReturnStatement(JsReturnStatement),
 	WithStmt(WithStmt),
-	LabelledStmt(LabelledStmt),
+	JsLabeledStatement(JsLabeledStatement),
 	SwitchStmt(SwitchStmt),
 	ThrowStmt(ThrowStmt),
 	TryStmt(TryStmt),
@@ -2808,8 +2810,8 @@ impl AstNode for WithStmt {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for LabelledStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == LABELLED_STMT }
+impl AstNode for JsLabeledStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LABELED_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3019,17 +3021,6 @@ impl AstNode for VarDecl {
 }
 impl AstNode for NameRef {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME_REF }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for Name {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3404,6 +3395,17 @@ impl AstNode for TsAssertion {
 }
 impl AstNode for TsConstAssertion {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONST_ASSERTION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for Name {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4466,8 +4468,8 @@ impl From<JsReturnStatement> for JsAnyStatement {
 impl From<WithStmt> for JsAnyStatement {
 	fn from(node: WithStmt) -> JsAnyStatement { JsAnyStatement::WithStmt(node) }
 }
-impl From<LabelledStmt> for JsAnyStatement {
-	fn from(node: LabelledStmt) -> JsAnyStatement { JsAnyStatement::LabelledStmt(node) }
+impl From<JsLabeledStatement> for JsAnyStatement {
+	fn from(node: JsLabeledStatement) -> JsAnyStatement { JsAnyStatement::JsLabeledStatement(node) }
 }
 impl From<SwitchStmt> for JsAnyStatement {
 	fn from(node: SwitchStmt) -> JsAnyStatement { JsAnyStatement::SwitchStmt(node) }
@@ -4531,7 +4533,7 @@ impl AstNode for JsAnyStatement {
 			| BREAK_STMT
 			| JS_RETURN_STATEMENT
 			| WITH_STMT
-			| LABELLED_STMT
+			| JS_LABELED_STATEMENT
 			| SWITCH_STMT
 			| THROW_STMT
 			| TRY_STMT
@@ -4567,7 +4569,9 @@ impl AstNode for JsAnyStatement {
 			BREAK_STMT => JsAnyStatement::BreakStmt(BreakStmt { syntax }),
 			JS_RETURN_STATEMENT => JsAnyStatement::JsReturnStatement(JsReturnStatement { syntax }),
 			WITH_STMT => JsAnyStatement::WithStmt(WithStmt { syntax }),
-			LABELLED_STMT => JsAnyStatement::LabelledStmt(LabelledStmt { syntax }),
+			JS_LABELED_STATEMENT => {
+				JsAnyStatement::JsLabeledStatement(JsLabeledStatement { syntax })
+			}
 			SWITCH_STMT => JsAnyStatement::SwitchStmt(SwitchStmt { syntax }),
 			THROW_STMT => JsAnyStatement::ThrowStmt(ThrowStmt { syntax }),
 			TRY_STMT => JsAnyStatement::TryStmt(TryStmt { syntax }),
@@ -4616,7 +4620,7 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::BreakStmt(it) => &it.syntax,
 			JsAnyStatement::JsReturnStatement(it) => &it.syntax,
 			JsAnyStatement::WithStmt(it) => &it.syntax,
-			JsAnyStatement::LabelledStmt(it) => &it.syntax,
+			JsAnyStatement::JsLabeledStatement(it) => &it.syntax,
 			JsAnyStatement::SwitchStmt(it) => &it.syntax,
 			JsAnyStatement::ThrowStmt(it) => &it.syntax,
 			JsAnyStatement::TryStmt(it) => &it.syntax,
@@ -6036,7 +6040,7 @@ impl std::fmt::Display for WithStmt {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for LabelledStmt {
+impl std::fmt::Display for JsLabeledStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6132,11 +6136,6 @@ impl std::fmt::Display for VarDecl {
 	}
 }
 impl std::fmt::Display for NameRef {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for Name {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6307,6 +6306,11 @@ impl std::fmt::Display for TsAssertion {
 	}
 }
 impl std::fmt::Display for TsConstAssertion {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for Name {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

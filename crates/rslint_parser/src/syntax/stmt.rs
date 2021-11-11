@@ -266,10 +266,10 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 			p.state.labels.insert(string, range.to_owned());
 		}
 
-		let m = expr.precede(p);
+		let m = expr.undo_completion(p);
 		p.bump_any();
 		stmt(p, None, None);
-		return Some(m.complete(p, LABELLED_STMT));
+		return Some(m.complete(p, JS_LABELED_STATEMENT));
 	}
 
 	let m = expr.precede(p);

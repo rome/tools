@@ -1,8 +1,7 @@
 JS_MODULE@0..46
   LIST@0..45
-    LABELLED_STMT@0..7
-      NAME@0..3
-        IDENT@0..3 "foo"
+    JS_LABELED_STATEMENT@0..7
+      IDENT@0..3 "foo"
       COLON@3..4 ":"
       WHITESPACE@4..5 " "
       JS_BLOCK_STATEMENT@5..7
@@ -10,9 +9,8 @@ JS_MODULE@0..46
         LIST@6..6
         R_CURLY@6..7 "}"
     WHITESPACE@7..8 "\n"
-    LABELLED_STMT@8..16
-      NAME@8..12
-        IDENT@8..12 "rust"
+    JS_LABELED_STATEMENT@8..16
+      IDENT@8..12 "rust"
       COLON@12..13 ":"
       WHITESPACE@13..14 " "
       JS_BLOCK_STATEMENT@14..16

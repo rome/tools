@@ -1,8 +1,7 @@
 JS_MODULE@0..64
   LIST@0..63
-    LABELLED_STMT@0..7
-      NAME@0..3
-        IDENT@0..3 "foo"
+    JS_LABELED_STATEMENT@0..7
+      IDENT@0..3 "foo"
       COLON@3..4 ":"
       WHITESPACE@4..5 " "
       JS_BLOCK_STATEMENT@5..7

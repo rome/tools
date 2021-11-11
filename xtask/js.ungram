@@ -76,7 +76,7 @@ JsAnyStatement =
 	| BreakStmt
 	| JsReturnStatement
 	| WithStmt
-	| LabelledStmt
+	| JsLabeledStatement
 	| SwitchStmt
 	| ThrowStmt
 	| TryStmt
@@ -159,8 +159,10 @@ JsReturnStatement =
 // with statement
 WithStmt = 'with' condition:Condition cons:JsAnyStatement
 
-// labelled statement
-LabelledStmt = label:Name ':' stmt: JsAnyStatement
+
+JsLabeledStatement =
+    label: 'ident' ':'
+    body: JsAnyStatement
 
 // switch statement
 SwitchStmt =

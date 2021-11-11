@@ -4,9 +4,9 @@ use rslint_parser::ast::{
 	ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator,
 	DefaultClause, DoWhileStmt, Finalizer, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
 	ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement, JsDebuggerStatement,
-	JsEmptyStatement, JsExpressionStatement, JsReturnStatement, JsScript, LabelledStmt, Literal,
-	LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
-	SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
+	JsEmptyStatement, JsExpressionStatement, JsLabeledStatement, JsReturnStatement, JsScript,
+	Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr, Setter,
+	SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt, WithStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -109,7 +109,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::CONTINUE_STMT => ContinueStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::LABELLED_STMT => LabelledStmt::cast(self.clone())
+			SyntaxKind::JS_LABELED_STATEMENT => JsLabeledStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::TRY_STMT => TryStmt::cast(self.clone())

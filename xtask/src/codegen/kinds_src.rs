@@ -163,6 +163,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"WHITESPACE",
 		"COMMENT",
 		"JS_SHEBANG",
+		"JS_IDENTIFIER",
 	],
 	nodes: &[
 		"JS_SCRIPT",
@@ -187,7 +188,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"SWITCH_STMT",
 		"CASE_CLAUSE",
 		"DEFAULT_CLAUSE",
-		"LABELLED_STMT",
+		"JS_LABELED_STATEMENT",
 		"THROW_STMT",
 		"TRY_STMT",
 		"CATCH_CLAUSE",
