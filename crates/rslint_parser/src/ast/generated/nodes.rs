@@ -315,18 +315,18 @@ impl SwitchStmt {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ThrowStmt {
+pub struct JsThrowStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ThrowStmt {
+impl JsThrowStatement {
 	pub fn throw_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![throw])
 	}
-	pub fn exception(&self) -> SyntaxResult<JsAnyExpression> {
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
 		support::as_mandatory_node(&self.syntax)
 	}
-	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [;])
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T ! [;])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2382,7 +2382,7 @@ pub enum JsAnyStatement {
 	JsWithStatement(JsWithStatement),
 	JsLabeledStatement(JsLabeledStatement),
 	SwitchStmt(SwitchStmt),
-	ThrowStmt(ThrowStmt),
+	JsThrowStatement(JsThrowStatement),
 	JsTryStatement(JsTryStatement),
 	JsTryFinallyStatement(JsTryFinallyStatement),
 	JsDebuggerStatement(JsDebuggerStatement),
@@ -2867,8 +2867,8 @@ impl AstNode for SwitchStmt {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for ThrowStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == THROW_STMT }
+impl AstNode for JsThrowStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THROW_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4531,8 +4531,8 @@ impl From<JsLabeledStatement> for JsAnyStatement {
 impl From<SwitchStmt> for JsAnyStatement {
 	fn from(node: SwitchStmt) -> JsAnyStatement { JsAnyStatement::SwitchStmt(node) }
 }
-impl From<ThrowStmt> for JsAnyStatement {
-	fn from(node: ThrowStmt) -> JsAnyStatement { JsAnyStatement::ThrowStmt(node) }
+impl From<JsThrowStatement> for JsAnyStatement {
+	fn from(node: JsThrowStatement) -> JsAnyStatement { JsAnyStatement::JsThrowStatement(node) }
 }
 impl From<JsTryStatement> for JsAnyStatement {
 	fn from(node: JsTryStatement) -> JsAnyStatement { JsAnyStatement::JsTryStatement(node) }
@@ -4597,7 +4597,7 @@ impl AstNode for JsAnyStatement {
 			| JS_WITH_STATEMENT
 			| JS_LABELED_STATEMENT
 			| SWITCH_STMT
-			| THROW_STMT
+			| JS_THROW_STATEMENT
 			| JS_TRY_STATEMENT
 			| JS_TRY_FINALLY_STATEMENT
 			| JS_DEBUGGER_STATEMENT
@@ -4636,7 +4636,7 @@ impl AstNode for JsAnyStatement {
 				JsAnyStatement::JsLabeledStatement(JsLabeledStatement { syntax })
 			}
 			SWITCH_STMT => JsAnyStatement::SwitchStmt(SwitchStmt { syntax }),
-			THROW_STMT => JsAnyStatement::ThrowStmt(ThrowStmt { syntax }),
+			JS_THROW_STATEMENT => JsAnyStatement::JsThrowStatement(JsThrowStatement { syntax }),
 			JS_TRY_STATEMENT => JsAnyStatement::JsTryStatement(JsTryStatement { syntax }),
 			JS_TRY_FINALLY_STATEMENT => {
 				JsAnyStatement::JsTryFinallyStatement(JsTryFinallyStatement { syntax })
@@ -4688,7 +4688,7 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsWithStatement(it) => &it.syntax,
 			JsAnyStatement::JsLabeledStatement(it) => &it.syntax,
 			JsAnyStatement::SwitchStmt(it) => &it.syntax,
-			JsAnyStatement::ThrowStmt(it) => &it.syntax,
+			JsAnyStatement::JsThrowStatement(it) => &it.syntax,
 			JsAnyStatement::JsTryStatement(it) => &it.syntax,
 			JsAnyStatement::JsTryFinallyStatement(it) => &it.syntax,
 			JsAnyStatement::JsDebuggerStatement(it) => &it.syntax,
@@ -6117,7 +6117,7 @@ impl std::fmt::Display for SwitchStmt {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ThrowStmt {
+impl std::fmt::Display for JsThrowStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

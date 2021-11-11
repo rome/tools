@@ -78,7 +78,7 @@ JsAnyStatement =
 	| JsWithStatement
 	| JsLabeledStatement
 	| SwitchStmt
-	| ThrowStmt
+	| JsThrowStatement
 	| JsTryStatement
 	| JsTryFinallyStatement
 	| JsDebuggerStatement
@@ -182,8 +182,10 @@ CaseClause = 'case' test:JsAnyExpression ':' cons:JsAnyStatement*
 DefaultClause = 'default' ':' cons:JsAnyStatement*
 
 
-// throw statement
-ThrowStmt = 'throw' exception:JsAnyExpression ';'
+JsThrowStatement =
+    'throw'
+    argument: JsAnyExpression
+    ';'?
 
 // try..catch..finally statement
 JsTryStatement =

@@ -315,7 +315,7 @@ pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 		p.expr_with_semi_recovery(false);
 	}
 	semi(p, start..p.cur_tok().range.end);
-	m.complete(p, THROW_STMT)
+	m.complete(p, JS_THROW_STATEMENT)
 }
 
 /// A break statement with an optional label such as `break a;`

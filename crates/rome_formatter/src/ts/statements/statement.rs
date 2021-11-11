@@ -38,7 +38,7 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::SwitchStmt(switch_statement) => {
 				switch_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::ThrowStmt(throw_statement) => {
+			JsAnyStatement::JsThrowStatement(throw_statement) => {
 				throw_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::JsTryStatement(try_statement) => {
