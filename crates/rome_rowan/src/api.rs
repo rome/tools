@@ -759,4 +759,51 @@ mod tests {
 			vec!["c", "b", "a"]
 		);
 	}
+
+	#[test]
+	fn siblings_with_tokens() {
+		let mut builder: TreeBuilder<RawLanguage> = TreeBuilder::new();
+
+		builder.start_node(RawLanguage::list_kind());
+
+		builder.token(SyntaxKind(1), "for");
+		builder.token(SyntaxKind(2), "(");
+		builder.token(SyntaxKind(3), ";");
+
+		builder.start_node(SyntaxKind(4));
+		builder.token(SyntaxKind(5), "x");
+		builder.finish_node();
+
+		builder.token(SyntaxKind(3), ";");
+		builder.token(SyntaxKind(6), ")");
+
+		builder.finish_node();
+
+		let root = builder.finish();
+
+		let first_semicolon = root
+			.children_with_tokens()
+			.nth(2)
+			.and_then(|e| e.into_token())
+			.unwrap();
+
+		assert_eq!(first_semicolon.text(), ";");
+
+		assert_eq!(
+			first_semicolon
+				.siblings_with_tokens(Direction::Next)
+				.map(|e| e.to_string())
+				.collect::<Vec<_>>(),
+			vec!["x", ";", ")"]
+		);
+
+		assert_eq!(
+			first_semicolon.next_sibling_or_token(),
+			first_semicolon.siblings_with_tokens(Direction::Next).next()
+		);
+		assert_eq!(
+			first_semicolon.prev_sibling_or_token(),
+			first_semicolon.siblings_with_tokens(Direction::Prev).next()
+		);
+	}
 }
