@@ -1,11 +1,10 @@
 JS_MODULE@0..64
   LIST@0..63
-    LABELLED_STMT@0..7
-      NAME@0..3
-        IDENT@0..3 "foo"
+    JS_LABELED_STATEMENT@0..7
+      IDENT@0..3 "foo"
       COLON@3..4 ":"
       WHITESPACE@4..5 " "
-      BLOCK_STMT@5..7
+      JS_BLOCK_STATEMENT@5..7
         L_CURLY@5..6 "{"
         LIST@6..6
         R_CURLY@6..7 "}"
@@ -19,7 +18,7 @@ JS_MODULE@0..64
           TRUE_KW@15..19 "true"
         R_PAREN@19..20 ")"
       WHITESPACE@20..21 " "
-      BLOCK_STMT@21..63
+      JS_BLOCK_STATEMENT@21..63
         L_CURLY@21..22 "{"
         WHITESPACE@22..25 "\n  "
         LIST@25..61

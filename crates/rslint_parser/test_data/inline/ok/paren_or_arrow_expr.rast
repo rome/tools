@@ -1,6 +1,6 @@
 JS_MODULE@0..85
   LIST@0..84
-    EXPR_STMT@0..6
+    JS_EXPRESSION_STATEMENT@0..6
       GROUPING_EXPR@0..5
         L_PAREN@0..1 "("
         NAME_REF@1..4
@@ -8,7 +8,7 @@ JS_MODULE@0..85
         R_PAREN@4..5 ")"
       SEMICOLON@5..6 ";"
     WHITESPACE@6..7 "\n"
-    EXPR_STMT@7..19
+    JS_EXPRESSION_STATEMENT@7..19
       ARROW_EXPR@7..18
         PARAMETER_LIST@7..12
           L_PAREN@7..8 "("
@@ -20,13 +20,13 @@ JS_MODULE@0..85
         WHITESPACE@12..13 " "
         FAT_ARROW@13..15 "=>"
         WHITESPACE@15..16 " "
-        BLOCK_STMT@16..18
+        JS_BLOCK_STATEMENT@16..18
           L_CURLY@16..17 "{"
           LIST@17..17
           R_CURLY@17..18 "}"
       SEMICOLON@18..19 ";"
     WHITESPACE@19..20 "\n"
-    EXPR_STMT@20..28
+    JS_EXPRESSION_STATEMENT@20..28
       GROUPING_EXPR@20..27
         L_PAREN@20..21 "("
         BIN_EXPR@21..26
@@ -40,7 +40,7 @@ JS_MODULE@0..85
         R_PAREN@26..27 ")"
       SEMICOLON@27..28 ";"
     WHITESPACE@28..29 "\n"
-    EXPR_STMT@29..64
+    JS_EXPRESSION_STATEMENT@29..64
       ARROW_EXPR@29..63
         PARAMETER_LIST@29..57
           L_PAREN@29..30 "("
@@ -82,13 +82,13 @@ JS_MODULE@0..85
         WHITESPACE@57..58 " "
         FAT_ARROW@58..60 "=>"
         WHITESPACE@60..61 " "
-        BLOCK_STMT@61..63
+        JS_BLOCK_STATEMENT@61..63
           L_CURLY@61..62 "{"
           LIST@62..62
           R_CURLY@62..63 "}"
       SEMICOLON@63..64 ";"
     WHITESPACE@64..65 "\n"
-    EXPR_STMT@65..84
+    JS_EXPRESSION_STATEMENT@65..84
       ARROW_EXPR@65..84
         PARAMETER_LIST@65..78
           L_PAREN@65..66 "("
@@ -107,7 +107,7 @@ JS_MODULE@0..85
         WHITESPACE@78..79 " "
         FAT_ARROW@79..81 "=>"
         WHITESPACE@81..82 " "
-        BLOCK_STMT@82..84
+        JS_BLOCK_STATEMENT@82..84
           L_CURLY@82..83 "{"
           LIST@83..83
           R_CURLY@83..84 "}"

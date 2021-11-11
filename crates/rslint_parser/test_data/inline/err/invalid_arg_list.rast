@@ -1,6 +1,6 @@
 JS_MODULE@0..21
   LIST@0..21
-    EXPR_STMT@0..8
+    JS_EXPRESSION_STATEMENT@0..8
       CALL_EXPR@0..7
         NAME_REF@0..3
           IDENT@0..3 "foo"
@@ -14,7 +14,7 @@ JS_MODULE@0..21
               IDENT@6..7 "b"
       SEMICOLON@7..8 ";"
     WHITESPACE@8..9 "\n"
-    EXPR_STMT@9..16
+    JS_EXPRESSION_STATEMENT@9..16
       CALL_EXPR@9..16
         NAME_REF@9..12
           IDENT@9..12 "foo"

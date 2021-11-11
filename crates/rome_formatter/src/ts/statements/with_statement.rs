@@ -1,20 +1,21 @@
 use crate::{
-	format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+	format_elements, group_elements, soft_indent, space_token, FormatElement, FormatResult,
+	Formatter, ToFormatElement,
 };
-use rslint_parser::ast::WithStmt;
+use rslint_parser::ast::JsWithStatement;
 
-impl ToFormatElement for WithStmt {
+impl ToFormatElement for JsWithStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let with_token = formatter.format_token(&self.with_token()?)?;
-		let condition = formatter.format_node(self.condition()?)?;
-		let cons = formatter.format_node(self.cons()?)?;
-
 		Ok(format_elements![
-			with_token,
+			formatter.format_token(&self.with_token()?)?,
 			space_token(),
-			condition,
+			group_elements(format_elements![
+				formatter.format_token(&self.l_paren_token()?)?,
+				soft_indent(formatter.format_node(self.object()?)?),
+				formatter.format_token(&self.r_paren_token()?)?
+			]),
 			space_token(),
-			cons
+			formatter.format_node(self.body()?)?
 		])
 	}
 }

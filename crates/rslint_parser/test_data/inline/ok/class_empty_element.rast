@@ -10,25 +10,25 @@ JS_MODULE@0..41
         L_CURLY@10..11 "{"
         WHITESPACE@11..12 " "
         LIST@12..39
-          EMPTY_STMT@12..13
+          JS_EMPTY_STATEMENT@12..13
             SEMICOLON@12..13 ";"
-          EMPTY_STMT@13..14
+          JS_EMPTY_STATEMENT@13..14
             SEMICOLON@13..14 ";"
-          EMPTY_STMT@14..15
+          JS_EMPTY_STATEMENT@14..15
             SEMICOLON@14..15 ";"
-          EMPTY_STMT@15..16
+          JS_EMPTY_STATEMENT@15..16
             SEMICOLON@15..16 ";"
-          EMPTY_STMT@16..17
+          JS_EMPTY_STATEMENT@16..17
             SEMICOLON@16..17 ";"
-          EMPTY_STMT@17..18
+          JS_EMPTY_STATEMENT@17..18
             SEMICOLON@17..18 ";"
-          EMPTY_STMT@18..19
+          JS_EMPTY_STATEMENT@18..19
             SEMICOLON@18..19 ";"
-          EMPTY_STMT@19..20
+          JS_EMPTY_STATEMENT@19..20
             SEMICOLON@19..20 ";"
-          EMPTY_STMT@20..21
+          JS_EMPTY_STATEMENT@20..21
             SEMICOLON@20..21 ";"
-          EMPTY_STMT@21..22
+          JS_EMPTY_STATEMENT@21..22
             SEMICOLON@21..22 ";"
           WHITESPACE@22..23 " "
           GETTER@23..35
@@ -41,17 +41,17 @@ JS_MODULE@0..41
               LIST@31..31
               R_PAREN@31..32 ")"
             WHITESPACE@32..33 " "
-            BLOCK_STMT@33..35
+            JS_BLOCK_STATEMENT@33..35
               L_CURLY@33..34 "{"
               LIST@34..34
               R_CURLY@34..35 "}"
-          EMPTY_STMT@35..36
+          JS_EMPTY_STATEMENT@35..36
             SEMICOLON@35..36 ";"
-          EMPTY_STMT@36..37
+          JS_EMPTY_STATEMENT@36..37
             SEMICOLON@36..37 ";"
-          EMPTY_STMT@37..38
+          JS_EMPTY_STATEMENT@37..38
             SEMICOLON@37..38 ";"
-          EMPTY_STMT@38..39
+          JS_EMPTY_STATEMENT@38..39
             SEMICOLON@38..39 ";"
         R_CURLY@39..40 "}"
   WHITESPACE@40..41 "\n"

@@ -1,12 +1,12 @@
 use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, BlockStmt, CallExpr, CaseClause,
-	CatchClause, ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt,
-	DebuggerStmt, Declarator, DefaultClause, DoWhileStmt, EmptyStmt, ExprStmt, Finalizer, FnDecl,
-	ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, IfStmt,
-	JsScript, LabelledStmt, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList,
-	ReturnStmt, SequenceExpr, Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt,
-	WithStmt,
+	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, CaseClause, CatchClause,
+	ClassBody, ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator,
+	DefaultClause, DoWhileStmt, Finalizer, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
+	ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement, JsDebuggerStatement,
+	JsEmptyStatement, JsExpressionStatement, JsLabeledStatement, JsReturnStatement, JsScript,
+	JsWithStatement, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr,
+	Setter, SinglePattern, SwitchStmt, TryStmt, VarDecl, WhileStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -55,13 +55,13 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::SEQUENCE_EXPR => SequenceExpr::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::BLOCK_STMT => BlockStmt::cast(self.clone())
+			SyntaxKind::JS_BLOCK_STATEMENT => JsBlockStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::EXPR_STMT => ExprStmt::cast(self.clone())
+			SyntaxKind::JS_EXPRESSION_STATEMENT => JsExpressionStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::RETURN_STMT => ReturnStmt::cast(self.clone())
+			SyntaxKind::JS_RETURN_STATEMENT => JsReturnStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::IF_STMT => IfStmt::cast(self.clone())
@@ -82,7 +82,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::FOR_STMT_UPDATE => ForStmtUpdate::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::EMPTY_STMT => EmptyStmt::cast(self.clone())
+			SyntaxKind::JS_EMPTY_STATEMENT => JsEmptyStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::IDENT_PROP => IdentProp::cast(self.clone())
@@ -109,7 +109,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::CONTINUE_STMT => ContinueStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::LABELLED_STMT => LabelledStmt::cast(self.clone())
+			SyntaxKind::JS_LABELED_STATEMENT => JsLabeledStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::TRY_STMT => TryStmt::cast(self.clone())
@@ -121,10 +121,10 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::CATCH_CLAUSE => CatchClause::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::WITH_STMT => WithStmt::cast(self.clone())
+			SyntaxKind::JS_WITH_STATEMENT => JsWithStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::DEBUGGER_STMT => DebuggerStmt::cast(self.clone())
+			SyntaxKind::JS_DEBUGGER_STATEMENT => JsDebuggerStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::FOR_IN_STMT => ForInStmt::cast(self.clone())

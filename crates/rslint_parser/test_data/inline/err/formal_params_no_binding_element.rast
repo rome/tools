@@ -12,7 +12,7 @@ JS_MODULE@0..22
             TRUE_KW@13..17 "true"
         R_PAREN@17..18 ")"
       WHITESPACE@18..19 " "
-      BLOCK_STMT@19..21
+      JS_BLOCK_STATEMENT@19..21
         L_CURLY@19..20 "{"
         LIST@20..20
         R_CURLY@20..21 "}"

@@ -1,7 +1,7 @@
 use crate::{format_elements, token, FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::DebuggerStmt;
+use rslint_parser::ast::JsDebuggerStatement;
 
-impl ToFormatElement for DebuggerStmt {
+impl ToFormatElement for JsDebuggerStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		Ok(format_elements![
 			formatter.format_token(&self.debugger_token()?)?,

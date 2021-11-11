@@ -63,9 +63,9 @@ JsModule =
 ///////////////
 
 JsAnyStatement =
-	BlockStmt
-	| EmptyStmt
-	| ExprStmt
+	JsBlockStatement
+	| JsEmptyStatement
+	| JsExpressionStatement
 	| IfStmt
 	| DoWhileStmt
 	| WhileStmt
@@ -74,13 +74,13 @@ JsAnyStatement =
 	| ForOfStmt
 	| ContinueStmt
 	| BreakStmt
-	| ReturnStmt
-	| WithStmt
-	| LabelledStmt
+	| JsReturnStatement
+	| JsWithStatement
+	| JsLabeledStatement
 	| SwitchStmt
 	| ThrowStmt
 	| TryStmt
-	| DebuggerStmt
+	| JsDebuggerStatement
 	| Decl
 	| ImportDecl
 	| ExportNamed
@@ -94,16 +94,17 @@ JsAnyStatement =
 	| JsUnknownStatement
 
 
-// Block statement
-BlockStmt = '{' stmts: JsAnyStatement* '}'
+JsBlockStatement =
+	'{'
+	statements: JsAnyStatement*
+	'}'
 
 
-// Empty statemnet
-EmptyStmt = ';'?
+JsEmptyStatement =
+    ';'
 
-
-// Expression statement
-ExprStmt = expr: JsAnyExpression
+JsExpressionStatement =
+    expression: JsAnyExpression ';'?
 
 
 // while statement
@@ -150,14 +151,21 @@ ContinueStmt = 'continue' name_ref: NameRef ';'?
 BreakStmt = 'break' 'ident'? ';'
 
 
-// return statement
-ReturnStmt = 'return' value:JsAnyExpression ';'?
+JsReturnStatement =
+    'return'
+    argument: JsAnyExpression?
+    ';'?
 
-// with statement
-WithStmt = 'with' condition:Condition cons:JsAnyStatement
 
-// labelled statement
-LabelledStmt = label:Name ':' stmt: JsAnyStatement
+JsWithStatement =
+    'with' '(' object: JsAnyExpression ')'
+    body: JsAnyStatement
+
+
+JsLabeledStatement =
+    label: 'ident' ':'
+    body: JsAnyStatement
+
 
 // switch statement
 SwitchStmt =
@@ -178,15 +186,16 @@ ThrowStmt = 'throw' exception:JsAnyExpression ';'
 
 // try..catch..finally statement
 
-TryStmt = 'try' test:BlockStmt handler:CatchClause? finalizer:Finalizer?
+TryStmt = 'try' test:JsBlockStatement handler:CatchClause? finalizer:Finalizer?
 
 // TODO: fix it, the pattern is not mandatory anymore
-CatchClause = 'catch' '(' error:Pattern ')' cons:BlockStmt
-Finalizer = 'finally' cons:BlockStmt
+CatchClause = 'catch' '(' error:Pattern ')' cons:JsBlockStatement
+Finalizer = 'finally' cons:JsBlockStatement
 
 
 // debugger statement
-DebuggerStmt = 'debugger' ';'?
+JsDebuggerStatement =
+	'debugger' ';'?
 
 
 ///////////////
@@ -277,7 +286,7 @@ FnExpr =
 	parameters:ArgList
 	':'?
 	return_type:TsType?
-	body:BlockStmt
+	body:JsBlockStatement
 
 // Arrow expression
 ArrowExpr =
@@ -310,7 +319,7 @@ ClassBody =  '{' elements:ClassElement* '}'
 
 
 ClassElement =
-	EmptyStmt
+	JsEmptyStatement
 	| Method
 	// probably PrivateProp is not needed
 	| PrivateProp
@@ -326,7 +335,7 @@ Constructor =
 	name:PropName
 	type_params:TsTypeParams?
 	parameters:ParameterList
-	body:BlockStmt
+	body:JsBlockStatement
 
 
 ConstructorParameters =
@@ -432,7 +441,7 @@ Undefined = 'undefined'
 
 ExprOrBlock =
 	JsAnyExpression
-	| BlockStmt
+	| JsBlockStatement
 
 ParameterList = '(' parameters:(Pattern (',' Pattern)* ','?) ')'
 ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
@@ -529,9 +538,9 @@ IdentProp = name: Name
 // MISCELLANEOUS
 ///////////////
 
-Getter =  'get' key:PropName parameters:ParameterList  body:BlockStmt
+Getter =  'get' key:PropName parameters:ParameterList  body:JsBlockStatement
 
-Setter = 'set' key:PropName parameters:ParameterList  body:BlockStmt
+Setter = 'set' key:PropName parameters:ParameterList  body:JsBlockStatement
 
 Method =
 	'static'?
@@ -542,7 +551,7 @@ Method =
 	parameters:ParameterList
 	':'?
 	return_type:TsType?
-	body:BlockStmt
+	body:JsBlockStatement
 
 SpreadElement = '...' element:JsAnyExpression
 
@@ -577,7 +586,7 @@ FnDecl =
 	parameters:ParameterList
 	':'?
 	return_type:TsType?
-	body:BlockStmt
+	body:JsBlockStatement
 
 VarDecl = ('var' | 'const' | manual__:'let') declared:(Declarator (',' Declarator)*) ';'?
 

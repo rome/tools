@@ -1,5 +1,5 @@
 use crate::ast::ArgList;
-use crate::{ast::JsModule, parse_module, AstNode, Parse, ParserError};
+use crate::{parse_module, parse_text, AstNode, ParserError, SyntaxNode};
 use expect_test::expect_file;
 use rslint_errors::{file::SimpleFiles, Emitter};
 use rslint_syntax::SyntaxKind;
@@ -43,8 +43,29 @@ fn test_data_dir() -> PathBuf {
 	project_dir().join("rslint_parser/test_data")
 }
 
-fn try_parse(path: &str, text: &str) -> Parse<JsModule> {
-	let res = catch_unwind(|| parse_module(text, 0));
+struct ParseResult {
+	root: SyntaxNode,
+	errors: Vec<ParserError>,
+}
+
+fn try_parse(path: &str, text: &str) -> ParseResult {
+	let res = catch_unwind(|| {
+		// Files containing a // SCRIPT comment are parsed as script and not as module
+		// This is needed to test features that are restricted in strict mode.
+		if text.contains("// SCRIPT") {
+			let script = parse_text(text, 0);
+			ParseResult {
+				root: script.syntax(),
+				errors: Vec::from(script.errors()),
+			}
+		} else {
+			let module = parse_module(text, 0);
+			ParseResult {
+				root: module.syntax(),
+				errors: Vec::from(module.errors()),
+			}
+		}
+	});
 	assert!(
 		!res.is_err(),
 		"Trying to parse `{}` caused infinite recursion",
@@ -57,22 +78,23 @@ fn try_parse(path: &str, text: &str) -> Parse<JsModule> {
 fn parser_tests() {
 	dir_tests(&test_data_dir(), &["inline/ok"], "rast", |text, path| {
 		let parse = try_parse(path.to_str().unwrap(), text);
-		let errors = parse.errors();
+		let errors = parse.errors.as_slice();
 		assert_errors_are_absent(errors, path);
-		format!("{:#?}", parse.syntax())
+		format!("{:#?}", parse.root)
 	});
+
 	dir_tests(&test_data_dir(), &["inline/err"], "rast", |text, path| {
 		let parse = try_parse(path.to_str().unwrap(), text);
-		let errors = parse.errors();
+		let errors = parse.errors.as_slice();
 		assert_errors_are_present(errors, path);
 		let mut files = SimpleFiles::new();
 		files.add(
 			path.file_name().unwrap().to_string_lossy().to_string(),
 			text.to_string(),
 		);
-		let mut ret = format!("{:#?}", parse.syntax());
+		let mut ret = format!("{:#?}", parse.root);
 
-		for diag in parse.errors() {
+		for diag in &parse.errors {
 			let mut write = rslint_errors::termcolor::Buffer::no_color();
 			let mut emitter = Emitter::new(&files);
 			emitter
@@ -144,7 +166,8 @@ fn assert_errors_are_present(errors: &[ParserError], path: &Path) {
 fn assert_errors_are_absent(errors: &[ParserError], path: &Path) {
 	assert!(
 		errors.is_empty(),
-		"There should be no errors in the file {:?}",
+		"There should be no errors in the file {:?} but the following errors were present: {:?}",
 		path.display(),
+		errors
 	);
 }

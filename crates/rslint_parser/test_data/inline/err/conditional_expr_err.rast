@@ -1,6 +1,6 @@
 JS_MODULE@0..40
   LIST@0..39
-    EXPR_STMT@0..13
+    JS_EXPRESSION_STATEMENT@0..13
       COND_EXPR@0..13
         NAME_REF@0..3
           IDENT@0..3 "foo"
@@ -13,7 +13,7 @@ JS_MODULE@0..40
         NAME_REF@10..13
           IDENT@10..13 "baz"
     WHITESPACE@13..14 "\n"
-    EXPR_STMT@14..39
+    JS_EXPRESSION_STATEMENT@14..39
       COND_EXPR@14..39
         NAME_REF@14..17
           IDENT@14..17 "foo"

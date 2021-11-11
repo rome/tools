@@ -3,7 +3,7 @@ JS_MODULE@0..28
     THROW_STMT@0..5
       THROW_KW@0..5 "throw"
     WHITESPACE@5..6 "\n"
-    EXPR_STMT@6..27
+    JS_EXPRESSION_STATEMENT@6..27
       NEW_EXPR@6..27
         NEW_KW@6..9 "new"
         WHITESPACE@9..10 " "

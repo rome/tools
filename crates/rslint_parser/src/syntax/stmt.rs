@@ -266,15 +266,15 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 			p.state.labels.insert(string, range.to_owned());
 		}
 
-		let m = expr.precede(p);
+		let m = expr.undo_completion(p);
 		p.bump_any();
 		stmt(p, None, None);
-		return Some(m.complete(p, LABELLED_STMT));
+		return Some(m.complete(p, JS_LABELED_STATEMENT));
 	}
 
 	let m = expr.precede(p);
 	semi(p, start..p.cur_tok().range.end);
-	Some(m.complete(p, EXPR_STMT))
+	Some(m.complete(p, JS_EXPRESSION_STATEMENT))
 }
 
 /// A debugger statement such as `debugger;`
@@ -285,7 +285,7 @@ pub fn debugger_stmt(p: &mut Parser) -> CompletedMarker {
 	let range = p.cur_tok().range;
 	p.expect(T![debugger]);
 	semi(p, range);
-	m.complete(p, DEBUGGER_STMT)
+	m.complete(p, JS_DEBUGGER_STATEMENT)
 }
 
 /// A throw statement such as `throw new Error("uh oh");`
@@ -408,7 +408,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 		p.expr_with_semi_recovery(false);
 	}
 	semi(p, start..p.cur_tok().range.end);
-	let complete = m.complete(p, RETURN_STMT);
+	let complete = m.complete(p, JS_RETURN_STATEMENT);
 
 	if !p.state.in_function && !p.syntax.global_return {
 		let err = p
@@ -426,7 +426,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 pub fn empty_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![;]);
-	m.complete(p, EMPTY_STMT)
+	m.complete(p, JS_EMPTY_STATEMENT)
 }
 
 /// A block statement consisting of statements wrapped in curly brackets.
@@ -458,7 +458,7 @@ pub fn block_stmt(
 	guard.bump(T!['{']);
 	block_items(&mut *guard, function_body, false, true, recovery_set);
 	guard.expect(T!['}']);
-	Some(m.complete(&mut *guard, BLOCK_STMT))
+	Some(m.complete(&mut *guard, JS_BLOCK_STATEMENT))
 }
 
 pub fn block_stmt_unchecked(p: &mut Parser, function_body: bool) -> CompletedMarker {
@@ -466,7 +466,7 @@ pub fn block_stmt_unchecked(p: &mut Parser, function_body: bool) -> CompletedMar
 	p.bump(T!['{']);
 	block_items(p, function_body, false, true, None);
 	p.expect(T!['}']);
-	m.complete(p, BLOCK_STMT)
+	m.complete(p, JS_BLOCK_STATEMENT)
 }
 
 /// Top level items or items inside of a block statement, this also handles module items so we can
@@ -586,10 +586,10 @@ pub(crate) fn block_items(
 		// Still makes the function body strict
 		if let Some(kind) = complete.map(|x| x.kind()).filter(|_| could_be_directive) {
 			match kind {
-				EXPR_STMT => {
+				JS_EXPRESSION_STATEMENT => {
 					let parsed = p
-						.parse_marker::<ast::ExprStmt>(complete.as_ref().unwrap())
-						.expr();
+						.parse_marker::<ast::JsExpressionStatement>(complete.as_ref().unwrap())
+						.expression();
 					if let Ok(LITERAL) = parsed.as_ref().map(|it| it.syntax().kind()) {
 						let unwrapped = parsed.unwrap().syntax().to::<ast::Literal>();
 						if unwrapped.is_string() {
@@ -656,10 +656,14 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 pub fn with_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![with]);
-	condition(p);
+
+	p.expect(T!['(']);
+	expr(p);
+	p.expect(T![')']);
+
 	stmt(p, None, None);
 
-	let mut complete = m.complete(p, WITH_STMT);
+	let mut complete = m.complete(p, JS_WITH_STATEMENT);
 	if p.state.strict.is_some() {
 		let err = p
 			.err_builder("`with` statements are not allowed in strict mode")

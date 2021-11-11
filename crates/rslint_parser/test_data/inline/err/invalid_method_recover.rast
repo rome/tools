@@ -30,7 +30,7 @@ JS_MODULE@0..48
               WHITESPACE@22..23 " "
               FAT_ARROW@23..25 "=>"
               WHITESPACE@25..26 " "
-              BLOCK_STMT@26..43
+              JS_BLOCK_STATEMENT@26..43
                 L_CURLY@26..27 "{"
                 WHITESPACE@27..32 "\n    "
                 LIST@32..39
@@ -50,7 +50,7 @@ JS_MODULE@0..48
             SEMICOLON@43..44 ";"
         WHITESPACE@44..45 "\n"
         R_CURLY@45..46 "}"
-    EMPTY_STMT@46..47
+    JS_EMPTY_STATEMENT@46..47
       SEMICOLON@46..47 ";"
   WHITESPACE@47..48 "\n"
 --

@@ -91,7 +91,7 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
                 the current token is guaranteed to be `IMPORT_KW`",
 		);
 		semi(p, start..p.cur_tok().range.start);
-		return m.complete(p, EXPR_STMT);
+		return m.complete(p, JS_EXPRESSION_STATEMENT);
 	}
 
 	let p = &mut *p.with_state(ParserState {

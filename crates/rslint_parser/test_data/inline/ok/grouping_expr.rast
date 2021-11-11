@@ -1,6 +1,6 @@
 JS_MODULE@0..14
   LIST@0..13
-    EXPR_STMT@0..13
+    JS_EXPRESSION_STATEMENT@0..13
       CALL_EXPR@0..13
         GROUPING_EXPR@0..7
           L_PAREN@0..1 "("

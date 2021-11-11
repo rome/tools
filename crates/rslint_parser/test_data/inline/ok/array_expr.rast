@@ -1,6 +1,6 @@
 JS_MODULE@0..65
   LIST@0..64
-    EXPR_STMT@0..11
+    JS_EXPRESSION_STATEMENT@0..11
       ARRAY_EXPR@0..10
         L_BRACK@0..1 "["
         LIST@1..9
@@ -13,7 +13,7 @@ JS_MODULE@0..65
         R_BRACK@9..10 "]"
       SEMICOLON@10..11 ";"
     WHITESPACE@11..12 "\n"
-    EXPR_STMT@12..18
+    JS_EXPRESSION_STATEMENT@12..18
       ARRAY_EXPR@12..17
         L_BRACK@12..13 "["
         LIST@13..16
@@ -22,7 +22,7 @@ JS_MODULE@0..65
         R_BRACK@16..17 "]"
       SEMICOLON@17..18 ";"
     WHITESPACE@18..19 "\n"
-    EXPR_STMT@19..26
+    JS_EXPRESSION_STATEMENT@19..26
       ARRAY_EXPR@19..25
         L_BRACK@19..20 "["
         LIST@20..24
@@ -32,7 +32,7 @@ JS_MODULE@0..65
         R_BRACK@24..25 "]"
       SEMICOLON@25..26 ";"
     WHITESPACE@26..27 "\n"
-    EXPR_STMT@27..34
+    JS_EXPRESSION_STATEMENT@27..34
       ARRAY_EXPR@27..33
         L_BRACK@27..28 "["
         LIST@28..32
@@ -42,7 +42,7 @@ JS_MODULE@0..65
         R_BRACK@32..33 "]"
       SEMICOLON@33..34 ";"
     WHITESPACE@34..35 "\n"
-    EXPR_STMT@35..50
+    JS_EXPRESSION_STATEMENT@35..50
       ARRAY_EXPR@35..49
         L_BRACK@35..36 "["
         LIST@36..48
@@ -60,7 +60,7 @@ JS_MODULE@0..65
         R_BRACK@48..49 "]"
       SEMICOLON@49..50 ";"
     WHITESPACE@50..51 "\n"
-    EXPR_STMT@51..64
+    JS_EXPRESSION_STATEMENT@51..64
       ARRAY_EXPR@51..63
         L_BRACK@51..52 "["
         LIST@52..62

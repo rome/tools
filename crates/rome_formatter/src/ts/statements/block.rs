@@ -1,4 +1,4 @@
-use rslint_parser::ast::{BlockStmt, IfStmt};
+use rslint_parser::ast::{IfStmt, JsBlockStatement};
 use rslint_parser::AstNode;
 
 use crate::ts::statements::format_statements;
@@ -7,9 +7,9 @@ use crate::{
 	ToFormatElement,
 };
 
-impl ToFormatElement for BlockStmt {
+impl ToFormatElement for JsBlockStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let stmts = format_statements(self.stmts(), formatter);
+		let stmts = format_statements(self.statements(), formatter);
 
 		// Formatting of curly braces for an:
 		// * empty block: same line `{}`,

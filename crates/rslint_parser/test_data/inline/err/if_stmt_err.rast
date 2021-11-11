@@ -11,7 +11,7 @@ JS_MODULE@0..61
       WHITESPACE@9..10 " "
       ELSE_KW@10..14 "else"
       WHITESPACE@14..15 " "
-      BLOCK_STMT@15..17
+      JS_BLOCK_STATEMENT@15..17
         L_CURLY@15..16 "{"
         LIST@16..16
         R_CURLY@16..17 "}"
@@ -33,7 +33,7 @@ JS_MODULE@0..61
         CONDITION@36..36
         ELSE_KW@36..40 "else"
         WHITESPACE@40..41 " "
-        BLOCK_STMT@41..43
+        JS_BLOCK_STATEMENT@41..43
           L_CURLY@41..42 "{"
           LIST@42..42
           R_CURLY@42..43 "}"
@@ -45,14 +45,14 @@ JS_MODULE@0..61
         L_PAREN@47..48 "("
         R_PAREN@48..49 ")"
       WHITESPACE@49..50 " "
-      BLOCK_STMT@50..52
+      JS_BLOCK_STATEMENT@50..52
         L_CURLY@50..51 "{"
         LIST@51..51
         R_CURLY@51..52 "}"
       WHITESPACE@52..53 " "
       ELSE_KW@53..57 "else"
       WHITESPACE@57..58 " "
-      BLOCK_STMT@58..60
+      JS_BLOCK_STATEMENT@58..60
         L_CURLY@58..59 "{"
         LIST@59..59
         R_CURLY@59..60 "}"

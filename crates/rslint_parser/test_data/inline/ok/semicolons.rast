@@ -68,11 +68,11 @@ JS_MODULE@0..84
         LIST@66..66
         R_PAREN@66..67 ")"
       WHITESPACE@67..68 " "
-      BLOCK_STMT@68..83
+      JS_BLOCK_STATEMENT@68..83
         L_CURLY@68..69 "{"
         WHITESPACE@69..70 " "
         LIST@70..81
-          RETURN_STMT@70..81
+          JS_RETURN_STATEMENT@70..81
             RETURN_KW@70..76 "return"
             WHITESPACE@76..77 " "
             LITERAL@77..81

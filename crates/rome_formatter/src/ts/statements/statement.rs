@@ -4,11 +4,13 @@ use rslint_parser::ast::JsAnyStatement;
 impl ToFormatElement for JsAnyStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			JsAnyStatement::BlockStmt(block) => block.to_format_element(formatter),
-			JsAnyStatement::EmptyStmt(empty_statement) => {
+			JsAnyStatement::JsBlockStatement(block) => block.to_format_element(formatter),
+			JsAnyStatement::JsEmptyStatement(empty_statement) => {
 				empty_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::ExprStmt(expr_stmt) => expr_stmt.to_format_element(formatter),
+			JsAnyStatement::JsExpressionStatement(expr_stmt) => {
+				expr_stmt.to_format_element(formatter)
+			}
 			JsAnyStatement::IfStmt(if_stmt) => if_stmt.to_format_element(formatter),
 			JsAnyStatement::DoWhileStmt(do_while_statement) => {
 				do_while_statement.to_format_element(formatter)
@@ -26,9 +28,11 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::BreakStmt(break_statement) => {
 				break_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::ReturnStmt(stmt) => stmt.to_format_element(formatter),
-			JsAnyStatement::WithStmt(with_statement) => with_statement.to_format_element(formatter),
-			JsAnyStatement::LabelledStmt(label_statement) => {
+			JsAnyStatement::JsReturnStatement(stmt) => stmt.to_format_element(formatter),
+			JsAnyStatement::JsWithStatement(with_statement) => {
+				with_statement.to_format_element(formatter)
+			}
+			JsAnyStatement::JsLabeledStatement(label_statement) => {
 				label_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::SwitchStmt(switch_statement) => {
@@ -38,7 +42,7 @@ impl ToFormatElement for JsAnyStatement {
 				throw_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::TryStmt(try_statement) => try_statement.to_format_element(formatter),
-			JsAnyStatement::DebuggerStmt(debugger_statement) => {
+			JsAnyStatement::JsDebuggerStatement(debugger_statement) => {
 				debugger_statement.to_format_element(formatter)
 			}
 

@@ -1,6 +1,6 @@
 JS_MODULE@0..125
   LIST@0..124
-    EXPR_STMT@0..5
+    JS_EXPRESSION_STATEMENT@0..5
       BIN_EXPR@0..5
         LITERAL@0..1
           NUMBER@0..1 "5"
@@ -10,7 +10,7 @@ JS_MODULE@0..125
         LITERAL@4..5
           NUMBER@4..5 "5"
     WHITESPACE@5..6 "\n"
-    EXPR_STMT@6..17
+    JS_EXPRESSION_STATEMENT@6..17
       BIN_EXPR@6..17
         LITERAL@6..7
           NUMBER@6..7 "6"
@@ -26,7 +26,7 @@ JS_MODULE@0..125
           LITERAL@16..17
             NUMBER@16..17 "7"
     WHITESPACE@17..18 "\n"
-    EXPR_STMT@18..39
+    JS_EXPRESSION_STATEMENT@18..39
       BIN_EXPR@18..39
         LITERAL@18..19
           NUMBER@18..19 "1"
@@ -62,7 +62,7 @@ JS_MODULE@0..125
           LITERAL@38..39
             NUMBER@38..39 "3"
     WHITESPACE@39..40 "\n"
-    EXPR_STMT@40..45
+    JS_EXPRESSION_STATEMENT@40..45
       BIN_EXPR@40..45
         LITERAL@40..41
           NUMBER@40..41 "1"
@@ -72,7 +72,7 @@ JS_MODULE@0..125
         LITERAL@44..45
           NUMBER@44..45 "2"
     WHITESPACE@45..46 "\n"
-    EXPR_STMT@46..55
+    JS_EXPRESSION_STATEMENT@46..55
       BIN_EXPR@46..55
         LITERAL@46..48
           NUMBER@46..48 "74"
@@ -82,7 +82,7 @@ JS_MODULE@0..125
         NAME_REF@52..55
           IDENT@52..55 "foo"
     WHITESPACE@55..56 "\n"
-    EXPR_STMT@56..76
+    JS_EXPRESSION_STATEMENT@56..76
       BIN_EXPR@56..76
         NAME_REF@56..59
           IDENT@56..59 "foo"
@@ -92,7 +92,7 @@ JS_MODULE@0..125
         NAME_REF@71..76
           IDENT@71..76 "Array"
     WHITESPACE@76..77 "\n"
-    EXPR_STMT@77..87
+    JS_EXPRESSION_STATEMENT@77..87
       BIN_EXPR@77..87
         NAME_REF@77..80
           IDENT@77..80 "foo"
@@ -102,7 +102,7 @@ JS_MODULE@0..125
         NAME_REF@84..87
           IDENT@84..87 "bar"
     WHITESPACE@87..88 "\n"
-    EXPR_STMT@88..101
+    JS_EXPRESSION_STATEMENT@88..101
       BIN_EXPR@88..101
         BIN_EXPR@88..97
           BIN_EXPR@88..93
@@ -124,7 +124,7 @@ JS_MODULE@0..125
         LITERAL@100..101
           NUMBER@100..101 "1"
     WHITESPACE@101..102 "\n"
-    EXPR_STMT@102..124
+    JS_EXPRESSION_STATEMENT@102..124
       BIN_EXPR@102..124
         BIN_EXPR@102..107
           LITERAL@102..103

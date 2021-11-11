@@ -1,20 +1,20 @@
 JS_MODULE@0..27
   LIST@0..26
-    BLOCK_STMT@0..2
+    JS_BLOCK_STATEMENT@0..2
       L_CURLY@0..1 "{"
       LIST@1..1
       R_CURLY@1..2 "}"
     WHITESPACE@2..3 "\n"
-    BLOCK_STMT@3..11
+    JS_BLOCK_STATEMENT@3..11
       L_CURLY@3..4 "{"
       LIST@4..10
-        BLOCK_STMT@4..10
+        JS_BLOCK_STATEMENT@4..10
           L_CURLY@4..5 "{"
           LIST@5..9
-            BLOCK_STMT@5..9
+            JS_BLOCK_STATEMENT@5..9
               L_CURLY@5..6 "{"
               LIST@6..8
-                BLOCK_STMT@6..8
+                JS_BLOCK_STATEMENT@6..8
                   L_CURLY@6..7 "{"
                   LIST@7..7
                   R_CURLY@7..8 "}"
@@ -22,11 +22,11 @@ JS_MODULE@0..27
           R_CURLY@9..10 "}"
       R_CURLY@10..11 "}"
     WHITESPACE@11..12 "\n"
-    BLOCK_STMT@12..26
+    JS_BLOCK_STATEMENT@12..26
       L_CURLY@12..13 "{"
       WHITESPACE@13..14 " "
       LIST@14..24
-        EXPR_STMT@14..24
+        JS_EXPRESSION_STATEMENT@14..24
           ASSIGN_EXPR@14..23
             NAME_REF@14..17
               IDENT@14..17 "foo"

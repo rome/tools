@@ -1,6 +1,6 @@
 JS_MODULE@0..33
   LIST@0..32
-    EXPR_STMT@0..8
+    JS_EXPRESSION_STATEMENT@0..8
       TEMPLATE@0..8
         NAME_REF@0..3
           IDENT@0..3 "foo"
@@ -9,7 +9,7 @@ JS_MODULE@0..33
           TEMPLATE_CHUNK@4..7 "bar"
         BACKTICK@7..8 "`"
     WHITESPACE@8..9 "\n"
-    EXPR_STMT@9..32
+    JS_EXPRESSION_STATEMENT@9..32
       BRACKET_EXPR@9..32
         CALL_EXPR@9..27
           CALL_EXPR@9..22

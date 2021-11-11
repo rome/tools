@@ -17,7 +17,7 @@ JS_MODULE@0..25
             R_PAREN@15..16 ")"
       SEMICOLON@16..17 ";"
     WHITESPACE@17..18 "\n"
-    EXPR_STMT@18..24
+    JS_EXPRESSION_STATEMENT@18..24
       CALL_EXPR@18..23
         NAME_REF@18..21
           IDENT@18..21 "foo"
