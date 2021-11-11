@@ -119,17 +119,24 @@ impl JsExpressionStatement {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct IfStmt {
+pub struct JsIfStatement {
 	pub(crate) syntax: SyntaxNode,
 }
-impl IfStmt {
+impl JsIfStatement {
 	pub fn if_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![if])
 	}
-	pub fn condition(&self) -> SyntaxResult<Condition> { support::as_mandatory_node(&self.syntax) }
-	pub fn else_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![else])
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T!['('])
 	}
+	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![')'])
+	}
+	pub fn consequence(&self) -> SyntaxResult<JsAnyStatement> {
+		support::as_mandatory_node(&self.syntax)
+	}
+	pub fn else_clause(&self) -> Option<JsElseClause> { support::as_optional_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct DoWhileStmt {
@@ -556,6 +563,18 @@ impl Condition {
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T![')'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsElseClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsElseClause {
+	pub fn else_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::as_mandatory_token(&self.syntax, T![else])
+	}
+	pub fn alternate(&self) -> SyntaxResult<JsAnyStatement> {
+		support::as_mandatory_node(&self.syntax)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2370,7 +2389,7 @@ pub enum JsAnyStatement {
 	JsBlockStatement(JsBlockStatement),
 	JsEmptyStatement(JsEmptyStatement),
 	JsExpressionStatement(JsExpressionStatement),
-	IfStmt(IfStmt),
+	JsIfStatement(JsIfStatement),
 	DoWhileStmt(DoWhileStmt),
 	WhileStmt(WhileStmt),
 	ForStmt(ForStmt),
@@ -2735,8 +2754,8 @@ impl AstNode for JsExpressionStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for IfStmt {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == IF_STMT }
+impl AstNode for JsIfStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IF_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3012,6 +3031,17 @@ impl AstNode for TsNamespaceExportDecl {
 }
 impl AstNode for Condition {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == CONDITION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsElseClause {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ELSE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4495,8 +4525,8 @@ impl From<JsExpressionStatement> for JsAnyStatement {
 		JsAnyStatement::JsExpressionStatement(node)
 	}
 }
-impl From<IfStmt> for JsAnyStatement {
-	fn from(node: IfStmt) -> JsAnyStatement { JsAnyStatement::IfStmt(node) }
+impl From<JsIfStatement> for JsAnyStatement {
+	fn from(node: JsIfStatement) -> JsAnyStatement { JsAnyStatement::JsIfStatement(node) }
 }
 impl From<DoWhileStmt> for JsAnyStatement {
 	fn from(node: DoWhileStmt) -> JsAnyStatement { JsAnyStatement::DoWhileStmt(node) }
@@ -4585,7 +4615,7 @@ impl AstNode for JsAnyStatement {
 			JS_BLOCK_STATEMENT
 			| JS_EMPTY_STATEMENT
 			| JS_EXPRESSION_STATEMENT
-			| IF_STMT
+			| JS_IF_STATEMENT
 			| DO_WHILE_STMT
 			| WHILE_STMT
 			| FOR_STMT
@@ -4622,7 +4652,7 @@ impl AstNode for JsAnyStatement {
 			JS_EXPRESSION_STATEMENT => {
 				JsAnyStatement::JsExpressionStatement(JsExpressionStatement { syntax })
 			}
-			IF_STMT => JsAnyStatement::IfStmt(IfStmt { syntax }),
+			JS_IF_STATEMENT => JsAnyStatement::JsIfStatement(JsIfStatement { syntax }),
 			DO_WHILE_STMT => JsAnyStatement::DoWhileStmt(DoWhileStmt { syntax }),
 			WHILE_STMT => JsAnyStatement::WhileStmt(WhileStmt { syntax }),
 			FOR_STMT => JsAnyStatement::ForStmt(ForStmt { syntax }),
@@ -4676,7 +4706,7 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsBlockStatement(it) => &it.syntax,
 			JsAnyStatement::JsEmptyStatement(it) => &it.syntax,
 			JsAnyStatement::JsExpressionStatement(it) => &it.syntax,
-			JsAnyStatement::IfStmt(it) => &it.syntax,
+			JsAnyStatement::JsIfStatement(it) => &it.syntax,
 			JsAnyStatement::DoWhileStmt(it) => &it.syntax,
 			JsAnyStatement::WhileStmt(it) => &it.syntax,
 			JsAnyStatement::ForStmt(it) => &it.syntax,
@@ -6057,7 +6087,7 @@ impl std::fmt::Display for JsExpressionStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for IfStmt {
+impl std::fmt::Display for JsIfStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6183,6 +6213,11 @@ impl std::fmt::Display for TsNamespaceExportDecl {
 	}
 }
 impl std::fmt::Display for Condition {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsElseClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

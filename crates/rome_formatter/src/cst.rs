@@ -3,8 +3,8 @@ use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, CaseClause, ClassBody,
 	ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator,
 	DefaultClause, DoWhileStmt, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
-	ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement, JsCatchClause, JsDebuggerStatement,
-	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsLabeledStatement,
+	ForStmtUpdate, Getter, IdentProp, JsBlockStatement, JsCatchClause, JsDebuggerStatement,
+	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement, JsLabeledStatement,
 	JsReturnStatement, JsScript, JsTryStatement, JsWithStatement, Literal, LiteralProp, Name,
 	NameRef, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern, SwitchStmt, VarDecl,
 	WhileStmt,
@@ -65,7 +65,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_RETURN_STATEMENT => JsReturnStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::IF_STMT => IfStmt::cast(self.clone())
+			SyntaxKind::JS_IF_STATEMENT => JsIfStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CONDITION => Condition::cast(self.clone())
