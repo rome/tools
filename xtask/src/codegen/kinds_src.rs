@@ -347,7 +347,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"TS_ENTITY_NAME",
 		"BOOLEAN",
 		"BIG_INT_VALUE",
-		// unknown tokens
+		// unknown tokens for JS language
 		"JS_UNKNOWN_EXPRESSION",
 		"JS_UNKNOWN_STATEMENT",
 		"JS_UNKNOWN_PATTERN",

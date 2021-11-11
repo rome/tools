@@ -130,7 +130,7 @@ impl Formatter {
 	/// "mess up" the developers, yet incomplete, work or accidentally introduce new syntax errors.
 	///
 	/// You may be inclined to call `node.text` directly. However, using `text` doesn't track the nodes
-	///nor its children source mapping information, resulting in incorrect source maps for this subtree.
+	/// nor its children source mapping information, resulting in incorrect source maps for this subtree.
 	pub fn format_raw(&self, node: &SyntaxNode) -> FormatElement {
 		concat_elements(node.children_with_tokens().map(|child| match child {
 			SyntaxElement::Node(child_node) => {

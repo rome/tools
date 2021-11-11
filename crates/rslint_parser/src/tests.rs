@@ -61,7 +61,40 @@ fn parser_tests() {
 		assert_errors_are_absent(errors, path);
 		format!("{:#?}", parse.syntax())
 	});
+	dir_tests(&test_data_dir(), &["ts/ok"], "rast", |text, path| {
+		let parse = try_parse(path.to_str().unwrap(), text);
+		let errors = parse.errors();
+		assert_errors_are_absent(errors, path);
+		format!("{:#?}", parse.syntax())
+	});
 	dir_tests(&test_data_dir(), &["inline/err"], "rast", |text, path| {
+		let parse = try_parse(path.to_str().unwrap(), text);
+		let errors = parse.errors();
+		assert_errors_are_present(errors, path);
+		let mut files = SimpleFiles::new();
+		files.add(
+			path.file_name().unwrap().to_string_lossy().to_string(),
+			text.to_string(),
+		);
+		let mut ret = format!("{:#?}", parse.syntax());
+
+		for diag in parse.errors() {
+			let mut write = rslint_errors::termcolor::Buffer::no_color();
+			let mut emitter = Emitter::new(&files);
+			emitter
+				.emit_with_writer(diag, &mut write)
+				.expect("failed to emit diagnostic");
+
+			ret.push_str(&format!(
+				"--\n{}",
+				std::str::from_utf8(write.as_slice()).expect("non utf8 in error buffer")
+			));
+		}
+		ret.push_str(&format!("--\n{}", text));
+		ret
+	});
+
+	dir_tests(&test_data_dir(), &["ts/err"], "rast", |text, path| {
 		let parse = try_parse(path.to_str().unwrap(), text);
 		let errors = parse.errors();
 		assert_errors_are_present(errors, path);

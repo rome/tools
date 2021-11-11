@@ -44,7 +44,7 @@ impl ToFormatElement for JsAnyStatement {
 
 			JsAnyStatement::ForOfStmt(_) => todo!(),
 			JsAnyStatement::Decl(decl) => decl.to_format_element(formatter),
-			JsAnyStatement::JsUnknownStatement(_) => todo!(),
+			JsAnyStatement::JsUnknownStatement(node) => Ok(formatter.format_raw(node.syntax())),
 			JsAnyStatement::ImportDecl(_) => todo!(),
 			JsAnyStatement::ExportNamed(_) => todo!(),
 			JsAnyStatement::ExportDefaultDecl(_) => todo!(),

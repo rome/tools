@@ -102,7 +102,7 @@ pub(crate) fn maybe_ts_type_annotation(p: &mut Parser) -> Option<Range<usize>> {
 				.primary(start..end, "");
 
 			p.error(err);
-			maybe_err.complete(p, ERROR);
+			maybe_err.complete(p, JS_UNKNOWN_EXPRESSION);
 		} else {
 			maybe_err.abandon(p);
 		}
@@ -371,7 +371,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 		p.bump_any();
 		let mut complete = ts_heritage_clause(p, false);
 		for elem in &mut complete {
-			elem.change_kind(p, ERROR);
+			elem.change_kind(p, JS_UNKNOWN_EXPRESSION);
 		}
 
 		let err = p
@@ -379,7 +379,7 @@ pub fn ts_interface(p: &mut Parser) -> Option<CompletedMarker> {
 			.primary(p.marker_vec_range(&complete), "");
 
 		p.error(err);
-		m.complete(p, ERROR);
+		m.complete(p, JS_UNKNOWN_EXPRESSION);
 	}
 
 	if let Some(extends_list) = extends_list {
@@ -472,7 +472,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 						.primary(complete.range(p), "");
 
 					p.error(err);
-					complete.change_kind(p, ERROR);
+					complete.change_kind(p, JS_UNKNOWN_EXPRESSION);
 				}
 			}
 		}
@@ -587,12 +587,11 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 				.err_builder("expected an identifier or string for an enum variant, but found none")
 				.primary(p.cur_tok().range, "");
 
-			// TODO: #1759
 			p.err_recover(
 				err,
 				token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
 				false,
-				ERROR,
+				JS_UNKNOWN_ASSIGNMENT_TARGET,
 			);
 			true
 		} else {
@@ -1029,7 +1028,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 					T![|]
 				]),
 				false,
-				ERROR,
+				JS_UNKNOWN_PATTERN,
 			);
 			None
 		}
@@ -1050,7 +1049,7 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			let range = p.cur_tok().range;
 			p.bump_any();
-			m.complete(p, ERROR);
+			m.complete(p, JS_UNKNOWN_EXPRESSION);
 			let err = p
 				.err_builder("type arguments may not contain trailing commas")
 				.primary(range, "help: remove this comma");
@@ -1123,12 +1122,11 @@ fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 			.err_builder("expected a type parameter, but found none")
 			.primary(p.cur_tok().range, "");
 
-		// TODO: #1759
 		p.err_recover(
 			err,
 			token_set![T![ident], T![yield], T![await], T![>], T![=]],
 			false,
-			ERROR,
+			JS_UNKNOWN_EXPRESSION,
 		);
 		None
 	}
@@ -1291,9 +1289,9 @@ pub(crate) fn maybe_eat_incorrect_modifier(p: &mut Parser) -> Option<CompletedMa
 	if matches!(p.cur_src(), "public" | "private" | "protected") {
 		let m = p.start();
 		p.bump_any();
-		Some(m.complete(p, ERROR))
+		Some(m.complete(p, JS_UNKNOWN_MEMBER))
 	} else if ts_modifier(p, &["readonly"]).is_some() {
-		Some(maybe_err.complete(p, ERROR))
+		Some(maybe_err.complete(p, JS_UNKNOWN_MEMBER))
 	} else {
 		None
 	}
@@ -1364,7 +1362,6 @@ pub fn ts_type_name(
 		))
 		.primary(p.cur_tok().range, "");
 
-	// TODO: #1759
-	p.err_recover(err, set, false, ERROR)?;
+	p.err_recover(err, set, false, JS_UNKNOWN_BINDING)?;
 	None
 }
