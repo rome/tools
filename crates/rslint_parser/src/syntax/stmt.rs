@@ -616,14 +616,19 @@ pub(crate) fn block_items(
 	p.state = old;
 }
 
-/// An expression wrapped in parentheses such as `()`
+/// A (bool) condition
 pub fn condition(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
+	parenthesized_expression(p);
+	m.complete(p, CONDITION)
+}
+
+/// An expression wrapped in parentheses such as `()`
+pub fn parenthesized_expression(p: &mut Parser) {
 	p.state.allow_object_expr = p.expect(T!['(']);
 	expr(p);
 	p.expect(T![')']);
 	p.state.allow_object_expr = true;
-	m.complete(p, CONDITION)
 }
 
 /// An if statement such as `if (foo) { bar(); }`
@@ -640,26 +645,33 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 	// if () {} else {}
 	let m = p.start();
 	p.expect(T![if]);
-	condition(&mut *p.with_state(ParserState {
+
+	// (test)
+	parenthesized_expression(&mut *p.with_state(ParserState {
 		expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![else]]),
 		..p.state.clone()
 	}));
+
+	// body
 	// allows us to recover from `if (true) else {}`
 	stmt(p, STMT_RECOVERY_SET.union(token_set![T![else]]), None);
-	if p.eat(T![else]) {
+
+	// else clause
+	if p.at(T![else]) {
+		let else_clause = p.start();
+		p.eat(T![else]);
 		stmt(p, None, None);
+		else_clause.complete(p, JS_ELSE_CLAUSE);
 	}
-	m.complete(p, IF_STMT)
+
+	m.complete(p, JS_IF_STATEMENT)
 }
 
 /// A with statement such as `with (foo) something()`
 pub fn with_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![with]);
-
-	p.expect(T!['(']);
-	expr(p);
-	p.expect(T![')']);
+	parenthesized_expression(p);
 
 	stmt(p, None, None);
 
@@ -995,7 +1007,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 				stmt(p, None, None);
 			}
 			cons_list.complete(p, LIST);
-			m.complete(p, DEFAULT_CLAUSE);
+			m.complete(p, JS_DEFAULT_CLAUSE);
 			return Some(start..end);
 		}
 		T![case] => {
@@ -1007,7 +1019,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 				stmt(p, None, None);
 			}
 			cons_list.complete(p, LIST);
-			m.complete(p, CASE_CLAUSE);
+			m.complete(p, JS_CASE_CLAUSE);
 		}
 		_ => {
 			let err = p
@@ -1044,7 +1056,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 	// switch {}
 	let m = p.start();
 	p.expect(T![switch]);
-	condition(p);
+	parenthesized_expression(p);
 	p.expect(T!['{']);
 	let cases_list = p.start();
 	let mut first_default: Option<Range<usize>> = None;
@@ -1074,7 +1086,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 	}
 	cases_list.complete(p, LIST);
 	p.expect(T!['}']);
-	m.complete(p, SWITCH_STMT)
+	m.complete(p, JS_SWITCH_STATEMENT)
 }
 
 fn catch_clause(p: &mut Parser) {

@@ -66,7 +66,7 @@ JsAnyStatement =
 	JsBlockStatement
 	| JsEmptyStatement
 	| JsExpressionStatement
-	| IfStmt
+	| JsIfStatement
 	| DoWhileStmt
 	| WhileStmt
 	| ForStmt
@@ -77,7 +77,7 @@ JsAnyStatement =
 	| JsReturnStatement
 	| JsWithStatement
 	| JsLabeledStatement
-	| SwitchStmt
+	| JsSwitchStatement
 	| JsThrowStatement
 	| JsTryStatement
 	| JsTryFinallyStatement
@@ -116,7 +116,14 @@ DoWhileStmt = 'do'  cons:JsAnyStatement 'while' condition:Condition ';'?
 
 
 // if statement
-IfStmt = 'if' condition: Condition manual__cons: JsAnyStatement 'else' manual__alt: JsAnyStatement
+JsIfStatement =
+	'if' '(' test: JsAnyExpression ')'
+	consequence: JsAnyStatement
+	else_clause: JsElseClause?
+
+JsElseClause =
+	'else'
+	alternate: JsAnyStatement
 
 
 // for..in statement
@@ -168,18 +175,15 @@ JsLabeledStatement =
     body: JsAnyStatement
 
 
-// switch statement
-SwitchStmt =
-	'switch'
-	test:Condition
-	'{'
-	cases:SwitchCase*
-	'}'
+JsSwitchStatement =
+    'switch' '(' discriminant: JsAnyExpression ')'
+    '{'
+    cases: JsAnySwitchClause*
+    '}'
 
-SwitchCase = CaseClause | DefaultClause
-
-CaseClause = 'case' test:JsAnyExpression ':' cons:JsAnyStatement*
-DefaultClause = 'default' ':' cons:JsAnyStatement*
+JsAnySwitchClause = JsCaseClause | JsDefaultClause
+JsCaseClause = 'case' test: JsAnyExpression ':' consequence: JsAnyStatement*
+JsDefaultClause = 'default' ':' consequence: JsAnyStatement*
 
 
 JsThrowStatement =

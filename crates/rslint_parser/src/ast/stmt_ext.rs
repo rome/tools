@@ -92,47 +92,9 @@ impl WildcardImport {
 	}
 }
 
-impl IfStmt {
-	pub fn cons(&self) -> Option<JsAnyStatement> {
-		self.syntax()
-			.child_with_ast::<JsAnyStatement>()
-			.filter(|cons| {
-				cons.syntax().text_range().start()
-					<= self
-						.else_token()
-						.map(|x| x.text_range().start())
-						.unwrap_or_else(|_| cons.syntax().text_range().start())
-			})
-	}
-
-	pub fn alt(&self) -> Option<JsAnyStatement> {
-		let possible_blocks = self
-			.syntax()
-			.children()
-			.filter(|child| child.is::<JsAnyStatement>())
-			.collect::<Vec<_>>();
-
-		// handle if (true) else {}
-		if let Some(else_block) = possible_blocks.get(1) {
-			Some(else_block.to())
-		} else {
-			possible_blocks
-				.first()
-				.filter(|node| {
-					node.text_range().start()
-						> self
-							.else_token()
-							.map(|x| x.text_range().start())
-							.unwrap_or_else(|_| node.text_range().start())
-				})
-				.map(|x| x.to())
-		}
-	}
-}
-
-impl SwitchCase {
-	pub fn into_case(self) -> Option<CaseClause> {
-		if let SwitchCase::CaseClause(clause) = self {
+impl JsAnySwitchClause {
+	pub fn into_case(self) -> Option<JsCaseClause> {
+		if let JsAnySwitchClause::JsCaseClause(clause) = self {
 			Some(clause)
 		} else {
 			None

@@ -37,7 +37,7 @@ impl<T> Parse<T> {
 	/// The syntax node represented by this Parse result
 	///
 	/// ```
-	/// use rslint_parser::{parse_text, ast::IfStmt, SyntaxNodeExt, SyntaxKind, AstNode};
+	/// use rslint_parser::{parse_text, ast::JsIfStatement, SyntaxNodeExt, SyntaxKind, AstNode};
 	///
 	/// let parse = parse_text(
 	/// "
@@ -49,7 +49,7 @@ impl<T> Parse<T> {
 	/// // The first stmt in the root syntax node (Script) is the if statement.
 	/// let if_stmt = parse.tree().statements().first().unwrap();
 	///
-	/// assert_eq!(if_stmt.syntax().kind(), SyntaxKind::IF_STMT);
+	/// assert_eq!(if_stmt.syntax().kind(), SyntaxKind::JS_IF_STATEMENT);
 	/// ```
 	pub fn syntax(&self) -> SyntaxNode {
 		self.root.clone()

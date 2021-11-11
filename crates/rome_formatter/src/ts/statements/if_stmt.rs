@@ -1,34 +1,40 @@
 use crate::{
-	format_elements, group_elements, space_token, FormatElement, FormatResult, Formatter,
-	ToFormatElement,
+	empty_element, format_elements, group_elements, soft_indent, space_token, FormatElement,
+	FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::IfStmt;
+use rslint_parser::ast::{JsElseClause, JsIfStatement};
 
-impl ToFormatElement for IfStmt {
+impl ToFormatElement for JsIfStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let mut result = format_elements![
+		let formatted_else_clause = if let Some(else_clause) = self.else_clause() {
+			format_elements![space_token(), formatter.format_node(else_clause)?]
+		} else {
+			empty_element()
+		};
+
+		Ok(format_elements![
 			group_elements(format_elements![
 				formatter.format_token(&self.if_token()?)?,
 				space_token(),
-				formatter.format_node(self.condition()?)?,
+				group_elements(format_elements![
+					formatter.format_token(&self.l_paren_token()?)?,
+					soft_indent(formatter.format_node(self.test()?)?),
+					formatter.format_token(&self.r_paren_token()?)?
+				]),
 				space_token(),
 			]),
-			// TODO: #1725 this will change when we will review the grammar
-			formatter.format_node(self.cons().unwrap())?
-		];
+			formatter.format_node(self.consequence()?)?,
+			formatted_else_clause
+		])
+	}
+}
 
-		if let Ok(else_token) = self.else_token() {
-			if let Some(alt) = self.alt() {
-				result = format_elements![
-					result,
-					space_token(),
-					formatter.format_token(&else_token)?,
-					space_token(),
-					formatter.format_node(alt)?,
-				]
-			}
-		};
-
-		Ok(result)
+impl ToFormatElement for JsElseClause {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		Ok(format_elements![
+			formatter.format_token(&self.else_token()?)?,
+			space_token(),
+			formatter.format_node(self.alternate()?)?,
+		])
 	}
 }

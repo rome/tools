@@ -1,13 +1,13 @@
 use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, CaseClause, ClassBody,
-	ClassDecl, ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator,
-	DefaultClause, DoWhileStmt, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
-	ForStmtUpdate, Getter, IdentProp, IfStmt, JsBlockStatement, JsCatchClause, JsDebuggerStatement,
-	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsLabeledStatement,
-	JsReturnStatement, JsScript, JsTryStatement, JsWithStatement, Literal, LiteralProp, Name,
-	NameRef, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern, SwitchStmt, VarDecl,
-	WhileStmt,
+	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl,
+	ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator, DoWhileStmt, FnDecl,
+	ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp,
+	JsBlockStatement, JsCaseClause, JsCatchClause, JsDebuggerStatement, JsDefaultClause,
+	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement, JsLabeledStatement,
+	JsReturnStatement, JsScript, JsSwitchStatement, JsTryStatement, JsWithStatement, Literal,
+	LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
+	VarDecl, WhileStmt,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -65,7 +65,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_RETURN_STATEMENT => JsReturnStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::IF_STMT => IfStmt::cast(self.clone())
+			SyntaxKind::JS_IF_STATEMENT => JsIfStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CONDITION => Condition::cast(self.clone())
@@ -98,13 +98,13 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::DO_WHILE_STMT => DoWhileStmt::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::SWITCH_STMT => SwitchStmt::cast(self.clone())
+			SyntaxKind::JS_SWITCH_STATEMENT => JsSwitchStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::DEFAULT_CLAUSE => DefaultClause::cast(self.clone())
+			SyntaxKind::JS_DEFAULT_CLAUSE => JsDefaultClause::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::CASE_CLAUSE => CaseClause::cast(self.clone())
+			SyntaxKind::JS_CASE_CLAUSE => JsCaseClause::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CONTINUE_STMT => ContinueStmt::cast(self.clone())
