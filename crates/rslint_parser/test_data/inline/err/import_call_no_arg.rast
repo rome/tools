@@ -13,7 +13,7 @@ JS_MODULE@0..25
             JS_EQUAL_VALUE_CLAUSE@6..16
               EQ@6..7 "="
               WHITESPACE@7..8 " "
-              IMPORT_CALL@8..16
+              JS_IMPORT_CALL_EXPRESSION@8..16
                 IMPORT_KW@8..14 "import"
                 L_PAREN@14..15 "("
                 R_PAREN@15..16 ")"

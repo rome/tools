@@ -980,10 +980,10 @@ impl SuperCall {
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ImportCall {
+pub struct JsImportCallExpression {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ImportCall {
+impl JsImportCallExpression {
 	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![import])
 	}
@@ -2286,7 +2286,7 @@ pub enum JsAnyExpression {
 	NewTarget(NewTarget),
 	ImportMeta(ImportMeta),
 	SuperCall(SuperCall),
-	ImportCall(ImportCall),
+	JsImportCallExpression(JsImportCallExpression),
 	YieldExpr(YieldExpr),
 	PrivatePropAccess(PrivatePropAccess),
 	TsNonNull(TsNonNull),
@@ -3255,8 +3255,8 @@ impl AstNode for SuperCall {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for ImportCall {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_CALL }
+impl AstNode for JsImportCallExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_CALL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4814,8 +4814,10 @@ impl From<ImportMeta> for JsAnyExpression {
 impl From<SuperCall> for JsAnyExpression {
 	fn from(node: SuperCall) -> JsAnyExpression { JsAnyExpression::SuperCall(node) }
 }
-impl From<ImportCall> for JsAnyExpression {
-	fn from(node: ImportCall) -> JsAnyExpression { JsAnyExpression::ImportCall(node) }
+impl From<JsImportCallExpression> for JsAnyExpression {
+	fn from(node: JsImportCallExpression) -> JsAnyExpression {
+		JsAnyExpression::JsImportCallExpression(node)
+	}
 }
 impl From<YieldExpr> for JsAnyExpression {
 	fn from(node: YieldExpr) -> JsAnyExpression { JsAnyExpression::YieldExpr(node) }
@@ -4865,7 +4867,7 @@ impl AstNode for JsAnyExpression {
 			| NEW_TARGET
 			| IMPORT_META
 			| SUPER_CALL
-			| IMPORT_CALL
+			| JS_IMPORT_CALL_EXPRESSION
 			| YIELD_EXPR
 			| PRIVATE_PROP_ACCESS
 			| TS_NON_NULL
@@ -4913,7 +4915,9 @@ impl AstNode for JsAnyExpression {
 			NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
 			IMPORT_META => JsAnyExpression::ImportMeta(ImportMeta { syntax }),
 			SUPER_CALL => JsAnyExpression::SuperCall(SuperCall { syntax }),
-			IMPORT_CALL => JsAnyExpression::ImportCall(ImportCall { syntax }),
+			JS_IMPORT_CALL_EXPRESSION => {
+				JsAnyExpression::JsImportCallExpression(JsImportCallExpression { syntax })
+			}
 			YIELD_EXPR => JsAnyExpression::YieldExpr(YieldExpr { syntax }),
 			PRIVATE_PROP_ACCESS => JsAnyExpression::PrivatePropAccess(PrivatePropAccess { syntax }),
 			TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
@@ -4958,7 +4962,7 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::NewTarget(it) => &it.syntax,
 			JsAnyExpression::ImportMeta(it) => &it.syntax,
 			JsAnyExpression::SuperCall(it) => &it.syntax,
-			JsAnyExpression::ImportCall(it) => &it.syntax,
+			JsAnyExpression::JsImportCallExpression(it) => &it.syntax,
 			JsAnyExpression::YieldExpr(it) => &it.syntax,
 			JsAnyExpression::PrivatePropAccess(it) => &it.syntax,
 			JsAnyExpression::TsNonNull(it) => &it.syntax,
@@ -6406,7 +6410,7 @@ impl std::fmt::Display for SuperCall {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ImportCall {
+impl std::fmt::Display for JsImportCallExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

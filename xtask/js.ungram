@@ -261,7 +261,7 @@ JsAnyExpression =
 	| NewTarget
 	| ImportMeta
 	| SuperCall
-	| ImportCall
+	| JsImportCallExpression
 	| YieldExpr
 	| PrivatePropAccess
 	| TsNonNull
@@ -298,8 +298,11 @@ YieldExpr = 'yield' '*'? value:JsAnyExpression
 // super call expression
 SuperCall = 'super' arguments:ArgList
 
-// import call expression
-ImportCall = 'import' '(' argument:JsAnyExpression ')'
+JsImportCallExpression =
+	'import'
+	'('
+	argument: JsAnyExpression
+	')'
 
 // new target expression
 NewTarget = 'new' '.' 'target'

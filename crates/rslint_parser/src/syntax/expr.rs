@@ -1051,7 +1051,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				p.expect(T!['(']);
 				assign_expr(p);
 				p.expect(T![')']);
-				m.complete(p, IMPORT_CALL)
+				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}
 		}
 		BACKTICK => template(p, None),
