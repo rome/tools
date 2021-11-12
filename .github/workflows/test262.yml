@@ -79,7 +79,7 @@ jobs:
         id: comparison
         shell: bash
         run: |
-          omment="$(cargo xtask compare ./base_results.json ./new_results.json  --markdown)"
+          comment="$(cargo xtask compare ./base_results.json ./new_results.json  --markdown)"
           comment="${comment//'%'/'%25'}"
           comment="${comment//$'\n'/'%0A'}"
           comment="${comment//$'\r'/'%0D'}"
