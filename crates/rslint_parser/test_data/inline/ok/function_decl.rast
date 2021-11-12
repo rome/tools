@@ -100,7 +100,7 @@ JS_MODULE@0..142
         WHITESPACE@126..129 "\n  "
         LIST@129..139
           JS_EXPRESSION_STATEMENT@129..139
-            YIELD_EXPR@129..138
+            JS_YIELD_EXPRESSION@129..138
               YIELD_KW@129..134 "yield"
               WHITESPACE@134..135 " "
               JS_REFERENCE_IDENTIFIER_EXPRESSION@135..138

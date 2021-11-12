@@ -35,7 +35,7 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::ImportMeta(_) => todo!(),
 			JsAnyExpression::SuperCall(super_call) => super_call.to_format_element(formatter),
 			JsAnyExpression::JsImportCallExpression(_) => todo!(),
-			JsAnyExpression::YieldExpr(_) => todo!(),
+			JsAnyExpression::JsYieldExpression(_) => todo!(),
 			JsAnyExpression::JsAwaitExpression(_) => todo!(),
 			JsAnyExpression::PrivatePropAccess(_) => todo!(),
 			JsAnyExpression::TsNonNull(_) => todo!(),

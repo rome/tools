@@ -240,6 +240,7 @@ JsAnyExpression =
 	| JsAwaitExpression
 	| JsBinaryExpression
 	| JsConditionalExpression
+	| JsImportCallExpression
 	| JsLogicalExpression
 	| JsParenthesizedExpression
 	| JsReferenceIdentifierExpression
@@ -248,6 +249,7 @@ JsAnyExpression =
 	| JsUnaryExpression
 	| JsPreUpdateExpression
 	| JsPostUpdateExpression
+	| JsYieldExpression
 	| ArrowExpr
 	| Template
 	| ObjectExpr
@@ -261,8 +263,6 @@ JsAnyExpression =
 	| NewTarget
 	| ImportMeta
 	| SuperCall
-	| JsImportCallExpression
-	| YieldExpr
 	| PrivatePropAccess
 	| TsNonNull
 	| TsAssertion
@@ -291,8 +291,11 @@ JsAwaitExpression =
 	'await'
 	argument: JsAnyExpression
 
-// yield expression
-YieldExpr = 'yield' '*'? value:JsAnyExpression
+
+JsYieldExpression =
+	'yield'
+	'*'?
+	argument: JsAnyExpression?
 
 // super call expression
 SuperCall = 'super' arguments:ArgList

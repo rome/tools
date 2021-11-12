@@ -255,7 +255,7 @@ pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 		assign_expr(p);
 	}
 
-	m.complete(p, YIELD_EXPR)
+	m.complete(p, JS_YIELD_EXPRESSION)
 }
 
 /// A conditional expression such as `foo ? bar : baz`

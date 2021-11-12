@@ -253,7 +253,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"FOR_OF_STMT",
 		"SINGLE_PATTERN",
 		"ARROW_EXPR",
-		"YIELD_EXPR",
+		"JS_YIELD_EXPRESSION",
 		"CLASS_DECL",
 		"CLASS_EXPR",
 		"CLASS_BODY",
