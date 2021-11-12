@@ -1405,7 +1405,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = p.start();
 		p.bump_any();
 		unary_expr(p);
-		return Some(m.complete(p, AWAIT_EXPR));
+		return Some(m.complete(p, JS_AWAIT_EXPRESSION));
 	}
 
 	if p.at(T![<]) {

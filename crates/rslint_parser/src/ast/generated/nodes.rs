@@ -646,6 +646,16 @@ impl JsArrayExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsAwaitExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsAwaitExpression {
+	pub fn await_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![await])
+	}
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsBinaryExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -994,16 +1004,6 @@ impl YieldExpr {
 	}
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
 	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct AwaitExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl AwaitExpr {
-	pub fn await_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![await])
-	}
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PrivatePropAccess {
@@ -2261,6 +2261,7 @@ pub enum Decl {
 pub enum JsAnyExpression {
 	JsAnyLiteral(JsAnyLiteral),
 	JsArrayExpression(JsArrayExpression),
+	JsAwaitExpression(JsAwaitExpression),
 	JsBinaryExpression(JsBinaryExpression),
 	JsLogicalExpression(JsLogicalExpression),
 	ArrowExpr(ArrowExpr),
@@ -2286,7 +2287,6 @@ pub enum JsAnyExpression {
 	SuperCall(SuperCall),
 	ImportCall(ImportCall),
 	YieldExpr(YieldExpr),
-	AwaitExpr(AwaitExpr),
 	PrivatePropAccess(PrivatePropAccess),
 	TsNonNull(TsNonNull),
 	TsAssertion(TsAssertion),
@@ -2990,6 +2990,17 @@ impl AstNode for JsArrayExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsAwaitExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_AWAIT_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsBinaryExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINARY_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3256,17 +3267,6 @@ impl AstNode for ImportCall {
 }
 impl AstNode for YieldExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == YIELD_EXPR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for AwaitExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == AWAIT_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4731,6 +4731,9 @@ impl AstNode for Decl {
 impl From<JsArrayExpression> for JsAnyExpression {
 	fn from(node: JsArrayExpression) -> JsAnyExpression { JsAnyExpression::JsArrayExpression(node) }
 }
+impl From<JsAwaitExpression> for JsAnyExpression {
+	fn from(node: JsAwaitExpression) -> JsAnyExpression { JsAnyExpression::JsAwaitExpression(node) }
+}
 impl From<JsBinaryExpression> for JsAnyExpression {
 	fn from(node: JsBinaryExpression) -> JsAnyExpression {
 		JsAnyExpression::JsBinaryExpression(node)
@@ -4814,9 +4817,6 @@ impl From<ImportCall> for JsAnyExpression {
 impl From<YieldExpr> for JsAnyExpression {
 	fn from(node: YieldExpr) -> JsAnyExpression { JsAnyExpression::YieldExpr(node) }
 }
-impl From<AwaitExpr> for JsAnyExpression {
-	fn from(node: AwaitExpr) -> JsAnyExpression { JsAnyExpression::AwaitExpr(node) }
-}
 impl From<PrivatePropAccess> for JsAnyExpression {
 	fn from(node: PrivatePropAccess) -> JsAnyExpression { JsAnyExpression::PrivatePropAccess(node) }
 }
@@ -4838,6 +4838,7 @@ impl AstNode for JsAnyExpression {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			JS_ARRAY_EXPRESSION
+			| JS_AWAIT_EXPRESSION
 			| JS_BINARY_EXPRESSION
 			| JS_LOGICAL_EXPRESSION
 			| ARROW_EXPR
@@ -4863,7 +4864,6 @@ impl AstNode for JsAnyExpression {
 			| SUPER_CALL
 			| IMPORT_CALL
 			| YIELD_EXPR
-			| AWAIT_EXPR
 			| PRIVATE_PROP_ACCESS
 			| TS_NON_NULL
 			| TS_ASSERTION
@@ -4876,6 +4876,7 @@ impl AstNode for JsAnyExpression {
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_ARRAY_EXPRESSION => JsAnyExpression::JsArrayExpression(JsArrayExpression { syntax }),
+			JS_AWAIT_EXPRESSION => JsAnyExpression::JsAwaitExpression(JsAwaitExpression { syntax }),
 			JS_BINARY_EXPRESSION => {
 				JsAnyExpression::JsBinaryExpression(JsBinaryExpression { syntax })
 			}
@@ -4909,7 +4910,6 @@ impl AstNode for JsAnyExpression {
 			SUPER_CALL => JsAnyExpression::SuperCall(SuperCall { syntax }),
 			IMPORT_CALL => JsAnyExpression::ImportCall(ImportCall { syntax }),
 			YIELD_EXPR => JsAnyExpression::YieldExpr(YieldExpr { syntax }),
-			AWAIT_EXPR => JsAnyExpression::AwaitExpr(AwaitExpr { syntax }),
 			PRIVATE_PROP_ACCESS => JsAnyExpression::PrivatePropAccess(PrivatePropAccess { syntax }),
 			TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
 			TS_ASSERTION => JsAnyExpression::TsAssertion(TsAssertion { syntax }),
@@ -4929,6 +4929,7 @@ impl AstNode for JsAnyExpression {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyExpression::JsArrayExpression(it) => &it.syntax,
+			JsAnyExpression::JsAwaitExpression(it) => &it.syntax,
 			JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
 			JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
@@ -4954,7 +4955,6 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::SuperCall(it) => &it.syntax,
 			JsAnyExpression::ImportCall(it) => &it.syntax,
 			JsAnyExpression::YieldExpr(it) => &it.syntax,
-			JsAnyExpression::AwaitExpr(it) => &it.syntax,
 			JsAnyExpression::PrivatePropAccess(it) => &it.syntax,
 			JsAnyExpression::TsNonNull(it) => &it.syntax,
 			JsAnyExpression::TsAssertion(it) => &it.syntax,
@@ -6281,6 +6281,11 @@ impl std::fmt::Display for JsArrayExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAwaitExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsBinaryExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6402,11 +6407,6 @@ impl std::fmt::Display for ImportCall {
 	}
 }
 impl std::fmt::Display for YieldExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for AwaitExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

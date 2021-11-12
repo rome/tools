@@ -267,7 +267,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"WILDCARD_IMPORT",
 		"NAMED_IMPORTS",
 		"SPECIFIER",
-		"AWAIT_EXPR",
+		"JS_AWAIT_EXPRESSION",
 		// These three are just hacks for converting to ast node without
 		// having to handle every error recovery case.
 		// in the future we might just tag the underlying rowan nodes

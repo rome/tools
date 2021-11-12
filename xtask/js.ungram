@@ -237,6 +237,7 @@ JsDebuggerStatement =
 JsAnyExpression =
 	JsAnyLiteral
 	| JsArrayExpression
+	| JsAwaitExpression
 	| JsBinaryExpression
 	| JsLogicalExpression
 	| ArrowExpr
@@ -262,7 +263,6 @@ JsAnyExpression =
 	| SuperCall
 	| ImportCall
 	| YieldExpr
-	| AwaitExpr
 	| PrivatePropAccess
 	| TsNonNull
 	| TsAssertion
@@ -287,8 +287,10 @@ NewExpr = 'new' type_args:TsTypeArgs? object:JsAnyExpression arguments:ArgList
 // call expression
 CallExpr = type_args:TsTypeArgs? callee:JsAnyExpression arguments:ArgList
 
-// await expression
-AwaitExpr = 'await' expr: JsAnyExpression
+
+JsAwaitExpression =
+	'await'
+	argument: JsAnyExpression
 
 // yield expression
 YieldExpr = 'yield' '*'? value:JsAnyExpression
