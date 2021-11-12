@@ -26,7 +26,7 @@ impl ToFormatElement for JsVariableDeclaration {
 		Ok(format_elements![
 			formatter.format_token(&self.kind_token()?)?,
 			space_token(),
-			join_elements(token(","), declarators),
+			join_elements(format_elements![token(","), space_token()], declarators),
 		])
 	}
 }
