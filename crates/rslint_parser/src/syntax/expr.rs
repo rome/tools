@@ -895,7 +895,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// this.foo
 			let m = p.start();
 			p.bump_any();
-			m.complete(p, THIS_EXPR)
+			m.complete(p, JS_THIS_EXPRESSION)
 		}
 		T![class] => {
 			// test class_expr

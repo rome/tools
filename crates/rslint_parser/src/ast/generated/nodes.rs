@@ -749,6 +749,15 @@ impl JsSequenceExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsThisExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsThisExpression {
+	pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![this])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrowExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -769,15 +778,6 @@ pub struct Template {
 impl Template {
 	pub fn backtick_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['`'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ThisExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ThisExpr {
-	pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![this])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2272,9 +2272,9 @@ pub enum JsAnyExpression {
 	JsParenthesizedExpression(JsParenthesizedExpression),
 	JsReferenceIdentifierExpression(JsReferenceIdentifierExpression),
 	JsSequenceExpression(JsSequenceExpression),
+	JsThisExpression(JsThisExpression),
 	ArrowExpr(ArrowExpr),
 	Template(Template),
-	ThisExpr(ThisExpr),
 	ObjectExpr(ObjectExpr),
 	BracketExpr(BracketExpr),
 	DotExpr(DotExpr),
@@ -3071,6 +3071,17 @@ impl AstNode for JsSequenceExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsThisExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THIS_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for ArrowExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARROW_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3084,17 +3095,6 @@ impl AstNode for ArrowExpr {
 }
 impl AstNode for Template {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ThisExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == THIS_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4768,14 +4768,14 @@ impl From<JsSequenceExpression> for JsAnyExpression {
 		JsAnyExpression::JsSequenceExpression(node)
 	}
 }
+impl From<JsThisExpression> for JsAnyExpression {
+	fn from(node: JsThisExpression) -> JsAnyExpression { JsAnyExpression::JsThisExpression(node) }
+}
 impl From<ArrowExpr> for JsAnyExpression {
 	fn from(node: ArrowExpr) -> JsAnyExpression { JsAnyExpression::ArrowExpr(node) }
 }
 impl From<Template> for JsAnyExpression {
 	fn from(node: Template) -> JsAnyExpression { JsAnyExpression::Template(node) }
-}
-impl From<ThisExpr> for JsAnyExpression {
-	fn from(node: ThisExpr) -> JsAnyExpression { JsAnyExpression::ThisExpr(node) }
 }
 impl From<ObjectExpr> for JsAnyExpression {
 	fn from(node: ObjectExpr) -> JsAnyExpression { JsAnyExpression::ObjectExpr(node) }
@@ -4859,9 +4859,9 @@ impl AstNode for JsAnyExpression {
 			| JS_PARENTHESIZED_EXPRESSION
 			| JS_REFERENCE_IDENTIFIER_EXPRESSION
 			| JS_SEQUENCE_EXPRESSION
+			| JS_THIS_EXPRESSION
 			| ARROW_EXPR
 			| TEMPLATE
-			| THIS_EXPR
 			| OBJECT_EXPR
 			| BRACKET_EXPR
 			| DOT_EXPR
@@ -4911,9 +4911,9 @@ impl AstNode for JsAnyExpression {
 			JS_SEQUENCE_EXPRESSION => {
 				JsAnyExpression::JsSequenceExpression(JsSequenceExpression { syntax })
 			}
+			JS_THIS_EXPRESSION => JsAnyExpression::JsThisExpression(JsThisExpression { syntax }),
 			ARROW_EXPR => JsAnyExpression::ArrowExpr(ArrowExpr { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
-			THIS_EXPR => JsAnyExpression::ThisExpr(ThisExpr { syntax }),
 			OBJECT_EXPR => JsAnyExpression::ObjectExpr(ObjectExpr { syntax }),
 			BRACKET_EXPR => JsAnyExpression::BracketExpr(BracketExpr { syntax }),
 			DOT_EXPR => JsAnyExpression::DotExpr(DotExpr { syntax }),
@@ -4962,9 +4962,9 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsParenthesizedExpression(it) => &it.syntax,
 			JsAnyExpression::JsReferenceIdentifierExpression(it) => &it.syntax,
 			JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
+			JsAnyExpression::JsThisExpression(it) => &it.syntax,
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
-			JsAnyExpression::ThisExpr(it) => &it.syntax,
 			JsAnyExpression::ObjectExpr(it) => &it.syntax,
 			JsAnyExpression::BracketExpr(it) => &it.syntax,
 			JsAnyExpression::DotExpr(it) => &it.syntax,
@@ -6342,17 +6342,17 @@ impl std::fmt::Display for JsSequenceExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsThisExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for ArrowExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
 impl std::fmt::Display for Template {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ThisExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

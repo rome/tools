@@ -244,9 +244,9 @@ JsAnyExpression =
 	| JsParenthesizedExpression
 	| JsReferenceIdentifierExpression
 	| JsSequenceExpression
+	| JsThisExpression
 	| ArrowExpr
 	| Template
-	| ThisExpr
 	| ObjectExpr
 	| BracketExpr
 	| DotExpr
@@ -273,8 +273,7 @@ JsAnyExpression =
 // the backtick is just a placeholder, there's
 Template = '`'
 
-// This Expression
-ThisExpr = 'this'
+JsThisExpression = 'this'
 
 // Dot expression
 // TODO: review the 'super' token

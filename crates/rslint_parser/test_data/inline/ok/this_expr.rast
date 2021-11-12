@@ -1,12 +1,12 @@
 JS_MODULE@0..14
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..4
-      THIS_EXPR@0..4
+      JS_THIS_EXPRESSION@0..4
         THIS_KW@0..4 "this"
     WHITESPACE@4..5 "\n"
     JS_EXPRESSION_STATEMENT@5..13
       DOT_EXPR@5..13
-        THIS_EXPR@5..9
+        JS_THIS_EXPRESSION@5..9
           THIS_KW@5..9 "this"
         DOT@9..10 "."
         NAME@10..13
