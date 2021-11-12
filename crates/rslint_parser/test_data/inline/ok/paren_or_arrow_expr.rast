@@ -30,13 +30,13 @@ JS_MODULE@0..85
       GROUPING_EXPR@20..27
         L_PAREN@20..21 "("
         BIN_EXPR@21..26
-          LITERAL@21..22
-            NUMBER@21..22 "5"
+          JS_NUMBER_LITERAL@21..22
+            JS_NUMBER_LITERAL_TOKEN@21..22 "5"
           WHITESPACE@22..23 " "
           PLUS@23..24 "+"
           WHITESPACE@24..25 " "
-          LITERAL@25..26
-            NUMBER@25..26 "5"
+          JS_NUMBER_LITERAL@25..26
+            JS_NUMBER_LITERAL_TOKEN@25..26 "5"
         R_PAREN@26..27 ")"
       SEMICOLON@27..28 ";"
     WHITESPACE@28..29 "\n"

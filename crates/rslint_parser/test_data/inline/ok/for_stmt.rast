@@ -17,8 +17,8 @@ JS_MODULE@0..95
               JS_EQUAL_VALUE_CLAUSE@11..14
                 EQ@11..12 "="
                 WHITESPACE@12..13 " "
-                LITERAL@13..14
-                  NUMBER@13..14 "5"
+                JS_NUMBER_LITERAL@13..14
+                  JS_NUMBER_LITERAL_TOKEN@13..14 "5"
       SEMICOLON@14..15 ";"
       WHITESPACE@15..16 " "
       FOR_STMT_TEST@16..22
@@ -28,8 +28,8 @@ JS_MODULE@0..95
           WHITESPACE@17..18 " "
           L_ANGLE@18..19 "<"
           WHITESPACE@19..20 " "
-          LITERAL@20..22
-            NUMBER@20..22 "10"
+          JS_NUMBER_LITERAL@20..22
+            JS_NUMBER_LITERAL_TOKEN@20..22 "10"
       SEMICOLON@22..23 ";"
       WHITESPACE@23..24 " "
       FOR_STMT_UPDATE@24..27

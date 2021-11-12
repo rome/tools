@@ -28,8 +28,8 @@ JS_MODULE@0..32
             JS_EQUAL_VALUE_CLAUSE@17..20
               EQ@17..18 "="
               WHITESPACE@18..19 " "
-              LITERAL@19..20
-                NUMBER@19..20 "5"
+              JS_NUMBER_LITERAL@19..20
+                JS_NUMBER_LITERAL_TOKEN@19..20 "5"
     WHITESPACE@20..21 " "
     JS_VARIABLE_DECLARATION_STATEMENT@21..31
       JS_VARIABLE_DECLARATION@21..30
@@ -44,8 +44,8 @@ JS_MODULE@0..32
             JS_EQUAL_VALUE_CLAUSE@27..30
               EQ@27..28 "="
               WHITESPACE@28..29 " "
-              LITERAL@29..30
-                NUMBER@29..30 "5"
+              JS_NUMBER_LITERAL@29..30
+                JS_NUMBER_LITERAL_TOKEN@29..30 "5"
       SEMICOLON@30..31 ";"
   WHITESPACE@31..32 "\n"
 --

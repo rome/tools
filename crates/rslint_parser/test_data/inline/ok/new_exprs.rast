@@ -64,13 +64,13 @@ JS_MODULE@0..113
             COMMA@69..70 ","
             WHITESPACE@70..71 " "
             BIN_EXPR@71..76
-              LITERAL@71..72
-                NUMBER@71..72 "6"
+              JS_NUMBER_LITERAL@71..72
+                JS_NUMBER_LITERAL_TOKEN@71..72 "6"
               WHITESPACE@72..73 " "
               PLUS@73..74 "+"
               WHITESPACE@74..75 " "
-              LITERAL@75..76
-                NUMBER@75..76 "6"
+              JS_NUMBER_LITERAL@75..76
+                JS_NUMBER_LITERAL_TOKEN@75..76 "6"
             COMMA@76..77 ","
             WHITESPACE@77..78 " "
             BIN_EXPR@78..111

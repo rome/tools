@@ -236,7 +236,7 @@ JsDebuggerStatement =
 // Expression
 JsAnyExpression =
 	ArrowExpr
-	| Literal
+	| JsAnyLiteral
 	| Template
 	| NameRef
 	| ThisExpr
@@ -457,25 +457,35 @@ PostUpdateExpression =
     operand:JsAnyExpression
     operator:('++' | '--')
 
-// Literals
-Literal =
-	'string'
-	| 'true'
-	| 'false'
-	| 'number'
-	| 'regex'
-	| 'float'
-	| 'big_int'
 
-Null = 'null'
-Undefined = 'undefined'
+///////////////
+// LITERALS
+///////////////
 
-ExprOrBlock =
-	JsAnyExpression
-	| JsBlockStatement
+JsAnyLiteral =
+	JsStringLiteral
+	| JsNumberLiteral
+	| JsBigIntLiteral
+	| JsBooleanLiteral
+	| JsNullLiteral
+	| JsRegexLiteral
 
-ParameterList = '(' parameters:(Pattern (',' Pattern)* ','?) ')'
-ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
+// "abcd" | 'abcd'
+JsStringLiteral = value: 'js_string_literal_token'
+
+// 4, 5.5, 0x00, ...
+JsNumberLiteral = value: 'js_number_literal_token'
+
+// 45n
+JsBigIntLiteral =  value: 'js_big_int_literal_token'
+
+// true, false
+JsBooleanLiteral = value_token: ('true' | 'false')
+
+// null
+JsNullLiteral = value: 'null'
+
+JsRegexLiteral = value: 'js_regex_literal_token'
 
 
 ///////////////
@@ -544,7 +554,8 @@ LiteralProp = manual__key:PropName ':' manual__value:JsAnyExpression
 
 PropName =
 	ComputedPropertyName
-	| Literal
+	| JsStringLiteral
+	| JsNumberLiteral
 	| Ident
 	| Name
 	| JsUnknownBinding
@@ -645,6 +656,7 @@ ImportDecl =
 	imports:ImportClause*
 	'type'?
 	'from'
+	source: JsStringLiteral
 	asserted_object:ObjectExpr
 	'assert'?
 	';'?
@@ -660,7 +672,7 @@ DefaultDecl =
 ExportDefaultExpr = 'export' 'type'? 'default'? expr:JsAnyExpression
 
 // export wildcard
-ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from'
+ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: JsStringLiteral
 
 
 // export declaration
@@ -688,7 +700,7 @@ Specifier = name:Ident manual__:'as'? manual__alias:Name
 
 
 // this is not currently implemented in rslint parser
-ImportStringSpecifier = 'string'
+ImportStringSpecifier = 'js_string_literal_token'
 
 
 WildcardImport = '*' 'as'? ident: Ident?
@@ -699,6 +711,13 @@ ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier
 ///////////////
 // AUXILIARY
 ///////////////
+
+ExprOrBlock =
+	JsAnyExpression
+	| JsBlockStatement
+
+ParameterList = '(' parameters:(Pattern (',' Pattern)* ','?) ')'
+ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
 
 
 // let a = 10;
@@ -726,7 +745,7 @@ TsModuleRef =
 	TsEntityName
 
 
-TsExternalModuleRef = 'require' '(' 'string' ')'
+TsExternalModuleRef = 'require' '(' 'js_string_literal_token' ')'
 
 TsType =
 	TsAny

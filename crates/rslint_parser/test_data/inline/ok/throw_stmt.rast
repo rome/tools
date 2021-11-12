@@ -11,14 +11,14 @@ JS_MODULE@0..36
         ARG_LIST@15..22
           L_PAREN@15..16 "("
           LIST@16..21
-            LITERAL@16..21
-              STRING@16..21 "\"foo\""
+            JS_STRING_LITERAL@16..21
+              JS_STRING_LITERAL_TOKEN@16..21 "\"foo\""
           R_PAREN@21..22 ")"
       SEMICOLON@22..23 ";"
     WHITESPACE@23..24 "\n"
     JS_THROW_STATEMENT@24..35
       THROW_KW@24..29 "throw"
       WHITESPACE@29..30 " "
-      LITERAL@30..35
-        STRING@30..35 "\"foo\""
+      JS_STRING_LITERAL@30..35
+        JS_STRING_LITERAL_TOKEN@30..35 "\"foo\""
   WHITESPACE@35..36 "\n"

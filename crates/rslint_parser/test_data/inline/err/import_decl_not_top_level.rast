@@ -13,8 +13,8 @@ JS_MODULE@0..28
           WHITESPACE@13..14 " "
           FROM_KW@14..18 "from"
           WHITESPACE@18..19 " "
-          LITERAL@19..24
-            STRING@19..24 "\"bar\""
+          JS_STRING_LITERAL@19..24
+            JS_STRING_LITERAL_TOKEN@19..24 "\"bar\""
           SEMICOLON@24..25 ";"
       WHITESPACE@25..26 "\n"
       R_CURLY@26..27 "}"

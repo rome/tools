@@ -23,8 +23,8 @@ JS_MODULE@0..31
                     WHITESPACE@13..14 " "
                     EQ@14..15 "="
                     WHITESPACE@15..16 " "
-                    LITERAL@16..17
-                      NUMBER@16..17 "4"
+                    JS_NUMBER_LITERAL@16..17
+                      JS_NUMBER_LITERAL_TOKEN@16..17 "4"
                   COMMA@17..18 ","
                   WHITESPACE@18..19 " "
                   INITIALIZED_PROP@19..28

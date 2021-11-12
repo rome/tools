@@ -13,8 +13,8 @@ JS_MODULE@0..155
             JS_EQUAL_VALUE_CLAUSE@6..9
               EQ@6..7 "="
               WHITESPACE@7..8 " "
-              LITERAL@8..9
-                NUMBER@8..9 "5"
+              JS_NUMBER_LITERAL@8..9
+                JS_NUMBER_LITERAL_TOKEN@8..9 "5"
       SEMICOLON@9..10 ";"
     WHITESPACE@10..11 "\n"
     JS_VARIABLE_DECLARATION_STATEMENT@11..32
@@ -41,8 +41,8 @@ JS_MODULE@0..155
             JS_EQUAL_VALUE_CLAUSE@28..31
               EQ@28..29 "="
               WHITESPACE@29..30 " "
-              LITERAL@30..31
-                NUMBER@30..31 "5"
+              JS_NUMBER_LITERAL@30..31
+                JS_NUMBER_LITERAL_TOKEN@30..31 "5"
       SEMICOLON@31..32 ";"
     WHITESPACE@32..33 "\n"
     JS_VARIABLE_DECLARATION_STATEMENT@33..46
@@ -75,8 +75,8 @@ JS_MODULE@0..155
             JS_EQUAL_VALUE_CLAUSE@55..58
               EQ@55..56 "="
               WHITESPACE@56..57 " "
-              LITERAL@57..58
-                NUMBER@57..58 "5"
+              JS_NUMBER_LITERAL@57..58
+                JS_NUMBER_LITERAL_TOKEN@57..58 "5"
       SEMICOLON@58..59 ";"
     WHITESPACE@59..60 "\n"
     JS_VARIABLE_DECLARATION_STATEMENT@60..91
@@ -131,8 +131,8 @@ JS_MODULE@0..155
             JS_EQUAL_VALUE_CLAUSE@100..109
               EQ@100..101 "="
               WHITESPACE@101..102 " "
-              LITERAL@102..109
-                STRING@102..109 "\"lorem\""
+              JS_STRING_LITERAL@102..109
+                JS_STRING_LITERAL_TOKEN@102..109 "\"lorem\""
           COMMA@109..110 ","
           WHITESPACE@110..111 " "
           JS_VARIABLE_DECLARATOR@111..124
@@ -143,8 +143,8 @@ JS_MODULE@0..155
             JS_EQUAL_VALUE_CLAUSE@115..124
               EQ@115..116 "="
               WHITESPACE@116..117 " "
-              LITERAL@117..124
-                STRING@117..124 "\"ipsum\""
+              JS_STRING_LITERAL@117..124
+                JS_STRING_LITERAL_TOKEN@117..124 "\"ipsum\""
           COMMA@124..125 ","
           WHITESPACE@125..126 " "
           JS_VARIABLE_DECLARATOR@126..141
@@ -155,8 +155,8 @@ JS_MODULE@0..155
             JS_EQUAL_VALUE_CLAUSE@132..141
               EQ@132..133 "="
               WHITESPACE@133..134 " "
-              LITERAL@134..141
-                STRING@134..141 "\"value\""
+              JS_STRING_LITERAL@134..141
+                JS_STRING_LITERAL_TOKEN@134..141 "\"value\""
           COMMA@141..142 ","
           WHITESPACE@142..143 " "
           JS_VARIABLE_DECLARATOR@143..153
@@ -167,7 +167,7 @@ JS_MODULE@0..155
             JS_EQUAL_VALUE_CLAUSE@150..153
               EQ@150..151 "="
               WHITESPACE@151..152 " "
-              LITERAL@152..153
-                NUMBER@152..153 "6"
+              JS_NUMBER_LITERAL@152..153
+                JS_NUMBER_LITERAL_TOKEN@152..153 "6"
       SEMICOLON@153..154 ";"
   WHITESPACE@154..155 "\n"

@@ -19,8 +19,8 @@ JS_MODULE@0..101
             WHITESPACE@14..15 " "
             QUESTION2EQ@15..18 "??="
             WHITESPACE@18..19 " "
-            LITERAL@19..20
-              NUMBER@19..20 "3"
+            JS_NUMBER_LITERAL@19..20
+              JS_NUMBER_LITERAL_TOKEN@19..20 "3"
       SEMICOLON@20..21 ";"
     WHITESPACE@21..22 "\n"
     JS_EXPRESSION_STATEMENT@22..33

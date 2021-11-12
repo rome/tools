@@ -3,7 +3,7 @@ JS_MODULE@0..52
     JS_WHILE_STATEMENT@0..13
       WHILE_KW@0..5 "while"
       WHITESPACE@5..6 " "
-      LITERAL@6..10
+      JS_BOOLEAN_LITERAL@6..10
         TRUE_KW@6..10 "true"
       WHITESPACE@10..11 " "
       JS_BLOCK_STATEMENT@11..13
@@ -23,7 +23,7 @@ JS_MODULE@0..52
       WHILE_KW@23..28 "while"
       WHITESPACE@28..29 " "
       L_PAREN@29..30 "("
-      LITERAL@30..34
+      JS_BOOLEAN_LITERAL@30..34
         TRUE_KW@30..34 "true"
       WHITESPACE@34..35 " "
       JS_BLOCK_STATEMENT@35..37
@@ -34,7 +34,7 @@ JS_MODULE@0..52
     JS_WHILE_STATEMENT@38..51
       WHILE_KW@38..43 "while"
       WHITESPACE@43..44 " "
-      LITERAL@44..48
+      JS_BOOLEAN_LITERAL@44..48
         TRUE_KW@44..48 "true"
       R_PAREN@48..49 ")"
       WHITESPACE@49..50 " "

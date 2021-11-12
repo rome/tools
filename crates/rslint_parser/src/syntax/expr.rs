@@ -13,8 +13,6 @@ use super::typescript::*;
 use super::util::*;
 use crate::{SyntaxKind::*, *};
 
-pub const LITERAL: TokenSet = token_set![TRUE_KW, FALSE_KW, NUMBER, STRING, NULL_KW, REGEX];
-
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
 
 pub const ASSIGN_TOKENS: TokenSet = token_set![
@@ -61,8 +59,13 @@ pub const STARTS_EXPR: TokenSet = token_set![
 	T![import],
 	T![super],
 	BACKTICK,
-]
-.union(LITERAL);
+	TRUE_KW,
+	FALSE_KW,
+	JS_NUMBER_LITERAL_TOKEN,
+	JS_STRING_LITERAL_TOKEN,
+	NULL_KW,
+	JS_REGEX_LITERAL_TOKEN
+];
 
 /// A literal expression.
 ///
@@ -76,12 +79,26 @@ pub const STARTS_EXPR: TokenSet = token_set![
 // 'bar'
 // null
 pub fn literal(p: &mut Parser) -> Option<CompletedMarker> {
-	if !p.at_ts(LITERAL) {
-		return None;
-	}
+	let literal_kind = match p.cur_tok().kind {
+		SyntaxKind::JS_NUMBER_LITERAL_TOKEN => {
+			if p.cur_src().ends_with('n') {
+				let m = p.start();
+				p.bump_remap(SyntaxKind::JS_BIG_INT_LITERAL_TOKEN);
+				return Some(m.complete(p, JS_BIG_INT_LITERAL));
+			};
+
+			SyntaxKind::JS_NUMBER_LITERAL
+		}
+		SyntaxKind::JS_STRING_LITERAL_TOKEN => SyntaxKind::JS_STRING_LITERAL,
+		SyntaxKind::NULL_KW => SyntaxKind::JS_NULL_LITERAL,
+		SyntaxKind::TRUE_KW | SyntaxKind::FALSE_KW => SyntaxKind::JS_BOOLEAN_LITERAL,
+		SyntaxKind::JS_REGEX_LITERAL_TOKEN => SyntaxKind::JS_REGEX_LITERAL,
+		_ => return None,
+	};
+
 	let m = p.start();
 	p.bump_any();
-	Some(m.complete(p, SyntaxKind::LITERAL))
+	Some(m.complete(p, literal_kind))
 }
 
 /// An assignment expression such as `foo += bar` or `foo = 5`.
@@ -1178,8 +1195,14 @@ pub fn object_expr(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, OBJECT_EXPR)
 }
 
-const STARTS_OBJ_PROP: TokenSet =
-	token_set![STRING, NUMBER, T![ident], T![await], T![yield], T!['[']];
+const STARTS_OBJ_PROP: TokenSet = token_set![
+	JS_STRING_LITERAL_TOKEN,
+	JS_NUMBER_LITERAL_TOKEN,
+	T![ident],
+	T![await],
+	T![yield],
+	T!['[']
+];
 
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
 pub fn object_property(p: &mut Parser) -> Option<CompletedMarker> {
@@ -1276,7 +1299,7 @@ pub fn object_property(p: &mut Parser) -> Option<CompletedMarker> {
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker> {
 	match p.cur() {
-		STRING | NUMBER => literal(p),
+		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => literal(p),
 		T!['['] => {
 			let m = p.start();
 			p.bump_any();

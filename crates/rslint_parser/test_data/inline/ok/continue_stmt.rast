@@ -13,7 +13,7 @@ JS_MODULE@0..64
       WHILE_KW@8..13 "while"
       WHITESPACE@13..14 " "
       L_PAREN@14..15 "("
-      LITERAL@15..19
+      JS_BOOLEAN_LITERAL@15..19
         TRUE_KW@15..19 "true"
       R_PAREN@19..20 ")"
       WHITESPACE@20..21 " "

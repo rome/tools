@@ -4,17 +4,18 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	ArrayExpr, GroupingExpr, Literal, LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
+	ArrayExpr, GroupingExpr, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsStringLiteral,
+	LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
 };
-use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxToken};
+use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
 fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 	match syntax_token.kind() {
 		SyntaxKind::NULL_KW => token("null"),
 		SyntaxKind::TRUE_KW => token("true"),
 		SyntaxKind::FALSE_KW => token("false"),
-		SyntaxKind::STRING => token(syntax_token.text()),
-		SyntaxKind::NUMBER => token(syntax_token.text()),
+		SyntaxKind::JS_STRING_LITERAL_TOKEN => token(syntax_token.text()),
+		SyntaxKind::JS_NUMBER_LITERAL_TOKEN => token(syntax_token.text()),
 		SyntaxKind::MINUS => token("-"),
 		_ => panic!("Unsupported JSON token {:?}", syntax_token),
 	}
@@ -22,9 +23,17 @@ fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 
 fn tokenize_node(node: SyntaxNode) -> FormatElement {
 	match node.kind() {
-		SyntaxKind::LITERAL => {
-			let literal = Literal::cast(node).unwrap();
-			tokenize_token(literal.token())
+		SyntaxKind::JS_STRING_LITERAL => {
+			tokenize_token(node.to::<JsStringLiteral>().value_token().unwrap())
+		}
+		SyntaxKind::JS_BOOLEAN_LITERAL => {
+			tokenize_token(node.to::<JsBooleanLiteral>().value_token().unwrap())
+		}
+		SyntaxKind::JS_NULL_LITERAL => {
+			tokenize_token(node.to::<JsNullLiteral>().value_token().unwrap())
+		}
+		SyntaxKind::JS_NUMBER_LITERAL => {
+			tokenize_token(node.to::<JsNumberLiteral>().value_token().unwrap())
 		}
 		SyntaxKind::UNARY_EXPR => {
 			let expr = UnaryExpr::cast(node).unwrap();

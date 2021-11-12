@@ -14,8 +14,8 @@ pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
 	T![await],
 	T![;],
 	T!['}'],
-	NUMBER,
-	STRING
+	JS_NUMBER_LITERAL_TOKEN,
+	JS_STRING_LITERAL_TOKEN
 ];
 
 pub fn decorators(p: &mut Parser) -> Vec<CompletedMarker> {
@@ -1151,7 +1151,13 @@ pub fn method(
 			args_body(&mut *guard);
 			m.complete(&mut *guard, METHOD)
 		}
-		T![*] | STRING | NUMBER | T![await] | T![ident] | T![yield] | T!['['] => {
+		T![*]
+		| JS_STRING_LITERAL_TOKEN
+		| JS_NUMBER_LITERAL_TOKEN
+		| T![await]
+		| T![ident]
+		| T![yield]
+		| T!['['] => {
 			let in_generator = p.eat(T![*]);
 			let mut guard = p.with_state(ParserState {
 				in_generator,

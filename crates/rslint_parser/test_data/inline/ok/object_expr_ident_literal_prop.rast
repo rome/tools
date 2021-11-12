@@ -22,7 +22,7 @@ JS_MODULE@0..20
                       IDENT@10..11 "a"
                     COLON@11..12 ":"
                     WHITESPACE@12..13 " "
-                    LITERAL@13..17
+                    JS_BOOLEAN_LITERAL@13..17
                       TRUE_KW@13..17 "true"
                 WHITESPACE@17..18 " "
                 R_CURLY@18..19 "}"

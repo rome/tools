@@ -19,8 +19,8 @@ JS_MODULE@0..34
             WHITESPACE@18..19 " "
             FROM_KW@19..23 "from"
             WHITESPACE@23..24 " "
-            LITERAL@24..30
-              STRING@24..30 "\"life\""
+            JS_STRING_LITERAL@24..30
+              JS_STRING_LITERAL_TOKEN@24..30 "\"life\""
             SEMICOLON@30..31 ";"
       WHITESPACE@31..32 "\n"
       R_CURLY@32..33 "}"

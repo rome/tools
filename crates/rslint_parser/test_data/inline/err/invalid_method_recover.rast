@@ -11,13 +11,13 @@ JS_MODULE@0..48
             COMPUTED_PROPERTY_NAME@10..17
               L_BRACK@10..11 "["
               BIN_EXPR@11..16
-                LITERAL@11..12
-                  NUMBER@11..12 "1"
+                JS_NUMBER_LITERAL@11..12
+                  JS_NUMBER_LITERAL_TOKEN@11..12 "1"
                 WHITESPACE@12..13 " "
                 PLUS@13..14 "+"
                 WHITESPACE@14..15 " "
-                LITERAL@15..16
-                  NUMBER@15..16 "1"
+                JS_NUMBER_LITERAL@15..16
+                  JS_NUMBER_LITERAL_TOKEN@15..16 "1"
               R_BRACK@16..17 "]"
             WHITESPACE@17..18 " "
             EQ@18..19 "="

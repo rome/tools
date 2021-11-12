@@ -12,8 +12,8 @@ JS_MODULE@0..28
         ARG_LIST@15..27
           L_PAREN@15..16 "("
           LIST@16..26
-            LITERAL@16..26
-              STRING@16..26 "\"oh no :(\""
+            JS_STRING_LITERAL@16..26
+              JS_STRING_LITERAL_TOKEN@16..26 "\"oh no :(\""
           R_PAREN@26..27 ")"
   WHITESPACE@27..28 "\n"
 --
