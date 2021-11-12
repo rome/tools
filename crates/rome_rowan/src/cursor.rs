@@ -148,6 +148,23 @@ unsafe impl sll::Elem for NodeData {
 
 pub(crate) type SyntaxElement = NodeOrToken<SyntaxNode, SyntaxToken>;
 
+pub(crate) struct SyntaxTrivia {
+	offset: TextSize,
+	token: SyntaxToken,
+	is_leading: bool,
+}
+
+impl Clone for SyntaxTrivia {
+	#[inline]
+	fn clone(&self) -> Self {
+		Self {
+			offset: self.offset,
+			token: self.token.clone(),
+			is_leading: self.is_leading,
+		}
+	}
+}
+
 pub(crate) struct SyntaxNode {
 	ptr: ptr::NonNull<NodeData>,
 }
@@ -543,6 +560,34 @@ impl NodeData {
 	}
 }
 
+impl SyntaxTrivia {
+	pub(crate) fn leading_range(&self) -> TextRange {
+		let len = self.token.green().leading().text_len();
+		TextRange::at(self.offset, len)
+	}
+
+	pub(crate) fn trailing_range(&self) -> TextRange {
+		let len = self.token.green().trailing().text_len();
+		TextRange::at(self.offset, len)
+	}
+
+	pub(crate) fn text(&self) -> &str {
+		if self.is_leading {
+			self.token.green().text_leading()
+		} else {
+			self.token.green().text_trailing()
+		}
+	}
+
+	pub(crate) fn text_len(&self) -> TextSize {
+		if self.is_leading {
+			self.token.green().leading().text_len()
+		} else {
+			self.token.green().trailing().text_len()
+		}
+	}
+}
+
 impl SyntaxNode {
 	pub(crate) fn new_root(green: GreenNode) -> SyntaxNode {
 		let green = GreenNode::into_raw(green);
@@ -904,6 +949,19 @@ impl SyntaxToken {
 	}
 
 	#[inline]
+	fn green(&self) -> &GreenTokenData {
+		match self.data().green().as_token() {
+			Some(token) => token,
+			None => {
+				panic!(
+					"corrupted tree: a node thinks it is a token: {:?}",
+					self.data().green().as_node().unwrap().to_string()
+				);
+			}
+		}
+	}
+
+	#[inline]
 	fn data(&self) -> &NodeData {
 		unsafe { self.ptr.as_ref() }
 	}
@@ -919,23 +977,48 @@ impl SyntaxToken {
 	}
 
 	#[inline]
+	pub fn text_trimmed_range(&self) -> TextRange {
+		let g = self.green();
+		let leading_len = g.leading().text_len();
+		let trailing_len = g.trailing().text_len();
+
+		let range = self.text_range();
+		TextRange::new(range.start() + leading_len, range.end() - trailing_len)
+	}
+
+	#[inline]
+	pub fn leading_range(&self) -> TextRange {
+		let g = self.green();
+		let leading_len = g.leading().text_len();
+
+		let range = self.text_range();
+		let start = range.start();
+		TextRange::new(start, start + leading_len)
+	}
+
+	#[inline]
+	pub fn trailing_range(&self) -> TextRange {
+		let g = self.green();
+		let trailing_len = g.trailing().text_len();
+
+		let range = self.text_range();
+		let end = range.end();
+		TextRange::new(end - trailing_len, end)
+	}
+
+	#[inline]
 	pub fn index(&self) -> usize {
 		self.data().slot() as usize
 	}
 
 	#[inline]
 	pub fn text(&self) -> &str {
-		match self.data().green().as_token() {
-			Some(it) => it.text(),
-			None => {
-				debug_assert!(
-					false,
-					"corrupted tree: a node thinks it is a token: {:?}",
-					self.data().green().as_node().unwrap().to_string()
-				);
-				""
-			}
-		}
+		self.green().text()
+	}
+
+	#[inline]
+	pub fn text_trimmed(&self) -> &str {
+		self.green().text_trimmed()
 	}
 
 	#[inline]
@@ -992,6 +1075,24 @@ impl SyntaxToken {
 	pub fn detach(&self) {
 		assert!(self.data().mutable, "immutable tree: {}", self);
 		self.data().detach()
+	}
+
+	#[inline]
+	pub fn leading(&self) -> SyntaxTrivia {
+		SyntaxTrivia {
+			offset: self.data().offset,
+			token: self.clone(),
+			is_leading: true,
+		}
+	}
+
+	#[inline]
+	pub fn trailing(&self) -> SyntaxTrivia {
+		SyntaxTrivia {
+			offset: self.data().offset,
+			token: self.clone(),
+			is_leading: false,
+		}
 	}
 }
 
@@ -1096,6 +1197,42 @@ impl SyntaxElement {
 }
 
 // region: impls
+
+impl PartialEq for SyntaxTrivia {
+	#[inline]
+	fn eq(&self, other: &Self) -> bool {
+		self.token == other.token && self.is_leading == other.is_leading
+	}
+}
+
+impl Eq for SyntaxTrivia {}
+
+impl Hash for SyntaxTrivia {
+	#[inline]
+	fn hash<H: Hasher>(&self, state: &mut H) {
+		self.token.hash(state);
+		self.is_leading.hash(state);
+	}
+}
+
+impl fmt::Debug for SyntaxTrivia {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		let mut f = f.debug_struct("SyntaxTrivia");
+		if self.is_leading {
+			f.field("text_range", &self.leading_range());
+		} else {
+			f.field("text_range", &self.trailing_range());
+		}
+
+		f.finish()
+	}
+}
+
+impl fmt::Display for SyntaxTrivia {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		fmt::Display::fmt(self.text(), f)
+	}
+}
 
 // Identity semantics for hash & eq
 impl PartialEq for SyntaxNode {

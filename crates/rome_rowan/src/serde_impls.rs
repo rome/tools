@@ -2,7 +2,7 @@ use serde::ser::{Serialize, SerializeMap, SerializeSeq, Serializer};
 use std::fmt;
 
 use crate::{
-	api::{Language, SyntaxNode, SyntaxToken},
+	api::{Language, RawLanguage, SyntaxNode, SyntaxToken},
 	NodeOrToken,
 };
 
@@ -45,6 +45,10 @@ impl<L: Language> Serialize for SyntaxToken<L> {
 		state.serialize_entry("kind", &SerDisplay(DisplayDebug(self.kind())))?;
 		state.serialize_entry("text_range", &self.text_range())?;
 		state.serialize_entry("text", &self.text())?;
+
+		// To implement this, SyntaxTrivia will need to expose the kind and the length of each trivia
+		// state.serialize_entry("leading", &self.leading())?;
+		// state.serialize_entry("trailing", &self.trailing())?;
 		state.end()
 	}
 }
@@ -65,4 +69,15 @@ impl<L: Language> Serialize for Children<&'_ SyntaxNode<L>> {
 			})?;
 		state.end()
 	}
+}
+
+#[test]
+pub fn serialization() {
+	let mut builder: crate::TreeBuilder<crate::api::RawLanguage> = crate::TreeBuilder::new();
+	builder.start_node(crate::SyntaxKind(0));
+	builder.token(crate::SyntaxKind(0), "\n\tlet ");
+	builder.finish_node();
+	let root = builder.finish();
+
+	assert!(serde_json::to_string(&root).is_ok());
 }

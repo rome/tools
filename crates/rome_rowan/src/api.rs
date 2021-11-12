@@ -32,6 +32,28 @@ impl Language for RawLanguage {
 	}
 }
 
+#[derive(Clone, PartialEq, Eq, Hash, Debug)]
+pub enum Trivia {
+	Whitespace(usize),
+	Comments(usize),
+}
+
+impl Trivia {
+	#[inline]
+	pub fn text_len(&self) -> TextSize {
+		match self {
+			Trivia::Whitespace(n) => (*n as u32).into(),
+			Trivia::Comments(n) => (*n as u32).into(),
+		}
+	}
+}
+
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct SyntaxTrivia<L: Language> {
+	raw: cursor::SyntaxTrivia,
+	_p: PhantomData<L>,
+}
+
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxNode<L: Language> {
 	raw: cursor::SyntaxNode,
@@ -114,6 +136,12 @@ impl<L: Language> From<SyntaxToken<L>> for SyntaxElement<L> {
 	}
 }
 
+impl<L: Language> SyntaxTrivia<L> {
+	pub fn text(&self) -> &str {
+		self.raw.text()
+	}
+}
+
 impl<L: Language> SyntaxNode<L> {
 	pub(crate) fn new_root(green: GreenNode) -> SyntaxNode<L> {
 		SyntaxNode::from(cursor::SyntaxNode::new_root(green))
@@ -133,6 +161,47 @@ impl<L: Language> SyntaxNode<L> {
 
 	pub fn text_range(&self) -> TextRange {
 		self.raw.text_range()
+	}
+
+	pub fn text_trimmed_range(&self) -> TextRange {
+		let leading_len = self
+			.raw
+			.first_token()
+			.map(|x| x.leading().text_len())
+			.unwrap_or_else(|| 0.into());
+
+		let trailing_len = self
+			.raw
+			.last_token()
+			.map(|x| x.trailing().text_len())
+			.unwrap_or_else(|| 0.into());
+
+		let range = self.text_range();
+		TextRange::new(range.start() + leading_len, range.end() - trailing_len)
+	}
+
+	pub fn leading_range(&self) -> TextRange {
+		let leading_len = self
+			.raw
+			.first_token()
+			.map(|x| x.leading().text_len())
+			.unwrap_or_else(|| 0.into());
+
+		let range = self.text_range();
+		let start = range.start();
+		TextRange::new(start, start + leading_len)
+	}
+
+	pub fn trailing_range(&self) -> TextRange {
+		let trailing_len = self
+			.raw
+			.last_token()
+			.map(|x| x.trailing().text_len())
+			.unwrap_or_else(|| 0.into());
+
+		let range = self.text_range();
+		let end = range.start();
+		TextRange::new(end - trailing_len, end)
 	}
 
 	pub fn text(&self) -> SyntaxText {
@@ -304,12 +373,28 @@ impl<L: Language> SyntaxToken<L> {
 		self.raw.text_range()
 	}
 
+	pub fn text_trimmed_range(&self) -> TextRange {
+		self.raw.text_trimmed_range()
+	}
+
+	fn leading_range(&self) -> TextRange {
+		self.raw.leading_range()
+	}
+
+	fn trailing_range(&self) -> TextRange {
+		self.raw.trailing_range()
+	}
+
 	pub fn index(&self) -> usize {
 		self.raw.index()
 	}
 
 	pub fn text(&self) -> &str {
 		self.raw.text()
+	}
+
+	pub fn text_trimmed(&self) -> &str {
+		self.raw.text_trimmed()
 	}
 
 	pub fn parent(&self) -> Option<SyntaxNode<L>> {
@@ -348,6 +433,22 @@ impl<L: Language> SyntaxToken<L> {
 	pub fn detach(&self) {
 		self.raw.detach()
 	}
+
+	#[inline]
+	pub fn leading(&self) -> SyntaxTrivia<L> {
+		SyntaxTrivia {
+			raw: self.raw.leading(),
+			_p: PhantomData,
+		}
+	}
+
+	#[inline]
+	pub fn trailing(&self) -> SyntaxTrivia<L> {
+		SyntaxTrivia {
+			raw: self.raw.trailing(),
+			_p: PhantomData,
+		}
+	}
 }
 
 impl<L: Language> SyntaxElement<L> {
@@ -355,6 +456,27 @@ impl<L: Language> SyntaxElement<L> {
 		match self {
 			NodeOrToken::Node(it) => it.text_range(),
 			NodeOrToken::Token(it) => it.text_range(),
+		}
+	}
+
+	pub fn text_trimmed_range(&self) -> TextRange {
+		match self {
+			NodeOrToken::Node(it) => it.text_trimmed_range(),
+			NodeOrToken::Token(it) => it.text_trimmed_range(),
+		}
+	}
+
+	pub fn leading_range(&self) -> TextRange {
+		match self {
+			NodeOrToken::Node(it) => it.leading_range(),
+			NodeOrToken::Token(it) => it.leading_range(),
+		}
+	}
+
+	pub fn trailing_range(&self) -> TextRange {
+		match self {
+			NodeOrToken::Node(it) => it.trailing_range(),
+			NodeOrToken::Token(it) => it.trailing_range(),
 		}
 	}
 
@@ -386,12 +508,14 @@ impl<L: Language> SyntaxElement<L> {
 			NodeOrToken::Token(it) => it.next_sibling_or_token(),
 		}
 	}
+
 	pub fn prev_sibling_or_token(&self) -> Option<SyntaxElement<L>> {
 		match self {
 			NodeOrToken::Node(it) => it.prev_sibling_or_token(),
 			NodeOrToken::Token(it) => it.prev_sibling_or_token(),
 		}
 	}
+
 	pub fn detach(&self) {
 		match self {
 			NodeOrToken::Node(it) => it.detach(),
@@ -592,7 +716,9 @@ impl<L: Language> IntoIterator for SyntaxList<L> {
 
 #[cfg(test)]
 mod tests {
-	use crate::api::RawLanguage;
+	use text_size::TextRange;
+
+	use crate::api::{RawLanguage, Trivia};
 	use crate::{Direction, Language, SyntaxKind, SyntaxList, TreeBuilder};
 
 	#[test]
@@ -804,6 +930,76 @@ mod tests {
 		assert_eq!(
 			first_semicolon.prev_sibling_or_token(),
 			first_semicolon.siblings_with_tokens(Direction::Prev).next()
+		);
+	}
+
+	#[test]
+	pub fn syntax_text_and_len() {
+		let mut builder: crate::TreeBuilder<crate::api::RawLanguage> = crate::TreeBuilder::new();
+		builder.start_node(crate::SyntaxKind(0));
+		builder.token_with_trivia(
+			crate::SyntaxKind(0),
+			"\n\t let \t\t",
+			&[Trivia::Whitespace(3)],
+			&[Trivia::Whitespace(3)],
+		);
+		builder.finish_node();
+
+		let node = builder.finish();
+		assert_eq!("\n\t let \t\t", node.text());
+
+		let token = node.first_token().unwrap();
+		assert_eq!("\n\t let \t\t", token.text());
+		assert_eq!("let", token.text_trimmed());
+
+		assert_eq!("\n\t ", token.leading().text());
+		assert_eq!(" \t\t", token.trailing().text());
+	}
+
+	#[test]
+	pub fn syntax_range() {
+		let mut builder: crate::TreeBuilder<crate::api::RawLanguage> = crate::TreeBuilder::new();
+		builder.start_node(crate::SyntaxKind(0));
+		builder.token_with_trivia(
+			crate::SyntaxKind(0),
+			"\n\t let \t\t",
+			&[Trivia::Whitespace(3)],
+			&[Trivia::Whitespace(3)],
+		);
+		builder.token_with_trivia(
+			crate::SyntaxKind(0),
+			"a ",
+			&[Trivia::Whitespace(0)],
+			&[Trivia::Whitespace(1)],
+		);
+		builder.token_with_trivia(
+			crate::SyntaxKind(1),
+			"\n=\n",
+			&[Trivia::Whitespace(1)],
+			&[Trivia::Whitespace(1)],
+		);
+		builder.token(crate::SyntaxKind(0), "1");
+		builder.token(crate::SyntaxKind(0), ";");
+		builder.finish_node();
+
+		let node = builder.finish();
+
+		let eq_token = node
+			.descendants_with_tokens()
+			.find(|x| x.kind().0 == 1)
+			.unwrap();
+		assert_eq!(TextRange::new(11.into(), 14.into()), eq_token.text_range());
+		assert_eq!(
+			TextRange::new(12.into(), 13.into()),
+			eq_token.text_trimmed_range()
+		);
+		assert_eq!(
+			TextRange::new(11.into(), 12.into()),
+			eq_token.leading_range()
+		);
+		assert_eq!(
+			TextRange::new(13.into(), 14.into()),
+			eq_token.trailing_range()
 		);
 	}
 }
