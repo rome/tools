@@ -42,6 +42,7 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::PreUpdateExpression(_) => todo!(),
 			JsAnyExpression::PostUpdateExpression(_) => todo!(),
 			JsAnyExpression::JsUnknownExpression(_) => todo!(),
+			JsAnyExpression::JsLogicalExpression(_) => todo!(),
 		}
 	}
 }

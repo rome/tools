@@ -86,12 +86,6 @@ pub enum JsBinaryOperation {
 	BitwiseOr,
 	/// `^`
 	BitwiseXor,
-	/// `??`
-	NullishCoalescing,
-	/// `||`
-	LogicalOr,
-	/// `&&`
-	LogicalAnd,
 	/// `in`
 	In,
 	/// `instanceof`
@@ -99,9 +93,8 @@ pub enum JsBinaryOperation {
 }
 
 impl JsBinaryExpression {
-	fn op_details(&self) -> SyntaxResult<(SyntaxToken, JsBinaryOperation)> {
-		let token = self.operator()?;
-		let op = match token.kind() {
+	pub fn operator_kind(&self) -> SyntaxResult<JsBinaryOperation> {
+		let kind = match self.operator()?.kind() {
 			T![<] => JsBinaryOperation::LessThan,
 			T![>] => JsBinaryOperation::GreaterThan,
 			T![<=] => JsBinaryOperation::LessThanOrEqual,
@@ -122,43 +115,50 @@ impl JsBinaryExpression {
 			T![&] => JsBinaryOperation::BitwiseAnd,
 			T![|] => JsBinaryOperation::BitwiseOr,
 			T![^] => JsBinaryOperation::BitwiseXor,
-			T![??] => JsBinaryOperation::NullishCoalescing,
-			T![||] => JsBinaryOperation::LogicalOr,
-			T![&&] => JsBinaryOperation::LogicalAnd,
 			T![in] => JsBinaryOperation::In,
 			T![instanceof] => JsBinaryOperation::Instanceof,
 			_ => unreachable!(),
 		};
 
-		Ok((token, op))
-	}
-
-	pub fn op(&self) -> SyntaxResult<JsBinaryOperation> {
-		self.op_details().map(|t| t.1)
-	}
-
-	pub fn left(&self) -> Option<JsAnyExpression> {
-		support::node(self.syntax())
+		Ok(kind)
 	}
 
 	pub fn right(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(1)
 	}
 
-	/// Whether this binary expr is a `||` or `&&` expression.
-	pub fn conditional(&self) -> bool {
-		matches!(
-			self.operator().map(|t| t.kind()),
-			Ok(T![||] | T![&&] | T![??]),
-		)
-	}
-
 	/// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
-	pub fn comparison(&self) -> bool {
+	pub fn is_comparision_operator(&self) -> bool {
 		matches!(
 			self.operator().map(|t| t.kind()),
 			Ok(T![>] | T![<] | T![>=] | T![<=] | T![==] | T![===] | T![!=] | T![!==])
 		)
+	}
+}
+
+pub enum JsLogicalOperation {
+	/// `??`
+	NullishCoalescing,
+	/// `||`
+	LogicalOr,
+	/// `&&`
+	LogicalAnd,
+}
+
+impl JsLogicalExpression {
+	pub fn operator_kind(&self) -> SyntaxResult<JsLogicalOperation> {
+		let kind = match self.operator()?.kind() {
+			T![&&] => JsLogicalOperation::LogicalAnd,
+			T![||] => JsLogicalOperation::LogicalOr,
+			T![??] => JsLogicalOperation::NullishCoalescing,
+			_ => unreachable!(),
+		};
+
+		Ok(kind)
+	}
+
+	pub fn right(&self) -> Option<JsAnyExpression> {
+		support::children(self.syntax()).nth(1)
 	}
 }
 

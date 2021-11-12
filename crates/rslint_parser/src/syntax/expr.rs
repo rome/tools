@@ -261,7 +261,7 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	// test_err conditional_expr_err
 	// foo ? bar baz
 	// foo ? bar baz ? foo : bar
-	let lhs = binary_expr(p);
+	let lhs = binary_or_logical_expression(p);
 
 	if p.at(T![?]) {
 		let m = lhs?.precede(p);
@@ -277,10 +277,10 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	lhs
 }
 
-/// A binary expression such as `2 + 2` or `foo * bar + 2`
-pub fn binary_expr(p: &mut Parser) -> Option<CompletedMarker> {
+/// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
+pub fn binary_or_logical_expression(p: &mut Parser) -> Option<CompletedMarker> {
 	let left = unary_expr(p);
-	binary_expr_recursive(p, left, 0)
+	binary_or_logical_expression_recursive(p, left, 0)
 }
 
 // test binary_expressions
@@ -299,7 +299,7 @@ pub fn binary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 // foo(foo +);
 // foo + * 2;
 // !foo * bar;
-fn binary_expr_recursive(
+fn binary_or_logical_expression_recursive(
 	p: &mut Parser,
 	left: Option<CompletedMarker>,
 	min_prec: u8,
@@ -314,7 +314,7 @@ fn binary_expr_recursive(
 			m.complete(p, TS_ASSERTION)
 		};
 		res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-		return binary_expr_recursive(p, Some(res), min_prec);
+		return binary_or_logical_expression_recursive(p, Some(res), min_prec);
 	}
 	let kind = match p.cur() {
 		T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
@@ -362,7 +362,7 @@ fn binary_expr_recursive(
 		unary_expr(p)
 	};
 
-	binary_expr_recursive(
+	binary_or_logical_expression_recursive(
 		p,
 		right,
 		// ** is right recursive
@@ -373,8 +373,13 @@ fn binary_expr_recursive(
 		},
 	);
 
-	let complete = m.complete(p, JS_BINARY_EXPRESSION);
-	binary_expr_recursive(p, Some(complete), min_prec)
+	let expression_kind = match op {
+		T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
+		_ => JS_BINARY_EXPRESSION,
+	};
+
+	let complete = m.complete(p, expression_kind);
+	binary_or_logical_expression_recursive(p, Some(complete), min_prec)
 
 	// FIXME(RDambrosio016): We should check for nullish-coalescing and logical expr being used together,
 	// however, i can't figure out a way to do this efficiently without using parse_marker which is way too

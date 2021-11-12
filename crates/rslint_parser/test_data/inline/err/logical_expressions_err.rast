@@ -1,0 +1,63 @@
+JS_MODULE@0..37
+  LIST@0..36
+    JS_EXPRESSION_STATEMENT@0..11
+      JS_LOGICAL_EXPRESSION@0..10
+        NAME_REF@0..3
+          IDENT@0..3 "foo"
+        WHITESPACE@3..4 " "
+        QUESTION2@4..6 "??"
+        WHITESPACE@6..7 " "
+        JS_BINARY_EXPRESSION@7..10
+          STAR@7..8 "*"
+          WHITESPACE@8..9 " "
+          JS_NUMBER_LITERAL@9..10
+            JS_NUMBER_LITERAL_TOKEN@9..10 "2"
+      SEMICOLON@10..11 ";"
+    WHITESPACE@11..12 "\n"
+    JS_EXPRESSION_STATEMENT@12..24
+      JS_LOGICAL_EXPRESSION@12..23
+        UNARY_EXPR@12..16
+          BANG@12..13 "!"
+          NAME_REF@13..16
+            IDENT@13..16 "foo"
+        WHITESPACE@16..17 " "
+        AMP2@17..19 "&&"
+        WHITESPACE@19..20 " "
+        NAME_REF@20..23
+          IDENT@20..23 "bar"
+      SEMICOLON@23..24 ";"
+    WHITESPACE@24..25 "\n"
+    JS_EXPRESSION_STATEMENT@25..36
+      CALL_EXPR@25..36
+        NAME_REF@25..28
+          IDENT@25..28 "foo"
+        ARG_LIST@28..36
+          L_PAREN@28..29 "("
+          LIST@29..35
+            JS_LOGICAL_EXPRESSION@29..35
+              NAME_REF@29..32
+                IDENT@29..32 "foo"
+              WHITESPACE@32..33 " "
+              PIPE2@33..35 "||"
+          R_PAREN@35..36 ")"
+  WHITESPACE@36..37 "\n"
+--
+error[SyntaxError]: Expected an expression for the right hand side of a `??`, but found an operator instead
+  ┌─ logical_expressions_err.js:1:8
+  │
+1 │ foo ?? * 2;
+  │     -- ^ But this operator was encountered instead
+  │     │   
+  │     This operator requires a right hand side value
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ logical_expressions_err.js:3:11
+  │
+3 │ foo(foo ||)
+  │           ^ Expected an expression here
+
+--
+foo ?? * 2;
+!foo && bar;
+foo(foo ||)

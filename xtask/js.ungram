@@ -238,6 +238,7 @@ JsAnyExpression =
 	JsAnyLiteral
 	| JsArrayExpression
 	| JsBinaryExpression
+	| JsLogicalExpression
 	| ArrowExpr
 	| Template
 	| NameRef
@@ -436,15 +437,18 @@ BracketExpr =  'super'? manual__object:JsAnyExpression '[' manual__prop:JsAnyExp
 
 
 JsBinaryExpression =
-    manual__left: JsAnyExpression
+    left: JsAnyExpression
     operator: (
     	'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
     	| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
-    	| '&' | '|' | '^' | '??' | '||' | '&&' | 'in' | 'instanceof'
-    // TODO 1725 extract && ?? and || into logical expression
-			| '??' | '||' | '&&'
+    	| '&' | '|' | '^' | 'in' | 'instanceof'
 		)
     manual__right: JsAnyExpression
+
+JsLogicalExpression =
+	left: JsAnyExpression
+	operator: ('??' | '||' | '&&')
+	manual__right: JsAnyExpression
 
 // unary expression
 UnaryExpr =

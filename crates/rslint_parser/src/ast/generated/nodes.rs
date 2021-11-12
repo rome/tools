@@ -650,6 +650,7 @@ pub struct JsBinaryExpression {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsBinaryExpression {
+	pub fn left(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
 		support::find_required_token(
 			&self.syntax,
@@ -674,16 +675,20 @@ impl JsBinaryExpression {
 				T ! [&],
 				T ! [|],
 				T ! [^],
-				T ! [??],
-				T ! [||],
-				T ! [&&],
 				T![in],
 				T![instanceof],
-				T ! [??],
-				T ! [||],
-				T ! [&&],
 			],
 		)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsLogicalExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsLogicalExpression {
+	pub fn left(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(&self.syntax, &[T ! [??], T ! [||], T ! [&&]])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2257,6 +2262,7 @@ pub enum JsAnyExpression {
 	JsAnyLiteral(JsAnyLiteral),
 	JsArrayExpression(JsArrayExpression),
 	JsBinaryExpression(JsBinaryExpression),
+	JsLogicalExpression(JsLogicalExpression),
 	ArrowExpr(ArrowExpr),
 	Template(Template),
 	NameRef(NameRef),
@@ -2986,6 +2992,17 @@ impl AstNode for JsArrayExpression {
 }
 impl AstNode for JsBinaryExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINARY_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsLogicalExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LOGICAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4719,6 +4736,11 @@ impl From<JsBinaryExpression> for JsAnyExpression {
 		JsAnyExpression::JsBinaryExpression(node)
 	}
 }
+impl From<JsLogicalExpression> for JsAnyExpression {
+	fn from(node: JsLogicalExpression) -> JsAnyExpression {
+		JsAnyExpression::JsLogicalExpression(node)
+	}
+}
 impl From<ArrowExpr> for JsAnyExpression {
 	fn from(node: ArrowExpr) -> JsAnyExpression { JsAnyExpression::ArrowExpr(node) }
 }
@@ -4817,6 +4839,7 @@ impl AstNode for JsAnyExpression {
 		match kind {
 			JS_ARRAY_EXPRESSION
 			| JS_BINARY_EXPRESSION
+			| JS_LOGICAL_EXPRESSION
 			| ARROW_EXPR
 			| TEMPLATE
 			| NAME_REF
@@ -4855,6 +4878,9 @@ impl AstNode for JsAnyExpression {
 			JS_ARRAY_EXPRESSION => JsAnyExpression::JsArrayExpression(JsArrayExpression { syntax }),
 			JS_BINARY_EXPRESSION => {
 				JsAnyExpression::JsBinaryExpression(JsBinaryExpression { syntax })
+			}
+			JS_LOGICAL_EXPRESSION => {
+				JsAnyExpression::JsLogicalExpression(JsLogicalExpression { syntax })
 			}
 			ARROW_EXPR => JsAnyExpression::ArrowExpr(ArrowExpr { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
@@ -4904,6 +4930,7 @@ impl AstNode for JsAnyExpression {
 		match self {
 			JsAnyExpression::JsArrayExpression(it) => &it.syntax,
 			JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
+			JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
 			JsAnyExpression::NameRef(it) => &it.syntax,
@@ -6255,6 +6282,11 @@ impl std::fmt::Display for JsArrayExpression {
 	}
 }
 impl std::fmt::Display for JsBinaryExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsLogicalExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
