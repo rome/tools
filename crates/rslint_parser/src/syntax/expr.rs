@@ -1374,14 +1374,14 @@ pub fn postfix_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				check_assign_target_from_marker(p, &lhs?);
 				let m = lhs?.precede(p);
 				p.bump(T![++]);
-				let complete = m.complete(p, POST_UPDATE_EXPRESSION);
+				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
 				Some(complete)
 			}
 			T![--] => {
 				check_assign_target_from_marker(p, &lhs?);
 				let m = lhs?.precede(p);
 				p.bump(T![--]);
-				let complete = m.complete(p, POST_UPDATE_EXPRESSION);
+				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
 				Some(complete)
 			}
 			_ => lhs,
@@ -1427,7 +1427,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = p.start();
 		p.bump(T![++]);
 		let right = unary_expr(p)?;
-		let complete = m.complete(p, PRE_UPDATE_EXPRESSION);
+		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		check_assign_target_from_marker(p, &right);
 		return Some(complete);
 	}
@@ -1435,7 +1435,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = p.start();
 		p.bump(T![--]);
 		let right = unary_expr(p)?;
-		let complete = m.complete(p, PRE_UPDATE_EXPRESSION);
+		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		check_assign_target_from_marker(p, &right);
 		return Some(complete);
 	}

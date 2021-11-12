@@ -41,8 +41,8 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::TsNonNull(_) => todo!(),
 			JsAnyExpression::TsAssertion(_) => todo!(),
 			JsAnyExpression::TsConstAssertion(_) => todo!(),
-			JsAnyExpression::PreUpdateExpression(_) => todo!(),
-			JsAnyExpression::PostUpdateExpression(_) => todo!(),
+			JsAnyExpression::JsPreUpdateExpression(_) => todo!(),
+			JsAnyExpression::JsPostUpdateExpression(_) => todo!(),
 			JsAnyExpression::JsUnknownExpression(_) => todo!(),
 			JsAnyExpression::JsLogicalExpression(_) => todo!(),
 		}

@@ -246,6 +246,8 @@ JsAnyExpression =
 	| JsSequenceExpression
 	| JsThisExpression
 	| JsUnaryExpression
+	| JsPreUpdateExpression
+	| JsPostUpdateExpression
 	| ArrowExpr
 	| Template
 	| ObjectExpr
@@ -253,8 +255,6 @@ JsAnyExpression =
 	| DotExpr
 	| NewExpr
 	| CallExpr
-	| PreUpdateExpression
-	| PostUpdateExpression
 	| AssignExpr
 	| FnExpr
 	| ClassExpr
@@ -466,11 +466,11 @@ JsUnaryExpression =
   operator: ('delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!')
   argument: JsAnyExpression
 
-PreUpdateExpression =
+JsPreUpdateExpression =
     operator:('++' | '--')
     operand:JsAnyExpression
 
-PostUpdateExpression =
+JsPostUpdateExpression =
     operand:JsAnyExpression
     operator:('++' | '--')
 

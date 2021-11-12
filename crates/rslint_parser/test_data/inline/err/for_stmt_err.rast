@@ -44,7 +44,7 @@ JS_MODULE@0..40
         SEMICOLON@31..32 ";"
         WHITESPACE@32..33 " "
         FOR_STMT_UPDATE@33..36
-          PRE_UPDATE_EXPRESSION@33..36
+          JS_PRE_UPDATE_EXPRESSION@33..36
             PLUS2@33..35 "++"
             JS_REFERENCE_IDENTIFIER_EXPRESSION@35..36
               IDENT@35..36 "i"
