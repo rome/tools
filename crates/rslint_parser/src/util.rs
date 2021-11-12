@@ -234,7 +234,7 @@ pub trait SyntaxNodeExt {
 	/// Get the parent of this node, recursing through any grouping expressions
 	fn expr_parent(&self) -> Option<SyntaxNode> {
 		let parent = self.to_node().parent()?;
-		if parent.kind() == SyntaxKind::GROUPING_EXPR {
+		if parent.kind() == SyntaxKind::JS_PARENTHESIZED_EXPRESSION {
 			parent.parent()
 		} else {
 			Some(parent)

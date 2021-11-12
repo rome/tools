@@ -4,7 +4,7 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	GroupingExpr, JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral,
+	JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsParenthesizedExpression,
 	JsStringLiteral, LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
@@ -104,15 +104,15 @@ pub fn tokenize_json(content: &str) -> FormatElement {
 	let script = parse_text(format!("({})", content).as_str(), 0);
 
 	// Unwrap the grouping to get to the JSON content. The grouping is only used as a trick to parse JSON
-	let json_content = GroupingExpr::cast(
+	let json_content = JsParenthesizedExpression::cast(
 		script
 			.syntax()
 			.descendants()
-			.find(|e| e.kind() == SyntaxKind::GROUPING_EXPR)
+			.find(|e| e.kind() == SyntaxKind::JS_PARENTHESIZED_EXPRESSION)
 			.unwrap(),
 	)
 	// TODO: #1725 this should be reviewed for error handling
-	.and_then(|grouping| grouping.inner().ok())
+	.and_then(|grouping| grouping.expression().ok())
 	.unwrap();
 
 	let tokenized_content = tokenize_node(json_content.syntax().clone());

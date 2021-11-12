@@ -1,7 +1,7 @@
 //! General utility functions for parsing and error checking.
 
 use crate::{
-	ast::{GroupingExpr, JsAnyExpression},
+	ast::{JsAnyExpression, JsParenthesizedExpression},
 	SyntaxKind::*,
 	*,
 };
@@ -25,10 +25,10 @@ pub fn check_simple_assign_target(p: &mut Parser, target: &JsAnyExpression, rang
 fn is_simple_assign_target(p: &mut Parser, target: &JsAnyExpression) -> bool {
 	match target.syntax().kind() {
 		NAME_REF | BRACKET_EXPR | DOT_EXPR | PRIVATE_PROP_ACCESS => true,
-		GROUPING_EXPR => {
-			let inner = GroupingExpr::cast(target.syntax().to_owned())
+		JS_PARENTHESIZED_EXPRESSION => {
+			let inner = JsParenthesizedExpression::cast(target.syntax().to_owned())
 				.unwrap()
-				.inner();
+				.expression();
 			if let Ok(inner) = inner {
 				is_simple_assign_target(p, &inner)
 			} else {
@@ -61,9 +61,9 @@ pub fn check_assign_target(
 				JsAnyExpression::JsAnyLiteral(_) => false,
 				JsAnyExpression::CallExpr(_) => deny_call,
 				JsAnyExpression::JsBinaryExpression(_) => false,
-				JsAnyExpression::GroupingExpr(it) => {
-					it.inner().map_or(false, |i| should_deny(&i, deny_call))
-				}
+				JsAnyExpression::JsParenthesizedExpression(it) => it
+					.expression()
+					.map_or(false, |i| should_deny(&i, deny_call)),
 				_ => true,
 			}
 		}
@@ -128,8 +128,8 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 				check_for_stmt_lhs(p, rhs, marker);
 			}
 		}
-		JsAnyExpression::GroupingExpr(expr) => {
-			if let Ok(inner) = expr.inner() {
+		JsAnyExpression::JsParenthesizedExpression(expr) => {
+			if let Ok(inner) = expr.expression() {
 				check_for_stmt_lhs(p, inner, marker);
 			}
 		}

@@ -715,6 +715,21 @@ impl JsLogicalExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsParenthesizedExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsParenthesizedExpression {
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['('])
+	}
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![')'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrowExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -768,19 +783,6 @@ impl ObjectExpr {
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['}'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct GroupingExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl GroupingExpr {
-	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['('])
-	}
-	pub fn inner(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2266,12 +2268,12 @@ pub enum JsAnyExpression {
 	JsBinaryExpression(JsBinaryExpression),
 	JsConditionalExpression(JsConditionalExpression),
 	JsLogicalExpression(JsLogicalExpression),
+	JsParenthesizedExpression(JsParenthesizedExpression),
 	ArrowExpr(ArrowExpr),
 	Template(Template),
 	NameRef(NameRef),
 	ThisExpr(ThisExpr),
 	ObjectExpr(ObjectExpr),
-	GroupingExpr(GroupingExpr),
 	BracketExpr(BracketExpr),
 	DotExpr(DotExpr),
 	NewExpr(NewExpr),
@@ -3035,6 +3037,17 @@ impl AstNode for JsLogicalExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsParenthesizedExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for ArrowExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARROW_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3081,17 +3094,6 @@ impl AstNode for ThisExpr {
 }
 impl AstNode for ObjectExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == OBJECT_EXPR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for GroupingExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == GROUPING_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4750,6 +4752,11 @@ impl From<JsLogicalExpression> for JsAnyExpression {
 		JsAnyExpression::JsLogicalExpression(node)
 	}
 }
+impl From<JsParenthesizedExpression> for JsAnyExpression {
+	fn from(node: JsParenthesizedExpression) -> JsAnyExpression {
+		JsAnyExpression::JsParenthesizedExpression(node)
+	}
+}
 impl From<ArrowExpr> for JsAnyExpression {
 	fn from(node: ArrowExpr) -> JsAnyExpression { JsAnyExpression::ArrowExpr(node) }
 }
@@ -4764,9 +4771,6 @@ impl From<ThisExpr> for JsAnyExpression {
 }
 impl From<ObjectExpr> for JsAnyExpression {
 	fn from(node: ObjectExpr) -> JsAnyExpression { JsAnyExpression::ObjectExpr(node) }
-}
-impl From<GroupingExpr> for JsAnyExpression {
-	fn from(node: GroupingExpr) -> JsAnyExpression { JsAnyExpression::GroupingExpr(node) }
 }
 impl From<BracketExpr> for JsAnyExpression {
 	fn from(node: BracketExpr) -> JsAnyExpression { JsAnyExpression::BracketExpr(node) }
@@ -4847,12 +4851,12 @@ impl AstNode for JsAnyExpression {
 			| JS_BINARY_EXPRESSION
 			| JS_CONDITIONAL_EXPRESSION
 			| JS_LOGICAL_EXPRESSION
+			| JS_PARENTHESIZED_EXPRESSION
 			| ARROW_EXPR
 			| TEMPLATE
 			| NAME_REF
 			| THIS_EXPR
 			| OBJECT_EXPR
-			| GROUPING_EXPR
 			| BRACKET_EXPR
 			| DOT_EXPR
 			| NEW_EXPR
@@ -4891,12 +4895,14 @@ impl AstNode for JsAnyExpression {
 			JS_LOGICAL_EXPRESSION => {
 				JsAnyExpression::JsLogicalExpression(JsLogicalExpression { syntax })
 			}
+			JS_PARENTHESIZED_EXPRESSION => {
+				JsAnyExpression::JsParenthesizedExpression(JsParenthesizedExpression { syntax })
+			}
 			ARROW_EXPR => JsAnyExpression::ArrowExpr(ArrowExpr { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
 			NAME_REF => JsAnyExpression::NameRef(NameRef { syntax }),
 			THIS_EXPR => JsAnyExpression::ThisExpr(ThisExpr { syntax }),
 			OBJECT_EXPR => JsAnyExpression::ObjectExpr(ObjectExpr { syntax }),
-			GROUPING_EXPR => JsAnyExpression::GroupingExpr(GroupingExpr { syntax }),
 			BRACKET_EXPR => JsAnyExpression::BracketExpr(BracketExpr { syntax }),
 			DOT_EXPR => JsAnyExpression::DotExpr(DotExpr { syntax }),
 			NEW_EXPR => JsAnyExpression::NewExpr(NewExpr { syntax }),
@@ -4942,12 +4948,12 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
 			JsAnyExpression::JsConditionalExpression(it) => &it.syntax,
 			JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
+			JsAnyExpression::JsParenthesizedExpression(it) => &it.syntax,
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
 			JsAnyExpression::NameRef(it) => &it.syntax,
 			JsAnyExpression::ThisExpr(it) => &it.syntax,
 			JsAnyExpression::ObjectExpr(it) => &it.syntax,
-			JsAnyExpression::GroupingExpr(it) => &it.syntax,
 			JsAnyExpression::BracketExpr(it) => &it.syntax,
 			JsAnyExpression::DotExpr(it) => &it.syntax,
 			JsAnyExpression::NewExpr(it) => &it.syntax,
@@ -6310,6 +6316,11 @@ impl std::fmt::Display for JsLogicalExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsParenthesizedExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for ArrowExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6331,11 +6342,6 @@ impl std::fmt::Display for ThisExpr {
 	}
 }
 impl std::fmt::Display for ObjectExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for GroupingExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

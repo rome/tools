@@ -145,13 +145,13 @@ pub(crate) fn is_valid_target(p: &mut Parser, marker: &CompletedMarker) -> bool 
 	match marker.kind() {
 		DOT_EXPR | BRACKET_EXPR | NAME_REF | PRIVATE_PROP_ACCESS | TS_CONST_ASSERTION
 		| TS_ASSERTION | TS_NON_NULL => true,
-		GROUPING_EXPR => {
+		JS_PARENTHESIZED_EXPRESSION => {
 			// avoid parsing the marker because it is incredibly expensive and this is a hot path
 			for (idx, event) in p.events[marker.start_pos as usize..].iter().enumerate() {
 				match event {
 					Event::Finish { .. } if marker.finish_pos as usize == idx => return true,
 					Event::Start {
-						kind: SyntaxKind::GROUPING_EXPR,
+						kind: SyntaxKind::JS_PARENTHESIZED_EXPRESSION,
 						..
 					} => {}
 					Event::Start {
@@ -394,7 +394,7 @@ pub fn paren_expr(p: &mut Parser) -> CompletedMarker {
 	p.expect(T!['(']);
 	expr(p);
 	p.expect(T![')']);
-	m.complete(p, GROUPING_EXPR)
+	m.complete(p, JS_PARENTHESIZED_EXPRESSION)
 }
 
 /// A member or new expression with subscripts. e.g. `new foo`, `new Foo()`, `foo`, or `foo().bar[5]`
@@ -826,7 +826,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			.primary(start..p.cur_tok().range.start, "");
 
 		p.error(err);
-		return m.complete(p, GROUPING_EXPR);
+		return m.complete(p, JS_PARENTHESIZED_EXPRESSION);
 	}
 
 	if let Some(range) = spread_range {
@@ -845,7 +845,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 		p.error(err);
 	}
 
-	m.complete(p, GROUPING_EXPR)
+	m.complete(p, JS_PARENTHESIZED_EXPRESSION)
 }
 
 pub fn expr_or_spread(p: &mut Parser) -> Option<CompletedMarker> {

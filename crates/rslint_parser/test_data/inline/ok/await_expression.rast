@@ -34,7 +34,7 @@ JS_MODULE@0..116
               JS_AWAIT_EXPRESSION@42..57
                 AWAIT_KW@42..47 "await"
                 WHITESPACE@47..48 " "
-                GROUPING_EXPR@48..57
+                JS_PARENTHESIZED_EXPRESSION@48..57
                   L_PAREN@48..49 "("
                   CALL_EXPR@49..56
                     NAME_REF@49..54

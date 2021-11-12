@@ -212,7 +212,7 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"LITERAL_PROP",
 		"GETTER",
 		"SETTER",
-		"GROUPING_EXPR",
+		"JS_PARENTHESIZED_EXPRESSION",
 		"NEW_EXPR",
 		"FN_EXPR",
 		"BRACKET_EXPR",

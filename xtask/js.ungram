@@ -241,12 +241,12 @@ JsAnyExpression =
 	| JsBinaryExpression
 	| JsConditionalExpression
 	| JsLogicalExpression
+	| JsParenthesizedExpression
 	| ArrowExpr
 	| Template
 	| NameRef
 	| ThisExpr
 	| ObjectExpr
-	| GroupingExpr
 	| BracketExpr
 	| DotExpr
 	| NewExpr
@@ -439,8 +439,9 @@ PatternOrExpr = Pattern | JsAnyExpression
 SequenceExpr =
 	exprs:(JsAnyExpression (',' JsAnyExpression)*)
 
-// grouping expression
-GroupingExpr = '(' inner:JsAnyExpression ')'
+
+JsParenthesizedExpression =
+	'(' expression: JsAnyExpression ')'
 
 // bracket expression
 BracketExpr =  'super'? manual__object:JsAnyExpression '[' manual__prop:JsAnyExpression ']'

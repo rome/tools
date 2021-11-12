@@ -15,7 +15,7 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::ObjectExpr(object_expression) => {
 				object_expression.to_format_element(formatter)
 			}
-			JsAnyExpression::GroupingExpr(_) => todo!(),
+			JsAnyExpression::JsParenthesizedExpression(_) => todo!(),
 			JsAnyExpression::BracketExpr(_) => todo!(),
 			JsAnyExpression::DotExpr(_) => todo!(),
 			JsAnyExpression::NewExpr(_) => todo!(),
