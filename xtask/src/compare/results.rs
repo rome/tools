@@ -173,8 +173,8 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 		create_column("PR".yellow());
 		create_column("Difference".cyan());
 
-		let passed_diff = &base_passed - &new_passed;
-		let failed_diff = &base_failed - &new_failed;
+		let passed_diff = base_passed - new_passed;
+		let failed_diff = base_failed - new_failed;
 		let panics_diff = base_panics - new_panics;
 		let passed_row: Vec<&dyn std::fmt::Display> =
 			vec![&"Passed", &base_passed, &new_passed, &passed_diff];

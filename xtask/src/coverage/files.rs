@@ -2,18 +2,17 @@ use colored::Colorize;
 use indicatif::ProgressBar;
 use regex::Regex;
 use rslint_parser::ParserError;
-use serde::{Deserialize, Serialize, Serializer};
+use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::fs::read_to_string;
+use std::io;
 use std::path::PathBuf;
-use std::{env, io};
 use std::{fs::File, io::Write};
 use walkdir::WalkDir;
 use yastl::Pool;
 
 use crate::{project_root, BASE_RESULT_FILE};
 
-use super::TEST_JSON_PATH;
 const BASE_PATH: &str = "xtask/src/coverage/test262/test";
 
 #[derive(Debug, Clone)]
@@ -204,8 +203,8 @@ pub struct Summary {
 	pub coverage: f64,
 }
 
-impl TestResults {
-	pub fn new() -> Self {
+impl Default for TestResults {
+	fn default() -> Self {
 		Self {
 			summary: Summary {
 				tests_ran: 0,
@@ -216,6 +215,12 @@ impl TestResults {
 			},
 			details: vec![],
 		}
+	}
+}
+
+impl TestResults {
+	pub fn new() -> Self {
+		Self::default()
 	}
 
 	pub fn store_results(&mut self, results: Vec<TestResult>) {
@@ -264,7 +269,7 @@ impl TestResults {
 
 		file.write_all(json.as_bytes())
 			.expect("Can't write in the JSON file");
-		println!("");
+		println!();
 		println!("The test result report has been saved in: {:?}", &path);
 	}
 }
