@@ -1,9 +1,9 @@
 use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl,
-	ClassProp, Condition, ConstructorParameters, ContinueStmt, Declarator, FnDecl, ForInStmt,
-	ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement,
-	JsCaseClause, JsCatchClause, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
+	ClassProp, Condition, ConstructorParameters, Declarator, FnDecl, ForInStmt, ForStmt,
+	ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement, JsCaseClause,
+	JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
 	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement, JsLabeledStatement,
 	JsReturnStatement, JsScript, JsSwitchStatement, JsTryStatement, JsWhileStatement,
 	JsWithStatement, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr,
@@ -107,7 +107,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_CASE_CLAUSE => JsCaseClause::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::CONTINUE_STMT => ContinueStmt::cast(self.clone())
+			SyntaxKind::JS_CONTINUE_STATEMENT => JsContinueStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_LABELED_STATEMENT => JsLabeledStatement::cast(self.clone())

@@ -21,18 +21,17 @@ JS_MODULE@0..64
         L_CURLY@21..22 "{"
         WHITESPACE@22..25 "\n  "
         LIST@25..61
-          CONTINUE_STMT@25..34
+          JS_CONTINUE_STATEMENT@25..34
             CONTINUE_KW@25..33 "continue"
             SEMICOLON@33..34 ";"
           WHITESPACE@34..37 "\n  "
-          CONTINUE_STMT@37..50
+          JS_CONTINUE_STATEMENT@37..50
             CONTINUE_KW@37..45 "continue"
             WHITESPACE@45..46 " "
-            NAME_REF@46..49
-              IDENT@46..49 "foo"
+            IDENT@46..49 "foo"
             SEMICOLON@49..50 ";"
           WHITESPACE@50..53 "\n  "
-          CONTINUE_STMT@53..61
+          JS_CONTINUE_STATEMENT@53..61
             CONTINUE_KW@53..61 "continue"
         WHITESPACE@61..62 "\n"
         R_CURLY@62..63 "}"

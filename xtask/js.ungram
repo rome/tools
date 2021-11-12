@@ -72,8 +72,8 @@ JsAnyStatement =
 	| ForStmt
 	| ForInStmt
 	| ForOfStmt
-	| ContinueStmt
-	| BreakStmt
+	| JsContinueStatement
+	| JsBreakStatement
 	| JsReturnStatement
 	| JsWithStatement
 	| JsLabeledStatement
@@ -156,12 +156,15 @@ ForInStmt = 'for' '(' left:ForStmtInit 'in' right:JsAnyExpression ')' cons:JsAny
 ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:JsAnyExpression ')' cons:JsAnyStatement
 
 
-// continue statement
-ContinueStmt = 'continue' name_ref: NameRef ';'?
+JsBreakStatement =
+    'break'
+    (label: 'ident')?
+    ';'?
 
-
-// break statement
-BreakStmt = 'break' 'ident'? ';'
+JsContinueStatement =
+    'continue'
+    (label: 'ident')?
+    ';'?
 
 
 JsReturnStatement =

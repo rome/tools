@@ -22,10 +22,10 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::ForInStmt(for_in_statement) => {
 				for_in_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::ContinueStmt(continue_statement) => {
+			JsAnyStatement::JsContinueStatement(continue_statement) => {
 				continue_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::BreakStmt(break_statement) => {
+			JsAnyStatement::JsBreakStatement(break_statement) => {
 				break_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::JsReturnStatement(stmt) => stmt.to_format_element(formatter),
