@@ -1,18 +1,20 @@
 JS_MODULE@0..26
   LIST@0..25
-    VAR_DECL@0..13
-      IDENT@0..3 "let"
-      WHITESPACE@3..4 " "
-      LIST@4..13
-        DECLARATOR@4..13
-          SINGLE_PATTERN@4..5
-            NAME@4..5
-              IDENT@4..5 "a"
-          WHITESPACE@5..6 " "
-          EQ@6..7 "="
-          WHITESPACE@7..8 " "
-          NAME_REF@8..13
-            IDENT@8..13 "async"
+    JS_VARIABLE_DECLARATION_STATEMENT@0..13
+      JS_VARIABLE_DECLARATION@0..13
+        LET_KW@0..3 "let"
+        WHITESPACE@3..4 " "
+        LIST@4..13
+          JS_VARIABLE_DECLARATOR@4..13
+            SINGLE_PATTERN@4..5
+              NAME@4..5
+                IDENT@4..5 "a"
+            WHITESPACE@5..6 " "
+            JS_EQUAL_VALUE_CLAUSE@6..13
+              EQ@6..7 "="
+              WHITESPACE@7..8 " "
+              NAME_REF@8..13
+                IDENT@8..13 "async"
     WHITESPACE@13..14 " "
     JS_EXPRESSION_STATEMENT@14..25
       ARROW_EXPR@14..25

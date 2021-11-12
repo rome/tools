@@ -6,8 +6,6 @@ use crate::{
 	*,
 };
 
-use std::collections::HashMap;
-
 /// Check if assignment to an expression is invalid and report an error if so.
 ///
 /// For example: `++true` is invalid.
@@ -118,118 +116,6 @@ pub fn get_precedence(tok: SyntaxKind) -> Option<u8> {
 	})
 }
 
-/// Check the bound names of a variable declaration and issue errors according to `13.3.1.1`
-///
-/// # Panics
-/// Panics if the marker does not represent a [`VarDecl`](ast::VarDecl).
-pub fn check_var_decl_bound_names(p: &mut Parser, marker: &CompletedMarker) {
-	let mut map = HashMap::with_capacity(3);
-
-	let decl = p.parse_marker::<ast::VarDecl>(marker);
-	if decl.is_let() || decl.is_const() {
-		for declarator in decl.declared() {
-			if let Ok(pattern) = declarator.pattern() {
-				check_pat(p, pattern, &mut map, marker)
-			}
-		}
-	}
-}
-
-fn check_pat(
-	p: &mut Parser,
-	pattern: ast::Pattern,
-	map: &mut HashMap<String, Range<usize>>,
-	marker: &CompletedMarker,
-) {
-	match pattern {
-		ast::Pattern::SinglePattern(name) => {
-			if let Some(ident) = name.name().map_or_else(|_| None, |x| x.ident_token().ok()) {
-				check_name_pat(p, &ident, map, marker);
-			}
-		}
-		ast::Pattern::AssignPattern(pat) => {
-			if let Ok(subpat) = pat.value() {
-				// This should always be a pattern
-				if ast::Pattern::can_cast(subpat.syntax().kind()) {
-					check_pat(
-						p,
-						ast::Pattern::cast(subpat.syntax().to_owned()).unwrap(),
-						map,
-						marker,
-					)
-				}
-			}
-		}
-		ast::Pattern::ObjectPattern(obj) => {
-			for subpat in obj.elements() {
-				let pat = match subpat {
-					ast::ObjectPatternProp::AssignPattern(pat) => pat.into(),
-					ast::ObjectPatternProp::KeyValuePattern(pat) => {
-						if let Some(val) = pat.value() {
-							val
-						} else {
-							return;
-						}
-					}
-					ast::ObjectPatternProp::RestPattern(pat) => pat.into(),
-					ast::ObjectPatternProp::SinglePattern(pat) => pat.into(),
-					ast::ObjectPatternProp::JsUnknownPattern(_) => todo!(),
-				};
-				check_pat(p, pat, map, marker);
-			}
-		}
-		ast::Pattern::ArrayPattern(pat) => {
-			for subpat in pat.elements() {
-				check_pat(p, subpat, map, marker);
-			}
-		}
-		ast::Pattern::RestPattern(pat) => {
-			if let Ok(subpat) = pat.pat() {
-				check_pat(p, subpat, map, marker);
-			}
-		}
-		ast::Pattern::ExprPattern(_) => unreachable!(),
-		ast::Pattern::JsUnknownPattern(_) => todo!(),
-	}
-}
-
-fn check_name_pat(
-	p: &mut Parser,
-	token: &SyntaxToken,
-	map: &mut HashMap<String, Range<usize>>,
-	marker: &CompletedMarker,
-) {
-	let range = marker.offset_range(p, token.text_range());
-	let token_src = p.source(range).to_owned();
-
-	if token_src == "let" {
-		let err = p
-			.err_builder("`let` cannot be declared as a variable name inside of a declaration")
-			.primary(range, "");
-
-		p.error(err);
-	}
-
-	if let Some(entry) = map.get(&token_src) {
-		let err = p
-			.err_builder(
-				"Declarations inside of a `let` or `const` declaration may not have duplicates",
-			)
-			.secondary(
-				entry.to_owned(),
-				&format!("{} is first declared here", token_src),
-			)
-			.primary(
-				range,
-				&format!("a second declaration of {} is not allowed", token_src),
-			);
-
-		p.error(err);
-	} else {
-		map.insert(token_src.to_owned(), range.into());
-	}
-}
-
 /// Check the LHS expression inside of a for...in or for...of statement according to
 pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker) {
 	match expr {
@@ -333,9 +219,9 @@ pub fn check_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker
 }
 
 /// Check if the var declaration in a for statement has multiple declarators, which is invalid
-pub fn check_for_stmt_declarators(p: &mut Parser, marker: &CompletedMarker) {
-	let parsed = p.parse_marker::<ast::VarDecl>(marker);
-	let excess = parsed.declared().iter().skip(1).collect::<Vec<_>>();
+pub fn check_for_stmt_declaration(p: &mut Parser, marker: &CompletedMarker) {
+	let parsed = p.parse_marker::<ast::JsVariableDeclaration>(marker);
+	let excess = parsed.declarators().iter().skip(1).collect::<Vec<_>>();
 
 	if !excess.is_empty() {
 		let start = marker

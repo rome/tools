@@ -142,7 +142,7 @@ ForStmt =
 	cons:JsAnyStatement
 
 ForStmtInit = inner:ForHead ';'
-ForHead = VarDecl | JsAnyExpression
+ForHead = JsVariableDeclaration | JsAnyExpression
 
 ForStmtTest = expr:JsAnyExpression ';'
 
@@ -275,7 +275,7 @@ Template = '`'
 // This Expression
 ThisExpr = 'this'
 
-// Dot exprssion
+// Dot expression
 // TODO: review the 'super' token
 // https://github.com/rome/tools/issues/1729
 DotExpr = 'super'? object:JsAnyExpression '.' prop:Name
@@ -289,13 +289,13 @@ CallExpr = type_args:TsTypeArgs? callee:JsAnyExpression arguments:ArgList
 // await expression
 AwaitExpr = 'await' expr: JsAnyExpression
 
-// yield expressoin
+// yield expression
 YieldExpr = 'yield' '*'? value:JsAnyExpression
 
 // super call expression
 SuperCall = 'super' arguments:ArgList
 
-// import call exression
+// import call expression
 ImportCall = 'import' '(' argument:JsAnyExpression ')'
 
 // new target expression
@@ -601,7 +601,7 @@ NameRef = 'ident'
 Decl =
 	FnDecl
 	| ClassDecl
-	| VarDecl
+	| JsVariableDeclarationStatement
 	| TsEnum
 	| TsTypeAliasDecl
 	| TsNamespaceDecl
@@ -619,12 +619,21 @@ FnDecl =
 	return_type:TsType?
 	body:JsBlockStatement
 
-VarDecl = ('var' | 'const' | manual__:'let') declared:(Declarator (',' Declarator)*) ';'?
+
+JsVariableDeclarationStatement =
+    declaration: JsVariableDeclaration ';'?
+
+JsVariableDeclaration =
+    kind_token: ('var' | 'const' | 'let')
+    declarators: (JsVariableDeclarator (',' JsVariableDeclarator)*)
+
+JsVariableDeclarator =
+		// TODO 1725 change to `JsAnyBinding`
+    id: Pattern
+    init: JsEqualValueClause?
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
 ClassDecl  = 'class' name: Name ('extends' parent:NameRef)? body:ClassBody
-
-Declarator = pattern:Pattern '!' '=' value:JsAnyExpression
 
 
 ///////////////
@@ -686,6 +695,19 @@ WildcardImport = '*' 'as'? ident: Ident?
 
 // @ematipico this one is not entirely correct I think..
 ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
+
+///////////////
+// AUXILIARY
+///////////////
+
+
+// let a = 10;
+//       ^^^^
+// class { a = 10; }
+//           ^^^^
+JsEqualValueClause =
+	'='
+	expression: JsAnyExpression
 
 ///////////////
 // TYPESCRIPT

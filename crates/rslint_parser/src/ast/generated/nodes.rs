@@ -614,21 +614,15 @@ impl ForStmtUpdate {
 	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct VarDecl {
+pub struct JsVariableDeclaration {
 	pub(crate) syntax: SyntaxNode,
 }
-impl VarDecl {
-	pub fn var_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![var])
+impl JsVariableDeclaration {
+	pub fn kind_token(&self) -> Option<SyntaxToken> {
+		support::find_token(&self.syntax, &[T![var], T![const], T![let]])
 	}
-	pub fn const_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![const])
-	}
-	pub fn declared(&self) -> AstSeparatedList<Declarator> {
+	pub fn declarators(&self) -> AstSeparatedList<JsVariableDeclarator> {
 		support::separated_list(&self.syntax, 0usize)
-	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1697,6 +1691,18 @@ impl ClassDecl {
 	pub fn body(&self) -> SyntaxResult<ClassBody> { support::as_mandatory_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsVariableDeclarationStatement {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsVariableDeclarationStatement {
+	pub fn declaration(&self) -> SyntaxResult<JsVariableDeclaration> {
+		support::as_mandatory_node(&self.syntax)
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
+		support::as_optional_token(&self.syntax, T ! [;])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsEnum {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1795,18 +1801,22 @@ impl TsInterfaceDecl {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Declarator {
+pub struct JsVariableDeclarator {
 	pub(crate) syntax: SyntaxNode,
 }
-impl Declarator {
-	pub fn pattern(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
-	pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![!])
-	}
+impl JsVariableDeclarator {
+	pub fn id(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
+	pub fn init(&self) -> Option<JsEqualValueClause> { support::as_optional_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsEqualValueClause {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsEqualValueClause {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::as_mandatory_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
 		support::as_mandatory_node(&self.syntax)
 	}
 }
@@ -2449,7 +2459,7 @@ pub enum JsAnyStatement {
 pub enum Decl {
 	FnDecl(FnDecl),
 	ClassDecl(ClassDecl),
-	VarDecl(VarDecl),
+	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
 	TsEnum(TsEnum),
 	TsTypeAliasDecl(TsTypeAliasDecl),
 	TsNamespaceDecl(TsNamespaceDecl),
@@ -2493,7 +2503,7 @@ pub enum JsAnyExpression {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ForHead {
-	VarDecl(VarDecl),
+	JsVariableDeclaration(JsVariableDeclaration),
 	JsAnyExpression(JsAnyExpression),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -3101,8 +3111,8 @@ impl AstNode for ForStmtUpdate {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for VarDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == VAR_DECL }
+impl AstNode for JsVariableDeclaration {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3904,6 +3914,17 @@ impl AstNode for ClassDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsVariableDeclarationStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_STATEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for TsEnum {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3959,8 +3980,19 @@ impl AstNode for TsInterfaceDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Declarator {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == DECLARATOR }
+impl AstNode for JsVariableDeclarator {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATOR }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsEqualValueClause {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EQUAL_VALUE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4776,8 +4808,10 @@ impl From<FnDecl> for Decl {
 impl From<ClassDecl> for Decl {
 	fn from(node: ClassDecl) -> Decl { Decl::ClassDecl(node) }
 }
-impl From<VarDecl> for Decl {
-	fn from(node: VarDecl) -> Decl { Decl::VarDecl(node) }
+impl From<JsVariableDeclarationStatement> for Decl {
+	fn from(node: JsVariableDeclarationStatement) -> Decl {
+		Decl::JsVariableDeclarationStatement(node)
+	}
 }
 impl From<TsEnum> for Decl {
 	fn from(node: TsEnum) -> Decl { Decl::TsEnum(node) }
@@ -4797,8 +4831,14 @@ impl From<TsInterfaceDecl> for Decl {
 impl AstNode for Decl {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			FN_DECL | CLASS_DECL | VAR_DECL | TS_ENUM | TS_TYPE_ALIAS_DECL | TS_NAMESPACE_DECL
-			| TS_MODULE_DECL | TS_INTERFACE_DECL => true,
+			FN_DECL
+			| CLASS_DECL
+			| JS_VARIABLE_DECLARATION_STATEMENT
+			| TS_ENUM
+			| TS_TYPE_ALIAS_DECL
+			| TS_NAMESPACE_DECL
+			| TS_MODULE_DECL
+			| TS_INTERFACE_DECL => true,
 			_ => false,
 		}
 	}
@@ -4806,7 +4846,9 @@ impl AstNode for Decl {
 		let res = match syntax.kind() {
 			FN_DECL => Decl::FnDecl(FnDecl { syntax }),
 			CLASS_DECL => Decl::ClassDecl(ClassDecl { syntax }),
-			VAR_DECL => Decl::VarDecl(VarDecl { syntax }),
+			JS_VARIABLE_DECLARATION_STATEMENT => {
+				Decl::JsVariableDeclarationStatement(JsVariableDeclarationStatement { syntax })
+			}
 			TS_ENUM => Decl::TsEnum(TsEnum { syntax }),
 			TS_TYPE_ALIAS_DECL => Decl::TsTypeAliasDecl(TsTypeAliasDecl { syntax }),
 			TS_NAMESPACE_DECL => Decl::TsNamespaceDecl(TsNamespaceDecl { syntax }),
@@ -4820,7 +4862,7 @@ impl AstNode for Decl {
 		match self {
 			Decl::FnDecl(it) => &it.syntax,
 			Decl::ClassDecl(it) => &it.syntax,
-			Decl::VarDecl(it) => &it.syntax,
+			Decl::JsVariableDeclarationStatement(it) => &it.syntax,
 			Decl::TsEnum(it) => &it.syntax,
 			Decl::TsTypeAliasDecl(it) => &it.syntax,
 			Decl::TsNamespaceDecl(it) => &it.syntax,
@@ -5050,20 +5092,22 @@ impl AstNode for JsAnyExpression {
 		}
 	}
 }
-impl From<VarDecl> for ForHead {
-	fn from(node: VarDecl) -> ForHead { ForHead::VarDecl(node) }
+impl From<JsVariableDeclaration> for ForHead {
+	fn from(node: JsVariableDeclaration) -> ForHead { ForHead::JsVariableDeclaration(node) }
 }
 impl AstNode for ForHead {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			VAR_DECL => true,
+			JS_VARIABLE_DECLARATION => true,
 			k if JsAnyExpression::can_cast(k) => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			VAR_DECL => ForHead::VarDecl(VarDecl { syntax }),
+			JS_VARIABLE_DECLARATION => {
+				ForHead::JsVariableDeclaration(JsVariableDeclaration { syntax })
+			}
 			_ => {
 				if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
 					return Some(ForHead::JsAnyExpression(js_any_expression));
@@ -5075,7 +5119,7 @@ impl AstNode for ForHead {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ForHead::VarDecl(it) => &it.syntax,
+			ForHead::JsVariableDeclaration(it) => &it.syntax,
 			ForHead::JsAnyExpression(it) => it.syntax(),
 		}
 	}
@@ -6266,7 +6310,7 @@ impl std::fmt::Display for ForStmtUpdate {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for VarDecl {
+impl std::fmt::Display for JsVariableDeclaration {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6631,6 +6675,11 @@ impl std::fmt::Display for ClassDecl {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsVariableDeclarationStatement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for TsEnum {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6656,7 +6705,12 @@ impl std::fmt::Display for TsInterfaceDecl {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Declarator {
+impl std::fmt::Display for JsVariableDeclarator {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsEqualValueClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

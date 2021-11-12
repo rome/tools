@@ -5,7 +5,7 @@ use syntax::stmt::FOLLOWS_LET;
 use super::decl::{class_decl, function_decl};
 use super::expr::{assign_expr, expr, identifier_name, literal, object_expr, primary_expr};
 use super::pat::binding_identifier;
-use super::stmt::{block_items, semi, var_decl};
+use super::stmt::{block_items, semi, variable_declaration_statement};
 use super::typescript::*;
 use crate::{SyntaxKind::*, *};
 
@@ -455,7 +455,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 			|| p.at(T![const])
 			|| (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1))))
 	{
-		var_decl(p, false);
+		variable_declaration_statement(p);
 	} else {
 		let m = p.start();
 

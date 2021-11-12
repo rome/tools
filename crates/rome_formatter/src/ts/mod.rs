@@ -1,4 +1,5 @@
 mod arg_list;
+mod auxiliary;
 mod class;
 mod condition;
 mod declarators;
