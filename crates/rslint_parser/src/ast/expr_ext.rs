@@ -21,7 +21,7 @@ impl JsConditionalExpression {
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 
-	pub fn alternative(&self) -> SyntaxResult<JsAnyExpression> {
+	pub fn alternate(&self) -> SyntaxResult<JsAnyExpression> {
 		support::children(self.syntax())
 			.nth(2)
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
