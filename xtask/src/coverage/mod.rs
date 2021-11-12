@@ -8,7 +8,7 @@ use std::any::Any;
 use std::path::PathBuf;
 use yastl::Pool;
 
-pub const TEST_JSON_PATH: &str = "xtask/src/test262_result.json";
+pub const TEST_JSON_PATH: &str = "xtask/src/base_results.json";
 
 pub fn run(query: Option<&str>, pool: Pool, json: bool) {
 	let files = get_test_files(query, &pool);

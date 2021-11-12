@@ -56,7 +56,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-          ref: main
+          # To restore once the main branch has the new command
+          # ref: main
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -67,7 +68,7 @@ jobs:
       - name: Run Test262 suite on main branch
         continue-on-error: true
         run: cargo xtask coverage --json
-      - name: Save test results
+      - name: Download PRs test results
         uses: actions/download-artifact@v2
         with:
           name: new_results

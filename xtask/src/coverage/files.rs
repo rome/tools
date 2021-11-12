@@ -162,7 +162,7 @@ pub struct TestResult {
 	pub fail: Option<FailReason>,
 	#[serde(rename = "o")]
 	pub outcome: Outcome,
-	#[serde(rename = "p")]
+	#[serde(rename = "h")]
 	pub path: PathBuf,
 	#[serde(skip)]
 	pub code: String,
@@ -186,7 +186,7 @@ pub enum Outcome {
 pub struct TestResults {
 	#[serde(rename = "s")]
 	pub summary: Summary,
-	#[serde(rename = "d")]
+	#[serde(rename = "p")]
 	pub details: Vec<TestResult>,
 }
 
@@ -194,11 +194,11 @@ pub struct TestResults {
 pub struct Summary {
 	#[serde(rename = "a")]
 	pub tests_ran: u32,
-	#[serde(rename = "p")]
+	#[serde(rename = "pa")]
 	pub passed: u32,
 	#[serde(rename = "f")]
 	pub failed: u32,
-	#[serde(rename = "p")]
+	#[serde(rename = "pc")]
 	pub panics: u32,
 	#[serde(rename = "c")]
 	pub coverage: f64,
