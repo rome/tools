@@ -22,7 +22,7 @@
 //     {
 //         if file.file_type().expect("No file type").is_dir() {
 //             let res = parse_group_mod(
-//                 &read_to_string(file.path().join("auxiliary")).expect("No mod file for group"),
+//                 &read_to_string(file.path().join("mod.rs")).expect("No mod file for group"),
 //             );
 //             let meta = res.expect("No group! declaration in group");
 

@@ -5,7 +5,7 @@ use SyntaxKind::*;
 
 impl BracketExpr {
 	pub fn object(&self) -> Option<JsAnyExpression> {
-		support::child(self.syntax())
+		support::node(self.syntax())
 	}
 
 	pub fn prop(&self) -> Option<JsAnyExpression> {
@@ -15,7 +15,7 @@ impl BracketExpr {
 
 impl CondExpr {
 	pub fn test(&self) -> Option<JsAnyExpression> {
-		support::child(self.syntax())
+		support::node(self.syntax())
 	}
 
 	pub fn cons(&self) -> Option<JsAnyExpression> {
@@ -29,7 +29,7 @@ impl CondExpr {
 
 impl LiteralProp {
 	pub fn key(&self) -> SyntaxResult<PropName> {
-		support::as_mandatory_node::<PropName>(self.syntax())
+		support::required_node::<PropName>(self.syntax())
 	}
 
 	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
@@ -144,7 +144,7 @@ impl BinExpr {
 	}
 
 	pub fn lhs(&self) -> Option<JsAnyExpression> {
-		support::child(self.syntax())
+		support::node(self.syntax())
 	}
 
 	pub fn rhs(&self) -> Option<JsAnyExpression> {

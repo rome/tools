@@ -747,7 +747,8 @@ fn variable_declaration(p: &mut Parser, no_semi: bool) -> CompletedMarker {
 			p.bump_any()
 		}
 		T![ident] if p.cur_src() == "let" => {
-			// let is a valid identifier name that's why the parser parses it as ident, remap it here
+			// let is a valid identifier name that's why the returns an ident for let.
+			// remap it here because we know from the context that this is the let keyword.
 			p.bump_remap(T![let]);
 			is_let = true;
 		}

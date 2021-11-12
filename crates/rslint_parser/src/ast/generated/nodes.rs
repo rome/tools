@@ -55,7 +55,7 @@ pub struct Ident {
 }
 impl Ident {
 	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, T![ident])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -64,7 +64,7 @@ pub struct JsScript {
 }
 impl JsScript {
 	pub fn interpreter_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![js_shebang])
+		support::token(&self.syntax, T![js_shebang])
 	}
 	pub fn statements(&self) -> AstNodeList<JsAnyStatement> {
 		support::node_list(&self.syntax, 0usize)
@@ -76,7 +76,7 @@ pub struct JsModule {
 }
 impl JsModule {
 	pub fn interpreter_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![js_shebang])
+		support::token(&self.syntax, T![js_shebang])
 	}
 	pub fn statements(&self) -> AstNodeList<JsAnyStatement> {
 		support::node_list(&self.syntax, 0usize)
@@ -88,13 +88,13 @@ pub struct JsBlockStatement {
 }
 impl JsBlockStatement {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn statements(&self) -> AstNodeList<JsAnyStatement> {
 		support::node_list(&self.syntax, 0usize)
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -103,7 +103,7 @@ pub struct JsEmptyStatement {
 }
 impl JsEmptyStatement {
 	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [;])
+		support::required_token(&self.syntax, T ! [;])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -112,11 +112,9 @@ pub struct JsExpressionStatement {
 }
 impl JsExpressionStatement {
 	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsIfStatement {
@@ -124,19 +122,19 @@ pub struct JsIfStatement {
 }
 impl JsIfStatement {
 	pub fn if_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![if])
+		support::required_token(&self.syntax, T![if])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 	pub fn consequence(&self) -> SyntaxResult<JsAnyStatement> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
-	pub fn else_clause(&self) -> Option<JsElseClause> { support::as_optional_node(&self.syntax) }
+	pub fn else_clause(&self) -> Option<JsElseClause> { support::node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsDoWhileStatement {
@@ -144,22 +142,20 @@ pub struct JsDoWhileStatement {
 }
 impl JsDoWhileStatement {
 	pub fn do_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![do])
+		support::required_token(&self.syntax, T![do])
 	}
-	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 	pub fn while_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![while])
+		support::required_token(&self.syntax, T![while])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsWhileStatement {
@@ -167,16 +163,16 @@ pub struct JsWhileStatement {
 }
 impl JsWhileStatement {
 	pub fn while_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![while])
+		support::required_token(&self.syntax, T![while])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmt {
@@ -184,18 +180,18 @@ pub struct ForStmt {
 }
 impl ForStmt {
 	pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![for])
+		support::required_token(&self.syntax, T![for])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn init(&self) -> Option<ForStmtInit> { support::as_optional_node(&self.syntax) }
-	pub fn test(&self) -> Option<ForStmtTest> { support::as_optional_node(&self.syntax) }
-	pub fn update(&self) -> Option<ForStmtUpdate> { support::as_optional_node(&self.syntax) }
+	pub fn init(&self) -> Option<ForStmtInit> { support::node(&self.syntax) }
+	pub fn test(&self) -> Option<ForStmtTest> { support::node(&self.syntax) }
+	pub fn update(&self) -> Option<ForStmtUpdate> { support::node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForInStmt {
@@ -203,22 +199,20 @@ pub struct ForInStmt {
 }
 impl ForInStmt {
 	pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![for])
+		support::required_token(&self.syntax, T![for])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn left(&self) -> SyntaxResult<ForStmtInit> { support::as_mandatory_node(&self.syntax) }
+	pub fn left(&self) -> SyntaxResult<ForStmtInit> { support::required_node(&self.syntax) }
 	pub fn in_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![in])
+		support::required_token(&self.syntax, T![in])
 	}
-	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForOfStmt {
@@ -226,22 +220,20 @@ pub struct ForOfStmt {
 }
 impl ForOfStmt {
 	pub fn for_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![for])
+		support::required_token(&self.syntax, T![for])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn left(&self) -> SyntaxResult<ForStmtInit> { support::as_mandatory_node(&self.syntax) }
+	pub fn left(&self) -> SyntaxResult<ForStmtInit> { support::required_node(&self.syntax) }
 	pub fn of_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![of])
+		support::required_token(&self.syntax, T![of])
 	}
-	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsContinueStatement {
@@ -249,14 +241,10 @@ pub struct JsContinueStatement {
 }
 impl JsContinueStatement {
 	pub fn continue_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![continue])
+		support::required_token(&self.syntax, T![continue])
 	}
-	pub fn label_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![ident])
-	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsBreakStatement {
@@ -264,14 +252,10 @@ pub struct JsBreakStatement {
 }
 impl JsBreakStatement {
 	pub fn break_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![break])
+		support::required_token(&self.syntax, T![break])
 	}
-	pub fn label_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![ident])
-	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsReturnStatement {
@@ -279,12 +263,10 @@ pub struct JsReturnStatement {
 }
 impl JsReturnStatement {
 	pub fn return_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![return])
+		support::required_token(&self.syntax, T![return])
 	}
-	pub fn argument(&self) -> Option<JsAnyExpression> { support::as_optional_node(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsWithStatement {
@@ -292,18 +274,16 @@ pub struct JsWithStatement {
 }
 impl JsWithStatement {
 	pub fn with_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![with])
+		support::required_token(&self.syntax, T![with])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsLabeledStatement {
@@ -311,12 +291,12 @@ pub struct JsLabeledStatement {
 }
 impl JsLabeledStatement {
 	pub fn label_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, T![ident])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsSwitchStatement {
@@ -324,25 +304,25 @@ pub struct JsSwitchStatement {
 }
 impl JsSwitchStatement {
 	pub fn switch_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![switch])
+		support::required_token(&self.syntax, T![switch])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
 	pub fn discriminant(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn cases(&self) -> AstNodeList<JsAnySwitchClause> {
 		support::node_list(&self.syntax, 0usize)
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -351,14 +331,10 @@ pub struct JsThrowStatement {
 }
 impl JsThrowStatement {
 	pub fn throw_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![throw])
+		support::required_token(&self.syntax, T![throw])
 	}
-	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsTryStatement {
@@ -366,13 +342,11 @@ pub struct JsTryStatement {
 }
 impl JsTryStatement {
 	pub fn try_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![try])
+		support::required_token(&self.syntax, T![try])
 	}
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 	pub fn catch_clause(&self) -> SyntaxResult<JsCatchClause> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -381,14 +355,12 @@ pub struct JsTryFinallyStatement {
 }
 impl JsTryFinallyStatement {
 	pub fn try_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![try])
+		support::required_token(&self.syntax, T![try])
 	}
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn catch_clause(&self) -> Option<JsCatchClause> { support::as_optional_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
+	pub fn catch_clause(&self) -> Option<JsCatchClause> { support::node(&self.syntax) }
 	pub fn finally_clause(&self) -> SyntaxResult<JsFinallyClause> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -397,11 +369,9 @@ pub struct JsDebuggerStatement {
 }
 impl JsDebuggerStatement {
 	pub fn debugger_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![debugger])
+		support::required_token(&self.syntax, T![debugger])
 	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ImportDecl {
@@ -409,24 +379,18 @@ pub struct ImportDecl {
 }
 impl ImportDecl {
 	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![import])
+		support::required_token(&self.syntax, T![import])
 	}
 	pub fn imports(&self) -> AstNodeList<ImportClause> { support::node_list(&self.syntax, 0usize) }
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
 	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![from])
+		support::required_token(&self.syntax, T![from])
 	}
 	pub fn asserted_object(&self) -> SyntaxResult<ObjectExpr> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
-	pub fn assert_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![assert])
-	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn assert_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![assert]) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportNamed {
@@ -434,22 +398,18 @@ pub struct ExportNamed {
 }
 impl ExportNamed {
 	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
+		support::required_token(&self.syntax, T![export])
 	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn from_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![from])
-	}
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
+	pub fn from_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![from]) }
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn specifiers(&self) -> AstSeparatedList<Specifier> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -458,15 +418,11 @@ pub struct ExportDefaultDecl {
 }
 impl ExportDefaultDecl {
 	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
+		support::required_token(&self.syntax, T![export])
 	}
-	pub fn default_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![default])
-	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn decl(&self) -> SyntaxResult<DefaultDecl> { support::as_mandatory_node(&self.syntax) }
+	pub fn default_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![default]) }
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
+	pub fn decl(&self) -> SyntaxResult<DefaultDecl> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportDefaultExpr {
@@ -474,15 +430,11 @@ pub struct ExportDefaultExpr {
 }
 impl ExportDefaultExpr {
 	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
+		support::required_token(&self.syntax, T![export])
 	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn default_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![default])
-	}
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
+	pub fn default_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![default]) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportWildcard {
@@ -490,20 +442,16 @@ pub struct ExportWildcard {
 }
 impl ExportWildcard {
 	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
+		support::required_token(&self.syntax, T![export])
 	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
 	pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [*])
+		support::required_token(&self.syntax, T ! [*])
 	}
-	pub fn as_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![as])
-	}
-	pub fn ident(&self) -> Option<Ident> { support::as_optional_node(&self.syntax) }
+	pub fn as_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![as]) }
+	pub fn ident(&self) -> Option<Ident> { support::node(&self.syntax) }
 	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![from])
+		support::required_token(&self.syntax, T![from])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -512,12 +460,10 @@ pub struct ExportDecl {
 }
 impl ExportDecl {
 	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
+		support::required_token(&self.syntax, T![export])
 	}
-	pub fn type_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![type])
-	}
-	pub fn decl(&self) -> SyntaxResult<Decl> { support::as_mandatory_node(&self.syntax) }
+	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
+	pub fn decl(&self) -> SyntaxResult<Decl> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsImportEqualsDecl {
@@ -525,19 +471,17 @@ pub struct TsImportEqualsDecl {
 }
 impl TsImportEqualsDecl {
 	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![import])
+		support::required_token(&self.syntax, T![import])
 	}
 	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
+		support::required_token(&self.syntax, T![export])
 	}
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
+		support::required_token(&self.syntax, T ! [=])
 	}
-	pub fn module(&self) -> SyntaxResult<TsModuleRef> { support::as_mandatory_node(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn module(&self) -> SyntaxResult<TsModuleRef> { support::required_node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsExportAssignment {
@@ -545,15 +489,13 @@ pub struct TsExportAssignment {
 }
 impl TsExportAssignment {
 	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
+		support::required_token(&self.syntax, T![export])
 	}
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
+		support::required_token(&self.syntax, T ! [=])
 	}
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNamespaceExportDecl {
@@ -561,18 +503,16 @@ pub struct TsNamespaceExportDecl {
 }
 impl TsNamespaceExportDecl {
 	pub fn export_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![export])
+		support::required_token(&self.syntax, T![export])
 	}
 	pub fn as_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![as])
+		support::required_token(&self.syntax, T![as])
 	}
 	pub fn namespace_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![namespace])
+		support::required_token(&self.syntax, T![namespace])
 	}
-	pub fn ident(&self) -> Option<Ident> { support::as_optional_node(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn ident(&self) -> Option<Ident> { support::node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsElseClause {
@@ -580,20 +520,18 @@ pub struct JsElseClause {
 }
 impl JsElseClause {
 	pub fn else_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![else])
+		support::required_token(&self.syntax, T![else])
 	}
-	pub fn alternate(&self) -> SyntaxResult<JsAnyStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn alternate(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmtInit {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ForStmtInit {
-	pub fn inner(&self) -> SyntaxResult<ForHead> { support::as_mandatory_node(&self.syntax) }
+	pub fn inner(&self) -> SyntaxResult<ForHead> { support::required_node(&self.syntax) }
 	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [;])
+		support::required_token(&self.syntax, T ! [;])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -601,9 +539,9 @@ pub struct ForStmtTest {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ForStmtTest {
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn semicolon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [;])
+		support::required_token(&self.syntax, T ! [;])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -611,15 +549,15 @@ pub struct ForStmtUpdate {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ForStmtUpdate {
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclaration {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsVariableDeclaration {
-	pub fn kind_token(&self) -> Option<SyntaxToken> {
-		support::find_token(&self.syntax, &[T![var], T![const], T![let]])
+	pub fn kind_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(&self.syntax, &[T![var], T![const], T![let]])
 	}
 	pub fn declarators(&self) -> AstSeparatedList<JsVariableDeclarator> {
 		support::separated_list(&self.syntax, 0usize)
@@ -631,11 +569,11 @@ pub struct JsCaseClause {
 }
 impl JsCaseClause {
 	pub fn case_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![case])
+		support::required_token(&self.syntax, T![case])
 	}
-	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
 	pub fn consequence(&self) -> AstNodeList<JsAnyStatement> {
 		support::node_list(&self.syntax, 0usize)
@@ -647,10 +585,10 @@ pub struct JsDefaultClause {
 }
 impl JsDefaultClause {
 	pub fn default_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![default])
+		support::required_token(&self.syntax, T![default])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
 	pub fn consequence(&self) -> AstNodeList<JsAnyStatement> {
 		support::node_list(&self.syntax, 0usize)
@@ -662,14 +600,10 @@ pub struct JsCatchClause {
 }
 impl JsCatchClause {
 	pub fn catch_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![catch])
+		support::required_token(&self.syntax, T![catch])
 	}
-	pub fn declaration(&self) -> Option<JsCatchDeclaration> {
-		support::as_optional_node(&self.syntax)
-	}
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn declaration(&self) -> Option<JsCatchDeclaration> { support::node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsFinallyClause {
@@ -677,11 +611,9 @@ pub struct JsFinallyClause {
 }
 impl JsFinallyClause {
 	pub fn finally_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![finally])
+		support::required_token(&self.syntax, T![finally])
 	}
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsCatchDeclaration {
@@ -689,11 +621,11 @@ pub struct JsCatchDeclaration {
 }
 impl JsCatchDeclaration {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn binding(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
+	pub fn binding(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -701,18 +633,14 @@ pub struct ArrowExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ArrowExpr {
-	pub fn async_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![async])
-	}
-	pub fn type_params(&self) -> Option<TsTypeParams> { support::as_optional_node(&self.syntax) }
-	pub fn params(&self) -> Option<ArrowExprParams> { support::as_optional_node(&self.syntax) }
+	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
+	pub fn params(&self) -> Option<ArrowExprParams> { support::node(&self.syntax) }
 	pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=>])
+		support::required_token(&self.syntax, T ! [=>])
 	}
-	pub fn colon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [:])
-	}
-	pub fn return_type(&self) -> Option<TsType> { support::as_optional_node(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Literal {
@@ -720,22 +648,22 @@ pub struct Literal {
 }
 impl Literal {
 	pub fn true_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![true])
+		support::required_token(&self.syntax, T![true])
 	}
 	pub fn false_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![false])
+		support::required_token(&self.syntax, T![false])
 	}
 	pub fn number_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![number])
+		support::required_token(&self.syntax, T![number])
 	}
 	pub fn regex_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![regex])
+		support::required_token(&self.syntax, T![regex])
 	}
 	pub fn float_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![float])
+		support::required_token(&self.syntax, T![float])
 	}
 	pub fn big_int_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![big_int])
+		support::required_token(&self.syntax, T![big_int])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -744,7 +672,7 @@ pub struct Template {
 }
 impl Template {
 	pub fn backtick_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['`'])
+		support::required_token(&self.syntax, T!['`'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -753,7 +681,7 @@ pub struct NameRef {
 }
 impl NameRef {
 	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, T![ident])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -762,7 +690,7 @@ pub struct ThisExpr {
 }
 impl ThisExpr {
 	pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![this])
+		support::required_token(&self.syntax, T![this])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -771,11 +699,11 @@ pub struct ArrayExpr {
 }
 impl ArrayExpr {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['['])
+		support::required_token(&self.syntax, T!['['])
 	}
 	pub fn elements(&self) -> AstNodeList<ExprOrSpread> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![']'])
+		support::required_token(&self.syntax, T![']'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -784,13 +712,13 @@ pub struct ObjectExpr {
 }
 impl ObjectExpr {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn props(&self) -> AstSeparatedList<ObjectProp> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -799,13 +727,11 @@ pub struct GroupingExpr {
 }
 impl GroupingExpr {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn inner(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn inner(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -813,14 +739,12 @@ pub struct BracketExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl BracketExpr {
-	pub fn super_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![super])
-	}
+	pub fn super_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![super]) }
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['['])
+		support::required_token(&self.syntax, T!['['])
 	}
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![']'])
+		support::required_token(&self.syntax, T![']'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -828,16 +752,12 @@ pub struct DotExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl DotExpr {
-	pub fn super_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![super])
-	}
-	pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn super_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![super]) }
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [.])
+		support::required_token(&self.syntax, T ! [.])
 	}
-	pub fn prop(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
+	pub fn prop(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NewExpr {
@@ -845,32 +765,28 @@ pub struct NewExpr {
 }
 impl NewExpr {
 	pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![new])
+		support::required_token(&self.syntax, T![new])
 	}
-	pub fn type_args(&self) -> Option<TsTypeArgs> { support::as_optional_node(&self.syntax) }
-	pub fn object(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::as_mandatory_node(&self.syntax) }
+	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct CallExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl CallExpr {
-	pub fn type_args(&self) -> Option<TsTypeArgs> { support::as_optional_node(&self.syntax) }
-	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::as_mandatory_node(&self.syntax) }
+	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
+	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct UnaryExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl UnaryExpr {
-	pub fn operator(&self) -> Option<SyntaxToken> {
-		support::find_token(
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(
 			&self.syntax,
 			&[
 				T![delete],
@@ -884,32 +800,26 @@ impl UnaryExpr {
 			],
 		)
 	}
-	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PreUpdateExpression {
 	pub(crate) syntax: SyntaxNode,
 }
 impl PreUpdateExpression {
-	pub fn operator(&self) -> Option<SyntaxToken> {
-		support::find_token(&self.syntax, &[T ! [++], T ! [--]])
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(&self.syntax, &[T ! [++], T ! [--]])
 	}
-	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PostUpdateExpression {
 	pub(crate) syntax: SyntaxNode,
 }
 impl PostUpdateExpression {
-	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn operator(&self) -> Option<SyntaxToken> {
-		support::find_token(&self.syntax, &[T ! [++], T ! [--]])
+	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(&self.syntax, &[T ! [++], T ! [--]])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -917,8 +827,8 @@ pub struct BinExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl BinExpr {
-	pub fn operator(&self) -> Option<SyntaxToken> {
-		support::find_token(
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(
 			&self.syntax,
 			&[
 				T ! [<],
@@ -956,10 +866,10 @@ pub struct CondExpr {
 }
 impl CondExpr {
 	pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [?])
+		support::required_token(&self.syntax, T ! [?])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -967,8 +877,8 @@ pub struct AssignExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl AssignExpr {
-	pub fn operator(&self) -> Option<SyntaxToken> {
-		support::find_token(
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(
 			&self.syntax,
 			&[
 				T ! [=],
@@ -998,32 +908,24 @@ impl SequenceExpr {
 	pub fn exprs(&self) -> AstSeparatedList<JsAnyExpression> {
 		support::separated_list(&self.syntax, 0usize)
 	}
-	pub fn bin_expr(&self) -> SyntaxResult<BinExpr> { support::as_mandatory_node(&self.syntax) }
+	pub fn bin_expr(&self) -> SyntaxResult<BinExpr> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct FnExpr {
 	pub(crate) syntax: SyntaxNode,
 }
 impl FnExpr {
-	pub fn async_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![async])
-	}
+	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
 	pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![function])
+		support::required_token(&self.syntax, T![function])
 	}
-	pub fn star_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [*])
-	}
-	pub fn name(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
-	pub fn type_params(&self) -> Option<TsTypeParams> { support::as_optional_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ArgList> { support::as_mandatory_node(&self.syntax) }
-	pub fn colon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [:])
-	}
-	pub fn return_type(&self) -> Option<TsType> { support::as_optional_node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClassExpr {
@@ -1031,18 +933,16 @@ pub struct ClassExpr {
 }
 impl ClassExpr {
 	pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![class])
+		support::required_token(&self.syntax, T![class])
 	}
-	pub fn name(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
-	pub fn type_params(&self) -> Option<TsTypeParams> { support::as_optional_node(&self.syntax) }
-	pub fn parent(&self) -> Option<JsAnyExpression> { support::as_optional_node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
+	pub fn parent(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
 	pub fn implements_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![implements])
+		support::token(&self.syntax, T![implements])
 	}
-	pub fn implements(&self) -> Option<TsExprWithTypeArgs> {
-		support::as_optional_node(&self.syntax)
-	}
-	pub fn body(&self) -> SyntaxResult<ClassBody> { support::as_mandatory_node(&self.syntax) }
+	pub fn implements(&self) -> Option<TsExprWithTypeArgs> { support::node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<ClassBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -1050,13 +950,13 @@ pub struct NewTarget {
 }
 impl NewTarget {
 	pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![new])
+		support::required_token(&self.syntax, T![new])
 	}
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [.])
+		support::required_token(&self.syntax, T ! [.])
 	}
 	pub fn target_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![target])
+		support::required_token(&self.syntax, T![target])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1065,10 +965,10 @@ pub struct ImportMeta {
 }
 impl ImportMeta {
 	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![import])
+		support::required_token(&self.syntax, T![import])
 	}
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [.])
+		support::required_token(&self.syntax, T ! [.])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1077,9 +977,9 @@ pub struct SuperCall {
 }
 impl SuperCall {
 	pub fn super_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![super])
+		support::required_token(&self.syntax, T![super])
 	}
-	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::as_mandatory_node(&self.syntax) }
+	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ImportCall {
@@ -1087,16 +987,14 @@ pub struct ImportCall {
 }
 impl ImportCall {
 	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![import])
+		support::required_token(&self.syntax, T![import])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1105,14 +1003,10 @@ pub struct YieldExpr {
 }
 impl YieldExpr {
 	pub fn yield_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![yield])
+		support::required_token(&self.syntax, T![yield])
 	}
-	pub fn star_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [*])
-	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct AwaitExpr {
@@ -1120,29 +1014,29 @@ pub struct AwaitExpr {
 }
 impl AwaitExpr {
 	pub fn await_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![await])
+		support::required_token(&self.syntax, T![await])
 	}
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PrivatePropAccess {
 	pub(crate) syntax: SyntaxNode,
 }
 impl PrivatePropAccess {
-	pub fn lhs(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn lhs(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [.])
+		support::required_token(&self.syntax, T ! [.])
 	}
-	pub fn rhs(&self) -> SyntaxResult<PrivateName> { support::as_mandatory_node(&self.syntax) }
+	pub fn rhs(&self) -> SyntaxResult<PrivateName> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNonNull {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsNonNull {
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![!])
+		support::required_token(&self.syntax, T![!])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1150,14 +1044,14 @@ pub struct TsAssertion {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsAssertion {
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 	pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [<])
+		support::required_token(&self.syntax, T ! [<])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [>])
+		support::required_token(&self.syntax, T ! [>])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1165,16 +1059,16 @@ pub struct TsConstAssertion {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsConstAssertion {
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 	pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [<])
+		support::required_token(&self.syntax, T ! [<])
 	}
 	pub fn const_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![const])
+		support::required_token(&self.syntax, T![const])
 	}
 	pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [>])
+		support::required_token(&self.syntax, T ! [>])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1183,7 +1077,7 @@ pub struct Name {
 }
 impl Name {
 	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![ident])
+		support::required_token(&self.syntax, T![ident])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1192,11 +1086,11 @@ pub struct TsTypeArgs {
 }
 impl TsTypeArgs {
 	pub fn l_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [<])
+		support::required_token(&self.syntax, T ! [<])
 	}
-	pub fn args(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn args(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [>])
+		support::required_token(&self.syntax, T ! [>])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1205,13 +1099,13 @@ pub struct ArgList {
 }
 impl ArgList {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
 	pub fn args(&self) -> AstSeparatedList<JsAnyExpression> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1219,13 +1113,9 @@ pub struct TsTypeParams {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeParams {
-	pub fn l_angle_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [<])
-	}
-	pub fn params(&self) -> SyntaxResult<TsTypeParam> { support::as_mandatory_node(&self.syntax) }
-	pub fn r_angle_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [>])
-	}
+	pub fn l_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [<]) }
+	pub fn params(&self) -> SyntaxResult<TsTypeParam> { support::required_node(&self.syntax) }
+	pub fn r_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [>]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ParameterList {
@@ -1233,13 +1123,13 @@ pub struct ParameterList {
 }
 impl ParameterList {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
 	pub fn parameters(&self) -> AstSeparatedList<Pattern> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1247,10 +1137,8 @@ pub struct TsExprWithTypeArgs {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsExprWithTypeArgs {
-	pub fn item(&self) -> SyntaxResult<TsEntityName> { support::as_mandatory_node(&self.syntax) }
-	pub fn type_params(&self) -> SyntaxResult<TsTypeArgs> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn item(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax) }
+	pub fn type_params(&self) -> SyntaxResult<TsTypeArgs> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClassBody {
@@ -1258,11 +1146,11 @@ pub struct ClassBody {
 }
 impl ClassBody {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn elements(&self) -> AstNodeList<ClassElement> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1270,87 +1158,55 @@ pub struct Method {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Method {
-	pub fn static_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![static])
-	}
-	pub fn async_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![async])
-	}
-	pub fn star_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [*])
-	}
-	pub fn name(&self) -> SyntaxResult<PropName> { support::as_mandatory_node(&self.syntax) }
-	pub fn type_params(&self) -> Option<TsTypeParams> { support::as_optional_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn colon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [:])
-	}
-	pub fn return_type(&self) -> Option<TsType> { support::as_optional_node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
+	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn name(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PrivateProp {
 	pub(crate) syntax: SyntaxNode,
 }
 impl PrivateProp {
-	pub fn class_prop(&self) -> SyntaxResult<ClassProp> { support::as_mandatory_node(&self.syntax) }
+	pub fn class_prop(&self) -> SyntaxResult<ClassProp> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClassProp {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ClassProp {
-	pub fn declare_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![declare])
-	}
+	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
 	pub fn abstract_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![abstract])
+		support::token(&self.syntax, T![abstract])
 	}
-	pub fn static_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![static])
-	}
-	pub fn accessibility(&self) -> Option<TsAccessibility> {
-		support::as_optional_node(&self.syntax)
-	}
-	pub fn hash_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [#])
-	}
-	pub fn key(&self) -> SyntaxResult<PropName> { support::as_mandatory_node(&self.syntax) }
+	pub fn static_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![static]) }
+	pub fn accessibility(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn hash_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [#]) }
+	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
 	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [?])
+		support::token(&self.syntax, T ! [?])
 	}
-	pub fn excl_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![!])
-	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
-	pub fn eq_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [=])
-	}
-	pub fn value(&self) -> Option<JsAnyExpression> { support::as_optional_node(&self.syntax) }
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
+	pub fn eq_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [=]) }
+	pub fn value(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Constructor {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Constructor {
-	pub fn accessibility(&self) -> Option<TsAccessibility> {
-		support::as_optional_node(&self.syntax)
-	}
-	pub fn name(&self) -> SyntaxResult<PropName> { support::as_mandatory_node(&self.syntax) }
-	pub fn type_params(&self) -> Option<TsTypeParams> { support::as_optional_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn accessibility(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignature {
@@ -1358,18 +1214,18 @@ pub struct TsIndexSignature {
 }
 impl TsIndexSignature {
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![readonly])
+		support::token(&self.syntax, T![readonly])
 	}
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['['])
+		support::required_token(&self.syntax, T!['['])
 	}
-	pub fn pat(&self) -> SyntaxResult<SinglePattern> { support::as_mandatory_node(&self.syntax) }
+	pub fn pat(&self) -> SyntaxResult<SinglePattern> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![']'])
+		support::required_token(&self.syntax, T![']'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1378,15 +1234,11 @@ pub struct Getter {
 }
 impl Getter {
 	pub fn get_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![get])
+		support::required_token(&self.syntax, T![get])
 	}
-	pub fn key(&self) -> SyntaxResult<PropName> { support::as_mandatory_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Setter {
@@ -1394,15 +1246,11 @@ pub struct Setter {
 }
 impl Setter {
 	pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![set])
+		support::required_token(&self.syntax, T![set])
 	}
-	pub fn key(&self) -> SyntaxResult<PropName> { support::as_mandatory_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsAccessibility {
@@ -1410,10 +1258,10 @@ pub struct TsAccessibility {
 }
 impl TsAccessibility {
 	pub fn private_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![private])
+		support::required_token(&self.syntax, T![private])
 	}
 	pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![readonly])
+		support::required_token(&self.syntax, T![readonly])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1422,13 +1270,13 @@ pub struct ConstructorParameters {
 }
 impl ConstructorParameters {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
 	pub fn parameters(&self) -> AstSeparatedList<ConstructorParamOrPat> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1437,9 +1285,9 @@ pub struct TsConstructorParam {
 }
 impl TsConstructorParam {
 	pub fn readonly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![readonly])
+		support::required_token(&self.syntax, T![readonly])
 	}
-	pub fn pat(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
+	pub fn pat(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SpreadElement {
@@ -1447,11 +1295,9 @@ pub struct SpreadElement {
 }
 impl SpreadElement {
 	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [...])
+		support::required_token(&self.syntax, T ! [...])
 	}
-	pub fn element(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn element(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Null {
@@ -1459,7 +1305,7 @@ pub struct Null {
 }
 impl Null {
 	pub fn null_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![null])
+		support::required_token(&self.syntax, T![null])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1468,7 +1314,7 @@ pub struct Undefined {
 }
 impl Undefined {
 	pub fn undefined_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![undefined])
+		support::required_token(&self.syntax, T![undefined])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1476,17 +1322,13 @@ pub struct SinglePattern {
 	pub(crate) syntax: SyntaxNode,
 }
 impl SinglePattern {
-	pub fn name(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [?])
+		support::token(&self.syntax, T ! [?])
 	}
-	pub fn excl_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![!])
-	}
-	pub fn colon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [:])
-	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct RestPattern {
@@ -1494,26 +1336,22 @@ pub struct RestPattern {
 }
 impl RestPattern {
 	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [...])
+		support::required_token(&self.syntax, T ! [...])
 	}
-	pub fn pat(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
+	pub fn pat(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct AssignPattern {
 	pub(crate) syntax: SyntaxNode,
 }
 impl AssignPattern {
-	pub fn key(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
-	pub fn colon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [:])
-	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn key(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
+		support::required_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ObjectPattern {
@@ -1521,13 +1359,13 @@ pub struct ObjectPattern {
 }
 impl ObjectPattern {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn elements(&self) -> AstSeparatedList<ObjectPatternProp> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1536,35 +1374,35 @@ pub struct ArrayPattern {
 }
 impl ArrayPattern {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['['])
+		support::required_token(&self.syntax, T!['['])
 	}
 	pub fn elements(&self) -> AstNodeList<Pattern> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![']'])
+		support::required_token(&self.syntax, T![']'])
 	}
 	pub fn excl_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![!])
+		support::required_token(&self.syntax, T![!])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExprPattern {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ExprPattern {
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct KeyValuePattern {
 	pub(crate) syntax: SyntaxNode,
 }
 impl KeyValuePattern {
-	pub fn key(&self) -> SyntaxResult<PropName> { support::as_mandatory_node(&self.syntax) }
+	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1573,7 +1411,7 @@ pub struct LiteralProp {
 }
 impl LiteralProp {
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1582,31 +1420,27 @@ pub struct SpreadProp {
 }
 impl SpreadProp {
 	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [...])
+		support::required_token(&self.syntax, T ! [...])
 	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct InitializedProp {
 	pub(crate) syntax: SyntaxNode,
 }
 impl InitializedProp {
-	pub fn key(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
+	pub fn key(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
+		support::required_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct IdentProp {
 	pub(crate) syntax: SyntaxNode,
 }
 impl IdentProp {
-	pub fn name(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ComputedPropertyName {
@@ -1614,11 +1448,11 @@ pub struct ComputedPropertyName {
 }
 impl ComputedPropertyName {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['['])
+		support::required_token(&self.syntax, T!['['])
 	}
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![']'])
+		support::required_token(&self.syntax, T![']'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1627,9 +1461,9 @@ pub struct PrivateName {
 }
 impl PrivateName {
 	pub fn hash_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [#])
+		support::required_token(&self.syntax, T ! [#])
 	}
-	pub fn name(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Condition {
@@ -1637,13 +1471,13 @@ pub struct Condition {
 }
 impl Condition {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
 	pub fn condition(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1651,29 +1485,17 @@ pub struct FnDecl {
 	pub(crate) syntax: SyntaxNode,
 }
 impl FnDecl {
-	pub fn async_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![async])
-	}
+	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
 	pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![function])
+		support::required_token(&self.syntax, T![function])
 	}
-	pub fn star_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [*])
-	}
-	pub fn name(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
-	pub fn type_parameters(&self) -> Option<TsTypeParams> {
-		support::as_optional_node(&self.syntax)
-	}
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn colon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [:])
-	}
-	pub fn return_type(&self) -> Option<TsType> { support::as_optional_node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<JsBlockStatement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
+	pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClassDecl {
@@ -1681,14 +1503,14 @@ pub struct ClassDecl {
 }
 impl ClassDecl {
 	pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![class])
+		support::required_token(&self.syntax, T![class])
 	}
-	pub fn name(&self) -> SyntaxResult<Name> { support::as_mandatory_node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 	pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![extends])
+		support::required_token(&self.syntax, T![extends])
 	}
-	pub fn parent(&self) -> SyntaxResult<NameRef> { support::as_mandatory_node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<ClassBody> { support::as_mandatory_node(&self.syntax) }
+	pub fn parent(&self) -> SyntaxResult<NameRef> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<ClassBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarationStatement {
@@ -1696,30 +1518,26 @@ pub struct JsVariableDeclarationStatement {
 }
 impl JsVariableDeclarationStatement {
 	pub fn declaration(&self) -> SyntaxResult<JsVariableDeclaration> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsEnum {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsEnum {
-	pub fn const_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![const])
-	}
+	pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![const]) }
 	pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![enum])
+		support::required_token(&self.syntax, T![enum])
 	}
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn members(&self) -> AstNodeList<TsEnumMember> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1728,15 +1546,13 @@ pub struct TsTypeAliasDecl {
 }
 impl TsTypeAliasDecl {
 	pub fn type_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![type])
+		support::required_token(&self.syntax, T![type])
 	}
-	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
+		support::required_token(&self.syntax, T ! [=])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNamespaceDecl {
@@ -1744,13 +1560,11 @@ pub struct TsNamespaceDecl {
 }
 impl TsNamespaceDecl {
 	pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![declare])
+		support::required_token(&self.syntax, T![declare])
 	}
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
-	pub fn dot_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [.])
-	}
-	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
+	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsModuleDecl {
@@ -1758,46 +1572,34 @@ pub struct TsModuleDecl {
 }
 impl TsModuleDecl {
 	pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![declare])
+		support::required_token(&self.syntax, T![declare])
 	}
-	pub fn global_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![global])
-	}
+	pub fn global_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![global]) }
 	pub fn module_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![module])
+		support::required_token(&self.syntax, T![module])
 	}
-	pub fn dot_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [.])
-	}
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::as_mandatory_node(&self.syntax) }
+	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsInterfaceDecl {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsInterfaceDecl {
-	pub fn declare_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![declare])
-	}
+	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
 	pub fn interface_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![interface])
+		support::required_token(&self.syntax, T![interface])
 	}
-	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn extends_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![extends])
-	}
-	pub fn extends(&self) -> Option<TsExprWithTypeArgs> { support::as_optional_node(&self.syntax) }
+	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
+	pub fn extends_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![extends]) }
+	pub fn extends(&self) -> Option<TsExprWithTypeArgs> { support::node(&self.syntax) }
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
-	pub fn members(&self) -> SyntaxResult<TsTypeElement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn members(&self) -> SyntaxResult<TsTypeElement> { support::required_node(&self.syntax) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1805,8 +1607,8 @@ pub struct JsVariableDeclarator {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsVariableDeclarator {
-	pub fn id(&self) -> SyntaxResult<Pattern> { support::as_mandatory_node(&self.syntax) }
-	pub fn init(&self) -> Option<JsEqualValueClause> { support::as_optional_node(&self.syntax) }
+	pub fn id(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsEqualValueClause {
@@ -1814,10 +1616,10 @@ pub struct JsEqualValueClause {
 }
 impl JsEqualValueClause {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
+		support::required_token(&self.syntax, T ! [=])
 	}
 	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1826,12 +1628,10 @@ pub struct WildcardImport {
 }
 impl WildcardImport {
 	pub fn star_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [*])
+		support::required_token(&self.syntax, T ! [*])
 	}
-	pub fn as_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![as])
-	}
-	pub fn ident(&self) -> Option<Ident> { support::as_optional_node(&self.syntax) }
+	pub fn as_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![as]) }
+	pub fn ident(&self) -> Option<Ident> { support::node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NamedImports {
@@ -1839,13 +1639,13 @@ pub struct NamedImports {
 }
 impl NamedImports {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn specifiers(&self) -> AstSeparatedList<Specifier> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1858,7 +1658,7 @@ pub struct Specifier {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Specifier {
-	pub fn name(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
@@ -1866,13 +1666,13 @@ pub struct TsExternalModuleRef {
 }
 impl TsExternalModuleRef {
 	pub fn require_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![require])
+		support::required_token(&self.syntax, T![require])
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1881,7 +1681,7 @@ pub struct TsAny {
 }
 impl TsAny {
 	pub fn any_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![any])
+		support::required_token(&self.syntax, T![any])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1890,7 +1690,7 @@ pub struct TsUnknown {
 }
 impl TsUnknown {
 	pub fn unknown_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![unknown])
+		support::required_token(&self.syntax, T![unknown])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1898,42 +1698,42 @@ pub struct TsNumber {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsNumber {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsObject {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsObject {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsBoolean {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsBoolean {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsBigint {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsBigint {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsString {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsString {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsSymbol {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsSymbol {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsVoid {
@@ -1941,7 +1741,7 @@ pub struct TsVoid {
 }
 impl TsVoid {
 	pub fn void_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![void])
+		support::required_token(&self.syntax, T![void])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1950,7 +1750,7 @@ pub struct TsUndefined {
 }
 impl TsUndefined {
 	pub fn undefined_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![undefined])
+		support::required_token(&self.syntax, T![undefined])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1959,7 +1759,7 @@ pub struct TsNull {
 }
 impl TsNull {
 	pub fn null_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![null])
+		support::required_token(&self.syntax, T![null])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1968,7 +1768,7 @@ pub struct TsNever {
 }
 impl TsNever {
 	pub fn never_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![never])
+		support::required_token(&self.syntax, T![never])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1977,7 +1777,7 @@ pub struct TsThis {
 }
 impl TsThis {
 	pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![this])
+		support::required_token(&self.syntax, T![this])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1985,15 +1785,15 @@ pub struct TsLiteral {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsLiteral {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsPredicate {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsPredicate {
-	pub fn lhs(&self) -> SyntaxResult<TsThisOrMore> { support::as_mandatory_node(&self.syntax) }
-	pub fn rhs(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn lhs(&self) -> SyntaxResult<TsThisOrMore> { support::required_node(&self.syntax) }
+	pub fn rhs(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTuple {
@@ -2001,13 +1801,11 @@ pub struct TsTuple {
 }
 impl TsTuple {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['['])
+		support::required_token(&self.syntax, T!['['])
 	}
-	pub fn elements(&self) -> SyntaxResult<TsTupleElement> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn elements(&self) -> SyntaxResult<TsTupleElement> { support::required_node(&self.syntax) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![']'])
+		support::required_token(&self.syntax, T![']'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2016,11 +1814,11 @@ pub struct TsParen {
 }
 impl TsParen {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2028,8 +1826,8 @@ pub struct TsTypeRef {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeRef {
-	pub fn name(&self) -> SyntaxResult<TsEntityName> { support::as_mandatory_node(&self.syntax) }
-	pub fn type_args(&self) -> SyntaxResult<TsTypeArgs> { support::as_mandatory_node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax) }
+	pub fn type_args(&self) -> SyntaxResult<TsTypeArgs> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplate {
@@ -2037,7 +1835,7 @@ pub struct TsTemplate {
 }
 impl TsTemplate {
 	pub fn elements(&self) -> SyntaxResult<TsTemplateElement> {
-		support::as_mandatory_node(&self.syntax)
+		support::required_node(&self.syntax)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2046,33 +1844,23 @@ pub struct TsMappedType {
 }
 impl TsMappedType {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
-	pub fn readonly_modifier(&self) -> Option<TsMappedTypeReadonly> {
-		support::as_optional_node(&self.syntax)
-	}
-	pub fn minus_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [-])
-	}
-	pub fn plus_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [+])
-	}
+	pub fn readonly_modifier(&self) -> Option<TsMappedTypeReadonly> { support::node(&self.syntax) }
+	pub fn minus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [-]) }
+	pub fn plus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [+]) }
 	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [?])
+		support::token(&self.syntax, T ! [?])
 	}
-	pub fn param(&self) -> SyntaxResult<TsMappedTypeParam> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn param(&self) -> SyntaxResult<TsMappedTypeParam> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [;])
-	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsImport {
@@ -2080,20 +1868,16 @@ pub struct TsImport {
 }
 impl TsImport {
 	pub fn import_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![import])
+		support::required_token(&self.syntax, T![import])
 	}
-	pub fn type_args(&self) -> SyntaxResult<TsTypeArgs> { support::as_mandatory_node(&self.syntax) }
-	pub fn dot_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [.])
-	}
+	pub fn type_args(&self) -> SyntaxResult<TsTypeArgs> { support::required_node(&self.syntax) }
+	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['('])
+		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn qualifier(&self) -> SyntaxResult<TsEntityName> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn qualifier(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax) }
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![')'])
+		support::required_token(&self.syntax, T![')'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2102,11 +1886,11 @@ pub struct TsArray {
 }
 impl TsArray {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['['])
+		support::required_token(&self.syntax, T!['['])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![']'])
+		support::required_token(&self.syntax, T![']'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2115,11 +1899,11 @@ pub struct TsIndexedArray {
 }
 impl TsIndexedArray {
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['['])
+		support::required_token(&self.syntax, T!['['])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![']'])
+		support::required_token(&self.syntax, T![']'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2127,7 +1911,7 @@ pub struct TsTypeOperator {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeOperator {
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsIntersection {
@@ -2148,11 +1932,11 @@ pub struct TsFnType {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsFnType {
-	pub fn params(&self) -> SyntaxResult<ParameterList> { support::as_mandatory_node(&self.syntax) }
+	pub fn params(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
 	pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=>])
+		support::required_token(&self.syntax, T ! [=>])
 	}
-	pub fn return_type(&self) -> Option<TsType> { support::as_optional_node(&self.syntax) }
+	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorType {
@@ -2160,27 +1944,27 @@ pub struct TsConstructorType {
 }
 impl TsConstructorType {
 	pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![new])
+		support::required_token(&self.syntax, T![new])
 	}
-	pub fn params(&self) -> SyntaxResult<ParameterList> { support::as_mandatory_node(&self.syntax) }
+	pub fn params(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn return_type(&self) -> Option<TsType> { support::as_optional_node(&self.syntax) }
+	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConditionalType {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsConditionalType {
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [?])
+		support::required_token(&self.syntax, T ! [?])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn extends(&self) -> SyntaxResult<TsExtends> { support::as_mandatory_node(&self.syntax) }
+	pub fn extends(&self) -> SyntaxResult<TsExtends> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsObjectType {
@@ -2188,11 +1972,11 @@ pub struct TsObjectType {
 }
 impl TsObjectType {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
 	pub fn members(&self) -> AstNodeList<TsTypeElement> { support::node_list(&self.syntax, 0usize) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2201,48 +1985,44 @@ pub struct TsInfer {
 }
 impl TsInfer {
 	pub fn infer_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![infer])
+		support::required_token(&self.syntax, T![infer])
 	}
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTupleElement {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTupleElement {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
 	pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [?])
+		support::required_token(&self.syntax, T ! [?])
 	}
-	pub fn dotdotdot_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [...])
-	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn dotdotdot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [...]) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsEnumMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsEnumMember {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
+		support::required_token(&self.syntax, T ! [=])
 	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplateElement {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTemplateElement {
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2250,14 +2030,10 @@ pub struct TsMappedTypeReadonly {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsMappedTypeReadonly {
-	pub fn minus_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [-])
-	}
-	pub fn plus_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [+])
-	}
+	pub fn minus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [-]) }
+	pub fn plus_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [+]) }
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![readonly])
+		support::token(&self.syntax, T![readonly])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2265,22 +2041,18 @@ pub struct TsMappedTypeParam {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsMappedTypeParam {
-	pub fn l_brack_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T!['['])
-	}
-	pub fn name(&self) -> Option<TsTypeName> { support::as_optional_node(&self.syntax) }
-	pub fn r_brack_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![']'])
-	}
-	pub fn ident(&self) -> Option<Ident> { support::as_optional_node(&self.syntax) }
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn l_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T!['[']) }
+	pub fn name(&self) -> Option<TsTypeName> { support::node(&self.syntax) }
+	pub fn r_brack_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![']']) }
+	pub fn ident(&self) -> Option<Ident> { support::node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeName {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeName {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsExtends {
@@ -2288,9 +2060,9 @@ pub struct TsExtends {
 }
 impl TsExtends {
 	pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![extends])
+		support::required_token(&self.syntax, T![extends])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsModuleBlock {
@@ -2298,11 +2070,11 @@ pub struct TsModuleBlock {
 }
 impl TsModuleBlock {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['{'])
+		support::required_token(&self.syntax, T!['{'])
 	}
-	pub fn items(&self) -> SyntaxResult<JsAnyStatement> { support::as_mandatory_node(&self.syntax) }
+	pub fn items(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T!['}'])
+		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2310,11 +2082,9 @@ pub struct TsTypeParam {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeParam {
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::as_mandatory_node(&self.syntax) }
-	pub fn constraint(&self) -> SyntaxResult<TsConstraint> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn default(&self) -> SyntaxResult<TsDefault> { support::as_mandatory_node(&self.syntax) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+	pub fn constraint(&self) -> SyntaxResult<TsConstraint> { support::required_node(&self.syntax) }
+	pub fn default(&self) -> SyntaxResult<TsDefault> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConstraint {
@@ -2322,9 +2092,9 @@ pub struct TsConstraint {
 }
 impl TsConstraint {
 	pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![extends])
+		support::required_token(&self.syntax, T![extends])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsDefault {
@@ -2332,25 +2102,21 @@ pub struct TsDefault {
 }
 impl TsDefault {
 	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [=])
+		support::required_token(&self.syntax, T ! [=])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsCallSignatureDecl {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsCallSignatureDecl {
-	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn return_type(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn return_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructSignatureDecl {
@@ -2358,18 +2124,12 @@ pub struct TsConstructSignatureDecl {
 }
 impl TsConstructSignatureDecl {
 	pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T![new])
+		support::required_token(&self.syntax, T![new])
 	}
-	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn colon_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [:])
-	}
-	pub fn return_type(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertySignature {
@@ -2377,16 +2137,16 @@ pub struct TsPropertySignature {
 }
 impl TsPropertySignature {
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![readonly])
+		support::token(&self.syntax, T![readonly])
 	}
-	pub fn prop(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
+	pub fn prop(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [?])
+		support::required_token(&self.syntax, T ! [?])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsMethodSignature {
@@ -2394,33 +2154,29 @@ pub struct TsMethodSignature {
 }
 impl TsMethodSignature {
 	pub fn readonly_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T![readonly])
+		support::token(&self.syntax, T![readonly])
 	}
-	pub fn key(&self) -> SyntaxResult<JsAnyExpression> { support::as_mandatory_node(&self.syntax) }
-	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> {
-		support::as_mandatory_node(&self.syntax)
-	}
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> {
-		support::as_mandatory_node(&self.syntax)
-	}
+	pub fn key(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
 	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
-		support::as_optional_token(&self.syntax, T ! [?])
+		support::token(&self.syntax, T ! [?])
 	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [:])
+		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn return_type(&self) -> SyntaxResult<TsType> { support::as_mandatory_node(&self.syntax) }
+	pub fn return_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsQualifiedPath {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsQualifiedPath {
-	pub fn lhs(&self) -> SyntaxResult<TsEntityName> { support::as_mandatory_node(&self.syntax) }
+	pub fn lhs(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax) }
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::as_mandatory_token(&self.syntax, T ! [.])
+		support::required_token(&self.syntax, T ! [.])
 	}
-	pub fn rhs(&self) -> SyntaxResult<TsTypeName> { support::as_mandatory_node(&self.syntax) }
+	pub fn rhs(&self) -> SyntaxResult<TsTypeName> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyStatement {

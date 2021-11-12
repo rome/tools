@@ -54,10 +54,7 @@ impl JsVariableDeclaration {
 	}
 
 	pub fn variable_kind(&self) -> SyntaxResult<JsVariableKind> {
-		let token_kind = self
-			.kind_token()
-			.map(|t| t.kind())
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))?;
+		let token_kind = self.kind_token().map(|t| t.kind())?;
 
 		Ok(match token_kind {
 			T![const] => JsVariableKind::Const,

@@ -3,9 +3,8 @@ use crate::{
 	Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
-	AstNode, JsVariableDeclaration, JsVariableDeclarationStatement, JsVariableDeclarator,
+	JsVariableDeclaration, JsVariableDeclarationStatement, JsVariableDeclarator,
 };
-use rslint_parser::SyntaxError;
 
 impl ToFormatElement for JsVariableDeclarationStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -25,11 +24,7 @@ impl ToFormatElement for JsVariableDeclaration {
 		}
 
 		Ok(format_elements![
-			formatter.format_token(
-				&self
-					.kind_token()
-					.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))?
-			)?,
+			formatter.format_token(&self.kind_token()?)?,
 			space_token(),
 			join_elements(token(","), declarators),
 		])
