@@ -158,7 +158,7 @@ impl GreenTokenData {
 		unsafe { std::str::from_utf8_unchecked(self.data.slice()) }
 	}
 
-	fn leading_trailing_total_len(&self) -> (TextSize, TextSize, TextSize) {
+	pub(crate) fn leading_trailing_total_len(&self) -> (TextSize, TextSize, TextSize) {
 		let leading_len = self.data.header.leading.text_len();
 		let trailing_len = self.data.header.trailing.text_len();
 		let total_len = self.data.slice().len() as u32;

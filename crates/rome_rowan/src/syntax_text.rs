@@ -17,6 +17,10 @@ impl SyntaxText {
 		SyntaxText { node, range }
 	}
 
+	pub(crate) fn with_range(node: SyntaxNode, range: TextRange) -> SyntaxText {
+		SyntaxText { node, range }
+	}
+
 	pub fn len(&self) -> TextSize {
 		self.range.len()
 	}
