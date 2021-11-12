@@ -242,9 +242,9 @@ JsAnyExpression =
 	| JsConditionalExpression
 	| JsLogicalExpression
 	| JsParenthesizedExpression
+	| JsReferenceIdentifierExpression
 	| ArrowExpr
 	| Template
-	| NameRef
 	| ThisExpr
 	| ObjectExpr
 	| BracketExpr
@@ -622,7 +622,7 @@ Name = 'ident'
 
 Condition = '(' condition:JsAnyExpression ')'
 
-NameRef = 'ident'
+JsReferenceIdentifierExpression = name: 'ident'
 
 ///////////////
 // DECLARATIONS
@@ -663,7 +663,7 @@ JsVariableDeclarator =
     init: JsEqualValueClause?
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
-ClassDecl  = 'class' name: Name ('extends' parent:NameRef)? body:ClassBody
+ClassDecl  = 'class' name: Name ('extends' parent: JsAnyExpression)? body:ClassBody
 
 
 ///////////////

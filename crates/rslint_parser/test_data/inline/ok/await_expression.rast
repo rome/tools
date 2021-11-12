@@ -21,7 +21,7 @@ JS_MODULE@0..116
               AWAIT_KW@25..30 "await"
               WHITESPACE@30..31 " "
               CALL_EXPR@31..38
-                NAME_REF@31..36
+                JS_REFERENCE_IDENTIFIER_EXPRESSION@31..36
                   IDENT@31..36 "inner"
                 ARG_LIST@36..38
                   L_PAREN@36..37 "("
@@ -37,7 +37,7 @@ JS_MODULE@0..116
                 JS_PARENTHESIZED_EXPRESSION@48..57
                   L_PAREN@48..49 "("
                   CALL_EXPR@49..56
-                    NAME_REF@49..54
+                    JS_REFERENCE_IDENTIFIER_EXPRESSION@49..54
                       IDENT@49..54 "inner"
                     ARG_LIST@54..56
                       L_PAREN@54..55 "("
@@ -51,7 +51,7 @@ JS_MODULE@0..116
                 AWAIT_KW@60..65 "await"
                 WHITESPACE@65..66 " "
                 CALL_EXPR@66..73
-                  NAME_REF@66..71
+                  JS_REFERENCE_IDENTIFIER_EXPRESSION@66..71
                     IDENT@66..71 "inner"
                   ARG_LIST@71..73
                     L_PAREN@71..72 "("

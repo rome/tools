@@ -33,7 +33,7 @@ JS_MODULE@0..31
                     WHITESPACE@22..23 " "
                     EQ@23..24 "="
                     WHITESPACE@24..25 " "
-                    NAME_REF@25..28
+                    JS_REFERENCE_IDENTIFIER_EXPRESSION@25..28
                       IDENT@25..28 "bar"
                 WHITESPACE@28..29 " "
                 R_CURLY@29..30 "}"

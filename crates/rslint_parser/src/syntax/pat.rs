@@ -15,7 +15,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 		_ if assignment => {
 			let m = p.start();
 			let mut complete = lhs_expr(p)?;
-			if complete.kind() == NAME_REF {
+			if complete.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION {
 				complete.change_kind(p, NAME);
 			}
 			m.complete(

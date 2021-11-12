@@ -103,7 +103,7 @@ JS_MODULE@0..142
             YIELD_EXPR@129..138
               YIELD_KW@129..134 "yield"
               WHITESPACE@134..135 " "
-              NAME_REF@135..138
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@135..138
                 IDENT@135..138 "foo"
             SEMICOLON@138..139 ";"
         WHITESPACE@139..140 "\n"

@@ -4,7 +4,7 @@ JS_MODULE@0..38
       SWITCH_KW@0..6 "switch"
       WHITESPACE@6..7 " "
       L_PAREN@7..8 "("
-      NAME_REF@8..11
+      JS_REFERENCE_IDENTIFIER_EXPRESSION@8..11
         IDENT@8..11 "foo"
       R_PAREN@11..12 ")"
       WHITESPACE@12..13 " "
@@ -14,7 +14,7 @@ JS_MODULE@0..38
         JS_CASE_CLAUSE@16..27
           CASE_KW@16..20 "case"
           WHITESPACE@20..21 " "
-          NAME_REF@21..24
+          JS_REFERENCE_IDENTIFIER_EXPRESSION@21..24
             IDENT@21..24 "bar"
           COLON@24..25 ":"
           WHITESPACE@25..27 "\n "

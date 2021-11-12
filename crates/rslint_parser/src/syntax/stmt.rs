@@ -233,7 +233,7 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 
 	let mut expr = p.expr_with_semi_recovery(false)?;
 	// Labelled stmt
-	if expr.kind() == NAME_REF && p.at(T![:]) {
+	if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
 		expr.change_kind(p, NAME);
 		// Its not possible to have a name without an inner ident token
 		let range = p.events[expr.start_pos as usize..]

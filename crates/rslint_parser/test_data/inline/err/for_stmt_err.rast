@@ -34,7 +34,7 @@ JS_MODULE@0..40
         WHITESPACE@24..25 " "
         FOR_STMT_TEST@25..31
           JS_BINARY_EXPRESSION@25..31
-            NAME_REF@25..26
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@25..26
               IDENT@25..26 "i"
             WHITESPACE@26..27 " "
             L_ANGLE@27..28 "<"
@@ -46,7 +46,7 @@ JS_MODULE@0..40
         FOR_STMT_UPDATE@33..36
           PRE_UPDATE_EXPRESSION@33..36
             PLUS2@33..35 "++"
-            NAME_REF@35..36
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@35..36
               IDENT@35..36 "i"
         WHITESPACE@36..37 " "
         JS_BLOCK_STATEMENT@37..39

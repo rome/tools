@@ -6,7 +6,7 @@ JS_MODULE@0..20
           BRACKET_EXPR@0..12
             DOT_EXPR@0..10
               CALL_EXPR@0..5
-                NAME_REF@0..3
+                JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
                   IDENT@0..3 "foo"
                 ARG_LIST@3..5
                   L_PAREN@3..4 "("

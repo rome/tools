@@ -24,7 +24,7 @@ pub fn check_simple_assign_target(p: &mut Parser, target: &JsAnyExpression, rang
 
 fn is_simple_assign_target(p: &mut Parser, target: &JsAnyExpression) -> bool {
 	match target.syntax().kind() {
-		NAME_REF | BRACKET_EXPR | DOT_EXPR | PRIVATE_PROP_ACCESS => true,
+		JS_REFERENCE_IDENTIFIER_EXPRESSION | BRACKET_EXPR | DOT_EXPR | PRIVATE_PROP_ACCESS => true,
 		JS_PARENTHESIZED_EXPRESSION => {
 			let inner = JsParenthesizedExpression::cast(target.syntax().to_owned())
 				.unwrap()
@@ -119,7 +119,7 @@ pub fn get_precedence(tok: SyntaxKind) -> Option<u8> {
 /// Check the LHS expression inside of a for...in or for...of statement according to
 pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker) {
 	match expr {
-		JsAnyExpression::NameRef(ident) => {
+		JsAnyExpression::JsReferenceIdentifierExpression(ident) => {
 			check_simple_assign_target(p, &JsAnyExpression::from(ident), marker.range(p))
 		}
 		JsAnyExpression::DotExpr(_) | JsAnyExpression::BracketExpr(_) => {}

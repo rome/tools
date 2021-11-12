@@ -4,7 +4,7 @@ JS_MODULE@0..113
       NEW_EXPR@0..9
         NEW_KW@0..3 "new"
         WHITESPACE@3..4 " "
-        NAME_REF@4..7
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@4..7
           IDENT@4..7 "Foo"
         ARG_LIST@7..9
           L_PAREN@7..8 "("
@@ -15,7 +15,7 @@ JS_MODULE@0..113
       NEW_EXPR@10..17
         NEW_KW@10..13 "new"
         WHITESPACE@13..14 " "
-        NAME_REF@14..17
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@14..17
           IDENT@14..17 "foo"
       SEMICOLON@17..18 ";"
     WHITESPACE@18..19 "\n"
@@ -38,7 +38,7 @@ JS_MODULE@0..113
             NEW_EXPR@42..51
               NEW_KW@42..45 "new"
               WHITESPACE@45..46 " "
-              NAME_REF@46..49
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@46..49
                 IDENT@46..49 "Foo"
               ARG_LIST@49..51
                 L_PAREN@49..50 "("
@@ -50,16 +50,16 @@ JS_MODULE@0..113
       NEW_EXPR@53..112
         NEW_KW@53..56 "new"
         WHITESPACE@56..57 " "
-        NAME_REF@57..60
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@57..60
           IDENT@57..60 "Foo"
         ARG_LIST@60..112
           L_PAREN@60..61 "("
           LIST@61..111
-            NAME_REF@61..64
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@61..64
               IDENT@61..64 "bar"
             COMMA@64..65 ","
             WHITESPACE@65..66 " "
-            NAME_REF@66..69
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@66..69
               IDENT@66..69 "baz"
             COMMA@69..70 ","
             WHITESPACE@70..71 " "
@@ -75,10 +75,10 @@ JS_MODULE@0..113
             WHITESPACE@77..78 " "
             JS_BINARY_EXPRESSION@78..111
               BRACKET_EXPR@78..86
-                NAME_REF@78..81
+                JS_REFERENCE_IDENTIFIER_EXPRESSION@78..81
                   IDENT@78..81 "foo"
                 L_BRACK@81..82 "["
-                NAME_REF@82..85
+                JS_REFERENCE_IDENTIFIER_EXPRESSION@82..85
                   IDENT@82..85 "bar"
                 R_BRACK@85..86 "]"
               WHITESPACE@86..87 " "
@@ -104,7 +104,7 @@ JS_MODULE@0..113
                 STAR@101..102 "*"
                 WHITESPACE@102..103 " "
                 DOT_EXPR@103..111
-                  NAME_REF@103..106
+                  JS_REFERENCE_IDENTIFIER_EXPRESSION@103..106
                     IDENT@103..106 "foo"
                   QUESTIONDOT@106..108 "?."
                   NAME@108..111

@@ -5,10 +5,10 @@ use rslint_parser::ast::{
 	ForStmtUpdate, Getter, IdentProp, JsArrayExpression, JsBlockStatement, JsBooleanLiteral,
 	JsCaseClause, JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
 	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement,
-	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsReturnStatement, JsScript,
-	JsStringLiteral, JsSwitchStatement, JsTryStatement, JsVariableDeclarationStatement,
-	JsVariableDeclarator, JsWhileStatement, JsWithStatement, LiteralProp, Name, NameRef,
-	ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
+	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsReferenceIdentifierExpression,
+	JsReturnStatement, JsScript, JsStringLiteral, JsSwitchStatement, JsTryStatement,
+	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement,
+	LiteralProp, Name, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -39,9 +39,11 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::NAME => Name::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::NAME_REF => NameRef::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
+			SyntaxKind::JS_REFERENCE_IDENTIFIER_EXPRESSION => {
+				JsReferenceIdentifierExpression::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
 			SyntaxKind::PARAMETER_LIST => ParameterList::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),

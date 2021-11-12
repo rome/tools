@@ -22,7 +22,7 @@ JS_MODULE@0..48
                     WHITESPACE@15..16 " "
                     COMPUTED_PROPERTY_NAME@16..21
                       L_BRACK@16..17 "["
-                      NAME_REF@17..20
+                      JS_REFERENCE_IDENTIFIER_EXPRESSION@17..20
                         IDENT@17..20 "foo"
                       R_BRACK@20..21 "]"
                     PARAMETER_LIST@21..23
@@ -37,7 +37,7 @@ JS_MODULE@0..48
                         JS_RETURN_STATEMENT@30..41
                           RETURN_KW@30..36 "return"
                           WHITESPACE@36..37 " "
-                          NAME_REF@37..40
+                          JS_REFERENCE_IDENTIFIER_EXPRESSION@37..40
                             IDENT@37..40 "foo"
                           SEMICOLON@40..41 ";"
                       WHITESPACE@41..44 "\n  "

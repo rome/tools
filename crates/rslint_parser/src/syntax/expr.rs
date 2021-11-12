@@ -143,8 +143,13 @@ fn assign_expr_base(p: &mut Parser) -> Option<CompletedMarker> {
 
 pub(crate) fn is_valid_target(p: &mut Parser, marker: &CompletedMarker) -> bool {
 	match marker.kind() {
-		DOT_EXPR | BRACKET_EXPR | NAME_REF | PRIVATE_PROP_ACCESS | TS_CONST_ASSERTION
-		| TS_ASSERTION | TS_NON_NULL => true,
+		DOT_EXPR
+		| BRACKET_EXPR
+		| JS_REFERENCE_IDENTIFIER_EXPRESSION
+		| PRIVATE_PROP_ACCESS
+		| TS_CONST_ASSERTION
+		| TS_ASSERTION
+		| TS_NON_NULL => true,
 		JS_PARENTHESIZED_EXPRESSION => {
 			// avoid parsing the marker because it is incredibly expensive and this is a hot path
 			for (idx, event) in p.events[marker.start_pos as usize..].iter().enumerate() {
@@ -162,9 +167,9 @@ pub(crate) fn is_valid_target(p: &mut Parser, marker: &CompletedMarker) -> bool 
 						return matches!(
 							kind,
 							DOT_EXPR
-								| BRACKET_EXPR | NAME_REF | PRIVATE_PROP_ACCESS
-								| TS_CONST_ASSERTION | TS_ASSERTION
-								| TS_NON_NULL
+								| BRACKET_EXPR | JS_REFERENCE_IDENTIFIER_EXPRESSION
+								| PRIVATE_PROP_ACCESS | TS_CONST_ASSERTION
+								| TS_ASSERTION | TS_NON_NULL
 						);
 					}
 					_ => {}
@@ -1079,7 +1084,7 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 		T![ident] | T![yield] | T![await] => {
 			let m = p.start();
 			p.bump_remap(T![ident]);
-			Some(m.complete(p, NAME_REF))
+			Some(m.complete(p, JS_REFERENCE_IDENTIFIER_EXPRESSION))
 		}
 		_ => {
 			let err = p

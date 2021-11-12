@@ -13,7 +13,7 @@ JS_MODULE@0..15
             JS_EQUAL_VALUE_CLAUSE@6..13
               EQ@6..7 "="
               WHITESPACE@7..8 " "
-              NAME_REF@8..13
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@8..13
                 IDENT@8..13 "async"
       SEMICOLON@13..14 ";"
   WHITESPACE@14..15 "\n"
