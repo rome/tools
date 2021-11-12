@@ -2,13 +2,16 @@ use colored::Colorize;
 use indicatif::ProgressBar;
 use regex::Regex;
 use rslint_parser::ParserError;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::fs::read_to_string;
 use std::io;
 use std::path::PathBuf;
+use std::{fs::File, io::Write};
 use walkdir::WalkDir;
 use yastl::Pool;
+
+use crate::{project_root, BASE_RESULT_FILE};
 
 const BASE_PATH: &str = "xtask/src/coverage/test262/test";
 
@@ -152,10 +155,15 @@ pub fn get_test_files(query: Option<&str>, pool: &Pool) -> Vec<TestFile> {
 	files
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct TestResult {
+	#[serde(skip)]
 	pub fail: Option<FailReason>,
+	#[serde(rename = "o")]
+	pub outcome: Outcome,
+	#[serde(rename = "h")]
 	pub path: PathBuf,
+	#[serde(skip)]
 	pub code: String,
 }
 
@@ -164,4 +172,104 @@ pub enum FailReason {
 	IncorrectlyPassed,
 	IncorrectlyErrored(Vec<ParserError>),
 	ParserPanic(Box<dyn Any + Send + 'static>),
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub enum Outcome {
+	Passed,
+	Failed,
+	Panicked,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TestResults {
+	#[serde(rename = "s")]
+	pub summary: Summary,
+	#[serde(rename = "p")]
+	pub details: Vec<TestResult>,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Summary {
+	#[serde(rename = "a")]
+	pub tests_ran: u32,
+	#[serde(rename = "pa")]
+	pub passed: u32,
+	#[serde(rename = "f")]
+	pub failed: u32,
+	#[serde(rename = "pc")]
+	pub panics: u32,
+	#[serde(rename = "c")]
+	pub coverage: f64,
+}
+
+impl Default for TestResults {
+	fn default() -> Self {
+		Self {
+			summary: Summary {
+				tests_ran: 0,
+				passed: 0,
+				failed: 0,
+				panics: 0,
+				coverage: 0.0,
+			},
+			details: vec![],
+		}
+	}
+}
+
+impl TestResults {
+	pub fn new() -> Self {
+		Self::default()
+	}
+
+	pub fn store_results(&mut self, results: Vec<TestResult>) {
+		self.details = results;
+		let passed = self.passed_tests() as u32;
+		let tests_ran = self.details.len();
+		let coverage = (passed as f64 / tests_ran as f64) * 100.0;
+		self.summary = Summary {
+			tests_ran: self.details.len() as u32,
+			passed,
+			failed: self.errored_tests() as u32,
+			panics: self.panicked_tests() as u32,
+			coverage,
+		};
+	}
+
+	pub fn panicked_tests(&self) -> usize {
+		self.details
+			.iter()
+			.filter(|res| matches!(res.fail, Some(FailReason::ParserPanic(_))))
+			.count()
+	}
+
+	pub fn errored_tests(&self) -> usize {
+		self.details
+			.iter()
+			.filter(|res| {
+				matches!(
+					res.fail,
+					Some(FailReason::IncorrectlyErrored(_)) | Some(FailReason::IncorrectlyPassed)
+				)
+			})
+			.count()
+	}
+
+	pub fn passed_tests(&self) -> usize {
+		self.details.iter().filter(|res| res.fail.is_none()).count()
+	}
+
+	/// Saves results into a JSON file inside the temporary directory of the OS
+	pub fn dump_to_json(&self) {
+		let json = serde_json::to_string(&self).unwrap();
+		let path = project_root().join(BASE_RESULT_FILE);
+
+		let mut file = File::create(&path).expect("Can't open the JSON file");
+
+		file.write_all(json.as_bytes())
+			.expect("Can't write in the JSON file");
+		println!();
+		println!("The test result report has been saved in: {:?}", &path);
+	}
 }

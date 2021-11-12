@@ -1,6 +1,7 @@
 //! Codegen tools mostly used to generate ast and syntax definitions. Adapted from rust analyzer's codegen
 
 pub mod codegen;
+pub mod compare;
 pub mod coverage;
 pub mod docgen;
 pub mod glue;
@@ -16,6 +17,12 @@ use crate::{
 };
 
 pub use anyhow::{bail, Context as _, Result};
+
+// this is the filename of the results coming from `main` branch
+pub const BASE_RESULT_FILE: &str = "base_results.json";
+
+// this is the filename of the results coming from the current PR
+pub const NEW_RESULT_FILE: &str = "new_results.json";
 
 pub fn project_root() -> PathBuf {
 	Path::new(

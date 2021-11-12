@@ -1,4 +1,4 @@
-mod files;
+pub mod files;
 
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
@@ -8,7 +8,9 @@ use std::any::Any;
 use std::path::PathBuf;
 use yastl::Pool;
 
-pub fn run(query: Option<&str>, pool: Pool) {
+pub const TEST_JSON_PATH: &str = "xtask/src/base_results.json";
+
+pub fn run(query: Option<&str>, pool: Pool, json: bool) {
 	let files = get_test_files(query, &pool);
 	let num_ran = files.len();
 
@@ -21,6 +23,7 @@ pub fn run(query: Option<&str>, pool: Pool) {
 
 	std::panic::set_hook(Box::new(|_| {}));
 	let start_tests = std::time::Instant::now();
+	let mut test_results = TestResults::new();
 
 	let (tx, rx) = std::sync::mpsc::channel();
 
@@ -63,7 +66,7 @@ pub fn run(query: Option<&str>, pool: Pool) {
 	});
 	drop(tx);
 
-	let res = rx.into_iter().collect::<Vec<_>>();
+	test_results.store_results(rx.into_iter().collect::<Vec<_>>());
 
 	let _ = std::panic::take_hook();
 
@@ -75,20 +78,10 @@ pub fn run(query: Option<&str>, pool: Pool) {
 		start_tests.elapsed().as_secs_f32()
 	);
 
-	let panicked = res
-		.iter()
-		.filter(|res| matches!(res.fail, Some(FailReason::ParserPanic(_))))
-		.count();
-	let errored = res
-		.iter()
-		.filter(|res| {
-			matches!(
-				res.fail,
-				Some(FailReason::IncorrectlyErrored(_)) | Some(FailReason::IncorrectlyPassed)
-			)
-		})
-		.count();
-	let passed = res.iter().filter(|res| res.fail.is_none()).count();
+	let panicked = test_results.summary.panics;
+	let errored = test_results.summary.failed;
+	let passed = test_results.summary.passed;
+	let coverage = format!("{:.2}", test_results.summary.coverage);
 
 	let mut table = AsciiTable::default();
 
@@ -108,12 +101,14 @@ pub fn run(query: Option<&str>, pool: Pool) {
 	create_column("Failed".red());
 	create_column("Panics".red());
 	create_column("Coverage".cyan());
-
-	let coverage = (passed as f64 / num_ran as f64) * 100.0;
-	let coverage = format!("{:.2}", coverage);
 	let numbers: Vec<&dyn std::fmt::Display> =
 		vec![&num_ran, &passed, &errored, &panicked, &coverage];
+
 	table.print(vec![numbers]);
+
+	if json {
+		test_results.dump_to_json();
+	}
 
 	if passed > 0 {
 		std::process::exit(1);
@@ -128,15 +123,33 @@ pub fn run_test_file(file: TestFile) -> TestResult {
 	if meta.flags.contains(&TestFlag::OnlyStrict) {
 		let (code, res) = exec_test(code, true, false);
 		let fail = passed(res, meta);
-		TestResult { fail, path, code }
+		let outcome = extract_outcome(&fail);
+		TestResult {
+			fail,
+			path,
+			code,
+			outcome,
+		}
 	} else if meta.flags.contains(&TestFlag::NoStrict) || meta.flags.contains(&TestFlag::Raw) {
 		let (code, res) = exec_test(code, false, false);
 		let fail = passed(res, meta);
-		TestResult { fail, path, code }
+		let outcome = extract_outcome(&fail);
+		TestResult {
+			fail,
+			path,
+			code,
+			outcome,
+		}
 	} else if meta.flags.contains(&TestFlag::Module) {
 		let (code, res) = exec_test(code, false, true);
 		let fail = passed(res, meta);
-		TestResult { fail, path, code }
+		let outcome = extract_outcome(&fail);
+		TestResult {
+			fail,
+			path,
+			code,
+			outcome,
+		}
 	} else {
 		let (_, l) = exec_test(code.clone(), false, false);
 		let (code, r) = exec_test(code, true, false);
@@ -208,7 +221,14 @@ fn default_bar_style() -> indicatif::ProgressStyle {
 
 fn merge_tests(code: String, l: ExecRes, r: ExecRes, meta: MetaData, path: PathBuf) -> TestResult {
 	let fail = passed(l, meta.clone()).or_else(|| passed(r, meta));
-	TestResult { fail, path, code }
+	// outcome lowers down the reason of failing, being able to use serde over it
+	let outcome = extract_outcome(&fail);
+	TestResult {
+		fail,
+		path,
+		code,
+		outcome,
+	}
 }
 
 fn passed(res: ExecRes, meta: MetaData) -> Option<FailReason> {
@@ -224,6 +244,17 @@ fn passed(res: ExecRes, meta: MetaData) -> Option<FailReason> {
 		ExecRes::ParseCorrectly if should_fail => Some(FailReason::IncorrectlyPassed),
 		ExecRes::Errors(err) if !should_fail => Some(FailReason::IncorrectlyErrored(err)),
 		_ => unreachable!(),
+	}
+}
+
+fn extract_outcome(fail: &Option<FailReason>) -> Outcome {
+	if let Some(fail) = fail {
+		match fail {
+			FailReason::IncorrectlyPassed | FailReason::IncorrectlyErrored(_) => Outcome::Failed,
+			FailReason::ParserPanic(_) => Outcome::Panicked,
+		}
+	} else {
+		Outcome::Passed
 	}
 }
 
