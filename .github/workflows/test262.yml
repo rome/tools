@@ -72,4 +72,4 @@ jobs:
         with:
           name: new_results
       - name: Compare results on ${{ matrix.os }}
-        run: cargo xtaxk compare ./base_results.json ./new_results.json  --markdown
+        run: cargo xtask compare ./base_results.json ./new_results.json  --markdown
