@@ -1,7 +1,7 @@
 JS_MODULE@0..40
   LIST@0..39
     JS_EXPRESSION_STATEMENT@0..13
-      COND_EXPR@0..13
+      JS_CONDITIONAL_EXPRESSION@0..13
         NAME_REF@0..3
           IDENT@0..3 "foo"
         WHITESPACE@3..4 " "
@@ -14,7 +14,7 @@ JS_MODULE@0..40
           IDENT@10..13 "baz"
     WHITESPACE@13..14 "\n"
     JS_EXPRESSION_STATEMENT@14..39
-      COND_EXPR@14..39
+      JS_CONDITIONAL_EXPRESSION@14..39
         NAME_REF@14..17
           IDENT@14..17 "foo"
         WHITESPACE@17..18 " "
@@ -23,7 +23,7 @@ JS_MODULE@0..40
         NAME_REF@20..23
           IDENT@20..23 "bar"
         WHITESPACE@23..24 " "
-        COND_EXPR@24..39
+        JS_CONDITIONAL_EXPRESSION@24..39
           NAME_REF@24..27
             IDENT@24..27 "baz"
           WHITESPACE@27..28 " "

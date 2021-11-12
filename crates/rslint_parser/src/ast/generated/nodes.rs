@@ -131,7 +131,7 @@ impl JsIfStatement {
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
 	}
-	pub fn consequence(&self) -> SyntaxResult<JsAnyStatement> {
+	pub fn consequent(&self) -> SyntaxResult<JsAnyStatement> {
 		support::required_node(&self.syntax)
 	}
 	pub fn else_clause(&self) -> Option<JsElseClause> { support::node(&self.syntax) }
@@ -577,7 +577,7 @@ impl JsCaseClause {
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn consequence(&self) -> AstNodeList<JsAnyStatement> {
+	pub fn consequent(&self) -> AstNodeList<JsAnyStatement> {
 		support::node_list(&self.syntax, 0usize)
 	}
 }
@@ -592,7 +592,7 @@ impl JsDefaultClause {
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
-	pub fn consequence(&self) -> AstNodeList<JsAnyStatement> {
+	pub fn consequent(&self) -> AstNodeList<JsAnyStatement> {
 		support::node_list(&self.syntax, 0usize)
 	}
 }
@@ -689,6 +689,19 @@ impl JsBinaryExpression {
 				T![instanceof],
 			],
 		)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsConditionalExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsConditionalExpression {
+	pub fn test(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [?])
+	}
+	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [:])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -856,18 +869,6 @@ impl PostUpdateExpression {
 	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
 		support::find_required_token(&self.syntax, &[T ! [++], T ! [--]])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct CondExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl CondExpr {
-	pub fn question_mark_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [?])
-	}
-	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [:])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2263,6 +2264,7 @@ pub enum JsAnyExpression {
 	JsArrayExpression(JsArrayExpression),
 	JsAwaitExpression(JsAwaitExpression),
 	JsBinaryExpression(JsBinaryExpression),
+	JsConditionalExpression(JsConditionalExpression),
 	JsLogicalExpression(JsLogicalExpression),
 	ArrowExpr(ArrowExpr),
 	Template(Template),
@@ -2277,7 +2279,6 @@ pub enum JsAnyExpression {
 	UnaryExpr(UnaryExpr),
 	PreUpdateExpression(PreUpdateExpression),
 	PostUpdateExpression(PostUpdateExpression),
-	CondExpr(CondExpr),
 	AssignExpr(AssignExpr),
 	SequenceExpr(SequenceExpr),
 	FnExpr(FnExpr),
@@ -3012,6 +3013,17 @@ impl AstNode for JsBinaryExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsConditionalExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONDITIONAL_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsLogicalExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LOGICAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3157,17 +3169,6 @@ impl AstNode for PreUpdateExpression {
 }
 impl AstNode for PostUpdateExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == POST_UPDATE_EXPRESSION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for CondExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == COND_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4739,6 +4740,11 @@ impl From<JsBinaryExpression> for JsAnyExpression {
 		JsAnyExpression::JsBinaryExpression(node)
 	}
 }
+impl From<JsConditionalExpression> for JsAnyExpression {
+	fn from(node: JsConditionalExpression) -> JsAnyExpression {
+		JsAnyExpression::JsConditionalExpression(node)
+	}
+}
 impl From<JsLogicalExpression> for JsAnyExpression {
 	fn from(node: JsLogicalExpression) -> JsAnyExpression {
 		JsAnyExpression::JsLogicalExpression(node)
@@ -4786,9 +4792,6 @@ impl From<PostUpdateExpression> for JsAnyExpression {
 	fn from(node: PostUpdateExpression) -> JsAnyExpression {
 		JsAnyExpression::PostUpdateExpression(node)
 	}
-}
-impl From<CondExpr> for JsAnyExpression {
-	fn from(node: CondExpr) -> JsAnyExpression { JsAnyExpression::CondExpr(node) }
 }
 impl From<AssignExpr> for JsAnyExpression {
 	fn from(node: AssignExpr) -> JsAnyExpression { JsAnyExpression::AssignExpr(node) }
@@ -4840,6 +4843,7 @@ impl AstNode for JsAnyExpression {
 			JS_ARRAY_EXPRESSION
 			| JS_AWAIT_EXPRESSION
 			| JS_BINARY_EXPRESSION
+			| JS_CONDITIONAL_EXPRESSION
 			| JS_LOGICAL_EXPRESSION
 			| ARROW_EXPR
 			| TEMPLATE
@@ -4854,7 +4858,6 @@ impl AstNode for JsAnyExpression {
 			| UNARY_EXPR
 			| PRE_UPDATE_EXPRESSION
 			| POST_UPDATE_EXPRESSION
-			| COND_EXPR
 			| ASSIGN_EXPR
 			| SEQUENCE_EXPR
 			| FN_EXPR
@@ -4880,6 +4883,9 @@ impl AstNode for JsAnyExpression {
 			JS_BINARY_EXPRESSION => {
 				JsAnyExpression::JsBinaryExpression(JsBinaryExpression { syntax })
 			}
+			JS_CONDITIONAL_EXPRESSION => {
+				JsAnyExpression::JsConditionalExpression(JsConditionalExpression { syntax })
+			}
 			JS_LOGICAL_EXPRESSION => {
 				JsAnyExpression::JsLogicalExpression(JsLogicalExpression { syntax })
 			}
@@ -4900,7 +4906,6 @@ impl AstNode for JsAnyExpression {
 			POST_UPDATE_EXPRESSION => {
 				JsAnyExpression::PostUpdateExpression(PostUpdateExpression { syntax })
 			}
-			COND_EXPR => JsAnyExpression::CondExpr(CondExpr { syntax }),
 			ASSIGN_EXPR => JsAnyExpression::AssignExpr(AssignExpr { syntax }),
 			SEQUENCE_EXPR => JsAnyExpression::SequenceExpr(SequenceExpr { syntax }),
 			FN_EXPR => JsAnyExpression::FnExpr(FnExpr { syntax }),
@@ -4931,6 +4936,7 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsArrayExpression(it) => &it.syntax,
 			JsAnyExpression::JsAwaitExpression(it) => &it.syntax,
 			JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
+			JsAnyExpression::JsConditionalExpression(it) => &it.syntax,
 			JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
@@ -4945,7 +4951,6 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::UnaryExpr(it) => &it.syntax,
 			JsAnyExpression::PreUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::PostUpdateExpression(it) => &it.syntax,
-			JsAnyExpression::CondExpr(it) => &it.syntax,
 			JsAnyExpression::AssignExpr(it) => &it.syntax,
 			JsAnyExpression::SequenceExpr(it) => &it.syntax,
 			JsAnyExpression::FnExpr(it) => &it.syntax,
@@ -6291,6 +6296,11 @@ impl std::fmt::Display for JsBinaryExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsConditionalExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsLogicalExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6357,11 +6367,6 @@ impl std::fmt::Display for PreUpdateExpression {
 	}
 }
 impl std::fmt::Display for PostUpdateExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for CondExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

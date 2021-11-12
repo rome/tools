@@ -272,7 +272,7 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		}));
 		p.expect(T![:]);
 		assign_expr(p);
-		return Some(m.complete(p, COND_EXPR));
+		return Some(m.complete(p, JS_CONDITIONAL_EXPRESSION));
 	}
 	lhs
 }

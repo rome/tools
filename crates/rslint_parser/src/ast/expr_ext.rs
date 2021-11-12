@@ -14,17 +14,17 @@ impl BracketExpr {
 	}
 }
 
-impl CondExpr {
-	pub fn test(&self) -> Option<JsAnyExpression> {
-		support::node(self.syntax())
+impl JsConditionalExpression {
+	pub fn consequent(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 
-	pub fn cons(&self) -> Option<JsAnyExpression> {
-		support::children(self.syntax()).nth(1)
-	}
-
-	pub fn alt(&self) -> Option<JsAnyExpression> {
-		support::children(self.syntax()).nth(2)
+	pub fn alternative(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(2)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 }
 

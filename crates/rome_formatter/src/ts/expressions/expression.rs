@@ -24,7 +24,7 @@ impl ToFormatElement for JsAnyExpression {
 			}
 			JsAnyExpression::UnaryExpr(_) => todo!(),
 			JsAnyExpression::JsBinaryExpression(_) => todo!(),
-			JsAnyExpression::CondExpr(_) => todo!(),
+			JsAnyExpression::JsConditionalExpression(_) => todo!(),
 			JsAnyExpression::AssignExpr(_) => todo!(),
 			JsAnyExpression::SequenceExpr(expr) => expr.to_format_element(formatter),
 			JsAnyExpression::FnExpr(_) => todo!(),

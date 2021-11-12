@@ -123,7 +123,7 @@ JsDoWhileStatement =
 // if statement
 JsIfStatement =
 	'if' '(' test: JsAnyExpression ')'
-	consequence: JsAnyStatement
+	consequent: JsAnyStatement
 	else_clause: JsElseClause?
 
 JsElseClause =
@@ -190,8 +190,8 @@ JsSwitchStatement =
     '}'
 
 JsAnySwitchClause = JsCaseClause | JsDefaultClause
-JsCaseClause = 'case' test: JsAnyExpression ':' consequence: JsAnyStatement*
-JsDefaultClause = 'default' ':' consequence: JsAnyStatement*
+JsCaseClause = 'case' test: JsAnyExpression ':' consequent: JsAnyStatement*
+JsDefaultClause = 'default' ':' consequent: JsAnyStatement*
 
 
 JsThrowStatement =
@@ -239,6 +239,7 @@ JsAnyExpression =
 	| JsArrayExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
+	| JsConditionalExpression
 	| JsLogicalExpression
 	| ArrowExpr
 	| Template
@@ -253,7 +254,6 @@ JsAnyExpression =
 	| UnaryExpr
 	| PreUpdateExpression
 	| PostUpdateExpression
-	| CondExpr
 	| AssignExpr
 	| SequenceExpr
 	| FnExpr
@@ -304,8 +304,13 @@ ImportCall = 'import' '(' argument:JsAnyExpression ')'
 // new target expression
 NewTarget = 'new' '.' 'target'
 
-// conditional expression
-CondExpr = manual__test: JsAnyExpression '?' manual__cons: JsAnyExpression  ':' manual__alt: JsAnyExpression
+
+JsConditionalExpression =
+	test: JsAnyExpression
+	'?'
+	manual__consequent: JsAnyExpression
+	':'
+	manual__alternate: JsAnyExpression
 
 // import meta expression
 ImportMeta = 'import' '.'

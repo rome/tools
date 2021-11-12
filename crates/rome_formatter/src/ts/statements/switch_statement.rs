@@ -46,7 +46,7 @@ impl ToFormatElement for JsDefaultClause {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let default = formatter.format_token(&self.default_token()?)?;
 		let colon = formatter.format_token(&self.colon_token()?)?;
-		let statements = format_statements(self.consequence(), formatter);
+		let statements = format_statements(self.consequent(), formatter);
 
 		Ok(format_elements![
 			default,
@@ -65,7 +65,7 @@ impl ToFormatElement for JsCaseClause {
 
 		let test = formatter.format_node(self.test()?)?;
 
-		let cons = format_statements(self.consequence(), formatter);
+		let cons = format_statements(self.consequent(), formatter);
 
 		Ok(format_elements![
 			case_word,
