@@ -6,9 +6,9 @@ use rslint_parser::ast::{
 	JsCaseClause, JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
 	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement,
 	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsReferenceIdentifierExpression,
-	JsReturnStatement, JsScript, JsStringLiteral, JsSwitchStatement, JsTryStatement,
-	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement,
-	LiteralProp, Name, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
+	JsReturnStatement, JsScript, JsSequenceExpression, JsStringLiteral, JsSwitchStatement,
+	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
+	JsWithStatement, LiteralProp, Name, ObjectExpr, ParameterList, Setter, SinglePattern,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -67,7 +67,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::FN_DECL => FnDecl::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::SEQUENCE_EXPR => SequenceExpr::cast(self.clone())
+			SyntaxKind::JS_SEQUENCE_EXPRESSION => JsSequenceExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_BLOCK_STATEMENT => JsBlockStatement::cast(self.clone())

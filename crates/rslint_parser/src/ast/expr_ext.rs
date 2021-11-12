@@ -162,6 +162,14 @@ impl JsLogicalExpression {
 	}
 }
 
+impl JsSequenceExpression {
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
+	}
+}
+
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum UnaryOp {
 	/// `++`

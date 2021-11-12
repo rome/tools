@@ -7,7 +7,9 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::ArrowExpr(arrow) => arrow.to_format_element(formatter),
 			JsAnyExpression::JsAnyLiteral(literal) => literal.to_format_element(formatter),
 			JsAnyExpression::Template(_) => todo!(),
-			JsAnyExpression::JsReferenceIdentifierExpression(name_ref) => name_ref.to_format_element(formatter),
+			JsAnyExpression::JsReferenceIdentifierExpression(name_ref) => {
+				name_ref.to_format_element(formatter)
+			}
 			JsAnyExpression::ThisExpr(_) => todo!(),
 			JsAnyExpression::JsArrayExpression(array_expression) => {
 				array_expression.to_format_element(formatter)
@@ -26,7 +28,7 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::JsBinaryExpression(_) => todo!(),
 			JsAnyExpression::JsConditionalExpression(_) => todo!(),
 			JsAnyExpression::AssignExpr(_) => todo!(),
-			JsAnyExpression::SequenceExpr(expr) => expr.to_format_element(formatter),
+			JsAnyExpression::JsSequenceExpression(expr) => expr.to_format_element(formatter),
 			JsAnyExpression::FnExpr(_) => todo!(),
 			JsAnyExpression::ClassExpr(_) => todo!(),
 			JsAnyExpression::NewTarget(_) => todo!(),

@@ -1,5 +1,5 @@
-JS_MODULE@0..14
-  LIST@0..13
+JS_MODULE@0..28
+  LIST@0..27
     JS_EXPRESSION_STATEMENT@0..6
       ARROW_EXPR@0..6
         PARAMETER_LIST@0..4
@@ -22,7 +22,31 @@ JS_MODULE@0..14
       L_CURLY@11..12 "{"
       LIST@12..12
       R_CURLY@12..13 "}"
-  WHITESPACE@13..14 "\n"
+    WHITESPACE@13..14 "\n"
+    JS_EXPRESSION_STATEMENT@14..19
+      JS_PARENTHESIZED_EXPRESSION@14..19
+        L_PAREN@14..15 "("
+        JS_SEQUENCE_EXPRESSION@15..19
+          JS_REFERENCE_IDENTIFIER_EXPRESSION@15..16
+            IDENT@15..16 "a"
+          COMMA@16..17 ","
+          WHITESPACE@17..18 " "
+          ERROR@18..19
+            COMMA@18..19 ","
+    JS_EXPRESSION_STATEMENT@19..20
+      JS_REFERENCE_IDENTIFIER_EXPRESSION@19..20
+        IDENT@19..20 "b"
+    ERROR@20..21
+      R_PAREN@20..21 ")"
+    WHITESPACE@21..22 " "
+    ERROR@22..24
+      FAT_ARROW@22..24 "=>"
+    WHITESPACE@24..25 " "
+    JS_BLOCK_STATEMENT@25..27
+      L_CURLY@25..26 "{"
+      LIST@26..26
+      R_CURLY@26..27 "}"
+  WHITESPACE@27..28 "\n"
 --
 error[SyntaxError]: Expected an identifier or pattern, but found none
   ┌─ paren_or_arrow_expr_invalid_params.js:1:2
@@ -69,4 +93,53 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │         ^^ Expected a statement or declaration here
 
 --
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ paren_or_arrow_expr_invalid_params.js:2:5
+  │
+2 │ (a, ,b) => {}
+  │     ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead found `b`
+  ┌─ paren_or_arrow_expr_invalid_params.js:2:6
+  │
+2 │ (a, ,b) => {}
+  │      ^ unexpected
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ paren_or_arrow_expr_invalid_params.js:2:6
+  │
+2 │ (a, ,b) => {}
+  │ -----^
+  │ │    │
+  │ │    An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ paren_or_arrow_expr_invalid_params.js:2:7
+  │
+2 │ (a, ,b) => {}
+  │      -^
+  │      ││
+  │      │An explicit or implicit semicolon is expected here...
+  │      ...Which is required to end this statement
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ paren_or_arrow_expr_invalid_params.js:2:7
+  │
+2 │ (a, ,b) => {}
+  │       ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ paren_or_arrow_expr_invalid_params.js:2:9
+  │
+2 │ (a, ,b) => {}
+  │         ^^ Expected a statement or declaration here
+
+--
 (5 + 5) => {}
+(a, ,b) => {}

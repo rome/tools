@@ -243,6 +243,7 @@ JsAnyExpression =
 	| JsLogicalExpression
 	| JsParenthesizedExpression
 	| JsReferenceIdentifierExpression
+	| JsSequenceExpression
 	| ArrowExpr
 	| Template
 	| ThisExpr
@@ -255,7 +256,6 @@ JsAnyExpression =
 	| PreUpdateExpression
 	| PostUpdateExpression
 	| AssignExpr
-	| SequenceExpr
 	| FnExpr
 	| ClassExpr
 	| NewTarget
@@ -435,9 +435,10 @@ AssignExpr =
 
 PatternOrExpr = Pattern | JsAnyExpression
 
-// sequence expression
-SequenceExpr =
-	exprs:(JsAnyExpression (',' JsAnyExpression)*)
+JsSequenceExpression =
+	left: JsAnyExpression
+	comma: ','
+	manual__right: JsAnyExpression
 
 
 JsParenthesizedExpression =

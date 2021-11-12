@@ -741,7 +741,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			} else {
 				sub_m.abandon(&mut *temp);
 				if had_comma {
-					expr_m.complete(&mut *temp, SEQUENCE_EXPR);
+					expr_m.complete(&mut *temp, JS_SEQUENCE_EXPRESSION);
 				}
 				temp.expect(T![')']);
 				break;
@@ -871,24 +871,15 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 	let first = assign_expr(p)?;
 
 	if p.at(T![,]) {
-		let list_marker = first.precede(p);
+		let sequence_expr_marker = first.precede(p);
 
-		// let m = LIST.precede(p);
 		p.bump_any();
-		assign_expr(p)?;
+		expr(p)?;
 
-		while p.at(T![,]) {
-			p.bump_any();
-			assign_expr(p)?;
-		}
-
-		let list = list_marker.complete(p, LIST);
-		let m = list.precede(p);
-
-		return Some(m.complete(p, SEQUENCE_EXPR));
+		Some(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
+	} else {
+		Some(first)
 	}
-
-	Some(first)
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.

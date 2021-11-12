@@ -739,6 +739,16 @@ impl JsReferenceIdentifierExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsSequenceExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsSequenceExpression {
+	pub fn left(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn comma_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [,])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrowExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -899,15 +909,6 @@ impl AssignExpr {
 				T ! [??=],
 			],
 		)
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct SequenceExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl SequenceExpr {
-	pub fn exprs(&self) -> AstSeparatedList<JsAnyExpression> {
-		support::separated_list(&self.syntax, 0usize)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2270,6 +2271,7 @@ pub enum JsAnyExpression {
 	JsLogicalExpression(JsLogicalExpression),
 	JsParenthesizedExpression(JsParenthesizedExpression),
 	JsReferenceIdentifierExpression(JsReferenceIdentifierExpression),
+	JsSequenceExpression(JsSequenceExpression),
 	ArrowExpr(ArrowExpr),
 	Template(Template),
 	ThisExpr(ThisExpr),
@@ -2282,7 +2284,6 @@ pub enum JsAnyExpression {
 	PreUpdateExpression(PreUpdateExpression),
 	PostUpdateExpression(PostUpdateExpression),
 	AssignExpr(AssignExpr),
-	SequenceExpr(SequenceExpr),
 	FnExpr(FnExpr),
 	ClassExpr(ClassExpr),
 	NewTarget(NewTarget),
@@ -3059,6 +3060,17 @@ impl AstNode for JsReferenceIdentifierExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsSequenceExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SEQUENCE_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for ArrowExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARROW_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3182,17 +3194,6 @@ impl AstNode for PostUpdateExpression {
 }
 impl AstNode for AssignExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ASSIGN_EXPR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for SequenceExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SEQUENCE_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4762,6 +4763,11 @@ impl From<JsReferenceIdentifierExpression> for JsAnyExpression {
 		JsAnyExpression::JsReferenceIdentifierExpression(node)
 	}
 }
+impl From<JsSequenceExpression> for JsAnyExpression {
+	fn from(node: JsSequenceExpression) -> JsAnyExpression {
+		JsAnyExpression::JsSequenceExpression(node)
+	}
+}
 impl From<ArrowExpr> for JsAnyExpression {
 	fn from(node: ArrowExpr) -> JsAnyExpression { JsAnyExpression::ArrowExpr(node) }
 }
@@ -4801,9 +4807,6 @@ impl From<PostUpdateExpression> for JsAnyExpression {
 }
 impl From<AssignExpr> for JsAnyExpression {
 	fn from(node: AssignExpr) -> JsAnyExpression { JsAnyExpression::AssignExpr(node) }
-}
-impl From<SequenceExpr> for JsAnyExpression {
-	fn from(node: SequenceExpr) -> JsAnyExpression { JsAnyExpression::SequenceExpr(node) }
 }
 impl From<FnExpr> for JsAnyExpression {
 	fn from(node: FnExpr) -> JsAnyExpression { JsAnyExpression::FnExpr(node) }
@@ -4855,6 +4858,7 @@ impl AstNode for JsAnyExpression {
 			| JS_LOGICAL_EXPRESSION
 			| JS_PARENTHESIZED_EXPRESSION
 			| JS_REFERENCE_IDENTIFIER_EXPRESSION
+			| JS_SEQUENCE_EXPRESSION
 			| ARROW_EXPR
 			| TEMPLATE
 			| THIS_EXPR
@@ -4867,7 +4871,6 @@ impl AstNode for JsAnyExpression {
 			| PRE_UPDATE_EXPRESSION
 			| POST_UPDATE_EXPRESSION
 			| ASSIGN_EXPR
-			| SEQUENCE_EXPR
 			| FN_EXPR
 			| CLASS_EXPR
 			| NEW_TARGET
@@ -4905,6 +4908,9 @@ impl AstNode for JsAnyExpression {
 					syntax,
 				})
 			}
+			JS_SEQUENCE_EXPRESSION => {
+				JsAnyExpression::JsSequenceExpression(JsSequenceExpression { syntax })
+			}
 			ARROW_EXPR => JsAnyExpression::ArrowExpr(ArrowExpr { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
 			THIS_EXPR => JsAnyExpression::ThisExpr(ThisExpr { syntax }),
@@ -4921,7 +4927,6 @@ impl AstNode for JsAnyExpression {
 				JsAnyExpression::PostUpdateExpression(PostUpdateExpression { syntax })
 			}
 			ASSIGN_EXPR => JsAnyExpression::AssignExpr(AssignExpr { syntax }),
-			SEQUENCE_EXPR => JsAnyExpression::SequenceExpr(SequenceExpr { syntax }),
 			FN_EXPR => JsAnyExpression::FnExpr(FnExpr { syntax }),
 			CLASS_EXPR => JsAnyExpression::ClassExpr(ClassExpr { syntax }),
 			NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
@@ -4956,6 +4961,7 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
 			JsAnyExpression::JsParenthesizedExpression(it) => &it.syntax,
 			JsAnyExpression::JsReferenceIdentifierExpression(it) => &it.syntax,
+			JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
 			JsAnyExpression::ThisExpr(it) => &it.syntax,
@@ -4968,7 +4974,6 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::PreUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::PostUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::AssignExpr(it) => &it.syntax,
-			JsAnyExpression::SequenceExpr(it) => &it.syntax,
 			JsAnyExpression::FnExpr(it) => &it.syntax,
 			JsAnyExpression::ClassExpr(it) => &it.syntax,
 			JsAnyExpression::NewTarget(it) => &it.syntax,
@@ -6332,6 +6337,11 @@ impl std::fmt::Display for JsReferenceIdentifierExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsSequenceExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for ArrowExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6388,11 +6398,6 @@ impl std::fmt::Display for PostUpdateExpression {
 	}
 }
 impl std::fmt::Display for AssignExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for SequenceExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
