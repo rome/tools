@@ -194,8 +194,7 @@ pub fn token_range_must_be_correct() {
 	let eq = s
 		.tokens()
 		.iter()
-		.filter(|x| x.text() == "=")
-		.nth(0)
+		.find(|x| x.text() == "=")
 		.map(Clone::clone)
 		.unwrap();
 	let range = eq.text_with_trivia_range();
@@ -216,8 +215,7 @@ pub fn node_range_must_be_correct() {
 	let var_decl = m
 		.syntax()
 		.descendants()
-		.filter(|x| x.kind() == SyntaxKind::VAR_DECL)
-		.nth(0)
+		.find(|x| x.kind() == SyntaxKind::VAR_DECL)
 		.unwrap();
 
 	let range = var_decl.text_with_trivia_range();
@@ -240,7 +238,7 @@ pub fn test_trivia_attached_to_tokens() {
 
 	use rome_rowan::GreenTokenTrivia::*;
 	use rome_rowan::Trivia;
-	let first_let = lets.iter().filter(predicate).nth(0).unwrap();
+	let first_let = lets.iter().find(predicate).unwrap();
 	assert!(matches!(first_let.leading(), Comment(4)));
 	assert!(matches!(first_let.trailing(), Whitespace(1)));
 
