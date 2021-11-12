@@ -35,12 +35,13 @@ jobs:
         continue-on-error: true
         run: cargo xtask coverage --json
       - name: Rename the emitted file
-        run: mv base_results.json new_results.json
+        run: |
+          mv base_results.json new_results.json
       - name: Save test results
         uses: actions/upload-artifact@v2
         with:
           name: new_results
-          path: xtask/src/base_results.json
+          path: new_results.json
 
   compare:
     needs: coverage
@@ -71,4 +72,4 @@ jobs:
         with:
           name: new_results
       - name: Compare results on ${{ matrix.os }}
-        run: cargo xtaxk compare --markdown
+        run: cargo xtaxk compare ./base_results.json ./new_results.json  --markdown
