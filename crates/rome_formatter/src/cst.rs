@@ -5,9 +5,9 @@ use rslint_parser::ast::{
 	ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement,
 	JsCaseClause, JsCatchClause, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
 	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement, JsLabeledStatement,
-	JsReturnStatement, JsScript, JsSwitchStatement, JsTryStatement, JsWithStatement, Literal,
-	LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
-	VarDecl, WhileStmt,
+	JsReturnStatement, JsScript, JsSwitchStatement, JsTryStatement, JsWhileStatement,
+	JsWithStatement, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr,
+	Setter, SinglePattern, VarDecl,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -92,7 +92,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::OBJECT_EXPR => ObjectExpr::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::WHILE_STMT => WhileStmt::cast(self.clone())
+			SyntaxKind::JS_WHILE_STATEMENT => JsWhileStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_DO_WHILE_STATEMENT => JsDoWhileStatement::cast(self.clone())

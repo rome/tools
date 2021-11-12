@@ -700,7 +700,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 	// while true) }
 	let m = p.start();
 	p.expect(T![while]);
-	condition(p);
+	parenthesized_expression(p);
 	stmt(
 		&mut *p.with_state(ParserState {
 			break_allowed: true,
@@ -710,7 +710,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 		None,
 		None,
 	);
-	m.complete(p, WHILE_STMT)
+	m.complete(p, JS_WHILE_STATEMENT)
 }
 
 /// A var, const, or let declaration such as `var a = 5, b;` or `let {a, b} = foo;`

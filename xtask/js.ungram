@@ -68,7 +68,7 @@ JsAnyStatement =
 	| JsExpressionStatement
 	| JsIfStatement
 	| JsDoWhileStatement
-	| WhileStmt
+	| JsWhileStatement
 	| ForStmt
 	| ForInStmt
 	| ForOfStmt
@@ -108,8 +108,9 @@ JsExpressionStatement =
     expression: JsAnyExpression ';'?
 
 
-// while statement
-WhileStmt = 'while' condition: Condition cons: JsAnyStatement
+JsWhileStatement =
+    'while' '(' test: JsAnyExpression ')'
+    body: JsAnyStatement
 
 
 JsDoWhileStatement =
