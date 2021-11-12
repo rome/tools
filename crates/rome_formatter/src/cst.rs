@@ -1,8 +1,8 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl,
-	ClassProp, Condition, ConstructorParameters, FnDecl, ForInStmt, ForStmt, ForStmtInit,
-	ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement, JsBooleanLiteral,
+	ArgList, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl, ClassProp,
+	Condition, ConstructorParameters, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
+	ForStmtUpdate, Getter, IdentProp, JsArrayExpression, JsBlockStatement, JsBooleanLiteral,
 	JsCaseClause, JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
 	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement,
 	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsReturnStatement, JsScript,
@@ -15,7 +15,7 @@ use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 impl ToFormatElement for SyntaxNode {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self.kind() {
-			SyntaxKind::ARRAY_EXPR => ArrayExpr::cast(self.clone())
+			SyntaxKind::JS_ARRAY_EXPRESSION => JsArrayExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::ARROW_EXPR => ArrowExpr::cast(self.clone())

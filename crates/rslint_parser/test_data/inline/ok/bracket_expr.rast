@@ -14,7 +14,7 @@ JS_MODULE@0..56
         NAME_REF@9..12
           IDENT@9..12 "foo"
         L_BRACK@12..13 "["
-        BIN_EXPR@13..18
+        JS_BINARY_EXPRESSION@13..18
           JS_NUMBER_LITERAL@13..14
             JS_NUMBER_LITERAL_TOKEN@13..14 "5"
           WHITESPACE@14..15 " "

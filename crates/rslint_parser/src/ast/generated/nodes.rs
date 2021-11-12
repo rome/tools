@@ -631,6 +631,62 @@ impl JsCatchDeclaration {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsArrayExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsArrayExpression {
+	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['['])
+	}
+	pub fn elements(&self) -> AstSeparatedList<JsAnyArrayElement> {
+		support::separated_list(&self.syntax, 0usize)
+	}
+	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![']'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsBinaryExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsBinaryExpression {
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(
+			&self.syntax,
+			&[
+				T ! [<],
+				T ! [>],
+				T ! [<=],
+				T ! [>=],
+				T ! [==],
+				T ! [===],
+				T ! [!=],
+				T ! [!==],
+				T ! [+],
+				T ! [-],
+				T ! [*],
+				T ! [/],
+				T ! [%],
+				T ! [**],
+				T ! [<<],
+				T ! [>>],
+				T ! [>>>],
+				T ! [&],
+				T ! [|],
+				T ! [^],
+				T ! [??],
+				T ! [||],
+				T ! [&&],
+				T![in],
+				T![instanceof],
+				T ! [??],
+				T ! [||],
+				T ! [&&],
+			],
+		)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrowExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -669,19 +725,6 @@ pub struct ThisExpr {
 impl ThisExpr {
 	pub fn this_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![this])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ArrayExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ArrayExpr {
-	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['['])
-	}
-	pub fn elements(&self) -> AstNodeList<ExprOrSpread> { support::node_list(&self.syntax, 0usize) }
-	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![']'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -801,44 +844,6 @@ impl PostUpdateExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct BinExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl BinExpr {
-	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
-		support::find_required_token(
-			&self.syntax,
-			&[
-				T ! [<],
-				T ! [>],
-				T ! [<=],
-				T ! [>=],
-				T ! [==],
-				T ! [===],
-				T ! [!=],
-				T ! [!==],
-				T ! [+],
-				T ! [-],
-				T ! [*],
-				T ! [/],
-				T ! [%],
-				T ! [**],
-				T ! [<<],
-				T ! [>>],
-				T ! [>>>],
-				T ! [&],
-				T ! [|],
-				T ! [^],
-				T ! [??],
-				T ! [||],
-				T ! [&&],
-				T![in],
-				T![instanceof],
-			],
-		)
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct CondExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -886,7 +891,6 @@ impl SequenceExpr {
 	pub fn exprs(&self) -> AstSeparatedList<JsAnyExpression> {
 		support::separated_list(&self.syntax, 0usize)
 	}
-	pub fn bin_expr(&self) -> SyntaxResult<BinExpr> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct FnExpr {
@@ -1277,6 +1281,11 @@ impl SpreadElement {
 	}
 	pub fn element(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsArrayHole {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsArrayHole {}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteral {
 	pub(crate) syntax: SyntaxNode,
@@ -2245,12 +2254,13 @@ pub enum Decl {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExpression {
-	ArrowExpr(ArrowExpr),
 	JsAnyLiteral(JsAnyLiteral),
+	JsArrayExpression(JsArrayExpression),
+	JsBinaryExpression(JsBinaryExpression),
+	ArrowExpr(ArrowExpr),
 	Template(Template),
 	NameRef(NameRef),
 	ThisExpr(ThisExpr),
-	ArrayExpr(ArrayExpr),
 	ObjectExpr(ObjectExpr),
 	GroupingExpr(GroupingExpr),
 	BracketExpr(BracketExpr),
@@ -2260,7 +2270,6 @@ pub enum JsAnyExpression {
 	UnaryExpr(UnaryExpr),
 	PreUpdateExpression(PreUpdateExpression),
 	PostUpdateExpression(PostUpdateExpression),
-	BinExpr(BinExpr),
 	CondExpr(CondExpr),
 	AssignExpr(AssignExpr),
 	SequenceExpr(SequenceExpr),
@@ -2389,10 +2398,10 @@ pub enum ConstructorParamOrPat {
 	Pattern(Pattern),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ExprOrSpread {
+pub enum JsAnyArrayElement {
 	JsAnyExpression(JsAnyExpression),
 	SpreadElement(SpreadElement),
-	GroupingExpr(GroupingExpr),
+	JsArrayHole(JsArrayHole),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
@@ -2964,6 +2973,28 @@ impl AstNode for JsCatchDeclaration {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsArrayExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsBinaryExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINARY_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for ArrowExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARROW_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2999,17 +3030,6 @@ impl AstNode for NameRef {
 }
 impl AstNode for ThisExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == THIS_EXPR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ArrayExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == ARRAY_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3109,17 +3129,6 @@ impl AstNode for PreUpdateExpression {
 }
 impl AstNode for PostUpdateExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == POST_UPDATE_EXPRESSION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for BinExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == BIN_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3483,6 +3492,17 @@ impl AstNode for TsConstructorParam {
 }
 impl AstNode for SpreadElement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == SPREAD_ELEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsArrayHole {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_HOLE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4691,6 +4711,14 @@ impl AstNode for Decl {
 		}
 	}
 }
+impl From<JsArrayExpression> for JsAnyExpression {
+	fn from(node: JsArrayExpression) -> JsAnyExpression { JsAnyExpression::JsArrayExpression(node) }
+}
+impl From<JsBinaryExpression> for JsAnyExpression {
+	fn from(node: JsBinaryExpression) -> JsAnyExpression {
+		JsAnyExpression::JsBinaryExpression(node)
+	}
+}
 impl From<ArrowExpr> for JsAnyExpression {
 	fn from(node: ArrowExpr) -> JsAnyExpression { JsAnyExpression::ArrowExpr(node) }
 }
@@ -4702,9 +4730,6 @@ impl From<NameRef> for JsAnyExpression {
 }
 impl From<ThisExpr> for JsAnyExpression {
 	fn from(node: ThisExpr) -> JsAnyExpression { JsAnyExpression::ThisExpr(node) }
-}
-impl From<ArrayExpr> for JsAnyExpression {
-	fn from(node: ArrayExpr) -> JsAnyExpression { JsAnyExpression::ArrayExpr(node) }
 }
 impl From<ObjectExpr> for JsAnyExpression {
 	fn from(node: ObjectExpr) -> JsAnyExpression { JsAnyExpression::ObjectExpr(node) }
@@ -4736,9 +4761,6 @@ impl From<PostUpdateExpression> for JsAnyExpression {
 	fn from(node: PostUpdateExpression) -> JsAnyExpression {
 		JsAnyExpression::PostUpdateExpression(node)
 	}
-}
-impl From<BinExpr> for JsAnyExpression {
-	fn from(node: BinExpr) -> JsAnyExpression { JsAnyExpression::BinExpr(node) }
 }
 impl From<CondExpr> for JsAnyExpression {
 	fn from(node: CondExpr) -> JsAnyExpression { JsAnyExpression::CondExpr(node) }
@@ -4793,11 +4815,12 @@ impl From<JsUnknownExpression> for JsAnyExpression {
 impl AstNode for JsAnyExpression {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			ARROW_EXPR
+			JS_ARRAY_EXPRESSION
+			| JS_BINARY_EXPRESSION
+			| ARROW_EXPR
 			| TEMPLATE
 			| NAME_REF
 			| THIS_EXPR
-			| ARRAY_EXPR
 			| OBJECT_EXPR
 			| GROUPING_EXPR
 			| BRACKET_EXPR
@@ -4807,7 +4830,6 @@ impl AstNode for JsAnyExpression {
 			| UNARY_EXPR
 			| PRE_UPDATE_EXPRESSION
 			| POST_UPDATE_EXPRESSION
-			| BIN_EXPR
 			| COND_EXPR
 			| ASSIGN_EXPR
 			| SEQUENCE_EXPR
@@ -4830,11 +4852,14 @@ impl AstNode for JsAnyExpression {
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
+			JS_ARRAY_EXPRESSION => JsAnyExpression::JsArrayExpression(JsArrayExpression { syntax }),
+			JS_BINARY_EXPRESSION => {
+				JsAnyExpression::JsBinaryExpression(JsBinaryExpression { syntax })
+			}
 			ARROW_EXPR => JsAnyExpression::ArrowExpr(ArrowExpr { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
 			NAME_REF => JsAnyExpression::NameRef(NameRef { syntax }),
 			THIS_EXPR => JsAnyExpression::ThisExpr(ThisExpr { syntax }),
-			ARRAY_EXPR => JsAnyExpression::ArrayExpr(ArrayExpr { syntax }),
 			OBJECT_EXPR => JsAnyExpression::ObjectExpr(ObjectExpr { syntax }),
 			GROUPING_EXPR => JsAnyExpression::GroupingExpr(GroupingExpr { syntax }),
 			BRACKET_EXPR => JsAnyExpression::BracketExpr(BracketExpr { syntax }),
@@ -4848,7 +4873,6 @@ impl AstNode for JsAnyExpression {
 			POST_UPDATE_EXPRESSION => {
 				JsAnyExpression::PostUpdateExpression(PostUpdateExpression { syntax })
 			}
-			BIN_EXPR => JsAnyExpression::BinExpr(BinExpr { syntax }),
 			COND_EXPR => JsAnyExpression::CondExpr(CondExpr { syntax }),
 			ASSIGN_EXPR => JsAnyExpression::AssignExpr(AssignExpr { syntax }),
 			SEQUENCE_EXPR => JsAnyExpression::SequenceExpr(SequenceExpr { syntax }),
@@ -4878,11 +4902,12 @@ impl AstNode for JsAnyExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
+			JsAnyExpression::JsArrayExpression(it) => &it.syntax,
+			JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
 			JsAnyExpression::NameRef(it) => &it.syntax,
 			JsAnyExpression::ThisExpr(it) => &it.syntax,
-			JsAnyExpression::ArrayExpr(it) => &it.syntax,
 			JsAnyExpression::ObjectExpr(it) => &it.syntax,
 			JsAnyExpression::GroupingExpr(it) => &it.syntax,
 			JsAnyExpression::BracketExpr(it) => &it.syntax,
@@ -4892,7 +4917,6 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::UnaryExpr(it) => &it.syntax,
 			JsAnyExpression::PreUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::PostUpdateExpression(it) => &it.syntax,
-			JsAnyExpression::BinExpr(it) => &it.syntax,
 			JsAnyExpression::CondExpr(it) => &it.syntax,
 			JsAnyExpression::AssignExpr(it) => &it.syntax,
 			JsAnyExpression::SequenceExpr(it) => &it.syntax,
@@ -5524,27 +5548,27 @@ impl AstNode for ConstructorParamOrPat {
 		}
 	}
 }
-impl From<SpreadElement> for ExprOrSpread {
-	fn from(node: SpreadElement) -> ExprOrSpread { ExprOrSpread::SpreadElement(node) }
+impl From<SpreadElement> for JsAnyArrayElement {
+	fn from(node: SpreadElement) -> JsAnyArrayElement { JsAnyArrayElement::SpreadElement(node) }
 }
-impl From<GroupingExpr> for ExprOrSpread {
-	fn from(node: GroupingExpr) -> ExprOrSpread { ExprOrSpread::GroupingExpr(node) }
+impl From<JsArrayHole> for JsAnyArrayElement {
+	fn from(node: JsArrayHole) -> JsAnyArrayElement { JsAnyArrayElement::JsArrayHole(node) }
 }
-impl AstNode for ExprOrSpread {
+impl AstNode for JsAnyArrayElement {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			SPREAD_ELEMENT | GROUPING_EXPR => true,
+			SPREAD_ELEMENT | JS_ARRAY_HOLE => true,
 			k if JsAnyExpression::can_cast(k) => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			SPREAD_ELEMENT => ExprOrSpread::SpreadElement(SpreadElement { syntax }),
-			GROUPING_EXPR => ExprOrSpread::GroupingExpr(GroupingExpr { syntax }),
+			SPREAD_ELEMENT => JsAnyArrayElement::SpreadElement(SpreadElement { syntax }),
+			JS_ARRAY_HOLE => JsAnyArrayElement::JsArrayHole(JsArrayHole { syntax }),
 			_ => {
 				if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-					return Some(ExprOrSpread::JsAnyExpression(js_any_expression));
+					return Some(JsAnyArrayElement::JsAnyExpression(js_any_expression));
 				}
 				return None;
 			}
@@ -5553,9 +5577,9 @@ impl AstNode for ExprOrSpread {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ExprOrSpread::SpreadElement(it) => &it.syntax,
-			ExprOrSpread::GroupingExpr(it) => &it.syntax,
-			ExprOrSpread::JsAnyExpression(it) => it.syntax(),
+			JsAnyArrayElement::SpreadElement(it) => &it.syntax,
+			JsAnyArrayElement::JsArrayHole(it) => &it.syntax,
+			JsAnyArrayElement::JsAnyExpression(it) => it.syntax(),
 		}
 	}
 }
@@ -5940,7 +5964,7 @@ impl std::fmt::Display for ConstructorParamOrPat {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ExprOrSpread {
+impl std::fmt::Display for JsAnyArrayElement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6225,6 +6249,16 @@ impl std::fmt::Display for JsCatchDeclaration {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsArrayExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsBinaryExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for ArrowExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6241,11 +6275,6 @@ impl std::fmt::Display for NameRef {
 	}
 }
 impl std::fmt::Display for ThisExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ArrayExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6291,11 +6320,6 @@ impl std::fmt::Display for PreUpdateExpression {
 	}
 }
 impl std::fmt::Display for PostUpdateExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for BinExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6461,6 +6485,11 @@ impl std::fmt::Display for TsConstructorParam {
 	}
 }
 impl std::fmt::Display for SpreadElement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsArrayHole {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

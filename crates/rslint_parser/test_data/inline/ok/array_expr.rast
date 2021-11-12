@@ -1,7 +1,7 @@
 JS_MODULE@0..65
   LIST@0..64
     JS_EXPRESSION_STATEMENT@0..11
-      ARRAY_EXPR@0..10
+      JS_ARRAY_EXPRESSION@0..10
         L_BRACK@0..1 "["
         LIST@1..9
           NAME_REF@1..4
@@ -14,7 +14,7 @@ JS_MODULE@0..65
       SEMICOLON@10..11 ";"
     WHITESPACE@11..12 "\n"
     JS_EXPRESSION_STATEMENT@12..18
-      ARRAY_EXPR@12..17
+      JS_ARRAY_EXPRESSION@12..17
         L_BRACK@12..13 "["
         LIST@13..16
           NAME_REF@13..16
@@ -23,9 +23,10 @@ JS_MODULE@0..65
       SEMICOLON@17..18 ";"
     WHITESPACE@18..19 "\n"
     JS_EXPRESSION_STATEMENT@19..26
-      ARRAY_EXPR@19..25
+      JS_ARRAY_EXPRESSION@19..25
         L_BRACK@19..20 "["
         LIST@20..24
+          JS_ARRAY_HOLE@20..20
           COMMA@20..21 ","
           NAME_REF@21..24
             IDENT@21..24 "foo"
@@ -33,7 +34,7 @@ JS_MODULE@0..65
       SEMICOLON@25..26 ";"
     WHITESPACE@26..27 "\n"
     JS_EXPRESSION_STATEMENT@27..34
-      ARRAY_EXPR@27..33
+      JS_ARRAY_EXPRESSION@27..33
         L_BRACK@27..28 "["
         LIST@28..32
           NAME_REF@28..31
@@ -43,25 +44,33 @@ JS_MODULE@0..65
       SEMICOLON@33..34 ";"
     WHITESPACE@34..35 "\n"
     JS_EXPRESSION_STATEMENT@35..50
-      ARRAY_EXPR@35..49
+      JS_ARRAY_EXPRESSION@35..49
         L_BRACK@35..36 "["
         LIST@36..48
+          JS_ARRAY_HOLE@36..36
           COMMA@36..37 ","
+          JS_ARRAY_HOLE@37..37
           COMMA@37..38 ","
+          JS_ARRAY_HOLE@38..38
           COMMA@38..39 ","
+          JS_ARRAY_HOLE@39..39
           COMMA@39..40 ","
+          JS_ARRAY_HOLE@40..40
           COMMA@40..41 ","
           NAME_REF@41..44
             IDENT@41..44 "foo"
           COMMA@44..45 ","
+          JS_ARRAY_HOLE@45..45
           COMMA@45..46 ","
+          JS_ARRAY_HOLE@46..46
           COMMA@46..47 ","
+          JS_ARRAY_HOLE@47..47
           COMMA@47..48 ","
         R_BRACK@48..49 "]"
       SEMICOLON@49..50 ";"
     WHITESPACE@50..51 "\n"
     JS_EXPRESSION_STATEMENT@51..64
-      ARRAY_EXPR@51..63
+      JS_ARRAY_EXPRESSION@51..63
         L_BRACK@51..52 "["
         LIST@52..62
           SPREAD_ELEMENT@52..56

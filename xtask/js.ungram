@@ -235,12 +235,13 @@ JsDebuggerStatement =
 
 // Expression
 JsAnyExpression =
-	ArrowExpr
-	| JsAnyLiteral
+	JsAnyLiteral
+	| JsArrayExpression
+	| JsBinaryExpression
+	| ArrowExpr
 	| Template
 	| NameRef
 	| ThisExpr
-	| ArrayExpr
 	| ObjectExpr
 	| GroupingExpr
 	| BracketExpr
@@ -250,7 +251,6 @@ JsAnyExpression =
 	| UnaryExpr
 	| PreUpdateExpression
 	| PostUpdateExpression
-	| BinExpr
 	| CondExpr
 	| AssignExpr
 	| SequenceExpr
@@ -398,13 +398,18 @@ ClassProp =
 	value:JsAnyExpression?
 	';'?
 
-// Array expression
-ArrayExpr = '[' elements:ExprOrSpread* ']'
+// Array expression\
+JsArrayExpression =
+	'['
+	elements: (JsAnyArrayElement (',' JsAnyArrayElement)* ','?)
+	']'
 
-ExprOrSpread =
+JsAnyArrayElement =
 	JsAnyExpression
 	| SpreadElement
-	| GroupingExpr
+	| JsArrayHole
+
+JsArrayHole = manual__hole: ''
 
 // assign expression
 AssignExpr =
@@ -422,8 +427,6 @@ PatternOrExpr = Pattern | JsAnyExpression
 // sequence expression
 SequenceExpr =
 	exprs:(JsAnyExpression (',' JsAnyExpression)*)
-	bin_expr: BinExpr
-
 
 // grouping expression
 GroupingExpr = '(' inner:JsAnyExpression ')'
@@ -432,15 +435,16 @@ GroupingExpr = '(' inner:JsAnyExpression ')'
 BracketExpr =  'super'? manual__object:JsAnyExpression '[' manual__prop:JsAnyExpression ']'
 
 
-// binary expression
-BinExpr =
-  manual__lhs:JsAnyExpression
-  operator:(
-		'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
-		| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
-		| '&' | '|' | '^' | '??' | '||' | '&&' | 'in' | 'instanceof'
-  )
-  manual__rhs:JsAnyExpression
+JsBinaryExpression =
+    manual__left: JsAnyExpression
+    operator: (
+    	'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
+    	| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
+    	| '&' | '|' | '^' | '??' | '||' | '&&' | 'in' | 'instanceof'
+    // TODO 1725 extract && ?? and || into logical expression
+			| '??' | '||' | '&&'
+		)
+    manual__right: JsAnyExpression
 
 // unary expression
 UnaryExpr =

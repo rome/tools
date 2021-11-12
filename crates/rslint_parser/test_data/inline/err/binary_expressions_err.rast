@@ -7,7 +7,7 @@ JS_MODULE@0..35
         ARG_LIST@3..10
           L_PAREN@3..4 "("
           LIST@4..9
-            BIN_EXPR@4..9
+            JS_BINARY_EXPRESSION@4..9
               NAME_REF@4..7
                 IDENT@4..7 "foo"
               WHITESPACE@7..8 " "
@@ -16,13 +16,13 @@ JS_MODULE@0..35
       SEMICOLON@10..11 ";"
     WHITESPACE@11..12 "\n"
     JS_EXPRESSION_STATEMENT@12..22
-      BIN_EXPR@12..21
+      JS_BINARY_EXPRESSION@12..21
         NAME_REF@12..15
           IDENT@12..15 "foo"
         WHITESPACE@15..16 " "
         PLUS@16..17 "+"
         WHITESPACE@17..18 " "
-        BIN_EXPR@18..21
+        JS_BINARY_EXPRESSION@18..21
           STAR@18..19 "*"
           WHITESPACE@19..20 " "
           JS_NUMBER_LITERAL@20..21
@@ -30,7 +30,7 @@ JS_MODULE@0..35
       SEMICOLON@21..22 ";"
     WHITESPACE@22..23 "\n"
     JS_EXPRESSION_STATEMENT@23..34
-      BIN_EXPR@23..33
+      JS_BINARY_EXPRESSION@23..33
         UNARY_EXPR@23..27
           BANG@23..24 "!"
           NAME_REF@24..27

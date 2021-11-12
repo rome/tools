@@ -33,7 +33,7 @@ JS_MODULE@0..40
         SEMICOLON@23..24 ";"
         WHITESPACE@24..25 " "
         FOR_STMT_TEST@25..31
-          BIN_EXPR@25..31
+          JS_BINARY_EXPRESSION@25..31
             NAME_REF@25..26
               IDENT@25..26 "i"
             WHITESPACE@26..27 " "

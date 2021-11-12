@@ -9,7 +9,7 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::Template(_) => todo!(),
 			JsAnyExpression::NameRef(name_ref) => name_ref.to_format_element(formatter),
 			JsAnyExpression::ThisExpr(_) => todo!(),
-			JsAnyExpression::ArrayExpr(array_expression) => {
+			JsAnyExpression::JsArrayExpression(array_expression) => {
 				array_expression.to_format_element(formatter)
 			}
 			JsAnyExpression::ObjectExpr(object_expression) => {
@@ -23,7 +23,7 @@ impl ToFormatElement for JsAnyExpression {
 				call_expression.to_format_element(formatter)
 			}
 			JsAnyExpression::UnaryExpr(_) => todo!(),
-			JsAnyExpression::BinExpr(_) => todo!(),
+			JsAnyExpression::JsBinaryExpression(_) => todo!(),
 			JsAnyExpression::CondExpr(_) => todo!(),
 			JsAnyExpression::AssignExpr(_) => todo!(),
 			JsAnyExpression::SequenceExpr(expr) => expr.to_format_element(formatter),

@@ -60,7 +60,7 @@ pub fn check_assign_target(
 			match e {
 				JsAnyExpression::JsAnyLiteral(_) => false,
 				JsAnyExpression::CallExpr(_) => deny_call,
-				JsAnyExpression::BinExpr(_) => false,
+				JsAnyExpression::JsBinaryExpression(_) => false,
 				JsAnyExpression::GroupingExpr(it) => {
 					it.inner().map_or(false, |i| should_deny(&i, deny_call))
 				}
@@ -133,11 +133,11 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 				check_for_stmt_lhs(p, inner, marker);
 			}
 		}
-		JsAnyExpression::ArrayExpr(expr) => {
+		JsAnyExpression::JsArrayExpression(expr) => {
 			let elem_count = expr.elements().len();
 
 			for (idx, elem) in expr.elements().iter().enumerate() {
-				if let ast::ExprOrSpread::SpreadElement(ref spread) = elem {
+				if let ast::JsAnyArrayElement::SpreadElement(ref spread) = elem {
 					if idx != elem_count - 1 {
 						let err = p.err_builder("Spread element may only occur as the last element of an assignment target")
                             .primary(marker.offset_range(p, spread.syntax().trimmed_range()), "");

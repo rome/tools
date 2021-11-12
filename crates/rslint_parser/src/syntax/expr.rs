@@ -373,7 +373,7 @@ fn binary_expr_recursive(
 		},
 	);
 
-	let complete = m.complete(p, BIN_EXPR);
+	let complete = m.complete(p, JS_BINARY_EXPRESSION);
 	binary_expr_recursive(p, Some(complete), min_prec)
 
 	// FIXME(RDambrosio016): We should check for nullish-coalescing and logical expr being used together,
@@ -1136,7 +1136,10 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	let elements_list = p.start();
 
 	while !p.at(EOF) {
-		while p.eat(T![,]) {}
+		while p.at(T![,]) {
+			p.start().complete(p, SyntaxKind::JS_ARRAY_HOLE);
+			p.eat(T![,]);
+		}
 
 		if p.at(T![']']) {
 			break;
@@ -1157,7 +1160,7 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	elements_list.complete(p, LIST);
 
 	p.expect(T![']']);
-	m.complete(p, ARRAY_EXPR)
+	m.complete(p, JS_ARRAY_EXPRESSION)
 }
 
 /// A spread element consisting of three dots and an assignment expression such as `...foo`

@@ -10,7 +10,7 @@ JS_MODULE@0..48
           CLASS_PROP@10..44
             COMPUTED_PROPERTY_NAME@10..17
               L_BRACK@10..11 "["
-              BIN_EXPR@11..16
+              JS_BINARY_EXPRESSION@11..16
                 JS_NUMBER_LITERAL@11..12
                   JS_NUMBER_LITERAL_TOKEN@11..12 "1"
                 WHITESPACE@12..13 " "

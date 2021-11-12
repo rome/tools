@@ -4,8 +4,8 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	ArrayExpr, GroupingExpr, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsStringLiteral,
-	LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
+	GroupingExpr, JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral,
+	JsStringLiteral, LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
@@ -77,8 +77,8 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 				token("}"),
 			])
 		}
-		SyntaxKind::ARRAY_EXPR => {
-			let array = ArrayExpr::cast(node).unwrap();
+		SyntaxKind::JS_ARRAY_EXPRESSION => {
+			let array = JsArrayExpression::cast(node).unwrap();
 
 			let separator = format_elements![token(","), soft_line_break_or_space(),];
 

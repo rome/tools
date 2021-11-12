@@ -1,10 +1,10 @@
 use crate::{
-	format_elements, group_elements, if_group_breaks, join_elements, soft_indent,
+	empty_element, format_elements, group_elements, if_group_breaks, join_elements, soft_indent,
 	soft_line_break_or_space, token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::ArrayExpr;
+use rslint_parser::ast::{JsArrayExpression, JsArrayHole};
 
-impl ToFormatElement for ArrayExpr {
+impl ToFormatElement for JsArrayExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let elements = formatter.format_nodes(self.elements())?;
 
@@ -17,5 +17,11 @@ impl ToFormatElement for ArrayExpr {
 			if_group_breaks(token(",")),
 			formatter.format_token(&self.r_brack_token()?)?,
 		)))
+	}
+}
+
+impl ToFormatElement for JsArrayHole {
+	fn to_format_element(&self, _: &Formatter) -> FormatResult<FormatElement> {
+		Ok(empty_element())
 	}
 }

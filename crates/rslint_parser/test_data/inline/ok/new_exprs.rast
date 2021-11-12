@@ -63,7 +63,7 @@ JS_MODULE@0..113
               IDENT@66..69 "baz"
             COMMA@69..70 ","
             WHITESPACE@70..71 " "
-            BIN_EXPR@71..76
+            JS_BINARY_EXPRESSION@71..76
               JS_NUMBER_LITERAL@71..72
                 JS_NUMBER_LITERAL_TOKEN@71..72 "6"
               WHITESPACE@72..73 " "
@@ -73,7 +73,7 @@ JS_MODULE@0..113
                 JS_NUMBER_LITERAL_TOKEN@75..76 "6"
             COMMA@76..77 ","
             WHITESPACE@77..78 " "
-            BIN_EXPR@78..111
+            JS_BINARY_EXPRESSION@78..111
               BRACKET_EXPR@78..86
                 NAME_REF@78..81
                   IDENT@78..81 "foo"
@@ -84,7 +84,7 @@ JS_MODULE@0..113
               WHITESPACE@86..87 " "
               PLUS@87..88 "+"
               WHITESPACE@88..89 " "
-              BIN_EXPR@89..111
+              JS_BINARY_EXPRESSION@89..111
                 ARROW_EXPR@89..100
                   PARAMETER_LIST@89..94
                     L_PAREN@89..90 "("
