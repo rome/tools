@@ -7,11 +7,11 @@ let a = 10;
 "use strict"; // not a directive
 
 function test() {
-	"use strict";
+	'use strict';
 
 	let a = 10;
 
-	"use strict";
+	'use strict'; // not a directive
 }
 
 (function () {
@@ -27,7 +27,7 @@ let b = () => {
 
 	let a = 10;
 
-	"use strict";
+	"use strict";  // not a directive
 }
 
 {

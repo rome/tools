@@ -520,7 +520,7 @@ pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
 
 		let directive_text = p.token_src(&directive_token);
 
-		if &directive_text[1..directive_text.len() - 1] == "use strict" {
+		if directive_text == "\"use strict\"" || directive_text == "'use strict'" {
 			if old_state == None {
 				old_state = Some(p.state.clone());
 			}
