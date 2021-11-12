@@ -1,6 +1,7 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 
-use crate::{ast::*, numbers::*, util::*, SyntaxText, TextRange, TextSize, TokenSet, T};
+use crate::{ast::*, numbers::*, util::*, TextRange, TokenSet, T};
+use rome_rowan::{SyntaxText, TextSize};
 use SyntaxKind::*;
 
 impl BracketExpr {
@@ -333,74 +334,21 @@ impl ObjectExpr {
 	}
 }
 
-#[derive(Debug, Clone, PartialEq, PartialOrd)]
-pub enum LiteralKind {
-	Number(f64),
-	BigInt(BigInt),
-	String,
-	Null,
-	Bool(bool),
-	Regex,
+impl JsNumberLiteral {
+	pub fn as_number(&self) -> Option<f64> {
+		parse_js_number(self.value_token().unwrap().text())
+	}
 }
 
-impl Literal {
-	pub fn token(&self) -> SyntaxToken {
-		self.syntax()
-			.children_with_tokens()
-			.find(|e| !e.kind().is_trivia())
-			.and_then(|e| e.into_token())
-			.unwrap()
+impl JsBigIntLiteral {
+	pub fn as_number(&self) -> Option<BigInt> {
+		parse_js_big_int(self.value_token().ok()?.text())
 	}
+}
 
-	pub fn kind(&self) -> LiteralKind {
-		match self.token().kind() {
-			T![null] => LiteralKind::Null,
-			NUMBER => match parse_js_num(self.to_string()).unwrap() {
-				JsNum::BigInt(bigint) => LiteralKind::BigInt(bigint),
-				JsNum::Float(float) => LiteralKind::Number(float),
-			},
-			STRING => LiteralKind::String,
-			TRUE_KW => LiteralKind::Bool(true),
-			FALSE_KW => LiteralKind::Bool(false),
-			REGEX => LiteralKind::Regex,
-			_ => unreachable!(),
-		}
-	}
-
-	pub fn as_number(&self) -> Option<f64> {
-		if let LiteralKind::Number(num) = self.kind() {
-			Some(num)
-		} else {
-			None
-		}
-	}
-
-	pub fn is_number(&self) -> bool {
-		matches!(self.kind(), LiteralKind::Number(_))
-	}
-
-	pub fn is_string(&self) -> bool {
-		self.kind() == LiteralKind::String
-	}
-
-	pub fn is_null(&self) -> bool {
-		self.kind() == LiteralKind::Null
-	}
-
-	pub fn is_bool(&self) -> bool {
-		matches!(self.kind(), LiteralKind::Bool(_))
-	}
-
-	pub fn is_regex(&self) -> bool {
-		self.kind() == LiteralKind::Regex
-	}
-
+impl JsStringLiteral {
 	/// Get the inner text of a string not including the quotes
-	pub fn inner_string_text(&self) -> Option<SyntaxText> {
-		if !self.is_string() {
-			return None;
-		}
-
+	pub fn inner_string_text(&self) -> SyntaxText {
 		let start = self.syntax().text_range().start() + TextSize::from(1);
 		let end_char = self
 			.syntax()
@@ -415,11 +363,9 @@ impl Literal {
 
 		let offset = self.syntax().text_range().start();
 
-		Some(
-			self.syntax()
-				.text()
-				.slice(TextRange::new(start - offset, end - offset)),
-		)
+		self.syntax()
+			.text()
+			.slice(TextRange::new(start - offset, end - offset))
 	}
 }
 
@@ -516,7 +462,8 @@ impl ObjectProp {
 fn prop_name_syntax(name: PropName) -> Option<SyntaxNode> {
 	Some(match name {
 		PropName::Ident(idt) => idt.syntax().clone(),
-		PropName::Literal(lit) => lit.syntax().clone(),
+		PropName::JsStringLiteral(lit) => lit.syntax().clone(),
+		PropName::JsNumberLiteral(lit) => lit.syntax().clone(),
 		PropName::Name(name) => name.syntax().clone(),
 		PropName::ComputedPropertyName(_) => return None,
 		PropName::JsUnknownBinding(_) => todo!(),

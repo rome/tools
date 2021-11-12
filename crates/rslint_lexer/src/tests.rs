@@ -170,12 +170,12 @@ fn all_whitespace() {
 fn empty_string() {
 	assert_lex! {
 		r#""""#,
-		STRING:2
+		JS_STRING_LITERAL_TOKEN:2
 	}
 
 	assert_lex! {
 		"''",
-		STRING:2
+		JS_STRING_LITERAL_TOKEN:2
 	}
 }
 
@@ -219,12 +219,12 @@ fn template_literals() {
 fn simple_string() {
 	assert_lex! {
 		r#"'abcdefghijklmnopqrstuvwxyz123456789\'10🦀'"#,
-		STRING:45
+		JS_STRING_LITERAL_TOKEN:45
 	}
 
 	assert_lex! {
 		r#""abcdefghijklmnopqrstuvwxyz123456789\"10🦀""#,
-		STRING:45
+		JS_STRING_LITERAL_TOKEN:45
 	}
 }
 
@@ -245,12 +245,12 @@ fn string_unicode_escape_invalid() {
 fn string_unicode_escape_valid() {
 	assert_lex! {
 		r#""abcd\u2000a""#,
-		STRING:13
+		JS_STRING_LITERAL_TOKEN:13
 	}
 
 	assert_lex! {
 		r#"'abcd\u2000a'"#,
-		STRING:13
+		JS_STRING_LITERAL_TOKEN:13
 	}
 }
 
@@ -258,12 +258,12 @@ fn string_unicode_escape_valid() {
 fn string_unicode_escape_valid_resolving_to_endquote() {
 	assert_lex! {
 		r#""abcd\u0022a""#,
-		STRING:13
+		JS_STRING_LITERAL_TOKEN:13
 	}
 
 	assert_lex! {
 		r#"'abcd\u0027a'"#,
-		STRING:13
+		JS_STRING_LITERAL_TOKEN:13
 	}
 }
 
@@ -284,12 +284,12 @@ fn string_hex_escape_invalid() {
 fn string_hex_escape_valid() {
 	assert_lex! {
 		r#""abcd \x00 \xAB""#,
-		STRING:16
+		JS_STRING_LITERAL_TOKEN:16
 	}
 
 	assert_lex! {
 		r#"'abcd \x00 \xAB'"#,
-		STRING:16
+		JS_STRING_LITERAL_TOKEN:16
 	}
 }
 
@@ -328,7 +328,7 @@ fn complex_string_1() {
 		WHITESPACE:1,
 		PLUSEQ:2,
 		WHITESPACE:1,
-		STRING:14,
+		JS_STRING_LITERAL_TOKEN:14,
 		SEMICOLON:1
 	}
 
@@ -339,7 +339,7 @@ fn complex_string_1() {
 		WHITESPACE:1,
 		PLUSEQ:2,
 		WHITESPACE:1,
-		STRING:14,
+		JS_STRING_LITERAL_TOKEN:14,
 		SEMICOLON:1
 	}
 }
@@ -677,23 +677,23 @@ fn labels_y() {
 fn number_basic() {
 	assert_lex! {
 		"1",
-		NUMBER:1
+		JS_NUMBER_LITERAL_TOKEN:1
 	}
 
 	assert_lex! {
 		"123456 ",
-		NUMBER:6,
+		JS_NUMBER_LITERAL_TOKEN:6,
 		WHITESPACE:1
 	}
 
 	assert_lex! {
 		"90",
-		NUMBER:2
+		JS_NUMBER_LITERAL_TOKEN:2
 	}
 
 	assert_lex! {
 		".13",
-		NUMBER:3
+		JS_NUMBER_LITERAL_TOKEN:3
 	}
 }
 
@@ -701,7 +701,7 @@ fn number_basic() {
 fn number_basic_err() {
 	assert_lex! {
 		"2_?",
-		NUMBER:2, // numeric separator error
+		JS_NUMBER_LITERAL_TOKEN:2, // numeric separator error
 		QUESTION:1
 	}
 
@@ -712,7 +712,7 @@ fn number_basic_err() {
 
 	assert_lex! {
 		r#"25\uFEFFb"#,
-		NUMBER:2,
+		JS_NUMBER_LITERAL_TOKEN:2,
 		ERROR_TOKEN:6,
 		IDENT:1
 	}
@@ -727,19 +727,19 @@ fn number_basic_err() {
 fn number_complex() {
 	assert_lex! {
 		"3e-5 123e+56",
-		NUMBER:4,
+		JS_NUMBER_LITERAL_TOKEN:4,
 		WHITESPACE:1,
-		NUMBER:7
+		JS_NUMBER_LITERAL_TOKEN:7
 	}
 
 	assert_lex! {
 		"3.14159e+1",
-		NUMBER:10
+		JS_NUMBER_LITERAL_TOKEN:10
 	}
 
 	assert_lex! {
 		".0e34",
-		NUMBER:5
+		JS_NUMBER_LITERAL_TOKEN:5
 	}
 }
 
@@ -750,12 +750,12 @@ fn dot_number_disambiguation() {
 		DOT:1,
 		IDENT:1,
 		PLUS:1,
-		NUMBER:1
+		JS_NUMBER_LITERAL_TOKEN:1
 	}
 
 	assert_lex! {
 		".0e+5",
-		NUMBER:5
+		JS_NUMBER_LITERAL_TOKEN:5
 	}
 }
 
@@ -763,13 +763,13 @@ fn dot_number_disambiguation() {
 fn binary_literals() {
 	assert_lex! {
 		"0b10101010, 0B10101010, 0b10101010n",
-		NUMBER:10,
+		JS_NUMBER_LITERAL_TOKEN:10,
 		COMMA:1,
 		WHITESPACE:1,
-		NUMBER:10,
+		JS_NUMBER_LITERAL_TOKEN:10,
 		COMMA:1,
 		WHITESPACE:1,
-		NUMBER:11
+		JS_NUMBER_LITERAL_TOKEN:11
 	}
 }
 
@@ -777,13 +777,13 @@ fn binary_literals() {
 fn octal_literals() {
 	assert_lex! {
 		"0o01742242, 0B10101010, 0b10101010n",
-		NUMBER:10,
+		JS_NUMBER_LITERAL_TOKEN:10,
 		COMMA:1,
 		WHITESPACE:1,
-		NUMBER:10,
+		JS_NUMBER_LITERAL_TOKEN:10,
 		COMMA:1,
 		WHITESPACE:1,
-		NUMBER:11
+		JS_NUMBER_LITERAL_TOKEN:11
 	}
 }
 
@@ -791,11 +791,11 @@ fn octal_literals() {
 fn bigint_literals() {
 	assert_lex! {
 		"0n 1743642n 1n",
-		NUMBER:2,
+		JS_NUMBER_LITERAL_TOKEN:2,
 		WHITESPACE:1,
-		NUMBER:8,
+		JS_NUMBER_LITERAL_TOKEN:8,
 		WHITESPACE:1,
-		NUMBER:2
+		JS_NUMBER_LITERAL_TOKEN:2
 	}
 }
 
@@ -821,15 +821,15 @@ fn shebang() {
 	assert_lex! {
 		"#0",
 		ERROR_TOKEN:1,
-		NUMBER:1
+		JS_NUMBER_LITERAL_TOKEN:1
 	}
 
 	assert_lex! {
 		"0#!/bin/deno",
-		NUMBER:1,
+		JS_NUMBER_LITERAL_TOKEN:1,
 		HASH:1,
 		BANG:1,
-		REGEX:9
+		JS_REGEX_LITERAL_TOKEN:9
 	}
 }
 
@@ -877,7 +877,7 @@ fn regex() {
 		WHITESPACE:1,
 		EQ:1,
 		WHITESPACE:1,
-		REGEX:7
+		JS_REGEX_LITERAL_TOKEN:7
 	}
 }
 
@@ -891,11 +891,11 @@ fn division() {
 		WHITESPACE:1,
 		EQ:1,
 		WHITESPACE:1,
-		NUMBER:1,
+		JS_NUMBER_LITERAL_TOKEN:1,
 		WHITESPACE:1,
 		SLASH:1,
 		WHITESPACE:1,
-		NUMBER:1
+		JS_NUMBER_LITERAL_TOKEN:1
 	}
 }
 
@@ -1007,7 +1007,7 @@ fn issue_30() {
 fn fuzz_fail_7() {
 	assert_lex! {
 		"/\u{0}/ª\u{80}",
-		REGEX:5,
+		JS_REGEX_LITERAL_TOKEN:5,
 		ERROR_TOKEN:2
 	}
 }

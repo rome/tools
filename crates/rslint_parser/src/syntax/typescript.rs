@@ -221,7 +221,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 
 	if p.cur_src() == "module" {
-		if p.nth_at(1, STRING) {
+		if p.nth_at(1, JS_STRING_LITERAL_TOKEN) {
 			return ts_ambient_external_module_decl(p, true);
 		} else if token_set![T![ident], T![yield], T![await]].contains(p.nth(1)) {
 			p.bump_remap(T![module]);
@@ -313,7 +313,7 @@ pub fn ts_ambient_external_module_decl(
 	if p.cur_src() == "global" {
 		p.bump_any();
 	} else {
-		p.expect(STRING);
+		p.expect(JS_STRING_LITERAL_TOKEN);
 	}
 	if p.at(T!['{']) {
 		ts_module_block(p);
@@ -465,7 +465,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 		p.expect_no_recover(T![']'])?;
 	} else {
 		match p.cur() {
-			STRING | NUMBER => {
+			JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => {
 				literal(p);
 			}
 			_ => {
@@ -585,7 +585,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 		let member = p.start();
 		let err_occured = if !p.at_ts(token_set![T![ident], T![yield], T![await]])
 			&& !p.cur().is_keyword()
-			&& !p.at(STRING)
+			&& !p.at(JS_STRING_LITERAL_TOKEN)
 		{
 			let err = p
 				.err_builder("expected an identifier or string for an enum variant, but found none")
@@ -598,7 +598,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 			);
 			true
 		} else {
-			if !p.eat(STRING) {
+			if !p.eat(JS_STRING_LITERAL_TOKEN) {
 				identifier_name(p).unwrap().undo_completion(p).abandon(p);
 			}
 			false
@@ -932,9 +932,11 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				ts_type_ref(p, None)
 			}
 		}
-		NUMBER | STRING | TRUE_KW | FALSE_KW | REGEX => {
-			Some(literal(p).unwrap().precede(p).complete(p, TS_LITERAL))
-		}
+		JS_NUMBER_LITERAL_TOKEN
+		| JS_STRING_LITERAL_TOKEN
+		| TRUE_KW
+		| FALSE_KW
+		| JS_REGEX_LITERAL_TOKEN => Some(literal(p).unwrap().precede(p).complete(p, TS_LITERAL)),
 		BACKTICK => {
 			let m = p.start();
 			p.bump_any();
@@ -961,12 +963,12 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 		T![-] => {
 			let m = p.start();
 			p.bump_any();
-			if p.at(NUMBER) {
+			if p.at(JS_NUMBER_LITERAL_TOKEN) {
 				let _m = p.start();
 				p.bump_any();
-				_m.complete(p, LITERAL);
+				_m.complete(p, JS_NUMBER_LITERAL);
 			} else {
-				p.expect_no_recover(NUMBER)?;
+				p.expect_no_recover(JS_NUMBER_LITERAL_TOKEN)?;
 			}
 			Some(m.complete(p, TS_LITERAL))
 		}
@@ -1020,11 +1022,11 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 					T![this],
 					T![import],
 					T![-],
-					NUMBER,
-					STRING,
+					JS_NUMBER_LITERAL_TOKEN,
+					JS_STRING_LITERAL_TOKEN,
 					TRUE_KW,
 					FALSE_KW,
-					REGEX,
+					JS_REGEX_LITERAL_TOKEN,
 					BACKTICK,
 					T![&],
 					T![|]
@@ -1136,7 +1138,7 @@ pub fn ts_import(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	p.expect_no_recover(T![import])?;
 	p.expect_no_recover(T!['('])?;
-	p.expect_no_recover(STRING)?;
+	p.expect_no_recover(JS_STRING_LITERAL_TOKEN)?;
 	p.expect_no_recover(T![')'])?;
 	if p.eat(T![.]) {
 		ts_entity_name(p, None, false);

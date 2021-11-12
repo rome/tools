@@ -8,6 +8,7 @@ use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use crate::ast::JsStringLiteral;
 use crate::{SyntaxKind::*, *};
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
@@ -591,18 +592,17 @@ pub(crate) fn block_items(
 					let parsed = p
 						.parse_marker::<ast::JsExpressionStatement>(complete.as_ref().unwrap())
 						.expression();
-					if let Ok(LITERAL) = parsed.as_ref().map(|it| it.syntax().kind()) {
-						let unwrapped = parsed.unwrap().syntax().to::<ast::Literal>();
-						if unwrapped.is_string() {
-							if unwrapped.inner_string_text().unwrap() == "use strict" {
-								let range = complete.as_ref().unwrap().range(p).into();
-								// We must do this because we cannot have multiple mutable borrows of p
-								let mut new = p.state.clone();
-								new.strict(p, range);
-								p.state = new;
-								could_be_directive = false;
-							}
-						} else {
+					if let Some(string_literal) = parsed
+						.as_ref()
+						.ok()
+						.and_then(|it| JsStringLiteral::cast(it.syntax().clone()))
+					{
+						if string_literal.inner_string_text() == "use strict" {
+							let range = complete.as_ref().unwrap().range(p).into();
+							// We must do this because we cannot have multiple mutable borrows of p
+							let mut new = p.state.clone();
+							new.strict(p, range);
+							p.state = new;
 							could_be_directive = false;
 						}
 					}

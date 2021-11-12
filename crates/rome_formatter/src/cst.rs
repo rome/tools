@@ -1,15 +1,16 @@
-use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl,
 	ClassProp, Condition, ConstructorParameters, FnDecl, ForInStmt, ForStmt, ForStmtInit,
-	ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement, JsCaseClause, JsCatchClause,
-	JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
-	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement, JsLabeledStatement,
-	JsReturnStatement, JsScript, JsSwitchStatement, JsTryStatement, JsVariableDeclarationStatement,
-	JsVariableDeclarator, JsWhileStatement, JsWithStatement, Literal, LiteralProp, Name, NameRef,
+	ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement, JsBooleanLiteral,
+	JsCaseClause, JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
+	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement,
+	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsReturnStatement, JsScript,
+	JsStringLiteral, JsSwitchStatement, JsTryStatement, JsVariableDeclarationStatement,
+	JsVariableDeclarator, JsWhileStatement, JsWithStatement, LiteralProp, Name, NameRef,
 	ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
 };
-use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
+use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
 impl ToFormatElement for SyntaxNode {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -23,7 +24,16 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::ASSIGN_PATTERN => AssignPattern::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::LITERAL => Literal::cast(self.clone())
+			SyntaxKind::JS_BOOLEAN_LITERAL => JsBooleanLiteral::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::JS_STRING_LITERAL => JsStringLiteral::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::JS_NULL_LITERAL => JsNullLiteral::cast(self.clone())
+				.unwrap()
+				.to_format_element(formatter),
+			SyntaxKind::JS_NUMBER_LITERAL => JsNumberLiteral::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::NAME => Name::cast(self.clone())
@@ -168,17 +178,6 @@ impl ToFormatElement for SyntaxNode {
 				"Implement formatting for the {:?} syntax kind.",
 				self.kind()
 			),
-		}
-	}
-}
-
-impl ToFormatElement for SyntaxToken {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		match self.kind() {
-			SyntaxKind::STRING => rslint_parser::ast::String::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			_ => Ok(token(self.text())),
 		}
 	}
 }

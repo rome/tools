@@ -58,7 +58,7 @@ pub fn check_assign_target(
 
 		fn should_deny(e: &JsAnyExpression, deny_call: bool) -> bool {
 			match e {
-				JsAnyExpression::Literal(_) => false,
+				JsAnyExpression::JsAnyLiteral(_) => false,
 				JsAnyExpression::CallExpr(_) => deny_call,
 				JsAnyExpression::BinExpr(_) => false,
 				JsAnyExpression::GroupingExpr(it) => {

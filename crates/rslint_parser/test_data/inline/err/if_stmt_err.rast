@@ -4,7 +4,7 @@ JS_MODULE@0..61
       IF_KW@0..2 "if"
       WHITESPACE@2..3 " "
       L_PAREN@3..4 "("
-      LITERAL@4..8
+      JS_BOOLEAN_LITERAL@4..8
         TRUE_KW@4..8 "true"
       R_PAREN@8..9 ")"
       WHITESPACE@9..10 " "
@@ -20,7 +20,7 @@ JS_MODULE@0..61
       IF_KW@18..20 "if"
       WHITESPACE@20..21 " "
       L_PAREN@21..22 "("
-      LITERAL@22..26
+      JS_BOOLEAN_LITERAL@22..26
         TRUE_KW@22..26 "true"
       R_PAREN@26..27 ")"
       WHITESPACE@27..28 " "

@@ -6,12 +6,12 @@ JS_MODULE@0..14
           L_PAREN@0..1 "("
           LIST@1..4
             ERROR@1..2
-              NUMBER@1..2 "5"
+              JS_NUMBER_LITERAL_TOKEN@1..2 "5"
             WHITESPACE@2..3 " "
             ERROR@3..4
               PLUS@3..4 "+"
         WHITESPACE@4..5 " "
-        NUMBER@5..6 "5"
+        JS_NUMBER_LITERAL_TOKEN@5..6 "5"
     ERROR@6..7
       R_PAREN@6..7 ")"
     WHITESPACE@7..8 " "

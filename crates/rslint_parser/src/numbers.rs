@@ -4,48 +4,45 @@ use lexical::parse_radix;
 
 pub use num_bigint::BigInt;
 
-#[derive(Debug, Clone, PartialEq)]
-pub enum JsNum {
-	Float(f64),
-	BigInt(BigInt),
-}
-
-/// Parse a js number as a string into a number.
-pub fn parse_js_num(num: String) -> Option<JsNum> {
-	let (radix, mut raw) = match num.get(0..2) {
+fn split_into_radix_and_number(num: &str) -> (u32, String) {
+	match num.get(0..2) {
 		Some("0x") | Some("0X") => (16, num.get(2..).unwrap().replace("_", "")),
 		Some("0b") | Some("0B") => (2, num.get(2..).unwrap().replace("_", "")),
 		Some("0o") | Some("0O") => (8, num.get(2..).unwrap().replace("_", "")),
-		_ => (10, num.as_str().replace("_", "")),
-	};
+		_ => (10, num.replace("_", "")),
+	}
+}
+
+/// Parse a js number as a string into a number.
+pub fn parse_js_number(num: &str) -> Option<f64> {
+	let (radix, raw) = split_into_radix_and_number(num);
 
 	if radix == 10 && raw.starts_with('0') {
 		// account for legacy octal literals
-		if let Ok(parsed) = parse_radix(raw.as_bytes(), 8) {
-			return Some(JsNum::Float(parsed));
+		if let Ok(parsed) = parse_radix::<f64, _>(raw.as_bytes(), 8) {
+			return Some(parsed);
 		}
 	}
 
-	let bigint = if raw.get(raw.len() - 1..raw.len()) == Some("n") {
-		raw = raw.split_at(raw.len() - 1).0.to_string();
-		true
-	} else {
-		false
-	};
+	parse_radix::<f64, _>(raw.as_bytes(), radix as u8).ok()
+}
 
-	if bigint {
-		Some(JsNum::BigInt(BigInt::parse_bytes(raw.as_bytes(), radix)?))
+/// Parse a big int number as a string into a number.
+pub fn parse_js_big_int(num: &str) -> Option<BigInt> {
+	let (radix, raw) = split_into_radix_and_number(num);
+
+	let raw = if raw.get(raw.len() - 1..raw.len()) == Some("n") {
+		raw.split_at(raw.len() - 1).0.to_string()
 	} else {
-		Some(JsNum::Float(
-			parse_radix::<f64, _>(raw.as_bytes(), radix as u8).ok()?,
-		))
-	}
+		raw
+	};
+	BigInt::parse_bytes(raw.as_bytes(), radix)
 }
 
 #[cfg(test)]
 mod tests {
 	use crate::{
-		ast::{JsAnyExpression, LiteralKind},
+		ast::{AstNode, JsBigIntLiteral, JsNumberLiteral},
 		parse_expr,
 	};
 	use num_bigint::ToBigInt;
@@ -53,10 +50,13 @@ mod tests {
 	macro_rules! assert_float {
 		($literal:literal, $value:expr) => {
 			let parsed = parse_expr($literal, 0);
-			if let JsAnyExpression::Literal(literal) = parsed.tree() {
+			if let Some(literal) = JsNumberLiteral::cast(parsed.syntax()) {
 				assert_eq!(literal.as_number(), Some($value));
 			} else {
-				panic!("Parsed expression is not a literal");
+				panic!(
+					"Parsed expression is not a number literal. Expr:\n{:#?}",
+					parsed.syntax()
+				);
 			}
 		};
 	}
@@ -64,11 +64,14 @@ mod tests {
 	macro_rules! assert_bigint {
 		($literal:literal, $value:expr) => {
 			let parsed = parse_expr($literal, 0);
-			if let JsAnyExpression::Literal(literal) = parsed.tree() {
-				let val = ($value as u64).to_bigint().unwrap();
-				assert_eq!(literal.kind(), LiteralKind::BigInt(val));
+			if let Some(literal) = JsBigIntLiteral::cast(parsed.syntax()) {
+				let val = ($value as u64).to_bigint();
+				assert_eq!(literal.as_number(), val);
 			} else {
-				panic!("Parsed expression is not a literal");
+				panic!(
+					"Parsed expression is not a big int literal. Expr:\n{:#?}",
+					parsed.syntax()
+				);
 			}
 		};
 	}

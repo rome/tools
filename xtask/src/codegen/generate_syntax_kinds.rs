@@ -155,6 +155,10 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			#([#all_keywords_idents] => { $crate::SyntaxKind::#all_keywords };)*
 			[ident] => { $crate::SyntaxKind::IDENT };
 			[js_shebang] => { $crate::SyntaxKind::JS_SHEBANG };
+			[js_string_literal_token] => { $crate::SyntaxKind::JS_STRING_LITERAL_TOKEN };
+			[js_number_literal_token] => { $crate::SyntaxKind::JS_NUMBER_LITERAL_TOKEN };
+			[js_big_int_literal_token] => { $crate::SyntaxKind::JS_BIG_INT_LITERAL_TOKEN };
+			[js_regex_literal_token] => { $crate::SyntaxKind::JS_REGEX_LITERAL_TOKEN };
 			[#] => { $crate::SyntaxKind::HASH };
 		}
 	};

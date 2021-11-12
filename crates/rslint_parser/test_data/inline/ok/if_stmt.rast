@@ -4,7 +4,7 @@ JS_MODULE@0..88
       IF_KW@0..2 "if"
       WHITESPACE@2..3 " "
       L_PAREN@3..4 "("
-      LITERAL@4..8
+      JS_BOOLEAN_LITERAL@4..8
         TRUE_KW@4..8 "true"
       R_PAREN@8..9 ")"
       WHITESPACE@9..10 " "
@@ -25,7 +25,7 @@ JS_MODULE@0..88
       IF_KW@21..23 "if"
       WHITESPACE@23..24 " "
       L_PAREN@24..25 "("
-      LITERAL@25..29
+      JS_BOOLEAN_LITERAL@25..29
         TRUE_KW@25..29 "true"
       R_PAREN@29..30 ")"
       WHITESPACE@30..31 " "
@@ -38,12 +38,12 @@ JS_MODULE@0..88
       IF_KW@34..36 "if"
       WHITESPACE@36..37 " "
       L_PAREN@37..38 "("
-      LITERAL@38..42
+      JS_BOOLEAN_LITERAL@38..42
         TRUE_KW@38..42 "true"
       R_PAREN@42..43 ")"
       WHITESPACE@43..44 " "
       JS_EXPRESSION_STATEMENT@44..49
-        LITERAL@44..49
+        JS_BOOLEAN_LITERAL@44..49
           FALSE_KW@44..49 "false"
     WHITESPACE@49..50 "\n"
     JS_IF_STATEMENT@50..87
@@ -66,7 +66,7 @@ JS_MODULE@0..88
           IF_KW@67..69 "if"
           WHITESPACE@69..70 " "
           L_PAREN@70..71 "("
-          LITERAL@71..75
+          JS_BOOLEAN_LITERAL@71..75
             TRUE_KW@71..75 "true"
           R_PAREN@75..76 ")"
           WHITESPACE@76..77 " "

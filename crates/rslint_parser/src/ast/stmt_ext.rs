@@ -65,25 +65,6 @@ impl JsVariableDeclaration {
 	}
 }
 
-impl ImportDecl {
-	/// The source of the import, such as `import a from "a"` ("a"), or `import "foo"` ("foo")
-	pub fn source(&self) -> Option<Literal> {
-		self.syntax()
-			.children()
-			.find_map(|x| x.try_to::<Literal>().filter(|x| x.is_string()))
-	}
-}
-
-impl ExportDecl {
-	/// The source of the export, such as `export a from "a"` ("a"), or `export "foo"` ("foo")
-	pub fn source(&self) -> Option<Literal> {
-		self.syntax().children().find_map(|x| {
-			x.children()
-				.find_map(|x| x.try_to::<Literal>().filter(|x| x.is_string()))
-		})
-	}
-}
-
 impl Specifier {
 	pub fn as_token(&self) -> Option<SyntaxToken> {
 		self.syntax()
@@ -131,6 +112,6 @@ mod tests {
 
 impl TsEnumMember {
 	pub fn string_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, STRING)
+		support::token(&self.syntax, JS_STRING_LITERAL_TOKEN)
 	}
 }

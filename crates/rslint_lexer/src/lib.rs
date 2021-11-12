@@ -862,7 +862,7 @@ impl<'src> Lexer<'src> {
 				Some(err),
 			)
 		} else {
-			tok!(NUMBER, self.cur - start)
+			tok!(JS_NUMBER_LITERAL_TOKEN, self.cur - start)
 		}
 	}
 
@@ -1009,7 +1009,7 @@ impl<'src> Lexer<'src> {
 									}
 								},
 								_ => {
-									return (Token::new(SyntaxKind::REGEX, self.cur - start), diagnostic)
+									return (Token::new(SyntaxKind::JS_REGEX_LITERAL_TOKEN, self.cur - start), diagnostic)
 								}
 							}
 						}
@@ -1020,7 +1020,7 @@ impl<'src> Lexer<'src> {
 						let err = Diagnostic::error(self.file_id, "", "expected a character after a regex escape, but found none")
 							.primary(self.cur..self.cur + 1, "expected a character following this");
 
-						return (Token::new(SyntaxKind::REGEX, self.cur - start), Some(err));
+						return (Token::new(SyntaxKind::JS_REGEX_LITERAL_TOKEN, self.cur - start), Some(err));
 					}
 				},
 				None => {
@@ -1028,7 +1028,7 @@ impl<'src> Lexer<'src> {
 						.primary(self.cur..self.cur, "...but the file ends here")
 						.secondary(start..start + 1, "a regex literal starts there...");
 
-					return (Token::new(SyntaxKind::REGEX, self.cur - start), Some(err));
+					return (Token::new(SyntaxKind::JS_REGEX_LITERAL_TOKEN, self.cur - start), Some(err));
 				},
 				_ => {},
 			}
@@ -1333,7 +1333,7 @@ impl<'src> Lexer<'src> {
 						Some(err),
 					)
 				} else {
-					tok!(STRING, self.cur - start)
+					tok!(JS_STRING_LITERAL_TOKEN, self.cur - start)
 				}
 			}
 			IDT => self.resolve_identifier((byte as char, start)),

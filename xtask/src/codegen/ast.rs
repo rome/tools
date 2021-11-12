@@ -42,7 +42,7 @@ pub fn generate_ast(mode: Mode) -> Result<()> {
 }
 
 fn make_ast(grammar: &Grammar) -> AstSrc {
-	let tokens = "String Number Whitespace Comment"
+	let tokens = "Whitespace Comment"
 		.split_ascii_whitespace()
 		.map(|it| it.to_string())
 		.collect::<Vec<_>>();
@@ -143,14 +143,12 @@ fn handle_rule(
 		Rule::Token(token) => {
 			let name = clean_token_name(grammar, token);
 
-			if name != "int_number" && name != "string" {
-				let field = Field::Token {
-					name: label.cloned().unwrap_or_else(|| name.clone()),
-					kind: TokenKind::Single(name),
-					optional,
-				};
-				fields.push(field);
-			}
+			let field = Field::Token {
+				name: label.cloned().unwrap_or_else(|| name.clone()),
+				kind: TokenKind::Single(name),
+				optional,
+			};
+			fields.push(field);
 		}
 
 		Rule::Rep(rule) => {

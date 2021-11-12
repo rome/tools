@@ -386,6 +386,7 @@ impl ImportDecl {
 	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![from])
 	}
+	pub fn source(&self) -> SyntaxResult<JsStringLiteral> { support::required_node(&self.syntax) }
 	pub fn asserted_object(&self) -> SyntaxResult<ObjectExpr> {
 		support::required_node(&self.syntax)
 	}
@@ -453,6 +454,7 @@ impl ExportWildcard {
 	pub fn from_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![from])
 	}
+	pub fn source(&self) -> SyntaxResult<JsStringLiteral> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportDecl {
@@ -641,30 +643,6 @@ impl ArrowExpr {
 	}
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
 	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Literal {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Literal {
-	pub fn true_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![true])
-	}
-	pub fn false_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![false])
-	}
-	pub fn number_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![number])
-	}
-	pub fn regex_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![regex])
-	}
-	pub fn float_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![float])
-	}
-	pub fn big_int_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![big_int])
-	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Template {
@@ -1300,21 +1278,57 @@ impl SpreadElement {
 	pub fn element(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Null {
+pub struct JsStringLiteral {
 	pub(crate) syntax: SyntaxNode,
 }
-impl Null {
-	pub fn null_token(&self) -> SyntaxResult<SyntaxToken> {
+impl JsStringLiteral {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_string_literal_token])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsNumberLiteral {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsNumberLiteral {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_number_literal_token])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsBigIntLiteral {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsBigIntLiteral {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_big_int_literal_token])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsBooleanLiteral {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsBooleanLiteral {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(&self.syntax, &[T![true], T![false]])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsNullLiteral {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsNullLiteral {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![null])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Undefined {
+pub struct JsRegexLiteral {
 	pub(crate) syntax: SyntaxNode,
 }
-impl Undefined {
-	pub fn undefined_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![undefined])
+impl JsRegexLiteral {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_regex_literal_token])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1652,7 +1666,11 @@ impl NamedImports {
 pub struct ImportStringSpecifier {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ImportStringSpecifier {}
+impl ImportStringSpecifier {
+	pub fn js_string_literal_token_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_string_literal_token])
+	}
+}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Specifier {
 	pub(crate) syntax: SyntaxNode,
@@ -1670,6 +1688,9 @@ impl TsExternalModuleRef {
 	}
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
+	}
+	pub fn js_string_literal_token_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_string_literal_token])
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
@@ -2225,7 +2246,7 @@ pub enum Decl {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExpression {
 	ArrowExpr(ArrowExpr),
-	Literal(Literal),
+	JsAnyLiteral(JsAnyLiteral),
 	Template(Template),
 	NameRef(NameRef),
 	ThisExpr(ThisExpr),
@@ -2276,6 +2297,15 @@ pub enum Pattern {
 	ArrayPattern(ArrayPattern),
 	ExprPattern(ExprPattern),
 	JsUnknownPattern(JsUnknownPattern),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyLiteral {
+	JsStringLiteral(JsStringLiteral),
+	JsNumberLiteral(JsNumberLiteral),
+	JsBigIntLiteral(JsBigIntLiteral),
+	JsBooleanLiteral(JsBooleanLiteral),
+	JsNullLiteral(JsNullLiteral),
+	JsRegexLiteral(JsRegexLiteral),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsType {
@@ -2347,7 +2377,8 @@ pub enum ClassElement {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PropName {
 	ComputedPropertyName(ComputedPropertyName),
-	Literal(Literal),
+	JsStringLiteral(JsStringLiteral),
+	JsNumberLiteral(JsNumberLiteral),
 	Ident(Ident),
 	Name(Name),
 	JsUnknownBinding(JsUnknownBinding),
@@ -2944,17 +2975,6 @@ impl AstNode for ArrowExpr {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Literal {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == LITERAL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for Template {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3472,8 +3492,8 @@ impl AstNode for SpreadElement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Null {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NULL }
+impl AstNode for JsStringLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3483,8 +3503,52 @@ impl AstNode for Null {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Undefined {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == UNDEFINED }
+impl AstNode for JsNumberLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsBigIntLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsBooleanLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOOLEAN_LITERAL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsNullLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NULL_LITERAL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsRegexLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REGEX_LITERAL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4630,9 +4694,6 @@ impl AstNode for Decl {
 impl From<ArrowExpr> for JsAnyExpression {
 	fn from(node: ArrowExpr) -> JsAnyExpression { JsAnyExpression::ArrowExpr(node) }
 }
-impl From<Literal> for JsAnyExpression {
-	fn from(node: Literal) -> JsAnyExpression { JsAnyExpression::Literal(node) }
-}
 impl From<Template> for JsAnyExpression {
 	fn from(node: Template) -> JsAnyExpression { JsAnyExpression::Template(node) }
 }
@@ -4733,7 +4794,6 @@ impl AstNode for JsAnyExpression {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			ARROW_EXPR
-			| LITERAL
 			| TEMPLATE
 			| NAME_REF
 			| THIS_EXPR
@@ -4764,13 +4824,13 @@ impl AstNode for JsAnyExpression {
 			| TS_ASSERTION
 			| TS_CONST_ASSERTION
 			| JS_UNKNOWN_EXPRESSION => true,
+			k if JsAnyLiteral::can_cast(k) => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			ARROW_EXPR => JsAnyExpression::ArrowExpr(ArrowExpr { syntax }),
-			LITERAL => JsAnyExpression::Literal(Literal { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
 			NAME_REF => JsAnyExpression::NameRef(NameRef { syntax }),
 			THIS_EXPR => JsAnyExpression::ThisExpr(ThisExpr { syntax }),
@@ -4807,14 +4867,18 @@ impl AstNode for JsAnyExpression {
 			JS_UNKNOWN_EXPRESSION => {
 				JsAnyExpression::JsUnknownExpression(JsUnknownExpression { syntax })
 			}
-			_ => return None,
+			_ => {
+				if let Some(js_any_literal) = JsAnyLiteral::cast(syntax) {
+					return Some(JsAnyExpression::JsAnyLiteral(js_any_literal));
+				}
+				return None;
+			}
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
-			JsAnyExpression::Literal(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
 			JsAnyExpression::NameRef(it) => &it.syntax,
 			JsAnyExpression::ThisExpr(it) => &it.syntax,
@@ -4845,6 +4909,7 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::TsAssertion(it) => &it.syntax,
 			JsAnyExpression::TsConstAssertion(it) => &it.syntax,
 			JsAnyExpression::JsUnknownExpression(it) => &it.syntax,
+			JsAnyExpression::JsAnyLiteral(it) => it.syntax(),
 		}
 	}
 }
@@ -4959,6 +5024,55 @@ impl AstNode for Pattern {
 			Pattern::ArrayPattern(it) => &it.syntax,
 			Pattern::ExprPattern(it) => &it.syntax,
 			Pattern::JsUnknownPattern(it) => &it.syntax,
+		}
+	}
+}
+impl From<JsStringLiteral> for JsAnyLiteral {
+	fn from(node: JsStringLiteral) -> JsAnyLiteral { JsAnyLiteral::JsStringLiteral(node) }
+}
+impl From<JsNumberLiteral> for JsAnyLiteral {
+	fn from(node: JsNumberLiteral) -> JsAnyLiteral { JsAnyLiteral::JsNumberLiteral(node) }
+}
+impl From<JsBigIntLiteral> for JsAnyLiteral {
+	fn from(node: JsBigIntLiteral) -> JsAnyLiteral { JsAnyLiteral::JsBigIntLiteral(node) }
+}
+impl From<JsBooleanLiteral> for JsAnyLiteral {
+	fn from(node: JsBooleanLiteral) -> JsAnyLiteral { JsAnyLiteral::JsBooleanLiteral(node) }
+}
+impl From<JsNullLiteral> for JsAnyLiteral {
+	fn from(node: JsNullLiteral) -> JsAnyLiteral { JsAnyLiteral::JsNullLiteral(node) }
+}
+impl From<JsRegexLiteral> for JsAnyLiteral {
+	fn from(node: JsRegexLiteral) -> JsAnyLiteral { JsAnyLiteral::JsRegexLiteral(node) }
+}
+impl AstNode for JsAnyLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			JS_STRING_LITERAL | JS_NUMBER_LITERAL | JS_BIG_INT_LITERAL | JS_BOOLEAN_LITERAL
+			| JS_NULL_LITERAL | JS_REGEX_LITERAL => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_STRING_LITERAL => JsAnyLiteral::JsStringLiteral(JsStringLiteral { syntax }),
+			JS_NUMBER_LITERAL => JsAnyLiteral::JsNumberLiteral(JsNumberLiteral { syntax }),
+			JS_BIG_INT_LITERAL => JsAnyLiteral::JsBigIntLiteral(JsBigIntLiteral { syntax }),
+			JS_BOOLEAN_LITERAL => JsAnyLiteral::JsBooleanLiteral(JsBooleanLiteral { syntax }),
+			JS_NULL_LITERAL => JsAnyLiteral::JsNullLiteral(JsNullLiteral { syntax }),
+			JS_REGEX_LITERAL => JsAnyLiteral::JsRegexLiteral(JsRegexLiteral { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyLiteral::JsStringLiteral(it) => &it.syntax,
+			JsAnyLiteral::JsNumberLiteral(it) => &it.syntax,
+			JsAnyLiteral::JsBigIntLiteral(it) => &it.syntax,
+			JsAnyLiteral::JsBooleanLiteral(it) => &it.syntax,
+			JsAnyLiteral::JsNullLiteral(it) => &it.syntax,
+			JsAnyLiteral::JsRegexLiteral(it) => &it.syntax,
 		}
 	}
 }
@@ -5324,8 +5438,11 @@ impl AstNode for ClassElement {
 impl From<ComputedPropertyName> for PropName {
 	fn from(node: ComputedPropertyName) -> PropName { PropName::ComputedPropertyName(node) }
 }
-impl From<Literal> for PropName {
-	fn from(node: Literal) -> PropName { PropName::Literal(node) }
+impl From<JsStringLiteral> for PropName {
+	fn from(node: JsStringLiteral) -> PropName { PropName::JsStringLiteral(node) }
+}
+impl From<JsNumberLiteral> for PropName {
+	fn from(node: JsNumberLiteral) -> PropName { PropName::JsNumberLiteral(node) }
 }
 impl From<Ident> for PropName {
 	fn from(node: Ident) -> PropName { PropName::Ident(node) }
@@ -5339,7 +5456,12 @@ impl From<JsUnknownBinding> for PropName {
 impl AstNode for PropName {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			COMPUTED_PROPERTY_NAME | LITERAL | IDENT | NAME | JS_UNKNOWN_BINDING => true,
+			COMPUTED_PROPERTY_NAME
+			| JS_STRING_LITERAL
+			| JS_NUMBER_LITERAL
+			| IDENT
+			| NAME
+			| JS_UNKNOWN_BINDING => true,
 			_ => false,
 		}
 	}
@@ -5348,7 +5470,8 @@ impl AstNode for PropName {
 			COMPUTED_PROPERTY_NAME => {
 				PropName::ComputedPropertyName(ComputedPropertyName { syntax })
 			}
-			LITERAL => PropName::Literal(Literal { syntax }),
+			JS_STRING_LITERAL => PropName::JsStringLiteral(JsStringLiteral { syntax }),
+			JS_NUMBER_LITERAL => PropName::JsNumberLiteral(JsNumberLiteral { syntax }),
 			IDENT => PropName::Ident(Ident { syntax }),
 			NAME => PropName::Name(Name { syntax }),
 			JS_UNKNOWN_BINDING => PropName::JsUnknownBinding(JsUnknownBinding { syntax }),
@@ -5359,7 +5482,8 @@ impl AstNode for PropName {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			PropName::ComputedPropertyName(it) => &it.syntax,
-			PropName::Literal(it) => &it.syntax,
+			PropName::JsStringLiteral(it) => &it.syntax,
+			PropName::JsNumberLiteral(it) => &it.syntax,
 			PropName::Ident(it) => &it.syntax,
 			PropName::Name(it) => &it.syntax,
 			PropName::JsUnknownBinding(it) => &it.syntax,
@@ -5776,6 +5900,11 @@ impl std::fmt::Display for Pattern {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAnyLiteral {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for TsType {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6101,11 +6230,6 @@ impl std::fmt::Display for ArrowExpr {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Literal {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for Template {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6341,12 +6465,32 @@ impl std::fmt::Display for SpreadElement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Null {
+impl std::fmt::Display for JsStringLiteral {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Undefined {
+impl std::fmt::Display for JsNumberLiteral {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsBigIntLiteral {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsBooleanLiteral {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsNullLiteral {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsRegexLiteral {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

@@ -87,8 +87,8 @@ impl Formatter {
 	/// use rome_rowan::{NodeOrToken, TreeBuilder};
 	///
 	/// let mut builder = TreeBuilder::<'_, JsLanguage>::new();
-	/// builder.start_node(SyntaxKind::LITERAL);
-	/// builder.token(SyntaxKind::STRING, "'abc'");
+	/// builder.start_node(SyntaxKind::JS_STRING_LITERAL);
+	/// builder.token(SyntaxKind::JS_STRING_LITERAL_TOKEN, "'abc'");
 	/// builder.finish_node();
 	/// let node = builder.finish();
 	///
@@ -97,10 +97,10 @@ impl Formatter {
 	/// let formatter = Formatter::default();
 	/// let result = formatter.format_token(&syntax_token);
 	///
-	/// assert_eq!(Ok(token("\"abc\"")), result)
+	/// assert_eq!(Ok(token("'abc'")), result)
 	/// ```
 	pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatResult<FormatElement> {
-		syntax_token.to_format_element(self)
+		Ok(token(syntax_token.text()))
 	}
 
 	/// Formats each child and returns the result as a list.
