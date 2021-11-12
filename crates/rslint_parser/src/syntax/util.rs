@@ -1,7 +1,7 @@
 //! General utility functions for parsing and error checking.
 
 use crate::{
-	ast::{GroupingExpr, JsAnyExpression, NameRef},
+	ast::{GroupingExpr, JsAnyExpression},
 	SyntaxKind::*,
 	*,
 };
@@ -88,18 +88,13 @@ pub fn check_assign_target(
 /// # Panics
 /// Panics if the marker is not a name with an ident
 // FIXME: Labels should not cross function boundaries
-pub fn check_label_use(p: &mut Parser, label: &CompletedMarker) {
-	let name = p.parse_marker::<NameRef>(label).ident_token().unwrap();
-	if p.state.labels.get(name.text()).is_none() {
+pub fn check_label_use(p: &mut Parser, label: &Token) {
+	let name = p.token_src(label);
+
+	if p.state.labels.get(name).is_none() {
 		let err = p
-			.err_builder(&format!(
-				"Use of undefined statement label `{}`",
-				name.text()
-			))
-			.primary(
-				label.range(p),
-				"This label is used, but it is never defined",
-			);
+			.err_builder(&format!("Use of undefined statement label `{}`", name))
+			.primary(&label.range, "This label is used, but it is never defined");
 
 		p.error(err);
 	}

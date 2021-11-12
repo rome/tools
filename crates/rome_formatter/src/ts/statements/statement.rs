@@ -12,20 +12,20 @@ impl ToFormatElement for JsAnyStatement {
 				expr_stmt.to_format_element(formatter)
 			}
 			JsAnyStatement::JsIfStatement(if_stmt) => if_stmt.to_format_element(formatter),
-			JsAnyStatement::DoWhileStmt(do_while_statement) => {
+			JsAnyStatement::JsDoWhileStatement(do_while_statement) => {
 				do_while_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::WhileStmt(while_statement) => {
+			JsAnyStatement::JsWhileStatement(while_statement) => {
 				while_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::ForStmt(for_stmt) => for_stmt.to_format_element(formatter),
 			JsAnyStatement::ForInStmt(for_in_statement) => {
 				for_in_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::ContinueStmt(continue_statement) => {
+			JsAnyStatement::JsContinueStatement(continue_statement) => {
 				continue_statement.to_format_element(formatter)
 			}
-			JsAnyStatement::BreakStmt(break_statement) => {
+			JsAnyStatement::JsBreakStatement(break_statement) => {
 				break_statement.to_format_element(formatter)
 			}
 			JsAnyStatement::JsReturnStatement(stmt) => stmt.to_format_element(formatter),

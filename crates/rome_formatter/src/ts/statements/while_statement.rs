@@ -1,20 +1,21 @@
 use crate::{
-	format_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
+	format_elements, group_elements, soft_indent, space_token, FormatElement, FormatResult,
+	Formatter, ToFormatElement,
 };
-use rslint_parser::ast::WhileStmt;
+use rslint_parser::ast::JsWhileStatement;
 
-impl ToFormatElement for WhileStmt {
+impl ToFormatElement for JsWhileStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let while_token = formatter.format_token(&self.while_token()?)?;
-		let condition = formatter.format_node(self.condition()?)?;
-		let cons = formatter.format_node(self.cons()?)?;
-
 		Ok(format_elements![
-			while_token,
+			formatter.format_token(&self.while_token()?)?,
 			space_token(),
-			condition,
+			group_elements(format_elements![
+				formatter.format_token(&self.l_paren_token()?)?,
+				soft_indent(formatter.format_node(self.test()?)?),
+				formatter.format_token(&self.r_paren_token()?)?
+			]),
 			space_token(),
-			cons
+			formatter.format_node(self.body()?)?
 		])
 	}
 }

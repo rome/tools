@@ -1,27 +1,25 @@
 JS_MODULE@0..29
   LIST@0..28
-    WHILE_STMT@0..15
+    JS_WHILE_STATEMENT@0..15
       WHILE_KW@0..5 "while"
       WHITESPACE@5..6 " "
-      CONDITION@6..12
-        L_PAREN@6..7 "("
-        LITERAL@7..11
-          TRUE_KW@7..11 "true"
-        R_PAREN@11..12 ")"
+      L_PAREN@6..7 "("
+      LITERAL@7..11
+        TRUE_KW@7..11 "true"
+      R_PAREN@11..12 ")"
       WHITESPACE@12..13 " "
       JS_BLOCK_STATEMENT@13..15
         L_CURLY@13..14 "{"
         LIST@14..14
         R_CURLY@14..15 "}"
     WHITESPACE@15..16 "\n"
-    WHILE_STMT@16..28
+    JS_WHILE_STATEMENT@16..28
       WHILE_KW@16..21 "while"
       WHITESPACE@21..22 " "
-      CONDITION@22..25
-        L_PAREN@22..23 "("
-        LITERAL@23..24
-          NUMBER@23..24 "5"
-        R_PAREN@24..25 ")"
+      L_PAREN@22..23 "("
+      LITERAL@23..24
+        NUMBER@23..24 "5"
+      R_PAREN@24..25 ")"
       WHITESPACE@25..26 " "
       JS_BLOCK_STATEMENT@26..28
         L_CURLY@26..27 "{"

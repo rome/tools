@@ -67,13 +67,13 @@ JsAnyStatement =
 	| JsEmptyStatement
 	| JsExpressionStatement
 	| JsIfStatement
-	| DoWhileStmt
-	| WhileStmt
+	| JsDoWhileStatement
+	| JsWhileStatement
 	| ForStmt
 	| ForInStmt
 	| ForOfStmt
-	| ContinueStmt
-	| BreakStmt
+	| JsContinueStatement
+	| JsBreakStatement
 	| JsReturnStatement
 	| JsWithStatement
 	| JsLabeledStatement
@@ -108,11 +108,16 @@ JsExpressionStatement =
     expression: JsAnyExpression ';'?
 
 
-// while statement
-WhileStmt = 'while' condition: Condition cons: JsAnyStatement
+JsWhileStatement =
+    'while' '(' test: JsAnyExpression ')'
+    body: JsAnyStatement
 
-// do while statement
-DoWhileStmt = 'do'  cons:JsAnyStatement 'while' condition:Condition ';'?
+
+JsDoWhileStatement =
+    'do'
+    body: JsAnyStatement
+    'while' '(' test: JsAnyExpression ')'
+    ';'?
 
 
 // if statement
@@ -151,12 +156,15 @@ ForInStmt = 'for' '(' left:ForStmtInit 'in' right:JsAnyExpression ')' cons:JsAny
 ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:JsAnyExpression ')' cons:JsAnyStatement
 
 
-// continue statement
-ContinueStmt = 'continue' name_ref: NameRef ';'?
+JsBreakStatement =
+    'break'
+    (label: 'ident')?
+    ';'?
 
-
-// break statement
-BreakStmt = 'break' 'ident'? ';'
+JsContinueStatement =
+    'continue'
+    (label: 'ident')?
+    ';'?
 
 
 JsReturnStatement =

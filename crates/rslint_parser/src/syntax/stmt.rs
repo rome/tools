@@ -3,7 +3,7 @@
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
 use super::decl::{class_decl, decorators, function_decl};
-use super::expr::{assign_expr, expr, primary_expr, EXPR_RECOVERY_SET, STARTS_EXPR};
+use super::expr::{assign_expr, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
@@ -329,11 +329,13 @@ pub fn break_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	let start = p.cur_tok().range;
 	p.expect(T![break]);
+
 	let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
-		let end = p.cur_tok().range.end;
-		let label = primary_expr(p).unwrap();
-		check_label_use(p, &label);
-		end
+		let label_token = p.cur_tok();
+		p.bump_any();
+		check_label_use(p, &label_token);
+
+		label_token.range.end
 	} else {
 		start.end
 	};
@@ -348,7 +350,7 @@ pub fn break_stmt(p: &mut Parser) -> CompletedMarker {
 		p.error(err);
 	}
 
-	m.complete(p, BREAK_STMT)
+	m.complete(p, JS_BREAK_STATEMENT)
 }
 
 /// A continue statement with an optional label such as `continue a;`
@@ -363,16 +365,13 @@ pub fn continue_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	let start = p.cur_tok().range;
 	p.expect(T![continue]);
+
 	let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
-		let end = p.cur_tok().range.end;
-		let mut guard = p.with_state(ParserState {
-			expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![;]]),
-			..p.state.clone()
-		});
-		let label = primary_expr(&mut *guard).unwrap();
-		drop(guard);
-		check_label_use(p, &label);
-		end
+		let label_token = p.cur_tok();
+		p.bump_any();
+		check_label_use(p, &label_token);
+
+		label_token.range.end
 	} else {
 		start.end
 	};
@@ -387,7 +386,7 @@ pub fn continue_stmt(p: &mut Parser) -> CompletedMarker {
 		p.error(err);
 	}
 
-	m.complete(p, CONTINUE_STMT)
+	m.complete(p, JS_CONTINUE_STATEMENT)
 }
 
 /// A return statement with an optional value such as `return a;`
@@ -700,7 +699,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 	// while true) }
 	let m = p.start();
 	p.expect(T![while]);
-	condition(p);
+	parenthesized_expression(p);
 	stmt(
 		&mut *p.with_state(ParserState {
 			break_allowed: true,
@@ -710,7 +709,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 		None,
 		None,
 	);
-	m.complete(p, WHILE_STMT)
+	m.complete(p, JS_WHILE_STATEMENT)
 }
 
 /// A var, const, or let declaration such as `var a = 5, b;` or `let {a, b} = foo;`
@@ -866,9 +865,9 @@ pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
 		None,
 	);
 	p.expect(T![while]);
-	condition(p);
+	parenthesized_expression(p);
 	semi(p, start..p.cur_tok().range.end);
-	m.complete(p, DO_WHILE_STMT)
+	m.complete(p, JS_DO_WHILE_STATEMENT)
 }
 
 fn for_head(p: &mut Parser) -> SyntaxKind {
