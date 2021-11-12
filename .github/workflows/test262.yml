@@ -50,7 +50,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+#        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [ubuntu-latest]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -73,7 +74,7 @@ jobs:
         with:
           name: new_results
       - name: Compare results on ${{ matrix.os }}
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request_target'
         id: comparison
         shell: bash
         run: |
@@ -84,12 +85,12 @@ jobs:
           echo "::set-output name=comment::$comment"
 
       - name: Get the PR number
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request_target'
         id: pr-number
         uses: kkak10/pr-number-action@v1.3
 
       - name: Find Previous Comment
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request_target'
         uses: peter-evans/find-comment@v1.3.0
         id: previous-comment
         with:
@@ -97,7 +98,7 @@ jobs:
           body-includes: Test262 conformance changes
 
       - name: Update comment
-        if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
+        if: github.event_name == 'pull_request_target' && steps.previous-comment.outputs.comment-id
         uses: peter-evans/create-or-update-comment@v1.4.5
         continue-on-error: true
         with:
@@ -109,7 +110,7 @@ jobs:
           edit-mode: replace
 
       - name: Write a new comment
-        if: github.event_name == 'pull_request' && !steps.previous-comment.outputs.comment-id
+        if: github.event_name == 'pull_request_target' && !steps.previous-comment.outputs.comment-id
         uses: peter-evans/create-or-update-comment@v1.4.5
         continue-on-error: true
         with:
