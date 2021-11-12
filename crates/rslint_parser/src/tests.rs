@@ -1,6 +1,8 @@
 use crate::ast::ArgList;
 use crate::{parse_module, parse_text, AstNode, ParserError, SyntaxNode};
 use expect_test::expect_file;
+use rslint_errors::file::SimpleFile;
+use rslint_errors::termcolor::Buffer;
 use rslint_errors::{file::SimpleFiles, Emitter};
 use rslint_syntax::SyntaxKind;
 use std::fs;
@@ -79,7 +81,7 @@ fn parser_tests() {
 	dir_tests(&test_data_dir(), &["inline/ok"], "rast", |text, path| {
 		let parse = try_parse(path.to_str().unwrap(), text);
 		let errors = parse.errors.as_slice();
-		assert_errors_are_absent(errors, path);
+		assert_errors_are_absent(errors, path, &parse.root);
 		format!("{:#?}", parse.root)
 	});
 
@@ -163,11 +165,22 @@ fn assert_errors_are_present(errors: &[ParserError], path: &Path) {
 	);
 }
 
-fn assert_errors_are_absent(errors: &[ParserError], path: &Path) {
-	assert!(
-		errors.is_empty(),
-		"There should be no errors in the file {:?} but the following errors were present: {:?}",
+fn assert_errors_are_absent(errors: &[ParserError], path: &Path, syntax: &SyntaxNode) {
+	if errors.is_empty() {
+		return;
+	}
+
+	let file = SimpleFile::new(path.to_str().unwrap().to_string(), syntax.to_string());
+	let mut emitter = Emitter::new(&file);
+	let mut buffer = Buffer::no_color();
+
+	for diagnostic in errors {
+		emitter.emit_with_writer(diagnostic, &mut buffer).unwrap();
+	}
+
+	panic!("There should be no errors in the file {:?} but the following errors where present:\n{}\n\nParsed tree:\n{:#?}",
 		path.display(),
-		errors
+		std::str::from_utf8(buffer.as_slice()).unwrap(),
+		syntax
 	);
 }

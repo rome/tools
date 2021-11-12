@@ -2,7 +2,7 @@
 
 use super::decl::*;
 use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
-use super::stmt::{block_items, semi, var_decl};
+use super::stmt::{block_items, semi, variable_declaration_statement};
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_TS_RECOVERY_SET: TokenSet = token_set![
@@ -156,14 +156,18 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			// unwrap the marker so its children go to `m`
-			var_decl(p, false).undo_completion(p).abandon(p);
-			m.complete(p, VAR_DECL)
+			variable_declaration_statement(p)
+				.undo_completion(p)
+				.abandon(p);
+			m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
 		}
 		_ if p.nth_src(1) == "let" => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
-			var_decl(p, false).undo_completion(p).abandon(p);
-			m.complete(p, VAR_DECL)
+			variable_declaration_statement(p)
+				.undo_completion(p)
+				.abandon(p);
+			m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
 		}
 		_ if p.nth_src(1) == "global" => {
 			let m = p.start();

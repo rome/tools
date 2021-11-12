@@ -45,9 +45,18 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						TokenKind::Many(kinds) => {
 							let tokens = token_kinds_to_code(kinds.as_slice());
 							let method_name = format_ident!("{}", name);
-							quote! {
-								pub fn #method_name(&self) -> Option<SyntaxToken> {
-									support::find_token(&self.syntax, #tokens)
+
+							if is_optional {
+								quote! {
+									pub fn #method_name(&self) -> Option<SyntaxToken> {
+										support::find_token(&self.syntax, #tokens)
+									}
+								}
+							} else {
+								quote! {
+									pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
+										support::find_required_token(&self.syntax, #tokens)
+									}
 								}
 							}
 						}
@@ -56,13 +65,13 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 							if is_optional {
 								quote! {
 									pub fn #method_name(&self) -> Option<SyntaxToken> {
-										support::as_optional_token(&self.syntax, #token_kind_code)
+										support::token(&self.syntax, #token_kind_code)
 									}
 								}
 							} else {
 								quote! {
 									pub fn #method_name(&self) -> SyntaxResult<SyntaxToken> {
-										support::as_mandatory_token(&self.syntax, #token_kind_code)
+										support::required_token(&self.syntax, #token_kind_code)
 									}
 								}
 							}
@@ -92,7 +101,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					} else if *optional {
 						quote! {
 							pub fn #method_name(&self) -> Option<#ty> {
-								support::as_optional_node(&self.syntax)
+								support::node(&self.syntax)
 							}
 						}
 					} else if *has_many {
@@ -115,7 +124,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					} else {
 						quote! {
 							pub fn #method_name(&self) -> SyntaxResult<#ty> {
-								support::as_mandatory_node(&self.syntax)
+								support::required_node(&self.syntax)
 							}
 						}
 					}

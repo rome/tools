@@ -349,7 +349,7 @@ impl<N: AstNode> IntoIterator for &AstSeparatedList<N> {
 /// Specific result used when navigating nodes using AST APIs
 pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq, Clone)]
 pub enum SyntaxError {
 	/// Error thrown when a mandatory node is not found
 	MissingRequiredChild(SyntaxNode),
@@ -364,14 +364,12 @@ mod support {
 	use crate::SyntaxList;
 	use crate::{SyntaxError, SyntaxResult};
 
-	// TODO: #1725 remove once API are set in stone
-	#[allow(dead_code)]
-	pub(super) fn child<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
+	pub(super) fn node<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
 	}
 
-	pub(super) fn as_optional_node<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
-		parent.children().find_map(N::cast)
+	pub(super) fn required_node<N: AstNode>(parent: &SyntaxNode) -> SyntaxResult<N> {
+		node(parent).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 
 	pub(super) fn elements(parent: &SyntaxNode) -> SyntaxElementChildren {
@@ -409,29 +407,11 @@ mod support {
 			.find(|it| it.kind() == kind)
 	}
 
-	pub(super) fn as_optional_token(parent: &SyntaxNode, kind: SyntaxKind) -> Option<SyntaxToken> {
-		parent
-			.children_with_tokens()
-			.filter_map(|it| it.into_token())
-			.find(|it| it.kind() == kind)
-	}
-
-	pub(super) fn as_mandatory_node<N: AstNode>(parent: &SyntaxNode) -> SyntaxResult<N> {
-		parent
-			.children()
-			.find_map(N::cast)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
-	}
-
-	pub(super) fn as_mandatory_token(
+	pub(super) fn required_token(
 		parent: &SyntaxNode,
 		kind: SyntaxKind,
 	) -> SyntaxResult<SyntaxToken> {
-		parent
-			.children_with_tokens()
-			.filter_map(|it| it.into_token())
-			.find(|it| it.kind() == kind)
-			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
+		token(parent, kind).ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 
 	pub(super) fn find_token(
@@ -446,6 +426,14 @@ mod support {
 					.iter()
 					.any(|possible_kind| *possible_kind == it.kind())
 			})
+	}
+
+	pub(super) fn find_required_token(
+		parent: &SyntaxNode,
+		possible_kinds: &[SyntaxKind],
+	) -> SyntaxResult<SyntaxToken> {
+		find_token(parent, possible_kinds)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
 	}
 }
 

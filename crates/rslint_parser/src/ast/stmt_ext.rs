@@ -30,27 +30,38 @@ impl AstNode for StmtListItem {
 	}
 }
 
-impl VarDecl {
-	// TODO: switch this to a contextual keyword once the typescript pr lands
-	pub fn let_token(&self) -> Option<SyntaxToken> {
-		self.syntax()
-			.first_lossy_token()
-			.filter(|t| t.kind() == T![ident] && t.text() == "let")
-	}
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
+pub enum JsVariableKind {
+	Const,
+	Let,
+	Var,
+}
 
+impl JsVariableDeclaration {
 	/// Whether the declaration is a const declaration
 	pub fn is_const(&self) -> bool {
-		self.const_token().is_ok()
+		self.variable_kind() == Ok(JsVariableKind::Const)
 	}
 
 	/// Whether the declaration is a let declaration
 	pub fn is_let(&self) -> bool {
-		self.let_token().is_some()
+		self.variable_kind() == Ok(JsVariableKind::Let)
 	}
 
 	/// Whether the declaration is a let declaration
 	pub fn is_var(&self) -> bool {
-		self.var_token().is_ok()
+		self.variable_kind() == Ok(JsVariableKind::Const)
+	}
+
+	pub fn variable_kind(&self) -> SyntaxResult<JsVariableKind> {
+		let token_kind = self.kind_token().map(|t| t.kind())?;
+
+		Ok(match token_kind {
+			T![const] => JsVariableKind::Const,
+			T![let] => JsVariableKind::Let,
+			T![var] => JsVariableKind::Var,
+			_ => unreachable!(),
+		})
 	}
 }
 
@@ -112,7 +123,7 @@ mod tests {
 		let var_decl = parsed
 			.statements()
 			.iter()
-			.find_map(|stmt| ast::VarDecl::cast(stmt.syntax().clone()));
+			.find_map(|stmt| ast::JsVariableDeclarationStatement::cast(stmt.syntax().clone()));
 
 		assert!(var_decl.is_some());
 	}

@@ -7,7 +7,7 @@ use super::expr::{assign_expr, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
-use super::util::{check_for_stmt_declarators, check_label_use, check_lhs};
+use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
 use crate::{SyntaxKind::*, *};
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
@@ -86,7 +86,7 @@ pub fn stmt(
 			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
 			res
 		}
-		T![var] | T![const] => var_decl(p, false),
+		T![var] | T![const] => variable_declaration_statement(p),
 		T![for] => for_stmt(p),
 		T![do] => do_stmt(p),
 		T![switch] => switch_stmt(p),
@@ -131,7 +131,9 @@ pub fn stmt(
 			)
 		}
 
-		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => var_decl(p, false),
+		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
+			variable_declaration_statement(p)
+		}
 		// TODO: handle `<T>() => {};` with less of a hack
 		_ if p.at_ts(STARTS_EXPR) || p.at(T![<]) => {
 			let complete = expr_stmt(p, decorator);
@@ -712,19 +714,29 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_WHILE_STATEMENT)
 }
 
-/// A var, const, or let declaration such as `var a = 5, b;` or `let {a, b} = foo;`
+/// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
 // test var_decl
 // var a = 5;
 // let { foo, bar } = 5;
 // let bar, foo;
 // const a = 5;
 // const { foo: [bar], baz } = {};
-pub fn var_decl(p: &mut Parser, no_semi: bool) -> CompletedMarker {
+pub fn variable_declaration_statement(p: &mut Parser) -> CompletedMarker {
 	// test_err var_decl_err
 	// var a =;
 	// const a = 5 let b = 5;
 	let m = p.start();
 	let start = p.cur_tok().range.start;
+
+	variable_declaration(p, false);
+
+	semi(p, start..p.cur_tok().range.start);
+
+	m.complete(p, JS_VARIABLE_DECLARATION_STATEMENT)
+}
+
+fn variable_declaration(p: &mut Parser, no_semi: bool) -> CompletedMarker {
+	let m = p.start();
 	let mut is_const = None;
 	let mut is_let = false;
 
@@ -735,7 +747,9 @@ pub fn var_decl(p: &mut Parser, no_semi: bool) -> CompletedMarker {
 			p.bump_any()
 		}
 		T![ident] if p.cur_src() == "let" => {
-			p.bump_any();
+			// let is a valid identifier name that's why the returns an ident for let.
+			// remap it here because we know from the context that this is the let keyword.
+			p.bump_remap(T![let]);
 			is_let = true;
 		}
 		_ => {
@@ -751,28 +765,19 @@ pub fn var_decl(p: &mut Parser, no_semi: bool) -> CompletedMarker {
 
 	let declared_list = p.start();
 
-	declarator(p, &is_const, no_semi, is_let);
+	variable_declarator(p, &is_const, no_semi, is_let);
 
-	if p.eat(T![,]) {
-		declarator(p, &is_const, no_semi, is_let);
-		while p.eat(T![,]) {
-			declarator(p, &is_const, no_semi, is_let);
-		}
+	while p.eat(T![,]) {
+		variable_declarator(p, &is_const, no_semi, is_let);
 	}
 
 	declared_list.complete(p, LIST);
-
-	if !no_semi {
-		semi(p, start..p.cur_tok().range.start);
-	}
-	let complete = m.complete(p, VAR_DECL);
 	p.state.name_map.clear();
-
-	complete
+	m.complete(p, JS_VARIABLE_DECLARATION)
 }
 
 // A single declarator, either `ident` or `ident = assign_expr`
-fn declarator(
+pub(crate) fn variable_declarator(
 	p: &mut Parser,
 	is_const: &Option<Range<usize>>,
 	for_stmt: bool,
@@ -820,8 +825,8 @@ fn declarator(
 
 	let marker = pat_m.complete(p, kind);
 
-	if p.eat(T![=]) {
-		p.expr_with_semi_recovery(true);
+	if p.at(T![=]) {
+		variable_initializer(p);
 	} else if marker.kind() != SINGLE_PATTERN && !for_stmt && !p.state.in_declare {
 		let err = p
 			.err_builder("Object and Array patterns require initializers")
@@ -840,7 +845,16 @@ fn declarator(
 		p.error(err);
 	}
 
-	Some(m.complete(p, DECLARATOR))
+	Some(m.complete(p, JS_VARIABLE_DECLARATOR))
+}
+
+fn variable_initializer(p: &mut Parser) {
+	let m = p.start();
+
+	p.expect(T![=]);
+	p.expr_with_semi_recovery(true);
+
+	m.complete(p, SyntaxKind::JS_EQUAL_VALUE_CLAUSE);
 }
 
 // A do.. while statement, such as `do {} while (true)`
@@ -878,7 +892,7 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 			include_in: false,
 			..p.state.clone()
 		});
-		let decl = var_decl(&mut *guard, true);
+		let decl = variable_declaration(&mut *guard, true);
 		drop(guard);
 		m.complete(p, FOR_STMT_INIT);
 
@@ -889,7 +903,7 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 			let is_in = p.at(T![in]);
 			p.bump_any();
 
-			check_for_stmt_declarators(p, &decl);
+			check_for_stmt_declaration(p, &decl);
 
 			for_each_head(p, is_in)
 		} else {

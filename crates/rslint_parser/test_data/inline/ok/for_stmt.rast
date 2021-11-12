@@ -5,19 +5,20 @@ JS_MODULE@0..95
       WHITESPACE@3..4 " "
       L_PAREN@4..5 "("
       FOR_STMT_INIT@5..14
-        VAR_DECL@5..14
-          IDENT@5..8 "let"
+        JS_VARIABLE_DECLARATION@5..14
+          LET_KW@5..8 "let"
           WHITESPACE@8..9 " "
           LIST@9..14
-            DECLARATOR@9..14
+            JS_VARIABLE_DECLARATOR@9..14
               SINGLE_PATTERN@9..10
                 NAME@9..10
                   IDENT@9..10 "i"
               WHITESPACE@10..11 " "
-              EQ@11..12 "="
-              WHITESPACE@12..13 " "
-              LITERAL@13..14
-                NUMBER@13..14 "5"
+              JS_EQUAL_VALUE_CLAUSE@11..14
+                EQ@11..12 "="
+                WHITESPACE@12..13 " "
+                LITERAL@13..14
+                  NUMBER@13..14 "5"
       SEMICOLON@14..15 ";"
       WHITESPACE@15..16 " "
       FOR_STMT_TEST@16..22
@@ -48,11 +49,11 @@ JS_MODULE@0..95
       WHITESPACE@35..36 " "
       L_PAREN@36..37 "("
       FOR_STMT_INIT@37..53
-        VAR_DECL@37..53
-          IDENT@37..40 "let"
+        JS_VARIABLE_DECLARATION@37..53
+          LET_KW@37..40 "let"
           WHITESPACE@40..41 " "
           LIST@41..53
-            DECLARATOR@41..53
+            JS_VARIABLE_DECLARATOR@41..53
               OBJECT_PATTERN@41..53
                 L_CURLY@41..42 "{"
                 WHITESPACE@42..43 " "

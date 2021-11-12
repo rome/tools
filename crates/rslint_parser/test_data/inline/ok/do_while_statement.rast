@@ -57,19 +57,21 @@ JS_MODULE@0..144
       R_PAREN@76..77 ")"
       SEMICOLON@77..78 ";"
     WHITESPACE@78..80 "\n\n"
-    VAR_DECL@80..90
-      IDENT@80..83 "let"
-      WHITESPACE@83..84 " "
-      LIST@84..89
-        DECLARATOR@84..89
-          SINGLE_PATTERN@84..85
-            NAME@84..85
-              IDENT@84..85 "a"
-          WHITESPACE@85..86 " "
-          EQ@86..87 "="
-          WHITESPACE@87..88 " "
-          LITERAL@88..89
-            NUMBER@88..89 "1"
+    JS_VARIABLE_DECLARATION_STATEMENT@80..90
+      JS_VARIABLE_DECLARATION@80..89
+        LET_KW@80..83 "let"
+        WHITESPACE@83..84 " "
+        LIST@84..89
+          JS_VARIABLE_DECLARATOR@84..89
+            SINGLE_PATTERN@84..85
+              NAME@84..85
+                IDENT@84..85 "a"
+            WHITESPACE@85..86 " "
+            JS_EQUAL_VALUE_CLAUSE@86..89
+              EQ@86..87 "="
+              WHITESPACE@87..88 " "
+              LITERAL@88..89
+                NUMBER@88..89 "1"
       SEMICOLON@89..90 ";"
     WHITESPACE@90..91 "\n"
     JS_DO_WHILE_STATEMENT@91..143

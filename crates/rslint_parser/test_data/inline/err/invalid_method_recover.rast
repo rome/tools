@@ -34,17 +34,19 @@ JS_MODULE@0..48
                 L_CURLY@26..27 "{"
                 WHITESPACE@27..32 "\n    "
                 LIST@32..39
-                  VAR_DECL@32..39
-                    IDENT@32..35 "let"
-                    WHITESPACE@35..36 " "
-                    LIST@36..39
-                      DECLARATOR@36..39
-                        SINGLE_PATTERN@36..37
-                          NAME@36..37
-                            IDENT@36..37 "a"
-                        EQ@37..38 "="
-                        ERROR@38..39
-                          SEMICOLON@38..39 ";"
+                  JS_VARIABLE_DECLARATION_STATEMENT@32..39
+                    JS_VARIABLE_DECLARATION@32..39
+                      LET_KW@32..35 "let"
+                      WHITESPACE@35..36 " "
+                      LIST@36..39
+                        JS_VARIABLE_DECLARATOR@36..39
+                          SINGLE_PATTERN@36..37
+                            NAME@36..37
+                              IDENT@36..37 "a"
+                          JS_EQUAL_VALUE_CLAUSE@37..39
+                            EQ@37..38 "="
+                            ERROR@38..39
+                              SEMICOLON@38..39 ";"
                 WHITESPACE@39..42 "\n  "
                 R_CURLY@42..43 "}"
             SEMICOLON@43..44 ";"

@@ -1,13 +1,13 @@
 use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl,
-	ClassProp, Condition, ConstructorParameters, Declarator, FnDecl, ForInStmt, ForStmt,
-	ForStmtInit, ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement, JsCaseClause,
-	JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
+	ClassProp, Condition, ConstructorParameters, FnDecl, ForInStmt, ForStmt, ForStmtInit,
+	ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement, JsCaseClause, JsCatchClause,
+	JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
 	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement, JsLabeledStatement,
-	JsReturnStatement, JsScript, JsSwitchStatement, JsTryStatement, JsWhileStatement,
-	JsWithStatement, Literal, LiteralProp, Name, NameRef, ObjectExpr, ParameterList, SequenceExpr,
-	Setter, SinglePattern, VarDecl,
+	JsReturnStatement, JsScript, JsSwitchStatement, JsTryStatement, JsVariableDeclarationStatement,
+	JsVariableDeclarator, JsWhileStatement, JsWithStatement, Literal, LiteralProp, Name, NameRef,
+	ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
 };
 use rslint_parser::{AstNode, AstToken, SyntaxKind, SyntaxNode, SyntaxToken};
 
@@ -44,10 +44,12 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::SPREAD_ELEMENT => SinglePattern::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::VAR_DECL => VarDecl::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::DECLARATOR => Declarator::cast(self.clone())
+			SyntaxKind::JS_VARIABLE_DECLARATION_STATEMENT => {
+				JsVariableDeclarationStatement::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
+			SyntaxKind::JS_VARIABLE_DECLARATOR => JsVariableDeclarator::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::FN_DECL => FnDecl::cast(self.clone())

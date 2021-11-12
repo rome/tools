@@ -1,18 +1,20 @@
 JS_MODULE@0..24
   LIST@0..23
-    VAR_DECL@0..13
-      IDENT@0..3 "let"
-      WHITESPACE@3..4 " "
-      LIST@4..13
-        DECLARATOR@4..13
-          SINGLE_PATTERN@4..7
-            NAME@4..7
-              IDENT@4..7 "foo"
-          WHITESPACE@7..8 " "
-          EQ@8..9 "="
-          WHITESPACE@9..10 " "
-          NAME_REF@10..13
-            IDENT@10..13 "bar"
+    JS_VARIABLE_DECLARATION_STATEMENT@0..13
+      JS_VARIABLE_DECLARATION@0..13
+        LET_KW@0..3 "let"
+        WHITESPACE@3..4 " "
+        LIST@4..13
+          JS_VARIABLE_DECLARATOR@4..13
+            SINGLE_PATTERN@4..7
+              NAME@4..7
+                IDENT@4..7 "foo"
+            WHITESPACE@7..8 " "
+            JS_EQUAL_VALUE_CLAUSE@8..13
+              EQ@8..9 "="
+              WHITESPACE@9..10 " "
+              NAME_REF@10..13
+                IDENT@10..13 "bar"
     WHITESPACE@13..14 " "
     JS_THROW_STATEMENT@14..23
       THROW_KW@14..19 "throw"
