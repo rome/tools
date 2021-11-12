@@ -128,7 +128,7 @@ impl JsBinaryExpression {
 	}
 
 	/// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
-	pub fn is_comparision_operator(&self) -> bool {
+	pub fn is_comparison_operator(&self) -> bool {
 		matches!(
 			self.operator().map(|t| t.kind()),
 			Ok(T![>] | T![<] | T![>=] | T![<=] | T![==] | T![===] | T![!=] | T![!==])
@@ -171,11 +171,7 @@ impl JsSequenceExpression {
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum UnaryOp {
-	/// `++`
-	Increment,
-	/// `--`
-	Decrement,
+pub enum JsUnaryOperation {
 	/// `delete`
 	Delete,
 	/// `void`
@@ -190,8 +186,23 @@ pub enum UnaryOp {
 	BitwiseNot,
 	/// `!`
 	LogicalNot,
-	/// `await`
-	Await,
+}
+
+impl JsUnaryExpression {
+	pub fn operation(&self) -> SyntaxResult<JsUnaryOperation> {
+		let operator = self.operator()?;
+
+		Ok(match operator.kind() {
+			T![+] => JsUnaryOperation::Plus,
+			T![-] => JsUnaryOperation::Minus,
+			T![~] => JsUnaryOperation::BitwiseNot,
+			T![!] => JsUnaryOperation::LogicalNot,
+			T![typeof] => JsUnaryOperation::Typeof,
+			T![void] => JsUnaryOperation::Void,
+			T![delete] => JsUnaryOperation::Delete,
+			_ => unreachable!(),
+		})
+	}
 }
 
 impl KeyValuePattern {

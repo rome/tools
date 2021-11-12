@@ -5,7 +5,7 @@ use crate::{
 };
 use rslint_parser::ast::{
 	JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsParenthesizedExpression,
-	JsStringLiteral, LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
+	JsStringLiteral, JsUnaryExpression, LiteralProp, ObjectExpr, ObjectProp,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
@@ -35,8 +35,8 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 		SyntaxKind::JS_NUMBER_LITERAL => {
 			tokenize_token(node.to::<JsNumberLiteral>().value_token().unwrap())
 		}
-		SyntaxKind::UNARY_EXPR => {
-			let expr = UnaryExpr::cast(node).unwrap();
+		SyntaxKind::JS_UNARY_EXPRESSION => {
+			let expr = JsUnaryExpression::cast(node).unwrap();
 			format_elements![
 				tokenize_token(expr.operator().unwrap()),
 				tokenize_node(expr.argument().unwrap().syntax().clone())

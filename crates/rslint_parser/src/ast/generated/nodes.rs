@@ -758,6 +758,27 @@ impl JsThisExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsUnaryExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsUnaryExpression {
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(
+			&self.syntax,
+			&[
+				T![delete],
+				T![void],
+				T![typeof],
+				T ! [+],
+				T ! [-],
+				T ! [~],
+				T![!],
+			],
+		)
+	}
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrowExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -840,28 +861,6 @@ impl CallExpr {
 	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct UnaryExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl UnaryExpr {
-	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
-		support::find_required_token(
-			&self.syntax,
-			&[
-				T![delete],
-				T![void],
-				T![typeof],
-				T ! [+],
-				T ! [-],
-				T ! [~],
-				T![!],
-				T![await],
-			],
-		)
-	}
-	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct PreUpdateExpression {
@@ -2273,6 +2272,7 @@ pub enum JsAnyExpression {
 	JsReferenceIdentifierExpression(JsReferenceIdentifierExpression),
 	JsSequenceExpression(JsSequenceExpression),
 	JsThisExpression(JsThisExpression),
+	JsUnaryExpression(JsUnaryExpression),
 	ArrowExpr(ArrowExpr),
 	Template(Template),
 	ObjectExpr(ObjectExpr),
@@ -2280,7 +2280,6 @@ pub enum JsAnyExpression {
 	DotExpr(DotExpr),
 	NewExpr(NewExpr),
 	CallExpr(CallExpr),
-	UnaryExpr(UnaryExpr),
 	PreUpdateExpression(PreUpdateExpression),
 	PostUpdateExpression(PostUpdateExpression),
 	AssignExpr(AssignExpr),
@@ -3082,6 +3081,17 @@ impl AstNode for JsThisExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsUnaryExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNARY_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for ArrowExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARROW_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3150,17 +3160,6 @@ impl AstNode for NewExpr {
 }
 impl AstNode for CallExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == CALL_EXPR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for UnaryExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == UNARY_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4771,6 +4770,9 @@ impl From<JsSequenceExpression> for JsAnyExpression {
 impl From<JsThisExpression> for JsAnyExpression {
 	fn from(node: JsThisExpression) -> JsAnyExpression { JsAnyExpression::JsThisExpression(node) }
 }
+impl From<JsUnaryExpression> for JsAnyExpression {
+	fn from(node: JsUnaryExpression) -> JsAnyExpression { JsAnyExpression::JsUnaryExpression(node) }
+}
 impl From<ArrowExpr> for JsAnyExpression {
 	fn from(node: ArrowExpr) -> JsAnyExpression { JsAnyExpression::ArrowExpr(node) }
 }
@@ -4791,9 +4793,6 @@ impl From<NewExpr> for JsAnyExpression {
 }
 impl From<CallExpr> for JsAnyExpression {
 	fn from(node: CallExpr) -> JsAnyExpression { JsAnyExpression::CallExpr(node) }
-}
-impl From<UnaryExpr> for JsAnyExpression {
-	fn from(node: UnaryExpr) -> JsAnyExpression { JsAnyExpression::UnaryExpr(node) }
 }
 impl From<PreUpdateExpression> for JsAnyExpression {
 	fn from(node: PreUpdateExpression) -> JsAnyExpression {
@@ -4860,6 +4859,7 @@ impl AstNode for JsAnyExpression {
 			| JS_REFERENCE_IDENTIFIER_EXPRESSION
 			| JS_SEQUENCE_EXPRESSION
 			| JS_THIS_EXPRESSION
+			| JS_UNARY_EXPRESSION
 			| ARROW_EXPR
 			| TEMPLATE
 			| OBJECT_EXPR
@@ -4867,7 +4867,6 @@ impl AstNode for JsAnyExpression {
 			| DOT_EXPR
 			| NEW_EXPR
 			| CALL_EXPR
-			| UNARY_EXPR
 			| PRE_UPDATE_EXPRESSION
 			| POST_UPDATE_EXPRESSION
 			| ASSIGN_EXPR
@@ -4912,6 +4911,7 @@ impl AstNode for JsAnyExpression {
 				JsAnyExpression::JsSequenceExpression(JsSequenceExpression { syntax })
 			}
 			JS_THIS_EXPRESSION => JsAnyExpression::JsThisExpression(JsThisExpression { syntax }),
+			JS_UNARY_EXPRESSION => JsAnyExpression::JsUnaryExpression(JsUnaryExpression { syntax }),
 			ARROW_EXPR => JsAnyExpression::ArrowExpr(ArrowExpr { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
 			OBJECT_EXPR => JsAnyExpression::ObjectExpr(ObjectExpr { syntax }),
@@ -4919,7 +4919,6 @@ impl AstNode for JsAnyExpression {
 			DOT_EXPR => JsAnyExpression::DotExpr(DotExpr { syntax }),
 			NEW_EXPR => JsAnyExpression::NewExpr(NewExpr { syntax }),
 			CALL_EXPR => JsAnyExpression::CallExpr(CallExpr { syntax }),
-			UNARY_EXPR => JsAnyExpression::UnaryExpr(UnaryExpr { syntax }),
 			PRE_UPDATE_EXPRESSION => {
 				JsAnyExpression::PreUpdateExpression(PreUpdateExpression { syntax })
 			}
@@ -4963,6 +4962,7 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsReferenceIdentifierExpression(it) => &it.syntax,
 			JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
 			JsAnyExpression::JsThisExpression(it) => &it.syntax,
+			JsAnyExpression::JsUnaryExpression(it) => &it.syntax,
 			JsAnyExpression::ArrowExpr(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
 			JsAnyExpression::ObjectExpr(it) => &it.syntax,
@@ -4970,7 +4970,6 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::DotExpr(it) => &it.syntax,
 			JsAnyExpression::NewExpr(it) => &it.syntax,
 			JsAnyExpression::CallExpr(it) => &it.syntax,
-			JsAnyExpression::UnaryExpr(it) => &it.syntax,
 			JsAnyExpression::PreUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::PostUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::AssignExpr(it) => &it.syntax,
@@ -6347,6 +6346,11 @@ impl std::fmt::Display for JsThisExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsUnaryExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for ArrowExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6378,11 +6382,6 @@ impl std::fmt::Display for NewExpr {
 	}
 }
 impl std::fmt::Display for CallExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for UnaryExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

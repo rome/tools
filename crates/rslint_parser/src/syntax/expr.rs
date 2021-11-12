@@ -1396,7 +1396,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	const UNARY_SINGLE: TokenSet =
 		token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
-	// FIXME: this shouldnt allow await in sync functions
+	// FIXME: this shouldn't allow await in sync functions
 	if (p.state.in_async || p.syntax.top_level_await) && p.at(T![await]) {
 		let m = p.start();
 		p.bump_any();
@@ -1457,7 +1457,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				}
 			}
 		}
-		return Some(m.complete(p, UNARY_EXPR));
+		return Some(m.complete(p, JS_UNARY_EXPRESSION));
 	}
 
 	postfix_expr(p)

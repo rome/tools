@@ -245,6 +245,7 @@ JsAnyExpression =
 	| JsReferenceIdentifierExpression
 	| JsSequenceExpression
 	| JsThisExpression
+	| JsUnaryExpression
 	| ArrowExpr
 	| Template
 	| ObjectExpr
@@ -252,7 +253,6 @@ JsAnyExpression =
 	| DotExpr
 	| NewExpr
 	| CallExpr
-	| UnaryExpr
 	| PreUpdateExpression
 	| PostUpdateExpression
 	| AssignExpr
@@ -462,11 +462,9 @@ JsLogicalExpression =
 	manual__right: JsAnyExpression
 
 // unary expression
-UnaryExpr =
-  operator:(
-		'delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!' | 'await'
-  )
-  argument:JsAnyExpression
+JsUnaryExpression =
+  operator: ('delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!')
+  argument: JsAnyExpression
 
 PreUpdateExpression =
     operator:('++' | '--')
