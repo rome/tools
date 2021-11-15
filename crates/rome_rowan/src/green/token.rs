@@ -47,9 +47,7 @@ impl From<Vec<Trivia>> for GreenTokenTrivia {
 			[] => GreenTokenTrivia::None,
 			[Trivia::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
 			[Trivia::Comments(len)] => GreenTokenTrivia::Comments(*len),
-			_ => {
-				GreenTokenTrivia::Many(Box::new(trivias))
-			},
+			_ => GreenTokenTrivia::Many(Box::new(trivias)),
 		}
 	}
 }

@@ -1175,7 +1175,12 @@ mod tests {
 			vec![Trivia::Whitespace(1)],
 		);
 		builder.token(crate::SyntaxKind(0), "1");
-		builder.token_with_trivia(crate::SyntaxKind(0), ";\t\t", vec![], vec![Trivia::Whitespace(2)]);
+		builder.token_with_trivia(
+			crate::SyntaxKind(0),
+			";\t\t",
+			vec![],
+			vec![Trivia::Whitespace(2)],
+		);
 		builder.finish_node();
 
 		let node = builder.finish();
