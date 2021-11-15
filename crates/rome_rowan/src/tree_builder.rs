@@ -1,4 +1,5 @@
 use crate::{
+	api::Trivia,
 	cow_mut::CowMut,
 	green::{GreenElement, NodeCache},
 	GreenNode, Language, NodeOrToken, SyntaxNode,
@@ -42,10 +43,41 @@ impl<L: Language> TreeBuilder<'_, L> {
 		}
 	}
 
+	/// Method to quickly wrap a tree with a node.
+	///
+	/// TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0), |builder| {
+	///     builder.token(SyntaxKind(1), "let");
+	/// });
+	pub fn wrap_with_node<F>(kind: L::Kind, build: F) -> SyntaxNode<L>
+	where
+		F: Fn(&mut Self),
+	{
+		let mut builder = TreeBuilder::<L>::new();
+		builder.start_node(kind);
+		build(&mut builder);
+		builder.finish_node();
+		builder.finish()
+	}
+
 	/// Adds new token to the current branch.
 	#[inline]
 	pub fn token(&mut self, kind: L::Kind, text: &str) {
 		let (hash, token) = self.cache.token(L::kind_to_raw(kind), text);
+		self.children.push((hash, Some(token.into())));
+	}
+
+	/// Adds new token to the current branch.
+	#[inline]
+	pub fn token_with_trivia(
+		&mut self,
+		kind: L::Kind,
+		text: &str,
+		leading: Vec<Trivia>,
+		trailing: Vec<Trivia>,
+	) {
+		let (hash, token) =
+			self.cache
+				.token_with_trivia(L::kind_to_raw(kind), text, leading, trailing);
 		self.children.push((hash, Some(token.into())));
 	}
 

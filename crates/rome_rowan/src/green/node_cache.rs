@@ -2,6 +2,7 @@ use hashbrown::hash_map::RawEntryMut;
 use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 
+use crate::api::Trivia;
 use crate::green::Slot;
 use crate::{
 	green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
@@ -9,6 +10,7 @@ use crate::{
 };
 
 use super::element::GreenElement;
+use super::token::GreenTokenTrivia;
 
 type HashMap<K, V> = hashbrown::HashMap<K, V, BuildHasherDefault<FxHasher>>;
 
@@ -40,11 +42,15 @@ pub struct NodeCache {
 	tokens: HashMap<NoHash<GreenToken>, ()>,
 }
 
-fn token_hash(token: &GreenTokenData) -> u64 {
+fn token_hash_of(kind: SyntaxKind, text: &str) -> u64 {
 	let mut h = FxHasher::default();
-	token.kind().hash(&mut h);
-	token.text().hash(&mut h);
+	kind.hash(&mut h);
+	text.hash(&mut h);
 	h.finish()
+}
+
+fn token_hash(token: &GreenTokenData) -> u64 {
+	token_hash_of(token.kind(), token.text())
 }
 
 fn node_hash(node: &GreenNodeData) -> u64 {
@@ -148,12 +154,20 @@ impl NodeCache {
 	}
 
 	pub(crate) fn token(&mut self, kind: SyntaxKind, text: &str) -> (u64, GreenToken) {
-		let hash = {
-			let mut h = FxHasher::default();
-			kind.hash(&mut h);
-			text.hash(&mut h);
-			h.finish()
-		};
+		self.token_with_trivia(kind, text, Vec::new(), Vec::new())
+	}
+
+	pub(crate) fn token_with_trivia(
+		&mut self,
+		kind: SyntaxKind,
+		text: &str,
+		leading: Vec<Trivia>,
+		trailing: Vec<Trivia>,
+	) -> (u64, GreenToken) {
+		let hash = token_hash_of(kind, text);
+
+		let leading = GreenTokenTrivia::from(leading);
+		let trailing = GreenTokenTrivia::from(trailing);
 
 		let entry = self.tokens.raw_entry_mut().from_hash(hash, |token| {
 			token.0.kind() == kind && token.0.text() == text
@@ -162,7 +176,7 @@ impl NodeCache {
 		let token = match entry {
 			RawEntryMut::Occupied(entry) => entry.key().0.clone(),
 			RawEntryMut::Vacant(entry) => {
-				let token = GreenToken::new(kind, text);
+				let token = GreenToken::with_trivia(kind, text, leading, trailing);
 				entry.insert_with_hasher(hash, NoHash(token.clone()), (), |t| token_hash(&t.0));
 				token
 			}
@@ -170,4 +184,35 @@ impl NodeCache {
 
 		(hash, token)
 	}
+}
+
+#[test]
+fn green_token_hash() {
+	let kind = SyntaxKind(0);
+	let text = " let ";
+	let t1 = GreenToken::with_trivia(
+		kind,
+		text,
+		GreenTokenTrivia::Whitespace(1),
+		GreenTokenTrivia::Whitespace(1),
+	);
+	let t2 = GreenToken::with_trivia(
+		kind,
+		text,
+		GreenTokenTrivia::Whitespace(1),
+		GreenTokenTrivia::Whitespace(1),
+	);
+
+	assert_eq!(token_hash(&t1), token_hash(&t2));
+
+	let t3 = GreenToken::new(kind, "let");
+	assert_ne!(token_hash(&t1), token_hash(&t3));
+
+	let t4 = GreenToken::with_trivia(
+		kind,
+		"\tlet ",
+		GreenTokenTrivia::Whitespace(1),
+		GreenTokenTrivia::Whitespace(1),
+	);
+	assert_ne!(token_hash(&t1), token_hash(&t4));
 }
