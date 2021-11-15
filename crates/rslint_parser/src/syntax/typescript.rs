@@ -134,12 +134,8 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	Some(match p.nth(1) {
-		T![function] => {
-			p.state.decorators_were_valid = true;
-			function_declaration(p)
-		}
+		T![function] => function_declaration(p),
 		T![class] => {
-			p.state.decorators_were_valid = true;
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			class_decl(p, false).undo_completion(p).abandon(p);
@@ -196,7 +192,6 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 
 pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.cur_src() == "abstract" {
-		p.state.decorators_were_valid = true;
 		let m = p.start();
 		let range = p.cur_tok().range;
 		p.bump_remap(T![abstract]);

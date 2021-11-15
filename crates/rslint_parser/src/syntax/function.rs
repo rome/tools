@@ -1,10 +1,11 @@
 use crate::syntax::decl::{is_semi, parameter_list};
-use crate::syntax::pat::{binding_identifier, opt_binding_identifier};
-use crate::syntax::stmt::function_body;
+use crate::syntax::pat::opt_binding_identifier;
+use crate::syntax::stmt::block_impl;
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::{CompletedMarker, Parser, ParserState};
 use rslint_syntax::SyntaxKind::{
-	ERROR, FN_EXPR, JS_FUNCTION_DECLARATION, JS_IDENTIFIER_BINDING, TS_RETURN_TYPE,
+	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION,
+	JS_IDENTIFIER_BINDING, TS_RETURN_TYPE,
 };
 use rslint_syntax::{SyntaxKind, T};
 use std::collections::HashMap;
@@ -25,7 +26,7 @@ pub(super) fn function_declaration(p: &mut Parser) -> CompletedMarker {
 }
 
 pub(super) fn function_expression(p: &mut Parser) -> CompletedMarker {
-	function(p, FN_EXPR)
+	function(p, JS_FUNCTION_EXPRESSION)
 }
 
 fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
@@ -69,17 +70,31 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 	parameter_types(guard);
 	parameter_list(guard);
 	return_type(guard);
-	fn_body(guard);
+
+	if kind == JS_FUNCTION_DECLARATION {
+		function_body_or_declaration(guard);
+	} else {
+		function_body(guard);
+	}
 
 	m.complete(guard, kind)
 }
 
-pub(super) fn fn_body(p: &mut Parser) {
+pub(super) fn function_body(p: &mut Parser) -> Option<CompletedMarker> {
+	block_impl(p, JS_FUNCTION_BODY, None)
+}
+
+// TODO 1725 This is probably not ideal (same with the `declare` keyword). We should
+// use a different AST type for function declarations. For example, a function declaration should
+// never have a body but that would be allowed with this approach. Same for interfaces, interface
+// methods should never have a body
+/// Either parses a typescript declaration body or the function body
+pub(crate) fn function_body_or_declaration(p: &mut Parser) {
 	// omitting the body is allowed in ts
 	if p.typescript() && !p.at(T!['{']) && is_semi(p, 0) {
 		p.eat(T![;]);
 	} else {
-		let mut complete = function_body(p, None);
+		let mut complete = function_body(p);
 		if let Some(ref mut block) = complete {
 			if p.state.in_declare {
 				let err = p
@@ -99,7 +114,7 @@ pub(super) fn args_body(p: &mut Parser) {
 	parameter_types(p);
 	parameter_list(p);
 	return_type(p);
-	fn_body(p);
+	function_body_or_declaration(p);
 }
 
 fn parameter_types(p: &mut Parser) {

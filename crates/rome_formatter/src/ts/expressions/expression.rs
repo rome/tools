@@ -29,7 +29,7 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::JsConditionalExpression(_) => todo!(),
 			JsAnyExpression::AssignExpr(_) => todo!(),
 			JsAnyExpression::JsSequenceExpression(expr) => expr.to_format_element(formatter),
-			JsAnyExpression::FnExpr(_) => todo!(),
+			JsAnyExpression::JsFunctionExpression(_) => todo!(),
 			JsAnyExpression::ClassExpr(_) => todo!(),
 			JsAnyExpression::NewTarget(_) => todo!(),
 			JsAnyExpression::ImportMeta(_) => todo!(),

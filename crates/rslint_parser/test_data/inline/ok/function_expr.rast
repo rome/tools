@@ -14,7 +14,7 @@ JS_ROOT@0..48
             JS_EQUAL_VALUE_CLAUSE@6..21
               EQ@6..7 "="
               WHITESPACE@7..8 " "
-              FN_EXPR@8..21
+              JS_FUNCTION_EXPRESSION@8..21
                 FUNCTION_KW@8..16 "function"
                 JS_PARAMETER_LIST@16..18
                   L_PAREN@16..17 "("
@@ -40,7 +40,7 @@ JS_ROOT@0..48
             JS_EQUAL_VALUE_CLAUSE@28..47
               EQ@28..29 "="
               WHITESPACE@29..30 " "
-              FN_EXPR@30..47
+              JS_FUNCTION_EXPRESSION@30..47
                 FUNCTION_KW@30..38 "function"
                 WHITESPACE@38..39 " "
                 JS_IDENTIFIER_BINDING@39..42

@@ -14,7 +14,7 @@ JS_ROOT@0..62
             JS_EQUAL_VALUE_CLAUSE@6..27
               EQ@6..7 "="
               WHITESPACE@7..8 " "
-              FN_EXPR@8..27
+              JS_FUNCTION_EXPRESSION@8..27
                 ASYNC_KW@8..13 "async"
                 WHITESPACE@13..14 " "
                 FUNCTION_KW@14..22 "function"
@@ -43,7 +43,7 @@ JS_ROOT@0..62
             JS_EQUAL_VALUE_CLAUSE@35..60
               EQ@35..36 "="
               WHITESPACE@36..37 " "
-              FN_EXPR@37..60
+              JS_FUNCTION_EXPRESSION@37..60
                 ASYNC_KW@37..42 "async"
                 WHITESPACE@42..43 " "
                 FUNCTION_KW@43..51 "function"

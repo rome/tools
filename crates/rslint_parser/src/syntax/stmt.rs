@@ -2,13 +2,13 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
-use super::decl::{class_decl, decorators};
+use super::decl::class_decl;
 use super::expr::{assign_expr, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
-use crate::syntax::function::{function_declaration, function_expression};
+use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
@@ -66,16 +66,7 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 }
 
 /// A generic statement such as a block, if, while, with, etc
-pub fn stmt(
-	p: &mut Parser,
-	recovery_set: impl Into<Option<TokenSet>>,
-	decorator: Option<CompletedMarker>,
-) -> Option<CompletedMarker> {
-	let decorator = if p.at(T![@]) {
-		decorators(p).into_iter().next() // should be always Some
-	} else {
-		decorator
-	};
+pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option<CompletedMarker> {
 	let res = match p.cur() {
 		T![;] => empty_stmt(p),
 		T!['{'] => block_stmt(p, recovery_set).unwrap(), // It is only ever None if there is no `{`,
@@ -97,47 +88,21 @@ pub fn stmt(
 		T![continue] => continue_stmt(p),
 		T![throw] => throw_stmt(p),
 		T![debugger] => debugger_stmt(p),
-		T![function] => {
-			p.state.decorators_were_valid = true;
-			// TODO: Should we change this to fn_expr if there is no name?
-			function_declaration(p)
-		}
-		T![class] => {
-			p.state.decorators_were_valid = true;
-			let complete = class_decl(p, false);
-			if let Some(decorator) = decorator {
-				let new = decorator.precede(p);
-				complete.undo_completion(p);
-				new.complete(p, CLASS_DECL)
-			} else {
-				complete
-			}
-		}
+		T![function] => function_declaration(p),
+		T![class] => class_decl(p, false),
 		T![ident]
 			if p.cur_src() == "async"
 				&& p.nth_at(1, T![function])
 				&& !p.has_linebreak_before_n(1) =>
 		{
-			p.state.decorators_were_valid = true;
-			function_expression(p)
+			function_declaration(p)
 		}
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {
 			variable_declaration_statement(p)
 		}
 		// TODO: handle `<T>() => {};` with less of a hack
-		_ if p.at_ts(STARTS_EXPR) || p.at(T![<]) => {
-			let complete = expr_stmt(p, decorator);
-			if let Some(decorator) = decorator.filter(|_| !p.state.decorators_were_valid) {
-				let err = p
-					.err_builder("decorators are not valid in this position")
-					.primary(decorator.range(p), "");
-
-				p.error(err);
-			}
-			p.state.decorators_were_valid = false;
-			return complete;
-		}
+		_ if p.at_ts(STARTS_EXPR) || p.at(T![<]) => return expr_stmt(p),
 		_ => {
 			let err = p
 				.err_builder("Expected a statement or declaration, but found none")
@@ -157,19 +122,10 @@ pub fn stmt(
 		}
 	};
 
-	if let Some(decorator) = decorator.filter(|_| !p.state.decorators_were_valid) {
-		let err = p
-			.err_builder("decorators are not valid in this position")
-			.primary(decorator.range(p), "");
-
-		p.error(err);
-	}
-	p.state.decorators_were_valid = false;
-
 	Some(res)
 }
 
-fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<CompletedMarker> {
+fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
 	// we treat these as always being ts declarations since ambiguity is inefficient in this style of
@@ -181,12 +137,6 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 		&& !p.nth_at(1, T![.])
 	{
 		if let Some(mut res) = try_parse_ts(p, ts_expr_stmt) {
-			if let Some(decorator) = decorator {
-				let kind = res.kind();
-				let m = decorator.precede(p);
-				res.undo_completion(p);
-				res = m.complete(p, kind);
-			}
 			res.err_if_not_ts(
 				p,
 				"TypeScript declarations can only be used in TypeScript files",
@@ -261,7 +211,7 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 
 		let m = expr.undo_completion(p);
 		p.bump_any();
-		stmt(p, None, None);
+		stmt(p, None);
 		return Some(m.complete(p, JS_LABELED_STATEMENT));
 	}
 
@@ -421,13 +371,6 @@ pub fn empty_stmt(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_EMPTY_STATEMENT)
 }
 
-pub(crate) fn function_body(
-	p: &mut Parser,
-	recovery_set: impl Into<Option<TokenSet>>,
-) -> Option<CompletedMarker> {
-	block_impl(p, JS_FUNCTION_BODY, recovery_set)
-}
-
 /// A block statement consisting of statements wrapped in curly brackets.
 // test block_stmt
 // {}
@@ -441,7 +384,7 @@ pub(crate) fn block_stmt(
 }
 
 /// A block wrapped in curly brackets. Can either be a function body or a block statement.
-fn block_impl(
+pub(super) fn block_impl(
 	p: &mut Parser,
 	block_kind: SyntaxKind,
 	recovery_set: impl Into<Option<TokenSet>>,
@@ -544,13 +487,6 @@ pub(crate) fn statements(
 			break;
 		}
 
-		let decorator = if p.at(T![@]) {
-			decorators(p).into_iter().next()
-		} else {
-			None
-		};
-		let mut is_import_export = false;
-
 		match p.cur() {
 			// test_err import_decl_not_top_level
 			// {
@@ -559,14 +495,7 @@ pub(crate) fn statements(
 
 			// make sure we dont try parsing import.meta or import() as declarations
 			T![import] if !token_set![T![.], T!['(']].contains(p.nth(1)) => {
-				is_import_export = true;
 				let mut m = import_decl(p);
-				if let Some(decorator) = decorator {
-					let kind = m.kind();
-					let new = decorator.precede(p);
-					m.undo_completion(p);
-					m = new.complete(p, kind)
-				}
 				if !p.state.is_module && !p.typescript() {
 					let err = p
 						.err_builder("Illegal use of an import declaration outside of a module")
@@ -589,14 +518,7 @@ pub(crate) fn statements(
 			//  export { pain } from "life";
 			// }
 			T![export] => {
-				is_import_export = true;
 				let mut m = export_decl(p);
-				if let Some(decorator) = decorator {
-					let kind = m.kind();
-					let new = decorator.precede(p);
-					m.undo_completion(p);
-					m = new.complete(p, kind)
-				}
 				if !p.state.is_module && !p.typescript() {
 					let err = p
 						.err_builder("Illegal use of an export declaration outside of a module")
@@ -615,20 +537,9 @@ pub(crate) fn statements(
 				}
 			}
 			_ => {
-				stmt(p, recovery_set, decorator);
+				stmt(p, recovery_set);
 			}
 		};
-
-		if let Some(decorator) =
-			decorator.filter(|_| !p.state.decorators_were_valid && is_import_export)
-		{
-			let err = p
-				.err_builder("decorators are not valid in this position")
-				.primary(decorator.range(p), "");
-
-			p.error(err);
-		}
-		p.state.decorators_were_valid = false;
 	}
 
 	list_start.complete(p, LIST);
@@ -672,13 +583,13 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 
 	// body
 	// allows us to recover from `if (true) else {}`
-	stmt(p, STMT_RECOVERY_SET.union(token_set![T![else]]), None);
+	stmt(p, STMT_RECOVERY_SET.union(token_set![T![else]]));
 
 	// else clause
 	if p.at(T![else]) {
 		let else_clause = p.start();
 		p.eat(T![else]);
-		stmt(p, None, None);
+		stmt(p, None);
 		else_clause.complete(p, JS_ELSE_CLAUSE);
 	}
 
@@ -691,7 +602,7 @@ pub fn with_stmt(p: &mut Parser) -> CompletedMarker {
 	p.expect(T![with]);
 	parenthesized_expression(p);
 
-	stmt(p, None, None);
+	stmt(p, None);
 
 	let mut complete = m.complete(p, JS_WITH_STATEMENT);
 	if p.state.strict.is_some() {
@@ -725,7 +636,6 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 			continue_allowed: true,
 			..p.state.clone()
 		}),
-		None,
 		None,
 	);
 	m.complete(p, JS_WHILE_STATEMENT)
@@ -893,7 +803,6 @@ pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
 			..p.state.clone()
 		}),
 		None,
-		None,
 	);
 	p.expect(T![while]);
 	parenthesized_expression(p);
@@ -1016,7 +925,6 @@ pub fn for_stmt(p: &mut Parser) -> CompletedMarker {
 			..p.state.clone()
 		}),
 		None,
-		None,
 	);
 	m.complete(p, kind)
 }
@@ -1034,7 +942,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			let end = p.cur_tok().range.end;
 			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
-				stmt(p, None, None);
+				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
 			m.complete(p, JS_DEFAULT_CLAUSE);
@@ -1046,7 +954,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			p.expect(T![:]);
 			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
-				stmt(p, None, None);
+				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
 			m.complete(p, JS_CASE_CLAUSE);

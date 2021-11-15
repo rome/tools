@@ -364,7 +364,6 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 	if !only_ty && !exports_ns && p.eat(T![default]) {
 		if p.cur_src() == "abstract" && p.nth_at(1, T![class]) {
-			p.state.decorators_were_valid = true;
 			let inner = p.start();
 			if !p.typescript() {
 				let err = p
@@ -398,7 +397,6 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		if p.at(T![class]) {
-			p.state.decorators_were_valid = true;
 			class_decl(
 				&mut *p.with_state(ParserState {
 					in_default: true,
@@ -410,7 +408,6 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		if p.cur_src() == "async" && p.nth_at(1, T![function]) && !p.has_linebreak_before_n(1) {
-			p.state.decorators_were_valid = true;
 			function_declaration(p);
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
@@ -425,17 +422,14 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	}
 
 	if !only_ty && p.at(T![class]) {
-		p.state.decorators_were_valid = true;
 		class_decl(p, false);
 	} else if !only_ty
 		&& p.cur_src() == "async"
 		&& p.nth_at(1, T![function])
 		&& !p.has_linebreak_before_n(1)
 	{
-		p.state.decorators_were_valid = true;
 		function_declaration(p);
 	} else if !only_ty && p.at(T![function]) {
-		p.state.decorators_were_valid = true;
 		function_declaration(p);
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");

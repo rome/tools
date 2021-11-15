@@ -1,10 +1,9 @@
 //! Class and function declarations.
 
-use super::expr::{assign_expr, identifier_name, object_prop_name, STARTS_EXPR};
+use super::expr::{assign_expr, identifier_name, object_prop_name};
 use super::pat::{binding_identifier, pattern};
 use super::typescript::*;
-use crate::syntax::function::{args_body, fn_body};
-use crate::syntax::stmt::function_body;
+use crate::syntax::function::{args_body, function_body, function_body_or_declaration};
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
@@ -17,39 +16,6 @@ pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
 	JS_NUMBER_LITERAL_TOKEN,
 	JS_STRING_LITERAL_TOKEN
 ];
-
-pub fn decorators(p: &mut Parser) -> Vec<CompletedMarker> {
-	let mut decorators = Vec::with_capacity(1);
-	while p.at(T![@]) {
-		let decorator = decorator(p);
-		if !p.syntax.decorators {
-			let err = p
-				.err_builder("decorators are not allowed")
-				.primary(decorator.range(p), "");
-
-			p.error(err);
-		}
-		decorators.push(decorator);
-	}
-	decorators
-}
-
-pub fn decorator(p: &mut Parser) -> CompletedMarker {
-	let m = p.start();
-	p.expect(T![@]);
-
-	if !STARTS_EXPR.contains(p.cur()) {
-		let err = p
-			.err_builder("decorators require an expression to call")
-			.primary(p.cur_tok().range, "");
-
-		p.error(err);
-	} else {
-		assign_expr(p);
-	}
-
-	m.complete(p, TS_DECORATOR)
-}
 
 pub fn maybe_private_name(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![#]) {
@@ -242,13 +208,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 			p.expect(T![,]);
 		}
 
-		let decorator = if p.at(T![@]) {
-			decorators(p).into_iter().next()
-		} else {
-			None
-		};
-
-		let marker = if p.at(T![...]) {
+		if p.at(T![...]) {
 			let m = p.start();
 			p.bump_any();
 			pattern(p, true, false);
@@ -339,13 +299,6 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				None
 			}
 		};
-
-		if let (Some(res), Some(decorator)) = (marker, decorator) {
-			let kind = res.kind();
-			let m = decorator.precede(p);
-			res.undo_completion(p).abandon(p);
-			m.complete(p, kind);
-		}
 	}
 
 	parameters_list.complete(p, LIST);
@@ -360,7 +313,7 @@ pub fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	if guard.at(T!['{']) {
-		function_body(&mut *guard, None)
+		function_body(&mut *guard)
 	} else {
 		assign_expr(&mut *guard)
 	}
@@ -695,7 +648,6 @@ fn consume_leading_tokens(
 
 fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
-	decorators(p);
 	let has_accessibility = matches!(p.cur_src(), "public" | "private" | "protected");
 	let mut offset = has_accessibility as usize;
 	let declare = p.nth_src(offset) == "declare";
@@ -938,7 +890,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 				p.error(err);
 			}
 
-			fn_body(p);
+			function_body_or_declaration(p);
 
 			// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 

@@ -39,7 +39,7 @@ JS_ROOT@0..114
         LIST@40..40
         R_CURLY@40..41 "}"
     WHITESPACE@41..42 "\n"
-    FN_EXPR@42..61
+    JS_FUNCTION_DECLARATION@42..61
       ASYNC_KW@42..47 "async"
       WHITESPACE@47..48 " "
       FUNCTION_KW@48..56 "function"
@@ -54,7 +54,7 @@ JS_ROOT@0..114
         LIST@60..60
         R_CURLY@60..61 "}"
     WHITESPACE@61..62 "\n"
-    FN_EXPR@62..83
+    JS_FUNCTION_DECLARATION@62..83
       ASYNC_KW@62..67 "async"
       WHITESPACE@67..68 " "
       FUNCTION_KW@68..76 "function"
@@ -152,6 +152,20 @@ error[SyntaxError]: Expected an identifier or pattern, but found none
   │
 3 │ function *() {}
   │          ^
+
+--
+error[SyntaxError]: expected a name for the function in a function declaration, but found none
+  ┌─ function_decl_err.js:4:15
+  │
+4 │ async function() {}
+  │               ^
+
+--
+error[SyntaxError]: expected a name for the function in a function declaration, but found none
+  ┌─ function_decl_err.js:5:17
+  │
+5 │ async function *() {}
+  │                 ^
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none

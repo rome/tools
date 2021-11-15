@@ -246,6 +246,7 @@ JsAnyExpression =
 	| JsAwaitExpression
 	| JsBinaryExpression
 	| JsConditionalExpression
+	| JsFunctionExpression
 	| JsImportCallExpression
 	| JsLogicalExpression
 	| JsParenthesizedExpression
@@ -264,7 +265,6 @@ JsAnyExpression =
 	| NewExpr
 	| CallExpr
 	| AssignExpr
-	| FnExpr
 	| ClassExpr
 	| NewTarget
 	| ImportMeta
@@ -326,17 +326,15 @@ JsConditionalExpression =
 // import meta expression
 ImportMeta = 'import' '.'
 
-// function expression
-FnExpr =
+JsFunctionExpression =
 	'async'?
 	'function'
 	'*'?
-	name:Name
-	type_params:TsTypeParams?
-	parameters:ArgList
-	':'?
-	return_type:TsType?
-	body:JsFunctionBody
+	id: JsIdentifierBinding?
+	type_params: TsTypeParams?
+	parameters: JsParameterList
+	return_type: TsReturnType?
+	body: JsFunctionBody
 
 // Arrow expression
 ArrowExpr =
