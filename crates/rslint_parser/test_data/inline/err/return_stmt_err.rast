@@ -1,4 +1,5 @@
-JS_MODULE@0..20
+JS_ROOT@0..20
+  LIST@0..0
   LIST@0..19
     JS_RETURN_STATEMENT@0..7
       RETURN_KW@0..6 "return"

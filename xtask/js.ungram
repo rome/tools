@@ -48,15 +48,14 @@ JsUnknownAssignmentTarget = SyntaxElement*
 
 Ident = 'ident'
 
-// TODO #1725 add directives (JsDirective (';' JsDirective)*)
-JsScript =
+JsRoot =
 	interpreter: 'js_shebang'?
+	directives: JsDirective*
 	statements: JsAnyStatement*
 
-// TODO #1725 add directives (JsDirective (';' JsDirective)*)
-JsModule =
-	interpreter: 'js_shebang'?
-	statements: JsAnyStatement*
+JsDirective =
+	value: 'js_string_literal_token'
+	';'?
 
 ///////////////
 // STATEMENTS
@@ -330,7 +329,7 @@ FnExpr =
 	parameters:ArgList
 	':'?
 	return_type:TsType?
-	body:JsBlockStatement
+	body:JsFunctionBody
 
 // Arrow expression
 ArrowExpr =
@@ -379,7 +378,7 @@ Constructor =
 	name:PropName
 	type_params:TsTypeParams?
 	parameters:ParameterList
-	body:JsBlockStatement
+	body:JsFunctionBody
 
 
 ConstructorParameters =
@@ -600,9 +599,9 @@ IdentProp = name: Name
 // MISCELLANEOUS
 ///////////////
 
-Getter =  'get' key:PropName parameters:ParameterList  body:JsBlockStatement
+Getter =  'get' key:PropName parameters:ParameterList  body:JsFunctionBody
 
-Setter = 'set' key:PropName parameters:ParameterList  body:JsBlockStatement
+Setter = 'set' key:PropName parameters:ParameterList  body:JsFunctionBody
 
 Method =
 	'static'?
@@ -613,7 +612,7 @@ Method =
 	parameters:ParameterList
 	':'?
 	return_type:TsType?
-	body:JsBlockStatement
+	body:JsFunctionBody
 
 SpreadElement = '...' element:JsAnyExpression
 
@@ -648,7 +647,7 @@ FnDecl =
 	parameters:ParameterList
 	':'?
 	return_type:TsType?
-	body:JsBlockStatement
+	body:JsFunctionBody
 
 
 JsVariableDeclarationStatement =
@@ -734,7 +733,7 @@ ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier
 
 ExprOrBlock =
 	JsAnyExpression
-	| JsBlockStatement
+	| JsFunctionBody
 
 ParameterList = '(' parameters:(Pattern (',' Pattern)* ','?) ')'
 ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
@@ -747,6 +746,12 @@ ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
 JsEqualValueClause =
 	'='
 	expression: JsAnyExpression
+
+JsFunctionBody =
+	'{'
+	directives: JsDirective*
+	statements: JsAnyStatement*
+	'}'
 
 ///////////////
 // TYPESCRIPT

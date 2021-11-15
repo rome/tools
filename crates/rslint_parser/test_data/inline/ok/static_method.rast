@@ -1,4 +1,5 @@
-JS_MODULE@0..99
+JS_ROOT@0..99
+  LIST@0..0
   LIST@0..98
     CLASS_DECL@0..98
       CLASS_KW@0..5 "class"
@@ -23,8 +24,9 @@ JS_MODULE@0..99
                     IDENT@24..27 "bar"
               R_PAREN@27..28 ")"
             WHITESPACE@28..29 " "
-            JS_BLOCK_STATEMENT@29..31
+            JS_FUNCTION_BODY@29..31
               L_CURLY@29..30 "{"
+              LIST@30..30
               LIST@30..30
               R_CURLY@30..31 "}"
           WHITESPACE@31..33 "\n "
@@ -39,8 +41,9 @@ JS_MODULE@0..99
               LIST@45..45
               R_PAREN@45..46 ")"
             WHITESPACE@46..47 " "
-            JS_BLOCK_STATEMENT@47..49
+            JS_FUNCTION_BODY@47..49
               L_CURLY@47..48 "{"
+              LIST@48..48
               LIST@48..48
               R_CURLY@48..49 "}"
           WHITESPACE@49..51 "\n "
@@ -56,8 +59,9 @@ JS_MODULE@0..99
               LIST@68..68
               R_PAREN@68..69 ")"
             WHITESPACE@69..70 " "
-            JS_BLOCK_STATEMENT@70..72
+            JS_FUNCTION_BODY@70..72
               L_CURLY@70..71 "{"
+              LIST@71..71
               LIST@71..71
               R_CURLY@71..72 "}"
           WHITESPACE@72..74 "\n "
@@ -74,8 +78,9 @@ JS_MODULE@0..99
               LIST@92..92
               R_PAREN@92..93 ")"
             WHITESPACE@93..94 " "
-            JS_BLOCK_STATEMENT@94..96
+            JS_FUNCTION_BODY@94..96
               L_CURLY@94..95 "{"
+              LIST@95..95
               LIST@95..95
               R_CURLY@95..96 "}"
         WHITESPACE@96..97 "\n"

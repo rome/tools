@@ -1,4 +1,5 @@
-JS_MODULE@0..41
+JS_ROOT@0..41
+  LIST@0..0
   LIST@0..40
     CLASS_DECL@0..40
       CLASS_KW@0..5 "class"
@@ -41,8 +42,9 @@ JS_MODULE@0..41
               LIST@31..31
               R_PAREN@31..32 ")"
             WHITESPACE@32..33 " "
-            JS_BLOCK_STATEMENT@33..35
+            JS_FUNCTION_BODY@33..35
               L_CURLY@33..34 "{"
+              LIST@34..34
               LIST@34..34
               R_CURLY@34..35 "}"
           JS_EMPTY_STATEMENT@35..36

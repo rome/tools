@@ -1,0 +1,120 @@
+JS_ROOT@0..161
+  COMMENT@0..9 "// SCRIPT"
+  WHITESPACE@9..11 "\n\n"
+  LIST@11..11
+  LIST@11..160
+    FN_DECL@11..160
+      FUNCTION_KW@11..19 "function"
+      WHITESPACE@19..20 " "
+      NAME@20..24
+        IDENT@20..24 "test"
+      PARAMETER_LIST@24..26
+        L_PAREN@24..25 "("
+        LIST@25..25
+        R_PAREN@25..26 ")"
+      WHITESPACE@26..27 " "
+      JS_FUNCTION_BODY@27..160
+        L_CURLY@27..28 "{"
+        WHITESPACE@28..30 "\n\t"
+        LIST@30..43
+          JS_DIRECTIVE@30..43
+            JS_STRING_LITERAL_TOKEN@30..42 "\"use strict\""
+            SEMICOLON@42..43 ";"
+        WHITESPACE@43..45 "\n\t"
+        LIST@45..158
+          FN_DECL@45..84
+            FUNCTION_KW@45..53 "function"
+            WHITESPACE@53..54 " "
+            NAME@54..61
+              IDENT@54..61 "inner_a"
+            PARAMETER_LIST@61..63
+              L_PAREN@61..62 "("
+              LIST@62..62
+              R_PAREN@62..63 ")"
+            WHITESPACE@63..64 " "
+            JS_FUNCTION_BODY@64..84
+              L_CURLY@64..65 "{"
+              WHITESPACE@65..68 "\n\t\t"
+              LIST@68..81
+                JS_DIRECTIVE@68..81
+                  JS_STRING_LITERAL_TOKEN@68..80 "\"use strict\""
+                  SEMICOLON@80..81 ";"
+              WHITESPACE@81..83 "\n\t"
+              LIST@83..83
+              R_CURLY@83..84 "}"
+          WHITESPACE@84..87 "\n\n\t"
+          FN_DECL@87..158
+            FUNCTION_KW@87..95 "function"
+            WHITESPACE@95..96 " "
+            NAME@96..103
+              IDENT@96..103 "inner_b"
+            PARAMETER_LIST@103..105
+              L_PAREN@103..104 "("
+              LIST@104..104
+              R_PAREN@104..105 ")"
+            WHITESPACE@105..106 " "
+            JS_FUNCTION_BODY@106..158
+              L_CURLY@106..107 "{"
+              WHITESPACE@107..110 "\n\t\t"
+              LIST@110..110
+              LIST@110..155
+                FN_DECL@110..155
+                  FUNCTION_KW@110..118 "function"
+                  WHITESPACE@118..119 " "
+                  NAME@119..130
+                    IDENT@119..130 "inner_inner"
+                  PARAMETER_LIST@130..132
+                    L_PAREN@130..131 "("
+                    LIST@131..131
+                    R_PAREN@131..132 ")"
+                  WHITESPACE@132..133 " "
+                  JS_FUNCTION_BODY@133..155
+                    L_CURLY@133..134 "{"
+                    WHITESPACE@134..138 "\n\t\t\t"
+                    LIST@138..151
+                      JS_DIRECTIVE@138..151
+                        JS_STRING_LITERAL_TOKEN@138..150 "\"use strict\""
+                        SEMICOLON@150..151 ";"
+                    WHITESPACE@151..154 "\n\t\t"
+                    LIST@154..154
+                    R_CURLY@154..155 "}"
+              WHITESPACE@155..157 "\n\t"
+              R_CURLY@157..158 "}"
+        WHITESPACE@158..159 "\n"
+        R_CURLY@159..160 "}"
+  WHITESPACE@160..161 "\n"
+--
+warning[SyntaxError]: Redundant strict mode declaration
+  ┌─ directives_err.js:4:2
+  │
+4 │     "use strict";
+  │     ------------ strict mode is previous declared here
+5 │     function inner_a() {
+6 │         "use strict";
+  │         ------------ this declaration is redundant
+
+--
+warning[SyntaxError]: Redundant strict mode declaration
+   ┌─ directives_err.js:4:2
+   │
+ 4 │     "use strict";
+   │     ------------ strict mode is previous declared here
+   ·
+11 │             "use strict";
+   │             ------------ this declaration is redundant
+
+--
+// SCRIPT
+
+function test() {
+	"use strict";
+	function inner_a() {
+		"use strict";
+	}
+
+	function inner_b() {
+		function inner_inner() {
+			"use strict";
+		}
+	}
+}

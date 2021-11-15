@@ -8,7 +8,6 @@ use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
-use crate::ast::JsStringLiteral;
 use crate::{SyntaxKind::*, *};
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
@@ -78,7 +77,7 @@ pub fn stmt(
 	};
 	let res = match p.cur() {
 		T![;] => empty_stmt(p),
-		T!['{'] => block_stmt(p, false, recovery_set).unwrap(), // It is only ever None if there is no `{`,
+		T!['{'] => block_stmt(p, recovery_set).unwrap(), // It is only ever None if there is no `{`,
 		T![if] => if_stmt(p),
 		T![with] => with_stmt(p),
 		T![while] => while_stmt(p),
@@ -431,14 +430,29 @@ pub fn empty_stmt(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_EMPTY_STATEMENT)
 }
 
+pub(crate) fn function_body(
+	p: &mut Parser,
+	recovery_set: impl Into<Option<TokenSet>>,
+) -> Option<CompletedMarker> {
+	block_impl(p, JS_FUNCTION_BODY, recovery_set)
+}
+
 /// A block statement consisting of statements wrapped in curly brackets.
 // test block_stmt
 // {}
 // {{{{}}}}
 // { foo = bar; }
-pub fn block_stmt(
+pub(crate) fn block_stmt(
 	p: &mut Parser,
-	function_body: bool,
+	recovery_set: impl Into<Option<TokenSet>>,
+) -> Option<CompletedMarker> {
+	block_impl(p, JS_BLOCK_STATEMENT, recovery_set)
+}
+
+/// A block wrapped in curly brackets. Can either be a function body or a block statement.
+fn block_impl(
+	p: &mut Parser,
+	block_kind: SyntaxKind,
 	recovery_set: impl Into<Option<TokenSet>>,
 ) -> Option<CompletedMarker> {
 	if !p.at(T!['{']) {
@@ -454,36 +468,83 @@ pub fn block_stmt(
 	}
 	let m = p.start();
 	let mut guard = p.with_state(ParserState {
-		in_function: p.state.in_function || function_body,
+		in_function: p.state.in_function || block_kind == JS_FUNCTION_BODY,
 		..p.state.clone()
 	});
 	guard.bump(T!['{']);
-	block_items(&mut *guard, function_body, false, true, recovery_set);
+
+	let old_parser_state = if block_kind == JS_FUNCTION_BODY {
+		directives(&mut *guard)
+	} else {
+		None
+	};
+
+	statements(&mut *guard, false, true, recovery_set);
+
 	guard.expect(T!['}']);
-	Some(m.complete(&mut *guard, JS_BLOCK_STATEMENT))
+
+	if let Some(old_parser_state) = old_parser_state {
+		guard.state = old_parser_state;
+	}
+
+	Some(m.complete(&mut *guard, block_kind))
 }
 
-pub fn block_stmt_unchecked(p: &mut Parser, function_body: bool) -> CompletedMarker {
-	let m = p.start();
-	p.bump(T!['{']);
-	block_items(p, function_body, false, true, None);
-	p.expect(T!['}']);
-	m.complete(p, JS_BLOCK_STATEMENT)
+#[must_use]
+pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
+	let list = p.start();
+
+	let mut old_state: Option<ParserState> = None;
+
+	fn is_directive(p: &Parser) -> bool {
+		if !p.at(JS_STRING_LITERAL_TOKEN) {
+			false
+		} else {
+			let next = p.nth(1);
+
+			matches!(next, T![;] | EOF | T!['}']) || p.has_linebreak_before_n(1)
+		}
+	}
+
+	while is_directive(p) {
+		let directive_token = p.cur_tok();
+
+		let directive = p.start();
+		// bump string token
+		p.bump_any();
+
+		// eat semicolon if present, correct termination guaranteed by is_directive
+		p.eat(SyntaxKind::SEMICOLON);
+
+		directive.complete(p, JS_DIRECTIVE);
+
+		let directive_text = p.token_src(&directive_token);
+
+		if &directive_text[1..directive_text.len() - 1] == "use strict" {
+			if old_state == None {
+				old_state = Some(p.state.clone());
+			}
+
+			let mut new_state = p.state.clone();
+			new_state.strict(p, directive_token.range);
+			p.state = new_state;
+		}
+	}
+
+	list.complete(p, LIST);
+
+	old_state
 }
 
 /// Top level items or items inside of a block statement, this also handles module items so we can
 /// easily recover from erroneous module declarations in scripts
-pub(crate) fn block_items(
+pub(crate) fn statements(
 	p: &mut Parser,
-	directives: bool,
 	top_level: bool,
 	stop_on_r_curly: bool,
 	recovery_set: impl Into<Option<TokenSet>>,
 ) {
-	let old = p.state.clone();
 	let recovery_set = recovery_set.into();
-
-	let mut could_be_directive = directives;
 
 	let list_start = p.start();
 
@@ -499,7 +560,7 @@ pub(crate) fn block_items(
 		};
 		let mut is_import_export = false;
 
-		let complete = match p.cur() {
+		match p.cur() {
 			// test_err import_decl_not_top_level
 			// {
 			//  import foo from "bar";
@@ -531,7 +592,6 @@ pub(crate) fn block_items(
 					p.error(err);
 					m.change_kind(p, ERROR);
 				}
-				Some(m)
 			}
 			// test_err export_decl_not_top_level
 			// {
@@ -562,9 +622,10 @@ pub(crate) fn block_items(
 					p.error(err);
 					m.change_kind(p, ERROR);
 				}
-				Some(m)
 			}
-			_ => stmt(p, recovery_set, decorator),
+			_ => {
+				stmt(p, recovery_set, decorator);
+			}
 		};
 
 		if let Some(decorator) =
@@ -577,44 +638,9 @@ pub(crate) fn block_items(
 			p.error(err);
 		}
 		p.state.decorators_were_valid = false;
-
-		// Directives are the longest sequence of string literals, so
-		// ```
-		// function a() {
-		//  "aaa";
-		//  "use strict"
-		// }
-		// ```
-		// Still makes the function body strict
-		if let Some(kind) = complete.map(|x| x.kind()).filter(|_| could_be_directive) {
-			match kind {
-				JS_EXPRESSION_STATEMENT => {
-					let parsed = p
-						.parse_marker::<ast::JsExpressionStatement>(complete.as_ref().unwrap())
-						.expression();
-					if let Some(string_literal) = parsed
-						.as_ref()
-						.ok()
-						.and_then(|it| JsStringLiteral::cast(it.syntax().clone()))
-					{
-						if string_literal.inner_string_text() == "use strict" {
-							let range = complete.as_ref().unwrap().range(p).into();
-							// We must do this because we cannot have multiple mutable borrows of p
-							let mut new = p.state.clone();
-							new.strict(p, range);
-							p.state = new;
-							could_be_directive = false;
-						}
-					}
-				}
-				_ => could_be_directive = false,
-			}
-		}
 	}
 
 	list_start.complete(p, LIST);
-
-	p.state = old;
 }
 
 /// A (bool) condition
@@ -1110,7 +1136,7 @@ fn catch_clause(p: &mut Parser) {
 		catch_declaration(p);
 	}
 
-	block_stmt(p, false, STMT_RECOVERY_SET);
+	block_stmt(p, STMT_RECOVERY_SET);
 	m.complete(p, JS_CATCH_CLAUSE);
 }
 
@@ -1177,7 +1203,7 @@ pub fn try_stmt(p: &mut Parser) -> CompletedMarker {
 	// block_items error recovery
 	let m = p.start();
 	p.expect(T![try]);
-	block_stmt(p, false, None);
+	block_stmt(p, None);
 
 	if p.at(T![catch]) {
 		catch_clause(p);
@@ -1186,7 +1212,7 @@ pub fn try_stmt(p: &mut Parser) -> CompletedMarker {
 	let kind = if p.at(T![finally]) {
 		let finalizer = p.start();
 		p.bump_any();
-		block_stmt(p, false, None);
+		block_stmt(p, None);
 		finalizer.complete(p, JS_FINALLY_CLAUSE);
 		JS_TRY_FINALLY_STATEMENT
 	} else {

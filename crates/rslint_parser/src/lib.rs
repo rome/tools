@@ -182,7 +182,7 @@ impl Syntax {
 	pub fn new(file_kind: FileKind) -> Self {
 		let mut this = Self {
 			file_kind,
-			..Default::default()
+			..Syntax::default()
 		};
 		if file_kind == FileKind::TypeScript {
 			this = this.typescript();

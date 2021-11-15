@@ -1,4 +1,5 @@
-JS_MODULE@0..48
+JS_ROOT@0..48
+  LIST@0..0
   LIST@0..47
     JS_VARIABLE_DECLARATION_STATEMENT@0..47
       JS_VARIABLE_DECLARATION@0..47
@@ -30,9 +31,10 @@ JS_MODULE@0..48
                       LIST@22..22
                       R_PAREN@22..23 ")"
                     WHITESPACE@23..24 " "
-                    JS_BLOCK_STATEMENT@24..45
+                    JS_FUNCTION_BODY@24..45
                       L_CURLY@24..25 "{"
                       WHITESPACE@25..30 "\n    "
+                      LIST@30..30
                       LIST@30..41
                         JS_RETURN_STATEMENT@30..41
                           RETURN_KW@30..36 "return"

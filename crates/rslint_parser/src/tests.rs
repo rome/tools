@@ -1,5 +1,5 @@
-use crate::ast::ArgList;
-use crate::{parse_module, parse_text, AstNode, ParserError, SyntaxNode};
+use crate::ast::{ArgList, JsRoot};
+use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode};
 use expect_test::expect_file;
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
@@ -45,27 +45,14 @@ fn test_data_dir() -> PathBuf {
 	project_dir().join("rslint_parser/test_data")
 }
 
-struct ParseResult {
-	root: SyntaxNode,
-	errors: Vec<ParserError>,
-}
-
-fn try_parse(path: &str, text: &str) -> ParseResult {
+fn try_parse(path: &str, text: &str) -> Parse<JsRoot> {
 	let res = catch_unwind(|| {
 		// Files containing a // SCRIPT comment are parsed as script and not as module
 		// This is needed to test features that are restricted in strict mode.
 		if text.contains("// SCRIPT") {
-			let script = parse_text(text, 0);
-			ParseResult {
-				root: script.syntax(),
-				errors: Vec::from(script.errors()),
-			}
+			parse_text(text, 0)
 		} else {
-			let module = parse_module(text, 0);
-			ParseResult {
-				root: module.syntax(),
-				errors: Vec::from(module.errors()),
-			}
+			parse_module(text, 0)
 		}
 	});
 	assert!(
@@ -80,23 +67,23 @@ fn try_parse(path: &str, text: &str) -> ParseResult {
 fn parser_tests() {
 	dir_tests(&test_data_dir(), &["inline/ok"], "rast", |text, path| {
 		let parse = try_parse(path.to_str().unwrap(), text);
-		let errors = parse.errors.as_slice();
-		assert_errors_are_absent(errors, path, &parse.root);
-		format!("{:#?}", parse.root)
+		let errors = parse.errors();
+		assert_errors_are_absent(errors, path, &parse.syntax());
+		format!("{:#?}", parse.syntax())
 	});
 
 	dir_tests(&test_data_dir(), &["inline/err"], "rast", |text, path| {
 		let parse = try_parse(path.to_str().unwrap(), text);
-		let errors = parse.errors.as_slice();
+		let errors = parse.errors();
 		assert_errors_are_present(errors, path);
 		let mut files = SimpleFiles::new();
 		files.add(
 			path.file_name().unwrap().to_string_lossy().to_string(),
 			text.to_string(),
 		);
-		let mut ret = format!("{:#?}", parse.root);
+		let mut ret = format!("{:#?}", parse.syntax());
 
-		for diag in &parse.errors {
+		for diag in parse.errors() {
 			let mut write = rslint_errors::termcolor::Buffer::no_color();
 			let mut emitter = Emitter::new(&files);
 			emitter
