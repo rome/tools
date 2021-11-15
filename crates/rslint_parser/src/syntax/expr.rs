@@ -1277,7 +1277,9 @@ pub fn object_property(p: &mut Parser) -> Option<CompletedMarker> {
 				} else {
 					// test object_expr_ident_prop
 					// let b = {foo}
-					Some(m.complete(p, IDENT_PROP))
+					// TODO 1725 Remove change_kind after migrating all names to JS_REFERENCE_IDENTIFIER_EXPRESSIONS
+					prop?.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
+					Some(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
 				}
 			}
 		}

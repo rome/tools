@@ -481,11 +481,69 @@ JsPostUpdateExpression =
 // OBJECTS
 ///////////////
 
+// { a: ... }
+//   ^
+JsStaticObjectMemberName = name: 'ident'
+
+// { [call()]: ... }
+//   ^^^^^^^^
+JsComputedObjectMemberName =
+	'['
+	expression: JsAnyExpression
+	']'
+
+JsAnyObjectMemberName =
+	JsStaticObjectMemberName
+	// { "a": ... }
+	//   ^^^
+	| JsStringLiteral
+
+	// { 5: ... }
+	//   ^
+	| JsNumberLiteral
+	| JsComputedObjectMemberName
 
 JsObjectExpression =
 	'{'
-	members: (ObjectProp (',' ObjectProp)* ','?)
+	members: (JsAnyObjectMember (',' JsAnyObjectMember)* ','?)
 	'}'
+
+JsAnyObjectMember =
+	LiteralProp // JsPropertyObjectMember
+	| Getter
+	| Setter
+	| SpreadProp
+	| InitializedProp // ?
+	| JsShorthandPropertyObjectMember
+	| Method // JsMethodObjectMember
+	| JsUnknownMember
+
+
+// literal prop
+LiteralProp = manual__key:PropName ':' manual__value:JsAnyExpression
+
+PropName =
+	ComputedPropertyName
+	| JsStringLiteral
+	| JsNumberLiteral
+	| Ident
+	| Name
+	| JsUnknownBinding
+
+
+// computed property
+ComputedPropertyName = '[' expr: JsAnyExpression ']'
+
+// private property access
+PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
+
+// spread property
+SpreadProp = '...' value:JsAnyExpression
+
+// initialised property
+InitializedProp = key:Name '=' value:JsAnyExpression
+
+JsShorthandPropertyObjectMember = identifier: JsReferenceIdentifierExpression
 
 
 ///////////////
@@ -561,50 +619,6 @@ KeyValuePattern = key:PropName ':' manual__value:Pattern
 
 // expression pattern
 ExprPattern = expr: JsAnyExpression
-
-
-
-
-///////////////
-// PROPS
-///////////////
-ObjectProp =
-	LiteralProp
-	| Getter
-	| Setter
-	| SpreadProp
-	| InitializedProp
-	| IdentProp
-	| Method
-	| JsUnknownMember
-
-
-// literal prop
-LiteralProp = manual__key:PropName ':' manual__value:JsAnyExpression
-
-PropName =
-	ComputedPropertyName
-	| JsStringLiteral
-	| JsNumberLiteral
-	| Ident
-	| Name
-	| JsUnknownBinding
-
-
-// computed property
-ComputedPropertyName = '[' expr: JsAnyExpression ']'
-
-// private property access
-PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
-
-// spread property
-SpreadProp = '...' value:JsAnyExpression
-
-// initialised property
-InitializedProp = key:Name '=' value:JsAnyExpression
-
-// property identifier
-IdentProp = name: Name
 
 ///////////////
 // MISCELLANEOUS

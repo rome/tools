@@ -1,17 +1,21 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::ObjectProp;
+use rslint_parser::ast::JsAnyObjectMember;
 
-impl ToFormatElement for ObjectProp {
+impl ToFormatElement for JsAnyObjectMember {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			ObjectProp::LiteralProp(literal_prop) => literal_prop.to_format_element(formatter),
-			ObjectProp::Getter(getter) => getter.to_format_element(formatter),
-			ObjectProp::Setter(setter) => setter.to_format_element(formatter),
-			ObjectProp::SpreadProp(_) => todo!(),
-			ObjectProp::InitializedProp(_) => todo!(),
-			ObjectProp::IdentProp(ident) => ident.to_format_element(formatter),
-			ObjectProp::Method(_) => todo!(),
-			ObjectProp::JsUnknownMember(_) => todo!(),
+			JsAnyObjectMember::LiteralProp(literal_prop) => {
+				literal_prop.to_format_element(formatter)
+			}
+			JsAnyObjectMember::Getter(getter) => getter.to_format_element(formatter),
+			JsAnyObjectMember::Setter(setter) => setter.to_format_element(formatter),
+			JsAnyObjectMember::SpreadProp(_) => todo!(),
+			JsAnyObjectMember::InitializedProp(_) => todo!(),
+			JsAnyObjectMember::JsShorthandPropertyObjectMember(ident) => {
+				ident.to_format_element(formatter)
+			}
+			JsAnyObjectMember::Method(_) => todo!(),
+			JsAnyObjectMember::JsUnknownMember(_) => todo!(),
 		}
 	}
 }

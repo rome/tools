@@ -36,8 +36,8 @@ JS_ROOT@0..27
               JS_OBJECT_EXPRESSION@20..26
                 L_CURLY@20..21 "{"
                 LIST@21..25
-                  IDENT_PROP@21..24
-                    NAME@21..24
+                  JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@21..24
+                    JS_REFERENCE_IDENTIFIER_EXPRESSION@21..24
                       IDENT@21..24 "foo"
                   COMMA@24..25 ","
                 R_CURLY@25..26 "}"

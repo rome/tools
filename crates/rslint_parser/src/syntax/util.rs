@@ -163,17 +163,17 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 
 			for (idx, prop) in expr.members().iter().enumerate() {
 				match prop {
-					ast::ObjectProp::LiteralProp(prop) => {
+					ast::JsAnyObjectMember::LiteralProp(prop) => {
 						if let Ok(expr) = prop.value() {
 							check_for_stmt_lhs(p, expr, marker);
 						}
 					}
-					ast::ObjectProp::SpreadProp(prop) if idx != expr.members().len() - 1 => {
+					ast::JsAnyObjectMember::SpreadProp(prop) if idx != expr.members().len() - 1 => {
 						if let Ok(lhs) = prop.value() {
 							check_spread_element(p, lhs, marker);
 						}
 					}
-					ast::ObjectProp::InitializedProp(_) => {}
+					ast::JsAnyObjectMember::InitializedProp(_) => {}
 					_ => {
 						let err = p
 							.err_builder("Illegal object property in assignment target")

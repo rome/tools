@@ -4,8 +4,8 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsObjectExpression,
-	JsParenthesizedExpression, JsStringLiteral, JsUnaryExpression, LiteralProp, ObjectProp,
+	JsAnyObjectMember, JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral,
+	JsObjectExpression, JsParenthesizedExpression, JsStringLiteral, JsUnaryExpression, LiteralProp,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
@@ -62,7 +62,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 				.members()
 				.iter()
 				.map(|prop| match prop {
-					ObjectProp::LiteralProp(prop) => {
+					JsAnyObjectMember::LiteralProp(prop) => {
 						format_elements![tokenize_node(prop.syntax().clone())]
 					}
 					_ => panic!("Unsupported prop type {:?}", prop),

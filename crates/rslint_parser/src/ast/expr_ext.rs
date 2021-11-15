@@ -390,7 +390,7 @@ impl Template {
 	}
 }
 
-impl ObjectProp {
+impl JsAnyObjectMember {
 	pub fn key(&self) -> Option<std::string::String> {
 		Some(self.key_element()?.to_string())
 	}
@@ -398,25 +398,25 @@ impl ObjectProp {
 	pub fn key_element(&self) -> Option<SyntaxElement> {
 		Some(
 			match self {
-				ObjectProp::IdentProp(idt) => idt.syntax().clone(),
-				ObjectProp::LiteralProp(litprop) => {
+				JsAnyObjectMember::JsShorthandPropertyObjectMember(idt) => idt.syntax().clone(),
+				JsAnyObjectMember::LiteralProp(litprop) => {
 					litprop.key().map_or_else(|_| None, prop_name_syntax)?
 				}
 
-				ObjectProp::Getter(getter) => {
+				JsAnyObjectMember::Getter(getter) => {
 					getter.key().map_or_else(|_| None, prop_name_syntax)?
 				}
-				ObjectProp::Setter(setter) => {
+				JsAnyObjectMember::Setter(setter) => {
 					setter.key().map_or_else(|_| None, prop_name_syntax)?
 				}
-				ObjectProp::Method(method) => {
+				JsAnyObjectMember::Method(method) => {
 					method.name().map_or_else(|_| None, prop_name_syntax)?
 				}
-				ObjectProp::InitializedProp(init) => init
+				JsAnyObjectMember::InitializedProp(init) => init
 					.key()
 					.map_or_else(|_| None, |key| Some(key.syntax().clone()))?,
-				ObjectProp::SpreadProp(_) => return None,
-				ObjectProp::JsUnknownMember(_) => todo!(),
+				JsAnyObjectMember::SpreadProp(_) => return None,
+				JsAnyObjectMember::JsUnknownMember(_) => todo!(),
 			}
 			.into(),
 		)

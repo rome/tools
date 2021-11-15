@@ -2,12 +2,12 @@ use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayPattern, AssignPattern, CallExpr, ClassBody, ClassDecl, ClassProp, Condition,
 	ConstructorParameters, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter,
-	IdentProp, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteral,
-	JsCaseClause, JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
-	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
-	JsFunctionDeclaration, JsIfStatement, JsLabeledStatement, JsNullLiteral, JsNumberLiteral,
-	JsObjectExpression, JsParameterList, JsReferenceIdentifierExpression, JsReturnStatement,
-	JsRoot, JsSequenceExpression, JsStringLiteral, JsSwitchStatement, JsTryStatement,
+	JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteral, JsCaseClause,
+	JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
+	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration, JsIfStatement,
+	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsObjectExpression, JsParameterList,
+	JsReferenceIdentifierExpression, JsReturnStatement, JsRoot, JsSequenceExpression,
+	JsShorthandPropertyObjectMember, JsStringLiteral, JsSwitchStatement, JsTryStatement,
 	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement,
 	LiteralProp, Name, Setter, SinglePattern,
 };
@@ -103,9 +103,11 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_EMPTY_STATEMENT => JsEmptyStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::IDENT_PROP => IdentProp::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
+			SyntaxKind::JS_SHORTHAND_PROPERTY_OBJECT_MEMBER => {
+				JsShorthandPropertyObjectMember::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
 			SyntaxKind::JS_OBJECT_EXPRESSION => JsObjectExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),

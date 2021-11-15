@@ -897,7 +897,7 @@ impl JsObjectExpression {
 	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['{'])
 	}
-	pub fn members(&self) -> AstSeparatedList<ObjectProp> {
+	pub fn members(&self) -> AstSeparatedList<JsAnyObjectMember> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1468,6 +1468,30 @@ pub struct JsArrayHole {
 }
 impl JsArrayHole {}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsStaticObjectMemberName {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsStaticObjectMemberName {
+	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsComputedObjectMemberName {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsComputedObjectMemberName {
+	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['['])
+	}
+	pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+		support::required_node(&self.syntax)
+	}
+	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![']'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteral {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1484,6 +1508,68 @@ impl JsNumberLiteral {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![js_number_literal_token])
 	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct LiteralProp {
+	pub(crate) syntax: SyntaxNode,
+}
+impl LiteralProp {
+	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [:])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct SpreadProp {
+	pub(crate) syntax: SyntaxNode,
+}
+impl SpreadProp {
+	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [...])
+	}
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct InitializedProp {
+	pub(crate) syntax: SyntaxNode,
+}
+impl InitializedProp {
+	pub fn key(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
+	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [=])
+	}
+	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsShorthandPropertyObjectMember {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsShorthandPropertyObjectMember {
+	pub fn identifier(&self) -> SyntaxResult<JsReferenceIdentifierExpression> {
+		support::required_node(&self.syntax)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ComputedPropertyName {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ComputedPropertyName {
+	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['['])
+	}
+	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![']'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct PrivateName {
+	pub(crate) syntax: SyntaxNode,
+}
+impl PrivateName {
+	pub fn hash_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [#])
+	}
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsBigIntLiteral {
@@ -1608,66 +1694,6 @@ impl KeyValuePattern {
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct LiteralProp {
-	pub(crate) syntax: SyntaxNode,
-}
-impl LiteralProp {
-	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [:])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct SpreadProp {
-	pub(crate) syntax: SyntaxNode,
-}
-impl SpreadProp {
-	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [...])
-	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct InitializedProp {
-	pub(crate) syntax: SyntaxNode,
-}
-impl InitializedProp {
-	pub fn key(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
-	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [=])
-	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct IdentProp {
-	pub(crate) syntax: SyntaxNode,
-}
-impl IdentProp {
-	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ComputedPropertyName {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ComputedPropertyName {
-	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['['])
-	}
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![']'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct PrivateName {
-	pub(crate) syntax: SyntaxNode,
-}
-impl PrivateName {
-	pub fn hash_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [#])
-	}
-	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Condition {
@@ -2470,13 +2496,20 @@ pub enum PatternOrExpr {
 	JsAnyExpression(JsAnyExpression),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ObjectProp {
+pub enum JsAnyObjectMemberName {
+	JsStaticObjectMemberName(JsStaticObjectMemberName),
+	JsStringLiteral(JsStringLiteral),
+	JsNumberLiteral(JsNumberLiteral),
+	JsComputedObjectMemberName(JsComputedObjectMemberName),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyObjectMember {
 	LiteralProp(LiteralProp),
 	Getter(Getter),
 	Setter(Setter),
 	SpreadProp(SpreadProp),
 	InitializedProp(InitializedProp),
-	IdentProp(IdentProp),
+	JsShorthandPropertyObjectMember(JsShorthandPropertyObjectMember),
 	Method(Method),
 	JsUnknownMember(JsUnknownMember),
 }
@@ -3732,6 +3765,28 @@ impl AstNode for JsArrayHole {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsStaticObjectMemberName {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_OBJECT_MEMBER_NAME }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsComputedObjectMemberName {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_OBJECT_MEMBER_NAME }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsStringLiteral {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3745,6 +3800,72 @@ impl AstNode for JsStringLiteral {
 }
 impl AstNode for JsNumberLiteral {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for LiteralProp {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == LITERAL_PROP }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for SpreadProp {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == SPREAD_PROP }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for InitializedProp {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == INITIALIZED_PROP }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsShorthandPropertyObjectMember {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SHORTHAND_PROPERTY_OBJECT_MEMBER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ComputedPropertyName {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == COMPUTED_PROPERTY_NAME }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for PrivateName {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == PRIVATE_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3866,72 +3987,6 @@ impl AstNode for ExprPattern {
 }
 impl AstNode for KeyValuePattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == KEY_VALUE_PATTERN }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for LiteralProp {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == LITERAL_PROP }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for SpreadProp {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SPREAD_PROP }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for InitializedProp {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == INITIALIZED_PROP }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for IdentProp {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == IDENT_PROP }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ComputedPropertyName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == COMPUTED_PROPERTY_NAME }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for PrivateName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == PRIVATE_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5727,62 +5782,129 @@ impl AstNode for PatternOrExpr {
 		}
 	}
 }
-impl From<LiteralProp> for ObjectProp {
-	fn from(node: LiteralProp) -> ObjectProp { ObjectProp::LiteralProp(node) }
+impl From<JsStaticObjectMemberName> for JsAnyObjectMemberName {
+	fn from(node: JsStaticObjectMemberName) -> JsAnyObjectMemberName {
+		JsAnyObjectMemberName::JsStaticObjectMemberName(node)
+	}
 }
-impl From<Getter> for ObjectProp {
-	fn from(node: Getter) -> ObjectProp { ObjectProp::Getter(node) }
+impl From<JsStringLiteral> for JsAnyObjectMemberName {
+	fn from(node: JsStringLiteral) -> JsAnyObjectMemberName {
+		JsAnyObjectMemberName::JsStringLiteral(node)
+	}
 }
-impl From<Setter> for ObjectProp {
-	fn from(node: Setter) -> ObjectProp { ObjectProp::Setter(node) }
+impl From<JsNumberLiteral> for JsAnyObjectMemberName {
+	fn from(node: JsNumberLiteral) -> JsAnyObjectMemberName {
+		JsAnyObjectMemberName::JsNumberLiteral(node)
+	}
 }
-impl From<SpreadProp> for ObjectProp {
-	fn from(node: SpreadProp) -> ObjectProp { ObjectProp::SpreadProp(node) }
+impl From<JsComputedObjectMemberName> for JsAnyObjectMemberName {
+	fn from(node: JsComputedObjectMemberName) -> JsAnyObjectMemberName {
+		JsAnyObjectMemberName::JsComputedObjectMemberName(node)
+	}
 }
-impl From<InitializedProp> for ObjectProp {
-	fn from(node: InitializedProp) -> ObjectProp { ObjectProp::InitializedProp(node) }
-}
-impl From<IdentProp> for ObjectProp {
-	fn from(node: IdentProp) -> ObjectProp { ObjectProp::IdentProp(node) }
-}
-impl From<Method> for ObjectProp {
-	fn from(node: Method) -> ObjectProp { ObjectProp::Method(node) }
-}
-impl From<JsUnknownMember> for ObjectProp {
-	fn from(node: JsUnknownMember) -> ObjectProp { ObjectProp::JsUnknownMember(node) }
-}
-impl AstNode for ObjectProp {
+impl AstNode for JsAnyObjectMemberName {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			LITERAL_PROP | GETTER | SETTER | SPREAD_PROP | INITIALIZED_PROP | IDENT_PROP
-			| METHOD | JS_UNKNOWN_MEMBER => true,
+			JS_STATIC_OBJECT_MEMBER_NAME
+			| JS_STRING_LITERAL
+			| JS_NUMBER_LITERAL
+			| JS_COMPUTED_OBJECT_MEMBER_NAME => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			LITERAL_PROP => ObjectProp::LiteralProp(LiteralProp { syntax }),
-			GETTER => ObjectProp::Getter(Getter { syntax }),
-			SETTER => ObjectProp::Setter(Setter { syntax }),
-			SPREAD_PROP => ObjectProp::SpreadProp(SpreadProp { syntax }),
-			INITIALIZED_PROP => ObjectProp::InitializedProp(InitializedProp { syntax }),
-			IDENT_PROP => ObjectProp::IdentProp(IdentProp { syntax }),
-			METHOD => ObjectProp::Method(Method { syntax }),
-			JS_UNKNOWN_MEMBER => ObjectProp::JsUnknownMember(JsUnknownMember { syntax }),
+			JS_STATIC_OBJECT_MEMBER_NAME => {
+				JsAnyObjectMemberName::JsStaticObjectMemberName(JsStaticObjectMemberName { syntax })
+			}
+			JS_STRING_LITERAL => JsAnyObjectMemberName::JsStringLiteral(JsStringLiteral { syntax }),
+			JS_NUMBER_LITERAL => JsAnyObjectMemberName::JsNumberLiteral(JsNumberLiteral { syntax }),
+			JS_COMPUTED_OBJECT_MEMBER_NAME => {
+				JsAnyObjectMemberName::JsComputedObjectMemberName(JsComputedObjectMemberName {
+					syntax,
+				})
+			}
 			_ => return None,
 		};
 		Some(res)
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			ObjectProp::LiteralProp(it) => &it.syntax,
-			ObjectProp::Getter(it) => &it.syntax,
-			ObjectProp::Setter(it) => &it.syntax,
-			ObjectProp::SpreadProp(it) => &it.syntax,
-			ObjectProp::InitializedProp(it) => &it.syntax,
-			ObjectProp::IdentProp(it) => &it.syntax,
-			ObjectProp::Method(it) => &it.syntax,
-			ObjectProp::JsUnknownMember(it) => &it.syntax,
+			JsAnyObjectMemberName::JsStaticObjectMemberName(it) => &it.syntax,
+			JsAnyObjectMemberName::JsStringLiteral(it) => &it.syntax,
+			JsAnyObjectMemberName::JsNumberLiteral(it) => &it.syntax,
+			JsAnyObjectMemberName::JsComputedObjectMemberName(it) => &it.syntax,
+		}
+	}
+}
+impl From<LiteralProp> for JsAnyObjectMember {
+	fn from(node: LiteralProp) -> JsAnyObjectMember { JsAnyObjectMember::LiteralProp(node) }
+}
+impl From<Getter> for JsAnyObjectMember {
+	fn from(node: Getter) -> JsAnyObjectMember { JsAnyObjectMember::Getter(node) }
+}
+impl From<Setter> for JsAnyObjectMember {
+	fn from(node: Setter) -> JsAnyObjectMember { JsAnyObjectMember::Setter(node) }
+}
+impl From<SpreadProp> for JsAnyObjectMember {
+	fn from(node: SpreadProp) -> JsAnyObjectMember { JsAnyObjectMember::SpreadProp(node) }
+}
+impl From<InitializedProp> for JsAnyObjectMember {
+	fn from(node: InitializedProp) -> JsAnyObjectMember { JsAnyObjectMember::InitializedProp(node) }
+}
+impl From<JsShorthandPropertyObjectMember> for JsAnyObjectMember {
+	fn from(node: JsShorthandPropertyObjectMember) -> JsAnyObjectMember {
+		JsAnyObjectMember::JsShorthandPropertyObjectMember(node)
+	}
+}
+impl From<Method> for JsAnyObjectMember {
+	fn from(node: Method) -> JsAnyObjectMember { JsAnyObjectMember::Method(node) }
+}
+impl From<JsUnknownMember> for JsAnyObjectMember {
+	fn from(node: JsUnknownMember) -> JsAnyObjectMember { JsAnyObjectMember::JsUnknownMember(node) }
+}
+impl AstNode for JsAnyObjectMember {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			LITERAL_PROP
+			| GETTER
+			| SETTER
+			| SPREAD_PROP
+			| INITIALIZED_PROP
+			| JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
+			| METHOD
+			| JS_UNKNOWN_MEMBER => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			LITERAL_PROP => JsAnyObjectMember::LiteralProp(LiteralProp { syntax }),
+			GETTER => JsAnyObjectMember::Getter(Getter { syntax }),
+			SETTER => JsAnyObjectMember::Setter(Setter { syntax }),
+			SPREAD_PROP => JsAnyObjectMember::SpreadProp(SpreadProp { syntax }),
+			INITIALIZED_PROP => JsAnyObjectMember::InitializedProp(InitializedProp { syntax }),
+			JS_SHORTHAND_PROPERTY_OBJECT_MEMBER => {
+				JsAnyObjectMember::JsShorthandPropertyObjectMember(
+					JsShorthandPropertyObjectMember { syntax },
+				)
+			}
+			METHOD => JsAnyObjectMember::Method(Method { syntax }),
+			JS_UNKNOWN_MEMBER => JsAnyObjectMember::JsUnknownMember(JsUnknownMember { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyObjectMember::LiteralProp(it) => &it.syntax,
+			JsAnyObjectMember::Getter(it) => &it.syntax,
+			JsAnyObjectMember::Setter(it) => &it.syntax,
+			JsAnyObjectMember::SpreadProp(it) => &it.syntax,
+			JsAnyObjectMember::InitializedProp(it) => &it.syntax,
+			JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => &it.syntax,
+			JsAnyObjectMember::Method(it) => &it.syntax,
+			JsAnyObjectMember::JsUnknownMember(it) => &it.syntax,
 		}
 	}
 }
@@ -6264,7 +6386,12 @@ impl std::fmt::Display for PatternOrExpr {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ObjectProp {
+impl std::fmt::Display for JsAnyObjectMemberName {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsAnyObjectMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6859,12 +6986,52 @@ impl std::fmt::Display for JsArrayHole {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsStaticObjectMemberName {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsComputedObjectMemberName {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsStringLiteral {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
 impl std::fmt::Display for JsNumberLiteral {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for LiteralProp {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for SpreadProp {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for InitializedProp {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsShorthandPropertyObjectMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ComputedPropertyName {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for PrivateName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6920,36 +7087,6 @@ impl std::fmt::Display for ExprPattern {
 	}
 }
 impl std::fmt::Display for KeyValuePattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for LiteralProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for SpreadProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for InitializedProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for IdentProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ComputedPropertyName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for PrivateName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
