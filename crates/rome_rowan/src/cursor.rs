@@ -148,7 +148,7 @@ unsafe impl sll::Elem for NodeData {
 
 pub(crate) type SyntaxElement = NodeOrToken<SyntaxNode, SyntaxToken>;
 
-#[derive(Clone)]
+#[derive(PartialEq, Eq, Clone, Hash)]
 pub(crate) struct SyntaxTrivia {
 	offset: TextSize,
 	token: SyntaxToken,
@@ -1196,23 +1196,6 @@ impl SyntaxElement {
 }
 
 // region: impls
-
-impl PartialEq for SyntaxTrivia {
-	#[inline]
-	fn eq(&self, other: &Self) -> bool {
-		self.token == other.token && self.is_leading == other.is_leading
-	}
-}
-
-impl Eq for SyntaxTrivia {}
-
-impl Hash for SyntaxTrivia {
-	#[inline]
-	fn hash<H: Hasher>(&self, state: &mut H) {
-		self.token.hash(state);
-		self.is_leading.hash(state);
-	}
-}
 
 impl fmt::Debug for SyntaxTrivia {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
