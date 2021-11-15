@@ -4,8 +4,8 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsParenthesizedExpression,
-	JsStringLiteral, JsUnaryExpression, LiteralProp, ObjectExpr, ObjectProp,
+	JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsObjectExpression,
+	JsParenthesizedExpression, JsStringLiteral, JsUnaryExpression, LiteralProp, ObjectProp,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
@@ -53,13 +53,13 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 			]
 		}
 
-		SyntaxKind::OBJECT_EXPR => {
-			let object = ObjectExpr::cast(node).unwrap();
+		SyntaxKind::JS_OBJECT_EXPRESSION => {
+			let object = JsObjectExpression::cast(node).unwrap();
 
 			let separator = format_elements![token(","), soft_line_break_or_space()];
 
 			let properties_list: Vec<FormatElement> = object
-				.props()
+				.members()
 				.iter()
 				.map(|prop| match prop {
 					ObjectProp::LiteralProp(prop) => {

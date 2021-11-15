@@ -27,7 +27,7 @@ JS_ROOT@0..74
       WHITESPACE@35..36 " "
       EXTENDS_KW@36..43 "extends"
       WHITESPACE@43..44 " "
-      OBJECT_EXPR@44..46
+      JS_OBJECT_EXPRESSION@44..46
         L_CURLY@44..45 "{"
         LIST@45..45
         R_CURLY@45..46 "}"

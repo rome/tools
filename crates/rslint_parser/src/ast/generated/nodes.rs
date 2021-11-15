@@ -511,7 +511,7 @@ impl ImportDecl {
 		support::required_token(&self.syntax, T![from])
 	}
 	pub fn source(&self) -> SyntaxResult<JsStringLiteral> { support::required_node(&self.syntax) }
-	pub fn asserted_object(&self) -> SyntaxResult<ObjectExpr> {
+	pub fn asserted_object(&self) -> SyntaxResult<JsObjectExpression> {
 		support::required_node(&self.syntax)
 	}
 	pub fn assert_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![assert]) }
@@ -890,6 +890,21 @@ impl JsLogicalExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsObjectExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsObjectExpression {
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['{'])
+	}
+	pub fn members(&self) -> AstSeparatedList<ObjectProp> {
+		support::separated_list(&self.syntax, 0usize)
+	}
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['}'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsParenthesizedExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -991,21 +1006,6 @@ pub struct Template {
 impl Template {
 	pub fn backtick_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['`'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ObjectExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ObjectExpr {
-	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['{'])
-	}
-	pub fn props(&self) -> AstSeparatedList<ObjectProp> {
-		support::separated_list(&self.syntax, 0usize)
-	}
-	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2334,6 +2334,7 @@ pub enum JsAnyExpression {
 	JsFunctionExpression(JsFunctionExpression),
 	JsImportCallExpression(JsImportCallExpression),
 	JsLogicalExpression(JsLogicalExpression),
+	JsObjectExpression(JsObjectExpression),
 	JsParenthesizedExpression(JsParenthesizedExpression),
 	JsReferenceIdentifierExpression(JsReferenceIdentifierExpression),
 	JsSequenceExpression(JsSequenceExpression),
@@ -2343,7 +2344,6 @@ pub enum JsAnyExpression {
 	JsPostUpdateExpression(JsPostUpdateExpression),
 	JsYieldExpression(JsYieldExpression),
 	Template(Template),
-	ObjectExpr(ObjectExpr),
 	BracketExpr(BracketExpr),
 	DotExpr(DotExpr),
 	NewExpr(NewExpr),
@@ -2397,17 +2397,6 @@ pub enum JsAnyArrowFunctionParameters {
 pub enum JsAnyArrowFunctionBody {
 	JsAnyExpression(JsAnyExpression),
 	JsFunctionBody(JsFunctionBody),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum ObjectProp {
-	LiteralProp(LiteralProp),
-	Getter(Getter),
-	Setter(Setter),
-	SpreadProp(SpreadProp),
-	InitializedProp(InitializedProp),
-	IdentProp(IdentProp),
-	Method(Method),
-	JsUnknownMember(JsUnknownMember),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ClassElement {
@@ -2479,6 +2468,17 @@ pub enum JsAnyArrayElement {
 pub enum PatternOrExpr {
 	Pattern(Pattern),
 	JsAnyExpression(JsAnyExpression),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum ObjectProp {
+	LiteralProp(LiteralProp),
+	Getter(Getter),
+	Setter(Setter),
+	SpreadProp(SpreadProp),
+	InitializedProp(InitializedProp),
+	IdentProp(IdentProp),
+	Method(Method),
+	JsUnknownMember(JsUnknownMember),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ObjectPatternProp {
@@ -3237,6 +3237,17 @@ impl AstNode for JsLogicalExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsObjectExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsParenthesizedExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3327,17 +3338,6 @@ impl AstNode for JsYieldExpression {
 }
 impl AstNode for Template {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ObjectExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == OBJECT_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4872,6 +4872,11 @@ impl From<JsLogicalExpression> for JsAnyExpression {
 		JsAnyExpression::JsLogicalExpression(node)
 	}
 }
+impl From<JsObjectExpression> for JsAnyExpression {
+	fn from(node: JsObjectExpression) -> JsAnyExpression {
+		JsAnyExpression::JsObjectExpression(node)
+	}
+}
 impl From<JsParenthesizedExpression> for JsAnyExpression {
 	fn from(node: JsParenthesizedExpression) -> JsAnyExpression {
 		JsAnyExpression::JsParenthesizedExpression(node)
@@ -4908,9 +4913,6 @@ impl From<JsYieldExpression> for JsAnyExpression {
 }
 impl From<Template> for JsAnyExpression {
 	fn from(node: Template) -> JsAnyExpression { JsAnyExpression::Template(node) }
-}
-impl From<ObjectExpr> for JsAnyExpression {
-	fn from(node: ObjectExpr) -> JsAnyExpression { JsAnyExpression::ObjectExpr(node) }
 }
 impl From<BracketExpr> for JsAnyExpression {
 	fn from(node: BracketExpr) -> JsAnyExpression { JsAnyExpression::BracketExpr(node) }
@@ -4967,6 +4969,7 @@ impl AstNode for JsAnyExpression {
 			| JS_FUNCTION_EXPRESSION
 			| JS_IMPORT_CALL_EXPRESSION
 			| JS_LOGICAL_EXPRESSION
+			| JS_OBJECT_EXPRESSION
 			| JS_PARENTHESIZED_EXPRESSION
 			| JS_REFERENCE_IDENTIFIER_EXPRESSION
 			| JS_SEQUENCE_EXPRESSION
@@ -4976,7 +4979,6 @@ impl AstNode for JsAnyExpression {
 			| JS_POST_UPDATE_EXPRESSION
 			| JS_YIELD_EXPRESSION
 			| TEMPLATE
-			| OBJECT_EXPR
 			| BRACKET_EXPR
 			| DOT_EXPR
 			| NEW_EXPR
@@ -5017,6 +5019,9 @@ impl AstNode for JsAnyExpression {
 			JS_LOGICAL_EXPRESSION => {
 				JsAnyExpression::JsLogicalExpression(JsLogicalExpression { syntax })
 			}
+			JS_OBJECT_EXPRESSION => {
+				JsAnyExpression::JsObjectExpression(JsObjectExpression { syntax })
+			}
 			JS_PARENTHESIZED_EXPRESSION => {
 				JsAnyExpression::JsParenthesizedExpression(JsParenthesizedExpression { syntax })
 			}
@@ -5038,7 +5043,6 @@ impl AstNode for JsAnyExpression {
 			}
 			JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
-			OBJECT_EXPR => JsAnyExpression::ObjectExpr(ObjectExpr { syntax }),
 			BRACKET_EXPR => JsAnyExpression::BracketExpr(BracketExpr { syntax }),
 			DOT_EXPR => JsAnyExpression::DotExpr(DotExpr { syntax }),
 			NEW_EXPR => JsAnyExpression::NewExpr(NewExpr { syntax }),
@@ -5074,6 +5078,7 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsFunctionExpression(it) => &it.syntax,
 			JsAnyExpression::JsImportCallExpression(it) => &it.syntax,
 			JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
+			JsAnyExpression::JsObjectExpression(it) => &it.syntax,
 			JsAnyExpression::JsParenthesizedExpression(it) => &it.syntax,
 			JsAnyExpression::JsReferenceIdentifierExpression(it) => &it.syntax,
 			JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
@@ -5083,7 +5088,6 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsPostUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::JsYieldExpression(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
-			JsAnyExpression::ObjectExpr(it) => &it.syntax,
 			JsAnyExpression::BracketExpr(it) => &it.syntax,
 			JsAnyExpression::DotExpr(it) => &it.syntax,
 			JsAnyExpression::NewExpr(it) => &it.syntax,
@@ -5330,65 +5334,6 @@ impl AstNode for JsAnyArrowFunctionBody {
 		match self {
 			JsAnyArrowFunctionBody::JsFunctionBody(it) => &it.syntax,
 			JsAnyArrowFunctionBody::JsAnyExpression(it) => it.syntax(),
-		}
-	}
-}
-impl From<LiteralProp> for ObjectProp {
-	fn from(node: LiteralProp) -> ObjectProp { ObjectProp::LiteralProp(node) }
-}
-impl From<Getter> for ObjectProp {
-	fn from(node: Getter) -> ObjectProp { ObjectProp::Getter(node) }
-}
-impl From<Setter> for ObjectProp {
-	fn from(node: Setter) -> ObjectProp { ObjectProp::Setter(node) }
-}
-impl From<SpreadProp> for ObjectProp {
-	fn from(node: SpreadProp) -> ObjectProp { ObjectProp::SpreadProp(node) }
-}
-impl From<InitializedProp> for ObjectProp {
-	fn from(node: InitializedProp) -> ObjectProp { ObjectProp::InitializedProp(node) }
-}
-impl From<IdentProp> for ObjectProp {
-	fn from(node: IdentProp) -> ObjectProp { ObjectProp::IdentProp(node) }
-}
-impl From<Method> for ObjectProp {
-	fn from(node: Method) -> ObjectProp { ObjectProp::Method(node) }
-}
-impl From<JsUnknownMember> for ObjectProp {
-	fn from(node: JsUnknownMember) -> ObjectProp { ObjectProp::JsUnknownMember(node) }
-}
-impl AstNode for ObjectProp {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			LITERAL_PROP | GETTER | SETTER | SPREAD_PROP | INITIALIZED_PROP | IDENT_PROP
-			| METHOD | JS_UNKNOWN_MEMBER => true,
-			_ => false,
-		}
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			LITERAL_PROP => ObjectProp::LiteralProp(LiteralProp { syntax }),
-			GETTER => ObjectProp::Getter(Getter { syntax }),
-			SETTER => ObjectProp::Setter(Setter { syntax }),
-			SPREAD_PROP => ObjectProp::SpreadProp(SpreadProp { syntax }),
-			INITIALIZED_PROP => ObjectProp::InitializedProp(InitializedProp { syntax }),
-			IDENT_PROP => ObjectProp::IdentProp(IdentProp { syntax }),
-			METHOD => ObjectProp::Method(Method { syntax }),
-			JS_UNKNOWN_MEMBER => ObjectProp::JsUnknownMember(JsUnknownMember { syntax }),
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			ObjectProp::LiteralProp(it) => &it.syntax,
-			ObjectProp::Getter(it) => &it.syntax,
-			ObjectProp::Setter(it) => &it.syntax,
-			ObjectProp::SpreadProp(it) => &it.syntax,
-			ObjectProp::InitializedProp(it) => &it.syntax,
-			ObjectProp::IdentProp(it) => &it.syntax,
-			ObjectProp::Method(it) => &it.syntax,
-			ObjectProp::JsUnknownMember(it) => &it.syntax,
 		}
 	}
 }
@@ -5779,6 +5724,65 @@ impl AstNode for PatternOrExpr {
 		match self {
 			PatternOrExpr::Pattern(it) => it.syntax(),
 			PatternOrExpr::JsAnyExpression(it) => it.syntax(),
+		}
+	}
+}
+impl From<LiteralProp> for ObjectProp {
+	fn from(node: LiteralProp) -> ObjectProp { ObjectProp::LiteralProp(node) }
+}
+impl From<Getter> for ObjectProp {
+	fn from(node: Getter) -> ObjectProp { ObjectProp::Getter(node) }
+}
+impl From<Setter> for ObjectProp {
+	fn from(node: Setter) -> ObjectProp { ObjectProp::Setter(node) }
+}
+impl From<SpreadProp> for ObjectProp {
+	fn from(node: SpreadProp) -> ObjectProp { ObjectProp::SpreadProp(node) }
+}
+impl From<InitializedProp> for ObjectProp {
+	fn from(node: InitializedProp) -> ObjectProp { ObjectProp::InitializedProp(node) }
+}
+impl From<IdentProp> for ObjectProp {
+	fn from(node: IdentProp) -> ObjectProp { ObjectProp::IdentProp(node) }
+}
+impl From<Method> for ObjectProp {
+	fn from(node: Method) -> ObjectProp { ObjectProp::Method(node) }
+}
+impl From<JsUnknownMember> for ObjectProp {
+	fn from(node: JsUnknownMember) -> ObjectProp { ObjectProp::JsUnknownMember(node) }
+}
+impl AstNode for ObjectProp {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			LITERAL_PROP | GETTER | SETTER | SPREAD_PROP | INITIALIZED_PROP | IDENT_PROP
+			| METHOD | JS_UNKNOWN_MEMBER => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			LITERAL_PROP => ObjectProp::LiteralProp(LiteralProp { syntax }),
+			GETTER => ObjectProp::Getter(Getter { syntax }),
+			SETTER => ObjectProp::Setter(Setter { syntax }),
+			SPREAD_PROP => ObjectProp::SpreadProp(SpreadProp { syntax }),
+			INITIALIZED_PROP => ObjectProp::InitializedProp(InitializedProp { syntax }),
+			IDENT_PROP => ObjectProp::IdentProp(IdentProp { syntax }),
+			METHOD => ObjectProp::Method(Method { syntax }),
+			JS_UNKNOWN_MEMBER => ObjectProp::JsUnknownMember(JsUnknownMember { syntax }),
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			ObjectProp::LiteralProp(it) => &it.syntax,
+			ObjectProp::Getter(it) => &it.syntax,
+			ObjectProp::Setter(it) => &it.syntax,
+			ObjectProp::SpreadProp(it) => &it.syntax,
+			ObjectProp::InitializedProp(it) => &it.syntax,
+			ObjectProp::IdentProp(it) => &it.syntax,
+			ObjectProp::Method(it) => &it.syntax,
+			ObjectProp::JsUnknownMember(it) => &it.syntax,
 		}
 	}
 }
@@ -6230,11 +6234,6 @@ impl std::fmt::Display for JsAnyArrowFunctionBody {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ObjectProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for ClassElement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6261,6 +6260,11 @@ impl std::fmt::Display for JsAnyArrayElement {
 	}
 }
 impl std::fmt::Display for PatternOrExpr {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ObjectProp {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6630,6 +6634,11 @@ impl std::fmt::Display for JsLogicalExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsObjectExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsParenthesizedExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6671,11 +6680,6 @@ impl std::fmt::Display for JsYieldExpression {
 	}
 }
 impl std::fmt::Display for Template {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ObjectExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

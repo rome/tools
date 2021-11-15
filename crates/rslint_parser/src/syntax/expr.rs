@@ -1181,7 +1181,7 @@ pub fn object_expr(p: &mut Parser) -> CompletedMarker {
 	props_list.complete(p, LIST);
 
 	p.expect(T!['}']);
-	m.complete(p, OBJECT_EXPR)
+	m.complete(p, JS_OBJECT_EXPRESSION)
 }
 
 const STARTS_OBJ_PROP: TokenSet = token_set![

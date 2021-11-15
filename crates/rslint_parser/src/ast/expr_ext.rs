@@ -292,9 +292,9 @@ impl JsArrayExpression {
 	}
 }
 
-impl ObjectExpr {
+impl JsObjectExpression {
 	pub fn has_trailing_comma(&self) -> bool {
-		self.props().trailing_separator().is_some()
+		self.members().trailing_separator().is_some()
 	}
 }
 

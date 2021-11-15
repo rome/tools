@@ -250,6 +250,7 @@ JsAnyExpression =
 	| JsFunctionExpression
 	| JsImportCallExpression
 	| JsLogicalExpression
+	| JsObjectExpression
 	| JsParenthesizedExpression
 	| JsReferenceIdentifierExpression
 	| JsSequenceExpression
@@ -259,7 +260,6 @@ JsAnyExpression =
 	| JsPostUpdateExpression
 	| JsYieldExpression
 	| Template
-	| ObjectExpr
 	| BracketExpr
 	| DotExpr
 	| NewExpr
@@ -347,9 +347,6 @@ JsArrowFunctionExpression =
 
 JsAnyArrowFunctionParameters = JsParameterList | JsIdentifierBinding
 JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
-
-// Object expression
-ObjectExpr = '{' props:(ObjectProp (',' ObjectProp)* ','?) '}'
 
 // class expression
 ClassExpr =
@@ -478,6 +475,17 @@ JsPreUpdateExpression =
 JsPostUpdateExpression =
     operand:JsAnyExpression
     operator:('++' | '--')
+
+
+///////////////
+// OBJECTS
+///////////////
+
+
+JsObjectExpression =
+	'{'
+	members: (ObjectProp (',' ObjectProp)* ','?)
+	'}'
 
 
 ///////////////
@@ -671,7 +679,7 @@ ImportDecl =
 	'type'?
 	'from'
 	source: JsStringLiteral
-	asserted_object:ObjectExpr
+	asserted_object: JsObjectExpression
 	'assert'?
 	';'?
 

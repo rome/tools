@@ -150,8 +150,8 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 				check_for_stmt_lhs(p, elem.syntax().to::<JsAnyExpression>(), marker);
 			}
 		}
-		JsAnyExpression::ObjectExpr(expr) => {
-			if let Some(trailing_comma) = expr.props().trailing_separator() {
+		JsAnyExpression::JsObjectExpression(expr) => {
+			if let Some(trailing_comma) = expr.members().trailing_separator() {
 				// Untyped node machine go brr
 				let comma_range = trailing_comma.text_range();
 				let err = p
@@ -161,14 +161,14 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 				p.error(err);
 			}
 
-			for (idx, prop) in expr.props().iter().enumerate() {
+			for (idx, prop) in expr.members().iter().enumerate() {
 				match prop {
 					ast::ObjectProp::LiteralProp(prop) => {
 						if let Ok(expr) = prop.value() {
 							check_for_stmt_lhs(p, expr, marker);
 						}
 					}
-					ast::ObjectProp::SpreadProp(prop) if idx != expr.props().len() - 1 => {
+					ast::ObjectProp::SpreadProp(prop) if idx != expr.members().len() - 1 => {
 						if let Ok(lhs) = prop.value() {
 							check_spread_element(p, lhs, marker);
 						}

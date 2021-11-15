@@ -14,7 +14,7 @@ JS_ROOT@0..26
             JS_EQUAL_VALUE_CLAUSE@10..24
               EQ@10..11 "="
               WHITESPACE@11..12 " "
-              OBJECT_EXPR@12..24
+              JS_OBJECT_EXPRESSION@12..24
                 L_CURLY@12..13 "{"
                 WHITESPACE@13..14 " "
                 LIST@14..22
