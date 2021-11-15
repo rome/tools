@@ -81,7 +81,14 @@ JsAnyStatement =
 	| JsTryStatement
 	| JsTryFinallyStatement
 	| JsDebuggerStatement
-	| Decl
+  | FnDecl
+	| ClassDecl
+	| JsVariableDeclarationStatement
+	| TsEnum
+	| TsTypeAliasDecl
+	| TsNamespaceDecl
+	| TsModuleDecl
+	| TsInterfaceDecl
 	| ImportDecl
 	| ExportNamed
 	| ExportDefaultDecl
@@ -628,16 +635,6 @@ JsReferenceIdentifierExpression = name: 'ident'
 // DECLARATIONS
 ///////////////
 
-Decl =
-	FnDecl
-	| ClassDecl
-	| JsVariableDeclarationStatement
-	| TsEnum
-	| TsTypeAliasDecl
-	| TsNamespaceDecl
-	| TsModuleDecl
-	| TsInterfaceDecl
-
 FnDecl =
 	'async'?
 	'function'
@@ -695,7 +692,17 @@ ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: JsStrin
 
 
 // export declaration
-ExportDecl = 'export' 'type'? decl: Decl
+ExportDecl = 'export' 'type'? decl: JsAnyExportDeclaration
+
+JsAnyExportDeclaration =
+	FnDecl
+	| ClassDecl
+	| JsVariableDeclarationStatement
+	| TsEnum
+	| TsTypeAliasDecl
+	| TsNamespaceDecl
+	| TsModuleDecl
+	| TsInterfaceDecl
 
 
 // typescript export assignment

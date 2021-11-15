@@ -49,7 +49,11 @@ impl ToFormatElement for JsAnyStatement {
 			}
 
 			JsAnyStatement::ForOfStmt(_) => todo!(),
-			JsAnyStatement::Decl(decl) => decl.to_format_element(formatter),
+			JsAnyStatement::FnDecl(decl) => decl.to_format_element(formatter),
+			JsAnyStatement::ClassDecl(decl) => decl.to_format_element(formatter),
+			JsAnyStatement::JsVariableDeclarationStatement(decl) => {
+				decl.to_format_element(formatter)
+			}
 			JsAnyStatement::JsUnknownStatement(_) => todo!(),
 			JsAnyStatement::ImportDecl(_) => todo!(),
 			JsAnyStatement::ExportNamed(_) => todo!(),
@@ -63,6 +67,11 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::JsTryFinallyStatement(try_finally) => {
 				try_finally.to_format_element(formatter)
 			}
+			JsAnyStatement::TsEnum(_) => todo!(),
+			JsAnyStatement::TsTypeAliasDecl(_) => todo!(),
+			JsAnyStatement::TsNamespaceDecl(_) => todo!(),
+			JsAnyStatement::TsModuleDecl(_) => todo!(),
+			JsAnyStatement::TsInterfaceDecl(_) => todo!(),
 		}
 	}
 }
