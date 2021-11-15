@@ -243,6 +243,7 @@ JsDebuggerStatement =
 JsAnyExpression =
 	JsAnyLiteral
 	| JsArrayExpression
+	| JsArrowFunctionExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
 	| JsConditionalExpression
@@ -257,7 +258,6 @@ JsAnyExpression =
 	| JsPreUpdateExpression
 	| JsPostUpdateExpression
 	| JsYieldExpression
-	| ArrowExpr
 	| Template
 	| ObjectExpr
 	| BracketExpr
@@ -331,24 +331,22 @@ JsFunctionExpression =
 	'function'
 	'*'?
 	id: JsIdentifierBinding?
-	type_params: TsTypeParams?
+	type_parameters: TsTypeParams?
 	parameters: JsParameterList
 	return_type: TsReturnType?
 	body: JsFunctionBody
 
-// Arrow expression
-ArrowExpr =
-	'async'?
-	type_params:TsTypeParams?
-	params:ArrowExprParams?
-	'=>'
-	':'?
-	return_type:TsType?
-	manual__body:ExprOrBlock
 
-ArrowExprParams =
-	Name
-	| JsParameterList
+JsArrowFunctionExpression =
+	'async'?
+	type_parameters: TsTypeParams?
+	parameter_list: JsAnyArrowFunctionParameters?
+	'=>'
+	return_type: TsReturnType?
+	manual__body: JsAnyArrowFunctionBody
+
+JsAnyArrowFunctionParameters = JsParameterList | JsIdentifierBinding
+JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
 
 // Object expression
 ObjectExpr = '{' props:(ObjectProp (',' ObjectProp)* ','?) '}'
@@ -746,10 +744,6 @@ JsIdentifierBinding = name: 'ident'
 ///////////////
 // AUXILIARY
 ///////////////
-
-ExprOrBlock =
-	JsAnyExpression
-	| JsFunctionBody
 
 
 JsParameterList =

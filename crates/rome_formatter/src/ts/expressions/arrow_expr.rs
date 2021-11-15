@@ -1,11 +1,13 @@
-use rslint_parser::ast::{ArrowExpr, ArrowExprParams};
+use rslint_parser::ast::{
+	JsAnyArrowFunctionBody, JsAnyArrowFunctionParameters, JsArrowFunctionExpression,
+};
 
 use crate::{
 	concat_elements, format_elements, space_token, token, FormatElement, FormatResult, Formatter,
 	ToFormatElement,
 };
 
-impl ToFormatElement for ArrowExpr {
+impl ToFormatElement for JsArrowFunctionExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut tokens: Vec<FormatElement> = vec![];
 
@@ -16,14 +18,14 @@ impl ToFormatElement for ArrowExpr {
 			));
 		}
 
-		if let Some(params) = self.params() {
+		if let Some(params) = self.parameter_list() {
 			match params {
-				ArrowExprParams::Name(name) => {
+				JsAnyArrowFunctionParameters::JsIdentifierBinding(name) => {
 					tokens.push(token("("));
 					tokens.push(formatter.format_node(name)?);
 					tokens.push(token(")"));
 				}
-				ArrowExprParams::JsParameterList(params) => {
+				JsAnyArrowFunctionParameters::JsParameterList(params) => {
 					tokens.push(formatter.format_node(params)?)
 				}
 			}
@@ -37,5 +39,14 @@ impl ToFormatElement for ArrowExpr {
 		}
 
 		Ok(concat_elements(tokens))
+	}
+}
+
+impl ToFormatElement for JsAnyArrowFunctionBody {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		match self {
+			JsAnyArrowFunctionBody::JsFunctionBody(body) => body.to_format_element(formatter),
+			JsAnyArrowFunctionBody::JsAnyExpression(expr) => expr.to_format_element(formatter),
+		}
 	}
 }

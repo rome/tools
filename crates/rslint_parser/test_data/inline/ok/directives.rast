@@ -134,7 +134,7 @@ JS_ROOT@0..321
             JS_EQUAL_VALUE_CLAUSE@225..281
               EQ@225..226 "="
               WHITESPACE@226..227 " "
-              ARROW_EXPR@227..281
+              JS_ARROW_FUNCTION_EXPRESSION@227..281
                 JS_PARAMETER_LIST@227..229
                   L_PAREN@227..228 "("
                   LIST@228..228

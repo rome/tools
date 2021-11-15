@@ -14,10 +14,10 @@ JS_ROOT@0..82
             JS_EQUAL_VALUE_CLAUSE@6..23
               EQ@6..7 "="
               WHITESPACE@7..8 " "
-              ARROW_EXPR@8..23
+              JS_ARROW_FUNCTION_EXPRESSION@8..23
                 ASYNC_KW@8..13 "async"
                 WHITESPACE@13..14 " "
-                NAME@14..17
+                JS_IDENTIFIER_BINDING@14..17
                   IDENT@14..17 "foo"
                 WHITESPACE@17..18 " "
                 FAT_ARROW@18..20 "=>"
@@ -41,7 +41,7 @@ JS_ROOT@0..82
             JS_EQUAL_VALUE_CLAUSE@30..49
               EQ@30..31 "="
               WHITESPACE@31..32 " "
-              ARROW_EXPR@32..49
+              JS_ARROW_FUNCTION_EXPRESSION@32..49
                 ASYNC_KW@32..37 "async"
                 WHITESPACE@37..38 " "
                 JS_PARAMETER_LIST@38..43
@@ -61,7 +61,7 @@ JS_ROOT@0..82
                   R_CURLY@48..49 "}"
     WHITESPACE@49..50 "\n"
     JS_EXPRESSION_STATEMENT@50..81
-      ARROW_EXPR@50..81
+      JS_ARROW_FUNCTION_EXPRESSION@50..81
         ASYNC_KW@50..55 "async"
         WHITESPACE@55..56 " "
         JS_PARAMETER_LIST@56..74

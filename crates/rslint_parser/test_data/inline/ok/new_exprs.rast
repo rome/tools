@@ -86,7 +86,7 @@ JS_ROOT@0..113
               PLUS@87..88 "+"
               WHITESPACE@88..89 " "
               JS_BINARY_EXPRESSION@89..111
-                ARROW_EXPR@89..100
+                JS_ARROW_FUNCTION_EXPRESSION@89..100
                   JS_PARAMETER_LIST@89..94
                     L_PAREN@89..90 "("
                     LIST@90..93
