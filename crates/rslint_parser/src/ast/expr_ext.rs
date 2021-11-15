@@ -29,10 +29,6 @@ impl JsConditionalExpression {
 }
 
 impl JsPropertyObjectMember {
-	pub fn key(&self) -> SyntaxResult<PropName> {
-		support::required_node::<PropName>(self.syntax())
-	}
-
 	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
 		let child = self.syntax().children().nth(1);
 		match child {
@@ -388,50 +384,6 @@ impl Template {
 			self.syntax().text_range().end(),
 		))
 	}
-}
-
-impl JsAnyObjectMember {
-	pub fn key(&self) -> Option<std::string::String> {
-		Some(self.key_element()?.to_string())
-	}
-
-	pub fn key_element(&self) -> Option<SyntaxElement> {
-		Some(
-			match self {
-				JsAnyObjectMember::JsShorthandPropertyObjectMember(idt) => idt.syntax().clone(),
-				JsAnyObjectMember::JsPropertyObjectMember(member) => {
-					member.key().map_or_else(|_| None, prop_name_syntax)?
-				}
-
-				JsAnyObjectMember::Getter(getter) => {
-					getter.key().map_or_else(|_| None, prop_name_syntax)?
-				}
-				JsAnyObjectMember::Setter(setter) => {
-					setter.key().map_or_else(|_| None, prop_name_syntax)?
-				}
-				JsAnyObjectMember::Method(method) => {
-					method.name().map_or_else(|_| None, prop_name_syntax)?
-				}
-				JsAnyObjectMember::InitializedProp(init) => init
-					.key()
-					.map_or_else(|_| None, |key| Some(key.syntax().clone()))?,
-				JsAnyObjectMember::SpreadProp(_) => return None,
-				JsAnyObjectMember::JsUnknownMember(_) => todo!(),
-			}
-			.into(),
-		)
-	}
-}
-
-fn prop_name_syntax(name: PropName) -> Option<SyntaxNode> {
-	Some(match name {
-		PropName::Ident(idt) => idt.syntax().clone(),
-		PropName::JsStringLiteral(lit) => lit.syntax().clone(),
-		PropName::JsNumberLiteral(lit) => lit.syntax().clone(),
-		PropName::Name(name) => name.syntax().clone(),
-		PropName::ComputedPropertyName(_) => return None,
-		PropName::JsUnknownBinding(_) => todo!(),
-	})
 }
 
 impl JsAnyExpression {

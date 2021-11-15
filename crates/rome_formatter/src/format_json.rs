@@ -47,7 +47,7 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 		SyntaxKind::JS_PROPERTY_OBJECT_MEMBER => {
 			let prop = JsPropertyObjectMember::cast(node).unwrap();
 			format_elements![
-				tokenize_node(prop.key().unwrap().syntax().clone()),
+				tokenize_node(prop.name().unwrap().syntax().clone()),
 				token(":"),
 				space_token(),
 				tokenize_node(prop.value().unwrap().syntax().clone()),

@@ -510,7 +510,7 @@ JsObjectExpression =
 
 JsAnyObjectMember =
 	JsPropertyObjectMember
-	| Getter
+	| JsGetterObjectMember
 	| Setter
 	| SpreadProp
 	| InitializedProp // BindingWithDefault?
@@ -519,12 +519,17 @@ JsAnyObjectMember =
 	| JsUnknownMember
 
 
-// literal prop
 JsPropertyObjectMember =
 	name: JsAnyObjectMemberName
 	':'
 	manual__value: JsAnyExpression
 
+JsGetterObjectMember =
+	'get'
+	name: JsAnyObjectMemberName
+	'('')'
+	return_type: TsReturnType?
+	body: JsFunctionBody
 
 PropName =
 	ComputedPropertyName

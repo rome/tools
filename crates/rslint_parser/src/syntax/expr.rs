@@ -9,7 +9,7 @@ use super::decl::{arrow_body, class_decl, maybe_private_name, method, parameter_
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
-use crate::syntax::function::function_expression;
+use crate::syntax::function::{function_body, function_expression, ts_return_type};
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -1204,18 +1204,24 @@ pub fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 		//    return foo;
 		//  }
 		// }
-		//
+		T![ident]
+			if p.cur_src() == "get"
+				&& !p.has_linebreak_before_n(1)
+				&& STARTS_OBJ_PROP.contains(p.nth(1)) =>
+		{
+			Some(getter_object_member(p))
+		}
+
+		// test object_expr_getter_setter
 		// let b = {
 		//  set [foo](bar) {
 		//     return 5;
 		//  }
 		// }
-		T![ident]
-			if (p.cur_src() == "get" || p.cur_src() == "set")
-				&& (p.nth_at(1, T![ident]) || p.nth_at(1, T!['['])) =>
-		{
+		T![ident] if p.cur_src() == "set" && (p.nth_at(1, T![ident]) || p.nth_at(1, T!['['])) => {
 			method(p, None, None)
 		}
+
 		// test object_expr_async_method
 		// let a = {
 		//   async foo() {},
@@ -1228,6 +1234,7 @@ pub fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 		{
 			method(p, None, None)
 		}
+
 		// test object_expr_spread_prop
 		// let a = {...foo}
 		T![...] => {
@@ -1235,12 +1242,14 @@ pub fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			assign_expr(p);
 			Some(m.complete(p, SPREAD_PROP))
 		}
+
 		T![*] => {
 			// test object_expr_generator_method
 			// let b = { *foo() {} }
 			let m = p.start();
 			method(p, m, None)
 		}
+
 		_ => {
 			let member_name = object_member_name(p);
 
@@ -1293,6 +1302,26 @@ pub fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			}
 		}
 	}
+}
+
+fn getter_object_member(p: &mut Parser) -> CompletedMarker {
+	debug_assert!(p.at(T![ident]), "Expected an identifier");
+	debug_assert!(p.cur_src() == "get", "Expected a get identifier");
+
+	let m = p.start();
+
+	p.bump_remap(T![get]);
+
+	object_member_name(p);
+
+	p.expect(T!['(']);
+	p.expect(T![')']);
+
+	ts_return_type(p);
+
+	function_body(p);
+
+	m.complete(p, JS_GETTER_OBJECT_MEMBER)
 }
 
 // test object_prop_name
