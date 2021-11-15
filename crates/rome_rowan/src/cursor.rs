@@ -148,21 +148,11 @@ unsafe impl sll::Elem for NodeData {
 
 pub(crate) type SyntaxElement = NodeOrToken<SyntaxNode, SyntaxToken>;
 
+#[derive(Clone)]
 pub(crate) struct SyntaxTrivia {
 	offset: TextSize,
 	token: SyntaxToken,
 	is_leading: bool,
-}
-
-impl Clone for SyntaxTrivia {
-	#[inline]
-	fn clone(&self) -> Self {
-		Self {
-			offset: self.offset,
-			token: self.token.clone(),
-			is_leading: self.is_leading,
-		}
-	}
 }
 
 pub(crate) struct SyntaxNode {
@@ -562,30 +552,30 @@ impl NodeData {
 
 impl SyntaxTrivia {
 	pub(crate) fn text_range(&self) -> TextRange {
-		let g = self.token.green();
+		let green_token = self.token.green();
 		if self.is_leading {
-			TextRange::at(self.offset, g.leading().text_len())
+			TextRange::at(self.offset, green_token.leading().text_len())
 		} else {
-			let (_, trailing_len, total_len) = g.leading_trailing_total_len();
+			let (_, trailing_len, total_len) = green_token.leading_trailing_total_len();
 			TextRange::at(self.offset + total_len - trailing_len, trailing_len)
 		}
 	}
 
 	pub(crate) fn text(&self) -> &str {
-		let g = self.token.green();
+		let green_token = self.token.green();
 		if self.is_leading {
-			g.text_leading()
+			green_token.text_leading()
 		} else {
-			g.text_trailing()
+			green_token.text_trailing()
 		}
 	}
 
 	pub(crate) fn text_len(&self) -> TextSize {
-		let g = self.token.green();
+		let green_token = self.token.green();
 		if self.is_leading {
-			g.leading().text_len()
+			green_token.leading().text_len()
 		} else {
-			g.trailing().text_len()
+			green_token.trailing().text_len()
 		}
 	}
 }
@@ -680,25 +670,24 @@ impl SyntaxNode {
 
 	pub fn text_trimmed_range(&self) -> TextRange {
 		let leading_len = self
-			.first_token()
-			.map(|x| x.leading().text_len())
+			.first_leading_trivia()
+			.map(|x| x.text_len())
 			.unwrap_or_else(|| 0.into());
-
 		let trailing_len = self
-			.last_token()
-			.map(|x| x.trailing().text_len())
+			.last_trailing_trivia()
+			.map(|x| x.text_len())
 			.unwrap_or_else(|| 0.into());
 
 		let range = self.text_range();
 		TextRange::new(range.start() + leading_len, range.end() - trailing_len)
 	}
 
-	pub fn leading(&self) -> Option<SyntaxTrivia> {
-		self.first_token().map(|x| x.leading())
+	pub fn first_leading_trivia(&self) -> Option<SyntaxTrivia> {
+		self.first_token().map(|x| x.leading_trivia())
 	}
 
-	pub fn trailing(&self) -> Option<SyntaxTrivia> {
-		self.last_token().map(|x| x.trailing())
+	pub fn last_trailing_trivia(&self) -> Option<SyntaxTrivia> {
+		self.last_token().map(|x| x.trailing_trivia())
 	}
 
 	#[inline]
@@ -1008,9 +997,9 @@ impl SyntaxToken {
 
 	#[inline]
 	pub fn text_trimmed_range(&self) -> TextRange {
-		let g = self.green();
-		let leading_len = g.leading().text_len();
-		let trailing_len = g.trailing().text_len();
+		let green_token = self.green();
+		let leading_len = green_token.leading().text_len();
+		let trailing_len = green_token.trailing().text_len();
 
 		let range = self.text_range();
 		TextRange::new(range.start() + leading_len, range.end() - trailing_len)
@@ -1088,7 +1077,7 @@ impl SyntaxToken {
 	}
 
 	#[inline]
-	pub fn leading(&self) -> SyntaxTrivia {
+	pub fn leading_trivia(&self) -> SyntaxTrivia {
 		SyntaxTrivia {
 			offset: self.data().offset,
 			token: self.clone(),
@@ -1097,7 +1086,7 @@ impl SyntaxToken {
 	}
 
 	#[inline]
-	pub fn trailing(&self) -> SyntaxTrivia {
+	pub fn trailing_trivia(&self) -> SyntaxTrivia {
 		SyntaxTrivia {
 			offset: self.data().offset,
 			token: self.clone(),

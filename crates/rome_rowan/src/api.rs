@@ -49,6 +49,12 @@ impl Trivia {
 	}
 }
 
+pub enum SyntaxTriviaPiece {
+	Whitespace {},
+	NewLine {},
+	Comments {},
+}
+
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxTrivia<L: Language> {
 	raw: cursor::SyntaxTrivia,
@@ -164,31 +170,183 @@ impl<L: Language> SyntaxNode<L> {
 		L::kind_from_raw(self.raw.kind())
 	}
 
-	pub fn text_range(&self) -> TextRange {
-		self.raw.text_range()
-	}
-
-	pub fn text_trimmed_range(&self) -> TextRange {
-		self.raw.text_trimmed_range()
-	}
-
+	/// Returns the text of all descendants tokens combined, including all trivia.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "; \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// });
+	/// assert_eq!("\n\t let \t\ta; \t\t", node.text());
+	/// ```
 	pub fn text(&self) -> SyntaxText {
 		self.raw.text()
 	}
 
+	/// Returns the text of all descendants tokens combined,
+	/// excluding the fist token leading trivia, and the last token trailing trivia.
+	/// All other trivia is included.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "; \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// });
+	/// assert_eq!("let \t\ta;", node.text_trimmed());
+	/// ```
 	pub fn text_trimmed(&self) -> SyntaxText {
 		self.raw.text_trimmed()
 	}
 
-	pub fn leading(&self) -> Option<SyntaxTrivia<L>> {
-		self.raw.leading().map(|raw| SyntaxTrivia {
+	/// Returns the range corresponding for the text of all descendants tokens combined, including all trivia.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "; \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// });
+	/// let range = node.text_range();
+	/// assert_eq!(0u32, range.start().into());
+	/// assert_eq!(14u32, range.end().into());
+	/// ```
+	pub fn text_range(&self) -> TextRange {
+		self.raw.text_range()
+	}
+
+	/// Returns the range corresponding for the text of all descendants tokens combined,
+	/// excluding the fist token leading  trivia, and the last token trailing trivia.
+	/// All other trivia is included.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "; \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// });
+	/// let range = node.text_trimmed_range();
+	/// assert_eq!(3u32, range.start().into());
+	/// assert_eq!(11u32, range.end().into());
+	/// ```
+	pub fn text_trimmed_range(&self) -> TextRange {
+		self.raw.text_trimmed_range()
+	}
+
+	/// Returns the leading trivia of the [first_token](SyntaxNode::first_token), or [None] if the node does not have any descendant tokens.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "; \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// });
+	/// let trivia = node.first_leading_trivia();
+	/// assert!(trivia.is_some());
+	/// assert_eq!("\n\t ", trivia.unwrap().text());
+	///
+	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {});
+	/// let trivia = node.first_leading_trivia();
+	/// assert!(trivia.is_none());
+	/// ```
+	pub fn first_leading_trivia(&self) -> Option<SyntaxTrivia<L>> {
+		self.raw.first_leading_trivia().map(|raw| SyntaxTrivia {
 			raw,
 			_p: PhantomData,
 		})
 	}
 
-	pub fn trailing(&self) -> Option<SyntaxTrivia<L>> {
-		self.raw.trailing().map(|raw| SyntaxTrivia {
+	/// Returns the trailing trivia of the  [last_token](SyntaxNode::last_token), or [None] if the node does not have any descendant tokens.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	///     builder.token(SyntaxKind(1), "a");
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "; \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// });
+	/// let trivia = node.last_trailing_trivia();
+	/// assert!(trivia.is_some());
+	/// assert_eq!(" \t\t", trivia.unwrap().text());
+	///
+	/// let mut node = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {});
+	/// let trivia = node.last_trailing_trivia();
+	/// assert!(trivia.is_none());
+	/// ```
+	pub fn last_trailing_trivia(&self) -> Option<SyntaxTrivia<L>> {
+		self.raw.last_trailing_trivia().map(|raw| SyntaxTrivia {
 			raw,
 			_p: PhantomData,
 		})
@@ -367,10 +525,40 @@ impl<L: Language> SyntaxToken<L> {
 		self.raw.index()
 	}
 
+	/// Returns the text of the token, including all trivia.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut token = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// }).first_token().unwrap();
+	/// assert_eq!("\n\t let \t\t", token.text());
+	/// ```
 	pub fn text(&self) -> &str {
 		self.raw.text()
 	}
 
+	/// Returns the text of the token, excluding all trivia.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut token = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// }).first_token().unwrap();
+	/// assert_eq!("let", token.text_trimmed());
+	/// ```
 	pub fn text_trimmed(&self) -> &str {
 		self.raw.text_trimmed()
 	}
@@ -412,18 +600,48 @@ impl<L: Language> SyntaxToken<L> {
 		self.raw.detach()
 	}
 
+	/// Returns the token leading trivia.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut token = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// }).first_token().unwrap();
+	/// assert_eq!("\n\t ", token.leading_trivia().text());
+	/// ```
 	#[inline]
-	pub fn leading(&self) -> SyntaxTrivia<L> {
+	pub fn leading_trivia(&self) -> SyntaxTrivia<L> {
 		SyntaxTrivia {
-			raw: self.raw.leading(),
+			raw: self.raw.leading_trivia(),
 			_p: PhantomData,
 		}
 	}
 
+	/// Returns the token trailing trivia.
+	///
+	/// ```
+	/// use rome_rowan::*;
+	/// use rome_rowan::api::RawLanguage;
+	/// let mut token = TreeBuilder::<RawLanguage>::wrap_with_node(SyntaxKind(0),|builder| {
+	///     builder.token_with_trivia(
+	///         SyntaxKind(1),
+	///         "\n\t let \t\t",
+	///         &[Trivia::Whitespace(3)],
+	///         &[Trivia::Whitespace(3)],
+	///     );
+	/// }).first_token().unwrap();
+	/// assert_eq!(" \t\t", token.trailing_trivia().text());
+	/// ```
 	#[inline]
-	pub fn trailing(&self) -> SyntaxTrivia<L> {
+	pub fn trailing_trivia(&self) -> SyntaxTrivia<L> {
 		SyntaxTrivia {
-			raw: self.raw.trailing(),
+			raw: self.raw.trailing_trivia(),
 			_p: PhantomData,
 		}
 	}
@@ -446,15 +664,15 @@ impl<L: Language> SyntaxElement<L> {
 
 	pub fn leading(&self) -> Option<SyntaxTrivia<L>> {
 		match self {
-			NodeOrToken::Node(it) => it.leading(),
-			NodeOrToken::Token(it) => Some(it.leading()),
+			NodeOrToken::Node(it) => it.first_leading_trivia(),
+			NodeOrToken::Token(it) => Some(it.leading_trivia()),
 		}
 	}
 
 	pub fn trailing(&self) -> Option<SyntaxTrivia<L>> {
 		match self {
-			NodeOrToken::Node(it) => it.trailing(),
-			NodeOrToken::Token(it) => Some(it.trailing()),
+			NodeOrToken::Node(it) => it.last_trailing_trivia(),
+			NodeOrToken::Token(it) => Some(it.trailing_trivia()),
 		}
 	}
 
@@ -923,21 +1141,21 @@ mod tests {
 		);
 		builder.finish_node();
 
-		// Node texts
+		// // Node texts
 
 		let node = builder.finish();
 		assert_eq!("\n\t let \t\t", node.text());
 		assert_eq!("let", node.text_trimmed());
-		assert_eq!("\n\t ", node.leading().unwrap().text());
-		assert_eq!(" \t\t", node.trailing().unwrap().text());
+		assert_eq!("\n\t ", node.first_leading_trivia().unwrap().text());
+		assert_eq!(" \t\t", node.last_trailing_trivia().unwrap().text());
 
 		// Token texts
 
 		let token = node.first_token().unwrap();
 		assert_eq!("\n\t let \t\t", token.text());
 		assert_eq!("let", token.text_trimmed());
-		assert_eq!("\n\t ", token.leading().text());
-		assert_eq!(" \t\t", token.trailing().text());
+		assert_eq!("\n\t ", token.leading_trivia().text());
+		assert_eq!(" \t\t", token.trailing_trivia().text());
 	}
 
 	#[test]
@@ -977,11 +1195,11 @@ mod tests {
 		);
 		assert_eq!(
 			TextRange::new(0.into(), 3.into()),
-			node.leading().unwrap().text_range()
+			node.first_leading_trivia().unwrap().text_range()
 		);
 		assert_eq!(
 			TextRange::new(16.into(), 18.into()),
-			node.trailing().unwrap().text_range()
+			node.last_trailing_trivia().unwrap().text_range()
 		);
 
 		// as NodeOrToken
@@ -1015,11 +1233,11 @@ mod tests {
 		);
 		assert_eq!(
 			TextRange::new(11.into(), 12.into()),
-			eq_token.leading().text_range()
+			eq_token.leading_trivia().text_range()
 		);
 		assert_eq!(
 			TextRange::new(13.into(), 14.into()),
-			eq_token.trailing().text_range()
+			eq_token.trailing_trivia().text_range()
 		);
 	}
 }
