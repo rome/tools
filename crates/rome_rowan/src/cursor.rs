@@ -564,9 +564,9 @@ impl SyntaxTrivia {
 	pub(crate) fn text(&self) -> &str {
 		let green_token = self.token.green();
 		if self.is_leading {
-			green_token.text_leading()
+			green_token.text_leading_trivia()
 		} else {
-			green_token.text_trailing()
+			green_token.text_trailing_trivia()
 		}
 	}
 

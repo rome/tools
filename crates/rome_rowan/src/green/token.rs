@@ -177,7 +177,7 @@ impl GreenTokenData {
 	}
 
 	#[inline]
-	pub fn text_leading(&self) -> &str {
+	pub fn text_leading_trivia(&self) -> &str {
 		let leading_len = self.leading().text_len();
 
 		let end: usize = leading_len.into();
@@ -186,7 +186,7 @@ impl GreenTokenData {
 	}
 
 	#[inline]
-	pub fn text_trailing(&self) -> &str {
+	pub fn text_trailing_trivia(&self) -> &str {
 		let (_, trailing_len, total_len) = self.leading_trailing_total_len();
 
 		let start: usize = (total_len - trailing_len).into();
@@ -291,8 +291,8 @@ mod tests {
 		assert_eq!("let", t.text_trimmed());
 		assert_eq!(TextSize::from(3), t.text_trimmed_len());
 
-		assert_eq!("\n\t ", t.text_leading());
-		assert_eq!(" \t\t", t.text_trailing());
+		assert_eq!("\n\t ", t.text_leading_trivia());
+		assert_eq!(" \t\t", t.text_trailing_trivia());
 
 		assert_eq!("\n\t let \t\t", format!("{}", t));
 	}
