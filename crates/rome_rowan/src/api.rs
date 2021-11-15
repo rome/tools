@@ -247,7 +247,7 @@ impl<L: Language> SyntaxNode<L> {
 	}
 
 	/// Returns the range corresponding for the text of all descendants tokens combined,
-	/// excluding the fist token leading  trivia, and the last token trailing trivia.
+	/// excluding the first token leading  trivia, and the last token trailing trivia.
 	/// All other trivia is included.
 	///
 	/// ```
