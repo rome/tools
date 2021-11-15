@@ -119,8 +119,8 @@ impl fmt::Debug for GreenTokenData {
 		f.debug_struct("GreenToken")
 			.field("kind", &self.kind())
 			.field("text", &self.text())
-			.field("leading", &self.leading())
-			.field("trailing", &self.trailing())
+			.field("leading", &self.leading_trivia())
+			.field("trailing", &self.trailing_trivia())
 			.finish()
 	}
 }
@@ -178,7 +178,7 @@ impl GreenTokenData {
 
 	#[inline]
 	pub fn text_leading_trivia(&self) -> &str {
-		let leading_len = self.leading().text_len();
+		let leading_len = self.leading_trivia().text_len();
 
 		let end: usize = leading_len.into();
 		let text = unsafe { std::str::from_utf8_unchecked(self.data.slice()) };
@@ -201,18 +201,12 @@ impl GreenTokenData {
 	}
 
 	#[inline]
-	#[allow(dead_code)]
-	pub fn text_trimmed_len(&self) -> TextSize {
-		TextSize::of(self.text_trimmed())
-	}
-
-	#[inline]
-	pub fn leading(&self) -> &GreenTokenTrivia {
+	pub fn leading_trivia(&self) -> &GreenTokenTrivia {
 		&self.data.header.leading
 	}
 
 	#[inline]
-	pub fn trailing(&self) -> &GreenTokenTrivia {
+	pub fn trailing_trivia(&self) -> &GreenTokenTrivia {
 		&self.data.header.trailing
 	}
 }
@@ -289,7 +283,6 @@ mod tests {
 		assert_eq!(TextSize::from(9), t.text_len());
 
 		assert_eq!("let", t.text_trimmed());
-		assert_eq!(TextSize::from(3), t.text_trimmed_len());
 
 		assert_eq!("\n\t ", t.text_leading_trivia());
 		assert_eq!(" \t\t", t.text_trailing_trivia());

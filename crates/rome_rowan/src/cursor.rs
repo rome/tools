@@ -554,7 +554,7 @@ impl SyntaxTrivia {
 	pub(crate) fn text_range(&self) -> TextRange {
 		let green_token = self.token.green();
 		if self.is_leading {
-			TextRange::at(self.offset, green_token.leading().text_len())
+			TextRange::at(self.offset, green_token.leading_trivia().text_len())
 		} else {
 			let (_, trailing_len, total_len) = green_token.leading_trailing_total_len();
 			TextRange::at(self.offset + total_len - trailing_len, trailing_len)
@@ -573,9 +573,9 @@ impl SyntaxTrivia {
 	pub(crate) fn text_len(&self) -> TextSize {
 		let green_token = self.token.green();
 		if self.is_leading {
-			green_token.leading().text_len()
+			green_token.leading_trivia().text_len()
 		} else {
-			green_token.trailing().text_len()
+			green_token.trailing_trivia().text_len()
 		}
 	}
 }
@@ -998,8 +998,8 @@ impl SyntaxToken {
 	#[inline]
 	pub fn text_trimmed_range(&self) -> TextRange {
 		let green_token = self.green();
-		let leading_len = green_token.leading().text_len();
-		let trailing_len = green_token.trailing().text_len();
+		let leading_len = green_token.leading_trivia().text_len();
+		let trailing_len = green_token.trailing_trivia().text_len();
 
 		let range = self.text_range();
 		TextRange::new(range.start() + leading_len, range.end() - trailing_len)
