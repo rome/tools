@@ -49,12 +49,6 @@ impl Trivia {
 	}
 }
 
-pub enum SyntaxTriviaPiece {
-	Whitespace {},
-	NewLine {},
-	Comments {},
-}
-
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxTrivia<L: Language> {
 	raw: cursor::SyntaxTrivia,
