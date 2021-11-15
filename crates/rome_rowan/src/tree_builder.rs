@@ -72,8 +72,8 @@ impl<L: Language> TreeBuilder<'_, L> {
 		&mut self,
 		kind: L::Kind,
 		text: &str,
-		leading: &[Trivia],
-		trailing: &[Trivia],
+		leading: Vec<Trivia>,
+		trailing: Vec<Trivia>,
 	) {
 		let (hash, token) =
 			self.cache

@@ -41,28 +41,16 @@ impl GreenTokenTrivia {
 	}
 }
 
-impl From<&[Trivia]> for GreenTokenTrivia {
-	fn from(trivias: &[Trivia]) -> Self {
-		let mut trivia = GreenTokenTrivia::None;
-		for current_trivia in trivias.iter().map(Clone::clone) {
-			trivia = match (trivia, current_trivia) {
-				(GreenTokenTrivia::None, Trivia::Whitespace(len)) => {
-					GreenTokenTrivia::Whitespace(len)
-				}
-				(GreenTokenTrivia::None, Trivia::Comments(len)) => GreenTokenTrivia::Comments(len),
-				(GreenTokenTrivia::Whitespace(len), second) => {
-					GreenTokenTrivia::Many(Box::new(vec![Trivia::Whitespace(len), second]))
-				}
-				(GreenTokenTrivia::Comments(len), second) => {
-					GreenTokenTrivia::Many(Box::new(vec![Trivia::Comments(len), second]))
-				}
-				(GreenTokenTrivia::Many(mut v), second) => {
-					v.push(second);
-					GreenTokenTrivia::Many(v)
-				}
-			}
+impl From<Vec<Trivia>> for GreenTokenTrivia {
+	fn from(trivias: Vec<Trivia>) -> Self {
+		match trivias.as_slice() {
+			[] => GreenTokenTrivia::None,
+			[Trivia::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
+			[Trivia::Comments(len)] => GreenTokenTrivia::Comments(*len),
+			_ => {
+				GreenTokenTrivia::Many(Box::new(trivias))
+			},
 		}
-		trivia
 	}
 }
 
