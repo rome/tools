@@ -199,7 +199,7 @@ impl GreenTokenData {
 
 impl GreenToken {
 	#[inline]
-	#[allow(dead_code)]
+	#[cfg(test)]
 	pub fn new(kind: SyntaxKind, text: &str) -> GreenToken {
 		Self::with_trivia(kind, text, GreenTokenTrivia::None, GreenTokenTrivia::None)
 	}
