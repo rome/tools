@@ -2,12 +2,13 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
-use super::decl::{class_decl, decorators, function_decl};
+use super::decl::{class_decl, decorators};
 use super::expr::{assign_expr, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use crate::syntax::function::{function_declaration, function_expression};
 use crate::{SyntaxKind::*, *};
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
@@ -98,9 +99,8 @@ pub fn stmt(
 		T![debugger] => debugger_stmt(p),
 		T![function] => {
 			p.state.decorators_were_valid = true;
-			let m = decorator.map(|x| x.precede(p)).unwrap_or_else(|| p.start());
 			// TODO: Should we change this to fn_expr if there is no name?
-			function_decl(p, m, true)
+			function_declaration(p)
 		}
 		T![class] => {
 			p.state.decorators_were_valid = true;
@@ -119,16 +119,7 @@ pub fn stmt(
 				&& !p.has_linebreak_before_n(1) =>
 		{
 			p.state.decorators_were_valid = true;
-			let m = decorator.map(|x| x.precede(p)).unwrap_or_else(|| p.start());
-			p.bump_any();
-			function_decl(
-				&mut *p.with_state(ParserState {
-					in_async: true,
-					..p.state.clone()
-				}),
-				m,
-				true,
-			)
+			function_expression(p)
 		}
 
 		T![ident] if p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)) => {

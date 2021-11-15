@@ -2,11 +2,12 @@
 
 use syntax::stmt::FOLLOWS_LET;
 
-use super::decl::{class_decl, function_decl};
+use super::decl::class_decl;
 use super::expr::{assign_expr, expr, identifier_name, literal, object_expr, primary_expr};
 use super::pat::binding_identifier;
 use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
+use crate::syntax::function::function_declaration;
 use crate::syntax::stmt::directives;
 use crate::{SyntaxKind::*, *};
 
@@ -410,14 +411,8 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 
 		if p.cur_src() == "async" && p.nth_at(1, T![function]) && !p.has_linebreak_before_n(1) {
 			p.state.decorators_were_valid = true;
-			let mut guard = p.with_state(ParserState {
-				in_async: true,
-				..p.state.clone()
-			});
-			let inner = guard.start();
-			guard.bump_any();
-			function_decl(&mut *guard, inner, false);
-			return m.complete(&mut *guard, EXPORT_DEFAULT_DECL);
+			function_declaration(p);
+			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 
 		if p.cur_src() == "from" || (p.at(T![,]) && p.nth_at(1, T!['{'])) {
@@ -438,17 +433,10 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		&& !p.has_linebreak_before_n(1)
 	{
 		p.state.decorators_were_valid = true;
-		let mut guard = p.with_state(ParserState {
-			in_async: true,
-			..p.state.clone()
-		});
-		let inner = guard.start();
-		guard.bump_any();
-		function_decl(&mut *guard, inner, false);
+		function_declaration(p);
 	} else if !only_ty && p.at(T![function]) {
 		p.state.decorators_were_valid = true;
-		let m = p.start();
-		function_decl(p, m, false);
+		function_declaration(p);
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");
 	} else if !only_ty

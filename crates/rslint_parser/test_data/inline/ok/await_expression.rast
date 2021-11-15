@@ -1,14 +1,14 @@
 JS_ROOT@0..116
   LIST@0..0
   LIST@0..115
-    FN_DECL@0..76
-      IDENT@0..5 "async"
+    FN_EXPR@0..76
+      ASYNC_KW@0..5 "async"
       WHITESPACE@5..6 " "
       FUNCTION_KW@6..14 "function"
       WHITESPACE@14..15 " "
-      NAME@15..19
+      JS_IDENTIFIER_BINDING@15..19
         IDENT@15..19 "test"
-      PARAMETER_LIST@19..21
+      JS_PARAMETER_LIST@19..21
         L_PAREN@19..20 "("
         LIST@20..20
         R_PAREN@20..21 ")"
@@ -63,14 +63,14 @@ JS_ROOT@0..116
         WHITESPACE@74..75 "\n"
         R_CURLY@75..76 "}"
     WHITESPACE@76..78 "\n\n"
-    FN_DECL@78..115
-      IDENT@78..83 "async"
+    FN_EXPR@78..115
+      ASYNC_KW@78..83 "async"
       WHITESPACE@83..84 " "
       FUNCTION_KW@84..92 "function"
       WHITESPACE@92..93 " "
-      NAME@93..98
+      JS_IDENTIFIER_BINDING@93..98
         IDENT@93..98 "inner"
-      PARAMETER_LIST@98..100
+      JS_PARAMETER_LIST@98..100
         L_PAREN@98..99 "("
         LIST@99..99
         R_PAREN@99..100 ")"

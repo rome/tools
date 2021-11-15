@@ -23,7 +23,7 @@ impl ToFormatElement for ArrowExpr {
 					tokens.push(formatter.format_node(name)?);
 					tokens.push(token(")"));
 				}
-				ArrowExprParams::ParameterList(params) => {
+				ArrowExprParams::JsParameterList(params) => {
 					tokens.push(formatter.format_node(params)?)
 				}
 			}

@@ -2,9 +2,9 @@ use crate::{
 	format_elements, group_elements, join_elements, soft_indent, soft_line_break_or_space, token,
 	FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::ParameterList;
+use rslint_parser::ast::JsParameterList;
 
-impl ToFormatElement for ParameterList {
+impl ToFormatElement for JsParameterList {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let param_tokens = formatter.format_nodes(self.parameters())?;
 

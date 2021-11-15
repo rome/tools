@@ -44,7 +44,7 @@ JS_ROOT@0..82
               ARROW_EXPR@32..49
                 ASYNC_KW@32..37 "async"
                 WHITESPACE@37..38 " "
-                PARAMETER_LIST@38..43
+                JS_PARAMETER_LIST@38..43
                   L_PAREN@38..39 "("
                   LIST@39..42
                     SINGLE_PATTERN@39..42
@@ -64,7 +64,7 @@ JS_ROOT@0..82
       ARROW_EXPR@50..81
         ASYNC_KW@50..55 "async"
         WHITESPACE@55..56 " "
-        PARAMETER_LIST@56..74
+        JS_PARAMETER_LIST@56..74
           L_PAREN@56..57 "("
           LIST@57..73
             SINGLE_PATTERN@57..60
@@ -77,7 +77,7 @@ JS_ROOT@0..82
                 IDENT@62..65 "bar"
             COMMA@65..66 ","
             WHITESPACE@66..67 " "
-            REST_PATTERN@67..73
+            JS_REST_PARAMETER@67..73
               DOT2@67..70 "..."
               SINGLE_PATTERN@70..73
                 NAME@70..73

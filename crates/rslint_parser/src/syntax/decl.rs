@@ -1,11 +1,11 @@
 //! Class and function declarations.
 
 use super::expr::{assign_expr, identifier_name, object_prop_name, STARTS_EXPR};
-use super::pat::{binding_identifier, opt_binding_identifier, pattern};
+use super::pat::{binding_identifier, pattern};
 use super::typescript::*;
+use crate::syntax::function::{args_body, fn_body};
 use crate::syntax::stmt::function_body;
 use crate::{SyntaxKind::*, *};
-use std::collections::HashMap;
 
 pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
 	T!['['],
@@ -79,85 +79,6 @@ fn class_prop_name(p: &mut Parser) -> Option<(CompletedMarker, Option<usize>)> {
 	} else {
 		None
 	}
-}
-
-fn args_body(p: &mut Parser) {
-	if p.at(T![<]) {
-		if let Some(ref mut ty) = ts_type_params(p) {
-			ty.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
-		}
-	}
-	formal_parameters(p);
-	if p.at(T![:]) {
-		if let Some(ref mut ty) = ts_type_or_type_predicate_ann(p, T![:]) {
-			ty.err_if_not_ts(p, "return types can only be used in TypeScript files");
-		}
-	}
-	fn_body(p);
-}
-
-fn fn_body(p: &mut Parser) {
-	// omitting the body is allowed in ts
-	if p.typescript() && !p.at(T!['{']) && is_semi(p, 0) {
-		p.eat(T![;]);
-	} else {
-		let mut complete = function_body(p, None);
-		if let Some(ref mut block) = complete {
-			if p.state.in_declare {
-				let err = p
-					.err_builder(
-						"function implementations cannot be given in ambient (declare) contexts",
-					)
-					.primary(block.range(p), "");
-
-				p.error(err);
-				block.change_kind(p, ERROR);
-			}
-		}
-	}
-}
-
-/// A function declaration, this could be async and or a generator. This takes a marker
-/// because you need to first advance over async or start a marker and feed it in.
-// test function_decl
-// function foo() {}
-// function *foo() {}
-// function foo(await) {}
-// async function *foo() {}
-// async function foo() {}
-// function *foo() {
-//   yield foo;
-// }
-pub fn function_decl(p: &mut Parser, m: Marker, fn_expr: bool) -> CompletedMarker {
-	// test_err function_decl_err
-	// function() {}
-	// function {}
-	// function *() {}
-	// async function() {}
-	// async function *() {}
-	// function *foo() {}
-	// yield foo;
-	p.expect(T![function]);
-	let in_generator = p.eat(T![*]);
-	let guard = &mut *p.with_state(ParserState {
-		labels: HashMap::new(),
-		in_function: true,
-		in_generator,
-		..p.state.clone()
-	});
-
-	let complete = opt_binding_identifier(guard);
-	if complete.is_none() && !fn_expr {
-		let err = guard
-			.err_builder(
-				"expected a name for the function in a function declaration, but found none",
-			)
-			.primary(guard.cur_tok().range, "");
-
-		guard.error(err);
-	}
-	args_body(guard);
-	m.complete(guard, FN_DECL)
 }
 
 #[allow(clippy::unnecessary_unwrap)]
@@ -295,7 +216,7 @@ fn constructor_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 }
 
-pub fn formal_parameters(p: &mut Parser) -> CompletedMarker {
+pub fn parameter_list(p: &mut Parser) -> CompletedMarker {
 	parameters_common(p, false)
 }
 
@@ -367,7 +288,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				p.error(err);
 				m.complete(p, ERROR);
 			}
-			let complete = m.complete(p, REST_PATTERN);
+			let complete = m.complete(p, JS_REST_PARAMETER);
 
 			// FIXME: this should be handled better, we should keep trying to parse params but issue an error for each one
 			// which would allow for better recovery from `foo, ...bar, foo`
@@ -430,7 +351,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 	parameters_list.complete(p, LIST);
 	p.state.allow_object_expr = true;
 	p.expect(T![')']);
-	m.complete(p, PARAMETER_LIST)
+	m.complete(p, JS_PARAMETER_LIST)
 }
 
 pub fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {

@@ -24,7 +24,7 @@ JS_ROOT@0..48
             EQ@18..19 "="
             WHITESPACE@19..20 " "
             ARROW_EXPR@20..43
-              PARAMETER_LIST@20..22
+              JS_PARAMETER_LIST@20..22
                 L_PAREN@20..21 "("
                 LIST@21..21
                 R_PAREN@21..22 ")"

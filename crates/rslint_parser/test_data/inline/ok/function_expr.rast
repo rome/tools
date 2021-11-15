@@ -16,7 +16,7 @@ JS_ROOT@0..48
               WHITESPACE@7..8 " "
               FN_EXPR@8..21
                 FUNCTION_KW@8..16 "function"
-                PARAMETER_LIST@16..18
+                JS_PARAMETER_LIST@16..18
                   L_PAREN@16..17 "("
                   LIST@17..17
                   R_PAREN@17..18 ")"
@@ -43,9 +43,9 @@ JS_ROOT@0..48
               FN_EXPR@30..47
                 FUNCTION_KW@30..38 "function"
                 WHITESPACE@38..39 " "
-                NAME@39..42
+                JS_IDENTIFIER_BINDING@39..42
                   IDENT@39..42 "foo"
-                PARAMETER_LIST@42..44
+                JS_PARAMETER_LIST@42..44
                   L_PAREN@42..43 "("
                   LIST@43..43
                   R_PAREN@43..44 ")"

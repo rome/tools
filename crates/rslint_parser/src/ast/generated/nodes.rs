@@ -375,20 +375,21 @@ impl JsDebuggerStatement {
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct FnDecl {
+pub struct JsFunctionDeclaration {
 	pub(crate) syntax: SyntaxNode,
 }
-impl FnDecl {
+impl JsFunctionDeclaration {
 	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
 	pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![function])
 	}
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
-	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
+	pub fn id(&self) -> SyntaxResult<JsIdentifierBinding> { support::required_node(&self.syntax) }
 	pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
-	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
-	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
+	pub fn parameter_list(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
+	pub fn return_type(&self) -> Option<TsReturnType> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1251,10 +1252,10 @@ impl JsFunctionBody {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ParameterList {
+pub struct JsParameterList {
 	pub(crate) syntax: SyntaxNode,
 }
-impl ParameterList {
+impl JsParameterList {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
@@ -1296,7 +1297,9 @@ impl Method {
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
 	pub fn name(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
 	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
 	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
@@ -1338,7 +1341,9 @@ impl Constructor {
 	pub fn accessibility(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
 	pub fn name(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
 	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1370,7 +1375,9 @@ impl Getter {
 		support::required_token(&self.syntax, T![get])
 	}
 	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1382,7 +1389,9 @@ impl Setter {
 		support::required_token(&self.syntax, T![set])
 	}
 	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1655,6 +1664,25 @@ impl Condition {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsIdentifierBinding {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsIdentifierBinding {
+	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsReturnType {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsReturnType {
+	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [:])
+	}
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarator {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1715,6 +1743,16 @@ pub struct Specifier {
 }
 impl Specifier {
 	pub fn name(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsRestParameter {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsRestParameter {
+	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [...])
+	}
+	pub fn binding(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
@@ -1991,7 +2029,7 @@ pub struct TsFnType {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsFnType {
-	pub fn params(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn params(&self) -> SyntaxResult<JsParameterList> { support::required_node(&self.syntax) }
 	pub fn fat_arrow_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [=>])
 	}
@@ -2005,7 +2043,7 @@ impl TsConstructorType {
 	pub fn new_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![new])
 	}
-	pub fn params(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn params(&self) -> SyntaxResult<JsParameterList> { support::required_node(&self.syntax) }
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
@@ -2171,7 +2209,9 @@ pub struct TsCallSignatureDecl {
 }
 impl TsCallSignatureDecl {
 	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
@@ -2186,7 +2226,9 @@ impl TsConstructSignatureDecl {
 		support::required_token(&self.syntax, T![new])
 	}
 	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
 	pub fn return_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
@@ -2217,7 +2259,9 @@ impl TsMethodSignature {
 	}
 	pub fn key(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
 	pub fn question_mark_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T ! [?])
 	}
@@ -2258,7 +2302,7 @@ pub enum JsAnyStatement {
 	JsTryStatement(JsTryStatement),
 	JsTryFinallyStatement(JsTryFinallyStatement),
 	JsDebuggerStatement(JsDebuggerStatement),
-	FnDecl(FnDecl),
+	JsFunctionDeclaration(JsFunctionDeclaration),
 	ClassDecl(ClassDecl),
 	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
 	TsEnum(TsEnum),
@@ -2379,7 +2423,7 @@ pub enum TsType {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ArrowExprParams {
 	Name(Name),
-	ParameterList(ParameterList),
+	JsParameterList(JsParameterList),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ExprOrBlock {
@@ -2451,18 +2495,24 @@ pub enum ImportClause {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum DefaultDecl {
-	FnDecl(FnDecl),
+	JsFunctionDeclaration(JsFunctionDeclaration),
 	ClassDecl(ClassDecl),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExportDeclaration {
-	FnDecl(FnDecl),
+	JsFunctionDeclaration(JsFunctionDeclaration),
 	ClassDecl(ClassDecl),
+	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
 	TsEnum(TsEnum),
 	TsTypeAliasDecl(TsTypeAliasDecl),
 	TsNamespaceDecl(TsNamespaceDecl),
 	TsModuleDecl(TsModuleDecl),
 	TsInterfaceDecl(TsInterfaceDecl),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyParameter {
+	Pattern(Pattern),
+	JsRestParameter(JsRestParameter),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsModuleRef {
@@ -2800,8 +2850,8 @@ impl AstNode for JsDebuggerStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for FnDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FN_DECL }
+impl AstNode for JsFunctionDeclaration {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3493,8 +3543,8 @@ impl AstNode for JsFunctionBody {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for ParameterList {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == PARAMETER_LIST }
+impl AstNode for JsParameterList {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARAMETER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3878,6 +3928,28 @@ impl AstNode for Condition {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsIdentifierBinding {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_BINDING }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsReturnType {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_RETURN_TYPE }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsVariableDeclarator {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATOR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3935,6 +4007,17 @@ impl AstNode for ImportStringSpecifier {
 }
 impl AstNode for Specifier {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == SPECIFIER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsRestParameter {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REST_PARAMETER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4537,8 +4620,10 @@ impl From<JsDebuggerStatement> for JsAnyStatement {
 		JsAnyStatement::JsDebuggerStatement(node)
 	}
 }
-impl From<FnDecl> for JsAnyStatement {
-	fn from(node: FnDecl) -> JsAnyStatement { JsAnyStatement::FnDecl(node) }
+impl From<JsFunctionDeclaration> for JsAnyStatement {
+	fn from(node: JsFunctionDeclaration) -> JsAnyStatement {
+		JsAnyStatement::JsFunctionDeclaration(node)
+	}
 }
 impl From<ClassDecl> for JsAnyStatement {
 	fn from(node: ClassDecl) -> JsAnyStatement { JsAnyStatement::ClassDecl(node) }
@@ -4617,7 +4702,7 @@ impl AstNode for JsAnyStatement {
 			| JS_TRY_STATEMENT
 			| JS_TRY_FINALLY_STATEMENT
 			| JS_DEBUGGER_STATEMENT
-			| FN_DECL
+			| JS_FUNCTION_DECLARATION
 			| CLASS_DECL
 			| JS_VARIABLE_DECLARATION_STATEMENT
 			| TS_ENUM
@@ -4671,7 +4756,9 @@ impl AstNode for JsAnyStatement {
 			JS_DEBUGGER_STATEMENT => {
 				JsAnyStatement::JsDebuggerStatement(JsDebuggerStatement { syntax })
 			}
-			FN_DECL => JsAnyStatement::FnDecl(FnDecl { syntax }),
+			JS_FUNCTION_DECLARATION => {
+				JsAnyStatement::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
+			}
 			CLASS_DECL => JsAnyStatement::ClassDecl(ClassDecl { syntax }),
 			JS_VARIABLE_DECLARATION_STATEMENT => {
 				JsAnyStatement::JsVariableDeclarationStatement(JsVariableDeclarationStatement {
@@ -4726,7 +4813,7 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsTryStatement(it) => &it.syntax,
 			JsAnyStatement::JsTryFinallyStatement(it) => &it.syntax,
 			JsAnyStatement::JsDebuggerStatement(it) => &it.syntax,
-			JsAnyStatement::FnDecl(it) => &it.syntax,
+			JsAnyStatement::JsFunctionDeclaration(it) => &it.syntax,
 			JsAnyStatement::ClassDecl(it) => &it.syntax,
 			JsAnyStatement::JsVariableDeclarationStatement(it) => &it.syntax,
 			JsAnyStatement::TsEnum(it) => &it.syntax,
@@ -5349,20 +5436,20 @@ impl AstNode for TsType {
 impl From<Name> for ArrowExprParams {
 	fn from(node: Name) -> ArrowExprParams { ArrowExprParams::Name(node) }
 }
-impl From<ParameterList> for ArrowExprParams {
-	fn from(node: ParameterList) -> ArrowExprParams { ArrowExprParams::ParameterList(node) }
+impl From<JsParameterList> for ArrowExprParams {
+	fn from(node: JsParameterList) -> ArrowExprParams { ArrowExprParams::JsParameterList(node) }
 }
 impl AstNode for ArrowExprParams {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			NAME | PARAMETER_LIST => true,
+			NAME | JS_PARAMETER_LIST => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			NAME => ArrowExprParams::Name(Name { syntax }),
-			PARAMETER_LIST => ArrowExprParams::ParameterList(ParameterList { syntax }),
+			JS_PARAMETER_LIST => ArrowExprParams::JsParameterList(JsParameterList { syntax }),
 			_ => return None,
 		};
 		Some(res)
@@ -5370,7 +5457,7 @@ impl AstNode for ArrowExprParams {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			ArrowExprParams::Name(it) => &it.syntax,
-			ArrowExprParams::ParameterList(it) => &it.syntax,
+			ArrowExprParams::JsParameterList(it) => &it.syntax,
 		}
 	}
 }
@@ -5763,8 +5850,8 @@ impl AstNode for ImportClause {
 		}
 	}
 }
-impl From<FnDecl> for DefaultDecl {
-	fn from(node: FnDecl) -> DefaultDecl { DefaultDecl::FnDecl(node) }
+impl From<JsFunctionDeclaration> for DefaultDecl {
+	fn from(node: JsFunctionDeclaration) -> DefaultDecl { DefaultDecl::JsFunctionDeclaration(node) }
 }
 impl From<ClassDecl> for DefaultDecl {
 	fn from(node: ClassDecl) -> DefaultDecl { DefaultDecl::ClassDecl(node) }
@@ -5772,13 +5859,15 @@ impl From<ClassDecl> for DefaultDecl {
 impl AstNode for DefaultDecl {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			FN_DECL | CLASS_DECL => true,
+			JS_FUNCTION_DECLARATION | CLASS_DECL => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			FN_DECL => DefaultDecl::FnDecl(FnDecl { syntax }),
+			JS_FUNCTION_DECLARATION => {
+				DefaultDecl::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
+			}
 			CLASS_DECL => DefaultDecl::ClassDecl(ClassDecl { syntax }),
 			_ => return None,
 		};
@@ -5786,16 +5875,23 @@ impl AstNode for DefaultDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			DefaultDecl::FnDecl(it) => &it.syntax,
+			DefaultDecl::JsFunctionDeclaration(it) => &it.syntax,
 			DefaultDecl::ClassDecl(it) => &it.syntax,
 		}
 	}
 }
-impl From<FnDecl> for JsAnyExportDeclaration {
-	fn from(node: FnDecl) -> JsAnyExportDeclaration { JsAnyExportDeclaration::FnDecl(node) }
+impl From<JsFunctionDeclaration> for JsAnyExportDeclaration {
+	fn from(node: JsFunctionDeclaration) -> JsAnyExportDeclaration {
+		JsAnyExportDeclaration::JsFunctionDeclaration(node)
+	}
 }
 impl From<ClassDecl> for JsAnyExportDeclaration {
 	fn from(node: ClassDecl) -> JsAnyExportDeclaration { JsAnyExportDeclaration::ClassDecl(node) }
+}
+impl From<JsVariableDeclarationStatement> for JsAnyExportDeclaration {
+	fn from(node: JsVariableDeclarationStatement) -> JsAnyExportDeclaration {
+		JsAnyExportDeclaration::JsVariableDeclarationStatement(node)
+	}
 }
 impl From<TsEnum> for JsAnyExportDeclaration {
 	fn from(node: TsEnum) -> JsAnyExportDeclaration { JsAnyExportDeclaration::TsEnum(node) }
@@ -5823,15 +5919,28 @@ impl From<TsInterfaceDecl> for JsAnyExportDeclaration {
 impl AstNode for JsAnyExportDeclaration {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			FN_DECL | CLASS_DECL | TS_ENUM | TS_TYPE_ALIAS_DECL | TS_NAMESPACE_DECL
-			| TS_MODULE_DECL | TS_INTERFACE_DECL => true,
+			JS_FUNCTION_DECLARATION
+			| CLASS_DECL
+			| JS_VARIABLE_DECLARATION_STATEMENT
+			| TS_ENUM
+			| TS_TYPE_ALIAS_DECL
+			| TS_NAMESPACE_DECL
+			| TS_MODULE_DECL
+			| TS_INTERFACE_DECL => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			FN_DECL => JsAnyExportDeclaration::FnDecl(FnDecl { syntax }),
+			JS_FUNCTION_DECLARATION => {
+				JsAnyExportDeclaration::JsFunctionDeclaration(JsFunctionDeclaration { syntax })
+			}
 			CLASS_DECL => JsAnyExportDeclaration::ClassDecl(ClassDecl { syntax }),
+			JS_VARIABLE_DECLARATION_STATEMENT => {
+				JsAnyExportDeclaration::JsVariableDeclarationStatement(
+					JsVariableDeclarationStatement { syntax },
+				)
+			}
 			TS_ENUM => JsAnyExportDeclaration::TsEnum(TsEnum { syntax }),
 			TS_TYPE_ALIAS_DECL => {
 				JsAnyExportDeclaration::TsTypeAliasDecl(TsTypeAliasDecl { syntax })
@@ -5849,13 +5958,44 @@ impl AstNode for JsAnyExportDeclaration {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyExportDeclaration::FnDecl(it) => &it.syntax,
+			JsAnyExportDeclaration::JsFunctionDeclaration(it) => &it.syntax,
 			JsAnyExportDeclaration::ClassDecl(it) => &it.syntax,
+			JsAnyExportDeclaration::JsVariableDeclarationStatement(it) => &it.syntax,
 			JsAnyExportDeclaration::TsEnum(it) => &it.syntax,
 			JsAnyExportDeclaration::TsTypeAliasDecl(it) => &it.syntax,
 			JsAnyExportDeclaration::TsNamespaceDecl(it) => &it.syntax,
 			JsAnyExportDeclaration::TsModuleDecl(it) => &it.syntax,
 			JsAnyExportDeclaration::TsInterfaceDecl(it) => &it.syntax,
+		}
+	}
+}
+impl From<JsRestParameter> for JsAnyParameter {
+	fn from(node: JsRestParameter) -> JsAnyParameter { JsAnyParameter::JsRestParameter(node) }
+}
+impl AstNode for JsAnyParameter {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			JS_REST_PARAMETER => true,
+			k if Pattern::can_cast(k) => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_REST_PARAMETER => JsAnyParameter::JsRestParameter(JsRestParameter { syntax }),
+			_ => {
+				if let Some(pattern) = Pattern::cast(syntax) {
+					return Some(JsAnyParameter::Pattern(pattern));
+				}
+				return None;
+			}
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyParameter::JsRestParameter(it) => &it.syntax,
+			JsAnyParameter::Pattern(it) => it.syntax(),
 		}
 	}
 }
@@ -6125,6 +6265,11 @@ impl std::fmt::Display for JsAnyExportDeclaration {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAnyParameter {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for TsModuleRef {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6290,7 +6435,7 @@ impl std::fmt::Display for JsDebuggerStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for FnDecl {
+impl std::fmt::Display for JsFunctionDeclaration {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6605,7 +6750,7 @@ impl std::fmt::Display for JsFunctionBody {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ParameterList {
+impl std::fmt::Display for JsParameterList {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6780,6 +6925,16 @@ impl std::fmt::Display for Condition {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsIdentifierBinding {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsReturnType {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsVariableDeclarator {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6806,6 +6961,11 @@ impl std::fmt::Display for ImportStringSpecifier {
 	}
 }
 impl std::fmt::Display for Specifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsRestParameter {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

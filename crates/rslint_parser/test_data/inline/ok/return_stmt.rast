@@ -3,7 +3,7 @@ JS_ROOT@0..43
   LIST@0..42
     JS_EXPRESSION_STATEMENT@0..42
       ARROW_EXPR@0..42
-        PARAMETER_LIST@0..2
+        JS_PARAMETER_LIST@0..2
           L_PAREN@0..1 "("
           LIST@1..1
           R_PAREN@1..2 ")"

@@ -5,12 +5,11 @@
 
 use syntax::decl::is_semi;
 
-use super::decl::{
-	arrow_body, class_decl, formal_parameters, function_decl, maybe_private_name, method,
-};
+use super::decl::{arrow_body, class_decl, parameter_list, maybe_private_name, method};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
+use crate::syntax::function::function_expression;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -724,7 +723,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			let expr = assign_expr(&mut *temp);
 			if expr.is_some() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
-				params_marker = Some(formal_parameters(&mut *temp));
+				params_marker = Some(parameter_list(&mut *temp));
 				break;
 			}
 
@@ -758,7 +757,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				..p.state.clone()
 			});
 			p.rewind(checkpoint);
-			formal_parameters(p);
+			parameter_list(p);
 			if p.at(T![:]) {
 				if let Some(mut ret) = ts_type_or_type_predicate_ann(p, T![:]) {
 					ret.err_if_not_ts(
@@ -797,7 +796,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if params_marker.is_none() {
 				// Rewind the parser so we can reparse as formal parameters
 				p.rewind(checkpoint);
-				formal_parameters(p);
+				parameter_list(p);
 			}
 
 			if p.at(T![:]) {
@@ -915,18 +914,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// let a = async function() {};
 			// let b = async function foo() {};
 			if p.nth_at(1, T![function]) {
-				let m = p.start();
-				p.bump_remap(T![async]);
-				let mut complete = function_decl(
-					&mut *p.with_state(ParserState {
-						in_async: true,
-						..p.state.clone()
-					}),
-					m,
-					true,
-				);
-				complete.change_kind(p, FN_EXPR);
-				complete
+				function_expression(p)
 			} else {
 				// `async a => {}` and `async (a) => {}`
 				if p.state.potential_arrow_start
@@ -939,7 +927,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					let m = p.start();
 					p.bump_remap(T![async]);
 					if p.at(T!['(']) {
-						formal_parameters(p);
+						parameter_list(p);
 					} else {
 						let m = p.start();
 						// test_err async_arrow_expr_await_parameter
@@ -971,10 +959,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// test function_expr
 			// let a = function() {}
 			// let b = function foo() {}
-			let m = p.start();
-			let mut complete = function_decl(p, m, true);
-			complete.change_kind(p, FN_EXPR);
-			complete
+			function_expression(p)
 		}
 		T![ident] | T![yield] | T![await] => {
 			// test identifier_reference

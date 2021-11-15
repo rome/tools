@@ -16,7 +16,7 @@ JS_ROOT@0..47
             WHITESPACE@18..19 " "
             NAME@19..22
               IDENT@19..22 "foo"
-            PARAMETER_LIST@22..24
+            JS_PARAMETER_LIST@22..24
               L_PAREN@22..23 "("
               LIST@23..23
               R_PAREN@23..24 ")"
@@ -33,7 +33,7 @@ JS_ROOT@0..47
             STAR@35..36 "*"
             NAME@36..39
               IDENT@36..39 "foo"
-            PARAMETER_LIST@39..41
+            JS_PARAMETER_LIST@39..41
               L_PAREN@39..40 "("
               LIST@40..40
               R_PAREN@40..41 ")"

@@ -17,6 +17,7 @@ mod script;
 mod setter;
 mod spread;
 mod statements;
+mod bindings;
 
 #[cfg(test)]
 mod test {

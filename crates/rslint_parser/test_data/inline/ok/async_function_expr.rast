@@ -18,7 +18,7 @@ JS_ROOT@0..62
                 ASYNC_KW@8..13 "async"
                 WHITESPACE@13..14 " "
                 FUNCTION_KW@14..22 "function"
-                PARAMETER_LIST@22..24
+                JS_PARAMETER_LIST@22..24
                   L_PAREN@22..23 "("
                   LIST@23..23
                   R_PAREN@23..24 ")"
@@ -48,9 +48,9 @@ JS_ROOT@0..62
                 WHITESPACE@42..43 " "
                 FUNCTION_KW@43..51 "function"
                 WHITESPACE@51..52 " "
-                NAME@52..55
+                JS_IDENTIFIER_BINDING@52..55
                   IDENT@52..55 "foo"
-                PARAMETER_LIST@55..57
+                JS_PARAMETER_LIST@55..57
                   L_PAREN@55..56 "("
                   LIST@56..56
                   R_PAREN@56..57 ")"
