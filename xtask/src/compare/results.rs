@@ -1,7 +1,7 @@
-use crate::coverage::files::{Outcome, TestResults};
+use crate::coverage::files::{Outcome, TestResult, TestResults};
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
-use std::{fs::File, path::Path};
+use std::{collections::HashMap, ffi::OsStr, fs::File, path::Path};
 
 pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 	let base_results: TestResults =
@@ -35,9 +35,37 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 
 	if markdown {
 		/// Generates a proper diff format, with some bold text if things change.
-		fn diff_format(diff: isize) -> String {
+		fn diff_format(diff: isize, i_am_passed_results: bool, show_increase: bool) -> String {
+			let good = "✅ ";
+			let bad = "❌ ";
+			let up = "⏫ ";
+			let down = "⏬ ";
+
+			let emoji = if show_increase {
+				match diff.cmp(&0) {
+					std::cmp::Ordering::Less => {
+						if i_am_passed_results {
+							format!("{}{}", bad, down)
+						} else {
+							format!("{}{}", good, down)
+						}
+					}
+					std::cmp::Ordering::Equal => format!(""),
+					std::cmp::Ordering::Greater => {
+						if i_am_passed_results {
+							format!("{}{}", good, up)
+						} else {
+							format!("{}{}", bad, up)
+						}
+					}
+				}
+			} else {
+				format!("")
+			};
+
 			format!(
-				"{}{}{}{}",
+				"{}{}{}{}{}",
+				emoji,
 				if diff != 0 { "**" } else { "" },
 				if diff > 0 { "+" } else { "" },
 				diff,
@@ -52,28 +80,28 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 			"| Total | {} | {} | {} |",
 			base_total,
 			new_total,
-			diff_format(total_diff)
+			diff_format(total_diff, false, false)
 		);
 
 		println!(
 			"| Passed | {} | {} | {} |",
 			base_passed,
 			new_passed,
-			diff_format(passed_diff)
+			diff_format(passed_diff, true, true)
 		);
 
 		println!(
 			"| Failed | {} | {} | {} |",
 			base_failed,
 			new_failed,
-			diff_format(failed_diff)
+			diff_format(failed_diff, false, true)
 		);
 
 		println!(
 			"| Panics | {} | {} | {} |",
-			base_passed,
-			new_passed,
-			diff_format(panics_diff)
+			base_panics,
+			new_panics,
+			diff_format(panics_diff, false, true)
 		);
 
 		println!(
@@ -209,11 +237,13 @@ fn compare_diffs<'a>(
 	new_results: &'a TestResults,
 ) -> ReportDiff<'a> {
 	let mut report_diff = ReportDiff::new();
+	let new_paths: HashMap<&OsStr, &TestResult> = new_results
+		.details
+		.iter()
+		.map(|detail| return (detail.path.as_os_str(), detail))
+		.collect();
 	for base_result in &base_results.details {
-		let test_to_analyze = new_results
-			.details
-			.iter()
-			.find(|new_test| new_test.path.as_os_str().eq(base_result.path.as_os_str()));
+		let test_to_analyze = new_paths.get(base_result.path.as_os_str());
 
 		if let Some(test_to_analyze) = test_to_analyze {
 			match (&base_result.outcome, &test_to_analyze.outcome) {

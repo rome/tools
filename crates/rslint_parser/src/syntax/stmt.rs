@@ -113,7 +113,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 
 			// We must explicitly handle this case or else infinite recursion can happen
 			if p.at_ts(token_set![T!['}'], T![import], T![export]]) {
-				p.err_and_bump(err);
+				p.err_and_bump(err, ERROR);
 				return None;
 			}
 
@@ -171,7 +171,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 		m.complete(p, ERROR);
 	}
 
-	let mut expr = p.expr_with_semi_recovery(false)?;
+	let mut expr = p.expr_with_semi_recovery(false, ERROR)?;
 	// Labelled stmt
 	if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
 		expr.change_kind(p, NAME);
@@ -255,7 +255,7 @@ pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 
 		p.error(err);
 	} else {
-		p.expr_with_semi_recovery(false);
+		p.expr_with_semi_recovery(false, ERROR);
 	}
 	semi(p, start..p.cur_tok().range.end);
 	m.complete(p, JS_THROW_STATEMENT)
@@ -347,7 +347,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	p.expect(T![return]);
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
-		p.expr_with_semi_recovery(false);
+		p.expr_with_semi_recovery(false, ERROR);
 	}
 	semi(p, start..p.cur_tok().range.end);
 	let complete = m.complete(p, JS_RETURN_STATEMENT);
@@ -779,13 +779,13 @@ fn variable_initializer(p: &mut Parser) {
 	let m = p.start();
 
 	p.expect(T![=]);
-	p.expr_with_semi_recovery(true);
+	p.expr_with_semi_recovery(true, ERROR);
 
 	m.complete(p, SyntaxKind::JS_EQUAL_VALUE_CLAUSE);
 }
 
 // A do.. while statement, such as `do {} while (true)`
-// test do_while_stmt
+// test do_while_stmtR
 // do { } while (true)
 // do throw Error("foo") while (true)
 pub fn do_stmt(p: &mut Parser) -> CompletedMarker {

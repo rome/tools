@@ -32,7 +32,7 @@ fn main() -> Result<()> {
 			let base_result_path = free.get(0).map(String::as_str);
 			let new_result_path = free.get(1).map(String::as_str);
 
-			compare::run(base_result_path, new_result_path, markdown);
+			compare::coverage_compare(base_result_path, new_result_path, markdown);
 			Ok(())
 		}
 		// "docgen" => {

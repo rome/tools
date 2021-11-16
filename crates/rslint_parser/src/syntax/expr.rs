@@ -1012,7 +1012,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						))
 						.primary(p.cur_tok().range, "");
 
-					p.err_and_bump(err);
+					p.err_and_bump(err, ERROR);
 					m.complete(p, ERROR)
 				} else {
 					let err = p

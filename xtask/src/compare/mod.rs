@@ -3,7 +3,11 @@ use std::path::PathBuf;
 
 mod results;
 
-pub fn run(base_result_path: Option<&str>, new_result_path: Option<&str>, markdown: bool) {
+pub fn coverage_compare(
+	base_result_path: Option<&str>,
+	new_result_path: Option<&str>,
+	markdown: bool,
+) {
 	// resolve the path passed as argument, or retrieve the default one
 	let base_result_dir = if let Some(base_result_path) = base_result_path {
 		PathBuf::from(base_result_path)

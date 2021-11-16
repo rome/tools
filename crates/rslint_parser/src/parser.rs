@@ -423,19 +423,24 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Bump and add an error event
-	pub fn err_and_bump(&mut self, err: impl Into<ParserError>) {
+	pub fn err_and_bump(&mut self, err: impl Into<ParserError>, unknown_syntax_kind: SyntaxKind) {
 		let m = self.start();
 		self.bump_any();
-		m.complete(self, SyntaxKind::ERROR);
+		m.complete(self, unknown_syntax_kind);
 		self.error(err);
 	}
 
-	pub fn err_if_not_ts(&mut self, mut marker: impl BorrowMut<CompletedMarker>, err: &str) {
+	pub fn err_if_not_ts(
+		&mut self,
+		mut marker: impl BorrowMut<CompletedMarker>,
+		err: &str,
+		unknown_syntax_kind: SyntaxKind,
+	) {
 		if self.typescript() {
 			return;
 		}
 		let borrow = marker.borrow_mut();
-		borrow.change_kind(self, SyntaxKind::ERROR);
+		borrow.change_kind(self, unknown_syntax_kind);
 		let err = self.err_builder(err).primary(borrow.range(self), "");
 
 		self.error(err);
@@ -489,7 +494,11 @@ impl<'t> Parser<'t> {
 		start..end
 	}
 
-	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> Option<CompletedMarker> {
+	pub fn expr_with_semi_recovery(
+		&mut self,
+		assign: bool,
+		unknown_syntax_kind: SyntaxKind,
+	) -> Option<CompletedMarker> {
 		let func = if assign {
 			syntax::expr::assign_expr
 		} else {
@@ -504,7 +513,7 @@ impl<'t> Parser<'t> {
 
 			self.error(err);
 			self.bump_any();
-			m.complete(self, SyntaxKind::ERROR);
+			m.complete(self, unknown_syntax_kind);
 			return None;
 		}
 
@@ -715,7 +724,7 @@ impl CompletedMarker {
 	}
 
 	pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
-		p.err_if_not_ts(self, err);
+		p.err_if_not_ts(self, err, SyntaxKind::ERROR);
 	}
 }
 
