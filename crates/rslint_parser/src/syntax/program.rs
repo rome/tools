@@ -424,12 +424,14 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	if !only_ty && p.at(T![class]) {
 		class_decl(p, false);
 	} else if !only_ty
-		&& p.cur_src() == "async"
-		&& p.nth_at(1, T![function])
-		&& !p.has_linebreak_before_n(1)
+		// function ...
+		&& (p.at(T![function])
+			||
+		// async function ... 
+		(p.cur_src() == "async"
+				&& p.nth_at(1, T![function])
+				&& !p.has_linebreak_before_n(1)))
 	{
-		function_declaration(p);
-	} else if !only_ty && p.at(T![function]) {
 		function_declaration(p);
 	} else if !only_ty && p.at(T![const]) && p.nth_src(1) == "enum" {
 		ts_enum(p).err_if_not_ts(p, "enums can only be used in TypeScript files");
