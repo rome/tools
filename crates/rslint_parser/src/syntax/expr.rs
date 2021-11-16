@@ -3,12 +3,11 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use syntax::decl::is_semi;
-
-use super::decl::{arrow_body, class_decl, maybe_private_name, parameter_list};
+use super::decl::{arrow_body, maybe_private_name, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
+use crate::syntax::class::{class_decl, is_semi};
 use crate::syntax::function::function_expression;
 use crate::syntax::object::object_expr;
 use crate::{SyntaxKind::*, *};

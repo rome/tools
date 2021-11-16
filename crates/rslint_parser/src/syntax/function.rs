@@ -1,4 +1,5 @@
-use crate::syntax::decl::{is_semi, parameter_list};
+use crate::syntax::class::is_semi;
+use crate::syntax::decl::parameter_list;
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::block_impl;
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};

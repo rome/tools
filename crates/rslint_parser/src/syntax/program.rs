@@ -2,11 +2,11 @@
 
 use syntax::stmt::FOLLOWS_LET;
 
-use super::decl::class_decl;
 use super::expr::{assign_expr, expr, identifier_name, literal, primary_expr};
 use super::pat::binding_identifier;
 use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
+use crate::syntax::class::class_decl;
 use crate::syntax::function::function_declaration;
 use crate::syntax::object::object_expr;
 use crate::syntax::stmt::directives;

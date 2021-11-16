@@ -2,12 +2,12 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
-use super::decl::class_decl;
 use super::expr::{assign_expr, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use crate::syntax::class::class_decl;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 

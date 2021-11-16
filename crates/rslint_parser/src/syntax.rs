@@ -7,6 +7,7 @@
 //!
 //! Functions emit markers, see `CompletedMarker` and `Marker` docs for more info.
 
+mod class;
 pub mod decl;
 pub mod expr;
 mod function;

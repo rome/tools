@@ -3,6 +3,7 @@
 use super::decl::*;
 use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
 use super::stmt::{semi, statements, variable_declaration_statement};
+use crate::syntax::class::class_decl;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 
