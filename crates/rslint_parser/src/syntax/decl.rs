@@ -1,9 +1,10 @@
 //! Class and function declarations.
 
-use super::expr::{assign_expr, identifier_name, object_prop_name};
+use super::expr::{assign_expr, identifier_name};
 use super::pat::{binding_identifier, pattern};
 use super::typescript::*;
 use crate::syntax::function::{args_body, function_body, function_body_or_declaration};
+use crate::syntax::object::object_prop_name;
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
