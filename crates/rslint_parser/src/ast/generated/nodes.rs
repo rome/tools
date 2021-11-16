@@ -4684,46 +4684,39 @@ impl From<JsUnknownStatement> for JsAnyStatement {
 }
 impl AstNode for JsAnyStatement {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
+		matches!(
+			kind,
 			JS_BLOCK_STATEMENT
-			| JS_EMPTY_STATEMENT
-			| JS_EXPRESSION_STATEMENT
-			| JS_IF_STATEMENT
-			| JS_DO_WHILE_STATEMENT
-			| JS_WHILE_STATEMENT
-			| FOR_STMT
-			| FOR_IN_STMT
-			| FOR_OF_STMT
-			| JS_CONTINUE_STATEMENT
-			| JS_BREAK_STATEMENT
-			| JS_RETURN_STATEMENT
-			| JS_WITH_STATEMENT
-			| JS_LABELED_STATEMENT
-			| JS_SWITCH_STATEMENT
-			| JS_THROW_STATEMENT
-			| JS_TRY_STATEMENT
-			| JS_TRY_FINALLY_STATEMENT
-			| JS_DEBUGGER_STATEMENT
-			| JS_FUNCTION_DECLARATION
-			| CLASS_DECL
-			| JS_VARIABLE_DECLARATION_STATEMENT
-			| TS_ENUM
-			| TS_TYPE_ALIAS_DECL
-			| TS_NAMESPACE_DECL
-			| TS_MODULE_DECL
-			| TS_INTERFACE_DECL
-			| IMPORT_DECL
-			| EXPORT_NAMED
-			| EXPORT_DEFAULT_DECL
-			| EXPORT_DEFAULT_EXPR
-			| EXPORT_WILDCARD
-			| EXPORT_DECL
-			| TS_IMPORT_EQUALS_DECL
-			| TS_EXPORT_ASSIGNMENT
-			| TS_NAMESPACE_EXPORT_DECL
-			| JS_UNKNOWN_STATEMENT => true,
-			_ => false,
-		}
+				| JS_EMPTY_STATEMENT
+				| JS_EXPRESSION_STATEMENT
+				| JS_IF_STATEMENT
+				| JS_DO_WHILE_STATEMENT
+				| JS_WHILE_STATEMENT
+				| FOR_STMT | FOR_IN_STMT
+				| FOR_OF_STMT | JS_CONTINUE_STATEMENT
+				| JS_BREAK_STATEMENT
+				| JS_RETURN_STATEMENT
+				| JS_WITH_STATEMENT
+				| JS_LABELED_STATEMENT
+				| JS_SWITCH_STATEMENT
+				| JS_THROW_STATEMENT
+				| JS_TRY_STATEMENT
+				| JS_TRY_FINALLY_STATEMENT
+				| JS_DEBUGGER_STATEMENT
+				| JS_FUNCTION_DECLARATION
+				| CLASS_DECL | JS_VARIABLE_DECLARATION_STATEMENT
+				| TS_ENUM | TS_TYPE_ALIAS_DECL
+				| TS_NAMESPACE_DECL
+				| TS_MODULE_DECL | TS_INTERFACE_DECL
+				| IMPORT_DECL | EXPORT_NAMED
+				| EXPORT_DEFAULT_DECL
+				| EXPORT_DEFAULT_EXPR
+				| EXPORT_WILDCARD
+				| EXPORT_DECL | TS_IMPORT_EQUALS_DECL
+				| TS_EXPORT_ASSIGNMENT
+				| TS_NAMESPACE_EXPORT_DECL
+				| JS_UNKNOWN_STATEMENT
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5141,12 +5134,7 @@ impl From<JsDefaultClause> for JsAnySwitchClause {
 	fn from(node: JsDefaultClause) -> JsAnySwitchClause { JsAnySwitchClause::JsDefaultClause(node) }
 }
 impl AstNode for JsAnySwitchClause {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE => true,
-			_ => false,
-		}
-	}
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_CASE_CLAUSE | JS_DEFAULT_CLAUSE) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_CASE_CLAUSE => JsAnySwitchClause::JsCaseClause(JsCaseClause { syntax }),
@@ -5185,11 +5173,13 @@ impl From<JsUnknownPattern> for Pattern {
 }
 impl AstNode for Pattern {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			SINGLE_PATTERN | REST_PATTERN | ASSIGN_PATTERN | OBJECT_PATTERN | ARRAY_PATTERN
-			| EXPR_PATTERN | JS_UNKNOWN_PATTERN => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			SINGLE_PATTERN
+				| REST_PATTERN | ASSIGN_PATTERN
+				| OBJECT_PATTERN | ARRAY_PATTERN
+				| EXPR_PATTERN | JS_UNKNOWN_PATTERN
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5236,11 +5226,15 @@ impl From<JsRegexLiteral> for JsAnyLiteral {
 }
 impl AstNode for JsAnyLiteral {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_STRING_LITERAL | JS_NUMBER_LITERAL | JS_BIG_INT_LITERAL | JS_BOOLEAN_LITERAL
-			| JS_NULL_LITERAL | JS_REGEX_LITERAL => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			JS_STRING_LITERAL
+				| JS_NUMBER_LITERAL
+				| JS_BIG_INT_LITERAL
+				| JS_BOOLEAN_LITERAL
+				| JS_NULL_LITERAL
+				| JS_REGEX_LITERAL
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5277,10 +5271,7 @@ impl From<JsIdentifierBinding> for JsAnyArrowFunctionParameters {
 }
 impl AstNode for JsAnyArrowFunctionParameters {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_PARAMETER_LIST | JS_IDENTIFIER_BINDING => true,
-			_ => false,
-		}
+		matches!(kind, JS_PARAMETER_LIST | JS_IDENTIFIER_BINDING)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5359,11 +5350,14 @@ impl From<JsUnknownMember> for ObjectProp {
 }
 impl AstNode for ObjectProp {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			LITERAL_PROP | GETTER | SETTER | SPREAD_PROP | INITIALIZED_PROP | IDENT_PROP
-			| METHOD | JS_UNKNOWN_MEMBER => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			LITERAL_PROP
+				| GETTER | SETTER
+				| SPREAD_PROP | INITIALIZED_PROP
+				| IDENT_PROP | METHOD
+				| JS_UNKNOWN_MEMBER
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5421,11 +5415,15 @@ impl From<JsUnknownMember> for ClassElement {
 }
 impl AstNode for ClassElement {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_EMPTY_STATEMENT | METHOD | PRIVATE_PROP | CLASS_PROP | CONSTRUCTOR
-			| TS_INDEX_SIGNATURE | GETTER | SETTER | JS_UNKNOWN_MEMBER => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			JS_EMPTY_STATEMENT
+				| METHOD | PRIVATE_PROP
+				| CLASS_PROP | CONSTRUCTOR
+				| TS_INDEX_SIGNATURE
+				| GETTER | SETTER
+				| JS_UNKNOWN_MEMBER
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5476,15 +5474,13 @@ impl From<JsUnknownBinding> for PropName {
 }
 impl AstNode for PropName {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
+		matches!(
+			kind,
 			COMPUTED_PROPERTY_NAME
-			| JS_STRING_LITERAL
-			| JS_NUMBER_LITERAL
-			| IDENT
-			| NAME
-			| JS_UNKNOWN_BINDING => true,
-			_ => false,
-		}
+				| JS_STRING_LITERAL
+				| JS_NUMBER_LITERAL
+				| IDENT | NAME | JS_UNKNOWN_BINDING
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5640,15 +5636,27 @@ impl From<TsInfer> for TsType {
 }
 impl AstNode for TsType {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			TS_ANY | TS_UNKNOWN | TS_NUMBER | TS_OBJECT | TS_BOOLEAN | TS_BIGINT | TS_STRING
-			| TS_SYMBOL | TS_VOID | TS_UNDEFINED | TS_NULL | TS_NEVER | TS_THIS | TS_LITERAL
-			| TS_PREDICATE | TS_TUPLE | TS_PAREN | TS_TYPE_REF | TS_TEMPLATE | TS_MAPPED_TYPE
-			| TS_IMPORT | TS_ARRAY | TS_INDEXED_ARRAY | TS_TYPE_OPERATOR | TS_INTERSECTION
-			| TS_UNION | TS_FN_TYPE | TS_CONSTRUCTOR_TYPE | TS_CONDITIONAL_TYPE
-			| TS_OBJECT_TYPE | TS_INFER => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			TS_ANY
+				| TS_UNKNOWN | TS_NUMBER
+				| TS_OBJECT | TS_BOOLEAN
+				| TS_BIGINT | TS_STRING
+				| TS_SYMBOL | TS_VOID
+				| TS_UNDEFINED | TS_NULL
+				| TS_NEVER | TS_THIS
+				| TS_LITERAL | TS_PREDICATE
+				| TS_TUPLE | TS_PAREN
+				| TS_TYPE_REF | TS_TEMPLATE
+				| TS_MAPPED_TYPE | TS_IMPORT
+				| TS_ARRAY | TS_INDEXED_ARRAY
+				| TS_TYPE_OPERATOR
+				| TS_INTERSECTION
+				| TS_UNION | TS_FN_TYPE
+				| TS_CONSTRUCTOR_TYPE
+				| TS_CONDITIONAL_TYPE
+				| TS_OBJECT_TYPE | TS_INFER
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5801,11 +5809,10 @@ impl From<JsUnknownPattern> for ObjectPatternProp {
 }
 impl AstNode for ObjectPatternProp {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			ASSIGN_PATTERN | KEY_VALUE_PATTERN | REST_PATTERN | SINGLE_PATTERN
-			| JS_UNKNOWN_PATTERN => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			ASSIGN_PATTERN | KEY_VALUE_PATTERN | REST_PATTERN | SINGLE_PATTERN | JS_UNKNOWN_PATTERN
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5844,10 +5851,10 @@ impl From<ImportStringSpecifier> for ImportClause {
 }
 impl AstNode for ImportClause {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			WILDCARD_IMPORT | NAMED_IMPORTS | NAME | IMPORT_STRING_SPECIFIER => true,
-			_ => false,
-		}
+		matches!(
+			kind,
+			WILDCARD_IMPORT | NAMED_IMPORTS | NAME | IMPORT_STRING_SPECIFIER
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -5877,12 +5884,7 @@ impl From<ClassDecl> for DefaultDecl {
 	fn from(node: ClassDecl) -> DefaultDecl { DefaultDecl::ClassDecl(node) }
 }
 impl AstNode for DefaultDecl {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_FUNCTION_DECLARATION | CLASS_DECL => true,
-			_ => false,
-		}
-	}
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, JS_FUNCTION_DECLARATION | CLASS_DECL) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			JS_FUNCTION_DECLARATION => {
@@ -5938,17 +5940,14 @@ impl From<TsInterfaceDecl> for JsAnyExportDeclaration {
 }
 impl AstNode for JsAnyExportDeclaration {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
+		matches!(
+			kind,
 			JS_FUNCTION_DECLARATION
-			| CLASS_DECL
-			| JS_VARIABLE_DECLARATION_STATEMENT
-			| TS_ENUM
-			| TS_TYPE_ALIAS_DECL
-			| TS_NAMESPACE_DECL
-			| TS_MODULE_DECL
-			| TS_INTERFACE_DECL => true,
-			_ => false,
-		}
+				| CLASS_DECL | JS_VARIABLE_DECLARATION_STATEMENT
+				| TS_ENUM | TS_TYPE_ALIAS_DECL
+				| TS_NAMESPACE_DECL
+				| TS_MODULE_DECL | TS_INTERFACE_DECL
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -6058,12 +6057,7 @@ impl From<TsQualifiedPath> for TsEntityName {
 	fn from(node: TsQualifiedPath) -> TsEntityName { TsEntityName::TsQualifiedPath(node) }
 }
 impl AstNode for TsEntityName {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			TS_TYPE_NAME | TS_QUALIFIED_PATH => true,
-			_ => false,
-		}
-	}
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, TS_TYPE_NAME | TS_QUALIFIED_PATH) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			TS_TYPE_NAME => TsEntityName::TsTypeName(TsTypeName { syntax }),
@@ -6086,12 +6080,7 @@ impl From<TsTypeName> for TsThisOrMore {
 	fn from(node: TsTypeName) -> TsThisOrMore { TsThisOrMore::TsTypeName(node) }
 }
 impl AstNode for TsThisOrMore {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			TS_THIS | TS_TYPE_NAME => true,
-			_ => false,
-		}
-	}
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, TS_THIS | TS_TYPE_NAME) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			TS_THIS => TsThisOrMore::TsThis(TsThis { syntax }),
@@ -6126,14 +6115,14 @@ impl From<TsIndexSignature> for TsTypeElement {
 }
 impl AstNode for TsTypeElement {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
+		matches!(
+			kind,
 			TS_CALL_SIGNATURE_DECL
-			| TS_CONSTRUCT_SIGNATURE_DECL
-			| TS_PROPERTY_SIGNATURE
-			| TS_METHOD_SIGNATURE
-			| TS_INDEX_SIGNATURE => true,
-			_ => false,
-		}
+				| TS_CONSTRUCT_SIGNATURE_DECL
+				| TS_PROPERTY_SIGNATURE
+				| TS_METHOD_SIGNATURE
+				| TS_INDEX_SIGNATURE
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -6169,12 +6158,7 @@ impl From<TsNamespaceDecl> for TsNamespaceBody {
 	fn from(node: TsNamespaceDecl) -> TsNamespaceBody { TsNamespaceBody::TsNamespaceDecl(node) }
 }
 impl AstNode for TsNamespaceBody {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			TS_MODULE_BLOCK | TS_NAMESPACE_DECL => true,
-			_ => false,
-		}
-	}
+	fn can_cast(kind: SyntaxKind) -> bool { matches!(kind, TS_MODULE_BLOCK | TS_NAMESPACE_DECL) }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			TS_MODULE_BLOCK => TsNamespaceBody::TsModuleBlock(TsModuleBlock { syntax }),
