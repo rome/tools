@@ -7,7 +7,7 @@ use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
-use crate::syntax::class::class_decl;
+use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 
@@ -89,7 +89,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T![throw] => throw_stmt(p),
 		T![debugger] => debugger_stmt(p),
 		T![function] => function_declaration(p),
-		T![class] => class_decl(p, false),
+		T![class] => class_declaration(p),
 		T![ident]
 			if p.cur_src() == "async"
 				&& p.nth_at(1, T![function])

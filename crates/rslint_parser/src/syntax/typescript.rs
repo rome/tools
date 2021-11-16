@@ -3,7 +3,7 @@
 use super::decl::*;
 use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
 use super::stmt::{semi, statements, variable_declaration_statement};
-use crate::syntax::class::class_decl;
+use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 
@@ -139,7 +139,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		T![class] => {
 			let m = p.start();
 			p.bump_remap(T![declare]);
-			class_decl(p, false).undo_completion(p).abandon(p);
+			class_declaration(p).undo_completion(p).abandon(p);
 			m.complete(p, CLASS_DECL)
 		}
 		t if (t == T![const] && p.nth_at(2, T![enum])) || t == T![enum] => {
@@ -203,7 +203,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			p.error(err);
 			return None;
 		}
-		class_decl(p, false).undo_completion(p).abandon(p);
+		class_declaration(p).undo_completion(p).abandon(p);
 		return Some(m.complete(p, CLASS_DECL));
 	}
 

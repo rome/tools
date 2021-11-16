@@ -12,17 +12,43 @@ use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
 use std::ops::Range;
 
+/// Parses a class expression, e.g. let a = class {}
+pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
+	class_impl(p, ClassKind::Expression)
+}
+
 // test class_decl
 // class foo {}
 // class foo extends bar {}
 // class foo extends foo.bar {}
-pub(super) fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
-	// test_err class_decl_err
-	// class {}
-	// class extends bar {}
-	// class extends {}
-	// class
-	// class foo { set {} }
+
+// test_err class_decl_err
+// class {}
+// class extends bar {}
+// class extends {}
+// class
+// class foo { set {} }
+/// Parses a class declaration
+pub(super) fn class_declaration(p: &mut Parser) -> CompletedMarker {
+	class_impl(p, ClassKind::Declaration)
+}
+
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
+enum ClassKind {
+	Declaration,
+	Expression,
+}
+
+impl From<ClassKind> for SyntaxKind {
+	fn from(kind: ClassKind) -> Self {
+		match kind {
+			ClassKind::Declaration => SyntaxKind::CLASS_DECL,
+			ClassKind::Expression => SyntaxKind::CLASS_EXPR,
+		}
+	}
+}
+
+fn class_impl(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![class]);
 	// class bodies are implicitly strict
@@ -46,7 +72,7 @@ pub(super) fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 		None
 	};
 
-	if idt.is_none() && !expr && !guard.state.in_default {
+	if idt.is_none() && kind == ClassKind::Declaration && !guard.state.in_default {
 		let err = guard
 			.err_builder("class declarations must have a name")
 			.primary(guard.cur_tok().range, "");
@@ -152,7 +178,7 @@ pub(super) fn class_decl(p: &mut Parser, expr: bool) -> CompletedMarker {
 
 	class_body(&mut *guard);
 
-	m.complete(&mut *guard, CLASS_DECL)
+	m.complete(&mut *guard, kind.into())
 }
 
 fn class_body(p: &mut Parser) -> CompletedMarker {

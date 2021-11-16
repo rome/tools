@@ -7,7 +7,7 @@ use super::decl::{arrow_body, maybe_private_name, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
-use crate::syntax::class::{class_decl, is_semi};
+use crate::syntax::class::{class_expression, is_semi};
 use crate::syntax::function::function_expression;
 use crate::syntax::object::object_expr;
 use crate::{SyntaxKind::*, *};
@@ -903,9 +903,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			//  constructor() {}
 			// }
 			// foo[class {}]
-			let mut m = class_decl(p, true);
-			m.change_kind(p, CLASS_EXPR);
-			m
+			class_expression(p)
 		}
 		// test async_ident
 		// let a = async;
