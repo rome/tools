@@ -1,7 +1,7 @@
-use crate::coverage::files::{Outcome, TestResults};
+use crate::coverage::files::{Outcome, TestResult, TestResults};
 use ascii_table::{AsciiTable, Column};
 use colored::Colorize;
-use std::{fs::File, path::Path};
+use std::{collections::HashMap, ffi::OsStr, fs::File, path::Path};
 
 pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 	let base_results: TestResults =
@@ -209,11 +209,13 @@ fn compare_diffs<'a>(
 	new_results: &'a TestResults,
 ) -> ReportDiff<'a> {
 	let mut report_diff = ReportDiff::new();
+	let new_paths: HashMap<&OsStr, &TestResult> = new_results
+		.details
+		.iter()
+		.map(|detail| return (detail.path.as_os_str(), detail))
+		.collect();
 	for base_result in &base_results.details {
-		let test_to_analyze = new_results
-			.details
-			.iter()
-			.find(|new_test| new_test.path.as_os_str().eq(base_result.path.as_os_str()));
+		let test_to_analyze = new_paths.get(base_result.path.as_os_str());
 
 		if let Some(test_to_analyze) = test_to_analyze {
 			match (&base_result.outcome, &test_to_analyze.outcome) {

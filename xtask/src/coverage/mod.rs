@@ -11,7 +11,7 @@ use yastl::Pool;
 pub const TEST_JSON_PATH: &str = "xtask/src/base_results.json";
 
 pub fn run(query: Option<&str>, pool: Pool, json: bool) {
-	let files = get_test_files(query, &pool);
+	let files = get_test_files(query, &pool, json);
 	let num_ran = files.len();
 
 	let detailed = num_ran < 10;
@@ -71,49 +71,48 @@ pub fn run(query: Option<&str>, pool: Pool, json: bool) {
 	let _ = std::panic::take_hook();
 
 	pb.finish_and_clear();
-	println!(
-		"\n{} {} tests in {:.2}s\n",
-		"Ran".bold().bright_green(),
-		num_ran,
-		start_tests.elapsed().as_secs_f32()
-	);
-
-	let panicked = test_results.summary.panics;
-	let errored = test_results.summary.failed;
-	let passed = test_results.summary.passed;
-	let coverage = format!("{:.2}", test_results.summary.coverage);
-
-	let mut table = AsciiTable::default();
-
-	let mut counter = 0usize;
-	let mut create_column = |name: colored::ColoredString| {
-		let column = Column {
-			header: name.to_string(),
-			align: ascii_table::Align::Center,
-			..Column::default()
-		};
-		table.columns.insert(counter, column);
-		counter += 1;
-	};
-
-	create_column("Tests ran".into());
-	create_column("Passed".green());
-	create_column("Failed".red());
-	create_column("Panics".red());
-	create_column("Coverage".cyan());
-	let numbers: Vec<&dyn std::fmt::Display> =
-		vec![&num_ran, &passed, &errored, &panicked, &coverage];
-
-	table.print(vec![numbers]);
 
 	if json {
 		test_results.dump_to_json();
-	}
-
-	if passed > 0 {
-		std::process::exit(1);
 	} else {
-		std::process::exit(0);
+		println!(
+			"\n{} {} tests in {:.2}s\n",
+			"Ran".bold().bright_green(),
+			num_ran,
+			start_tests.elapsed().as_secs_f32()
+		);
+
+		let panicked = test_results.summary.panics;
+		let errored = test_results.summary.failed;
+		let passed = test_results.summary.passed;
+		let coverage = format!("{:.2}", test_results.summary.coverage);
+
+		let mut table = AsciiTable::default();
+
+		let mut counter = 0usize;
+		let mut create_column = |name: colored::ColoredString| {
+			let column = Column {
+				header: name.to_string(),
+				align: ascii_table::Align::Center,
+				..Column::default()
+			};
+			table.columns.insert(counter, column);
+			counter += 1;
+		};
+		create_column("Tests ran".into());
+		create_column("Passed".green());
+		create_column("Failed".red());
+		create_column("Panics".red());
+		create_column("Coverage".cyan());
+		let numbers: Vec<&dyn std::fmt::Display> =
+			vec![&num_ran, &passed, &errored, &panicked, &coverage];
+
+		table.print(vec![numbers]);
+		if passed > 0 {
+			std::process::exit(1);
+		} else {
+			std::process::exit(0);
+		}
 	}
 }
 

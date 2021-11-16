@@ -34,17 +34,15 @@ jobs:
         uses: Swatinem/rust-cache@v1
       - name: Run Test262 suite
         continue-on-error: true
-        run: cargo xtask coverage --json
-      - name: Rename the emitted file
-        run: |
-          mv base_results.json new_results.json
+        run:  cargo xtask coverage --json > new_results.json
       - name: Save test results
         uses: actions/upload-artifact@v2
         with:
           name: new_results
           path: new_results.json
 
-  compare:
+# This job compares the coverage results from this PR and the coverage results from master
+  coverage-comparison:
     needs: coverage
     name: Compare coverage
     runs-on: ${{ matrix.os }}
@@ -58,8 +56,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-          # To restore once the main branch has the new command
-          # ref: main
+          ref: main
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -69,7 +66,7 @@ jobs:
         uses: Swatinem/rust-cache@v1
       - name: Run Test262 suite on main branch
         continue-on-error: true
-        run: cargo xtask coverage --json
+        run:  cargo xtask coverage --json > base_results.json
       - name: Download PRs test results
         uses: actions/download-artifact@v2
         with:

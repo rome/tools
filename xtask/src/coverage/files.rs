@@ -7,11 +7,8 @@ use std::any::Any;
 use std::fs::read_to_string;
 use std::io;
 use std::path::PathBuf;
-use std::{fs::File, io::Write};
 use walkdir::WalkDir;
 use yastl::Pool;
-
-use crate::{project_root, BASE_RESULT_FILE};
 
 const BASE_PATH: &str = "xtask/src/coverage/test262/test";
 
@@ -98,7 +95,7 @@ fn read_metadata(code: &str) -> io::Result<MetaData> {
 	serde_yaml::from_str(yaml).map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))
 }
 
-pub fn get_test_files(query: Option<&str>, pool: &Pool) -> Vec<TestFile> {
+pub fn get_test_files(query: Option<&str>, pool: &Pool, json: bool) -> Vec<TestFile> {
 	let start = std::time::Instant::now();
 
 	let files = WalkDir::new(BASE_PATH)
@@ -146,11 +143,13 @@ pub fn get_test_files(query: Option<&str>, pool: &Pool) -> Vec<TestFile> {
 	let files = rx.into_iter().collect();
 
 	pb.finish_and_clear();
-	println!(
-		"{} test files in {:.2}s",
-		"Loaded".bold().bright_green(),
-		start.elapsed().as_secs_f32()
-	);
+	if !json {
+		println!(
+			"{} test files in {:.2}s",
+			"Loaded".bold().bright_green(),
+			start.elapsed().as_secs_f32()
+		);
+	}
 
 	files
 }
@@ -260,16 +259,9 @@ impl TestResults {
 		self.details.iter().filter(|res| res.fail.is_none()).count()
 	}
 
-	/// Saves results into a JSON file inside the temporary directory of the OS
+	/// Prints results of the coverage to STDOUT in JSON format
 	pub fn dump_to_json(&self) {
 		let json = serde_json::to_string(&self).unwrap();
-		let path = project_root().join(BASE_RESULT_FILE);
-
-		let mut file = File::create(&path).expect("Can't open the JSON file");
-
-		file.write_all(json.as_bytes())
-			.expect("Can't write in the JSON file");
-		println!();
-		println!("The test result report has been saved in: {:?}", &path);
+		println!("{}", json);
 	}
 }
