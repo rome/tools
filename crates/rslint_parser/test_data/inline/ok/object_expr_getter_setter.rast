@@ -34,7 +34,7 @@ JS_MODULE@0..43
                         JS_RETURN_STATEMENT@26..37
                           RETURN_KW@26..32 "return"
                           WHITESPACE@32..33 " "
-                          NAME_REF@33..36
+                          JS_REFERENCE_IDENTIFIER_EXPRESSION@33..36
                             IDENT@33..36 "foo"
                           SEMICOLON@36..37 ";"
                       WHITESPACE@37..39 "\n "

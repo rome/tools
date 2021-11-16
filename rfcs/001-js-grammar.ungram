@@ -215,7 +215,7 @@ JsWithStatement =
 //     PrivatePropAccess, -> MemberExpression
 // }
                                         // RSLint Name
-JsAnyExpression = JsArrayExpression        // ArrayExpr
+JsAnyExpression = JsArrayExpression     // ArrayExpr
     | JsArrowFunctionExpression         // ArrowExpr
     | JsAssignmentExpression            // AssignExpr
     | JsAwaitExpression                 // AwaitExpr

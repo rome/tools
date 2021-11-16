@@ -4,8 +4,8 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	ArrayExpr, GroupingExpr, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsStringLiteral,
-	LiteralProp, ObjectExpr, ObjectProp, UnaryExpr,
+	JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsParenthesizedExpression,
+	JsStringLiteral, JsUnaryExpression, LiteralProp, ObjectExpr, ObjectProp,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
@@ -35,8 +35,8 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 		SyntaxKind::JS_NUMBER_LITERAL => {
 			tokenize_token(node.to::<JsNumberLiteral>().value_token().unwrap())
 		}
-		SyntaxKind::UNARY_EXPR => {
-			let expr = UnaryExpr::cast(node).unwrap();
+		SyntaxKind::JS_UNARY_EXPRESSION => {
+			let expr = JsUnaryExpression::cast(node).unwrap();
 			format_elements![
 				tokenize_token(expr.operator().unwrap()),
 				tokenize_node(expr.argument().unwrap().syntax().clone())
@@ -77,8 +77,8 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 				token("}"),
 			])
 		}
-		SyntaxKind::ARRAY_EXPR => {
-			let array = ArrayExpr::cast(node).unwrap();
+		SyntaxKind::JS_ARRAY_EXPRESSION => {
+			let array = JsArrayExpression::cast(node).unwrap();
 
 			let separator = format_elements![token(","), soft_line_break_or_space(),];
 
@@ -104,15 +104,15 @@ pub fn tokenize_json(content: &str) -> FormatElement {
 	let script = parse_text(format!("({})", content).as_str(), 0);
 
 	// Unwrap the grouping to get to the JSON content. The grouping is only used as a trick to parse JSON
-	let json_content = GroupingExpr::cast(
+	let json_content = JsParenthesizedExpression::cast(
 		script
 			.syntax()
 			.descendants()
-			.find(|e| e.kind() == SyntaxKind::GROUPING_EXPR)
+			.find(|e| e.kind() == SyntaxKind::JS_PARENTHESIZED_EXPRESSION)
 			.unwrap(),
 	)
 	// TODO: #1725 this should be reviewed for error handling
-	.and_then(|grouping| grouping.inner().ok())
+	.and_then(|grouping| grouping.expression().ok())
 	.unwrap();
 
 	let tokenized_content = tokenize_node(json_content.syntax().clone());

@@ -2,19 +2,19 @@ JS_MODULE@0..101
   LIST@0..100
     JS_EXPRESSION_STATEMENT@0..21
       ASSIGN_EXPR@0..20
-        NAME_REF@0..3
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
           IDENT@0..3 "foo"
         WHITESPACE@3..4 " "
         PLUSEQ@4..6 "+="
         WHITESPACE@6..7 " "
         ASSIGN_EXPR@7..20
-          NAME_REF@7..10
+          JS_REFERENCE_IDENTIFIER_EXPRESSION@7..10
             IDENT@7..10 "bar"
           WHITESPACE@10..11 " "
           EQ@11..12 "="
           WHITESPACE@12..13 " "
           ASSIGN_EXPR@13..20
-            NAME_REF@13..14
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@13..14
               IDENT@13..14 "b"
             WHITESPACE@14..15 " "
             QUESTION2EQ@15..18 "??="
@@ -25,12 +25,12 @@ JS_MODULE@0..101
     WHITESPACE@21..22 "\n"
     JS_EXPRESSION_STATEMENT@22..33
       ASSIGN_EXPR@22..32
-        NAME_REF@22..25
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@22..25
           IDENT@22..25 "foo"
         WHITESPACE@25..26 " "
         MINUSEQ@26..28 "-="
         WHITESPACE@28..29 " "
-        NAME_REF@29..32
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@29..32
           IDENT@29..32 "bar"
       SEMICOLON@32..33 ";"
     WHITESPACE@33..34 "\n"
@@ -51,12 +51,12 @@ JS_MODULE@0..101
         WHITESPACE@44..45 " "
         EQ@45..46 "="
         WHITESPACE@46..47 " "
-        NAME_REF@47..50
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@47..50
           IDENT@47..50 "baz"
       SEMICOLON@50..51 ";"
     WHITESPACE@51..52 "\n"
     JS_EXPRESSION_STATEMENT@52..72
-      GROUPING_EXPR@52..71
+      JS_PARENTHESIZED_EXPRESSION@52..71
         L_PAREN@52..53 "("
         ASSIGN_EXPR@53..70
           OBJECT_PATTERN@53..65
@@ -84,7 +84,7 @@ JS_MODULE@0..101
       SEMICOLON@71..72 ";"
     WHITESPACE@72..73 "\n"
     JS_EXPRESSION_STATEMENT@73..100
-      GROUPING_EXPR@73..99
+      JS_PARENTHESIZED_EXPRESSION@73..99
         L_PAREN@73..74 "("
         ASSIGN_EXPR@74..98
           OBJECT_PATTERN@74..93

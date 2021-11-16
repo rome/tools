@@ -13,7 +13,7 @@ JS_MODULE@0..84
             JS_EQUAL_VALUE_CLAUSE@8..13
               EQ@8..9 "="
               WHITESPACE@9..10 " "
-              NAME_REF@10..13
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@10..13
                 IDENT@10..13 "bar"
       SEMICOLON@13..14 ";"
     WHITESPACE@14..15 "\n"
@@ -30,7 +30,7 @@ JS_MODULE@0..84
             JS_EQUAL_VALUE_CLAUSE@23..26
               EQ@23..24 "="
               WHITESPACE@24..25 " "
-              NAME_REF@25..26
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@25..26
                 IDENT@25..26 "b"
       SEMICOLON@26..27 ";"
     WHITESPACE@27..28 "\n"

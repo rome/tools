@@ -233,7 +233,7 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 
 	let mut expr = p.expr_with_semi_recovery(false)?;
 	// Labelled stmt
-	if expr.kind() == NAME_REF && p.at(T![:]) {
+	if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
 		expr.change_kind(p, NAME);
 		// Its not possible to have a name without an inner ident token
 		let range = p.events[expr.start_pos as usize..]
@@ -932,7 +932,7 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 
 			if let Some(ref expr) = complete {
 				check_lhs(p, p.parse_marker(expr), &complete.unwrap());
-				if p.typescript() && matches!(expr.kind(), ARRAY_EXPR | OBJECT_EXPR) {
+				if p.typescript() && matches!(expr.kind(), JS_ARRAY_EXPRESSION | OBJECT_EXPR) {
 					let err = p.err_builder("the left hand side of a `for..in` or `for..of` statement cannot be a destructuring pattern")
                         .primary(expr.range(p), "");
 

@@ -7,7 +7,7 @@ JS_MODULE@0..28
       NEW_EXPR@6..27
         NEW_KW@6..9 "new"
         WHITESPACE@9..10 " "
-        NAME_REF@10..15
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@10..15
           IDENT@10..15 "Error"
         ARG_LIST@15..27
           L_PAREN@15..16 "("

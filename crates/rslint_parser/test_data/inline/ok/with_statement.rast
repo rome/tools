@@ -28,7 +28,7 @@ JS_SCRIPT@0..65
             WITH_KW@31..35 "with"
             WHITESPACE@35..36 " "
             L_PAREN@36..37 "("
-            NAME_REF@37..38
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@37..38
               IDENT@37..38 "o"
             R_PAREN@38..39 ")"
             WHITESPACE@39..40 " "
@@ -39,7 +39,7 @@ JS_SCRIPT@0..65
                 JS_EXPRESSION_STATEMENT@44..59
                   CALL_EXPR@44..58
                     DOT_EXPR@44..55
-                      NAME_REF@44..51
+                      JS_REFERENCE_IDENTIFIER_EXPRESSION@44..51
                         IDENT@44..51 "console"
                       DOT@51..52 "."
                       NAME@52..55
@@ -47,7 +47,7 @@ JS_SCRIPT@0..65
                     ARG_LIST@55..58
                       L_PAREN@55..56 "("
                       LIST@56..57
-                        NAME_REF@56..57
+                        JS_REFERENCE_IDENTIFIER_EXPRESSION@56..57
                           IDENT@56..57 "x"
                       R_PAREN@57..58 ")"
                   SEMICOLON@58..59 ";"

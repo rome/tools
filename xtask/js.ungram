@@ -123,7 +123,7 @@ JsDoWhileStatement =
 // if statement
 JsIfStatement =
 	'if' '(' test: JsAnyExpression ')'
-	consequence: JsAnyStatement
+	consequent: JsAnyStatement
 	else_clause: JsElseClause?
 
 JsElseClause =
@@ -190,8 +190,8 @@ JsSwitchStatement =
     '}'
 
 JsAnySwitchClause = JsCaseClause | JsDefaultClause
-JsCaseClause = 'case' test: JsAnyExpression ':' consequence: JsAnyStatement*
-JsDefaultClause = 'default' ':' consequence: JsAnyStatement*
+JsCaseClause = 'case' test: JsAnyExpression ':' consequent: JsAnyStatement*
+JsDefaultClause = 'default' ':' consequent: JsAnyStatement*
 
 
 JsThrowStatement =
@@ -235,33 +235,34 @@ JsDebuggerStatement =
 
 // Expression
 JsAnyExpression =
-	ArrowExpr
-	| JsAnyLiteral
+	JsAnyLiteral
+	| JsArrayExpression
+	| JsAwaitExpression
+	| JsBinaryExpression
+	| JsConditionalExpression
+	| JsImportCallExpression
+	| JsLogicalExpression
+	| JsParenthesizedExpression
+	| JsReferenceIdentifierExpression
+	| JsSequenceExpression
+	| JsThisExpression
+	| JsUnaryExpression
+	| JsPreUpdateExpression
+	| JsPostUpdateExpression
+	| JsYieldExpression
+	| ArrowExpr
 	| Template
-	| NameRef
-	| ThisExpr
-	| ArrayExpr
 	| ObjectExpr
-	| GroupingExpr
 	| BracketExpr
 	| DotExpr
 	| NewExpr
 	| CallExpr
-	| UnaryExpr
-	| PreUpdateExpression
-	| PostUpdateExpression
-	| BinExpr
-	| CondExpr
 	| AssignExpr
-	| SequenceExpr
 	| FnExpr
 	| ClassExpr
 	| NewTarget
 	| ImportMeta
 	| SuperCall
-	| ImportCall
-	| YieldExpr
-	| AwaitExpr
 	| PrivatePropAccess
 	| TsNonNull
 	| TsAssertion
@@ -272,8 +273,7 @@ JsAnyExpression =
 // the backtick is just a placeholder, there's
 Template = '`'
 
-// This Expression
-ThisExpr = 'this'
+JsThisExpression = 'this'
 
 // Dot expression
 // TODO: review the 'super' token
@@ -286,23 +286,36 @@ NewExpr = 'new' type_args:TsTypeArgs? object:JsAnyExpression arguments:ArgList
 // call expression
 CallExpr = type_args:TsTypeArgs? callee:JsAnyExpression arguments:ArgList
 
-// await expression
-AwaitExpr = 'await' expr: JsAnyExpression
 
-// yield expression
-YieldExpr = 'yield' '*'? value:JsAnyExpression
+JsAwaitExpression =
+	'await'
+	argument: JsAnyExpression
+
+
+JsYieldExpression =
+	'yield'
+	'*'?
+	argument: JsAnyExpression?
 
 // super call expression
 SuperCall = 'super' arguments:ArgList
 
-// import call expression
-ImportCall = 'import' '(' argument:JsAnyExpression ')'
+JsImportCallExpression =
+	'import'
+	'('
+	argument: JsAnyExpression
+	')'
 
 // new target expression
 NewTarget = 'new' '.' 'target'
 
-// conditional expression
-CondExpr = manual__test: JsAnyExpression '?' manual__cons: JsAnyExpression  ':' manual__alt: JsAnyExpression
+
+JsConditionalExpression =
+	test: JsAnyExpression
+	'?'
+	manual__consequent: JsAnyExpression
+	':'
+	manual__alternate: JsAnyExpression
 
 // import meta expression
 ImportMeta = 'import' '.'
@@ -398,13 +411,18 @@ ClassProp =
 	value:JsAnyExpression?
 	';'?
 
-// Array expression
-ArrayExpr = '[' elements:ExprOrSpread* ']'
+// Array expression\
+JsArrayExpression =
+	'['
+	elements: (JsAnyArrayElement (',' JsAnyArrayElement)* ','?)
+	']'
 
-ExprOrSpread =
+JsAnyArrayElement =
 	JsAnyExpression
 	| SpreadElement
-	| GroupingExpr
+	| JsArrayHole
+
+JsArrayHole = manual__hole: ''
 
 // assign expression
 AssignExpr =
@@ -419,41 +437,43 @@ AssignExpr =
 
 PatternOrExpr = Pattern | JsAnyExpression
 
-// sequence expression
-SequenceExpr =
-	exprs:(JsAnyExpression (',' JsAnyExpression)*)
-	bin_expr: BinExpr
+JsSequenceExpression =
+	left: JsAnyExpression
+	comma: ','
+	manual__right: JsAnyExpression
 
 
-// grouping expression
-GroupingExpr = '(' inner:JsAnyExpression ')'
+JsParenthesizedExpression =
+	'(' expression: JsAnyExpression ')'
 
 // bracket expression
 BracketExpr =  'super'? manual__object:JsAnyExpression '[' manual__prop:JsAnyExpression ']'
 
 
-// binary expression
-BinExpr =
-  manual__lhs:JsAnyExpression
-  operator:(
-		'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
-		| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
-		| '&' | '|' | '^' | '??' | '||' | '&&' | 'in' | 'instanceof'
-  )
-  manual__rhs:JsAnyExpression
+JsBinaryExpression =
+    left: JsAnyExpression
+    operator: (
+    	'<' | '>' | '<=' | '>=' | '==' | '===' | '!=' | '!=='
+    	| '+' | '-' | '*' | '/' | '%' | '**' | '<<' | '>>' | '>>>'
+    	| '&' | '|' | '^' | 'in' | 'instanceof'
+		)
+    manual__right: JsAnyExpression
+
+JsLogicalExpression =
+	left: JsAnyExpression
+	operator: ('??' | '||' | '&&')
+	manual__right: JsAnyExpression
 
 // unary expression
-UnaryExpr =
-  operator:(
-		'delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!' | 'await'
-  )
-  argument:JsAnyExpression
+JsUnaryExpression =
+  operator: ('delete' | 'void' | 'typeof' | '+' | '-' | '~' | '!')
+  argument: JsAnyExpression
 
-PreUpdateExpression =
+JsPreUpdateExpression =
     operator:('++' | '--')
     operand:JsAnyExpression
 
-PostUpdateExpression =
+JsPostUpdateExpression =
     operand:JsAnyExpression
     operator:('++' | '--')
 
@@ -603,7 +623,7 @@ Name = 'ident'
 
 Condition = '(' condition:JsAnyExpression ')'
 
-NameRef = 'ident'
+JsReferenceIdentifierExpression = name: 'ident'
 
 ///////////////
 // DECLARATIONS
@@ -644,7 +664,7 @@ JsVariableDeclarator =
     init: JsEqualValueClause?
 
 // @ematipico: should we consider ClassDecl = ClassExpr ?
-ClassDecl  = 'class' name: Name ('extends' parent:NameRef)? body:ClassBody
+ClassDecl  = 'class' name: Name ('extends' parent: JsAnyExpression)? body:ClassBody
 
 
 ///////////////

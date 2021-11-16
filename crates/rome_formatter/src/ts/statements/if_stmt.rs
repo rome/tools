@@ -23,7 +23,7 @@ impl ToFormatElement for JsIfStatement {
 				]),
 				space_token(),
 			]),
-			formatter.format_node(self.consequence()?)?,
+			formatter.format_node(self.consequent()?)?,
 			formatted_else_clause
 		])
 	}

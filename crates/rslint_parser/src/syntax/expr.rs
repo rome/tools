@@ -143,15 +143,20 @@ fn assign_expr_base(p: &mut Parser) -> Option<CompletedMarker> {
 
 pub(crate) fn is_valid_target(p: &mut Parser, marker: &CompletedMarker) -> bool {
 	match marker.kind() {
-		DOT_EXPR | BRACKET_EXPR | NAME_REF | PRIVATE_PROP_ACCESS | TS_CONST_ASSERTION
-		| TS_ASSERTION | TS_NON_NULL => true,
-		GROUPING_EXPR => {
+		DOT_EXPR
+		| BRACKET_EXPR
+		| JS_REFERENCE_IDENTIFIER_EXPRESSION
+		| PRIVATE_PROP_ACCESS
+		| TS_CONST_ASSERTION
+		| TS_ASSERTION
+		| TS_NON_NULL => true,
+		JS_PARENTHESIZED_EXPRESSION => {
 			// avoid parsing the marker because it is incredibly expensive and this is a hot path
 			for (idx, event) in p.events[marker.start_pos as usize..].iter().enumerate() {
 				match event {
 					Event::Finish { .. } if marker.finish_pos as usize == idx => return true,
 					Event::Start {
-						kind: SyntaxKind::GROUPING_EXPR,
+						kind: SyntaxKind::JS_PARENTHESIZED_EXPRESSION,
 						..
 					} => {}
 					Event::Start {
@@ -162,9 +167,9 @@ pub(crate) fn is_valid_target(p: &mut Parser, marker: &CompletedMarker) -> bool 
 						return matches!(
 							kind,
 							DOT_EXPR
-								| BRACKET_EXPR | NAME_REF | PRIVATE_PROP_ACCESS
-								| TS_CONST_ASSERTION | TS_ASSERTION
-								| TS_NON_NULL
+								| BRACKET_EXPR | JS_REFERENCE_IDENTIFIER_EXPRESSION
+								| PRIVATE_PROP_ACCESS | TS_CONST_ASSERTION
+								| TS_ASSERTION | TS_NON_NULL
 						);
 					}
 					_ => {}
@@ -250,7 +255,7 @@ pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 		assign_expr(p);
 	}
 
-	m.complete(p, YIELD_EXPR)
+	m.complete(p, JS_YIELD_EXPRESSION)
 }
 
 /// A conditional expression such as `foo ? bar : baz`
@@ -261,7 +266,7 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	// test_err conditional_expr_err
 	// foo ? bar baz
 	// foo ? bar baz ? foo : bar
-	let lhs = binary_expr(p);
+	let lhs = binary_or_logical_expression(p);
 
 	if p.at(T![?]) {
 		let m = lhs?.precede(p);
@@ -272,15 +277,15 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		}));
 		p.expect(T![:]);
 		assign_expr(p);
-		return Some(m.complete(p, COND_EXPR));
+		return Some(m.complete(p, JS_CONDITIONAL_EXPRESSION));
 	}
 	lhs
 }
 
-/// A binary expression such as `2 + 2` or `foo * bar + 2`
-pub fn binary_expr(p: &mut Parser) -> Option<CompletedMarker> {
+/// A binary expression such as `2 + 2` or `foo * bar + 2` or a logical expression 'a || b'
+pub fn binary_or_logical_expression(p: &mut Parser) -> Option<CompletedMarker> {
 	let left = unary_expr(p);
-	binary_expr_recursive(p, left, 0)
+	binary_or_logical_expression_recursive(p, left, 0)
 }
 
 // test binary_expressions
@@ -299,7 +304,7 @@ pub fn binary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 // foo(foo +);
 // foo + * 2;
 // !foo * bar;
-fn binary_expr_recursive(
+fn binary_or_logical_expression_recursive(
 	p: &mut Parser,
 	left: Option<CompletedMarker>,
 	min_prec: u8,
@@ -314,7 +319,7 @@ fn binary_expr_recursive(
 			m.complete(p, TS_ASSERTION)
 		};
 		res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");
-		return binary_expr_recursive(p, Some(res), min_prec);
+		return binary_or_logical_expression_recursive(p, Some(res), min_prec);
 	}
 	let kind = match p.cur() {
 		T![>] if p.nth_at(1, T![>]) && p.nth_at(2, T![>]) => T![>>>],
@@ -362,7 +367,7 @@ fn binary_expr_recursive(
 		unary_expr(p)
 	};
 
-	binary_expr_recursive(
+	binary_or_logical_expression_recursive(
 		p,
 		right,
 		// ** is right recursive
@@ -373,8 +378,13 @@ fn binary_expr_recursive(
 		},
 	);
 
-	let complete = m.complete(p, BIN_EXPR);
-	binary_expr_recursive(p, Some(complete), min_prec)
+	let expression_kind = match op {
+		T![??] | T![||] | T![&&] => JS_LOGICAL_EXPRESSION,
+		_ => JS_BINARY_EXPRESSION,
+	};
+
+	let complete = m.complete(p, expression_kind);
+	binary_or_logical_expression_recursive(p, Some(complete), min_prec)
 
 	// FIXME(RDambrosio016): We should check for nullish-coalescing and logical expr being used together,
 	// however, i can't figure out a way to do this efficiently without using parse_marker which is way too
@@ -389,7 +399,7 @@ pub fn paren_expr(p: &mut Parser) -> CompletedMarker {
 	p.expect(T!['(']);
 	expr(p);
 	p.expect(T![')']);
-	m.complete(p, GROUPING_EXPR)
+	m.complete(p, JS_PARENTHESIZED_EXPRESSION)
 }
 
 /// A member or new expression with subscripts. e.g. `new foo`, `new Foo()`, `foo`, or `foo().bar[5]`
@@ -731,7 +741,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			} else {
 				sub_m.abandon(&mut *temp);
 				if had_comma {
-					expr_m.complete(&mut *temp, SEQUENCE_EXPR);
+					expr_m.complete(&mut *temp, JS_SEQUENCE_EXPRESSION);
 				}
 				temp.expect(T![')']);
 				break;
@@ -821,7 +831,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			.primary(start..p.cur_tok().range.start, "");
 
 		p.error(err);
-		return m.complete(p, GROUPING_EXPR);
+		return m.complete(p, JS_PARENTHESIZED_EXPRESSION);
 	}
 
 	if let Some(range) = spread_range {
@@ -840,7 +850,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 		p.error(err);
 	}
 
-	m.complete(p, GROUPING_EXPR)
+	m.complete(p, JS_PARENTHESIZED_EXPRESSION)
 }
 
 pub fn expr_or_spread(p: &mut Parser) -> Option<CompletedMarker> {
@@ -861,24 +871,15 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 	let first = assign_expr(p)?;
 
 	if p.at(T![,]) {
-		let list_marker = first.precede(p);
+		let sequence_expr_marker = first.precede(p);
 
-		// let m = LIST.precede(p);
 		p.bump_any();
-		assign_expr(p)?;
+		expr(p)?;
 
-		while p.at(T![,]) {
-			p.bump_any();
-			assign_expr(p)?;
-		}
-
-		let list = list_marker.complete(p, LIST);
-		let m = list.precede(p);
-
-		return Some(m.complete(p, SEQUENCE_EXPR));
+		Some(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
+	} else {
+		Some(first)
 	}
-
-	Some(first)
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
@@ -894,7 +895,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// this.foo
 			let m = p.start();
 			p.bump_any();
-			m.complete(p, THIS_EXPR)
+			m.complete(p, JS_THIS_EXPRESSION)
 		}
 		T![class] => {
 			// test class_expr
@@ -1046,7 +1047,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				p.expect(T!['(']);
 				assign_expr(p);
 				p.expect(T![')']);
-				m.complete(p, IMPORT_CALL)
+				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}
 		}
 		BACKTICK => template(p, None),
@@ -1074,7 +1075,7 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 		T![ident] | T![yield] | T![await] => {
 			let m = p.start();
 			p.bump_remap(T![ident]);
-			Some(m.complete(p, NAME_REF))
+			Some(m.complete(p, JS_REFERENCE_IDENTIFIER_EXPRESSION))
 		}
 		_ => {
 			let err = p
@@ -1136,7 +1137,10 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	let elements_list = p.start();
 
 	while !p.at(EOF) {
-		while p.eat(T![,]) {}
+		while p.at(T![,]) {
+			p.start().complete(p, SyntaxKind::JS_ARRAY_HOLE);
+			p.eat(T![,]);
+		}
 
 		if p.at(T![']']) {
 			break;
@@ -1157,7 +1161,7 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	elements_list.complete(p, LIST);
 
 	p.expect(T![']']);
-	m.complete(p, ARRAY_EXPR)
+	m.complete(p, JS_ARRAY_EXPRESSION)
 }
 
 /// A spread element consisting of three dots and an assignment expression such as `...foo`
@@ -1370,14 +1374,14 @@ pub fn postfix_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				check_assign_target_from_marker(p, &lhs?);
 				let m = lhs?.precede(p);
 				p.bump(T![++]);
-				let complete = m.complete(p, POST_UPDATE_EXPRESSION);
+				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
 				Some(complete)
 			}
 			T![--] => {
 				check_assign_target_from_marker(p, &lhs?);
 				let m = lhs?.precede(p);
 				p.bump(T![--]);
-				let complete = m.complete(p, POST_UPDATE_EXPRESSION);
+				let complete = m.complete(p, JS_POST_UPDATE_EXPRESSION);
 				Some(complete)
 			}
 			_ => lhs,
@@ -1392,12 +1396,12 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	const UNARY_SINGLE: TokenSet =
 		token_set![T![delete], T![void], T![typeof], T![+], T![-], T![~], T![!]];
 
-	// FIXME: this shouldnt allow await in sync functions
+	// FIXME: this shouldn't allow await in sync functions
 	if (p.state.in_async || p.syntax.top_level_await) && p.at(T![await]) {
 		let m = p.start();
 		p.bump_any();
 		unary_expr(p);
-		return Some(m.complete(p, AWAIT_EXPR));
+		return Some(m.complete(p, JS_AWAIT_EXPRESSION));
 	}
 
 	if p.at(T![<]) {
@@ -1423,7 +1427,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = p.start();
 		p.bump(T![++]);
 		let right = unary_expr(p)?;
-		let complete = m.complete(p, PRE_UPDATE_EXPRESSION);
+		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		check_assign_target_from_marker(p, &right);
 		return Some(complete);
 	}
@@ -1431,7 +1435,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = p.start();
 		p.bump(T![--]);
 		let right = unary_expr(p)?;
-		let complete = m.complete(p, PRE_UPDATE_EXPRESSION);
+		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		check_assign_target_from_marker(p, &right);
 		return Some(complete);
 	}
@@ -1453,7 +1457,7 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				}
 			}
 		}
-		return Some(m.complete(p, UNARY_EXPR));
+		return Some(m.complete(p, JS_UNARY_EXPRESSION));
 	}
 
 	postfix_expr(p)

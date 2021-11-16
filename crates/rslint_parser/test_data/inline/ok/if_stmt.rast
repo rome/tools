@@ -50,7 +50,7 @@ JS_MODULE@0..88
       IF_KW@50..52 "if"
       WHITESPACE@52..53 " "
       L_PAREN@53..54 "("
-      NAME_REF@54..57
+      JS_REFERENCE_IDENTIFIER_EXPRESSION@54..57
         IDENT@54..57 "bar"
       R_PAREN@57..58 ")"
       WHITESPACE@58..59 " "

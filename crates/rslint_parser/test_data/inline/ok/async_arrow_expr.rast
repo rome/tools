@@ -83,6 +83,6 @@ JS_MODULE@0..82
         WHITESPACE@74..75 " "
         FAT_ARROW@75..77 "=>"
         WHITESPACE@77..78 " "
-        NAME_REF@78..81
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@78..81
           IDENT@78..81 "foo"
   WHITESPACE@81..82 "\n"

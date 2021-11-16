@@ -21,7 +21,7 @@ use crate::*;
 ///     syntax::expr,
 ///     tokenize,
 ///     TokenSource,
-///     ast::GroupingExpr,
+///     ast::JsParenthesizedExpression,
 ///     LosslessTreeSink,
 ///     SyntaxNode,
 ///     process,
@@ -50,7 +50,7 @@ use crate::*;
 /// // Completed markers can be turned into an ast node with parse_marker on the parser
 /// let completed_marker = expr::expr(&mut parser).unwrap();
 ///
-/// parser.parse_marker::<GroupingExpr>(&completed_marker);
+/// parser.parse_marker::<JsParenthesizedExpression>(&completed_marker);
 ///
 /// // Make a new text tree sink, its job is assembling events into a rowan GreenNode.
 /// // At each point (Start, Token, Finish, Error) it also consumes whitespace.
@@ -66,12 +66,12 @@ use crate::*;
 ///
 /// assert!(errors.is_empty());
 ///
-/// assert!(GroupingExpr::can_cast(untyped_node.kind()));
+/// assert!(JsParenthesizedExpression::can_cast(untyped_node.kind()));
 ///
 /// // Convert the untyped SyntaxNode into a typed AST node
-/// let typed_expr = GroupingExpr::cast(untyped_node).unwrap();
+/// let typed_expr = JsParenthesizedExpression::cast(untyped_node).unwrap();
 ///
-/// assert_eq!(typed_expr.inner().unwrap().syntax().text(), "delete b");
+/// assert_eq!(typed_expr.expression().unwrap().syntax().text(), "delete b");
 /// ```
 #[derive(Clone)]
 pub struct Parser<'t> {

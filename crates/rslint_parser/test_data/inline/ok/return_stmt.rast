@@ -20,7 +20,7 @@ JS_MODULE@0..43
             JS_RETURN_STATEMENT@20..31
               RETURN_KW@20..26 "return"
               WHITESPACE@26..27 " "
-              NAME_REF@27..30
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@27..30
                 IDENT@27..30 "foo"
               SEMICOLON@30..31 ";"
             WHITESPACE@31..34 "\n  "

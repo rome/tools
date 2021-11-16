@@ -51,7 +51,7 @@ JS_MODULE@0..59
                   WHITESPACE@40..41 " "
                   EQ@41..42 "="
                   WHITESPACE@42..43 " "
-                  NAME_REF@43..46
+                  JS_REFERENCE_IDENTIFIER_EXPRESSION@43..46
                     IDENT@43..46 "bar"
                 COMMA@46..47 ","
                 WHITESPACE@47..48 " "

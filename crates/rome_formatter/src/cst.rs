@@ -1,21 +1,21 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, ArrayExpr, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl,
-	ClassProp, Condition, ConstructorParameters, FnDecl, ForInStmt, ForStmt, ForStmtInit,
-	ForStmtTest, ForStmtUpdate, Getter, IdentProp, JsBlockStatement, JsBooleanLiteral,
+	ArgList, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl, ClassProp,
+	Condition, ConstructorParameters, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
+	ForStmtUpdate, Getter, IdentProp, JsArrayExpression, JsBlockStatement, JsBooleanLiteral,
 	JsCaseClause, JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
 	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement,
-	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsReturnStatement, JsScript,
-	JsStringLiteral, JsSwitchStatement, JsTryStatement, JsVariableDeclarationStatement,
-	JsVariableDeclarator, JsWhileStatement, JsWithStatement, LiteralProp, Name, NameRef,
-	ObjectExpr, ParameterList, SequenceExpr, Setter, SinglePattern,
+	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsReferenceIdentifierExpression,
+	JsReturnStatement, JsScript, JsSequenceExpression, JsStringLiteral, JsSwitchStatement,
+	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
+	JsWithStatement, LiteralProp, Name, ObjectExpr, ParameterList, Setter, SinglePattern,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
 impl ToFormatElement for SyntaxNode {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self.kind() {
-			SyntaxKind::ARRAY_EXPR => ArrayExpr::cast(self.clone())
+			SyntaxKind::JS_ARRAY_EXPRESSION => JsArrayExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::ARROW_EXPR => ArrowExpr::cast(self.clone())
@@ -39,9 +39,11 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::NAME => Name::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::NAME_REF => NameRef::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
+			SyntaxKind::JS_REFERENCE_IDENTIFIER_EXPRESSION => {
+				JsReferenceIdentifierExpression::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
 			SyntaxKind::PARAMETER_LIST => ParameterList::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
@@ -65,7 +67,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::FN_DECL => FnDecl::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::SEQUENCE_EXPR => SequenceExpr::cast(self.clone())
+			SyntaxKind::JS_SEQUENCE_EXPRESSION => JsSequenceExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_BLOCK_STATEMENT => JsBlockStatement::cast(self.clone())

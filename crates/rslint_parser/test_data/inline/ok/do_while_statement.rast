@@ -6,7 +6,7 @@ JS_MODULE@0..144
       JS_EXPRESSION_STATEMENT@3..23
         CALL_EXPR@3..22
           DOT_EXPR@3..14
-            NAME_REF@3..10
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@3..10
               IDENT@3..10 "console"
             DOT@10..11 "."
             NAME@11..14
@@ -35,7 +35,7 @@ JS_MODULE@0..144
           JS_EXPRESSION_STATEMENT@43..62
             CALL_EXPR@43..62
               DOT_EXPR@43..54
-                NAME_REF@43..50
+                JS_REFERENCE_IDENTIFIER_EXPRESSION@43..50
                   IDENT@43..50 "console"
                 DOT@50..51 "."
                 NAME@51..54
@@ -86,13 +86,13 @@ JS_MODULE@0..144
           LIST@102..111
             JS_EXPRESSION_STATEMENT@102..111
               ASSIGN_EXPR@102..111
-                NAME_REF@102..103
+                JS_REFERENCE_IDENTIFIER_EXPRESSION@102..103
                   IDENT@102..103 "a"
                 WHITESPACE@103..104 " "
                 EQ@104..105 "="
                 WHITESPACE@105..106 " "
-                BIN_EXPR@106..111
-                  NAME_REF@106..107
+                JS_BINARY_EXPRESSION@106..111
+                  JS_REFERENCE_IDENTIFIER_EXPRESSION@106..107
                     IDENT@106..107 "a"
                   WHITESPACE@107..108 " "
                   PLUS@108..109 "+"
@@ -104,8 +104,8 @@ JS_MODULE@0..144
         WHITESPACE@114..115 " "
         WHILE_KW@115..120 "while"
         L_PAREN@120..121 "("
-        BIN_EXPR@121..126
-          NAME_REF@121..122
+        JS_BINARY_EXPRESSION@121..126
+          JS_REFERENCE_IDENTIFIER_EXPRESSION@121..122
             IDENT@121..122 "a"
           WHITESPACE@122..123 " "
           L_ANGLE@123..124 "<"
@@ -117,8 +117,8 @@ JS_MODULE@0..144
       WHILE_KW@128..133 "while"
       WHITESPACE@133..134 " "
       L_PAREN@134..135 "("
-      BIN_EXPR@135..142
-        NAME_REF@135..136
+      JS_BINARY_EXPRESSION@135..142
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@135..136
           IDENT@135..136 "a"
         WHITESPACE@136..137 " "
         L_ANGLE@137..138 "<"

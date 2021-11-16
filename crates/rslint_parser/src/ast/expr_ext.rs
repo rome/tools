@@ -1,6 +1,6 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 
-use crate::{ast::*, numbers::*, util::*, TextRange, TokenSet, T};
+use crate::{ast::*, numbers::*, util::*, TextRange, T};
 use rome_rowan::{SyntaxText, TextSize};
 use SyntaxKind::*;
 
@@ -14,17 +14,17 @@ impl BracketExpr {
 	}
 }
 
-impl CondExpr {
-	pub fn test(&self) -> Option<JsAnyExpression> {
-		support::node(self.syntax())
+impl JsConditionalExpression {
+	pub fn consequent(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 
-	pub fn cons(&self) -> Option<JsAnyExpression> {
-		support::children(self.syntax()).nth(1)
-	}
-
-	pub fn alt(&self) -> Option<JsAnyExpression> {
-		support::children(self.syntax()).nth(2)
+	pub fn alternate(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(2)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 }
 
@@ -45,7 +45,7 @@ impl LiteralProp {
 
 /// A binary operation applied to two expressions
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum BinOp {
+pub enum JsBinaryOperation {
 	/// `<`
 	LessThan,
 	/// `>`
@@ -86,99 +86,92 @@ pub enum BinOp {
 	BitwiseOr,
 	/// `^`
 	BitwiseXor,
-	/// `??`
-	NullishCoalescing,
-	/// `||`
-	LogicalOr,
-	/// `&&`
-	LogicalAnd,
 	/// `in`
 	In,
 	/// `instanceof`
 	Instanceof,
 }
 
-impl BinExpr {
-	pub fn op_details(&self) -> Option<(SyntaxToken, BinOp)> {
-		self.syntax()
-			.children_with_tokens()
-			.filter_map(|x| x.into_token())
-			.find_map(|t| {
-				let op = match t.kind() {
-					T![<] => BinOp::LessThan,
-					T![>] => BinOp::GreaterThan,
-					T![<=] => BinOp::LessThanOrEqual,
-					T![>=] => BinOp::GreaterThanOrEqual,
-					T![==] => BinOp::Equality,
-					T![===] => BinOp::StrictEquality,
-					T![!=] => BinOp::Inequality,
-					T![!==] => BinOp::StrictInequality,
-					T![+] => BinOp::Plus,
-					T![-] => BinOp::Minus,
-					T![*] => BinOp::Times,
-					T![/] => BinOp::Divide,
-					T![%] => BinOp::Remainder,
-					T![**] => BinOp::Exponent,
-					T![<<] => BinOp::LeftShift,
-					T![>>] => BinOp::RightShift,
-					T![>>>] => BinOp::UnsignedRightShift,
-					T![&] => BinOp::BitwiseAnd,
-					T![|] => BinOp::BitwiseOr,
-					T![^] => BinOp::BitwiseXor,
-					T![??] => BinOp::NullishCoalescing,
-					T![||] => BinOp::LogicalOr,
-					T![&&] => BinOp::LogicalAnd,
-					T![in] => BinOp::In,
-					T![instanceof] => BinOp::Instanceof,
-					_ => return None,
-				};
-				Some((t, op))
-			})
+impl JsBinaryExpression {
+	pub fn operator_kind(&self) -> SyntaxResult<JsBinaryOperation> {
+		let kind = match self.operator()?.kind() {
+			T![<] => JsBinaryOperation::LessThan,
+			T![>] => JsBinaryOperation::GreaterThan,
+			T![<=] => JsBinaryOperation::LessThanOrEqual,
+			T![>=] => JsBinaryOperation::GreaterThanOrEqual,
+			T![==] => JsBinaryOperation::Equality,
+			T![===] => JsBinaryOperation::StrictEquality,
+			T![!=] => JsBinaryOperation::Inequality,
+			T![!==] => JsBinaryOperation::StrictInequality,
+			T![+] => JsBinaryOperation::Plus,
+			T![-] => JsBinaryOperation::Minus,
+			T![*] => JsBinaryOperation::Times,
+			T![/] => JsBinaryOperation::Divide,
+			T![%] => JsBinaryOperation::Remainder,
+			T![**] => JsBinaryOperation::Exponent,
+			T![<<] => JsBinaryOperation::LeftShift,
+			T![>>] => JsBinaryOperation::RightShift,
+			T![>>>] => JsBinaryOperation::UnsignedRightShift,
+			T![&] => JsBinaryOperation::BitwiseAnd,
+			T![|] => JsBinaryOperation::BitwiseOr,
+			T![^] => JsBinaryOperation::BitwiseXor,
+			T![in] => JsBinaryOperation::In,
+			T![instanceof] => JsBinaryOperation::Instanceof,
+			_ => unreachable!(),
+		};
+
+		Ok(kind)
 	}
 
-	pub fn op(&self) -> Option<BinOp> {
-		self.op_details().map(|t| t.1)
-	}
-
-	pub fn op_token(&self) -> Option<SyntaxToken> {
-		self.op_details().map(|t| t.0)
-	}
-
-	pub fn lhs(&self) -> Option<JsAnyExpression> {
-		support::node(self.syntax())
-	}
-
-	pub fn rhs(&self) -> Option<JsAnyExpression> {
+	pub fn right(&self) -> Option<JsAnyExpression> {
 		support::children(self.syntax()).nth(1)
 	}
 
-	/// Whether this binary expr is a `||` or `&&` expression.
-	pub fn conditional(&self) -> bool {
-		token_set![T![||], T![&&]].contains(self.op_token().map(|x| x.kind()).unwrap_or(T![&]))
+	/// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
+	pub fn is_comparison_operator(&self) -> bool {
+		matches!(
+			self.operator().map(|t| t.kind()),
+			Ok(T![>] | T![<] | T![>=] | T![<=] | T![==] | T![===] | T![!=] | T![!==])
+		)
+	}
+}
+
+pub enum JsLogicalOperation {
+	/// `??`
+	NullishCoalescing,
+	/// `||`
+	LogicalOr,
+	/// `&&`
+	LogicalAnd,
+}
+
+impl JsLogicalExpression {
+	pub fn operator_kind(&self) -> SyntaxResult<JsLogicalOperation> {
+		let kind = match self.operator()?.kind() {
+			T![&&] => JsLogicalOperation::LogicalAnd,
+			T![||] => JsLogicalOperation::LogicalOr,
+			T![??] => JsLogicalOperation::NullishCoalescing,
+			_ => unreachable!(),
+		};
+
+		Ok(kind)
 	}
 
-	/// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
-	pub fn comparison(&self) -> bool {
-		const SET: TokenSet = token_set![
-			T![>],
-			T![<],
-			T![>=],
-			T![<=],
-			T![==],
-			T![===],
-			T![!=],
-			T![!==]
-		];
-		SET.contains(self.op_token().map(|x| x.kind()).unwrap_or(T![&]))
+	pub fn right(&self) -> Option<JsAnyExpression> {
+		support::children(self.syntax()).nth(1)
+	}
+}
+
+impl JsSequenceExpression {
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum UnaryOp {
-	/// `++`
-	Increment,
-	/// `--`
-	Decrement,
+pub enum JsUnaryOperation {
 	/// `delete`
 	Delete,
 	/// `void`
@@ -193,8 +186,23 @@ pub enum UnaryOp {
 	BitwiseNot,
 	/// `!`
 	LogicalNot,
-	/// `await`
-	Await,
+}
+
+impl JsUnaryExpression {
+	pub fn operation(&self) -> SyntaxResult<JsUnaryOperation> {
+		let operator = self.operator()?;
+
+		Ok(match operator.kind() {
+			T![+] => JsUnaryOperation::Plus,
+			T![-] => JsUnaryOperation::Minus,
+			T![~] => JsUnaryOperation::BitwiseNot,
+			T![!] => JsUnaryOperation::LogicalNot,
+			T![typeof] => JsUnaryOperation::Typeof,
+			T![void] => JsUnaryOperation::Void,
+			T![delete] => JsUnaryOperation::Delete,
+			_ => unreachable!(),
+		})
+	}
 }
 
 impl KeyValuePattern {
@@ -278,53 +286,9 @@ impl AssignExpr {
 	}
 }
 
-impl ArrayExpr {
+impl JsArrayExpression {
 	pub fn has_trailing_comma(&self) -> bool {
-		if let Some(last) = self.elements().last().map(|it| it.syntax().to_owned()) {
-			if let Some(tok) = last
-				.next_sibling_or_token()
-				.map(|it| it.into_token())
-				.flatten()
-			{
-				return tok.kind() == T![,];
-			}
-		}
-		false
-	}
-
-	/// A list of all sparse elements as a vector of the comma tokens
-	pub fn sparse_elements(&self) -> Vec<SyntaxToken> {
-		let node = self.syntax();
-		let commas = node
-			.children_with_tokens()
-			.filter_map(|x| x.into_token().filter(|tok| tok.kind() == COMMA));
-		commas
-			.filter(|comma| {
-				let mut siblings = comma
-					.siblings_with_tokens(crate::Direction::Prev)
-					.skip(1)
-					.skip_while(|item| {
-						item.as_token()
-							.filter(|tok| tok.kind().is_trivia())
-							.is_some()
-					});
-
-				siblings
-					.next()
-					.and_then(|x| x.into_node()?.try_to::<ExprOrSpread>())
-					.is_none()
-			})
-			.collect()
-	}
-}
-
-impl ExprOrSpread {
-	pub fn is_spread(&self) -> bool {
-		matches!(self, ExprOrSpread::SpreadElement(_))
-	}
-
-	pub fn is_expr(&self) -> bool {
-		!self.is_spread()
+		self.elements().trailing_separator().is_some()
 	}
 }
 
