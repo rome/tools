@@ -1538,6 +1538,27 @@ impl JsGetterObjectMember {
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
 	}
+	pub fn return_type(&self) -> Option<TsReturnType> { support::node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsSetterObjectMember {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsSetterObjectMember {
+	pub fn set_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![set])
+	}
+	pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+		support::required_node(&self.syntax)
+	}
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['('])
+	}
+	pub fn parameter(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![')'])
+	}
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2528,7 +2549,7 @@ pub enum JsAnyObjectMemberName {
 pub enum JsAnyObjectMember {
 	JsPropertyObjectMember(JsPropertyObjectMember),
 	JsGetterObjectMember(JsGetterObjectMember),
-	Setter(Setter),
+	JsSetterObjectMember(JsSetterObjectMember),
 	SpreadProp(SpreadProp),
 	InitializedProp(InitializedProp),
 	JsShorthandPropertyObjectMember(JsShorthandPropertyObjectMember),
@@ -3844,6 +3865,17 @@ impl AstNode for JsPropertyObjectMember {
 }
 impl AstNode for JsGetterObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_GETTER_OBJECT_MEMBER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsSetterObjectMember {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SETTER_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5880,8 +5912,10 @@ impl From<JsGetterObjectMember> for JsAnyObjectMember {
 		JsAnyObjectMember::JsGetterObjectMember(node)
 	}
 }
-impl From<Setter> for JsAnyObjectMember {
-	fn from(node: Setter) -> JsAnyObjectMember { JsAnyObjectMember::Setter(node) }
+impl From<JsSetterObjectMember> for JsAnyObjectMember {
+	fn from(node: JsSetterObjectMember) -> JsAnyObjectMember {
+		JsAnyObjectMember::JsSetterObjectMember(node)
+	}
 }
 impl From<SpreadProp> for JsAnyObjectMember {
 	fn from(node: SpreadProp) -> JsAnyObjectMember { JsAnyObjectMember::SpreadProp(node) }
@@ -5905,7 +5939,7 @@ impl AstNode for JsAnyObjectMember {
 		match kind {
 			JS_PROPERTY_OBJECT_MEMBER
 			| JS_GETTER_OBJECT_MEMBER
-			| SETTER
+			| JS_SETTER_OBJECT_MEMBER
 			| SPREAD_PROP
 			| INITIALIZED_PROP
 			| JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
@@ -5922,7 +5956,9 @@ impl AstNode for JsAnyObjectMember {
 			JS_GETTER_OBJECT_MEMBER => {
 				JsAnyObjectMember::JsGetterObjectMember(JsGetterObjectMember { syntax })
 			}
-			SETTER => JsAnyObjectMember::Setter(Setter { syntax }),
+			JS_SETTER_OBJECT_MEMBER => {
+				JsAnyObjectMember::JsSetterObjectMember(JsSetterObjectMember { syntax })
+			}
 			SPREAD_PROP => JsAnyObjectMember::SpreadProp(SpreadProp { syntax }),
 			INITIALIZED_PROP => JsAnyObjectMember::InitializedProp(InitializedProp { syntax }),
 			JS_SHORTHAND_PROPERTY_OBJECT_MEMBER => {
@@ -5940,7 +5976,7 @@ impl AstNode for JsAnyObjectMember {
 		match self {
 			JsAnyObjectMember::JsPropertyObjectMember(it) => &it.syntax,
 			JsAnyObjectMember::JsGetterObjectMember(it) => &it.syntax,
-			JsAnyObjectMember::Setter(it) => &it.syntax,
+			JsAnyObjectMember::JsSetterObjectMember(it) => &it.syntax,
 			JsAnyObjectMember::SpreadProp(it) => &it.syntax,
 			JsAnyObjectMember::InitializedProp(it) => &it.syntax,
 			JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => &it.syntax,
@@ -7053,6 +7089,11 @@ impl std::fmt::Display for JsPropertyObjectMember {
 	}
 }
 impl std::fmt::Display for JsGetterObjectMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsSetterObjectMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

@@ -9,6 +9,7 @@ use super::decl::{arrow_body, class_decl, maybe_private_name, method, parameter_
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
+use crate::syntax::decl::formal_param_pat;
 use crate::syntax::function::{function_body, function_expression, ts_return_type};
 use crate::{SyntaxKind::*, *};
 
@@ -1218,8 +1219,12 @@ pub fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 		//     return 5;
 		//  }
 		// }
-		T![ident] if p.cur_src() == "set" && (p.nth_at(1, T![ident]) || p.nth_at(1, T!['['])) => {
-			method(p, None, None)
+		T![ident]
+			if p.cur_src() == "set"
+				&& !p.has_linebreak_before_n(1)
+				&& STARTS_OBJ_PROP.contains(p.nth(1)) =>
+		{
+			Some(setter_object_member(p))
 		}
 
 		// test object_expr_async_method
@@ -1322,6 +1327,26 @@ fn getter_object_member(p: &mut Parser) -> CompletedMarker {
 	function_body(p);
 
 	m.complete(p, JS_GETTER_OBJECT_MEMBER)
+}
+
+fn setter_object_member(p: &mut Parser) -> CompletedMarker {
+	debug_assert!(p.at(T![ident]), "Expected an identifier");
+	debug_assert!(p.cur_src() == "set", "Expected a set identifier");
+
+	let m = p.start();
+
+	p.bump_remap(T![set]);
+
+	object_member_name(p);
+
+	p.state.allow_object_expr = p.expect(T!['(']);
+	formal_param_pat(p);
+	p.expect(T![')']);
+
+	function_body(p);
+
+	p.state.allow_object_expr = true;
+	m.complete(p, JS_SETTER_OBJECT_MEMBER)
 }
 
 // test object_prop_name

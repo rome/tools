@@ -511,7 +511,7 @@ JsObjectExpression =
 JsAnyObjectMember =
 	JsPropertyObjectMember
 	| JsGetterObjectMember
-	| Setter
+	| JsSetterObjectMember
 	| SpreadProp
 	| InitializedProp // BindingWithDefault?
 	| JsShorthandPropertyObjectMember
@@ -530,6 +530,15 @@ JsGetterObjectMember =
 	'('')'
 	return_type: TsReturnType?
 	body: JsFunctionBody
+
+JsSetterObjectMember =
+	'set'
+	name: JsAnyObjectMemberName
+	'('
+	parameter: Pattern
+	')'
+	body: JsFunctionBody
+
 
 PropName =
 	ComputedPropertyName

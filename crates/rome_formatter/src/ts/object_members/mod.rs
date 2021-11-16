@@ -4,3 +4,4 @@ mod object_member;
 mod object_member_name;
 mod prop_name;
 mod property_object_member;
+mod setter_object_member;

@@ -67,7 +67,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 		guard.error(err);
 	}
 
-	parameter_types(guard);
+	ts_parameter_types(guard);
 	parameter_list(guard);
 	ts_return_type(guard);
 
@@ -111,13 +111,13 @@ pub(crate) fn function_body_or_declaration(p: &mut Parser) {
 }
 
 pub(super) fn args_body(p: &mut Parser) {
-	parameter_types(p);
+	ts_parameter_types(p);
 	parameter_list(p);
 	ts_return_type(p);
 	function_body_or_declaration(p);
 }
 
-fn parameter_types(p: &mut Parser) {
+pub(crate) fn ts_parameter_types(p: &mut Parser) {
 	if p.at(T![<]) {
 		if let Some(ref mut ty) = ts_type_params(p) {
 			ty.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
