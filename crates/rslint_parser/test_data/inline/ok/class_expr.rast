@@ -1,4 +1,5 @@
-JS_MODULE@0..72
+JS_ROOT@0..72
+  LIST@0..0
   LIST@0..71
     JS_VARIABLE_DECLARATION_STATEMENT@0..17
       JS_VARIABLE_DECLARATION@0..16
@@ -53,8 +54,9 @@ JS_MODULE@0..72
                         LIST@51..51
                         R_PAREN@51..52 ")"
                       WHITESPACE@52..53 " "
-                      JS_BLOCK_STATEMENT@53..55
+                      JS_FUNCTION_BODY@53..55
                         L_CURLY@53..54 "{"
+                        LIST@54..54
                         LIST@54..54
                         R_CURLY@54..55 "}"
                   WHITESPACE@55..56 "\n"

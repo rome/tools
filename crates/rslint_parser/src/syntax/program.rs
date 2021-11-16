@@ -5,8 +5,9 @@ use syntax::stmt::FOLLOWS_LET;
 use super::decl::{class_decl, function_decl};
 use super::expr::{assign_expr, expr, identifier_name, literal, object_expr, primary_expr};
 use super::pat::binding_identifier;
-use super::stmt::{block_items, semi, variable_declaration_statement};
+use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
+use crate::syntax::stmt::directives;
 use crate::{SyntaxKind::*, *};
 
 #[macro_export]
@@ -22,15 +23,15 @@ macro_rules! at_ident_name {
 pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.eat(T![js_shebang]);
-	block_items(p, true, true, false, None);
-	m.complete(
-		p,
-		if p.syntax.file_kind == FileKind::Script {
-			SyntaxKind::JS_SCRIPT
-		} else {
-			SyntaxKind::JS_MODULE
-		},
-	)
+
+	let old_parser_state = directives(p);
+	statements(p, true, false, None);
+
+	if let Some(old_parser_state) = old_parser_state {
+		p.state = old_parser_state;
+	}
+
+	m.complete(p, SyntaxKind::JS_ROOT)
 }
 
 fn named_list(p: &mut Parser) -> Marker {

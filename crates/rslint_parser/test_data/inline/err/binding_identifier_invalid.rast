@@ -1,4 +1,5 @@
-JS_MODULE@0..83
+JS_ROOT@0..83
+  LIST@0..0
   LIST@0..82
     JS_EXPRESSION_STATEMENT@0..30
       ARROW_EXPR@0..30
@@ -11,9 +12,10 @@ JS_MODULE@0..83
         WHITESPACE@8..9 " "
         FAT_ARROW@9..11 "=>"
         WHITESPACE@11..12 " "
-        JS_BLOCK_STATEMENT@12..30
+        JS_FUNCTION_BODY@12..30
           L_CURLY@12..13 "{"
           WHITESPACE@13..14 " "
+          LIST@14..14
           LIST@14..28
             JS_VARIABLE_DECLARATION_STATEMENT@14..28
               JS_VARIABLE_DECLARATION@14..27
@@ -45,9 +47,10 @@ JS_MODULE@0..83
         LIST@45..45
         R_PAREN@45..46 ")"
       WHITESPACE@46..47 " "
-      JS_BLOCK_STATEMENT@47..68
+      JS_FUNCTION_BODY@47..68
         L_CURLY@47..48 "{"
         WHITESPACE@48..52 "\n   "
+        LIST@52..52
         LIST@52..66
           JS_VARIABLE_DECLARATION_STATEMENT@52..66
             JS_VARIABLE_DECLARATION@52..65

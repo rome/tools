@@ -117,7 +117,7 @@ impl ParserState {
 	}
 
 	/// Turn on strict mode and issue a warning for redundant strict mode declarations
-	pub fn strict(&mut self, p: &mut Parser, range: Range<usize>) {
+	pub(crate) fn strict(&mut self, p: &mut Parser, range: Range<usize>) {
 		if let Some(strict) = self.strict.to_owned() {
 			let mut err = p.warning_builder("Redundant strict mode declaration");
 

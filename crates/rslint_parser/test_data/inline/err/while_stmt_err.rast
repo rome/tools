@@ -1,4 +1,5 @@
-JS_MODULE@0..52
+JS_ROOT@0..52
+  LIST@0..0
   LIST@0..51
     JS_WHILE_STATEMENT@0..13
       WHILE_KW@0..5 "while"

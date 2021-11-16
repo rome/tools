@@ -1,4 +1,5 @@
-JS_MODULE@0..142
+JS_ROOT@0..142
+  LIST@0..0
   LIST@0..141
     FN_DECL@0..17
       FUNCTION_KW@0..8 "function"
@@ -10,8 +11,9 @@ JS_MODULE@0..142
         LIST@13..13
         R_PAREN@13..14 ")"
       WHITESPACE@14..15 " "
-      JS_BLOCK_STATEMENT@15..17
+      JS_FUNCTION_BODY@15..17
         L_CURLY@15..16 "{"
+        LIST@16..16
         LIST@16..16
         R_CURLY@16..17 "}"
     WHITESPACE@17..18 "\n"
@@ -26,8 +28,9 @@ JS_MODULE@0..142
         LIST@32..32
         R_PAREN@32..33 ")"
       WHITESPACE@33..34 " "
-      JS_BLOCK_STATEMENT@34..36
+      JS_FUNCTION_BODY@34..36
         L_CURLY@34..35 "{"
+        LIST@35..35
         LIST@35..35
         R_CURLY@35..36 "}"
     WHITESPACE@36..37 "\n"
@@ -44,8 +47,9 @@ JS_MODULE@0..142
               IDENT@50..55 "await"
         R_PAREN@55..56 ")"
       WHITESPACE@56..57 " "
-      JS_BLOCK_STATEMENT@57..59
+      JS_FUNCTION_BODY@57..59
         L_CURLY@57..58 "{"
+        LIST@58..58
         LIST@58..58
         R_CURLY@58..59 "}"
     WHITESPACE@59..60 "\n"
@@ -62,8 +66,9 @@ JS_MODULE@0..142
         LIST@80..80
         R_PAREN@80..81 ")"
       WHITESPACE@81..82 " "
-      JS_BLOCK_STATEMENT@82..84
+      JS_FUNCTION_BODY@82..84
         L_CURLY@82..83 "{"
+        LIST@83..83
         LIST@83..83
         R_CURLY@83..84 "}"
     WHITESPACE@84..85 "\n"
@@ -79,8 +84,9 @@ JS_MODULE@0..142
         LIST@104..104
         R_PAREN@104..105 ")"
       WHITESPACE@105..106 " "
-      JS_BLOCK_STATEMENT@106..108
+      JS_FUNCTION_BODY@106..108
         L_CURLY@106..107 "{"
+        LIST@107..107
         LIST@107..107
         R_CURLY@107..108 "}"
     WHITESPACE@108..109 "\n"
@@ -95,9 +101,10 @@ JS_MODULE@0..142
         LIST@123..123
         R_PAREN@123..124 ")"
       WHITESPACE@124..125 " "
-      JS_BLOCK_STATEMENT@125..141
+      JS_FUNCTION_BODY@125..141
         L_CURLY@125..126 "{"
         WHITESPACE@126..129 "\n  "
+        LIST@129..129
         LIST@129..139
           JS_EXPRESSION_STATEMENT@129..139
             JS_YIELD_EXPRESSION@129..138

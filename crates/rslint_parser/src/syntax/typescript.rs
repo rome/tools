@@ -2,7 +2,7 @@
 
 use super::decl::*;
 use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
-use super::stmt::{block_items, semi, variable_declaration_statement};
+use super::stmt::{semi, statements, variable_declaration_statement};
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_TS_RECOVERY_SET: TokenSet = token_set![
@@ -327,7 +327,7 @@ pub fn ts_module_block(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	p.expect_no_recover(T!['{'])?;
 	// module blocks are considered top level
-	block_items(p, false, true, true, None);
+	statements(p, true, true, None);
 	p.expect_no_recover(T!['}'])?;
 	Some(m.complete(p, TS_MODULE_BLOCK))
 }

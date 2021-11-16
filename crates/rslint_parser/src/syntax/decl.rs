@@ -2,8 +2,8 @@
 
 use super::expr::{assign_expr, identifier_name, object_prop_name, STARTS_EXPR};
 use super::pat::{binding_identifier, opt_binding_identifier, pattern};
-use super::stmt::block_stmt;
 use super::typescript::*;
+use crate::syntax::stmt::function_body;
 use crate::{SyntaxKind::*, *};
 use std::collections::HashMap;
 
@@ -101,7 +101,7 @@ fn fn_body(p: &mut Parser) {
 	if p.typescript() && !p.at(T!['{']) && is_semi(p, 0) {
 		p.eat(T![;]);
 	} else {
-		let mut complete = block_stmt(p, true, None);
+		let mut complete = function_body(p, None);
 		if let Some(ref mut block) = complete {
 			if p.state.in_declare {
 				let err = p
@@ -439,7 +439,7 @@ pub fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	if guard.at(T!['{']) {
-		block_stmt(&mut *guard, true, None)
+		function_body(&mut *guard, None)
 	} else {
 		assign_expr(&mut *guard)
 	}

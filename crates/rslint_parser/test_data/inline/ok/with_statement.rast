@@ -1,6 +1,7 @@
-JS_SCRIPT@0..65
+JS_ROOT@0..65
   COMMENT@0..9 "// SCRIPT"
   WHITESPACE@9..11 "\n\n"
+  LIST@11..11
   LIST@11..64
     FN_DECL@11..64
       FUNCTION_KW@11..19 "function"
@@ -20,9 +21,10 @@ JS_SCRIPT@0..65
               IDENT@25..26 "o"
         R_PAREN@26..27 ")"
       WHITESPACE@27..28 " "
-      JS_BLOCK_STATEMENT@28..64
+      JS_FUNCTION_BODY@28..64
         L_CURLY@28..29 "{"
         WHITESPACE@29..31 "\n\t"
+        LIST@31..31
         LIST@31..62
           JS_WITH_STATEMENT@31..62
             WITH_KW@31..35 "with"
