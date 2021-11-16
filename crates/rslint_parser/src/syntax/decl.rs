@@ -967,7 +967,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 	None
 }
 
-/// A method definition, this takes an optional markers for object props
+/// A method definition, this takes an optional markers for object object_members
 pub fn method(
 	p: &mut Parser,
 	marker: impl Into<Option<Marker>>,

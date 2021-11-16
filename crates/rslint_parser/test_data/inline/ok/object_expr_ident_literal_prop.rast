@@ -18,8 +18,8 @@ JS_ROOT@0..20
                 L_CURLY@8..9 "{"
                 WHITESPACE@9..10 " "
                 LIST@10..17
-                  LITERAL_PROP@10..17
-                    NAME@10..11
+                  JS_PROPERTY_OBJECT_MEMBER@10..17
+                    JS_STATIC_OBJECT_MEMBER_NAME@10..11
                       IDENT@10..11 "a"
                     COLON@11..12 ":"
                     WHITESPACE@12..13 " "

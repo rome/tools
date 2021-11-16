@@ -163,7 +163,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 
 			for (idx, prop) in expr.members().iter().enumerate() {
 				match prop {
-					ast::JsAnyObjectMember::LiteralProp(prop) => {
+					ast::JsAnyObjectMember::JsPropertyObjectMember(prop) => {
 						if let Ok(expr) = prop.value() {
 							check_for_stmt_lhs(p, expr, marker);
 						}

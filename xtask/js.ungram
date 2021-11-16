@@ -509,18 +509,22 @@ JsObjectExpression =
 	'}'
 
 JsAnyObjectMember =
-	LiteralProp // JsPropertyObjectMember
+	JsPropertyObjectMember
 	| Getter
 	| Setter
 	| SpreadProp
-	| InitializedProp // ?
+	| InitializedProp // BindingWithDefault?
 	| JsShorthandPropertyObjectMember
 	| Method // JsMethodObjectMember
 	| JsUnknownMember
 
 
 // literal prop
-LiteralProp = manual__key:PropName ':' manual__value:JsAnyExpression
+JsPropertyObjectMember =
+	name: JsAnyObjectMemberName
+	':'
+	manual__value: JsAnyExpression
+
 
 PropName =
 	ComputedPropertyName
@@ -543,7 +547,9 @@ SpreadProp = '...' value:JsAnyExpression
 // initialised property
 InitializedProp = key:Name '=' value:JsAnyExpression
 
-JsShorthandPropertyObjectMember = identifier: JsReferenceIdentifierExpression
+// { a }
+//   ^
+JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
 
 
 ///////////////

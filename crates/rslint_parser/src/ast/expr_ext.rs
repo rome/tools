@@ -28,7 +28,7 @@ impl JsConditionalExpression {
 	}
 }
 
-impl LiteralProp {
+impl JsPropertyObjectMember {
 	pub fn key(&self) -> SyntaxResult<PropName> {
 		support::required_node::<PropName>(self.syntax())
 	}
@@ -399,8 +399,8 @@ impl JsAnyObjectMember {
 		Some(
 			match self {
 				JsAnyObjectMember::JsShorthandPropertyObjectMember(idt) => idt.syntax().clone(),
-				JsAnyObjectMember::LiteralProp(litprop) => {
-					litprop.key().map_or_else(|_| None, prop_name_syntax)?
+				JsAnyObjectMember::JsPropertyObjectMember(member) => {
+					member.key().map_or_else(|_| None, prop_name_syntax)?
 				}
 
 				JsAnyObjectMember::Getter(getter) => {

@@ -1510,10 +1510,13 @@ impl JsNumberLiteral {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct LiteralProp {
+pub struct JsPropertyObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
-impl LiteralProp {
+impl JsPropertyObjectMember {
+	pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+		support::required_node(&self.syntax)
+	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
@@ -1544,7 +1547,7 @@ pub struct JsShorthandPropertyObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsShorthandPropertyObjectMember {
-	pub fn identifier(&self) -> SyntaxResult<JsReferenceIdentifierExpression> {
+	pub fn name(&self) -> SyntaxResult<JsReferenceIdentifierExpression> {
 		support::required_node(&self.syntax)
 	}
 }
@@ -2504,7 +2507,7 @@ pub enum JsAnyObjectMemberName {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMember {
-	LiteralProp(LiteralProp),
+	JsPropertyObjectMember(JsPropertyObjectMember),
 	Getter(Getter),
 	Setter(Setter),
 	SpreadProp(SpreadProp),
@@ -3809,8 +3812,8 @@ impl AstNode for JsNumberLiteral {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for LiteralProp {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == LITERAL_PROP }
+impl AstNode for JsPropertyObjectMember {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5837,8 +5840,10 @@ impl AstNode for JsAnyObjectMemberName {
 		}
 	}
 }
-impl From<LiteralProp> for JsAnyObjectMember {
-	fn from(node: LiteralProp) -> JsAnyObjectMember { JsAnyObjectMember::LiteralProp(node) }
+impl From<JsPropertyObjectMember> for JsAnyObjectMember {
+	fn from(node: JsPropertyObjectMember) -> JsAnyObjectMember {
+		JsAnyObjectMember::JsPropertyObjectMember(node)
+	}
 }
 impl From<Getter> for JsAnyObjectMember {
 	fn from(node: Getter) -> JsAnyObjectMember { JsAnyObjectMember::Getter(node) }
@@ -5866,7 +5871,7 @@ impl From<JsUnknownMember> for JsAnyObjectMember {
 impl AstNode for JsAnyObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			LITERAL_PROP
+			JS_PROPERTY_OBJECT_MEMBER
 			| GETTER
 			| SETTER
 			| SPREAD_PROP
@@ -5879,7 +5884,9 @@ impl AstNode for JsAnyObjectMember {
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			LITERAL_PROP => JsAnyObjectMember::LiteralProp(LiteralProp { syntax }),
+			JS_PROPERTY_OBJECT_MEMBER => {
+				JsAnyObjectMember::JsPropertyObjectMember(JsPropertyObjectMember { syntax })
+			}
 			GETTER => JsAnyObjectMember::Getter(Getter { syntax }),
 			SETTER => JsAnyObjectMember::Setter(Setter { syntax }),
 			SPREAD_PROP => JsAnyObjectMember::SpreadProp(SpreadProp { syntax }),
@@ -5897,7 +5904,7 @@ impl AstNode for JsAnyObjectMember {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyObjectMember::LiteralProp(it) => &it.syntax,
+			JsAnyObjectMember::JsPropertyObjectMember(it) => &it.syntax,
 			JsAnyObjectMember::Getter(it) => &it.syntax,
 			JsAnyObjectMember::Setter(it) => &it.syntax,
 			JsAnyObjectMember::SpreadProp(it) => &it.syntax,
@@ -7006,7 +7013,7 @@ impl std::fmt::Display for JsNumberLiteral {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for LiteralProp {
+impl std::fmt::Display for JsPropertyObjectMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

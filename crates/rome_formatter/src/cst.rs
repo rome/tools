@@ -6,10 +6,10 @@ use rslint_parser::ast::{
 	JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
 	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration, JsIfStatement,
 	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsObjectExpression, JsParameterList,
-	JsReferenceIdentifierExpression, JsReturnStatement, JsRoot, JsSequenceExpression,
-	JsShorthandPropertyObjectMember, JsStringLiteral, JsSwitchStatement, JsTryStatement,
-	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement,
-	LiteralProp, Name, Setter, SinglePattern,
+	JsPropertyObjectMember, JsReferenceIdentifierExpression, JsReturnStatement, JsRoot,
+	JsSequenceExpression, JsShorthandPropertyObjectMember, JsStringLiteral, JsSwitchStatement,
+	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
+	JsWithStatement, Name, Setter, SinglePattern,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -159,7 +159,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::ARG_LIST => ArgList::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::LITERAL_PROP => LiteralProp::cast(self.clone())
+			SyntaxKind::JS_PROPERTY_OBJECT_MEMBER => JsPropertyObjectMember::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CLASS_DECL => ClassDecl::cast(self.clone())

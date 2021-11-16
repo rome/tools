@@ -1176,7 +1176,7 @@ pub fn object_expr(p: &mut Parser) -> CompletedMarker {
 				break;
 			}
 		}
-		object_property(p);
+		object_member(p);
 	}
 	props_list.complete(p, LIST);
 
@@ -1194,7 +1194,7 @@ const STARTS_OBJ_PROP: TokenSet = token_set![
 ];
 
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
-pub fn object_property(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 
 	match p.cur() {
@@ -1242,44 +1242,53 @@ pub fn object_property(p: &mut Parser) -> Option<CompletedMarker> {
 			method(p, m, None)
 		}
 		_ => {
-			let prop = object_prop_name(p, false);
-			// test object_expr_assign_prop
-			// let b = { foo = 4, foo = bar }
-			if let Some(NAME) = prop.map(|m| m.kind()) {
-				if p.eat(T![=]) {
-					assign_expr(p);
-					return Some(m.complete(p, INITIALIZED_PROP));
-				}
-			}
+			let member_name = object_member_name(p);
 
 			// test object_expr_method
 			// let b = {
 			//  foo() {},
 			// }
 			if p.at(T!['(']) || p.at(T![<]) {
+				if let Some(mut member_name) = member_name {
+					member_name.change_kind(p, NAME);
+				}
+
 				method(p, m, None)
+			} else if let Some(mut member_name) = member_name {
+				// test object_expr_assign_prop
+				// let b = { foo = 4, foo = bar }
+				if p.eat(T![=]) {
+					member_name.change_kind(p, NAME);
+					assign_expr(p);
+					return Some(m.complete(p, INITIALIZED_PROP));
+				}
+
+				// ({foo})
+				// test object_expr_ident_prop
+				if !p.at(T![:]) && member_name.kind() == JS_STATIC_OBJECT_MEMBER_NAME {
+					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
+					Some(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
+				} else {
+					// let b = { a: true }
+					// If the member name was a literal OR we're at a colon
+					p.expect(T![:]);
+					assign_expr(p);
+					Some(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
+				}
 			} else {
 				// test_err object_expr_error_prop_name
 				// let a = { /: 6, /: /foo/ }
 				// let a = {{}}
-				if prop.is_none() {
-					p.err_recover_no_err(token_set![T![:], T![,]], false);
-				}
 				// test_err object_expr_non_ident_literal_prop
 				// let b = {5}
 
-				// test object_expr_ident_literal_prop
-				// let b = { a: true }
-				if p.at(T![:]) || prop?.kind() != NAME {
-					p.expect(T![:]);
+				p.err_recover_no_err(token_set![T![:], T![,]], false);
+
+				if p.eat(T![:]) {
 					assign_expr(p);
-					Some(m.complete(p, LITERAL_PROP))
+					Some(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				} else {
-					// test object_expr_ident_prop
-					// let b = {foo}
-					// TODO 1725 Remove change_kind after migrating all names to JS_REFERENCE_IDENTIFIER_EXPRESSIONS
-					prop?.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
-					Some(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
+					None
 				}
 			}
 		}
@@ -1300,6 +1309,26 @@ pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker
 		}
 		_ if binding => super::pat::binding_identifier(p),
 		_ => identifier_name(p),
+	}
+}
+
+// test object_prop_name
+// let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
+/// Parses a `JsAnyObjectMemberName` and returns its completion marker
+fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
+	match p.cur() {
+		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => literal(p),
+		T!['['] => {
+			let m = p.start();
+			p.bump_any();
+			assign_expr(p);
+			p.expect(T![']']);
+			Some(m.complete(p, COMPUTED_PROPERTY_NAME))
+		}
+		_ => identifier_name(p).map(|mut ident| {
+			ident.change_kind(p, JS_STATIC_OBJECT_MEMBER_NAME);
+			ident
+		}),
 	}
 }
 
