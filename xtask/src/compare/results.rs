@@ -42,24 +42,27 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 			let down = "⏬ ";
 
 			let emoji = if show_increase {
-				if diff < 0 {
-					if i_am_passed_results {
-						format!("{}{}", bad, down)
-					} else {
-						format!("{}{}", good, down)
+				match diff.cmp(&0) {
+					std::cmp::Ordering::Less => {
+						if i_am_passed_results {
+							format!("{}{}", bad, down)
+						} else {
+							format!("{}{}", good, down)
+						}
 					}
-				} else if diff > 0 {
-					if i_am_passed_results {
-						format!("{}{}", good, up)
-					} else {
-						format!("{}{}", bad, up)
+					std::cmp::Ordering::Equal => format!(""),
+					std::cmp::Ordering::Greater => {
+						if i_am_passed_results {
+							format!("{}{}", good, up)
+						} else {
+							format!("{}{}", bad, up)
+						}
 					}
-				} else {
-					format!("")
 				}
 			} else {
 				format!("")
 			};
+
 			format!(
 				"{}{}{}{}{}",
 				emoji,

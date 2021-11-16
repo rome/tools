@@ -158,11 +158,16 @@ pub fn stmt(
 
 			// We must explicitly handle this case or else infinite recursion can happen
 			if p.at_ts(token_set![T!['}'], T![import], T![export]]) {
-				p.err_and_bump(err);
+				p.err_and_bump(err, ERROR);
 				return None;
 			}
 
-			p.err_recover(err, recovery_set.into().unwrap_or(STMT_RECOVERY_SET), false);
+			p.err_recover(
+				err,
+				recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
+				false,
+				ERROR,
+			);
 			return None;
 		}
 	};
@@ -231,7 +236,7 @@ fn expr_stmt(p: &mut Parser, decorator: Option<CompletedMarker>) -> Option<Compl
 		m.complete(p, ERROR);
 	}
 
-	let mut expr = p.expr_with_semi_recovery(false)?;
+	let mut expr = p.expr_with_semi_recovery(false, ERROR)?;
 	// Labelled stmt
 	if expr.kind() == NAME_REF && p.at(T![:]) {
 		expr.change_kind(p, NAME);
@@ -315,7 +320,7 @@ pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 
 		p.error(err);
 	} else {
-		p.expr_with_semi_recovery(false);
+		p.expr_with_semi_recovery(false, ERROR);
 	}
 	semi(p, start..p.cur_tok().range.end);
 	m.complete(p, JS_THROW_STATEMENT)
@@ -407,7 +412,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	p.expect(T![return]);
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
-		p.expr_with_semi_recovery(false);
+		p.expr_with_semi_recovery(false, ERROR);
 	}
 	semi(p, start..p.cur_tok().range.end);
 	let complete = m.complete(p, JS_RETURN_STATEMENT);
@@ -852,13 +857,13 @@ fn variable_initializer(p: &mut Parser) {
 	let m = p.start();
 
 	p.expect(T![=]);
-	p.expr_with_semi_recovery(true);
+	p.expr_with_semi_recovery(true, ERROR);
 
 	m.complete(p, SyntaxKind::JS_EQUAL_VALUE_CLAUSE);
 }
 
 // A do.. while statement, such as `do {} while (true)`
-// test do_while_stmt
+// test do_while_stmtR
 // do { } while (true)
 // do throw Error("foo") while (true)
 pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
@@ -1044,7 +1049,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			p.err_recover(err, STMT_RECOVERY_SET, true);
+			p.err_recover(err, STMT_RECOVERY_SET, true, ERROR);
 		}
 	}
 	None
