@@ -3,7 +3,7 @@ class Foo extends Boar {
 		super();
 	}
 	get g() {}
-	set gg() {}
+	set gg(a) {}
 	lorem() {
 		return "ipsum";
 	}

@@ -383,7 +383,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 				..p.state.clone()
 			}));
 			decl.undo_completion(p).abandon(p);
-			inner.complete(p, CLASS_DECL);
+			inner.complete(p, JS_CLASS_DECLARATION);
 			return m.complete(p, EXPORT_DEFAULT_DECL);
 		}
 

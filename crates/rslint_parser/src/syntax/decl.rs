@@ -3,7 +3,6 @@
 use super::expr::{assign_expr, identifier_name};
 use super::pat::pattern;
 use super::typescript::*;
-use crate::syntax::class::constructor_param_pat;
 use crate::syntax::function::function_body;
 use crate::{SyntaxKind::*, *};
 
@@ -107,11 +106,16 @@ pub(super) fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 }
 
 pub(super) fn parameter_list(p: &mut Parser) -> CompletedMarker {
-	parameters_common(p, false)
+	let m = p.start();
+	parameters_list(p, formal_param_pat);
+	m.complete(p, JS_PARAMETER_LIST)
 }
 
-pub(super) fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarker {
-	let m = p.start();
+/// Parses a (param, param) list into the current active node
+pub(super) fn parameters_list(
+	p: &mut Parser,
+	parse_param: impl Fn(&mut Parser) -> Option<CompletedMarker>,
+) {
 	let mut first = true;
 
 	p.state.allow_object_expr = p.expect(T!['(']);
@@ -185,14 +189,9 @@ pub(super) fn parameters_common(p: &mut Parser, constructor_params: bool) -> Com
 			}
 			Some(complete)
 		} else {
-			let func = if constructor_params {
-				constructor_param_pat
-			} else {
-				formal_param_pat
-			};
 			// test_err formal_params_no_binding_element
 			// function foo(true) {}
-			if let Some(res) = func(p) {
+			if let Some(res) = parse_param(p) {
 				if res.kind() == ASSIGN_PATTERN && p.state.in_binding_list_for_signature {
 					let err = p
 						.err_builder(
@@ -224,7 +223,6 @@ pub(super) fn parameters_common(p: &mut Parser, constructor_params: bool) -> Com
 	parameters_list.complete(p, LIST);
 	p.state.allow_object_expr = true;
 	p.expect(T![')']);
-	m.complete(p, JS_PARAMETER_LIST)
 }
 
 pub(super) fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {

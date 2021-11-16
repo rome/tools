@@ -21,7 +21,7 @@ JS_ROOT@0..170
                   JS_SETTER_OBJECT_MEMBER@11..30
                     SET_KW@11..14 "set"
                     WHITESPACE@14..15 " "
-                    JS_STATIC_OBJECT_MEMBER_NAME@15..18
+                    JS_STATIC_MEMBER_NAME@15..18
                       IDENT@15..18 "foo"
                     L_PAREN@18..19 "("
                     SINGLE_PATTERN@19..24
@@ -104,7 +104,7 @@ JS_ROOT@0..170
                   COMMA@107..108 ","
                   WHITESPACE@108..111 "\n\n\t"
                   JS_METHOD_OBJECT_MEMBER@111..167
-                    JS_STATIC_OBJECT_MEMBER_NAME@111..114
+                    JS_STATIC_MEMBER_NAME@111..114
                       IDENT@111..114 "set"
                     JS_PARAMETER_LIST@114..116
                       L_PAREN@114..115 "("

@@ -1,3 +1,10 @@
-mod class_declarator;
-mod constructor;
-mod prop;
+mod class_declaration;
+mod class_member;
+mod class_member_name;
+mod constructor_class_member;
+mod extends_clause;
+mod getter_class_member;
+mod method_class_member;
+mod property_class_member;
+mod semicolon_class_member;
+mod setter_class_member;

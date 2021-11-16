@@ -1,15 +1,16 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, ArrayPattern, AssignPattern, CallExpr, ClassBody, ClassDecl, ClassProp, Condition,
-	ConstructorParameters, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter,
-	JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteral, JsCaseClause,
-	JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
-	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration, JsIfStatement,
-	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsObjectExpression, JsParameterList,
-	JsPropertyObjectMember, JsReferenceIdentifierExpression, JsReturnStatement, JsRoot,
-	JsSequenceExpression, JsShorthandPropertyObjectMember, JsStringLiteral, JsSwitchStatement,
+	ArgList, ArrayPattern, AssignPattern, CallExpr, Condition, ForInStmt, ForStmt, ForStmtInit,
+	ForStmtTest, ForStmtUpdate, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
+	JsBooleanLiteral, JsCaseClause, JsCatchClause, JsClassDeclaration, JsContinueStatement,
+	JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement, JsEmptyStatement,
+	JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration, JsGetterClassMember,
+	JsIfStatement, JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsObjectExpression,
+	JsParameterList, JsPropertyClassMember, JsPropertyObjectMember,
+	JsReferenceIdentifierExpression, JsReturnStatement, JsRoot, JsSequenceExpression,
+	JsSetterClassMember, JsShorthandPropertyObjectMember, JsStringLiteral, JsSwitchStatement,
 	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
-	JsWithStatement, Name, Setter, SinglePattern,
+	JsWithStatement, Name, SinglePattern,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -162,22 +163,20 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_PROPERTY_OBJECT_MEMBER => JsPropertyObjectMember::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::CLASS_DECL => ClassDecl::cast(self.clone())
+			SyntaxKind::JS_CLASS_DECLARATION => JsClassDeclaration::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::CLASS_BODY => ClassBody::cast(self.clone())
+			// TODO
+			// SyntaxKind::CONSTRUCTOR_PARAMETERS => ConstructorParameters::cast(self.clone())
+			// 	.unwrap()
+			// 	.to_format_element(formatter),
+			SyntaxKind::JS_GETTER_CLASS_MEMBER => JsGetterClassMember::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::CONSTRUCTOR_PARAMETERS => ConstructorParameters::cast(self.clone())
+			SyntaxKind::JS_SETTER_CLASS_MEMBER => JsSetterClassMember::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::GETTER => Getter::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::SETTER => Setter::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::CLASS_PROP => ClassProp::cast(self.clone())
+			SyntaxKind::JS_PROPERTY_CLASS_MEMBER => JsPropertyClassMember::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 

@@ -90,10 +90,12 @@ pub fn ts_modifier(p: &mut Parser, modifiers: &[&'static str]) -> Option<Range<u
 
 pub(crate) fn maybe_ts_type_annotation(p: &mut Parser) -> Option<Range<usize>> {
 	if p.at(T![:]) {
-		let maybe_err = p.start();
+		let m = p.start();
+
 		let start = p.cur_tok().range.start;
 		p.bump_any();
 		let compl = ts_type(p);
+
 		let end = compl
 			.map(|x| usize::from(x.range(p).end()))
 			.unwrap_or_else(|| p.cur_tok().range.start);
@@ -104,9 +106,9 @@ pub(crate) fn maybe_ts_type_annotation(p: &mut Parser) -> Option<Range<usize>> {
 				.primary(start..end, "");
 
 			p.error(err);
-			maybe_err.complete(p, ERROR);
+			m.complete(p, ERROR);
 		} else {
-			maybe_err.abandon(p);
+			m.complete(p, TS_TYPE_ANNOTATION);
 		}
 		Some(start..end)
 	} else {
@@ -140,7 +142,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			class_declaration(p).undo_completion(p).abandon(p);
-			m.complete(p, CLASS_DECL)
+			m.complete(p, JS_STATIC_MEMBER_NAME)
 		}
 		t if (t == T![const] && p.nth_at(2, T![enum])) || t == T![enum] => {
 			let m = p.start();
@@ -204,7 +206,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			return None;
 		}
 		class_declaration(p).undo_completion(p).abandon(p);
-		return Some(m.complete(p, CLASS_DECL));
+		return Some(m.complete(p, JS_STATIC_MEMBER_NAME));
 	}
 
 	if p.at(T![enum]) {

@@ -119,7 +119,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 				// ({foo})
 				// test object_expr_ident_prop
-				if !p.at(T![:]) && member_name.kind() == JS_STATIC_OBJECT_MEMBER_NAME {
+				if !p.at(T![:]) && member_name.kind() == JS_STATIC_MEMBER_NAME {
 					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
 					Some(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
 				} else {
@@ -222,13 +222,12 @@ fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 			Some(m.complete(p, COMPUTED_PROPERTY_NAME))
 		}
 		_ => identifier_name(p).map(|mut ident| {
-			ident.change_kind(p, JS_STATIC_OBJECT_MEMBER_NAME);
+			ident.change_kind(p, JS_STATIC_MEMBER_NAME);
 			ident
 		}),
 	}
 }
 
-// TODO #1725 unify with class method parsing?
 /// Parses a method object member
 fn method_object_member(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();

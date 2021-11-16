@@ -7,7 +7,7 @@ class Foo extends Boar {
 
 	}
 
-	set gg() {
+	set gg(a) {
 
 	}
 

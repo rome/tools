@@ -1,3 +1,3 @@
 class foo {
- set bar() {}
+ set bar(a) {}
 }

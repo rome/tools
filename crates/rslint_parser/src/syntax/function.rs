@@ -1,12 +1,11 @@
-use crate::syntax::class::is_semi;
 use crate::syntax::decl::parameter_list;
 use crate::syntax::pat::opt_binding_identifier;
-use crate::syntax::stmt::block_impl;
+use crate::syntax::stmt::{block_impl, is_semi};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::{CompletedMarker, Parser, ParserState};
 use rslint_syntax::SyntaxKind::{
 	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION,
-	JS_IDENTIFIER_BINDING, TS_RETURN_TYPE,
+	JS_IDENTIFIER_BINDING, TS_TYPE_ANNOTATION,
 };
 use rslint_syntax::{SyntaxKind, T};
 use std::collections::HashMap;
@@ -90,7 +89,7 @@ pub(super) fn function_body(p: &mut Parser) -> Option<CompletedMarker> {
 // never have a body but that would be allowed with this approach. Same for interfaces, interface
 // methods should never have a body
 /// Either parses a typescript declaration body or the function body
-pub(crate) fn function_body_or_declaration(p: &mut Parser) {
+pub(super) fn function_body_or_declaration(p: &mut Parser) {
 	// omitting the body is allowed in ts
 	if p.typescript() && !p.at(T!['{']) && is_semi(p, 0) {
 		p.eat(T![;]);
@@ -111,13 +110,6 @@ pub(crate) fn function_body_or_declaration(p: &mut Parser) {
 	}
 }
 
-pub(super) fn args_body(p: &mut Parser) {
-	ts_parameter_types(p);
-	parameter_list(p);
-	ts_return_type(p);
-	function_body_or_declaration(p);
-}
-
 pub(crate) fn ts_parameter_types(p: &mut Parser) {
 	if p.at(T![<]) {
 		if let Some(ref mut ty) = ts_type_params(p) {
@@ -132,6 +124,6 @@ pub(crate) fn ts_return_type(p: &mut Parser) {
 		if let Some(ref mut ty) = ts_type_or_type_predicate_ann(p, T![:]) {
 			ty.err_if_not_ts(p, "return types can only be used in TypeScript files");
 		}
-		return_type.complete(p, TS_RETURN_TYPE);
+		return_type.complete(p, TS_TYPE_ANNOTATION);
 	}
 }
