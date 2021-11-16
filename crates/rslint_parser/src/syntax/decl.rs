@@ -296,6 +296,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 						T![')'],
 					],
 					true,
+					ERROR,
 				);
 				None
 			}
@@ -964,6 +965,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 		err,
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
 		false,
+		ERROR,
 	);
 	None
 }
@@ -1062,6 +1064,7 @@ pub fn method(
 				err,
 				recovery_set.into().unwrap_or(BASE_METHOD_RECOVERY_SET),
 				false,
+				ERROR,
 			);
 			return None;
 		}
