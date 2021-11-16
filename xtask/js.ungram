@@ -510,20 +510,24 @@ JsObjectExpression =
 
 JsAnyObjectMember =
 	JsPropertyObjectMember
+	| JsMethodObjectMember
 	| JsGetterObjectMember
 	| JsSetterObjectMember
-	| SpreadProp
 	| InitializedProp // BindingWithDefault?
 	| JsShorthandPropertyObjectMember
-	| JsMethodObjectMember // JsMethodObjectMember
+	| JsSpread
 	| JsUnknownMember
 
 
+// { a: 5, b: () => {} }
+//   ^^^^  ^^^^^^^^^^^
 JsPropertyObjectMember =
 	name: JsAnyObjectMemberName
 	':'
 	manual__value: JsAnyExpression
 
+// { get a() {} }
+//   ^^^^^^^^^^
 JsGetterObjectMember =
 	'get'
 	name: JsAnyObjectMemberName
@@ -531,6 +535,8 @@ JsGetterObjectMember =
 	return_type: TsReturnType?
 	body: JsFunctionBody
 
+//  { set a(value) {} }
+//    ^^^^^^^^^^^^^^^
 JsSetterObjectMember =
 	'set'
 	name: JsAnyObjectMemberName
@@ -539,6 +545,8 @@ JsSetterObjectMember =
 	')'
 	body: JsFunctionBody
 
+// { a() {}, async b() {}, async * c() {} }
+//   ^^^^^^  ^^^^^^^^^^^^  ^^^^^^^^^^^^^^
 JsMethodObjectMember =
 	'async'?
 	'*'?
@@ -562,9 +570,6 @@ ComputedPropertyName = '[' expr: JsAnyExpression ']'
 
 // private property access
 PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
-
-// spread property
-SpreadProp = '...' value:JsAnyExpression
 
 // initialised property
 InitializedProp = key:Name '=' value:JsAnyExpression
@@ -795,6 +800,13 @@ JsIdentifierBinding = name: 'ident'
 // AUXILIARY
 ///////////////
 
+// { ...a }
+//   ^^^^
+// [ ...a ]
+//   ^^^^
+JsSpread =
+	'...'
+	argument: JsAnyExpression
 
 JsParameterList =
 	'('

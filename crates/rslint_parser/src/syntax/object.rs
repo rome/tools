@@ -1,7 +1,7 @@
-use crate::syntax::decl::{formal_param_pat, method, parameter_list, BASE_METHOD_RECOVERY_SET};
+use crate::syntax::decl::{formal_param_pat, parameter_list, BASE_METHOD_RECOVERY_SET};
 use crate::syntax::expr::{assign_expr, identifier_name, literal};
-use crate::syntax::function::{args_body, function_body, ts_parameter_types, ts_return_type};
-use crate::{CompletedMarker, Marker, Parser, ParserState, TokenSet};
+use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
+use crate::{CompletedMarker, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::T;
 
@@ -29,12 +29,15 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 			first = false;
 		} else {
 			p.expect(T![,]);
+
 			if p.at(T!['}']) {
 				break;
 			}
 		}
+
 		object_member(p);
 	}
+
 	props_list.complete(p, LIST);
 
 	p.expect(T!['}']);
@@ -85,7 +88,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_any();
 			assign_expr(p);
-			Some(m.complete(p, SPREAD_PROP))
+			Some(m.complete(p, JS_SPREAD))
 		}
 
 		T![*] => {

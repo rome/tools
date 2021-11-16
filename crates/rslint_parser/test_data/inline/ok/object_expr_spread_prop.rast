@@ -17,7 +17,7 @@ JS_ROOT@0..17
               JS_OBJECT_EXPRESSION@8..16
                 L_CURLY@8..9 "{"
                 LIST@9..15
-                  SPREAD_PROP@9..15
+                  JS_SPREAD@9..15
                     DOT2@9..12 "..."
                     JS_REFERENCE_IDENTIFIER_EXPRESSION@12..15
                       IDENT@12..15 "foo"

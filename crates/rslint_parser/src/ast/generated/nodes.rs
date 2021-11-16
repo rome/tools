@@ -1522,6 +1522,23 @@ impl JsPropertyObjectMember {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsMethodObjectMember {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsMethodObjectMember {
+	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+		support::required_node(&self.syntax)
+	}
+	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
+	pub fn parameter_list(&self) -> SyntaxResult<JsParameterList> {
+		support::required_node(&self.syntax)
+	}
+	pub fn return_type(&self) -> Option<TsReturnType> { support::node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsGetterObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1562,16 +1579,6 @@ impl JsSetterObjectMember {
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct SpreadProp {
-	pub(crate) syntax: SyntaxNode,
-}
-impl SpreadProp {
-	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [...])
-	}
-	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct InitializedProp {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1592,21 +1599,14 @@ impl JsShorthandPropertyObjectMember {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct JsMethodObjectMember {
+pub struct JsSpread {
 	pub(crate) syntax: SyntaxNode,
 }
-impl JsMethodObjectMember {
-	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
-	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
-	pub fn name(&self) -> SyntaxResult<JsAnyObjectMemberName> {
-		support::required_node(&self.syntax)
+impl JsSpread {
+	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [...])
 	}
-	pub fn type_params(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
-	pub fn parameter_list(&self) -> SyntaxResult<JsParameterList> {
-		support::required_node(&self.syntax)
-	}
-	pub fn return_type(&self) -> Option<TsReturnType> { support::node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
+	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ComputedPropertyName {
@@ -2565,12 +2565,12 @@ pub enum JsAnyObjectMemberName {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMember {
 	JsPropertyObjectMember(JsPropertyObjectMember),
+	JsMethodObjectMember(JsMethodObjectMember),
 	JsGetterObjectMember(JsGetterObjectMember),
 	JsSetterObjectMember(JsSetterObjectMember),
-	SpreadProp(SpreadProp),
 	InitializedProp(InitializedProp),
 	JsShorthandPropertyObjectMember(JsShorthandPropertyObjectMember),
-	JsMethodObjectMember(JsMethodObjectMember),
+	JsSpread(JsSpread),
 	JsUnknownMember(JsUnknownMember),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -3880,6 +3880,17 @@ impl AstNode for JsPropertyObjectMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsMethodObjectMember {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_OBJECT_MEMBER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsGetterObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_GETTER_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3893,17 +3904,6 @@ impl AstNode for JsGetterObjectMember {
 }
 impl AstNode for JsSetterObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SETTER_OBJECT_MEMBER }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for SpreadProp {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SPREAD_PROP }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3935,8 +3935,8 @@ impl AstNode for JsShorthandPropertyObjectMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for JsMethodObjectMember {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_OBJECT_MEMBER }
+impl AstNode for JsSpread {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SPREAD }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5935,6 +5935,11 @@ impl From<JsPropertyObjectMember> for JsAnyObjectMember {
 		JsAnyObjectMember::JsPropertyObjectMember(node)
 	}
 }
+impl From<JsMethodObjectMember> for JsAnyObjectMember {
+	fn from(node: JsMethodObjectMember) -> JsAnyObjectMember {
+		JsAnyObjectMember::JsMethodObjectMember(node)
+	}
+}
 impl From<JsGetterObjectMember> for JsAnyObjectMember {
 	fn from(node: JsGetterObjectMember) -> JsAnyObjectMember {
 		JsAnyObjectMember::JsGetterObjectMember(node)
@@ -5945,9 +5950,6 @@ impl From<JsSetterObjectMember> for JsAnyObjectMember {
 		JsAnyObjectMember::JsSetterObjectMember(node)
 	}
 }
-impl From<SpreadProp> for JsAnyObjectMember {
-	fn from(node: SpreadProp) -> JsAnyObjectMember { JsAnyObjectMember::SpreadProp(node) }
-}
 impl From<InitializedProp> for JsAnyObjectMember {
 	fn from(node: InitializedProp) -> JsAnyObjectMember { JsAnyObjectMember::InitializedProp(node) }
 }
@@ -5956,10 +5958,8 @@ impl From<JsShorthandPropertyObjectMember> for JsAnyObjectMember {
 		JsAnyObjectMember::JsShorthandPropertyObjectMember(node)
 	}
 }
-impl From<JsMethodObjectMember> for JsAnyObjectMember {
-	fn from(node: JsMethodObjectMember) -> JsAnyObjectMember {
-		JsAnyObjectMember::JsMethodObjectMember(node)
-	}
+impl From<JsSpread> for JsAnyObjectMember {
+	fn from(node: JsSpread) -> JsAnyObjectMember { JsAnyObjectMember::JsSpread(node) }
 }
 impl From<JsUnknownMember> for JsAnyObjectMember {
 	fn from(node: JsUnknownMember) -> JsAnyObjectMember { JsAnyObjectMember::JsUnknownMember(node) }
@@ -5968,12 +5968,12 @@ impl AstNode for JsAnyObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			JS_PROPERTY_OBJECT_MEMBER
+			| JS_METHOD_OBJECT_MEMBER
 			| JS_GETTER_OBJECT_MEMBER
 			| JS_SETTER_OBJECT_MEMBER
-			| SPREAD_PROP
 			| INITIALIZED_PROP
 			| JS_SHORTHAND_PROPERTY_OBJECT_MEMBER
-			| JS_METHOD_OBJECT_MEMBER
+			| JS_SPREAD
 			| JS_UNKNOWN_MEMBER => true,
 			_ => false,
 		}
@@ -5983,22 +5983,22 @@ impl AstNode for JsAnyObjectMember {
 			JS_PROPERTY_OBJECT_MEMBER => {
 				JsAnyObjectMember::JsPropertyObjectMember(JsPropertyObjectMember { syntax })
 			}
+			JS_METHOD_OBJECT_MEMBER => {
+				JsAnyObjectMember::JsMethodObjectMember(JsMethodObjectMember { syntax })
+			}
 			JS_GETTER_OBJECT_MEMBER => {
 				JsAnyObjectMember::JsGetterObjectMember(JsGetterObjectMember { syntax })
 			}
 			JS_SETTER_OBJECT_MEMBER => {
 				JsAnyObjectMember::JsSetterObjectMember(JsSetterObjectMember { syntax })
 			}
-			SPREAD_PROP => JsAnyObjectMember::SpreadProp(SpreadProp { syntax }),
 			INITIALIZED_PROP => JsAnyObjectMember::InitializedProp(InitializedProp { syntax }),
 			JS_SHORTHAND_PROPERTY_OBJECT_MEMBER => {
 				JsAnyObjectMember::JsShorthandPropertyObjectMember(
 					JsShorthandPropertyObjectMember { syntax },
 				)
 			}
-			JS_METHOD_OBJECT_MEMBER => {
-				JsAnyObjectMember::JsMethodObjectMember(JsMethodObjectMember { syntax })
-			}
+			JS_SPREAD => JsAnyObjectMember::JsSpread(JsSpread { syntax }),
 			JS_UNKNOWN_MEMBER => JsAnyObjectMember::JsUnknownMember(JsUnknownMember { syntax }),
 			_ => return None,
 		};
@@ -6007,12 +6007,12 @@ impl AstNode for JsAnyObjectMember {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyObjectMember::JsPropertyObjectMember(it) => &it.syntax,
+			JsAnyObjectMember::JsMethodObjectMember(it) => &it.syntax,
 			JsAnyObjectMember::JsGetterObjectMember(it) => &it.syntax,
 			JsAnyObjectMember::JsSetterObjectMember(it) => &it.syntax,
-			JsAnyObjectMember::SpreadProp(it) => &it.syntax,
 			JsAnyObjectMember::InitializedProp(it) => &it.syntax,
 			JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => &it.syntax,
-			JsAnyObjectMember::JsMethodObjectMember(it) => &it.syntax,
+			JsAnyObjectMember::JsSpread(it) => &it.syntax,
 			JsAnyObjectMember::JsUnknownMember(it) => &it.syntax,
 		}
 	}
@@ -7120,17 +7120,17 @@ impl std::fmt::Display for JsPropertyObjectMember {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsMethodObjectMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsGetterObjectMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
 impl std::fmt::Display for JsSetterObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for SpreadProp {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -7145,7 +7145,7 @@ impl std::fmt::Display for JsShorthandPropertyObjectMember {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsMethodObjectMember {
+impl std::fmt::Display for JsSpread {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

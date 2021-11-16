@@ -168,8 +168,8 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 							check_for_stmt_lhs(p, expr, marker);
 						}
 					}
-					ast::JsAnyObjectMember::SpreadProp(prop) if idx != expr.members().len() - 1 => {
-						if let Ok(lhs) = prop.value() {
+					ast::JsAnyObjectMember::JsSpread(prop) if idx != expr.members().len() - 1 => {
+						if let Ok(lhs) = prop.argument() {
 							check_spread_element(p, lhs, marker);
 						}
 					}
