@@ -26,7 +26,7 @@ JS_ROOT@0..48
                       JS_REFERENCE_IDENTIFIER_EXPRESSION@17..20
                         IDENT@17..20 "foo"
                       R_BRACK@20..21 "]"
-                    PARAMETER_LIST@21..23
+                    JS_PARAMETER_LIST@21..23
                       L_PAREN@21..22 "("
                       LIST@22..22
                       R_PAREN@22..23 ")"

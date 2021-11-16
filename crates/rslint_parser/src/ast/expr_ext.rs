@@ -333,9 +333,9 @@ impl JsStringLiteral {
 	}
 }
 
-impl ArrowExpr {
-	pub fn body(&self) -> Option<ExprOrBlock> {
-		ExprOrBlock::cast(self.syntax().children().last()?)
+impl JsArrowFunctionExpression {
+	pub fn body(&self) -> Option<JsAnyArrowFunctionBody> {
+		JsAnyArrowFunctionBody::cast(self.syntax().children().last()?)
 	}
 }
 

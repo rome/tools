@@ -1,12 +1,12 @@
 JS_ROOT@0..22
   LIST@0..0
   LIST@0..21
-    FN_DECL@0..21
+    JS_FUNCTION_DECLARATION@0..21
       FUNCTION_KW@0..8 "function"
       WHITESPACE@8..9 " "
-      NAME@9..12
+      JS_IDENTIFIER_BINDING@9..12
         IDENT@9..12 "foo"
-      PARAMETER_LIST@12..18
+      JS_PARAMETER_LIST@12..18
         L_PAREN@12..13 "("
         LIST@13..17
           ERROR@13..17

@@ -22,7 +22,7 @@ JS_ROOT@0..22
                     STAR@10..11 "*"
                     NAME@11..14
                       IDENT@11..14 "foo"
-                    PARAMETER_LIST@14..16
+                    JS_PARAMETER_LIST@14..16
                       L_PAREN@14..15 "("
                       LIST@15..15
                       R_PAREN@15..16 ")"

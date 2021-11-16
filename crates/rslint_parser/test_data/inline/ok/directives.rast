@@ -28,14 +28,14 @@ JS_ROOT@0..360
         JS_STRING_LITERAL_TOKEN@35..47 "\"use strict\""
       SEMICOLON@47..48 ";"
     WHITESPACE@48..49 " "
-    FN_DECL@49..152
+    JS_FUNCTION_DECLARATION@49..152
       COMMENT@49..67 "// not a directive"
       WHITESPACE@67..69 "\n\n"
       FUNCTION_KW@69..77 "function"
       WHITESPACE@77..78 " "
-      NAME@78..82
+      JS_IDENTIFIER_BINDING@78..82
         IDENT@78..82 "test"
-      PARAMETER_LIST@82..84
+      JS_PARAMETER_LIST@82..84
         L_PAREN@82..83 "("
         LIST@83..83
         R_PAREN@83..84 ")"
@@ -78,10 +78,10 @@ JS_ROOT@0..360
     JS_EXPRESSION_STATEMENT@154..236
       JS_PARENTHESIZED_EXPRESSION@154..235
         L_PAREN@154..155 "("
-        FN_EXPR@155..234
+        JS_FUNCTION_EXPRESSION@155..234
           FUNCTION_KW@155..163 "function"
           WHITESPACE@163..164 " "
-          PARAMETER_LIST@164..166
+          JS_PARAMETER_LIST@164..166
             L_PAREN@164..165 "("
             LIST@165..165
             R_PAREN@165..166 ")"
@@ -136,8 +136,8 @@ JS_ROOT@0..360
             JS_EQUAL_VALUE_CLAUSE@244..320
               EQ@244..245 "="
               WHITESPACE@245..246 " "
-              ARROW_EXPR@246..320
-                PARAMETER_LIST@246..248
+              JS_ARROW_FUNCTION_EXPRESSION@246..320
+                JS_PARAMETER_LIST@246..248
                   L_PAREN@246..247 "("
                   LIST@247..247
                   R_PAREN@247..248 ")"

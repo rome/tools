@@ -4,7 +4,7 @@ use rslint_parser::ast::JsAnyExpression;
 impl ToFormatElement for JsAnyExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			JsAnyExpression::ArrowExpr(arrow) => arrow.to_format_element(formatter),
+			JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow.to_format_element(formatter),
 			JsAnyExpression::JsAnyLiteral(literal) => literal.to_format_element(formatter),
 			JsAnyExpression::Template(_) => todo!(),
 			JsAnyExpression::JsReferenceIdentifierExpression(name_ref) => {
@@ -29,7 +29,7 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::JsConditionalExpression(_) => todo!(),
 			JsAnyExpression::AssignExpr(_) => todo!(),
 			JsAnyExpression::JsSequenceExpression(expr) => expr.to_format_element(formatter),
-			JsAnyExpression::FnExpr(_) => todo!(),
+			JsAnyExpression::JsFunctionExpression(_) => todo!(),
 			JsAnyExpression::ClassExpr(_) => todo!(),
 			JsAnyExpression::NewTarget(_) => todo!(),
 			JsAnyExpression::ImportMeta(_) => todo!(),

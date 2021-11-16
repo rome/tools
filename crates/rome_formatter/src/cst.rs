@@ -1,14 +1,15 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
-	ArgList, ArrayPattern, ArrowExpr, AssignPattern, CallExpr, ClassBody, ClassDecl, ClassProp,
-	Condition, ConstructorParameters, FnDecl, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
-	ForStmtUpdate, Getter, IdentProp, JsArrayExpression, JsBlockStatement, JsBooleanLiteral,
+	ArgList, ArrayPattern, AssignPattern, CallExpr, ClassBody, ClassDecl, ClassProp, Condition,
+	ConstructorParameters, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter,
+	IdentProp, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteral,
 	JsCaseClause, JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
-	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsIfStatement,
-	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsReferenceIdentifierExpression,
-	JsReturnStatement, JsRoot, JsSequenceExpression, JsStringLiteral, JsSwitchStatement,
-	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
-	JsWithStatement, LiteralProp, Name, ObjectExpr, ParameterList, Setter, SinglePattern,
+	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
+	JsFunctionDeclaration, JsIfStatement, JsLabeledStatement, JsNullLiteral, JsNumberLiteral,
+	JsParameterList, JsReferenceIdentifierExpression, JsReturnStatement, JsRoot,
+	JsSequenceExpression, JsStringLiteral, JsSwitchStatement, JsTryStatement,
+	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement,
+	LiteralProp, Name, ObjectExpr, Setter, SinglePattern,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -18,9 +19,11 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_ARRAY_EXPRESSION => JsArrayExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::ARROW_EXPR => ArrowExpr::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
+			SyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
+				JsArrowFunctionExpression::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
 			SyntaxKind::ASSIGN_PATTERN => AssignPattern::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
@@ -44,7 +47,7 @@ impl ToFormatElement for SyntaxNode {
 					.unwrap()
 					.to_format_element(formatter)
 			}
-			SyntaxKind::PARAMETER_LIST => ParameterList::cast(self.clone())
+			SyntaxKind::JS_PARAMETER_LIST => JsParameterList::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_ROOT => JsRoot::cast(self.clone())
@@ -64,7 +67,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_VARIABLE_DECLARATOR => JsVariableDeclarator::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::FN_DECL => FnDecl::cast(self.clone())
+			SyntaxKind::JS_FUNCTION_DECLARATION => JsFunctionDeclaration::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_SEQUENCE_EXPRESSION => JsSequenceExpression::cast(self.clone())

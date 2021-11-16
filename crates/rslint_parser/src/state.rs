@@ -49,7 +49,6 @@ pub struct ParserState {
 	pub(crate) no_recovery: bool,
 	pub in_declare: bool,
 	pub in_binding_list_for_signature: bool,
-	pub decorators_were_valid: bool,
 	pub in_default: bool,
 	pub for_head_error: Option<Diagnostic>,
 }
@@ -84,7 +83,6 @@ impl Default for ParserState {
 			no_recovery: false,
 			in_declare: false,
 			in_binding_list_for_signature: false,
-			decorators_were_valid: false,
 			in_default: false,
 			for_head_error: None,
 		}

@@ -1,9 +1,9 @@
 use crate::{
 	concat_elements, space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::FnDecl;
+use rslint_parser::ast::JsFunctionDeclaration;
 
-impl ToFormatElement for FnDecl {
+impl ToFormatElement for JsFunctionDeclaration {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let mut tokens = vec![];
 
@@ -19,8 +19,8 @@ impl ToFormatElement for FnDecl {
 		}
 
 		tokens.push(space_token());
-		tokens.push(formatter.format_node(self.name()?)?);
-		tokens.push(formatter.format_node(self.parameters()?)?);
+		tokens.push(formatter.format_node(self.id()?)?);
+		tokens.push(formatter.format_node(self.parameter_list()?)?);
 		tokens.push(space_token());
 		tokens.push(formatter.format_node(self.body()?)?);
 

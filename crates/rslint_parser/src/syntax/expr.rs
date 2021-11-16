@@ -5,12 +5,11 @@
 
 use syntax::decl::is_semi;
 
-use super::decl::{
-	arrow_body, class_decl, formal_parameters, function_decl, maybe_private_name, method,
-};
+use super::decl::{arrow_body, class_decl, maybe_private_name, method, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
+use crate::syntax::function::function_expression;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -110,12 +109,12 @@ pub fn assign_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			ts_type_params(p)?;
 			let res = assign_expr_base(p);
-			if res.map(|x| x.kind()) != Some(ARROW_EXPR) {
+			if res.map(|x| x.kind()) != Some(JS_ARROW_FUNCTION_EXPRESSION) {
 				m.abandon(p);
 				None
 			} else {
 				res.unwrap().undo_completion(p).abandon(p);
-				Some(m.complete(p, ARROW_EXPR))
+				Some(m.complete(p, JS_ARROW_FUNCTION_EXPRESSION))
 			}
 		});
 		if let Some(mut res) = res {
@@ -425,7 +424,7 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 		}
 
 		let complete = member_or_new_expr(p, new_expr)?;
-		if complete.kind() == ARROW_EXPR {
+		if complete.kind() == JS_ARROW_FUNCTION_EXPRESSION {
 			return Some(complete);
 		}
 
@@ -724,7 +723,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			let expr = assign_expr(&mut *temp);
 			if expr.is_some() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
-				params_marker = Some(formal_parameters(&mut *temp));
+				params_marker = Some(parameter_list(&mut *temp));
 				break;
 			}
 
@@ -758,7 +757,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				..p.state.clone()
 			});
 			p.rewind(checkpoint);
-			formal_parameters(p);
+			parameter_list(p);
 			if p.at(T![:]) {
 				if let Some(mut ret) = ts_type_or_type_predicate_ann(p, T![:]) {
 					ret.err_if_not_ts(
@@ -775,7 +774,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 		// events does not work apparently, therefore we need to clone the entire parser
 		let cloned = p.clone();
 		if func(p).is_some() {
-			let c = m.complete(p, ARROW_EXPR);
+			let c = m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 			return c;
 		} else {
 			*p = cloned;
@@ -797,7 +796,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if params_marker.is_none() {
 				// Rewind the parser so we can reparse as formal parameters
 				p.rewind(checkpoint);
-				formal_parameters(p);
+				parameter_list(p);
 			}
 
 			if p.at(T![:]) {
@@ -812,7 +811,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 
 			p.bump_any();
 			arrow_body(p);
-			return m.complete(p, ARROW_EXPR);
+			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 		}
 	}
 
@@ -915,18 +914,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// let a = async function() {};
 			// let b = async function foo() {};
 			if p.nth_at(1, T![function]) {
-				let m = p.start();
-				p.bump_remap(T![async]);
-				let mut complete = function_decl(
-					&mut *p.with_state(ParserState {
-						in_async: true,
-						..p.state.clone()
-					}),
-					m,
-					true,
-				);
-				complete.change_kind(p, FN_EXPR);
-				complete
+				function_expression(p)
 			} else {
 				// `async a => {}` and `async (a) => {}`
 				if p.state.potential_arrow_start
@@ -939,13 +927,13 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					let m = p.start();
 					p.bump_remap(T![async]);
 					if p.at(T!['(']) {
-						formal_parameters(p);
+						parameter_list(p);
 					} else {
 						let m = p.start();
 						// test_err async_arrow_expr_await_parameter
 						// let a = async await => {}
 						p.bump_remap(T![ident]);
-						m.complete(p, NAME);
+						m.complete(p, JS_IDENTIFIER_BINDING);
 					}
 					if p.at(T![:]) {
 						let complete = ts_type_or_type_predicate_ann(p, T![:]);
@@ -961,7 +949,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						in_async: true,
 						..p.state.clone()
 					}));
-					m.complete(p, ARROW_EXPR)
+					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
 					identifier_reference(p)?
 				}
@@ -971,10 +959,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			// test function_expr
 			// let a = function() {}
 			// let b = function foo() {}
-			let m = p.start();
-			let mut complete = function_decl(p, m, true);
-			complete.change_kind(p, FN_EXPR);
-			complete
+			function_expression(p)
 		}
 		T![ident] | T![yield] | T![await] => {
 			// test identifier_reference
@@ -990,12 +975,12 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// foo =>
 				// {}
 
-				// parameters are binding so we need to change the kind from NAME_REF to NAME
-				ident.change_kind(p, NAME);
+				// parameters are binding so we need to change the kind from NAME_REF to JS_IDENTIFIER_BINDING
+				ident.change_kind(p, JS_IDENTIFIER_BINDING);
 				let m = ident.precede(p);
 				p.bump_any();
 				arrow_body(p);
-				m.complete(p, ARROW_EXPR)
+				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
 				ident
 			}
@@ -1327,7 +1312,7 @@ pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 
 	let lhs = member_or_new_expr(p, true)?;
-	if lhs.kind() == ARROW_EXPR {
+	if lhs.kind() == JS_ARROW_FUNCTION_EXPRESSION {
 		return Some(lhs);
 	}
 

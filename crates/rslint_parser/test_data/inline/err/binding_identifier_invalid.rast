@@ -2,10 +2,10 @@ JS_ROOT@0..83
   LIST@0..0
   LIST@0..82
     JS_EXPRESSION_STATEMENT@0..30
-      ARROW_EXPR@0..30
+      JS_ARROW_FUNCTION_EXPRESSION@0..30
         ASYNC_KW@0..5 "async"
         WHITESPACE@5..6 " "
-        PARAMETER_LIST@6..8
+        JS_PARAMETER_LIST@6..8
           L_PAREN@6..7 "("
           LIST@7..7
           R_PAREN@7..8 ")"
@@ -36,13 +36,13 @@ JS_ROOT@0..83
           WHITESPACE@28..29 " "
           R_CURLY@29..30 "}"
     WHITESPACE@30..31 "\n"
-    FN_DECL@31..68
+    JS_FUNCTION_DECLARATION@31..68
       FUNCTION_KW@31..39 "function"
       WHITESPACE@39..40 " "
       STAR@40..41 "*"
-      NAME@41..44
+      JS_IDENTIFIER_BINDING@41..44
         IDENT@41..44 "foo"
-      PARAMETER_LIST@44..46
+      JS_PARAMETER_LIST@44..46
         L_PAREN@44..45 "("
         LIST@45..45
         R_PAREN@45..46 ")"

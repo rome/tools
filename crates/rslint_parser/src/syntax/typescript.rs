@@ -3,6 +3,7 @@
 use super::decl::*;
 use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
 use super::stmt::{semi, statements, variable_declaration_statement};
+use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_TS_RECOVERY_SET: TokenSet = token_set![
@@ -133,14 +134,8 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 		..p.state.clone()
 	});
 	Some(match p.nth(1) {
-		T![function] => {
-			p.state.decorators_were_valid = true;
-			let m = p.start();
-			p.bump_remap(T![declare]);
-			function_decl(p, m, false)
-		}
+		T![function] => function_declaration(p),
 		T![class] => {
-			p.state.decorators_were_valid = true;
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			class_decl(p, false).undo_completion(p).abandon(p);
@@ -197,7 +192,6 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 
 pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.cur_src() == "abstract" {
-		p.state.decorators_were_valid = true;
 		let m = p.start();
 		let range = p.cur_tok().range;
 		p.bump_remap(T![abstract]);
@@ -487,7 +481,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 		if p.at(T![<]) {
 			no_recover!(p, ts_type_params(p));
 		}
-		formal_parameters(p);
+		parameter_list(p);
 		if p.at(T![:]) {
 			ts_type_or_type_predicate_ann(p, T![:]);
 		}
@@ -536,7 +530,7 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
 		no_recover!(p, ts_type_params(p));
 	}
 
-	formal_parameters(&mut *p.with_state(ParserState {
+	parameter_list(&mut *p.with_state(ParserState {
 		in_binding_list_for_signature: true,
 		..p.state.clone()
 	}));
@@ -667,7 +661,7 @@ pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<Comple
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
-	formal_parameters(p);
+	parameter_list(p);
 	no_recover!(p, ts_type_or_type_predicate_ann(p, T![=>]));
 	Some(m.complete(
 		p,

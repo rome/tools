@@ -18,8 +18,8 @@ JS_ROOT@0..26
                 IDENT@8..13 "async"
     WHITESPACE@13..14 " "
     JS_EXPRESSION_STATEMENT@14..25
-      ARROW_EXPR@14..25
-        NAME@14..19
+      JS_ARROW_FUNCTION_EXPRESSION@14..25
+        JS_IDENTIFIER_BINDING@14..19
           IDENT@14..19 "await"
         WHITESPACE@19..20 " "
         FAT_ARROW@20..22 "=>"

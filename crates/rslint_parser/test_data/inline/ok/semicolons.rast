@@ -66,12 +66,12 @@ JS_ROOT@0..84
               NAME@49..52
                 IDENT@49..52 "foo"
     WHITESPACE@52..53 "\n"
-    FN_DECL@53..83
+    JS_FUNCTION_DECLARATION@53..83
       FUNCTION_KW@53..61 "function"
       WHITESPACE@61..62 " "
-      NAME@62..65
+      JS_IDENTIFIER_BINDING@62..65
         IDENT@62..65 "foo"
-      PARAMETER_LIST@65..67
+      JS_PARAMETER_LIST@65..67
         L_PAREN@65..66 "("
         LIST@66..66
         R_PAREN@66..67 ")"

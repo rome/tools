@@ -81,7 +81,7 @@ JsAnyStatement =
 	| JsTryStatement
 	| JsTryFinallyStatement
 	| JsDebuggerStatement
-  | FnDecl
+  | JsFunctionDeclaration
 	| ClassDecl
 	| JsVariableDeclarationStatement
 	| TsEnum
@@ -243,9 +243,11 @@ JsDebuggerStatement =
 JsAnyExpression =
 	JsAnyLiteral
 	| JsArrayExpression
+	| JsArrowFunctionExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
 	| JsConditionalExpression
+	| JsFunctionExpression
 	| JsImportCallExpression
 	| JsLogicalExpression
 	| JsParenthesizedExpression
@@ -256,7 +258,6 @@ JsAnyExpression =
 	| JsPreUpdateExpression
 	| JsPostUpdateExpression
 	| JsYieldExpression
-	| ArrowExpr
 	| Template
 	| ObjectExpr
 	| BracketExpr
@@ -264,7 +265,6 @@ JsAnyExpression =
 	| NewExpr
 	| CallExpr
 	| AssignExpr
-	| FnExpr
 	| ClassExpr
 	| NewTarget
 	| ImportMeta
@@ -326,31 +326,27 @@ JsConditionalExpression =
 // import meta expression
 ImportMeta = 'import' '.'
 
-// function expression
-FnExpr =
+JsFunctionExpression =
 	'async'?
 	'function'
 	'*'?
-	name:Name
-	type_params:TsTypeParams?
-	parameters:ArgList
-	':'?
-	return_type:TsType?
-	body:JsFunctionBody
+	id: JsIdentifierBinding?
+	type_parameters: TsTypeParams?
+	parameters: JsParameterList
+	return_type: TsReturnType?
+	body: JsFunctionBody
 
-// Arrow expression
-ArrowExpr =
+
+JsArrowFunctionExpression =
 	'async'?
-	type_params:TsTypeParams?
-	params:ArrowExprParams?
+	type_parameters: TsTypeParams?
+	parameter_list: JsAnyArrowFunctionParameters?
 	'=>'
-	':'?
-	return_type:TsType?
-	manual__body:ExprOrBlock
+	return_type: TsReturnType?
+	manual__body: JsAnyArrowFunctionBody
 
-ArrowExprParams =
-	Name
-	| ParameterList
+JsAnyArrowFunctionParameters = JsParameterList | JsIdentifierBinding
+JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
 
 // Object expression
 ObjectExpr = '{' props:(ObjectProp (',' ObjectProp)* ','?) '}'
@@ -384,7 +380,7 @@ Constructor =
 	accessibility:TsAccessibility?
 	name:PropName
 	type_params:TsTypeParams?
-	parameters:ParameterList
+	parameters:JsParameterList
 	body:JsFunctionBody
 
 
@@ -606,9 +602,9 @@ IdentProp = name: Name
 // MISCELLANEOUS
 ///////////////
 
-Getter =  'get' key:PropName parameters:ParameterList  body:JsFunctionBody
+Getter =  'get' key:PropName parameters:JsParameterList  body:JsFunctionBody
 
-Setter = 'set' key:PropName parameters:ParameterList  body:JsFunctionBody
+Setter = 'set' key:PropName parameters:JsParameterList  body:JsFunctionBody
 
 Method =
 	'static'?
@@ -616,7 +612,7 @@ Method =
 	'*'?
 	name:PropName
 	type_params:TsTypeParams?
-	parameters:ParameterList
+	parameters:JsParameterList
 	':'?
 	return_type:TsType?
 	body:JsFunctionBody
@@ -635,17 +631,19 @@ JsReferenceIdentifierExpression = name: 'ident'
 // DECLARATIONS
 ///////////////
 
-FnDecl =
+JsFunctionDeclaration =
 	'async'?
 	'function'
 	'*'?
-	name: Name
-	type_parameters:TsTypeParams?
-	parameters:ParameterList
-	':'?
-	return_type:TsType?
-	body:JsFunctionBody
+	id: JsIdentifierBinding
+	type_parameters: TsTypeParams?
+	parameter_list: JsParameterList
+	return_type: TsReturnType?
+	body: JsFunctionBody
 
+TsReturnType =
+	':'
+	type: TsType
 
 JsVariableDeclarationStatement =
     declaration: JsVariableDeclaration ';'?
@@ -680,7 +678,7 @@ ImportDecl =
 // export default declaration
 ExportDefaultDecl = 'export' 'default'? 'type'? decl:DefaultDecl
 DefaultDecl =
-	FnDecl
+	JsFunctionDeclaration
 	| ClassDecl
 
 
@@ -695,7 +693,7 @@ ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: JsStrin
 ExportDecl = 'export' 'type'? decl: JsAnyExportDeclaration
 
 JsAnyExportDeclaration =
-	FnDecl
+	JsFunctionDeclaration
 	| ClassDecl
 	| JsVariableDeclarationStatement
 	| TsEnum
@@ -735,14 +733,30 @@ WildcardImport = '*' 'as'? ident: Ident?
 ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
 
 ///////////////
+// BINDINGS
+///////////////
+
+// Binds a value to an identifier.
+// let x = OR function(test) {}
+//     ^               ^^^^
+JsIdentifierBinding = name: 'ident'
+
+///////////////
 // AUXILIARY
 ///////////////
 
-ExprOrBlock =
-	JsAnyExpression
-	| JsFunctionBody
 
-ParameterList = '(' parameters:(Pattern (',' Pattern)* ','?) ')'
+JsParameterList =
+	'('
+	parameters: (Pattern (',' Pattern)* ','?)
+	')'
+
+JsAnyParameter = Pattern | JsRestParameter
+
+JsRestParameter =
+	'...'
+	binding: Pattern
+
 ArgList = '(' args:(JsAnyExpression (',' JsAnyExpression)* ','?) ')'
 
 
@@ -896,12 +910,12 @@ TsUnion = types:TsType*
 
 // typescript function type
 // Example: (something: String) => bool
-TsFnType = params:ParameterList '=>' return_type:TsType?
+TsFnType = params:JsParameterList '=>' return_type:TsType?
 
 
 // typescript constructor type
 // Exapmle: new (something: String): SomethingElse
-TsConstructorType = 'new' params:ParameterList ':' return_type:TsType?
+TsConstructorType = 'new' params:JsParameterList ':' return_type:TsType?
 
 
 // typescript conditional type
@@ -974,11 +988,11 @@ TsTypeArgs = '<' args:TsType '>'
 
 
 // @ematipico we should make an example here
-TsCallSignatureDecl =  type_params:TsTypeParams parameters:ParameterList  ':' return_type:TsType
+TsCallSignatureDecl =  type_params:TsTypeParams parameters:JsParameterList  ':' return_type:TsType
 TsConstructSignatureDecl =
 	'new'
 	type_params:TsTypeParams
-	parameters:ParameterList
+	parameters:JsParameterList
 	// these two should be optional together
 	':'? return_type:TsType
 
@@ -990,7 +1004,7 @@ TsMethodSignature =
 	'readonly'?
 	key:JsAnyExpression
 	type_params:TsTypeParams
-	parameters:ParameterList
+	parameters:JsParameterList
 	'?'?
 	':'
 	return_type:TsType
