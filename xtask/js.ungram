@@ -391,7 +391,7 @@ ConstructorParamOrPat =
 
 
 
-// This type is here only to matain compatiblity with rslit_parser
+// This type is here only to maintain compatibility with rslit_parser
 // A private property should only have the hash (#) or have the
 // keyword `private` in the typescript version
 PrivateProp = class_prop: ClassProp
@@ -513,7 +513,7 @@ JsAnyObjectMember =
 	| JsMethodObjectMember
 	| JsGetterObjectMember
 	| JsSetterObjectMember
-	| InitializedProp // BindingWithDefault?
+	| InitializedProp // TODO 1725 Delete after finishing assignment targets work
 	| JsShorthandPropertyObjectMember
 	| JsSpread
 	| JsUnknownMember
@@ -556,6 +556,11 @@ JsMethodObjectMember =
 	return_type: TsReturnType?
 	body: JsFunctionBody
 
+// { a }
+//   ^
+JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
+
+// TODO 1725 Delete after finishing work around Classes & Assignment targets
 PropName =
 	ComputedPropertyName
 	| JsStringLiteral
@@ -573,10 +578,6 @@ PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
 
 // initialised property
 InitializedProp = key:Name '=' value:JsAnyExpression
-
-// { a }
-//   ^
-JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
 
 
 ///////////////
