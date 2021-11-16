@@ -1,34 +1,6 @@
 //! Extended AST node definitions for statements which are unique and special enough to generate code for manually
 
-use crate::{ast::*, syntax_node::SyntaxNode, SyntaxKind, SyntaxKind::*, SyntaxNodeExt, T};
-
-/// Either a statement or a declaration such as a function
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum StmtListItem {
-	Stmt(JsAnyStatement),
-	Decl(Decl),
-}
-
-impl AstNode for StmtListItem {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		JsAnyStatement::can_cast(kind) || Decl::can_cast(kind)
-	}
-
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if JsAnyStatement::can_cast(syntax.kind()) {
-			Some(StmtListItem::Stmt(JsAnyStatement::cast(syntax)?))
-		} else {
-			Some(StmtListItem::Decl(Decl::cast(syntax)?))
-		}
-	}
-
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			StmtListItem::Stmt(stmt) => stmt.syntax(),
-			StmtListItem::Decl(decl) => decl.syntax(),
-		}
-	}
-}
+use crate::{ast::*, SyntaxKind::*, SyntaxNodeExt, T};
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Hash)]
 pub enum JsVariableKind {

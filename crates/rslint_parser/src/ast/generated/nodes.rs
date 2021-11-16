@@ -375,6 +375,128 @@ impl JsDebuggerStatement {
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct FnDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl FnDecl {
+	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
+	pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![function])
+	}
+	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
+	pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
+	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
+	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
+	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ClassDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl ClassDecl {
+	pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![class])
+	}
+	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
+	pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![extends])
+	}
+	pub fn parent(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<ClassBody> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsVariableDeclarationStatement {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsVariableDeclarationStatement {
+	pub fn declaration(&self) -> SyntaxResult<JsVariableDeclaration> {
+		support::required_node(&self.syntax)
+	}
+	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsEnum {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsEnum {
+	pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![const]) }
+	pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![enum])
+	}
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['{'])
+	}
+	pub fn members(&self) -> AstNodeList<TsEnumMember> { support::node_list(&self.syntax, 0usize) }
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['}'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsTypeAliasDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsTypeAliasDecl {
+	pub fn type_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![type])
+	}
+	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
+	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [=])
+	}
+	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsNamespaceDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsNamespaceDecl {
+	pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![declare])
+	}
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
+	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsModuleDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsModuleDecl {
+	pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![declare])
+	}
+	pub fn global_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![global]) }
+	pub fn module_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![module])
+	}
+	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
+	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TsInterfaceDecl {
+	pub(crate) syntax: SyntaxNode,
+}
+impl TsInterfaceDecl {
+	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
+	pub fn interface_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![interface])
+	}
+	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
+	pub fn extends_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![extends]) }
+	pub fn extends(&self) -> Option<TsExprWithTypeArgs> { support::node(&self.syntax) }
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['{'])
+	}
+	pub fn members(&self) -> SyntaxResult<TsTypeElement> { support::required_node(&self.syntax) }
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['}'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ImportDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -466,7 +588,9 @@ impl ExportDecl {
 		support::required_token(&self.syntax, T![export])
 	}
 	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
-	pub fn decl(&self) -> SyntaxResult<Decl> { support::required_node(&self.syntax) }
+	pub fn decl(&self) -> SyntaxResult<JsAnyExportDeclaration> {
+		support::required_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsImportEqualsDecl {
@@ -1531,128 +1655,6 @@ impl Condition {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct FnDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl FnDecl {
-	pub fn async_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![async]) }
-	pub fn function_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![function])
-	}
-	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
-	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
-	pub fn type_parameters(&self) -> Option<TsTypeParams> { support::node(&self.syntax) }
-	pub fn parameters(&self) -> SyntaxResult<ParameterList> { support::required_node(&self.syntax) }
-	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
-	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ClassDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ClassDecl {
-	pub fn class_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![class])
-	}
-	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
-	pub fn extends_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![extends])
-	}
-	pub fn parent(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<ClassBody> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct JsVariableDeclarationStatement {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsVariableDeclarationStatement {
-	pub fn declaration(&self) -> SyntaxResult<JsVariableDeclaration> {
-		support::required_node(&self.syntax)
-	}
-	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsEnum {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsEnum {
-	pub fn const_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![const]) }
-	pub fn enum_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![enum])
-	}
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
-	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['{'])
-	}
-	pub fn members(&self) -> AstNodeList<TsEnumMember> { support::node_list(&self.syntax, 0usize) }
-	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['}'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsTypeAliasDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsTypeAliasDecl {
-	pub fn type_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![type])
-	}
-	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
-	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [=])
-	}
-	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsNamespaceDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsNamespaceDecl {
-	pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![declare])
-	}
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
-	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
-	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsModuleDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsModuleDecl {
-	pub fn declare_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![declare])
-	}
-	pub fn global_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![global]) }
-	pub fn module_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![module])
-	}
-	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
-	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
-	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct TsInterfaceDecl {
-	pub(crate) syntax: SyntaxNode,
-}
-impl TsInterfaceDecl {
-	pub fn declare_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![declare]) }
-	pub fn interface_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![interface])
-	}
-	pub fn type_params(&self) -> SyntaxResult<TsTypeParams> { support::required_node(&self.syntax) }
-	pub fn extends_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![extends]) }
-	pub fn extends(&self) -> Option<TsExprWithTypeArgs> { support::node(&self.syntax) }
-	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['{'])
-	}
-	pub fn members(&self) -> SyntaxResult<TsTypeElement> { support::required_node(&self.syntax) }
-	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['}'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarator {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2256,7 +2258,14 @@ pub enum JsAnyStatement {
 	JsTryStatement(JsTryStatement),
 	JsTryFinallyStatement(JsTryFinallyStatement),
 	JsDebuggerStatement(JsDebuggerStatement),
-	Decl(Decl),
+	FnDecl(FnDecl),
+	ClassDecl(ClassDecl),
+	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
+	TsEnum(TsEnum),
+	TsTypeAliasDecl(TsTypeAliasDecl),
+	TsNamespaceDecl(TsNamespaceDecl),
+	TsModuleDecl(TsModuleDecl),
+	TsInterfaceDecl(TsInterfaceDecl),
 	ImportDecl(ImportDecl),
 	ExportNamed(ExportNamed),
 	ExportDefaultDecl(ExportDefaultDecl),
@@ -2267,17 +2276,6 @@ pub enum JsAnyStatement {
 	TsExportAssignment(TsExportAssignment),
 	TsNamespaceExportDecl(TsNamespaceExportDecl),
 	JsUnknownStatement(JsUnknownStatement),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum Decl {
-	FnDecl(FnDecl),
-	ClassDecl(ClassDecl),
-	JsVariableDeclarationStatement(JsVariableDeclarationStatement),
-	TsEnum(TsEnum),
-	TsTypeAliasDecl(TsTypeAliasDecl),
-	TsNamespaceDecl(TsNamespaceDecl),
-	TsModuleDecl(TsModuleDecl),
-	TsInterfaceDecl(TsInterfaceDecl),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExpression {
@@ -2455,6 +2453,16 @@ pub enum ImportClause {
 pub enum DefaultDecl {
 	FnDecl(FnDecl),
 	ClassDecl(ClassDecl),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyExportDeclaration {
+	FnDecl(FnDecl),
+	ClassDecl(ClassDecl),
+	TsEnum(TsEnum),
+	TsTypeAliasDecl(TsTypeAliasDecl),
+	TsNamespaceDecl(TsNamespaceDecl),
+	TsModuleDecl(TsModuleDecl),
+	TsInterfaceDecl(TsInterfaceDecl),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsModuleRef {
@@ -2783,6 +2791,94 @@ impl AstNode for JsTryFinallyStatement {
 }
 impl AstNode for JsDebuggerStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEBUGGER_STATEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for FnDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == FN_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for ClassDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == CLASS_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsVariableDeclarationStatement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_STATEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsEnum {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsTypeAliasDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ALIAS_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsNamespaceDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMESPACE_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsModuleDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MODULE_DECL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for TsInterfaceDecl {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERFACE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3782,94 +3878,6 @@ impl AstNode for Condition {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for FnDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == FN_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for ClassDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == CLASS_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for JsVariableDeclarationStatement {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_STATEMENT }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsEnum {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsTypeAliasDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ALIAS_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsNamespaceDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMESPACE_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsModuleDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MODULE_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for TsInterfaceDecl {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERFACE_DECL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for JsVariableDeclarator {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATOR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4529,6 +4537,32 @@ impl From<JsDebuggerStatement> for JsAnyStatement {
 		JsAnyStatement::JsDebuggerStatement(node)
 	}
 }
+impl From<FnDecl> for JsAnyStatement {
+	fn from(node: FnDecl) -> JsAnyStatement { JsAnyStatement::FnDecl(node) }
+}
+impl From<ClassDecl> for JsAnyStatement {
+	fn from(node: ClassDecl) -> JsAnyStatement { JsAnyStatement::ClassDecl(node) }
+}
+impl From<JsVariableDeclarationStatement> for JsAnyStatement {
+	fn from(node: JsVariableDeclarationStatement) -> JsAnyStatement {
+		JsAnyStatement::JsVariableDeclarationStatement(node)
+	}
+}
+impl From<TsEnum> for JsAnyStatement {
+	fn from(node: TsEnum) -> JsAnyStatement { JsAnyStatement::TsEnum(node) }
+}
+impl From<TsTypeAliasDecl> for JsAnyStatement {
+	fn from(node: TsTypeAliasDecl) -> JsAnyStatement { JsAnyStatement::TsTypeAliasDecl(node) }
+}
+impl From<TsNamespaceDecl> for JsAnyStatement {
+	fn from(node: TsNamespaceDecl) -> JsAnyStatement { JsAnyStatement::TsNamespaceDecl(node) }
+}
+impl From<TsModuleDecl> for JsAnyStatement {
+	fn from(node: TsModuleDecl) -> JsAnyStatement { JsAnyStatement::TsModuleDecl(node) }
+}
+impl From<TsInterfaceDecl> for JsAnyStatement {
+	fn from(node: TsInterfaceDecl) -> JsAnyStatement { JsAnyStatement::TsInterfaceDecl(node) }
+}
 impl From<ImportDecl> for JsAnyStatement {
 	fn from(node: ImportDecl) -> JsAnyStatement { JsAnyStatement::ImportDecl(node) }
 }
@@ -4583,6 +4617,14 @@ impl AstNode for JsAnyStatement {
 			| JS_TRY_STATEMENT
 			| JS_TRY_FINALLY_STATEMENT
 			| JS_DEBUGGER_STATEMENT
+			| FN_DECL
+			| CLASS_DECL
+			| JS_VARIABLE_DECLARATION_STATEMENT
+			| TS_ENUM
+			| TS_TYPE_ALIAS_DECL
+			| TS_NAMESPACE_DECL
+			| TS_MODULE_DECL
+			| TS_INTERFACE_DECL
 			| IMPORT_DECL
 			| EXPORT_NAMED
 			| EXPORT_DEFAULT_DECL
@@ -4593,7 +4635,6 @@ impl AstNode for JsAnyStatement {
 			| TS_EXPORT_ASSIGNMENT
 			| TS_NAMESPACE_EXPORT_DECL
 			| JS_UNKNOWN_STATEMENT => true,
-			k if Decl::can_cast(k) => true,
 			_ => false,
 		}
 	}
@@ -4630,6 +4671,18 @@ impl AstNode for JsAnyStatement {
 			JS_DEBUGGER_STATEMENT => {
 				JsAnyStatement::JsDebuggerStatement(JsDebuggerStatement { syntax })
 			}
+			FN_DECL => JsAnyStatement::FnDecl(FnDecl { syntax }),
+			CLASS_DECL => JsAnyStatement::ClassDecl(ClassDecl { syntax }),
+			JS_VARIABLE_DECLARATION_STATEMENT => {
+				JsAnyStatement::JsVariableDeclarationStatement(JsVariableDeclarationStatement {
+					syntax,
+				})
+			}
+			TS_ENUM => JsAnyStatement::TsEnum(TsEnum { syntax }),
+			TS_TYPE_ALIAS_DECL => JsAnyStatement::TsTypeAliasDecl(TsTypeAliasDecl { syntax }),
+			TS_NAMESPACE_DECL => JsAnyStatement::TsNamespaceDecl(TsNamespaceDecl { syntax }),
+			TS_MODULE_DECL => JsAnyStatement::TsModuleDecl(TsModuleDecl { syntax }),
+			TS_INTERFACE_DECL => JsAnyStatement::TsInterfaceDecl(TsInterfaceDecl { syntax }),
 			IMPORT_DECL => JsAnyStatement::ImportDecl(ImportDecl { syntax }),
 			EXPORT_NAMED => JsAnyStatement::ExportNamed(ExportNamed { syntax }),
 			EXPORT_DEFAULT_DECL => JsAnyStatement::ExportDefaultDecl(ExportDefaultDecl { syntax }),
@@ -4648,12 +4701,7 @@ impl AstNode for JsAnyStatement {
 			JS_UNKNOWN_STATEMENT => {
 				JsAnyStatement::JsUnknownStatement(JsUnknownStatement { syntax })
 			}
-			_ => {
-				if let Some(decl) = Decl::cast(syntax) {
-					return Some(JsAnyStatement::Decl(decl));
-				}
-				return None;
-			}
+			_ => return None,
 		};
 		Some(res)
 	}
@@ -4678,6 +4726,14 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::JsTryStatement(it) => &it.syntax,
 			JsAnyStatement::JsTryFinallyStatement(it) => &it.syntax,
 			JsAnyStatement::JsDebuggerStatement(it) => &it.syntax,
+			JsAnyStatement::FnDecl(it) => &it.syntax,
+			JsAnyStatement::ClassDecl(it) => &it.syntax,
+			JsAnyStatement::JsVariableDeclarationStatement(it) => &it.syntax,
+			JsAnyStatement::TsEnum(it) => &it.syntax,
+			JsAnyStatement::TsTypeAliasDecl(it) => &it.syntax,
+			JsAnyStatement::TsNamespaceDecl(it) => &it.syntax,
+			JsAnyStatement::TsModuleDecl(it) => &it.syntax,
+			JsAnyStatement::TsInterfaceDecl(it) => &it.syntax,
 			JsAnyStatement::ImportDecl(it) => &it.syntax,
 			JsAnyStatement::ExportNamed(it) => &it.syntax,
 			JsAnyStatement::ExportDefaultDecl(it) => &it.syntax,
@@ -4688,76 +4744,6 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::TsExportAssignment(it) => &it.syntax,
 			JsAnyStatement::TsNamespaceExportDecl(it) => &it.syntax,
 			JsAnyStatement::JsUnknownStatement(it) => &it.syntax,
-			JsAnyStatement::Decl(it) => it.syntax(),
-		}
-	}
-}
-impl From<FnDecl> for Decl {
-	fn from(node: FnDecl) -> Decl { Decl::FnDecl(node) }
-}
-impl From<ClassDecl> for Decl {
-	fn from(node: ClassDecl) -> Decl { Decl::ClassDecl(node) }
-}
-impl From<JsVariableDeclarationStatement> for Decl {
-	fn from(node: JsVariableDeclarationStatement) -> Decl {
-		Decl::JsVariableDeclarationStatement(node)
-	}
-}
-impl From<TsEnum> for Decl {
-	fn from(node: TsEnum) -> Decl { Decl::TsEnum(node) }
-}
-impl From<TsTypeAliasDecl> for Decl {
-	fn from(node: TsTypeAliasDecl) -> Decl { Decl::TsTypeAliasDecl(node) }
-}
-impl From<TsNamespaceDecl> for Decl {
-	fn from(node: TsNamespaceDecl) -> Decl { Decl::TsNamespaceDecl(node) }
-}
-impl From<TsModuleDecl> for Decl {
-	fn from(node: TsModuleDecl) -> Decl { Decl::TsModuleDecl(node) }
-}
-impl From<TsInterfaceDecl> for Decl {
-	fn from(node: TsInterfaceDecl) -> Decl { Decl::TsInterfaceDecl(node) }
-}
-impl AstNode for Decl {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			FN_DECL
-			| CLASS_DECL
-			| JS_VARIABLE_DECLARATION_STATEMENT
-			| TS_ENUM
-			| TS_TYPE_ALIAS_DECL
-			| TS_NAMESPACE_DECL
-			| TS_MODULE_DECL
-			| TS_INTERFACE_DECL => true,
-			_ => false,
-		}
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			FN_DECL => Decl::FnDecl(FnDecl { syntax }),
-			CLASS_DECL => Decl::ClassDecl(ClassDecl { syntax }),
-			JS_VARIABLE_DECLARATION_STATEMENT => {
-				Decl::JsVariableDeclarationStatement(JsVariableDeclarationStatement { syntax })
-			}
-			TS_ENUM => Decl::TsEnum(TsEnum { syntax }),
-			TS_TYPE_ALIAS_DECL => Decl::TsTypeAliasDecl(TsTypeAliasDecl { syntax }),
-			TS_NAMESPACE_DECL => Decl::TsNamespaceDecl(TsNamespaceDecl { syntax }),
-			TS_MODULE_DECL => Decl::TsModuleDecl(TsModuleDecl { syntax }),
-			TS_INTERFACE_DECL => Decl::TsInterfaceDecl(TsInterfaceDecl { syntax }),
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			Decl::FnDecl(it) => &it.syntax,
-			Decl::ClassDecl(it) => &it.syntax,
-			Decl::JsVariableDeclarationStatement(it) => &it.syntax,
-			Decl::TsEnum(it) => &it.syntax,
-			Decl::TsTypeAliasDecl(it) => &it.syntax,
-			Decl::TsNamespaceDecl(it) => &it.syntax,
-			Decl::TsModuleDecl(it) => &it.syntax,
-			Decl::TsInterfaceDecl(it) => &it.syntax,
 		}
 	}
 }
@@ -5805,6 +5791,74 @@ impl AstNode for DefaultDecl {
 		}
 	}
 }
+impl From<FnDecl> for JsAnyExportDeclaration {
+	fn from(node: FnDecl) -> JsAnyExportDeclaration { JsAnyExportDeclaration::FnDecl(node) }
+}
+impl From<ClassDecl> for JsAnyExportDeclaration {
+	fn from(node: ClassDecl) -> JsAnyExportDeclaration { JsAnyExportDeclaration::ClassDecl(node) }
+}
+impl From<TsEnum> for JsAnyExportDeclaration {
+	fn from(node: TsEnum) -> JsAnyExportDeclaration { JsAnyExportDeclaration::TsEnum(node) }
+}
+impl From<TsTypeAliasDecl> for JsAnyExportDeclaration {
+	fn from(node: TsTypeAliasDecl) -> JsAnyExportDeclaration {
+		JsAnyExportDeclaration::TsTypeAliasDecl(node)
+	}
+}
+impl From<TsNamespaceDecl> for JsAnyExportDeclaration {
+	fn from(node: TsNamespaceDecl) -> JsAnyExportDeclaration {
+		JsAnyExportDeclaration::TsNamespaceDecl(node)
+	}
+}
+impl From<TsModuleDecl> for JsAnyExportDeclaration {
+	fn from(node: TsModuleDecl) -> JsAnyExportDeclaration {
+		JsAnyExportDeclaration::TsModuleDecl(node)
+	}
+}
+impl From<TsInterfaceDecl> for JsAnyExportDeclaration {
+	fn from(node: TsInterfaceDecl) -> JsAnyExportDeclaration {
+		JsAnyExportDeclaration::TsInterfaceDecl(node)
+	}
+}
+impl AstNode for JsAnyExportDeclaration {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			FN_DECL | CLASS_DECL | TS_ENUM | TS_TYPE_ALIAS_DECL | TS_NAMESPACE_DECL
+			| TS_MODULE_DECL | TS_INTERFACE_DECL => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			FN_DECL => JsAnyExportDeclaration::FnDecl(FnDecl { syntax }),
+			CLASS_DECL => JsAnyExportDeclaration::ClassDecl(ClassDecl { syntax }),
+			TS_ENUM => JsAnyExportDeclaration::TsEnum(TsEnum { syntax }),
+			TS_TYPE_ALIAS_DECL => {
+				JsAnyExportDeclaration::TsTypeAliasDecl(TsTypeAliasDecl { syntax })
+			}
+			TS_NAMESPACE_DECL => {
+				JsAnyExportDeclaration::TsNamespaceDecl(TsNamespaceDecl { syntax })
+			}
+			TS_MODULE_DECL => JsAnyExportDeclaration::TsModuleDecl(TsModuleDecl { syntax }),
+			TS_INTERFACE_DECL => {
+				JsAnyExportDeclaration::TsInterfaceDecl(TsInterfaceDecl { syntax })
+			}
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyExportDeclaration::FnDecl(it) => &it.syntax,
+			JsAnyExportDeclaration::ClassDecl(it) => &it.syntax,
+			JsAnyExportDeclaration::TsEnum(it) => &it.syntax,
+			JsAnyExportDeclaration::TsTypeAliasDecl(it) => &it.syntax,
+			JsAnyExportDeclaration::TsNamespaceDecl(it) => &it.syntax,
+			JsAnyExportDeclaration::TsModuleDecl(it) => &it.syntax,
+			JsAnyExportDeclaration::TsInterfaceDecl(it) => &it.syntax,
+		}
+	}
+}
 impl From<TsExternalModuleRef> for TsModuleRef {
 	fn from(node: TsExternalModuleRef) -> TsModuleRef { TsModuleRef::TsExternalModuleRef(node) }
 }
@@ -5981,11 +6035,6 @@ impl std::fmt::Display for JsAnyStatement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Decl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for JsAnyExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6067,6 +6116,11 @@ impl std::fmt::Display for ImportClause {
 	}
 }
 impl std::fmt::Display for DefaultDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsAnyExportDeclaration {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6232,6 +6286,46 @@ impl std::fmt::Display for JsTryFinallyStatement {
 	}
 }
 impl std::fmt::Display for JsDebuggerStatement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for FnDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for ClassDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsVariableDeclarationStatement {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsEnum {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsTypeAliasDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsNamespaceDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsModuleDecl {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for TsInterfaceDecl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -6682,46 +6776,6 @@ impl std::fmt::Display for PrivateName {
 	}
 }
 impl std::fmt::Display for Condition {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for FnDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for ClassDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsVariableDeclarationStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsEnum {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsTypeAliasDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsNamespaceDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsModuleDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for TsInterfaceDecl {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
