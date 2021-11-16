@@ -515,7 +515,7 @@ JsAnyObjectMember =
 	| SpreadProp
 	| InitializedProp // BindingWithDefault?
 	| JsShorthandPropertyObjectMember
-	| Method // JsMethodObjectMember
+	| JsMethodObjectMember // JsMethodObjectMember
 	| JsUnknownMember
 
 
@@ -539,6 +539,14 @@ JsSetterObjectMember =
 	')'
 	body: JsFunctionBody
 
+JsMethodObjectMember =
+	'async'?
+	'*'?
+	name: JsAnyObjectMemberName
+	type_params: TsTypeParams?
+	parameter_list: JsParameterList
+	return_type: TsReturnType?
+	body: JsFunctionBody
 
 PropName =
 	ComputedPropertyName

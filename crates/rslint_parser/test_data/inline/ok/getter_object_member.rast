@@ -124,8 +124,8 @@ JS_ROOT@0..212
                       R_CURLY@148..149 "}"
                   COMMA@149..150 ","
                   WHITESPACE@150..153 "\n\n\t"
-                  METHOD@153..209
-                    NAME@153..156
+                  JS_METHOD_OBJECT_MEMBER@153..209
+                    JS_STATIC_OBJECT_MEMBER_NAME@153..156
                       IDENT@153..156 "get"
                     JS_PARAMETER_LIST@156..158
                       L_PAREN@156..157 "("

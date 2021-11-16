@@ -1,7 +1,7 @@
-use crate::syntax::decl::{formal_param_pat, method};
+use crate::syntax::decl::{formal_param_pat, method, parameter_list, BASE_METHOD_RECOVERY_SET};
 use crate::syntax::expr::{assign_expr, identifier_name, literal};
-use crate::syntax::function::{function_body, ts_return_type};
-use crate::{CompletedMarker, Parser, TokenSet};
+use crate::syntax::function::{args_body, function_body, ts_parameter_types, ts_return_type};
+use crate::{CompletedMarker, Marker, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::T;
 
@@ -43,8 +43,6 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
 fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
-	let m = p.start();
-
 	match p.cur() {
 		// test object_expr_getter_setter
 		// let a = {
@@ -79,17 +77,12 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 		//   async foo() {},
 		//   async *foo() {}
 		// }
-		T![ident]
-			if p.cur_src() == "async"
-				&& !p.has_linebreak_before_n(1)
-				&& (STARTS_OBJ_PROP.contains(p.nth(1)) || p.nth_at(1, T![*])) =>
-		{
-			method(p, None, None)
-		}
+		T![ident] if is_parser_at_async_method_member(p) => method_object_member(p),
 
 		// test object_expr_spread_prop
 		// let a = {...foo}
 		T![...] => {
+			let m = p.start();
 			p.bump_any();
 			assign_expr(p);
 			Some(m.complete(p, SPREAD_PROP))
@@ -98,11 +91,11 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 		T![*] => {
 			// test object_expr_generator_method
 			// let b = { *foo() {} }
-			let m = p.start();
-			method(p, m, None)
+			method_object_member(p)
 		}
 
 		_ => {
+			let m = p.start();
 			let member_name = object_member_name(p);
 
 			// test object_expr_method
@@ -110,11 +103,8 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			//  foo() {},
 			// }
 			if p.at(T!['(']) || p.at(T![<]) {
-				if let Some(mut member_name) = member_name {
-					member_name.change_kind(p, NAME);
-				}
-
-				method(p, m, None)
+				method_object_member_body(p).ok()?;
+				Some(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 			} else if let Some(mut member_name) = member_name {
 				// test object_expr_assign_prop
 				// let b = { foo = 4, foo = bar }
@@ -156,6 +146,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 }
 
+/// Parses a getter object member: `{ get a() { return "a"; } }`
 fn getter_object_member(p: &mut Parser) -> CompletedMarker {
 	debug_assert!(p.at(T![ident]), "Expected an identifier");
 	debug_assert!(p.cur_src() == "get", "Expected a get identifier");
@@ -176,6 +167,7 @@ fn getter_object_member(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_GETTER_OBJECT_MEMBER)
 }
 
+/// Parses a setter object member like `{ set a(value) { .. } }`
 fn setter_object_member(p: &mut Parser) -> CompletedMarker {
 	debug_assert!(p.at(T![ident]), "Expected an identifier");
 	debug_assert!(p.cur_src() == "set", "Expected a set identifier");
@@ -231,4 +223,68 @@ fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 			ident
 		}),
 	}
+}
+
+// TODO 1725 unify with class method parsing?
+/// Parses a method object member
+fn method_object_member(p: &mut Parser) -> Option<CompletedMarker> {
+	let m = p.start();
+
+	// test async_method
+	// class foo {
+	//  async foo() {}
+	//  async *foo() {}
+	// }
+	let state = if is_parser_at_async_method_member(p) {
+		p.bump_remap(T![async]);
+
+		ParserState {
+			in_async: true,
+			in_generator: p.eat(T![*]),
+			..p.state.clone()
+		}
+	} else {
+		ParserState {
+			in_generator: p.eat(T![*]),
+			..p.state.clone()
+		}
+	};
+
+	let mut guard = p.with_state(state);
+	object_member_name(&mut *guard);
+	method_object_member_body(&mut *guard).ok()?;
+	drop(guard);
+
+	Some(m.complete(p, JS_METHOD_OBJECT_MEMBER))
+}
+
+/// Parses the body of a method object member starting right after the member name.
+fn method_object_member_body(p: &mut Parser) -> Result<(), ()> {
+	let old = p.state.to_owned();
+	p.state.in_function = true;
+
+	let result = if matches!(p.cur(), T!['('] | T![<]) {
+		ts_parameter_types(p);
+		parameter_list(p);
+		ts_return_type(p);
+		function_body(p);
+		Ok(())
+	} else {
+		let err = p
+			.err_builder("expected a method definition, but found none")
+			.primary(p.cur_tok().range, "");
+
+		p.err_recover(err, BASE_METHOD_RECOVERY_SET, false);
+		Err(())
+	};
+
+	p.state = old;
+	result
+}
+
+fn is_parser_at_async_method_member(p: &Parser) -> bool {
+	p.cur() == T![ident]
+		&& p.cur_src() == "async"
+		&& !p.has_linebreak_before_n(1)
+		&& (STARTS_OBJ_PROP.contains(p.nth(1)) || p.nth_at(1, T![*]))
 }

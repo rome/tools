@@ -18,10 +18,10 @@ JS_ROOT@0..48
                 L_CURLY@8..9 "{"
                 WHITESPACE@9..12 "\n  "
                 LIST@12..45
-                  METHOD@12..26
+                  JS_METHOD_OBJECT_MEMBER@12..26
                     ASYNC_KW@12..17 "async"
                     WHITESPACE@17..18 " "
-                    NAME@18..21
+                    JS_STATIC_OBJECT_MEMBER_NAME@18..21
                       IDENT@18..21 "foo"
                     JS_PARAMETER_LIST@21..23
                       L_PAREN@21..22 "("
@@ -35,11 +35,11 @@ JS_ROOT@0..48
                       R_CURLY@25..26 "}"
                   COMMA@26..27 ","
                   WHITESPACE@27..30 "\n  "
-                  METHOD@30..45
+                  JS_METHOD_OBJECT_MEMBER@30..45
                     ASYNC_KW@30..35 "async"
                     WHITESPACE@35..36 " "
                     STAR@36..37 "*"
-                    NAME@37..40
+                    JS_STATIC_OBJECT_MEMBER_NAME@37..40
                       IDENT@37..40 "foo"
                     JS_PARAMETER_LIST@40..42
                       L_PAREN@40..41 "("

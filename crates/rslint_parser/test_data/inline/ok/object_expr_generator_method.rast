@@ -18,9 +18,9 @@ JS_ROOT@0..22
                 L_CURLY@8..9 "{"
                 WHITESPACE@9..10 " "
                 LIST@10..19
-                  METHOD@10..19
+                  JS_METHOD_OBJECT_MEMBER@10..19
                     STAR@10..11 "*"
-                    NAME@11..14
+                    JS_STATIC_OBJECT_MEMBER_NAME@11..14
                       IDENT@11..14 "foo"
                     JS_PARAMETER_LIST@14..16
                       L_PAREN@14..15 "("
