@@ -18,8 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-#        os: [windows-latest, macos-latest, ubuntu-latest]
-        os: [ubuntu-latest]
+       os: [windows-latest, macos-latest, ubuntu-latest]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -49,8 +48,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-#        os: [windows-latest, macos-latest, ubuntu-latest]
-        os: [ubuntu-latest]
+       os: [windows-latest, macos-latest, ubuntu-latest]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

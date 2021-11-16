@@ -35,9 +35,34 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 
 	if markdown {
 		/// Generates a proper diff format, with some bold text if things change.
-		fn diff_format(diff: isize) -> String {
+		fn diff_format(diff: isize, i_am_passed_results: bool, show_increase: bool) -> String {
+			let good = "✅ ";
+			let bad = "❌ ";
+			let up = "⏫ ";
+			let down = "⏬ ";
+
+			let emoji = if show_increase {
+				if diff < 0 {
+					if i_am_passed_results {
+						format!("{}{}", bad, down)
+					} else {
+						format!("{}{}", good, down)
+					}
+				} else if diff > 0 {
+					if i_am_passed_results {
+						format!("{}{}", good, up)
+					} else {
+						format!("{}{}", bad, up)
+					}
+				} else {
+					format!("")
+				}
+			} else {
+				format!("")
+			};
 			format!(
-				"{}{}{}{}",
+				"{}{}{}{}{}",
+				emoji,
 				if diff != 0 { "**" } else { "" },
 				if diff > 0 { "+" } else { "" },
 				diff,
@@ -52,28 +77,28 @@ pub fn emit_compare(base: &Path, new: &Path, markdown: bool) {
 			"| Total | {} | {} | {} |",
 			base_total,
 			new_total,
-			diff_format(total_diff)
+			diff_format(total_diff, false, false)
 		);
 
 		println!(
 			"| Passed | {} | {} | {} |",
 			base_passed,
 			new_passed,
-			diff_format(passed_diff)
+			diff_format(passed_diff, true, true)
 		);
 
 		println!(
 			"| Failed | {} | {} | {} |",
 			base_failed,
 			new_failed,
-			diff_format(failed_diff)
+			diff_format(failed_diff, false, true)
 		);
 
 		println!(
 			"| Panics | {} | {} | {} |",
-			base_passed,
-			new_passed,
-			diff_format(panics_diff)
+			base_panics,
+			new_panics,
+			diff_format(panics_diff, false, true)
 		);
 
 		println!(
