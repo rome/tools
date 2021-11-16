@@ -593,6 +593,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 				token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
 				ERROR,
 				err,
+				ERROR,
 			)
 			.recover(p);
 			true
@@ -1031,6 +1032,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				]),
 				ERROR,
 				err,
+				ERROR,
 			)
 			.recover(p);
 			None
@@ -1129,6 +1131,7 @@ fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 			token_set![T![ident], T![yield], T![await], T![>], T![=]],
 			ERROR,
 			err,
+			ERROR,
 		)
 		.recover(p);
 		None
