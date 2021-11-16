@@ -191,11 +191,20 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Recover from an error with a recovery set or by using a `{` or `}`.
+	///
+	/// # Arguments
+	///
+	/// * `error` -  the [Diagnostic] to emit
+	/// * `recovery` - it recovers the parser position is inside a set [tokens](TokenSet)
+	/// * `include_braces` - it recovers the parser if the current token is a curly brace
+	/// * `unknown_node` - The kind of the unknown node the parser inserts if it isn't able to recover because
+	/// the current token is neither in the recovery set nor any of `{` or `}`.
 	pub fn err_recover(
 		&mut self,
 		error: impl Into<ParserError>,
 		recovery: TokenSet,
 		include_braces: bool,
+		unknown_node: SyntaxKind,
 	) -> Option<()> {
 		if self.state.no_recovery {
 			return None;
@@ -217,12 +226,24 @@ impl<'t> Parser<'t> {
 		let m = self.start();
 		self.error(error);
 		self.bump_any();
-		m.complete(self, SyntaxKind::ERROR);
+		m.complete(self, unknown_node);
 		Some(())
 	}
 
 	/// Recover from an error but don't add an error to the events
-	pub fn err_recover_no_err(&mut self, recovery: TokenSet, include_braces: bool) {
+	///
+	/// # Arguments
+	///
+	/// * `recovery` - it recovers the parser position is inside a set [tokens](TokenSet)
+	/// * `include_braces` - it recovers the parser if the current token is a curly brace
+	/// * `unknown_node` - The kind of the unknown node the parser inserts if it isn't able to recover because
+	/// the current token is neither in the recovery set nor any of `{` or `}`.
+	pub fn err_recover_no_err(
+		&mut self,
+		recovery: TokenSet,
+		include_braces: bool,
+		unknown_node: SyntaxKind,
+	) {
 		match self.cur() {
 			T!['{'] | T!['}'] if include_braces => {
 				return;
@@ -239,7 +260,7 @@ impl<'t> Parser<'t> {
 
 		let m = self.start();
 		self.bump_any();
-		m.complete(self, SyntaxKind::ERROR);
+		m.complete(self, unknown_node);
 	}
 
 	/// Starts a new node in the syntax tree. All nodes and tokens

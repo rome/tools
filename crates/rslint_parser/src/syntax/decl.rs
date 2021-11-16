@@ -209,6 +209,7 @@ pub(super) fn parameters_list(
 						T![')'],
 					],
 					true,
+					ERROR,
 				);
 				None
 			}

@@ -77,7 +77,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			p.err_recover(err, ts, false);
+			p.err_recover(err, ts, false, ERROR);
 			return None;
 		}
 	})
@@ -178,6 +178,7 @@ pub fn array_binding_pattern(
 			p.err_recover_no_err(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				false,
+				ERROR,
 			);
 		}
 		if !p.at(T![']']) {
@@ -247,6 +248,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		p.err_recover_no_err(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			false,
+			ERROR,
 		);
 		return None;
 	};
