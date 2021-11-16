@@ -185,6 +185,8 @@ impl<'t> Parser<'t> {
 		error: impl Into<ParserError>,
 		recovery: TokenSet,
 		include_braces: bool,
+		// The kind of unknown token the parser wanted to try to guess at that position
+		unknown_syntax_kind: SyntaxKind,
 	) -> Option<()> {
 		if self.state.no_recovery {
 			return None;
@@ -206,12 +208,17 @@ impl<'t> Parser<'t> {
 		let m = self.start();
 		self.error(error);
 		self.bump_any();
-		m.complete(self, SyntaxKind::ERROR);
+		m.complete(self, unknown_syntax_kind);
 		Some(())
 	}
 
 	/// Recover from an error but don't add an error to the events
-	pub fn err_recover_no_err(&mut self, recovery: TokenSet, include_braces: bool) {
+	pub fn err_recover_no_err(
+		&mut self,
+		recovery: TokenSet,
+		include_braces: bool,
+		unknown_syntax_kind: SyntaxKind,
+	) {
 		match self.cur() {
 			T!['{'] | T!['}'] if include_braces => {
 				return;
@@ -225,7 +232,7 @@ impl<'t> Parser<'t> {
 
 		let m = self.start();
 		self.bump_any();
-		m.complete(self, SyntaxKind::ERROR);
+		m.complete(self, unknown_syntax_kind);
 	}
 
 	/// Starts a new node in the syntax tree. All nodes and tokens
