@@ -102,7 +102,7 @@ jobs:
         with:
           comment-id: ${{ steps.previous-comment.outputs.comment-id }}
           body: |
-            ### Test262 coverage results
+            ### Test262 comparison coverage results on ${{ matrix.os }}
 
             ${{ steps.comparison.outputs.comment }}
           edit-mode: replace
@@ -114,7 +114,7 @@ jobs:
         with:
           issue-number: ${{ steps.pr-number.outputs.pr }}
           body: |
-            ### Test262 coverage results
+            ### Test262 comparison coverage results on ${{ matrix.os }}
 
             ${{ steps.comparison.outputs.comment }}
 
