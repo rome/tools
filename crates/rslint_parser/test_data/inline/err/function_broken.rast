@@ -1,0 +1,36 @@
+JS_ROOT@0..19
+  LIST@0..0
+  LIST@0..18
+    JS_FUNCTION_DECLARATION@0..14
+      FUNCTION_KW@0..8 "function"
+      WHITESPACE@8..9 " "
+      JS_IDENTIFIER_BINDING@9..12
+        IDENT@9..12 "foo"
+      JS_PARAMETER_LIST@12..14
+        L_PAREN@12..13 "("
+        LIST@13..13
+        R_PAREN@13..14 ")"
+    JS_UNKNOWN_STATEMENT@14..15
+      R_PAREN@14..15 ")"
+    WHITESPACE@15..16 " "
+    JS_BLOCK_STATEMENT@16..18
+      L_CURLY@16..17 "{"
+      LIST@17..17
+      R_CURLY@17..18 "}"
+  WHITESPACE@18..19 "\n"
+--
+error[SyntaxError]: expected a block statement but instead found `)`
+  ┌─ function_broken.js:1:15
+  │
+1 │ function foo()) {}
+  │               ^
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ function_broken.js:1:15
+  │
+1 │ function foo()) {}
+  │               ^ Expected a statement or declaration here
+
+--
+function foo()) {}
