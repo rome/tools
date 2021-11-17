@@ -107,13 +107,6 @@ error[SyntaxError]: expected a semicolon for a class property, but found none
   │             ^^^^
 
 --
-error[SyntaxError]: class fields are unsupported
-  ┌─ class_decl_err.js:5:13
-  │
-5 │ class foo { set {} }
-  │             ^^^
-
---
 error[SyntaxError]: Expected an identifier or keyword
   ┌─ class_decl_err.js:5:17
   │

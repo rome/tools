@@ -72,15 +72,6 @@ error[SyntaxError]: expected an expression, but found `;` instead
   │           ^
 
 --
-error[SyntaxError]: class fields are unsupported
-  ┌─ invalid_method_recover.js:2:3
-  │  
-2 │ ┌   [1 + 1] = () => {
-3 │ │     let a=;
-4 │ │   };
-  │ └────^
-
---
 class {
   [1 + 1] = () => {
     let a=;

@@ -1,0 +1,207 @@
+JS_ROOT@0..198
+  LIST@0..0
+  LIST@0..196
+    CLASS_DECL@0..128
+      CLASS_KW@0..5 "class"
+      WHITESPACE@5..6 " "
+      NAME@6..13
+        IDENT@6..13 "Setters"
+      WHITESPACE@13..14 " "
+      CLASS_BODY@14..128
+        L_CURLY@14..15 "{"
+        WHITESPACE@15..17 "\n\t"
+        LIST@17..126
+          SETTER@17..30
+            SET_KW@17..20 "set"
+            WHITESPACE@20..21 " "
+            NAME@21..24
+              IDENT@21..24 "foo"
+            JS_PARAMETER_LIST@24..27
+              L_PAREN@24..25 "("
+              LIST@25..26
+                SINGLE_PATTERN@25..26
+                  NAME@25..26
+                    IDENT@25..26 "a"
+              R_PAREN@26..27 ")"
+            WHITESPACE@27..28 " "
+            JS_FUNCTION_BODY@28..30
+              L_CURLY@28..29 "{"
+              LIST@29..29
+              LIST@29..29
+              R_CURLY@29..30 "}"
+          WHITESPACE@30..32 "\n\t"
+          SETTER@32..48
+            SET_KW@32..35 "set"
+            WHITESPACE@35..36 " "
+            NAME@36..42
+              IDENT@36..42 "static"
+            JS_PARAMETER_LIST@42..45
+              L_PAREN@42..43 "("
+              LIST@43..44
+                SINGLE_PATTERN@43..44
+                  NAME@43..44
+                    IDENT@43..44 "a"
+              R_PAREN@44..45 ")"
+            WHITESPACE@45..46 " "
+            JS_FUNCTION_BODY@46..48
+              L_CURLY@46..47 "{"
+              LIST@47..47
+              LIST@47..47
+              R_CURLY@47..48 "}"
+          WHITESPACE@48..50 "\n\t"
+          SETTER@50..70
+            STATIC_KW@50..56 "static"
+            WHITESPACE@56..57 " "
+            SET_KW@57..60 "set"
+            WHITESPACE@60..61 " "
+            NAME@61..64
+              IDENT@61..64 "bar"
+            JS_PARAMETER_LIST@64..67
+              L_PAREN@64..65 "("
+              LIST@65..66
+                SINGLE_PATTERN@65..66
+                  NAME@65..66
+                    IDENT@65..66 "a"
+              R_PAREN@66..67 ")"
+            WHITESPACE@67..68 " "
+            JS_FUNCTION_BODY@68..70
+              L_CURLY@68..69 "{"
+              LIST@69..69
+              LIST@69..69
+              R_CURLY@69..70 "}"
+          WHITESPACE@70..73 "\n\n\t"
+          SETTER@73..88
+            SET_KW@73..76 "set"
+            WHITESPACE@76..77 " "
+            JS_STRING_LITERAL@77..82
+              JS_STRING_LITERAL_TOKEN@77..82 "\"baz\""
+            JS_PARAMETER_LIST@82..85
+              L_PAREN@82..83 "("
+              LIST@83..84
+                SINGLE_PATTERN@83..84
+                  NAME@83..84
+                    IDENT@83..84 "a"
+              R_PAREN@84..85 ")"
+            WHITESPACE@85..86 " "
+            JS_FUNCTION_BODY@86..88
+              L_CURLY@86..87 "{"
+              LIST@87..87
+              LIST@87..87
+              R_CURLY@87..88 "}"
+          WHITESPACE@88..91 "\n\n\t"
+          SETTER@91..112
+            SET_KW@91..94 "set"
+            WHITESPACE@94..95 " "
+            COMPUTED_PROPERTY_NAME@95..106
+              L_BRACK@95..96 "["
+              JS_BINARY_EXPRESSION@96..105
+                JS_STRING_LITERAL@96..99
+                  JS_STRING_LITERAL_TOKEN@96..99 "\"a\""
+                WHITESPACE@99..100 " "
+                PLUS@100..101 "+"
+                WHITESPACE@101..102 " "
+                JS_STRING_LITERAL@102..105
+                  JS_STRING_LITERAL_TOKEN@102..105 "\"b\""
+              R_BRACK@105..106 "]"
+            JS_PARAMETER_LIST@106..109
+              L_PAREN@106..107 "("
+              LIST@107..108
+                SINGLE_PATTERN@107..108
+                  NAME@107..108
+                    IDENT@107..108 "a"
+              R_PAREN@108..109 ")"
+            WHITESPACE@109..110 " "
+            JS_FUNCTION_BODY@110..112
+              L_CURLY@110..111 "{"
+              LIST@111..111
+              LIST@111..111
+              R_CURLY@111..112 "}"
+          WHITESPACE@112..115 "\n\n\t"
+          SETTER@115..126
+            SET_KW@115..118 "set"
+            WHITESPACE@118..119 " "
+            JS_NUMBER_LITERAL@119..120
+              JS_NUMBER_LITERAL_TOKEN@119..120 "5"
+            JS_PARAMETER_LIST@120..123
+              L_PAREN@120..121 "("
+              LIST@121..122
+                SINGLE_PATTERN@121..122
+                  NAME@121..122
+                    IDENT@121..122 "a"
+              R_PAREN@122..123 ")"
+            WHITESPACE@123..124 " "
+            JS_FUNCTION_BODY@124..126
+              L_CURLY@124..125 "{"
+              LIST@125..125
+              LIST@125..125
+              R_CURLY@125..126 "}"
+        WHITESPACE@126..127 "\n"
+        R_CURLY@127..128 "}"
+    WHITESPACE@128..130 "\n\n"
+    CLASS_DECL@130..196
+      CLASS_KW@130..135 "class"
+      WHITESPACE@135..136 " "
+      NAME@136..146
+        IDENT@136..146 "NotSetters"
+      WHITESPACE@146..147 " "
+      CLASS_BODY@147..196
+        L_CURLY@147..148 "{"
+        WHITESPACE@148..150 "\n\t"
+        LIST@150..194
+          METHOD@150..159
+            NAME@150..153
+              IDENT@150..153 "set"
+            JS_PARAMETER_LIST@153..156
+              L_PAREN@153..154 "("
+              LIST@154..155
+                SINGLE_PATTERN@154..155
+                  NAME@154..155
+                    IDENT@154..155 "a"
+              R_PAREN@155..156 ")"
+            WHITESPACE@156..157 " "
+            JS_FUNCTION_BODY@157..159
+              L_CURLY@157..158 "{"
+              LIST@158..158
+              LIST@158..158
+              R_CURLY@158..159 "}"
+          WHITESPACE@159..161 "\n\t"
+          METHOD@161..176
+            ASYNC_KW@161..166 "async"
+            WHITESPACE@166..167 " "
+            NAME@167..170
+              IDENT@167..170 "set"
+            JS_PARAMETER_LIST@170..173
+              L_PAREN@170..171 "("
+              LIST@171..172
+                SINGLE_PATTERN@171..172
+                  NAME@171..172
+                    IDENT@171..172 "a"
+              R_PAREN@172..173 ")"
+            WHITESPACE@173..174 " "
+            JS_FUNCTION_BODY@174..176
+              L_CURLY@174..175 "{"
+              LIST@175..175
+              LIST@175..175
+              R_CURLY@175..176 "}"
+          WHITESPACE@176..178 "\n\t"
+          METHOD@178..194
+            STATIC_KW@178..184 "static"
+            WHITESPACE@184..185 " "
+            NAME@185..188
+              IDENT@185..188 "set"
+            JS_PARAMETER_LIST@188..191
+              L_PAREN@188..189 "("
+              LIST@189..190
+                SINGLE_PATTERN@189..190
+                  NAME@189..190
+                    IDENT@189..190 "a"
+              R_PAREN@190..191 ")"
+            WHITESPACE@191..192 " "
+            JS_FUNCTION_BODY@192..194
+              L_CURLY@192..193 "{"
+              LIST@193..193
+              LIST@193..193
+              R_CURLY@193..194 "}"
+        WHITESPACE@194..195 "\n"
+        R_CURLY@195..196 "}"
+  WHITESPACE@196..198 "\n\n"

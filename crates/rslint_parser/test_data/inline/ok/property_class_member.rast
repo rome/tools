@@ -1,0 +1,49 @@
+JS_ROOT@0..117
+  LIST@0..0
+  LIST@0..115
+    CLASS_DECL@0..115
+      CLASS_KW@0..5 "class"
+      WHITESPACE@5..6 " "
+      NAME@6..9
+        IDENT@6..9 "foo"
+      WHITESPACE@9..10 " "
+      CLASS_BODY@10..115
+        L_CURLY@10..11 "{"
+        WHITESPACE@11..13 "\n\t"
+        LIST@13..113
+          CLASS_PROP@13..22
+            NAME@13..21
+              IDENT@13..21 "property"
+            SEMICOLON@21..22 ";"
+          WHITESPACE@22..24 "\n\t"
+          CLASS_PROP@24..50
+            NAME@24..43
+              IDENT@24..43 "initializedProperty"
+            WHITESPACE@43..44 " "
+            EQ@44..45 "="
+            WHITESPACE@45..46 " "
+            JS_STRING_LITERAL@46..49
+              JS_STRING_LITERAL_TOKEN@46..49 "\"a\""
+            SEMICOLON@49..50 ";"
+          WHITESPACE@50..52 "\n\t"
+          CLASS_PROP@52..74
+            STATIC_KW@52..58 "static"
+            WHITESPACE@58..59 " "
+            NAME@59..73
+              IDENT@59..73 "staticProperty"
+            SEMICOLON@73..74 ";"
+          WHITESPACE@74..76 "\n\t"
+          CLASS_PROP@76..113
+            STATIC_KW@76..82 "static"
+            WHITESPACE@82..83 " "
+            NAME@83..108
+              IDENT@83..108 "staticInitializedProp ..."
+            WHITESPACE@108..109 " "
+            EQ@109..110 "="
+            WHITESPACE@110..111 " "
+            JS_NUMBER_LITERAL@111..112
+              JS_NUMBER_LITERAL_TOKEN@111..112 "1"
+            SEMICOLON@112..113 ";"
+        WHITESPACE@113..114 "\n"
+        R_CURLY@114..115 "}"
+  WHITESPACE@115..117 "\n\n"
