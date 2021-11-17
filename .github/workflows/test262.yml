@@ -91,7 +91,7 @@ jobs:
         id: previous-comment
         with:
           issue-number: ${{ steps.pr-number.outputs.pr }}
-          body-includes: Test262 comparison coverage
+          body-includes: Test262 comparison coverage results on ${{ matrix.os }}
 
       - name: Update comment
         if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
