@@ -1,4 +1,3 @@
-use crate::state::StateGuard;
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
 use crate::syntax::expr::{assign_expr, identifier_name, literal};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -107,45 +106,46 @@ fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 	m.complete(&mut *guard, kind.into())
 }
 
-fn implements_clause(mut guard: &mut StateGuard) {
-	let mut implements_list = None;
-
-	if guard.cur_src() == "implements" {
-		let start = guard.cur_tok().range.start;
-		let maybe_err = guard.start();
-		guard.bump_remap(T![implements]);
-
-		implements_list = Some(guard.start());
-		let elems = ts_heritage_clause(&mut *guard, false);
-		if !guard.typescript() {
-			let err = guard
-				.err_builder("classes can only implement interfaces in TypeScript files")
-				.primary(start..(guard.marker_vec_range(&elems).end), "");
-
-			guard.error(err);
-			maybe_err.complete(&mut *guard, ERROR);
-		} else {
-			maybe_err.abandon(&mut *guard)
-		}
+fn implements_clause(p: &mut Parser) {
+	if p.cur_src() != "implements" {
+		return;
 	}
 
-	while guard.cur_src() == "implements" {
-		let start = guard.cur_tok().range.start;
-		let m = guard.start();
-		guard.bump_any();
-		let elems = ts_heritage_clause(&mut *guard, false);
+	let implements_clause = p.start();
 
-		let err = guard
+	let start = p.cur_tok().range.start;
+	let maybe_err = p.start();
+	p.bump_remap(T![implements]);
+
+	let list = p.start();
+	let elems = ts_heritage_clause(&mut *p, false);
+	if !p.typescript() {
+		let err = p
+			.err_builder("classes can only implement interfaces in TypeScript files")
+			.primary(start..(p.marker_vec_range(&elems).end), "");
+
+		p.error(err);
+		maybe_err.complete(&mut *p, ERROR);
+	} else {
+		maybe_err.abandon(&mut *p)
+	}
+
+	while p.cur_src() == "implements" {
+		let start = p.cur_tok().range.start;
+		let m = p.start();
+		p.bump_any();
+		let elems = ts_heritage_clause(&mut *p, false);
+
+		let err = p
 			.err_builder("classes cannot have multiple `implements` clauses")
-			.primary(start..guard.marker_vec_range(&elems).end, "");
+			.primary(start..p.marker_vec_range(&elems).end, "");
 
-		guard.error(err);
-		m.complete(&mut *guard, ERROR);
+		p.error(err);
+		m.complete(&mut *p, ERROR);
 	}
 
-	if let Some(implements_list) = implements_list {
-		implements_list.complete(&mut guard, LIST);
-	}
+	list.complete(p, LIST);
+	implements_clause.complete(p, TS_IMPLEMENTS_CLAUSE);
 }
 
 fn extends_clause(p: &mut Parser) {

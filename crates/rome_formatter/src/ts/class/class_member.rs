@@ -4,7 +4,7 @@ use rslint_parser::ast::JsAnyClassMember;
 impl ToFormatElement for JsAnyClassMember {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			JsAnyClassMember::JsSemicolonClassMember(empty_statement) => {
+			JsAnyClassMember::JsEmptyClassMember(empty_statement) => {
 				empty_statement.to_format_element(formatter)
 			}
 			JsAnyClassMember::JsMethodClassMember(method) => method.to_format_element(formatter),
@@ -17,6 +17,7 @@ impl ToFormatElement for JsAnyClassMember {
 			JsAnyClassMember::JsGetterClassMember(getter) => getter.to_format_element(formatter),
 			JsAnyClassMember::JsSetterClassMember(setter) => setter.to_format_element(formatter),
 			JsAnyClassMember::JsUnknownMember(_) => todo!(),
+			JsAnyClassMember::TsIndexSignature(_) => todo!(),
 		}
 	}
 }

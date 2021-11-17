@@ -512,7 +512,7 @@ InitializedProp = key:Name '=' value:JsAnyExpression
 JsClassDeclaration  =
 	'class'
 	id: JsIdentifierBinding
-	// TODO implements
+	implements_clause: TsImplementsClause?
 	extends_clause: JsExtendsClause?
 	'{'
 	members: JsAnyClassMember*
@@ -525,6 +525,10 @@ JsClassExpression =
 	'{'
 	members: JsAnyClassMember*
 	'}'
+
+TsImplementsClause =
+	'implements'
+	interfaces: (TsExprWithTypeArgs (',' TsExprWithTypeArgs)*)
 
 // class Test extends A {}
 //            ^^^^^^^^^
@@ -548,6 +552,7 @@ JsAnyClassMember =
 	| JsGetterClassMember
 	| JsSetterClassMember
 	| JsEmptyClassMember
+	| TsIndexSignature
 	| JsUnknownMember
 
 // class Test { constructor() {} }
@@ -557,6 +562,7 @@ JsAnyClassMember =
 // class Test { 'constructor'() {} }
 //              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
+	access_modifier: TsAccessibility?
 	name: JsAnyConstructorMemberName
 	parameter_list: JsConstructorParameterList
 	body: JsFunctionBody
@@ -578,8 +584,13 @@ JsAnyConstructorParameter =
 // class Test { a; b = 1; static c; }
 //              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
+	'declare'?
+	access_modifier: TsAccessibility?
+	'abstract'?
 	'static'?
 	name: JsAnyClassMemberName
+	'?'?
+	'!'?
 	type: TsTypeAnnotation?
 	value: JsEqualValueClause?
 	';'?
@@ -587,7 +598,9 @@ JsPropertyClassMember =
 // class Test { a() {} }
 //              ^^^^^^
 JsMethodClassMember =
+	access_modifier: TsAccessibility?
 	'static'?
+	'abstract'?
 	'async'?
 	'*'?
 	name: JsAnyClassMemberName
@@ -599,6 +612,8 @@ JsMethodClassMember =
 // class Test { get a() {} }
 //              ^^^^^^^^^^
 JsGetterClassMember =
+	access_modifier: TsAccessibility?
+	'abstract'?
 	'static'?
 	'get'
 	name: JsAnyClassMemberName
@@ -609,6 +624,8 @@ JsGetterClassMember =
 // class Test { set a(v) {} }
 //              ^^^^^^^^^^^
 JsSetterClassMember =
+	access_modifier: TsAccessibility?
+	'abstract'?
 	'static'?
 	'set'
 	name: JsAnyClassMemberName
