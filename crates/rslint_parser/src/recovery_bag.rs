@@ -40,12 +40,7 @@ impl RecoveryBag {
 	}
 
 	pub fn has_braces(&self, parser: &Parser) -> bool {
-		match parser.cur() {
-			T!['{'] | T!['}'] if self.include_braces => {
-				return true;
-			}
-			_ => return false,
-		}
+		matches!(parser.cur(), T!['{'] | T!['}'] if self.include_braces)
 	}
 
 	pub fn is_at_token_set(&self, parser: &Parser) -> bool {
