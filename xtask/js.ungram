@@ -540,7 +540,7 @@ JsAnyClassMember =
 	| JsMethodClassMember
 	| JsGetterClassMember
 	| JsSetterClassMember
-	| JsSemicolonClassMember
+	| JsEmptyClassMember
 	| JsUnknownMember
 
 JsConstructorClassMember =
@@ -596,7 +596,7 @@ JsSetterClassMember =
 	')'
 	body: JsFunctionBody
 
-JsSemicolonClassMember = ';'
+JsEmptyClassMember = ';'
 
 ///////////////
 // LITERALS

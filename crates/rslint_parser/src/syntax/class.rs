@@ -205,7 +205,7 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 	// test class_empty_element
 	// class foo { ;;;;;;;;;; get foo() {};;;;}
 	if p.eat(T![;]) {
-		return Some(member_marker.complete(p, JS_SEMICOLON_CLASS_MEMBER));
+		return Some(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER));
 	}
 
 	// test static_method
