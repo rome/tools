@@ -108,7 +108,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 					it.kind,
 					self.text
 						.get(start..end)
-						.unwrap_or_else(|| self.text.get(start - 1..end).unwrap()),
+						.unwrap_or_else(|| self.text.get(start - 1..end).unwrap_or("")),
 				)
 			});
 			n_attached_trivias(kind, leading_trivias.rev())

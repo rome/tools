@@ -5,6 +5,7 @@ use rslint_lexer::{SyntaxKind, T};
 /// This struct contains the information needed to the parser to recover from a certain error
 ///
 /// By default it doesn't check curly braces, use [with_braces_included] to turn opt-in the check
+#[derive(Debug)]
 pub struct RecoveryBag {
 	/// The [Diagnostic] to emit
 	error: Option<ParserError>,
