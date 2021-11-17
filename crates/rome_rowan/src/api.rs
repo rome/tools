@@ -277,15 +277,13 @@ impl<L: Language> Iterator for SyntaxTriviaPiecesIterator<L> {
 	type Item = SyntaxTriviaPiece<L>;
 
 	fn next(&mut self) -> Option<Self::Item> {
-		match self.iter.next() {
-			Some((offset, trivia)) => Some(SyntaxTriviaPiece {
-				raw: self.iter.raw.clone(),
-				offset,
-				trivia,
-				_p: PhantomData,
-			}),
-			None => None,
-		}
+		let (offset, trivia) = self.iter.next()?;
+		Some(SyntaxTriviaPiece {
+			raw: self.iter.raw.clone(),
+			offset,
+			trivia,
+			_p: PhantomData,
+		})
 	}
 }
 

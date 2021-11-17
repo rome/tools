@@ -44,7 +44,7 @@ impl GreenTokenTrivia {
 		match self {
 			GreenTokenTrivia::Whitespace(l) if index == 0 => Some(Trivia::Whitespace(*l)),
 			GreenTokenTrivia::Comments(l) if index == 0 => Some(Trivia::Comments(*l)),
-			GreenTokenTrivia::Many(v) => v.get(index).map(Clone::clone),
+			GreenTokenTrivia::Many(v) => v.get(index).copied(),
 			_ => None,
 		}
 	}

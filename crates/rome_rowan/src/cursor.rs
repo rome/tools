@@ -563,17 +563,13 @@ impl Iterator for SyntaxTriviaPiecesIterator {
 	type Item = (TextSize, Trivia);
 
 	fn next(&mut self) -> Option<Self::Item> {
-		match self.raw.get_piece(self.next_index) {
-			Some(trivia) => {
-				let piece = (self.next_offset, trivia);
+		let trivia = self.raw.get_piece(self.next_index)?;
+		let piece = (self.next_offset, trivia);
 
-				self.next_index += 1;
-				self.next_offset += trivia.text_len();
+		self.next_index += 1;
+		self.next_offset += trivia.text_len();
 
-				Some(piece)
-			}
-			None => None,
-		}
+		Some(piece)
 	}
 }
 
