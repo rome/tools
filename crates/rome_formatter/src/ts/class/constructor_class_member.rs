@@ -3,8 +3,7 @@ use crate::{
 	FormatElement, FormatResult, Formatter, ToFormatElement,
 };
 use rslint_parser::ast::{
-	JsAnyConstructorMemberName, JsAnyConstructorParameter, JsConstructorClassMember,
-	JsConstructorParameterList,
+	JsAnyConstructorParameter, JsConstructorClassMember, JsConstructorParameterList,
 };
 
 impl ToFormatElement for JsConstructorClassMember {
@@ -15,19 +14,6 @@ impl ToFormatElement for JsConstructorClassMember {
 			space_token(),
 			formatter.format_node(self.body()?)?
 		])
-	}
-}
-
-impl ToFormatElement for JsAnyConstructorMemberName {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		match self {
-			JsAnyConstructorMemberName::JsStringLiteral(literal) => {
-				literal.to_format_element(formatter)
-			}
-			JsAnyConstructorMemberName::JsStaticMemberName(name) => {
-				name.to_format_element(formatter)
-			}
-		}
 	}
 }
 

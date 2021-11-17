@@ -1532,9 +1532,7 @@ pub struct JsConstructorClassMember {
 }
 impl JsConstructorClassMember {
 	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
-	pub fn name(&self) -> SyntaxResult<JsAnyConstructorMemberName> {
-		support::required_node(&self.syntax)
-	}
+	pub fn name(&self) -> SyntaxResult<JsStaticMemberName> { support::required_node(&self.syntax) }
 	pub fn parameter_list(&self) -> SyntaxResult<JsConstructorParameterList> {
 		support::required_node(&self.syntax)
 	}
@@ -2600,11 +2598,6 @@ pub enum JsAnyClassMemberName {
 	JsStaticMemberName(JsStaticMemberName),
 	JsComputedMemberName(JsComputedMemberName),
 	JsPrivateClassMemberName(JsPrivateClassMemberName),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum JsAnyConstructorMemberName {
-	JsStringLiteral(JsStringLiteral),
-	JsStaticMemberName(JsStaticMemberName),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyConstructorParameter {
@@ -5952,42 +5945,6 @@ impl AstNode for JsAnyClassMemberName {
 		}
 	}
 }
-impl From<JsStringLiteral> for JsAnyConstructorMemberName {
-	fn from(node: JsStringLiteral) -> JsAnyConstructorMemberName {
-		JsAnyConstructorMemberName::JsStringLiteral(node)
-	}
-}
-impl From<JsStaticMemberName> for JsAnyConstructorMemberName {
-	fn from(node: JsStaticMemberName) -> JsAnyConstructorMemberName {
-		JsAnyConstructorMemberName::JsStaticMemberName(node)
-	}
-}
-impl AstNode for JsAnyConstructorMemberName {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_STRING_LITERAL | JS_STATIC_MEMBER_NAME => true,
-			_ => false,
-		}
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			JS_STRING_LITERAL => {
-				JsAnyConstructorMemberName::JsStringLiteral(JsStringLiteral { syntax })
-			}
-			JS_STATIC_MEMBER_NAME => {
-				JsAnyConstructorMemberName::JsStaticMemberName(JsStaticMemberName { syntax })
-			}
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			JsAnyConstructorMemberName::JsStringLiteral(it) => &it.syntax,
-			JsAnyConstructorMemberName::JsStaticMemberName(it) => &it.syntax,
-		}
-	}
-}
 impl From<TsConstructorParam> for JsAnyConstructorParameter {
 	fn from(node: TsConstructorParam) -> JsAnyConstructorParameter {
 		JsAnyConstructorParameter::TsConstructorParam(node)
@@ -6683,11 +6640,6 @@ impl std::fmt::Display for JsAnyClassMember {
 	}
 }
 impl std::fmt::Display for JsAnyClassMemberName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsAnyConstructorMemberName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
