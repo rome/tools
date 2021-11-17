@@ -1,7 +1,7 @@
-JS_ROOT@0..591
+JS_ROOT@0..607
   LIST@0..0
-  LIST@0..590
-    JS_CLASS_DECLARATION@0..152
+  LIST@0..606
+    JS_CLASS_DECLARATION@0..168
       CLASS_KW@0..5 "class"
       WHITESPACE@5..6 " "
       JS_IDENTIFIER_BINDING@6..10
@@ -9,7 +9,7 @@ JS_ROOT@0..591
       WHITESPACE@10..11 " "
       L_CURLY@11..12 "{"
       WHITESPACE@12..14 "\n\t"
-      LIST@14..150
+      LIST@14..166
         JS_METHOD_CLASS_MEMBER@14..25
           JS_STATIC_MEMBER_NAME@14..20
             IDENT@14..20 "method"
@@ -123,280 +123,295 @@ JS_ROOT@0..591
             LIST@149..149
             LIST@149..149
             R_CURLY@149..150 "}"
-      WHITESPACE@150..151 "\n"
-      R_CURLY@151..152 "}"
-    WHITESPACE@152..154 "\n\n"
-    JS_CLASS_DECLARATION@154..353
-      CLASS_KW@154..159 "class"
-      WHITESPACE@159..160 " "
-      JS_IDENTIFIER_BINDING@160..178
-        IDENT@160..178 "ContextualKeywords"
-      WHITESPACE@178..179 " "
-      L_CURLY@179..180 "{"
-      WHITESPACE@180..182 "\n\t"
-      COMMENT@182..206 "// Methods called static"
-      WHITESPACE@206..208 "\n\t"
-      LIST@208..330
-        JS_METHOD_CLASS_MEMBER@208..219
-          IDENT@208..214 "static"
-          JS_PARAMETER_LIST@214..216
-            L_PAREN@214..215 "("
-            LIST@215..215
-            R_PAREN@215..216 ")"
-          WHITESPACE@216..217 " "
-          JS_FUNCTION_BODY@217..219
-            L_CURLY@217..218 "{"
-            LIST@218..218
-            LIST@218..218
-            R_CURLY@218..219 "}"
-        WHITESPACE@219..221 "\n\t"
-        JS_METHOD_CLASS_MEMBER@221..238
-          ASYNC_KW@221..226 "async"
-          WHITESPACE@226..227 " "
-          JS_STATIC_MEMBER_NAME@227..233
-            IDENT@227..233 "static"
-          JS_PARAMETER_LIST@233..235
-            L_PAREN@233..234 "("
+        WHITESPACE@150..153 "\n\n\t"
+        JS_METHOD_CLASS_MEMBER@153..166
+          JS_PRIVATE_CLASS_MEMBER_NAME@153..161
+            HASH@153..154 "#"
+            IDENT@154..161 "private"
+          JS_PARAMETER_LIST@161..163
+            L_PAREN@161..162 "("
+            LIST@162..162
+            R_PAREN@162..163 ")"
+          WHITESPACE@163..164 " "
+          JS_FUNCTION_BODY@164..166
+            L_CURLY@164..165 "{"
+            LIST@165..165
+            LIST@165..165
+            R_CURLY@165..166 "}"
+      WHITESPACE@166..167 "\n"
+      R_CURLY@167..168 "}"
+    WHITESPACE@168..170 "\n\n"
+    JS_CLASS_DECLARATION@170..369
+      CLASS_KW@170..175 "class"
+      WHITESPACE@175..176 " "
+      JS_IDENTIFIER_BINDING@176..194
+        IDENT@176..194 "ContextualKeywords"
+      WHITESPACE@194..195 " "
+      L_CURLY@195..196 "{"
+      WHITESPACE@196..198 "\n\t"
+      COMMENT@198..222 "// Methods called static"
+      WHITESPACE@222..224 "\n\t"
+      LIST@224..346
+        JS_METHOD_CLASS_MEMBER@224..235
+          IDENT@224..230 "static"
+          JS_PARAMETER_LIST@230..232
+            L_PAREN@230..231 "("
+            LIST@231..231
+            R_PAREN@231..232 ")"
+          WHITESPACE@232..233 " "
+          JS_FUNCTION_BODY@233..235
+            L_CURLY@233..234 "{"
             LIST@234..234
-            R_PAREN@234..235 ")"
-          WHITESPACE@235..236 " "
-          JS_FUNCTION_BODY@236..238
-            L_CURLY@236..237 "{"
-            LIST@237..237
-            LIST@237..237
-            R_CURLY@237..238 "}"
-        WHITESPACE@238..240 "\n\t"
-        JS_METHOD_CLASS_MEMBER@240..253
-          STAR@240..241 "*"
-          WHITESPACE@241..242 " "
-          JS_STATIC_MEMBER_NAME@242..248
-            IDENT@242..248 "static"
-          JS_PARAMETER_LIST@248..250
-            L_PAREN@248..249 "("
-            LIST@249..249
-            R_PAREN@249..250 ")"
-          WHITESPACE@250..251 " "
-          JS_FUNCTION_BODY@251..253
-            L_CURLY@251..252 "{"
-            LIST@252..252
-            LIST@252..252
-            R_CURLY@252..253 "}"
-        WHITESPACE@253..255 "\n\t"
-        JS_METHOD_CLASS_MEMBER@255..273
-          ASYNC_KW@255..260 "async"
-          STAR@260..261 "*"
-          WHITESPACE@261..262 " "
-          JS_STATIC_MEMBER_NAME@262..268
-            IDENT@262..268 "static"
-          JS_PARAMETER_LIST@268..270
-            L_PAREN@268..269 "("
-            LIST@269..269
-            R_PAREN@269..270 ")"
-          WHITESPACE@270..271 " "
-          JS_FUNCTION_BODY@271..273
-            L_CURLY@271..272 "{"
-            LIST@272..272
-            LIST@272..272
-            R_CURLY@272..273 "}"
-        WHITESPACE@273..276 "\n\n\t"
-        JS_METHOD_CLASS_MEMBER@276..288
-          JS_STATIC_MEMBER_NAME@276..283
-            IDENT@276..283 "declare"
-          JS_PARAMETER_LIST@283..285
-            L_PAREN@283..284 "("
-            LIST@284..284
-            R_PAREN@284..285 ")"
-          WHITESPACE@285..286 " "
-          JS_FUNCTION_BODY@286..288
-            L_CURLY@286..287 "{"
-            LIST@287..287
-            LIST@287..287
-            R_CURLY@287..288 "}"
-        WHITESPACE@288..291 "\n\n\t"
-        JS_METHOD_CLASS_MEMBER@291..299
-          JS_STATIC_MEMBER_NAME@291..294
-            IDENT@291..294 "get"
-          JS_PARAMETER_LIST@294..296
-            L_PAREN@294..295 "("
-            LIST@295..295
-            R_PAREN@295..296 ")"
-          WHITESPACE@296..297 " "
-          JS_FUNCTION_BODY@297..299
-            L_CURLY@297..298 "{"
-            LIST@298..298
-            LIST@298..298
-            R_CURLY@298..299 "}"
-        WHITESPACE@299..300 " "
-        COMMENT@300..320 "// Method called get"
-        WHITESPACE@320..322 "\n\t"
-        JS_METHOD_CLASS_MEMBER@322..330
-          JS_STATIC_MEMBER_NAME@322..325
-            IDENT@322..325 "set"
-          JS_PARAMETER_LIST@325..327
-            L_PAREN@325..326 "("
-            LIST@326..326
-            R_PAREN@326..327 ")"
-          WHITESPACE@327..328 " "
-          JS_FUNCTION_BODY@328..330
-            L_CURLY@328..329 "{"
-            LIST@329..329
-            LIST@329..329
-            R_CURLY@329..330 "}"
-      WHITESPACE@330..331 " "
-      COMMENT@331..351 "// Method called set"
-      WHITESPACE@351..352 "\n"
-      R_CURLY@352..353 "}"
-    WHITESPACE@353..355 "\n\n"
-    JS_CLASS_DECLARATION@355..590
-      CLASS_KW@355..360 "class"
-      WHITESPACE@360..361 " "
-      JS_IDENTIFIER_BINDING@361..367
-        IDENT@361..367 "Static"
-      WHITESPACE@367..368 " "
-      L_CURLY@368..369 "{"
-      WHITESPACE@369..371 "\n\t"
-      LIST@371..588
-        JS_METHOD_CLASS_MEMBER@371..389
-          STATIC_KW@371..377 "static"
-          WHITESPACE@377..378 " "
-          JS_STATIC_MEMBER_NAME@378..384
-            IDENT@378..384 "method"
-          JS_PARAMETER_LIST@384..386
-            L_PAREN@384..385 "("
-            LIST@385..385
-            R_PAREN@385..386 ")"
-          WHITESPACE@386..387 " "
-          JS_FUNCTION_BODY@387..389
-            L_CURLY@387..388 "{"
-            LIST@388..388
-            LIST@388..388
-            R_CURLY@388..389 "}"
-        WHITESPACE@389..391 "\n\t"
-        JS_METHOD_CLASS_MEMBER@391..420
-          STATIC_KW@391..397 "static"
-          WHITESPACE@397..398 " "
-          ASYNC_KW@398..403 "async"
-          WHITESPACE@403..404 " "
-          JS_STATIC_MEMBER_NAME@404..415
-            IDENT@404..415 "asyncMethod"
-          JS_PARAMETER_LIST@415..417
-            L_PAREN@415..416 "("
-            LIST@416..416
-            R_PAREN@416..417 ")"
-          WHITESPACE@417..418 " "
-          JS_FUNCTION_BODY@418..420
-            L_CURLY@418..419 "{"
-            LIST@419..419
-            LIST@419..419
-            R_CURLY@419..420 "}"
-        WHITESPACE@420..422 "\n\t"
-        JS_METHOD_CLASS_MEMBER@422..461
-          STATIC_KW@422..428 "static"
-          WHITESPACE@428..429 " "
-          ASYNC_KW@429..434 "async"
-          STAR@434..435 "*"
-          WHITESPACE@435..436 " "
-          JS_STATIC_MEMBER_NAME@436..456
-            IDENT@436..456 "asyncGeneratorMethod"
-          JS_PARAMETER_LIST@456..458
-            L_PAREN@456..457 "("
-            LIST@457..457
-            R_PAREN@457..458 ")"
-          WHITESPACE@458..459 " "
-          JS_FUNCTION_BODY@459..461
-            L_CURLY@459..460 "{"
-            LIST@460..460
-            LIST@460..460
-            R_CURLY@460..461 "}"
-        WHITESPACE@461..463 "\n\t"
-        JS_METHOD_CLASS_MEMBER@463..492
-          STATIC_KW@463..469 "static"
-          WHITESPACE@469..470 " "
-          STAR@470..471 "*"
-          WHITESPACE@471..472 " "
-          JS_STATIC_MEMBER_NAME@472..487
-            IDENT@472..487 "generatorMethod"
-          JS_PARAMETER_LIST@487..489
-            L_PAREN@487..488 "("
-            LIST@488..488
-            R_PAREN@488..489 ")"
-          WHITESPACE@489..490 " "
-          JS_FUNCTION_BODY@490..492
-            L_CURLY@490..491 "{"
-            LIST@491..491
-            LIST@491..491
-            R_CURLY@491..492 "}"
-        WHITESPACE@492..495 "\n\n\t"
-        JS_METHOD_CLASS_MEMBER@495..513
-          STATIC_KW@495..501 "static"
-          WHITESPACE@501..502 " "
-          JS_STATIC_MEMBER_NAME@502..508
-            IDENT@502..508 "static"
-          JS_PARAMETER_LIST@508..510
-            L_PAREN@508..509 "("
-            LIST@509..509
-            R_PAREN@509..510 ")"
-          WHITESPACE@510..511 " "
-          JS_FUNCTION_BODY@511..513
-            L_CURLY@511..512 "{"
-            LIST@512..512
-            LIST@512..512
-            R_CURLY@512..513 "}"
-        WHITESPACE@513..515 "\n\t"
-        JS_METHOD_CLASS_MEMBER@515..539
-          STATIC_KW@515..521 "static"
-          WHITESPACE@521..522 " "
-          ASYNC_KW@522..527 "async"
-          WHITESPACE@527..528 " "
-          JS_STATIC_MEMBER_NAME@528..534
-            IDENT@528..534 "static"
-          JS_PARAMETER_LIST@534..536
-            L_PAREN@534..535 "("
-            LIST@535..535
-            R_PAREN@535..536 ")"
-          WHITESPACE@536..537 " "
-          JS_FUNCTION_BODY@537..539
-            L_CURLY@537..538 "{"
-            LIST@538..538
-            LIST@538..538
-            R_CURLY@538..539 "}"
-        WHITESPACE@539..541 "\n\t"
-        JS_METHOD_CLASS_MEMBER@541..566
-          STATIC_KW@541..547 "static"
-          WHITESPACE@547..548 " "
-          ASYNC_KW@548..553 "async"
-          STAR@553..554 "*"
-          WHITESPACE@554..555 " "
-          JS_STATIC_MEMBER_NAME@555..561
-            IDENT@555..561 "static"
-          JS_PARAMETER_LIST@561..563
-            L_PAREN@561..562 "("
-            LIST@562..562
-            R_PAREN@562..563 ")"
+            LIST@234..234
+            R_CURLY@234..235 "}"
+        WHITESPACE@235..237 "\n\t"
+        JS_METHOD_CLASS_MEMBER@237..254
+          ASYNC_KW@237..242 "async"
+          WHITESPACE@242..243 " "
+          JS_STATIC_MEMBER_NAME@243..249
+            IDENT@243..249 "static"
+          JS_PARAMETER_LIST@249..251
+            L_PAREN@249..250 "("
+            LIST@250..250
+            R_PAREN@250..251 ")"
+          WHITESPACE@251..252 " "
+          JS_FUNCTION_BODY@252..254
+            L_CURLY@252..253 "{"
+            LIST@253..253
+            LIST@253..253
+            R_CURLY@253..254 "}"
+        WHITESPACE@254..256 "\n\t"
+        JS_METHOD_CLASS_MEMBER@256..269
+          STAR@256..257 "*"
+          WHITESPACE@257..258 " "
+          JS_STATIC_MEMBER_NAME@258..264
+            IDENT@258..264 "static"
+          JS_PARAMETER_LIST@264..266
+            L_PAREN@264..265 "("
+            LIST@265..265
+            R_PAREN@265..266 ")"
+          WHITESPACE@266..267 " "
+          JS_FUNCTION_BODY@267..269
+            L_CURLY@267..268 "{"
+            LIST@268..268
+            LIST@268..268
+            R_CURLY@268..269 "}"
+        WHITESPACE@269..271 "\n\t"
+        JS_METHOD_CLASS_MEMBER@271..289
+          ASYNC_KW@271..276 "async"
+          STAR@276..277 "*"
+          WHITESPACE@277..278 " "
+          JS_STATIC_MEMBER_NAME@278..284
+            IDENT@278..284 "static"
+          JS_PARAMETER_LIST@284..286
+            L_PAREN@284..285 "("
+            LIST@285..285
+            R_PAREN@285..286 ")"
+          WHITESPACE@286..287 " "
+          JS_FUNCTION_BODY@287..289
+            L_CURLY@287..288 "{"
+            LIST@288..288
+            LIST@288..288
+            R_CURLY@288..289 "}"
+        WHITESPACE@289..292 "\n\n\t"
+        JS_METHOD_CLASS_MEMBER@292..304
+          JS_STATIC_MEMBER_NAME@292..299
+            IDENT@292..299 "declare"
+          JS_PARAMETER_LIST@299..301
+            L_PAREN@299..300 "("
+            LIST@300..300
+            R_PAREN@300..301 ")"
+          WHITESPACE@301..302 " "
+          JS_FUNCTION_BODY@302..304
+            L_CURLY@302..303 "{"
+            LIST@303..303
+            LIST@303..303
+            R_CURLY@303..304 "}"
+        WHITESPACE@304..307 "\n\n\t"
+        JS_METHOD_CLASS_MEMBER@307..315
+          JS_STATIC_MEMBER_NAME@307..310
+            IDENT@307..310 "get"
+          JS_PARAMETER_LIST@310..312
+            L_PAREN@310..311 "("
+            LIST@311..311
+            R_PAREN@311..312 ")"
+          WHITESPACE@312..313 " "
+          JS_FUNCTION_BODY@313..315
+            L_CURLY@313..314 "{"
+            LIST@314..314
+            LIST@314..314
+            R_CURLY@314..315 "}"
+        WHITESPACE@315..316 " "
+        COMMENT@316..336 "// Method called get"
+        WHITESPACE@336..338 "\n\t"
+        JS_METHOD_CLASS_MEMBER@338..346
+          JS_STATIC_MEMBER_NAME@338..341
+            IDENT@338..341 "set"
+          JS_PARAMETER_LIST@341..343
+            L_PAREN@341..342 "("
+            LIST@342..342
+            R_PAREN@342..343 ")"
+          WHITESPACE@343..344 " "
+          JS_FUNCTION_BODY@344..346
+            L_CURLY@344..345 "{"
+            LIST@345..345
+            LIST@345..345
+            R_CURLY@345..346 "}"
+      WHITESPACE@346..347 " "
+      COMMENT@347..367 "// Method called set"
+      WHITESPACE@367..368 "\n"
+      R_CURLY@368..369 "}"
+    WHITESPACE@369..371 "\n\n"
+    JS_CLASS_DECLARATION@371..606
+      CLASS_KW@371..376 "class"
+      WHITESPACE@376..377 " "
+      JS_IDENTIFIER_BINDING@377..383
+        IDENT@377..383 "Static"
+      WHITESPACE@383..384 " "
+      L_CURLY@384..385 "{"
+      WHITESPACE@385..387 "\n\t"
+      LIST@387..604
+        JS_METHOD_CLASS_MEMBER@387..405
+          STATIC_KW@387..393 "static"
+          WHITESPACE@393..394 " "
+          JS_STATIC_MEMBER_NAME@394..400
+            IDENT@394..400 "method"
+          JS_PARAMETER_LIST@400..402
+            L_PAREN@400..401 "("
+            LIST@401..401
+            R_PAREN@401..402 ")"
+          WHITESPACE@402..403 " "
+          JS_FUNCTION_BODY@403..405
+            L_CURLY@403..404 "{"
+            LIST@404..404
+            LIST@404..404
+            R_CURLY@404..405 "}"
+        WHITESPACE@405..407 "\n\t"
+        JS_METHOD_CLASS_MEMBER@407..436
+          STATIC_KW@407..413 "static"
+          WHITESPACE@413..414 " "
+          ASYNC_KW@414..419 "async"
+          WHITESPACE@419..420 " "
+          JS_STATIC_MEMBER_NAME@420..431
+            IDENT@420..431 "asyncMethod"
+          JS_PARAMETER_LIST@431..433
+            L_PAREN@431..432 "("
+            LIST@432..432
+            R_PAREN@432..433 ")"
+          WHITESPACE@433..434 " "
+          JS_FUNCTION_BODY@434..436
+            L_CURLY@434..435 "{"
+            LIST@435..435
+            LIST@435..435
+            R_CURLY@435..436 "}"
+        WHITESPACE@436..438 "\n\t"
+        JS_METHOD_CLASS_MEMBER@438..477
+          STATIC_KW@438..444 "static"
+          WHITESPACE@444..445 " "
+          ASYNC_KW@445..450 "async"
+          STAR@450..451 "*"
+          WHITESPACE@451..452 " "
+          JS_STATIC_MEMBER_NAME@452..472
+            IDENT@452..472 "asyncGeneratorMethod"
+          JS_PARAMETER_LIST@472..474
+            L_PAREN@472..473 "("
+            LIST@473..473
+            R_PAREN@473..474 ")"
+          WHITESPACE@474..475 " "
+          JS_FUNCTION_BODY@475..477
+            L_CURLY@475..476 "{"
+            LIST@476..476
+            LIST@476..476
+            R_CURLY@476..477 "}"
+        WHITESPACE@477..479 "\n\t"
+        JS_METHOD_CLASS_MEMBER@479..508
+          STATIC_KW@479..485 "static"
+          WHITESPACE@485..486 " "
+          STAR@486..487 "*"
+          WHITESPACE@487..488 " "
+          JS_STATIC_MEMBER_NAME@488..503
+            IDENT@488..503 "generatorMethod"
+          JS_PARAMETER_LIST@503..505
+            L_PAREN@503..504 "("
+            LIST@504..504
+            R_PAREN@504..505 ")"
+          WHITESPACE@505..506 " "
+          JS_FUNCTION_BODY@506..508
+            L_CURLY@506..507 "{"
+            LIST@507..507
+            LIST@507..507
+            R_CURLY@507..508 "}"
+        WHITESPACE@508..511 "\n\n\t"
+        JS_METHOD_CLASS_MEMBER@511..529
+          STATIC_KW@511..517 "static"
+          WHITESPACE@517..518 " "
+          JS_STATIC_MEMBER_NAME@518..524
+            IDENT@518..524 "static"
+          JS_PARAMETER_LIST@524..526
+            L_PAREN@524..525 "("
+            LIST@525..525
+            R_PAREN@525..526 ")"
+          WHITESPACE@526..527 " "
+          JS_FUNCTION_BODY@527..529
+            L_CURLY@527..528 "{"
+            LIST@528..528
+            LIST@528..528
+            R_CURLY@528..529 "}"
+        WHITESPACE@529..531 "\n\t"
+        JS_METHOD_CLASS_MEMBER@531..555
+          STATIC_KW@531..537 "static"
+          WHITESPACE@537..538 " "
+          ASYNC_KW@538..543 "async"
+          WHITESPACE@543..544 " "
+          JS_STATIC_MEMBER_NAME@544..550
+            IDENT@544..550 "static"
+          JS_PARAMETER_LIST@550..552
+            L_PAREN@550..551 "("
+            LIST@551..551
+            R_PAREN@551..552 ")"
+          WHITESPACE@552..553 " "
+          JS_FUNCTION_BODY@553..555
+            L_CURLY@553..554 "{"
+            LIST@554..554
+            LIST@554..554
+            R_CURLY@554..555 "}"
+        WHITESPACE@555..557 "\n\t"
+        JS_METHOD_CLASS_MEMBER@557..582
+          STATIC_KW@557..563 "static"
           WHITESPACE@563..564 " "
-          JS_FUNCTION_BODY@564..566
-            L_CURLY@564..565 "{"
-            LIST@565..565
-            LIST@565..565
-            R_CURLY@565..566 "}"
-        WHITESPACE@566..568 "\n\t"
-        JS_METHOD_CLASS_MEMBER@568..588
-          STATIC_KW@568..574 "static"
-          WHITESPACE@574..575 " "
-          STAR@575..576 "*"
-          WHITESPACE@576..577 " "
-          JS_STATIC_MEMBER_NAME@577..583
-            IDENT@577..583 "static"
-          JS_PARAMETER_LIST@583..585
-            L_PAREN@583..584 "("
-            LIST@584..584
-            R_PAREN@584..585 ")"
-          WHITESPACE@585..586 " "
-          JS_FUNCTION_BODY@586..588
-            L_CURLY@586..587 "{"
-            LIST@587..587
-            LIST@587..587
-            R_CURLY@587..588 "}"
-      WHITESPACE@588..589 "\n"
-      R_CURLY@589..590 "}"
-  WHITESPACE@590..591 "\n"
+          ASYNC_KW@564..569 "async"
+          STAR@569..570 "*"
+          WHITESPACE@570..571 " "
+          JS_STATIC_MEMBER_NAME@571..577
+            IDENT@571..577 "static"
+          JS_PARAMETER_LIST@577..579
+            L_PAREN@577..578 "("
+            LIST@578..578
+            R_PAREN@578..579 ")"
+          WHITESPACE@579..580 " "
+          JS_FUNCTION_BODY@580..582
+            L_CURLY@580..581 "{"
+            LIST@581..581
+            LIST@581..581
+            R_CURLY@581..582 "}"
+        WHITESPACE@582..584 "\n\t"
+        JS_METHOD_CLASS_MEMBER@584..604
+          STATIC_KW@584..590 "static"
+          WHITESPACE@590..591 " "
+          STAR@591..592 "*"
+          WHITESPACE@592..593 " "
+          JS_STATIC_MEMBER_NAME@593..599
+            IDENT@593..599 "static"
+          JS_PARAMETER_LIST@599..601
+            L_PAREN@599..600 "("
+            LIST@600..600
+            R_PAREN@600..601 ")"
+          WHITESPACE@601..602 " "
+          JS_FUNCTION_BODY@602..604
+            L_CURLY@602..603 "{"
+            LIST@603..603
+            LIST@603..603
+            R_CURLY@603..604 "}"
+      WHITESPACE@604..605 "\n"
+      R_CURLY@605..606 "}"
+  WHITESPACE@606..607 "\n"

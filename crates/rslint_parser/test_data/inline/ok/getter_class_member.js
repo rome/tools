@@ -8,6 +8,8 @@ class Getters {
 	get ["a" + "b"]() {}
 
 	get 5() {}
+
+	get #private() {}
 }
 
 class NotGetters {

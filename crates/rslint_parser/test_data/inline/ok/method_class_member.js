@@ -7,6 +7,8 @@ class Test {
 	"foo"() {}
 	["foo" + "bar"]() {}
 	5() {}
+
+	#private() {}
 }
 
 class ContextualKeywords {

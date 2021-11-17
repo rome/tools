@@ -8,6 +8,8 @@ class Setters {
 	set ["a" + "b"](a) {}
 
 	set 5(a) {}
+
+	set #private(a) {}
 }
 
 class NotSetters {
