@@ -52,8 +52,8 @@ impl RecoveryBag {
 		parser.at_ts(self.recovery)
 	}
 
-	pub fn get_error(&self) -> Diagnostic {
-		self.error.to_owned().unwrap()
+	pub fn get_error(&self) -> Option<Diagnostic> {
+		self.error.to_owned()
 	}
 
 	pub fn get_mysterious_node(&self) -> SyntaxKind {

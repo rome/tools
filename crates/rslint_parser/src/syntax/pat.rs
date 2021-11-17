@@ -172,7 +172,6 @@ pub fn array_binding_pattern(
 			ParseRecoverer::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				ERROR,
-				ERROR,
 			)
 			.recover(p);
 		}
@@ -241,7 +240,6 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	} else {
 		ParseRecoverer::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
-			ERROR,
 			ERROR,
 		)
 		.recover(p);
