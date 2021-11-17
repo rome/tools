@@ -228,7 +228,7 @@ fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 }
 
-// TODO 1725 unify with class method parsing?
+// TODO #1725 unify with class method parsing?
 /// Parses a method object member
 fn method_object_member(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();

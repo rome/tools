@@ -1,4 +1,4 @@
-use rslint_parser::ast::{JsAnyObjectMemberName, JsStaticObjectMemberName};
+use rslint_parser::ast::JsAnyObjectMemberName;
 
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 
@@ -12,11 +12,5 @@ impl ToFormatElement for JsAnyObjectMemberName {
 				ident.to_format_element(formatter)
 			}
 		}
-	}
-}
-
-impl ToFormatElement for JsStaticObjectMemberName {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		formatter.format_token(&self.name_token()?)
 	}
 }

@@ -513,7 +513,7 @@ JsAnyObjectMember =
 	| JsMethodObjectMember
 	| JsGetterObjectMember
 	| JsSetterObjectMember
-	| InitializedProp // TODO 1725 Delete after finishing assignment targets work
+	| InitializedProp // TODO #1725 Delete after finishing assignment targets work
 	| JsShorthandPropertyObjectMember
 	| JsSpread
 	| JsUnknownMember
@@ -560,7 +560,7 @@ JsMethodObjectMember =
 //   ^
 JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
 
-// TODO 1725 Delete after finishing work around Classes & Assignment targets
+// TODO #1725 Delete after finishing work around Classes & Assignment targets
 PropName =
 	ComputedPropertyName
 	| JsStringLiteral
@@ -709,7 +709,7 @@ JsVariableDeclaration =
     declarators: (JsVariableDeclarator (',' JsVariableDeclarator)*)
 
 JsVariableDeclarator =
-		// TODO 1725 change to `JsAnyBinding`
+		// TODO #1725 change to `JsAnyBinding`
     id: Pattern
     init: JsEqualValueClause?
 

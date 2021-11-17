@@ -5,3 +5,4 @@ mod object_member_name;
 mod prop_name;
 mod property_object_member;
 mod setter_object_member;
+mod static_object_member_name;
