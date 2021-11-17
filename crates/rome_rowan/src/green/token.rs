@@ -8,7 +8,7 @@ use std::{
 use countme::Count;
 
 use crate::{
-	api::Trivia,
+	api::TriviaPiece,
 	arc::{Arc, HeaderSlice, ThinArc},
 	green::SyntaxKind,
 	TextSize,
@@ -20,7 +20,7 @@ pub enum GreenTokenTrivia {
 	None,
 	Whitespace(usize),
 	Comments(usize),
-	Many(Box<Vec<Trivia>>),
+	Many(Box<Vec<TriviaPiece>>),
 }
 
 impl GreenTokenTrivia {
@@ -39,14 +39,23 @@ impl GreenTokenTrivia {
 			}
 		}
 	}
+
+	pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
+		match self {
+			GreenTokenTrivia::Whitespace(l) if index == 0 => Some(TriviaPiece::Whitespace(*l)),
+			GreenTokenTrivia::Comments(l) if index == 0 => Some(TriviaPiece::Comments(*l)),
+			GreenTokenTrivia::Many(v) => v.get(index).copied(),
+			_ => None,
+		}
+	}
 }
 
-impl From<Vec<Trivia>> for GreenTokenTrivia {
-	fn from(trivias: Vec<Trivia>) -> Self {
+impl From<Vec<TriviaPiece>> for GreenTokenTrivia {
+	fn from(trivias: Vec<TriviaPiece>) -> Self {
 		match trivias.as_slice() {
 			[] => GreenTokenTrivia::None,
-			[Trivia::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
-			[Trivia::Comments(len)] => GreenTokenTrivia::Comments(*len),
+			[TriviaPiece::Whitespace(len)] => GreenTokenTrivia::Whitespace(*len),
+			[TriviaPiece::Comments(len)] => GreenTokenTrivia::Comments(*len),
 			_ => GreenTokenTrivia::Many(Box::new(trivias)),
 		}
 	}
@@ -251,7 +260,7 @@ impl ops::Deref for GreenToken {
 
 #[cfg(test)]
 mod tests {
-	use crate::api::Trivia;
+	use crate::api::TriviaPiece;
 
 	use super::*;
 	use quickcheck_macros::*;
@@ -296,8 +305,8 @@ mod tests {
 	#[test]
 	fn many_text_len_dont_panic() {
 		let trivia = GreenTokenTrivia::Many(Box::new(vec![
-			Trivia::Whitespace(usize::MAX),
-			Trivia::Comments(1),
+			TriviaPiece::Whitespace(usize::MAX),
+			TriviaPiece::Comments(1),
 		]));
 		assert_eq!(TextSize::from(u32::MAX), trivia.text_len());
 	}
@@ -306,7 +315,7 @@ mod tests {
 	fn many_text_len(lengths: Vec<u32>) {
 		let trivia: Vec<_> = lengths
 			.iter()
-			.map(|x| Trivia::Whitespace(*x as usize))
+			.map(|x| TriviaPiece::Whitespace(*x as usize))
 			.collect();
 		let trivia = GreenTokenTrivia::Many(Box::new(trivia));
 

@@ -31,7 +31,7 @@ pub use text_size::{TextLen, TextRange, TextSize};
 pub use crate::{
 	api::{
 		Language, SyntaxElement, SyntaxElementChildren, SyntaxList, SyntaxNode, SyntaxNodeChildren,
-		SyntaxToken, Trivia,
+		SyntaxToken, TriviaPiece,
 	},
 	green::SyntaxKind,
 	syntax_text::SyntaxText,
