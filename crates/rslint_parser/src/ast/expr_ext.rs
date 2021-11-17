@@ -28,11 +28,7 @@ impl JsConditionalExpression {
 	}
 }
 
-impl LiteralProp {
-	pub fn key(&self) -> SyntaxResult<PropName> {
-		support::required_node::<PropName>(self.syntax())
-	}
-
+impl JsPropertyObjectMember {
 	pub fn value(&self) -> SyntaxResult<JsAnyExpression> {
 		let child = self.syntax().children().nth(1);
 		match child {
@@ -292,9 +288,9 @@ impl JsArrayExpression {
 	}
 }
 
-impl ObjectExpr {
+impl JsObjectExpression {
 	pub fn has_trailing_comma(&self) -> bool {
-		self.props().trailing_separator().is_some()
+		self.members().trailing_separator().is_some()
 	}
 }
 
@@ -388,50 +384,6 @@ impl Template {
 			self.syntax().text_range().end(),
 		))
 	}
-}
-
-impl ObjectProp {
-	pub fn key(&self) -> Option<std::string::String> {
-		Some(self.key_element()?.to_string())
-	}
-
-	pub fn key_element(&self) -> Option<SyntaxElement> {
-		Some(
-			match self {
-				ObjectProp::IdentProp(idt) => idt.syntax().clone(),
-				ObjectProp::LiteralProp(litprop) => {
-					litprop.key().map_or_else(|_| None, prop_name_syntax)?
-				}
-
-				ObjectProp::Getter(getter) => {
-					getter.key().map_or_else(|_| None, prop_name_syntax)?
-				}
-				ObjectProp::Setter(setter) => {
-					setter.key().map_or_else(|_| None, prop_name_syntax)?
-				}
-				ObjectProp::Method(method) => {
-					method.name().map_or_else(|_| None, prop_name_syntax)?
-				}
-				ObjectProp::InitializedProp(init) => init
-					.key()
-					.map_or_else(|_| None, |key| Some(key.syntax().clone()))?,
-				ObjectProp::SpreadProp(_) => return None,
-				ObjectProp::JsUnknownMember(_) => todo!(),
-			}
-			.into(),
-		)
-	}
-}
-
-fn prop_name_syntax(name: PropName) -> Option<SyntaxNode> {
-	Some(match name {
-		PropName::Ident(idt) => idt.syntax().clone(),
-		PropName::JsStringLiteral(lit) => lit.syntax().clone(),
-		PropName::JsNumberLiteral(lit) => lit.syntax().clone(),
-		PropName::Name(name) => name.syntax().clone(),
-		PropName::ComputedPropertyName(_) => return None,
-		PropName::JsUnknownBinding(_) => todo!(),
-	})
 }
 
 impl JsAnyExpression {

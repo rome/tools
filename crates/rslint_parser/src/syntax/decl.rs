@@ -1,9 +1,10 @@
 //! Class and function declarations.
 
-use super::expr::{assign_expr, identifier_name, object_prop_name};
+use super::expr::{assign_expr, identifier_name};
 use super::pat::{binding_identifier, pattern};
 use super::typescript::*;
 use crate::syntax::function::{args_body, function_body, function_body_or_declaration};
+use crate::syntax::object::object_prop_name;
 use crate::{SyntaxKind::*, *};
 
 pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
@@ -48,7 +49,7 @@ fn class_prop_name(p: &mut Parser) -> Option<(CompletedMarker, Option<usize>)> {
 }
 
 #[allow(clippy::unnecessary_unwrap)]
-fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
+pub(super) fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	if p.typescript() {
 		if let Some(modifier) = maybe_eat_incorrect_modifier(p) {
@@ -967,7 +968,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 	None
 }
 
-/// A method definition, this takes an optional markers for object props
+/// A method definition, this takes an optional markers for object object_members
 pub fn method(
 	p: &mut Parser,
 	marker: impl Into<Option<Marker>>,

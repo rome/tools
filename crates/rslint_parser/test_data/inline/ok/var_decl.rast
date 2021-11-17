@@ -113,7 +113,7 @@ JS_ROOT@0..155
             JS_EQUAL_VALUE_CLAUSE@86..90
               EQ@86..87 "="
               WHITESPACE@87..88 " "
-              OBJECT_EXPR@88..90
+              JS_OBJECT_EXPRESSION@88..90
                 L_CURLY@88..89 "{"
                 LIST@89..89
                 R_CURLY@89..90 "}"

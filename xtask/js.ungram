@@ -250,6 +250,7 @@ JsAnyExpression =
 	| JsFunctionExpression
 	| JsImportCallExpression
 	| JsLogicalExpression
+	| JsObjectExpression
 	| JsParenthesizedExpression
 	| JsReferenceIdentifierExpression
 	| JsSequenceExpression
@@ -259,7 +260,6 @@ JsAnyExpression =
 	| JsPostUpdateExpression
 	| JsYieldExpression
 	| Template
-	| ObjectExpr
 	| BracketExpr
 	| DotExpr
 	| NewExpr
@@ -348,9 +348,6 @@ JsArrowFunctionExpression =
 JsAnyArrowFunctionParameters = JsParameterList | JsIdentifierBinding
 JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
 
-// Object expression
-ObjectExpr = '{' props:(ObjectProp (',' ObjectProp)* ','?) '}'
-
 // class expression
 ClassExpr =
 	'class'
@@ -394,7 +391,7 @@ ConstructorParamOrPat =
 
 
 
-// This type is here only to matain compatiblity with rslit_parser
+// This type is here only to maintain compatibility with rslit_parser
 // A private property should only have the hash (#) or have the
 // keyword `private` in the typescript version
 PrivateProp = class_prop: ClassProp
@@ -481,6 +478,109 @@ JsPostUpdateExpression =
 
 
 ///////////////
+// OBJECTS
+///////////////
+
+// { a: ... }
+//   ^
+JsStaticObjectMemberName = name: 'ident'
+
+// { [call()]: ... }
+//   ^^^^^^^^
+JsComputedObjectMemberName =
+	'['
+	expression: JsAnyExpression
+	']'
+
+JsAnyObjectMemberName =
+	JsStaticObjectMemberName
+	// { "a": ... }
+	//   ^^^
+	| JsStringLiteral
+
+	// { 5: ... }
+	//   ^
+	| JsNumberLiteral
+	| JsComputedObjectMemberName
+
+JsObjectExpression =
+	'{'
+	members: (JsAnyObjectMember (',' JsAnyObjectMember)* ','?)
+	'}'
+
+JsAnyObjectMember =
+	JsPropertyObjectMember
+	| JsMethodObjectMember
+	| JsGetterObjectMember
+	| JsSetterObjectMember
+	| InitializedProp // TODO #1725 Delete after finishing assignment targets work
+	| JsShorthandPropertyObjectMember
+	| JsSpread
+	| JsUnknownMember
+
+
+// { a: 5, b: () => {} }
+//   ^^^^  ^^^^^^^^^^^
+JsPropertyObjectMember =
+	name: JsAnyObjectMemberName
+	':'
+	manual__value: JsAnyExpression
+
+// { get a() {} }
+//   ^^^^^^^^^^
+JsGetterObjectMember =
+	'get'
+	name: JsAnyObjectMemberName
+	'('')'
+	return_type: TsReturnType?
+	body: JsFunctionBody
+
+//  { set a(value) {} }
+//    ^^^^^^^^^^^^^^^
+JsSetterObjectMember =
+	'set'
+	name: JsAnyObjectMemberName
+	'('
+	parameter: Pattern
+	')'
+	body: JsFunctionBody
+
+// { a() {}, async b() {}, async * c() {} }
+//   ^^^^^^  ^^^^^^^^^^^^  ^^^^^^^^^^^^^^
+JsMethodObjectMember =
+	'async'?
+	'*'?
+	name: JsAnyObjectMemberName
+	type_params: TsTypeParams?
+	parameter_list: JsParameterList
+	return_type: TsReturnType?
+	body: JsFunctionBody
+
+// { a }
+//   ^
+JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
+
+// TODO #1725 Delete after finishing work around Classes & Assignment targets
+PropName =
+	ComputedPropertyName
+	| JsStringLiteral
+	| JsNumberLiteral
+	| Ident
+	| Name
+	| JsUnknownBinding
+
+
+// computed property
+ComputedPropertyName = '[' expr: JsAnyExpression ']'
+
+// private property access
+PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
+
+// initialised property
+InitializedProp = key:Name '=' value:JsAnyExpression
+
+
+///////////////
 // LITERALS
 ///////////////
 
@@ -554,50 +654,6 @@ KeyValuePattern = key:PropName ':' manual__value:Pattern
 // expression pattern
 ExprPattern = expr: JsAnyExpression
 
-
-
-
-///////////////
-// PROPS
-///////////////
-ObjectProp =
-	LiteralProp
-	| Getter
-	| Setter
-	| SpreadProp
-	| InitializedProp
-	| IdentProp
-	| Method
-	| JsUnknownMember
-
-
-// literal prop
-LiteralProp = manual__key:PropName ':' manual__value:JsAnyExpression
-
-PropName =
-	ComputedPropertyName
-	| JsStringLiteral
-	| JsNumberLiteral
-	| Ident
-	| Name
-	| JsUnknownBinding
-
-
-// computed property
-ComputedPropertyName = '[' expr: JsAnyExpression ']'
-
-// private property access
-PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
-
-// spread property
-SpreadProp = '...' value:JsAnyExpression
-
-// initialised property
-InitializedProp = key:Name '=' value:JsAnyExpression
-
-// property identifier
-IdentProp = name: Name
-
 ///////////////
 // MISCELLANEOUS
 ///////////////
@@ -653,7 +709,7 @@ JsVariableDeclaration =
     declarators: (JsVariableDeclarator (',' JsVariableDeclarator)*)
 
 JsVariableDeclarator =
-		// TODO 1725 change to `JsAnyBinding`
+		// TODO #1725 change to `JsAnyBinding`
     id: Pattern
     init: JsEqualValueClause?
 
@@ -671,7 +727,7 @@ ImportDecl =
 	'type'?
 	'from'
 	source: JsStringLiteral
-	asserted_object:ObjectExpr
+	asserted_object: JsObjectExpression
 	'assert'?
 	';'?
 
@@ -745,6 +801,13 @@ JsIdentifierBinding = name: 'ident'
 // AUXILIARY
 ///////////////
 
+// { ...a }
+//   ^^^^
+// [ ...a ]
+//   ^^^^
+JsSpread =
+	'...'
+	argument: JsAnyExpression
 
 JsParameterList =
 	'('

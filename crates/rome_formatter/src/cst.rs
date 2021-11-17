@@ -2,14 +2,14 @@ use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayPattern, AssignPattern, CallExpr, ClassBody, ClassDecl, ClassProp, Condition,
 	ConstructorParameters, ForInStmt, ForStmt, ForStmtInit, ForStmtTest, ForStmtUpdate, Getter,
-	IdentProp, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteral,
-	JsCaseClause, JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
-	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
-	JsFunctionDeclaration, JsIfStatement, JsLabeledStatement, JsNullLiteral, JsNumberLiteral,
-	JsParameterList, JsReferenceIdentifierExpression, JsReturnStatement, JsRoot,
-	JsSequenceExpression, JsStringLiteral, JsSwitchStatement, JsTryStatement,
-	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement,
-	LiteralProp, Name, ObjectExpr, Setter, SinglePattern,
+	JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement, JsBooleanLiteral, JsCaseClause,
+	JsCatchClause, JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
+	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration, JsIfStatement,
+	JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsObjectExpression, JsParameterList,
+	JsPropertyObjectMember, JsReferenceIdentifierExpression, JsReturnStatement, JsRoot,
+	JsSequenceExpression, JsShorthandPropertyObjectMember, JsStringLiteral, JsSwitchStatement,
+	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
+	JsWithStatement, Name, Setter, SinglePattern,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -103,10 +103,12 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_EMPTY_STATEMENT => JsEmptyStatement::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::IDENT_PROP => IdentProp::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::OBJECT_EXPR => ObjectExpr::cast(self.clone())
+			SyntaxKind::JS_SHORTHAND_PROPERTY_OBJECT_MEMBER => {
+				JsShorthandPropertyObjectMember::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
+			SyntaxKind::JS_OBJECT_EXPRESSION => JsObjectExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_WHILE_STATEMENT => JsWhileStatement::cast(self.clone())
@@ -157,7 +159,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::ARG_LIST => ArgList::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::LITERAL_PROP => LiteralProp::cast(self.clone())
+			SyntaxKind::JS_PROPERTY_OBJECT_MEMBER => JsPropertyObjectMember::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::CLASS_DECL => ClassDecl::cast(self.clone())

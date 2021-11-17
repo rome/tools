@@ -72,7 +72,7 @@ JS_ROOT@0..95
       WHITESPACE@53..54 " "
       IDENT@54..56 "of"
       WHITESPACE@56..57 " "
-      OBJECT_EXPR@57..59
+      JS_OBJECT_EXPRESSION@57..59
         L_CURLY@57..58 "{"
         LIST@58..58
         R_CURLY@58..59 "}"
@@ -93,7 +93,7 @@ JS_ROOT@0..95
       WHITESPACE@72..73 " "
       IN_KW@73..75 "in"
       WHITESPACE@75..76 " "
-      OBJECT_EXPR@76..78
+      JS_OBJECT_EXPRESSION@76..78
         L_CURLY@76..77 "{"
         LIST@77..77
         R_CURLY@77..78 "}"

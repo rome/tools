@@ -4,8 +4,9 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral, JsParenthesizedExpression,
-	JsStringLiteral, JsUnaryExpression, LiteralProp, ObjectExpr, ObjectProp,
+	JsAnyObjectMember, JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral,
+	JsObjectExpression, JsParenthesizedExpression, JsPropertyObjectMember, JsStringLiteral,
+	JsUnaryExpression,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
@@ -43,26 +44,26 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 			]
 		}
 
-		SyntaxKind::LITERAL_PROP => {
-			let prop = LiteralProp::cast(node).unwrap();
+		SyntaxKind::JS_PROPERTY_OBJECT_MEMBER => {
+			let prop = JsPropertyObjectMember::cast(node).unwrap();
 			format_elements![
-				tokenize_node(prop.key().unwrap().syntax().clone()),
+				tokenize_node(prop.name().unwrap().syntax().clone()),
 				token(":"),
 				space_token(),
 				tokenize_node(prop.value().unwrap().syntax().clone()),
 			]
 		}
 
-		SyntaxKind::OBJECT_EXPR => {
-			let object = ObjectExpr::cast(node).unwrap();
+		SyntaxKind::JS_OBJECT_EXPRESSION => {
+			let object = JsObjectExpression::cast(node).unwrap();
 
 			let separator = format_elements![token(","), soft_line_break_or_space()];
 
 			let properties_list: Vec<FormatElement> = object
-				.props()
+				.members()
 				.iter()
 				.map(|prop| match prop {
-					ObjectProp::LiteralProp(prop) => {
+					JsAnyObjectMember::JsPropertyObjectMember(prop) => {
 						format_elements![tokenize_node(prop.syntax().clone())]
 					}
 					_ => panic!("Unsupported prop type {:?}", prop),
