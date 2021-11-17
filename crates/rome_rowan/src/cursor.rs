@@ -94,7 +94,10 @@ use std::{
 
 use countme::Count;
 
-use crate::green::{Child, Children};
+use crate::{
+	green::{Child, Children},
+	Trivia,
+};
 use crate::{
 	green::{GreenElementRef, GreenNodeData, GreenTokenData, SyntaxKind},
 	sll,
@@ -550,6 +553,30 @@ impl NodeData {
 	}
 }
 
+pub struct SyntaxTriviaPiecesIterator {
+	pub(crate) raw: SyntaxTrivia,
+	pub(crate) next_index: usize,
+	pub(crate) next_offset: TextSize,
+}
+
+impl Iterator for SyntaxTriviaPiecesIterator {
+	type Item = (TextSize, Trivia);
+
+	fn next(&mut self) -> Option<Self::Item> {
+		match self.raw.get_piece(self.next_index) {
+			Some(trivia) => {
+				let piece = (self.next_offset, trivia);
+
+				self.next_index += 1;
+				self.next_offset += trivia.text_len();
+
+				Some(piece)
+			}
+			None => None,
+		}
+	}
+}
+
 impl SyntaxTrivia {
 	pub(crate) fn text_range(&self) -> TextRange {
 		let green_token = self.token.green();
@@ -576,6 +603,23 @@ impl SyntaxTrivia {
 			green_token.leading_trivia().text_len()
 		} else {
 			green_token.trailing_trivia().text_len()
+		}
+	}
+
+	pub(crate) fn get_piece(&self, i: usize) -> Option<Trivia> {
+		let green_token = self.token.green();
+		if self.is_leading {
+			green_token.leading_trivia().get_piece(i)
+		} else {
+			green_token.trailing_trivia().get_piece(i)
+		}
+	}
+
+	pub(crate) fn pieces(&self) -> SyntaxTriviaPiecesIterator {
+		SyntaxTriviaPiecesIterator {
+			raw: self.clone(),
+			next_index: 0,
+			next_offset: self.offset,
 		}
 	}
 }

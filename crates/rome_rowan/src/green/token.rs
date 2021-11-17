@@ -39,6 +39,15 @@ impl GreenTokenTrivia {
 			}
 		}
 	}
+
+	pub(crate) fn get_piece(&self, index: usize) -> Option<Trivia> {
+		match self {
+			GreenTokenTrivia::Whitespace(l) if index == 0 => Some(Trivia::Whitespace(*l)),
+			GreenTokenTrivia::Comments(l) if index == 0 => Some(Trivia::Comments(*l)),
+			GreenTokenTrivia::Many(v) => v.get(index).map(Clone::clone),
+			_ => None,
+		}
+	}
 }
 
 impl From<Vec<Trivia>> for GreenTokenTrivia {
