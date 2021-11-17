@@ -71,7 +71,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			p.recover_on_unexpected_node(RecoveryBag::with_error(ts, false, ERROR, err));
+			p.recover_on_unexpected_node(RecoveryBag::with_error(ts, ERROR, err));
 			return None;
 		}
 	})
@@ -171,7 +171,6 @@ pub fn array_binding_pattern(
 		} else if binding_element(p, parameters, assignment).is_none() {
 			p.recover_on_unexpected_node(RecoveryBag::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
-				false,
 				ERROR,
 			));
 		}
@@ -240,7 +239,6 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	} else {
 		p.recover_on_unexpected_node(RecoveryBag::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
-			false,
 			ERROR,
 		));
 		return None;

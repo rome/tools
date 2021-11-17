@@ -120,7 +120,6 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 
 			p.recover_on_unexpected_node(RecoveryBag::with_error(
 				recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
-				false,
 				ERROR,
 				err,
 			));
@@ -980,12 +979,10 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			p.recover_on_unexpected_node(RecoveryBag::with_error(
-				STMT_RECOVERY_SET,
-				true,
-				JS_UNKNOWN_STATEMENT,
-				err,
-			));
+			p.recover_on_unexpected_node(
+				RecoveryBag::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
+					.with_braces_included(),
+			);
 		}
 	}
 	None
@@ -1020,7 +1017,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		if let Some(range) = switch_clause(&mut *temp) {
+		if let Some(default_range) = switch_clause(&mut *temp) {
 			if let Some(ref err_range) = first_default {
 				let err = temp
 					.err_builder(
@@ -1030,14 +1027,12 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 						err_range.to_owned(),
 						"the first default clause is defined here",
 					)
-					.primary(range, "a second clause here is not allowed");
+					.primary(default_range, "a second clause here is not allowed");
 
 				temp.error(err);
-			} else {
-				// if the range is 0, it means that we found a "case"
-				if !range.is_empty() {
-					first_default = Some(range);
-				}
+			// if the range is 0, it means that we found a "case"
+			} else if !default_range.is_empty() {
+				first_default = Some(default_range);
 			}
 		} else {
 			break;

@@ -588,7 +588,6 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 
 			p.recover_on_unexpected_node(RecoveryBag::with_error(
 				token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
-				false,
 				ERROR,
 				err,
 			));
@@ -1026,7 +1025,6 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 					T![&],
 					T![|]
 				]),
-				false,
 				ERROR,
 				err,
 			));
@@ -1124,7 +1122,6 @@ fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 
 		p.recover_on_unexpected_node(RecoveryBag::with_error(
 			token_set![T![ident], T![yield], T![await], T![>], T![=]],
-			false,
 			ERROR,
 			err,
 		));
@@ -1362,6 +1359,6 @@ pub fn ts_type_name(
 		))
 		.primary(p.cur_tok().range, "");
 
-	p.recover_on_unexpected_node(RecoveryBag::with_error(set, false, ERROR, err));
+	p.recover_on_unexpected_node(RecoveryBag::with_error(set, ERROR, err));
 	None
 }

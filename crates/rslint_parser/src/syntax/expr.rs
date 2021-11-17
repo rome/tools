@@ -719,7 +719,6 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 
 						temp.recover_on_unexpected_node(RecoveryBag::with_error(
 							EXPR_RECOVERY_SET,
-							false,
 							ERROR,
 							err,
 						));
@@ -1054,12 +1053,10 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
-			p.recover_on_unexpected_node(RecoveryBag::with_error(
-				p.state.expr_recovery_set,
-				true,
-				ERROR,
-				err,
-			));
+			p.recover_on_unexpected_node(
+				RecoveryBag::with_error(p.state.expr_recovery_set, ERROR, err)
+					.with_braces_included(),
+			);
 			return None;
 		}
 	};
@@ -1079,12 +1076,10 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.recover_on_unexpected_node(RecoveryBag::with_error(
-				p.state.expr_recovery_set,
-				true,
-				ERROR,
-				err,
-			));
+			p.recover_on_unexpected_node(
+				RecoveryBag::with_error(p.state.expr_recovery_set, ERROR, err)
+					.with_braces_included(),
+			);
 			None
 		}
 	}

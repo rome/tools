@@ -193,14 +193,7 @@ impl<'t> Parser<'t> {
 		}
 		let error = recovery_bag.get_error();
 
-		if recovery_bag.has_braces(self) {
-			if let Some(error) = error {
-				self.error(error);
-			}
-			return;
-		}
-
-		if recovery_bag.is_at_token_set(self) {
+		if recovery_bag.parsing_is_recoverable(self) {
 			if let Some(error) = error {
 				self.error(error);
 			}
@@ -212,7 +205,7 @@ impl<'t> Parser<'t> {
 			self.error(error);
 		}
 		self.bump_any();
-		m.complete(self, recovery_bag.get_mysterious_node());
+		m.complete(self, recovery_bag.get_unknown_node_kind());
 	}
 
 	/// Starts a new node in the syntax tree. All nodes and tokens

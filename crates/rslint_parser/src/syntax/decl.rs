@@ -286,19 +286,21 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				}
 				Some(res)
 			} else {
-				p.recover_on_unexpected_node(RecoveryBag::new(
-					token_set![
-						T![ident],
-						T![await],
-						T![yield],
-						T![,],
-						T!['['],
-						T![...],
-						T![')'],
-					],
-					true,
-					ERROR,
-				));
+				p.recover_on_unexpected_node(
+					RecoveryBag::new(
+						token_set![
+							T![ident],
+							T![await],
+							T![yield],
+							T![,],
+							T!['['],
+							T![...],
+							T![')'],
+						],
+						ERROR,
+					)
+					.with_braces_included(),
+				);
 				None
 			}
 		};
@@ -964,7 +966,6 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 		.primary(p.cur_tok().range, "");
 	let bag = RecoveryBag::with_error(
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
-		false,
 		ERROR,
 		err,
 	);
@@ -1064,7 +1065,6 @@ pub fn method(
 
 			p.recover_on_unexpected_node(RecoveryBag::with_error(
 				recovery_set.into().unwrap_or(BASE_METHOD_RECOVERY_SET),
-				false,
 				ERROR,
 				err,
 			));
