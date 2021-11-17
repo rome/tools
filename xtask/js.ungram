@@ -506,7 +506,7 @@ PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
 InitializedProp = key:Name '=' value:JsAnyExpression
 
 ///////////////
-// LITERALS
+// CLASSES
 ///////////////
 
 JsClassDeclaration  =
@@ -526,13 +526,20 @@ JsClassExpression =
 	members: JsAnyClassMember*
 	'}'
 
+// class Test extends A {}
+//            ^^^^^^^^^
 JsExtendsClause =
 	'extends'
 	super_class: JsAnyExpression
 
+// class Test { #test; }
+//              ^^^^^
 JsPrivateClassMemberName = '#' id: 'ident'
 
-JsAnyClassMemberName = JsStaticMemberName | JsComputedMemberName | JsPrivateClassMemberName
+JsAnyClassMemberName =
+	JsStaticMemberName
+	| JsComputedMemberName
+	| JsPrivateClassMemberName
 
 JsAnyClassMember =
 	JsConstructorClassMember
@@ -543,6 +550,12 @@ JsAnyClassMember =
 	| JsEmptyClassMember
 	| JsUnknownMember
 
+// class Test { constructor() {} }
+//              ^^^^^^^^^^^^^^^^
+// class Test { "constructor"() {} }
+//              ^^^^^^^^^^^^^^^^^^
+// class Test { 'constructor'() {} }
+//              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
 	name: JsAnyConstructorMemberName
 	parameter_list: JsConstructorParameterList
@@ -562,6 +575,8 @@ JsAnyConstructorParameter =
 	TsConstructorParam
 	| Pattern
 
+// class Test { a; b = 1; static c; }
+//              ^^ ^^^^^^ ^^^^^^^^^
 JsPropertyClassMember =
 	'static'?
 	name: JsAnyClassMemberName
@@ -569,6 +584,8 @@ JsPropertyClassMember =
 	value: JsEqualValueClause?
 	';'?
 
+// class Test { a() {} }
+//              ^^^^^^
 JsMethodClassMember =
 	'static'?
 	'async'?
@@ -579,6 +596,8 @@ JsMethodClassMember =
 	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
 
+// class Test { get a() {} }
+//              ^^^^^^^^^^
 JsGetterClassMember =
 	'static'?
 	'get'
@@ -587,6 +606,8 @@ JsGetterClassMember =
 	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
 
+// class Test { set a(v) {} }
+//              ^^^^^^^^^^^
 JsSetterClassMember =
 	'static'?
 	'set'

@@ -18,8 +18,6 @@ pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 	class(p, ClassKind::Expression)
 }
 
-// * Test declare
-
 // test class_decl
 // class foo {}
 // class foo extends bar {}
@@ -227,10 +225,15 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 	if declare && !has_access_modifier {
 		// declare() and declare: foo
 		if is_method_class_member(p, offset) {
-			p.bump_remap(JS_STATIC_MEMBER_NAME); // bump declare identifier as member name
+			let member_name = p.start();
+			p.bump_any(); // bump declare identifier
+			member_name.complete(p, JS_STATIC_MEMBER_NAME);
+
 			return Some(method_class_member_body(p, member_marker));
 		} else if is_property_class_member(p, offset) {
+			let member_name = p.start();
 			p.bump_any(); // bump declare identifier
+			member_name.complete(p, JS_STATIC_MEMBER_NAME);
 
 			return Some(property_class_member_body(p, member_marker));
 		} else {
@@ -705,7 +708,6 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 		}
 	}
 
-	// TODO revert to constructor params?
 	constructor_parameter_list(p);
 
 	if let Some(range) = maybe_ts_type_annotation(p) {
@@ -730,7 +732,7 @@ fn constructor_parameter_list(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_CONSTRUCTOR_PARAMETER_LIST)
 }
 
-pub(super) fn constructor_parameter(p: &mut Parser) -> Option<CompletedMarker> {
+fn constructor_parameter(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;

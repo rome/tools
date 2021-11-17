@@ -16,6 +16,8 @@ class ContextualKeywords {
 	* static() {}
 	async* static() {}
 
+	declare() {}
+
 	get() {} // Method called get
 	set() {} // Method called set
 }

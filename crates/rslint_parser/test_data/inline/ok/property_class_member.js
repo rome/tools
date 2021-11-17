@@ -1,6 +1,6 @@
 class foo {
 	property
-	with_semi;
+	declare;
 	initializedProperty = "a"
 
 	"a";

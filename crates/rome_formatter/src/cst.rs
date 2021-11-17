@@ -2,11 +2,11 @@ use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayPattern, AssignPattern, CallExpr, Condition, ForInStmt, ForStmt, ForStmtInit,
 	ForStmtTest, ForStmtUpdate, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
-	JsBooleanLiteral, JsCaseClause, JsCatchClause, JsClassDeclaration, JsContinueStatement,
-	JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement, JsEmptyStatement,
-	JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration, JsGetterClassMember,
-	JsIfStatement, JsLabeledStatement, JsNullLiteral, JsNumberLiteral, JsObjectExpression,
-	JsParameterList, JsPropertyClassMember, JsPropertyObjectMember,
+	JsBooleanLiteral, JsCaseClause, JsCatchClause, JsClassDeclaration, JsConstructorParameterList,
+	JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
+	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration,
+	JsGetterClassMember, JsIfStatement, JsLabeledStatement, JsNullLiteral, JsNumberLiteral,
+	JsObjectExpression, JsParameterList, JsPropertyClassMember, JsPropertyObjectMember,
 	JsReferenceIdentifierExpression, JsReturnStatement, JsRoot, JsSequenceExpression,
 	JsSetterClassMember, JsShorthandPropertyObjectMember, JsStringLiteral, JsSwitchStatement,
 	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
@@ -166,10 +166,11 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_CLASS_DECLARATION => JsClassDeclaration::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			// TODO
-			// SyntaxKind::CONSTRUCTOR_PARAMETERS => ConstructorParameters::cast(self.clone())
-			// 	.unwrap()
-			// 	.to_format_element(formatter),
+			SyntaxKind::JS_CONSTRUCTOR_PARAMETER_LIST => {
+				JsConstructorParameterList::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
 			SyntaxKind::JS_GETTER_CLASS_MEMBER => JsGetterClassMember::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),

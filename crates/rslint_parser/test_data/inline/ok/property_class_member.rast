@@ -1,7 +1,7 @@
-JS_ROOT@0..257
+JS_ROOT@0..255
   LIST@0..0
-  LIST@0..255
-    JS_CLASS_DECLARATION@0..255
+  LIST@0..253
+    JS_CLASS_DECLARATION@0..253
       CLASS_KW@0..5 "class"
       WHITESPACE@5..6 " "
       JS_IDENTIFIER_BINDING@6..9
@@ -9,101 +9,101 @@ JS_ROOT@0..257
       WHITESPACE@9..10 " "
       L_CURLY@10..11 "{"
       WHITESPACE@11..13 "\n\t"
-      LIST@13..253
+      LIST@13..251
         JS_PROPERTY_CLASS_MEMBER@13..21
           JS_STATIC_MEMBER_NAME@13..21
             IDENT@13..21 "property"
         WHITESPACE@21..23 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@23..33
-          JS_STATIC_MEMBER_NAME@23..32
-            IDENT@23..32 "with_semi"
-          SEMICOLON@32..33 ";"
-        WHITESPACE@33..35 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@35..60
-          JS_STATIC_MEMBER_NAME@35..54
-            IDENT@35..54 "initializedProperty"
-          WHITESPACE@54..55 " "
-          JS_EQUAL_VALUE_CLAUSE@55..60
-            EQ@55..56 "="
-            WHITESPACE@56..57 " "
-            JS_STRING_LITERAL@57..60
-              JS_STRING_LITERAL_TOKEN@57..60 "\"a\""
-        WHITESPACE@60..63 "\n\n\t"
-        JS_PROPERTY_CLASS_MEMBER@63..67
-          JS_STRING_LITERAL@63..66
-            JS_STRING_LITERAL_TOKEN@63..66 "\"a\""
-          SEMICOLON@66..67 ";"
-        WHITESPACE@67..69 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@69..70
-          JS_NUMBER_LITERAL@69..70
-            JS_NUMBER_LITERAL_TOKEN@69..70 "5"
-        WHITESPACE@70..72 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@72..83
-          COMPUTED_PROPERTY_NAME@72..83
-            L_BRACK@72..73 "["
-            JS_BINARY_EXPRESSION@73..82
-              JS_STRING_LITERAL@73..76
-                JS_STRING_LITERAL_TOKEN@73..76 "\"a\""
+        JS_PROPERTY_CLASS_MEMBER@23..31
+          JS_STATIC_MEMBER_NAME@23..30
+            IDENT@23..30 "declare"
+          SEMICOLON@30..31 ";"
+        WHITESPACE@31..33 "\n\t"
+        JS_PROPERTY_CLASS_MEMBER@33..58
+          JS_STATIC_MEMBER_NAME@33..52
+            IDENT@33..52 "initializedProperty"
+          WHITESPACE@52..53 " "
+          JS_EQUAL_VALUE_CLAUSE@53..58
+            EQ@53..54 "="
+            WHITESPACE@54..55 " "
+            JS_STRING_LITERAL@55..58
+              JS_STRING_LITERAL_TOKEN@55..58 "\"a\""
+        WHITESPACE@58..61 "\n\n\t"
+        JS_PROPERTY_CLASS_MEMBER@61..65
+          JS_STRING_LITERAL@61..64
+            JS_STRING_LITERAL_TOKEN@61..64 "\"a\""
+          SEMICOLON@64..65 ";"
+        WHITESPACE@65..67 "\n\t"
+        JS_PROPERTY_CLASS_MEMBER@67..68
+          JS_NUMBER_LITERAL@67..68
+            JS_NUMBER_LITERAL_TOKEN@67..68 "5"
+        WHITESPACE@68..70 "\n\t"
+        JS_PROPERTY_CLASS_MEMBER@70..81
+          COMPUTED_PROPERTY_NAME@70..81
+            L_BRACK@70..71 "["
+            JS_BINARY_EXPRESSION@71..80
+              JS_STRING_LITERAL@71..74
+                JS_STRING_LITERAL_TOKEN@71..74 "\"a\""
+              WHITESPACE@74..75 " "
+              PLUS@75..76 "+"
               WHITESPACE@76..77 " "
-              PLUS@77..78 "+"
-              WHITESPACE@78..79 " "
-              JS_STRING_LITERAL@79..82
-                JS_STRING_LITERAL_TOKEN@79..82 "\"b\""
-            R_BRACK@82..83 "]"
-        WHITESPACE@83..86 "\n\n\t"
-        JS_PROPERTY_CLASS_MEMBER@86..107
-          STATIC_KW@86..92 "static"
-          WHITESPACE@92..93 " "
-          JS_STATIC_MEMBER_NAME@93..107
-            IDENT@93..107 "staticProperty"
-        WHITESPACE@107..109 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@109..145
-          STATIC_KW@109..115 "static"
-          WHITESPACE@115..116 " "
-          JS_STATIC_MEMBER_NAME@116..141
-            IDENT@116..141 "staticInitializedProp ..."
-          WHITESPACE@141..142 " "
-          JS_EQUAL_VALUE_CLAUSE@142..145
-            EQ@142..143 "="
-            WHITESPACE@143..144 " "
-            JS_NUMBER_LITERAL@144..145
-              JS_NUMBER_LITERAL_TOKEN@144..145 "1"
-        WHITESPACE@145..148 "\n\n\t"
-        JS_PROPERTY_CLASS_MEMBER@148..156
-          JS_PRIVATE_CLASS_MEMBER_NAME@148..156
-            HASH@148..149 "#"
-            IDENT@149..156 "private"
-        WHITESPACE@156..158 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@158..183
-          JS_PRIVATE_CLASS_MEMBER_NAME@158..177
-            HASH@158..159 "#"
-            IDENT@159..177 "privateInitialized"
-          WHITESPACE@177..178 " "
-          JS_EQUAL_VALUE_CLAUSE@178..183
-            EQ@178..179 "="
-            WHITESPACE@179..180 " "
-            JS_STRING_LITERAL@180..183
-              JS_STRING_LITERAL_TOKEN@180..183 "\"a\""
-        WHITESPACE@183..186 "\n\n\t"
-        JS_PROPERTY_CLASS_MEMBER@186..207
-          STATIC_KW@186..192 "static"
-          WHITESPACE@192..193 " "
-          JS_PRIVATE_CLASS_MEMBER_NAME@193..207
-            HASH@193..194 "#"
-            IDENT@194..207 "staticPrivate"
-        WHITESPACE@207..209 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@209..253
-          STATIC_KW@209..215 "static"
-          WHITESPACE@215..216 " "
-          JS_PRIVATE_CLASS_MEMBER_NAME@216..249
-            HASH@216..217 "#"
-            IDENT@217..249 "staticPrivateInitiali ..."
-          WHITESPACE@249..250 " "
-          JS_EQUAL_VALUE_CLAUSE@250..253
-            EQ@250..251 "="
-            WHITESPACE@251..252 " "
-            JS_NUMBER_LITERAL@252..253
-              JS_NUMBER_LITERAL_TOKEN@252..253 "1"
-      WHITESPACE@253..254 "\n"
-      R_CURLY@254..255 "}"
-  WHITESPACE@255..257 "\n\n"
+              JS_STRING_LITERAL@77..80
+                JS_STRING_LITERAL_TOKEN@77..80 "\"b\""
+            R_BRACK@80..81 "]"
+        WHITESPACE@81..84 "\n\n\t"
+        JS_PROPERTY_CLASS_MEMBER@84..105
+          STATIC_KW@84..90 "static"
+          WHITESPACE@90..91 " "
+          JS_STATIC_MEMBER_NAME@91..105
+            IDENT@91..105 "staticProperty"
+        WHITESPACE@105..107 "\n\t"
+        JS_PROPERTY_CLASS_MEMBER@107..143
+          STATIC_KW@107..113 "static"
+          WHITESPACE@113..114 " "
+          JS_STATIC_MEMBER_NAME@114..139
+            IDENT@114..139 "staticInitializedProp ..."
+          WHITESPACE@139..140 " "
+          JS_EQUAL_VALUE_CLAUSE@140..143
+            EQ@140..141 "="
+            WHITESPACE@141..142 " "
+            JS_NUMBER_LITERAL@142..143
+              JS_NUMBER_LITERAL_TOKEN@142..143 "1"
+        WHITESPACE@143..146 "\n\n\t"
+        JS_PROPERTY_CLASS_MEMBER@146..154
+          JS_PRIVATE_CLASS_MEMBER_NAME@146..154
+            HASH@146..147 "#"
+            IDENT@147..154 "private"
+        WHITESPACE@154..156 "\n\t"
+        JS_PROPERTY_CLASS_MEMBER@156..181
+          JS_PRIVATE_CLASS_MEMBER_NAME@156..175
+            HASH@156..157 "#"
+            IDENT@157..175 "privateInitialized"
+          WHITESPACE@175..176 " "
+          JS_EQUAL_VALUE_CLAUSE@176..181
+            EQ@176..177 "="
+            WHITESPACE@177..178 " "
+            JS_STRING_LITERAL@178..181
+              JS_STRING_LITERAL_TOKEN@178..181 "\"a\""
+        WHITESPACE@181..184 "\n\n\t"
+        JS_PROPERTY_CLASS_MEMBER@184..205
+          STATIC_KW@184..190 "static"
+          WHITESPACE@190..191 " "
+          JS_PRIVATE_CLASS_MEMBER_NAME@191..205
+            HASH@191..192 "#"
+            IDENT@192..205 "staticPrivate"
+        WHITESPACE@205..207 "\n\t"
+        JS_PROPERTY_CLASS_MEMBER@207..251
+          STATIC_KW@207..213 "static"
+          WHITESPACE@213..214 " "
+          JS_PRIVATE_CLASS_MEMBER_NAME@214..247
+            HASH@214..215 "#"
+            IDENT@215..247 "staticPrivateInitiali ..."
+          WHITESPACE@247..248 " "
+          JS_EQUAL_VALUE_CLAUSE@248..251
+            EQ@248..249 "="
+            WHITESPACE@249..250 " "
+            JS_NUMBER_LITERAL@250..251
+              JS_NUMBER_LITERAL_TOKEN@250..251 "1"
+      WHITESPACE@251..252 "\n"
+      R_CURLY@252..253 "}"
+  WHITESPACE@253..255 "\n\n"
