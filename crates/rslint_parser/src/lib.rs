@@ -64,6 +64,7 @@ mod lossless_tree_sink;
 mod lossy_tree_sink;
 mod numbers;
 mod parse;
+mod recovery_bag;
 mod state;
 mod syntax_node;
 mod token_source;

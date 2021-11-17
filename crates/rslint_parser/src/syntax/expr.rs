@@ -9,6 +9,7 @@ use super::decl::{arrow_body, class_decl, maybe_private_name, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
+use crate::recovery_bag::RecoveryBag;
 use crate::syntax::function::function_expression;
 use crate::syntax::object::object_expr;
 use crate::{SyntaxKind::*, *};
@@ -716,7 +717,12 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
                     .primary(temp.cur_tok().range, "");
 
-						temp.err_recover(err, EXPR_RECOVERY_SET, false, ERROR);
+						temp.recover_on_unexpected_node(RecoveryBag::with_error(
+							EXPR_RECOVERY_SET,
+							false,
+							ERROR,
+							err,
+						));
 					}
 				}
 				break;
@@ -1048,7 +1054,12 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
-			p.err_recover(err, p.state.expr_recovery_set, true, ERROR);
+			p.recover_on_unexpected_node(RecoveryBag::with_error(
+				p.state.expr_recovery_set,
+				true,
+				ERROR,
+				err,
+			));
 			return None;
 		}
 	};
@@ -1068,7 +1079,12 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.err_recover(err, p.state.expr_recovery_set, true, ERROR);
+			p.recover_on_unexpected_node(RecoveryBag::with_error(
+				p.state.expr_recovery_set,
+				true,
+				ERROR,
+				err,
+			));
 			None
 		}
 	}

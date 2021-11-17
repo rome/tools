@@ -8,6 +8,7 @@ use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
 
+use crate::recovery_bag::RecoveryBag;
 use crate::*;
 
 /// An extremely fast, error tolerant, completely lossless JavaScript parser
@@ -183,31 +184,19 @@ impl<'t> Parser<'t> {
 	///
 	/// # Arguments
 	///
-	/// * `error` -  the [Diagnostic] to emit
-	/// * `recovery` - it recovers the parser position is inside a set [tokens](TokenSet)
-	/// * `include_braces` - it recovers the parser if the current token is a curly brace
-	/// * `unknown_node` - The kind of the unknown node the parser inserts if it isn't able to recover because
-	/// the current token is neither in the recovery set nor any of `{` or `}`.
-	pub fn err_recover(
-		&mut self,
-		error: impl Into<ParserError>,
-		recovery: TokenSet,
-		include_braces: bool,
-		unknown_node: SyntaxKind,
-	) -> Option<()> {
+	/// * `recovery_bag` - Everything needed to recover from an error
+	pub fn recover_on_unexpected_node(&mut self, recovery_bag: RecoveryBag) -> Option<()> {
 		if self.state.no_recovery {
 			return None;
 		}
+		let error = recovery_bag.get_error();
 
-		match self.cur() {
-			T!['{'] | T!['}'] if include_braces => {
-				self.error(error);
-				return Some(());
-			}
-			_ => (),
+		if recovery_bag.has_braces(&self) {
+			self.error(error);
+			return Some(());
 		}
 
-		if self.at_ts(recovery) {
+		if recovery_bag.is_at_token_set(&self) {
 			self.error(error);
 			return Some(());
 		}
@@ -215,38 +204,27 @@ impl<'t> Parser<'t> {
 		let m = self.start();
 		self.error(error);
 		self.bump_any();
-		m.complete(self, unknown_node);
+		m.complete(self, recovery_bag.get_mysterious_node());
 		Some(())
 	}
 
-	/// Recover from an error but don't add an error to the events
+	/// Recover from an error but doesn't 	add an error to the events
 	///
 	/// # Arguments
 	///
-	/// * `recovery` - it recovers the parser position is inside a set [tokens](TokenSet)
-	/// * `include_braces` - it recovers the parser if the current token is a curly brace
-	/// * `unknown_node` - The kind of the unknown node the parser inserts if it isn't able to recover because
-	/// the current token is neither in the recovery set nor any of `{` or `}`.
-	pub fn err_recover_no_err(
-		&mut self,
-		recovery: TokenSet,
-		include_braces: bool,
-		unknown_node: SyntaxKind,
-	) {
-		match self.cur() {
-			T!['{'] | T!['}'] if include_braces => {
-				return;
-			}
-			_ => (),
+	/// * `recovery_bag` - Everything needed to recover from an error
+	pub fn err_recover_no_err(&mut self, recovery_bag: RecoveryBag) {
+		if recovery_bag.has_braces(&self) {
+			return;
 		}
 
-		if self.at_ts(recovery) {
+		if recovery_bag.is_at_token_set(&self) {
 			return;
 		}
 
 		let m = self.start();
 		self.bump_any();
-		m.complete(self, unknown_node);
+		m.complete(self, recovery_bag.get_mysterious_node());
 	}
 
 	/// Starts a new node in the syntax tree. All nodes and tokens

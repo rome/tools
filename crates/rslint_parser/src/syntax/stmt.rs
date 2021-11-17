@@ -8,6 +8,7 @@ use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use crate::recovery_bag::RecoveryBag;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 
@@ -117,12 +118,12 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 				return None;
 			}
 
-			p.err_recover(
-				err,
+			p.recover_on_unexpected_node(RecoveryBag::with_error(
 				recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
 				false,
 				ERROR,
-			);
+				err,
+			));
 			return None;
 		}
 	};
@@ -976,7 +977,12 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			p.err_recover(err, STMT_RECOVERY_SET, true, ERROR);
+			p.recover_on_unexpected_node(RecoveryBag::with_error(
+				STMT_RECOVERY_SET,
+				true,
+				ERROR,
+				err,
+			));
 		}
 	}
 	None

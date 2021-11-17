@@ -3,6 +3,7 @@
 use super::expr::{assign_expr, identifier_name};
 use super::pat::{binding_identifier, pattern};
 use super::typescript::*;
+use crate::recovery_bag::RecoveryBag;
 use crate::syntax::function::{args_body, function_body, function_body_or_declaration};
 use crate::syntax::object::object_prop_name;
 use crate::{SyntaxKind::*, *};
@@ -285,7 +286,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				}
 				Some(res)
 			} else {
-				p.err_recover_no_err(
+				p.err_recover_no_err(RecoveryBag::new(
 					token_set![
 						T![ident],
 						T![await],
@@ -297,7 +298,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 					],
 					true,
 					ERROR,
-				);
+				));
 				None
 			}
 		};
@@ -961,12 +962,13 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 	let err = p
 		.err_builder("expected `;`, a property, or a method for a class body, but found none")
 		.primary(p.cur_tok().range, "");
-	p.err_recover(
-		err,
+	let bag = RecoveryBag::with_error(
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
 		false,
 		ERROR,
+		err,
 	);
+	p.recover_on_unexpected_node(bag);
 	None
 }
 
@@ -1060,12 +1062,12 @@ pub fn method(
 				.err_builder("expected a method definition, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.err_recover(
-				err,
+			p.recover_on_unexpected_node(RecoveryBag::with_error(
 				recovery_set.into().unwrap_or(BASE_METHOD_RECOVERY_SET),
 				false,
 				ERROR,
-			);
+				err,
+			));
 			return None;
 		}
 	};
