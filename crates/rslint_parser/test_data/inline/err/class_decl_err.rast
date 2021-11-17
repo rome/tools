@@ -54,7 +54,7 @@ JS_ROOT@0..74
             L_CURLY@69..70 "{"
         R_CURLY@70..71 "}"
     WHITESPACE@71..72 " "
-    ERROR@72..73
+    JS_UNKNOWN_STATEMENT@72..73
       R_CURLY@72..73 "}"
   WHITESPACE@73..74 "\n"
 --
