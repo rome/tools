@@ -169,7 +169,7 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
-			p.err_recover_no_err(RecoveryBag::new(
+			p.recover_on_unexpected_node(RecoveryBag::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				false,
 				ERROR,
@@ -238,7 +238,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	let name = if let Some(n) = name {
 		n
 	} else {
-		p.err_recover_no_err(RecoveryBag::new(
+		p.recover_on_unexpected_node(RecoveryBag::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			false,
 			ERROR,

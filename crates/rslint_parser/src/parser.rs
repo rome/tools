@@ -182,47 +182,35 @@ impl<'t> Parser<'t> {
 
 	/// Recover from an error with a recovery set or by using a `{` or `}`.
 	///
+	/// If `recovery_bag` has an error, it gets tracked in the events.
+	///
 	/// # Arguments
 	///
 	/// * `recovery_bag` - Everything needed to recover from an error
-	pub fn recover_on_unexpected_node(&mut self, recovery_bag: RecoveryBag) -> Option<()> {
+	pub fn recover_on_unexpected_node(&mut self, recovery_bag: RecoveryBag) {
 		if self.state.no_recovery {
-			return None;
+			return;
 		}
 		let error = recovery_bag.get_error();
 
 		if recovery_bag.has_braces(&self) {
-			self.error(error);
-			return Some(());
-		}
-
-		if recovery_bag.is_at_token_set(&self) {
-			self.error(error);
-			return Some(());
-		}
-
-		let m = self.start();
-		self.error(error);
-		self.bump_any();
-		m.complete(self, recovery_bag.get_mysterious_node());
-		Some(())
-	}
-
-	/// Recover from an error but doesn't 	add an error to the events
-	///
-	/// # Arguments
-	///
-	/// * `recovery_bag` - Everything needed to recover from an error
-	pub fn err_recover_no_err(&mut self, recovery_bag: RecoveryBag) {
-		if recovery_bag.has_braces(&self) {
+			if let Some(error) = error {
+				self.error(error);
+			}
 			return;
 		}
 
 		if recovery_bag.is_at_token_set(&self) {
+			if let Some(error) = error {
+				self.error(error);
+			}
 			return;
 		}
 
 		let m = self.start();
+		if let Some(error) = error {
+			self.error(error);
+		}
 		self.bump_any();
 		m.complete(self, recovery_bag.get_mysterious_node());
 	}

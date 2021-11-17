@@ -1362,6 +1362,6 @@ pub fn ts_type_name(
 		))
 		.primary(p.cur_tok().range, "");
 
-	p.recover_on_unexpected_node(RecoveryBag::with_error(set, false, ERROR, err))?;
+	p.recover_on_unexpected_node(RecoveryBag::with_error(set, false, ERROR, err));
 	None
 }

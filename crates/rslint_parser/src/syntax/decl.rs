@@ -286,7 +286,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				}
 				Some(res)
 			} else {
-				p.err_recover_no_err(RecoveryBag::new(
+				p.recover_on_unexpected_node(RecoveryBag::new(
 					token_set![
 						T![ident],
 						T![await],
