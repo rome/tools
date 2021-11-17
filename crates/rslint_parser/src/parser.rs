@@ -193,14 +193,14 @@ impl<'t> Parser<'t> {
 		}
 		let error = recovery_bag.get_error();
 
-		if recovery_bag.has_braces(&self) {
+		if recovery_bag.has_braces(self) {
 			if let Some(error) = error {
 				self.error(error);
 			}
 			return;
 		}
 
-		if recovery_bag.is_at_token_set(&self) {
+		if recovery_bag.is_at_token_set(self) {
 			if let Some(error) = error {
 				self.error(error);
 			}

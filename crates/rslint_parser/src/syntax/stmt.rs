@@ -1035,7 +1035,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 				temp.error(err);
 			} else {
 				// if the range is 0, it means that we found a "case"
-				if range.len() != 0 {
+				if !range.is_empty() {
 					first_default = Some(range);
 				}
 			}
