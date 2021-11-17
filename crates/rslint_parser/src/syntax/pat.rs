@@ -1,4 +1,5 @@
-use super::expr::{assign_expr, identifier_name, identifier_reference, lhs_expr, object_prop_name};
+use super::expr::{assign_expr, identifier_name, identifier_reference, lhs_expr};
+use crate::syntax::object::object_prop_name;
 use crate::{SyntaxKind::*, *};
 
 pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<CompletedMarker> {

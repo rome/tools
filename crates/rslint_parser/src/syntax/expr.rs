@@ -5,11 +5,12 @@
 
 use syntax::decl::is_semi;
 
-use super::decl::{arrow_body, class_decl, maybe_private_name, method, parameter_list};
+use super::decl::{arrow_body, class_decl, maybe_private_name, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
 use crate::syntax::function::function_expression;
+use crate::syntax::object::object_expr;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -1155,150 +1156,6 @@ pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 	p.expect(T![...]);
 	assign_expr(p);
 	m.complete(p, SPREAD_ELEMENT)
-}
-
-/// An object literal such as `{ a: b, "b": 5 + 5 }`.
-// test object_expr
-// let a = {};
-// let b = {foo,}
-pub fn object_expr(p: &mut Parser) -> CompletedMarker {
-	let m = p.start();
-	p.expect(T!['{']);
-	let props_list = p.start();
-	let mut first = true;
-
-	while !p.at(EOF) && !p.at(T!['}']) {
-		if first {
-			first = false;
-		} else {
-			p.expect(T![,]);
-			if p.at(T!['}']) {
-				break;
-			}
-		}
-		object_property(p);
-	}
-	props_list.complete(p, LIST);
-
-	p.expect(T!['}']);
-	m.complete(p, OBJECT_EXPR)
-}
-
-const STARTS_OBJ_PROP: TokenSet = token_set![
-	JS_STRING_LITERAL_TOKEN,
-	JS_NUMBER_LITERAL_TOKEN,
-	T![ident],
-	T![await],
-	T![yield],
-	T!['[']
-];
-
-/// An individual object property such as `"a": b` or `5: 6 + 6`.
-pub fn object_property(p: &mut Parser) -> Option<CompletedMarker> {
-	let m = p.start();
-
-	match p.cur() {
-		// test object_expr_getter_setter
-		// let a = {
-		//  get foo() {
-		//    return foo;
-		//  }
-		// }
-		//
-		// let b = {
-		//  set [foo](bar) {
-		//     return 5;
-		//  }
-		// }
-		T![ident]
-			if (p.cur_src() == "get" || p.cur_src() == "set")
-				&& (p.nth_at(1, T![ident]) || p.nth_at(1, T!['['])) =>
-		{
-			method(p, None, None)
-		}
-		// test object_expr_async_method
-		// let a = {
-		//   async foo() {},
-		//   async *foo() {}
-		// }
-		T![ident]
-			if p.cur_src() == "async"
-				&& !p.has_linebreak_before_n(1)
-				&& (STARTS_OBJ_PROP.contains(p.nth(1)) || p.nth_at(1, T![*])) =>
-		{
-			method(p, None, None)
-		}
-		// test object_expr_spread_prop
-		// let a = {...foo}
-		T![...] => {
-			p.bump_any();
-			assign_expr(p);
-			Some(m.complete(p, SPREAD_PROP))
-		}
-		T![*] => {
-			// test object_expr_generator_method
-			// let b = { *foo() {} }
-			let m = p.start();
-			method(p, m, None)
-		}
-		_ => {
-			let prop = object_prop_name(p, false);
-			// test object_expr_assign_prop
-			// let b = { foo = 4, foo = bar }
-			if let Some(NAME) = prop.map(|m| m.kind()) {
-				if p.eat(T![=]) {
-					assign_expr(p);
-					return Some(m.complete(p, INITIALIZED_PROP));
-				}
-			}
-
-			// test object_expr_method
-			// let b = {
-			//  foo() {},
-			// }
-			if p.at(T!['(']) || p.at(T![<]) {
-				method(p, m, None)
-			} else {
-				// test_err object_expr_error_prop_name
-				// let a = { /: 6, /: /foo/ }
-				// let a = {{}}
-				if prop.is_none() {
-					p.err_recover_no_err(token_set![T![:], T![,]], false);
-				}
-				// test_err object_expr_non_ident_literal_prop
-				// let b = {5}
-
-				// test object_expr_ident_literal_prop
-				// let b = { a: true }
-				if p.at(T![:]) || prop?.kind() != NAME {
-					p.expect(T![:]);
-					assign_expr(p);
-					Some(m.complete(p, LITERAL_PROP))
-				} else {
-					// test object_expr_ident_prop
-					// let b = {foo}
-					Some(m.complete(p, IDENT_PROP))
-				}
-			}
-		}
-	}
-}
-
-// test object_prop_name
-// let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
-pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker> {
-	match p.cur() {
-		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => literal(p),
-		T!['['] => {
-			let m = p.start();
-			p.bump_any();
-			assign_expr(p);
-			p.expect(T![']']);
-			Some(m.complete(p, COMPUTED_PROPERTY_NAME))
-		}
-		_ if binding => super::pat::binding_identifier(p),
-		_ => identifier_name(p),
-	}
 }
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.

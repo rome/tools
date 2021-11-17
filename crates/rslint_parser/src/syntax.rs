@@ -10,6 +10,7 @@
 pub mod decl;
 pub mod expr;
 mod function;
+mod object;
 pub mod pat;
 pub mod program;
 pub mod stmt;

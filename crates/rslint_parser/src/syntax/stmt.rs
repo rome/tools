@@ -858,7 +858,9 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 
 			if let Some(ref expr) = complete {
 				check_lhs(p, p.parse_marker(expr), &complete.unwrap());
-				if p.typescript() && matches!(expr.kind(), JS_ARRAY_EXPRESSION | OBJECT_EXPR) {
+				if p.typescript()
+					&& matches!(expr.kind(), JS_ARRAY_EXPRESSION | JS_OBJECT_EXPRESSION)
+				{
 					let err = p.err_builder("the left hand side of a `for..in` or `for..of` statement cannot be a destructuring pattern")
                         .primary(expr.range(p), "");
 

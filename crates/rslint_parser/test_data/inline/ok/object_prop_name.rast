@@ -14,10 +14,10 @@ JS_ROOT@0..53
             JS_EQUAL_VALUE_CLAUSE@6..52
               EQ@6..7 "="
               WHITESPACE@7..8 " "
-              OBJECT_EXPR@8..52
+              JS_OBJECT_EXPRESSION@8..52
                 L_CURLY@8..9 "{"
                 LIST@9..51
-                  LITERAL_PROP@9..19
+                  JS_PROPERTY_OBJECT_MEMBER@9..19
                     JS_STRING_LITERAL@9..14
                       JS_STRING_LITERAL_TOKEN@9..14 "\"foo\""
                     COLON@14..15 ":"
@@ -26,7 +26,7 @@ JS_ROOT@0..53
                       IDENT@16..19 "foo"
                   COMMA@19..20 ","
                   WHITESPACE@20..21 " "
-                  LITERAL_PROP@21..33
+                  JS_PROPERTY_OBJECT_MEMBER@21..33
                     COMPUTED_PROPERTY_NAME@21..28
                       L_BRACK@21..22 "["
                       JS_BINARY_EXPRESSION@22..27
@@ -44,8 +44,8 @@ JS_ROOT@0..53
                       IDENT@30..33 "foo"
                   COMMA@33..34 ","
                   WHITESPACE@34..35 " "
-                  LITERAL_PROP@35..43
-                    NAME@35..38
+                  JS_PROPERTY_OBJECT_MEMBER@35..43
+                    JS_STATIC_OBJECT_MEMBER_NAME@35..38
                       IDENT@35..38 "bar"
                     COLON@38..39 ":"
                     WHITESPACE@39..40 " "
@@ -53,7 +53,7 @@ JS_ROOT@0..53
                       IDENT@40..43 "foo"
                   COMMA@43..44 ","
                   WHITESPACE@44..45 " "
-                  LITERAL_PROP@45..51
+                  JS_PROPERTY_OBJECT_MEMBER@45..51
                     JS_NUMBER_LITERAL@45..46
                       JS_NUMBER_LITERAL_TOKEN@45..46 "7"
                     COLON@46..47 ":"

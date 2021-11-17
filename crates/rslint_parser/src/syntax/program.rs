@@ -3,11 +3,12 @@
 use syntax::stmt::FOLLOWS_LET;
 
 use super::decl::class_decl;
-use super::expr::{assign_expr, expr, identifier_name, literal, object_expr, primary_expr};
+use super::expr::{assign_expr, expr, identifier_name, literal, primary_expr};
 use super::pat::binding_identifier;
 use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
 use crate::syntax::function::function_declaration;
+use crate::syntax::object::object_expr;
 use crate::syntax::stmt::directives;
 use crate::{SyntaxKind::*, *};
 
@@ -427,7 +428,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		// function ...
 		&& (p.at(T![function])
 			||
-		// async function ... 
+		// async function ...
 		(p.cur_src() == "async"
 				&& p.nth_at(1, T![function])
 				&& !p.has_linebreak_before_n(1)))

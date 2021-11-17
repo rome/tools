@@ -30,7 +30,7 @@ JS_ROOT@0..59
             JS_EQUAL_VALUE_CLAUSE@26..30
               EQ@26..27 "="
               WHITESPACE@27..28 " "
-              OBJECT_EXPR@28..30
+              JS_OBJECT_EXPRESSION@28..30
                 L_CURLY@28..29 "{"
                 LIST@29..29
                 R_CURLY@29..30 "}"
@@ -65,7 +65,7 @@ JS_ROOT@0..59
             JS_EQUAL_VALUE_CLAUSE@54..58
               EQ@54..55 "="
               WHITESPACE@55..56 " "
-              OBJECT_EXPR@56..58
+              JS_OBJECT_EXPRESSION@56..58
                 L_CURLY@56..57 "{"
                 LIST@57..57
                 R_CURLY@57..58 "}"

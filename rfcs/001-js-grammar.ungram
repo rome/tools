@@ -314,7 +314,7 @@ JsMemberExpression =
     object: JsAnyExpression
     member: JsAnyMember
 
-JsAnyMember = JsStaticMember | JsComputedMember
+JsAnyMember = JsStaticMember | JsComputedMemberName
 
 JsStaticMember = '.' name: JsAnyStaticMemberName
 
@@ -505,9 +505,9 @@ JsAnyStaticMemberName = JsStaticMemberName | JsStringLiteral | JsNumberLiteral
 
 JsStaticMemberName = name: 'js_identifier'
 
-JsComputedMember = '[' name: JsAnyExpression ']'
+JsComputedMemberName = '[' name: JsAnyExpression ']'
 
-JsAnyObjectMemberName =  JsAnyStaticMemberName | JsComputedMember
+JsAnyObjectMemberName =  JsAnyStaticMemberName | JsComputedMemberName
 
 // members = properties in Rome classic
 JsObjectExpression =

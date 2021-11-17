@@ -77,7 +77,7 @@ JS_ROOT@0..101
           WHITESPACE@65..66 " "
           EQ@66..67 "="
           WHITESPACE@67..68 " "
-          OBJECT_EXPR@68..70
+          JS_OBJECT_EXPRESSION@68..70
             L_CURLY@68..69 "{"
             LIST@69..69
             R_CURLY@69..70 "}"
@@ -114,7 +114,7 @@ JS_ROOT@0..101
           WHITESPACE@93..94 " "
           EQ@94..95 "="
           WHITESPACE@95..96 " "
-          OBJECT_EXPR@96..98
+          JS_OBJECT_EXPRESSION@96..98
             L_CURLY@96..97 "{"
             LIST@97..97
             R_CURLY@97..98 "}"
