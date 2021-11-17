@@ -294,17 +294,17 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				}
 			};
 
-			let can_cast_fn = if en.variants.iter().all(|v| simple_variants.contains(&v)) {
-				quote! {
-					matches!(kind, #(#kinds)|*)
-				}
-			} else {
+			let can_cast_fn = if en.variants.iter().any(|v| !simple_variants.contains(&v)) {
 				quote! {
 					match kind {
 						#all_kinds
 						#(#vv_can_cast)*
 						_ => false
 					}
+				}
+			} else {
+				quote! {
+					matches!(kind, #(#kinds)|*)
 				}
 			};
 
