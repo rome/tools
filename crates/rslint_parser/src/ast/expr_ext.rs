@@ -4,13 +4,11 @@ use crate::{ast::*, numbers::*, util::*, TextRange, T};
 use rome_rowan::{SyntaxText, TextSize};
 use SyntaxKind::*;
 
-impl BracketExpr {
-	pub fn object(&self) -> Option<JsAnyExpression> {
-		support::node(self.syntax())
-	}
-
-	pub fn prop(&self) -> Option<JsAnyExpression> {
-		support::children(self.syntax()).nth(1)
+impl JsComputedMemberExpression {
+	pub fn member(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| SyntaxError::MissingRequiredChild(self.syntax().clone()))
 	}
 }
 
@@ -451,38 +449,7 @@ impl Template {
 	}
 }
 
-impl JsAnyExpression {
-	/// Whether this is an optional chain expression.
-	pub fn opt_chain(&self) -> bool {
-		match self {
-			JsAnyExpression::DotExpr(dotexpr) => dotexpr.opt_chain_token(),
-			JsAnyExpression::CallExpr(callexpr) => callexpr.opt_chain_token(),
-			JsAnyExpression::BracketExpr(bracketexpr) => bracketexpr.opt_chain_token(),
-			_ => return false,
-		}
-		.is_some()
-	}
-}
-
-impl DotExpr {
-	pub fn opt_chain_token(&self) -> Option<SyntaxToken> {
-		self.syntax()
-			.children_with_tokens()
-			.filter_map(|child| child.into_token())
-			.find(|tok| tok.kind() == QUESTIONDOT)
-	}
-}
-
 impl CallExpr {
-	pub fn opt_chain_token(&self) -> Option<SyntaxToken> {
-		self.syntax()
-			.children_with_tokens()
-			.filter_map(|child| child.into_token())
-			.find(|tok| tok.kind() == QUESTIONDOT)
-	}
-}
-
-impl BracketExpr {
 	pub fn opt_chain_token(&self) -> Option<SyntaxToken> {
 		self.syntax()
 			.children_with_tokens()

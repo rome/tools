@@ -4,6 +4,7 @@ use super::decl::*;
 use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
 use super::stmt::{semi, statements, variable_declaration_statement};
 use crate::syntax::class::class_declaration;
+use crate::syntax::expr::any_reference_member;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 
@@ -465,8 +466,8 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 				literal(p);
 			}
 			_ => {
-				let mut complete = maybe_private_name(p)?;
-				if complete.kind() == PRIVATE_NAME {
+				let mut complete = any_reference_member(p)?;
+				if complete.kind() == JS_PRIVATE_CLASS_MEMBER_NAME {
 					let err = p
 						.err_builder("private names are not allowed outside of class bodies")
 						.primary(complete.range(p), "");

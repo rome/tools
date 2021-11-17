@@ -563,13 +563,6 @@ pub(crate) fn statements(
 	list_start.complete(p, LIST);
 }
 
-/// A (bool) condition
-pub fn condition(p: &mut Parser) -> CompletedMarker {
-	let m = p.start();
-	parenthesized_expression(p);
-	m.complete(p, CONDITION)
-}
-
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
 	p.state.allow_object_expr = p.expect(T!['(']);

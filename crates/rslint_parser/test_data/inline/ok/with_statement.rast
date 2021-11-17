@@ -32,11 +32,11 @@
               1: LIST@41..59
                 0: JS_EXPRESSION_STATEMENT@41..59
                   0: CALL_EXPR@41..58
-                    0: DOT_EXPR@41..55
+                    0: JS_STATIC_MEMBER_EXPRESSION@41..55
                       0: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..51
                         0: IDENT@41..51 "console" [Whitespace("\n\t\t")] []
                       1: DOT@51..52 "." [] []
-                      2: NAME@52..55
+                      2: JS_REFERENCE_IDENTIFIER_MEMBER@52..55
                         0: IDENT@52..55 "log" [] []
                     1: ARG_LIST@55..58
                       0: L_PAREN@55..56 "(" [] []

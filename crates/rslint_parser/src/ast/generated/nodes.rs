@@ -872,6 +872,22 @@ impl JsConditionalExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsComputedMemberExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsComputedMemberExpression {
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn optional_chain_token(&self) -> Option<SyntaxToken> {
+		support::token(&self.syntax, T ! [?.])
+	}
+	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['['])
+	}
+	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![']'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -965,6 +981,28 @@ impl JsSequenceExpression {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsStaticMemberExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsStaticMemberExpression {
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(&self.syntax, &[T ! [.], T ! [?.]])
+	}
+	pub fn member(&self) -> SyntaxResult<JsAnyReferenceMember> {
+		support::required_node(&self.syntax)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsSuperExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsSuperExpression {
+	pub fn super_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![super])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsThisExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1033,31 +1071,6 @@ impl Template {
 	pub fn backtick_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['`'])
 	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct BracketExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl BracketExpr {
-	pub fn super_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![super]) }
-	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['['])
-	}
-	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![']'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct DotExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl DotExpr {
-	pub fn super_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![super]) }
-	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [.])
-	}
-	pub fn prop(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NewExpr {
@@ -1146,17 +1159,6 @@ impl SuperCall {
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct PrivatePropAccess {
-	pub(crate) syntax: SyntaxNode,
-}
-impl PrivatePropAccess {
-	pub fn lhs(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [.])
-	}
-	pub fn rhs(&self) -> SyntaxResult<PrivateName> { support::required_node(&self.syntax) }
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNonNull {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1196,15 +1198,6 @@ impl TsConstAssertion {
 	}
 	pub fn r_angle_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [>])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Name {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Name {
-	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1442,19 +1435,6 @@ impl JsSpread {
 	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ComputedPropertyName {
-	pub(crate) syntax: SyntaxNode,
-}
-impl ComputedPropertyName {
-	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['['])
-	}
-	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![']'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteral {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1473,14 +1453,13 @@ impl JsNumberLiteral {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct PrivateName {
+pub struct Name {
 	pub(crate) syntax: SyntaxNode,
 }
-impl PrivateName {
-	pub fn hash_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T ! [#])
+impl Name {
+	pub fn ident_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
 	}
-	pub fn name(&self) -> SyntaxResult<Name> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsImplementsClause {
@@ -1830,21 +1809,6 @@ impl KeyValuePattern {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Condition {
-	pub(crate) syntax: SyntaxNode,
-}
-impl Condition {
-	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['('])
-	}
-	pub fn condition(&self) -> SyntaxResult<JsAnyExpression> {
-		support::required_node(&self.syntax)
-	}
-	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![')'])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarator {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1893,6 +1857,27 @@ pub struct Specifier {
 }
 impl Specifier {
 	pub fn name(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsReferenceIdentifierMember {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsReferenceIdentifierMember {
+	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsReferencePrivateMember {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsReferencePrivateMember {
+	pub fn hash_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [#])
+	}
+	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsRestParameter {
@@ -2480,6 +2465,7 @@ pub enum JsAnyExpression {
 	JsBinaryExpression(JsBinaryExpression),
 	JsClassExpression(JsClassExpression),
 	JsConditionalExpression(JsConditionalExpression),
+	JsComputedMemberExpression(JsComputedMemberExpression),
 	JsFunctionExpression(JsFunctionExpression),
 	JsImportCallExpression(JsImportCallExpression),
 	JsLogicalExpression(JsLogicalExpression),
@@ -2487,21 +2473,20 @@ pub enum JsAnyExpression {
 	JsParenthesizedExpression(JsParenthesizedExpression),
 	JsReferenceIdentifierExpression(JsReferenceIdentifierExpression),
 	JsSequenceExpression(JsSequenceExpression),
+	JsStaticMemberExpression(JsStaticMemberExpression),
+	JsSuperExpression(JsSuperExpression),
 	JsThisExpression(JsThisExpression),
 	JsUnaryExpression(JsUnaryExpression),
 	JsPreUpdateExpression(JsPreUpdateExpression),
 	JsPostUpdateExpression(JsPostUpdateExpression),
 	JsYieldExpression(JsYieldExpression),
 	Template(Template),
-	BracketExpr(BracketExpr),
-	DotExpr(DotExpr),
 	NewExpr(NewExpr),
 	CallExpr(CallExpr),
 	AssignExpr(AssignExpr),
 	NewTarget(NewTarget),
 	ImportMeta(ImportMeta),
 	SuperCall(SuperCall),
-	PrivatePropAccess(PrivatePropAccess),
 	TsNonNull(TsNonNull),
 	TsAssertion(TsAssertion),
 	TsConstAssertion(TsConstAssertion),
@@ -2558,6 +2543,11 @@ pub enum PatternOrExpr {
 	JsAnyExpression(JsAnyExpression),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyReferenceMember {
+	JsReferenceIdentifierMember(JsReferenceIdentifierMember),
+	JsReferencePrivateMember(JsReferencePrivateMember),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMemberName {
 	JsLiteralMemberName(JsLiteralMemberName),
 	JsComputedMemberName(JsComputedMemberName),
@@ -2575,7 +2565,7 @@ pub enum JsAnyObjectMember {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PropName {
-	ComputedPropertyName(ComputedPropertyName),
+	JsComputedMemberName(JsComputedMemberName),
 	JsStringLiteral(JsStringLiteral),
 	JsNumberLiteral(JsNumberLiteral),
 	Ident(Ident),
@@ -3373,6 +3363,17 @@ impl AstNode for JsConditionalExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsComputedMemberExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsFunctionExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3450,6 +3451,28 @@ impl AstNode for JsSequenceExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsStaticMemberExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MEMBER_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsSuperExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SUPER_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsThisExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THIS_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3507,28 +3530,6 @@ impl AstNode for JsYieldExpression {
 }
 impl AstNode for Template {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for BracketExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == BRACKET_EXPR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for DotExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == DOT_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3604,17 +3605,6 @@ impl AstNode for SuperCall {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for PrivatePropAccess {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == PRIVATE_PROP_ACCESS }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for TsNonNull {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NON_NULL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3639,17 +3629,6 @@ impl AstNode for TsAssertion {
 }
 impl AstNode for TsConstAssertion {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONST_ASSERTION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for Name {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -3857,17 +3836,6 @@ impl AstNode for JsSpread {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for ComputedPropertyName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == COMPUTED_PROPERTY_NAME }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for JsStringLiteral {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3890,8 +3858,8 @@ impl AstNode for JsNumberLiteral {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for PrivateName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == PRIVATE_NAME }
+impl AstNode for Name {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -4187,17 +4155,6 @@ impl AstNode for KeyValuePattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for Condition {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == CONDITION }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for JsVariableDeclarator {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATOR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4244,6 +4201,28 @@ impl AstNode for ImportStringSpecifier {
 }
 impl AstNode for Specifier {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == SPECIFIER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsReferenceIdentifierMember {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER_MEMBER }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsReferencePrivateMember {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_PRIVATE_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5091,6 +5070,11 @@ impl From<JsConditionalExpression> for JsAnyExpression {
 		JsAnyExpression::JsConditionalExpression(node)
 	}
 }
+impl From<JsComputedMemberExpression> for JsAnyExpression {
+	fn from(node: JsComputedMemberExpression) -> JsAnyExpression {
+		JsAnyExpression::JsComputedMemberExpression(node)
+	}
+}
 impl From<JsFunctionExpression> for JsAnyExpression {
 	fn from(node: JsFunctionExpression) -> JsAnyExpression {
 		JsAnyExpression::JsFunctionExpression(node)
@@ -5126,6 +5110,14 @@ impl From<JsSequenceExpression> for JsAnyExpression {
 		JsAnyExpression::JsSequenceExpression(node)
 	}
 }
+impl From<JsStaticMemberExpression> for JsAnyExpression {
+	fn from(node: JsStaticMemberExpression) -> JsAnyExpression {
+		JsAnyExpression::JsStaticMemberExpression(node)
+	}
+}
+impl From<JsSuperExpression> for JsAnyExpression {
+	fn from(node: JsSuperExpression) -> JsAnyExpression { JsAnyExpression::JsSuperExpression(node) }
+}
 impl From<JsThisExpression> for JsAnyExpression {
 	fn from(node: JsThisExpression) -> JsAnyExpression { JsAnyExpression::JsThisExpression(node) }
 }
@@ -5148,12 +5140,6 @@ impl From<JsYieldExpression> for JsAnyExpression {
 impl From<Template> for JsAnyExpression {
 	fn from(node: Template) -> JsAnyExpression { JsAnyExpression::Template(node) }
 }
-impl From<BracketExpr> for JsAnyExpression {
-	fn from(node: BracketExpr) -> JsAnyExpression { JsAnyExpression::BracketExpr(node) }
-}
-impl From<DotExpr> for JsAnyExpression {
-	fn from(node: DotExpr) -> JsAnyExpression { JsAnyExpression::DotExpr(node) }
-}
 impl From<NewExpr> for JsAnyExpression {
 	fn from(node: NewExpr) -> JsAnyExpression { JsAnyExpression::NewExpr(node) }
 }
@@ -5171,9 +5157,6 @@ impl From<ImportMeta> for JsAnyExpression {
 }
 impl From<SuperCall> for JsAnyExpression {
 	fn from(node: SuperCall) -> JsAnyExpression { JsAnyExpression::SuperCall(node) }
-}
-impl From<PrivatePropAccess> for JsAnyExpression {
-	fn from(node: PrivatePropAccess) -> JsAnyExpression { JsAnyExpression::PrivatePropAccess(node) }
 }
 impl From<TsNonNull> for JsAnyExpression {
 	fn from(node: TsNonNull) -> JsAnyExpression { JsAnyExpression::TsNonNull(node) }
@@ -5198,6 +5181,7 @@ impl AstNode for JsAnyExpression {
 			| JS_BINARY_EXPRESSION
 			| JS_CLASS_EXPRESSION
 			| JS_CONDITIONAL_EXPRESSION
+			| JS_COMPUTED_MEMBER_EXPRESSION
 			| JS_FUNCTION_EXPRESSION
 			| JS_IMPORT_CALL_EXPRESSION
 			| JS_LOGICAL_EXPRESSION
@@ -5205,21 +5189,20 @@ impl AstNode for JsAnyExpression {
 			| JS_PARENTHESIZED_EXPRESSION
 			| JS_REFERENCE_IDENTIFIER_EXPRESSION
 			| JS_SEQUENCE_EXPRESSION
+			| JS_STATIC_MEMBER_EXPRESSION
+			| JS_SUPER_EXPRESSION
 			| JS_THIS_EXPRESSION
 			| JS_UNARY_EXPRESSION
 			| JS_PRE_UPDATE_EXPRESSION
 			| JS_POST_UPDATE_EXPRESSION
 			| JS_YIELD_EXPRESSION
 			| TEMPLATE
-			| BRACKET_EXPR
-			| DOT_EXPR
 			| NEW_EXPR
 			| CALL_EXPR
 			| ASSIGN_EXPR
 			| NEW_TARGET
 			| IMPORT_META
 			| SUPER_CALL
-			| PRIVATE_PROP_ACCESS
 			| TS_NON_NULL
 			| TS_ASSERTION
 			| TS_CONST_ASSERTION
@@ -5241,6 +5224,9 @@ impl AstNode for JsAnyExpression {
 			JS_CLASS_EXPRESSION => JsAnyExpression::JsClassExpression(JsClassExpression { syntax }),
 			JS_CONDITIONAL_EXPRESSION => {
 				JsAnyExpression::JsConditionalExpression(JsConditionalExpression { syntax })
+			}
+			JS_COMPUTED_MEMBER_EXPRESSION => {
+				JsAnyExpression::JsComputedMemberExpression(JsComputedMemberExpression { syntax })
 			}
 			JS_FUNCTION_EXPRESSION => {
 				JsAnyExpression::JsFunctionExpression(JsFunctionExpression { syntax })
@@ -5265,6 +5251,10 @@ impl AstNode for JsAnyExpression {
 			JS_SEQUENCE_EXPRESSION => {
 				JsAnyExpression::JsSequenceExpression(JsSequenceExpression { syntax })
 			}
+			JS_STATIC_MEMBER_EXPRESSION => {
+				JsAnyExpression::JsStaticMemberExpression(JsStaticMemberExpression { syntax })
+			}
+			JS_SUPER_EXPRESSION => JsAnyExpression::JsSuperExpression(JsSuperExpression { syntax }),
 			JS_THIS_EXPRESSION => JsAnyExpression::JsThisExpression(JsThisExpression { syntax }),
 			JS_UNARY_EXPRESSION => JsAnyExpression::JsUnaryExpression(JsUnaryExpression { syntax }),
 			JS_PRE_UPDATE_EXPRESSION => {
@@ -5275,15 +5265,12 @@ impl AstNode for JsAnyExpression {
 			}
 			JS_YIELD_EXPRESSION => JsAnyExpression::JsYieldExpression(JsYieldExpression { syntax }),
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
-			BRACKET_EXPR => JsAnyExpression::BracketExpr(BracketExpr { syntax }),
-			DOT_EXPR => JsAnyExpression::DotExpr(DotExpr { syntax }),
 			NEW_EXPR => JsAnyExpression::NewExpr(NewExpr { syntax }),
 			CALL_EXPR => JsAnyExpression::CallExpr(CallExpr { syntax }),
 			ASSIGN_EXPR => JsAnyExpression::AssignExpr(AssignExpr { syntax }),
 			NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
 			IMPORT_META => JsAnyExpression::ImportMeta(ImportMeta { syntax }),
 			SUPER_CALL => JsAnyExpression::SuperCall(SuperCall { syntax }),
-			PRIVATE_PROP_ACCESS => JsAnyExpression::PrivatePropAccess(PrivatePropAccess { syntax }),
 			TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
 			TS_ASSERTION => JsAnyExpression::TsAssertion(TsAssertion { syntax }),
 			TS_CONST_ASSERTION => JsAnyExpression::TsConstAssertion(TsConstAssertion { syntax }),
@@ -5307,6 +5294,7 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
 			JsAnyExpression::JsClassExpression(it) => &it.syntax,
 			JsAnyExpression::JsConditionalExpression(it) => &it.syntax,
+			JsAnyExpression::JsComputedMemberExpression(it) => &it.syntax,
 			JsAnyExpression::JsFunctionExpression(it) => &it.syntax,
 			JsAnyExpression::JsImportCallExpression(it) => &it.syntax,
 			JsAnyExpression::JsLogicalExpression(it) => &it.syntax,
@@ -5314,21 +5302,20 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::JsParenthesizedExpression(it) => &it.syntax,
 			JsAnyExpression::JsReferenceIdentifierExpression(it) => &it.syntax,
 			JsAnyExpression::JsSequenceExpression(it) => &it.syntax,
+			JsAnyExpression::JsStaticMemberExpression(it) => &it.syntax,
+			JsAnyExpression::JsSuperExpression(it) => &it.syntax,
 			JsAnyExpression::JsThisExpression(it) => &it.syntax,
 			JsAnyExpression::JsUnaryExpression(it) => &it.syntax,
 			JsAnyExpression::JsPreUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::JsPostUpdateExpression(it) => &it.syntax,
 			JsAnyExpression::JsYieldExpression(it) => &it.syntax,
 			JsAnyExpression::Template(it) => &it.syntax,
-			JsAnyExpression::BracketExpr(it) => &it.syntax,
-			JsAnyExpression::DotExpr(it) => &it.syntax,
 			JsAnyExpression::NewExpr(it) => &it.syntax,
 			JsAnyExpression::CallExpr(it) => &it.syntax,
 			JsAnyExpression::AssignExpr(it) => &it.syntax,
 			JsAnyExpression::NewTarget(it) => &it.syntax,
 			JsAnyExpression::ImportMeta(it) => &it.syntax,
 			JsAnyExpression::SuperCall(it) => &it.syntax,
-			JsAnyExpression::PrivatePropAccess(it) => &it.syntax,
 			JsAnyExpression::TsNonNull(it) => &it.syntax,
 			JsAnyExpression::TsAssertion(it) => &it.syntax,
 			JsAnyExpression::TsConstAssertion(it) => &it.syntax,
@@ -5625,6 +5612,44 @@ impl AstNode for PatternOrExpr {
 		}
 	}
 }
+impl From<JsReferenceIdentifierMember> for JsAnyReferenceMember {
+	fn from(node: JsReferenceIdentifierMember) -> JsAnyReferenceMember {
+		JsAnyReferenceMember::JsReferenceIdentifierMember(node)
+	}
+}
+impl From<JsReferencePrivateMember> for JsAnyReferenceMember {
+	fn from(node: JsReferencePrivateMember) -> JsAnyReferenceMember {
+		JsAnyReferenceMember::JsReferencePrivateMember(node)
+	}
+}
+impl AstNode for JsAnyReferenceMember {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(
+			kind,
+			JS_REFERENCE_IDENTIFIER_MEMBER | JS_REFERENCE_PRIVATE_MEMBER
+		)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_REFERENCE_IDENTIFIER_MEMBER => {
+				JsAnyReferenceMember::JsReferenceIdentifierMember(JsReferenceIdentifierMember {
+					syntax,
+				})
+			}
+			JS_REFERENCE_PRIVATE_MEMBER => {
+				JsAnyReferenceMember::JsReferencePrivateMember(JsReferencePrivateMember { syntax })
+			}
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyReferenceMember::JsReferenceIdentifierMember(it) => &it.syntax,
+			JsAnyReferenceMember::JsReferencePrivateMember(it) => &it.syntax,
+		}
+	}
+}
 impl From<JsLiteralMemberName> for JsAnyObjectMemberName {
 	fn from(node: JsLiteralMemberName) -> JsAnyObjectMemberName {
 		JsAnyObjectMemberName::JsLiteralMemberName(node)
@@ -5744,8 +5769,8 @@ impl AstNode for JsAnyObjectMember {
 		}
 	}
 }
-impl From<ComputedPropertyName> for PropName {
-	fn from(node: ComputedPropertyName) -> PropName { PropName::ComputedPropertyName(node) }
+impl From<JsComputedMemberName> for PropName {
+	fn from(node: JsComputedMemberName) -> PropName { PropName::JsComputedMemberName(node) }
 }
 impl From<JsStringLiteral> for PropName {
 	fn from(node: JsStringLiteral) -> PropName { PropName::JsStringLiteral(node) }
@@ -5766,7 +5791,7 @@ impl AstNode for PropName {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		matches!(
 			kind,
-			COMPUTED_PROPERTY_NAME
+			JS_COMPUTED_MEMBER_NAME
 				| JS_STRING_LITERAL
 				| JS_NUMBER_LITERAL
 				| IDENT | NAME | JS_UNKNOWN_BINDING
@@ -5774,8 +5799,8 @@ impl AstNode for PropName {
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			COMPUTED_PROPERTY_NAME => {
-				PropName::ComputedPropertyName(ComputedPropertyName { syntax })
+			JS_COMPUTED_MEMBER_NAME => {
+				PropName::JsComputedMemberName(JsComputedMemberName { syntax })
 			}
 			JS_STRING_LITERAL => PropName::JsStringLiteral(JsStringLiteral { syntax }),
 			JS_NUMBER_LITERAL => PropName::JsNumberLiteral(JsNumberLiteral { syntax }),
@@ -5788,7 +5813,7 @@ impl AstNode for PropName {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			PropName::ComputedPropertyName(it) => &it.syntax,
+			PropName::JsComputedMemberName(it) => &it.syntax,
 			PropName::JsStringLiteral(it) => &it.syntax,
 			PropName::JsNumberLiteral(it) => &it.syntax,
 			PropName::Ident(it) => &it.syntax,
@@ -6596,6 +6621,11 @@ impl std::fmt::Display for PatternOrExpr {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAnyReferenceMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsAnyObjectMemberName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -6986,6 +7016,11 @@ impl std::fmt::Display for JsConditionalExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsComputedMemberExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsFunctionExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -7021,6 +7056,16 @@ impl std::fmt::Display for JsSequenceExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsStaticMemberExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsSuperExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsThisExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -7047,16 +7092,6 @@ impl std::fmt::Display for JsYieldExpression {
 	}
 }
 impl std::fmt::Display for Template {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for BracketExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for DotExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -7091,11 +7126,6 @@ impl std::fmt::Display for SuperCall {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for PrivatePropAccess {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for TsNonNull {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -7107,11 +7137,6 @@ impl std::fmt::Display for TsAssertion {
 	}
 }
 impl std::fmt::Display for TsConstAssertion {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for Name {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -7206,11 +7231,6 @@ impl std::fmt::Display for JsSpread {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for ComputedPropertyName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for JsStringLiteral {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -7221,7 +7241,7 @@ impl std::fmt::Display for JsNumberLiteral {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for PrivateName {
+impl std::fmt::Display for Name {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -7356,11 +7376,6 @@ impl std::fmt::Display for KeyValuePattern {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for Condition {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for JsVariableDeclarator {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -7382,6 +7397,16 @@ impl std::fmt::Display for ImportStringSpecifier {
 	}
 }
 impl std::fmt::Display for Specifier {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsReferenceIdentifierMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsReferencePrivateMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

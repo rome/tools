@@ -790,7 +790,7 @@ fn ts_access_modifier<'a>(p: &'a Parser) -> Option<&'a str> {
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
 fn class_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let result = match p.cur() {
-		T![#] => private_member_name(p),
+		T![#] => private_class_member_name(p),
 		T!['['] => computed_member_name(p),
 		_ => literal_member_name(p)?,
 	};
@@ -798,7 +798,7 @@ fn class_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(result)
 }
 
-fn private_member_name(p: &mut Parser) -> CompletedMarker {
+pub(crate) fn private_class_member_name(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![#]);
 	p.expect(T![ident]);

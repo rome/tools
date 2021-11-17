@@ -5,7 +5,7 @@
     0: JS_EXPRESSION_STATEMENT@0..17
       0: JS_UNARY_EXPRESSION@0..16
         0: DELETE_KW@0..7 "delete" [] [Whitespace(" ")]
-        1: BRACKET_EXPR@7..16
+        1: JS_COMPUTED_MEMBER_EXPRESSION@7..16
           0: JS_REFERENCE_IDENTIFIER_EXPRESSION@7..8
             0: IDENT@7..8 "a" [] []
           1: L_BRACK@8..9 "[" [] []

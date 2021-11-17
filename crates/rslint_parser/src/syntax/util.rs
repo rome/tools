@@ -24,7 +24,9 @@ pub fn check_simple_assign_target(p: &mut Parser, target: &JsAnyExpression, rang
 
 fn is_simple_assign_target(p: &mut Parser, target: &JsAnyExpression) -> bool {
 	match target.syntax().kind() {
-		JS_REFERENCE_IDENTIFIER_EXPRESSION | BRACKET_EXPR | DOT_EXPR | PRIVATE_PROP_ACCESS => true,
+		JS_REFERENCE_IDENTIFIER_EXPRESSION
+		| JS_COMPUTED_MEMBER_EXPRESSION
+		| JS_STATIC_MEMBER_EXPRESSION => true,
 		JS_PARENTHESIZED_EXPRESSION => {
 			let inner = JsParenthesizedExpression::cast(target.syntax().to_owned())
 				.unwrap()
@@ -122,7 +124,8 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 		JsAnyExpression::JsReferenceIdentifierExpression(ident) => {
 			check_simple_assign_target(p, &JsAnyExpression::from(ident), marker.range(p))
 		}
-		JsAnyExpression::DotExpr(_) | JsAnyExpression::BracketExpr(_) => {}
+		JsAnyExpression::JsStaticMemberExpression(_)
+		| JsAnyExpression::JsComputedMemberExpression(_) => {}
 		JsAnyExpression::AssignExpr(expr) => {
 			if let Some(rhs) = expr.rhs() {
 				check_for_stmt_lhs(p, rhs, marker);

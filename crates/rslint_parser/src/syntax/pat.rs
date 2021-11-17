@@ -1,4 +1,4 @@
-use super::expr::{assign_expr, identifier_name, identifier_reference, lhs_expr};
+use super::expr::{assign_expr, identifier_name, lhs_expr, reference_identifier_expression};
 use crate::syntax::object::object_prop_name;
 use crate::{SyntaxKind::*, *};
 
@@ -129,7 +129,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 		p.error(err);
 	}
 
-	let mut m = identifier_reference(p)?;
+	let mut m = reference_identifier_expression(p)?;
 	m.change_kind(p, NAME);
 	Some(m)
 }

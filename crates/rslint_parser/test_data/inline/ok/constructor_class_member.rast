@@ -24,11 +24,11 @@
             2: LIST@29..43
               0: JS_EXPRESSION_STATEMENT@29..43
                 0: ASSIGN_EXPR@29..42
-                  0: DOT_EXPR@29..39
+                  0: JS_STATIC_MEMBER_EXPRESSION@29..39
                     0: JS_THIS_EXPRESSION@29..36
                       0: THIS_KW@29..36 "this" [Whitespace("\n\t\t")] []
                     1: DOT@36..37 "." [] []
-                    2: NAME@37..39
+                    2: JS_REFERENCE_IDENTIFIER_MEMBER@37..39
                       0: IDENT@37..39 "a" [] [Whitespace(" ")]
                   1: EQ@39..41 "=" [] [Whitespace(" ")]
                   2: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..42
@@ -58,11 +58,11 @@
             2: LIST@81..95
               0: JS_EXPRESSION_STATEMENT@81..95
                 0: ASSIGN_EXPR@81..94
-                  0: DOT_EXPR@81..91
+                  0: JS_STATIC_MEMBER_EXPRESSION@81..91
                     0: JS_THIS_EXPRESSION@81..88
                       0: THIS_KW@81..88 "this" [Whitespace("\n\t\t")] []
                     1: DOT@88..89 "." [] []
-                    2: NAME@89..91
+                    2: JS_REFERENCE_IDENTIFIER_MEMBER@89..91
                       0: IDENT@89..91 "b" [] [Whitespace(" ")]
                   1: EQ@91..93 "=" [] [Whitespace(" ")]
                   2: JS_REFERENCE_IDENTIFIER_EXPRESSION@93..94

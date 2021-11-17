@@ -62,7 +62,7 @@
                 0: JS_NUMBER_LITERAL_TOKEN@75..76 "6" [] []
             5: COMMA@76..78 "," [] [Whitespace(" ")]
             6: JS_BINARY_EXPRESSION@78..111
-              0: BRACKET_EXPR@78..87
+              0: JS_COMPUTED_MEMBER_EXPRESSION@78..87
                 0: JS_REFERENCE_IDENTIFIER_EXPRESSION@78..81
                   0: IDENT@78..81 "foo" [] []
                 1: L_BRACK@81..82 "[" [] []
@@ -86,11 +86,11 @@
                     2: LIST@99..99
                     3: R_CURLY@99..101 "}" [] [Whitespace(" ")]
                 1: STAR@101..103 "*" [] [Whitespace(" ")]
-                2: DOT_EXPR@103..111
+                2: JS_STATIC_MEMBER_EXPRESSION@103..111
                   0: JS_REFERENCE_IDENTIFIER_EXPRESSION@103..106
                     0: IDENT@103..106 "foo" [] []
                   1: QUESTIONDOT@106..108 "?." [] []
-                  2: NAME@108..111
+                  2: JS_REFERENCE_IDENTIFIER_MEMBER@108..111
                     0: IDENT@108..111 "bar" [] []
           2: R_PAREN@111..112 ")" [] []
       1: (empty)

@@ -3,14 +3,14 @@
   1: LIST@0..0
   2: LIST@0..18
     0: JS_EXPRESSION_STATEMENT@0..5
-      0: BRACKET_EXPR@0..5
+      0: JS_COMPUTED_MEMBER_EXPRESSION@0..5
         0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
           0: IDENT@0..3 "foo" [] []
         1: L_BRACK@3..4 "[" [] []
         2: R_BRACK@4..5 "]" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@5..13
-      0: BRACKET_EXPR@5..13
+      0: JS_COMPUTED_MEMBER_EXPRESSION@5..13
         0: JS_REFERENCE_IDENTIFIER_EXPRESSION@5..9
           0: IDENT@5..9 "foo" [Whitespace("\n")] []
         1: QUESTIONDOT@9..11 "?." [] []
@@ -18,7 +18,7 @@
         3: R_BRACK@12..13 "]" [] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@13..18
-      0: BRACKET_EXPR@13..18
+      0: JS_COMPUTED_MEMBER_EXPRESSION@13..18
         0: JS_REFERENCE_IDENTIFIER_EXPRESSION@13..17
           0: IDENT@13..17 "foo" [Whitespace("\n")] []
         1: L_BRACK@17..18 "[" [] []
