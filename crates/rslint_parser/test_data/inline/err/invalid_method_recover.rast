@@ -8,7 +8,7 @@ JS_ROOT@0..48
       WHITESPACE@7..10 "\n  "
       LIST@10..44
         JS_PROPERTY_CLASS_MEMBER@10..44
-          COMPUTED_PROPERTY_NAME@10..17
+          JS_COMPUTED_MEMBER_NAME@10..17
             L_BRACK@10..11 "["
             JS_BINARY_EXPRESSION@11..16
               JS_NUMBER_LITERAL@11..12

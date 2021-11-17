@@ -66,7 +66,7 @@ JS_ROOT@0..219
         JS_SETTER_CLASS_MEMBER@73..88
           SET_KW@73..76 "set"
           WHITESPACE@76..77 " "
-          JS_STRING_LITERAL@77..82
+          JS_STATIC_MEMBER_NAME@77..82
             JS_STRING_LITERAL_TOKEN@77..82 "\"baz\""
           L_PAREN@82..83 "("
           SINGLE_PATTERN@83..84
@@ -83,7 +83,7 @@ JS_ROOT@0..219
         JS_SETTER_CLASS_MEMBER@91..112
           SET_KW@91..94 "set"
           WHITESPACE@94..95 " "
-          COMPUTED_PROPERTY_NAME@95..106
+          JS_COMPUTED_MEMBER_NAME@95..106
             L_BRACK@95..96 "["
             JS_BINARY_EXPRESSION@96..105
               JS_STRING_LITERAL@96..99
@@ -109,7 +109,7 @@ JS_ROOT@0..219
         JS_SETTER_CLASS_MEMBER@115..126
           SET_KW@115..118 "set"
           WHITESPACE@118..119 " "
-          JS_NUMBER_LITERAL@119..120
+          JS_STATIC_MEMBER_NAME@119..120
             JS_NUMBER_LITERAL_TOKEN@119..120 "5"
           L_PAREN@120..121 "("
           SINGLE_PATTERN@121..122

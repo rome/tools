@@ -1,5 +1,5 @@
 use crate::syntax::decl::{formal_param_pat, parameter_list, BASE_METHOD_RECOVERY_SET};
-use crate::syntax::expr::{assign_expr, identifier_name, literal};
+use crate::syntax::expr::{assign_expr, expr, identifier_name, literal};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::{CompletedMarker, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
@@ -99,6 +99,8 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 		_ => {
 			let m = p.start();
+			let literal_member_name =
+				matches!(p.cur(), JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN);
 			let member_name = object_member_name(p);
 
 			// test object_expr_method
@@ -119,7 +121,9 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 				// ({foo})
 				// test object_expr_ident_prop
-				if !p.at(T![:]) && member_name.kind() == JS_STATIC_MEMBER_NAME {
+				if !literal_member_name
+					&& (matches!(p.cur(), T![,] | T!['}']) || p.has_linebreak_before_n(0))
+				{
 					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
 					Some(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
 				} else {
@@ -213,19 +217,42 @@ pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker
 /// Parses a `JsAnyObjectMemberName` and returns its completion marker
 fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
-		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => literal(p),
-		T!['['] => {
-			let m = p.start();
-			p.bump_any();
-			assign_expr(p);
-			p.expect(T![']']);
-			Some(m.complete(p, COMPUTED_PROPERTY_NAME))
-		}
-		_ => identifier_name(p).map(|mut ident| {
-			ident.change_kind(p, JS_STATIC_MEMBER_NAME);
-			ident
-		}),
+		T!['['] => Some(computed_member_name(p)),
+		_ => static_member_name(p),
 	}
+}
+
+pub(crate) fn computed_member_name(p: &mut Parser) -> CompletedMarker {
+	let m = p.start();
+
+	p.expect(T!['[']);
+	expr(p);
+	p.expect(T![']']);
+	m.complete(p, JS_COMPUTED_MEMBER_NAME)
+}
+
+pub(super) fn static_member_name(p: &mut Parser) -> Option<CompletedMarker> {
+	let m = p.start();
+
+	match p.cur() {
+		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN | T![ident] => {
+			p.bump_any();
+		}
+		t if t.is_keyword() => {
+			p.bump_remap(T![ident]);
+		}
+		_ => {
+			let err = p
+				.err_builder("Expected an identifier, a keyword, or a string or number literal")
+				.primary(
+					p.cur_tok().range,
+					"Expected an identifier, a keyword, or a string or number literal here",
+				);
+			p.error(err);
+			return None;
+		}
+	}
+	Some(m.complete(p, JS_STATIC_MEMBER_NAME))
 }
 
 /// Parses a method object member

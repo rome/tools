@@ -1,6 +1,7 @@
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
-use crate::syntax::expr::{assign_expr, identifier_name, literal};
+use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
+use crate::syntax::object::{computed_member_name, static_member_name};
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{is_semi, optional_semi};
 use crate::syntax::typescript::{
@@ -225,16 +226,10 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 	if declare && !has_access_modifier {
 		// declare() and declare: foo
 		if is_method_class_member(p, offset) {
-			let member_name = p.start();
-			p.bump_any(); // bump declare identifier
-			member_name.complete(p, JS_STATIC_MEMBER_NAME);
-
+			static_member_name(p); // bump declare as identifier
 			return Some(method_class_member_body(p, member_marker));
 		} else if is_property_class_member(p, offset) {
-			let member_name = p.start();
-			p.bump_any(); // bump declare identifier
-			member_name.complete(p, JS_STATIC_MEMBER_NAME);
-
+			static_member_name(p); // bump declare as identifier
 			return Some(property_class_member_body(p, member_marker));
 		} else {
 			let msg = if p.typescript() {
@@ -793,28 +788,19 @@ fn ts_access_modifier<'a>(p: &'a Parser) -> Option<&'a str> {
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
 fn class_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let result = match p.cur() {
-		T![#] => {
-			let m = p.start();
-			p.bump_any();
-			p.expect(T![ident]);
-			m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME)
-		}
-		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => literal(p)?,
-		T!['['] => {
-			let m = p.start();
-			p.bump_any();
-			assign_expr(p);
-			p.expect(T![']']);
-			m.complete(p, COMPUTED_PROPERTY_NAME)
-		}
-		_ => {
-			let mut ident = identifier_name(p)?;
-			ident.change_kind(p, JS_STATIC_MEMBER_NAME);
-			ident
-		}
+		T![#] => private_member_name(p),
+		T!['['] => computed_member_name(p),
+		_ => static_member_name(p)?,
 	};
 
 	Some(result)
+}
+
+fn private_member_name(p: &mut Parser) -> CompletedMarker {
+	let m = p.start();
+	p.expect(T![#]);
+	p.expect(T![ident]);
+	m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME)
 }
 
 fn consume_modifiers(

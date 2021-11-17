@@ -57,7 +57,7 @@ JS_ROOT@0..209
         JS_GETTER_CLASS_MEMBER@70..84
           GET_KW@70..73 "get"
           WHITESPACE@73..74 " "
-          JS_STRING_LITERAL@74..79
+          JS_STATIC_MEMBER_NAME@74..79
             JS_STRING_LITERAL_TOKEN@74..79 "\"baz\""
           L_PAREN@79..80 "("
           R_PAREN@80..81 ")"
@@ -71,7 +71,7 @@ JS_ROOT@0..209
         JS_GETTER_CLASS_MEMBER@87..107
           GET_KW@87..90 "get"
           WHITESPACE@90..91 " "
-          COMPUTED_PROPERTY_NAME@91..102
+          JS_COMPUTED_MEMBER_NAME@91..102
             L_BRACK@91..92 "["
             JS_BINARY_EXPRESSION@92..101
               JS_STRING_LITERAL@92..95
@@ -94,7 +94,7 @@ JS_ROOT@0..209
         JS_GETTER_CLASS_MEMBER@110..120
           GET_KW@110..113 "get"
           WHITESPACE@113..114 " "
-          JS_NUMBER_LITERAL@114..115
+          JS_STATIC_MEMBER_NAME@114..115
             JS_NUMBER_LITERAL_TOKEN@114..115 "5"
           L_PAREN@115..116 "("
           R_PAREN@116..117 ")"

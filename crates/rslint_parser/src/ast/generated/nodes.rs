@@ -1316,26 +1316,15 @@ pub struct JsStaticMemberName {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsStaticMemberName {
-	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![ident])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct JsStringLiteral {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsStringLiteral {
-	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal_token])
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct JsNumberLiteral {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsNumberLiteral {
-	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_number_literal_token])
+	pub fn value(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(
+			&self.syntax,
+			&[
+				T![ident],
+				T![js_string_literal_token],
+				T![js_number_literal_token],
+			],
+		)
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1463,6 +1452,24 @@ impl ComputedPropertyName {
 	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![']'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsStringLiteral {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsStringLiteral {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_string_literal_token])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsNumberLiteral {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsNumberLiteral {
+	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_number_literal_token])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2555,8 +2562,6 @@ pub enum PatternOrExpr {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMemberName {
 	JsStaticMemberName(JsStaticMemberName),
-	JsStringLiteral(JsStringLiteral),
-	JsNumberLiteral(JsNumberLiteral),
 	JsComputedMemberName(JsComputedMemberName),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -3771,28 +3776,6 @@ impl AstNode for JsStaticMemberName {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for JsStringLiteral {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for JsNumberLiteral {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
 impl AstNode for JsComputedMemberName {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3883,6 +3866,28 @@ impl AstNode for JsSpread {
 }
 impl AstNode for ComputedPropertyName {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == COMPUTED_PROPERTY_NAME }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsStringLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsNumberLiteral {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5640,16 +5645,6 @@ impl From<JsStaticMemberName> for JsAnyObjectMemberName {
 		JsAnyObjectMemberName::JsStaticMemberName(node)
 	}
 }
-impl From<JsStringLiteral> for JsAnyObjectMemberName {
-	fn from(node: JsStringLiteral) -> JsAnyObjectMemberName {
-		JsAnyObjectMemberName::JsStringLiteral(node)
-	}
-}
-impl From<JsNumberLiteral> for JsAnyObjectMemberName {
-	fn from(node: JsNumberLiteral) -> JsAnyObjectMemberName {
-		JsAnyObjectMemberName::JsNumberLiteral(node)
-	}
-}
 impl From<JsComputedMemberName> for JsAnyObjectMemberName {
 	fn from(node: JsComputedMemberName) -> JsAnyObjectMemberName {
 		JsAnyObjectMemberName::JsComputedMemberName(node)
@@ -5658,10 +5653,7 @@ impl From<JsComputedMemberName> for JsAnyObjectMemberName {
 impl AstNode for JsAnyObjectMemberName {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			JS_STATIC_MEMBER_NAME
-			| JS_STRING_LITERAL
-			| JS_NUMBER_LITERAL
-			| JS_COMPUTED_MEMBER_NAME => true,
+			JS_STATIC_MEMBER_NAME | JS_COMPUTED_MEMBER_NAME => true,
 			_ => false,
 		}
 	}
@@ -5670,8 +5662,6 @@ impl AstNode for JsAnyObjectMemberName {
 			JS_STATIC_MEMBER_NAME => {
 				JsAnyObjectMemberName::JsStaticMemberName(JsStaticMemberName { syntax })
 			}
-			JS_STRING_LITERAL => JsAnyObjectMemberName::JsStringLiteral(JsStringLiteral { syntax }),
-			JS_NUMBER_LITERAL => JsAnyObjectMemberName::JsNumberLiteral(JsNumberLiteral { syntax }),
 			JS_COMPUTED_MEMBER_NAME => {
 				JsAnyObjectMemberName::JsComputedMemberName(JsComputedMemberName { syntax })
 			}
@@ -5682,8 +5672,6 @@ impl AstNode for JsAnyObjectMemberName {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			JsAnyObjectMemberName::JsStaticMemberName(it) => &it.syntax,
-			JsAnyObjectMemberName::JsStringLiteral(it) => &it.syntax,
-			JsAnyObjectMemberName::JsNumberLiteral(it) => &it.syntax,
 			JsAnyObjectMemberName::JsComputedMemberName(it) => &it.syntax,
 		}
 	}
@@ -7249,16 +7237,6 @@ impl std::fmt::Display for JsStaticMemberName {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsStringLiteral {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsNumberLiteral {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for JsComputedMemberName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -7300,6 +7278,16 @@ impl std::fmt::Display for JsSpread {
 	}
 }
 impl std::fmt::Display for ComputedPropertyName {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsStringLiteral {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsNumberLiteral {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

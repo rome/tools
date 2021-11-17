@@ -44,7 +44,7 @@ JS_ROOT@0..212
                   JS_GETTER_OBJECT_MEMBER@44..76
                     GET_KW@44..47 "get"
                     WHITESPACE@47..48 " "
-                    JS_STRING_LITERAL@48..53
+                    JS_STATIC_MEMBER_NAME@48..53
                       JS_STRING_LITERAL_TOKEN@48..53 "\"bar\""
                     L_PAREN@53..54 "("
                     R_PAREN@54..55 ")"
@@ -67,7 +67,7 @@ JS_ROOT@0..212
                   JS_GETTER_OBJECT_MEMBER@80..121
                     GET_KW@80..83 "get"
                     WHITESPACE@83..84 " "
-                    COMPUTED_PROPERTY_NAME@84..95
+                    JS_COMPUTED_MEMBER_NAME@84..95
                       L_BRACK@84..85 "["
                       JS_BINARY_EXPRESSION@85..94
                         JS_STRING_LITERAL@85..88
@@ -104,7 +104,7 @@ JS_ROOT@0..212
                   JS_GETTER_OBJECT_MEMBER@125..149
                     GET_KW@125..128 "get"
                     WHITESPACE@128..129 " "
-                    JS_NUMBER_LITERAL@129..130
+                    JS_STATIC_MEMBER_NAME@129..130
                       JS_NUMBER_LITERAL_TOKEN@129..130 "5"
                     L_PAREN@130..131 "("
                     R_PAREN@131..132 ")"

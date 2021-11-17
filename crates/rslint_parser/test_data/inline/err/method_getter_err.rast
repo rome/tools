@@ -22,11 +22,11 @@ JS_ROOT@0..22
       R_CURLY@20..21 "}"
   WHITESPACE@21..22 "\n"
 --
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ method_getter_err.js:2:6
   │
 2 │  get {}
-  │      ^ Expected an identifier or keyword here
+  │      ^ Expected an identifier, a keyword, or a string or number literal here
 
 --
 error[SyntaxError]: expected `'('` but instead found `{`

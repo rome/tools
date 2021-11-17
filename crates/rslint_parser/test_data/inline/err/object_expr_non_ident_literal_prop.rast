@@ -18,7 +18,7 @@ JS_ROOT@0..12
                 L_CURLY@8..9 "{"
                 LIST@9..10
                   JS_PROPERTY_OBJECT_MEMBER@9..10
-                    JS_NUMBER_LITERAL@9..10
+                    JS_STATIC_MEMBER_NAME@9..10
                       JS_NUMBER_LITERAL_TOKEN@9..10 "5"
                 R_CURLY@10..11 "}"
   WHITESPACE@11..12 "\n"

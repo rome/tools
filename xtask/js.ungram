@@ -420,13 +420,6 @@ JsPostUpdateExpression =
 ///////////////
 JsAnyObjectMemberName =
 	JsStaticMemberName
-	// { "a": ... }
-	//   ^^^
-	| JsStringLiteral
-
-	// { 5: ... }
-	//   ^
-	| JsNumberLiteral
 	| JsComputedMemberName
 
 JsObjectExpression =
@@ -563,14 +556,9 @@ JsAnyClassMember =
 //              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
 	access_modifier: TsAccessibility?
-	name: JsAnyConstructorMemberName
+	name: JsStaticMemberName
 	parameter_list: JsConstructorParameterList
 	body: JsFunctionBody
-
-// constructor or "constructor" or 'constructor'
-JsAnyConstructorMemberName =
-	JsStringLiteral
-	| JsStaticMemberName
 
 JsConstructorParameterList =
 	'('
@@ -848,9 +836,9 @@ JsSpread =
 	argument: JsAnyExpression
 
 
-// { a: ... }
-//   ^
-JsStaticMemberName = name: 'ident'
+// { a: ..., "b": ..., 4: ... }
+//   ^       ^^^       ^
+JsStaticMemberName = value: ('ident' | 'js_string_literal_token' | 'js_number_literal_token')
 
 // { [call()]: ... }
 //   ^^^^^^^^

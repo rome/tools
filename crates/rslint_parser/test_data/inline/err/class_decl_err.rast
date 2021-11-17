@@ -145,11 +145,11 @@ error[SyntaxError]: expected `;`, a property, or a method for a class body, but 
   │           ^
 
 --
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ class_decl_err.js:5:17
   │
 5 │ class foo { set {} }
-  │                 ^ Expected an identifier or keyword here
+  │                 ^ Expected an identifier, a keyword, or a string or number literal here
 
 --
 error[SyntaxError]: expected `'('` but instead found `{`
