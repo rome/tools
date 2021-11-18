@@ -17,7 +17,7 @@ pub struct LossyTreeSink<'a> {
 	errors: Vec<ParserError>,
 	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
-	/// Trivia start Offset and its pieces.
+	/// Trivia start offset and its [TriviaPiece].
 	next_token_leading_trivia: (TextRange, Vec<TriviaPiece>),
 }
 
