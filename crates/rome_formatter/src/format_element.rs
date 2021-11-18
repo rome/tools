@@ -970,11 +970,12 @@ mod tests {
 			FormatElement::Line(Line::new(LineMode::Hard)),
 			FormatElement::Space,
 			FormatElement::Token(Token::new(" \t \n")),
-			FormatElement::List(List::new(vec![
-				FormatElement::Empty,
-			])),
+			FormatElement::List(List::new(vec![FormatElement::Empty])),
 			FormatElement::Group(Group::new(FormatElement::Empty)),
-			FormatElement::ConditionalGroupContent(ConditionalGroupContent::new(FormatElement::Empty, GroupPrintMode::Flat)),
+			FormatElement::ConditionalGroupContent(ConditionalGroupContent::new(
+				FormatElement::Empty,
+				GroupPrintMode::Flat,
+			)),
 		]);
 
 		let f = f.trim_start();
