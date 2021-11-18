@@ -311,7 +311,7 @@ impl<L: Language> Iterator for SyntaxTriviaPiecesIterator<L> {
 }
 
 impl<L: Language> SyntaxTrivia<L> {
-	/// Returns all pieces of this trivia.
+	/// Returns all [SyntaxTriviaPiece] of this trivia.
 	///
 	/// ```
 	/// use rome_rowan::*;
