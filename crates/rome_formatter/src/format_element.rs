@@ -146,19 +146,8 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// assert_eq!(r#""Hello\tWorld""#, format_element(&elements, FormatOptions::default()).code());
 /// ```
 #[inline]
-pub fn token(text: &str) -> FormatElement {
-	if text.is_empty() {
-		FormatElement::Empty
-	} else {
-		FormatElement::Token(Token::new(text))
-	}
-}
-
-/// Creates a token that gets written as is to the output. See fucntion [token] for more details
-/// and examples.
-/// This function moves the string to be more efficient.
-#[inline]
-pub fn token_from_string(text: String) -> FormatElement {
+pub fn token<S: Into<String>>(text: S) -> FormatElement {
+	let text = text.into();
 	if text.is_empty() {
 		FormatElement::Empty
 	} else {

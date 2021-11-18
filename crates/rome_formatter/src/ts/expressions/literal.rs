@@ -1,4 +1,4 @@
-use crate::{token, token_from_string, FormatElement, FormatResult, Formatter, ToFormatElement};
+use crate::{token, FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	JsAnyLiteral, JsBigIntLiteral, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral,
 	JsStringLiteral,
@@ -13,7 +13,7 @@ impl ToFormatElement for JsStringLiteral {
 		if quoted.starts_with('\'') {
 			let s = &quoted[1..quoted.len() - 1];
 			let s = format!("\"{}\"", s);
-			Ok(token_from_string(s))
+			Ok(token(s))
 		} else {
 			Ok(token(quoted))
 		}
