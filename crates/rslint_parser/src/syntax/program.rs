@@ -116,7 +116,7 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 
 	let list = p.start();
 
-	if p.at(JS_STRING_LITERAL_TOKEN) {
+	if p.at(JS_STRING_LITERAL) {
 		let inner = p.start();
 		p.bump_any();
 		inner.complete(p, IMPORT_STRING_SPECIFIER);
@@ -181,7 +181,7 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 		p.bump_remap(T![from]);
 	}
 
-	if !p.at(JS_STRING_LITERAL_TOKEN) {
+	if !p.at(JS_STRING_LITERAL) {
 		let err = p
 			.err_builder(
 				"expected a source for a `from` clause in an import statement, but found none",
@@ -537,7 +537,7 @@ pub fn ts_external_module_ref(p: &mut Parser) -> CompletedMarker {
 	}
 
 	p.expect(T!['(']);
-	p.expect(JS_STRING_LITERAL_TOKEN);
+	p.expect(JS_STRING_LITERAL);
 	p.expect(T![')']);
 	m.complete(p, TS_EXTERNAL_MODULE_REF)
 }

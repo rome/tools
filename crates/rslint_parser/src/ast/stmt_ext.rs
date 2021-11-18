@@ -84,6 +84,6 @@ mod tests {
 
 impl TsEnumMember {
 	pub fn string_token(&self) -> Option<SyntaxToken> {
-		support::token(&self.syntax, JS_STRING_LITERAL_TOKEN)
+		support::token(&self.syntax, JS_STRING_LITERAL)
 	}
 }

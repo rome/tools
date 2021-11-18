@@ -54,7 +54,7 @@ JsRoot =
 	statements: JsAnyStatement*
 
 JsDirective =
-	value: 'js_string_literal_token'
+	value: 'js_string_literal'
 	';'?
 
 ///////////////
@@ -634,13 +634,13 @@ JsAnyLiteralExpression =
 	| JsRegexLiteralExpression
 
 // "abcd" | 'abcd'
-JsStringLiteralExpression = value: 'js_string_literal_token'
+JsStringLiteralExpression = value: 'js_string_literal'
 
 // 4, 5.5, 0x00, ...
-JsNumberLiteralExpression = value: 'js_number_literal_token'
+JsNumberLiteralExpression = value: 'js_number_literal'
 
 // 45n
-JsBigIntLiteralExpression =  value: 'js_big_int_literal_token'
+JsBigIntLiteralExpression =  value: 'js_big_int_literal'
 
 // true, false
 JsBooleanLiteralExpression = value_token: ('true' | 'false')
@@ -648,7 +648,7 @@ JsBooleanLiteralExpression = value_token: ('true' | 'false')
 // null
 JsNullLiteralExpression = value: 'null'
 
-JsRegexLiteralExpression = value: 'js_regex_literal_token'
+JsRegexLiteralExpression = value: 'js_regex_literal'
 
 
 ///////////////
@@ -745,7 +745,7 @@ ImportDecl =
 	imports:ImportClause*
 	'type'?
 	'from'
-	source: 'js_string_literal_token'
+	source: 'js_string_literal'
 	asserted_object: JsObjectExpression
 	'assert'?
 	';'?
@@ -761,7 +761,7 @@ DefaultDecl =
 ExportDefaultExpr = 'export' 'type'? 'default'? expr:JsAnyExpression
 
 // export wildcard
-ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: 'js_string_literal_token'
+ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: 'js_string_literal'
 
 
 // export declaration
@@ -799,7 +799,7 @@ Specifier = name:Ident manual__:'as'? manual__alias:Name
 
 
 // this is not currently implemented in rslint parser
-ImportStringSpecifier = 'js_string_literal_token'
+ImportStringSpecifier = source: 'js_string_literal'
 
 
 WildcardImport = '*' 'as'? ident: Ident?
@@ -831,7 +831,7 @@ JsSpread =
 
 // { a: ..., "b": ..., 4: ... }
 //   ^       ^^^       ^
-JsLiteralMemberName = value: ('ident' | 'js_string_literal_token' | 'js_number_literal_token')
+JsLiteralMemberName = value: ('ident' | 'js_string_literal' | 'js_number_literal')
 
 // { [call()]: ... }
 //   ^^^^^^^^
@@ -908,7 +908,7 @@ TsModuleRef =
 	TsEntityName
 
 
-TsExternalModuleRef = 'require' '(' 'js_string_literal_token' ')'
+TsExternalModuleRef = 'require' '(' module: 'js_string_literal' ')'
 
 TsType =
 	TsAny

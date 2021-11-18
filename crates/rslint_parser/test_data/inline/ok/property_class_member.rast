@@ -22,25 +22,25 @@
           1: JS_EQUAL_VALUE_CLAUSE@53..58
             0: EQ@53..55 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@55..58
-              0: JS_STRING_LITERAL_TOKEN@55..58 "\"a\"" [] []
+              0: JS_STRING_LITERAL@55..58 "\"a\"" [] []
           2: (empty)
         3: JS_PROPERTY_CLASS_MEMBER@58..65
           0: JS_LITERAL_MEMBER_NAME@58..64
-            0: JS_STRING_LITERAL_TOKEN@58..64 "\"a\"" [Whitespace("\n\n\t")] []
+            0: JS_STRING_LITERAL@58..64 "\"a\"" [Whitespace("\n\n\t")] []
           1: SEMICOLON@64..65 ";" [] []
         4: JS_PROPERTY_CLASS_MEMBER@65..68
           0: JS_LITERAL_MEMBER_NAME@65..68
-            0: JS_NUMBER_LITERAL_TOKEN@65..68 "5" [Whitespace("\n\t")] []
+            0: JS_NUMBER_LITERAL@65..68 "5" [Whitespace("\n\t")] []
           1: (empty)
         5: JS_PROPERTY_CLASS_MEMBER@68..81
           0: JS_COMPUTED_MEMBER_NAME@68..81
             0: L_BRACK@68..71 "[" [Whitespace("\n\t")] []
             1: JS_BINARY_EXPRESSION@71..80
               0: JS_STRING_LITERAL_EXPRESSION@71..75
-                0: JS_STRING_LITERAL_TOKEN@71..75 "\"a\"" [] [Whitespace(" ")]
+                0: JS_STRING_LITERAL@71..75 "\"a\"" [] [Whitespace(" ")]
               1: PLUS@75..77 "+" [] [Whitespace(" ")]
               2: JS_STRING_LITERAL_EXPRESSION@77..80
-                0: JS_STRING_LITERAL_TOKEN@77..80 "\"b\"" [] []
+                0: JS_STRING_LITERAL@77..80 "\"b\"" [] []
             2: R_BRACK@80..81 "]" [] []
           1: (empty)
         6: JS_PROPERTY_CLASS_MEMBER@81..105
@@ -55,7 +55,7 @@
           2: JS_EQUAL_VALUE_CLAUSE@140..143
             0: EQ@140..142 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@142..143
-              0: JS_NUMBER_LITERAL_TOKEN@142..143 "1" [] []
+              0: JS_NUMBER_LITERAL@142..143 "1" [] []
           3: (empty)
         8: JS_PROPERTY_CLASS_MEMBER@143..154
           0: JS_PRIVATE_CLASS_MEMBER_NAME@143..154
@@ -69,7 +69,7 @@
           1: JS_EQUAL_VALUE_CLAUSE@176..181
             0: EQ@176..178 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@178..181
-              0: JS_STRING_LITERAL_TOKEN@178..181 "\"a\"" [] []
+              0: JS_STRING_LITERAL@178..181 "\"a\"" [] []
           2: (empty)
         10: JS_PROPERTY_CLASS_MEMBER@181..205
           0: STATIC_KW@181..191 "static" [Whitespace("\n\n\t")] [Whitespace(" ")]
@@ -85,7 +85,7 @@
           2: JS_EQUAL_VALUE_CLAUSE@248..251
             0: EQ@248..250 "=" [] [Whitespace(" ")]
             1: JS_NUMBER_LITERAL_EXPRESSION@250..251
-              0: JS_NUMBER_LITERAL_TOKEN@250..251 "1" [] []
+              0: JS_NUMBER_LITERAL@250..251 "1" [] []
           3: (empty)
       4: R_CURLY@251..253 "}" [Whitespace("\n")] []
   3: EOF@253..255 "" [Whitespace("\n\n")] []

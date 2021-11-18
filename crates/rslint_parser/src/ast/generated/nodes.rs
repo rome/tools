@@ -79,7 +79,7 @@ pub struct JsDirective {
 }
 impl JsDirective {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal_token])
+		support::required_token(&self.syntax, T![js_string_literal])
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
@@ -517,7 +517,7 @@ impl ImportDecl {
 		support::required_token(&self.syntax, T![from])
 	}
 	pub fn source_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal_token])
+		support::required_token(&self.syntax, T![js_string_literal])
 	}
 	pub fn asserted_object(&self) -> SyntaxResult<JsObjectExpression> {
 		support::required_node(&self.syntax)
@@ -587,7 +587,7 @@ impl ExportWildcard {
 		support::required_token(&self.syntax, T![from])
 	}
 	pub fn source_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal_token])
+		support::required_token(&self.syntax, T![js_string_literal])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1306,11 +1306,7 @@ impl JsLiteralMemberName {
 	pub fn value(&self) -> SyntaxResult<SyntaxToken> {
 		support::find_required_token(
 			&self.syntax,
-			&[
-				T![ident],
-				T![js_string_literal_token],
-				T![js_number_literal_token],
-			],
+			&[T![ident], T![js_string_literal], T![js_number_literal]],
 		)
 	}
 }
@@ -1434,7 +1430,7 @@ pub struct JsStringLiteralExpression {
 }
 impl JsStringLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal_token])
+		support::required_token(&self.syntax, T![js_string_literal])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1443,7 +1439,7 @@ pub struct JsNumberLiteralExpression {
 }
 impl JsNumberLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_number_literal_token])
+		support::required_token(&self.syntax, T![js_number_literal])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1689,7 +1685,7 @@ pub struct JsBigIntLiteralExpression {
 }
 impl JsBigIntLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_big_int_literal_token])
+		support::required_token(&self.syntax, T![js_big_int_literal])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1716,7 +1712,7 @@ pub struct JsRegexLiteralExpression {
 }
 impl JsRegexLiteralExpression {
 	pub fn value_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_regex_literal_token])
+		support::required_token(&self.syntax, T![js_regex_literal])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1841,8 +1837,8 @@ pub struct ImportStringSpecifier {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ImportStringSpecifier {
-	pub fn js_string_literal_token_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal_token])
+	pub fn source_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_string_literal])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -1894,8 +1890,8 @@ impl TsExternalModuleRef {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn js_string_literal_token_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![js_string_literal_token])
+	pub fn module_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![js_string_literal])
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])

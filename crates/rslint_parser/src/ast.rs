@@ -455,10 +455,7 @@ mod tests {
 		for (node, separator) in elements.into_iter() {
 			if let Some(node) = node {
 				builder.start_node(SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
-				builder.token(
-					SyntaxKind::JS_NUMBER_LITERAL_TOKEN,
-					node.to_string().as_str(),
-				);
+				builder.token(SyntaxKind::JS_NUMBER_LITERAL, node.to_string().as_str());
 				builder.finish_node();
 			}
 

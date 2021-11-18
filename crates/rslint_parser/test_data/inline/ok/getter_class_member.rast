@@ -45,7 +45,7 @@
         3: JS_GETTER_CLASS_MEMBER@67..84
           0: GET_KW@67..74 "get" [Whitespace("\n\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@74..79
-            0: JS_STRING_LITERAL_TOKEN@74..79 "\"baz\"" [] []
+            0: JS_STRING_LITERAL@74..79 "\"baz\"" [] []
           2: L_PAREN@79..80 "(" [] []
           3: R_PAREN@80..82 ")" [] [Whitespace(" ")]
           4: JS_FUNCTION_BODY@82..84
@@ -59,10 +59,10 @@
             0: L_BRACK@91..92 "[" [] []
             1: JS_BINARY_EXPRESSION@92..101
               0: JS_STRING_LITERAL_EXPRESSION@92..96
-                0: JS_STRING_LITERAL_TOKEN@92..96 "\"a\"" [] [Whitespace(" ")]
+                0: JS_STRING_LITERAL@92..96 "\"a\"" [] [Whitespace(" ")]
               1: PLUS@96..98 "+" [] [Whitespace(" ")]
               2: JS_STRING_LITERAL_EXPRESSION@98..101
-                0: JS_STRING_LITERAL_TOKEN@98..101 "\"b\"" [] []
+                0: JS_STRING_LITERAL@98..101 "\"b\"" [] []
             2: R_BRACK@101..102 "]" [] []
           2: L_PAREN@102..103 "(" [] []
           3: R_PAREN@103..105 ")" [] [Whitespace(" ")]
@@ -74,7 +74,7 @@
         5: JS_GETTER_CLASS_MEMBER@107..120
           0: GET_KW@107..114 "get" [Whitespace("\n\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@114..115
-            0: JS_NUMBER_LITERAL_TOKEN@114..115 "5" [] []
+            0: JS_NUMBER_LITERAL@114..115 "5" [] []
           2: L_PAREN@115..116 "(" [] []
           3: R_PAREN@116..118 ")" [] [Whitespace(" ")]
           4: JS_FUNCTION_BODY@118..120

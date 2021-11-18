@@ -14,7 +14,7 @@
           0: L_PAREN@15..16 "(" [] []
           1: LIST@16..26
             0: JS_STRING_LITERAL_EXPRESSION@16..26
-              0: JS_STRING_LITERAL_TOKEN@16..26 "\"oh no :(\"" [] []
+              0: JS_STRING_LITERAL@16..26 "\"oh no :(\"" [] []
           2: R_PAREN@26..27 ")" [] []
       1: (empty)
   3: EOF@27..28 "" [Whitespace("\n")] []

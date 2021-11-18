@@ -25,7 +25,7 @@ impl JsLiteralMemberName {
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
 	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-	///   builder.token(SyntaxKind::JS_STRING_LITERAL_TOKEN, "\"abcd\"");
+	///   builder.token(SyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
 	/// });
 	///
 	/// let static_member_name = node.to::<JsLiteralMemberName>();
@@ -41,7 +41,7 @@ impl JsLiteralMemberName {
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
 	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-	///   builder.token(SyntaxKind::JS_NUMBER_LITERAL_TOKEN, "5");
+	///   builder.token(SyntaxKind::JS_NUMBER_LITERAL, "5");
 	/// });
 	///
 	/// let static_member_name = node.to::<JsLiteralMemberName>();
@@ -69,7 +69,7 @@ impl JsLiteralMemberName {
 		let name = value.text_trimmed();
 
 		let result = match value.kind() {
-			JS_STRING_LITERAL_TOKEN => String::from(&name[1..name.len() - 1]),
+			JS_STRING_LITERAL => String::from(&name[1..name.len() - 1]),
 			_ => String::from(name),
 		};
 

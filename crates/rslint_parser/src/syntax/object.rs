@@ -6,8 +6,8 @@ use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::T;
 
 const STARTS_OBJ_PROP: TokenSet = token_set![
-	JS_STRING_LITERAL_TOKEN,
-	JS_NUMBER_LITERAL_TOKEN,
+	JS_STRING_LITERAL,
+	JS_NUMBER_LITERAL,
 	T![ident],
 	T![await],
 	T![yield],
@@ -198,7 +198,7 @@ fn setter_object_member(p: &mut Parser) -> CompletedMarker {
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker> {
 	match p.cur() {
-		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => literal(p),
+		JS_STRING_LITERAL | JS_NUMBER_LITERAL => literal(p),
 		T!['['] => Some(computed_member_name(p)),
 		_ if binding => super::pat::binding_identifier(p),
 		_ => identifier_name(p),
@@ -228,7 +228,7 @@ pub(super) fn literal_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 
 	match p.cur() {
-		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN | T![ident] => {
+		JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident] => {
 			p.bump_any();
 		}
 		t if t.is_keyword() => {

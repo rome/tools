@@ -61,10 +61,10 @@ pub const STARTS_EXPR: TokenSet = token_set![
 	BACKTICK,
 	TRUE_KW,
 	FALSE_KW,
-	JS_NUMBER_LITERAL_TOKEN,
-	JS_STRING_LITERAL_TOKEN,
+	JS_NUMBER_LITERAL,
+	JS_STRING_LITERAL,
 	NULL_KW,
-	JS_REGEX_LITERAL_TOKEN
+	JS_REGEX_LITERAL
 ];
 
 /// A literal expression.
@@ -80,19 +80,19 @@ pub const STARTS_EXPR: TokenSet = token_set![
 // null
 pub fn literal(p: &mut Parser) -> Option<CompletedMarker> {
 	let literal_kind = match p.cur_tok().kind {
-		SyntaxKind::JS_NUMBER_LITERAL_TOKEN => {
+		SyntaxKind::JS_NUMBER_LITERAL => {
 			if p.cur_src().ends_with('n') {
 				let m = p.start();
-				p.bump_remap(SyntaxKind::JS_BIG_INT_LITERAL_TOKEN);
+				p.bump_remap(SyntaxKind::JS_BIG_INT_LITERAL);
 				return Some(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
 			};
 
 			SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION
 		}
-		SyntaxKind::JS_STRING_LITERAL_TOKEN => SyntaxKind::JS_STRING_LITERAL_EXPRESSION,
+		SyntaxKind::JS_STRING_LITERAL => SyntaxKind::JS_STRING_LITERAL_EXPRESSION,
 		SyntaxKind::NULL_KW => SyntaxKind::JS_NULL_LITERAL_EXPRESSION,
 		SyntaxKind::TRUE_KW | SyntaxKind::FALSE_KW => SyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION,
-		SyntaxKind::JS_REGEX_LITERAL_TOKEN => SyntaxKind::JS_REGEX_LITERAL_EXPRESSION,
+		SyntaxKind::JS_REGEX_LITERAL => SyntaxKind::JS_REGEX_LITERAL_EXPRESSION,
 		_ => return None,
 	};
 

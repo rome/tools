@@ -764,7 +764,7 @@ mod tests {
 		expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."
 	)]
 	fn uncompleted_markers_panic() {
-		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL, 12)];
 		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
 		let mut parser = Parser::new(token_source, 0, Syntax::default());
@@ -775,19 +775,19 @@ mod tests {
 
 	#[test]
 	fn completed_marker_doesnt_panic() {
-		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL, 12)];
 		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
 		let mut p = Parser::new(token_source, 0, Syntax::default());
 
 		let m = p.start();
-		p.expect(SyntaxKind::JS_STRING_LITERAL_TOKEN);
+		p.expect(SyntaxKind::JS_STRING_LITERAL);
 		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL_EXPRESSION);
 	}
 
 	#[test]
 	fn abandoned_marker_doesnt_panic() {
-		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL, 12)];
 		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
 
 		let mut p = Parser::new(token_source, 0, Syntax::default());

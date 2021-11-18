@@ -152,10 +152,10 @@ pub const KINDS_SRC: KindsSrc = KindsSrc {
 		"number",
 	],
 	literals: &[
-		"JS_NUMBER_LITERAL_TOKEN",
-		"JS_BIG_INT_LITERAL_TOKEN",
-		"JS_STRING_LITERAL_TOKEN",
-		"JS_REGEX_LITERAL_TOKEN",
+		"JS_NUMBER_LITERAL",
+		"JS_BIG_INT_LITERAL",
+		"JS_STRING_LITERAL",
+		"JS_REGEX_LITERAL",
 	],
 	tokens: &[
 		"HASH", // #

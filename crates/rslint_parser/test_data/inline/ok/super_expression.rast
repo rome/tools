@@ -68,7 +68,7 @@
                     0: SUPER_KW@84..92 "super" [Whitespace("\n\t\t")] []
                   1: L_BRACK@92..93 "[" [] []
                   2: JS_NUMBER_LITERAL_EXPRESSION@93..94
-                    0: JS_NUMBER_LITERAL_TOKEN@93..94 "1" [] []
+                    0: JS_NUMBER_LITERAL@93..94 "1" [] []
                   3: R_BRACK@94..95 "]" [] []
                 1: SEMICOLON@95..96 ";" [] []
             3: R_CURLY@96..99 "}" [Whitespace("\n\t")] []

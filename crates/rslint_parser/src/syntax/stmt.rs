@@ -445,7 +445,7 @@ pub(crate) fn directives(p: &mut Parser) -> Option<ParserState> {
 	let mut old_state: Option<ParserState> = None;
 
 	fn is_directive(p: &Parser) -> bool {
-		if !p.at(JS_STRING_LITERAL_TOKEN) {
+		if !p.at(JS_STRING_LITERAL) {
 			false
 		} else {
 			let next = p.nth(1);

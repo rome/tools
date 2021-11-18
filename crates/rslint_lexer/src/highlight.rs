@@ -120,12 +120,10 @@ impl<'s> Iterator for Highlighter<'s> {
 			}
 			t if t.is_punct() => rgb![86, 182, 194],
 			t if t.is_keyword() => rgb![198, 120, 221],
-			SyntaxKind::JS_STRING_LITERAL_TOKEN
-			| SyntaxKind::BACKTICK
-			| SyntaxKind::TEMPLATE_CHUNK => {
+			SyntaxKind::JS_STRING_LITERAL | SyntaxKind::BACKTICK | SyntaxKind::TEMPLATE_CHUNK => {
 				rgb![152, 195, 121]
 			}
-			SyntaxKind::JS_NUMBER_LITERAL_TOKEN => rgb![209, 154, 102],
+			SyntaxKind::JS_NUMBER_LITERAL => rgb![209, 154, 102],
 			SyntaxKind::DOLLARCURLY => rgb![198, 120, 221],
 			SyntaxKind::ERROR_TOKEN => rgb![244, 71, 71],
 			SyntaxKind::COMMENT => rgb![127, 132, 142],

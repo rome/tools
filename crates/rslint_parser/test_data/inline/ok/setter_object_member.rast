@@ -33,7 +33,7 @@
                   2: JS_SETTER_OBJECT_MEMBER@31..55
                     0: SET_KW@31..38 "set" [Whitespace("\n\n ")] [Whitespace(" ")]
                     1: JS_LITERAL_MEMBER_NAME@38..43
-                      0: JS_STRING_LITERAL_TOKEN@38..43 "\"bar\"" [] []
+                      0: JS_STRING_LITERAL@38..43 "\"bar\"" [] []
                     2: L_PAREN@43..44 "(" [] []
                     3: SINGLE_PATTERN@44..49
                       0: NAME@44..49
@@ -51,10 +51,10 @@
                       0: L_BRACK@63..64 "[" [] []
                       1: JS_BINARY_EXPRESSION@64..73
                         0: JS_STRING_LITERAL_EXPRESSION@64..68
-                          0: JS_STRING_LITERAL_TOKEN@64..68 "\"a\"" [] [Whitespace(" ")]
+                          0: JS_STRING_LITERAL@64..68 "\"a\"" [] [Whitespace(" ")]
                         1: PLUS@68..70 "+" [] [Whitespace(" ")]
                         2: JS_STRING_LITERAL_EXPRESSION@70..73
-                          0: JS_STRING_LITERAL_TOKEN@70..73 "\"b\"" [] []
+                          0: JS_STRING_LITERAL@70..73 "\"b\"" [] []
                       2: R_BRACK@73..74 "]" [] []
                     2: L_PAREN@74..75 "(" [] []
                     3: SINGLE_PATTERN@75..80
@@ -70,7 +70,7 @@
                   6: JS_SETTER_OBJECT_MEMBER@87..107
                     0: SET_KW@87..94 "set" [Whitespace("\n\n\t")] [Whitespace(" ")]
                     1: JS_LITERAL_MEMBER_NAME@94..95
-                      0: JS_NUMBER_LITERAL_TOKEN@94..95 "5" [] []
+                      0: JS_NUMBER_LITERAL@94..95 "5" [] []
                     2: L_PAREN@95..96 "(" [] []
                     3: SINGLE_PATTERN@96..101
                       0: NAME@96..101
@@ -96,7 +96,7 @@
                         0: JS_RETURN_STATEMENT@118..164
                           0: RETURN_KW@118..128 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
                           1: JS_STRING_LITERAL_EXPRESSION@128..163
-                            0: JS_STRING_LITERAL_TOKEN@128..163 "\"This is a method and not a setter\"" [] []
+                            0: JS_STRING_LITERAL@128..163 "\"This is a method and not a setter\"" [] []
                           2: SEMICOLON@163..164 ";" [] []
                       3: R_CURLY@164..167 "}" [Whitespace("\n\t")] []
                 2: R_CURLY@167..169 "}" [Whitespace("\n")] []
