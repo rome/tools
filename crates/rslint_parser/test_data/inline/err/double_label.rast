@@ -1,0 +1,48 @@
+JS_ROOT@0..39
+  LIST@0..0
+  LIST@0..38
+    JS_LABELED_STATEMENT@0..38
+      IDENT@0..6 "label1"
+      COLON@6..7 ":"
+      WHITESPACE@7..8 " "
+      JS_BLOCK_STATEMENT@8..38
+        L_CURLY@8..9 "{"
+        WHITESPACE@9..11 "\n\t"
+        LIST@11..36
+          JS_LABELED_STATEMENT@11..36
+            IDENT@11..17 "label2"
+            COLON@17..18 ":"
+            WHITESPACE@18..19 " "
+            JS_BLOCK_STATEMENT@19..36
+              L_CURLY@19..20 "{"
+              WHITESPACE@20..23 "\n\t\t"
+              LIST@23..33
+                JS_LABELED_STATEMENT@23..33
+                  IDENT@23..29 "label1"
+                  COLON@29..30 ":"
+                  WHITESPACE@30..31 " "
+                  JS_BLOCK_STATEMENT@31..33
+                    L_CURLY@31..32 "{"
+                    LIST@32..32
+                    R_CURLY@32..33 "}"
+              WHITESPACE@33..35 "\n\t"
+              R_CURLY@35..36 "}"
+        WHITESPACE@36..37 "\n"
+        R_CURLY@37..38 "}"
+  WHITESPACE@38..39 "\n"
+--
+error[SyntaxError]: Duplicate statement labels are not allowed
+  ┌─ double_label.js:3:3
+  │
+1 │ label1: {
+  │ ------ `label1` is first used as a label here
+2 │     label2: {
+3 │         label1: {}
+  │         ^^^^^^ a second use of `label1` here is not allowed
+
+--
+label1: {
+	label2: {
+		label1: {}
+	}
+}
