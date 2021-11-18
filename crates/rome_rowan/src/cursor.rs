@@ -728,8 +728,6 @@ impl SyntaxNode {
 			.map(|x| x.text_len())
 			.unwrap_or_else(|| 0.into());
 
-		println!("{:?} {:?}", self.first_child_or_token(), trailing_len);
-
 		let range = self.text_range();
 		TextRange::new(range.start() + leading_len, range.end() - trailing_len)
 	}
@@ -853,7 +851,7 @@ impl SyntaxNode {
 	pub fn first_token(&self) -> Option<SyntaxToken> {
 		self.descendants_with_tokens()
 			.filter_map(|x| x.as_token().cloned())
-			.nth(0)
+			.next()
 	}
 
 	pub fn last_token(&self) -> Option<SyntaxToken> {

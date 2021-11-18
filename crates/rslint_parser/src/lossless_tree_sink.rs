@@ -1,5 +1,5 @@
 use crate::{
-	ast, AstNode, ParserError,
+	ParserError,
 	SyntaxKind::{self, *},
 	SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
@@ -58,7 +58,7 @@ impl<'a> TreeSink for LosslessTreeSink<'a> {
 			State::PendingFinish => self.inner.finish_node(),
 			State::Normal => (),
 		}
-		
+
 		let len = TextSize::from(self.tokens[self.token_pos].len as u32);
 		self.do_token(kind, len);
 	}
@@ -110,7 +110,7 @@ impl<'a> LosslessTreeSink<'a> {
 			state: State::PendingStart,
 			inner: SyntaxTreeBuilder::default(),
 			errors: vec![],
-			next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![])
+			next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
 		}
 	}
 
@@ -131,7 +131,7 @@ impl<'a> LosslessTreeSink<'a> {
 					state: State::PendingStart,
 					inner: SyntaxTreeBuilder::default(),
 					errors: vec![],
-					next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![])
+					next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
 				};
 			}
 			len += tok.len;
@@ -164,7 +164,7 @@ impl<'a> LosslessTreeSink<'a> {
 
 		self.inner.token_with_trivia(kind, text, leading, trailing);
 	}
-	
+
 	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, Vec<TriviaPiece>) {
 		let mut trivia = vec![];
 

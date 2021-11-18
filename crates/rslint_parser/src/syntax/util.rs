@@ -177,7 +177,10 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 					_ => {
 						let err = p
 							.err_builder("Illegal object property in assignment target")
-							.primary(marker.offset_range(p, prop.syntax().text_trimmed_range()), "");
+							.primary(
+								marker.offset_range(p, prop.syntax().text_trimmed_range()),
+								"",
+							);
 
 						p.error(err);
 					}
@@ -187,7 +190,10 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 		_ => {
 			let err = p
 				.err_builder("Illegal expression in assignment target")
-				.primary(marker.offset_range(p, expr.syntax().text_trimmed_range()), "");
+				.primary(
+					marker.offset_range(p, expr.syntax().text_trimmed_range()),
+					"",
+				);
 
 			p.error(err);
 		}
@@ -198,7 +204,10 @@ fn check_spread_element(p: &mut Parser, lhs: JsAnyExpression, marker: &Completed
 	if let JsAnyExpression::AssignExpr(expr) = lhs {
 		let err = p
 			.err_builder("Illegal spread element in assignment target")
-			.primary(marker.offset_range(p, expr.syntax().text_trimmed_range()), "");
+			.primary(
+				marker.offset_range(p, expr.syntax().text_trimmed_range()),
+				"",
+			);
 
 		p.error(err);
 	} else {
@@ -210,7 +219,10 @@ pub fn check_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker
 	if expr.syntax().kind() == ASSIGN_EXPR {
 		let err = p
 			.err_builder("Illegal assignment expression in for statement")
-			.primary(marker.offset_range(p, expr.syntax().text_trimmed_range()), "");
+			.primary(
+				marker.offset_range(p, expr.syntax().text_trimmed_range()),
+				"",
+			);
 
 		p.error(err);
 	} else {

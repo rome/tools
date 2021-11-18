@@ -1,5 +1,5 @@
 use crate::ast::{ArgList, JsRoot};
-use crate::{AstNode, Parse, ParserError, SyntaxNode, SyntaxToken, parse_module, parse_text};
+use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode, SyntaxToken};
 use expect_test::expect_file;
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
@@ -173,11 +173,10 @@ fn assert_errors_are_absent(errors: &[ParserError], path: &Path, syntax: &Syntax
 	);
 }
 
-
 #[test]
 pub fn test_trivia_attached_to_tokens() {
 	use crate::util::SyntaxNodeExt;
-	
+
 	let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
 	let m = parse_module(text, 0);
 	let s = m.syntax();
@@ -187,7 +186,7 @@ pub fn test_trivia_attached_to_tokens() {
 	let first_let = tokens.iter().find(is_let).unwrap();
 
 	// first let leading trivia asserts
-	let pieces: Vec<_> = first_let.leading_trivia().pieces().collect();	
+	let pieces: Vec<_> = first_let.leading_trivia().pieces().collect();
 	matches!(pieces.get(0).map(|x| x.text()), Some("/**/"));
 	matches!(pieces.get(1), None);
 
@@ -210,7 +209,6 @@ pub fn test_trivia_attached_to_tokens() {
 	matches!(pieces.get(0).map(|x| x.text()), Some(" \t "));
 }
 
-
 #[test]
 pub fn jsroot_display_text_and_trimmed() {
 	let code = " let a = 1; ";
@@ -225,7 +223,6 @@ pub fn jsroot_display_text_and_trimmed() {
 	let syntax_text = syntax.text_trimmed();
 	assert_eq!(format!("{}", syntax_text), code.trim());
 }
-
 
 #[test]
 pub fn token_range_must_be_correct() {
@@ -255,7 +252,6 @@ pub fn token_range_must_be_correct() {
 	assert_eq!(7usize, range.start().into());
 	assert_eq!(8usize, range.end().into());
 }
-
 
 #[test]
 pub fn node_range_must_be_correct() {

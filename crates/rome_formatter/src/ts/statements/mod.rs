@@ -1,4 +1,4 @@
-use crate::{concat_elements, hard_line_break, join_elements, FormatElement, Formatter};
+use crate::{hard_line_break, join_elements, FormatElement, Formatter};
 use rslint_parser::ast::{AstNodeList, JsAnyStatement};
 use rslint_parser::AstNode;
 
@@ -29,9 +29,9 @@ pub fn format_statements(
 	join_elements(
 		hard_line_break(),
 		stmts.iter().map(|stmt| {
-			formatter.format_node(stmt.clone()).unwrap_or_else(|_| {
-				formatter.format_raw(stmt.syntax()).trim_start().trim_end()
-			})
+			formatter
+				.format_node(stmt.clone())
+				.unwrap_or_else(|_| formatter.format_raw(stmt.syntax()).trim_start().trim_end())
 		}),
 	)
 }

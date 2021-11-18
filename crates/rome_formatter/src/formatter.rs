@@ -1,5 +1,8 @@
 use crate::printer::Printer;
-use crate::{FormatElement, FormatError, FormatOptions, FormatResult, Formatted, ToFormatElement, concat_elements, token, token_from_string};
+use crate::{
+	concat_elements, token, FormatElement, FormatError, FormatOptions, FormatResult, Formatted,
+	ToFormatElement,
+};
 use rome_rowan::SyntaxElement;
 use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
 

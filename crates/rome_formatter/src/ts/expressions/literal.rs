@@ -1,8 +1,8 @@
-use crate::{FormatElement, FormatResult, Formatter, ToFormatElement, token_from_string, token};
-use rslint_parser::{AstNode, ast::{
+use crate::{token, token_from_string, FormatElement, FormatResult, Formatter, ToFormatElement};
+use rslint_parser::ast::{
 	JsAnyLiteral, JsBigIntLiteral, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral,
 	JsStringLiteral,
-}};
+};
 
 impl ToFormatElement for JsStringLiteral {
 	fn to_format_element(&self, _: &Formatter) -> FormatResult<FormatElement> {
