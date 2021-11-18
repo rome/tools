@@ -733,9 +733,9 @@ impl FormatElement {
 		self == &FormatElement::Empty
 	}
 
-	/// Remove all empty, space, line breaks, idents from the start of
+	/// Remove all spaces, line breaks, indents from the start of
 	/// the [FormatElement].
-	/// Including characters of the [FormatElement::Token] variant.
+	/// Including "whitespace" characters of the [FormatElement::Token] variant.
 	pub fn trim_start(&self) -> FormatElement {
 		match self {
 			FormatElement::Empty => FormatElement::Empty,
@@ -769,9 +769,9 @@ impl FormatElement {
 		}
 	}
 
-	/// Remove all empty, space, line breaks, idents from the end of
+	/// Remove all spaces, line breaks, indents from the end of
 	/// the [FormatElement].
-	/// Including characters of the [FormatElement::Token] variant.
+	/// Including "whitespace" characters of the [FormatElement::Token] variant.
 	pub fn trim_end(&self) -> FormatElement {
 		match self {
 			FormatElement::Empty => FormatElement::Empty,
