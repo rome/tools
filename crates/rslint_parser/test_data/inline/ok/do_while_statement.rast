@@ -15,13 +15,13 @@
           1: ARG_LIST@14..22
             0: L_PAREN@14..15 "(" [] []
             1: LIST@15..21
-              0: JS_STRING_LITERAL@15..21
+              0: JS_STRING_LITERAL_EXPRESSION@15..21
                 0: JS_STRING_LITERAL_TOKEN@15..21 "\"test\"" [] []
             2: R_PAREN@21..22 ")" [] []
         1: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
       2: WHILE_KW@24..29 "while" [] []
       3: L_PAREN@29..30 "(" [] []
-      4: JS_BOOLEAN_LITERAL@30..34
+      4: JS_BOOLEAN_LITERAL_EXPRESSION@30..34
         0: TRUE_KW@30..34 "true" [] []
       5: R_PAREN@34..35 ")" [] []
       6: (empty)
@@ -41,14 +41,14 @@
               1: ARG_LIST@54..62
                 0: L_PAREN@54..55 "(" [] []
                 1: LIST@55..61
-                  0: JS_STRING_LITERAL@55..61
+                  0: JS_STRING_LITERAL_EXPRESSION@55..61
                     0: JS_STRING_LITERAL_TOKEN@55..61 "\"test\"" [] []
                 2: R_PAREN@61..62 ")" [] []
             1: (empty)
         2: R_CURLY@62..65 "}" [Whitespace("\n")] [Whitespace(" ")]
       2: WHILE_KW@65..71 "while" [] [Whitespace(" ")]
       3: L_PAREN@71..72 "(" [] []
-      4: JS_BOOLEAN_LITERAL@72..76
+      4: JS_BOOLEAN_LITERAL_EXPRESSION@72..76
         0: TRUE_KW@72..76 "true" [] []
       5: R_PAREN@76..77 ")" [] []
       6: SEMICOLON@77..78 ";" [] []
@@ -62,7 +62,7 @@
                 0: IDENT@84..86 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@86..89
               0: EQ@86..88 "=" [] [Whitespace(" ")]
-              1: JS_NUMBER_LITERAL@88..89
+              1: JS_NUMBER_LITERAL_EXPRESSION@88..89
                 0: JS_NUMBER_LITERAL_TOKEN@88..89 "1" [] []
       1: SEMICOLON@89..90 ";" [] []
     3: JS_DO_WHILE_STATEMENT@90..143
@@ -81,7 +81,7 @@
                   0: JS_REFERENCE_IDENTIFIER_EXPRESSION@106..108
                     0: IDENT@106..108 "a" [] [Whitespace(" ")]
                   1: PLUS@108..110 "+" [] [Whitespace(" ")]
-                  2: JS_NUMBER_LITERAL@110..111
+                  2: JS_NUMBER_LITERAL_EXPRESSION@110..111
                     0: JS_NUMBER_LITERAL_TOKEN@110..111 "1" [] []
               1: (empty)
           2: R_CURLY@111..115 "}" [Whitespace("\n\t")] [Whitespace(" ")]
@@ -91,7 +91,7 @@
           0: JS_REFERENCE_IDENTIFIER_EXPRESSION@121..123
             0: IDENT@121..123 "a" [] [Whitespace(" ")]
           1: L_ANGLE@123..125 "<" [] [Whitespace(" ")]
-          2: JS_NUMBER_LITERAL@125..126
+          2: JS_NUMBER_LITERAL_EXPRESSION@125..126
             0: JS_NUMBER_LITERAL_TOKEN@125..126 "5" [] []
         5: R_PAREN@126..127 ")" [] []
         6: (empty)
@@ -101,7 +101,7 @@
         0: JS_REFERENCE_IDENTIFIER_EXPRESSION@135..137
           0: IDENT@135..137 "a" [] [Whitespace(" ")]
         1: L_ANGLE@137..139 "<" [] [Whitespace(" ")]
-        2: JS_NUMBER_LITERAL@139..142
+        2: JS_NUMBER_LITERAL_EXPRESSION@139..142
           0: JS_NUMBER_LITERAL_TOKEN@139..142 "100" [] []
       5: R_PAREN@142..143 ")" [] []
       6: (empty)

@@ -26,10 +26,10 @@
                     0: JS_COMPUTED_MEMBER_NAME@21..28
                       0: L_BRACK@21..22 "[" [] []
                       1: JS_BINARY_EXPRESSION@22..27
-                        0: JS_NUMBER_LITERAL@22..24
+                        0: JS_NUMBER_LITERAL_EXPRESSION@22..24
                           0: JS_NUMBER_LITERAL_TOKEN@22..24 "6" [] [Whitespace(" ")]
                         1: PLUS@24..26 "+" [] [Whitespace(" ")]
-                        2: JS_NUMBER_LITERAL@26..27
+                        2: JS_NUMBER_LITERAL_EXPRESSION@26..27
                           0: JS_NUMBER_LITERAL_TOKEN@26..27 "6" [] []
                       2: R_BRACK@27..28 "]" [] []
                     1: COLON@28..30 ":" [] [Whitespace(" ")]

@@ -69,7 +69,7 @@
         2: LIST@70..82
           0: JS_RETURN_STATEMENT@70..82
             0: RETURN_KW@70..77 "return" [] [Whitespace(" ")]
-            1: JS_BOOLEAN_LITERAL@77..82
+            1: JS_BOOLEAN_LITERAL_EXPRESSION@77..82
               0: TRUE_KW@77..82 "true" [] [Whitespace(" ")]
             2: (empty)
         3: R_CURLY@82..83 "}" [] []

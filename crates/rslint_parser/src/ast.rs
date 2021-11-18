@@ -439,7 +439,7 @@ mod support {
 
 #[cfg(test)]
 mod tests {
-	use crate::ast::{AstSeparatedElement, AstSeparatedList, JsNumberLiteral};
+	use crate::ast::{AstSeparatedElement, AstSeparatedList, JsNumberLiteralExpression};
 	use crate::{JsLanguage, SyntaxKind};
 	use rome_rowan::TreeBuilder;
 
@@ -447,14 +447,14 @@ mod tests {
 	/// The elements are pairs of: (value, separator).
 	fn build_list<'a>(
 		elements: impl IntoIterator<Item = (Option<i32>, Option<&'a str>)>,
-	) -> AstSeparatedList<JsNumberLiteral> {
+	) -> AstSeparatedList<JsNumberLiteralExpression> {
 		let mut builder: TreeBuilder<JsLanguage> = TreeBuilder::new();
 
 		builder.start_node(SyntaxKind::LIST);
 
 		for (node, separator) in elements.into_iter() {
 			if let Some(node) = node {
-				builder.start_node(SyntaxKind::JS_NUMBER_LITERAL);
+				builder.start_node(SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION);
 				builder.token(
 					SyntaxKind::JS_NUMBER_LITERAL_TOKEN,
 					node.to_string().as_str(),
@@ -475,7 +475,7 @@ mod tests {
 	}
 
 	fn assert_elements<'a>(
-		actual: impl Iterator<Item = AstSeparatedElement<JsNumberLiteral>>,
+		actual: impl Iterator<Item = AstSeparatedElement<JsNumberLiteralExpression>>,
 		expected: impl IntoIterator<Item = (f64, Option<&'a str>)>,
 	) {
 		let actual = actual.map(|element| {
@@ -496,7 +496,7 @@ mod tests {
 	}
 
 	fn assert_nodes(
-		actual: impl Iterator<Item = JsNumberLiteral>,
+		actual: impl Iterator<Item = JsNumberLiteralExpression>,
 		expected: impl IntoIterator<Item = f64>,
 	) {
 		assert_eq!(

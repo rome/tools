@@ -12,7 +12,7 @@
                 0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..9
               0: EQ@6..8 "=" [] [Whitespace(" ")]
-              1: JS_NUMBER_LITERAL@8..9
+              1: JS_NUMBER_LITERAL_EXPRESSION@8..9
                 0: JS_NUMBER_LITERAL_TOKEN@8..9 "5" [] []
       1: SEMICOLON@9..10 ";" [] []
     1: JS_VARIABLE_DECLARATION_STATEMENT@10..32
@@ -33,7 +33,7 @@
               2: R_CURLY@26..28 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@28..31
               0: EQ@28..30 "=" [] [Whitespace(" ")]
-              1: JS_NUMBER_LITERAL@30..31
+              1: JS_NUMBER_LITERAL_EXPRESSION@30..31
                 0: JS_NUMBER_LITERAL_TOKEN@30..31 "5" [] []
       1: SEMICOLON@31..32 ";" [] []
     2: JS_VARIABLE_DECLARATION_STATEMENT@32..46
@@ -60,7 +60,7 @@
                 0: IDENT@53..55 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@55..58
               0: EQ@55..57 "=" [] [Whitespace(" ")]
-              1: JS_NUMBER_LITERAL@57..58
+              1: JS_NUMBER_LITERAL_EXPRESSION@57..58
                 0: JS_NUMBER_LITERAL_TOKEN@57..58 "5" [] []
       1: SEMICOLON@58..59 ";" [] []
     4: JS_VARIABLE_DECLARATION_STATEMENT@59..91
@@ -104,7 +104,7 @@
                 0: IDENT@96..100 "foo" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@100..109
               0: EQ@100..102 "=" [] [Whitespace(" ")]
-              1: JS_STRING_LITERAL@102..109
+              1: JS_STRING_LITERAL_EXPRESSION@102..109
                 0: JS_STRING_LITERAL_TOKEN@102..109 "\"lorem\"" [] []
           1: COMMA@109..111 "," [] [Whitespace(" ")]
           2: JS_VARIABLE_DECLARATOR@111..124
@@ -113,7 +113,7 @@
                 0: IDENT@111..115 "bar" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@115..124
               0: EQ@115..117 "=" [] [Whitespace(" ")]
-              1: JS_STRING_LITERAL@117..124
+              1: JS_STRING_LITERAL_EXPRESSION@117..124
                 0: JS_STRING_LITERAL_TOKEN@117..124 "\"ipsum\"" [] []
           3: COMMA@124..126 "," [] [Whitespace(" ")]
           4: JS_VARIABLE_DECLARATOR@126..141
@@ -122,7 +122,7 @@
                 0: IDENT@126..132 "third" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@132..141
               0: EQ@132..134 "=" [] [Whitespace(" ")]
-              1: JS_STRING_LITERAL@134..141
+              1: JS_STRING_LITERAL_EXPRESSION@134..141
                 0: JS_STRING_LITERAL_TOKEN@134..141 "\"value\"" [] []
           5: COMMA@141..143 "," [] [Whitespace(" ")]
           6: JS_VARIABLE_DECLARATOR@143..153
@@ -131,7 +131,7 @@
                 0: IDENT@143..150 "fourth" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@150..153
               0: EQ@150..152 "=" [] [Whitespace(" ")]
-              1: JS_NUMBER_LITERAL@152..153
+              1: JS_NUMBER_LITERAL_EXPRESSION@152..153
                 0: JS_NUMBER_LITERAL_TOKEN@152..153 "6" [] []
       1: SEMICOLON@153..154 ";" [] []
   3: EOF@154..155 "" [Whitespace("\n")] []

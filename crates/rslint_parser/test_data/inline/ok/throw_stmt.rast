@@ -11,13 +11,13 @@
         2: ARG_LIST@15..22
           0: L_PAREN@15..16 "(" [] []
           1: LIST@16..21
-            0: JS_STRING_LITERAL@16..21
+            0: JS_STRING_LITERAL_EXPRESSION@16..21
               0: JS_STRING_LITERAL_TOKEN@16..21 "\"foo\"" [] []
           2: R_PAREN@21..22 ")" [] []
       2: SEMICOLON@22..23 ";" [] []
     1: JS_THROW_STATEMENT@23..35
       0: THROW_KW@23..30 "throw" [Whitespace("\n")] [Whitespace(" ")]
-      1: JS_STRING_LITERAL@30..35
+      1: JS_STRING_LITERAL_EXPRESSION@30..35
         0: JS_STRING_LITERAL_TOKEN@30..35 "\"foo\"" [] []
       2: (empty)
   3: EOF@35..36 "" [Whitespace("\n")] []

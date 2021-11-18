@@ -241,7 +241,7 @@ JsDebuggerStatement =
 
 // Expression
 JsAnyExpression =
-	JsAnyLiteral
+	JsAnyLiteralExpression
 	| JsArrayExpression
 	| JsArrowFunctionExpression
 	| JsAwaitExpression
@@ -486,8 +486,8 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
 // TODO #1725 Delete after finishing work around Classes & Assignment targets
 PropName =
 	JsComputedMemberName
-	| JsStringLiteral
-	| JsNumberLiteral
+	| JsStringLiteralExpression
+	| JsNumberLiteralExpression
 	| Ident
 	| Name
 	| JsUnknownBinding
@@ -625,30 +625,30 @@ JsEmptyClassMember = ';'
 // LITERALS
 ///////////////
 
-JsAnyLiteral =
-	JsStringLiteral
-	| JsNumberLiteral
-	| JsBigIntLiteral
-	| JsBooleanLiteral
-	| JsNullLiteral
-	| JsRegexLiteral
+JsAnyLiteralExpression =
+	JsStringLiteralExpression
+	| JsNumberLiteralExpression
+	| JsBigIntLiteralExpression
+	| JsBooleanLiteralExpression
+	| JsNullLiteralExpression
+	| JsRegexLiteralExpression
 
 // "abcd" | 'abcd'
-JsStringLiteral = value: 'js_string_literal_token'
+JsStringLiteralExpression = value: 'js_string_literal_token'
 
 // 4, 5.5, 0x00, ...
-JsNumberLiteral = value: 'js_number_literal_token'
+JsNumberLiteralExpression = value: 'js_number_literal_token'
 
 // 45n
-JsBigIntLiteral =  value: 'js_big_int_literal_token'
+JsBigIntLiteralExpression =  value: 'js_big_int_literal_token'
 
 // true, false
-JsBooleanLiteral = value_token: ('true' | 'false')
+JsBooleanLiteralExpression = value_token: ('true' | 'false')
 
 // null
-JsNullLiteral = value: 'null'
+JsNullLiteralExpression = value: 'null'
 
-JsRegexLiteral = value: 'js_regex_literal_token'
+JsRegexLiteralExpression = value: 'js_regex_literal_token'
 
 
 ///////////////
@@ -745,7 +745,7 @@ ImportDecl =
 	imports:ImportClause*
 	'type'?
 	'from'
-	source: JsStringLiteral
+	source: 'js_string_literal_token'
 	asserted_object: JsObjectExpression
 	'assert'?
 	';'?
@@ -761,7 +761,7 @@ DefaultDecl =
 ExportDefaultExpr = 'export' 'type'? 'default'? expr:JsAnyExpression
 
 // export wildcard
-ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: JsStringLiteral
+ExportWildcard = 'export' 'type'? '*' 'as'? ident: Ident? 'from' source: 'js_string_literal_token'
 
 
 // export declaration

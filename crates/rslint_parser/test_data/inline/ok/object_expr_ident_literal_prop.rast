@@ -19,7 +19,7 @@
                     0: JS_LITERAL_MEMBER_NAME@10..11
                       0: IDENT@10..11 "a" [] []
                     1: COLON@11..13 ":" [] [Whitespace(" ")]
-                    2: JS_BOOLEAN_LITERAL@13..18
+                    2: JS_BOOLEAN_LITERAL_EXPRESSION@13..18
                       0: TRUE_KW@13..18 "true" [] [Whitespace(" ")]
                 2: R_CURLY@18..19 "}" [] []
       1: (empty)

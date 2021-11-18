@@ -2,15 +2,16 @@ use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
 use rslint_parser::ast::{
 	ArgList, ArrayPattern, AssignPattern, CallExpr, ForInStmt, ForStmt, ForStmtInit, ForStmtTest,
 	ForStmtUpdate, JsArrayExpression, JsArrowFunctionExpression, JsBlockStatement,
-	JsBooleanLiteral, JsCaseClause, JsCatchClause, JsClassDeclaration, JsConstructorParameterList,
-	JsContinueStatement, JsDebuggerStatement, JsDefaultClause, JsDoWhileStatement,
-	JsEmptyStatement, JsExpressionStatement, JsFinallyClause, JsFunctionDeclaration,
-	JsGetterClassMember, JsIfStatement, JsLabeledStatement, JsNullLiteral, JsNumberLiteral,
-	JsObjectExpression, JsParameterList, JsPropertyClassMember, JsPropertyObjectMember,
-	JsReferenceIdentifierExpression, JsReturnStatement, JsRoot, JsSequenceExpression,
-	JsSetterClassMember, JsShorthandPropertyObjectMember, JsStringLiteral, JsSwitchStatement,
-	JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement,
-	JsWithStatement, Name, SinglePattern,
+	JsBooleanLiteralExpression, JsCaseClause, JsCatchClause, JsClassDeclaration,
+	JsConstructorParameterList, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
+	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
+	JsFunctionDeclaration, JsGetterClassMember, JsIfStatement, JsLabeledStatement,
+	JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameterList,
+	JsPropertyClassMember, JsPropertyObjectMember, JsReferenceIdentifierExpression,
+	JsReturnStatement, JsRoot, JsSequenceExpression, JsSetterClassMember,
+	JsShorthandPropertyObjectMember, JsStringLiteralExpression, JsSwitchStatement, JsTryStatement,
+	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement, Name,
+	SinglePattern,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -28,18 +29,24 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::ASSIGN_PATTERN => AssignPattern::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::JS_BOOLEAN_LITERAL => JsBooleanLiteral::cast(self.clone())
+			SyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION => {
+				JsBooleanLiteralExpression::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
+			SyntaxKind::JS_STRING_LITERAL_EXPRESSION => {
+				JsStringLiteralExpression::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
+			SyntaxKind::JS_NULL_LITERAL_EXPRESSION => JsNullLiteralExpression::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::JS_STRING_LITERAL => JsStringLiteral::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::JS_NULL_LITERAL => JsNullLiteral::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::JS_NUMBER_LITERAL => JsNumberLiteral::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
+			SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION => {
+				JsNumberLiteralExpression::cast(self.clone())
+					.unwrap()
+					.to_format_element(formatter)
+			}
 			SyntaxKind::NAME => Name::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),

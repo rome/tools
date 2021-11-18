@@ -10,10 +10,10 @@
           0: JS_COMPUTED_MEMBER_NAME@7..18
             0: L_BRACK@7..11 "[" [Whitespace("\n  ")] []
             1: JS_BINARY_EXPRESSION@11..16
-              0: JS_NUMBER_LITERAL@11..13
+              0: JS_NUMBER_LITERAL_EXPRESSION@11..13
                 0: JS_NUMBER_LITERAL_TOKEN@11..13 "1" [] [Whitespace(" ")]
               1: PLUS@13..15 "+" [] [Whitespace(" ")]
-              2: JS_NUMBER_LITERAL@15..16
+              2: JS_NUMBER_LITERAL_EXPRESSION@15..16
                 0: JS_NUMBER_LITERAL_TOKEN@15..16 "1" [] []
             2: R_BRACK@16..18 "]" [] [Whitespace(" ")]
           1: JS_EQUAL_VALUE_CLAUSE@18..43

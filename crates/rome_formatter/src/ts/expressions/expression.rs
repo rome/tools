@@ -5,7 +5,9 @@ impl ToFormatElement for JsAnyExpression {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
 			JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow.to_format_element(formatter),
-			JsAnyExpression::JsAnyLiteral(literal) => literal.to_format_element(formatter),
+			JsAnyExpression::JsAnyLiteralExpression(literal) => {
+				literal.to_format_element(formatter)
+			}
 			JsAnyExpression::Template(_) => todo!(),
 			JsAnyExpression::JsReferenceIdentifierExpression(name_ref) => {
 				name_ref.to_format_element(formatter)

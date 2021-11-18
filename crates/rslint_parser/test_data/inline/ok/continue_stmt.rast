@@ -12,7 +12,7 @@
     1: JS_WHILE_STATEMENT@7..63
       0: WHILE_KW@7..14 "while" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@14..15 "(" [] []
-      2: JS_BOOLEAN_LITERAL@15..19
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@15..19
         0: TRUE_KW@15..19 "true" [] []
       3: R_PAREN@19..21 ")" [] [Whitespace(" ")]
       4: JS_BLOCK_STATEMENT@21..63

@@ -9,7 +9,7 @@
           0: JS_REFERENCE_IDENTIFIER_EXPRESSION@7..8
             0: IDENT@7..8 "a" [] []
           1: L_BRACK@8..9 "[" [] []
-          2: JS_STRING_LITERAL@9..15
+          2: JS_STRING_LITERAL_EXPRESSION@9..15
             0: JS_STRING_LITERAL_TOKEN@9..15 "'test'" [] []
           3: R_BRACK@15..16 "]" [] []
       1: SEMICOLON@16..17 ";" [] []
@@ -28,25 +28,25 @@
     3: JS_EXPRESSION_STATEMENT@35..39
       0: JS_UNARY_EXPRESSION@35..38
         0: PLUS@35..37 "+" [Whitespace("\n")] []
-        1: JS_NUMBER_LITERAL@37..38
+        1: JS_NUMBER_LITERAL_EXPRESSION@37..38
           0: JS_NUMBER_LITERAL_TOKEN@37..38 "1" [] []
       1: SEMICOLON@38..39 ";" [] []
     4: JS_EXPRESSION_STATEMENT@39..43
       0: JS_UNARY_EXPRESSION@39..42
         0: MINUS@39..41 "-" [Whitespace("\n")] []
-        1: JS_NUMBER_LITERAL@41..42
+        1: JS_NUMBER_LITERAL_EXPRESSION@41..42
           0: JS_NUMBER_LITERAL_TOKEN@41..42 "1" [] []
       1: SEMICOLON@42..43 ";" [] []
     5: JS_EXPRESSION_STATEMENT@43..47
       0: JS_UNARY_EXPRESSION@43..46
         0: TILDE@43..45 "~" [Whitespace("\n")] []
-        1: JS_NUMBER_LITERAL@45..46
+        1: JS_NUMBER_LITERAL_EXPRESSION@45..46
           0: JS_NUMBER_LITERAL_TOKEN@45..46 "1" [] []
       1: SEMICOLON@46..47 ";" [] []
     6: JS_EXPRESSION_STATEMENT@47..54
       0: JS_UNARY_EXPRESSION@47..53
         0: BANG@47..49 "!" [Whitespace("\n")] []
-        1: JS_BOOLEAN_LITERAL@49..53
+        1: JS_BOOLEAN_LITERAL_EXPRESSION@49..53
           0: TRUE_KW@49..53 "true" [] []
       1: SEMICOLON@53..54 ";" [] []
     7: JS_EXPRESSION_STATEMENT@54..69

@@ -987,7 +987,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 			if p.at(JS_NUMBER_LITERAL_TOKEN) {
 				let _m = p.start();
 				p.bump_any();
-				_m.complete(p, JS_NUMBER_LITERAL);
+				_m.complete(p, JS_NUMBER_LITERAL_EXPRESSION);
 			} else {
 				p.expect_no_recover(JS_NUMBER_LITERAL_TOKEN)?;
 			}

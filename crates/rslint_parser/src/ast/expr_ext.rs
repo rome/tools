@@ -357,19 +357,19 @@ impl JsObjectExpression {
 	}
 }
 
-impl JsNumberLiteral {
+impl JsNumberLiteralExpression {
 	pub fn as_number(&self) -> Option<f64> {
 		parse_js_number(self.value_token().unwrap().text())
 	}
 }
 
-impl JsBigIntLiteral {
+impl JsBigIntLiteralExpression {
 	pub fn as_number(&self) -> Option<BigInt> {
 		parse_js_big_int(self.value_token().ok()?.text())
 	}
 }
 
-impl JsStringLiteral {
+impl JsStringLiteralExpression {
 	/// Get the inner text of a string not including the quotes
 	pub fn inner_string_text(&self) -> SyntaxText {
 		let start = self.syntax().text_range().start() + TextSize::from(1);

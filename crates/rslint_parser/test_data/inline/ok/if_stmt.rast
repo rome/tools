@@ -5,7 +5,7 @@
     0: JS_IF_STATEMENT@0..20
       0: IF_KW@0..3 "if" [] [Whitespace(" ")]
       1: L_PAREN@3..4 "(" [] []
-      2: JS_BOOLEAN_LITERAL@4..8
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
       4: JS_BLOCK_STATEMENT@10..13
@@ -21,7 +21,7 @@
     1: JS_IF_STATEMENT@20..33
       0: IF_KW@20..24 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@24..25 "(" [] []
-      2: JS_BOOLEAN_LITERAL@25..29
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@25..29
         0: TRUE_KW@25..29 "true" [] []
       3: R_PAREN@29..31 ")" [] [Whitespace(" ")]
       4: JS_BLOCK_STATEMENT@31..33
@@ -31,11 +31,11 @@
     2: JS_IF_STATEMENT@33..49
       0: IF_KW@33..37 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@37..38 "(" [] []
-      2: JS_BOOLEAN_LITERAL@38..42
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@38..42
         0: TRUE_KW@38..42 "true" [] []
       3: R_PAREN@42..44 ")" [] [Whitespace(" ")]
       4: JS_EXPRESSION_STATEMENT@44..49
-        0: JS_BOOLEAN_LITERAL@44..49
+        0: JS_BOOLEAN_LITERAL_EXPRESSION@44..49
           0: FALSE_KW@44..49 "false" [] []
         1: (empty)
     3: JS_IF_STATEMENT@49..87
@@ -53,7 +53,7 @@
         1: JS_IF_STATEMENT@67..87
           0: IF_KW@67..70 "if" [] [Whitespace(" ")]
           1: L_PAREN@70..71 "(" [] []
-          2: JS_BOOLEAN_LITERAL@71..75
+          2: JS_BOOLEAN_LITERAL_EXPRESSION@71..75
             0: TRUE_KW@71..75 "true" [] []
           3: R_PAREN@75..77 ")" [] [Whitespace(" ")]
           4: JS_BLOCK_STATEMENT@77..80

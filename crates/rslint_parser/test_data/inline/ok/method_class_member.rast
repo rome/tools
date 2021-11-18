@@ -76,10 +76,10 @@
           0: JS_COMPUTED_MEMBER_NAME@120..137
             0: L_BRACK@120..123 "[" [Whitespace("\n\t")] []
             1: JS_BINARY_EXPRESSION@123..136
-              0: JS_STRING_LITERAL@123..129
+              0: JS_STRING_LITERAL_EXPRESSION@123..129
                 0: JS_STRING_LITERAL_TOKEN@123..129 "\"foo\"" [] [Whitespace(" ")]
               1: PLUS@129..131 "+" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL@131..136
+              2: JS_STRING_LITERAL_EXPRESSION@131..136
                 0: JS_STRING_LITERAL_TOKEN@131..136 "\"bar\"" [] []
             2: R_BRACK@136..137 "]" [] []
           1: JS_PARAMETER_LIST@137..140

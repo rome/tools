@@ -782,7 +782,7 @@ mod tests {
 
 		let m = p.start();
 		p.expect(SyntaxKind::JS_STRING_LITERAL_TOKEN);
-		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL);
+		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL_EXPRESSION);
 	}
 
 	#[test]

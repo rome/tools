@@ -84,15 +84,15 @@ pub fn literal(p: &mut Parser) -> Option<CompletedMarker> {
 			if p.cur_src().ends_with('n') {
 				let m = p.start();
 				p.bump_remap(SyntaxKind::JS_BIG_INT_LITERAL_TOKEN);
-				return Some(m.complete(p, JS_BIG_INT_LITERAL));
+				return Some(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
 			};
 
-			SyntaxKind::JS_NUMBER_LITERAL
+			SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION
 		}
-		SyntaxKind::JS_STRING_LITERAL_TOKEN => SyntaxKind::JS_STRING_LITERAL,
-		SyntaxKind::NULL_KW => SyntaxKind::JS_NULL_LITERAL,
-		SyntaxKind::TRUE_KW | SyntaxKind::FALSE_KW => SyntaxKind::JS_BOOLEAN_LITERAL,
-		SyntaxKind::JS_REGEX_LITERAL_TOKEN => SyntaxKind::JS_REGEX_LITERAL,
+		SyntaxKind::JS_STRING_LITERAL_TOKEN => SyntaxKind::JS_STRING_LITERAL_EXPRESSION,
+		SyntaxKind::NULL_KW => SyntaxKind::JS_NULL_LITERAL_EXPRESSION,
+		SyntaxKind::TRUE_KW | SyntaxKind::FALSE_KW => SyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION,
+		SyntaxKind::JS_REGEX_LITERAL_TOKEN => SyntaxKind::JS_REGEX_LITERAL_EXPRESSION,
 		_ => return None,
 	};
 

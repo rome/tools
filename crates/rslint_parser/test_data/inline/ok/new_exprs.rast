@@ -55,10 +55,10 @@
               0: IDENT@66..69 "baz" [] []
             3: COMMA@69..71 "," [] [Whitespace(" ")]
             4: JS_BINARY_EXPRESSION@71..76
-              0: JS_NUMBER_LITERAL@71..73
+              0: JS_NUMBER_LITERAL_EXPRESSION@71..73
                 0: JS_NUMBER_LITERAL_TOKEN@71..73 "6" [] [Whitespace(" ")]
               1: PLUS@73..75 "+" [] [Whitespace(" ")]
-              2: JS_NUMBER_LITERAL@75..76
+              2: JS_NUMBER_LITERAL_EXPRESSION@75..76
                 0: JS_NUMBER_LITERAL_TOKEN@75..76 "6" [] []
             5: COMMA@76..78 "," [] [Whitespace(" ")]
             6: JS_BINARY_EXPRESSION@78..111

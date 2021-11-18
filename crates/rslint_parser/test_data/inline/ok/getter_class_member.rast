@@ -58,10 +58,10 @@
           1: JS_COMPUTED_MEMBER_NAME@91..102
             0: L_BRACK@91..92 "[" [] []
             1: JS_BINARY_EXPRESSION@92..101
-              0: JS_STRING_LITERAL@92..96
+              0: JS_STRING_LITERAL_EXPRESSION@92..96
                 0: JS_STRING_LITERAL_TOKEN@92..96 "\"a\"" [] [Whitespace(" ")]
               1: PLUS@96..98 "+" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL@98..101
+              2: JS_STRING_LITERAL_EXPRESSION@98..101
                 0: JS_STRING_LITERAL_TOKEN@98..101 "\"b\"" [] []
             2: R_BRACK@101..102 "]" [] []
           2: L_PAREN@102..103 "(" [] []

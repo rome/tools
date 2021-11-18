@@ -5,7 +5,7 @@
     0: JS_IF_STATEMENT@0..17
       0: IF_KW@0..3 "if" [] [Whitespace(" ")]
       1: L_PAREN@3..4 "(" [] []
-      2: JS_BOOLEAN_LITERAL@4..8
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..10 ")" [] [Whitespace(" ")]
       4: JS_ELSE_CLAUSE@10..17
@@ -17,7 +17,7 @@
     1: JS_IF_STATEMENT@17..43
       0: IF_KW@17..21 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@21..22 "(" [] []
-      2: JS_BOOLEAN_LITERAL@22..26
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@22..26
         0: TRUE_KW@22..26 "true" [] []
       3: R_PAREN@26..28 ")" [] [Whitespace(" ")]
       4: JS_ELSE_CLAUSE@28..43
