@@ -60,6 +60,7 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 			)
 			.secondary(err_range, "...Which is required to end this statement");
 
+
 		p.error(err);
 	}
 }
@@ -226,7 +227,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 					&format!("`{}` is first used as a label here", text),
 				)
 				.primary(
-					p.cur_tok().range,
+					text_range,
 					&format!("a second use of `{}` here is not allowed", text),
 				);
 
