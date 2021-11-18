@@ -1,8 +1,8 @@
-JS_ROOT@0..359
+JS_ROOT@0..360
   LIST@0..20
     JS_DIRECTIVE@0..20
       JS_STRING_LITERAL_TOKEN@0..20 "// SCRIPT\n\n\"use new\""
-  LIST@20..359
+  LIST@20..360
     JS_VARIABLE_DECLARATION_STATEMENT@20..33
       JS_VARIABLE_DECLARATION@20..32
         LET_KW@20..26 "\n\nlet "
@@ -130,11 +130,11 @@ JS_ROOT@0..359
                         JS_STRING_LITERAL_TOKEN@282..297 "\n\n\t\"use strict\""
                       SEMICOLON@297..318 ";  // not a directive"
                   R_CURLY@318..320 "\n}"
-    JS_BLOCK_STATEMENT@320..359
+    JS_BLOCK_STATEMENT@320..360
       L_CURLY@320..323 "\n\n{"
       LIST@323..357
         JS_EXPRESSION_STATEMENT@323..357
           JS_STRING_LITERAL@323..337
             JS_STRING_LITERAL_TOKEN@323..337 "\n\t\"use strict\""
           SEMICOLON@337..357 "; // not a directive"
-      R_CURLY@357..359 "\n}"
+      R_CURLY@357..360 "\n}\n"

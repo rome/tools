@@ -1,7 +1,7 @@
-JS_ROOT@0..160
+JS_ROOT@0..161
   LIST@0..0
-  LIST@0..160
-    JS_FUNCTION_DECLARATION@0..160
+  LIST@0..161
+    JS_FUNCTION_DECLARATION@0..161
       FUNCTION_KW@0..20 "// SCRIPT\n\nfunction "
       JS_IDENTIFIER_BINDING@20..24
         IDENT@20..24 "test"
@@ -9,7 +9,7 @@ JS_ROOT@0..160
         L_PAREN@24..25 "("
         LIST@25..25
         R_PAREN@25..27 ") "
-      JS_FUNCTION_BODY@27..160
+      JS_FUNCTION_BODY@27..161
         L_CURLY@27..28 "{"
         LIST@28..43
           JS_DIRECTIVE@28..43
@@ -61,7 +61,7 @@ JS_ROOT@0..160
                     LIST@151..151
                     R_CURLY@151..155 "\n\t\t}"
               R_CURLY@155..158 "\n\t}"
-        R_CURLY@158..160 "\n}"
+        R_CURLY@158..161 "\n}\n"
 --
 warning[SyntaxError]: Redundant strict mode declaration
   ┌─ directives_err.js:4:2

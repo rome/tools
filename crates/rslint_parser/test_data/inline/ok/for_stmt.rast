@@ -1,6 +1,6 @@
-JS_ROOT@0..94
+JS_ROOT@0..95
   LIST@0..0
-  LIST@0..94
+  LIST@0..95
     FOR_STMT@0..31
       FOR_KW@0..4 "for "
       L_PAREN@4..5 "("
@@ -80,13 +80,13 @@ JS_ROOT@0..94
         L_CURLY@80..81 "{"
         LIST@81..81
         R_CURLY@81..82 "}"
-    FOR_STMT@82..94
+    FOR_STMT@82..95
       FOR_KW@82..87 "\nfor "
       L_PAREN@87..88 "("
       SEMICOLON@88..89 ";"
       SEMICOLON@89..90 ";"
       R_PAREN@90..92 ") "
-      JS_BLOCK_STATEMENT@92..94
+      JS_BLOCK_STATEMENT@92..95
         L_CURLY@92..93 "{"
         LIST@93..93
-        R_CURLY@93..94 "}"
+        R_CURLY@93..95 "}\n"

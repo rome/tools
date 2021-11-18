@@ -1,6 +1,6 @@
-JS_ROOT@0..39
+JS_ROOT@0..40
   LIST@0..0
-  LIST@0..39
+  LIST@0..40
     JS_VARIABLE_DECLARATION_STATEMENT@0..26
       JS_VARIABLE_DECLARATION@0..26
         LET_KW@0..4 "let "
@@ -38,8 +38,8 @@ JS_ROOT@0..39
                     ERROR@36..37
                       L_CURLY@36..37 "{"
                 R_CURLY@37..38 "}"
-    ERROR@38..39
-      R_CURLY@38..39 "}"
+    ERROR@38..40
+      R_CURLY@38..40 "}\n"
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ object_expr_error_prop_name.js:1:11

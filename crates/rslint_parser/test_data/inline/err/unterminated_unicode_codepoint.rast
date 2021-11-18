@@ -1,7 +1,7 @@
-JS_ROOT@0..17
+JS_ROOT@0..18
   LIST@0..0
-  LIST@0..17
-    JS_VARIABLE_DECLARATION_STATEMENT@0..17
+  LIST@0..18
+    JS_VARIABLE_DECLARATION_STATEMENT@0..18
       JS_VARIABLE_DECLARATION@0..16
         LET_KW@0..4 "let "
         LIST@4..16
@@ -13,7 +13,7 @@ JS_ROOT@0..17
               EQ@6..8 "= "
               ERROR@8..16
                 ERROR_TOKEN@8..16 "\"\\u{200\""
-      SEMICOLON@16..17 ";"
+      SEMICOLON@16..18 ";\n"
 --
 error: expected hex digits for a unicode code point escape, but encountered an invalid character
   ┌─ unterminated_unicode_codepoint.js:1:16

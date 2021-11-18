@@ -1,7 +1,7 @@
-JS_ROOT@0..39
+JS_ROOT@0..40
   LIST@0..0
-  LIST@0..39
-    FOR_STMT@0..39
+  LIST@0..40
+    FOR_STMT@0..40
       FOR_KW@0..4 "for "
       SEMICOLON@4..5 ";"
       SEMICOLON@5..7 "; "
@@ -10,7 +10,7 @@ JS_ROOT@0..39
           L_CURLY@7..8 "{"
           LIST@8..8
           R_CURLY@8..9 "}"
-      FOR_STMT@9..39
+      FOR_STMT@9..40
         FOR_KW@9..14 "\nfor "
         FOR_STMT_INIT@14..23
           JS_VARIABLE_DECLARATION@14..23
@@ -38,10 +38,10 @@ JS_ROOT@0..39
             PLUS2@33..35 "++"
             JS_REFERENCE_IDENTIFIER_EXPRESSION@35..37
               IDENT@35..37 "i "
-        JS_BLOCK_STATEMENT@37..39
+        JS_BLOCK_STATEMENT@37..40
           L_CURLY@37..38 "{"
           LIST@38..38
-          R_CURLY@38..39 "}"
+          R_CURLY@38..40 "}\n"
 --
 error[SyntaxError]: expected `'('` but instead found `;`
   ┌─ for_stmt_err.js:1:5

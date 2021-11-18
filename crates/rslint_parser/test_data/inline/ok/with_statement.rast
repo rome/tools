@@ -1,7 +1,7 @@
-JS_ROOT@0..64
+JS_ROOT@0..65
   LIST@0..0
-  LIST@0..64
-    JS_FUNCTION_DECLARATION@0..64
+  LIST@0..65
+    JS_FUNCTION_DECLARATION@0..65
       FUNCTION_KW@0..20 "// SCRIPT\n\nfunction "
       JS_IDENTIFIER_BINDING@20..21
         IDENT@20..21 "f"
@@ -16,7 +16,7 @@ JS_ROOT@0..64
             NAME@25..26
               IDENT@25..26 "o"
         R_PAREN@26..28 ") "
-      JS_FUNCTION_BODY@28..64
+      JS_FUNCTION_BODY@28..65
         L_CURLY@28..29 "{"
         LIST@29..29
         LIST@29..62
@@ -45,4 +45,4 @@ JS_ROOT@0..64
                       R_PAREN@57..58 ")"
                   SEMICOLON@58..59 ";"
               R_CURLY@59..62 "\n\t}"
-        R_CURLY@62..64 "\n}"
+        R_CURLY@62..65 "\n}\n"

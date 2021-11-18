@@ -1,6 +1,6 @@
-JS_ROOT@0..112
+JS_ROOT@0..113
   LIST@0..0
-  LIST@0..112
+  LIST@0..113
     JS_EXPRESSION_STATEMENT@0..9
       NEW_EXPR@0..9
         NEW_KW@0..4 "new "
@@ -37,12 +37,12 @@ JS_ROOT@0..112
                 LIST@50..50
                 R_PAREN@50..51 ")"
       SEMICOLON@51..52 ";"
-    JS_EXPRESSION_STATEMENT@52..112
-      NEW_EXPR@52..112
+    JS_EXPRESSION_STATEMENT@52..113
+      NEW_EXPR@52..113
         NEW_KW@52..57 "\nnew "
         JS_REFERENCE_IDENTIFIER_EXPRESSION@57..60
           IDENT@57..60 "Foo"
-        ARG_LIST@60..112
+        ARG_LIST@60..113
           L_PAREN@60..61 "("
           LIST@61..111
             JS_REFERENCE_IDENTIFIER_EXPRESSION@61..64
@@ -89,4 +89,4 @@ JS_ROOT@0..112
                   QUESTIONDOT@106..108 "?."
                   NAME@108..111
                     IDENT@108..111 "bar"
-          R_PAREN@111..112 ")"
+          R_PAREN@111..113 ")\n"

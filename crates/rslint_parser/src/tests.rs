@@ -1,6 +1,7 @@
 use crate::ast::{ArgList, JsRoot};
 use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode, SyntaxToken};
 use expect_test::expect_file;
+use rome_rowan::TextSize;
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::{file::SimpleFiles, Emitter};
@@ -211,9 +212,9 @@ pub fn test_trivia_attached_to_tokens() {
 
 #[test]
 pub fn jsroot_display_text_and_trimmed() {
-	let code = " let a = 1; ";
+	let code = " let a = 1; \n ";
 	let root = parse_module(code, 0);
-	let syntax = root.syntax();
+	let syntax = dbg!(root.syntax());	
 
 	assert_eq!(format!("{}", syntax), code);
 
@@ -272,4 +273,34 @@ pub fn node_range_must_be_correct() {
 	let range = var_decl.text_trimmed_range();
 	assert_eq!(18usize, range.start().into());
 	assert_eq!(28usize, range.end().into());
+}
+
+#[test]
+pub fn last_trivia_must_be_appended_to_eof() {
+	//               0123456789A123456789B123456789CC
+	let text = " function foo() { let a = 1; }\n";
+	let root = parse_module(text, 0);
+	let syntax = root.syntax();
+
+	let range = syntax.text_range();
+	let start = range.start();
+	let end = range.end();
+
+	assert_eq!(TextSize::from(0), start);
+	assert_eq!(TextSize::from(31), end);
+}
+
+#[test]
+pub fn just_trivia_must_be_appended_to_eof() {
+	//               0123456789A123456789B123456789C123
+	let text = "// just trivia... nothing else....";
+	let root = parse_module(text, 0);
+	let syntax = root.syntax();
+
+	let range = syntax.text_range();
+	let start = range.start();
+	let end = range.end();
+
+	assert_eq!(TextSize::from(0), start);
+	assert_eq!(TextSize::from(34), end);
 }

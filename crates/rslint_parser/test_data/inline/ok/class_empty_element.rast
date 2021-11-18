@@ -1,7 +1,7 @@
-JS_ROOT@0..40
+JS_ROOT@0..41
   LIST@0..0
-  LIST@0..40
-    JS_CLASS_DECLARATION@0..40
+  LIST@0..41
+    JS_CLASS_DECLARATION@0..41
       CLASS_KW@0..6 "class "
       JS_IDENTIFIER_BINDING@6..10
         IDENT@6..10 "foo "
@@ -46,4 +46,4 @@ JS_ROOT@0..40
           SEMICOLON@37..38 ";"
         JS_EMPTY_CLASS_MEMBER@38..39
           SEMICOLON@38..39 ";"
-      R_CURLY@39..40 "}"
+      R_CURLY@39..41 "}\n"

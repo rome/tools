@@ -1,6 +1,6 @@
-JS_ROOT@0..34
+JS_ROOT@0..35
   LIST@0..0
-  LIST@0..34
+  LIST@0..35
     JS_EXPRESSION_STATEMENT@0..11
       CALL_EXPR@0..10
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
@@ -24,7 +24,7 @@ JS_ROOT@0..34
           JS_NUMBER_LITERAL@20..21
             JS_NUMBER_LITERAL_TOKEN@20..21 "2"
       SEMICOLON@21..22 ";"
-    JS_EXPRESSION_STATEMENT@22..34
+    JS_EXPRESSION_STATEMENT@22..35
       JS_BINARY_EXPRESSION@22..33
         JS_UNARY_EXPRESSION@22..28
           BANG@22..24 "\n!"
@@ -33,7 +33,7 @@ JS_ROOT@0..34
         STAR@28..30 "* "
         JS_REFERENCE_IDENTIFIER_EXPRESSION@30..33
           IDENT@30..33 "bar"
-      SEMICOLON@33..34 ";"
+      SEMICOLON@33..35 ";\n"
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ binary_expressions_err.js:1:10

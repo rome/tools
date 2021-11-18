@@ -1,6 +1,6 @@
-JS_ROOT@0..606
+JS_ROOT@0..607
   LIST@0..0
-  LIST@0..606
+  LIST@0..607
     JS_CLASS_DECLARATION@0..168
       CLASS_KW@0..6 "class "
       JS_IDENTIFIER_BINDING@6..11
@@ -210,7 +210,7 @@ JS_ROOT@0..606
             LIST@345..345
             R_CURLY@345..367 "} // Method called set"
       R_CURLY@367..369 "\n}"
-    JS_CLASS_DECLARATION@369..606
+    JS_CLASS_DECLARATION@369..607
       CLASS_KW@369..377 "\n\nclass "
       JS_IDENTIFIER_BINDING@377..384
         IDENT@377..384 "Static "
@@ -328,4 +328,4 @@ JS_ROOT@0..606
             LIST@603..603
             LIST@603..603
             R_CURLY@603..604 "}"
-      R_CURLY@604..606 "\n}"
+      R_CURLY@604..607 "\n}\n"

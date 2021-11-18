@@ -1,6 +1,6 @@
-JS_ROOT@0..53
+JS_ROOT@0..54
   LIST@0..0
-  LIST@0..53
+  LIST@0..54
     JS_EXPRESSION_STATEMENT@0..7
       DOT_EXPR@0..7
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
@@ -36,10 +36,10 @@ JS_ROOT@0..53
         QUESTIONDOT@39..41 "?."
         NAME@41..44
           IDENT@41..44 "for"
-    JS_EXPRESSION_STATEMENT@44..53
-      DOT_EXPR@44..53
+    JS_EXPRESSION_STATEMENT@44..54
+      DOT_EXPR@44..54
         JS_REFERENCE_IDENTIFIER_EXPRESSION@44..48
           IDENT@44..48 "\nfoo"
         QUESTIONDOT@48..50 "?."
-        NAME@50..53
-          IDENT@50..53 "bar"
+        NAME@50..54
+          IDENT@50..54 "bar\n"

@@ -1,6 +1,6 @@
-JS_ROOT@0..23
+JS_ROOT@0..24
   LIST@0..0
-  LIST@0..23
+  LIST@0..24
     JS_VARIABLE_DECLARATION_STATEMENT@0..14
       JS_VARIABLE_DECLARATION@0..14
         LET_KW@0..4 "let "
@@ -13,10 +13,10 @@ JS_ROOT@0..23
               EQ@8..10 "= "
               JS_REFERENCE_IDENTIFIER_EXPRESSION@10..14
                 IDENT@10..14 "bar "
-    JS_THROW_STATEMENT@14..23
+    JS_THROW_STATEMENT@14..24
       THROW_KW@14..20 "throw "
-      JS_REFERENCE_IDENTIFIER_EXPRESSION@20..23
-        IDENT@20..23 "foo"
+      JS_REFERENCE_IDENTIFIER_EXPRESSION@20..24
+        IDENT@20..24 "foo\n"
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ semicolons_err.js:1:15

@@ -1,6 +1,6 @@
-JS_ROOT@0..63
+JS_ROOT@0..64
   LIST@0..0
-  LIST@0..63
+  LIST@0..64
     JS_LABELED_STATEMENT@0..7
       IDENT@0..3 "foo"
       COLON@3..5 ": "
@@ -8,13 +8,13 @@ JS_ROOT@0..63
         L_CURLY@5..6 "{"
         LIST@6..6
         R_CURLY@6..7 "}"
-    JS_WHILE_STATEMENT@7..63
+    JS_WHILE_STATEMENT@7..64
       WHILE_KW@7..14 "\nwhile "
       L_PAREN@14..15 "("
       JS_BOOLEAN_LITERAL@15..19
         TRUE_KW@15..19 "true"
       R_PAREN@19..21 ") "
-      JS_BLOCK_STATEMENT@21..63
+      JS_BLOCK_STATEMENT@21..64
         L_CURLY@21..22 "{"
         LIST@22..61
           JS_CONTINUE_STATEMENT@22..34
@@ -26,4 +26,4 @@ JS_ROOT@0..63
             SEMICOLON@49..50 ";"
           JS_CONTINUE_STATEMENT@50..61
             CONTINUE_KW@50..61 "\n  continue"
-        R_CURLY@61..63 "\n}"
+        R_CURLY@61..64 "\n}\n"

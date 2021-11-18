@@ -1,6 +1,6 @@
-JS_ROOT@0..9
+JS_ROOT@0..10
   LIST@0..0
-  LIST@0..9
-    JS_DEBUGGER_STATEMENT@0..9
+  LIST@0..10
+    JS_DEBUGGER_STATEMENT@0..10
       DEBUGGER_KW@0..8 "debugger"
-      SEMICOLON@8..9 ";"
+      SEMICOLON@8..10 ";\n"

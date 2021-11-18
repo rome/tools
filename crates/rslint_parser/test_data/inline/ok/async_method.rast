@@ -1,7 +1,7 @@
-JS_ROOT@0..46
+JS_ROOT@0..47
   LIST@0..0
-  LIST@0..46
-    JS_CLASS_DECLARATION@0..46
+  LIST@0..47
+    JS_CLASS_DECLARATION@0..47
       CLASS_KW@0..6 "class "
       JS_IDENTIFIER_BINDING@6..10
         IDENT@6..10 "foo "
@@ -34,4 +34,4 @@ JS_ROOT@0..46
             LIST@43..43
             LIST@43..43
             R_CURLY@43..44 "}"
-      R_CURLY@44..46 "\n}"
+      R_CURLY@44..47 "\n}\n"

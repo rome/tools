@@ -1,17 +1,17 @@
-JS_ROOT@0..211
+JS_ROOT@0..212
   LIST@0..0
-  LIST@0..211
-    JS_VARIABLE_DECLARATION_STATEMENT@0..211
-      JS_VARIABLE_DECLARATION@0..211
+  LIST@0..212
+    JS_VARIABLE_DECLARATION_STATEMENT@0..212
+      JS_VARIABLE_DECLARATION@0..212
         LET_KW@0..4 "let "
-        LIST@4..211
-          JS_VARIABLE_DECLARATOR@4..211
+        LIST@4..212
+          JS_VARIABLE_DECLARATOR@4..212
             SINGLE_PATTERN@4..6
               NAME@4..6
                 IDENT@4..6 "a "
-            JS_EQUAL_VALUE_CLAUSE@6..211
+            JS_EQUAL_VALUE_CLAUSE@6..212
               EQ@6..8 "= "
-              JS_OBJECT_EXPRESSION@8..211
+              JS_OBJECT_EXPRESSION@8..212
                 L_CURLY@8..9 "{"
                 LIST@9..209
                   JS_GETTER_OBJECT_MEMBER@9..40
@@ -109,4 +109,4 @@ JS_ROOT@0..211
                             JS_STRING_LITERAL_TOKEN@170..205 "\"This is a method and ..."
                           SEMICOLON@205..206 ";"
                       R_CURLY@206..209 "\n\t}"
-                R_CURLY@209..211 "\n}"
+                R_CURLY@209..212 "\n}\n"

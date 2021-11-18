@@ -1,7 +1,7 @@
-JS_ROOT@0..253
+JS_ROOT@0..255
   LIST@0..0
-  LIST@0..253
-    JS_CLASS_DECLARATION@0..253
+  LIST@0..255
+    JS_CLASS_DECLARATION@0..255
       CLASS_KW@0..6 "class "
       JS_IDENTIFIER_BINDING@6..10
         IDENT@6..10 "foo "
@@ -76,4 +76,4 @@ JS_ROOT@0..253
             EQ@248..250 "= "
             JS_NUMBER_LITERAL@250..251
               JS_NUMBER_LITERAL_TOKEN@250..251 "1"
-      R_CURLY@251..253 "\n}"
+      R_CURLY@251..255 "\n}\n\n"

@@ -1,7 +1,7 @@
-JS_ROOT@0..98
+JS_ROOT@0..99
   LIST@0..0
-  LIST@0..98
-    JS_CLASS_DECLARATION@0..98
+  LIST@0..99
+    JS_CLASS_DECLARATION@0..99
       CLASS_KW@0..6 "class "
       JS_IDENTIFIER_BINDING@6..10
         IDENT@6..10 "foo "
@@ -66,4 +66,4 @@ JS_ROOT@0..98
             LIST@95..95
             LIST@95..95
             R_CURLY@95..96 "}"
-      R_CURLY@96..98 "\n}"
+      R_CURLY@96..99 "\n}\n"

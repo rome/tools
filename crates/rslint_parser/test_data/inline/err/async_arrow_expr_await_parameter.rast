@@ -1,6 +1,6 @@
-JS_ROOT@0..25
+JS_ROOT@0..26
   LIST@0..0
-  LIST@0..25
+  LIST@0..26
     JS_VARIABLE_DECLARATION_STATEMENT@0..14
       JS_VARIABLE_DECLARATION@0..14
         LET_KW@0..4 "let "
@@ -13,16 +13,16 @@ JS_ROOT@0..25
               EQ@6..8 "= "
               JS_REFERENCE_IDENTIFIER_EXPRESSION@8..14
                 IDENT@8..14 "async "
-    JS_EXPRESSION_STATEMENT@14..25
-      JS_ARROW_FUNCTION_EXPRESSION@14..25
+    JS_EXPRESSION_STATEMENT@14..26
+      JS_ARROW_FUNCTION_EXPRESSION@14..26
         JS_IDENTIFIER_BINDING@14..20
           IDENT@14..20 "await "
         FAT_ARROW@20..23 "=> "
-        JS_FUNCTION_BODY@23..25
+        JS_FUNCTION_BODY@23..26
           L_CURLY@23..24 "{"
           LIST@24..24
           LIST@24..24
-          R_CURLY@24..25 "}"
+          R_CURLY@24..26 "}\n"
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ async_arrow_expr_await_parameter.js:1:15

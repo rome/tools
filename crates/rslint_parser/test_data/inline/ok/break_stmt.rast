@@ -1,6 +1,6 @@
-JS_ROOT@0..45
+JS_ROOT@0..46
   LIST@0..0
-  LIST@0..45
+  LIST@0..46
     JS_LABELED_STATEMENT@0..7
       IDENT@0..3 "foo"
       COLON@3..5 ": "
@@ -22,6 +22,6 @@ JS_ROOT@0..45
       BREAK_KW@23..30 "\nbreak "
       IDENT@30..33 "foo"
       SEMICOLON@33..34 ";"
-    JS_BREAK_STATEMENT@34..45
+    JS_BREAK_STATEMENT@34..46
       BREAK_KW@34..41 "\nbreak "
-      IDENT@41..45 "rust"
+      IDENT@41..46 "rust\n"

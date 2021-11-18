@@ -1,6 +1,6 @@
-JS_ROOT@0..82
+JS_ROOT@0..83
   LIST@0..0
-  LIST@0..82
+  LIST@0..83
     JS_EXPRESSION_STATEMENT@0..30
       JS_ARROW_FUNCTION_EXPRESSION@0..30
         ASYNC_KW@0..6 "async "
@@ -54,7 +54,7 @@ JS_ROOT@0..82
                       JS_NUMBER_LITERAL_TOKEN@64..65 "5"
             SEMICOLON@65..66 ";"
         R_CURLY@66..68 "\n}"
-    JS_VARIABLE_DECLARATION_STATEMENT@68..82
+    JS_VARIABLE_DECLARATION_STATEMENT@68..83
       JS_VARIABLE_DECLARATION@68..81
         LET_KW@68..73 "\nlet "
         LIST@73..81
@@ -66,7 +66,7 @@ JS_ROOT@0..82
               EQ@78..80 "= "
               JS_NUMBER_LITERAL@80..81
                 JS_NUMBER_LITERAL_TOKEN@80..81 "5"
-      SEMICOLON@81..82 ";"
+      SEMICOLON@81..83 ";\n"
 --
 error[SyntaxError]: Illegal use of `await` as an identifier in an async context
   ┌─ binding_identifier_invalid.js:1:19

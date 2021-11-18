@@ -1,7 +1,7 @@
-JS_ROOT@0..21
+JS_ROOT@0..22
   LIST@0..0
-  LIST@0..21
-    JS_CLASS_DECLARATION@0..21
+  LIST@0..22
+    JS_CLASS_DECLARATION@0..22
       CLASS_KW@0..6 "class "
       JS_IDENTIFIER_BINDING@6..10
         IDENT@6..10 "foo "
@@ -14,7 +14,7 @@ JS_ROOT@0..21
             LIST@18..18
             LIST@18..18
             R_CURLY@18..19 "}"
-      R_CURLY@19..21 "\n}"
+      R_CURLY@19..22 "\n}\n"
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ method_getter_err.js:2:6

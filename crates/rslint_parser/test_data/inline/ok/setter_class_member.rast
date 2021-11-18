@@ -1,6 +1,6 @@
-JS_ROOT@0..217
+JS_ROOT@0..219
   LIST@0..0
-  LIST@0..217
+  LIST@0..219
     JS_CLASS_DECLARATION@0..149
       CLASS_KW@0..6 "class "
       JS_IDENTIFIER_BINDING@6..14
@@ -115,7 +115,7 @@ JS_ROOT@0..217
             LIST@146..146
             R_CURLY@146..147 "}"
       R_CURLY@147..149 "\n}"
-    JS_CLASS_DECLARATION@149..217
+    JS_CLASS_DECLARATION@149..219
       CLASS_KW@149..157 "\n\nclass "
       JS_IDENTIFIER_BINDING@157..168
         IDENT@157..168 "NotSetters "
@@ -168,4 +168,4 @@ JS_ROOT@0..217
             LIST@214..214
             LIST@214..214
             R_CURLY@214..215 "}"
-      R_CURLY@215..217 "\n}"
+      R_CURLY@215..219 "\n}\n\n"

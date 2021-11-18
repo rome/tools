@@ -1,6 +1,6 @@
-JS_ROOT@0..81
+JS_ROOT@0..82
   LIST@0..0
-  LIST@0..81
+  LIST@0..82
     JS_VARIABLE_DECLARATION_STATEMENT@0..23
       JS_VARIABLE_DECLARATION@0..23
         LET_KW@0..4 "let "
@@ -46,8 +46,8 @@ JS_ROOT@0..81
                   LIST@48..48
                   LIST@48..48
                   R_CURLY@48..49 "}"
-    JS_EXPRESSION_STATEMENT@49..81
-      JS_ARROW_FUNCTION_EXPRESSION@49..81
+    JS_EXPRESSION_STATEMENT@49..82
+      JS_ARROW_FUNCTION_EXPRESSION@49..82
         ASYNC_KW@49..56 "\nasync "
         JS_PARAMETER_LIST@56..75
           L_PAREN@56..57 "("
@@ -67,5 +67,5 @@ JS_ROOT@0..81
                   IDENT@70..73 "baz"
           R_PAREN@73..75 ") "
         FAT_ARROW@75..78 "=> "
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@78..81
-          IDENT@78..81 "foo"
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@78..82
+          IDENT@78..82 "foo\n"

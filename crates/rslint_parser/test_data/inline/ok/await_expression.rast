@@ -1,6 +1,6 @@
-JS_ROOT@0..115
+JS_ROOT@0..116
   LIST@0..0
-  LIST@0..115
+  LIST@0..116
     JS_FUNCTION_DECLARATION@0..76
       ASYNC_KW@0..6 "async "
       FUNCTION_KW@6..15 "function "
@@ -51,7 +51,7 @@ JS_ROOT@0..115
                     R_PAREN@72..73 ")"
             SEMICOLON@73..74 ";"
         R_CURLY@74..76 "\n}"
-    JS_FUNCTION_DECLARATION@76..115
+    JS_FUNCTION_DECLARATION@76..116
       ASYNC_KW@76..84 "\n\nasync "
       FUNCTION_KW@84..93 "function "
       JS_IDENTIFIER_BINDING@93..98
@@ -60,7 +60,7 @@ JS_ROOT@0..115
         L_PAREN@98..99 "("
         LIST@99..99
         R_PAREN@99..101 ") "
-      JS_FUNCTION_BODY@101..115
+      JS_FUNCTION_BODY@101..116
         L_CURLY@101..102 "{"
         LIST@102..102
         LIST@102..113
@@ -69,4 +69,4 @@ JS_ROOT@0..115
             JS_NUMBER_LITERAL@111..112
               JS_NUMBER_LITERAL_TOKEN@111..112 "4"
             SEMICOLON@112..113 ";"
-        R_CURLY@113..115 "\n}"
+        R_CURLY@113..116 "\n}\n"

@@ -1,6 +1,6 @@
-JS_ROOT@0..83
+JS_ROOT@0..84
   LIST@0..0
-  LIST@0..83
+  LIST@0..84
     JS_VARIABLE_DECLARATION_STATEMENT@0..14
       JS_VARIABLE_DECLARATION@0..13
         LET_KW@0..4 "let "
@@ -52,7 +52,7 @@ JS_ROOT@0..83
             SINGLE_PATTERN@49..52
               NAME@49..52
                 IDENT@49..52 "foo"
-    JS_FUNCTION_DECLARATION@52..83
+    JS_FUNCTION_DECLARATION@52..84
       FUNCTION_KW@52..62 "\nfunction "
       JS_IDENTIFIER_BINDING@62..65
         IDENT@62..65 "foo"
@@ -60,7 +60,7 @@ JS_ROOT@0..83
         L_PAREN@65..66 "("
         LIST@66..66
         R_PAREN@66..68 ") "
-      JS_FUNCTION_BODY@68..83
+      JS_FUNCTION_BODY@68..84
         L_CURLY@68..70 "{ "
         LIST@70..70
         LIST@70..82
@@ -68,4 +68,4 @@ JS_ROOT@0..83
             RETURN_KW@70..77 "return "
             JS_BOOLEAN_LITERAL@77..82
               TRUE_KW@77..82 "true "
-        R_CURLY@82..83 "}"
+        R_CURLY@82..84 "}\n"

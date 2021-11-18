@@ -1,19 +1,19 @@
-JS_ROOT@0..27
+JS_ROOT@0..28
   LIST@0..0
-  LIST@0..27
+  LIST@0..28
     JS_THROW_STATEMENT@0..5
       THROW_KW@0..5 "throw"
-    JS_EXPRESSION_STATEMENT@5..27
-      NEW_EXPR@5..27
+    JS_EXPRESSION_STATEMENT@5..28
+      NEW_EXPR@5..28
         NEW_KW@5..10 "\nnew "
         JS_REFERENCE_IDENTIFIER_EXPRESSION@10..15
           IDENT@10..15 "Error"
-        ARG_LIST@15..27
+        ARG_LIST@15..28
           L_PAREN@15..16 "("
           LIST@16..26
             JS_STRING_LITERAL@16..26
               JS_STRING_LITERAL_TOKEN@16..26 "\"oh no :(\""
-          R_PAREN@26..27 ")"
+          R_PAREN@26..28 ")\n"
 --
 error[SyntaxError]: Linebreaks between a throw statement and the error to be thrown are not allowed
   ┌─ throw_stmt_err.js:2:1

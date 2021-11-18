@@ -1,6 +1,6 @@
-JS_ROOT@0..84
+JS_ROOT@0..85
   LIST@0..0
-  LIST@0..84
+  LIST@0..85
     JS_EXPRESSION_STATEMENT@0..6
       JS_PARENTHESIZED_EXPRESSION@0..5
         L_PAREN@0..1 "("
@@ -77,8 +77,8 @@ JS_ROOT@0..84
           LIST@62..62
           R_CURLY@62..63 "}"
       SEMICOLON@63..64 ";"
-    JS_EXPRESSION_STATEMENT@64..84
-      JS_ARROW_FUNCTION_EXPRESSION@64..84
+    JS_EXPRESSION_STATEMENT@64..85
+      JS_ARROW_FUNCTION_EXPRESSION@64..85
         JS_PARAMETER_LIST@64..79
           L_PAREN@64..66 "\n("
           LIST@66..77
@@ -93,8 +93,8 @@ JS_ROOT@0..84
                   IDENT@74..77 "bar"
           R_PAREN@77..79 ") "
         FAT_ARROW@79..82 "=> "
-        JS_FUNCTION_BODY@82..84
+        JS_FUNCTION_BODY@82..85
           L_CURLY@82..83 "{"
           LIST@83..83
           LIST@83..83
-          R_CURLY@83..84 "}"
+          R_CURLY@83..85 "}\n"

@@ -1,7 +1,7 @@
-JS_ROOT@0..21
+JS_ROOT@0..22
   LIST@0..0
-  LIST@0..21
-    JS_FUNCTION_DECLARATION@0..21
+  LIST@0..22
+    JS_FUNCTION_DECLARATION@0..22
       FUNCTION_KW@0..9 "function "
       JS_IDENTIFIER_BINDING@9..12
         IDENT@9..12 "foo"
@@ -11,11 +11,11 @@ JS_ROOT@0..21
           ERROR@13..17
             TRUE_KW@13..17 "true"
         R_PAREN@17..19 ") "
-      JS_FUNCTION_BODY@19..21
+      JS_FUNCTION_BODY@19..22
         L_CURLY@19..20 "{"
         LIST@20..20
         LIST@20..20
-        R_CURLY@20..21 "}"
+        R_CURLY@20..22 "}\n"
 --
 error[SyntaxError]: Expected an identifier or pattern, but found none
   ┌─ formal_params_no_binding_element.js:1:14

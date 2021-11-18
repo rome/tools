@@ -1,6 +1,6 @@
-JS_ROOT@0..26
+JS_ROOT@0..27
   LIST@0..0
-  LIST@0..26
+  LIST@0..27
     JS_BLOCK_STATEMENT@0..2
       L_CURLY@0..1 "{"
       LIST@1..1
@@ -21,7 +21,7 @@ JS_ROOT@0..26
               R_CURLY@8..9 "}"
           R_CURLY@9..10 "}"
       R_CURLY@10..11 "}"
-    JS_BLOCK_STATEMENT@11..26
+    JS_BLOCK_STATEMENT@11..27
       L_CURLY@11..14 "\n{ "
       LIST@14..25
         JS_EXPRESSION_STATEMENT@14..25
@@ -32,4 +32,4 @@ JS_ROOT@0..26
             JS_REFERENCE_IDENTIFIER_EXPRESSION@20..23
               IDENT@20..23 "bar"
           SEMICOLON@23..25 "; "
-      R_CURLY@25..26 "}"
+      R_CURLY@25..27 "}\n"
