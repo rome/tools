@@ -2,23 +2,22 @@ use crate::{
 	format_elements, group_elements, join_elements, soft_line_break_or_space, space_token, token,
 	FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{Constructor, ConstructorParamOrPat, ConstructorParameters};
+use rslint_parser::ast::{
+	JsAnyConstructorParameter, JsConstructorClassMember, JsConstructorParameterList,
+};
 
-impl ToFormatElement for Constructor {
+impl ToFormatElement for JsConstructorClassMember {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let constructor_token = formatter.format_node(self.name()?)?;
-		let params = formatter.format_node(self.parameters()?)?;
-		let body = formatter.format_node(self.body()?)?;
 		Ok(format_elements![
-			constructor_token,
-			params,
+			formatter.format_node(self.name()?)?,
+			formatter.format_node(self.parameter_list()?)?,
 			space_token(),
-			body
+			formatter.format_node(self.body()?)?
 		])
 	}
 }
 
-impl ToFormatElement for ConstructorParameters {
+impl ToFormatElement for JsConstructorParameterList {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		let l_bracket = formatter.format_token(&self.l_paren_token()?)?;
 		let params = formatter.format_nodes(self.parameters())?;
@@ -35,11 +34,11 @@ impl ToFormatElement for ConstructorParameters {
 	}
 }
 
-impl ToFormatElement for ConstructorParamOrPat {
+impl ToFormatElement for JsAnyConstructorParameter {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
 		match self {
-			ConstructorParamOrPat::TsConstructorParam(_) => todo!(),
-			ConstructorParamOrPat::Pattern(pattern) => pattern.to_format_element(formatter),
+			JsAnyConstructorParameter::TsConstructorParam(_) => todo!(),
+			JsAnyConstructorParameter::Pattern(pattern) => pattern.to_format_element(formatter),
 		}
 	}
 }
