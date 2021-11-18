@@ -752,9 +752,9 @@ impl FormatElement {
 			FormatElement::Empty => FormatElement::Empty,
 			FormatElement::Space => FormatElement::Empty,
 			FormatElement::Line(_) => FormatElement::Empty,
-			FormatElement::Indent(_) => FormatElement::Empty,
-			FormatElement::Group(_) => todo!(),
-			FormatElement::ConditionalGroupContent(_) => todo!(),
+			FormatElement::Indent(i) => i.content.trim_start(),
+			FormatElement::Group(g) => g.content.trim_start(),
+			FormatElement::ConditionalGroupContent(g) => g.content.trim_start(),
 			FormatElement::List(list) => {
 				let mut content: Vec<_> = list
 					.iter()
@@ -788,9 +788,9 @@ impl FormatElement {
 			FormatElement::Empty => FormatElement::Empty,
 			FormatElement::Space => FormatElement::Empty,
 			FormatElement::Line(_) => FormatElement::Empty,
-			FormatElement::Indent(_) => FormatElement::Empty,
-			FormatElement::Group(_) => todo!(),
-			FormatElement::ConditionalGroupContent(_) => todo!(),
+			FormatElement::Indent(i) => i.content.trim_end(),
+			FormatElement::Group(g) => g.content.trim_end(),
+			FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
 			FormatElement::List(list) => {
 				let mut content: Vec<_> = list
 					.iter()
@@ -959,5 +959,26 @@ mod tests {
 				token("b")
 			]))
 		);
+	}
+
+	#[test]
+	fn format_element_trim() {
+		use crate::format_element::*;
+		let f = concat_elements([
+			FormatElement::Empty,
+			FormatElement::Indent(Indent::new(FormatElement::Empty)),
+			FormatElement::Line(Line::new(LineMode::Hard)),
+			FormatElement::Space,
+			FormatElement::Token(Token::new(" \t \n")),
+			FormatElement::List(List::new(vec![
+				FormatElement::Empty,
+			])),
+			FormatElement::Group(Group::new(FormatElement::Empty)),
+			FormatElement::ConditionalGroupContent(ConditionalGroupContent::new(FormatElement::Empty, GroupPrintMode::Flat)),
+		]);
+
+		let f = f.trim_start();
+		matches!(f.trim_start(), FormatElement::Empty);
+		matches!(f.trim_end(), FormatElement::Empty);
 	}
 }
