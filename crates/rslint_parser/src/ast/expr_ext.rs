@@ -14,6 +14,71 @@ impl BracketExpr {
 	}
 }
 
+impl JsLiteralMemberName {
+	/// Returns the name of the member as a syntax text
+	///
+	/// ## Examples
+	///
+	/// Getting the name of a static member containing a string literal
+	///
+	/// ```
+	/// use rome_rowan::TreeBuilder;
+	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::ast::JsLiteralMemberName;
+	///
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	///   builder.token(SyntaxKind::JS_STRING_LITERAL_TOKEN, "\"abcd\"");
+	/// });
+	///
+	/// let static_member_name = node.to::<JsLiteralMemberName>();
+	///
+	/// assert_eq!("abcd", static_member_name.name().unwrap());
+	/// ```
+	///
+	/// Getting the name of a static member containing a number literal
+	///
+	/// ```
+	/// use rome_rowan::TreeBuilder;
+	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::ast::JsLiteralMemberName;
+	///
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	///   builder.token(SyntaxKind::JS_NUMBER_LITERAL_TOKEN, "5");
+	/// });
+	///
+	/// let static_member_name = node.to::<JsLiteralMemberName>();
+	///
+	/// assert_eq!("5", static_member_name.name().unwrap());
+	/// ```
+	///
+	/// Getting the name of a static member containing an identifier
+	///
+	/// ```
+	/// use rome_rowan::TreeBuilder;
+	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
+	/// use rslint_parser::ast::JsLiteralMemberName;
+	///
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
+	///   builder.token(SyntaxKind::IDENT, "abcd");
+	/// });
+	///
+	/// let static_member_name = node.to::<JsLiteralMemberName>();
+	///
+	/// assert_eq!("abcd", static_member_name.name().unwrap());
+	/// ```
+	pub fn name(&self) -> SyntaxResult<String> {
+		let value = self.value()?;
+		let name = value.text_trimmed();
+
+		let result = match value.kind() {
+			JS_STRING_LITERAL_TOKEN => String::from(&name[1..name.len() - 1]),
+			_ => String::from(name),
+		};
+
+		Ok(result)
+	}
+}
+
 impl JsConditionalExpression {
 	pub fn consequent(&self) -> SyntaxResult<JsAnyExpression> {
 		support::children(self.syntax())

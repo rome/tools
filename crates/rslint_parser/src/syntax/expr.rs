@@ -3,14 +3,14 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use syntax::decl::is_semi;
-
-use super::decl::{arrow_body, class_decl, maybe_private_name, parameter_list};
+use super::decl::{arrow_body, maybe_private_name, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
+use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
 use crate::syntax::object::object_expr;
+use crate::syntax::stmt::is_semi;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -904,9 +904,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			//  constructor() {}
 			// }
 			// foo[class {}]
-			let mut m = class_decl(p, true);
-			m.change_kind(p, CLASS_EXPR);
-			m
+			class_expression(p)
 		}
 		// test async_ident
 		// let a = async;

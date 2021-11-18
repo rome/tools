@@ -82,7 +82,7 @@ JsAnyStatement =
 	| JsTryFinallyStatement
 	| JsDebuggerStatement
   | JsFunctionDeclaration
-	| ClassDecl
+	| JsClassDeclaration
 	| JsVariableDeclarationStatement
 	| TsEnum
 	| TsTypeAliasDecl
@@ -246,6 +246,7 @@ JsAnyExpression =
 	| JsArrowFunctionExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
+	| JsClassExpression
 	| JsConditionalExpression
 	| JsFunctionExpression
 	| JsImportCallExpression
@@ -265,7 +266,6 @@ JsAnyExpression =
 	| NewExpr
 	| CallExpr
 	| AssignExpr
-	| ClassExpr
 	| NewTarget
 	| ImportMeta
 	| SuperCall
@@ -333,7 +333,7 @@ JsFunctionExpression =
 	id: JsIdentifierBinding?
 	type_parameters: TsTypeParams?
 	parameters: JsParameterList
-	return_type: TsReturnType?
+	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
 
 
@@ -342,73 +342,11 @@ JsArrowFunctionExpression =
 	type_parameters: TsTypeParams?
 	parameter_list: JsAnyArrowFunctionParameters?
 	'=>'
-	return_type: TsReturnType?
+	return_type: TsTypeAnnotation?
 	manual__body: JsAnyArrowFunctionBody
 
 JsAnyArrowFunctionParameters = JsParameterList | JsIdentifierBinding
 JsAnyArrowFunctionBody = JsAnyExpression | JsFunctionBody
-
-// class expression
-ClassExpr =
-	'class'
-	name: Name
-	type_params:TsTypeParams?
-	parent:JsAnyExpression?
-	'implements'?
-	implements:TsExprWithTypeArgs?
-	body:ClassBody
-
-ClassBody =  '{' elements:ClassElement* '}'
-
-
-ClassElement =
-	JsEmptyStatement
-	| Method
-	// probably PrivateProp is not needed
-	| PrivateProp
-	| ClassProp
-	| Constructor
-	| TsIndexSignature
-	| Getter
-	| Setter
-	| JsUnknownMember
-
-Constructor =
-	accessibility:TsAccessibility?
-	name:PropName
-	type_params:TsTypeParams?
-	parameters:JsParameterList
-	body:JsFunctionBody
-
-
-ConstructorParameters =
-		'(' parameters:(ConstructorParamOrPat (',' ConstructorParamOrPat)* ','?) ')'
-
-
-ConstructorParamOrPat =
-	TsConstructorParam
-	| Pattern
-
-
-
-// This type is here only to maintain compatibility with rslit_parser
-// A private property should only have the hash (#) or have the
-// keyword `private` in the typescript version
-PrivateProp = class_prop: ClassProp
-// @ematipico: they way it's written now is awful and can be improved a lot
-ClassProp =
-	'declare'?
-	'abstract'?
-	'static'?
-	accessibility:TsAccessibility?
-	'#'?
-	key:PropName
-	'?'?
-	'!'?
-	ty:TsType
-	'='?
-	value:JsAnyExpression?
-	';'?
 
 // Array expression\
 JsArrayExpression =
@@ -480,28 +418,9 @@ JsPostUpdateExpression =
 ///////////////
 // OBJECTS
 ///////////////
-
-// { a: ... }
-//   ^
-JsStaticObjectMemberName = name: 'ident'
-
-// { [call()]: ... }
-//   ^^^^^^^^
-JsComputedObjectMemberName =
-	'['
-	expression: JsAnyExpression
-	']'
-
 JsAnyObjectMemberName =
-	JsStaticObjectMemberName
-	// { "a": ... }
-	//   ^^^
-	| JsStringLiteral
-
-	// { 5: ... }
-	//   ^
-	| JsNumberLiteral
-	| JsComputedObjectMemberName
+	JsLiteralMemberName
+	| JsComputedMemberName
 
 JsObjectExpression =
 	'{'
@@ -532,7 +451,7 @@ JsGetterObjectMember =
 	'get'
 	name: JsAnyObjectMemberName
 	'('')'
-	return_type: TsReturnType?
+	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
 
 //  { set a(value) {} }
@@ -553,7 +472,7 @@ JsMethodObjectMember =
 	name: JsAnyObjectMemberName
 	type_params: TsTypeParams?
 	parameter_list: JsParameterList
-	return_type: TsReturnType?
+	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
 
 // { a }
@@ -579,6 +498,131 @@ PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
 // initialised property
 InitializedProp = key:Name '=' value:JsAnyExpression
 
+///////////////
+// CLASSES
+///////////////
+
+JsClassDeclaration  =
+	'class'
+	id: JsIdentifierBinding
+	implements_clause: TsImplementsClause?
+	extends_clause: JsExtendsClause?
+	'{'
+	members: JsAnyClassMember*
+	'}'
+
+JsClassExpression =
+	'class'
+	id: JsIdentifierBinding?
+	extends_clause: JsExtendsClause?
+	'{'
+	members: JsAnyClassMember*
+	'}'
+
+TsImplementsClause =
+	'implements'
+	interfaces: (TsExprWithTypeArgs (',' TsExprWithTypeArgs)*)
+
+// class Test extends A {}
+//            ^^^^^^^^^
+JsExtendsClause =
+	'extends'
+	super_class: JsAnyExpression
+
+// class Test { #test; }
+//              ^^^^^
+JsPrivateClassMemberName = '#' id: 'ident'
+
+JsAnyClassMemberName =
+	JsLiteralMemberName
+	| JsComputedMemberName
+	| JsPrivateClassMemberName
+
+JsAnyClassMember =
+	JsConstructorClassMember
+	| JsPropertyClassMember
+	| JsMethodClassMember
+	| JsGetterClassMember
+	| JsSetterClassMember
+	| JsEmptyClassMember
+	| TsIndexSignature
+	| JsUnknownMember
+
+// class Test { constructor() {} }
+//              ^^^^^^^^^^^^^^^^
+// class Test { "constructor"() {} }
+//              ^^^^^^^^^^^^^^^^^^
+// class Test { 'constructor'() {} }
+//              ^^^^^^^^^^^^^^^^^^
+JsConstructorClassMember =
+	access_modifier: TsAccessibility?
+	name: JsLiteralMemberName
+	parameter_list: JsConstructorParameterList
+	body: JsFunctionBody
+
+JsConstructorParameterList =
+	'('
+	parameters: (JsAnyConstructorParameter (',' JsAnyConstructorParameter)* ','?)
+	')'
+
+JsAnyConstructorParameter =
+	TsConstructorParam
+	| Pattern
+
+// class Test { a; b = 1; static c; }
+//              ^^ ^^^^^^ ^^^^^^^^^
+JsPropertyClassMember =
+	'declare'?
+	access_modifier: TsAccessibility?
+	'abstract'?
+	'static'?
+	name: JsAnyClassMemberName
+	'?'?
+	'!'?
+	type: TsTypeAnnotation?
+	value: JsEqualValueClause?
+	';'?
+
+// class Test { a() {} }
+//              ^^^^^^
+JsMethodClassMember =
+	access_modifier: TsAccessibility?
+	'static'?
+	'abstract'?
+	'async'?
+	'*'?
+	name: JsAnyClassMemberName
+	type_parameters: TsTypeParams?
+	parameter_list: JsParameterList
+	return_type: TsTypeAnnotation?
+	body: JsFunctionBody
+
+// class Test { get a() {} }
+//              ^^^^^^^^^^
+JsGetterClassMember =
+	access_modifier: TsAccessibility?
+	'abstract'?
+	'static'?
+	'get'
+	name: JsAnyClassMemberName
+	'(' ')'
+	return_type: TsTypeAnnotation?
+	body: JsFunctionBody
+
+// class Test { set a(v) {} }
+//              ^^^^^^^^^^^
+JsSetterClassMember =
+	access_modifier: TsAccessibility?
+	'abstract'?
+	'static'?
+	'set'
+	name: JsAnyClassMemberName
+	'('
+	parameter: Pattern
+	')'
+	body: JsFunctionBody
+
+JsEmptyClassMember = ';'
 
 ///////////////
 // LITERALS
@@ -625,13 +669,13 @@ Pattern =
 
 // single pattern
 SinglePattern
-	= name:Name '?'? '!'? ':'? ty:TsType
+	= name:Name '?'? '!'? ty: TsTypeAnnotation?
 
 // rest pattern
 RestPattern = '...' pat:Pattern
 
 // array pattern
-ArrayPattern = '[' elements:Pattern* ']' '!' ':' ty:TsType
+ArrayPattern = '[' elements:Pattern* ']' '!' ty: TsTypeAnnotation?
 
 // object pattern
 ObjectPattern = '{' elements:(ObjectPatternProp (',' ObjectPatternProp)* ','?) '}'
@@ -645,7 +689,7 @@ ObjectPatternProp =
 	| JsUnknownPattern
 
 // assign pattern
-AssignPattern = key:Pattern ':'? ty:TsType '=' value:JsAnyExpression
+AssignPattern = key:Pattern ty: TsTypeAnnotation? '=' value:JsAnyExpression
 
 // key value pattern
 KeyValuePattern = key:PropName ':' manual__value:Pattern
@@ -657,21 +701,6 @@ ExprPattern = expr: JsAnyExpression
 ///////////////
 // MISCELLANEOUS
 ///////////////
-
-Getter =  'get' key:PropName parameters:JsParameterList  body:JsFunctionBody
-
-Setter = 'set' key:PropName parameters:JsParameterList  body:JsFunctionBody
-
-Method =
-	'static'?
-	'async'?
-	'*'?
-	name:PropName
-	type_params:TsTypeParams?
-	parameters:JsParameterList
-	':'?
-	return_type:TsType?
-	body:JsFunctionBody
 
 SpreadElement = '...' element:JsAnyExpression
 
@@ -694,10 +723,10 @@ JsFunctionDeclaration =
 	id: JsIdentifierBinding
 	type_parameters: TsTypeParams?
 	parameter_list: JsParameterList
-	return_type: TsReturnType?
+	return_type: TsTypeAnnotation?
 	body: JsFunctionBody
 
-TsReturnType =
+TsTypeAnnotation =
 	':'
 	type: TsType
 
@@ -712,9 +741,6 @@ JsVariableDeclarator =
 		// TODO #1725 change to `JsAnyBinding`
     id: Pattern
     init: JsEqualValueClause?
-
-// @ematipico: should we consider ClassDecl = ClassExpr ?
-ClassDecl  = 'class' name: Name ('extends' parent: JsAnyExpression)? body:ClassBody
 
 
 ///////////////
@@ -735,7 +761,7 @@ ImportDecl =
 ExportDefaultDecl = 'export' 'default'? 'type'? decl:DefaultDecl
 DefaultDecl =
 	JsFunctionDeclaration
-	| ClassDecl
+	| JsClassDeclaration
 
 
 // export default expression
@@ -750,7 +776,7 @@ ExportDecl = 'export' 'type'? decl: JsAnyExportDeclaration
 
 JsAnyExportDeclaration =
 	JsFunctionDeclaration
-	| ClassDecl
+	| JsClassDeclaration
 	| JsVariableDeclarationStatement
 	| TsEnum
 	| TsTypeAliasDecl
@@ -808,6 +834,19 @@ JsIdentifierBinding = name: 'ident'
 JsSpread =
 	'...'
 	argument: JsAnyExpression
+
+
+// { a: ..., "b": ..., 4: ... }
+//   ^       ^^^       ^
+JsLiteralMemberName = value: ('ident' | 'js_string_literal_token' | 'js_number_literal_token')
+
+// { [call()]: ... }
+//   ^^^^^^^^
+JsComputedMemberName =
+	'['
+	expression: JsAnyExpression
+	']'
+
 
 JsParameterList =
 	'('

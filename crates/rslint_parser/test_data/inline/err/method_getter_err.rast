@@ -1,61 +1,46 @@
 JS_ROOT@0..22
   LIST@0..0
   LIST@0..21
-    CLASS_DECL@0..19
+    JS_CLASS_DECLARATION@0..21
       CLASS_KW@0..5 "class"
       WHITESPACE@5..6 " "
-      NAME@6..9
+      JS_IDENTIFIER_BINDING@6..9
         IDENT@6..9 "foo"
       WHITESPACE@9..10 " "
-      CLASS_BODY@10..19
-        L_CURLY@10..11 "{"
-        WHITESPACE@11..13 "\n "
-        LIST@13..18
-          CLASS_PROP@13..16
-            NAME@13..16
-              IDENT@13..16 "get"
+      L_CURLY@10..11 "{"
+      WHITESPACE@11..13 "\n "
+      LIST@13..19
+        JS_GETTER_CLASS_MEMBER@13..19
+          GET_KW@13..16 "get"
           WHITESPACE@16..17 " "
-          ERROR@17..18
+          JS_FUNCTION_BODY@17..19
             L_CURLY@17..18 "{"
-        R_CURLY@18..19 "}"
-    WHITESPACE@19..20 "\n"
-    ERROR@20..21
+            LIST@18..18
+            LIST@18..18
+            R_CURLY@18..19 "}"
+      WHITESPACE@19..20 "\n"
       R_CURLY@20..21 "}"
   WHITESPACE@21..22 "\n"
 --
-error[SyntaxError]: expected a semicolon for a class property, but found none
-  ┌─ method_getter_err.js:2:2
-  │
-2 │  get {}
-  │  ^^^^
-
---
-error[SyntaxError]: class fields are unsupported
-  ┌─ method_getter_err.js:2:2
-  │
-2 │  get {}
-  │  ^^^
-
---
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ method_getter_err.js:2:6
   │
 2 │  get {}
-  │      ^ Expected an identifier or keyword here
+  │      ^ Expected an identifier, a keyword, or a string or number literal here
 
 --
-error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none
+error[SyntaxError]: expected `'('` but instead found `{`
   ┌─ method_getter_err.js:2:6
   │
 2 │  get {}
-  │      ^
+  │      ^ unexpected
 
 --
-error[SyntaxError]: Expected a statement or declaration, but found none
-  ┌─ method_getter_err.js:3:1
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ method_getter_err.js:2:6
   │
-3 │ }
-  │ ^ Expected a statement or declaration here
+2 │  get {}
+  │      ^ unexpected
 
 --
 class foo {

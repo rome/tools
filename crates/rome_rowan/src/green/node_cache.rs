@@ -2,7 +2,7 @@ use hashbrown::hash_map::RawEntryMut;
 use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
 
-use crate::api::Trivia;
+use crate::api::TriviaPiece;
 use crate::green::Slot;
 use crate::{
 	green::GreenElementRef, GreenNode, GreenNodeData, GreenToken, GreenTokenData, NodeOrToken,
@@ -161,8 +161,8 @@ impl NodeCache {
 		&mut self,
 		kind: SyntaxKind,
 		text: &str,
-		leading: Vec<Trivia>,
-		trailing: Vec<Trivia>,
+		leading: Vec<TriviaPiece>,
+		trailing: Vec<TriviaPiece>,
 	) -> (u64, GreenToken) {
 		let hash = token_hash_of(kind, text);
 

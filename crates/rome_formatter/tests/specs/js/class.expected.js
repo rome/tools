@@ -3,7 +3,7 @@ class Foo extends Boar {
 		super();
 	}
 	get g() {}
-	set gg() {}
+	set gg(a) {}
 	lorem() {
 		return "ipsum";
 	}
@@ -12,5 +12,5 @@ class Foo extends Boar {
 		return "bar";
 	}
 	new_prop = 5;
-	second_prop = [5, 3, 4];
+	double_semicolon = [5, 3, 4];
 }

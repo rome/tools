@@ -6,15 +6,12 @@ mod class;
 mod condition;
 mod declarators;
 mod expressions;
-mod getter;
 mod ident;
-mod method;
 mod name;
 mod object_members;
 mod parameter_list;
 mod patterns;
 mod script;
-mod setter;
 mod spread;
 mod statements;
 

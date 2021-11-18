@@ -94,7 +94,10 @@ use std::{
 
 use countme::Count;
 
-use crate::green::{Child, Children};
+use crate::{
+	green::{Child, Children},
+	TriviaPiece,
+};
 use crate::{
 	green::{GreenElementRef, GreenNodeData, GreenTokenData, SyntaxKind},
 	sll,
@@ -550,17 +553,27 @@ impl NodeData {
 	}
 }
 
-impl SyntaxTrivia {
-	pub(crate) fn text_range(&self) -> TextRange {
-		let green_token = self.token.green();
-		if self.is_leading {
-			TextRange::at(self.offset, green_token.leading_trivia().text_len())
-		} else {
-			let (_, trailing_len, total_len) = green_token.leading_trailing_total_len();
-			TextRange::at(self.offset + total_len - trailing_len, trailing_len)
-		}
-	}
+pub struct SyntaxTriviaPiecesIterator {
+	pub(crate) raw: SyntaxTrivia,
+	pub(crate) next_index: usize,
+	pub(crate) next_offset: TextSize,
+}
 
+impl Iterator for SyntaxTriviaPiecesIterator {
+	type Item = (TextSize, TriviaPiece);
+
+	fn next(&mut self) -> Option<Self::Item> {
+		let trivia = self.raw.get_piece(self.next_index)?;
+		let piece = (self.next_offset, trivia);
+
+		self.next_index += 1;
+		self.next_offset += trivia.text_len();
+
+		Some(piece)
+	}
+}
+
+impl SyntaxTrivia {
 	pub(crate) fn text(&self) -> &str {
 		let green_token = self.token.green();
 		if self.is_leading {
@@ -576,6 +589,38 @@ impl SyntaxTrivia {
 			green_token.leading_trivia().text_len()
 		} else {
 			green_token.trailing_trivia().text_len()
+		}
+	}
+
+	pub(crate) fn text_range(&self) -> TextRange {
+		let green_token = self.token.green();
+		if self.is_leading {
+			TextRange::at(self.offset, green_token.leading_trivia().text_len())
+		} else {
+			let (_, trailing_len, total_len) = green_token.leading_trailing_total_len();
+			TextRange::at(self.offset + total_len - trailing_len, trailing_len)
+		}
+	}
+
+	/// Gets index-th trivia piece when the token associated with this trivia was created.
+	/// See [SyntaxTriviaPiece].
+	pub(crate) fn get_piece(&self, index: usize) -> Option<TriviaPiece> {
+		let green_token = self.token.green();
+		if self.is_leading {
+			green_token.leading_trivia().get_piece(index)
+		} else {
+			green_token.trailing_trivia().get_piece(index)
+		}
+	}
+
+	/// Iterate over all pieces of the trivia. The iterator returns the offset
+	/// of the trivia as [TextSize] and its data as [Trivia], which contains its length.
+	/// See [SyntaxTriviaPiece].
+	pub(crate) fn pieces(&self) -> SyntaxTriviaPiecesIterator {
+		SyntaxTriviaPiecesIterator {
+			raw: self.clone(),
+			next_index: 0,
+			next_offset: self.offset,
 		}
 	}
 }

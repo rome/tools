@@ -4,9 +4,9 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	JsAnyObjectMember, JsArrayExpression, JsBooleanLiteral, JsNullLiteral, JsNumberLiteral,
-	JsObjectExpression, JsParenthesizedExpression, JsPropertyObjectMember, JsStringLiteral,
-	JsUnaryExpression,
+	JsAnyObjectMember, JsArrayExpression, JsBooleanLiteral, JsLiteralMemberName, JsNullLiteral,
+	JsNumberLiteral, JsObjectExpression, JsParenthesizedExpression, JsPropertyObjectMember,
+	JsStringLiteral, JsUnaryExpression,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
@@ -24,6 +24,9 @@ fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 
 fn tokenize_node(node: SyntaxNode) -> FormatElement {
 	match node.kind() {
+		SyntaxKind::JS_LITERAL_MEMBER_NAME => {
+			tokenize_token(node.to::<JsLiteralMemberName>().value().unwrap())
+		}
 		SyntaxKind::JS_STRING_LITERAL => {
 			tokenize_token(node.to::<JsStringLiteral>().value_token().unwrap())
 		}

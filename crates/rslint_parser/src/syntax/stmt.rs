@@ -2,12 +2,12 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
-use super::decl::class_decl;
 use super::expr::{assign_expr, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
 
@@ -47,10 +47,8 @@ pub const FOLLOWS_LET: TokenSet = token_set![T!['{'], T!['['], T![ident], T![yie
 pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 	// test_err semicolons_err
 	// let foo = bar throw foo
-	if p.eat(T![;]) || p.at(EOF) || p.at(T!['}']) {
-		return;
-	}
-	if !p.has_linebreak_before_n(0) {
+
+	if !optional_semi(p) {
 		let err = p
 			.err_builder(
 				"Expected a semicolon or an implicit semicolon after a statement, but found none",
@@ -63,6 +61,26 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 
 		p.error(err);
 	}
+}
+
+/// Eats a semicolon if present but doesn't add an error none is present and the automatic
+/// semicolon insertion rule does not apply.
+///
+/// Returns false if neither a semicolon was present and the current position doesn't allow an automatic
+/// semicolon insertion.
+pub(crate) fn optional_semi(p: &mut Parser) -> bool {
+	if p.eat(T![;]) {
+		return true;
+	}
+
+	is_semi(p, 0)
+}
+
+pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
+	p.nth_at(offset, T![;])
+		|| p.nth_at(offset, EOF)
+		|| p.nth_at(offset, T!['}'])
+		|| p.has_linebreak_before_n(offset)
 }
 
 /// A generic statement such as a block, if, while, with, etc
@@ -89,7 +107,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T![throw] => throw_stmt(p),
 		T![debugger] => debugger_stmt(p),
 		T![function] => function_declaration(p),
-		T![class] => class_decl(p, false),
+		T![class] => class_declaration(p),
 		T![ident]
 			if p.cur_src() == "async"
 				&& p.nth_at(1, T![function])

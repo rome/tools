@@ -75,7 +75,7 @@ fn parser_tests() {
 	dir_tests(&test_data_dir(), &["inline/err"], "rast", |text, path| {
 		let parse = try_parse(path.to_str().unwrap(), text);
 		let errors = parse.errors();
-		assert_errors_are_present(errors, path);
+		assert_errors_are_present(errors, path, &parse.syntax());
 		let mut files = SimpleFiles::new();
 		files.add(
 			path.file_name().unwrap().to_string_lossy().to_string(),
@@ -144,11 +144,12 @@ fn js_files_in_dir(dir: &Path) -> Vec<PathBuf> {
 	acc
 }
 
-fn assert_errors_are_present(errors: &[ParserError], path: &Path) {
+fn assert_errors_are_present(errors: &[ParserError], path: &Path, syntax: &SyntaxNode) {
 	assert!(
 		!errors.is_empty(),
-		"There should be errors in the file {:?}",
-		path.display()
+		"There should be errors in the file {:?}\nSyntax Tree: {:#?}",
+		path.display(),
+		syntax
 	);
 }
 

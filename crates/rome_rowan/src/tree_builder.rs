@@ -1,5 +1,5 @@
 use crate::{
-	api::Trivia,
+	api::TriviaPiece,
 	cow_mut::CowMut,
 	green::{GreenElement, NodeCache},
 	GreenNode, Language, NodeOrToken, SyntaxNode,
@@ -72,8 +72,8 @@ impl<L: Language> TreeBuilder<'_, L> {
 		&mut self,
 		kind: L::Kind,
 		text: &str,
-		leading: Vec<Trivia>,
-		trailing: Vec<Trivia>,
+		leading: Vec<TriviaPiece>,
+		trailing: Vec<TriviaPiece>,
 	) {
 		let (hash, token) =
 			self.cache

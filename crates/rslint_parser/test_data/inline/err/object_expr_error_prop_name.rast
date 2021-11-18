@@ -51,18 +51,18 @@ JS_ROOT@0..40
       R_CURLY@38..39 "}"
   WHITESPACE@39..40 "\n"
 --
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ object_expr_error_prop_name.js:1:11
   │
 1 │ let a = { /: 6, /: /foo/ }
-  │           ^^^^^^^ Expected an identifier or keyword here
+  │           ^^^^^^^ Expected an identifier, a keyword, or a string or number literal here
 
 --
-error[SyntaxError]: Expected an identifier or keyword
+error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ object_expr_error_prop_name.js:2:10
   │
 2 │ let a = {{}}
-  │          ^ Expected an identifier or keyword here
+  │          ^ Expected an identifier, a keyword, or a string or number literal here
 
 --
 error[SyntaxError]: Expected a statement or declaration, but found none

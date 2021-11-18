@@ -217,7 +217,7 @@ impl Syntax {
 
 	pub fn module(mut self) -> Self {
 		self.file_kind = FileKind::Module;
-		self
+		self.class_fields()
 	}
 
 	pub fn typescript(mut self) -> Self {
