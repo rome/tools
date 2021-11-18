@@ -218,7 +218,7 @@ pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker
 fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
 		T!['['] => Some(computed_member_name(p)),
-		_ => static_member_name(p),
+		_ => literal_member_name(p),
 	}
 }
 
@@ -231,7 +231,7 @@ pub(crate) fn computed_member_name(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_COMPUTED_MEMBER_NAME)
 }
 
-pub(super) fn static_member_name(p: &mut Parser) -> Option<CompletedMarker> {
+pub(super) fn literal_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 
 	match p.cur() {
@@ -252,7 +252,7 @@ pub(super) fn static_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 			return None;
 		}
 	}
-	Some(m.complete(p, JS_STATIC_MEMBER_NAME))
+	Some(m.complete(p, JS_LITERAL_MEMBER_NAME))
 }
 
 /// Parses a method object member

@@ -419,7 +419,7 @@ JsPostUpdateExpression =
 // OBJECTS
 ///////////////
 JsAnyObjectMemberName =
-	JsStaticMemberName
+	JsLiteralMemberName
 	| JsComputedMemberName
 
 JsObjectExpression =
@@ -534,7 +534,7 @@ JsExtendsClause =
 JsPrivateClassMemberName = '#' id: 'ident'
 
 JsAnyClassMemberName =
-	JsStaticMemberName
+	JsLiteralMemberName
 	| JsComputedMemberName
 	| JsPrivateClassMemberName
 
@@ -556,7 +556,7 @@ JsAnyClassMember =
 //              ^^^^^^^^^^^^^^^^^^
 JsConstructorClassMember =
 	access_modifier: TsAccessibility?
-	name: JsStaticMemberName
+	name: JsLiteralMemberName
 	parameter_list: JsConstructorParameterList
 	body: JsFunctionBody
 
@@ -838,7 +838,7 @@ JsSpread =
 
 // { a: ..., "b": ..., 4: ... }
 //   ^       ^^^       ^
-JsStaticMemberName = value: ('ident' | 'js_string_literal_token' | 'js_number_literal_token')
+JsLiteralMemberName = value: ('ident' | 'js_string_literal_token' | 'js_number_literal_token')
 
 // { [call()]: ... }
 //   ^^^^^^^^

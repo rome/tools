@@ -1312,10 +1312,10 @@ pub struct JsArrayHole {
 }
 impl JsArrayHole {}
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct JsStaticMemberName {
+pub struct JsLiteralMemberName {
 	pub(crate) syntax: SyntaxNode,
 }
-impl JsStaticMemberName {
+impl JsLiteralMemberName {
 	pub fn value(&self) -> SyntaxResult<SyntaxToken> {
 		support::find_required_token(
 			&self.syntax,
@@ -1532,7 +1532,7 @@ pub struct JsConstructorClassMember {
 }
 impl JsConstructorClassMember {
 	pub fn access_modifier(&self) -> Option<TsAccessibility> { support::node(&self.syntax) }
-	pub fn name(&self) -> SyntaxResult<JsStaticMemberName> { support::required_node(&self.syntax) }
+	pub fn name(&self) -> SyntaxResult<JsLiteralMemberName> { support::required_node(&self.syntax) }
 	pub fn parameter_list(&self) -> SyntaxResult<JsConstructorParameterList> {
 		support::required_node(&self.syntax)
 	}
@@ -2559,7 +2559,7 @@ pub enum PatternOrExpr {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMemberName {
-	JsStaticMemberName(JsStaticMemberName),
+	JsLiteralMemberName(JsLiteralMemberName),
 	JsComputedMemberName(JsComputedMemberName),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2595,7 +2595,7 @@ pub enum JsAnyClassMember {
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMemberName {
-	JsStaticMemberName(JsStaticMemberName),
+	JsLiteralMemberName(JsLiteralMemberName),
 	JsComputedMemberName(JsComputedMemberName),
 	JsPrivateClassMemberName(JsPrivateClassMemberName),
 }
@@ -3758,8 +3758,8 @@ impl AstNode for JsArrayHole {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl AstNode for JsStaticMemberName {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MEMBER_NAME }
+impl AstNode for JsLiteralMemberName {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LITERAL_MEMBER_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5633,9 +5633,9 @@ impl AstNode for PatternOrExpr {
 		}
 	}
 }
-impl From<JsStaticMemberName> for JsAnyObjectMemberName {
-	fn from(node: JsStaticMemberName) -> JsAnyObjectMemberName {
-		JsAnyObjectMemberName::JsStaticMemberName(node)
+impl From<JsLiteralMemberName> for JsAnyObjectMemberName {
+	fn from(node: JsLiteralMemberName) -> JsAnyObjectMemberName {
+		JsAnyObjectMemberName::JsLiteralMemberName(node)
 	}
 }
 impl From<JsComputedMemberName> for JsAnyObjectMemberName {
@@ -5646,14 +5646,14 @@ impl From<JsComputedMemberName> for JsAnyObjectMemberName {
 impl AstNode for JsAnyObjectMemberName {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			JS_STATIC_MEMBER_NAME | JS_COMPUTED_MEMBER_NAME => true,
+			JS_LITERAL_MEMBER_NAME | JS_COMPUTED_MEMBER_NAME => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			JS_STATIC_MEMBER_NAME => {
-				JsAnyObjectMemberName::JsStaticMemberName(JsStaticMemberName { syntax })
+			JS_LITERAL_MEMBER_NAME => {
+				JsAnyObjectMemberName::JsLiteralMemberName(JsLiteralMemberName { syntax })
 			}
 			JS_COMPUTED_MEMBER_NAME => {
 				JsAnyObjectMemberName::JsComputedMemberName(JsComputedMemberName { syntax })
@@ -5664,7 +5664,7 @@ impl AstNode for JsAnyObjectMemberName {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyObjectMemberName::JsStaticMemberName(it) => &it.syntax,
+			JsAnyObjectMemberName::JsLiteralMemberName(it) => &it.syntax,
 			JsAnyObjectMemberName::JsComputedMemberName(it) => &it.syntax,
 		}
 	}
@@ -5900,9 +5900,9 @@ impl AstNode for JsAnyClassMember {
 		}
 	}
 }
-impl From<JsStaticMemberName> for JsAnyClassMemberName {
-	fn from(node: JsStaticMemberName) -> JsAnyClassMemberName {
-		JsAnyClassMemberName::JsStaticMemberName(node)
+impl From<JsLiteralMemberName> for JsAnyClassMemberName {
+	fn from(node: JsLiteralMemberName) -> JsAnyClassMemberName {
+		JsAnyClassMemberName::JsLiteralMemberName(node)
 	}
 }
 impl From<JsComputedMemberName> for JsAnyClassMemberName {
@@ -5918,14 +5918,14 @@ impl From<JsPrivateClassMemberName> for JsAnyClassMemberName {
 impl AstNode for JsAnyClassMemberName {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
-			JS_STATIC_MEMBER_NAME | JS_COMPUTED_MEMBER_NAME | JS_PRIVATE_CLASS_MEMBER_NAME => true,
+			JS_LITERAL_MEMBER_NAME | JS_COMPUTED_MEMBER_NAME | JS_PRIVATE_CLASS_MEMBER_NAME => true,
 			_ => false,
 		}
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
-			JS_STATIC_MEMBER_NAME => {
-				JsAnyClassMemberName::JsStaticMemberName(JsStaticMemberName { syntax })
+			JS_LITERAL_MEMBER_NAME => {
+				JsAnyClassMemberName::JsLiteralMemberName(JsLiteralMemberName { syntax })
 			}
 			JS_COMPUTED_MEMBER_NAME => {
 				JsAnyClassMemberName::JsComputedMemberName(JsComputedMemberName { syntax })
@@ -5939,7 +5939,7 @@ impl AstNode for JsAnyClassMemberName {
 	}
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyClassMemberName::JsStaticMemberName(it) => &it.syntax,
+			JsAnyClassMemberName::JsLiteralMemberName(it) => &it.syntax,
 			JsAnyClassMemberName::JsComputedMemberName(it) => &it.syntax,
 			JsAnyClassMemberName::JsPrivateClassMemberName(it) => &it.syntax,
 		}
@@ -7184,7 +7184,7 @@ impl std::fmt::Display for JsArrayHole {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsStaticMemberName {
+impl std::fmt::Display for JsLiteralMemberName {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

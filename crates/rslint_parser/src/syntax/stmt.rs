@@ -63,9 +63,11 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 	}
 }
 
-/// Eats a semicolon or verifies that the current position allows for an automatic semicolon insertion
-/// Returns false if neither a semicolon was present nor does the current position allow for an automatic
-/// semicolon insertion
+/// Eats a semicolon if present but doesn't add an error none is present and the automatic
+/// semicolon insertion rule does not apply.
+///
+/// Returns false if neither a semicolon was present and the current position doesn't allow an automatic
+/// semicolon insertion.
 pub(crate) fn optional_semi(p: &mut Parser) -> bool {
 	if p.eat(T![;]) {
 		return true;

@@ -18,7 +18,7 @@ JS_ROOT@0..53
                 L_CURLY@8..9 "{"
                 LIST@9..51
                   JS_PROPERTY_OBJECT_MEMBER@9..19
-                    JS_STATIC_MEMBER_NAME@9..14
+                    JS_LITERAL_MEMBER_NAME@9..14
                       JS_STRING_LITERAL_TOKEN@9..14 "\"foo\""
                     COLON@14..15 ":"
                     WHITESPACE@15..16 " "
@@ -45,7 +45,7 @@ JS_ROOT@0..53
                   COMMA@33..34 ","
                   WHITESPACE@34..35 " "
                   JS_PROPERTY_OBJECT_MEMBER@35..43
-                    JS_STATIC_MEMBER_NAME@35..38
+                    JS_LITERAL_MEMBER_NAME@35..38
                       IDENT@35..38 "bar"
                     COLON@38..39 ":"
                     WHITESPACE@39..40 " "
@@ -54,7 +54,7 @@ JS_ROOT@0..53
                   COMMA@43..44 ","
                   WHITESPACE@44..45 " "
                   JS_PROPERTY_OBJECT_MEMBER@45..51
-                    JS_STATIC_MEMBER_NAME@45..46
+                    JS_LITERAL_MEMBER_NAME@45..46
                       JS_NUMBER_LITERAL_TOKEN@45..46 "7"
                     COLON@46..47 ":"
                     WHITESPACE@47..48 " "

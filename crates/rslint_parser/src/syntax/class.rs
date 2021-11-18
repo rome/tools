@@ -1,7 +1,7 @@
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
 use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
-use crate::syntax::object::{computed_member_name, static_member_name};
+use crate::syntax::object::{computed_member_name, literal_member_name};
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{is_semi, optional_semi};
 use crate::syntax::typescript::{
@@ -226,10 +226,10 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 	if declare && !has_access_modifier {
 		// declare() and declare: foo
 		if is_method_class_member(p, offset) {
-			static_member_name(p); // bump declare as identifier
+			literal_member_name(p); // bump declare as identifier
 			return Some(method_class_member_body(p, member_marker));
 		} else if is_property_class_member(p, offset) {
-			static_member_name(p); // bump declare as identifier
+			literal_member_name(p); // bump declare as identifier
 			return Some(property_class_member_body(p, member_marker));
 		} else {
 			let msg = if p.typescript() {
@@ -289,7 +289,7 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 			consume_modifiers(p, declare, has_access_modifier, is_static, true);
 
 			return Some(if declare {
-				property_declaration_class_member_body(p, member_marker, JS_STATIC_MEMBER_NAME)
+				property_declaration_class_member_body(p, member_marker, JS_LITERAL_MEMBER_NAME)
 			} else {
 				property_class_member_body(p, member_marker)
 			});
@@ -472,7 +472,7 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 			return Some(property);
 		}
 
-		if member.kind() == JS_STATIC_MEMBER_NAME {
+		if member.kind() == JS_LITERAL_MEMBER_NAME {
 			let is_at_line_break_or_generator = p.has_linebreak_before_n(0) && p.at(T![*]);
 			let member_name = member.text(p);
 			if matches!(member_name, "get" | "set") && !is_at_line_break_or_generator {
@@ -790,7 +790,7 @@ fn class_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let result = match p.cur() {
 		T![#] => private_member_name(p),
 		T!['['] => computed_member_name(p),
-		_ => static_member_name(p)?,
+		_ => literal_member_name(p)?,
 	};
 
 	Some(result)

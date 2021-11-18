@@ -13,7 +13,7 @@ JS_ROOT@0..219
         JS_SETTER_CLASS_MEMBER@17..30
           SET_KW@17..20 "set"
           WHITESPACE@20..21 " "
-          JS_STATIC_MEMBER_NAME@21..24
+          JS_LITERAL_MEMBER_NAME@21..24
             IDENT@21..24 "foo"
           L_PAREN@24..25 "("
           SINGLE_PATTERN@25..26
@@ -30,7 +30,7 @@ JS_ROOT@0..219
         JS_SETTER_CLASS_MEMBER@32..48
           SET_KW@32..35 "set"
           WHITESPACE@35..36 " "
-          JS_STATIC_MEMBER_NAME@36..42
+          JS_LITERAL_MEMBER_NAME@36..42
             IDENT@36..42 "static"
           L_PAREN@42..43 "("
           SINGLE_PATTERN@43..44
@@ -49,7 +49,7 @@ JS_ROOT@0..219
           WHITESPACE@56..57 " "
           SET_KW@57..60 "set"
           WHITESPACE@60..61 " "
-          JS_STATIC_MEMBER_NAME@61..64
+          JS_LITERAL_MEMBER_NAME@61..64
             IDENT@61..64 "bar"
           L_PAREN@64..65 "("
           SINGLE_PATTERN@65..66
@@ -66,7 +66,7 @@ JS_ROOT@0..219
         JS_SETTER_CLASS_MEMBER@73..88
           SET_KW@73..76 "set"
           WHITESPACE@76..77 " "
-          JS_STATIC_MEMBER_NAME@77..82
+          JS_LITERAL_MEMBER_NAME@77..82
             JS_STRING_LITERAL_TOKEN@77..82 "\"baz\""
           L_PAREN@82..83 "("
           SINGLE_PATTERN@83..84
@@ -109,7 +109,7 @@ JS_ROOT@0..219
         JS_SETTER_CLASS_MEMBER@115..126
           SET_KW@115..118 "set"
           WHITESPACE@118..119 " "
-          JS_STATIC_MEMBER_NAME@119..120
+          JS_LITERAL_MEMBER_NAME@119..120
             JS_NUMBER_LITERAL_TOKEN@119..120 "5"
           L_PAREN@120..121 "("
           SINGLE_PATTERN@121..122
@@ -153,7 +153,7 @@ JS_ROOT@0..219
       WHITESPACE@169..171 "\n\t"
       LIST@171..215
         JS_METHOD_CLASS_MEMBER@171..180
-          JS_STATIC_MEMBER_NAME@171..174
+          JS_LITERAL_MEMBER_NAME@171..174
             IDENT@171..174 "set"
           JS_PARAMETER_LIST@174..177
             L_PAREN@174..175 "("
@@ -172,7 +172,7 @@ JS_ROOT@0..219
         JS_METHOD_CLASS_MEMBER@182..197
           ASYNC_KW@182..187 "async"
           WHITESPACE@187..188 " "
-          JS_STATIC_MEMBER_NAME@188..191
+          JS_LITERAL_MEMBER_NAME@188..191
             IDENT@188..191 "set"
           JS_PARAMETER_LIST@191..194
             L_PAREN@191..192 "("
@@ -191,7 +191,7 @@ JS_ROOT@0..219
         JS_METHOD_CLASS_MEMBER@199..215
           STATIC_KW@199..205 "static"
           WHITESPACE@205..206 " "
-          JS_STATIC_MEMBER_NAME@206..209
+          JS_LITERAL_MEMBER_NAME@206..209
             IDENT@206..209 "set"
           JS_PARAMETER_LIST@209..212
             L_PAREN@209..210 "("

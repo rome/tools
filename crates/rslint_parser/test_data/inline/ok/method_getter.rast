@@ -13,7 +13,7 @@ JS_ROOT@0..28
         JS_GETTER_CLASS_MEMBER@13..25
           GET_KW@13..16 "get"
           WHITESPACE@16..17 " "
-          JS_STATIC_MEMBER_NAME@17..20
+          JS_LITERAL_MEMBER_NAME@17..20
             IDENT@17..20 "bar"
           L_PAREN@20..21 "("
           R_PAREN@21..22 ")"

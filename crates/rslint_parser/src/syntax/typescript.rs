@@ -142,7 +142,7 @@ pub(crate) fn ts_declare(p: &mut Parser) -> Option<CompletedMarker> {
 			let m = p.start();
 			p.bump_remap(T![declare]);
 			class_declaration(p).undo_completion(p).abandon(p);
-			m.complete(p, JS_STATIC_MEMBER_NAME)
+			m.complete(p, JS_LITERAL_MEMBER_NAME)
 		}
 		t if (t == T![const] && p.nth_at(2, T![enum])) || t == T![enum] => {
 			let m = p.start();
@@ -206,7 +206,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 			return None;
 		}
 		class_declaration(p).undo_completion(p).abandon(p);
-		return Some(m.complete(p, JS_STATIC_MEMBER_NAME));
+		return Some(m.complete(p, JS_LITERAL_MEMBER_NAME));
 	}
 
 	if p.at(T![enum]) {

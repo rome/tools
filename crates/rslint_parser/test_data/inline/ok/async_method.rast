@@ -13,7 +13,7 @@ JS_ROOT@0..47
         JS_METHOD_CLASS_MEMBER@13..27
           ASYNC_KW@13..18 "async"
           WHITESPACE@18..19 " "
-          JS_STATIC_MEMBER_NAME@19..22
+          JS_LITERAL_MEMBER_NAME@19..22
             IDENT@19..22 "foo"
           JS_PARAMETER_LIST@22..24
             L_PAREN@22..23 "("
@@ -30,7 +30,7 @@ JS_ROOT@0..47
           ASYNC_KW@29..34 "async"
           WHITESPACE@34..35 " "
           STAR@35..36 "*"
-          JS_STATIC_MEMBER_NAME@36..39
+          JS_LITERAL_MEMBER_NAME@36..39
             IDENT@36..39 "foo"
           JS_PARAMETER_LIST@39..41
             L_PAREN@39..40 "("

@@ -45,7 +45,7 @@ JS_ROOT@0..72
                 WHITESPACE@37..39 "\n "
                 LIST@39..55
                   JS_CONSTRUCTOR_CLASS_MEMBER@39..55
-                    JS_STATIC_MEMBER_NAME@39..50
+                    JS_LITERAL_MEMBER_NAME@39..50
                       IDENT@39..50 "constructor"
                     JS_CONSTRUCTOR_PARAMETER_LIST@50..52
                       L_PAREN@50..51 "("

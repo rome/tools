@@ -21,7 +21,7 @@ JS_ROOT@0..212
                   JS_GETTER_OBJECT_MEMBER@11..40
                     GET_KW@11..14 "get"
                     WHITESPACE@14..15 " "
-                    JS_STATIC_MEMBER_NAME@15..18
+                    JS_LITERAL_MEMBER_NAME@15..18
                       IDENT@15..18 "foo"
                     L_PAREN@18..19 "("
                     R_PAREN@19..20 ")"
@@ -44,7 +44,7 @@ JS_ROOT@0..212
                   JS_GETTER_OBJECT_MEMBER@44..76
                     GET_KW@44..47 "get"
                     WHITESPACE@47..48 " "
-                    JS_STATIC_MEMBER_NAME@48..53
+                    JS_LITERAL_MEMBER_NAME@48..53
                       JS_STRING_LITERAL_TOKEN@48..53 "\"bar\""
                     L_PAREN@53..54 "("
                     R_PAREN@54..55 ")"
@@ -104,7 +104,7 @@ JS_ROOT@0..212
                   JS_GETTER_OBJECT_MEMBER@125..149
                     GET_KW@125..128 "get"
                     WHITESPACE@128..129 " "
-                    JS_STATIC_MEMBER_NAME@129..130
+                    JS_LITERAL_MEMBER_NAME@129..130
                       JS_NUMBER_LITERAL_TOKEN@129..130 "5"
                     L_PAREN@130..131 "("
                     R_PAREN@131..132 ")"
@@ -125,7 +125,7 @@ JS_ROOT@0..212
                   COMMA@149..150 ","
                   WHITESPACE@150..153 "\n\n\t"
                   JS_METHOD_OBJECT_MEMBER@153..209
-                    JS_STATIC_MEMBER_NAME@153..156
+                    JS_LITERAL_MEMBER_NAME@153..156
                       IDENT@153..156 "get"
                     JS_PARAMETER_LIST@156..158
                       L_PAREN@156..157 "("

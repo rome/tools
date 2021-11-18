@@ -11,16 +11,16 @@ JS_ROOT@0..255
       WHITESPACE@11..13 "\n\t"
       LIST@13..251
         JS_PROPERTY_CLASS_MEMBER@13..21
-          JS_STATIC_MEMBER_NAME@13..21
+          JS_LITERAL_MEMBER_NAME@13..21
             IDENT@13..21 "property"
         WHITESPACE@21..23 "\n\t"
         JS_PROPERTY_CLASS_MEMBER@23..31
-          JS_STATIC_MEMBER_NAME@23..30
+          JS_LITERAL_MEMBER_NAME@23..30
             IDENT@23..30 "declare"
           SEMICOLON@30..31 ";"
         WHITESPACE@31..33 "\n\t"
         JS_PROPERTY_CLASS_MEMBER@33..58
-          JS_STATIC_MEMBER_NAME@33..52
+          JS_LITERAL_MEMBER_NAME@33..52
             IDENT@33..52 "initializedProperty"
           WHITESPACE@52..53 " "
           JS_EQUAL_VALUE_CLAUSE@53..58
@@ -30,12 +30,12 @@ JS_ROOT@0..255
               JS_STRING_LITERAL_TOKEN@55..58 "\"a\""
         WHITESPACE@58..61 "\n\n\t"
         JS_PROPERTY_CLASS_MEMBER@61..65
-          JS_STATIC_MEMBER_NAME@61..64
+          JS_LITERAL_MEMBER_NAME@61..64
             JS_STRING_LITERAL_TOKEN@61..64 "\"a\""
           SEMICOLON@64..65 ";"
         WHITESPACE@65..67 "\n\t"
         JS_PROPERTY_CLASS_MEMBER@67..68
-          JS_STATIC_MEMBER_NAME@67..68
+          JS_LITERAL_MEMBER_NAME@67..68
             JS_NUMBER_LITERAL_TOKEN@67..68 "5"
         WHITESPACE@68..70 "\n\t"
         JS_PROPERTY_CLASS_MEMBER@70..81
@@ -54,13 +54,13 @@ JS_ROOT@0..255
         JS_PROPERTY_CLASS_MEMBER@84..105
           STATIC_KW@84..90 "static"
           WHITESPACE@90..91 " "
-          JS_STATIC_MEMBER_NAME@91..105
+          JS_LITERAL_MEMBER_NAME@91..105
             IDENT@91..105 "staticProperty"
         WHITESPACE@105..107 "\n\t"
         JS_PROPERTY_CLASS_MEMBER@107..143
           STATIC_KW@107..113 "static"
           WHITESPACE@113..114 " "
-          JS_STATIC_MEMBER_NAME@114..139
+          JS_LITERAL_MEMBER_NAME@114..139
             IDENT@114..139 "staticInitializedProp ..."
           WHITESPACE@139..140 " "
           JS_EQUAL_VALUE_CLAUSE@140..143

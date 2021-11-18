@@ -11,7 +11,7 @@ JS_ROOT@0..607
       WHITESPACE@12..14 "\n\t"
       LIST@14..166
         JS_METHOD_CLASS_MEMBER@14..25
-          JS_STATIC_MEMBER_NAME@14..20
+          JS_LITERAL_MEMBER_NAME@14..20
             IDENT@14..20 "method"
           JS_PARAMETER_LIST@20..22
             L_PAREN@20..21 "("
@@ -27,7 +27,7 @@ JS_ROOT@0..607
         JS_METHOD_CLASS_MEMBER@27..49
           ASYNC_KW@27..32 "async"
           WHITESPACE@32..33 " "
-          JS_STATIC_MEMBER_NAME@33..44
+          JS_LITERAL_MEMBER_NAME@33..44
             IDENT@33..44 "asyncMethod"
           JS_PARAMETER_LIST@44..46
             L_PAREN@44..45 "("
@@ -44,7 +44,7 @@ JS_ROOT@0..607
           ASYNC_KW@51..56 "async"
           STAR@56..57 "*"
           WHITESPACE@57..58 " "
-          JS_STATIC_MEMBER_NAME@58..78
+          JS_LITERAL_MEMBER_NAME@58..78
             IDENT@58..78 "asyncGeneratorMethod"
           JS_PARAMETER_LIST@78..80
             L_PAREN@78..79 "("
@@ -60,7 +60,7 @@ JS_ROOT@0..607
         JS_METHOD_CLASS_MEMBER@85..107
           STAR@85..86 "*"
           WHITESPACE@86..87 " "
-          JS_STATIC_MEMBER_NAME@87..102
+          JS_LITERAL_MEMBER_NAME@87..102
             IDENT@87..102 "generatorMethod"
           JS_PARAMETER_LIST@102..104
             L_PAREN@102..103 "("
@@ -74,7 +74,7 @@ JS_ROOT@0..607
             R_CURLY@106..107 "}"
         WHITESPACE@107..110 "\n\n\t"
         JS_METHOD_CLASS_MEMBER@110..120
-          JS_STATIC_MEMBER_NAME@110..115
+          JS_LITERAL_MEMBER_NAME@110..115
             JS_STRING_LITERAL_TOKEN@110..115 "\"foo\""
           JS_PARAMETER_LIST@115..117
             L_PAREN@115..116 "("
@@ -111,7 +111,7 @@ JS_ROOT@0..607
             R_CURLY@141..142 "}"
         WHITESPACE@142..144 "\n\t"
         JS_METHOD_CLASS_MEMBER@144..150
-          JS_STATIC_MEMBER_NAME@144..145
+          JS_LITERAL_MEMBER_NAME@144..145
             JS_NUMBER_LITERAL_TOKEN@144..145 "5"
           JS_PARAMETER_LIST@145..147
             L_PAREN@145..146 "("
@@ -168,7 +168,7 @@ JS_ROOT@0..607
         JS_METHOD_CLASS_MEMBER@237..254
           ASYNC_KW@237..242 "async"
           WHITESPACE@242..243 " "
-          JS_STATIC_MEMBER_NAME@243..249
+          JS_LITERAL_MEMBER_NAME@243..249
             IDENT@243..249 "static"
           JS_PARAMETER_LIST@249..251
             L_PAREN@249..250 "("
@@ -184,7 +184,7 @@ JS_ROOT@0..607
         JS_METHOD_CLASS_MEMBER@256..269
           STAR@256..257 "*"
           WHITESPACE@257..258 " "
-          JS_STATIC_MEMBER_NAME@258..264
+          JS_LITERAL_MEMBER_NAME@258..264
             IDENT@258..264 "static"
           JS_PARAMETER_LIST@264..266
             L_PAREN@264..265 "("
@@ -201,7 +201,7 @@ JS_ROOT@0..607
           ASYNC_KW@271..276 "async"
           STAR@276..277 "*"
           WHITESPACE@277..278 " "
-          JS_STATIC_MEMBER_NAME@278..284
+          JS_LITERAL_MEMBER_NAME@278..284
             IDENT@278..284 "static"
           JS_PARAMETER_LIST@284..286
             L_PAREN@284..285 "("
@@ -215,7 +215,7 @@ JS_ROOT@0..607
             R_CURLY@288..289 "}"
         WHITESPACE@289..292 "\n\n\t"
         JS_METHOD_CLASS_MEMBER@292..304
-          JS_STATIC_MEMBER_NAME@292..299
+          JS_LITERAL_MEMBER_NAME@292..299
             IDENT@292..299 "declare"
           JS_PARAMETER_LIST@299..301
             L_PAREN@299..300 "("
@@ -229,7 +229,7 @@ JS_ROOT@0..607
             R_CURLY@303..304 "}"
         WHITESPACE@304..307 "\n\n\t"
         JS_METHOD_CLASS_MEMBER@307..315
-          JS_STATIC_MEMBER_NAME@307..310
+          JS_LITERAL_MEMBER_NAME@307..310
             IDENT@307..310 "get"
           JS_PARAMETER_LIST@310..312
             L_PAREN@310..311 "("
@@ -245,7 +245,7 @@ JS_ROOT@0..607
         COMMENT@316..336 "// Method called get"
         WHITESPACE@336..338 "\n\t"
         JS_METHOD_CLASS_MEMBER@338..346
-          JS_STATIC_MEMBER_NAME@338..341
+          JS_LITERAL_MEMBER_NAME@338..341
             IDENT@338..341 "set"
           JS_PARAMETER_LIST@341..343
             L_PAREN@341..342 "("
@@ -274,7 +274,7 @@ JS_ROOT@0..607
         JS_METHOD_CLASS_MEMBER@387..405
           STATIC_KW@387..393 "static"
           WHITESPACE@393..394 " "
-          JS_STATIC_MEMBER_NAME@394..400
+          JS_LITERAL_MEMBER_NAME@394..400
             IDENT@394..400 "method"
           JS_PARAMETER_LIST@400..402
             L_PAREN@400..401 "("
@@ -292,7 +292,7 @@ JS_ROOT@0..607
           WHITESPACE@413..414 " "
           ASYNC_KW@414..419 "async"
           WHITESPACE@419..420 " "
-          JS_STATIC_MEMBER_NAME@420..431
+          JS_LITERAL_MEMBER_NAME@420..431
             IDENT@420..431 "asyncMethod"
           JS_PARAMETER_LIST@431..433
             L_PAREN@431..432 "("
@@ -311,7 +311,7 @@ JS_ROOT@0..607
           ASYNC_KW@445..450 "async"
           STAR@450..451 "*"
           WHITESPACE@451..452 " "
-          JS_STATIC_MEMBER_NAME@452..472
+          JS_LITERAL_MEMBER_NAME@452..472
             IDENT@452..472 "asyncGeneratorMethod"
           JS_PARAMETER_LIST@472..474
             L_PAREN@472..473 "("
@@ -329,7 +329,7 @@ JS_ROOT@0..607
           WHITESPACE@485..486 " "
           STAR@486..487 "*"
           WHITESPACE@487..488 " "
-          JS_STATIC_MEMBER_NAME@488..503
+          JS_LITERAL_MEMBER_NAME@488..503
             IDENT@488..503 "generatorMethod"
           JS_PARAMETER_LIST@503..505
             L_PAREN@503..504 "("
@@ -345,7 +345,7 @@ JS_ROOT@0..607
         JS_METHOD_CLASS_MEMBER@511..529
           STATIC_KW@511..517 "static"
           WHITESPACE@517..518 " "
-          JS_STATIC_MEMBER_NAME@518..524
+          JS_LITERAL_MEMBER_NAME@518..524
             IDENT@518..524 "static"
           JS_PARAMETER_LIST@524..526
             L_PAREN@524..525 "("
@@ -363,7 +363,7 @@ JS_ROOT@0..607
           WHITESPACE@537..538 " "
           ASYNC_KW@538..543 "async"
           WHITESPACE@543..544 " "
-          JS_STATIC_MEMBER_NAME@544..550
+          JS_LITERAL_MEMBER_NAME@544..550
             IDENT@544..550 "static"
           JS_PARAMETER_LIST@550..552
             L_PAREN@550..551 "("
@@ -382,7 +382,7 @@ JS_ROOT@0..607
           ASYNC_KW@564..569 "async"
           STAR@569..570 "*"
           WHITESPACE@570..571 " "
-          JS_STATIC_MEMBER_NAME@571..577
+          JS_LITERAL_MEMBER_NAME@571..577
             IDENT@571..577 "static"
           JS_PARAMETER_LIST@577..579
             L_PAREN@577..578 "("
@@ -400,7 +400,7 @@ JS_ROOT@0..607
           WHITESPACE@590..591 " "
           STAR@591..592 "*"
           WHITESPACE@592..593 " "
-          JS_STATIC_MEMBER_NAME@593..599
+          JS_LITERAL_MEMBER_NAME@593..599
             IDENT@593..599 "static"
           JS_PARAMETER_LIST@599..601
             L_PAREN@599..600 "("

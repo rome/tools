@@ -12,5 +12,5 @@ class Foo extends Boar {
 		return "bar";
 	}
 	new_prop = 5;
-	second_prop = [5, 3, 4];
+	double_semicolon = [5, 3, 4];
 }

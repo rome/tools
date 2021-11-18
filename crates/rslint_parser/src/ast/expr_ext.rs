@@ -14,7 +14,7 @@ impl BracketExpr {
 	}
 }
 
-impl JsStaticMemberName {
+impl JsLiteralMemberName {
 	/// Returns the name of the member as a syntax text
 	///
 	/// ## Examples
@@ -24,13 +24,13 @@ impl JsStaticMemberName {
 	/// ```
 	/// use rome_rowan::TreeBuilder;
 	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
-	/// use rslint_parser::ast::JsStaticMemberName;
+	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_STATIC_MEMBER_NAME, |builder| {
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
 	///   builder.token(SyntaxKind::JS_STRING_LITERAL_TOKEN, "\"abcd\"");
 	/// });
 	///
-	/// let static_member_name = node.to::<JsStaticMemberName>();
+	/// let static_member_name = node.to::<JsLiteralMemberName>();
 	///
 	/// assert_eq!("abcd", static_member_name.name().unwrap());
 	/// ```
@@ -40,13 +40,13 @@ impl JsStaticMemberName {
 	/// ```
 	/// use rome_rowan::TreeBuilder;
 	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
-	/// use rslint_parser::ast::JsStaticMemberName;
+	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_STATIC_MEMBER_NAME, |builder| {
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
 	///   builder.token(SyntaxKind::JS_NUMBER_LITERAL_TOKEN, "5");
 	/// });
 	///
-	/// let static_member_name = node.to::<JsStaticMemberName>();
+	/// let static_member_name = node.to::<JsLiteralMemberName>();
 	///
 	/// assert_eq!("5", static_member_name.name().unwrap());
 	/// ```
@@ -56,13 +56,13 @@ impl JsStaticMemberName {
 	/// ```
 	/// use rome_rowan::TreeBuilder;
 	/// use rslint_parser::{SyntaxKind, JsLanguage, SyntaxNode, SyntaxNodeExt};
-	/// use rslint_parser::ast::JsStaticMemberName;
+	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
-	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_STATIC_MEMBER_NAME, |builder| {
+	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
 	///   builder.token(SyntaxKind::IDENT, "abcd");
 	/// });
 	///
-	/// let static_member_name = node.to::<JsStaticMemberName>();
+	/// let static_member_name = node.to::<JsLiteralMemberName>();
 	///
 	/// assert_eq!("abcd", static_member_name.name().unwrap());
 	/// ```
