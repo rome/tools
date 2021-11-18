@@ -214,7 +214,7 @@ pub fn test_trivia_attached_to_tokens() {
 pub fn jsroot_display_text_and_trimmed() {
 	let code = " let a = 1; \n ";
 	let root = parse_module(code, 0);
-	let syntax = dbg!(root.syntax());	
+	let syntax = dbg!(root.syntax());
 
 	assert_eq!(format!("{}", syntax), code);
 

@@ -159,7 +159,7 @@ impl<'a> LosslessTreeSink<'a> {
 		match self.tokens.get(self.token_pos) {
 			Some(token) if token.kind == SyntaxKind::EOF => true,
 			None => true,
-			_ => false
+			_ => false,
 		}
 	}
 
@@ -171,13 +171,13 @@ impl<'a> LosslessTreeSink<'a> {
 		self.text_pos += len;
 		self.token_pos += 1;
 
-		// Everything until the next linebreak (but not including it) 
+		// Everything until the next linebreak (but not including it)
 		// will be the trailing trivia...
 		let (mut trailing_range, mut trailing) = self.get_trivia(true);
 
 		// ... and everything after and including the linebreak will be in the next
 		// token leading trivia...
-		let next_token_leading = { 
+		let next_token_leading = {
 			let (range, pieces) = self.get_trivia(false);
 			// ... unless there is no more tokens. Then treat the remaining
 			// trivia as the trailing of the last one.
@@ -185,9 +185,9 @@ impl<'a> LosslessTreeSink<'a> {
 			if self.is_eof() {
 				trailing_range = trailing_range.cover(range);
 				trailing.extend(pieces);
-				(TextRange::new(0.into(), 0.into()), vec![]) 
+				(TextRange::new(0.into(), 0.into()), vec![])
 			} else {
-				(range, pieces) 
+				(range, pieces)
 			}
 		};
 
