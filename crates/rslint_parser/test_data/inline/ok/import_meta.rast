@@ -1,4 +1,4 @@
-JS_ROOT@0..12
+JS_ROOT@0..11
   LIST@0..0
   LIST@0..11
     JS_EXPRESSION_STATEMENT@0..11
@@ -6,4 +6,3 @@ JS_ROOT@0..12
         IMPORT_KW@0..6 "import"
         DOT@6..7 "."
         IDENT@7..11 "meta"
-  WHITESPACE@11..12 "\n"

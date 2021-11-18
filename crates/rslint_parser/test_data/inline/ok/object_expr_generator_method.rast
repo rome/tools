@@ -1,37 +1,30 @@
-JS_ROOT@0..22
+JS_ROOT@0..21
   LIST@0..0
   LIST@0..21
     JS_VARIABLE_DECLARATION_STATEMENT@0..21
       JS_VARIABLE_DECLARATION@0..21
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
+        LET_KW@0..4 "let "
         LIST@4..21
           JS_VARIABLE_DECLARATOR@4..21
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "b"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "b "
             JS_EQUAL_VALUE_CLAUSE@6..21
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
+              EQ@6..8 "= "
               JS_OBJECT_EXPRESSION@8..21
-                L_CURLY@8..9 "{"
-                WHITESPACE@9..10 " "
-                LIST@10..19
-                  JS_METHOD_OBJECT_MEMBER@10..19
+                L_CURLY@8..10 "{ "
+                LIST@10..20
+                  JS_METHOD_OBJECT_MEMBER@10..20
                     STAR@10..11 "*"
                     JS_LITERAL_MEMBER_NAME@11..14
                       IDENT@11..14 "foo"
-                    JS_PARAMETER_LIST@14..16
+                    JS_PARAMETER_LIST@14..17
                       L_PAREN@14..15 "("
                       LIST@15..15
-                      R_PAREN@15..16 ")"
-                    WHITESPACE@16..17 " "
-                    JS_FUNCTION_BODY@17..19
+                      R_PAREN@15..17 ") "
+                    JS_FUNCTION_BODY@17..20
                       L_CURLY@17..18 "{"
                       LIST@18..18
                       LIST@18..18
-                      R_CURLY@18..19 "}"
-                WHITESPACE@19..20 " "
+                      R_CURLY@18..20 "} "
                 R_CURLY@20..21 "}"
-  WHITESPACE@21..22 "\n"

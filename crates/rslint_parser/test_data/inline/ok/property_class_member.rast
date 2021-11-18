@@ -1,109 +1,79 @@
-JS_ROOT@0..255
+JS_ROOT@0..253
   LIST@0..0
   LIST@0..253
     JS_CLASS_DECLARATION@0..253
-      CLASS_KW@0..5 "class"
-      WHITESPACE@5..6 " "
-      JS_IDENTIFIER_BINDING@6..9
-        IDENT@6..9 "foo"
-      WHITESPACE@9..10 " "
+      CLASS_KW@0..6 "class "
+      JS_IDENTIFIER_BINDING@6..10
+        IDENT@6..10 "foo "
       L_CURLY@10..11 "{"
-      WHITESPACE@11..13 "\n\t"
-      LIST@13..251
-        JS_PROPERTY_CLASS_MEMBER@13..21
-          JS_LITERAL_MEMBER_NAME@13..21
-            IDENT@13..21 "property"
-        WHITESPACE@21..23 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@23..31
-          JS_LITERAL_MEMBER_NAME@23..30
-            IDENT@23..30 "declare"
+      LIST@11..251
+        JS_PROPERTY_CLASS_MEMBER@11..21
+          JS_LITERAL_MEMBER_NAME@11..21
+            IDENT@11..21 "\n\tproperty"
+        JS_PROPERTY_CLASS_MEMBER@21..31
+          JS_LITERAL_MEMBER_NAME@21..30
+            IDENT@21..30 "\n\tdeclare"
           SEMICOLON@30..31 ";"
-        WHITESPACE@31..33 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@33..58
-          JS_LITERAL_MEMBER_NAME@33..52
-            IDENT@33..52 "initializedProperty"
-          WHITESPACE@52..53 " "
+        JS_PROPERTY_CLASS_MEMBER@31..58
+          JS_LITERAL_MEMBER_NAME@31..53
+            IDENT@31..53 "\n\tinitializedProperty "
           JS_EQUAL_VALUE_CLAUSE@53..58
-            EQ@53..54 "="
-            WHITESPACE@54..55 " "
+            EQ@53..55 "= "
             JS_STRING_LITERAL@55..58
               JS_STRING_LITERAL_TOKEN@55..58 "\"a\""
-        WHITESPACE@58..61 "\n\n\t"
-        JS_PROPERTY_CLASS_MEMBER@61..65
-          JS_LITERAL_MEMBER_NAME@61..64
-            JS_STRING_LITERAL_TOKEN@61..64 "\"a\""
+        JS_PROPERTY_CLASS_MEMBER@58..65
+          JS_LITERAL_MEMBER_NAME@58..64
+            JS_STRING_LITERAL_TOKEN@58..64 "\n\n\t\"a\""
           SEMICOLON@64..65 ";"
-        WHITESPACE@65..67 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@67..68
-          JS_LITERAL_MEMBER_NAME@67..68
-            JS_NUMBER_LITERAL_TOKEN@67..68 "5"
-        WHITESPACE@68..70 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@70..81
-          JS_COMPUTED_MEMBER_NAME@70..81
-            L_BRACK@70..71 "["
+        JS_PROPERTY_CLASS_MEMBER@65..68
+          JS_LITERAL_MEMBER_NAME@65..68
+            JS_NUMBER_LITERAL_TOKEN@65..68 "\n\t5"
+        JS_PROPERTY_CLASS_MEMBER@68..81
+          JS_COMPUTED_MEMBER_NAME@68..81
+            L_BRACK@68..71 "\n\t["
             JS_BINARY_EXPRESSION@71..80
-              JS_STRING_LITERAL@71..74
-                JS_STRING_LITERAL_TOKEN@71..74 "\"a\""
-              WHITESPACE@74..75 " "
-              PLUS@75..76 "+"
-              WHITESPACE@76..77 " "
+              JS_STRING_LITERAL@71..75
+                JS_STRING_LITERAL_TOKEN@71..75 "\"a\" "
+              PLUS@75..77 "+ "
               JS_STRING_LITERAL@77..80
                 JS_STRING_LITERAL_TOKEN@77..80 "\"b\""
             R_BRACK@80..81 "]"
-        WHITESPACE@81..84 "\n\n\t"
-        JS_PROPERTY_CLASS_MEMBER@84..105
-          STATIC_KW@84..90 "static"
-          WHITESPACE@90..91 " "
+        JS_PROPERTY_CLASS_MEMBER@81..105
+          STATIC_KW@81..91 "\n\n\tstatic "
           JS_LITERAL_MEMBER_NAME@91..105
             IDENT@91..105 "staticProperty"
-        WHITESPACE@105..107 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@107..143
-          STATIC_KW@107..113 "static"
-          WHITESPACE@113..114 " "
-          JS_LITERAL_MEMBER_NAME@114..139
-            IDENT@114..139 "staticInitializedProp ..."
-          WHITESPACE@139..140 " "
+        JS_PROPERTY_CLASS_MEMBER@105..143
+          STATIC_KW@105..114 "\n\tstatic "
+          JS_LITERAL_MEMBER_NAME@114..140
+            IDENT@114..140 "staticInitializedProp ..."
           JS_EQUAL_VALUE_CLAUSE@140..143
-            EQ@140..141 "="
-            WHITESPACE@141..142 " "
+            EQ@140..142 "= "
             JS_NUMBER_LITERAL@142..143
               JS_NUMBER_LITERAL_TOKEN@142..143 "1"
-        WHITESPACE@143..146 "\n\n\t"
-        JS_PROPERTY_CLASS_MEMBER@146..154
-          JS_PRIVATE_CLASS_MEMBER_NAME@146..154
-            HASH@146..147 "#"
+        JS_PROPERTY_CLASS_MEMBER@143..154
+          JS_PRIVATE_CLASS_MEMBER_NAME@143..154
+            HASH@143..147 "\n\n\t#"
             IDENT@147..154 "private"
-        WHITESPACE@154..156 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@156..181
-          JS_PRIVATE_CLASS_MEMBER_NAME@156..175
-            HASH@156..157 "#"
-            IDENT@157..175 "privateInitialized"
-          WHITESPACE@175..176 " "
+        JS_PROPERTY_CLASS_MEMBER@154..181
+          JS_PRIVATE_CLASS_MEMBER_NAME@154..176
+            HASH@154..157 "\n\t#"
+            IDENT@157..176 "privateInitialized "
           JS_EQUAL_VALUE_CLAUSE@176..181
-            EQ@176..177 "="
-            WHITESPACE@177..178 " "
+            EQ@176..178 "= "
             JS_STRING_LITERAL@178..181
               JS_STRING_LITERAL_TOKEN@178..181 "\"a\""
-        WHITESPACE@181..184 "\n\n\t"
-        JS_PROPERTY_CLASS_MEMBER@184..205
-          STATIC_KW@184..190 "static"
-          WHITESPACE@190..191 " "
+        JS_PROPERTY_CLASS_MEMBER@181..205
+          STATIC_KW@181..191 "\n\n\tstatic "
           JS_PRIVATE_CLASS_MEMBER_NAME@191..205
             HASH@191..192 "#"
             IDENT@192..205 "staticPrivate"
-        WHITESPACE@205..207 "\n\t"
-        JS_PROPERTY_CLASS_MEMBER@207..251
-          STATIC_KW@207..213 "static"
-          WHITESPACE@213..214 " "
-          JS_PRIVATE_CLASS_MEMBER_NAME@214..247
+        JS_PROPERTY_CLASS_MEMBER@205..251
+          STATIC_KW@205..214 "\n\tstatic "
+          JS_PRIVATE_CLASS_MEMBER_NAME@214..248
             HASH@214..215 "#"
-            IDENT@215..247 "staticPrivateInitiali ..."
-          WHITESPACE@247..248 " "
+            IDENT@215..248 "staticPrivateInitiali ..."
           JS_EQUAL_VALUE_CLAUSE@248..251
-            EQ@248..249 "="
-            WHITESPACE@249..250 " "
+            EQ@248..250 "= "
             JS_NUMBER_LITERAL@250..251
               JS_NUMBER_LITERAL_TOKEN@250..251 "1"
-      WHITESPACE@251..252 "\n"
-      R_CURLY@252..253 "}"
-  WHITESPACE@253..255 "\n\n"
+      R_CURLY@251..253 "\n}"

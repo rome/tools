@@ -1,4 +1,4 @@
-JS_ROOT@0..14
+JS_ROOT@0..13
   LIST@0..0
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..13
@@ -11,11 +11,9 @@ JS_ROOT@0..14
               IDENT@2..5 "foo"
             R_PAREN@5..6 ")"
           R_PAREN@6..7 ")"
-        WHITESPACE@7..8 "\n"
-        ARG_LIST@8..13
-          L_PAREN@8..9 "("
+        ARG_LIST@7..13
+          L_PAREN@7..9 "\n("
           LIST@9..12
             JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
               IDENT@9..12 "foo"
           R_PAREN@12..13 ")"
-  WHITESPACE@13..14 "\n"

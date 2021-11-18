@@ -1,54 +1,43 @@
-JS_ROOT@0..32
+JS_ROOT@0..31
   LIST@0..0
   LIST@0..31
     JS_VARIABLE_DECLARATION_STATEMENT@0..8
       JS_VARIABLE_DECLARATION@0..8
-        VAR_KW@0..3 "var"
-        WHITESPACE@3..4 " "
+        VAR_KW@0..4 "var "
         LIST@4..8
           JS_VARIABLE_DECLARATOR@4..8
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "a"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "a "
             JS_EQUAL_VALUE_CLAUSE@6..8
               EQ@6..7 "="
               ERROR@7..8
                 SEMICOLON@7..8 ";"
-    WHITESPACE@8..9 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@9..20
-      JS_VARIABLE_DECLARATION@9..20
-        CONST_KW@9..14 "const"
-        WHITESPACE@14..15 " "
-        LIST@15..20
-          JS_VARIABLE_DECLARATOR@15..20
-            SINGLE_PATTERN@15..16
-              NAME@15..16
-                IDENT@15..16 "a"
-            WHITESPACE@16..17 " "
-            JS_EQUAL_VALUE_CLAUSE@17..20
-              EQ@17..18 "="
-              WHITESPACE@18..19 " "
-              JS_NUMBER_LITERAL@19..20
-                JS_NUMBER_LITERAL_TOKEN@19..20 "5"
-    WHITESPACE@20..21 " "
+    JS_VARIABLE_DECLARATION_STATEMENT@8..21
+      JS_VARIABLE_DECLARATION@8..21
+        CONST_KW@8..15 "\nconst "
+        LIST@15..21
+          JS_VARIABLE_DECLARATOR@15..21
+            SINGLE_PATTERN@15..17
+              NAME@15..17
+                IDENT@15..17 "a "
+            JS_EQUAL_VALUE_CLAUSE@17..21
+              EQ@17..19 "= "
+              JS_NUMBER_LITERAL@19..21
+                JS_NUMBER_LITERAL_TOKEN@19..21 "5 "
     JS_VARIABLE_DECLARATION_STATEMENT@21..31
       JS_VARIABLE_DECLARATION@21..30
-        LET_KW@21..24 "let"
-        WHITESPACE@24..25 " "
+        LET_KW@21..25 "let "
         LIST@25..30
           JS_VARIABLE_DECLARATOR@25..30
-            SINGLE_PATTERN@25..26
-              NAME@25..26
-                IDENT@25..26 "b"
-            WHITESPACE@26..27 " "
+            SINGLE_PATTERN@25..27
+              NAME@25..27
+                IDENT@25..27 "b "
             JS_EQUAL_VALUE_CLAUSE@27..30
-              EQ@27..28 "="
-              WHITESPACE@28..29 " "
+              EQ@27..29 "= "
               JS_NUMBER_LITERAL@29..30
                 JS_NUMBER_LITERAL_TOKEN@29..30 "5"
       SEMICOLON@30..31 ";"
-  WHITESPACE@31..32 "\n"
 --
 error[SyntaxError]: expected an expression, but found `;` instead
   ┌─ var_decl_err.js:1:8

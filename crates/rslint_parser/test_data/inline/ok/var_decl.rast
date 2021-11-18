@@ -1,100 +1,79 @@
-JS_ROOT@0..155
+JS_ROOT@0..154
   LIST@0..0
   LIST@0..154
     JS_VARIABLE_DECLARATION_STATEMENT@0..10
       JS_VARIABLE_DECLARATION@0..9
-        VAR_KW@0..3 "var"
-        WHITESPACE@3..4 " "
+        VAR_KW@0..4 "var "
         LIST@4..9
           JS_VARIABLE_DECLARATOR@4..9
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "a"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "a "
             JS_EQUAL_VALUE_CLAUSE@6..9
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
+              EQ@6..8 "= "
               JS_NUMBER_LITERAL@8..9
                 JS_NUMBER_LITERAL_TOKEN@8..9 "5"
       SEMICOLON@9..10 ";"
-    WHITESPACE@10..11 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@11..32
-      JS_VARIABLE_DECLARATION@11..31
-        LET_KW@11..14 "let"
-        WHITESPACE@14..15 " "
+    JS_VARIABLE_DECLARATION_STATEMENT@10..32
+      JS_VARIABLE_DECLARATION@10..31
+        LET_KW@10..15 "\nlet "
         LIST@15..31
           JS_VARIABLE_DECLARATOR@15..31
-            OBJECT_PATTERN@15..27
-              L_CURLY@15..16 "{"
-              WHITESPACE@16..17 " "
-              LIST@17..25
+            OBJECT_PATTERN@15..28
+              L_CURLY@15..17 "{ "
+              LIST@17..26
                 SINGLE_PATTERN@17..20
                   NAME@17..20
                     IDENT@17..20 "foo"
-                COMMA@20..21 ","
-                WHITESPACE@21..22 " "
-                SINGLE_PATTERN@22..25
-                  NAME@22..25
-                    IDENT@22..25 "bar"
-              WHITESPACE@25..26 " "
-              R_CURLY@26..27 "}"
-            WHITESPACE@27..28 " "
+                COMMA@20..22 ", "
+                SINGLE_PATTERN@22..26
+                  NAME@22..26
+                    IDENT@22..26 "bar "
+              R_CURLY@26..28 "} "
             JS_EQUAL_VALUE_CLAUSE@28..31
-              EQ@28..29 "="
-              WHITESPACE@29..30 " "
+              EQ@28..30 "= "
               JS_NUMBER_LITERAL@30..31
                 JS_NUMBER_LITERAL_TOKEN@30..31 "5"
       SEMICOLON@31..32 ";"
-    WHITESPACE@32..33 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@33..46
-      JS_VARIABLE_DECLARATION@33..45
-        LET_KW@33..36 "let"
-        WHITESPACE@36..37 " "
+    JS_VARIABLE_DECLARATION_STATEMENT@32..46
+      JS_VARIABLE_DECLARATION@32..45
+        LET_KW@32..37 "\nlet "
         LIST@37..45
           JS_VARIABLE_DECLARATOR@37..40
             SINGLE_PATTERN@37..40
               NAME@37..40
                 IDENT@37..40 "bar"
-          COMMA@40..41 ","
-          WHITESPACE@41..42 " "
+          COMMA@40..42 ", "
           JS_VARIABLE_DECLARATOR@42..45
             SINGLE_PATTERN@42..45
               NAME@42..45
                 IDENT@42..45 "foo"
       SEMICOLON@45..46 ";"
-    WHITESPACE@46..47 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@47..59
-      JS_VARIABLE_DECLARATION@47..58
-        CONST_KW@47..52 "const"
-        WHITESPACE@52..53 " "
+    JS_VARIABLE_DECLARATION_STATEMENT@46..59
+      JS_VARIABLE_DECLARATION@46..58
+        CONST_KW@46..53 "\nconst "
         LIST@53..58
           JS_VARIABLE_DECLARATOR@53..58
-            SINGLE_PATTERN@53..54
-              NAME@53..54
-                IDENT@53..54 "a"
-            WHITESPACE@54..55 " "
+            SINGLE_PATTERN@53..55
+              NAME@53..55
+                IDENT@53..55 "a "
             JS_EQUAL_VALUE_CLAUSE@55..58
-              EQ@55..56 "="
-              WHITESPACE@56..57 " "
+              EQ@55..57 "= "
               JS_NUMBER_LITERAL@57..58
                 JS_NUMBER_LITERAL_TOKEN@57..58 "5"
       SEMICOLON@58..59 ";"
-    WHITESPACE@59..60 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@60..91
-      JS_VARIABLE_DECLARATION@60..90
-        CONST_KW@60..65 "const"
-        WHITESPACE@65..66 " "
+    JS_VARIABLE_DECLARATION_STATEMENT@59..91
+      JS_VARIABLE_DECLARATION@59..90
+        CONST_KW@59..66 "\nconst "
         LIST@66..90
           JS_VARIABLE_DECLARATOR@66..90
-            OBJECT_PATTERN@66..85
-              L_CURLY@66..67 "{"
-              WHITESPACE@67..68 " "
-              LIST@68..83
+            OBJECT_PATTERN@66..86
+              L_CURLY@66..68 "{ "
+              LIST@68..84
                 KEY_VALUE_PATTERN@68..78
                   NAME@68..71
                     IDENT@68..71 "foo"
-                  COLON@71..72 ":"
-                  WHITESPACE@72..73 " "
+                  COLON@71..73 ": "
                   ARRAY_PATTERN@73..78
                     L_BRACK@73..74 "["
                     LIST@74..77
@@ -102,73 +81,55 @@ JS_ROOT@0..155
                         NAME@74..77
                           IDENT@74..77 "bar"
                     R_BRACK@77..78 "]"
-                COMMA@78..79 ","
-                WHITESPACE@79..80 " "
-                SINGLE_PATTERN@80..83
-                  NAME@80..83
-                    IDENT@80..83 "baz"
-              WHITESPACE@83..84 " "
-              R_CURLY@84..85 "}"
-            WHITESPACE@85..86 " "
+                COMMA@78..80 ", "
+                SINGLE_PATTERN@80..84
+                  NAME@80..84
+                    IDENT@80..84 "baz "
+              R_CURLY@84..86 "} "
             JS_EQUAL_VALUE_CLAUSE@86..90
-              EQ@86..87 "="
-              WHITESPACE@87..88 " "
+              EQ@86..88 "= "
               JS_OBJECT_EXPRESSION@88..90
                 L_CURLY@88..89 "{"
                 LIST@89..89
                 R_CURLY@89..90 "}"
       SEMICOLON@90..91 ";"
-    WHITESPACE@91..92 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@92..154
-      JS_VARIABLE_DECLARATION@92..153
-        LET_KW@92..95 "let"
-        WHITESPACE@95..96 " "
+    JS_VARIABLE_DECLARATION_STATEMENT@91..154
+      JS_VARIABLE_DECLARATION@91..153
+        LET_KW@91..96 "\nlet "
         LIST@96..153
           JS_VARIABLE_DECLARATOR@96..109
-            SINGLE_PATTERN@96..99
-              NAME@96..99
-                IDENT@96..99 "foo"
-            WHITESPACE@99..100 " "
+            SINGLE_PATTERN@96..100
+              NAME@96..100
+                IDENT@96..100 "foo "
             JS_EQUAL_VALUE_CLAUSE@100..109
-              EQ@100..101 "="
-              WHITESPACE@101..102 " "
+              EQ@100..102 "= "
               JS_STRING_LITERAL@102..109
                 JS_STRING_LITERAL_TOKEN@102..109 "\"lorem\""
-          COMMA@109..110 ","
-          WHITESPACE@110..111 " "
+          COMMA@109..111 ", "
           JS_VARIABLE_DECLARATOR@111..124
-            SINGLE_PATTERN@111..114
-              NAME@111..114
-                IDENT@111..114 "bar"
-            WHITESPACE@114..115 " "
+            SINGLE_PATTERN@111..115
+              NAME@111..115
+                IDENT@111..115 "bar "
             JS_EQUAL_VALUE_CLAUSE@115..124
-              EQ@115..116 "="
-              WHITESPACE@116..117 " "
+              EQ@115..117 "= "
               JS_STRING_LITERAL@117..124
                 JS_STRING_LITERAL_TOKEN@117..124 "\"ipsum\""
-          COMMA@124..125 ","
-          WHITESPACE@125..126 " "
+          COMMA@124..126 ", "
           JS_VARIABLE_DECLARATOR@126..141
-            SINGLE_PATTERN@126..131
-              NAME@126..131
-                IDENT@126..131 "third"
-            WHITESPACE@131..132 " "
+            SINGLE_PATTERN@126..132
+              NAME@126..132
+                IDENT@126..132 "third "
             JS_EQUAL_VALUE_CLAUSE@132..141
-              EQ@132..133 "="
-              WHITESPACE@133..134 " "
+              EQ@132..134 "= "
               JS_STRING_LITERAL@134..141
                 JS_STRING_LITERAL_TOKEN@134..141 "\"value\""
-          COMMA@141..142 ","
-          WHITESPACE@142..143 " "
+          COMMA@141..143 ", "
           JS_VARIABLE_DECLARATOR@143..153
-            SINGLE_PATTERN@143..149
-              NAME@143..149
-                IDENT@143..149 "fourth"
-            WHITESPACE@149..150 " "
+            SINGLE_PATTERN@143..150
+              NAME@143..150
+                IDENT@143..150 "fourth "
             JS_EQUAL_VALUE_CLAUSE@150..153
-              EQ@150..151 "="
-              WHITESPACE@151..152 " "
+              EQ@150..152 "= "
               JS_NUMBER_LITERAL@152..153
                 JS_NUMBER_LITERAL_TOKEN@152..153 "6"
       SEMICOLON@153..154 ";"
-  WHITESPACE@154..155 "\n"

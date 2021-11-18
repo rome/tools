@@ -1,60 +1,47 @@
-JS_ROOT@0..40
+JS_ROOT@0..39
   LIST@0..0
   LIST@0..39
     FOR_STMT@0..39
-      FOR_KW@0..3 "for"
-      WHITESPACE@3..4 " "
+      FOR_KW@0..4 "for "
       SEMICOLON@4..5 ";"
-      SEMICOLON@5..6 ";"
-      WHITESPACE@6..7 " "
+      SEMICOLON@5..7 "; "
       FOR_STMT_UPDATE@7..9
         JS_OBJECT_EXPRESSION@7..9
           L_CURLY@7..8 "{"
           LIST@8..8
           R_CURLY@8..9 "}"
-      WHITESPACE@9..10 "\n"
-      FOR_STMT@10..39
-        FOR_KW@10..13 "for"
-        WHITESPACE@13..14 " "
+      FOR_STMT@9..39
+        FOR_KW@9..14 "\nfor "
         FOR_STMT_INIT@14..23
           JS_VARIABLE_DECLARATION@14..23
-            LET_KW@14..17 "let"
-            WHITESPACE@17..18 " "
+            LET_KW@14..18 "let "
             LIST@18..23
               JS_VARIABLE_DECLARATOR@18..23
-                SINGLE_PATTERN@18..19
-                  NAME@18..19
-                    IDENT@18..19 "i"
-                WHITESPACE@19..20 " "
+                SINGLE_PATTERN@18..20
+                  NAME@18..20
+                    IDENT@18..20 "i "
                 JS_EQUAL_VALUE_CLAUSE@20..23
-                  EQ@20..21 "="
-                  WHITESPACE@21..22 " "
+                  EQ@20..22 "= "
                   JS_NUMBER_LITERAL@22..23
                     JS_NUMBER_LITERAL_TOKEN@22..23 "5"
-        SEMICOLON@23..24 ";"
-        WHITESPACE@24..25 " "
+        SEMICOLON@23..25 "; "
         FOR_STMT_TEST@25..31
           JS_BINARY_EXPRESSION@25..31
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@25..26
-              IDENT@25..26 "i"
-            WHITESPACE@26..27 " "
-            L_ANGLE@27..28 "<"
-            WHITESPACE@28..29 " "
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@25..27
+              IDENT@25..27 "i "
+            L_ANGLE@27..29 "< "
             JS_NUMBER_LITERAL@29..31
               JS_NUMBER_LITERAL_TOKEN@29..31 "10"
-        SEMICOLON@31..32 ";"
-        WHITESPACE@32..33 " "
-        FOR_STMT_UPDATE@33..36
-          JS_PRE_UPDATE_EXPRESSION@33..36
+        SEMICOLON@31..33 "; "
+        FOR_STMT_UPDATE@33..37
+          JS_PRE_UPDATE_EXPRESSION@33..37
             PLUS2@33..35 "++"
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@35..36
-              IDENT@35..36 "i"
-        WHITESPACE@36..37 " "
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@35..37
+              IDENT@35..37 "i "
         JS_BLOCK_STATEMENT@37..39
           L_CURLY@37..38 "{"
           LIST@38..38
           R_CURLY@38..39 "}"
-  WHITESPACE@39..40 "\n"
 --
 error[SyntaxError]: expected `'('` but instead found `;`
   ┌─ for_stmt_err.js:1:5

@@ -1,21 +1,15 @@
-JS_ROOT@0..28
+JS_ROOT@0..27
   LIST@0..0
   LIST@0..27
     IMPORT_DECL@0..27
-      IMPORT_KW@0..6 "import"
-      WHITESPACE@6..7 " "
-      LIST@7..15
-        WILDCARD_IMPORT@7..15
-          STAR@7..8 "*"
-          WHITESPACE@8..9 " "
-          AS_KW@9..11 "as"
-          WHITESPACE@11..12 " "
-          NAME@12..15
-            IDENT@12..15 "foo"
-      WHITESPACE@15..16 " "
-      FROM_KW@16..20 "from"
-      WHITESPACE@20..21 " "
+      IMPORT_KW@0..7 "import "
+      LIST@7..16
+        WILDCARD_IMPORT@7..16
+          STAR@7..9 "* "
+          AS_KW@9..12 "as "
+          NAME@12..16
+            IDENT@12..16 "foo "
+      FROM_KW@16..21 "from "
       JS_STRING_LITERAL@21..26
         JS_STRING_LITERAL_TOKEN@21..26 "\"bla\""
       SEMICOLON@26..27 ";"
-  WHITESPACE@27..28 "\n"

@@ -1,8 +1,5 @@
 use crate::printer::Printer;
-use crate::{
-	concat_elements, token, FormatElement, FormatError, FormatOptions, FormatResult, Formatted,
-	ToFormatElement,
-};
+use crate::{FormatElement, FormatError, FormatOptions, FormatResult, Formatted, ToFormatElement, concat_elements, token, token_from_string};
 use rome_rowan::SyntaxElement;
 use rslint_parser::{AstNode, SyntaxNode, SyntaxToken};
 
@@ -100,7 +97,7 @@ impl Formatter {
 	/// assert_eq!(Ok(token("'abc'")), result)
 	/// ```
 	pub fn format_token(&self, syntax_token: &SyntaxToken) -> FormatResult<FormatElement> {
-		Ok(token(syntax_token.text()))
+		Ok(token(syntax_token.text_trimmed()))
 	}
 
 	/// Formats each child and returns the result as a list.

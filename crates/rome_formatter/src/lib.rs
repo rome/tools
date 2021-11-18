@@ -64,7 +64,7 @@ use rslint_parser::SyntaxError;
 pub use format_element::{
 	block_indent, concat_elements, empty_element, group_elements, hard_line_break, if_group_breaks,
 	if_group_fits_on_single_line, indent, join_elements, soft_indent, soft_line_break,
-	soft_line_break_or_space, space_token, token, FormatElement,
+	soft_line_break_or_space, space_token, token, token_from_string, FormatElement,
 };
 pub use printer::Printer;
 pub use printer::PrinterOptions;

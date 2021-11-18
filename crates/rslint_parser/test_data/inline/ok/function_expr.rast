@@ -1,58 +1,47 @@
-JS_ROOT@0..48
+JS_ROOT@0..47
   LIST@0..0
   LIST@0..47
     JS_VARIABLE_DECLARATION_STATEMENT@0..21
       JS_VARIABLE_DECLARATION@0..21
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
+        LET_KW@0..4 "let "
         LIST@4..21
           JS_VARIABLE_DECLARATOR@4..21
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "a"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "a "
             JS_EQUAL_VALUE_CLAUSE@6..21
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
+              EQ@6..8 "= "
               JS_FUNCTION_EXPRESSION@8..21
                 FUNCTION_KW@8..16 "function"
-                JS_PARAMETER_LIST@16..18
+                JS_PARAMETER_LIST@16..19
                   L_PAREN@16..17 "("
                   LIST@17..17
-                  R_PAREN@17..18 ")"
-                WHITESPACE@18..19 " "
+                  R_PAREN@17..19 ") "
                 JS_FUNCTION_BODY@19..21
                   L_CURLY@19..20 "{"
                   LIST@20..20
                   LIST@20..20
                   R_CURLY@20..21 "}"
-    WHITESPACE@21..22 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@22..47
-      JS_VARIABLE_DECLARATION@22..47
-        LET_KW@22..25 "let"
-        WHITESPACE@25..26 " "
+    JS_VARIABLE_DECLARATION_STATEMENT@21..47
+      JS_VARIABLE_DECLARATION@21..47
+        LET_KW@21..26 "\nlet "
         LIST@26..47
           JS_VARIABLE_DECLARATOR@26..47
-            SINGLE_PATTERN@26..27
-              NAME@26..27
-                IDENT@26..27 "b"
-            WHITESPACE@27..28 " "
+            SINGLE_PATTERN@26..28
+              NAME@26..28
+                IDENT@26..28 "b "
             JS_EQUAL_VALUE_CLAUSE@28..47
-              EQ@28..29 "="
-              WHITESPACE@29..30 " "
+              EQ@28..30 "= "
               JS_FUNCTION_EXPRESSION@30..47
-                FUNCTION_KW@30..38 "function"
-                WHITESPACE@38..39 " "
+                FUNCTION_KW@30..39 "function "
                 JS_IDENTIFIER_BINDING@39..42
                   IDENT@39..42 "foo"
-                JS_PARAMETER_LIST@42..44
+                JS_PARAMETER_LIST@42..45
                   L_PAREN@42..43 "("
                   LIST@43..43
-                  R_PAREN@43..44 ")"
-                WHITESPACE@44..45 " "
+                  R_PAREN@43..45 ") "
                 JS_FUNCTION_BODY@45..47
                   L_CURLY@45..46 "{"
                   LIST@46..46
                   LIST@46..46
                   R_CURLY@46..47 "}"
-  WHITESPACE@47..48 "\n"

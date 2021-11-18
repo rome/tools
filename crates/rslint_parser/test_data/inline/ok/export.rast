@@ -1,22 +1,16 @@
-JS_ROOT@0..27
+JS_ROOT@0..26
   LIST@0..0
   LIST@0..26
     EXPORT_DECL@0..26
-      EXPORT_KW@0..6 "export"
-      WHITESPACE@6..7 " "
+      EXPORT_KW@0..7 "export "
       EXPORT_NAMED@7..26
-        L_CURLY@7..8 "{"
-        WHITESPACE@8..9 " "
-        LIST@9..12
-          SPECIFIER@9..12
-            NAME@9..12
-              IDENT@9..12 "foo"
-        WHITESPACE@12..13 " "
-        R_CURLY@13..14 "}"
-        WHITESPACE@14..15 " "
-        FROM_KW@15..19 "from"
-        WHITESPACE@19..20 " "
+        L_CURLY@7..9 "{ "
+        LIST@9..13
+          SPECIFIER@9..13
+            NAME@9..13
+              IDENT@9..13 "foo "
+        R_CURLY@13..15 "} "
+        FROM_KW@15..20 "from "
         JS_STRING_LITERAL@20..25
           JS_STRING_LITERAL_TOKEN@20..25 "\"bla\""
         SEMICOLON@25..26 ";"
-  WHITESPACE@26..27 "\n"

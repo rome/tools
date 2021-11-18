@@ -30,24 +30,7 @@ pub fn format_statements(
 		hard_line_break(),
 		stmts.iter().map(|stmt| {
 			formatter.format_node(stmt.clone()).unwrap_or_else(|_| {
-				let verbatim = formatter.format_raw(stmt.syntax());
-
-				match verbatim {
-					FormatElement::List(list) => {
-						if let Some(FormatElement::Token(token)) = list.last() {
-							if token.as_str() == "\n" {
-								let mut elements = (*list).clone();
-								elements.pop(); // Pop the last new line
-								concat_elements(elements)
-							} else {
-								FormatElement::List(list)
-							}
-						} else {
-							FormatElement::List(list)
-						}
-					}
-					_ => verbatim,
-				}
+				formatter.format_raw(stmt.syntax()).trim_start().trim_end()
 			})
 		}),
 	)

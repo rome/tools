@@ -1,43 +1,34 @@
-JS_ROOT@0..53
+JS_ROOT@0..52
   LIST@0..0
   LIST@0..52
     JS_FUNCTION_DECLARATION@0..52
-      FUNCTION_KW@0..8 "function"
-      WHITESPACE@8..9 " "
+      FUNCTION_KW@0..9 "function "
       STAR@9..10 "*"
       JS_IDENTIFIER_BINDING@10..13
         IDENT@10..13 "foo"
-      JS_PARAMETER_LIST@13..15
+      JS_PARAMETER_LIST@13..16
         L_PAREN@13..14 "("
         LIST@14..14
-        R_PAREN@14..15 ")"
-      WHITESPACE@15..16 " "
+        R_PAREN@14..16 ") "
       JS_FUNCTION_BODY@16..52
         L_CURLY@16..17 "{"
-        WHITESPACE@17..19 "\n "
-        LIST@19..19
-        LIST@19..50
-          JS_EXPRESSION_STATEMENT@19..29
-            JS_YIELD_EXPRESSION@19..28
-              YIELD_KW@19..24 "yield"
-              WHITESPACE@24..25 " "
+        LIST@17..17
+        LIST@17..50
+          JS_EXPRESSION_STATEMENT@17..29
+            JS_YIELD_EXPRESSION@17..28
+              YIELD_KW@17..25 "\n yield "
               JS_REFERENCE_IDENTIFIER_EXPRESSION@25..28
                 IDENT@25..28 "foo"
             SEMICOLON@28..29 ";"
-          WHITESPACE@29..31 "\n "
-          JS_EXPRESSION_STATEMENT@31..42
-            JS_YIELD_EXPRESSION@31..41
-              YIELD_KW@31..36 "yield"
-              STAR@36..37 "*"
-              WHITESPACE@37..38 " "
+          JS_EXPRESSION_STATEMENT@29..42
+            JS_YIELD_EXPRESSION@29..41
+              YIELD_KW@29..36 "\n yield"
+              STAR@36..38 "* "
               JS_REFERENCE_IDENTIFIER_EXPRESSION@38..41
                 IDENT@38..41 "foo"
             SEMICOLON@41..42 ";"
-          WHITESPACE@42..44 "\n "
-          JS_EXPRESSION_STATEMENT@44..50
-            JS_YIELD_EXPRESSION@44..49
-              YIELD_KW@44..49 "yield"
+          JS_EXPRESSION_STATEMENT@42..50
+            JS_YIELD_EXPRESSION@42..49
+              YIELD_KW@42..49 "\n yield"
             SEMICOLON@49..50 ";"
-        WHITESPACE@50..51 "\n"
-        R_CURLY@51..52 "}"
-  WHITESPACE@52..53 "\n"
+        R_CURLY@50..52 "\n}"

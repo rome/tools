@@ -1,4 +1,4 @@
-JS_ROOT@0..65
+JS_ROOT@0..64
   LIST@0..0
   LIST@0..64
     JS_EXPRESSION_STATEMENT@0..11
@@ -7,25 +7,22 @@ JS_ROOT@0..65
         LIST@1..9
           JS_REFERENCE_IDENTIFIER_EXPRESSION@1..4
             IDENT@1..4 "foo"
-          COMMA@4..5 ","
-          WHITESPACE@5..6 " "
+          COMMA@4..6 ", "
           JS_REFERENCE_IDENTIFIER_EXPRESSION@6..9
             IDENT@6..9 "bar"
         R_BRACK@9..10 "]"
       SEMICOLON@10..11 ";"
-    WHITESPACE@11..12 "\n"
-    JS_EXPRESSION_STATEMENT@12..18
-      JS_ARRAY_EXPRESSION@12..17
-        L_BRACK@12..13 "["
+    JS_EXPRESSION_STATEMENT@11..18
+      JS_ARRAY_EXPRESSION@11..17
+        L_BRACK@11..13 "\n["
         LIST@13..16
           JS_REFERENCE_IDENTIFIER_EXPRESSION@13..16
             IDENT@13..16 "foo"
         R_BRACK@16..17 "]"
       SEMICOLON@17..18 ";"
-    WHITESPACE@18..19 "\n"
-    JS_EXPRESSION_STATEMENT@19..26
-      JS_ARRAY_EXPRESSION@19..25
-        L_BRACK@19..20 "["
+    JS_EXPRESSION_STATEMENT@18..26
+      JS_ARRAY_EXPRESSION@18..25
+        L_BRACK@18..20 "\n["
         LIST@20..24
           JS_ARRAY_HOLE@20..20
           COMMA@20..21 ","
@@ -33,20 +30,18 @@ JS_ROOT@0..65
             IDENT@21..24 "foo"
         R_BRACK@24..25 "]"
       SEMICOLON@25..26 ";"
-    WHITESPACE@26..27 "\n"
-    JS_EXPRESSION_STATEMENT@27..34
-      JS_ARRAY_EXPRESSION@27..33
-        L_BRACK@27..28 "["
+    JS_EXPRESSION_STATEMENT@26..34
+      JS_ARRAY_EXPRESSION@26..33
+        L_BRACK@26..28 "\n["
         LIST@28..32
           JS_REFERENCE_IDENTIFIER_EXPRESSION@28..31
             IDENT@28..31 "foo"
           COMMA@31..32 ","
         R_BRACK@32..33 "]"
       SEMICOLON@33..34 ";"
-    WHITESPACE@34..35 "\n"
-    JS_EXPRESSION_STATEMENT@35..50
-      JS_ARRAY_EXPRESSION@35..49
-        L_BRACK@35..36 "["
+    JS_EXPRESSION_STATEMENT@34..50
+      JS_ARRAY_EXPRESSION@34..49
+        L_BRACK@34..36 "\n["
         LIST@36..48
           JS_ARRAY_HOLE@36..36
           COMMA@36..37 ","
@@ -69,21 +64,18 @@ JS_ROOT@0..65
           COMMA@47..48 ","
         R_BRACK@48..49 "]"
       SEMICOLON@49..50 ";"
-    WHITESPACE@50..51 "\n"
-    JS_EXPRESSION_STATEMENT@51..64
-      JS_ARRAY_EXPRESSION@51..63
-        L_BRACK@51..52 "["
+    JS_EXPRESSION_STATEMENT@50..64
+      JS_ARRAY_EXPRESSION@50..63
+        L_BRACK@50..52 "\n["
         LIST@52..62
           SPREAD_ELEMENT@52..56
             DOT2@52..55 "..."
             JS_REFERENCE_IDENTIFIER_EXPRESSION@55..56
               IDENT@55..56 "a"
-          COMMA@56..57 ","
-          WHITESPACE@57..58 " "
+          COMMA@56..58 ", "
           SPREAD_ELEMENT@58..62
             DOT2@58..61 "..."
             JS_REFERENCE_IDENTIFIER_EXPRESSION@61..62
               IDENT@61..62 "b"
         R_BRACK@62..63 "]"
       SEMICOLON@63..64 ";"
-  WHITESPACE@64..65 "\n"

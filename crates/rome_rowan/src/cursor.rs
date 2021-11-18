@@ -623,6 +623,11 @@ impl SyntaxTrivia {
 			next_offset: self.offset,
 		}
 	}
+
+	#[inline]
+	pub(crate) fn offset(&self) -> TextSize {
+		self.offset
+	}
 }
 
 impl SyntaxNode {
@@ -722,6 +727,8 @@ impl SyntaxNode {
 			.last_trailing_trivia()
 			.map(|x| x.text_len())
 			.unwrap_or_else(|| 0.into());
+
+		println!("{:?} {:?}", self.first_child_or_token(), trailing_len);
 
 		let range = self.text_range();
 		TextRange::new(range.start() + leading_len, range.end() - trailing_len)
@@ -844,10 +851,15 @@ impl SyntaxNode {
 	}
 
 	pub fn first_token(&self) -> Option<SyntaxToken> {
-		self.first_child_or_token()?.first_token()
+		self.descendants_with_tokens()
+			.filter_map(|x| x.as_token().cloned())
+			.nth(0)
 	}
+
 	pub fn last_token(&self) -> Option<SyntaxToken> {
-		self.last_child_or_token()?.last_token()
+		self.descendants_with_tokens()
+			.filter_map(|x| x.as_token().cloned())
+			.last()
 	}
 
 	#[inline]

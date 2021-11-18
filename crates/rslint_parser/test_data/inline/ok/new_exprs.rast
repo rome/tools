@@ -1,44 +1,35 @@
-JS_ROOT@0..113
+JS_ROOT@0..112
   LIST@0..0
   LIST@0..112
     JS_EXPRESSION_STATEMENT@0..9
       NEW_EXPR@0..9
-        NEW_KW@0..3 "new"
-        WHITESPACE@3..4 " "
+        NEW_KW@0..4 "new "
         JS_REFERENCE_IDENTIFIER_EXPRESSION@4..7
           IDENT@4..7 "Foo"
         ARG_LIST@7..9
           L_PAREN@7..8 "("
           LIST@8..8
           R_PAREN@8..9 ")"
-    WHITESPACE@9..10 "\n"
-    JS_EXPRESSION_STATEMENT@10..18
-      NEW_EXPR@10..17
-        NEW_KW@10..13 "new"
-        WHITESPACE@13..14 " "
+    JS_EXPRESSION_STATEMENT@9..18
+      NEW_EXPR@9..17
+        NEW_KW@9..14 "\nnew "
         JS_REFERENCE_IDENTIFIER_EXPRESSION@14..17
           IDENT@14..17 "foo"
       SEMICOLON@17..18 ";"
-    WHITESPACE@18..19 "\n"
-    JS_EXPRESSION_STATEMENT@19..29
-      NEW_TARGET@19..29
-        NEW_KW@19..22 "new"
+    JS_EXPRESSION_STATEMENT@18..29
+      NEW_TARGET@18..29
+        NEW_KW@18..22 "\nnew"
         DOT@22..23 "."
         IDENT@23..29 "target"
-    WHITESPACE@29..30 "\n"
-    JS_EXPRESSION_STATEMENT@30..52
-      NEW_EXPR@30..51
-        NEW_KW@30..33 "new"
-        WHITESPACE@33..34 " "
+    JS_EXPRESSION_STATEMENT@29..52
+      NEW_EXPR@29..51
+        NEW_KW@29..34 "\nnew "
         NEW_EXPR@34..51
-          NEW_KW@34..37 "new"
-          WHITESPACE@37..38 " "
+          NEW_KW@34..38 "new "
           NEW_EXPR@38..51
-            NEW_KW@38..41 "new"
-            WHITESPACE@41..42 " "
+            NEW_KW@38..42 "new "
             NEW_EXPR@42..51
-              NEW_KW@42..45 "new"
-              WHITESPACE@45..46 " "
+              NEW_KW@42..46 "new "
               JS_REFERENCE_IDENTIFIER_EXPRESSION@46..49
                 IDENT@46..49 "Foo"
               ARG_LIST@49..51
@@ -46,11 +37,9 @@ JS_ROOT@0..113
                 LIST@50..50
                 R_PAREN@50..51 ")"
       SEMICOLON@51..52 ";"
-    WHITESPACE@52..53 "\n"
-    JS_EXPRESSION_STATEMENT@53..112
-      NEW_EXPR@53..112
-        NEW_KW@53..56 "new"
-        WHITESPACE@56..57 " "
+    JS_EXPRESSION_STATEMENT@52..112
+      NEW_EXPR@52..112
+        NEW_KW@52..57 "\nnew "
         JS_REFERENCE_IDENTIFIER_EXPRESSION@57..60
           IDENT@57..60 "Foo"
         ARG_LIST@60..112
@@ -58,53 +47,42 @@ JS_ROOT@0..113
           LIST@61..111
             JS_REFERENCE_IDENTIFIER_EXPRESSION@61..64
               IDENT@61..64 "bar"
-            COMMA@64..65 ","
-            WHITESPACE@65..66 " "
+            COMMA@64..66 ", "
             JS_REFERENCE_IDENTIFIER_EXPRESSION@66..69
               IDENT@66..69 "baz"
-            COMMA@69..70 ","
-            WHITESPACE@70..71 " "
+            COMMA@69..71 ", "
             JS_BINARY_EXPRESSION@71..76
-              JS_NUMBER_LITERAL@71..72
-                JS_NUMBER_LITERAL_TOKEN@71..72 "6"
-              WHITESPACE@72..73 " "
-              PLUS@73..74 "+"
-              WHITESPACE@74..75 " "
+              JS_NUMBER_LITERAL@71..73
+                JS_NUMBER_LITERAL_TOKEN@71..73 "6 "
+              PLUS@73..75 "+ "
               JS_NUMBER_LITERAL@75..76
                 JS_NUMBER_LITERAL_TOKEN@75..76 "6"
-            COMMA@76..77 ","
-            WHITESPACE@77..78 " "
+            COMMA@76..78 ", "
             JS_BINARY_EXPRESSION@78..111
-              BRACKET_EXPR@78..86
+              BRACKET_EXPR@78..87
                 JS_REFERENCE_IDENTIFIER_EXPRESSION@78..81
                   IDENT@78..81 "foo"
                 L_BRACK@81..82 "["
                 JS_REFERENCE_IDENTIFIER_EXPRESSION@82..85
                   IDENT@82..85 "bar"
-                R_BRACK@85..86 "]"
-              WHITESPACE@86..87 " "
-              PLUS@87..88 "+"
-              WHITESPACE@88..89 " "
+                R_BRACK@85..87 "] "
+              PLUS@87..89 "+ "
               JS_BINARY_EXPRESSION@89..111
-                JS_ARROW_FUNCTION_EXPRESSION@89..100
-                  JS_PARAMETER_LIST@89..94
+                JS_ARROW_FUNCTION_EXPRESSION@89..101
+                  JS_PARAMETER_LIST@89..95
                     L_PAREN@89..90 "("
                     LIST@90..93
                       SINGLE_PATTERN@90..93
                         NAME@90..93
                           IDENT@90..93 "foo"
-                    R_PAREN@93..94 ")"
-                  WHITESPACE@94..95 " "
-                  FAT_ARROW@95..97 "=>"
-                  WHITESPACE@97..98 " "
-                  JS_FUNCTION_BODY@98..100
+                    R_PAREN@93..95 ") "
+                  FAT_ARROW@95..98 "=> "
+                  JS_FUNCTION_BODY@98..101
                     L_CURLY@98..99 "{"
                     LIST@99..99
                     LIST@99..99
-                    R_CURLY@99..100 "}"
-                WHITESPACE@100..101 " "
-                STAR@101..102 "*"
-                WHITESPACE@102..103 " "
+                    R_CURLY@99..101 "} "
+                STAR@101..103 "* "
                 DOT_EXPR@103..111
                   JS_REFERENCE_IDENTIFIER_EXPRESSION@103..106
                     IDENT@103..106 "foo"
@@ -112,4 +90,3 @@ JS_ROOT@0..113
                   NAME@108..111
                     IDENT@108..111 "bar"
           R_PAREN@111..112 ")"
-  WHITESPACE@112..113 "\n"

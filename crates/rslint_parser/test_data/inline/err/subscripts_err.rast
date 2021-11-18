@@ -19,9 +19,8 @@ JS_ROOT@0..20
             L_BRACK@10..11 "["
             R_BRACK@11..12 "]"
           DOT@12..13 "."
-          WHITESPACE@13..14 "\n"
-          NAME@14..17
-            IDENT@14..17 "BAR"
+          NAME@13..17
+            IDENT@13..17 "\nBAR"
         BACKTICK@17..18 "`"
         LIST@18..20
           TEMPLATE_CHUNK@18..20 "b\n"

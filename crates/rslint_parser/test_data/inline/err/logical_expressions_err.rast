@@ -1,47 +1,38 @@
-JS_ROOT@0..37
+JS_ROOT@0..36
   LIST@0..0
   LIST@0..36
     JS_EXPRESSION_STATEMENT@0..11
       JS_LOGICAL_EXPRESSION@0..10
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo"
-        WHITESPACE@3..4 " "
-        QUESTION2@4..6 "??"
-        WHITESPACE@6..7 " "
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
+          IDENT@0..4 "foo "
+        QUESTION2@4..7 "?? "
         JS_BINARY_EXPRESSION@7..10
-          STAR@7..8 "*"
-          WHITESPACE@8..9 " "
+          STAR@7..9 "* "
           JS_NUMBER_LITERAL@9..10
             JS_NUMBER_LITERAL_TOKEN@9..10 "2"
       SEMICOLON@10..11 ";"
-    WHITESPACE@11..12 "\n"
-    JS_EXPRESSION_STATEMENT@12..24
-      JS_LOGICAL_EXPRESSION@12..23
-        JS_UNARY_EXPRESSION@12..16
-          BANG@12..13 "!"
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@13..16
-            IDENT@13..16 "foo"
-        WHITESPACE@16..17 " "
-        AMP2@17..19 "&&"
-        WHITESPACE@19..20 " "
+    JS_EXPRESSION_STATEMENT@11..24
+      JS_LOGICAL_EXPRESSION@11..23
+        JS_UNARY_EXPRESSION@11..17
+          BANG@11..13 "\n!"
+          JS_REFERENCE_IDENTIFIER_EXPRESSION@13..17
+            IDENT@13..17 "foo "
+        AMP2@17..20 "&& "
         JS_REFERENCE_IDENTIFIER_EXPRESSION@20..23
           IDENT@20..23 "bar"
       SEMICOLON@23..24 ";"
-    WHITESPACE@24..25 "\n"
-    JS_EXPRESSION_STATEMENT@25..36
-      CALL_EXPR@25..36
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@25..28
-          IDENT@25..28 "foo"
+    JS_EXPRESSION_STATEMENT@24..36
+      CALL_EXPR@24..36
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@24..28
+          IDENT@24..28 "\nfoo"
         ARG_LIST@28..36
           L_PAREN@28..29 "("
           LIST@29..35
             JS_LOGICAL_EXPRESSION@29..35
-              JS_REFERENCE_IDENTIFIER_EXPRESSION@29..32
-                IDENT@29..32 "foo"
-              WHITESPACE@32..33 " "
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@29..33
+                IDENT@29..33 "foo "
               PIPE2@33..35 "||"
           R_PAREN@35..36 ")"
-  WHITESPACE@36..37 "\n"
 --
 error[SyntaxError]: Expected an expression for the right hand side of a `??`, but found an operator instead
   ┌─ logical_expressions_err.js:1:8

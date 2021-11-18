@@ -1,4 +1,4 @@
-JS_ROOT@0..24
+JS_ROOT@0..23
   LIST@0..0
   LIST@0..23
     JS_EXPRESSION_STATEMENT@0..10
@@ -7,14 +7,12 @@ JS_ROOT@0..24
         DOT@6..7 "."
         ERROR@7..10
           IDENT@7..10 "foo"
-    WHITESPACE@10..11 "\n"
-    JS_EXPRESSION_STATEMENT@11..23
-      ERROR@11..23
-        IMPORT_KW@11..17 "import"
+    JS_EXPRESSION_STATEMENT@10..23
+      ERROR@10..23
+        IMPORT_KW@10..17 "\nimport"
         DOT@17..18 "."
         ERROR@18..23
           IDENT@18..23 "metaa"
-  WHITESPACE@23..24 "\n"
 --
 error[SyntaxError]: Expected `meta` following an import keyword, but found `foo`
   ┌─ import_no_meta.js:1:8

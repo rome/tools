@@ -98,7 +98,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	/// ```
 	pub fn text(&self) -> &str {
 		let txt = self.raw.text();
-		let start = self.offset;
+		let start = self.offset - self.raw.offset();
 		let end = start + self.text_len();
 
 		&txt[start.into()..end.into()]
@@ -311,7 +311,7 @@ impl<L: Language> Iterator for SyntaxTriviaPiecesIterator<L> {
 }
 
 impl<L: Language> SyntaxTrivia<L> {
-	/// Returns the text of all descendants tokens combined, including all trivia.
+	/// Returns all pieces of this trivia.
 	///
 	/// ```
 	/// use rome_rowan::*;
@@ -408,7 +408,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -434,7 +434,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -464,7 +464,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -492,7 +492,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -527,7 +527,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -620,6 +620,11 @@ impl<L: Language> SyntaxNode<L> {
 
 	pub fn descendants(&self) -> impl Iterator<Item = SyntaxNode<L>> {
 		self.raw.descendants().map(SyntaxNode::from)
+	}
+
+	pub fn descendants_tokens(&self) -> impl Iterator<Item = SyntaxToken<L>> {
+		self.descendants_with_tokens()
+			.filter_map(|x| x.as_token().cloned())
 	}
 
 	pub fn descendants_with_tokens(&self) -> impl Iterator<Item = SyntaxElement<L>> {

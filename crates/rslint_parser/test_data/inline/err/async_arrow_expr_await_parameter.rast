@@ -1,35 +1,28 @@
-JS_ROOT@0..26
+JS_ROOT@0..25
   LIST@0..0
   LIST@0..25
-    JS_VARIABLE_DECLARATION_STATEMENT@0..13
-      JS_VARIABLE_DECLARATION@0..13
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
-        LIST@4..13
-          JS_VARIABLE_DECLARATOR@4..13
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "a"
-            WHITESPACE@5..6 " "
-            JS_EQUAL_VALUE_CLAUSE@6..13
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
-              JS_REFERENCE_IDENTIFIER_EXPRESSION@8..13
-                IDENT@8..13 "async"
-    WHITESPACE@13..14 " "
+    JS_VARIABLE_DECLARATION_STATEMENT@0..14
+      JS_VARIABLE_DECLARATION@0..14
+        LET_KW@0..4 "let "
+        LIST@4..14
+          JS_VARIABLE_DECLARATOR@4..14
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "a "
+            JS_EQUAL_VALUE_CLAUSE@6..14
+              EQ@6..8 "= "
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@8..14
+                IDENT@8..14 "async "
     JS_EXPRESSION_STATEMENT@14..25
       JS_ARROW_FUNCTION_EXPRESSION@14..25
-        JS_IDENTIFIER_BINDING@14..19
-          IDENT@14..19 "await"
-        WHITESPACE@19..20 " "
-        FAT_ARROW@20..22 "=>"
-        WHITESPACE@22..23 " "
+        JS_IDENTIFIER_BINDING@14..20
+          IDENT@14..20 "await "
+        FAT_ARROW@20..23 "=> "
         JS_FUNCTION_BODY@23..25
           L_CURLY@23..24 "{"
           LIST@24..24
           LIST@24..24
           R_CURLY@24..25 "}"
-  WHITESPACE@25..26 "\n"
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ async_arrow_expr_await_parameter.js:1:15

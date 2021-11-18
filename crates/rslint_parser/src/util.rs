@@ -17,22 +17,6 @@ pub trait SyntaxNodeExt {
 			.collect()
 	}
 
-	/// Get all the tokens of this node, recursively, not including whitespace and comments.
-	fn lossy_tokens(&self) -> Vec<SyntaxToken> {
-		self.to_node()
-			.descendants_with_tokens()
-			.filter_map(|x| x.into_token().filter(|token| !token.kind().is_trivia()))
-			.collect()
-	}
-
-	/// Get the first non-whitespace child token.
-	fn first_lossy_token(&self) -> Option<SyntaxToken> {
-		self.to_node()
-			.children_with_tokens()
-			.filter_map(|it| it.into_token().filter(|x| !x.kind().is_trivia()))
-			.next()
-	}
-
 	/// Check if the node is a certain AST node and that it can be casted to it.
 	fn is<T: AstNode>(&self) -> bool {
 		T::can_cast(self.to_node().kind())
@@ -75,13 +59,13 @@ pub trait SyntaxNodeExt {
 	/// assert_ne!(left.text(), right.text());
 	/// ```
 	fn lexical_eq(&self, right: &SyntaxNode) -> bool {
-		let left = self.lossy_tokens();
-		let right = right.lossy_tokens();
+		let left = self.tokens();
+		let right = right.tokens();
 
 		if left.len() == right.len() {
 			left.iter()
 				.zip(right.iter())
-				.all(|(l, r)| l.text() == r.text())
+				.all(|(l, r)| l.text_trimmed() == r.text_trimmed())
 		} else {
 			false
 		}
@@ -92,53 +76,6 @@ pub trait SyntaxNodeExt {
 	/// node text.
 	fn color(&self) -> String {
 		color(&self.to_node().text().to_string())
-	}
-
-	/// Get the text range of this node, not including any leading or trailing whitespace.
-	///
-	/// # Examples
-	///
-	/// ```
-	/// use rslint_parser::{SyntaxNodeExt, parse_expr, TextRange};
-	///
-	/// let node = parse_expr(" foo. bar  ", 0).syntax();
-	///
-	/// assert_eq!(node.trimmed_range(), TextRange::new(1.into(), 9.into()));
-	///
-	/// assert_eq!(node.text_range(), TextRange::new(0.into(), 11.into()));
-	/// ```
-	fn trimmed_range(&self) -> TextRange {
-		let node = self.to_node();
-		let tokens = node.lossy_tokens();
-		let start = tokens
-			.first()
-			.map(|t| t.text_range().start())
-			.unwrap_or_else(|| 0.into());
-		let end = tokens
-			.last()
-			.map(|t| t.text_range().end())
-			.unwrap_or_else(|| 0.into());
-
-		TextRange::new(start, end)
-	}
-
-	/// Get the text of this node, not including leading or trailing whitespace
-	///
-	/// # Examples
-	/// ```
-	/// use rslint_parser::{SyntaxNodeExt, parse_expr, TextRange};
-	///
-	/// let node = parse_expr(" foo. bar  ", 0).syntax();
-	///
-	/// assert_eq!(node.trimmed_text(), "foo. bar");
-	/// ```
-	fn trimmed_text(&self) -> SyntaxText {
-		let trimmed = self.to_node().trimmed_range();
-		let offset = self.to_node().text_range().start();
-		self.to_node().text().slice(TextRange::new(
-			trimmed.start().checked_sub(offset).unwrap_or_default(),
-			trimmed.end().checked_sub(offset).unwrap_or_default(),
-		))
 	}
 
 	/// Check whether this node's kind is contained in a token set.
@@ -208,7 +145,7 @@ pub trait SyntaxNodeExt {
 	/// Separate all the lossy tokens of this node, then compare each token's text with the corresponding
 	/// text in `tokens`.
 	fn structural_lossy_token_eq(&self, tokens: &[impl AsRef<str>]) -> bool {
-		let node_tokens = self.to_node().lossy_tokens();
+		let node_tokens = self.to_node().tokens();
 		if node_tokens.len() == tokens.len() {
 			node_tokens
 				.iter()

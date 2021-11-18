@@ -1,4 +1,4 @@
-JS_ROOT@0..35
+JS_ROOT@0..34
   LIST@0..0
   LIST@0..34
     JS_EXPRESSION_STATEMENT@0..11
@@ -9,40 +9,31 @@ JS_ROOT@0..35
           L_PAREN@3..4 "("
           LIST@4..9
             JS_BINARY_EXPRESSION@4..9
-              JS_REFERENCE_IDENTIFIER_EXPRESSION@4..7
-                IDENT@4..7 "foo"
-              WHITESPACE@7..8 " "
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@4..8
+                IDENT@4..8 "foo "
               PLUS@8..9 "+"
           R_PAREN@9..10 ")"
       SEMICOLON@10..11 ";"
-    WHITESPACE@11..12 "\n"
-    JS_EXPRESSION_STATEMENT@12..22
-      JS_BINARY_EXPRESSION@12..21
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@12..15
-          IDENT@12..15 "foo"
-        WHITESPACE@15..16 " "
-        PLUS@16..17 "+"
-        WHITESPACE@17..18 " "
+    JS_EXPRESSION_STATEMENT@11..22
+      JS_BINARY_EXPRESSION@11..21
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@11..16
+          IDENT@11..16 "\nfoo "
+        PLUS@16..18 "+ "
         JS_BINARY_EXPRESSION@18..21
-          STAR@18..19 "*"
-          WHITESPACE@19..20 " "
+          STAR@18..20 "* "
           JS_NUMBER_LITERAL@20..21
             JS_NUMBER_LITERAL_TOKEN@20..21 "2"
       SEMICOLON@21..22 ";"
-    WHITESPACE@22..23 "\n"
-    JS_EXPRESSION_STATEMENT@23..34
-      JS_BINARY_EXPRESSION@23..33
-        JS_UNARY_EXPRESSION@23..27
-          BANG@23..24 "!"
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@24..27
-            IDENT@24..27 "foo"
-        WHITESPACE@27..28 " "
-        STAR@28..29 "*"
-        WHITESPACE@29..30 " "
+    JS_EXPRESSION_STATEMENT@22..34
+      JS_BINARY_EXPRESSION@22..33
+        JS_UNARY_EXPRESSION@22..28
+          BANG@22..24 "\n!"
+          JS_REFERENCE_IDENTIFIER_EXPRESSION@24..28
+            IDENT@24..28 "foo "
+        STAR@28..30 "* "
         JS_REFERENCE_IDENTIFIER_EXPRESSION@30..33
           IDENT@30..33 "bar"
       SEMICOLON@33..34 ";"
-  WHITESPACE@34..35 "\n"
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ binary_expressions_err.js:1:10

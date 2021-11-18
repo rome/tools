@@ -37,11 +37,11 @@ pub trait AstNode {
 	fn syntax(&self) -> &SyntaxNode;
 
 	fn text(&self) -> std::string::String {
-		self.syntax().trimmed_text().to_string()
+		self.syntax().text_trimmed().to_string()
 	}
 
 	fn range(&self) -> TextRange {
-		self.syntax().trimmed_range()
+		self.syntax().text_trimmed_range()
 	}
 }
 

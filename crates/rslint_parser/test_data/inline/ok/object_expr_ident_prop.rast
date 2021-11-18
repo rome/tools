@@ -1,19 +1,16 @@
-JS_ROOT@0..14
+JS_ROOT@0..13
   LIST@0..0
   LIST@0..13
     JS_VARIABLE_DECLARATION_STATEMENT@0..13
       JS_VARIABLE_DECLARATION@0..13
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
+        LET_KW@0..4 "let "
         LIST@4..13
           JS_VARIABLE_DECLARATOR@4..13
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "b"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "b "
             JS_EQUAL_VALUE_CLAUSE@6..13
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
+              EQ@6..8 "= "
               JS_OBJECT_EXPRESSION@8..13
                 L_CURLY@8..9 "{"
                 LIST@9..12
@@ -21,4 +18,3 @@ JS_ROOT@0..14
                     JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
                       IDENT@9..12 "foo"
                 R_CURLY@12..13 "}"
-  WHITESPACE@13..14 "\n"

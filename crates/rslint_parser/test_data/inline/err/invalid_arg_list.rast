@@ -1,6 +1,6 @@
-JS_ROOT@0..21
+JS_ROOT@0..20
   LIST@0..0
-  LIST@0..21
+  LIST@0..20
     JS_EXPRESSION_STATEMENT@0..8
       CALL_EXPR@0..7
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
@@ -14,26 +14,23 @@ JS_ROOT@0..21
             JS_REFERENCE_IDENTIFIER_EXPRESSION@6..7
               IDENT@6..7 "b"
       SEMICOLON@7..8 ";"
-    WHITESPACE@8..9 "\n"
-    JS_EXPRESSION_STATEMENT@9..16
-      CALL_EXPR@9..16
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
-          IDENT@9..12 "foo"
-        ARG_LIST@12..16
+    JS_EXPRESSION_STATEMENT@8..17
+      CALL_EXPR@8..17
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@8..12
+          IDENT@8..12 "\nfoo"
+        ARG_LIST@12..17
           L_PAREN@12..13 "("
-          LIST@13..16
+          LIST@13..17
             JS_REFERENCE_IDENTIFIER_EXPRESSION@13..14
               IDENT@13..14 "a"
             COMMA@14..15 ","
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@15..16
-              IDENT@15..16 "b"
-    WHITESPACE@16..17 " "
-    JS_VARIABLE_DECLARATION_STATEMENT@17..21
-      JS_VARIABLE_DECLARATION@17..21
+            JS_REFERENCE_IDENTIFIER_EXPRESSION@15..17
+              IDENT@15..17 "b "
+    JS_VARIABLE_DECLARATION_STATEMENT@17..20
+      JS_VARIABLE_DECLARATION@17..20
         VAR_KW@17..20 "var"
-        WHITESPACE@20..21 "\n"
-        LIST@21..21
-          ERROR@21..21
+        LIST@20..20
+          ERROR@20..20
 --
 error[SyntaxError]: expected `')'` but instead found `;`
   ┌─ invalid_arg_list.js:1:8

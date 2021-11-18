@@ -154,6 +154,18 @@ pub fn token(text: &str) -> FormatElement {
 	}
 }
 
+/// Creates a token that gets written as is to the output. See fucntion [token] for more details
+/// and examples.
+/// This function moves the string to be more efficient.
+#[inline]
+pub fn token_from_string(text: String) -> FormatElement {
+	if text.is_empty() {
+		FormatElement::Empty
+	} else {
+		FormatElement::Token(Token(text))
+	}
+}
+
 /// Inserts a single space. Allows to separate different tokens.
 ///
 /// ## Examples
@@ -730,6 +742,80 @@ impl FormatElement {
 	/// Returns true if the element contains no content.
 	pub fn is_empty(&self) -> bool {
 		self == &FormatElement::Empty
+	}
+
+	/// Remove all empty, space, line breaks, idents from the start of
+	/// the [FormatElement].
+	/// Including characters of the [FormatElement::Token] variant.
+	pub fn trim_start(&self) -> FormatElement {
+		match self {
+			FormatElement::Empty => FormatElement::Empty,
+			FormatElement::Space => FormatElement::Empty,
+			FormatElement::Line(_) => FormatElement::Empty,
+			FormatElement::Indent(_) => FormatElement::Empty,
+			FormatElement::Group(_) => todo!(),
+			FormatElement::ConditionalGroupContent(_) => todo!(),
+			FormatElement::List(list) => {
+				let mut content: Vec<_> = list
+					.iter()
+					.skip_while(|e| match e {
+						FormatElement::Empty => true,
+						FormatElement::Space => true,
+						FormatElement::Line(_) => true,
+						FormatElement::Indent(_) => true,
+						FormatElement::Token(t) => {
+							let s = t.trim_start();
+							s.is_empty()
+						}
+						_ => false,
+					})
+					.map(Clone::clone)
+					.collect();
+				if let Some(FormatElement::Token(s)) = content.get_mut(0) {
+					s.0 = s.trim_start().to_string()
+				}
+				FormatElement::List(List::new(content))
+			}
+			FormatElement::Token(s) => token(s.trim_start()),
+		}
+	}
+
+	/// Remove all empty, space, line breaks, idents from the end of
+	/// the [FormatElement].
+	/// Including characters of the [FormatElement::Token] variant.
+	pub fn trim_end(&self) -> FormatElement {
+		match self {
+			FormatElement::Empty => FormatElement::Empty,
+			FormatElement::Space => FormatElement::Empty,
+			FormatElement::Line(_) => FormatElement::Empty,
+			FormatElement::Indent(_) => FormatElement::Empty,
+			FormatElement::Group(_) => todo!(),
+			FormatElement::ConditionalGroupContent(_) => todo!(),
+			FormatElement::List(list) => {
+				let mut content: Vec<_> = list
+					.iter()
+					.rev()
+					.skip_while(|e| match e {
+						FormatElement::Empty => true,
+						FormatElement::Space => true,
+						FormatElement::Line(_) => true,
+						FormatElement::Indent(_) => true,
+						FormatElement::Token(t) => {
+							let s = t.trim_end();
+							s.is_empty()
+						}
+						_ => false,
+					})
+					.map(Clone::clone)
+					.collect();
+				content.reverse();
+				if let Some(FormatElement::Token(s)) = content.last_mut() {
+					s.0 = s.trim_end().to_string()
+				}
+				FormatElement::List(List::new(content))
+			}
+			FormatElement::Token(s) => token(s.trim_end()),
+		}
 	}
 }
 
