@@ -462,12 +462,22 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 	// super.foo
 	// super[bar]
 	// super[foo][bar]
-	if p.at(T![super]) && token_set!(T![.], T!['[']).contains(p.nth(1)) {
-		let super_completed = super_expression(p);
+	if p.at(T![super]) && token_set!(T![.], T!['['], T![?.]).contains(p.nth(1)) {
+		let mut super_completed = super_expression(p);
 
 		let lhs = match p.cur() {
 			T![.] => static_member_expression(p, super_completed, T![.]),
 			T!['['] => computed_member_expression(p, super_completed, false),
+			T![?.] => {
+				super_completed.change_kind(p, JS_UNKNOWN_EXPRESSION);
+				p.error(
+					p.err_builder(
+						"Super doesn't support optional chaining as super can never be null",
+					)
+					.primary(super_completed.range(p), ""),
+				);
+				static_member_expression(p, super_completed, T![?.])
+			}
 			_ => unreachable!(),
 		};
 
