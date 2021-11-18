@@ -53,12 +53,14 @@ impl ParseRecoverer {
 	///
 	/// If [ParserRecoverer] has an error, it gets tracked in the events.
 	pub fn recover(&self, p: &mut Parser) {
-		if p.state.no_recovery {
-			return;
-		}
 		let error = self.get_error();
 		if let Some(error) = error {
 			p.error(error);
+		} else {
+			// the check on state should be done only when there's no error
+			if p.state.no_recovery {
+				return;
+			}
 		}
 		if !self.parsing_is_recoverable(p) {
 			let m = p.start();
