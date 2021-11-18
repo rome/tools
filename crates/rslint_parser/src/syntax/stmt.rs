@@ -995,8 +995,6 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			}
 			cons_list.complete(p, LIST);
 			m.complete(p, JS_CASE_CLAUSE);
-			// We return an empty range, to tell the parser that we haven't found a default clause, but there's not error
-			return Some(0..0);
 		}
 		_ => {
 			let err = p
@@ -1059,13 +1057,8 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 
 				temp.error(err);
 			} else {
-				// if the range is 0, it means that we found a "case"
-				if !range.is_empty() {
-					first_default = Some(default_range);
-				}
+				first_default = Some(default_range);
 			}
-		} else {
-			break;
 		}
 	}
 	cases_list.complete(p, LIST);
