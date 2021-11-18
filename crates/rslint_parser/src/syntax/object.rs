@@ -137,7 +137,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 				// test_err object_expr_non_ident_literal_prop
 				// let b = {5}
 
-				p.recover_on_unexpected_node(ParseRecoverer::new(token_set![T![:], T![,]], ERROR));
+				ParseRecoverer::new(token_set![T![:], T![,]], ERROR).recover(p);
 
 				if p.eat(T![:]) {
 					assign_expr(p);
@@ -278,11 +278,7 @@ fn method_object_member_body(p: &mut Parser) -> Result<(), ()> {
 			.err_builder("expected a method definition, but found none")
 			.primary(p.cur_tok().range, "");
 
-		p.recover_on_unexpected_node(ParseRecoverer::with_error(
-			BASE_METHOD_RECOVERY_SET,
-			ERROR,
-			err,
-		));
+		ParseRecoverer::with_error(BASE_METHOD_RECOVERY_SET, ERROR, err).recover(p);
 		Err(())
 	};
 

@@ -717,11 +717,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
                     .primary(temp.cur_tok().range, "");
 
-						temp.recover_on_unexpected_node(ParseRecoverer::with_error(
-							EXPR_RECOVERY_SET,
-							ERROR,
-							err,
-						));
+						ParseRecoverer::with_error(EXPR_RECOVERY_SET, ERROR, err)
+							.recover(&mut temp);
 					}
 				}
 				break;
@@ -1053,10 +1050,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
-			p.recover_on_unexpected_node(
-				ParseRecoverer::with_error(p.state.expr_recovery_set, ERROR, err)
-					.enabled_braces_check(),
-			);
+			ParseRecoverer::with_error(p.state.expr_recovery_set, ERROR, err)
+				.enabled_braces_check()
+				.recover(p);
 			return None;
 		}
 	};
@@ -1076,10 +1072,9 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.recover_on_unexpected_node(
-				ParseRecoverer::with_error(p.state.expr_recovery_set, ERROR, err)
-					.enabled_braces_check(),
-			);
+			ParseRecoverer::with_error(p.state.expr_recovery_set, ERROR, err)
+				.enabled_braces_check()
+				.recover(p);
 			None
 		}
 	}

@@ -47,18 +47,38 @@ impl ParseRecoverer {
 		self
 	}
 
+	/// The main function that tells to the parser how to recover itself.
+	///
+	/// Recover from an error with a [recovery set](TokenSet) or by using a `{` or `}`.
+	///
+	/// If [ParserRecoverer] has an error, it gets tracked in the events.
+	pub fn recover(&self, p: &mut Parser) {
+		if p.state.no_recovery {
+			return;
+		}
+		let error = self.get_error();
+		if let Some(error) = error {
+			p.error(error);
+		}
+		if !self.parsing_is_recoverable(p) {
+			let m = p.start();
+			p.bump_any();
+			m.complete(p, self.get_unknown_node_kind());
+		}
+	}
+
 	/// Checks if the parsing phase is recoverable by checking curly braces and toke set
-	pub fn parsing_is_recoverable(&self, parser: &Parser) -> bool {
+	fn parsing_is_recoverable(&self, parser: &Parser) -> bool {
 		self.is_at_token_set(parser) || self.is_at_braces(parser)
 	}
 
 	/// It returns the diagnostic
-	pub fn get_error(&self) -> Option<Diagnostic> {
+	fn get_error(&self) -> Option<Diagnostic> {
 		self.error.to_owned()
 	}
 
 	/// It return the unknown node kind that will be used to complete the parsing
-	pub fn get_unknown_node_kind(&self) -> SyntaxKind {
+	fn get_unknown_node_kind(&self) -> SyntaxKind {
 		self.unknown_node_kind
 	}
 

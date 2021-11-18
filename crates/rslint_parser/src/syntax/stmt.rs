@@ -117,11 +117,12 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
 				return None;
 			}
-			p.recover_on_unexpected_node(ParseRecoverer::with_error(
+			ParseRecoverer::with_error(
 				recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
 				JS_UNKNOWN_STATEMENT,
 				err,
-			));
+			)
+			.recover(p);
 			return None;
 		}
 	};
@@ -978,10 +979,9 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			p.recover_on_unexpected_node(
-				ParseRecoverer::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
-					.enabled_braces_check(),
-			);
+			ParseRecoverer::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
+				.enabled_braces_check()
+				.recover(p);
 		}
 	}
 	None

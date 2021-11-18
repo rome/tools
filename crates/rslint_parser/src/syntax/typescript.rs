@@ -586,11 +586,12 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 				.err_builder("expected an identifier or string for an enum variant, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.recover_on_unexpected_node(ParseRecoverer::with_error(
+			ParseRecoverer::with_error(
 				token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
 				ERROR,
 				err,
-			));
+			)
+			.recover(p);
 			true
 		} else {
 			if !p.eat(JS_STRING_LITERAL_TOKEN) {
@@ -1007,7 +1008,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("expected a type")
 				.primary(p.cur_tok().range, "");
 
-			p.recover_on_unexpected_node(ParseRecoverer::with_error(
+			ParseRecoverer::with_error(
 				BASE_TS_RECOVERY_SET.union(token_set![
 					T![typeof],
 					T!['{'],
@@ -1027,7 +1028,8 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				]),
 				ERROR,
 				err,
-			));
+			)
+			.recover(p);
 			None
 		}
 	}
@@ -1120,11 +1122,12 @@ fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 			.err_builder("expected a type parameter, but found none")
 			.primary(p.cur_tok().range, "");
 
-		p.recover_on_unexpected_node(ParseRecoverer::with_error(
+		ParseRecoverer::with_error(
 			token_set![T![ident], T![yield], T![await], T![>], T![=]],
 			ERROR,
 			err,
-		));
+		)
+		.recover(p);
 		None
 	}
 }
@@ -1359,6 +1362,6 @@ pub fn ts_type_name(
 		))
 		.primary(p.cur_tok().range, "");
 
-	p.recover_on_unexpected_node(ParseRecoverer::with_error(set, ERROR, err));
+	ParseRecoverer::with_error(set, ERROR, err).recover(p);
 	None
 }

@@ -8,7 +8,6 @@ use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
 
-use crate::parse_recoverer::ParseRecoverer;
 use crate::*;
 
 /// An extremely fast, error tolerant, completely lossless JavaScript parser
@@ -180,27 +179,24 @@ impl<'t> Parser<'t> {
 		true
 	}
 
-	/// Recover from an error with a recovery set or by using a `{` or `}`.
-	///
-	/// If `recovery_bag` has an error, it gets tracked in the events.
 	///
 	/// # Arguments
 	///
 	/// * `recovery_bag` - Everything needed to recover from an error
-	pub fn recover_on_unexpected_node(&mut self, recovery_bag: ParseRecoverer) {
-		if self.state.no_recovery {
-			return;
-		}
-		let error = recovery_bag.get_error();
-		if let Some(error) = error {
-			self.error(error);
-		}
-		if !recovery_bag.parsing_is_recoverable(self) {
-			let m = self.start();
-			self.bump_any();
-			m.complete(self, recovery_bag.get_unknown_node_kind());
-		}
-	}
+	// pub fn recover_on_unexpected_node(&mut self, recovery_bag: ParseRecoverer) {
+	// 	if self.state.no_recovery {
+	// 		return;
+	// 	}
+	// 	let error = recovery_bag.get_error();
+	// 	if let Some(error) = error {
+	// 		self.error(error);
+	// 	}
+	// 	if !recovery_bag.parsing_is_recoverable(self) {
+	// 		let m = self.start();
+	// 		self.bump_any();
+	// 		m.complete(self, recovery_bag.get_unknown_node_kind());
+	// 	}
+	// }
 
 	/// Starts a new node in the syntax tree. All nodes and tokens
 	/// consumed between the `start` and the corresponding `Marker::complete`

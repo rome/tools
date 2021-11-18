@@ -71,7 +71,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			p.recover_on_unexpected_node(ParseRecoverer::with_error(ts, ERROR, err));
+			ParseRecoverer::with_error(ts, ERROR, err).recover(p);
 			return None;
 		}
 	})
@@ -169,10 +169,11 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
-			p.recover_on_unexpected_node(ParseRecoverer::new(
+			ParseRecoverer::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				ERROR,
-			));
+			)
+			.recover(p);
 		}
 		if !p.at(T![']']) {
 			p.expect(T![,]);
@@ -237,10 +238,11 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	let name = if let Some(n) = name {
 		n
 	} else {
-		p.recover_on_unexpected_node(ParseRecoverer::new(
+		ParseRecoverer::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			ERROR,
-		));
+		)
+		.recover(p);
 		return None;
 	};
 
