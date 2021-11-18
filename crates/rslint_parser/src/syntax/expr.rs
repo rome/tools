@@ -78,7 +78,7 @@ pub const STARTS_EXPR: TokenSet = token_set![
 // "foo"
 // 'bar'
 // null
-pub fn literal(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn literal_expression(p: &mut Parser) -> Option<CompletedMarker> {
 	let literal_kind = match p.cur_tok().kind {
 		SyntaxKind::JS_NUMBER_LITERAL => {
 			if p.cur_src().ends_with('n') {
@@ -923,7 +923,7 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 /// A primary expression such as a literal, an object, an array, or `this`.
 pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
-	if let Some(m) = literal(p) {
+	if let Some(m) = literal_expression(p) {
 		return Some(m);
 	}
 

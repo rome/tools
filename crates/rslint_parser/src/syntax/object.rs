@@ -1,5 +1,5 @@
 use crate::syntax::decl::{formal_param_pat, parameter_list, BASE_METHOD_RECOVERY_SET};
-use crate::syntax::expr::{assign_expr, expr, identifier_name, literal};
+use crate::syntax::expr::{assign_expr, expr, identifier_name, literal_expression};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::{CompletedMarker, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
@@ -198,7 +198,7 @@ fn setter_object_member(p: &mut Parser) -> CompletedMarker {
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker> {
 	match p.cur() {
-		JS_STRING_LITERAL | JS_NUMBER_LITERAL => literal(p),
+		JS_STRING_LITERAL | JS_NUMBER_LITERAL => literal_expression(p),
 		T!['['] => Some(computed_member_name(p)),
 		_ if binding => super::pat::binding_identifier(p),
 		_ => identifier_name(p),

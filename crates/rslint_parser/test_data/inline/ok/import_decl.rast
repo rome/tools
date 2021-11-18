@@ -11,7 +11,6 @@
           2: NAME@12..16
             0: IDENT@12..16 "foo" [] [Whitespace(" ")]
       2: FROM_KW@16..21 "from" [] [Whitespace(" ")]
-      3: JS_STRING_LITERAL_EXPRESSION@21..26
-        0: JS_STRING_LITERAL@21..26 "\"bla\"" [] []
+      3: JS_STRING_LITERAL@21..26 "\"bla\"" [] []
       4: SEMICOLON@26..27 ";" [] []
   3: EOF@27..28 "" [Whitespace("\n")] []

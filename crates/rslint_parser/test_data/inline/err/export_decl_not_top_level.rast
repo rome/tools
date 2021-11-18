@@ -15,8 +15,7 @@
                   0: IDENT@12..17 "pain" [] [Whitespace(" ")]
             2: R_CURLY@17..19 "}" [] [Whitespace(" ")]
             3: FROM_KW@19..24 "from" [] [Whitespace(" ")]
-            4: JS_STRING_LITERAL_EXPRESSION@24..30
-              0: JS_STRING_LITERAL@24..30 "\"life\"" [] []
+            4: JS_STRING_LITERAL@24..30 "\"life\"" [] []
             5: SEMICOLON@30..31 ";" [] []
       2: R_CURLY@31..33 "}" [Whitespace("\n")] []
   3: EOF@33..34 "" [Whitespace("\n")] []

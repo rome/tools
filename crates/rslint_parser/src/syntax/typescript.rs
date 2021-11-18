@@ -1,7 +1,7 @@
 //! TypeScript specific functions.
 
 use super::decl::*;
-use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
+use super::expr::{assign_expr, identifier_name, lhs_expr, literal_expression};
 use super::stmt::{semi, statements, variable_declaration_statement};
 use crate::syntax::class::class_declaration;
 use crate::syntax::expr::any_reference_member;
@@ -463,7 +463,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 	} else {
 		match p.cur() {
 			JS_STRING_LITERAL | JS_NUMBER_LITERAL => {
-				literal(p);
+				literal_expression(p);
 			}
 			_ => {
 				let mut complete = any_reference_member(p)?;
@@ -953,9 +953,12 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				ts_type_ref(p, None)
 			}
 		}
-		JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | JS_REGEX_LITERAL => {
-			Some(literal(p).unwrap().precede(p).complete(p, TS_LITERAL))
-		}
+		JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | JS_REGEX_LITERAL => Some(
+			literal_expression(p)
+				.unwrap()
+				.precede(p)
+				.complete(p, TS_LITERAL),
+		),
 		BACKTICK => {
 			let m = p.start();
 			p.bump_any();

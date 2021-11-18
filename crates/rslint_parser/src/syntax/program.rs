@@ -2,7 +2,7 @@
 
 use syntax::stmt::FOLLOWS_LET;
 
-use super::expr::{assign_expr, expr, identifier_name, literal, primary_expr};
+use super::expr::{assign_expr, expr, identifier_name, primary_expr};
 use super::pat::binding_identifier;
 use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
@@ -181,7 +181,7 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 		p.bump_remap(T![from]);
 	}
 
-	if !p.at(JS_STRING_LITERAL) {
+	if !p.eat(JS_STRING_LITERAL) {
 		let err = p
 			.err_builder(
 				"expected a source for a `from` clause in an import statement, but found none",
@@ -189,8 +189,6 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 			.primary(p.cur_tok().range, "");
 
 		p.error(err);
-	} else {
-		literal(p);
 	}
 
 	if p.cur_src() == "assert" {
@@ -506,7 +504,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 fn from_clause_and_semi(p: &mut Parser, start: usize) {
 	debug_assert_eq!(p.cur_src(), "from");
 	p.bump_remap(T![from]);
-	literal(p);
+	p.expect(T![js_string_literal]);
 	semi(p, start..p.cur_tok().range.start);
 }
 
