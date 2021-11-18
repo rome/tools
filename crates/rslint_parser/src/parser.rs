@@ -481,7 +481,7 @@ impl<'t> Parser<'t> {
 	)]
 	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> Option<CompletedMarker> {
 		let func = if assign {
-			syntax::expr::assign_expr
+			syntax::expr::assignment_expression_right_hand_side
 		} else {
 			syntax::expr::expr
 		};

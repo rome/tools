@@ -219,7 +219,7 @@ JsRoot {
           0: L_CURLY@98..99 "{" [] []
           1: LIST@99..111
             0: JS_EXPRESSION_STATEMENT@99..111
-              0: ASSIGN_EXPR@99..111
+              0: JS_ASSIGNMENT_EXPRESSION@99..111
                 0: JS_REFERENCE_IDENTIFIER_EXPRESSION@99..104
                   0: IDENT@99..104 "a" [Whitespace("\n\t\t")] [Whitespace(" ")]
                 1: EQ@104..106 "=" [] [Whitespace(" ")]

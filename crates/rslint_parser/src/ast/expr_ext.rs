@@ -1,5 +1,6 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 
+use crate::SyntaxError::MissingRequiredChild;
 use crate::{ast::*, numbers::*, util::*, TextRange, T};
 use rome_rowan::{SyntaxText, TextSize};
 use SyntaxKind::*;
@@ -282,7 +283,7 @@ impl KeyValuePattern {
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-pub enum AssignOp {
+pub enum JsAssignmentOperator {
 	Assign,
 	AddAssign,
 	SubtractAssign,
@@ -300,48 +301,40 @@ pub enum AssignOp {
 	NullishCoalescingAssign,
 }
 
-impl AssignExpr {
-	pub fn op_details(&self) -> Option<(SyntaxToken, AssignOp)> {
-		self.syntax()
-			.children_with_tokens()
-			.filter_map(|x| x.into_token())
-			.find_map(|t| {
-				let op = match t.kind() {
-					T![=] => AssignOp::Assign,
-					T![+=] => AssignOp::AddAssign,
-					T![-=] => AssignOp::SubtractAssign,
-					T![*=] => AssignOp::TimesAssign,
-					T![%=] => AssignOp::RemainderAssign,
-					T![**=] => AssignOp::ExponentAssign,
-					T![>>=] => AssignOp::LeftShiftAssign,
-					T![<<=] => AssignOp::RightShiftAssign,
-					T![>>>=] => AssignOp::UnsignedRightShiftAssign,
-					T![&=] => AssignOp::BitwiseAndAssign,
-					T![|=] => AssignOp::BitwiseOrAssign,
-					T![^=] => AssignOp::BitwiseXorAssign,
-					T![&&=] => AssignOp::LogicalAndAssign,
-					T![||=] => AssignOp::LogicalOrAssign,
-					T![??=] => AssignOp::NullishCoalescingAssign,
-					_ => return None,
-				};
-				Some((t, op))
-			})
+impl JsAssignmentExpression {
+	pub fn operator(&self) -> SyntaxResult<JsAssignmentOperator> {
+		let operator = match self.operator_token()?.kind() {
+			T![=] => JsAssignmentOperator::Assign,
+			T![+=] => JsAssignmentOperator::AddAssign,
+			T![-=] => JsAssignmentOperator::SubtractAssign,
+			T![*=] => JsAssignmentOperator::TimesAssign,
+			T![%=] => JsAssignmentOperator::RemainderAssign,
+			T![**=] => JsAssignmentOperator::ExponentAssign,
+			T![>>=] => JsAssignmentOperator::LeftShiftAssign,
+			T![<<=] => JsAssignmentOperator::RightShiftAssign,
+			T![>>>=] => JsAssignmentOperator::UnsignedRightShiftAssign,
+			T![&=] => JsAssignmentOperator::BitwiseAndAssign,
+			T![|=] => JsAssignmentOperator::BitwiseOrAssign,
+			T![^=] => JsAssignmentOperator::BitwiseXorAssign,
+			T![&&=] => JsAssignmentOperator::LogicalAndAssign,
+			T![||=] => JsAssignmentOperator::LogicalOrAssign,
+			T![??=] => JsAssignmentOperator::NullishCoalescingAssign,
+			_ => unreachable!(),
+		};
+
+		Ok(operator)
 	}
 
-	pub fn op(&self) -> Option<AssignOp> {
-		self.op_details().map(|t| t.1)
+	pub fn left(&self) -> SyntaxResult<PatternOrExpr> {
+		support::children(self.syntax())
+			.next()
+			.ok_or_else(|| MissingRequiredChild(self.syntax().clone()))
 	}
 
-	pub fn op_token(&self) -> Option<SyntaxToken> {
-		self.op_details().map(|t| t.0)
-	}
-
-	pub fn lhs(&self) -> Option<PatternOrExpr> {
-		self.syntax.children().next().and_then(|n| n.try_to())
-	}
-
-	pub fn rhs(&self) -> Option<JsAnyExpression> {
-		self.syntax.children().nth(1).and_then(|n| n.try_to())
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
+		support::children(self.syntax())
+			.nth(1)
+			.ok_or_else(|| MissingRequiredChild(self.syntax().clone()))
 	}
 }
 

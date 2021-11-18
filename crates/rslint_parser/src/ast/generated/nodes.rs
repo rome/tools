@@ -797,6 +797,34 @@ impl JsArrowFunctionExpression {
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
+pub struct JsAssignmentExpression {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsAssignmentExpression {
+	pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::find_required_token(
+			&self.syntax,
+			&[
+				T ! [=],
+				T ! [+=],
+				T ! [-=],
+				T ! [*=],
+				T ! [%=],
+				T ! [**=],
+				T ! [>>=],
+				T ! [<<=],
+				T ! [>>>=],
+				T ! [&=],
+				T ! [|=],
+				T ! [^=],
+				T ! [&&=],
+				T ! [||=],
+				T ! [??=],
+			],
+		)
+	}
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsAwaitExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1096,34 +1124,6 @@ impl CallExpr {
 	pub fn type_args(&self) -> Option<TsTypeArgs> { support::node(&self.syntax) }
 	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
-pub struct AssignExpr {
-	pub(crate) syntax: SyntaxNode,
-}
-impl AssignExpr {
-	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
-		support::find_required_token(
-			&self.syntax,
-			&[
-				T ! [=],
-				T ! [+=],
-				T ! [-=],
-				T ! [*=],
-				T ! [%=],
-				T ! [**=],
-				T ! [>>=],
-				T ! [<<=],
-				T ! [>>>=],
-				T ! [&=],
-				T ! [|=],
-				T ! [^=],
-				T ! [&&=],
-				T ! [||=],
-				T ! [??=],
-			],
-		)
-	}
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
@@ -2451,6 +2451,7 @@ pub enum JsAnyExpression {
 	JsAnyLiteralExpression(JsAnyLiteralExpression),
 	JsArrayExpression(JsArrayExpression),
 	JsArrowFunctionExpression(JsArrowFunctionExpression),
+	JsAssignmentExpression(JsAssignmentExpression),
 	JsAwaitExpression(JsAwaitExpression),
 	JsBinaryExpression(JsBinaryExpression),
 	JsClassExpression(JsClassExpression),
@@ -2473,7 +2474,6 @@ pub enum JsAnyExpression {
 	Template(Template),
 	NewExpr(NewExpr),
 	CallExpr(CallExpr),
-	AssignExpr(AssignExpr),
 	NewTarget(NewTarget),
 	ImportMeta(ImportMeta),
 	TsNonNull(TsNonNull),
@@ -4212,6 +4212,27 @@ impl std::fmt::Debug for JsArrowFunctionExpression {
 			.finish()
 	}
 }
+impl AstNode for JsAssignmentExpression {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ASSIGNMENT_EXPRESSION }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl std::fmt::Debug for JsAssignmentExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		f.debug_struct("JsAssignmentExpression")
+			.field(
+				"operator_token",
+				&support::DebugSyntaxResult(self.operator_token()),
+			)
+			.finish()
+	}
+}
 impl AstNode for JsAwaitExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_AWAIT_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4720,24 +4741,6 @@ impl std::fmt::Debug for CallExpr {
 			.field("type_args", &support::DebugOptionalNode(self.type_args()))
 			.field("callee", &support::DebugSyntaxResult(self.callee()))
 			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
-			.finish()
-	}
-}
-impl AstNode for AssignExpr {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == ASSIGN_EXPR }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for AssignExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("AssignExpr")
-			.field("operator", &support::DebugSyntaxResult(self.operator()))
 			.finish()
 	}
 }
@@ -7655,6 +7658,11 @@ impl From<JsArrowFunctionExpression> for JsAnyExpression {
 		JsAnyExpression::JsArrowFunctionExpression(node)
 	}
 }
+impl From<JsAssignmentExpression> for JsAnyExpression {
+	fn from(node: JsAssignmentExpression) -> JsAnyExpression {
+		JsAnyExpression::JsAssignmentExpression(node)
+	}
+}
 impl From<JsAwaitExpression> for JsAnyExpression {
 	fn from(node: JsAwaitExpression) -> JsAnyExpression { JsAnyExpression::JsAwaitExpression(node) }
 }
@@ -7747,9 +7755,6 @@ impl From<NewExpr> for JsAnyExpression {
 impl From<CallExpr> for JsAnyExpression {
 	fn from(node: CallExpr) -> JsAnyExpression { JsAnyExpression::CallExpr(node) }
 }
-impl From<AssignExpr> for JsAnyExpression {
-	fn from(node: AssignExpr) -> JsAnyExpression { JsAnyExpression::AssignExpr(node) }
-}
 impl From<NewTarget> for JsAnyExpression {
 	fn from(node: NewTarget) -> JsAnyExpression { JsAnyExpression::NewTarget(node) }
 }
@@ -7775,6 +7780,7 @@ impl AstNode for JsAnyExpression {
 		match kind {
 			JS_ARRAY_EXPRESSION
 			| JS_ARROW_FUNCTION_EXPRESSION
+			| JS_ASSIGNMENT_EXPRESSION
 			| JS_AWAIT_EXPRESSION
 			| JS_BINARY_EXPRESSION
 			| JS_CLASS_EXPRESSION
@@ -7797,7 +7803,6 @@ impl AstNode for JsAnyExpression {
 			| TEMPLATE
 			| NEW_EXPR
 			| CALL_EXPR
-			| ASSIGN_EXPR
 			| NEW_TARGET
 			| IMPORT_META
 			| TS_NON_NULL
@@ -7813,6 +7818,9 @@ impl AstNode for JsAnyExpression {
 			JS_ARRAY_EXPRESSION => JsAnyExpression::JsArrayExpression(JsArrayExpression { syntax }),
 			JS_ARROW_FUNCTION_EXPRESSION => {
 				JsAnyExpression::JsArrowFunctionExpression(JsArrowFunctionExpression { syntax })
+			}
+			JS_ASSIGNMENT_EXPRESSION => {
+				JsAnyExpression::JsAssignmentExpression(JsAssignmentExpression { syntax })
 			}
 			JS_AWAIT_EXPRESSION => JsAnyExpression::JsAwaitExpression(JsAwaitExpression { syntax }),
 			JS_BINARY_EXPRESSION => {
@@ -7864,7 +7872,6 @@ impl AstNode for JsAnyExpression {
 			TEMPLATE => JsAnyExpression::Template(Template { syntax }),
 			NEW_EXPR => JsAnyExpression::NewExpr(NewExpr { syntax }),
 			CALL_EXPR => JsAnyExpression::CallExpr(CallExpr { syntax }),
-			ASSIGN_EXPR => JsAnyExpression::AssignExpr(AssignExpr { syntax }),
 			NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
 			IMPORT_META => JsAnyExpression::ImportMeta(ImportMeta { syntax }),
 			TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
@@ -7888,6 +7895,7 @@ impl AstNode for JsAnyExpression {
 		match self {
 			JsAnyExpression::JsArrayExpression(it) => &it.syntax,
 			JsAnyExpression::JsArrowFunctionExpression(it) => &it.syntax,
+			JsAnyExpression::JsAssignmentExpression(it) => &it.syntax,
 			JsAnyExpression::JsAwaitExpression(it) => &it.syntax,
 			JsAnyExpression::JsBinaryExpression(it) => &it.syntax,
 			JsAnyExpression::JsClassExpression(it) => &it.syntax,
@@ -7910,7 +7918,6 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::Template(it) => &it.syntax,
 			JsAnyExpression::NewExpr(it) => &it.syntax,
 			JsAnyExpression::CallExpr(it) => &it.syntax,
-			JsAnyExpression::AssignExpr(it) => &it.syntax,
 			JsAnyExpression::NewTarget(it) => &it.syntax,
 			JsAnyExpression::ImportMeta(it) => &it.syntax,
 			JsAnyExpression::TsNonNull(it) => &it.syntax,
@@ -7927,6 +7934,7 @@ impl std::fmt::Debug for JsAnyExpression {
 			JsAnyExpression::JsAnyLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsArrayExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyExpression::JsAssignmentExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsAwaitExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsBinaryExpression(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
@@ -7949,7 +7957,6 @@ impl std::fmt::Debug for JsAnyExpression {
 			JsAnyExpression::Template(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::NewExpr(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::CallExpr(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::AssignExpr(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::ImportMeta(it) => std::fmt::Debug::fmt(it, f),
 			JsAnyExpression::TsNonNull(it) => std::fmt::Debug::fmt(it, f),
@@ -9953,6 +9960,11 @@ impl std::fmt::Display for JsArrowFunctionExpression {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAssignmentExpression {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsAwaitExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -10059,11 +10071,6 @@ impl std::fmt::Display for NewExpr {
 	}
 }
 impl std::fmt::Display for CallExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for AssignExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

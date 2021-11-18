@@ -244,6 +244,7 @@ JsAnyExpression =
 	JsAnyLiteralExpression
 	| JsArrayExpression
 	| JsArrowFunctionExpression
+	| JsAssignmentExpression
 	| JsAwaitExpression
 	| JsBinaryExpression
 	| JsClassExpression
@@ -266,7 +267,6 @@ JsAnyExpression =
 	| Template
 	| NewExpr
 	| CallExpr
-	| AssignExpr
 	| NewTarget
 	| ImportMeta
 	| TsNonNull
@@ -354,15 +354,14 @@ JsAnyArrayElement =
 
 JsArrayHole = manual__hole: ''
 
-// assign expression
-AssignExpr =
-  manual__lhs:PatternOrExpr
-  operator:(
+JsAssignmentExpression =
+  manual__left:PatternOrExpr
+  operator_token:(
 		'=' |'+=' | '-=' | '*=' | '%=' |
 		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
 		'|=' | '^=' | '&&=' | '||=' | '??='
   )
-  manual__rhs:PatternOrExpr
+  manual__right:JsAnyExpression
 
 
 PatternOrExpr = Pattern | JsAnyExpression

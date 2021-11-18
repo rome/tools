@@ -119,15 +119,15 @@ pub fn get_precedence(tok: SyntaxKind) -> Option<u8> {
 }
 
 /// Check the LHS expression inside of a for...in or for...of statement according to
-pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker) {
+pub(crate) fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker) {
 	match expr {
 		JsAnyExpression::JsReferenceIdentifierExpression(ident) => {
 			check_simple_assign_target(p, &JsAnyExpression::from(ident), marker.range(p))
 		}
 		JsAnyExpression::JsStaticMemberExpression(_)
 		| JsAnyExpression::JsComputedMemberExpression(_) => {}
-		JsAnyExpression::AssignExpr(expr) => {
-			if let Some(rhs) = expr.rhs() {
+		JsAnyExpression::JsAssignmentExpression(expr) => {
+			if let Ok(rhs) = expr.right() {
 				check_for_stmt_lhs(p, rhs, marker);
 			}
 		}
@@ -202,7 +202,7 @@ pub fn check_for_stmt_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &Comple
 }
 
 fn check_spread_element(p: &mut Parser, lhs: JsAnyExpression, marker: &CompletedMarker) {
-	if let JsAnyExpression::AssignExpr(expr) = lhs {
+	if let JsAnyExpression::JsAssignmentExpression(expr) = lhs {
 		let err = p
 			.err_builder("Illegal spread element in assignment target")
 			.primary(
@@ -217,7 +217,7 @@ fn check_spread_element(p: &mut Parser, lhs: JsAnyExpression, marker: &Completed
 }
 
 pub fn check_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker) {
-	if expr.syntax().kind() == ASSIGN_EXPR {
+	if expr.syntax().kind() == JS_ASSIGNMENT_EXPRESSION {
 		let err = p
 			.err_builder("Illegal assignment expression in for statement")
 			.primary(

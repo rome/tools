@@ -2,7 +2,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
-use super::expr::{assign_expr, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
+use super::expr::{assignment_expression_right_hand_side, expr, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
@@ -960,7 +960,7 @@ fn for_each_head(p: &mut Parser, is_in: bool) -> SyntaxKind {
 		expr(p);
 		FOR_IN_STMT
 	} else {
-		assign_expr(p);
+		assignment_expression_right_hand_side(p);
 		FOR_OF_STMT
 	}
 }

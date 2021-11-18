@@ -108,8 +108,8 @@ pub fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
 	Present(m.complete(p, literal_kind))
 }
 
-/// An assignment expression such as `foo += bar` or `foo = 5`.
-pub fn assign_expr(p: &mut Parser) -> Option<CompletedMarker> {
+/// Parses the right hand sie of the assignment expression.
+pub(crate) fn assignment_expression_right_hand_side(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![<])
 		&& (token_set![T![ident], T![await], T![yield]].contains(p.nth(1)) || p.nth(1).is_keyword())
 	{
@@ -240,8 +240,8 @@ fn assign_expr_recursive(
 		}
 		let m = target.precede(p);
 		p.bump_any();
-		assign_expr(p);
-		Some(m.complete(p, ASSIGN_EXPR))
+		assignment_expression_right_hand_side(p);
+		Some(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
 	} else {
 		Some(target)
 	}
@@ -259,7 +259,7 @@ pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 
 	if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
 		p.eat(T![*]);
-		assign_expr(p);
+		assignment_expression_right_hand_side(p);
 	}
 
 	m.complete(p, JS_YIELD_EXPRESSION)
@@ -278,12 +278,12 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![?]) {
 		let m = lhs?.precede(p);
 		p.bump_any();
-		assign_expr(&mut *p.with_state(ParserState {
+		assignment_expression_right_hand_side(&mut *p.with_state(ParserState {
 			in_cond_expr: true,
 			..p.state.clone()
 		}));
 		p.expect_required(T![:]);
-		assign_expr(p);
+		assignment_expression_right_hand_side(p);
 		return Some(m.complete(p, JS_CONDITIONAL_EXPRESSION));
 	}
 	lhs
@@ -689,7 +689,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 		if p.at(T![...]) {
 			spread_element(p);
 		} else {
-			assign_expr(p);
+			assignment_expression_right_hand_side(p);
 		}
 
 		if p.at(T![,]) {
@@ -753,7 +753,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				if !temp.eat(T![')']) {
 					if temp.eat(T![=]) {
 						// formal params will handle this error
-						assign_expr(&mut *temp);
+						assignment_expression_right_hand_side(&mut *temp);
 						temp.expect_required(T![')']);
 					} else {
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
@@ -770,7 +770,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				}
 				break;
 			}
-			let expr = assign_expr(&mut *temp);
+			let expr = assignment_expression_right_hand_side(&mut *temp);
 			if expr.is_some() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
 				// TODO: review this when `paren_or_arrow_expr` is refactored to use the new API
@@ -913,10 +913,10 @@ pub fn expr_or_spread(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![...]) {
 		let m = p.start();
 		p.bump_any();
-		assign_expr(p);
+		assignment_expression_right_hand_side(p);
 		Some(m.complete(p, SPREAD_ELEMENT))
 	} else {
-		assign_expr(p)
+		assignment_expression_right_hand_side(p)
 	}
 }
 
@@ -924,7 +924,7 @@ pub fn expr_or_spread(p: &mut Parser) -> Option<CompletedMarker> {
 // test sequence_expr
 // 1, 2, 3, 4, 5
 pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
-	let first = assign_expr(p)?;
+	let first = assignment_expression_right_hand_side(p)?;
 
 	if p.at(T![,]) {
 		let sequence_expr_marker = first.precede(p);
@@ -1094,7 +1094,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// test import_call
 				// import("foo")
 				p.expect_required(T!['(']);
-				assign_expr(p);
+				assignment_expression_right_hand_side(p);
 				p.expect_required(T![')']);
 				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}
@@ -1265,7 +1265,7 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 		if p.at(T![...]) {
 			spread_element(p);
 		} else {
-			assign_expr(p);
+			assignment_expression_right_hand_side(p);
 		}
 
 		if p.at(T![']']) {
@@ -1284,7 +1284,7 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T![...]);
-	assign_expr(p);
+	assignment_expression_right_hand_side(p);
 	m.complete(p, SPREAD_ELEMENT)
 }
 
