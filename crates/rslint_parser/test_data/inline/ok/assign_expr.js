@@ -1,5 +1,7 @@
 foo += bar = b ??= 3;
 foo -= bar;
+(foo = bar);
 [foo, bar] = baz;
-({ bar, baz } = {});
-({ bar: [baz], foo } = {});
+[foo, bar = "default", ...rest] = baz;
+// ({ bar, baz } = {});
+// ({ bar: [baz], foo } = {});

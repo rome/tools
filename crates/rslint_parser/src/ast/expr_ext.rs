@@ -1,6 +1,4 @@
 //! Extensions for things which are not easily generated in ast expr nodes
-
-use crate::SyntaxError::MissingRequiredChild;
 use crate::{ast::*, numbers::*, util::*, TextRange, T};
 use rome_rowan::{SyntaxText, TextSize};
 use SyntaxKind::*;
@@ -323,18 +321,6 @@ impl JsAssignmentExpression {
 		};
 
 		Ok(operator)
-	}
-
-	pub fn left(&self) -> SyntaxResult<PatternOrExpr> {
-		support::children(self.syntax())
-			.next()
-			.ok_or_else(|| MissingRequiredChild(self.syntax().clone()))
-	}
-
-	pub fn right(&self) -> SyntaxResult<JsAnyExpression> {
-		support::children(self.syntax())
-			.nth(1)
-			.ok_or_else(|| MissingRequiredChild(self.syntax().clone()))
 	}
 }
 

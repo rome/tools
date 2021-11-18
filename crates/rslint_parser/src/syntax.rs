@@ -7,14 +7,15 @@
 //!
 //! Functions emit markers, see `CompletedMarker` and `Marker` docs for more info.
 
+mod assignment_target;
 mod class;
-pub mod decl;
+mod decl;
 pub mod expr;
 mod function;
 mod js_parse_error;
 mod object;
-pub mod pat;
-pub mod program;
-pub mod stmt;
-pub mod typescript;
-pub mod util;
+mod pat;
+pub(crate) mod program;
+mod stmt;
+mod typescript;
+mod util;

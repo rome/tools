@@ -7,49 +7,49 @@ use crate::{
 	SyntaxKind::{self, *},
 	SyntaxNode, SyntaxResult, SyntaxToken, T,
 };
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownStatement {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownStatement {
-	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownExpression {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownExpression {
-	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownPattern {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownPattern {
-	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownMember {
-	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownBinding {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownBinding {
-	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownAssignmentTarget {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownAssignmentTarget {
-	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Ident {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -58,7 +58,7 @@ impl Ident {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsRoot {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -73,7 +73,7 @@ impl JsRoot {
 		support::node_list(&self.syntax, 1usize)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsDirective {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -83,7 +83,7 @@ impl JsDirective {
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsBlockStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -98,7 +98,7 @@ impl JsBlockStatement {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsEmptyStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -107,7 +107,7 @@ impl JsEmptyStatement {
 		support::required_token(&self.syntax, T ! [;])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsExpressionStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -117,7 +117,7 @@ impl JsExpressionStatement {
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsIfStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -137,7 +137,7 @@ impl JsIfStatement {
 	}
 	pub fn else_clause(&self) -> Option<JsElseClause> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsDoWhileStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -158,7 +158,7 @@ impl JsDoWhileStatement {
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsWhileStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -175,7 +175,7 @@ impl JsWhileStatement {
 	}
 	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmt {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -194,7 +194,7 @@ impl ForStmt {
 	}
 	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForInStmt {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -215,7 +215,7 @@ impl ForInStmt {
 	}
 	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForOfStmt {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -236,7 +236,7 @@ impl ForOfStmt {
 	}
 	pub fn cons(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsContinueStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -247,7 +247,7 @@ impl JsContinueStatement {
 	pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsBreakStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -258,7 +258,7 @@ impl JsBreakStatement {
 	pub fn label_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![ident]) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsReturnStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -269,7 +269,7 @@ impl JsReturnStatement {
 	pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsWithStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -286,7 +286,7 @@ impl JsWithStatement {
 	}
 	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsLabeledStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -299,7 +299,7 @@ impl JsLabeledStatement {
 	}
 	pub fn body(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsSwitchStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -326,7 +326,7 @@ impl JsSwitchStatement {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsThrowStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -337,7 +337,7 @@ impl JsThrowStatement {
 	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsTryStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -350,7 +350,7 @@ impl JsTryStatement {
 		support::required_node(&self.syntax)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsTryFinallyStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -364,7 +364,7 @@ impl JsTryFinallyStatement {
 		support::required_node(&self.syntax)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsDebuggerStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -374,7 +374,7 @@ impl JsDebuggerStatement {
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionDeclaration {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -392,7 +392,7 @@ impl JsFunctionDeclaration {
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsClassDeclaration {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -413,7 +413,7 @@ impl JsClassDeclaration {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarationStatement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -423,7 +423,7 @@ impl JsVariableDeclarationStatement {
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsEnum {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -441,7 +441,7 @@ impl TsEnum {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAliasDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -455,7 +455,7 @@ impl TsTypeAliasDecl {
 	}
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNamespaceDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -467,7 +467,7 @@ impl TsNamespaceDecl {
 	pub fn dot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [.]) }
 	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsModuleDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -483,7 +483,7 @@ impl TsModuleDecl {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<TsNamespaceBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsInterfaceDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -503,7 +503,7 @@ impl TsInterfaceDecl {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ImportDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -525,7 +525,7 @@ impl ImportDecl {
 	pub fn assert_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![assert]) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportNamed {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -545,7 +545,7 @@ impl ExportNamed {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportDefaultDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -557,7 +557,7 @@ impl ExportDefaultDecl {
 	pub fn type_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![type]) }
 	pub fn decl(&self) -> SyntaxResult<DefaultDecl> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportDefaultExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -569,7 +569,7 @@ impl ExportDefaultExpr {
 	pub fn default_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![default]) }
 	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportWildcard {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -590,7 +590,7 @@ impl ExportWildcard {
 		support::required_token(&self.syntax, T![js_string_literal])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExportDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -603,7 +603,7 @@ impl ExportDecl {
 		support::required_node(&self.syntax)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsImportEqualsDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -621,7 +621,7 @@ impl TsImportEqualsDecl {
 	pub fn module(&self) -> SyntaxResult<TsModuleRef> { support::required_node(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsExportAssignment {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -635,7 +635,7 @@ impl TsExportAssignment {
 	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNamespaceExportDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -652,7 +652,7 @@ impl TsNamespaceExportDecl {
 	pub fn ident(&self) -> Option<Ident> { support::node(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsElseClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -662,7 +662,7 @@ impl JsElseClause {
 	}
 	pub fn alternate(&self) -> SyntaxResult<JsAnyStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmtInit {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -672,7 +672,7 @@ impl ForStmtInit {
 		support::required_token(&self.syntax, T ! [;])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmtTest {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -682,14 +682,14 @@ impl ForStmtTest {
 		support::required_token(&self.syntax, T ! [;])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ForStmtUpdate {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ForStmtUpdate {
 	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclaration {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -701,7 +701,7 @@ impl JsVariableDeclaration {
 		support::separated_list(&self.syntax, 0usize)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsCaseClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -717,7 +717,7 @@ impl JsCaseClause {
 		support::node_list(&self.syntax, 0usize)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsDefaultClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -732,7 +732,7 @@ impl JsDefaultClause {
 		support::node_list(&self.syntax, 0usize)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsCatchClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -743,7 +743,7 @@ impl JsCatchClause {
 	pub fn declaration(&self) -> Option<JsCatchDeclaration> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsFinallyClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -753,7 +753,7 @@ impl JsFinallyClause {
 	}
 	pub fn body(&self) -> SyntaxResult<JsBlockStatement> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsCatchDeclaration {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -766,7 +766,7 @@ impl JsCatchDeclaration {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -781,7 +781,7 @@ impl JsArrayExpression {
 		support::required_token(&self.syntax, T![']'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsArrowFunctionExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -796,11 +796,14 @@ impl JsArrowFunctionExpression {
 	}
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsAssignmentExpression {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsAssignmentExpression {
+	pub fn left(&self) -> SyntaxResult<JsAnyAssignmentTarget> {
+		support::required_node(&self.syntax)
+	}
 	pub fn operator_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::find_required_token(
 			&self.syntax,
@@ -823,8 +826,9 @@ impl JsAssignmentExpression {
 			],
 		)
 	}
+	pub fn right(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsAwaitExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -834,7 +838,7 @@ impl JsAwaitExpression {
 	}
 	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsBinaryExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -870,7 +874,7 @@ impl JsBinaryExpression {
 		)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsClassExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -890,7 +894,7 @@ impl JsClassExpression {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsConditionalExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -903,7 +907,7 @@ impl JsConditionalExpression {
 		support::required_token(&self.syntax, T ! [:])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsComputedMemberExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -919,7 +923,7 @@ impl JsComputedMemberExpression {
 		support::required_token(&self.syntax, T![']'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -937,7 +941,7 @@ impl JsFunctionExpression {
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsImportCallExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -953,7 +957,7 @@ impl JsImportCallExpression {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsLogicalExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -963,7 +967,7 @@ impl JsLogicalExpression {
 		support::find_required_token(&self.syntax, &[T ! [??], T ! [||], T ! [&&]])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsObjectExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -978,7 +982,7 @@ impl JsObjectExpression {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsParenthesizedExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -993,7 +997,7 @@ impl JsParenthesizedExpression {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsReferenceIdentifierExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1002,7 +1006,7 @@ impl JsReferenceIdentifierExpression {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsSequenceExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1012,7 +1016,7 @@ impl JsSequenceExpression {
 		support::required_token(&self.syntax, T ! [,])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsStaticMemberExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1025,7 +1029,7 @@ impl JsStaticMemberExpression {
 		support::required_node(&self.syntax)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsSuperExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1034,7 +1038,7 @@ impl JsSuperExpression {
 		support::required_token(&self.syntax, T![super])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsThisExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1043,7 +1047,7 @@ impl JsThisExpression {
 		support::required_token(&self.syntax, T![this])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsUnaryExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1064,7 +1068,7 @@ impl JsUnaryExpression {
 	}
 	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsPreUpdateExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1074,7 +1078,7 @@ impl JsPreUpdateExpression {
 	}
 	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsPostUpdateExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1084,7 +1088,7 @@ impl JsPostUpdateExpression {
 		support::find_required_token(&self.syntax, &[T ! [++], T ! [--]])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsYieldExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1095,7 +1099,7 @@ impl JsYieldExpression {
 	pub fn star_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [*]) }
 	pub fn argument(&self) -> Option<JsAnyExpression> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Template {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1104,7 +1108,7 @@ impl Template {
 		support::required_token(&self.syntax, T!['`'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NewExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1116,7 +1120,7 @@ impl NewExpr {
 	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct CallExpr {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1125,7 +1129,7 @@ impl CallExpr {
 	pub fn callee(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NewTarget {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1140,7 +1144,7 @@ impl NewTarget {
 		support::required_token(&self.syntax, T![target])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ImportMeta {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1152,7 +1156,7 @@ impl ImportMeta {
 		support::required_token(&self.syntax, T ! [.])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNonNull {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1162,7 +1166,7 @@ impl TsNonNull {
 		support::required_token(&self.syntax, T![!])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsAssertion {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1177,7 +1181,7 @@ impl TsAssertion {
 		support::required_token(&self.syntax, T ! [>])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConstAssertion {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1194,7 +1198,7 @@ impl TsConstAssertion {
 		support::required_token(&self.syntax, T ! [>])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeArgs {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1207,7 +1211,7 @@ impl TsTypeArgs {
 		support::required_token(&self.syntax, T ! [>])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArgList {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1222,7 +1226,7 @@ impl ArgList {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsIdentifierBinding {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1231,7 +1235,7 @@ impl JsIdentifierBinding {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParams {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1240,7 +1244,7 @@ impl TsTypeParams {
 	pub fn params(&self) -> SyntaxResult<TsTypeParam> { support::required_node(&self.syntax) }
 	pub fn r_angle_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [>]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsParameterList {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1248,14 +1252,14 @@ impl JsParameterList {
 	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T!['('])
 	}
-	pub fn parameters(&self) -> AstSeparatedList<JsAnyParameter> {
+	pub fn parameters(&self) -> AstSeparatedList<Pattern> {
 		support::separated_list(&self.syntax, 0usize)
 	}
 	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeAnnotation {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1265,7 +1269,7 @@ impl TsTypeAnnotation {
 	}
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsFunctionBody {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1283,7 +1287,7 @@ impl JsFunctionBody {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SpreadElement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1293,12 +1297,12 @@ impl SpreadElement {
 	}
 	pub fn element(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsArrayHole {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsArrayHole {}
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsLiteralMemberName {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1310,7 +1314,7 @@ impl JsLiteralMemberName {
 		)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsComputedMemberName {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1325,7 +1329,7 @@ impl JsComputedMemberName {
 		support::required_token(&self.syntax, T![']'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsPropertyObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1337,7 +1341,7 @@ impl JsPropertyObjectMember {
 		support::required_token(&self.syntax, T ! [:])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsMethodObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1354,7 +1358,7 @@ impl JsMethodObjectMember {
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsGetterObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1374,7 +1378,7 @@ impl JsGetterObjectMember {
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsSetterObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1394,7 +1398,7 @@ impl JsSetterObjectMember {
 	}
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct InitializedProp {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1405,7 +1409,7 @@ impl InitializedProp {
 	}
 	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsShorthandPropertyObjectMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1414,7 +1418,7 @@ impl JsShorthandPropertyObjectMember {
 		support::required_node(&self.syntax)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsSpread {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1424,7 +1428,7 @@ impl JsSpread {
 	}
 	pub fn argument(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsStringLiteralExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1433,7 +1437,7 @@ impl JsStringLiteralExpression {
 		support::required_token(&self.syntax, T![js_string_literal])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsNumberLiteralExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1442,7 +1446,7 @@ impl JsNumberLiteralExpression {
 		support::required_token(&self.syntax, T![js_number_literal])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Name {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1451,7 +1455,7 @@ impl Name {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsImplementsClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1463,7 +1467,7 @@ impl TsImplementsClause {
 		support::separated_list(&self.syntax, 0usize)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsExtendsClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1475,7 +1479,7 @@ impl JsExtendsClause {
 		support::required_node(&self.syntax)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsExprWithTypeArgs {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1483,7 +1487,7 @@ impl TsExprWithTypeArgs {
 	pub fn item(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax) }
 	pub fn type_params(&self) -> SyntaxResult<TsTypeArgs> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsPrivateClassMemberName {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1495,7 +1499,7 @@ impl JsPrivateClassMemberName {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsConstructorClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1507,7 +1511,7 @@ impl JsConstructorClassMember {
 	}
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsPropertyClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1529,7 +1533,7 @@ impl JsPropertyClassMember {
 	pub fn value(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsMethodClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1551,7 +1555,7 @@ impl JsMethodClassMember {
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsGetterClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1576,7 +1580,7 @@ impl JsGetterClassMember {
 	pub fn return_type(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsSetterClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1601,7 +1605,7 @@ impl JsSetterClassMember {
 	}
 	pub fn body(&self) -> SyntaxResult<JsFunctionBody> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsEmptyClassMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1610,7 +1614,7 @@ impl JsEmptyClassMember {
 		support::required_token(&self.syntax, T ! [;])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexSignature {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1630,7 +1634,7 @@ impl TsIndexSignature {
 		support::required_token(&self.syntax, T![']'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsAccessibility {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1642,7 +1646,7 @@ impl TsAccessibility {
 		support::required_token(&self.syntax, T![readonly])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsConstructorParameterList {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1657,7 +1661,7 @@ impl JsConstructorParameterList {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorParam {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1667,7 +1671,7 @@ impl TsConstructorParam {
 	}
 	pub fn pat(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsEqualValueClause {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1679,7 +1683,98 @@ impl JsEqualValueClause {
 		support::required_node(&self.syntax)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsIdentifierAssignmentTarget {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsIdentifierAssignmentTarget {
+	pub fn name_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![ident])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsStaticMemberAssignmentTarget {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsStaticMemberAssignmentTarget {
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [.])
+	}
+	pub fn member(&self) -> SyntaxResult<JsAnyReferenceMember> {
+		support::required_node(&self.syntax)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsComputedMemberAssignmentTarget {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsComputedMemberAssignmentTarget {
+	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['['])
+	}
+	pub fn member(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![']'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsParenthesizedAssignmentTarget {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsParenthesizedAssignmentTarget {
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['('])
+	}
+	pub fn target(&self) -> SyntaxResult<JsAnyAssignmentTarget> {
+		support::required_node(&self.syntax)
+	}
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![')'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsAssignmentTargetWithDefault {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsAssignmentTargetWithDefault {
+	pub fn target(&self) -> SyntaxResult<JsAnyAssignmentTarget> {
+		support::required_node(&self.syntax)
+	}
+	pub fn eq_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [=])
+	}
+	pub fn default(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsArrayAssignmentTarget {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsArrayAssignmentTarget {
+	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['['])
+	}
+	pub fn elements(&self) -> AstSeparatedList<JsAnyArrayAssignmentTargetElement> {
+		support::separated_list(&self.syntax, 0usize)
+	}
+	pub fn r_brack_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![']'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsArrayAssignmentTargetRestElement {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsArrayAssignmentTargetRestElement {
+	pub fn dotdotdot_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T ! [...])
+	}
+	pub fn target(&self) -> SyntaxResult<JsAnyAssignmentTarget> {
+		support::required_node(&self.syntax)
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsBigIntLiteralExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1688,7 +1783,7 @@ impl JsBigIntLiteralExpression {
 		support::required_token(&self.syntax, T![js_big_int_literal])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsBooleanLiteralExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1697,7 +1792,7 @@ impl JsBooleanLiteralExpression {
 		support::find_required_token(&self.syntax, &[T![true], T![false]])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsNullLiteralExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1706,7 +1801,7 @@ impl JsNullLiteralExpression {
 		support::required_token(&self.syntax, T![null])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsRegexLiteralExpression {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1715,7 +1810,7 @@ impl JsRegexLiteralExpression {
 		support::required_token(&self.syntax, T![js_regex_literal])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct SinglePattern {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1727,7 +1822,7 @@ impl SinglePattern {
 	pub fn excl_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![!]) }
 	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct RestPattern {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1737,7 +1832,7 @@ impl RestPattern {
 	}
 	pub fn pat(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct AssignPattern {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1749,7 +1844,7 @@ impl AssignPattern {
 	}
 	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ObjectPattern {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1764,7 +1859,7 @@ impl ObjectPattern {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ArrayPattern {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1781,14 +1876,14 @@ impl ArrayPattern {
 	}
 	pub fn ty(&self) -> Option<TsTypeAnnotation> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ExprPattern {
 	pub(crate) syntax: SyntaxNode,
 }
 impl ExprPattern {
 	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct KeyValuePattern {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1798,7 +1893,7 @@ impl KeyValuePattern {
 		support::required_token(&self.syntax, T ! [:])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsVariableDeclarator {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1806,7 +1901,7 @@ impl JsVariableDeclarator {
 	pub fn id(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
 	pub fn init(&self) -> Option<JsEqualValueClause> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct WildcardImport {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1817,7 +1912,7 @@ impl WildcardImport {
 	pub fn as_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T![as]) }
 	pub fn ident(&self) -> Option<Ident> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct NamedImports {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1832,7 +1927,7 @@ impl NamedImports {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ImportStringSpecifier {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1841,14 +1936,14 @@ impl ImportStringSpecifier {
 		support::required_token(&self.syntax, T![js_string_literal])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Specifier {
 	pub(crate) syntax: SyntaxNode,
 }
 impl Specifier {
 	pub fn name(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsReferenceIdentifierMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1857,7 +1952,7 @@ impl JsReferenceIdentifierMember {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsReferencePrivateMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1869,7 +1964,7 @@ impl JsReferencePrivateMember {
 		support::required_token(&self.syntax, T![ident])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsRestParameter {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1879,7 +1974,7 @@ impl JsRestParameter {
 	}
 	pub fn binding(&self) -> SyntaxResult<Pattern> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsExternalModuleRef {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1897,7 +1992,7 @@ impl TsExternalModuleRef {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsAny {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1906,7 +2001,7 @@ impl TsAny {
 		support::required_token(&self.syntax, T![any])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsUnknown {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1915,49 +2010,49 @@ impl TsUnknown {
 		support::required_token(&self.syntax, T![unknown])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNumber {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsNumber {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsObject {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsObject {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsBoolean {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsBoolean {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsBigint {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsBigint {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsString {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsString {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsSymbol {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsSymbol {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsVoid {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1966,7 +2061,7 @@ impl TsVoid {
 		support::required_token(&self.syntax, T![void])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsUndefined {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1975,7 +2070,7 @@ impl TsUndefined {
 		support::required_token(&self.syntax, T![undefined])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNull {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1984,7 +2079,7 @@ impl TsNull {
 		support::required_token(&self.syntax, T![null])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNever {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1993,7 +2088,7 @@ impl TsNever {
 		support::required_token(&self.syntax, T![never])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsThis {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2002,14 +2097,14 @@ impl TsThis {
 		support::required_token(&self.syntax, T![this])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsLiteral {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsLiteral {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsPredicate {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2017,7 +2112,7 @@ impl TsPredicate {
 	pub fn lhs(&self) -> SyntaxResult<TsThisOrMore> { support::required_node(&self.syntax) }
 	pub fn rhs(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTuple {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2030,7 +2125,7 @@ impl TsTuple {
 		support::required_token(&self.syntax, T![']'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsParen {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2043,7 +2138,7 @@ impl TsParen {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeRef {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2051,7 +2146,7 @@ impl TsTypeRef {
 	pub fn name(&self) -> SyntaxResult<TsEntityName> { support::required_node(&self.syntax) }
 	pub fn type_args(&self) -> SyntaxResult<TsTypeArgs> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplate {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2060,7 +2155,7 @@ impl TsTemplate {
 		support::required_node(&self.syntax)
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedType {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2084,7 +2179,7 @@ impl TsMappedType {
 	}
 	pub fn semicolon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [;]) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsImport {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2102,7 +2197,7 @@ impl TsImport {
 		support::required_token(&self.syntax, T![')'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsArray {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2115,7 +2210,7 @@ impl TsArray {
 		support::required_token(&self.syntax, T![']'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsIndexedArray {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2128,28 +2223,28 @@ impl TsIndexedArray {
 		support::required_token(&self.syntax, T![']'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeOperator {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeOperator {
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsIntersection {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsIntersection {
 	pub fn types(&self) -> AstNodeList<TsType> { support::node_list(&self.syntax, 0usize) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsUnion {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsUnion {
 	pub fn types(&self) -> AstNodeList<TsType> { support::node_list(&self.syntax, 0usize) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsFnType {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2160,7 +2255,7 @@ impl TsFnType {
 	}
 	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructorType {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2174,7 +2269,7 @@ impl TsConstructorType {
 	}
 	pub fn return_type(&self) -> Option<TsType> { support::node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConditionalType {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2188,7 +2283,7 @@ impl TsConditionalType {
 	}
 	pub fn extends(&self) -> SyntaxResult<TsExtends> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsObjectType {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2201,7 +2296,7 @@ impl TsObjectType {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsInfer {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2211,7 +2306,7 @@ impl TsInfer {
 	}
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTupleElement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2226,7 +2321,7 @@ impl TsTupleElement {
 	pub fn dotdotdot_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [...]) }
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsEnumMember {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2237,7 +2332,7 @@ impl TsEnumMember {
 	}
 	pub fn value(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTemplateElement {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2247,7 +2342,7 @@ impl TsTemplateElement {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedTypeReadonly {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2258,7 +2353,7 @@ impl TsMappedTypeReadonly {
 		support::token(&self.syntax, T![readonly])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsMappedTypeParam {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2269,14 +2364,14 @@ impl TsMappedTypeParam {
 	pub fn ident(&self) -> Option<Ident> { support::node(&self.syntax) }
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeName {
 	pub(crate) syntax: SyntaxNode,
 }
 impl TsTypeName {
 	pub fn ident(&self) -> SyntaxResult<Ident> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsExtends {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2286,7 +2381,7 @@ impl TsExtends {
 	}
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsModuleBlock {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2299,7 +2394,7 @@ impl TsModuleBlock {
 		support::required_token(&self.syntax, T!['}'])
 	}
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsTypeParam {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2308,7 +2403,7 @@ impl TsTypeParam {
 	pub fn constraint(&self) -> SyntaxResult<TsConstraint> { support::required_node(&self.syntax) }
 	pub fn default(&self) -> SyntaxResult<TsDefault> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConstraint {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2318,7 +2413,7 @@ impl TsConstraint {
 	}
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsDefault {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2328,7 +2423,7 @@ impl TsDefault {
 	}
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsCallSignatureDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2342,7 +2437,7 @@ impl TsCallSignatureDecl {
 	}
 	pub fn return_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsConstructSignatureDecl {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2357,7 +2452,7 @@ impl TsConstructSignatureDecl {
 	pub fn colon_token(&self) -> Option<SyntaxToken> { support::token(&self.syntax, T ! [:]) }
 	pub fn return_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsPropertySignature {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2374,7 +2469,7 @@ impl TsPropertySignature {
 	}
 	pub fn ty(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsMethodSignature {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2395,7 +2490,7 @@ impl TsMethodSignature {
 	}
 	pub fn return_type(&self) -> SyntaxResult<TsType> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsQualifiedPath {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -2406,7 +2501,7 @@ impl TsQualifiedPath {
 	}
 	pub fn rhs(&self) -> SyntaxResult<TsTypeName> { support::required_node(&self.syntax) }
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyStatement {
 	JsBlockStatement(JsBlockStatement),
 	JsEmptyStatement(JsEmptyStatement),
@@ -2446,7 +2541,7 @@ pub enum JsAnyStatement {
 	TsNamespaceExportDecl(TsNamespaceExportDecl),
 	JsUnknownStatement(JsUnknownStatement),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExpression {
 	JsAnyLiteralExpression(JsAnyLiteralExpression),
 	JsArrayExpression(JsArrayExpression),
@@ -2481,17 +2576,17 @@ pub enum JsAnyExpression {
 	TsConstAssertion(TsConstAssertion),
 	JsUnknownExpression(JsUnknownExpression),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ForHead {
 	JsVariableDeclaration(JsVariableDeclaration),
 	JsAnyExpression(JsAnyExpression),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnySwitchClause {
 	JsCaseClause(JsCaseClause),
 	JsDefaultClause(JsDefaultClause),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Pattern {
 	SinglePattern(SinglePattern),
 	RestPattern(RestPattern),
@@ -2501,7 +2596,7 @@ pub enum Pattern {
 	ExprPattern(ExprPattern),
 	JsUnknownPattern(JsUnknownPattern),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyLiteralExpression {
 	JsStringLiteralExpression(JsStringLiteralExpression),
 	JsNumberLiteralExpression(JsNumberLiteralExpression),
@@ -2510,38 +2605,45 @@ pub enum JsAnyLiteralExpression {
 	JsNullLiteralExpression(JsNullLiteralExpression),
 	JsRegexLiteralExpression(JsRegexLiteralExpression),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrowFunctionParameters {
 	JsParameterList(JsParameterList),
 	JsIdentifierBinding(JsIdentifierBinding),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrowFunctionBody {
 	JsAnyExpression(JsAnyExpression),
 	JsFunctionBody(JsFunctionBody),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayElement {
 	JsAnyExpression(JsAnyExpression),
 	SpreadElement(SpreadElement),
 	JsArrayHole(JsArrayHole),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyAssignmentTarget {
+	JsIdentifierAssignmentTarget(JsIdentifierAssignmentTarget),
+	JsStaticMemberAssignmentTarget(JsStaticMemberAssignmentTarget),
+	JsComputedMemberAssignmentTarget(JsComputedMemberAssignmentTarget),
+	JsParenthesizedAssignmentTarget(JsParenthesizedAssignmentTarget),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
 	Pattern(Pattern),
 	JsAnyExpression(JsAnyExpression),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyReferenceMember {
 	JsReferenceIdentifierMember(JsReferenceIdentifierMember),
 	JsReferencePrivateMember(JsReferencePrivateMember),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMemberName {
 	JsLiteralMemberName(JsLiteralMemberName),
 	JsComputedMemberName(JsComputedMemberName),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMember {
 	JsPropertyObjectMember(JsPropertyObjectMember),
 	JsMethodObjectMember(JsMethodObjectMember),
@@ -2552,7 +2654,7 @@ pub enum JsAnyObjectMember {
 	JsSpread(JsSpread),
 	JsUnknownMember(JsUnknownMember),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PropName {
 	JsComputedMemberName(JsComputedMemberName),
 	JsStringLiteralExpression(JsStringLiteralExpression),
@@ -2561,7 +2663,7 @@ pub enum PropName {
 	Name(Name),
 	JsUnknownBinding(JsUnknownBinding),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMember {
 	JsConstructorClassMember(JsConstructorClassMember),
 	JsPropertyClassMember(JsPropertyClassMember),
@@ -2572,18 +2674,25 @@ pub enum JsAnyClassMember {
 	TsIndexSignature(TsIndexSignature),
 	JsUnknownMember(JsUnknownMember),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyClassMemberName {
 	JsLiteralMemberName(JsLiteralMemberName),
 	JsComputedMemberName(JsComputedMemberName),
 	JsPrivateClassMemberName(JsPrivateClassMemberName),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyConstructorParameter {
 	TsConstructorParam(TsConstructorParam),
 	Pattern(Pattern),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyArrayAssignmentTargetElement {
+	JsAssignmentTargetWithDefault(JsAssignmentTargetWithDefault),
+	JsAnyAssignmentTarget(JsAnyAssignmentTarget),
+	JsArrayAssignmentTargetRestElement(JsArrayAssignmentTargetRestElement),
+	JsArrayHole(JsArrayHole),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ObjectPatternProp {
 	AssignPattern(AssignPattern),
 	KeyValuePattern(KeyValuePattern),
@@ -2591,7 +2700,7 @@ pub enum ObjectPatternProp {
 	SinglePattern(SinglePattern),
 	JsUnknownPattern(JsUnknownPattern),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsType {
 	TsAny(TsAny),
 	TsUnknown(TsUnknown),
@@ -2625,19 +2734,19 @@ pub enum TsType {
 	TsObjectType(TsObjectType),
 	TsInfer(TsInfer),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ImportClause {
 	WildcardImport(WildcardImport),
 	NamedImports(NamedImports),
 	Name(Name),
 	ImportStringSpecifier(ImportStringSpecifier),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum DefaultDecl {
 	JsFunctionDeclaration(JsFunctionDeclaration),
 	JsClassDeclaration(JsClassDeclaration),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyExportDeclaration {
 	JsFunctionDeclaration(JsFunctionDeclaration),
 	JsClassDeclaration(JsClassDeclaration),
@@ -2648,27 +2757,27 @@ pub enum JsAnyExportDeclaration {
 	TsModuleDecl(TsModuleDecl),
 	TsInterfaceDecl(TsInterfaceDecl),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyParameter {
 	Pattern(Pattern),
 	JsRestParameter(JsRestParameter),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsModuleRef {
 	TsExternalModuleRef(TsExternalModuleRef),
 	TsEntityName(TsEntityName),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsEntityName {
 	TsTypeName(TsTypeName),
 	TsQualifiedPath(TsQualifiedPath),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsThisOrMore {
 	TsThis(TsThis),
 	TsTypeName(TsTypeName),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsTypeElement {
 	TsCallSignatureDecl(TsCallSignatureDecl),
 	TsConstructSignatureDecl(TsConstructSignatureDecl),
@@ -2676,7 +2785,7 @@ pub enum TsTypeElement {
 	TsMethodSignature(TsMethodSignature),
 	TsIndexSignature(TsIndexSignature),
 }
-#[derive(Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TsNamespaceBody {
 	TsModuleBlock(TsModuleBlock),
 	TsNamespaceDecl(TsNamespaceDecl),
@@ -2692,13 +2801,6 @@ impl AstNode for JsUnknownStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsUnknownStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownStatement")
-			.field("items", &self.items())
-			.finish()
-	}
-}
 impl AstNode for JsUnknownExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2709,13 +2811,6 @@ impl AstNode for JsUnknownExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsUnknownExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownExpression")
-			.field("items", &self.items())
-			.finish()
-	}
 }
 impl AstNode for JsUnknownPattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_PATTERN }
@@ -2728,13 +2823,6 @@ impl AstNode for JsUnknownPattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsUnknownPattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownPattern")
-			.field("items", &self.items())
-			.finish()
-	}
-}
 impl AstNode for JsUnknownMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2745,13 +2833,6 @@ impl AstNode for JsUnknownMember {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsUnknownMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownMember")
-			.field("items", &self.items())
-			.finish()
-	}
 }
 impl AstNode for JsUnknownBinding {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_BINDING }
@@ -2764,13 +2845,6 @@ impl AstNode for JsUnknownBinding {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsUnknownBinding {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownBinding")
-			.field("items", &self.items())
-			.finish()
-	}
-}
 impl AstNode for JsUnknownAssignmentTarget {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNKNOWN_ASSIGNMENT_TARGET }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2781,13 +2855,6 @@ impl AstNode for JsUnknownAssignmentTarget {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsUnknownAssignmentTarget {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnknownAssignmentTarget")
-			.field("items", &self.items())
-			.finish()
-	}
 }
 impl AstNode for Ident {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == IDENT }
@@ -2800,16 +2867,6 @@ impl AstNode for Ident {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for Ident {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("Ident")
-			.field(
-				"ident_token",
-				&support::DebugSyntaxResult(self.ident_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsRoot {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ROOT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2820,18 +2877,6 @@ impl AstNode for JsRoot {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsRoot {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsRoot")
-			.field(
-				"interpreter_token",
-				&support::DebugOptionalNode(self.interpreter_token()),
-			)
-			.field("directives", &self.directives())
-			.field("statements", &self.statements())
-			.finish()
-	}
 }
 impl AstNode for JsDirective {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DIRECTIVE }
@@ -2844,20 +2889,6 @@ impl AstNode for JsDirective {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsDirective {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsDirective")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsBlockStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BLOCK_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2868,21 +2899,6 @@ impl AstNode for JsBlockStatement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsBlockStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsBlockStatement")
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("statements", &self.statements())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsEmptyStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EMPTY_STATEMENT }
@@ -2895,16 +2911,6 @@ impl AstNode for JsEmptyStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsEmptyStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsEmptyStatement")
-			.field(
-				"semicolon_token",
-				&support::DebugSyntaxResult(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsExpressionStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXPRESSION_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2915,17 +2921,6 @@ impl AstNode for JsExpressionStatement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsExpressionStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsExpressionStatement")
-			.field("expression", &support::DebugSyntaxResult(self.expression()))
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsIfStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IF_STATEMENT }
@@ -2938,27 +2933,6 @@ impl AstNode for JsIfStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsIfStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsIfStatement")
-			.field("if_token", &support::DebugSyntaxResult(self.if_token()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("test", &support::DebugSyntaxResult(self.test()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field("consequent", &support::DebugSyntaxResult(self.consequent()))
-			.field(
-				"else_clause",
-				&support::DebugOptionalNode(self.else_clause()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsDoWhileStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DO_WHILE_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -2969,31 +2943,6 @@ impl AstNode for JsDoWhileStatement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsDoWhileStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsDoWhileStatement")
-			.field("do_token", &support::DebugSyntaxResult(self.do_token()))
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.field(
-				"while_token",
-				&support::DebugSyntaxResult(self.while_token()),
-			)
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("test", &support::DebugSyntaxResult(self.test()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsWhileStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_WHILE_STATEMENT }
@@ -3006,26 +2955,6 @@ impl AstNode for JsWhileStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsWhileStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsWhileStatement")
-			.field(
-				"while_token",
-				&support::DebugSyntaxResult(self.while_token()),
-			)
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("test", &support::DebugSyntaxResult(self.test()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for ForStmt {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3036,25 +2965,6 @@ impl AstNode for ForStmt {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ForStmt {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForStmt")
-			.field("for_token", &support::DebugSyntaxResult(self.for_token()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("init", &support::DebugOptionalNode(self.init()))
-			.field("test", &support::DebugOptionalNode(self.test()))
-			.field("update", &support::DebugOptionalNode(self.update()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field("cons", &support::DebugSyntaxResult(self.cons()))
-			.finish()
-	}
 }
 impl AstNode for ForInStmt {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_IN_STMT }
@@ -3067,25 +2977,6 @@ impl AstNode for ForInStmt {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ForInStmt {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForInStmt")
-			.field("for_token", &support::DebugSyntaxResult(self.for_token()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("left", &support::DebugSyntaxResult(self.left()))
-			.field("in_token", &support::DebugSyntaxResult(self.in_token()))
-			.field("right", &support::DebugSyntaxResult(self.right()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field("cons", &support::DebugSyntaxResult(self.cons()))
-			.finish()
-	}
-}
 impl AstNode for ForOfStmt {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_OF_STMT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3096,25 +2987,6 @@ impl AstNode for ForOfStmt {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ForOfStmt {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForOfStmt")
-			.field("for_token", &support::DebugSyntaxResult(self.for_token()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("left", &support::DebugSyntaxResult(self.left()))
-			.field("of_token", &support::DebugSyntaxResult(self.of_token()))
-			.field("right", &support::DebugSyntaxResult(self.right()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field("cons", &support::DebugSyntaxResult(self.cons()))
-			.finish()
-	}
 }
 impl AstNode for JsContinueStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONTINUE_STATEMENT }
@@ -3127,24 +2999,6 @@ impl AstNode for JsContinueStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsContinueStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsContinueStatement")
-			.field(
-				"continue_token",
-				&support::DebugSyntaxResult(self.continue_token()),
-			)
-			.field(
-				"label_token",
-				&support::DebugOptionalNode(self.label_token()),
-			)
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsBreakStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BREAK_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3155,24 +3009,6 @@ impl AstNode for JsBreakStatement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsBreakStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsBreakStatement")
-			.field(
-				"break_token",
-				&support::DebugSyntaxResult(self.break_token()),
-			)
-			.field(
-				"label_token",
-				&support::DebugOptionalNode(self.label_token()),
-			)
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsReturnStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_RETURN_STATEMENT }
@@ -3185,21 +3021,6 @@ impl AstNode for JsReturnStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsReturnStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsReturnStatement")
-			.field(
-				"return_token",
-				&support::DebugSyntaxResult(self.return_token()),
-			)
-			.field("argument", &support::DebugOptionalNode(self.argument()))
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsWithStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_WITH_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3210,23 +3031,6 @@ impl AstNode for JsWithStatement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsWithStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsWithStatement")
-			.field("with_token", &support::DebugSyntaxResult(self.with_token()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("object", &support::DebugSyntaxResult(self.object()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
 }
 impl AstNode for JsLabeledStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LABELED_STATEMENT }
@@ -3239,21 +3043,6 @@ impl AstNode for JsLabeledStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsLabeledStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsLabeledStatement")
-			.field(
-				"label_token",
-				&support::DebugSyntaxResult(self.label_token()),
-			)
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for JsSwitchStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SWITCH_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3264,37 +3053,6 @@ impl AstNode for JsSwitchStatement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsSwitchStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsSwitchStatement")
-			.field(
-				"switch_token",
-				&support::DebugSyntaxResult(self.switch_token()),
-			)
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field(
-				"discriminant",
-				&support::DebugSyntaxResult(self.discriminant()),
-			)
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("cases", &self.cases())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsThrowStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THROW_STATEMENT }
@@ -3307,21 +3065,6 @@ impl AstNode for JsThrowStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsThrowStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsThrowStatement")
-			.field(
-				"throw_token",
-				&support::DebugSyntaxResult(self.throw_token()),
-			)
-			.field("argument", &support::DebugSyntaxResult(self.argument()))
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsTryStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TRY_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3332,18 +3075,6 @@ impl AstNode for JsTryStatement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsTryStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsTryStatement")
-			.field("try_token", &support::DebugSyntaxResult(self.try_token()))
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.field(
-				"catch_clause",
-				&support::DebugSyntaxResult(self.catch_clause()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsTryFinallyStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_TRY_FINALLY_STATEMENT }
@@ -3356,22 +3087,6 @@ impl AstNode for JsTryFinallyStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsTryFinallyStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsTryFinallyStatement")
-			.field("try_token", &support::DebugSyntaxResult(self.try_token()))
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.field(
-				"catch_clause",
-				&support::DebugOptionalNode(self.catch_clause()),
-			)
-			.field(
-				"finally_clause",
-				&support::DebugSyntaxResult(self.finally_clause()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsDebuggerStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEBUGGER_STATEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3382,20 +3097,6 @@ impl AstNode for JsDebuggerStatement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsDebuggerStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsDebuggerStatement")
-			.field(
-				"debugger_token",
-				&support::DebugSyntaxResult(self.debugger_token()),
-			)
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsFunctionDeclaration {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_DECLARATION }
@@ -3408,35 +3109,6 @@ impl AstNode for JsFunctionDeclaration {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsFunctionDeclaration {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsFunctionDeclaration")
-			.field(
-				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
-			)
-			.field(
-				"function_token",
-				&support::DebugSyntaxResult(self.function_token()),
-			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
-			.field("id", &support::DebugSyntaxResult(self.id()))
-			.field(
-				"type_parameters",
-				&support::DebugOptionalNode(self.type_parameters()),
-			)
-			.field(
-				"parameter_list",
-				&support::DebugSyntaxResult(self.parameter_list()),
-			)
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for JsClassDeclaration {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3447,34 +3119,6 @@ impl AstNode for JsClassDeclaration {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsClassDeclaration {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsClassDeclaration")
-			.field(
-				"class_token",
-				&support::DebugSyntaxResult(self.class_token()),
-			)
-			.field("id", &support::DebugSyntaxResult(self.id()))
-			.field(
-				"implements_clause",
-				&support::DebugOptionalNode(self.implements_clause()),
-			)
-			.field(
-				"extends_clause",
-				&support::DebugOptionalNode(self.extends_clause()),
-			)
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("members", &self.members())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsVariableDeclarationStatement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION_STATEMENT }
@@ -3487,20 +3131,6 @@ impl AstNode for JsVariableDeclarationStatement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsVariableDeclarationStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsVariableDeclarationStatement")
-			.field(
-				"declaration",
-				&support::DebugSyntaxResult(self.declaration()),
-			)
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsEnum {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3511,27 +3141,6 @@ impl AstNode for TsEnum {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsEnum {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsEnum")
-			.field(
-				"const_token",
-				&support::DebugOptionalNode(self.const_token()),
-			)
-			.field("enum_token", &support::DebugSyntaxResult(self.enum_token()))
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("members", &self.members())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsTypeAliasDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ALIAS_DECL }
@@ -3544,19 +3153,6 @@ impl AstNode for TsTypeAliasDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsTypeAliasDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTypeAliasDecl")
-			.field("type_token", &support::DebugSyntaxResult(self.type_token()))
-			.field(
-				"type_params",
-				&support::DebugSyntaxResult(self.type_params()),
-			)
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
-}
 impl AstNode for TsNamespaceDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMESPACE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3567,19 +3163,6 @@ impl AstNode for TsNamespaceDecl {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsNamespaceDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsNamespaceDecl")
-			.field(
-				"declare_token",
-				&support::DebugSyntaxResult(self.declare_token()),
-			)
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field("dot_token", &support::DebugOptionalNode(self.dot_token()))
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
 }
 impl AstNode for TsModuleDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MODULE_DECL }
@@ -3592,27 +3175,6 @@ impl AstNode for TsModuleDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsModuleDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsModuleDecl")
-			.field(
-				"declare_token",
-				&support::DebugSyntaxResult(self.declare_token()),
-			)
-			.field(
-				"global_token",
-				&support::DebugOptionalNode(self.global_token()),
-			)
-			.field(
-				"module_token",
-				&support::DebugSyntaxResult(self.module_token()),
-			)
-			.field("dot_token", &support::DebugOptionalNode(self.dot_token()))
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for TsInterfaceDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERFACE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3623,38 +3185,6 @@ impl AstNode for TsInterfaceDecl {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsInterfaceDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsInterfaceDecl")
-			.field(
-				"declare_token",
-				&support::DebugOptionalNode(self.declare_token()),
-			)
-			.field(
-				"interface_token",
-				&support::DebugSyntaxResult(self.interface_token()),
-			)
-			.field(
-				"type_params",
-				&support::DebugSyntaxResult(self.type_params()),
-			)
-			.field(
-				"extends_token",
-				&support::DebugOptionalNode(self.extends_token()),
-			)
-			.field("extends", &support::DebugOptionalNode(self.extends()))
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("members", &support::DebugSyntaxResult(self.members()))
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for ImportDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_DECL }
@@ -3667,35 +3197,6 @@ impl AstNode for ImportDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ImportDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ImportDecl")
-			.field(
-				"import_token",
-				&support::DebugSyntaxResult(self.import_token()),
-			)
-			.field("imports", &self.imports())
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
-			.field("from_token", &support::DebugSyntaxResult(self.from_token()))
-			.field(
-				"source_token",
-				&support::DebugSyntaxResult(self.source_token()),
-			)
-			.field(
-				"asserted_object",
-				&support::DebugSyntaxResult(self.asserted_object()),
-			)
-			.field(
-				"assert_token",
-				&support::DebugOptionalNode(self.assert_token()),
-			)
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for ExportNamed {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_NAMED }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3706,27 +3207,6 @@ impl AstNode for ExportNamed {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ExportNamed {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ExportNamed")
-			.field(
-				"export_token",
-				&support::DebugSyntaxResult(self.export_token()),
-			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
-			.field("from_token", &support::DebugOptionalNode(self.from_token()))
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("specifiers", &self.specifiers())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for ExportDefaultDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DEFAULT_DECL }
@@ -3739,22 +3219,6 @@ impl AstNode for ExportDefaultDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ExportDefaultDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ExportDefaultDecl")
-			.field(
-				"export_token",
-				&support::DebugSyntaxResult(self.export_token()),
-			)
-			.field(
-				"default_token",
-				&support::DebugOptionalNode(self.default_token()),
-			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
-			.field("decl", &support::DebugSyntaxResult(self.decl()))
-			.finish()
-	}
-}
 impl AstNode for ExportDefaultExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DEFAULT_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3765,22 +3229,6 @@ impl AstNode for ExportDefaultExpr {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ExportDefaultExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ExportDefaultExpr")
-			.field(
-				"export_token",
-				&support::DebugSyntaxResult(self.export_token()),
-			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
-			.field(
-				"default_token",
-				&support::DebugOptionalNode(self.default_token()),
-			)
-			.field("expr", &support::DebugSyntaxResult(self.expr()))
-			.finish()
-	}
 }
 impl AstNode for ExportWildcard {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_WILDCARD }
@@ -3793,25 +3241,6 @@ impl AstNode for ExportWildcard {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ExportWildcard {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ExportWildcard")
-			.field(
-				"export_token",
-				&support::DebugSyntaxResult(self.export_token()),
-			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
-			.field("star_token", &support::DebugSyntaxResult(self.star_token()))
-			.field("as_token", &support::DebugOptionalNode(self.as_token()))
-			.field("ident", &support::DebugOptionalNode(self.ident()))
-			.field("from_token", &support::DebugSyntaxResult(self.from_token()))
-			.field(
-				"source_token",
-				&support::DebugSyntaxResult(self.source_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for ExportDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPORT_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3822,18 +3251,6 @@ impl AstNode for ExportDecl {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ExportDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ExportDecl")
-			.field(
-				"export_token",
-				&support::DebugSyntaxResult(self.export_token()),
-			)
-			.field("type_token", &support::DebugOptionalNode(self.type_token()))
-			.field("decl", &support::DebugSyntaxResult(self.decl()))
-			.finish()
-	}
 }
 impl AstNode for TsImportEqualsDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT_EQUALS_DECL }
@@ -3846,27 +3263,6 @@ impl AstNode for TsImportEqualsDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsImportEqualsDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsImportEqualsDecl")
-			.field(
-				"import_token",
-				&support::DebugSyntaxResult(self.import_token()),
-			)
-			.field(
-				"export_token",
-				&support::DebugSyntaxResult(self.export_token()),
-			)
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("module", &support::DebugSyntaxResult(self.module()))
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsExportAssignment {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPORT_ASSIGNMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3877,22 +3273,6 @@ impl AstNode for TsExportAssignment {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsExportAssignment {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsExportAssignment")
-			.field(
-				"export_token",
-				&support::DebugSyntaxResult(self.export_token()),
-			)
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("expr", &support::DebugSyntaxResult(self.expr()))
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsNamespaceExportDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NAMESPACE_EXPORT_DECL }
@@ -3905,26 +3285,6 @@ impl AstNode for TsNamespaceExportDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsNamespaceExportDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsNamespaceExportDecl")
-			.field(
-				"export_token",
-				&support::DebugSyntaxResult(self.export_token()),
-			)
-			.field("as_token", &support::DebugSyntaxResult(self.as_token()))
-			.field(
-				"namespace_token",
-				&support::DebugSyntaxResult(self.namespace_token()),
-			)
-			.field("ident", &support::DebugOptionalNode(self.ident()))
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsElseClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ELSE_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3935,14 +3295,6 @@ impl AstNode for JsElseClause {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsElseClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsElseClause")
-			.field("else_token", &support::DebugSyntaxResult(self.else_token()))
-			.field("alternate", &support::DebugSyntaxResult(self.alternate()))
-			.finish()
-	}
 }
 impl AstNode for ForStmtInit {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT_INIT }
@@ -3955,17 +3307,6 @@ impl AstNode for ForStmtInit {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ForStmtInit {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForStmtInit")
-			.field("inner", &support::DebugSyntaxResult(self.inner()))
-			.field(
-				"semicolon_token",
-				&support::DebugSyntaxResult(self.semicolon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for ForStmtTest {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT_TEST }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -3976,17 +3317,6 @@ impl AstNode for ForStmtTest {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ForStmtTest {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForStmtTest")
-			.field("expr", &support::DebugSyntaxResult(self.expr()))
-			.field(
-				"semicolon_token",
-				&support::DebugSyntaxResult(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for ForStmtUpdate {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == FOR_STMT_UPDATE }
@@ -3999,13 +3329,6 @@ impl AstNode for ForStmtUpdate {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ForStmtUpdate {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ForStmtUpdate")
-			.field("expr", &support::DebugSyntaxResult(self.expr()))
-			.finish()
-	}
-}
 impl AstNode for JsVariableDeclaration {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4016,14 +3339,6 @@ impl AstNode for JsVariableDeclaration {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsVariableDeclaration {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsVariableDeclaration")
-			.field("kind_token", &support::DebugSyntaxResult(self.kind_token()))
-			.field("declarators", &self.declarators())
-			.finish()
-	}
 }
 impl AstNode for JsCaseClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CASE_CLAUSE }
@@ -4036,19 +3351,6 @@ impl AstNode for JsCaseClause {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsCaseClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsCaseClause")
-			.field("case_token", &support::DebugSyntaxResult(self.case_token()))
-			.field("test", &support::DebugSyntaxResult(self.test()))
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field("consequent", &self.consequent())
-			.finish()
-	}
-}
 impl AstNode for JsDefaultClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_DEFAULT_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4059,21 +3361,6 @@ impl AstNode for JsDefaultClause {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsDefaultClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsDefaultClause")
-			.field(
-				"default_token",
-				&support::DebugSyntaxResult(self.default_token()),
-			)
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field("consequent", &self.consequent())
-			.finish()
-	}
 }
 impl AstNode for JsCatchClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CATCH_CLAUSE }
@@ -4086,21 +3373,6 @@ impl AstNode for JsCatchClause {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsCatchClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsCatchClause")
-			.field(
-				"catch_token",
-				&support::DebugSyntaxResult(self.catch_token()),
-			)
-			.field(
-				"declaration",
-				&support::DebugOptionalNode(self.declaration()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for JsFinallyClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FINALLY_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4111,17 +3383,6 @@ impl AstNode for JsFinallyClause {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsFinallyClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsFinallyClause")
-			.field(
-				"finally_token",
-				&support::DebugSyntaxResult(self.finally_token()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
 }
 impl AstNode for JsCatchDeclaration {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CATCH_DECLARATION }
@@ -4134,21 +3395,6 @@ impl AstNode for JsCatchDeclaration {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsCatchDeclaration {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsCatchDeclaration")
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("binding", &support::DebugSyntaxResult(self.binding()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsArrayExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4159,21 +3405,6 @@ impl AstNode for JsArrayExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsArrayExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsArrayExpression")
-			.field(
-				"l_brack_token",
-				&support::DebugSyntaxResult(self.l_brack_token()),
-			)
-			.field("elements", &self.elements())
-			.field(
-				"r_brack_token",
-				&support::DebugSyntaxResult(self.r_brack_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsArrowFunctionExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARROW_FUNCTION_EXPRESSION }
@@ -4186,32 +3417,6 @@ impl AstNode for JsArrowFunctionExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsArrowFunctionExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsArrowFunctionExpression")
-			.field(
-				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
-			)
-			.field(
-				"type_parameters",
-				&support::DebugOptionalNode(self.type_parameters()),
-			)
-			.field(
-				"parameter_list",
-				&support::DebugOptionalNode(self.parameter_list()),
-			)
-			.field(
-				"fat_arrow_token",
-				&support::DebugSyntaxResult(self.fat_arrow_token()),
-			)
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsAssignmentExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ASSIGNMENT_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4222,16 +3427,6 @@ impl AstNode for JsAssignmentExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsAssignmentExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsAssignmentExpression")
-			.field(
-				"operator_token",
-				&support::DebugSyntaxResult(self.operator_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsAwaitExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_AWAIT_EXPRESSION }
@@ -4244,17 +3439,6 @@ impl AstNode for JsAwaitExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsAwaitExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsAwaitExpression")
-			.field(
-				"await_token",
-				&support::DebugSyntaxResult(self.await_token()),
-			)
-			.field("argument", &support::DebugSyntaxResult(self.argument()))
-			.finish()
-	}
-}
 impl AstNode for JsBinaryExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BINARY_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4265,14 +3449,6 @@ impl AstNode for JsBinaryExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsBinaryExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsBinaryExpression")
-			.field("left", &support::DebugSyntaxResult(self.left()))
-			.field("operator", &support::DebugSyntaxResult(self.operator()))
-			.finish()
-	}
 }
 impl AstNode for JsClassExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CLASS_EXPRESSION }
@@ -4285,30 +3461,6 @@ impl AstNode for JsClassExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsClassExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsClassExpression")
-			.field(
-				"class_token",
-				&support::DebugSyntaxResult(self.class_token()),
-			)
-			.field("id", &support::DebugOptionalNode(self.id()))
-			.field(
-				"extends_clause",
-				&support::DebugOptionalNode(self.extends_clause()),
-			)
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("members", &self.members())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsConditionalExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONDITIONAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4319,21 +3471,6 @@ impl AstNode for JsConditionalExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsConditionalExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsConditionalExpression")
-			.field("test", &support::DebugSyntaxResult(self.test()))
-			.field(
-				"question_mark_token",
-				&support::DebugSyntaxResult(self.question_mark_token()),
-			)
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsComputedMemberExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_EXPRESSION }
@@ -4346,25 +3483,6 @@ impl AstNode for JsComputedMemberExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsComputedMemberExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsComputedMemberExpression")
-			.field("object", &support::DebugSyntaxResult(self.object()))
-			.field(
-				"optional_chain_token_token",
-				&support::DebugOptionalNode(self.optional_chain_token_token()),
-			)
-			.field(
-				"l_brack_token",
-				&support::DebugSyntaxResult(self.l_brack_token()),
-			)
-			.field(
-				"r_brack_token",
-				&support::DebugSyntaxResult(self.r_brack_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsFunctionExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4375,32 +3493,6 @@ impl AstNode for JsFunctionExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsFunctionExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsFunctionExpression")
-			.field(
-				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
-			)
-			.field(
-				"function_token",
-				&support::DebugSyntaxResult(self.function_token()),
-			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
-			.field("id", &support::DebugOptionalNode(self.id()))
-			.field(
-				"type_parameters",
-				&support::DebugOptionalNode(self.type_parameters()),
-			)
-			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
 }
 impl AstNode for JsImportCallExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IMPORT_CALL_EXPRESSION }
@@ -4413,25 +3505,6 @@ impl AstNode for JsImportCallExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsImportCallExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsImportCallExpression")
-			.field(
-				"import_token",
-				&support::DebugSyntaxResult(self.import_token()),
-			)
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("argument", &support::DebugSyntaxResult(self.argument()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsLogicalExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LOGICAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4442,14 +3515,6 @@ impl AstNode for JsLogicalExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsLogicalExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsLogicalExpression")
-			.field("left", &support::DebugSyntaxResult(self.left()))
-			.field("operator", &support::DebugSyntaxResult(self.operator()))
-			.finish()
-	}
 }
 impl AstNode for JsObjectExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_EXPRESSION }
@@ -4462,21 +3527,6 @@ impl AstNode for JsObjectExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsObjectExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsObjectExpression")
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("members", &self.members())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsParenthesizedExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4487,21 +3537,6 @@ impl AstNode for JsParenthesizedExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsParenthesizedExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsParenthesizedExpression")
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("expression", &support::DebugSyntaxResult(self.expression()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsReferenceIdentifierExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER_EXPRESSION }
@@ -4514,13 +3549,6 @@ impl AstNode for JsReferenceIdentifierExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsReferenceIdentifierExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsReferenceIdentifierExpression")
-			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
-			.finish()
-	}
-}
 impl AstNode for JsSequenceExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SEQUENCE_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4531,17 +3559,6 @@ impl AstNode for JsSequenceExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsSequenceExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsSequenceExpression")
-			.field("left", &support::DebugSyntaxResult(self.left()))
-			.field(
-				"comma_token",
-				&support::DebugSyntaxResult(self.comma_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsStaticMemberExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MEMBER_EXPRESSION }
@@ -4554,15 +3571,6 @@ impl AstNode for JsStaticMemberExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsStaticMemberExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsStaticMemberExpression")
-			.field("object", &support::DebugSyntaxResult(self.object()))
-			.field("operator", &support::DebugSyntaxResult(self.operator()))
-			.field("member", &support::DebugSyntaxResult(self.member()))
-			.finish()
-	}
-}
 impl AstNode for JsSuperExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SUPER_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4573,16 +3581,6 @@ impl AstNode for JsSuperExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsSuperExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsSuperExpression")
-			.field(
-				"super_token",
-				&support::DebugSyntaxResult(self.super_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsThisExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_THIS_EXPRESSION }
@@ -4595,13 +3593,6 @@ impl AstNode for JsThisExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsThisExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsThisExpression")
-			.field("this_token", &support::DebugSyntaxResult(self.this_token()))
-			.finish()
-	}
-}
 impl AstNode for JsUnaryExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_UNARY_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4612,14 +3603,6 @@ impl AstNode for JsUnaryExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsUnaryExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsUnaryExpression")
-			.field("operator", &support::DebugSyntaxResult(self.operator()))
-			.field("argument", &support::DebugSyntaxResult(self.argument()))
-			.finish()
-	}
 }
 impl AstNode for JsPreUpdateExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRE_UPDATE_EXPRESSION }
@@ -4632,14 +3615,6 @@ impl AstNode for JsPreUpdateExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsPreUpdateExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsPreUpdateExpression")
-			.field("operator", &support::DebugSyntaxResult(self.operator()))
-			.field("operand", &support::DebugSyntaxResult(self.operand()))
-			.finish()
-	}
-}
 impl AstNode for JsPostUpdateExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_POST_UPDATE_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4650,14 +3625,6 @@ impl AstNode for JsPostUpdateExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsPostUpdateExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsPostUpdateExpression")
-			.field("operand", &support::DebugSyntaxResult(self.operand()))
-			.field("operator", &support::DebugSyntaxResult(self.operator()))
-			.finish()
-	}
 }
 impl AstNode for JsYieldExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_YIELD_EXPRESSION }
@@ -4670,18 +3637,6 @@ impl AstNode for JsYieldExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsYieldExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsYieldExpression")
-			.field(
-				"yield_token",
-				&support::DebugSyntaxResult(self.yield_token()),
-			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
-			.field("argument", &support::DebugOptionalNode(self.argument()))
-			.finish()
-	}
-}
 impl AstNode for Template {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TEMPLATE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4692,16 +3647,6 @@ impl AstNode for Template {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for Template {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("Template")
-			.field(
-				"backtick_token",
-				&support::DebugSyntaxResult(self.backtick_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for NewExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == NEW_EXPR }
@@ -4714,16 +3659,6 @@ impl AstNode for NewExpr {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for NewExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("NewExpr")
-			.field("new_token", &support::DebugSyntaxResult(self.new_token()))
-			.field("type_args", &support::DebugOptionalNode(self.type_args()))
-			.field("object", &support::DebugSyntaxResult(self.object()))
-			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
-			.finish()
-	}
-}
 impl AstNode for CallExpr {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == CALL_EXPR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4734,15 +3669,6 @@ impl AstNode for CallExpr {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for CallExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("CallExpr")
-			.field("type_args", &support::DebugOptionalNode(self.type_args()))
-			.field("callee", &support::DebugSyntaxResult(self.callee()))
-			.field("arguments", &support::DebugSyntaxResult(self.arguments()))
-			.finish()
-	}
 }
 impl AstNode for NewTarget {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == NEW_TARGET }
@@ -4755,18 +3681,6 @@ impl AstNode for NewTarget {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for NewTarget {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("NewTarget")
-			.field("new_token", &support::DebugSyntaxResult(self.new_token()))
-			.field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
-			.field(
-				"target_token",
-				&support::DebugSyntaxResult(self.target_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for ImportMeta {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_META }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4777,17 +3691,6 @@ impl AstNode for ImportMeta {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ImportMeta {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ImportMeta")
-			.field(
-				"import_token",
-				&support::DebugSyntaxResult(self.import_token()),
-			)
-			.field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
-			.finish()
-	}
 }
 impl AstNode for TsNonNull {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NON_NULL }
@@ -4800,14 +3703,6 @@ impl AstNode for TsNonNull {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsNonNull {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsNonNull")
-			.field("expr", &support::DebugSyntaxResult(self.expr()))
-			.field("excl_token", &support::DebugSyntaxResult(self.excl_token()))
-			.finish()
-	}
-}
 impl AstNode for TsAssertion {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ASSERTION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4818,23 +3713,6 @@ impl AstNode for TsAssertion {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsAssertion {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsAssertion")
-			.field("expr", &support::DebugSyntaxResult(self.expr()))
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field(
-				"l_angle_token",
-				&support::DebugSyntaxResult(self.l_angle_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.field(
-				"r_angle_token",
-				&support::DebugSyntaxResult(self.r_angle_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsConstAssertion {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONST_ASSERTION }
@@ -4847,26 +3725,6 @@ impl AstNode for TsConstAssertion {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsConstAssertion {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsConstAssertion")
-			.field("expr", &support::DebugSyntaxResult(self.expr()))
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field(
-				"l_angle_token",
-				&support::DebugSyntaxResult(self.l_angle_token()),
-			)
-			.field(
-				"const_token",
-				&support::DebugSyntaxResult(self.const_token()),
-			)
-			.field(
-				"r_angle_token",
-				&support::DebugSyntaxResult(self.r_angle_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsTypeArgs {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ARGS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4877,21 +3735,6 @@ impl AstNode for TsTypeArgs {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTypeArgs {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTypeArgs")
-			.field(
-				"l_angle_token",
-				&support::DebugSyntaxResult(self.l_angle_token()),
-			)
-			.field("args", &support::DebugSyntaxResult(self.args()))
-			.field(
-				"r_angle_token",
-				&support::DebugSyntaxResult(self.r_angle_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for ArgList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARG_LIST }
@@ -4904,21 +3747,6 @@ impl AstNode for ArgList {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ArgList {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ArgList")
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("args", &self.args())
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsIdentifierBinding {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_BINDING }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4929,13 +3757,6 @@ impl AstNode for JsIdentifierBinding {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsIdentifierBinding {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsIdentifierBinding")
-			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
-			.finish()
-	}
 }
 impl AstNode for TsTypeParams {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAMS }
@@ -4948,21 +3769,6 @@ impl AstNode for TsTypeParams {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsTypeParams {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTypeParams")
-			.field(
-				"l_angle_token",
-				&support::DebugOptionalNode(self.l_angle_token()),
-			)
-			.field("params", &support::DebugSyntaxResult(self.params()))
-			.field(
-				"r_angle_token",
-				&support::DebugOptionalNode(self.r_angle_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsParameterList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARAMETER_LIST }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4973,21 +3779,6 @@ impl AstNode for JsParameterList {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsParameterList {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsParameterList")
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("parameters", &self.parameters())
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsTypeAnnotation {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_ANNOTATION }
@@ -5000,17 +3791,6 @@ impl AstNode for TsTypeAnnotation {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsTypeAnnotation {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTypeAnnotation")
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
-}
 impl AstNode for JsFunctionBody {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_FUNCTION_BODY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5021,22 +3801,6 @@ impl AstNode for JsFunctionBody {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsFunctionBody {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsFunctionBody")
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("directives", &self.directives())
-			.field("statements", &self.statements())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for SpreadElement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == SPREAD_ELEMENT }
@@ -5049,17 +3813,6 @@ impl AstNode for SpreadElement {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for SpreadElement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("SpreadElement")
-			.field(
-				"dotdotdot_token",
-				&support::DebugSyntaxResult(self.dotdotdot_token()),
-			)
-			.field("element", &support::DebugSyntaxResult(self.element()))
-			.finish()
-	}
-}
 impl AstNode for JsArrayHole {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_HOLE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5070,11 +3823,6 @@ impl AstNode for JsArrayHole {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsArrayHole {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsArrayHole").finish()
-	}
 }
 impl AstNode for JsLiteralMemberName {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_LITERAL_MEMBER_NAME }
@@ -5087,13 +3835,6 @@ impl AstNode for JsLiteralMemberName {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsLiteralMemberName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsLiteralMemberName")
-			.field("value", &support::DebugSyntaxResult(self.value()))
-			.finish()
-	}
-}
 impl AstNode for JsComputedMemberName {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5104,21 +3845,6 @@ impl AstNode for JsComputedMemberName {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsComputedMemberName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsComputedMemberName")
-			.field(
-				"l_brack_token",
-				&support::DebugSyntaxResult(self.l_brack_token()),
-			)
-			.field("expression", &support::DebugSyntaxResult(self.expression()))
-			.field(
-				"r_brack_token",
-				&support::DebugSyntaxResult(self.r_brack_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsPropertyObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_OBJECT_MEMBER }
@@ -5131,17 +3857,6 @@ impl AstNode for JsPropertyObjectMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsPropertyObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsPropertyObjectMember")
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsMethodObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5152,31 +3867,6 @@ impl AstNode for JsMethodObjectMember {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsMethodObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsMethodObjectMember")
-			.field(
-				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
-			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"type_params",
-				&support::DebugOptionalNode(self.type_params()),
-			)
-			.field(
-				"parameter_list",
-				&support::DebugSyntaxResult(self.parameter_list()),
-			)
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
 }
 impl AstNode for JsGetterObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_GETTER_OBJECT_MEMBER }
@@ -5189,27 +3879,6 @@ impl AstNode for JsGetterObjectMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsGetterObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsGetterObjectMember")
-			.field("get_token", &support::DebugSyntaxResult(self.get_token()))
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for JsSetterObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SETTER_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5220,24 +3889,6 @@ impl AstNode for JsSetterObjectMember {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsSetterObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsSetterObjectMember")
-			.field("set_token", &support::DebugSyntaxResult(self.set_token()))
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("parameter", &support::DebugSyntaxResult(self.parameter()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
 }
 impl AstNode for InitializedProp {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == INITIALIZED_PROP }
@@ -5250,15 +3901,6 @@ impl AstNode for InitializedProp {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for InitializedProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("InitializedProp")
-			.field("key", &support::DebugSyntaxResult(self.key()))
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("value", &support::DebugSyntaxResult(self.value()))
-			.finish()
-	}
-}
 impl AstNode for JsShorthandPropertyObjectMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SHORTHAND_PROPERTY_OBJECT_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5269,13 +3911,6 @@ impl AstNode for JsShorthandPropertyObjectMember {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsShorthandPropertyObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsShorthandPropertyObjectMember")
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.finish()
-	}
 }
 impl AstNode for JsSpread {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SPREAD }
@@ -5288,17 +3923,6 @@ impl AstNode for JsSpread {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsSpread {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsSpread")
-			.field(
-				"dotdotdot_token",
-				&support::DebugSyntaxResult(self.dotdotdot_token()),
-			)
-			.field("argument", &support::DebugSyntaxResult(self.argument()))
-			.finish()
-	}
-}
 impl AstNode for JsStringLiteralExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STRING_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5309,16 +3933,6 @@ impl AstNode for JsStringLiteralExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsStringLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsStringLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsNumberLiteralExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NUMBER_LITERAL_EXPRESSION }
@@ -5331,16 +3945,6 @@ impl AstNode for JsNumberLiteralExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsNumberLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsNumberLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for Name {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5351,16 +3955,6 @@ impl AstNode for Name {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for Name {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("Name")
-			.field(
-				"ident_token",
-				&support::DebugSyntaxResult(self.ident_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsImplementsClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPLEMENTS_CLAUSE }
@@ -5373,17 +3967,6 @@ impl AstNode for TsImplementsClause {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsImplementsClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsImplementsClause")
-			.field(
-				"implements_token",
-				&support::DebugSyntaxResult(self.implements_token()),
-			)
-			.field("interfaces", &self.interfaces())
-			.finish()
-	}
-}
 impl AstNode for JsExtendsClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EXTENDS_CLAUSE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5394,20 +3977,6 @@ impl AstNode for JsExtendsClause {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsExtendsClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsExtendsClause")
-			.field(
-				"extends_token",
-				&support::DebugSyntaxResult(self.extends_token()),
-			)
-			.field(
-				"super_class",
-				&support::DebugSyntaxResult(self.super_class()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsExprWithTypeArgs {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPR_WITH_TYPE_ARGS }
@@ -5420,17 +3989,6 @@ impl AstNode for TsExprWithTypeArgs {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsExprWithTypeArgs {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsExprWithTypeArgs")
-			.field("item", &support::DebugSyntaxResult(self.item()))
-			.field(
-				"type_params",
-				&support::DebugSyntaxResult(self.type_params()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsPrivateClassMemberName {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PRIVATE_CLASS_MEMBER_NAME }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5441,14 +3999,6 @@ impl AstNode for JsPrivateClassMemberName {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsPrivateClassMemberName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsPrivateClassMemberName")
-			.field("hash_token", &support::DebugSyntaxResult(self.hash_token()))
-			.field("id_token", &support::DebugSyntaxResult(self.id_token()))
-			.finish()
-	}
 }
 impl AstNode for JsConstructorClassMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_CLASS_MEMBER }
@@ -5461,22 +4011,6 @@ impl AstNode for JsConstructorClassMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsConstructorClassMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsConstructorClassMember")
-			.field(
-				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
-			)
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"parameter_list",
-				&support::DebugSyntaxResult(self.parameter_list()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for JsPropertyClassMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5487,40 +4021,6 @@ impl AstNode for JsPropertyClassMember {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsPropertyClassMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsPropertyClassMember")
-			.field(
-				"declare_token",
-				&support::DebugOptionalNode(self.declare_token()),
-			)
-			.field(
-				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
-			)
-			.field(
-				"abstract_token",
-				&support::DebugOptionalNode(self.abstract_token()),
-			)
-			.field(
-				"static_token",
-				&support::DebugOptionalNode(self.static_token()),
-			)
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
-			)
-			.field("excl_token", &support::DebugOptionalNode(self.excl_token()))
-			.field("ty", &support::DebugOptionalNode(self.ty()))
-			.field("value", &support::DebugOptionalNode(self.value()))
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsMethodClassMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_METHOD_CLASS_MEMBER }
@@ -5533,43 +4033,6 @@ impl AstNode for JsMethodClassMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsMethodClassMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsMethodClassMember")
-			.field(
-				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
-			)
-			.field(
-				"static_token",
-				&support::DebugOptionalNode(self.static_token()),
-			)
-			.field(
-				"abstract_token",
-				&support::DebugOptionalNode(self.abstract_token()),
-			)
-			.field(
-				"async_token",
-				&support::DebugOptionalNode(self.async_token()),
-			)
-			.field("star_token", &support::DebugOptionalNode(self.star_token()))
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"type_parameters",
-				&support::DebugOptionalNode(self.type_parameters()),
-			)
-			.field(
-				"parameter_list",
-				&support::DebugSyntaxResult(self.parameter_list()),
-			)
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for JsGetterClassMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_GETTER_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5580,39 +4043,6 @@ impl AstNode for JsGetterClassMember {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsGetterClassMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsGetterClassMember")
-			.field(
-				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
-			)
-			.field(
-				"abstract_token",
-				&support::DebugOptionalNode(self.abstract_token()),
-			)
-			.field(
-				"static_token",
-				&support::DebugOptionalNode(self.static_token()),
-			)
-			.field("get_token", &support::DebugSyntaxResult(self.get_token()))
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
 }
 impl AstNode for JsSetterClassMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_SETTER_CLASS_MEMBER }
@@ -5625,36 +4055,6 @@ impl AstNode for JsSetterClassMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsSetterClassMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsSetterClassMember")
-			.field(
-				"access_modifier",
-				&support::DebugOptionalNode(self.access_modifier()),
-			)
-			.field(
-				"abstract_token",
-				&support::DebugOptionalNode(self.abstract_token()),
-			)
-			.field(
-				"static_token",
-				&support::DebugOptionalNode(self.static_token()),
-			)
-			.field("set_token", &support::DebugSyntaxResult(self.set_token()))
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("parameter", &support::DebugSyntaxResult(self.parameter()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.field("body", &support::DebugSyntaxResult(self.body()))
-			.finish()
-	}
-}
 impl AstNode for JsEmptyClassMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EMPTY_CLASS_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5665,16 +4065,6 @@ impl AstNode for JsEmptyClassMember {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsEmptyClassMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsEmptyClassMember")
-			.field(
-				"semicolon_token",
-				&support::DebugSyntaxResult(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsIndexSignature {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEX_SIGNATURE }
@@ -5687,30 +4077,6 @@ impl AstNode for TsIndexSignature {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsIndexSignature {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsIndexSignature")
-			.field(
-				"readonly_token",
-				&support::DebugOptionalNode(self.readonly_token()),
-			)
-			.field(
-				"l_brack_token",
-				&support::DebugSyntaxResult(self.l_brack_token()),
-			)
-			.field("pat", &support::DebugSyntaxResult(self.pat()))
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.field(
-				"r_brack_token",
-				&support::DebugSyntaxResult(self.r_brack_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsAccessibility {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ACCESSIBILITY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5721,20 +4087,6 @@ impl AstNode for TsAccessibility {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsAccessibility {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsAccessibility")
-			.field(
-				"private_token",
-				&support::DebugSyntaxResult(self.private_token()),
-			)
-			.field(
-				"readonly_token",
-				&support::DebugSyntaxResult(self.readonly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsConstructorParameterList {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_CONSTRUCTOR_PARAMETER_LIST }
@@ -5747,21 +4099,6 @@ impl AstNode for JsConstructorParameterList {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsConstructorParameterList {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsConstructorParameterList")
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("parameters", &self.parameters())
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsConstructorParam {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCTOR_PARAM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5772,17 +4109,6 @@ impl AstNode for TsConstructorParam {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsConstructorParam {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsConstructorParam")
-			.field(
-				"readonly_token",
-				&support::DebugSyntaxResult(self.readonly_token()),
-			)
-			.field("pat", &support::DebugSyntaxResult(self.pat()))
-			.finish()
-	}
 }
 impl AstNode for JsEqualValueClause {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_EQUAL_VALUE_CLAUSE }
@@ -5795,13 +4121,82 @@ impl AstNode for JsEqualValueClause {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsEqualValueClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsEqualValueClause")
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("expression", &support::DebugSyntaxResult(self.expression()))
-			.finish()
+impl AstNode for JsIdentifierAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_ASSIGNMENT_TARGET }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
 	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsStaticMemberAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_STATIC_MEMBER_ASSIGNMENT_TARGET }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsComputedMemberAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsParenthesizedAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_ASSIGNMENT_TARGET }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsAssignmentTargetWithDefault {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ASSIGNMENT_TARGET_WITH_DEFAULT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsArrayAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_TARGET }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
+impl AstNode for JsArrayAssignmentTargetRestElement {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
 impl AstNode for JsBigIntLiteralExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BIG_INT_LITERAL_EXPRESSION }
@@ -5814,16 +4209,6 @@ impl AstNode for JsBigIntLiteralExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsBigIntLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsBigIntLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsBooleanLiteralExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_BOOLEAN_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5834,16 +4219,6 @@ impl AstNode for JsBooleanLiteralExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsBooleanLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsBooleanLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for JsNullLiteralExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_NULL_LITERAL_EXPRESSION }
@@ -5856,16 +4231,6 @@ impl AstNode for JsNullLiteralExpression {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsNullLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsNullLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsRegexLiteralExpression {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REGEX_LITERAL_EXPRESSION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5876,16 +4241,6 @@ impl AstNode for JsRegexLiteralExpression {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsRegexLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsRegexLiteralExpression")
-			.field(
-				"value_token",
-				&support::DebugSyntaxResult(self.value_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for SinglePattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == SINGLE_PATTERN }
@@ -5898,19 +4253,6 @@ impl AstNode for SinglePattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for SinglePattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("SinglePattern")
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field(
-				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
-			)
-			.field("excl_token", &support::DebugOptionalNode(self.excl_token()))
-			.field("ty", &support::DebugOptionalNode(self.ty()))
-			.finish()
-	}
-}
 impl AstNode for RestPattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == REST_PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5921,17 +4263,6 @@ impl AstNode for RestPattern {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for RestPattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("RestPattern")
-			.field(
-				"dotdotdot_token",
-				&support::DebugSyntaxResult(self.dotdotdot_token()),
-			)
-			.field("pat", &support::DebugSyntaxResult(self.pat()))
-			.finish()
-	}
 }
 impl AstNode for AssignPattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ASSIGN_PATTERN }
@@ -5944,16 +4275,6 @@ impl AstNode for AssignPattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for AssignPattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("AssignPattern")
-			.field("key", &support::DebugSyntaxResult(self.key()))
-			.field("ty", &support::DebugOptionalNode(self.ty()))
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("value", &support::DebugSyntaxResult(self.value()))
-			.finish()
-	}
-}
 impl AstNode for ObjectPattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == OBJECT_PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -5964,21 +4285,6 @@ impl AstNode for ObjectPattern {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ObjectPattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ObjectPattern")
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("elements", &self.elements())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for ArrayPattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == ARRAY_PATTERN }
@@ -5991,23 +4297,6 @@ impl AstNode for ArrayPattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ArrayPattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ArrayPattern")
-			.field(
-				"l_brack_token",
-				&support::DebugSyntaxResult(self.l_brack_token()),
-			)
-			.field("elements", &self.elements())
-			.field(
-				"r_brack_token",
-				&support::DebugSyntaxResult(self.r_brack_token()),
-			)
-			.field("excl_token", &support::DebugSyntaxResult(self.excl_token()))
-			.field("ty", &support::DebugOptionalNode(self.ty()))
-			.finish()
-	}
-}
 impl AstNode for ExprPattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == EXPR_PATTERN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6018,13 +4307,6 @@ impl AstNode for ExprPattern {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for ExprPattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ExprPattern")
-			.field("expr", &support::DebugSyntaxResult(self.expr()))
-			.finish()
-	}
 }
 impl AstNode for KeyValuePattern {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == KEY_VALUE_PATTERN }
@@ -6037,17 +4319,6 @@ impl AstNode for KeyValuePattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for KeyValuePattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("KeyValuePattern")
-			.field("key", &support::DebugSyntaxResult(self.key()))
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for JsVariableDeclarator {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_VARIABLE_DECLARATOR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6058,14 +4329,6 @@ impl AstNode for JsVariableDeclarator {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsVariableDeclarator {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsVariableDeclarator")
-			.field("id", &support::DebugSyntaxResult(self.id()))
-			.field("init", &support::DebugOptionalNode(self.init()))
-			.finish()
-	}
 }
 impl AstNode for WildcardImport {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == WILDCARD_IMPORT }
@@ -6078,15 +4341,6 @@ impl AstNode for WildcardImport {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for WildcardImport {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("WildcardImport")
-			.field("star_token", &support::DebugSyntaxResult(self.star_token()))
-			.field("as_token", &support::DebugOptionalNode(self.as_token()))
-			.field("ident", &support::DebugOptionalNode(self.ident()))
-			.finish()
-	}
-}
 impl AstNode for NamedImports {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == NAMED_IMPORTS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6097,21 +4351,6 @@ impl AstNode for NamedImports {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for NamedImports {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("NamedImports")
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("specifiers", &self.specifiers())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for ImportStringSpecifier {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_STRING_SPECIFIER }
@@ -6124,16 +4363,6 @@ impl AstNode for ImportStringSpecifier {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for ImportStringSpecifier {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("ImportStringSpecifier")
-			.field(
-				"source_token",
-				&support::DebugSyntaxResult(self.source_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for Specifier {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == SPECIFIER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6144,13 +4373,6 @@ impl AstNode for Specifier {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for Specifier {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("Specifier")
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.finish()
-	}
 }
 impl AstNode for JsReferenceIdentifierMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_IDENTIFIER_MEMBER }
@@ -6163,13 +4385,6 @@ impl AstNode for JsReferenceIdentifierMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsReferenceIdentifierMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsReferenceIdentifierMember")
-			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
-			.finish()
-	}
-}
 impl AstNode for JsReferencePrivateMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REFERENCE_PRIVATE_MEMBER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6180,14 +4395,6 @@ impl AstNode for JsReferencePrivateMember {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for JsReferencePrivateMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsReferencePrivateMember")
-			.field("hash_token", &support::DebugSyntaxResult(self.hash_token()))
-			.field("name_token", &support::DebugSyntaxResult(self.name_token()))
-			.finish()
-	}
 }
 impl AstNode for JsRestParameter {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_REST_PARAMETER }
@@ -6200,17 +4407,6 @@ impl AstNode for JsRestParameter {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for JsRestParameter {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("JsRestParameter")
-			.field(
-				"dotdotdot_token",
-				&support::DebugSyntaxResult(self.dotdotdot_token()),
-			)
-			.field("binding", &support::DebugSyntaxResult(self.binding()))
-			.finish()
-	}
-}
 impl AstNode for TsExternalModuleRef {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXTERNAL_MODULE_REF }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6221,28 +4417,6 @@ impl AstNode for TsExternalModuleRef {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsExternalModuleRef {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsExternalModuleRef")
-			.field(
-				"require_token",
-				&support::DebugSyntaxResult(self.require_token()),
-			)
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field(
-				"module_token",
-				&support::DebugSyntaxResult(self.module_token()),
-			)
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsAny {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ANY }
@@ -6255,13 +4429,6 @@ impl AstNode for TsAny {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsAny {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsAny")
-			.field("any_token", &support::DebugSyntaxResult(self.any_token()))
-			.finish()
-	}
-}
 impl AstNode for TsUnknown {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNKNOWN }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6272,16 +4439,6 @@ impl AstNode for TsUnknown {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsUnknown {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsUnknown")
-			.field(
-				"unknown_token",
-				&support::DebugSyntaxResult(self.unknown_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsNumber {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NUMBER }
@@ -6294,13 +4451,6 @@ impl AstNode for TsNumber {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsNumber {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsNumber")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
-}
 impl AstNode for TsObject {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OBJECT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6311,13 +4461,6 @@ impl AstNode for TsObject {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsObject {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsObject")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
 }
 impl AstNode for TsBoolean {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BOOLEAN }
@@ -6330,13 +4473,6 @@ impl AstNode for TsBoolean {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsBoolean {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsBoolean")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
-}
 impl AstNode for TsBigint {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_BIGINT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6347,13 +4483,6 @@ impl AstNode for TsBigint {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsBigint {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsBigint")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
 }
 impl AstNode for TsString {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_STRING }
@@ -6366,13 +4495,6 @@ impl AstNode for TsString {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsString {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsString")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
-}
 impl AstNode for TsSymbol {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_SYMBOL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6383,13 +4505,6 @@ impl AstNode for TsSymbol {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsSymbol {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsSymbol")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
 }
 impl AstNode for TsVoid {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_VOID }
@@ -6402,13 +4517,6 @@ impl AstNode for TsVoid {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsVoid {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsVoid")
-			.field("void_token", &support::DebugSyntaxResult(self.void_token()))
-			.finish()
-	}
-}
 impl AstNode for TsUndefined {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNDEFINED }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6419,16 +4527,6 @@ impl AstNode for TsUndefined {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsUndefined {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsUndefined")
-			.field(
-				"undefined_token",
-				&support::DebugSyntaxResult(self.undefined_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsNull {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NULL }
@@ -6441,13 +4539,6 @@ impl AstNode for TsNull {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsNull {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsNull")
-			.field("null_token", &support::DebugSyntaxResult(self.null_token()))
-			.finish()
-	}
-}
 impl AstNode for TsNever {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_NEVER }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6458,16 +4549,6 @@ impl AstNode for TsNever {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsNever {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsNever")
-			.field(
-				"never_token",
-				&support::DebugSyntaxResult(self.never_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsThis {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_THIS }
@@ -6480,13 +4561,6 @@ impl AstNode for TsThis {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsThis {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsThis")
-			.field("this_token", &support::DebugSyntaxResult(self.this_token()))
-			.finish()
-	}
-}
 impl AstNode for TsLiteral {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_LITERAL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6497,13 +4571,6 @@ impl AstNode for TsLiteral {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsLiteral {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsLiteral")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
 }
 impl AstNode for TsPredicate {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PREDICATE }
@@ -6516,14 +4583,6 @@ impl AstNode for TsPredicate {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsPredicate {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsPredicate")
-			.field("lhs", &support::DebugSyntaxResult(self.lhs()))
-			.field("rhs", &support::DebugSyntaxResult(self.rhs()))
-			.finish()
-	}
-}
 impl AstNode for TsTuple {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TUPLE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6534,21 +4593,6 @@ impl AstNode for TsTuple {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTuple {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTuple")
-			.field(
-				"l_brack_token",
-				&support::DebugSyntaxResult(self.l_brack_token()),
-			)
-			.field("elements", &support::DebugSyntaxResult(self.elements()))
-			.field(
-				"r_brack_token",
-				&support::DebugSyntaxResult(self.r_brack_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsParen {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PAREN }
@@ -6561,21 +4605,6 @@ impl AstNode for TsParen {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsParen {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsParen")
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsTypeRef {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_REF }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6586,14 +4615,6 @@ impl AstNode for TsTypeRef {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTypeRef {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTypeRef")
-			.field("name", &support::DebugSyntaxResult(self.name()))
-			.field("type_args", &support::DebugSyntaxResult(self.type_args()))
-			.finish()
-	}
 }
 impl AstNode for TsTemplate {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TEMPLATE }
@@ -6606,13 +4627,6 @@ impl AstNode for TsTemplate {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsTemplate {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTemplate")
-			.field("elements", &support::DebugSyntaxResult(self.elements()))
-			.finish()
-	}
-}
 impl AstNode for TsMappedType {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6623,43 +4637,6 @@ impl AstNode for TsMappedType {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsMappedType {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsMappedType")
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field(
-				"readonly_modifier",
-				&support::DebugOptionalNode(self.readonly_modifier()),
-			)
-			.field(
-				"minus_token",
-				&support::DebugOptionalNode(self.minus_token()),
-			)
-			.field("plus_token", &support::DebugOptionalNode(self.plus_token()))
-			.field(
-				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
-			)
-			.field("param", &support::DebugSyntaxResult(self.param()))
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.field(
-				"semicolon_token",
-				&support::DebugOptionalNode(self.semicolon_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsImport {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_IMPORT }
@@ -6672,27 +4649,6 @@ impl AstNode for TsImport {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsImport {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsImport")
-			.field(
-				"import_token",
-				&support::DebugSyntaxResult(self.import_token()),
-			)
-			.field("type_args", &support::DebugSyntaxResult(self.type_args()))
-			.field("dot_token", &support::DebugOptionalNode(self.dot_token()))
-			.field(
-				"l_paren_token",
-				&support::DebugSyntaxResult(self.l_paren_token()),
-			)
-			.field("qualifier", &support::DebugSyntaxResult(self.qualifier()))
-			.field(
-				"r_paren_token",
-				&support::DebugSyntaxResult(self.r_paren_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsArray {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ARRAY }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6703,21 +4659,6 @@ impl AstNode for TsArray {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsArray {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsArray")
-			.field(
-				"l_brack_token",
-				&support::DebugSyntaxResult(self.l_brack_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.field(
-				"r_brack_token",
-				&support::DebugSyntaxResult(self.r_brack_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsIndexedArray {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INDEXED_ARRAY }
@@ -6730,21 +4671,6 @@ impl AstNode for TsIndexedArray {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsIndexedArray {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsIndexedArray")
-			.field(
-				"l_brack_token",
-				&support::DebugSyntaxResult(self.l_brack_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.field(
-				"r_brack_token",
-				&support::DebugSyntaxResult(self.r_brack_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsTypeOperator {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_OPERATOR }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6755,13 +4681,6 @@ impl AstNode for TsTypeOperator {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTypeOperator {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTypeOperator")
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
 }
 impl AstNode for TsIntersection {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INTERSECTION }
@@ -6774,13 +4693,6 @@ impl AstNode for TsIntersection {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsIntersection {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsIntersection")
-			.field("types", &self.types())
-			.finish()
-	}
-}
 impl AstNode for TsUnion {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_UNION }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6791,13 +4703,6 @@ impl AstNode for TsUnion {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsUnion {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsUnion")
-			.field("types", &self.types())
-			.finish()
-	}
 }
 impl AstNode for TsFnType {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_FN_TYPE }
@@ -6810,21 +4715,6 @@ impl AstNode for TsFnType {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsFnType {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsFnType")
-			.field("params", &support::DebugSyntaxResult(self.params()))
-			.field(
-				"fat_arrow_token",
-				&support::DebugSyntaxResult(self.fat_arrow_token()),
-			)
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsConstructorType {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCTOR_TYPE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6835,22 +4725,6 @@ impl AstNode for TsConstructorType {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsConstructorType {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsConstructorType")
-			.field("new_token", &support::DebugSyntaxResult(self.new_token()))
-			.field("params", &support::DebugSyntaxResult(self.params()))
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field(
-				"return_type",
-				&support::DebugOptionalNode(self.return_type()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsConditionalType {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONDITIONAL_TYPE }
@@ -6863,22 +4737,6 @@ impl AstNode for TsConditionalType {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsConditionalType {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsConditionalType")
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.field(
-				"question_mark_token",
-				&support::DebugSyntaxResult(self.question_mark_token()),
-			)
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field("extends", &support::DebugSyntaxResult(self.extends()))
-			.finish()
-	}
-}
 impl AstNode for TsObjectType {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_OBJECT_TYPE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6889,21 +4747,6 @@ impl AstNode for TsObjectType {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsObjectType {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsObjectType")
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("members", &self.members())
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsInfer {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INFER }
@@ -6916,17 +4759,6 @@ impl AstNode for TsInfer {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsInfer {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsInfer")
-			.field(
-				"infer_token",
-				&support::DebugSyntaxResult(self.infer_token()),
-			)
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
-}
 impl AstNode for TsTupleElement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TUPLE_ELEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6937,26 +4769,6 @@ impl AstNode for TsTupleElement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTupleElement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTupleElement")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field(
-				"question_mark_token",
-				&support::DebugSyntaxResult(self.question_mark_token()),
-			)
-			.field(
-				"dotdotdot_token",
-				&support::DebugOptionalNode(self.dotdotdot_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
 }
 impl AstNode for TsEnumMember {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_ENUM_MEMBER }
@@ -6969,15 +4781,6 @@ impl AstNode for TsEnumMember {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsEnumMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsEnumMember")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("value", &support::DebugSyntaxResult(self.value()))
-			.finish()
-	}
-}
 impl AstNode for TsTemplateElement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TEMPLATE_ELEMENT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -6988,17 +4791,6 @@ impl AstNode for TsTemplateElement {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTemplateElement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTemplateElement")
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsMappedTypeReadonly {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE_READONLY }
@@ -7011,21 +4803,6 @@ impl AstNode for TsMappedTypeReadonly {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsMappedTypeReadonly {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsMappedTypeReadonly")
-			.field(
-				"minus_token",
-				&support::DebugOptionalNode(self.minus_token()),
-			)
-			.field("plus_token", &support::DebugOptionalNode(self.plus_token()))
-			.field(
-				"readonly_token",
-				&support::DebugOptionalNode(self.readonly_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsMappedTypeParam {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MAPPED_TYPE_PARAM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -7036,23 +4813,6 @@ impl AstNode for TsMappedTypeParam {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsMappedTypeParam {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsMappedTypeParam")
-			.field(
-				"l_brack_token",
-				&support::DebugOptionalNode(self.l_brack_token()),
-			)
-			.field("name", &support::DebugOptionalNode(self.name()))
-			.field(
-				"r_brack_token",
-				&support::DebugOptionalNode(self.r_brack_token()),
-			)
-			.field("ident", &support::DebugOptionalNode(self.ident()))
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
 }
 impl AstNode for TsTypeName {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_NAME }
@@ -7065,13 +4825,6 @@ impl AstNode for TsTypeName {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsTypeName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTypeName")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.finish()
-	}
-}
 impl AstNode for TsExtends {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXTENDS }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -7082,17 +4835,6 @@ impl AstNode for TsExtends {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsExtends {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsExtends")
-			.field(
-				"extends_token",
-				&support::DebugSyntaxResult(self.extends_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
 }
 impl AstNode for TsModuleBlock {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_MODULE_BLOCK }
@@ -7105,21 +4847,6 @@ impl AstNode for TsModuleBlock {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsModuleBlock {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsModuleBlock")
-			.field(
-				"l_curly_token",
-				&support::DebugSyntaxResult(self.l_curly_token()),
-			)
-			.field("items", &support::DebugSyntaxResult(self.items()))
-			.field(
-				"r_curly_token",
-				&support::DebugSyntaxResult(self.r_curly_token()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsTypeParam {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_TYPE_PARAM }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -7130,15 +4857,6 @@ impl AstNode for TsTypeParam {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsTypeParam {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsTypeParam")
-			.field("ident", &support::DebugSyntaxResult(self.ident()))
-			.field("constraint", &support::DebugSyntaxResult(self.constraint()))
-			.field("default", &support::DebugSyntaxResult(self.default()))
-			.finish()
-	}
 }
 impl AstNode for TsConstraint {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRAINT }
@@ -7151,17 +4869,6 @@ impl AstNode for TsConstraint {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsConstraint {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsConstraint")
-			.field(
-				"extends_token",
-				&support::DebugSyntaxResult(self.extends_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
-}
 impl AstNode for TsDefault {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_DEFAULT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -7172,14 +4879,6 @@ impl AstNode for TsDefault {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsDefault {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsDefault")
-			.field("eq_token", &support::DebugSyntaxResult(self.eq_token()))
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
 }
 impl AstNode for TsCallSignatureDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CALL_SIGNATURE_DECL }
@@ -7192,25 +4891,6 @@ impl AstNode for TsCallSignatureDecl {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsCallSignatureDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsCallSignatureDecl")
-			.field(
-				"type_params",
-				&support::DebugSyntaxResult(self.type_params()),
-			)
-			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field(
-				"return_type",
-				&support::DebugSyntaxResult(self.return_type()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsConstructSignatureDecl {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_CONSTRUCT_SIGNATURE_DECL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -7221,26 +4901,6 @@ impl AstNode for TsConstructSignatureDecl {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsConstructSignatureDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsConstructSignatureDecl")
-			.field("new_token", &support::DebugSyntaxResult(self.new_token()))
-			.field(
-				"type_params",
-				&support::DebugSyntaxResult(self.type_params()),
-			)
-			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
-			.field(
-				"colon_token",
-				&support::DebugOptionalNode(self.colon_token()),
-			)
-			.field(
-				"return_type",
-				&support::DebugSyntaxResult(self.return_type()),
-			)
-			.finish()
-	}
 }
 impl AstNode for TsPropertySignature {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_PROPERTY_SIGNATURE }
@@ -7253,26 +4913,6 @@ impl AstNode for TsPropertySignature {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsPropertySignature {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsPropertySignature")
-			.field(
-				"readonly_token",
-				&support::DebugOptionalNode(self.readonly_token()),
-			)
-			.field("prop", &support::DebugSyntaxResult(self.prop()))
-			.field(
-				"question_mark_token",
-				&support::DebugSyntaxResult(self.question_mark_token()),
-			)
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field("ty", &support::DebugSyntaxResult(self.ty()))
-			.finish()
-	}
-}
 impl AstNode for TsMethodSignature {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_METHOD_SIGNATURE }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -7284,34 +4924,6 @@ impl AstNode for TsMethodSignature {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for TsMethodSignature {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsMethodSignature")
-			.field(
-				"readonly_token",
-				&support::DebugOptionalNode(self.readonly_token()),
-			)
-			.field("key", &support::DebugSyntaxResult(self.key()))
-			.field(
-				"type_params",
-				&support::DebugSyntaxResult(self.type_params()),
-			)
-			.field("parameters", &support::DebugSyntaxResult(self.parameters()))
-			.field(
-				"question_mark_token",
-				&support::DebugOptionalNode(self.question_mark_token()),
-			)
-			.field(
-				"colon_token",
-				&support::DebugSyntaxResult(self.colon_token()),
-			)
-			.field(
-				"return_type",
-				&support::DebugSyntaxResult(self.return_type()),
-			)
-			.finish()
-	}
-}
 impl AstNode for TsQualifiedPath {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == TS_QUALIFIED_PATH }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -7322,15 +4934,6 @@ impl AstNode for TsQualifiedPath {
 		}
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl std::fmt::Debug for TsQualifiedPath {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("TsQualifiedPath")
-			.field("lhs", &support::DebugSyntaxResult(self.lhs()))
-			.field("dot_token", &support::DebugSyntaxResult(self.dot_token()))
-			.field("rhs", &support::DebugSyntaxResult(self.rhs()))
-			.finish()
-	}
 }
 impl From<JsBlockStatement> for JsAnyStatement {
 	fn from(node: JsBlockStatement) -> JsAnyStatement { JsAnyStatement::JsBlockStatement(node) }
@@ -7604,49 +5207,6 @@ impl AstNode for JsAnyStatement {
 			JsAnyStatement::TsExportAssignment(it) => &it.syntax,
 			JsAnyStatement::TsNamespaceExportDecl(it) => &it.syntax,
 			JsAnyStatement::JsUnknownStatement(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for JsAnyStatement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyStatement::JsBlockStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsEmptyStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsExpressionStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsIfStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsDoWhileStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsWhileStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ForStmt(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ForInStmt(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ForOfStmt(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsContinueStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsBreakStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsReturnStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsWithStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsLabeledStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsSwitchStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsThrowStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsTryStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsTryFinallyStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsDebuggerStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsVariableDeclarationStatement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::TsEnum(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::TsTypeAliasDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::TsNamespaceDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::TsModuleDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::TsInterfaceDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ImportDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ExportNamed(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ExportDefaultDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ExportDefaultExpr(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ExportWildcard(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::ExportDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::TsImportEqualsDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::TsExportAssignment(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::TsNamespaceExportDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyStatement::JsUnknownStatement(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -7928,44 +5488,6 @@ impl AstNode for JsAnyExpression {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyExpression::JsAnyLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsArrayExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsArrowFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsAssignmentExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsAwaitExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsBinaryExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsClassExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsConditionalExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsComputedMemberExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsFunctionExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsImportCallExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsLogicalExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsObjectExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsReferenceIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsSequenceExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsSuperExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsThisExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsUnaryExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsPreUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsPostUpdateExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsYieldExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::Template(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::NewExpr(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::CallExpr(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::ImportMeta(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::TsNonNull(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::TsAssertion(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::TsConstAssertion(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExpression::JsUnknownExpression(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsVariableDeclaration> for ForHead {
 	fn from(node: JsVariableDeclaration) -> ForHead { ForHead::JsVariableDeclaration(node) }
 }
@@ -7998,14 +5520,6 @@ impl AstNode for ForHead {
 		}
 	}
 }
-impl std::fmt::Debug for ForHead {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			ForHead::JsVariableDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			ForHead::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsCaseClause> for JsAnySwitchClause {
 	fn from(node: JsCaseClause) -> JsAnySwitchClause { JsAnySwitchClause::JsCaseClause(node) }
 }
@@ -8026,14 +5540,6 @@ impl AstNode for JsAnySwitchClause {
 		match self {
 			JsAnySwitchClause::JsCaseClause(it) => &it.syntax,
 			JsAnySwitchClause::JsDefaultClause(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for JsAnySwitchClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnySwitchClause::JsCaseClause(it) => std::fmt::Debug::fmt(it, f),
-			JsAnySwitchClause::JsDefaultClause(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -8090,19 +5596,6 @@ impl AstNode for Pattern {
 			Pattern::ArrayPattern(it) => &it.syntax,
 			Pattern::ExprPattern(it) => &it.syntax,
 			Pattern::JsUnknownPattern(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for Pattern {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			Pattern::SinglePattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::RestPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::AssignPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::ObjectPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::ArrayPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::ExprPattern(it) => std::fmt::Debug::fmt(it, f),
-			Pattern::JsUnknownPattern(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -8193,18 +5686,6 @@ impl AstNode for JsAnyLiteralExpression {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyLiteralExpression {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyLiteralExpression::JsStringLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyLiteralExpression::JsNumberLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyLiteralExpression::JsBigIntLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyLiteralExpression::JsBooleanLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyLiteralExpression::JsNullLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyLiteralExpression::JsRegexLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsParameterList> for JsAnyArrowFunctionParameters {
 	fn from(node: JsParameterList) -> JsAnyArrowFunctionParameters {
 		JsAnyArrowFunctionParameters::JsParameterList(node)
@@ -8238,14 +5719,6 @@ impl AstNode for JsAnyArrowFunctionParameters {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyArrowFunctionParameters {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyArrowFunctionParameters::JsParameterList(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyArrowFunctionParameters::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsFunctionBody> for JsAnyArrowFunctionBody {
 	fn from(node: JsFunctionBody) -> JsAnyArrowFunctionBody {
 		JsAnyArrowFunctionBody::JsFunctionBody(node)
@@ -8275,14 +5748,6 @@ impl AstNode for JsAnyArrowFunctionBody {
 		match self {
 			JsAnyArrowFunctionBody::JsFunctionBody(it) => &it.syntax,
 			JsAnyArrowFunctionBody::JsAnyExpression(it) => it.syntax(),
-		}
-	}
-}
-impl std::fmt::Debug for JsAnyArrowFunctionBody {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyArrowFunctionBody::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyArrowFunctionBody::JsFunctionBody(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -8321,12 +5786,68 @@ impl AstNode for JsAnyArrayElement {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyArrayElement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl From<JsIdentifierAssignmentTarget> for JsAnyAssignmentTarget {
+	fn from(node: JsIdentifierAssignmentTarget) -> JsAnyAssignmentTarget {
+		JsAnyAssignmentTarget::JsIdentifierAssignmentTarget(node)
+	}
+}
+impl From<JsStaticMemberAssignmentTarget> for JsAnyAssignmentTarget {
+	fn from(node: JsStaticMemberAssignmentTarget) -> JsAnyAssignmentTarget {
+		JsAnyAssignmentTarget::JsStaticMemberAssignmentTarget(node)
+	}
+}
+impl From<JsComputedMemberAssignmentTarget> for JsAnyAssignmentTarget {
+	fn from(node: JsComputedMemberAssignmentTarget) -> JsAnyAssignmentTarget {
+		JsAnyAssignmentTarget::JsComputedMemberAssignmentTarget(node)
+	}
+}
+impl From<JsParenthesizedAssignmentTarget> for JsAnyAssignmentTarget {
+	fn from(node: JsParenthesizedAssignmentTarget) -> JsAnyAssignmentTarget {
+		JsAnyAssignmentTarget::JsParenthesizedAssignmentTarget(node)
+	}
+}
+impl AstNode for JsAnyAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			JS_IDENTIFIER_ASSIGNMENT_TARGET
+			| JS_STATIC_MEMBER_ASSIGNMENT_TARGET
+			| JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET
+			| JS_PARENTHESIZED_ASSIGNMENT_TARGET => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_IDENTIFIER_ASSIGNMENT_TARGET => {
+				JsAnyAssignmentTarget::JsIdentifierAssignmentTarget(JsIdentifierAssignmentTarget {
+					syntax,
+				})
+			}
+			JS_STATIC_MEMBER_ASSIGNMENT_TARGET => {
+				JsAnyAssignmentTarget::JsStaticMemberAssignmentTarget(
+					JsStaticMemberAssignmentTarget { syntax },
+				)
+			}
+			JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET => {
+				JsAnyAssignmentTarget::JsComputedMemberAssignmentTarget(
+					JsComputedMemberAssignmentTarget { syntax },
+				)
+			}
+			JS_PARENTHESIZED_ASSIGNMENT_TARGET => {
+				JsAnyAssignmentTarget::JsParenthesizedAssignmentTarget(
+					JsParenthesizedAssignmentTarget { syntax },
+				)
+			}
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyArrayElement::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyArrayElement::SpreadElement(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyArrayElement::JsArrayHole(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyAssignmentTarget::JsIdentifierAssignmentTarget(it) => &it.syntax,
+			JsAnyAssignmentTarget::JsStaticMemberAssignmentTarget(it) => &it.syntax,
+			JsAnyAssignmentTarget::JsComputedMemberAssignmentTarget(it) => &it.syntax,
+			JsAnyAssignmentTarget::JsParenthesizedAssignmentTarget(it) => &it.syntax,
 		}
 	}
 }
@@ -8351,14 +5872,6 @@ impl AstNode for PatternOrExpr {
 		match self {
 			PatternOrExpr::Pattern(it) => it.syntax(),
 			PatternOrExpr::JsAnyExpression(it) => it.syntax(),
-		}
-	}
-}
-impl std::fmt::Debug for PatternOrExpr {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			PatternOrExpr::Pattern(it) => std::fmt::Debug::fmt(it, f),
-			PatternOrExpr::JsAnyExpression(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -8400,14 +5913,6 @@ impl AstNode for JsAnyReferenceMember {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyReferenceMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyReferenceMember::JsReferenceIdentifierMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyReferenceMember::JsReferencePrivateMember(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsLiteralMemberName> for JsAnyObjectMemberName {
 	fn from(node: JsLiteralMemberName) -> JsAnyObjectMemberName {
 		JsAnyObjectMemberName::JsLiteralMemberName(node)
@@ -8438,14 +5943,6 @@ impl AstNode for JsAnyObjectMemberName {
 		match self {
 			JsAnyObjectMemberName::JsLiteralMemberName(it) => &it.syntax,
 			JsAnyObjectMemberName::JsComputedMemberName(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for JsAnyObjectMemberName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyObjectMemberName::JsLiteralMemberName(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMemberName::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -8535,20 +6032,6 @@ impl AstNode for JsAnyObjectMember {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyObjectMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyObjectMember::JsPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMember::JsMethodObjectMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMember::JsGetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMember::JsSetterObjectMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMember::InitializedProp(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMember::JsShorthandPropertyObjectMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMember::JsSpread(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyObjectMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsComputedMemberName> for PropName {
 	fn from(node: JsComputedMemberName) -> PropName { PropName::JsComputedMemberName(node) }
 }
@@ -8607,18 +6090,6 @@ impl AstNode for PropName {
 			PropName::Ident(it) => &it.syntax,
 			PropName::Name(it) => &it.syntax,
 			PropName::JsUnknownBinding(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for PropName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			PropName::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
-			PropName::JsStringLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			PropName::JsNumberLiteralExpression(it) => std::fmt::Debug::fmt(it, f),
-			PropName::Ident(it) => std::fmt::Debug::fmt(it, f),
-			PropName::Name(it) => std::fmt::Debug::fmt(it, f),
-			PropName::JsUnknownBinding(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -8711,20 +6182,6 @@ impl AstNode for JsAnyClassMember {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyClassMember {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyClassMember::JsConstructorClassMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMember::JsPropertyClassMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMember::JsMethodClassMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMember::JsGetterClassMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMember::JsSetterClassMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMember::JsEmptyClassMember(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMember::TsIndexSignature(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMember::JsUnknownMember(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsLiteralMemberName> for JsAnyClassMemberName {
 	fn from(node: JsLiteralMemberName) -> JsAnyClassMemberName {
 		JsAnyClassMemberName::JsLiteralMemberName(node)
@@ -8770,15 +6227,6 @@ impl AstNode for JsAnyClassMemberName {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyClassMemberName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyClassMemberName::JsLiteralMemberName(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMemberName::JsComputedMemberName(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyClassMemberName::JsPrivateClassMemberName(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<TsConstructorParam> for JsAnyConstructorParameter {
 	fn from(node: TsConstructorParam) -> JsAnyConstructorParameter {
 		JsAnyConstructorParameter::TsConstructorParam(node)
@@ -8813,11 +6261,61 @@ impl AstNode for JsAnyConstructorParameter {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyConstructorParameter {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl From<JsAssignmentTargetWithDefault> for JsAnyArrayAssignmentTargetElement {
+	fn from(node: JsAssignmentTargetWithDefault) -> JsAnyArrayAssignmentTargetElement {
+		JsAnyArrayAssignmentTargetElement::JsAssignmentTargetWithDefault(node)
+	}
+}
+impl From<JsArrayAssignmentTargetRestElement> for JsAnyArrayAssignmentTargetElement {
+	fn from(node: JsArrayAssignmentTargetRestElement) -> JsAnyArrayAssignmentTargetElement {
+		JsAnyArrayAssignmentTargetElement::JsArrayAssignmentTargetRestElement(node)
+	}
+}
+impl From<JsArrayHole> for JsAnyArrayAssignmentTargetElement {
+	fn from(node: JsArrayHole) -> JsAnyArrayAssignmentTargetElement {
+		JsAnyArrayAssignmentTargetElement::JsArrayHole(node)
+	}
+}
+impl AstNode for JsAnyArrayAssignmentTargetElement {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			JS_ASSIGNMENT_TARGET_WITH_DEFAULT
+			| JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT
+			| JS_ARRAY_HOLE => true,
+			k if JsAnyAssignmentTarget::can_cast(k) => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_ASSIGNMENT_TARGET_WITH_DEFAULT => {
+				JsAnyArrayAssignmentTargetElement::JsAssignmentTargetWithDefault(
+					JsAssignmentTargetWithDefault { syntax },
+				)
+			}
+			JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT => {
+				JsAnyArrayAssignmentTargetElement::JsArrayAssignmentTargetRestElement(
+					JsArrayAssignmentTargetRestElement { syntax },
+				)
+			}
+			JS_ARRAY_HOLE => JsAnyArrayAssignmentTargetElement::JsArrayHole(JsArrayHole { syntax }),
+			_ => {
+				if let Some(js_any_assignment_target) = JsAnyAssignmentTarget::cast(syntax) {
+					return Some(JsAnyArrayAssignmentTargetElement::JsAnyAssignmentTarget(
+						js_any_assignment_target,
+					));
+				}
+				return None;
+			}
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
 		match self {
-			JsAnyConstructorParameter::TsConstructorParam(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyConstructorParameter::Pattern(it) => std::fmt::Debug::fmt(it, f),
+			JsAnyArrayAssignmentTargetElement::JsAssignmentTargetWithDefault(it) => &it.syntax,
+			JsAnyArrayAssignmentTargetElement::JsArrayAssignmentTargetRestElement(it) => &it.syntax,
+			JsAnyArrayAssignmentTargetElement::JsArrayHole(it) => &it.syntax,
+			JsAnyArrayAssignmentTargetElement::JsAnyAssignmentTarget(it) => it.syntax(),
 		}
 	}
 }
@@ -8863,17 +6361,6 @@ impl AstNode for ObjectPatternProp {
 			ObjectPatternProp::RestPattern(it) => &it.syntax,
 			ObjectPatternProp::SinglePattern(it) => &it.syntax,
 			ObjectPatternProp::JsUnknownPattern(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for ObjectPatternProp {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			ObjectPatternProp::AssignPattern(it) => std::fmt::Debug::fmt(it, f),
-			ObjectPatternProp::KeyValuePattern(it) => std::fmt::Debug::fmt(it, f),
-			ObjectPatternProp::RestPattern(it) => std::fmt::Debug::fmt(it, f),
-			ObjectPatternProp::SinglePattern(it) => std::fmt::Debug::fmt(it, f),
-			ObjectPatternProp::JsUnknownPattern(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -9067,43 +6554,6 @@ impl AstNode for TsType {
 		}
 	}
 }
-impl std::fmt::Debug for TsType {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			TsType::TsAny(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsUnknown(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsNumber(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsObject(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsBoolean(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsBigint(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsString(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsSymbol(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsVoid(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsUndefined(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsNull(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsNever(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsThis(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsLiteral(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsPredicate(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsTuple(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsParen(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsTypeRef(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsTemplate(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsMappedType(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsImport(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsArray(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsIndexedArray(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsTypeOperator(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsIntersection(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsUnion(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsFnType(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsConstructorType(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsConditionalType(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsObjectType(it) => std::fmt::Debug::fmt(it, f),
-			TsType::TsInfer(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<WildcardImport> for ImportClause {
 	fn from(node: WildcardImport) -> ImportClause { ImportClause::WildcardImport(node) }
 }
@@ -9146,16 +6596,6 @@ impl AstNode for ImportClause {
 		}
 	}
 }
-impl std::fmt::Debug for ImportClause {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			ImportClause::WildcardImport(it) => std::fmt::Debug::fmt(it, f),
-			ImportClause::NamedImports(it) => std::fmt::Debug::fmt(it, f),
-			ImportClause::Name(it) => std::fmt::Debug::fmt(it, f),
-			ImportClause::ImportStringSpecifier(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsFunctionDeclaration> for DefaultDecl {
 	fn from(node: JsFunctionDeclaration) -> DefaultDecl { DefaultDecl::JsFunctionDeclaration(node) }
 }
@@ -9180,14 +6620,6 @@ impl AstNode for DefaultDecl {
 		match self {
 			DefaultDecl::JsFunctionDeclaration(it) => &it.syntax,
 			DefaultDecl::JsClassDeclaration(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for DefaultDecl {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			DefaultDecl::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			DefaultDecl::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -9282,22 +6714,6 @@ impl AstNode for JsAnyExportDeclaration {
 		}
 	}
 }
-impl std::fmt::Debug for JsAnyExportDeclaration {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyExportDeclaration::JsFunctionDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExportDeclaration::JsClassDeclaration(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExportDeclaration::JsVariableDeclarationStatement(it) => {
-				std::fmt::Debug::fmt(it, f)
-			}
-			JsAnyExportDeclaration::TsEnum(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExportDeclaration::TsTypeAliasDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExportDeclaration::TsNamespaceDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExportDeclaration::TsModuleDecl(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyExportDeclaration::TsInterfaceDecl(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<JsRestParameter> for JsAnyParameter {
 	fn from(node: JsRestParameter) -> JsAnyParameter { JsAnyParameter::JsRestParameter(node) }
 }
@@ -9325,14 +6741,6 @@ impl AstNode for JsAnyParameter {
 		match self {
 			JsAnyParameter::JsRestParameter(it) => &it.syntax,
 			JsAnyParameter::Pattern(it) => it.syntax(),
-		}
-	}
-}
-impl std::fmt::Debug for JsAnyParameter {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			JsAnyParameter::Pattern(it) => std::fmt::Debug::fmt(it, f),
-			JsAnyParameter::JsRestParameter(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -9368,14 +6776,6 @@ impl AstNode for TsModuleRef {
 		}
 	}
 }
-impl std::fmt::Debug for TsModuleRef {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			TsModuleRef::TsExternalModuleRef(it) => std::fmt::Debug::fmt(it, f),
-			TsModuleRef::TsEntityName(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<TsTypeName> for TsEntityName {
 	fn from(node: TsTypeName) -> TsEntityName { TsEntityName::TsTypeName(node) }
 }
@@ -9399,14 +6799,6 @@ impl AstNode for TsEntityName {
 		}
 	}
 }
-impl std::fmt::Debug for TsEntityName {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			TsEntityName::TsTypeName(it) => std::fmt::Debug::fmt(it, f),
-			TsEntityName::TsQualifiedPath(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<TsThis> for TsThisOrMore {
 	fn from(node: TsThis) -> TsThisOrMore { TsThisOrMore::TsThis(node) }
 }
@@ -9427,14 +6819,6 @@ impl AstNode for TsThisOrMore {
 		match self {
 			TsThisOrMore::TsThis(it) => &it.syntax,
 			TsThisOrMore::TsTypeName(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for TsThisOrMore {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			TsThisOrMore::TsThis(it) => std::fmt::Debug::fmt(it, f),
-			TsThisOrMore::TsTypeName(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -9493,17 +6877,6 @@ impl AstNode for TsTypeElement {
 		}
 	}
 }
-impl std::fmt::Debug for TsTypeElement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			TsTypeElement::TsCallSignatureDecl(it) => std::fmt::Debug::fmt(it, f),
-			TsTypeElement::TsConstructSignatureDecl(it) => std::fmt::Debug::fmt(it, f),
-			TsTypeElement::TsPropertySignature(it) => std::fmt::Debug::fmt(it, f),
-			TsTypeElement::TsMethodSignature(it) => std::fmt::Debug::fmt(it, f),
-			TsTypeElement::TsIndexSignature(it) => std::fmt::Debug::fmt(it, f),
-		}
-	}
-}
 impl From<TsModuleBlock> for TsNamespaceBody {
 	fn from(node: TsModuleBlock) -> TsNamespaceBody { TsNamespaceBody::TsModuleBlock(node) }
 }
@@ -9524,14 +6897,6 @@ impl AstNode for TsNamespaceBody {
 		match self {
 			TsNamespaceBody::TsModuleBlock(it) => &it.syntax,
 			TsNamespaceBody::TsNamespaceDecl(it) => &it.syntax,
-		}
-	}
-}
-impl std::fmt::Debug for TsNamespaceBody {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		match self {
-			TsNamespaceBody::TsModuleBlock(it) => std::fmt::Debug::fmt(it, f),
-			TsNamespaceBody::TsNamespaceDecl(it) => std::fmt::Debug::fmt(it, f),
 		}
 	}
 }
@@ -9580,6 +6945,11 @@ impl std::fmt::Display for JsAnyArrayElement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAnyAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for PatternOrExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -9616,6 +6986,11 @@ impl std::fmt::Display for JsAnyClassMemberName {
 	}
 }
 impl std::fmt::Display for JsAnyConstructorParameter {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsAnyArrayAssignmentTargetElement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -10276,6 +7651,41 @@ impl std::fmt::Display for TsConstructorParam {
 	}
 }
 impl std::fmt::Display for JsEqualValueClause {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsIdentifierAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsStaticMemberAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsComputedMemberAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsParenthesizedAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsAssignmentTargetWithDefault {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsArrayAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsArrayAssignmentTargetRestElement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

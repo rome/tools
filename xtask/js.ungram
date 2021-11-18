@@ -355,13 +355,13 @@ JsAnyArrayElement =
 JsArrayHole = manual__hole: ''
 
 JsAssignmentExpression =
-  manual__left:PatternOrExpr
-  operator_token:(
+  left: JsAnyAssignmentTarget
+  operator_token: (
 		'=' |'+=' | '-=' | '*=' | '%=' |
 		'**=' | '>>=' | '<<=' | '>>>=' | '&=' |
 		'|=' | '^=' | '&&=' | '||=' | '??='
   )
-  manual__right:JsAnyExpression
+  right: JsAnyExpression
 
 
 PatternOrExpr = Pattern | JsAnyExpression
@@ -619,6 +619,64 @@ JsSetterClassMember =
 	body: JsFunctionBody
 
 JsEmptyClassMember = ';'
+
+///////////////
+// ASSIGNMENT TARGETS
+///////////////
+
+// TODO split into simple assignment target
+JsAnyAssignmentTarget =
+	JsAnySimpleAssignmentTarget
+	| JsArrayAssignmentTarget
+
+JsAnySimpleAssignmentTarget =
+	JsIdentifierAssignmentTarget
+	| JsStaticMemberAssignmentTarget
+	| JsComputedMemberAssignmentTarget
+
+JsAssignmentTargetWithDefault =
+	target: JsAnyAssignmentTarget
+	'='
+	default: JsAnyExpression
+
+// b = "test"
+// ^
+JsIdentifierAssignmentTarget = name: 'ident'
+
+// a.b = a.#b = "test"
+// ^^^   ^^^^
+JsStaticMemberAssignmentTarget =
+	object: JsAnyExpression
+	'.'
+	member: JsAnyReferenceMember
+
+// a['b'] = a[expr] = "test"
+// ^^^^^^   ^^^^^^^
+JsComputedMemberAssignmentTarget =
+	object: JsAnyExpression
+	'['
+	member: JsAnyExpression
+	']'
+
+// [a, b = "b"", ...rest] = bar
+// ^^^^^^^^^^^^^^^^^^^^^^
+JsArrayAssignmentTarget =
+	'['
+	elements: (JsAnyArrayAssignmentTargetElement (',' JsAnyArrayAssignmentTargetElement)* ','?)
+	// TODO rest
+	']'
+
+JsAnyArrayAssignmentTargetElement =
+	JsAssignmentTargetWithDefault
+	| JsAnyAssignmentTarget
+	| JsArrayAssignmentTargetRestElement
+	| JsArrayHole
+
+// [a, b, ...rest] = [];
+//        ^^^^^^^
+JsArrayAssignmentTargetRestElement =
+	'...'
+	target: JsAnyAssignmentTarget
 
 ///////////////
 // LITERALS

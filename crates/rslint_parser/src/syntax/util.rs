@@ -42,47 +42,6 @@ fn is_simple_assign_target(p: &mut Parser, target: &JsAnyExpression) -> bool {
 	}
 }
 
-pub fn check_assign_target(
-	p: &mut Parser,
-	target: &JsAnyExpression,
-	range: TextRange,
-	deny_call: bool,
-) {
-	if p.typescript() {
-		let is_eval_or_args = target.text() == "eval" || target.text() == "arguments";
-		if is_eval_or_args && p.state.strict.is_some() {
-			let err = p
-				.err_builder("`eval` and `arguments` cannot be assigned to in strict mode")
-				.primary(range, "");
-
-			p.error(err);
-		}
-
-		fn should_deny(e: &JsAnyExpression, deny_call: bool) -> bool {
-			match e {
-				JsAnyExpression::JsAnyLiteralExpression(_) => false,
-				JsAnyExpression::CallExpr(_) => deny_call,
-				JsAnyExpression::JsBinaryExpression(_) => false,
-				JsAnyExpression::JsParenthesizedExpression(it) => it
-					.expression()
-					.map_or(false, |i| should_deny(&i, deny_call)),
-				_ => true,
-			}
-		}
-
-		if !is_eval_or_args && !is_simple_assign_target(p, target) && should_deny(target, deny_call)
-		{
-			let err = p
-				.err_builder("invalid assignment target")
-				.primary(range, "");
-
-			p.error(err);
-		}
-	} else {
-		check_simple_assign_target(p, target, range);
-	}
-}
-
 /// Check if the use of a statement label is valid and the label is defined.
 ///
 /// # Panics
