@@ -293,6 +293,21 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					None
 				}
 			};
+
+			let can_cast_fn = if en.variants.iter().any(|v| !simple_variants.contains(&v)) {
+				quote! {
+					match kind {
+						#all_kinds
+						#(#vv_can_cast)*
+						_ => false
+					}
+				}
+			} else {
+				quote! {
+					matches!(kind, #(#kinds)|*)
+				}
+			};
+
 			let variant_can_cast: Vec<_> = simple_variants
 				.iter()
 				.map(|_| {
@@ -321,12 +336,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 					impl AstNode for #name {
 						fn can_cast(kind: SyntaxKind) -> bool {
-							// matches!(kind, #(#kinds)|*)
-							match kind {
-								#all_kinds
-								#(#vv_can_cast)*
-								_ => false
-							}
+							#can_cast_fn
 						}
 						fn cast(syntax: SyntaxNode) -> Option<Self> {
 								#cast_fn
