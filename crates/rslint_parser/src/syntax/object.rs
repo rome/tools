@@ -99,8 +99,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 		_ => {
 			let m = p.start();
-			let literal_member_name =
-				matches!(p.cur(), JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN);
+			let identifier_member_name = p.at(T![ident]) || p.cur().is_keyword();
 			let member_name = object_member_name(p);
 
 			// test object_expr_method
@@ -121,7 +120,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 				// ({foo})
 				// test object_expr_ident_prop
-				if !literal_member_name
+				if identifier_member_name
 					&& (matches!(p.cur(), T![,] | T!['}']) || p.has_linebreak_before_n(0))
 				{
 					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
