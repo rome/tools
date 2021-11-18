@@ -94,11 +94,13 @@ pub fn opt_binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 // }
 // let eval = 5;
 pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
+	let mut kind_to_change = NAME;
 	if p.at(T![yield]) && p.state.in_generator {
 		let err = p
 			.err_builder("Illegal use of `yield` as an identifier in generator function")
 			.primary(p.cur_tok().range, "");
 
+			kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
@@ -106,7 +108,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 		let err = p
 			.err_builder("Illegal use of `await` as an identifier in an async context")
 			.primary(p.cur_tok().range, "");
-
+			kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
@@ -119,12 +121,12 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 				p.cur_src()
 			))
 			.primary(p.cur_tok().range, "");
-
+			kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
 	let mut m = identifier_reference(p)?;
-	m.change_kind(p, NAME);
+	m.change_kind(p, kind_to_change);
 	Some(m)
 }
 
