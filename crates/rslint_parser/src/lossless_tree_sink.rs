@@ -19,6 +19,7 @@ pub struct LosslessTreeSink<'a> {
 	state: State,
 	errors: Vec<ParserError>,
 	inner: SyntaxTreeBuilder,
+	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
 	needs_eof: bool,
 	/// Trivia start Offset and its pieces.
 	next_token_leading_trivia: (TextRange, Vec<TriviaPiece>),
@@ -142,8 +143,13 @@ impl<'a> LosslessTreeSink<'a> {
 		panic!("Token start does not line up to a token or is out of bounds")
 	}
 
+	/// Finishes the tree and return the root node with possible parser errors.
+	/// 
+	/// If tree is finished with pending trivia, but no tokens were generated, for example,
+	/// a completely commented file, a [SyntaxKind::EOF] will be generated and all pending trivia
+	/// will be appended to its leading trivia.
 	pub fn finish(mut self) -> (SyntaxNode, Vec<ParserError>) {
-		if self.needs_eof {
+		if self.needs_eof && !self.next_token_leading_trivia.1.is_empty(){
 			self.do_token(SyntaxKind::EOF, 0.into());
 		}
 
