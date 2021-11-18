@@ -144,12 +144,12 @@ impl<'a> LosslessTreeSink<'a> {
 	}
 
 	/// Finishes the tree and return the root node with possible parser errors.
-	/// 
+	///
 	/// If tree is finished with pending trivia, but no tokens were generated, for example,
 	/// a completely commented file, a [SyntaxKind::EOF] will be generated and all pending trivia
 	/// will be appended to its leading trivia.
 	pub fn finish(mut self) -> (SyntaxNode, Vec<ParserError>) {
-		if self.needs_eof && !self.next_token_leading_trivia.1.is_empty(){
+		if self.needs_eof && !self.next_token_leading_trivia.1.is_empty() {
 			self.do_token(SyntaxKind::EOF, 0.into());
 		}
 

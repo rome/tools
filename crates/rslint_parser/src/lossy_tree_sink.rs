@@ -140,7 +140,7 @@ impl<'a> LossyTreeSink<'a> {
 	}
 
 	/// Finishes the tree and return the root node with possible parser errors.
-	/// 
+	///
 	/// If tree is finished with pending trivia, but no tokens were generated, for example,
 	/// a completely commented file, a [SyntaxKind::EOF] will be generated and all pending trivia
 	/// will be appended to its leading trivia.
