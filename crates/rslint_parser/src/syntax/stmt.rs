@@ -419,27 +419,23 @@ pub(super) fn block_impl(
 		return None;
 	}
 	let m = p.start();
-	let mut guard = p.with_state(ParserState {
-		in_function: p.state.in_function || block_kind == JS_FUNCTION_BODY,
-		..p.state.clone()
-	});
-	guard.bump(T!['{']);
+	p.bump(T!['{']);
 
 	let old_parser_state = if block_kind == JS_FUNCTION_BODY {
-		directives(&mut *guard)
+		directives(p)
 	} else {
 		None
 	};
 
-	statements(&mut *guard, false, true, recovery_set);
+	statements(p, false, true, recovery_set);
 
-	guard.expect(T!['}']);
+	p.expect(T!['}']);
 
 	if let Some(old_parser_state) = old_parser_state {
-		guard.state = old_parser_state;
+		p.state = old_parser_state;
 	}
 
-	Some(m.complete(&mut *guard, block_kind))
+	Some(m.complete(p, block_kind))
 }
 
 #[must_use]

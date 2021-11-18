@@ -269,7 +269,6 @@ JsAnyExpression =
 	| AssignExpr
 	| NewTarget
 	| ImportMeta
-	| SuperCall
 	| TsNonNull
 	| TsAssertion
 	| TsConstAssertion
@@ -299,9 +298,6 @@ JsYieldExpression =
 	'yield'
 	'*'?
 	argument: JsAnyExpression?
-
-// super call expression
-SuperCall = 'super' arguments:ArgList
 
 JsImportCallExpression =
 	'import'
@@ -390,7 +386,7 @@ JsStaticMemberExpression =
 // a[b]
 JsComputedMemberExpression =
 	object: JsAnyExpression
-	optional_chain: '?.'?
+	optional_chain_token: '?.'?
 	'['
 	manual__member: JsAnyExpression
 	']'

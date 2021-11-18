@@ -877,7 +877,7 @@ pub struct JsComputedMemberExpression {
 }
 impl JsComputedMemberExpression {
 	pub fn object(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
-	pub fn optional_chain_token(&self) -> Option<SyntaxToken> {
+	pub fn optional_chain_token_token(&self) -> Option<SyntaxToken> {
 		support::token(&self.syntax, T ! [?.])
 	}
 	pub fn l_brack_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -1147,16 +1147,6 @@ impl ImportMeta {
 	pub fn dot_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [.])
 	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct SuperCall {
-	pub(crate) syntax: SyntaxNode,
-}
-impl SuperCall {
-	pub fn super_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T![super])
-	}
-	pub fn arguments(&self) -> SyntaxResult<ArgList> { support::required_node(&self.syntax) }
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TsNonNull {
@@ -2486,7 +2476,6 @@ pub enum JsAnyExpression {
 	AssignExpr(AssignExpr),
 	NewTarget(NewTarget),
 	ImportMeta(ImportMeta),
-	SuperCall(SuperCall),
 	TsNonNull(TsNonNull),
 	TsAssertion(TsAssertion),
 	TsConstAssertion(TsConstAssertion),
@@ -3585,17 +3574,6 @@ impl AstNode for NewTarget {
 }
 impl AstNode for ImportMeta {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == IMPORT_META }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for SuperCall {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == SUPER_CALL }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5155,9 +5133,6 @@ impl From<NewTarget> for JsAnyExpression {
 impl From<ImportMeta> for JsAnyExpression {
 	fn from(node: ImportMeta) -> JsAnyExpression { JsAnyExpression::ImportMeta(node) }
 }
-impl From<SuperCall> for JsAnyExpression {
-	fn from(node: SuperCall) -> JsAnyExpression { JsAnyExpression::SuperCall(node) }
-}
 impl From<TsNonNull> for JsAnyExpression {
 	fn from(node: TsNonNull) -> JsAnyExpression { JsAnyExpression::TsNonNull(node) }
 }
@@ -5202,7 +5177,6 @@ impl AstNode for JsAnyExpression {
 			| ASSIGN_EXPR
 			| NEW_TARGET
 			| IMPORT_META
-			| SUPER_CALL
 			| TS_NON_NULL
 			| TS_ASSERTION
 			| TS_CONST_ASSERTION
@@ -5270,7 +5244,6 @@ impl AstNode for JsAnyExpression {
 			ASSIGN_EXPR => JsAnyExpression::AssignExpr(AssignExpr { syntax }),
 			NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
 			IMPORT_META => JsAnyExpression::ImportMeta(ImportMeta { syntax }),
-			SUPER_CALL => JsAnyExpression::SuperCall(SuperCall { syntax }),
 			TS_NON_NULL => JsAnyExpression::TsNonNull(TsNonNull { syntax }),
 			TS_ASSERTION => JsAnyExpression::TsAssertion(TsAssertion { syntax }),
 			TS_CONST_ASSERTION => JsAnyExpression::TsConstAssertion(TsConstAssertion { syntax }),
@@ -5315,7 +5288,6 @@ impl AstNode for JsAnyExpression {
 			JsAnyExpression::AssignExpr(it) => &it.syntax,
 			JsAnyExpression::NewTarget(it) => &it.syntax,
 			JsAnyExpression::ImportMeta(it) => &it.syntax,
-			JsAnyExpression::SuperCall(it) => &it.syntax,
 			JsAnyExpression::TsNonNull(it) => &it.syntax,
 			JsAnyExpression::TsAssertion(it) => &it.syntax,
 			JsAnyExpression::TsConstAssertion(it) => &it.syntax,
@@ -7117,11 +7089,6 @@ impl std::fmt::Display for NewTarget {
 	}
 }
 impl std::fmt::Display for ImportMeta {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for SuperCall {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

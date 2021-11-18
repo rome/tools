@@ -24,8 +24,9 @@
             1: LIST@39..39
             2: LIST@39..50
               0: JS_EXPRESSION_STATEMENT@39..50
-                0: SUPER_CALL@39..49
-                  0: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] []
+                0: CALL_EXPR@39..49
+                  0: JS_SUPER_EXPRESSION@39..47
+                    0: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] []
                   1: ARG_LIST@47..49
                     0: L_PAREN@47..48 "(" [] []
                     1: LIST@48..48

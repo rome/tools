@@ -81,7 +81,13 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 }
 
 pub(super) fn function_body(p: &mut Parser) -> Option<CompletedMarker> {
-	block_impl(p, JS_FUNCTION_BODY, None)
+	let mut guard = p.with_state(ParserState {
+		in_constructor: false,
+		in_function: true,
+		..p.state.clone()
+	});
+
+	block_impl(&mut *guard, JS_FUNCTION_BODY, None)
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should

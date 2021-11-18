@@ -463,9 +463,7 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 	// super[bar]
 	// super[foo][bar]
 	if p.at(T![super]) && token_set!(T![.], T!['[']).contains(p.nth(1)) {
-		let super_marker = p.start();
-		p.bump_any();
-		let super_completed = super_marker.complete(p, JS_SUPER_EXPRESSION);
+		let super_completed = super_expression(p);
 
 		let lhs = match p.cur() {
 			T![.] => static_member_expression(p, super_completed, T![.]),
@@ -478,6 +476,12 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 
 	let lhs = primary_expr(p)?;
 	Some(subscripts(p, lhs, true))
+}
+
+fn super_expression(p: &mut Parser) -> CompletedMarker {
+	let super_marker = p.start();
+	p.expect(T![super]);
+	super_marker.complete(p, JS_SUPER_EXPRESSION)
 }
 
 /// Dot, Array, or Call expr subscripts. Including optional chaining.
@@ -1183,15 +1187,22 @@ pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 
 /// A left hand side expression, either a member expression or a call expression such as `foo()`.
 pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
-	if p.at(T![super]) && p.nth_at(1, T!['(']) {
-		let m = p.start();
-		p.bump_any();
-		args(p);
-		let lhs = m.complete(p, SUPER_CALL);
-		return Some(subscripts(p, lhs, false));
-	}
+	let lhs = if p.at(T![super]) && p.nth_at(1, T!['(']) {
+		let mut super_marker = super_expression(p);
 
-	let lhs = member_or_new_expr(p, true)?;
+		if !p.state.in_constructor {
+			p.error(
+				p.err_builder("`super` is only valid inside of a class constructor of a subclass.")
+					.primary(super_marker.range(p), ""),
+			);
+			super_marker.change_kind(p, JS_UNKNOWN_EXPRESSION);
+		}
+
+		super_marker
+	} else {
+		member_or_new_expr(p, true)?
+	};
+
 	if lhs.kind() == JS_ARROW_FUNCTION_EXPRESSION {
 		return Some(lhs);
 	}
