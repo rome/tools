@@ -1,6 +1,6 @@
 use super::expr::{assign_expr, identifier_name, identifier_reference, lhs_expr};
 use crate::syntax::object::object_prop_name;
-use crate::{recovery_bag::RecoveryBag, SyntaxKind::*, *};
+use crate::{parse_recoverer::ParseRecoverer, SyntaxKind::*, *};
 
 pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<CompletedMarker> {
 	Some(match p.cur() {
@@ -71,7 +71,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			p.recover_on_unexpected_node(RecoveryBag::with_error(ts, ERROR, err));
+			p.recover_on_unexpected_node(ParseRecoverer::with_error(ts, ERROR, err));
 			return None;
 		}
 	})
@@ -169,7 +169,7 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
-			p.recover_on_unexpected_node(RecoveryBag::new(
+			p.recover_on_unexpected_node(ParseRecoverer::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				ERROR,
 			));
@@ -237,7 +237,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	let name = if let Some(n) = name {
 		n
 	} else {
-		p.recover_on_unexpected_node(RecoveryBag::new(
+		p.recover_on_unexpected_node(ParseRecoverer::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			ERROR,
 		));

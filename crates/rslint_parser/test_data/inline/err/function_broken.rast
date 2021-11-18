@@ -1,6 +1,6 @@
-JS_ROOT@0..19
+JS_ROOT@0..26
   LIST@0..0
-  LIST@0..18
+  LIST@0..25
     JS_FUNCTION_DECLARATION@0..14
       FUNCTION_KW@0..8 "function"
       WHITESPACE@8..9 " "
@@ -12,25 +12,82 @@ JS_ROOT@0..19
         R_PAREN@13..14 ")"
     JS_UNKNOWN_STATEMENT@14..15
       R_PAREN@14..15 ")"
-    WHITESPACE@15..16 " "
-    JS_BLOCK_STATEMENT@16..18
-      L_CURLY@16..17 "{"
-      LIST@17..17
+    JS_UNKNOWN_STATEMENT@15..16
+      R_CURLY@15..16 "}"
+    JS_UNKNOWN_STATEMENT@16..17
+      R_PAREN@16..17 ")"
+    JS_UNKNOWN_STATEMENT@17..18
       R_CURLY@17..18 "}"
-  WHITESPACE@18..19 "\n"
+    JS_BLOCK_STATEMENT@18..25
+      L_CURLY@18..19 "{"
+      LIST@19..25
+        JS_BLOCK_STATEMENT@19..25
+          L_CURLY@19..20 "{"
+          LIST@20..25
+            JS_BLOCK_STATEMENT@20..25
+              L_CURLY@20..21 "{"
+              WHITESPACE@21..23 "  "
+              LIST@23..25
+                JS_BLOCK_STATEMENT@23..25
+                  L_CURLY@23..24 "{"
+                  LIST@24..24
+                  R_CURLY@24..25 "}"
+  WHITESPACE@25..26 "\n"
 --
 error[SyntaxError]: expected a block statement but instead found `)`
   ┌─ function_broken.js:1:15
   │
-1 │ function foo()) {}
+1 │ function foo())})}{{{  {}
   │               ^
 
 --
 error[SyntaxError]: Expected a statement or declaration, but found none
   ┌─ function_broken.js:1:15
   │
-1 │ function foo()) {}
+1 │ function foo())})}{{{  {}
   │               ^ Expected a statement or declaration here
 
 --
-function foo()) {}
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ function_broken.js:1:16
+  │
+1 │ function foo())})}{{{  {}
+  │                ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ function_broken.js:1:17
+  │
+1 │ function foo())})}{{{  {}
+  │                 ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ function_broken.js:1:18
+  │
+1 │ function foo())})}{{{  {}
+  │                  ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ function_broken.js:2:1
+  │
+2 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ function_broken.js:2:1
+  │
+2 │ 
+  │ ^ the file ends here
+
+--
+error[SyntaxError]: expected `'}'` but instead the file ends
+  ┌─ function_broken.js:2:1
+  │
+2 │ 
+  │ ^ the file ends here
+
+--
+function foo())})}{{{  {}

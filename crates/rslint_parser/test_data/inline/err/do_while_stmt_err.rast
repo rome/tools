@@ -30,7 +30,7 @@ JS_ROOT@0..42
                 JS_BOOLEAN_LITERAL@37..41
                   TRUE_KW@37..41 "true"
                 WHITESPACE@41..42 "\n"
-                JS_UNKNOWN_EXPRESSION@42..42
+                JS_UNKNOWN_STATEMENT@42..42
               ERROR@42..42
           ERROR@42..42
       ERROR@42..42

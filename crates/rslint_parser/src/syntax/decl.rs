@@ -3,7 +3,7 @@
 use super::expr::{assign_expr, identifier_name};
 use super::pat::{binding_identifier, pattern};
 use super::typescript::*;
-use crate::recovery_bag::RecoveryBag;
+use crate::parse_recoverer::ParseRecoverer;
 use crate::syntax::function::{args_body, function_body, function_body_or_declaration};
 use crate::syntax::object::object_prop_name;
 use crate::{SyntaxKind::*, *};
@@ -287,7 +287,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 				Some(res)
 			} else {
 				p.recover_on_unexpected_node(
-					RecoveryBag::new(
+					ParseRecoverer::new(
 						token_set![
 							T![ident],
 							T![await],
@@ -299,7 +299,7 @@ fn parameters_common(p: &mut Parser, constructor_params: bool) -> CompletedMarke
 						],
 						ERROR,
 					)
-					.with_braces_included(),
+					.enabled_braces_check(),
 				);
 				None
 			}
@@ -964,7 +964,7 @@ fn class_member_no_semi(p: &mut Parser) -> Option<CompletedMarker> {
 	let err = p
 		.err_builder("expected `;`, a property, or a method for a class body, but found none")
 		.primary(p.cur_tok().range, "");
-	let bag = RecoveryBag::with_error(
+	let bag = ParseRecoverer::with_error(
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
 		ERROR,
 		err,
@@ -1063,7 +1063,7 @@ pub fn method(
 				.err_builder("expected a method definition, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.recover_on_unexpected_node(RecoveryBag::with_error(
+			p.recover_on_unexpected_node(ParseRecoverer::with_error(
 				recovery_set.into().unwrap_or(BASE_METHOD_RECOVERY_SET),
 				ERROR,
 				err,

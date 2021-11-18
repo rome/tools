@@ -1,6 +1,6 @@
-JS_ROOT@0..14
+JS_ROOT@0..17
   LIST@0..0
-  LIST@0..13
+  LIST@0..16
     JS_IF_STATEMENT@0..10
       IF_KW@0..2 "if"
       WHITESPACE@2..3 " "
@@ -9,19 +9,46 @@ JS_ROOT@0..14
         TRUE_KW@4..8 "true"
       R_PAREN@8..9 ")"
       JS_UNKNOWN_STATEMENT@9..10
-        R_PAREN@9..10 ")"
-    WHITESPACE@10..11 " "
-    JS_BLOCK_STATEMENT@11..13
-      L_CURLY@11..12 "{"
-      LIST@12..12
+        R_CURLY@9..10 "}"
+    JS_UNKNOWN_STATEMENT@10..11
+      R_CURLY@10..11 "}"
+    JS_UNKNOWN_STATEMENT@11..12
+      R_CURLY@11..12 "}"
+    JS_UNKNOWN_STATEMENT@12..13
       R_CURLY@12..13 "}"
-  WHITESPACE@13..14 "\n"
+    WHITESPACE@13..14 " "
+    JS_BLOCK_STATEMENT@14..16
+      L_CURLY@14..15 "{"
+      LIST@15..15
+      R_CURLY@15..16 "}"
+  WHITESPACE@16..17 "\n"
 --
 error[SyntaxError]: Expected a statement or declaration, but found none
   ┌─ if_broken.js:1:10
   │
-1 │ if (true)) {}
+1 │ if (true)}}}} {}
   │          ^ Expected a statement or declaration here
 
 --
-if (true)) {}
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_broken.js:1:11
+  │
+1 │ if (true)}}}} {}
+  │           ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_broken.js:1:12
+  │
+1 │ if (true)}}}} {}
+  │            ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_broken.js:1:13
+  │
+1 │ if (true)}}}} {}
+  │             ^ Expected a statement or declaration here
+
+--
+if (true)}}}} {}
