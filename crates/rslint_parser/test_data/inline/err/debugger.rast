@@ -1,0 +1,61 @@
+JS_ROOT@0..61
+  LIST@0..0
+  LIST@0..60
+    JS_FUNCTION_DECLARATION@0..60
+      FUNCTION_KW@0..8 "function"
+      WHITESPACE@8..9 " "
+      JS_IDENTIFIER_BINDING@9..12
+        IDENT@9..12 "foo"
+      JS_PARAMETER_LIST@12..14
+        L_PAREN@12..13 "("
+        LIST@13..13
+        R_PAREN@13..14 ")"
+      WHITESPACE@14..15 " "
+      JS_FUNCTION_BODY@15..60
+        L_CURLY@15..16 "{"
+        WHITESPACE@16..18 "\n\t"
+        LIST@18..18
+        LIST@18..58
+          JS_DEBUGGER_STATEMENT@18..26
+            DEBUGGER_KW@18..26 "debugger"
+          WHITESPACE@26..27 " "
+          JS_BLOCK_STATEMENT@27..58
+            L_CURLY@27..28 "{"
+            WHITESPACE@28..31 "\n\t\t"
+            LIST@31..55
+              JS_VARIABLE_DECLARATION_STATEMENT@31..55
+                JS_VARIABLE_DECLARATION@31..54
+                  VAR_KW@31..34 "var"
+                  WHITESPACE@34..35 " "
+                  LIST@35..54
+                    JS_VARIABLE_DECLARATOR@35..54
+                      SINGLE_PATTERN@35..44
+                        NAME@35..44
+                          IDENT@35..44 "something"
+                      WHITESPACE@44..45 " "
+                      JS_EQUAL_VALUE_CLAUSE@45..54
+                        EQ@45..46 "="
+                        WHITESPACE@46..47 " "
+                        JS_STRING_LITERAL@47..54
+                          JS_STRING_LITERAL_TOKEN@47..54 "\"lorem\""
+                SEMICOLON@54..55 ";"
+            WHITESPACE@55..57 "\n\t"
+            R_CURLY@57..58 "}"
+        WHITESPACE@58..59 "\n"
+        R_CURLY@59..60 "}"
+  WHITESPACE@60..61 "\n"
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ debugger.js:2:11
+  │
+2 │     debugger {
+  │     -------- ^ An explicit or implicit semicolon is expected here...
+  │     │         
+  │     ...Which is required to end this statement
+
+--
+function foo() {
+	debugger {
+		var something = "lorem";
+	}
+}
