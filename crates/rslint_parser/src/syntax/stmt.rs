@@ -60,7 +60,6 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 			)
 			.secondary(err_range, "...Which is required to end this statement");
 
-
 		p.error(err);
 	}
 }
@@ -86,11 +85,7 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 }
 
 /// A generic statement such as a block, if, while, with, etc
-pub fn stmt(
-	p: &mut Parser,
-	recovery_set: impl Into<Option<TokenSet>>,
-	unknown_node_on_error: SyntaxKind,
-) -> Option<CompletedMarker> {
+pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option<CompletedMarker> {
 	let res = match p.cur() {
 		T![;] => empty_stmt(p),
 		T!['{'] => block_stmt(p, recovery_set).unwrap(), // It is only ever None if there is no `{`,
@@ -137,7 +132,7 @@ pub fn stmt(
 
 			// We must explicitly handle this case or else infinite recursion can happen
 			if p.at_ts(token_set![T!['}'], T![import], T![export]]) {
-				p.err_and_bump(err, unknown_node_on_error);
+				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
 				return None;
 			}
 			ParseRecoverer::with_error(
@@ -239,7 +234,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 
 		let m = expr.undo_completion(p);
 		p.bump_any();
-		stmt(p, None, JS_UNKNOWN_EXPRESSION);
+		stmt(p, None);
 		return Some(m.complete(p, JS_LABELED_STATEMENT));
 	}
 
@@ -565,7 +560,7 @@ pub(crate) fn statements(
 				}
 			}
 			_ => {
-				stmt(p, recovery_set, JS_UNKNOWN_STATEMENT);
+				stmt(p, recovery_set);
 			}
 		};
 	}
@@ -583,7 +578,6 @@ pub fn condition(p: &mut Parser) -> CompletedMarker {
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
 	p.state.allow_object_expr = p.expect(T!['(']);
-	// p.recover_on_unexpected_node(recovery_bag)
 	expr(p);
 	p.expect(T![')']);
 	p.state.allow_object_expr = true;
@@ -612,17 +606,13 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 
 	// body
 	// allows us to recover from `if (true) else {}`
-	stmt(
-		p,
-		STMT_RECOVERY_SET.union(token_set![T![else]]),
-		JS_UNKNOWN_STATEMENT,
-	);
+	stmt(p, STMT_RECOVERY_SET.union(token_set![T![else]]));
 
 	// else clause
 	if p.at(T![else]) {
 		let else_clause = p.start();
 		p.eat(T![else]);
-		stmt(p, None, JS_UNKNOWN_EXPRESSION);
+		stmt(p, None);
 		else_clause.complete(p, JS_ELSE_CLAUSE);
 	}
 
@@ -635,7 +625,7 @@ pub fn with_stmt(p: &mut Parser) -> CompletedMarker {
 	p.expect(T![with]);
 	parenthesized_expression(p);
 
-	stmt(p, None, JS_UNKNOWN_EXPRESSION);
+	stmt(p, None);
 
 	let mut complete = m.complete(p, JS_WITH_STATEMENT);
 	if p.state.strict.is_some() {
@@ -670,7 +660,6 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 			..p.state.clone()
 		}),
 		None,
-		JS_UNKNOWN_EXPRESSION,
 	);
 	m.complete(p, JS_WHILE_STATEMENT)
 }
@@ -837,7 +826,6 @@ pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
 			..p.state.clone()
 		}),
 		None,
-		JS_UNKNOWN_STATEMENT,
 	);
 	p.expect(T![while]);
 	parenthesized_expression(p);
@@ -962,7 +950,6 @@ pub fn for_stmt(p: &mut Parser) -> CompletedMarker {
 			..p.state.clone()
 		}),
 		None,
-		JS_UNKNOWN_STATEMENT,
 	);
 	m.complete(p, kind)
 }
@@ -980,7 +967,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			let end = p.cur_tok().range.end;
 			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
-				stmt(p, None, JS_UNKNOWN_STATEMENT);
+				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
 			m.complete(p, JS_DEFAULT_CLAUSE);
@@ -992,7 +979,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			p.expect(T![:]);
 			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
-				stmt(p, None, JS_UNKNOWN_STATEMENT);
+				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
 			m.complete(p, JS_CASE_CLAUSE);
