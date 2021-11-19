@@ -173,9 +173,10 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
+			// TODO: find a away to land
 			ParseRecoverer::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
-				ERROR,
+				JS_UNKNOWN_PATTERN,
 			)
 			.recover(p);
 		}
