@@ -11,7 +11,7 @@ JS_ROOT@0..12
         ERROR@8..9
           L_CURLY@8..9 "{"
       R_CURLY@9..10 "}"
-    ERROR@10..11
+    JS_UNKNOWN_STATEMENT@10..11
       R_CURLY@10..11 "}"
   WHITESPACE@11..12 "\n"
 --

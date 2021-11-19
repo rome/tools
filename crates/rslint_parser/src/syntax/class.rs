@@ -1,3 +1,4 @@
+use crate::parse_recoverer::ParseRecoverer;
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
 use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -527,11 +528,12 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 	let err = p
 		.err_builder("expected `;`, a property, or a method for a class body, but found none")
 		.primary(p.cur_tok().range, "");
-	p.err_recover(
-		err,
+	ParseRecoverer::with_error(
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
-		false,
-	);
+		ERROR,
+		err,
+	)
+	.recover(p);
 	None
 }
 
