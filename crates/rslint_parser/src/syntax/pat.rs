@@ -64,14 +64,16 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			m.complete(p, SINGLE_PATTERN)
 		}
 		_ => {
+			let mut unknown_node_kind = JS_UNKNOWN_BINDING;
 			let err = p
 				.err_builder("Expected an identifier or pattern, but found none")
 				.primary(p.cur_tok().range, "");
 			let mut ts = token_set![T![ident], T![yield], T![await], T!['['],];
 			if p.state.allow_object_expr {
+				unknown_node_kind = JS_UNKNOWN_PATTERN;
 				ts = ts.union(token_set![T!['{']]);
 			}
-			ParseRecoverer::with_error(ts, ERROR, err).recover(p);
+			ParseRecoverer::with_error(ts, unknown_node_kind, err).recover(p);
 			return None;
 		}
 	})
@@ -100,7 +102,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 			.err_builder("Illegal use of `yield` as an identifier in generator function")
 			.primary(p.cur_tok().range, "");
 
-			kind_to_change = JS_UNKNOWN_BINDING;
+		kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
@@ -108,7 +110,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 		let err = p
 			.err_builder("Illegal use of `await` as an identifier in an async context")
 			.primary(p.cur_tok().range, "");
-			kind_to_change = JS_UNKNOWN_BINDING;
+		kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
@@ -121,7 +123,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 				p.cur_src()
 			))
 			.primary(p.cur_tok().range, "");
-			kind_to_change = JS_UNKNOWN_BINDING;
+		kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
@@ -242,7 +244,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	} else {
 		ParseRecoverer::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
-			ERROR,
+			JS_UNKNOWN_BINDING,
 		)
 		.recover(p);
 		return None;
@@ -254,7 +256,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 			.primary(name.range(p), "");
 
 		p.error(err);
-		return None;
+		return Some(m.complete(p, JS_UNKNOWN_BINDING));
 	}
 
 	let sp_marker = name.precede(p).complete(p, SINGLE_PATTERN);

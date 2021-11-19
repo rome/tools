@@ -1,0 +1,71 @@
+JS_ROOT@0..31
+  LIST@0..0
+  LIST@0..30
+    JS_VARIABLE_DECLARATION_STATEMENT@0..9
+      JS_VARIABLE_DECLARATION@0..9
+        LET_KW@0..3 "let"
+        WHITESPACE@3..4 " "
+        LIST@4..9
+          JS_VARIABLE_DECLARATOR@4..9
+            OBJECT_PATTERN@4..9
+              L_CURLY@4..5 "{"
+              WHITESPACE@5..6 " "
+              LIST@6..7
+                JS_UNKNOWN_BINDING@6..7
+                  JS_NUMBER_LITERAL@6..7
+                    JS_NUMBER_LITERAL_TOKEN@6..7 "5"
+              WHITESPACE@7..8 " "
+              R_CURLY@8..9 "}"
+    WHITESPACE@9..10 " "
+    JS_UNKNOWN_STATEMENT@10..11
+      R_CURLY@10..11 "}"
+    WHITESPACE@11..12 " "
+    JS_UNKNOWN_STATEMENT@12..13
+      EQ@12..13 "="
+    WHITESPACE@13..14 " "
+    JS_BLOCK_STATEMENT@14..29
+      L_CURLY@14..15 "{"
+      WHITESPACE@15..16 " "
+      LIST@16..27
+        JS_LABELED_STATEMENT@16..27
+          IDENT@16..20 "eval"
+          COLON@20..21 ":"
+          WHITESPACE@21..22 " "
+          JS_EXPRESSION_STATEMENT@22..27
+            JS_STRING_LITERAL@22..27
+              JS_STRING_LITERAL_TOKEN@22..27 "\"foo\""
+      WHITESPACE@27..28 " "
+      R_CURLY@28..29 "}"
+    JS_EMPTY_STATEMENT@29..30
+      SEMICOLON@29..30 ";"
+  WHITESPACE@30..31 "\n"
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ bad_object_pattern.js:1:7
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │       ^
+
+--
+error[SyntaxError]: Object and Array patterns require initializers
+  ┌─ bad_object_pattern.js:1:5
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │     ^^^^^ this pattern is declared, but it is not given an initialized value
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ bad_object_pattern.js:1:11
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │           ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ bad_object_pattern.js:1:13
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │             ^ Expected a statement or declaration here
+
+--
+let { 5 } } = { eval: "foo" };

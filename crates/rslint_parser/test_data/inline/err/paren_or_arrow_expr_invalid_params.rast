@@ -6,7 +6,7 @@ JS_ROOT@0..28
         JS_PARAMETER_LIST@0..4
           L_PAREN@0..1 "("
           LIST@1..4
-            ERROR@1..2
+            JS_UNKNOWN_PATTERN@1..2
               JS_NUMBER_LITERAL_TOKEN@1..2 "5"
             WHITESPACE@2..3 " "
             ERROR@3..4
