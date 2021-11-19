@@ -1,5 +1,5 @@
 use crate::{FormatElement, FormatResult, Formatter, ToFormatElement};
-use rslint_parser::ast::JsAnyStatement;
+use rslint_parser::{ast::JsAnyStatement, AstNode};
 
 impl ToFormatElement for JsAnyStatement {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -54,7 +54,9 @@ impl ToFormatElement for JsAnyStatement {
 			JsAnyStatement::JsVariableDeclarationStatement(decl) => {
 				decl.to_format_element(formatter)
 			}
-			JsAnyStatement::JsUnknownStatement(_) => todo!(),
+			JsAnyStatement::JsUnknownStatement(unknown_statement) => {
+				Ok(formatter.format_raw(unknown_statement.syntax()))
+			}
 			JsAnyStatement::ImportDecl(_) => todo!(),
 			JsAnyStatement::ExportNamed(_) => todo!(),
 			JsAnyStatement::ExportDefaultDecl(_) => todo!(),
