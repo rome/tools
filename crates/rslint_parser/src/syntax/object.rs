@@ -233,7 +233,7 @@ pub(crate) fn computed_member_name(p: &mut Parser) -> CompletedMarker {
 
 pub(super) fn literal_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
-
+	let mut complete_with_this_kind = JS_LITERAL_MEMBER_NAME;
 	match p.cur() {
 		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN | T![ident] => {
 			p.bump_any();
@@ -252,7 +252,7 @@ pub(super) fn literal_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 			return None;
 		}
 	}
-	Some(m.complete(p, JS_LITERAL_MEMBER_NAME))
+	Some(m.complete(p, complete_with_this_kind))
 }
 
 /// Parses a method object member

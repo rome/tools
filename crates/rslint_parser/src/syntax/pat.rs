@@ -251,12 +251,17 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	};
 
 	if name.kind() != NAME {
+		let unknown_node_kind = if p.state.allow_object_expr {
+			JS_UNKNOWN_PATTERN
+		} else {
+			JS_UNKNOWN_BINDING
+		};
 		let err = p
 			.err_builder("Expected an identifier for a pattern, but found none")
 			.primary(name.range(p), "");
 
 		p.error(err);
-		return Some(m.complete(p, JS_UNKNOWN_BINDING));
+		return Some(m.complete(p, unknown_node_kind));
 	}
 
 	let sp_marker = name.precede(p).complete(p, SINGLE_PATTERN);
