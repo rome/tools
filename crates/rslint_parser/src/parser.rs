@@ -602,6 +602,16 @@ impl Marker {
 	}
 }
 
+impl Drop for Marker {
+	fn drop(&mut self) {
+		debug_assert!(
+			panicking() || self.finished,
+			"Dropped marker '{:?}' without calling abandon, complete or ignore. Make sure you call 'complete' or 'abandon' on any marker you started with parser.start().",
+			self
+		);
+	}
+}
+
 /// A structure signifying a completed node
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub struct CompletedMarker {

@@ -15,7 +15,13 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 		T!['{'] if p.state.allow_object_expr => object_binding_pattern(p, parameters),
 		_ if assignment => {
 			let m = p.start();
-			let mut complete = lhs_expr(p)?;
+			let mut complete = if let Some(expr) = lhs_expr(p) {
+				expr
+			} else {
+				m.abandon(p);
+				return None;
+			};
+
 			if complete.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION {
 				complete.change_kind(p, NAME);
 			}

@@ -424,8 +424,14 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 			return Some(subscripts(p, complete, true));
 		}
 
-		let complete = member_or_new_expr(p, new_expr)?;
+		let complete = if let Some(expr) = member_or_new_expr(p, new_expr) {
+			expr
+		} else {
+			m.abandon(p);
+			return None;
+		};
 		if complete.kind() == JS_ARROW_FUNCTION_EXPRESSION {
+			m.abandon(p);
 			return Some(complete);
 		}
 

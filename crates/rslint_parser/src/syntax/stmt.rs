@@ -985,6 +985,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			m.complete(p, JS_CASE_CLAUSE);
 		}
 		_ => {
+			m.abandon(p);
 			let err = p
 				.err_builder(
 					"Expected a `case` or `default` clause in a switch statement, but found none",

@@ -674,15 +674,20 @@ pub fn ts_type(p: &mut Parser) -> Option<CompletedMarker> {
 
 pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<CompletedMarker> {
 	let m = p.start();
-	if !fn_type {
-		p.expect_no_recover(T![new])?;
+	if !fn_type && p.expect_no_recover(T![new]).is_none() {
+		m.abandon(p);
+		return None;
 	}
 
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
 	parameter_list(p);
-	no_recover!(p, ts_type_or_type_predicate_ann(p, T![=>]));
+	if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {
+		m.abandon(p);
+		return None;
+	}
+
 	Some(m.complete(
 		p,
 		if fn_type {

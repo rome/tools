@@ -279,10 +279,11 @@ fn method_object_member(p: &mut Parser) -> Option<CompletedMarker> {
 		}
 	};
 
-	let mut guard = p.with_state(state);
-	object_member_name(&mut *guard);
-	method_object_member_body(&mut *guard).ok()?;
-	drop(guard);
+	{
+		let mut guard = p.with_state(state);
+		object_member_name(&mut *guard);
+		method_object_member_body(&mut *guard).ok();
+	}
 
 	Some(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
