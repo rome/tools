@@ -167,8 +167,7 @@ impl<'t> Parser<'t> {
 
 	/// Check if a token lookahead is something, `n` must be smaller or equal to `4`
 	pub fn nth_at(&self, n: usize, kind: SyntaxKind) -> bool {
-		self.overflow_check();
-		self.tokens.lookahead_nth(n).kind == kind
+		self.nth_tok(n).kind == kind
 	}
 
 	/// Consume the next token if `kind` matches.
@@ -599,16 +598,6 @@ impl Marker {
 				}
 				_ => unreachable!(),
 			}
-		}
-	}
-}
-
-impl Drop for Marker {
-	fn drop(&mut self) {
-		if !panicking() && !self.finished {
-			panic!(
-			"Dropped marker '{:?}' without calling abandon, complete or ignore. Make sure you call 'complete' or 'abandon' on any marker you started with parser.start().",
-			self);
 		}
 	}
 }

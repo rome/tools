@@ -1084,7 +1084,12 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 			m.abandon(p);
 			return None;
 		}
-		no_recover!(p, ts_type(p));
+
+		if ts_type(p).is_none() && p.state.no_recovery {
+			args_list.abandon(p);
+			m.abandon(p);
+			return None;
+		}
 	}
 	args_list.complete(p, LIST);
 
@@ -1322,6 +1327,7 @@ pub(crate) fn maybe_eat_incorrect_modifier(p: &mut Parser) -> Option<CompletedMa
 	} else if ts_modifier(p, &["readonly"]).is_some() {
 		Some(maybe_err.complete(p, ERROR))
 	} else {
+		maybe_err.abandon(p);
 		None
 	}
 }

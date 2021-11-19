@@ -19,6 +19,14 @@ fn parser_smoke_test() {
 }
 
 #[test]
+fn parse_file_test() {
+	let file_name = r"C:\Users\Micha\git\rome\xtask\src\coverage\test262\test\language\expressions\less-than\S11.8.1_A2.2_T1.js";
+	let src = std::fs::read_to_string(Path::new(file_name)).unwrap();
+
+	assert!(parse_module(&src, 0).ok().is_ok());
+}
+
+#[test]
 fn parser_missing_smoke_test() {
 	let src = r#"
 		console.log("Hello world";
