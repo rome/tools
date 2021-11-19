@@ -3,11 +3,11 @@
 //! the parser yields events like `Start node`, `Error`, etc.
 //! These events are then applied to a `TreeSink`.
 
+use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
 use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
-use std::thread::panicking;
 
 use crate::*;
 
@@ -522,7 +522,7 @@ impl<'t> Parser<'t> {
 }
 
 /// A structure signifying the start of parsing of a syntax tree node
-#[derive(Debug, PartialEq, Eq, Hash)]
+#[derive(Debug)]
 pub struct Marker {
 	/// The index in the events list
 	pub pos: u32,
@@ -530,7 +530,7 @@ pub struct Marker {
 	pub start: usize,
 	pub old_start: u32,
 	pub(crate) child_idx: Option<usize>,
-	finished: bool,
+	bomb: DropBomb,
 }
 
 impl Marker {
@@ -540,7 +540,7 @@ impl Marker {
 			start,
 			old_start: pos,
 			child_idx: None,
-			finished: false,
+			bomb: DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
 		}
 	}
 
@@ -555,7 +555,7 @@ impl Marker {
 	/// and mark the create a `CompletedMarker` for possible future
 	/// operation like `.precede()` to deal with forward_parent.
 	pub fn complete(mut self, p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
-		self.finished = true;
+		self.bomb.defuse();
 		let idx = self.pos as usize;
 		match p.events[idx] {
 			Event::Start {
@@ -576,7 +576,7 @@ impl Marker {
 	/// Abandons the syntax tree node. All its children
 	/// are attached to its parent instead.
 	pub fn abandon(mut self, p: &mut Parser) {
-		self.finished = true;
+		self.bomb.defuse();
 		let idx = self.pos as usize;
 		if idx == p.events.len() - 1 {
 			match p.events.pop() {
@@ -599,16 +599,6 @@ impl Marker {
 				_ => unreachable!(),
 			}
 		}
-	}
-}
-
-impl Drop for Marker {
-	fn drop(&mut self) {
-		debug_assert!(
-			panicking() || self.finished,
-			"Dropped marker '{:?}' without calling abandon, complete or ignore. Make sure you call 'complete' or 'abandon' on any marker you started with parser.start().",
-			self
-		);
 	}
 }
 
