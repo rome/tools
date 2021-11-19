@@ -145,7 +145,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 					assign_expr(p);
 					Some(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				} else {
-					None
+					Some(m.complete(p, JS_UNKNOWN_MEMBER))
 				}
 			}
 		}
@@ -248,6 +248,7 @@ pub(super) fn literal_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 					"Expected an identifier, a keyword, or a string or number literal here",
 				);
 			p.error(err);
+			m.abandon(p);
 			return None;
 		}
 	}
@@ -278,10 +279,11 @@ fn method_object_member(p: &mut Parser) -> Option<CompletedMarker> {
 		}
 	};
 
-	let mut guard = p.with_state(state);
-	object_member_name(&mut *guard);
-	method_object_member_body(&mut *guard).ok()?;
-	drop(guard);
+	{
+		let mut guard = p.with_state(state);
+		object_member_name(&mut *guard);
+		method_object_member_body(&mut *guard).ok();
+	}
 
 	Some(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }

@@ -730,9 +730,14 @@ pub(crate) fn variable_declarator(
 ) -> Option<CompletedMarker> {
 	let m = p.start();
 	p.state.should_record_names = is_const.is_some() || is_let;
-	let pat_m = p.start();
-	let pat = pattern(p, false, false)?;
-	pat.undo_completion(p).abandon(p);
+	let pat = if let Some(pattern) = pattern(p, false, false) {
+		pattern
+	} else {
+		m.abandon(p);
+		return None;
+	};
+
+	let pat_m = pat.undo_completion(p);
 	p.state.should_record_names = false;
 	let kind = pat.kind();
 
@@ -980,6 +985,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			m.complete(p, JS_CASE_CLAUSE);
 		}
 		_ => {
+			m.abandon(p);
 			let err = p
 				.err_builder(
 					"Expected a `case` or `default` clause in a switch statement, but found none",

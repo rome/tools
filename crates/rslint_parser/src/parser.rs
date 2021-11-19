@@ -3,6 +3,7 @@
 //! the parser yields events like `Start node`, `Error`, etc.
 //! These events are then applied to a `TreeSink`.
 
+use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
 use std::borrow::BorrowMut;
 use std::cell::Cell;
@@ -166,8 +167,7 @@ impl<'t> Parser<'t> {
 
 	/// Check if a token lookahead is something, `n` must be smaller or equal to `4`
 	pub fn nth_at(&self, n: usize, kind: SyntaxKind) -> bool {
-		self.overflow_check();
-		self.tokens.lookahead_nth(n).kind == kind
+		self.nth_tok(n).kind == kind
 	}
 
 	/// Consume the next token if `kind` matches.
@@ -394,6 +394,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Get a checkpoint representing the progress of the parser at this point in time
+	#[must_use]
 	pub fn checkpoint(&self) -> Checkpoint {
 		Checkpoint {
 			token_pos: self.token_pos(),
@@ -522,7 +523,7 @@ impl<'t> Parser<'t> {
 }
 
 /// A structure signifying the start of parsing of a syntax tree node
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug)]
 pub struct Marker {
 	/// The index in the events list
 	pub pos: u32,
@@ -530,6 +531,7 @@ pub struct Marker {
 	pub start: usize,
 	pub old_start: u32,
 	pub(crate) child_idx: Option<usize>,
+	bomb: DropBomb,
 }
 
 impl Marker {
@@ -539,6 +541,7 @@ impl Marker {
 			start,
 			old_start: pos,
 			child_idx: None,
+			bomb: DropBomb::new("Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."),
 		}
 	}
 
@@ -552,7 +555,8 @@ impl Marker {
 	/// Finishes the syntax tree node and assigns `kind` to it,
 	/// and mark the create a `CompletedMarker` for possible future
 	/// operation like `.precede()` to deal with forward_parent.
-	pub fn complete(self, p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
+	pub fn complete(mut self, p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
+		self.bomb.defuse();
 		let idx = self.pos as usize;
 		match p.events[idx] {
 			Event::Start {
@@ -572,7 +576,8 @@ impl Marker {
 
 	/// Abandons the syntax tree node. All its children
 	/// are attached to its parent instead.
-	pub fn abandon(self, p: &mut Parser) {
+	pub fn abandon(mut self, p: &mut Parser) {
+		self.bomb.defuse();
 		let idx = self.pos as usize;
 		if idx == p.events.len() - 1 {
 			match p.events.pop() {
@@ -734,4 +739,48 @@ pub struct Checkpoint {
 	pub token_pos: usize,
 	pub event_pos: usize,
 	pub errors_pos: usize,
+}
+
+#[cfg(test)]
+mod tests {
+	use crate::{Parser, Syntax, TokenSource};
+	use rslint_lexer::Token;
+	use rslint_syntax::SyntaxKind;
+
+	#[test]
+	#[should_panic(
+		expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."
+	)]
+	fn uncompleted_markers_panic() {
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
+
+		let mut parser = Parser::new(token_source, 0, Syntax::default());
+
+		let _ = parser.start();
+		// drop the marker without calling complete or abandon
+	}
+
+	#[test]
+	fn completed_marker_doesnt_panic() {
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
+
+		let mut p = Parser::new(token_source, 0, Syntax::default());
+
+		let m = p.start();
+		p.expect(SyntaxKind::JS_STRING_LITERAL_TOKEN);
+		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL);
+	}
+
+	#[test]
+	fn abandoned_marker_doesnt_panic() {
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
+
+		let mut p = Parser::new(token_source, 0, Syntax::default());
+
+		let m = p.start();
+		m.abandon(&mut p);
+	}
 }

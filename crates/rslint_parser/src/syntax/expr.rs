@@ -424,8 +424,14 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 			return Some(subscripts(p, complete, true));
 		}
 
-		let complete = member_or_new_expr(p, new_expr)?;
+		let complete = if let Some(expr) = member_or_new_expr(p, new_expr) {
+			expr
+		} else {
+			m.abandon(p);
+			return None;
+		};
 		if complete.kind() == JS_ARROW_FUNCTION_EXPRESSION {
+			m.abandon(p);
 			return Some(complete);
 		}
 
@@ -679,19 +685,19 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 	p.expect(T!['(']);
 	let mut spread_range = None;
 	let mut trailing_comma_marker = None;
-	let mut had_comma = false;
 	let mut params_marker = None;
 
 	let mut temp = p.with_state(ParserState {
 		potential_arrow_start: true,
 		..p.state.clone()
 	});
-	let expr_m = temp.start();
-	let mut is_empty = false;
 
-	if temp.eat(T![')']) {
-		is_empty = true;
-	} else {
+	let is_empty = temp.eat(T![')']);
+
+	if !is_empty {
+		// stores a potentially started sequence expression
+		let mut sequence: Option<Marker> = None;
+
 		loop {
 			if temp.at(T![...]) {
 				let m = temp.start();
@@ -728,26 +734,33 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				break;
 			}
 
-			let sub_m = temp.start();
-			if temp.eat(T![,]) {
+			if temp.at(T![,]) {
 				if temp.at(T![')']) {
-					trailing_comma_marker = Some(sub_m.complete(&mut *temp, ERROR));
-					temp.bump_any();
+					// case where we are at a `,)` so the `,` is a trailing comma
+					let trailing_marker = temp.start();
+					temp.bump_any(); // bump ,
+					trailing_comma_marker = Some(trailing_marker.complete(&mut *temp, ERROR));
+					temp.bump_any(); // bump )
 					break;
 				} else {
-					sub_m.abandon(&mut *temp);
+					// start a sequence expression that precedes the before parsed expression statement
+					// and bump the ',' into it.
+					sequence = sequence
+						.or_else(|| expr.map(|expr| expr.precede(&mut *temp)))
+						.or_else(|| Some(temp.start()));
+					temp.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
 				}
-				had_comma = true;
 			} else {
-				sub_m.abandon(&mut *temp);
-				if had_comma {
-					expr_m.complete(&mut *temp, JS_SEQUENCE_EXPRESSION);
-				}
 				temp.expect(T![')']);
 				break;
 			}
 		}
+
+		if let Some(sequence) = sequence.take() {
+			sequence.complete(&mut *temp, JS_SEQUENCE_EXPRESSION);
+		}
 	}
+
 	drop(temp);
 	// if we are in a ternary expression, then we need to try and see if parsing as an arrow worked
 	// if it did then we just return it, otherwise it should be interpreted as a grouping expr
@@ -775,8 +788,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 		// events does not work apparently, therefore we need to clone the entire parser
 		let cloned = p.clone();
 		if func(p).is_some() {
-			let c = m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
-			return c;
+			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 		} else {
 			*p = cloned;
 		}
@@ -822,7 +834,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			.primary(params.range(p), "");
 
 		p.error(err);
-		return m.complete(p, ERROR);
+		return m.complete(p, JS_UNKNOWN_EXPRESSION);
 	}
 
 	if is_empty {
@@ -1266,7 +1278,14 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![++]) {
 		let m = p.start();
 		p.bump(T![++]);
-		let right = unary_expr(p)?;
+
+		let right = if let Some(unary) = unary_expr(p) {
+			unary
+		} else {
+			m.abandon(p);
+			return None;
+		};
+
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		check_assign_target_from_marker(p, &right);
 		return Some(complete);
@@ -1274,7 +1293,14 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![--]) {
 		let m = p.start();
 		p.bump(T![--]);
-		let right = unary_expr(p)?;
+
+		let right = if let Some(unary) = unary_expr(p) {
+			unary
+		} else {
+			m.abandon(p);
+			return None;
+		};
+
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		check_assign_target_from_marker(p, &right);
 		return Some(complete);
@@ -1284,7 +1310,14 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = p.start();
 		let op = p.cur();
 		p.bump_any();
-		let res = unary_expr(p)?;
+
+		let res = if let Some(unary) = unary_expr(p) {
+			unary
+		} else {
+			m.abandon(p);
+			return None;
+		};
+
 		if op == T![delete] && p.typescript() {
 			match res.kind() {
 				DOT_EXPR | BRACKET_EXPR => {}

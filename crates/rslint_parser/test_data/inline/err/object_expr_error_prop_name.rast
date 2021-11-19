@@ -44,8 +44,9 @@ JS_ROOT@0..40
               JS_OBJECT_EXPRESSION@35..38
                 L_CURLY@35..36 "{"
                 LIST@36..37
-                  ERROR@36..37
-                    L_CURLY@36..37 "{"
+                  JS_UNKNOWN_MEMBER@36..37
+                    ERROR@36..37
+                      L_CURLY@36..37 "{"
                 R_CURLY@37..38 "}"
     ERROR@38..39
       R_CURLY@38..39 "}"

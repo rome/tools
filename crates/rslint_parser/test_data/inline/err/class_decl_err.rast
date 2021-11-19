@@ -41,12 +41,12 @@ JS_ROOT@0..137
           JS_LITERAL_MEMBER_NAME@53..58
             IDENT@53..58 "class"
         WHITESPACE@58..59 " "
-        JS_UNKNOWN_MEMBER@59..62
+        JS_UNKNOWN_MEMBER@59..64
           JS_LITERAL_MEMBER_NAME@59..62
             IDENT@59..62 "foo"
-        WHITESPACE@62..63 " "
-        ERROR@63..64
-          L_CURLY@63..64 "{"
+          WHITESPACE@62..63 " "
+          ERROR@63..64
+            L_CURLY@63..64 "{"
         WHITESPACE@64..65 " "
         JS_SETTER_CLASS_MEMBER@65..71
           SET_KW@65..68 "set"
