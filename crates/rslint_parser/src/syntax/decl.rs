@@ -3,6 +3,7 @@
 use super::expr::{assign_expr, identifier_name};
 use super::pat::pattern;
 use super::typescript::*;
+use crate::parse_recoverer::ParseRecoverer;
 use crate::syntax::function::function_body;
 use crate::{SyntaxKind::*, *};
 
@@ -209,7 +210,7 @@ pub(super) fn parameters_list(
 				}
 				Some(res)
 			} else {
-				p.err_recover_no_err(
+				ParseRecoverer::new(
 					token_set![
 						T![ident],
 						T![await],
@@ -219,9 +220,10 @@ pub(super) fn parameters_list(
 						T![...],
 						T![')'],
 					],
-					true,
 					ERROR,
-				);
+				)
+				.enabled_braces_check()
+				.recover(p);
 				None
 			}
 		};

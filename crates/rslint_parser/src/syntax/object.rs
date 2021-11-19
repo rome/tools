@@ -1,3 +1,4 @@
+use crate::parse_recoverer::ParseRecoverer;
 use crate::syntax::decl::{formal_param_pat, parameter_list, BASE_METHOD_RECOVERY_SET};
 use crate::syntax::expr::{assign_expr, expr, identifier_name, literal};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -139,7 +140,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 				// test_err object_expr_non_ident_literal_prop
 				// let b = {5}
 
-				p.err_recover_no_err(token_set![T![:], T![,]], false, ERROR);
+				ParseRecoverer::new(token_set![T![:], T![,]], ERROR).recover(p);
 
 				if p.eat(T![:]) {
 					assign_expr(p);
@@ -304,7 +305,7 @@ fn method_object_member_body(p: &mut Parser) -> Result<(), ()> {
 			.err_builder("expected a method definition, but found none")
 			.primary(p.cur_tok().range, "");
 
-		p.err_recover(err, BASE_METHOD_RECOVERY_SET, false, ERROR);
+		ParseRecoverer::with_error(BASE_METHOD_RECOVERY_SET, ERROR, err).recover(p);
 		Err(())
 	};
 

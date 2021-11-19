@@ -7,6 +7,7 @@ use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use crate::parse_recoverer::ParseRecoverer;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
@@ -131,16 +132,15 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 
 			// We must explicitly handle this case or else infinite recursion can happen
 			if p.at_ts(token_set![T!['}'], T![import], T![export]]) {
-				p.err_and_bump(err, ERROR);
+				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
 				return None;
 			}
-
-			p.err_recover(
-				err,
+			ParseRecoverer::with_error(
 				recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
-				false,
-				ERROR,
-			);
+				JS_UNKNOWN_STATEMENT,
+				err,
+			)
+			.recover(p);
 			return None;
 		}
 	};
@@ -1000,7 +1000,9 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			p.err_recover(err, STMT_RECOVERY_SET, true, ERROR);
+			ParseRecoverer::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
+				.enabled_braces_check()
+				.recover(p);
 		}
 	}
 	None
@@ -1035,7 +1037,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		if let Some(range) = switch_clause(&mut *temp) {
+		if let Some(default_range) = switch_clause(&mut *temp) {
 			if let Some(ref err_range) = first_default {
 				let err = temp
 					.err_builder(
@@ -1045,11 +1047,11 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 						err_range.to_owned(),
 						"the first default clause is defined here",
 					)
-					.primary(range, "a second clause here is not allowed");
+					.primary(default_range, "a second clause here is not allowed");
 
 				temp.error(err);
 			} else {
-				first_default = Some(range);
+				first_default = Some(default_range);
 			}
 		}
 	}
