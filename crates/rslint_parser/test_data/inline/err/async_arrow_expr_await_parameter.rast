@@ -3,26 +3,26 @@ JS_ROOT@0..26
   LIST@0..26
     JS_VARIABLE_DECLARATION_STATEMENT@0..14
       JS_VARIABLE_DECLARATION@0..14
-        LET_KW@0..4 "let "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..14
           JS_VARIABLE_DECLARATOR@4..14
             SINGLE_PATTERN@4..6
               NAME@4..6
-                IDENT@4..6 "a "
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..14
-              EQ@6..8 "= "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_REFERENCE_IDENTIFIER_EXPRESSION@8..14
-                IDENT@8..14 "async "
+                IDENT@8..14 "async" [] [Whitespace(" ")]
     JS_EXPRESSION_STATEMENT@14..26
       JS_ARROW_FUNCTION_EXPRESSION@14..26
         JS_IDENTIFIER_BINDING@14..20
-          IDENT@14..20 "await "
-        FAT_ARROW@20..23 "=> "
+          IDENT@14..20 "await" [] [Whitespace(" ")]
+        FAT_ARROW@20..23 "=>" [] [Whitespace(" ")]
         JS_FUNCTION_BODY@23..26
-          L_CURLY@23..24 "{"
+          L_CURLY@23..24 "{" [] []
           LIST@24..24
           LIST@24..24
-          R_CURLY@24..26 "}\n"
+          R_CURLY@24..26 "}" [] [Whitespace("\n")]
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ async_arrow_expr_await_parameter.js:1:15

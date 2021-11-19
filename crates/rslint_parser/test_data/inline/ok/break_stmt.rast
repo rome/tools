@@ -2,26 +2,26 @@ JS_ROOT@0..46
   LIST@0..0
   LIST@0..46
     JS_LABELED_STATEMENT@0..7
-      IDENT@0..3 "foo"
-      COLON@3..5 ": "
+      IDENT@0..3 "foo" [] []
+      COLON@3..5 ":" [] [Whitespace(" ")]
       JS_BLOCK_STATEMENT@5..7
-        L_CURLY@5..6 "{"
+        L_CURLY@5..6 "{" [] []
         LIST@6..6
-        R_CURLY@6..7 "}"
+        R_CURLY@6..7 "}" [] []
     JS_LABELED_STATEMENT@7..16
-      IDENT@7..12 "\nrust"
-      COLON@12..14 ": "
+      IDENT@7..12 "rust" [Whitespace("\n")] []
+      COLON@12..14 ":" [] [Whitespace(" ")]
       JS_BLOCK_STATEMENT@14..16
-        L_CURLY@14..15 "{"
+        L_CURLY@14..15 "{" [] []
         LIST@15..15
-        R_CURLY@15..16 "}"
+        R_CURLY@15..16 "}" [] []
     JS_BREAK_STATEMENT@16..23
-      BREAK_KW@16..22 "\nbreak"
-      SEMICOLON@22..23 ";"
+      BREAK_KW@16..22 "break" [Whitespace("\n")] []
+      SEMICOLON@22..23 ";" [] []
     JS_BREAK_STATEMENT@23..34
-      BREAK_KW@23..30 "\nbreak "
-      IDENT@30..33 "foo"
-      SEMICOLON@33..34 ";"
+      BREAK_KW@23..30 "break" [Whitespace("\n")] [Whitespace(" ")]
+      IDENT@30..33 "foo" [] []
+      SEMICOLON@33..34 ";" [] []
     JS_BREAK_STATEMENT@34..46
-      BREAK_KW@34..41 "\nbreak "
-      IDENT@41..46 "rust\n"
+      BREAK_KW@34..41 "break" [Whitespace("\n")] [Whitespace(" ")]
+      IDENT@41..46 "rust" [] [Whitespace("\n")]

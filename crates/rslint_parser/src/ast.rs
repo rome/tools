@@ -575,7 +575,7 @@ mod tests {
 
 	#[test]
 	#[should_panic(
-		expected = "Missing element in separated list, found COMMA@2..3 \",\" token instead"
+		expected = "Missing element in separated list, found COMMA@2..3 \",\" [] [] token instead"
 	)]
 	fn separated_with_two_successive_separators() {
 		// list([1,,])
@@ -588,7 +588,7 @@ mod tests {
 
 	#[test]
 	#[should_panic(
-		expected = "Missing element in separated list, found COMMA@0..1 \",\" token instead"
+		expected = "Missing element in separated list, found COMMA@0..1 \",\" [] [] token instead"
 	)]
 	fn separated_with_leading_separator() {
 		// list([,3])

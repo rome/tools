@@ -3,23 +3,23 @@ JS_ROOT@0..20
   LIST@0..20
     JS_VARIABLE_DECLARATION_STATEMENT@0..20
       JS_VARIABLE_DECLARATION@0..20
-        LET_KW@0..4 "let "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..20
           JS_VARIABLE_DECLARATOR@4..20
             SINGLE_PATTERN@4..6
               NAME@4..6
-                IDENT@4..6 "a "
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..20
-              EQ@6..8 "= "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               TEMPLATE@8..20
-                BACKTICK@8..9 "`"
+                BACKTICK@8..9 "`" [] []
                 LIST@9..20
                   TEMPLATE_ELEMENT@9..15
-                    DOLLARCURLY@9..11 "${"
+                    DOLLARCURLY@9..11 "${" [] []
                     JS_REFERENCE_IDENTIFIER_EXPRESSION@11..14
-                      IDENT@11..14 "foo"
-                    R_CURLY@14..15 "}"
-                  TEMPLATE_CHUNK@15..20 " bar\n"
+                      IDENT@11..14 "foo" [] []
+                    R_CURLY@14..15 "}" [] []
+                  TEMPLATE_CHUNK@15..20 " bar\n" [] []
 --
 error: unterminated template literal
   ┌─ template_literal_unterminated.js:2:1

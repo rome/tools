@@ -3,66 +3,66 @@ JS_ROOT@0..70
   LIST@0..70
     JS_EXPRESSION_STATEMENT@0..17
       JS_UNARY_EXPRESSION@0..16
-        DELETE_KW@0..7 "delete "
+        DELETE_KW@0..7 "delete" [] [Whitespace(" ")]
         BRACKET_EXPR@7..16
           JS_REFERENCE_IDENTIFIER_EXPRESSION@7..8
-            IDENT@7..8 "a"
-          L_BRACK@8..9 "["
+            IDENT@7..8 "a" [] []
+          L_BRACK@8..9 "[" [] []
           JS_STRING_LITERAL@9..15
-            JS_STRING_LITERAL_TOKEN@9..15 "'test'"
-          R_BRACK@15..16 "]"
-      SEMICOLON@16..17 ";"
+            JS_STRING_LITERAL_TOKEN@9..15 "'test'" [] []
+          R_BRACK@15..16 "]" [] []
+      SEMICOLON@16..17 ";" [] []
     JS_EXPRESSION_STATEMENT@17..25
       JS_UNARY_EXPRESSION@17..24
-        VOID_KW@17..23 "\nvoid "
+        VOID_KW@17..23 "void" [Whitespace("\n")] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@23..24
-          IDENT@23..24 "a"
-      SEMICOLON@24..25 ";"
+          IDENT@23..24 "a" [] []
+      SEMICOLON@24..25 ";" [] []
     JS_EXPRESSION_STATEMENT@25..35
       JS_UNARY_EXPRESSION@25..34
-        TYPEOF_KW@25..33 "\ntypeof "
+        TYPEOF_KW@25..33 "typeof" [Whitespace("\n")] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@33..34
-          IDENT@33..34 "a"
-      SEMICOLON@34..35 ";"
+          IDENT@33..34 "a" [] []
+      SEMICOLON@34..35 ";" [] []
     JS_EXPRESSION_STATEMENT@35..39
       JS_UNARY_EXPRESSION@35..38
-        PLUS@35..37 "\n+"
+        PLUS@35..37 "+" [Whitespace("\n")] []
         JS_NUMBER_LITERAL@37..38
-          JS_NUMBER_LITERAL_TOKEN@37..38 "1"
-      SEMICOLON@38..39 ";"
+          JS_NUMBER_LITERAL_TOKEN@37..38 "1" [] []
+      SEMICOLON@38..39 ";" [] []
     JS_EXPRESSION_STATEMENT@39..43
       JS_UNARY_EXPRESSION@39..42
-        MINUS@39..41 "\n-"
+        MINUS@39..41 "-" [Whitespace("\n")] []
         JS_NUMBER_LITERAL@41..42
-          JS_NUMBER_LITERAL_TOKEN@41..42 "1"
-      SEMICOLON@42..43 ";"
+          JS_NUMBER_LITERAL_TOKEN@41..42 "1" [] []
+      SEMICOLON@42..43 ";" [] []
     JS_EXPRESSION_STATEMENT@43..47
       JS_UNARY_EXPRESSION@43..46
-        TILDE@43..45 "\n~"
+        TILDE@43..45 "~" [Whitespace("\n")] []
         JS_NUMBER_LITERAL@45..46
-          JS_NUMBER_LITERAL_TOKEN@45..46 "1"
-      SEMICOLON@46..47 ";"
+          JS_NUMBER_LITERAL_TOKEN@45..46 "1" [] []
+      SEMICOLON@46..47 ";" [] []
     JS_EXPRESSION_STATEMENT@47..54
       JS_UNARY_EXPRESSION@47..53
-        BANG@47..49 "\n!"
+        BANG@47..49 "!" [Whitespace("\n")] []
         JS_BOOLEAN_LITERAL@49..53
-          TRUE_KW@49..53 "true"
-      SEMICOLON@53..54 ";"
+          TRUE_KW@49..53 "true" [] []
+      SEMICOLON@53..54 ";" [] []
     JS_EXPRESSION_STATEMENT@54..70
       JS_BINARY_EXPRESSION@54..68
         JS_BINARY_EXPRESSION@54..64
           JS_UNARY_EXPRESSION@54..59
-            MINUS@54..57 "\n\n-"
+            MINUS@54..57 "-" [Whitespace("\n\n")] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@57..59
-              IDENT@57..59 "a "
-          PLUS@59..61 "+ "
+              IDENT@57..59 "a" [] [Whitespace(" ")]
+          PLUS@59..61 "+" [] [Whitespace(" ")]
           JS_UNARY_EXPRESSION@61..64
-            MINUS@61..62 "-"
+            MINUS@61..62 "-" [] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@62..64
-              IDENT@62..64 "b "
-        PLUS@64..66 "+ "
+              IDENT@62..64 "b" [] [Whitespace(" ")]
+        PLUS@64..66 "+" [] [Whitespace(" ")]
         JS_UNARY_EXPRESSION@66..68
-          PLUS@66..67 "+"
+          PLUS@66..67 "+" [] []
           JS_REFERENCE_IDENTIFIER_EXPRESSION@67..68
-            IDENT@67..68 "a"
-      SEMICOLON@68..70 ";\n"
+            IDENT@67..68 "a" [] []
+      SEMICOLON@68..70 ";" [] [Whitespace("\n")]

@@ -3,110 +3,110 @@ JS_ROOT@0..212
   LIST@0..212
     JS_VARIABLE_DECLARATION_STATEMENT@0..212
       JS_VARIABLE_DECLARATION@0..212
-        LET_KW@0..4 "let "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..212
           JS_VARIABLE_DECLARATOR@4..212
             SINGLE_PATTERN@4..6
               NAME@4..6
-                IDENT@4..6 "a "
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..212
-              EQ@6..8 "= "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_OBJECT_EXPRESSION@8..212
-                L_CURLY@8..9 "{"
+                L_CURLY@8..9 "{" [] []
                 LIST@9..209
                   JS_GETTER_OBJECT_MEMBER@9..40
-                    GET_KW@9..15 "\n get "
+                    GET_KW@9..15 "get" [Whitespace("\n ")] [Whitespace(" ")]
                     JS_LITERAL_MEMBER_NAME@15..18
-                      IDENT@15..18 "foo"
-                    L_PAREN@18..19 "("
-                    R_PAREN@19..21 ") "
+                      IDENT@15..18 "foo" [] []
+                    L_PAREN@18..19 "(" [] []
+                    R_PAREN@19..21 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@21..40
-                      L_CURLY@21..22 "{"
+                      L_CURLY@21..22 "{" [] []
                       LIST@22..22
                       LIST@22..37
                         JS_RETURN_STATEMENT@22..37
-                          RETURN_KW@22..33 "\n   return "
+                          RETURN_KW@22..33 "return" [Whitespace("\n   ")] [Whitespace(" ")]
                           JS_REFERENCE_IDENTIFIER_EXPRESSION@33..36
-                            IDENT@33..36 "foo"
-                          SEMICOLON@36..37 ";"
-                      R_CURLY@37..40 "\n }"
-                  COMMA@40..41 ","
+                            IDENT@33..36 "foo" [] []
+                          SEMICOLON@36..37 ";" [] []
+                      R_CURLY@37..40 "}" [Whitespace("\n ")] []
+                  COMMA@40..41 "," [] []
                   JS_GETTER_OBJECT_MEMBER@41..76
-                    GET_KW@41..48 "\n\n get "
+                    GET_KW@41..48 "get" [Whitespace("\n\n ")] [Whitespace(" ")]
                     JS_LITERAL_MEMBER_NAME@48..53
-                      JS_STRING_LITERAL_TOKEN@48..53 "\"bar\""
-                    L_PAREN@53..54 "("
-                    R_PAREN@54..56 ") "
+                      JS_STRING_LITERAL_TOKEN@48..53 "\"bar\"" [] []
+                    L_PAREN@53..54 "(" [] []
+                    R_PAREN@54..56 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@56..76
-                      L_CURLY@56..57 "{"
+                      L_CURLY@56..57 "{" [] []
                       LIST@57..57
                       LIST@57..73
                         JS_RETURN_STATEMENT@57..73
-                          RETURN_KW@57..67 "\n\t return "
+                          RETURN_KW@57..67 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
                           JS_STRING_LITERAL@67..72
-                            JS_STRING_LITERAL_TOKEN@67..72 "\"bar\""
-                          SEMICOLON@72..73 ";"
-                      R_CURLY@73..76 "\n }"
-                  COMMA@76..77 ","
+                            JS_STRING_LITERAL_TOKEN@67..72 "\"bar\"" [] []
+                          SEMICOLON@72..73 ";" [] []
+                      R_CURLY@73..76 "}" [Whitespace("\n ")] []
+                  COMMA@76..77 "," [] []
                   JS_GETTER_OBJECT_MEMBER@77..121
-                    GET_KW@77..84 "\n\n get "
+                    GET_KW@77..84 "get" [Whitespace("\n\n ")] [Whitespace(" ")]
                     JS_COMPUTED_MEMBER_NAME@84..95
-                      L_BRACK@84..85 "["
+                      L_BRACK@84..85 "[" [] []
                       JS_BINARY_EXPRESSION@85..94
                         JS_STRING_LITERAL@85..89
-                          JS_STRING_LITERAL_TOKEN@85..89 "\"a\" "
-                        PLUS@89..91 "+ "
+                          JS_STRING_LITERAL_TOKEN@85..89 "\"a\"" [] [Whitespace(" ")]
+                        PLUS@89..91 "+" [] [Whitespace(" ")]
                         JS_STRING_LITERAL@91..94
-                          JS_STRING_LITERAL_TOKEN@91..94 "\"b\""
-                      R_BRACK@94..95 "]"
-                    L_PAREN@95..96 "("
-                    R_PAREN@96..98 ") "
+                          JS_STRING_LITERAL_TOKEN@91..94 "\"b\"" [] []
+                      R_BRACK@94..95 "]" [] []
+                    L_PAREN@95..96 "(" [] []
+                    R_PAREN@96..98 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@98..121
-                      L_CURLY@98..99 "{"
+                      L_CURLY@98..99 "{" [] []
                       LIST@99..99
                       LIST@99..118
                         JS_RETURN_STATEMENT@99..118
-                          RETURN_KW@99..109 "\n\t return "
+                          RETURN_KW@99..109 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
                           JS_BINARY_EXPRESSION@109..118
                             JS_STRING_LITERAL@109..113
-                              JS_STRING_LITERAL_TOKEN@109..113 "\"a\" "
-                            PLUS@113..115 "+ "
+                              JS_STRING_LITERAL_TOKEN@109..113 "\"a\"" [] [Whitespace(" ")]
+                            PLUS@113..115 "+" [] [Whitespace(" ")]
                             JS_STRING_LITERAL@115..118
-                              JS_STRING_LITERAL_TOKEN@115..118 "\"b\""
-                      R_CURLY@118..121 "\n }"
-                  COMMA@121..122 ","
+                              JS_STRING_LITERAL_TOKEN@115..118 "\"b\"" [] []
+                      R_CURLY@118..121 "}" [Whitespace("\n ")] []
+                  COMMA@121..122 "," [] []
                   JS_GETTER_OBJECT_MEMBER@122..149
-                    GET_KW@122..129 "\n\n\tget "
+                    GET_KW@122..129 "get" [Whitespace("\n\n\t")] [Whitespace(" ")]
                     JS_LITERAL_MEMBER_NAME@129..130
-                      JS_NUMBER_LITERAL_TOKEN@129..130 "5"
-                    L_PAREN@130..131 "("
-                    R_PAREN@131..133 ") "
+                      JS_NUMBER_LITERAL_TOKEN@129..130 "5" [] []
+                    L_PAREN@130..131 "(" [] []
+                    R_PAREN@131..133 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@133..149
-                      L_CURLY@133..134 "{"
+                      L_CURLY@133..134 "{" [] []
                       LIST@134..134
                       LIST@134..146
                         JS_RETURN_STATEMENT@134..146
-                          RETURN_KW@134..144 "\n\t return "
+                          RETURN_KW@134..144 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
                           JS_NUMBER_LITERAL@144..145
-                            JS_NUMBER_LITERAL_TOKEN@144..145 "5"
-                          SEMICOLON@145..146 ";"
-                      R_CURLY@146..149 "\n\t}"
-                  COMMA@149..150 ","
+                            JS_NUMBER_LITERAL_TOKEN@144..145 "5" [] []
+                          SEMICOLON@145..146 ";" [] []
+                      R_CURLY@146..149 "}" [Whitespace("\n\t")] []
+                  COMMA@149..150 "," [] []
                   JS_METHOD_OBJECT_MEMBER@150..209
                     JS_LITERAL_MEMBER_NAME@150..156
-                      IDENT@150..156 "\n\n\tget"
+                      IDENT@150..156 "get" [Whitespace("\n\n\t")] []
                     JS_PARAMETER_LIST@156..159
-                      L_PAREN@156..157 "("
+                      L_PAREN@156..157 "(" [] []
                       LIST@157..157
-                      R_PAREN@157..159 ") "
+                      R_PAREN@157..159 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@159..209
-                      L_CURLY@159..160 "{"
+                      L_CURLY@159..160 "{" [] []
                       LIST@160..160
                       LIST@160..206
                         JS_RETURN_STATEMENT@160..206
-                          RETURN_KW@160..170 "\n\t return "
+                          RETURN_KW@160..170 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
                           JS_STRING_LITERAL@170..205
-                            JS_STRING_LITERAL_TOKEN@170..205 "\"This is a method and ..."
-                          SEMICOLON@205..206 ";"
-                      R_CURLY@206..209 "\n\t}"
-                R_CURLY@209..212 "\n}\n"
+                            JS_STRING_LITERAL_TOKEN@170..205 "\"This is a method and not a getter\"" [] []
+                          SEMICOLON@205..206 ";" [] []
+                      R_CURLY@206..209 "}" [Whitespace("\n\t")] []
+                R_CURLY@209..212 "}" [Whitespace("\n")] [Whitespace("\n")]

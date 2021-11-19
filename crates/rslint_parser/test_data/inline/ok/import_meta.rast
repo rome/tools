@@ -3,6 +3,6 @@ JS_ROOT@0..12
   LIST@0..12
     JS_EXPRESSION_STATEMENT@0..12
       IMPORT_META@0..12
-        IMPORT_KW@0..6 "import"
-        DOT@6..7 "."
-        IDENT@7..12 "meta\n"
+        IMPORT_KW@0..6 "import" [] []
+        DOT@6..7 "." [] []
+        IDENT@7..12 "meta" [] [Whitespace("\n")]

@@ -2,4 +2,4 @@ JS_ROOT@0..2
   LIST@0..0
   LIST@0..2
     JS_EMPTY_STATEMENT@0..2
-      SEMICOLON@0..2 ";\n"
+      SEMICOLON@0..2 ";" [] [Whitespace("\n")]

@@ -4,103 +4,103 @@ JS_ROOT@0..114
     JS_EXPRESSION_STATEMENT@0..5
       JS_BINARY_EXPRESSION@0..5
         JS_NUMBER_LITERAL@0..2
-          JS_NUMBER_LITERAL_TOKEN@0..2 "5 "
-        STAR@2..4 "* "
+          JS_NUMBER_LITERAL_TOKEN@0..2 "5" [] [Whitespace(" ")]
+        STAR@2..4 "*" [] [Whitespace(" ")]
         JS_NUMBER_LITERAL@4..5
-          JS_NUMBER_LITERAL_TOKEN@4..5 "5"
+          JS_NUMBER_LITERAL_TOKEN@4..5 "5" [] []
     JS_EXPRESSION_STATEMENT@5..17
       JS_BINARY_EXPRESSION@5..17
         JS_NUMBER_LITERAL@5..8
-          JS_NUMBER_LITERAL_TOKEN@5..8 "\n6 "
-        STAR2@8..11 "** "
+          JS_NUMBER_LITERAL_TOKEN@5..8 "6" [Whitespace("\n")] [Whitespace(" ")]
+        STAR2@8..11 "**" [] [Whitespace(" ")]
         JS_BINARY_EXPRESSION@11..17
           JS_NUMBER_LITERAL@11..13
-            JS_NUMBER_LITERAL_TOKEN@11..13 "6 "
-          STAR2@13..16 "** "
+            JS_NUMBER_LITERAL_TOKEN@11..13 "6" [] [Whitespace(" ")]
+          STAR2@13..16 "**" [] [Whitespace(" ")]
           JS_NUMBER_LITERAL@16..17
-            JS_NUMBER_LITERAL_TOKEN@16..17 "7"
+            JS_NUMBER_LITERAL_TOKEN@16..17 "7" [] []
     JS_EXPRESSION_STATEMENT@17..39
       JS_BINARY_EXPRESSION@17..39
         JS_NUMBER_LITERAL@17..20
-          JS_NUMBER_LITERAL_TOKEN@17..20 "\n1 "
-        PLUS@20..22 "+ "
+          JS_NUMBER_LITERAL_TOKEN@17..20 "1" [Whitespace("\n")] [Whitespace(" ")]
+        PLUS@20..22 "+" [] [Whitespace(" ")]
         JS_BINARY_EXPRESSION@22..39
           JS_BINARY_EXPRESSION@22..36
             JS_NUMBER_LITERAL@22..24
-              JS_NUMBER_LITERAL_TOKEN@22..24 "2 "
-            STAR@24..26 "* "
+              JS_NUMBER_LITERAL_TOKEN@22..24 "2" [] [Whitespace(" ")]
+            STAR@24..26 "*" [] [Whitespace(" ")]
             CALL_EXPR@26..36
               JS_NUMBER_LITERAL@26..27
-                JS_NUMBER_LITERAL_TOKEN@26..27 "3"
+                JS_NUMBER_LITERAL_TOKEN@26..27 "3" [] []
               ARG_LIST@27..36
-                L_PAREN@27..29 "\n("
+                L_PAREN@27..29 "(" [Whitespace("\n")] []
                 LIST@29..34
                   JS_BINARY_EXPRESSION@29..34
                     JS_NUMBER_LITERAL@29..31
-                      JS_NUMBER_LITERAL_TOKEN@29..31 "1 "
-                    PLUS@31..33 "+ "
+                      JS_NUMBER_LITERAL_TOKEN@29..31 "1" [] [Whitespace(" ")]
+                    PLUS@31..33 "+" [] [Whitespace(" ")]
                     JS_NUMBER_LITERAL@33..34
-                      JS_NUMBER_LITERAL_TOKEN@33..34 "2"
-                R_PAREN@34..36 ") "
-          STAR@36..38 "* "
+                      JS_NUMBER_LITERAL_TOKEN@33..34 "2" [] []
+                R_PAREN@34..36 ")" [] [Whitespace(" ")]
+          STAR@36..38 "*" [] [Whitespace(" ")]
           JS_NUMBER_LITERAL@38..39
-            JS_NUMBER_LITERAL_TOKEN@38..39 "3"
+            JS_NUMBER_LITERAL_TOKEN@38..39 "3" [] []
     JS_EXPRESSION_STATEMENT@39..45
       JS_BINARY_EXPRESSION@39..45
         JS_NUMBER_LITERAL@39..42
-          JS_NUMBER_LITERAL_TOKEN@39..42 "\n1 "
-        SLASH@42..44 "/ "
+          JS_NUMBER_LITERAL_TOKEN@39..42 "1" [Whitespace("\n")] [Whitespace(" ")]
+        SLASH@42..44 "/" [] [Whitespace(" ")]
         JS_NUMBER_LITERAL@44..45
-          JS_NUMBER_LITERAL_TOKEN@44..45 "2"
+          JS_NUMBER_LITERAL_TOKEN@44..45 "2" [] []
     JS_EXPRESSION_STATEMENT@45..55
       JS_BINARY_EXPRESSION@45..55
         JS_NUMBER_LITERAL@45..49
-          JS_NUMBER_LITERAL_TOKEN@45..49 "\n74 "
-        IN_KW@49..52 "in "
+          JS_NUMBER_LITERAL_TOKEN@45..49 "74" [Whitespace("\n")] [Whitespace(" ")]
+        IN_KW@49..52 "in" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@52..55
-          IDENT@52..55 "foo"
+          IDENT@52..55 "foo" [] []
     JS_EXPRESSION_STATEMENT@55..76
       JS_BINARY_EXPRESSION@55..76
         JS_REFERENCE_IDENTIFIER_EXPRESSION@55..60
-          IDENT@55..60 "\nfoo "
-        INSTANCEOF_KW@60..71 "instanceof "
+          IDENT@55..60 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        INSTANCEOF_KW@60..71 "instanceof" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@71..76
-          IDENT@71..76 "Array"
+          IDENT@71..76 "Array" [] []
     JS_EXPRESSION_STATEMENT@76..90
       JS_BINARY_EXPRESSION@76..90
         JS_BINARY_EXPRESSION@76..87
           JS_BINARY_EXPRESSION@76..83
             JS_NUMBER_LITERAL@76..79
-              JS_NUMBER_LITERAL_TOKEN@76..79 "\n1 "
-            PLUS@79..81 "+ "
+              JS_NUMBER_LITERAL_TOKEN@76..79 "1" [Whitespace("\n")] [Whitespace(" ")]
+            PLUS@79..81 "+" [] [Whitespace(" ")]
             JS_NUMBER_LITERAL@81..83
-              JS_NUMBER_LITERAL_TOKEN@81..83 "1 "
-          PLUS@83..85 "+ "
+              JS_NUMBER_LITERAL_TOKEN@81..83 "1" [] [Whitespace(" ")]
+          PLUS@83..85 "+" [] [Whitespace(" ")]
           JS_NUMBER_LITERAL@85..87
-            JS_NUMBER_LITERAL_TOKEN@85..87 "1 "
-        PLUS@87..89 "+ "
+            JS_NUMBER_LITERAL_TOKEN@85..87 "1" [] [Whitespace(" ")]
+        PLUS@87..89 "+" [] [Whitespace(" ")]
         JS_NUMBER_LITERAL@89..90
-          JS_NUMBER_LITERAL_TOKEN@89..90 "1"
+          JS_NUMBER_LITERAL_TOKEN@89..90 "1" [] []
     JS_EXPRESSION_STATEMENT@90..114
       JS_BINARY_EXPRESSION@90..114
         JS_BINARY_EXPRESSION@90..97
           JS_NUMBER_LITERAL@90..93
-            JS_NUMBER_LITERAL_TOKEN@90..93 "\n5 "
-          PLUS@93..95 "+ "
+            JS_NUMBER_LITERAL_TOKEN@90..93 "5" [Whitespace("\n")] [Whitespace(" ")]
+          PLUS@93..95 "+" [] [Whitespace(" ")]
           JS_NUMBER_LITERAL@95..97
-            JS_NUMBER_LITERAL_TOKEN@95..97 "6 "
-        MINUS@97..99 "- "
+            JS_NUMBER_LITERAL_TOKEN@95..97 "6" [] [Whitespace(" ")]
+        MINUS@97..99 "-" [] [Whitespace(" ")]
         JS_BINARY_EXPRESSION@99..114
           JS_BINARY_EXPRESSION@99..105
             JS_NUMBER_LITERAL@99..101
-              JS_NUMBER_LITERAL_TOKEN@99..101 "1 "
-            STAR@101..103 "* "
+              JS_NUMBER_LITERAL_TOKEN@99..101 "1" [] [Whitespace(" ")]
+            STAR@101..103 "*" [] [Whitespace(" ")]
             JS_NUMBER_LITERAL@103..105
-              JS_NUMBER_LITERAL_TOKEN@103..105 "2 "
-          SLASH@105..107 "/ "
+              JS_NUMBER_LITERAL_TOKEN@103..105 "2" [] [Whitespace(" ")]
+          SLASH@105..107 "/" [] [Whitespace(" ")]
           JS_BINARY_EXPRESSION@107..114
             JS_NUMBER_LITERAL@107..109
-              JS_NUMBER_LITERAL_TOKEN@107..109 "1 "
-            STAR2@109..112 "** "
+              JS_NUMBER_LITERAL_TOKEN@107..109 "1" [] [Whitespace(" ")]
+            STAR2@109..112 "**" [] [Whitespace(" ")]
             JS_NUMBER_LITERAL@112..114
-              JS_NUMBER_LITERAL_TOKEN@112..114 "6\n"
+              JS_NUMBER_LITERAL_TOKEN@112..114 "6" [] [Whitespace("\n")]

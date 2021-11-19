@@ -4,28 +4,28 @@ JS_ROOT@0..40
     JS_EXPRESSION_STATEMENT@0..13
       JS_CONDITIONAL_EXPRESSION@0..13
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
-          IDENT@0..4 "foo "
-        QUESTION@4..6 "? "
+          IDENT@0..4 "foo" [] [Whitespace(" ")]
+        QUESTION@4..6 "?" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@6..10
-          IDENT@6..10 "bar "
+          IDENT@6..10 "bar" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@10..13
-          IDENT@10..13 "baz"
+          IDENT@10..13 "baz" [] []
     JS_EXPRESSION_STATEMENT@13..40
       JS_CONDITIONAL_EXPRESSION@13..40
         JS_REFERENCE_IDENTIFIER_EXPRESSION@13..18
-          IDENT@13..18 "\nfoo "
-        QUESTION@18..20 "? "
+          IDENT@13..18 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        QUESTION@18..20 "?" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@20..24
-          IDENT@20..24 "bar "
+          IDENT@20..24 "bar" [] [Whitespace(" ")]
         JS_CONDITIONAL_EXPRESSION@24..40
           JS_REFERENCE_IDENTIFIER_EXPRESSION@24..28
-            IDENT@24..28 "baz "
-          QUESTION@28..30 "? "
+            IDENT@24..28 "baz" [] [Whitespace(" ")]
+          QUESTION@28..30 "?" [] [Whitespace(" ")]
           JS_REFERENCE_IDENTIFIER_EXPRESSION@30..34
-            IDENT@30..34 "foo "
-          COLON@34..36 ": "
+            IDENT@30..34 "foo" [] [Whitespace(" ")]
+          COLON@34..36 ":" [] [Whitespace(" ")]
           JS_REFERENCE_IDENTIFIER_EXPRESSION@36..40
-            IDENT@36..40 "bar\n"
+            IDENT@36..40 "bar" [] [Whitespace("\n")]
 --
 error[SyntaxError]: expected `:` but instead found `baz`
   ┌─ conditional_expr_err.js:1:11

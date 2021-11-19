@@ -256,20 +256,60 @@ impl<L: Language> fmt::Display for SyntaxNode<L> {
 	}
 }
 
-impl<L: Language> fmt::Debug for SyntaxToken<L> {
-	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{:?}@{:?}", self.kind(), self.text_range())?;
-		if self.text().len() < 25 {
-			return write!(f, " {:?}", self.text());
-		}
-		let text = self.text();
+fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+	let text = text.as_ref();
+	if text.len() < 25 {
+		return write!(f, "{:?}", text);
+	} else {
 		for idx in 21..25 {
 			if text.is_char_boundary(idx) {
 				let text = format!("{} ...", &text[..idx]);
-				return write!(f, " {:?}", text);
+				return write!(f, "{:?}", text);
 			}
 		}
-		unreachable!()
+		return write!(f, "");
+	}
+}
+
+fn print_debug_trivia_piece<L: Language>(piece: SyntaxTriviaPiece<L>, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+	match piece.trivia {
+		TriviaPiece::Whitespace(_) => {
+			write!(f, "Whitespace(")?;
+			print_debug_str(piece.text(), f)?;
+			write!(f, ")")
+		},
+		TriviaPiece::Comments(_) => {
+			write!(f, "Comments(")?;
+			print_debug_str(piece.text(), f)?;
+			write!(f, ")")
+		},
+	}
+}
+
+impl<L: Language> fmt::Debug for SyntaxToken<L> {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(f, "{:?}@{:?} {:?} ", self.kind(), self.text_range(), self.text_trimmed())?;
+
+		write!(f, "[")?;
+		let mut first_piece = true;
+		for piece in self.leading_trivia().pieces() {
+			if !first_piece {
+				write!(f, ", ")?;
+			}
+			first_piece = false;
+			print_debug_trivia_piece(piece, f)?;
+		}
+		write!(f, "] [")?;
+
+		let mut first_piece = true;
+		for piece in self.trailing_trivia().pieces() {
+			if !first_piece {
+				write!(f, ", ")?;
+			}
+			first_piece = false;
+			print_debug_trivia_piece(piece, f)?;
+		}
+		write!(f, "]")
 	}
 }
 

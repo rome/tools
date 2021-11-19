@@ -2,33 +2,33 @@ JS_ROOT@0..53
   LIST@0..0
   LIST@0..53
     JS_FUNCTION_DECLARATION@0..53
-      FUNCTION_KW@0..9 "function "
-      STAR@9..10 "*"
+      FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      STAR@9..10 "*" [] []
       JS_IDENTIFIER_BINDING@10..13
-        IDENT@10..13 "foo"
+        IDENT@10..13 "foo" [] []
       JS_PARAMETER_LIST@13..16
-        L_PAREN@13..14 "("
+        L_PAREN@13..14 "(" [] []
         LIST@14..14
-        R_PAREN@14..16 ") "
+        R_PAREN@14..16 ")" [] [Whitespace(" ")]
       JS_FUNCTION_BODY@16..53
-        L_CURLY@16..17 "{"
+        L_CURLY@16..17 "{" [] []
         LIST@17..17
         LIST@17..50
           JS_EXPRESSION_STATEMENT@17..29
             JS_YIELD_EXPRESSION@17..28
-              YIELD_KW@17..25 "\n yield "
+              YIELD_KW@17..25 "yield" [Whitespace("\n ")] [Whitespace(" ")]
               JS_REFERENCE_IDENTIFIER_EXPRESSION@25..28
-                IDENT@25..28 "foo"
-            SEMICOLON@28..29 ";"
+                IDENT@25..28 "foo" [] []
+            SEMICOLON@28..29 ";" [] []
           JS_EXPRESSION_STATEMENT@29..42
             JS_YIELD_EXPRESSION@29..41
-              YIELD_KW@29..36 "\n yield"
-              STAR@36..38 "* "
+              YIELD_KW@29..36 "yield" [Whitespace("\n ")] []
+              STAR@36..38 "*" [] [Whitespace(" ")]
               JS_REFERENCE_IDENTIFIER_EXPRESSION@38..41
-                IDENT@38..41 "foo"
-            SEMICOLON@41..42 ";"
+                IDENT@38..41 "foo" [] []
+            SEMICOLON@41..42 ";" [] []
           JS_EXPRESSION_STATEMENT@42..50
             JS_YIELD_EXPRESSION@42..49
-              YIELD_KW@42..49 "\n yield"
-            SEMICOLON@49..50 ";"
-        R_CURLY@50..53 "\n}\n"
+              YIELD_KW@42..49 "yield" [Whitespace("\n ")] []
+            SEMICOLON@49..50 ";" [] []
+        R_CURLY@50..53 "}" [Whitespace("\n")] [Whitespace("\n")]

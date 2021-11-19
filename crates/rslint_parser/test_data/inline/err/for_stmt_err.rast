@@ -2,46 +2,46 @@ JS_ROOT@0..40
   LIST@0..0
   LIST@0..40
     FOR_STMT@0..40
-      FOR_KW@0..4 "for "
-      SEMICOLON@4..5 ";"
-      SEMICOLON@5..7 "; "
+      FOR_KW@0..4 "for" [] [Whitespace(" ")]
+      SEMICOLON@4..5 ";" [] []
+      SEMICOLON@5..7 ";" [] [Whitespace(" ")]
       FOR_STMT_UPDATE@7..9
         JS_OBJECT_EXPRESSION@7..9
-          L_CURLY@7..8 "{"
+          L_CURLY@7..8 "{" [] []
           LIST@8..8
-          R_CURLY@8..9 "}"
+          R_CURLY@8..9 "}" [] []
       FOR_STMT@9..40
-        FOR_KW@9..14 "\nfor "
+        FOR_KW@9..14 "for" [Whitespace("\n")] [Whitespace(" ")]
         FOR_STMT_INIT@14..23
           JS_VARIABLE_DECLARATION@14..23
-            LET_KW@14..18 "let "
+            LET_KW@14..18 "let" [] [Whitespace(" ")]
             LIST@18..23
               JS_VARIABLE_DECLARATOR@18..23
                 SINGLE_PATTERN@18..20
                   NAME@18..20
-                    IDENT@18..20 "i "
+                    IDENT@18..20 "i" [] [Whitespace(" ")]
                 JS_EQUAL_VALUE_CLAUSE@20..23
-                  EQ@20..22 "= "
+                  EQ@20..22 "=" [] [Whitespace(" ")]
                   JS_NUMBER_LITERAL@22..23
-                    JS_NUMBER_LITERAL_TOKEN@22..23 "5"
-        SEMICOLON@23..25 "; "
+                    JS_NUMBER_LITERAL_TOKEN@22..23 "5" [] []
+        SEMICOLON@23..25 ";" [] [Whitespace(" ")]
         FOR_STMT_TEST@25..31
           JS_BINARY_EXPRESSION@25..31
             JS_REFERENCE_IDENTIFIER_EXPRESSION@25..27
-              IDENT@25..27 "i "
-            L_ANGLE@27..29 "< "
+              IDENT@25..27 "i" [] [Whitespace(" ")]
+            L_ANGLE@27..29 "<" [] [Whitespace(" ")]
             JS_NUMBER_LITERAL@29..31
-              JS_NUMBER_LITERAL_TOKEN@29..31 "10"
-        SEMICOLON@31..33 "; "
+              JS_NUMBER_LITERAL_TOKEN@29..31 "10" [] []
+        SEMICOLON@31..33 ";" [] [Whitespace(" ")]
         FOR_STMT_UPDATE@33..37
           JS_PRE_UPDATE_EXPRESSION@33..37
-            PLUS2@33..35 "++"
+            PLUS2@33..35 "++" [] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@35..37
-              IDENT@35..37 "i "
+              IDENT@35..37 "i" [] [Whitespace(" ")]
         JS_BLOCK_STATEMENT@37..40
-          L_CURLY@37..38 "{"
+          L_CURLY@37..38 "{" [] []
           LIST@38..38
-          R_CURLY@38..40 "}\n"
+          R_CURLY@38..40 "}" [] [Whitespace("\n")]
 --
 error[SyntaxError]: expected `'('` but instead found `;`
   ┌─ for_stmt_err.js:1:5

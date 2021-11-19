@@ -2,48 +2,48 @@ JS_ROOT@0..41
   LIST@0..0
   LIST@0..41
     JS_CLASS_DECLARATION@0..41
-      CLASS_KW@0..6 "class "
+      CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@6..10
-        IDENT@6..10 "foo "
-      L_CURLY@10..12 "{ "
+        IDENT@6..10 "foo" [] [Whitespace(" ")]
+      L_CURLY@10..12 "{" [] [Whitespace(" ")]
       LIST@12..39
         JS_EMPTY_CLASS_MEMBER@12..13
-          SEMICOLON@12..13 ";"
+          SEMICOLON@12..13 ";" [] []
         JS_EMPTY_CLASS_MEMBER@13..14
-          SEMICOLON@13..14 ";"
+          SEMICOLON@13..14 ";" [] []
         JS_EMPTY_CLASS_MEMBER@14..15
-          SEMICOLON@14..15 ";"
+          SEMICOLON@14..15 ";" [] []
         JS_EMPTY_CLASS_MEMBER@15..16
-          SEMICOLON@15..16 ";"
+          SEMICOLON@15..16 ";" [] []
         JS_EMPTY_CLASS_MEMBER@16..17
-          SEMICOLON@16..17 ";"
+          SEMICOLON@16..17 ";" [] []
         JS_EMPTY_CLASS_MEMBER@17..18
-          SEMICOLON@17..18 ";"
+          SEMICOLON@17..18 ";" [] []
         JS_EMPTY_CLASS_MEMBER@18..19
-          SEMICOLON@18..19 ";"
+          SEMICOLON@18..19 ";" [] []
         JS_EMPTY_CLASS_MEMBER@19..20
-          SEMICOLON@19..20 ";"
+          SEMICOLON@19..20 ";" [] []
         JS_EMPTY_CLASS_MEMBER@20..21
-          SEMICOLON@20..21 ";"
+          SEMICOLON@20..21 ";" [] []
         JS_EMPTY_CLASS_MEMBER@21..23
-          SEMICOLON@21..23 "; "
+          SEMICOLON@21..23 ";" [] [Whitespace(" ")]
         JS_GETTER_CLASS_MEMBER@23..35
-          GET_KW@23..27 "get "
+          GET_KW@23..27 "get" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@27..30
-            IDENT@27..30 "foo"
-          L_PAREN@30..31 "("
-          R_PAREN@31..33 ") "
+            IDENT@27..30 "foo" [] []
+          L_PAREN@30..31 "(" [] []
+          R_PAREN@31..33 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@33..35
-            L_CURLY@33..34 "{"
+            L_CURLY@33..34 "{" [] []
             LIST@34..34
             LIST@34..34
-            R_CURLY@34..35 "}"
+            R_CURLY@34..35 "}" [] []
         JS_EMPTY_CLASS_MEMBER@35..36
-          SEMICOLON@35..36 ";"
+          SEMICOLON@35..36 ";" [] []
         JS_EMPTY_CLASS_MEMBER@36..37
-          SEMICOLON@36..37 ";"
+          SEMICOLON@36..37 ";" [] []
         JS_EMPTY_CLASS_MEMBER@37..38
-          SEMICOLON@37..38 ";"
+          SEMICOLON@37..38 ";" [] []
         JS_EMPTY_CLASS_MEMBER@38..39
-          SEMICOLON@38..39 ";"
-      R_CURLY@39..41 "}\n"
+          SEMICOLON@38..39 ";" [] []
+      R_CURLY@39..41 "}" [] [Whitespace("\n")]

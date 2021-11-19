@@ -2,22 +2,22 @@ JS_ROOT@0..34
   LIST@0..0
   LIST@0..34
     JS_BLOCK_STATEMENT@0..34
-      L_CURLY@0..1 "{"
+      L_CURLY@0..1 "{" [] []
       LIST@1..31
         ERROR@1..31
-          EXPORT_KW@1..10 "\n export "
+          EXPORT_KW@1..10 "export" [Whitespace("\n ")] [Whitespace(" ")]
           EXPORT_NAMED@10..31
-            L_CURLY@10..12 "{ "
+            L_CURLY@10..12 "{" [] [Whitespace(" ")]
             LIST@12..17
               SPECIFIER@12..17
                 NAME@12..17
-                  IDENT@12..17 "pain "
-            R_CURLY@17..19 "} "
-            FROM_KW@19..24 "from "
+                  IDENT@12..17 "pain" [] [Whitespace(" ")]
+            R_CURLY@17..19 "}" [] [Whitespace(" ")]
+            FROM_KW@19..24 "from" [] [Whitespace(" ")]
             JS_STRING_LITERAL@24..30
-              JS_STRING_LITERAL_TOKEN@24..30 "\"life\""
-            SEMICOLON@30..31 ";"
-      R_CURLY@31..34 "\n}\n"
+              JS_STRING_LITERAL_TOKEN@24..30 "\"life\"" [] []
+            SEMICOLON@30..31 ";" [] []
+      R_CURLY@31..34 "}" [Whitespace("\n")] [Whitespace("\n")]
 --
 error[SyntaxError]: Illegal use of an import declaration not at the top level
   ┌─ export_decl_not_top_level.js:2:2

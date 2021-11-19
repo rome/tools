@@ -3,13 +3,13 @@ JS_ROOT@0..19
   LIST@0..19
     JS_EXPRESSION_STATEMENT@0..4
       JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-        IDENT@0..3 "foo"
-      SEMICOLON@3..4 ";"
+        IDENT@0..3 "foo" [] []
+      SEMICOLON@3..4 ";" [] []
     JS_EXPRESSION_STATEMENT@4..11
       JS_REFERENCE_IDENTIFIER_EXPRESSION@4..10
-        IDENT@4..10 "\nyield"
-      SEMICOLON@10..11 ";"
+        IDENT@4..10 "yield" [Whitespace("\n")] []
+      SEMICOLON@10..11 ";" [] []
     JS_EXPRESSION_STATEMENT@11..19
       JS_REFERENCE_IDENTIFIER_EXPRESSION@11..17
-        IDENT@11..17 "\nawait"
-      SEMICOLON@17..19 ";\n"
+        IDENT@11..17 "await" [Whitespace("\n")] []
+      SEMICOLON@17..19 ";" [] [Whitespace("\n")]

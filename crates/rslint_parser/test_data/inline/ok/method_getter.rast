@@ -2,20 +2,20 @@ JS_ROOT@0..28
   LIST@0..0
   LIST@0..28
     JS_CLASS_DECLARATION@0..28
-      CLASS_KW@0..6 "class "
+      CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@6..10
-        IDENT@6..10 "foo "
-      L_CURLY@10..11 "{"
+        IDENT@6..10 "foo" [] [Whitespace(" ")]
+      L_CURLY@10..11 "{" [] []
       LIST@11..25
         JS_GETTER_CLASS_MEMBER@11..25
-          GET_KW@11..17 "\n get "
+          GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@17..20
-            IDENT@17..20 "bar"
-          L_PAREN@20..21 "("
-          R_PAREN@21..23 ") "
+            IDENT@17..20 "bar" [] []
+          L_PAREN@20..21 "(" [] []
+          R_PAREN@21..23 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@23..25
-            L_CURLY@23..24 "{"
+            L_CURLY@23..24 "{" [] []
             LIST@24..24
             LIST@24..24
-            R_CURLY@24..25 "}"
-      R_CURLY@25..28 "\n}\n"
+            R_CURLY@24..25 "}" [] []
+      R_CURLY@25..28 "}" [Whitespace("\n")] [Whitespace("\n")]

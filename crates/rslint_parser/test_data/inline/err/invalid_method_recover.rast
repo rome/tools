@@ -2,48 +2,48 @@ JS_ROOT@0..48
   LIST@0..0
   LIST@0..48
     JS_CLASS_DECLARATION@0..46
-      CLASS_KW@0..6 "class "
-      L_CURLY@6..7 "{"
+      CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      L_CURLY@6..7 "{" [] []
       LIST@7..44
         JS_PROPERTY_CLASS_MEMBER@7..44
           JS_COMPUTED_MEMBER_NAME@7..18
-            L_BRACK@7..11 "\n  ["
+            L_BRACK@7..11 "[" [Whitespace("\n  ")] []
             JS_BINARY_EXPRESSION@11..16
               JS_NUMBER_LITERAL@11..13
-                JS_NUMBER_LITERAL_TOKEN@11..13 "1 "
-              PLUS@13..15 "+ "
+                JS_NUMBER_LITERAL_TOKEN@11..13 "1" [] [Whitespace(" ")]
+              PLUS@13..15 "+" [] [Whitespace(" ")]
               JS_NUMBER_LITERAL@15..16
-                JS_NUMBER_LITERAL_TOKEN@15..16 "1"
-            R_BRACK@16..18 "] "
+                JS_NUMBER_LITERAL_TOKEN@15..16 "1" [] []
+            R_BRACK@16..18 "]" [] [Whitespace(" ")]
           JS_EQUAL_VALUE_CLAUSE@18..43
-            EQ@18..20 "= "
+            EQ@18..20 "=" [] [Whitespace(" ")]
             JS_ARROW_FUNCTION_EXPRESSION@20..43
               JS_PARAMETER_LIST@20..23
-                L_PAREN@20..21 "("
+                L_PAREN@20..21 "(" [] []
                 LIST@21..21
-                R_PAREN@21..23 ") "
-              FAT_ARROW@23..26 "=> "
+                R_PAREN@21..23 ")" [] [Whitespace(" ")]
+              FAT_ARROW@23..26 "=>" [] [Whitespace(" ")]
               JS_FUNCTION_BODY@26..43
-                L_CURLY@26..27 "{"
+                L_CURLY@26..27 "{" [] []
                 LIST@27..27
                 LIST@27..39
                   JS_VARIABLE_DECLARATION_STATEMENT@27..39
                     JS_VARIABLE_DECLARATION@27..39
-                      LET_KW@27..36 "\n    let "
+                      LET_KW@27..36 "let" [Whitespace("\n    ")] [Whitespace(" ")]
                       LIST@36..39
                         JS_VARIABLE_DECLARATOR@36..39
                           SINGLE_PATTERN@36..37
                             NAME@36..37
-                              IDENT@36..37 "a"
+                              IDENT@36..37 "a" [] []
                           JS_EQUAL_VALUE_CLAUSE@37..39
-                            EQ@37..38 "="
+                            EQ@37..38 "=" [] []
                             ERROR@38..39
-                              SEMICOLON@38..39 ";"
-                R_CURLY@39..43 "\n  }"
-          SEMICOLON@43..44 ";"
-      R_CURLY@44..46 "\n}"
+                              SEMICOLON@38..39 ";" [] []
+                R_CURLY@39..43 "}" [Whitespace("\n  ")] []
+          SEMICOLON@43..44 ";" [] []
+      R_CURLY@44..46 "}" [Whitespace("\n")] []
     JS_EMPTY_STATEMENT@46..48
-      SEMICOLON@46..48 ";\n"
+      SEMICOLON@46..48 ";" [] [Whitespace("\n")]
 --
 error[SyntaxError]: class declarations must have a name
   ┌─ invalid_method_recover.js:1:7

@@ -4,16 +4,16 @@ JS_ROOT@0..14
     JS_EXPRESSION_STATEMENT@0..14
       CALL_EXPR@0..14
         JS_PARENTHESIZED_EXPRESSION@0..7
-          L_PAREN@0..1 "("
+          L_PAREN@0..1 "(" [] []
           JS_PARENTHESIZED_EXPRESSION@1..6
-            L_PAREN@1..2 "("
+            L_PAREN@1..2 "(" [] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@2..5
-              IDENT@2..5 "foo"
-            R_PAREN@5..6 ")"
-          R_PAREN@6..7 ")"
+              IDENT@2..5 "foo" [] []
+            R_PAREN@5..6 ")" [] []
+          R_PAREN@6..7 ")" [] []
         ARG_LIST@7..14
-          L_PAREN@7..9 "\n("
+          L_PAREN@7..9 "(" [Whitespace("\n")] []
           LIST@9..12
             JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
-              IDENT@9..12 "foo"
-          R_PAREN@12..14 ")\n"
+              IDENT@9..12 "foo" [] []
+          R_PAREN@12..14 ")" [] [Whitespace("\n")]

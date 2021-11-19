@@ -180,7 +180,7 @@ pub fn test_trivia_attached_to_tokens() {
 
 	let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
 	let m = parse_module(text, 0);
-	let s = m.syntax();
+	let s = dbg!(m.syntax());
 	let tokens = s.tokens();
 
 	let is_let = |x: &&SyntaxToken| x.text_trimmed() == "let";

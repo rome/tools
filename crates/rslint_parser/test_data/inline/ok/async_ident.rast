@@ -3,14 +3,14 @@ JS_ROOT@0..15
   LIST@0..15
     JS_VARIABLE_DECLARATION_STATEMENT@0..15
       JS_VARIABLE_DECLARATION@0..13
-        LET_KW@0..4 "let "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..13
           JS_VARIABLE_DECLARATOR@4..13
             SINGLE_PATTERN@4..6
               NAME@4..6
-                IDENT@4..6 "a "
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..13
-              EQ@6..8 "= "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_REFERENCE_IDENTIFIER_EXPRESSION@8..13
-                IDENT@8..13 "async"
-      SEMICOLON@13..15 ";\n"
+                IDENT@8..13 "async" [] []
+      SEMICOLON@13..15 ";" [] [Whitespace("\n")]

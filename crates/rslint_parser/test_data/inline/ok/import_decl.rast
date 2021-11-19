@@ -2,14 +2,14 @@ JS_ROOT@0..28
   LIST@0..0
   LIST@0..28
     IMPORT_DECL@0..28
-      IMPORT_KW@0..7 "import "
+      IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       LIST@7..16
         WILDCARD_IMPORT@7..16
-          STAR@7..9 "* "
-          AS_KW@9..12 "as "
+          STAR@7..9 "*" [] [Whitespace(" ")]
+          AS_KW@9..12 "as" [] [Whitespace(" ")]
           NAME@12..16
-            IDENT@12..16 "foo "
-      FROM_KW@16..21 "from "
+            IDENT@12..16 "foo" [] [Whitespace(" ")]
+      FROM_KW@16..21 "from" [] [Whitespace(" ")]
       JS_STRING_LITERAL@21..26
-        JS_STRING_LITERAL_TOKEN@21..26 "\"bla\""
-      SEMICOLON@26..28 ";\n"
+        JS_STRING_LITERAL_TOKEN@21..26 "\"bla\"" [] []
+      SEMICOLON@26..28 ";" [] [Whitespace("\n")]

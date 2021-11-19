@@ -4,22 +4,22 @@ JS_ROOT@0..43
     JS_EXPRESSION_STATEMENT@0..43
       JS_ARROW_FUNCTION_EXPRESSION@0..43
         JS_PARAMETER_LIST@0..3
-          L_PAREN@0..1 "("
+          L_PAREN@0..1 "(" [] []
           LIST@1..1
-          R_PAREN@1..3 ") "
-        FAT_ARROW@3..6 "=> "
+          R_PAREN@1..3 ")" [] [Whitespace(" ")]
+        FAT_ARROW@3..6 "=>" [] [Whitespace(" ")]
         JS_FUNCTION_BODY@6..43
-          L_CURLY@6..7 "{"
+          L_CURLY@6..7 "{" [] []
           LIST@7..7
           LIST@7..40
             JS_RETURN_STATEMENT@7..17
-              RETURN_KW@7..16 "\n  return"
-              SEMICOLON@16..17 ";"
+              RETURN_KW@7..16 "return" [Whitespace("\n  ")] []
+              SEMICOLON@16..17 ";" [] []
             JS_RETURN_STATEMENT@17..31
-              RETURN_KW@17..27 "\n  return "
+              RETURN_KW@17..27 "return" [Whitespace("\n  ")] [Whitespace(" ")]
               JS_REFERENCE_IDENTIFIER_EXPRESSION@27..30
-                IDENT@27..30 "foo"
-              SEMICOLON@30..31 ";"
+                IDENT@27..30 "foo" [] []
+              SEMICOLON@30..31 ";" [] []
             JS_RETURN_STATEMENT@31..40
-              RETURN_KW@31..40 "\n  return"
-          R_CURLY@40..43 "\n}\n"
+              RETURN_KW@31..40 "return" [Whitespace("\n  ")] []
+          R_CURLY@40..43 "}" [Whitespace("\n")] [Whitespace("\n")]

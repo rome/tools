@@ -4,93 +4,93 @@ JS_ROOT@0..101
     JS_EXPRESSION_STATEMENT@0..21
       ASSIGN_EXPR@0..20
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
-          IDENT@0..4 "foo "
-        PLUSEQ@4..7 "+= "
+          IDENT@0..4 "foo" [] [Whitespace(" ")]
+        PLUSEQ@4..7 "+=" [] [Whitespace(" ")]
         ASSIGN_EXPR@7..20
           JS_REFERENCE_IDENTIFIER_EXPRESSION@7..11
-            IDENT@7..11 "bar "
-          EQ@11..13 "= "
+            IDENT@7..11 "bar" [] [Whitespace(" ")]
+          EQ@11..13 "=" [] [Whitespace(" ")]
           ASSIGN_EXPR@13..20
             JS_REFERENCE_IDENTIFIER_EXPRESSION@13..15
-              IDENT@13..15 "b "
-            QUESTION2EQ@15..19 "??= "
+              IDENT@13..15 "b" [] [Whitespace(" ")]
+            QUESTION2EQ@15..19 "??=" [] [Whitespace(" ")]
             JS_NUMBER_LITERAL@19..20
-              JS_NUMBER_LITERAL_TOKEN@19..20 "3"
-      SEMICOLON@20..21 ";"
+              JS_NUMBER_LITERAL_TOKEN@19..20 "3" [] []
+      SEMICOLON@20..21 ";" [] []
     JS_EXPRESSION_STATEMENT@21..33
       ASSIGN_EXPR@21..32
         JS_REFERENCE_IDENTIFIER_EXPRESSION@21..26
-          IDENT@21..26 "\nfoo "
-        MINUSEQ@26..29 "-= "
+          IDENT@21..26 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        MINUSEQ@26..29 "-=" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@29..32
-          IDENT@29..32 "bar"
-      SEMICOLON@32..33 ";"
+          IDENT@29..32 "bar" [] []
+      SEMICOLON@32..33 ";" [] []
     JS_EXPRESSION_STATEMENT@33..51
       ASSIGN_EXPR@33..50
         ARRAY_PATTERN@33..45
-          L_BRACK@33..35 "\n["
+          L_BRACK@33..35 "[" [Whitespace("\n")] []
           LIST@35..43
             SINGLE_PATTERN@35..38
               NAME@35..38
-                IDENT@35..38 "foo"
-            COMMA@38..40 ", "
+                IDENT@35..38 "foo" [] []
+            COMMA@38..40 "," [] [Whitespace(" ")]
             SINGLE_PATTERN@40..43
               NAME@40..43
-                IDENT@40..43 "bar"
-          R_BRACK@43..45 "] "
-        EQ@45..47 "= "
+                IDENT@40..43 "bar" [] []
+          R_BRACK@43..45 "]" [] [Whitespace(" ")]
+        EQ@45..47 "=" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@47..50
-          IDENT@47..50 "baz"
-      SEMICOLON@50..51 ";"
+          IDENT@47..50 "baz" [] []
+      SEMICOLON@50..51 ";" [] []
     JS_EXPRESSION_STATEMENT@51..72
       JS_PARENTHESIZED_EXPRESSION@51..71
-        L_PAREN@51..53 "\n("
+        L_PAREN@51..53 "(" [Whitespace("\n")] []
         ASSIGN_EXPR@53..70
           OBJECT_PATTERN@53..66
-            L_CURLY@53..55 "{ "
+            L_CURLY@53..55 "{" [] [Whitespace(" ")]
             LIST@55..64
               SINGLE_PATTERN@55..58
                 NAME@55..58
-                  IDENT@55..58 "bar"
-              COMMA@58..60 ", "
+                  IDENT@55..58 "bar" [] []
+              COMMA@58..60 "," [] [Whitespace(" ")]
               SINGLE_PATTERN@60..64
                 NAME@60..64
-                  IDENT@60..64 "baz "
-            R_CURLY@64..66 "} "
-          EQ@66..68 "= "
+                  IDENT@60..64 "baz" [] [Whitespace(" ")]
+            R_CURLY@64..66 "}" [] [Whitespace(" ")]
+          EQ@66..68 "=" [] [Whitespace(" ")]
           JS_OBJECT_EXPRESSION@68..70
-            L_CURLY@68..69 "{"
+            L_CURLY@68..69 "{" [] []
             LIST@69..69
-            R_CURLY@69..70 "}"
-        R_PAREN@70..71 ")"
-      SEMICOLON@71..72 ";"
+            R_CURLY@69..70 "}" [] []
+        R_PAREN@70..71 ")" [] []
+      SEMICOLON@71..72 ";" [] []
     JS_EXPRESSION_STATEMENT@72..101
       JS_PARENTHESIZED_EXPRESSION@72..99
-        L_PAREN@72..74 "\n("
+        L_PAREN@72..74 "(" [Whitespace("\n")] []
         ASSIGN_EXPR@74..98
           OBJECT_PATTERN@74..94
-            L_CURLY@74..76 "{ "
+            L_CURLY@74..76 "{" [] [Whitespace(" ")]
             LIST@76..92
               KEY_VALUE_PATTERN@76..86
                 NAME@76..79
-                  IDENT@76..79 "bar"
-                COLON@79..81 ": "
+                  IDENT@76..79 "bar" [] []
+                COLON@79..81 ":" [] [Whitespace(" ")]
                 ARRAY_PATTERN@81..86
-                  L_BRACK@81..82 "["
+                  L_BRACK@81..82 "[" [] []
                   LIST@82..85
                     SINGLE_PATTERN@82..85
                       NAME@82..85
-                        IDENT@82..85 "baz"
-                  R_BRACK@85..86 "]"
-              COMMA@86..88 ", "
+                        IDENT@82..85 "baz" [] []
+                  R_BRACK@85..86 "]" [] []
+              COMMA@86..88 "," [] [Whitespace(" ")]
               SINGLE_PATTERN@88..92
                 NAME@88..92
-                  IDENT@88..92 "foo "
-            R_CURLY@92..94 "} "
-          EQ@94..96 "= "
+                  IDENT@88..92 "foo" [] [Whitespace(" ")]
+            R_CURLY@92..94 "}" [] [Whitespace(" ")]
+          EQ@94..96 "=" [] [Whitespace(" ")]
           JS_OBJECT_EXPRESSION@96..98
-            L_CURLY@96..97 "{"
+            L_CURLY@96..97 "{" [] []
             LIST@97..97
-            R_CURLY@97..98 "}"
-        R_PAREN@98..99 ")"
-      SEMICOLON@99..101 ";\n"
+            R_CURLY@97..98 "}" [] []
+        R_PAREN@98..99 ")" [] []
+      SEMICOLON@99..101 ";" [] [Whitespace("\n")]

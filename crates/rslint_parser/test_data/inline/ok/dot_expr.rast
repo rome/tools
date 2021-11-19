@@ -4,42 +4,42 @@ JS_ROOT@0..54
     JS_EXPRESSION_STATEMENT@0..7
       DOT_EXPR@0..7
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo"
-        DOT@3..4 "."
+          IDENT@0..3 "foo" [] []
+        DOT@3..4 "." [] []
         NAME@4..7
-          IDENT@4..7 "bar"
+          IDENT@4..7 "bar" [] []
     JS_EXPRESSION_STATEMENT@7..17
       DOT_EXPR@7..17
         JS_REFERENCE_IDENTIFIER_EXPRESSION@7..11
-          IDENT@7..11 "\nfoo"
-        DOT@11..12 "."
+          IDENT@7..11 "foo" [Whitespace("\n")] []
+        DOT@11..12 "." [] []
         NAME@12..17
-          IDENT@12..17 "await"
+          IDENT@12..17 "await" [] []
     JS_EXPRESSION_STATEMENT@17..27
       DOT_EXPR@17..27
         JS_REFERENCE_IDENTIFIER_EXPRESSION@17..21
-          IDENT@17..21 "\nfoo"
-        DOT@21..22 "."
+          IDENT@17..21 "foo" [Whitespace("\n")] []
+        DOT@21..22 "." [] []
         NAME@22..27
-          IDENT@22..27 "yield"
+          IDENT@22..27 "yield" [] []
     JS_EXPRESSION_STATEMENT@27..35
       DOT_EXPR@27..35
         JS_REFERENCE_IDENTIFIER_EXPRESSION@27..31
-          IDENT@27..31 "\nfoo"
-        DOT@31..32 "."
+          IDENT@27..31 "foo" [Whitespace("\n")] []
+        DOT@31..32 "." [] []
         NAME@32..35
-          IDENT@32..35 "for"
+          IDENT@32..35 "for" [] []
     JS_EXPRESSION_STATEMENT@35..44
       DOT_EXPR@35..44
         JS_REFERENCE_IDENTIFIER_EXPRESSION@35..39
-          IDENT@35..39 "\nfoo"
-        QUESTIONDOT@39..41 "?."
+          IDENT@35..39 "foo" [Whitespace("\n")] []
+        QUESTIONDOT@39..41 "?." [] []
         NAME@41..44
-          IDENT@41..44 "for"
+          IDENT@41..44 "for" [] []
     JS_EXPRESSION_STATEMENT@44..54
       DOT_EXPR@44..54
         JS_REFERENCE_IDENTIFIER_EXPRESSION@44..48
-          IDENT@44..48 "\nfoo"
-        QUESTIONDOT@48..50 "?."
+          IDENT@44..48 "foo" [Whitespace("\n")] []
+        QUESTIONDOT@48..50 "?." [] []
         NAME@50..54
-          IDENT@50..54 "bar\n"
+          IDENT@50..54 "bar" [] [Whitespace("\n")]

@@ -3,99 +3,99 @@ JS_ROOT@0..170
   LIST@0..170
     JS_VARIABLE_DECLARATION_STATEMENT@0..170
       JS_VARIABLE_DECLARATION@0..170
-        LET_KW@0..4 "let "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..170
           JS_VARIABLE_DECLARATOR@4..170
             SINGLE_PATTERN@4..6
               NAME@4..6
-                IDENT@4..6 "a "
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..170
-              EQ@6..8 "= "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_OBJECT_EXPRESSION@8..170
-                L_CURLY@8..9 "{"
+                L_CURLY@8..9 "{" [] []
                 LIST@9..167
                   JS_SETTER_OBJECT_MEMBER@9..30
-                    SET_KW@9..15 "\n set "
+                    SET_KW@9..15 "set" [Whitespace("\n ")] [Whitespace(" ")]
                     JS_LITERAL_MEMBER_NAME@15..18
-                      IDENT@15..18 "foo"
-                    L_PAREN@18..19 "("
+                      IDENT@15..18 "foo" [] []
+                    L_PAREN@18..19 "(" [] []
                     SINGLE_PATTERN@19..24
                       NAME@19..24
-                        IDENT@19..24 "value"
-                    R_PAREN@24..26 ") "
+                        IDENT@19..24 "value" [] []
+                    R_PAREN@24..26 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@26..30
-                      L_CURLY@26..27 "{"
+                      L_CURLY@26..27 "{" [] []
                       LIST@27..27
                       LIST@27..27
-                      R_CURLY@27..30 "\n }"
-                  COMMA@30..31 ","
+                      R_CURLY@27..30 "}" [Whitespace("\n ")] []
+                  COMMA@30..31 "," [] []
                   JS_SETTER_OBJECT_MEMBER@31..55
-                    SET_KW@31..38 "\n\n set "
+                    SET_KW@31..38 "set" [Whitespace("\n\n ")] [Whitespace(" ")]
                     JS_LITERAL_MEMBER_NAME@38..43
-                      JS_STRING_LITERAL_TOKEN@38..43 "\"bar\""
-                    L_PAREN@43..44 "("
+                      JS_STRING_LITERAL_TOKEN@38..43 "\"bar\"" [] []
+                    L_PAREN@43..44 "(" [] []
                     SINGLE_PATTERN@44..49
                       NAME@44..49
-                        IDENT@44..49 "value"
-                    R_PAREN@49..51 ") "
+                        IDENT@44..49 "value" [] []
+                    R_PAREN@49..51 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@51..55
-                      L_CURLY@51..52 "{"
+                      L_CURLY@51..52 "{" [] []
                       LIST@52..52
                       LIST@52..52
-                      R_CURLY@52..55 "\n }"
-                  COMMA@55..56 ","
+                      R_CURLY@52..55 "}" [Whitespace("\n ")] []
+                  COMMA@55..56 "," [] []
                   JS_SETTER_OBJECT_MEMBER@56..86
-                    SET_KW@56..63 "\n\n set "
+                    SET_KW@56..63 "set" [Whitespace("\n\n ")] [Whitespace(" ")]
                     JS_COMPUTED_MEMBER_NAME@63..74
-                      L_BRACK@63..64 "["
+                      L_BRACK@63..64 "[" [] []
                       JS_BINARY_EXPRESSION@64..73
                         JS_STRING_LITERAL@64..68
-                          JS_STRING_LITERAL_TOKEN@64..68 "\"a\" "
-                        PLUS@68..70 "+ "
+                          JS_STRING_LITERAL_TOKEN@64..68 "\"a\"" [] [Whitespace(" ")]
+                        PLUS@68..70 "+" [] [Whitespace(" ")]
                         JS_STRING_LITERAL@70..73
-                          JS_STRING_LITERAL_TOKEN@70..73 "\"b\""
-                      R_BRACK@73..74 "]"
-                    L_PAREN@74..75 "("
+                          JS_STRING_LITERAL_TOKEN@70..73 "\"b\"" [] []
+                      R_BRACK@73..74 "]" [] []
+                    L_PAREN@74..75 "(" [] []
                     SINGLE_PATTERN@75..80
                       NAME@75..80
-                        IDENT@75..80 "value"
-                    R_PAREN@80..82 ") "
+                        IDENT@75..80 "value" [] []
+                    R_PAREN@80..82 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@82..86
-                      L_CURLY@82..83 "{"
+                      L_CURLY@82..83 "{" [] []
                       LIST@83..83
                       LIST@83..83
-                      R_CURLY@83..86 "\n }"
-                  COMMA@86..87 ","
+                      R_CURLY@83..86 "}" [Whitespace("\n ")] []
+                  COMMA@86..87 "," [] []
                   JS_SETTER_OBJECT_MEMBER@87..107
-                    SET_KW@87..94 "\n\n\tset "
+                    SET_KW@87..94 "set" [Whitespace("\n\n\t")] [Whitespace(" ")]
                     JS_LITERAL_MEMBER_NAME@94..95
-                      JS_NUMBER_LITERAL_TOKEN@94..95 "5"
-                    L_PAREN@95..96 "("
+                      JS_NUMBER_LITERAL_TOKEN@94..95 "5" [] []
+                    L_PAREN@95..96 "(" [] []
                     SINGLE_PATTERN@96..101
                       NAME@96..101
-                        IDENT@96..101 "value"
-                    R_PAREN@101..103 ") "
+                        IDENT@96..101 "value" [] []
+                    R_PAREN@101..103 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@103..107
-                      L_CURLY@103..104 "{"
+                      L_CURLY@103..104 "{" [] []
                       LIST@104..104
                       LIST@104..104
-                      R_CURLY@104..107 "\n\t}"
-                  COMMA@107..108 ","
+                      R_CURLY@104..107 "}" [Whitespace("\n\t")] []
+                  COMMA@107..108 "," [] []
                   JS_METHOD_OBJECT_MEMBER@108..167
                     JS_LITERAL_MEMBER_NAME@108..114
-                      IDENT@108..114 "\n\n\tset"
+                      IDENT@108..114 "set" [Whitespace("\n\n\t")] []
                     JS_PARAMETER_LIST@114..117
-                      L_PAREN@114..115 "("
+                      L_PAREN@114..115 "(" [] []
                       LIST@115..115
-                      R_PAREN@115..117 ") "
+                      R_PAREN@115..117 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@117..167
-                      L_CURLY@117..118 "{"
+                      L_CURLY@117..118 "{" [] []
                       LIST@118..118
                       LIST@118..164
                         JS_RETURN_STATEMENT@118..164
-                          RETURN_KW@118..128 "\n\t return "
+                          RETURN_KW@118..128 "return" [Whitespace("\n\t ")] [Whitespace(" ")]
                           JS_STRING_LITERAL@128..163
-                            JS_STRING_LITERAL_TOKEN@128..163 "\"This is a method and ..."
-                          SEMICOLON@163..164 ";"
-                      R_CURLY@164..167 "\n\t}"
-                R_CURLY@167..170 "\n}\n"
+                            JS_STRING_LITERAL_TOKEN@128..163 "\"This is a method and not a setter\"" [] []
+                          SEMICOLON@163..164 ";" [] []
+                      R_CURLY@164..167 "}" [Whitespace("\n\t")] []
+                R_CURLY@167..170 "}" [Whitespace("\n")] [Whitespace("\n")]

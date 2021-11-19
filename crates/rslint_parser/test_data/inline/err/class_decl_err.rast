@@ -2,26 +2,27 @@ JS_ROOT@0..137
   LIST@0..0
   LIST@0..137
     JS_CLASS_DECLARATION@0..8
-      CLASS_KW@0..6 "class "
-      L_CURLY@6..7 "{"
+      CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      L_CURLY@6..7 "{" [] []
       LIST@7..7
-      R_CURLY@7..8 "}"
+      R_CURLY@7..8 "}" [] []
     JS_CLASS_DECLARATION@8..29
-      CLASS_KW@8..15 "\nclass "
+      CLASS_KW@8..15 "class" [Whitespace("\n")] [Whitespace(" ")]
       JS_EXTENDS_CLAUSE@15..27
-        EXTENDS_KW@15..23 "extends "
+        EXTENDS_KW@15..23 "extends" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@23..27
-          IDENT@23..27 "bar "
-      L_CURLY@27..28 "{"
+          IDENT@23..27 "bar" [] [Whitespace(" ")]
+      L_CURLY@27..28 "{" [] []
       LIST@28..28
-      R_CURLY@28..29 "}"
+      R_CURLY@28..29 "}" [] []
     JS_CLASS_DECLARATION@29..73
-      CLASS_KW@29..36 "\nclass "
+      CLASS_KW@29..36 "class" [Whitespace("\n")] [Whitespace(" ")]
       JS_EXTENDS_CLAUSE@36..46
-        EXTENDS_KW@36..44 "extends "
+        EXTENDS_KW@36..44 "extends" [] [Whitespace(" ")]
         JS_OBJECT_EXPRESSION@44..46
-          L_CURLY@44..45 "{"
+          L_CURLY@44..45 "{" [] []
           LIST@45..45
+<<<<<<< HEAD
           R_CURLY@45..46 "}"
 <<<<<<< HEAD
       WHITESPACE@46..47 "\n"
@@ -46,57 +47,64 @@ JS_ROOT@0..137
           WHITESPACE@68..69 " "
           OBJECT_PATTERN@69..71
 =======
+=======
+          R_CURLY@45..46 "}" [] []
+>>>>>>> ea5c966a0 (SyntaxToken fmt::Debug also printing trivia)
       LIST@46..72
         JS_PROPERTY_CLASS_MEMBER@46..52
           JS_LITERAL_MEMBER_NAME@46..52
-            IDENT@46..52 "\nclass"
+            IDENT@46..52 "class" [Whitespace("\n")] []
         JS_UNKNOWN_MEMBER@52..59
           JS_LITERAL_MEMBER_NAME@52..59
-            IDENT@52..59 "\nclass "
+            IDENT@52..59 "class" [Whitespace("\n")] [Whitespace(" ")]
         JS_UNKNOWN_MEMBER@59..63
           JS_LITERAL_MEMBER_NAME@59..63
-            IDENT@59..63 "foo "
+            IDENT@59..63 "foo" [] [Whitespace(" ")]
         ERROR@63..65
-          L_CURLY@63..65 "{ "
+          L_CURLY@63..65 "{" [] [Whitespace(" ")]
         JS_SETTER_CLASS_MEMBER@65..72
-          SET_KW@65..69 "set "
+          SET_KW@65..69 "set" [] [Whitespace(" ")]
           OBJECT_PATTERN@69..72
+<<<<<<< HEAD
 >>>>>>> 27e9fc4c5 (LosslessTreeSinker attaching trivia to tokens)
             L_CURLY@69..70 "{"
+=======
+            L_CURLY@69..70 "{" [] []
+>>>>>>> ea5c966a0 (SyntaxToken fmt::Debug also printing trivia)
             LIST@70..70
-            R_CURLY@70..72 "} "
-      R_CURLY@72..73 "}"
+            R_CURLY@70..72 "}" [] [Whitespace(" ")]
+      R_CURLY@72..73 "}" [] []
     JS_CLASS_DECLARATION@73..108
-      CLASS_KW@73..80 "\nclass "
+      CLASS_KW@73..80 "class" [Whitespace("\n")] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@80..82
-        IDENT@80..82 "A "
+        IDENT@80..82 "A" [] [Whitespace(" ")]
       JS_EXTENDS_CLAUSE@82..106
-        EXTENDS_KW@82..90 "extends "
+        EXTENDS_KW@82..90 "extends" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@90..94
-          IDENT@90..94 "bar "
+          IDENT@90..94 "bar" [] [Whitespace(" ")]
         ERROR@94..106
-          EXTENDS_KW@94..102 "extends "
+          EXTENDS_KW@94..102 "extends" [] [Whitespace(" ")]
           TS_EXPR_WITH_TYPE_ARGS@102..106
             JS_REFERENCE_IDENTIFIER_EXPRESSION@102..106
-              IDENT@102..106 "foo "
-      L_CURLY@106..107 "{"
+              IDENT@102..106 "foo" [] [Whitespace(" ")]
+      L_CURLY@106..107 "{" [] []
       LIST@107..107
-      R_CURLY@107..108 "}"
+      R_CURLY@107..108 "}" [] []
     JS_CLASS_DECLARATION@108..137
-      CLASS_KW@108..115 "\nclass "
+      CLASS_KW@108..115 "class" [Whitespace("\n")] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@115..117
-        IDENT@115..117 "A "
+        IDENT@115..117 "A" [] [Whitespace(" ")]
       JS_EXTENDS_CLAUSE@117..134
-        EXTENDS_KW@117..125 "extends "
+        EXTENDS_KW@117..125 "extends" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@125..128
-          IDENT@125..128 "bar"
-        COMMA@128..130 ", "
+          IDENT@125..128 "bar" [] []
+        COMMA@128..130 "," [] [Whitespace(" ")]
         TS_EXPR_WITH_TYPE_ARGS@130..134
           JS_REFERENCE_IDENTIFIER_EXPRESSION@130..134
-            IDENT@130..134 "foo "
-      L_CURLY@134..135 "{"
+            IDENT@130..134 "foo" [] [Whitespace(" ")]
+      L_CURLY@134..135 "{" [] []
       LIST@135..135
-      R_CURLY@135..137 "}\n"
+      R_CURLY@135..137 "}" [] [Whitespace("\n")]
 --
 error[SyntaxError]: class declarations must have a name
   ┌─ class_decl_err.js:1:7

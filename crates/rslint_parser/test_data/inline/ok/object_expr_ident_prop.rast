@@ -3,18 +3,18 @@ JS_ROOT@0..14
   LIST@0..14
     JS_VARIABLE_DECLARATION_STATEMENT@0..14
       JS_VARIABLE_DECLARATION@0..14
-        LET_KW@0..4 "let "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..14
           JS_VARIABLE_DECLARATOR@4..14
             SINGLE_PATTERN@4..6
               NAME@4..6
-                IDENT@4..6 "b "
+                IDENT@4..6 "b" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..14
-              EQ@6..8 "= "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_OBJECT_EXPRESSION@8..14
-                L_CURLY@8..9 "{"
+                L_CURLY@8..9 "{" [] []
                 LIST@9..12
                   JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@9..12
                     JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
-                      IDENT@9..12 "foo"
-                R_CURLY@12..14 "}\n"
+                      IDENT@9..12 "foo" [] []
+                R_CURLY@12..14 "}" [] [Whitespace("\n")]

@@ -3,79 +3,79 @@ JS_ROOT@0..65
   LIST@0..65
     JS_EXPRESSION_STATEMENT@0..11
       JS_ARRAY_EXPRESSION@0..10
-        L_BRACK@0..1 "["
+        L_BRACK@0..1 "[" [] []
         LIST@1..9
           JS_REFERENCE_IDENTIFIER_EXPRESSION@1..4
-            IDENT@1..4 "foo"
-          COMMA@4..6 ", "
+            IDENT@1..4 "foo" [] []
+          COMMA@4..6 "," [] [Whitespace(" ")]
           JS_REFERENCE_IDENTIFIER_EXPRESSION@6..9
-            IDENT@6..9 "bar"
-        R_BRACK@9..10 "]"
-      SEMICOLON@10..11 ";"
+            IDENT@6..9 "bar" [] []
+        R_BRACK@9..10 "]" [] []
+      SEMICOLON@10..11 ";" [] []
     JS_EXPRESSION_STATEMENT@11..18
       JS_ARRAY_EXPRESSION@11..17
-        L_BRACK@11..13 "\n["
+        L_BRACK@11..13 "[" [Whitespace("\n")] []
         LIST@13..16
           JS_REFERENCE_IDENTIFIER_EXPRESSION@13..16
-            IDENT@13..16 "foo"
-        R_BRACK@16..17 "]"
-      SEMICOLON@17..18 ";"
+            IDENT@13..16 "foo" [] []
+        R_BRACK@16..17 "]" [] []
+      SEMICOLON@17..18 ";" [] []
     JS_EXPRESSION_STATEMENT@18..26
       JS_ARRAY_EXPRESSION@18..25
-        L_BRACK@18..20 "\n["
+        L_BRACK@18..20 "[" [Whitespace("\n")] []
         LIST@20..24
           JS_ARRAY_HOLE@20..20
-          COMMA@20..21 ","
+          COMMA@20..21 "," [] []
           JS_REFERENCE_IDENTIFIER_EXPRESSION@21..24
-            IDENT@21..24 "foo"
-        R_BRACK@24..25 "]"
-      SEMICOLON@25..26 ";"
+            IDENT@21..24 "foo" [] []
+        R_BRACK@24..25 "]" [] []
+      SEMICOLON@25..26 ";" [] []
     JS_EXPRESSION_STATEMENT@26..34
       JS_ARRAY_EXPRESSION@26..33
-        L_BRACK@26..28 "\n["
+        L_BRACK@26..28 "[" [Whitespace("\n")] []
         LIST@28..32
           JS_REFERENCE_IDENTIFIER_EXPRESSION@28..31
-            IDENT@28..31 "foo"
-          COMMA@31..32 ","
-        R_BRACK@32..33 "]"
-      SEMICOLON@33..34 ";"
+            IDENT@28..31 "foo" [] []
+          COMMA@31..32 "," [] []
+        R_BRACK@32..33 "]" [] []
+      SEMICOLON@33..34 ";" [] []
     JS_EXPRESSION_STATEMENT@34..50
       JS_ARRAY_EXPRESSION@34..49
-        L_BRACK@34..36 "\n["
+        L_BRACK@34..36 "[" [Whitespace("\n")] []
         LIST@36..48
           JS_ARRAY_HOLE@36..36
-          COMMA@36..37 ","
+          COMMA@36..37 "," [] []
           JS_ARRAY_HOLE@37..37
-          COMMA@37..38 ","
+          COMMA@37..38 "," [] []
           JS_ARRAY_HOLE@38..38
-          COMMA@38..39 ","
+          COMMA@38..39 "," [] []
           JS_ARRAY_HOLE@39..39
-          COMMA@39..40 ","
+          COMMA@39..40 "," [] []
           JS_ARRAY_HOLE@40..40
-          COMMA@40..41 ","
+          COMMA@40..41 "," [] []
           JS_REFERENCE_IDENTIFIER_EXPRESSION@41..44
-            IDENT@41..44 "foo"
-          COMMA@44..45 ","
+            IDENT@41..44 "foo" [] []
+          COMMA@44..45 "," [] []
           JS_ARRAY_HOLE@45..45
-          COMMA@45..46 ","
+          COMMA@45..46 "," [] []
           JS_ARRAY_HOLE@46..46
-          COMMA@46..47 ","
+          COMMA@46..47 "," [] []
           JS_ARRAY_HOLE@47..47
-          COMMA@47..48 ","
-        R_BRACK@48..49 "]"
-      SEMICOLON@49..50 ";"
+          COMMA@47..48 "," [] []
+        R_BRACK@48..49 "]" [] []
+      SEMICOLON@49..50 ";" [] []
     JS_EXPRESSION_STATEMENT@50..65
       JS_ARRAY_EXPRESSION@50..63
-        L_BRACK@50..52 "\n["
+        L_BRACK@50..52 "[" [Whitespace("\n")] []
         LIST@52..62
           SPREAD_ELEMENT@52..56
-            DOT2@52..55 "..."
+            DOT2@52..55 "..." [] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@55..56
-              IDENT@55..56 "a"
-          COMMA@56..58 ", "
+              IDENT@55..56 "a" [] []
+          COMMA@56..58 "," [] [Whitespace(" ")]
           SPREAD_ELEMENT@58..62
-            DOT2@58..61 "..."
+            DOT2@58..61 "..." [] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@61..62
-              IDENT@61..62 "b"
-        R_BRACK@62..63 "]"
-      SEMICOLON@63..65 ";\n"
+              IDENT@61..62 "b" [] []
+        R_BRACK@62..63 "]" [] []
+      SEMICOLON@63..65 ";" [] [Whitespace("\n")]

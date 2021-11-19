@@ -3,28 +3,28 @@ JS_ROOT@0..25
   LIST@0..25
     JS_VARIABLE_DECLARATION_STATEMENT@0..17
       JS_VARIABLE_DECLARATION@0..16
-        LET_KW@0..4 "let "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..16
           JS_VARIABLE_DECLARATOR@4..16
             SINGLE_PATTERN@4..6
               NAME@4..6
-                IDENT@4..6 "a "
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..16
-              EQ@6..8 "= "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_IMPORT_CALL_EXPRESSION@8..16
-                IMPORT_KW@8..14 "import"
-                L_PAREN@14..15 "("
-                R_PAREN@15..16 ")"
-      SEMICOLON@16..17 ";"
+                IMPORT_KW@8..14 "import" [] []
+                L_PAREN@14..15 "(" [] []
+                R_PAREN@15..16 ")" [] []
+      SEMICOLON@16..17 ";" [] []
     JS_EXPRESSION_STATEMENT@17..25
       CALL_EXPR@17..23
         JS_REFERENCE_IDENTIFIER_EXPRESSION@17..21
-          IDENT@17..21 "\nfoo"
+          IDENT@17..21 "foo" [Whitespace("\n")] []
         ARG_LIST@21..23
-          L_PAREN@21..22 "("
+          L_PAREN@21..22 "(" [] []
           LIST@22..22
-          R_PAREN@22..23 ")"
-      SEMICOLON@23..25 ";\n"
+          R_PAREN@22..23 ")" [] []
+      SEMICOLON@23..25 ";" [] [Whitespace("\n")]
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ import_call_no_arg.js:1:16

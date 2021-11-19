@@ -4,31 +4,31 @@ JS_ROOT@0..21
     JS_EXPRESSION_STATEMENT@0..8
       CALL_EXPR@0..7
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo"
+          IDENT@0..3 "foo" [] []
         ARG_LIST@3..7
-          L_PAREN@3..4 "("
+          L_PAREN@3..4 "(" [] []
           LIST@4..7
             JS_REFERENCE_IDENTIFIER_EXPRESSION@4..5
-              IDENT@4..5 "a"
-            COMMA@5..6 ","
+              IDENT@4..5 "a" [] []
+            COMMA@5..6 "," [] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@6..7
-              IDENT@6..7 "b"
-      SEMICOLON@7..8 ";"
+              IDENT@6..7 "b" [] []
+      SEMICOLON@7..8 ";" [] []
     JS_EXPRESSION_STATEMENT@8..17
       CALL_EXPR@8..17
         JS_REFERENCE_IDENTIFIER_EXPRESSION@8..12
-          IDENT@8..12 "\nfoo"
+          IDENT@8..12 "foo" [Whitespace("\n")] []
         ARG_LIST@12..17
-          L_PAREN@12..13 "("
+          L_PAREN@12..13 "(" [] []
           LIST@13..17
             JS_REFERENCE_IDENTIFIER_EXPRESSION@13..14
-              IDENT@13..14 "a"
-            COMMA@14..15 ","
+              IDENT@13..14 "a" [] []
+            COMMA@14..15 "," [] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@15..17
-              IDENT@15..17 "b "
+              IDENT@15..17 "b" [] [Whitespace(" ")]
     JS_VARIABLE_DECLARATION_STATEMENT@17..21
       JS_VARIABLE_DECLARATION@17..21
-        VAR_KW@17..21 "var\n"
+        VAR_KW@17..21 "var" [] [Whitespace("\n")]
         LIST@21..21
           ERROR@21..21
 --
