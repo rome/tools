@@ -237,6 +237,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	let name = if let Some(n) = name {
 		n
 	} else {
+		m.abandon(p);
 		p.err_recover_no_err(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			false,
@@ -245,6 +246,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	};
 
 	if name.kind() != NAME {
+		m.abandon(p);
 		let err = p
 			.err_builder("Expected an identifier for a pattern, but found none")
 			.primary(name.range(p), "");
@@ -258,6 +260,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		assign_expr(p);
 		Some(m.complete(p, ASSIGN_PATTERN))
 	} else {
+		m.abandon(p);
 		Some(sp_marker)
 	}
 }

@@ -7,6 +7,7 @@ use rslint_errors::Diagnostic;
 use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
+use std::thread::panicking;
 
 use crate::*;
 
@@ -522,7 +523,7 @@ impl<'t> Parser<'t> {
 }
 
 /// A structure signifying the start of parsing of a syntax tree node
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, PartialEq, Eq, Hash)]
 pub struct Marker {
 	/// The index in the events list
 	pub pos: u32,
@@ -530,6 +531,7 @@ pub struct Marker {
 	pub start: usize,
 	pub old_start: u32,
 	pub(crate) child_idx: Option<usize>,
+	finished: bool,
 }
 
 impl Marker {
@@ -539,6 +541,7 @@ impl Marker {
 			start,
 			old_start: pos,
 			child_idx: None,
+			finished: false,
 		}
 	}
 
@@ -552,7 +555,8 @@ impl Marker {
 	/// Finishes the syntax tree node and assigns `kind` to it,
 	/// and mark the create a `CompletedMarker` for possible future
 	/// operation like `.precede()` to deal with forward_parent.
-	pub fn complete(self, p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
+	pub fn complete(mut self, p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
+		self.finished = true;
 		let idx = self.pos as usize;
 		match p.events[idx] {
 			Event::Start {
@@ -572,7 +576,8 @@ impl Marker {
 
 	/// Abandons the syntax tree node. All its children
 	/// are attached to its parent instead.
-	pub fn abandon(self, p: &mut Parser) {
+	pub fn abandon(mut self, p: &mut Parser) {
+		self.finished = true;
 		let idx = self.pos as usize;
 		if idx == p.events.len() - 1 {
 			match p.events.pop() {
@@ -594,6 +599,16 @@ impl Marker {
 				}
 				_ => unreachable!(),
 			}
+		}
+	}
+}
+
+impl Drop for Marker {
+	fn drop(&mut self) {
+		if !panicking() && !self.finished {
+			panic!(
+			"Dropped marker '{:?}' without calling abandon, complete or ignore. Make sure you call 'complete' or 'abandon' on any marker you started with parser.start().",
+			self);
 		}
 	}
 }
