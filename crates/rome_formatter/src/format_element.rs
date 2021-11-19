@@ -781,7 +781,7 @@ impl FormatElement {
 			FormatElement::Group(g) => g.content.trim_end(),
 			FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
 			FormatElement::List(list) => {
-				let r = list.iter().rev().enumerate().find(|(_, e)| match e {
+				let idx_first_non_empty = list.iter().rev().position(|e| match e {
 					FormatElement::Empty => false,
 					FormatElement::Space => false,
 					FormatElement::Line(_) => false,
@@ -793,12 +793,12 @@ impl FormatElement {
 					_ => true,
 				});
 
-				match r {
-					Some((non_empty_index, _)) => {
-						let non_empty_index = list.len() - non_empty_index;
+				match idx_first_non_empty {
+					Some(idx_first_non_empty) => {
+						let idx_first_non_empty = list.len() - idx_first_non_empty;
 						let mut content: Vec<_> = list
 							.iter()
-							.take(non_empty_index)
+							.take(idx_first_non_empty)
 							.map(Clone::clone)
 							.collect();
 						if let Some(FormatElement::Token(s)) = content.last_mut() {
