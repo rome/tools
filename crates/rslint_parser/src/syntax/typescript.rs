@@ -3,6 +3,7 @@
 use super::decl::*;
 use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
 use super::stmt::{semi, statements, variable_declaration_statement};
+use crate::parse_recoverer::ParseRecoverer;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
@@ -588,12 +589,12 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 				.err_builder("expected an identifier or string for an enum variant, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.err_recover(
-				err,
+			ParseRecoverer::with_error(
 				token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
-				false,
 				ERROR,
-			);
+				err,
+			)
+			.recover(p);
 			true
 		} else {
 			if !p.eat(JS_STRING_LITERAL_TOKEN) {
@@ -1010,8 +1011,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("expected a type")
 				.primary(p.cur_tok().range, "");
 
-			p.err_recover(
-				err,
+			ParseRecoverer::with_error(
 				BASE_TS_RECOVERY_SET.union(token_set![
 					T![typeof],
 					T!['{'],
@@ -1029,9 +1029,10 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 					T![&],
 					T![|]
 				]),
-				false,
 				ERROR,
-			);
+				err,
+			)
+			.recover(p);
 			None
 		}
 	}
@@ -1124,12 +1125,12 @@ fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 			.err_builder("expected a type parameter, but found none")
 			.primary(p.cur_tok().range, "");
 
-		p.err_recover(
-			err,
+		ParseRecoverer::with_error(
 			token_set![T![ident], T![yield], T![await], T![>], T![=]],
-			false,
 			ERROR,
-		);
+			err,
+		)
+		.recover(p);
 		None
 	}
 }
@@ -1364,6 +1365,6 @@ pub fn ts_type_name(
 		))
 		.primary(p.cur_tok().range, "");
 
-	p.err_recover(err, set, false, ERROR)?;
+	ParseRecoverer::with_error(set, ERROR, err).recover(p);
 	None
 }

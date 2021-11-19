@@ -1,6 +1,6 @@
 use super::expr::{assign_expr, identifier_name, identifier_reference, lhs_expr};
 use crate::syntax::object::object_prop_name;
-use crate::{SyntaxKind::*, *};
+use crate::{parse_recoverer::ParseRecoverer, SyntaxKind::*, *};
 
 pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<CompletedMarker> {
 	Some(match p.cur() {
@@ -71,7 +71,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			p.err_recover(err, ts, false, ERROR);
+			ParseRecoverer::with_error(ts, ERROR, err).recover(p);
 			return None;
 		}
 	})
@@ -169,11 +169,11 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
-			p.err_recover_no_err(
+			ParseRecoverer::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
-				false,
 				ERROR,
-			);
+			)
+			.recover(p);
 		}
 		if !p.at(T![']']) {
 			p.expect(T![,]);
@@ -238,11 +238,11 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	let name = if let Some(n) = name {
 		n
 	} else {
-		p.err_recover_no_err(
+		ParseRecoverer::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
-			false,
 			ERROR,
-		);
+		)
+		.recover(p);
 		return None;
 	};
 
