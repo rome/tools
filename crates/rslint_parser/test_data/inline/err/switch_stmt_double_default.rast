@@ -1,0 +1,50 @@
+JS_ROOT@0..43
+  LIST@0..0
+  LIST@0..42
+    JS_SWITCH_STATEMENT@0..42
+      SWITCH_KW@0..6 "switch"
+      WHITESPACE@6..7 " "
+      L_PAREN@7..8 "("
+      JS_REFERENCE_IDENTIFIER_EXPRESSION@8..11
+        IDENT@8..11 "foo"
+      R_PAREN@11..12 ")"
+      WHITESPACE@12..13 " "
+      L_CURLY@13..14 "{"
+      WHITESPACE@14..16 "\n\t"
+      LIST@16..40
+        JS_DEFAULT_CLAUSE@16..27
+          DEFAULT_KW@16..23 "default"
+          COLON@23..24 ":"
+          WHITESPACE@24..25 " "
+          LIST@25..27
+            JS_BLOCK_STATEMENT@25..27
+              L_CURLY@25..26 "{"
+              LIST@26..26
+              R_CURLY@26..27 "}"
+        WHITESPACE@27..29 "\n\t"
+        JS_DEFAULT_CLAUSE@29..40
+          DEFAULT_KW@29..36 "default"
+          COLON@36..37 ":"
+          WHITESPACE@37..38 " "
+          LIST@38..40
+            JS_BLOCK_STATEMENT@38..40
+              L_CURLY@38..39 "{"
+              LIST@39..39
+              R_CURLY@39..40 "}"
+      WHITESPACE@40..41 "\n"
+      R_CURLY@41..42 "}"
+  WHITESPACE@42..43 "\n"
+--
+error[SyntaxError]: Multiple default clauses inside of a switch statement are not allowed
+  ┌─ switch_stmt_double_default.js:3:2
+  │
+2 │     default: {}
+  │     ---------- the first default clause is defined here
+3 │     default: {}
+  │     ^^^^^^^^^^ a second clause here is not allowed
+
+--
+switch (foo) {
+	default: {}
+	default: {}
+}

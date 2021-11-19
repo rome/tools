@@ -6,6 +6,8 @@ on:
   pull_request:
     branches:
       - main
+      # enable this job on this temporary branch
+      - feature/unknown-nodes-errors
 
 env:
   RUST_LOG: info
