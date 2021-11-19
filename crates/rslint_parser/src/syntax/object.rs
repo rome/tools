@@ -48,7 +48,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
 fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
-		// test object_expr_getter_setter
+		// test object_expr_getter_getter
 		// let a = {
 		//  get foo() {
 		//    return foo;
@@ -212,7 +212,7 @@ pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker
 	}
 }
 
-// test object_prop_name
+// test object_member_name
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 /// Parses a `JsAnyObjectMemberName` and returns its completion marker
 fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {

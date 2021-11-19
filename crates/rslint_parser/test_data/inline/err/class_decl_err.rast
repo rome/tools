@@ -1,6 +1,6 @@
-JS_ROOT@0..137
+JS_ROOT@0..74
   LIST@0..0
-  LIST@0..136
+  LIST@0..73
     JS_CLASS_DECLARATION@0..8
       CLASS_KW@0..5 "class"
       WHITESPACE@5..6 " "
@@ -57,51 +57,7 @@ JS_ROOT@0..137
             R_CURLY@70..71 "}"
       WHITESPACE@71..72 " "
       R_CURLY@72..73 "}"
-    WHITESPACE@73..74 "\n"
-    JS_CLASS_DECLARATION@74..108
-      CLASS_KW@74..79 "class"
-      WHITESPACE@79..80 " "
-      JS_IDENTIFIER_BINDING@80..81
-        IDENT@80..81 "A"
-      WHITESPACE@81..82 " "
-      JS_EXTENDS_CLAUSE@82..105
-        EXTENDS_KW@82..89 "extends"
-        WHITESPACE@89..90 " "
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@90..93
-          IDENT@90..93 "bar"
-        WHITESPACE@93..94 " "
-        ERROR@94..105
-          EXTENDS_KW@94..101 "extends"
-          WHITESPACE@101..102 " "
-          TS_EXPR_WITH_TYPE_ARGS@102..105
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@102..105
-              IDENT@102..105 "foo"
-      WHITESPACE@105..106 " "
-      L_CURLY@106..107 "{"
-      LIST@107..107
-      R_CURLY@107..108 "}"
-    WHITESPACE@108..109 "\n"
-    JS_CLASS_DECLARATION@109..136
-      CLASS_KW@109..114 "class"
-      WHITESPACE@114..115 " "
-      JS_IDENTIFIER_BINDING@115..116
-        IDENT@115..116 "A"
-      WHITESPACE@116..117 " "
-      JS_EXTENDS_CLAUSE@117..133
-        EXTENDS_KW@117..124 "extends"
-        WHITESPACE@124..125 " "
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@125..128
-          IDENT@125..128 "bar"
-        COMMA@128..129 ","
-        WHITESPACE@129..130 " "
-        TS_EXPR_WITH_TYPE_ARGS@130..133
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@130..133
-            IDENT@130..133 "foo"
-      WHITESPACE@133..134 " "
-      L_CURLY@134..135 "{"
-      LIST@135..135
-      R_CURLY@135..136 "}"
-  WHITESPACE@136..137 "\n"
+  WHITESPACE@73..74 "\n"
 --
 error[SyntaxError]: class declarations must have a name
   ┌─ class_decl_err.js:1:7
@@ -173,24 +129,8 @@ error[SyntaxError]: expected a block statement but instead found `}`
   │                    ^
 
 --
-error[SyntaxError]: classes cannot extend multiple classes
-  ┌─ class_decl_err.js:6:29
-  │
-6 │ class A extends bar extends foo {}
-  │                             ^^^
-
---
-error[SyntaxError]: classes cannot extend multiple classes
-  ┌─ class_decl_err.js:7:22
-  │
-7 │ class A extends bar, foo {}
-  │                      ^^^
-
---
 class {}
 class extends bar {}
 class extends {}
 class
 class foo { set {} }
-class A extends bar extends foo {}
-class A extends bar, foo {}

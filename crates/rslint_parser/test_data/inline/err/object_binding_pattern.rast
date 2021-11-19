@@ -1,0 +1,222 @@
+JS_ROOT@0..124
+  LIST@0..0
+  LIST@0..123
+    JS_VARIABLE_DECLARATION_STATEMENT@0..9
+      JS_VARIABLE_DECLARATION@0..9
+        LET_KW@0..3 "let"
+        WHITESPACE@3..4 " "
+        LIST@4..9
+          JS_VARIABLE_DECLARATOR@4..9
+            OBJECT_PATTERN@4..9
+              L_CURLY@4..5 "{"
+              WHITESPACE@5..6 " "
+              LIST@6..7
+                JS_UNKNOWN_PATTERN@6..7
+                  JS_NUMBER_LITERAL@6..7
+                    JS_NUMBER_LITERAL_TOKEN@6..7 "5"
+              WHITESPACE@7..8 " "
+              R_CURLY@8..9 "}"
+    WHITESPACE@9..10 " "
+    JS_UNKNOWN_STATEMENT@10..11
+      R_CURLY@10..11 "}"
+    WHITESPACE@11..12 " "
+    JS_UNKNOWN_STATEMENT@12..13
+      EQ@12..13 "="
+    WHITESPACE@13..14 " "
+    JS_BLOCK_STATEMENT@14..29
+      L_CURLY@14..15 "{"
+      WHITESPACE@15..16 " "
+      LIST@16..27
+        JS_LABELED_STATEMENT@16..27
+          IDENT@16..20 "eval"
+          COLON@20..21 ":"
+          WHITESPACE@21..22 " "
+          JS_EXPRESSION_STATEMENT@22..27
+            JS_STRING_LITERAL@22..27
+              JS_STRING_LITERAL_TOKEN@22..27 "\"foo\""
+      WHITESPACE@27..28 " "
+      R_CURLY@28..29 "}"
+    JS_EMPTY_STATEMENT@29..30
+      SEMICOLON@29..30 ";"
+    WHITESPACE@30..31 "\n"
+    JS_VARIABLE_DECLARATION_STATEMENT@31..62
+      JS_VARIABLE_DECLARATION@31..61
+        LET_KW@31..34 "let"
+        WHITESPACE@34..35 " "
+        LIST@35..61
+          JS_VARIABLE_DECLARATOR@35..61
+            OBJECT_PATTERN@35..43
+              L_CURLY@35..36 "{"
+              WHITESPACE@36..37 " "
+              LIST@37..41
+                JS_UNKNOWN_PATTERN@37..41
+                  JS_UNKNOWN_BINDING@37..41
+                    IDENT@37..41 "eval"
+              WHITESPACE@41..42 " "
+              R_CURLY@42..43 "}"
+            WHITESPACE@43..44 " "
+            JS_EQUAL_VALUE_CLAUSE@44..61
+              EQ@44..45 "="
+              WHITESPACE@45..46 " "
+              JS_OBJECT_EXPRESSION@46..61
+                L_CURLY@46..47 "{"
+                WHITESPACE@47..48 " "
+                LIST@48..59
+                  JS_PROPERTY_OBJECT_MEMBER@48..59
+                    JS_LITERAL_MEMBER_NAME@48..52
+                      IDENT@48..52 "eval"
+                    COLON@52..53 ":"
+                    WHITESPACE@53..54 " "
+                    JS_STRING_LITERAL@54..59
+                      JS_STRING_LITERAL_TOKEN@54..59 "\"foo\""
+                WHITESPACE@59..60 " "
+                R_CURLY@60..61 "}"
+      SEMICOLON@61..62 ";"
+    WHITESPACE@62..63 "\n"
+    JS_VARIABLE_DECLARATION_STATEMENT@63..94
+      JS_VARIABLE_DECLARATION@63..93
+        LET_KW@63..66 "let"
+        WHITESPACE@66..67 " "
+        LIST@67..93
+          JS_VARIABLE_DECLARATOR@67..93
+            OBJECT_PATTERN@67..75
+              L_CURLY@67..68 "{"
+              WHITESPACE@68..69 " "
+              LIST@69..73
+                JS_UNKNOWN_PATTERN@69..70
+                  JS_NUMBER_LITERAL@69..70
+                    JS_NUMBER_LITERAL_TOKEN@69..70 "5"
+                COMMA@70..71 ","
+                WHITESPACE@71..72 " "
+                JS_UNKNOWN_PATTERN@72..73
+                  JS_NUMBER_LITERAL@72..73
+                    JS_NUMBER_LITERAL_TOKEN@72..73 "6"
+              WHITESPACE@73..74 " "
+              R_CURLY@74..75 "}"
+            WHITESPACE@75..76 " "
+            JS_EQUAL_VALUE_CLAUSE@76..93
+              EQ@76..77 "="
+              WHITESPACE@77..78 " "
+              JS_OBJECT_EXPRESSION@78..93
+                L_CURLY@78..79 "{"
+                WHITESPACE@79..80 " "
+                LIST@80..91
+                  JS_PROPERTY_OBJECT_MEMBER@80..91
+                    JS_LITERAL_MEMBER_NAME@80..84
+                      IDENT@80..84 "eval"
+                    COLON@84..85 ":"
+                    WHITESPACE@85..86 " "
+                    JS_STRING_LITERAL@86..91
+                      JS_STRING_LITERAL_TOKEN@86..91 "\"foo\""
+                WHITESPACE@91..92 " "
+                R_CURLY@92..93 "}"
+      SEMICOLON@93..94 ";"
+    WHITESPACE@94..95 "\n"
+    JS_VARIABLE_DECLARATION_STATEMENT@95..123
+      JS_VARIABLE_DECLARATION@95..122
+        LET_KW@95..98 "let"
+        WHITESPACE@98..99 " "
+        LIST@99..122
+          JS_VARIABLE_DECLARATOR@99..122
+            OBJECT_PATTERN@99..117
+              L_CURLY@99..100 "{"
+              WHITESPACE@100..101 " "
+              LIST@101..115
+                KEY_VALUE_PATTERN@101..111
+                  NAME@101..108
+                    IDENT@101..108 "default"
+                  COLON@108..109 ":"
+                  WHITESPACE@109..110 " "
+                  JS_UNKNOWN_PATTERN@110..111
+                    COMMA@110..111 ","
+                WHITESPACE@111..112 " "
+                SINGLE_PATTERN@112..115
+                  NAME@112..115
+                    IDENT@112..115 "bar"
+              WHITESPACE@115..116 " "
+              R_CURLY@116..117 "}"
+            WHITESPACE@117..118 " "
+            JS_EQUAL_VALUE_CLAUSE@118..122
+              EQ@118..119 "="
+              WHITESPACE@119..120 " "
+              JS_OBJECT_EXPRESSION@120..122
+                L_CURLY@120..121 "{"
+                LIST@121..121
+                R_CURLY@121..122 "}"
+      SEMICOLON@122..123 ";"
+  WHITESPACE@123..124 "\n"
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ object_binding_pattern.js:1:7
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │       ^
+
+--
+error[SyntaxError]: Object and Array patterns require initializers
+  ┌─ object_binding_pattern.js:1:5
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │     ^^^^^ this pattern is declared, but it is not given an initialized value
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ object_binding_pattern.js:1:11
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │           ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ object_binding_pattern.js:1:13
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │             ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
+  ┌─ object_binding_pattern.js:2:7
+  │
+2 │ let { eval } = { eval: "foo" };
+  │       ^^^^
+
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ object_binding_pattern.js:2:7
+  │
+2 │ let { eval } = { eval: "foo" };
+  │       ^^^^
+
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ object_binding_pattern.js:3:7
+  │
+3 │ let { 5, 6 } = { eval: "foo" };
+  │       ^
+
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ object_binding_pattern.js:3:10
+  │
+3 │ let { 5, 6 } = { eval: "foo" };
+  │          ^
+
+--
+error[SyntaxError]: Expected an identifier or pattern, but found none
+  ┌─ object_binding_pattern.js:4:16
+  │
+4 │ let { default: , bar } = {};
+  │                ^
+
+--
+error[SyntaxError]: expected `,` but instead found `bar`
+  ┌─ object_binding_pattern.js:4:18
+  │
+4 │ let { default: , bar } = {};
+  │                  ^^^ unexpected
+
+--
+let { 5 } } = { eval: "foo" };
+let { eval } = { eval: "foo" };
+let { 5, 6 } = { eval: "foo" };
+let { default: , bar } = {};

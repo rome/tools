@@ -1,6 +1,6 @@
-JS_ROOT@0..155
+JS_ROOT@0..92
   LIST@0..0
-  LIST@0..154
+  LIST@0..91
     JS_VARIABLE_DECLARATION_STATEMENT@0..10
       JS_VARIABLE_DECLARATION@0..9
         VAR_KW@0..3 "var"
@@ -118,57 +118,4 @@ JS_ROOT@0..155
                 LIST@89..89
                 R_CURLY@89..90 "}"
       SEMICOLON@90..91 ";"
-    WHITESPACE@91..92 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@92..154
-      JS_VARIABLE_DECLARATION@92..153
-        LET_KW@92..95 "let"
-        WHITESPACE@95..96 " "
-        LIST@96..153
-          JS_VARIABLE_DECLARATOR@96..109
-            SINGLE_PATTERN@96..99
-              NAME@96..99
-                IDENT@96..99 "foo"
-            WHITESPACE@99..100 " "
-            JS_EQUAL_VALUE_CLAUSE@100..109
-              EQ@100..101 "="
-              WHITESPACE@101..102 " "
-              JS_STRING_LITERAL@102..109
-                JS_STRING_LITERAL_TOKEN@102..109 "\"lorem\""
-          COMMA@109..110 ","
-          WHITESPACE@110..111 " "
-          JS_VARIABLE_DECLARATOR@111..124
-            SINGLE_PATTERN@111..114
-              NAME@111..114
-                IDENT@111..114 "bar"
-            WHITESPACE@114..115 " "
-            JS_EQUAL_VALUE_CLAUSE@115..124
-              EQ@115..116 "="
-              WHITESPACE@116..117 " "
-              JS_STRING_LITERAL@117..124
-                JS_STRING_LITERAL_TOKEN@117..124 "\"ipsum\""
-          COMMA@124..125 ","
-          WHITESPACE@125..126 " "
-          JS_VARIABLE_DECLARATOR@126..141
-            SINGLE_PATTERN@126..131
-              NAME@126..131
-                IDENT@126..131 "third"
-            WHITESPACE@131..132 " "
-            JS_EQUAL_VALUE_CLAUSE@132..141
-              EQ@132..133 "="
-              WHITESPACE@133..134 " "
-              JS_STRING_LITERAL@134..141
-                JS_STRING_LITERAL_TOKEN@134..141 "\"value\""
-          COMMA@141..142 ","
-          WHITESPACE@142..143 " "
-          JS_VARIABLE_DECLARATOR@143..153
-            SINGLE_PATTERN@143..149
-              NAME@143..149
-                IDENT@143..149 "fourth"
-            WHITESPACE@149..150 " "
-            JS_EQUAL_VALUE_CLAUSE@150..153
-              EQ@150..151 "="
-              WHITESPACE@151..152 " "
-              JS_NUMBER_LITERAL@152..153
-                JS_NUMBER_LITERAL_TOKEN@152..153 "6"
-      SEMICOLON@153..154 ";"
-  WHITESPACE@154..155 "\n"
+  WHITESPACE@91..92 "\n"

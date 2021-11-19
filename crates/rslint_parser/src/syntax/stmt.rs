@@ -148,6 +148,13 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 	Some(res)
 }
 
+// test_err double_label
+// label1: {
+// 	label2: {
+// 		label1: {}
+// 	}
+// }
+
 fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
@@ -246,6 +253,14 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 /// A debugger statement such as `debugger;`
 // test debugger_stmt
 // debugger;
+
+// test_err debugger_stmt
+// function foo() {
+// 	debugger {
+// 		var something = "lorem";
+// 	}
+// }
+
 pub fn debugger_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	let range = p.cur_tok().range;
@@ -595,6 +610,7 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 	// if (true) else
 	// if else {}
 	// if () {} else {}
+	// if (true)}}}} {}
 	let m = p.start();
 	p.expect(T![if]);
 

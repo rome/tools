@@ -150,6 +150,8 @@ pub fn binding_element(
 	left
 }
 
+// test_err
+// let [ default: , hey , ] = []
 pub fn array_binding_pattern(
 	p: &mut Parser,
 	parameters: bool,
@@ -191,6 +193,12 @@ pub fn array_binding_pattern(
 	m.complete(p, ARRAY_PATTERN)
 }
 
+
+// test_err object_binding_pattern
+// let { 5 } } = { eval: "foo" };
+// let { eval } = { eval: "foo" };
+// let { 5, 6 } = { eval: "foo" };
+// let { default: , bar } = {};
 pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T!['{']);

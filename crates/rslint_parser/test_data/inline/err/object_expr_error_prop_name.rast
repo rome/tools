@@ -1,6 +1,6 @@
-JS_ROOT@0..40
+JS_ROOT@0..96
   LIST@0..0
-  LIST@0..39
+  LIST@0..95
     JS_VARIABLE_DECLARATION_STATEMENT@0..26
       JS_VARIABLE_DECLARATION@0..26
         LET_KW@0..3 "let"
@@ -49,7 +49,36 @@ JS_ROOT@0..40
                 R_CURLY@37..38 "}"
     JS_UNKNOWN_STATEMENT@38..39
       R_CURLY@38..39 "}"
-  WHITESPACE@39..40 "\n"
+    WHITESPACE@39..40 "\n"
+    JS_EXPRESSION_STATEMENT@40..48
+      JS_REFERENCE_IDENTIFIER_EXPRESSION@40..48
+        IDENT@40..48 "test_err"
+    WHITESPACE@48..49 " "
+    JS_EXPRESSION_STATEMENT@49..83
+      JS_REFERENCE_IDENTIFIER_EXPRESSION@49..83
+        IDENT@49..83 "object_expr_non_ident ..."
+    WHITESPACE@83..84 "\n"
+    JS_VARIABLE_DECLARATION_STATEMENT@84..95
+      JS_VARIABLE_DECLARATION@84..95
+        LET_KW@84..87 "let"
+        WHITESPACE@87..88 " "
+        LIST@88..95
+          JS_VARIABLE_DECLARATOR@88..95
+            SINGLE_PATTERN@88..89
+              NAME@88..89
+                IDENT@88..89 "b"
+            WHITESPACE@89..90 " "
+            JS_EQUAL_VALUE_CLAUSE@90..95
+              EQ@90..91 "="
+              WHITESPACE@91..92 " "
+              JS_OBJECT_EXPRESSION@92..95
+                L_CURLY@92..93 "{"
+                LIST@93..94
+                  JS_PROPERTY_OBJECT_MEMBER@93..94
+                    JS_LITERAL_MEMBER_NAME@93..94
+                      JS_NUMBER_LITERAL_TOKEN@93..94 "5"
+                R_CURLY@94..95 "}"
+  WHITESPACE@95..96 "\n"
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ object_expr_error_prop_name.js:1:11
@@ -72,5 +101,31 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │            ^ Expected a statement or declaration here
 
 --
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ object_expr_error_prop_name.js:3:10
+  │
+3 │ test_err object_expr_non_ident_literal_prop
+  │ ---------^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  │ │        │
+  │ │        An explicit or implicit semicolon is expected here...
+  │ ...Which is required to end this statement
+
+--
+error[SyntaxError]: expected `:` but instead found `}`
+  ┌─ object_expr_error_prop_name.js:4:11
+  │
+4 │ let b = {5}
+  │           ^ unexpected
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ object_expr_error_prop_name.js:4:11
+  │
+4 │ let b = {5}
+  │           ^ Expected an expression here
+
+--
 let a = { /: 6, /: /foo/ }
 let a = {{}}
+test_err object_expr_non_ident_literal_prop
+let b = {5}

@@ -46,7 +46,7 @@ JS_ROOT@0..61
   WHITESPACE@60..61 "\n"
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ debugger.js:2:11
+  ┌─ debugger_stmt.js:2:11
   │
 2 │     debugger {
   │     -------- ^ An explicit or implicit semicolon is expected here...
