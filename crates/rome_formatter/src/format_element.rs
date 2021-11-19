@@ -781,35 +781,34 @@ impl FormatElement {
 			FormatElement::Group(g) => g.content.trim_end(),
 			FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
 			FormatElement::List(list) => {
-				let r = list
-					.iter()
-					.rev()
-					.enumerate()
-					.skip_while(|(_, e)| match e {
-						FormatElement::Empty => true,
-						FormatElement::Space => true,
-						FormatElement::Line(_) => true,
-						FormatElement::Indent(_) => true,
-						FormatElement::Token(t) => {
-							let s = t.trim_end();
-							s.is_empty()
-						}
-						_ => false,
-					})
-					.next();
+				let r = list.iter().rev().enumerate().find(|(_, e)| match e {
+					FormatElement::Empty => false,
+					FormatElement::Space => false,
+					FormatElement::Line(_) => false,
+					FormatElement::Indent(_) => false,
+					FormatElement::Token(t) => {
+						let s = t.trim_end();
+						!s.is_empty()
+					}
+					_ => true,
+				});
 
 				match r {
 					Some((non_empty_index, _)) => {
 						let non_empty_index = list.len() - non_empty_index;
-						let mut content: Vec<_> = list.iter().take(non_empty_index).map(Clone::clone).collect();
+						let mut content: Vec<_> = list
+							.iter()
+							.take(non_empty_index)
+							.map(Clone::clone)
+							.collect();
 						if let Some(FormatElement::Token(s)) = content.last_mut() {
 							s.0 = s.trim_end().to_string()
 						}
 						FormatElement::List(List::new(content))
-					},
+					}
 					None => FormatElement::List(List::new(vec![])),
 				}
-			},
+			}
 			FormatElement::Token(s) => token(s.trim_end()),
 		}
 	}
