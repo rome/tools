@@ -781,10 +781,11 @@ impl FormatElement {
 			FormatElement::Group(g) => g.content.trim_end(),
 			FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
 			FormatElement::List(list) => {
-				let mut content: Vec<_> = list
+				let r = list
 					.iter()
 					.rev()
-					.skip_while(|e| match e {
+					.enumerate()
+					.skip_while(|(_, e)| match e {
 						FormatElement::Empty => true,
 						FormatElement::Space => true,
 						FormatElement::Line(_) => true,
@@ -795,14 +796,20 @@ impl FormatElement {
 						}
 						_ => false,
 					})
-					.map(Clone::clone)
-					.collect();
-				content.reverse();
-				if let Some(FormatElement::Token(s)) = content.last_mut() {
-					s.0 = s.trim_end().to_string()
+					.next();
+
+				match r {
+					Some((non_empty_index, _)) => {
+						let non_empty_index = list.len() - non_empty_index;
+						let mut content: Vec<_> = list.iter().take(non_empty_index).map(Clone::clone).collect();
+						if let Some(FormatElement::Token(s)) = content.last_mut() {
+							s.0 = s.trim_end().to_string()
+						}
+						FormatElement::List(List::new(content))
+					},
+					None => FormatElement::List(List::new(vec![])),
 				}
-				FormatElement::List(List::new(content))
-			}
+			},
 			FormatElement::Token(s) => token(s.trim_end()),
 		}
 	}
