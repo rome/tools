@@ -739,3 +739,47 @@ pub struct Checkpoint {
 	pub event_pos: usize,
 	pub errors_pos: usize,
 }
+
+#[cfg(test)]
+mod tests {
+	use crate::{Parser, Syntax, TokenSource};
+	use rslint_lexer::Token;
+	use rslint_syntax::SyntaxKind;
+
+	#[test]
+	#[should_panic(
+		expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a markers parent."
+	)]
+	fn uncompleted_markers_panic() {
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
+
+		let mut parser = Parser::new(token_source, 0, Syntax::default());
+
+		let m = parser.start();
+		// drop the marker without calling complete or abandon
+	}
+
+	#[test]
+	fn completed_marker_doesnt_panic() {
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
+
+		let mut p = Parser::new(token_source, 0, Syntax::default());
+
+		let m = p.start();
+		p.expect(SyntaxKind::JS_STRING_LITERAL_TOKEN);
+		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL);
+	}
+
+	#[test]
+	fn abandoned_marker_doesnt_panic() {
+		let tokens = vec![Token::new(SyntaxKind::JS_STRING_LITERAL_TOKEN, 12)];
+		let token_source = TokenSource::new("'use strict'", tokens.as_slice());
+
+		let mut p = Parser::new(token_source, 0, Syntax::default());
+
+		let m = p.start();
+		m.abandon(&mut p);
+	}
+}
