@@ -687,6 +687,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 // let bar, foo;
 // const a = 5;
 // const { foo: [bar], baz } = {};
+// let foo = "lorem", bar = "ipsum", third = "value", fourth = 6;
 pub fn variable_declaration_statement(p: &mut Parser) -> CompletedMarker {
 	// test_err var_decl_err
 	// var a =;
@@ -951,6 +952,7 @@ pub fn for_stmt(p: &mut Parser) -> CompletedMarker {
 	// test_err for_stmt_err
 	// for ;; {}
 	// for let i = 5; i < 10; i++ {}
+	// for let i = 5; i < 10; ++i {}
 	let m = p.start();
 	p.expect(T![for]);
 	// FIXME: This should emit an error for non-for-of
@@ -1136,8 +1138,11 @@ fn catch_declaration(p: &mut Parser) {
 /// }
 /// ```
 // test try_stmt
+// try {} catch {}
 // try {} catch (e) {}
 // try {} catch {} finally {}
+// try {} catch (e) {} finally {}
+// try {} finally {}
 pub fn try_stmt(p: &mut Parser) -> CompletedMarker {
 	// TODO: recover from `try catch` and `try finally`. The issue is block_items
 	// will cause infinite recursion because parsing a stmt would not consume the catch token

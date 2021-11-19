@@ -1,6 +1,6 @@
-JS_ROOT@0..40
+JS_ROOT@0..70
   LIST@0..0
-  LIST@0..39
+  LIST@0..69
     FOR_STMT@0..39
       FOR_KW@0..3 "for"
       WHITESPACE@3..4 " "
@@ -54,7 +54,49 @@ JS_ROOT@0..40
           L_CURLY@37..38 "{"
           LIST@38..38
           R_CURLY@38..39 "}"
-  WHITESPACE@39..40 "\n"
+    WHITESPACE@39..40 "\n"
+    FOR_STMT@40..69
+      FOR_KW@40..43 "for"
+      WHITESPACE@43..44 " "
+      FOR_STMT_INIT@44..53
+        JS_VARIABLE_DECLARATION@44..53
+          LET_KW@44..47 "let"
+          WHITESPACE@47..48 " "
+          LIST@48..53
+            JS_VARIABLE_DECLARATOR@48..53
+              SINGLE_PATTERN@48..49
+                NAME@48..49
+                  IDENT@48..49 "i"
+              WHITESPACE@49..50 " "
+              JS_EQUAL_VALUE_CLAUSE@50..53
+                EQ@50..51 "="
+                WHITESPACE@51..52 " "
+                JS_NUMBER_LITERAL@52..53
+                  JS_NUMBER_LITERAL_TOKEN@52..53 "5"
+      SEMICOLON@53..54 ";"
+      WHITESPACE@54..55 " "
+      FOR_STMT_TEST@55..61
+        JS_BINARY_EXPRESSION@55..61
+          JS_REFERENCE_IDENTIFIER_EXPRESSION@55..56
+            IDENT@55..56 "i"
+          WHITESPACE@56..57 " "
+          L_ANGLE@57..58 "<"
+          WHITESPACE@58..59 " "
+          JS_NUMBER_LITERAL@59..61
+            JS_NUMBER_LITERAL_TOKEN@59..61 "10"
+      SEMICOLON@61..62 ";"
+      WHITESPACE@62..63 " "
+      FOR_STMT_UPDATE@63..66
+        JS_PRE_UPDATE_EXPRESSION@63..66
+          PLUS2@63..65 "++"
+          JS_REFERENCE_IDENTIFIER_EXPRESSION@65..66
+            IDENT@65..66 "i"
+      WHITESPACE@66..67 " "
+      JS_BLOCK_STATEMENT@67..69
+        L_CURLY@67..68 "{"
+        LIST@68..68
+        R_CURLY@68..69 "}"
+  WHITESPACE@69..70 "\n"
 --
 error[SyntaxError]: expected `'('` but instead found `;`
   ┌─ for_stmt_err.js:1:5
@@ -84,5 +126,20 @@ error[SyntaxError]: expected `')'` but instead found `{`
   │                            ^ unexpected
 
 --
+error[SyntaxError]: expected `'('` but instead found `let`
+  ┌─ for_stmt_err.js:3:5
+  │
+3 │ for let i = 5; i < 10; ++i {}
+  │     ^^^ unexpected
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ for_stmt_err.js:3:28
+  │
+3 │ for let i = 5; i < 10; ++i {}
+  │                            ^ unexpected
+
+--
 for ;; {}
 for let i = 5; i < 10; i++ {}
+for let i = 5; i < 10; ++i {}

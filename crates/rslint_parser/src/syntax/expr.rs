@@ -246,6 +246,7 @@ fn assign_expr_recursive(
 // function *foo() {
 //  yield foo;
 //  yield* foo;
+//  yield;
 // }
 pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
@@ -673,6 +674,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 
 // test_err paren_or_arrow_expr_invalid_params
 // (5 + 5) => {}
+// (a, ,b) => {}
 pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarker {
 	let m = p.start();
 	let checkpoint = p.checkpoint();

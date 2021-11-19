@@ -1,7 +1,7 @@
-JS_ROOT@0..45
+JS_ROOT@0..53
   LIST@0..0
-  LIST@0..44
-    JS_FUNCTION_DECLARATION@0..44
+  LIST@0..52
+    JS_FUNCTION_DECLARATION@0..52
       FUNCTION_KW@0..8 "function"
       WHITESPACE@8..9 " "
       STAR@9..10 "*"
@@ -12,11 +12,11 @@ JS_ROOT@0..45
         LIST@14..14
         R_PAREN@14..15 ")"
       WHITESPACE@15..16 " "
-      JS_FUNCTION_BODY@16..44
+      JS_FUNCTION_BODY@16..52
         L_CURLY@16..17 "{"
         WHITESPACE@17..19 "\n "
         LIST@19..19
-        LIST@19..42
+        LIST@19..50
           JS_EXPRESSION_STATEMENT@19..29
             JS_YIELD_EXPRESSION@19..28
               YIELD_KW@19..24 "yield"
@@ -33,6 +33,11 @@ JS_ROOT@0..45
               JS_REFERENCE_IDENTIFIER_EXPRESSION@38..41
                 IDENT@38..41 "foo"
             SEMICOLON@41..42 ";"
-        WHITESPACE@42..43 "\n"
-        R_CURLY@43..44 "}"
-  WHITESPACE@44..45 "\n"
+          WHITESPACE@42..44 "\n "
+          JS_EXPRESSION_STATEMENT@44..50
+            JS_YIELD_EXPRESSION@44..49
+              YIELD_KW@44..49 "yield"
+            SEMICOLON@49..50 ";"
+        WHITESPACE@50..51 "\n"
+        R_CURLY@51..52 "}"
+  WHITESPACE@52..53 "\n"

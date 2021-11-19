@@ -1,23 +1,23 @@
-JS_ROOT@0..23
+JS_ROOT@0..89
   LIST@0..0
-  LIST@0..22
-    JS_VARIABLE_DECLARATION_STATEMENT@0..22
-      JS_VARIABLE_DECLARATION@0..22
+  LIST@0..88
+    JS_VARIABLE_DECLARATION_STATEMENT@0..88
+      JS_VARIABLE_DECLARATION@0..88
         LET_KW@0..3 "let"
         WHITESPACE@3..4 " "
-        LIST@4..22
-          JS_VARIABLE_DECLARATOR@4..22
+        LIST@4..88
+          JS_VARIABLE_DECLARATOR@4..88
             SINGLE_PATTERN@4..5
               NAME@4..5
                 IDENT@4..5 "b"
             WHITESPACE@5..6 " "
-            JS_EQUAL_VALUE_CLAUSE@6..22
+            JS_EQUAL_VALUE_CLAUSE@6..88
               EQ@6..7 "="
               WHITESPACE@7..8 " "
-              JS_OBJECT_EXPRESSION@8..22
+              JS_OBJECT_EXPRESSION@8..88
                 L_CURLY@8..9 "{"
                 WHITESPACE@9..11 "\n "
-                LIST@11..20
+                LIST@11..86
                   JS_METHOD_OBJECT_MEMBER@11..19
                     JS_LITERAL_MEMBER_NAME@11..14
                       IDENT@11..14 "foo"
@@ -32,6 +32,95 @@ JS_ROOT@0..23
                       LIST@18..18
                       R_CURLY@18..19 "}"
                   COMMA@19..20 ","
-                WHITESPACE@20..21 "\n"
-                R_CURLY@21..22 "}"
-  WHITESPACE@22..23 "\n"
+                  WHITESPACE@20..21 "\n"
+                  JS_METHOD_OBJECT_MEMBER@21..29
+                    JS_LITERAL_MEMBER_NAME@21..24
+                      IDENT@21..24 "foo"
+                    JS_PARAMETER_LIST@24..26
+                      L_PAREN@24..25 "("
+                      LIST@25..25
+                      R_PAREN@25..26 ")"
+                    WHITESPACE@26..27 " "
+                    JS_FUNCTION_BODY@27..29
+                      L_CURLY@27..28 "{"
+                      LIST@28..28
+                      LIST@28..28
+                      R_CURLY@28..29 "}"
+                  COMMA@29..30 ","
+                  WHITESPACE@30..31 "\n"
+                  JS_METHOD_OBJECT_MEMBER@31..48
+                    JS_LITERAL_MEMBER_NAME@31..36
+                      JS_STRING_LITERAL_TOKEN@31..36 "\"bar\""
+                    JS_PARAMETER_LIST@36..45
+                      L_PAREN@36..37 "("
+                      LIST@37..44
+                        SINGLE_PATTERN@37..38
+                          NAME@37..38
+                            IDENT@37..38 "a"
+                        COMMA@38..39 ","
+                        WHITESPACE@39..40 " "
+                        SINGLE_PATTERN@40..41
+                          NAME@40..41
+                            IDENT@40..41 "b"
+                        COMMA@41..42 ","
+                        WHITESPACE@42..43 " "
+                        SINGLE_PATTERN@43..44
+                          NAME@43..44
+                            IDENT@43..44 "c"
+                      R_PAREN@44..45 ")"
+                    WHITESPACE@45..46 " "
+                    JS_FUNCTION_BODY@46..48
+                      L_CURLY@46..47 "{"
+                      LIST@47..47
+                      LIST@47..47
+                      R_CURLY@47..48 "}"
+                  COMMA@48..49 ","
+                  WHITESPACE@49..50 "\n"
+                  JS_METHOD_OBJECT_MEMBER@50..71
+                    JS_COMPUTED_MEMBER_NAME@50..65
+                      L_BRACK@50..51 "["
+                      JS_BINARY_EXPRESSION@51..64
+                        JS_STRING_LITERAL@51..56
+                          JS_STRING_LITERAL_TOKEN@51..56 "\"foo\""
+                        WHITESPACE@56..57 " "
+                        PLUS@57..58 "+"
+                        WHITESPACE@58..59 " "
+                        JS_STRING_LITERAL@59..64
+                          JS_STRING_LITERAL_TOKEN@59..64 "\"bar\""
+                      R_BRACK@64..65 "]"
+                    JS_PARAMETER_LIST@65..68
+                      L_PAREN@65..66 "("
+                      LIST@66..67
+                        SINGLE_PATTERN@66..67
+                          NAME@66..67
+                            IDENT@66..67 "a"
+                      R_PAREN@67..68 ")"
+                    WHITESPACE@68..69 " "
+                    JS_FUNCTION_BODY@69..71
+                      L_CURLY@69..70 "{"
+                      LIST@70..70
+                      LIST@70..70
+                      R_CURLY@70..71 "}"
+                  COMMA@71..72 ","
+                  WHITESPACE@72..73 "\n"
+                  JS_METHOD_OBJECT_MEMBER@73..86
+                    JS_LITERAL_MEMBER_NAME@73..74
+                      JS_NUMBER_LITERAL_TOKEN@73..74 "5"
+                    JS_PARAMETER_LIST@74..83
+                      L_PAREN@74..75 "("
+                      LIST@75..82
+                        JS_REST_PARAMETER@75..82
+                          DOT2@75..78 "..."
+                          SINGLE_PATTERN@78..82
+                            NAME@78..82
+                              IDENT@78..82 "rest"
+                      R_PAREN@82..83 ")"
+                    WHITESPACE@83..84 " "
+                    JS_FUNCTION_BODY@84..86
+                      L_CURLY@84..85 "{"
+                      LIST@85..85
+                      LIST@85..85
+                      R_CURLY@85..86 "}"
+                WHITESPACE@86..87 "\n"
+                R_CURLY@87..88 "}"
+  WHITESPACE@88..89 "\n"

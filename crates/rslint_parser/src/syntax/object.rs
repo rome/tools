@@ -106,6 +106,10 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			// test object_expr_method
 			// let b = {
 			//  foo() {},
+				// foo() {},
+				// "bar"(a, b, c) {},
+				// ["foo" + "bar"](a) {},
+				// 5(...rest) {}
 			// }
 			if p.at(T!['(']) || p.at(T![<]) {
 				method_object_member_body(p).ok()?;
