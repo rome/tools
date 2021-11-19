@@ -60,7 +60,6 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 			)
 			.secondary(err_range, "...Which is required to end this statement");
 
-
 		p.error(err);
 	}
 }
