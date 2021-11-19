@@ -1,0 +1,1 @@
+let [ let, let ] = a;

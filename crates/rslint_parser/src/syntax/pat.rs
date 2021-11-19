@@ -30,6 +30,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 		}
 		T![ident] | T![yield] | T![await] => {
 			let m = p.start();
+			let mut has_error = false;
 			if p.state.should_record_names {
 				let string = p.cur_src().to_string();
 				if string == "let" {
@@ -40,6 +41,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 						.primary(p.cur_tok().range, "");
 
 					p.error(err);
+					has_error = true;
 				} else if let Some(existing) = p.state.name_map.get(&string) {
 					let err = p
                     .err_builder(
@@ -53,15 +55,21 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
                         p.cur_tok().range,
                         &format!("a second declaration of {} is not allowed", string),
                     );
+										has_error= true;
 					p.error(err);
 				} else {
 					p.state
 						.name_map
 						.insert(p.cur_src().to_string(), p.cur_tok().range);
+
 				}
 			}
 			binding_identifier(p);
-			m.complete(p, SINGLE_PATTERN)
+			let mut completed = m.complete(p, SINGLE_PATTERN);
+			if has_error {
+				completed.change_kind(p, JS_UNKNOWN_PATTERN);
+			}
+			completed
 		}
 		_ => {
 			let err = p
@@ -94,13 +102,13 @@ pub fn opt_binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 // }
 // let eval = 5;
 pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
-	let mut kind_to_change = NAME;
+	let mut complete_with_this_kind = NAME;
 	if p.at(T![yield]) && p.state.in_generator {
 		let err = p
 			.err_builder("Illegal use of `yield` as an identifier in generator function")
 			.primary(p.cur_tok().range, "");
 
-			kind_to_change = JS_UNKNOWN_BINDING;
+			complete_with_this_kind = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
@@ -108,25 +116,26 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 		let err = p
 			.err_builder("Illegal use of `await` as an identifier in an async context")
 			.primary(p.cur_tok().range, "");
-			kind_to_change = JS_UNKNOWN_BINDING;
+			complete_with_this_kind = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
+	let src = p.cur_src();
 	if p.state.strict.is_some()
-		&& (p.cur_src() == "eval" || p.cur_src() == "arguments" || p.cur_src() == "yield")
+		&& (src == "eval" || src == "arguments" || src == "yield")
 	{
 		let err = p
 			.err_builder(&format!(
 				"Illegal use of `{}` as an identifier in strict mode",
-				p.cur_src()
+				src
 			))
 			.primary(p.cur_tok().range, "");
-			kind_to_change = JS_UNKNOWN_BINDING;
+			complete_with_this_kind = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
 	let mut m = identifier_reference(p)?;
-	m.change_kind(p, kind_to_change);
+	m.change_kind(p, complete_with_this_kind);
 	Some(m)
 }
 

@@ -1,0 +1,47 @@
+JS_ROOT@0..22
+  LIST@0..0
+  LIST@0..21
+    JS_VARIABLE_DECLARATION_STATEMENT@0..21
+      JS_VARIABLE_DECLARATION@0..20
+        LET_KW@0..3 "let"
+        WHITESPACE@3..4 " "
+        LIST@4..20
+          JS_VARIABLE_DECLARATOR@4..20
+            ARRAY_PATTERN@4..16
+              L_BRACK@4..5 "["
+              WHITESPACE@5..6 " "
+              LIST@6..14
+                JS_UNKNOWN_PATTERN@6..9
+                  NAME@6..9
+                    IDENT@6..9 "let"
+                COMMA@9..10 ","
+                WHITESPACE@10..11 " "
+                JS_UNKNOWN_PATTERN@11..14
+                  NAME@11..14
+                    IDENT@11..14 "let"
+              WHITESPACE@14..15 " "
+              R_BRACK@15..16 "]"
+            WHITESPACE@16..17 " "
+            JS_EQUAL_VALUE_CLAUSE@17..20
+              EQ@17..18 "="
+              WHITESPACE@18..19 " "
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@19..20
+                IDENT@19..20 "a"
+      SEMICOLON@20..21 ";"
+  WHITESPACE@21..22 "\n"
+--
+error[SyntaxError]: `let` cannot be declared as a variable name inside of a declaration
+  ┌─ let_const_no_duplicates.js:1:7
+  │
+1 │ let [ let, let ] = a;
+  │       ^^^
+
+--
+error[SyntaxError]: `let` cannot be declared as a variable name inside of a declaration
+  ┌─ let_const_no_duplicates.js:1:12
+  │
+1 │ let [ let, let ] = a;
+  │            ^^^
+
+--
+let [ let, let ] = a;

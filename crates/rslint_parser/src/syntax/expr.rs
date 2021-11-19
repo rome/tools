@@ -1070,7 +1070,7 @@ pub fn identifier_reference(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
-			ParseRecoverer::with_error(p.state.expr_recovery_set, ERROR, err)
+			ParseRecoverer::with_error(p.state.expr_recovery_set, JS_UNKNOWN_BINDING, err)
 				.enabled_braces_check()
 				.recover(p);
 			None

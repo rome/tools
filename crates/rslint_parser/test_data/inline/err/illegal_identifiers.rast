@@ -1,0 +1,59 @@
+JS_ROOT@0..36
+  LIST@0..0
+  LIST@0..35
+    JS_VARIABLE_DECLARATION_STATEMENT@0..35
+      JS_VARIABLE_DECLARATION@0..34
+        LET_KW@0..3 "let"
+        WHITESPACE@3..4 " "
+        LIST@4..34
+          JS_VARIABLE_DECLARATOR@4..34
+            ARRAY_PATTERN@4..30
+              L_BRACK@4..5 "["
+              WHITESPACE@5..6 " "
+              LIST@6..28
+                SINGLE_PATTERN@6..10
+                  JS_UNKNOWN_BINDING@6..10
+                    IDENT@6..10 "eval"
+                COMMA@10..11 ","
+                WHITESPACE@11..12 " "
+                SINGLE_PATTERN@12..17
+                  JS_UNKNOWN_BINDING@12..17
+                    IDENT@12..17 "yield"
+                COMMA@17..18 ","
+                WHITESPACE@18..19 " "
+                SINGLE_PATTERN@19..28
+                  JS_UNKNOWN_BINDING@19..28
+                    IDENT@19..28 "arguments"
+              WHITESPACE@28..29 " "
+              R_BRACK@29..30 "]"
+            WHITESPACE@30..31 " "
+            JS_EQUAL_VALUE_CLAUSE@31..34
+              EQ@31..32 "="
+              WHITESPACE@32..33 " "
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@33..34
+                IDENT@33..34 "a"
+      SEMICOLON@34..35 ";"
+  WHITESPACE@35..36 "\n"
+--
+error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
+  ┌─ illegal_identifiers.js:1:7
+  │
+1 │ let [ eval, yield, arguments ] = a;
+  │       ^^^^
+
+--
+error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+  ┌─ illegal_identifiers.js:1:13
+  │
+1 │ let [ eval, yield, arguments ] = a;
+  │             ^^^^^
+
+--
+error[SyntaxError]: Illegal use of `arguments` as an identifier in strict mode
+  ┌─ illegal_identifiers.js:1:20
+  │
+1 │ let [ eval, yield, arguments ] = a;
+  │                    ^^^^^^^^^
+
+--
+let [ eval, yield, arguments ] = a;
