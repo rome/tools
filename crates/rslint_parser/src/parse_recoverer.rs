@@ -69,7 +69,7 @@ impl ParseRecoverer {
 		}
 	}
 
-	/// Checks if the parsing phase is recoverable by checking curly braces and toke set
+	/// Checks if the parsing phase is recoverable by checking curly braces and [tokens set](TokenSet)
 	fn parsing_is_recoverable(&self, parser: &Parser) -> bool {
 		self.is_at_token_set(parser) || self.is_at_braces(parser)
 	}
@@ -79,7 +79,7 @@ impl ParseRecoverer {
 		self.error.to_owned()
 	}
 
-	/// It return the unknown node kind that will be used to complete the parsing
+	/// It returns the unknown node kind that will be used to complete the parsing
 	fn get_unknown_node_kind(&self) -> SyntaxKind {
 		self.unknown_node_kind
 	}

@@ -588,7 +588,6 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 
 	// body
 	// allows us to recover from `if (true) else {}`
-	// FIXME: in this case
 	stmt(p, STMT_RECOVERY_SET.union(token_set![T![else]]));
 
 	// else clause

@@ -179,24 +179,6 @@ impl<'t> Parser<'t> {
 		true
 	}
 
-	///
-	/// # Arguments
-	///
-	/// * `recovery_bag` - Everything needed to recover from an error
-	// pub fn recover_on_unexpected_node(&mut self, recovery_bag: ParseRecoverer) {
-	// 	if self.state.no_recovery {
-	// 		return;
-	// 	}
-	// 	let error = recovery_bag.get_error();
-	// 	if let Some(error) = error {
-	// 		self.error(error);
-	// 	}
-	// 	if !recovery_bag.parsing_is_recoverable(self) {
-	// 		let m = self.start();
-	// 		self.bump_any();
-	// 		m.complete(self, recovery_bag.get_unknown_node_kind());
-	// 	}
-	// }
 
 	/// Starts a new node in the syntax tree. All nodes and tokens
 	/// consumed between the `start` and the corresponding `Marker::complete`
