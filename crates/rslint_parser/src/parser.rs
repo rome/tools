@@ -394,6 +394,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Get a checkpoint representing the progress of the parser at this point in time
+	#[must_use]
 	pub fn checkpoint(&self) -> Checkpoint {
 		Checkpoint {
 			token_pos: self.token_pos(),
@@ -756,7 +757,7 @@ mod tests {
 
 		let mut parser = Parser::new(token_source, 0, Syntax::default());
 
-		let m = parser.start();
+		let _ = parser.start();
 		// drop the marker without calling complete or abandon
 	}
 

@@ -530,10 +530,8 @@ pub(crate) fn try_parse_index_signature(
 		return Err(m);
 	}
 
-	if p.eat(T![:]) {
-		if ts_type(p).is_none() && p.state.no_recovery {
-			return Err(m);
-		}
+	if p.eat(T![:]) && ts_type(p).is_none() && p.state.no_recovery {
+		return Err(m);
 	}
 
 	type_member_semi(p);
