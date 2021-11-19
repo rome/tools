@@ -650,19 +650,23 @@ pub fn computed_member_expression(
 
 /// An identifier name, either an ident or a keyword
 pub fn identifier_name(p: &mut Parser) -> Option<CompletedMarker> {
-	let m = p.start();
-	match p.cur() {
-		t if t.is_keyword() || t == T![ident] => p.bump_remap(T![ident]),
-		_ => {
-			let err = p
-				.err_builder("Expected an identifier or keyword")
-				.primary(p.cur_tok().range, "Expected an identifier or keyword here");
-			p.error(err);
-			m.abandon(p);
-			return None;
-		}
+	if is_at_identifier_name(p) {
+		let m = p.start();
+		p.bump_remap(T![ident]);
+		Some(m.complete(p, NAME))
+	} else {
+		let err = p
+			.err_builder("Expected an identifier or keyword")
+			.primary(p.cur_tok().range, "Expected an identifier or keyword here");
+		p.error(err);
+		None
 	}
-	Some(m.complete(p, NAME))
+}
+
+fn is_at_identifier_name(p: &Parser) -> bool {
+	let t = p.cur();
+
+	t.is_keyword() || t == T![ident]
 }
 
 /// Arguments to a function.

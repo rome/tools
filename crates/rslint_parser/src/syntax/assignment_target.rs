@@ -1,6 +1,11 @@
-use crate::syntax::expr::{expr_or_assignment_target, identifier_name};
+use crate::syntax::class::optional_equals_value_clause;
+use crate::syntax::expr::{
+	conditional_expr, expr, expr_or_assignment_target, identifier_name, primary_expr,
+	EXPR_RECOVERY_SET,
+};
 use crate::{CompletedMarker, Parser};
 use crate::{SyntaxKind::*, *};
+use rslint_errors::Diagnostic;
 
 /// Converts the passed in target (expression) to an assignment target
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
@@ -8,68 +13,133 @@ pub(crate) fn expression_to_assignment_target(
 	p: &mut Parser,
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
-) -> Option<CompletedMarker> {
-	if let Ok(assignment_target) = try_fast_expression_to_assignment_target_conversion(p, target) {
-		return Some(assignment_target);
+) -> CompletedMarker {
+	if let Ok(assignment_target) = try_expression_to_simple_assignment_target(p, target) {
+		return assignment_target;
 	}
+
+	let expression_end = p.token_pos();
 	p.rewind(checkpoint);
 
-	assignment_target(p)
-}
+	match try_assignment_target(p) {
+		Ok(target) => target,
+		Err(_) => {
+			let unknown = p.start();
+			while p.token_pos() <= expression_end {
+				p.bump_any();
+			}
 
-/// Parses an assignment target and inserts and creates an unknown assignment target if
-/// the current token isn't a valid start for an assignment target
-pub(crate) fn assignment_target(p: &mut Parser) -> Option<CompletedMarker> {
-	match p.cur() {
-		T![ident] | T![yield] | T![await] => identifier_assignment_target(p),
-		T!['['] => Some(array_assignment_target(p)),
-		// TODO object target
-		_ => {
-			let err = p
-				.err_builder("Expected an identifier or an assignment pattern but found none")
-				.primary(p.cur_tok().range, "");
-
-			// TODO change the error kind to `UnknownAssignmentTarget`
-			p.err_recover(
-				err,
-				token_set![T![ident], T![yield], T![await], T!['['],],
-				p.state.allow_object_expr,
+			let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+			let expression_range = completed.range(p);
+			p.error(
+				p.err_builder(&format!(
+					"Invalid assignment to `{}`",
+					p.source(expression_range)
+				))
+				.primary(expression_range, "This expression cannot be assigned to"),
 			);
-			None
+			completed
 		}
 	}
 }
 
-/// Parses an assignment target and wraps it as [JsAssignmentTargetWithDefault] if the target
-/// is followed by a `=` token
+// * members
+// * Re-add parenthesized assignment target, allowed in some places
+
+/// Parses an assignment target and inserts and creates an unknown assignment target if
+/// the current token isn't a valid start for an assignment target
+pub(crate) fn assignment_target(p: &mut Parser) -> Option<CompletedMarker> {
+	let result = try_assignment_target(p).ok();
+
+	if result == None {
+		p.error(missing_assignment_target_error(p));
+	}
+
+	result
+}
+
+fn missing_assignment_target_error(p: &Parser) -> Diagnostic {
+	p.err_builder("Missing assignment target").primary(
+		p.cur_tok().range,
+		"Expected an identifier, member expression, or an array or object pattern here",
+	)
+}
+
+/// Tries to parse an assignment target and returns the node's completed marker if successful.
+/// Returns an [Err] if the parser isn't positioned at an assignment target without adding an error.
+fn try_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()> {
+	match p.cur() {
+		T!['['] => Ok(array_assignment_target(p)),
+		T!['{'] if p.state.allow_object_expr => Ok(object_assignment_target(p)),
+		_ => try_simple_assignment_target(p),
+	}
+}
+
+fn simple_assignment_target(p: &mut Parser) -> Option<CompletedMarker> {
+	let result = try_simple_assignment_target(p).ok();
+
+	if result == None {
+		p.error(
+			p.err_builder("Expected an identifier or a member expression, but found none")
+				.primary(p.cur_tok().range, ""),
+		);
+	}
+
+	result
+}
+
+fn try_simple_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()> {
+	let checkpoint = p.checkpoint();
+	let expr = conditional_expr(p).ok_or(())?;
+
+	let assignment_target = try_expression_to_simple_assignment_target(p, expr);
+	if assignment_target.is_err() {
+		// This function shouldn't emit any error if it fails to parse the expression.
+		// Ideally, rewind wouldn't be needed here because there's a try_expr function that tries to parse
+		// the expression and otherwise returns an Error but doesn't add any diagnostics
+		p.rewind(checkpoint);
+	}
+
+	assignment_target
+}
+
 fn assignment_target_with_optional_default(p: &mut Parser) -> Option<CompletedMarker> {
-	let target = assignment_target(p);
+	let result = try_assignment_target_with_optional_default(p).ok();
+
+	if result == None {
+		p.error(missing_assignment_target_error(p));
+	}
+
+	result
+}
+
+/// Parses an assignment target and wraps it as a [JsAssignmentTargetWithDefault] if the target
+/// is followed by a `=` token. Returns [Err] if the parser can't parse the assignment target nor
+/// the default clause.
+fn try_assignment_target_with_optional_default(p: &mut Parser) -> Result<CompletedMarker, ()> {
+	let target = try_assignment_target(p);
 
 	if p.at(T![=]) {
-		let with_default = if let Some(target) = target {
-			target.precede(p)
-		} else {
-			p.start()
+		let with_default = match target {
+			Ok(target) => target.precede(p),
+			Err(_) => {
+				// It's possible to recover from the missing assignment target since the parser is still making
+				// progress by eating the default part. Just make sure the parser marks the target as missing.
+				p.error(missing_assignment_target_error(p));
+				p.start()
+			}
 		};
 
 		p.bump_any(); // eat the = token
 		expr_or_assignment_target(p);
 
-		Some(with_default.complete(p, JS_ASSIGNMENT_TARGET_WITH_DEFAULT))
+		Ok(with_default.complete(p, JS_ASSIGNMENT_TARGET_WITH_DEFAULT))
 	} else {
 		target
 	}
 }
 
-/// Parses an identifier assignment target
-fn identifier_assignment_target(p: &mut Parser) -> Option<CompletedMarker> {
-	identifier_name(p).map(|mut identifier| {
-		identifier.change_kind(p, JS_IDENTIFIER_ASSIGNMENT_TARGET);
-		identifier
-	})
-}
-
-/// Parses an array assignment target with all its elements
+/// Parses a [JsArrayAssignmentTarget] with all its elements
 fn array_assignment_target(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 
@@ -88,14 +158,28 @@ fn array_assignment_target(p: &mut Parser) -> CompletedMarker {
 			break;
 		}
 
-		let element = assignment_target_with_optional_default(p);
+		let element = {
+			let mut guard = p.with_state(ParserState {
+				expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...], T![=]]),
+				..p.state.clone()
+			});
 
-		if element.is_none() {
-			p.err_recover_no_err(
-				token_set![T![,], T![']']],
-				false,
-				// TODO create an UnknownAssignmentTarget node
-			);
+			try_assignment_target_with_optional_default(&mut *guard)
+		};
+
+		if element.is_err() {
+			// Use a custom error recovery here. The parser eats all tokens until it finds the end of the array (or file),
+			// or any token that starts a new assignment target and puts them into an unknown assignment target
+			p.error(missing_assignment_target_error(p));
+
+			let unknown = p.start();
+			while !p.at_ts(token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]))
+				&& !p.has_linebreak_before_n(0)
+			{
+				p.bump_any();
+			}
+
+			unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
 		}
 
 		if !p.at(T![']']) {
@@ -115,7 +199,7 @@ fn array_assignment_target_rest_element(p: &mut Parser) {
 
 	assignment_target_with_optional_default(p);
 
-	if p.at(T![,]) {
+	if p.eat(T![,]) {
 		p.error(
 			p.err_builder("rest element may not have a trailing comma")
 				.primary(p.cur_tok().range, "Remove the trailing comma here"),
@@ -126,69 +210,118 @@ fn array_assignment_target_rest_element(p: &mut Parser) {
 	}
 }
 
-fn try_fast_expression_to_assignment_target_conversion(
-	p: &mut Parser,
-	mut target: CompletedMarker,
-) -> Result<CompletedMarker, ()> {
-	let result = match target.kind() {
-		JS_STATIC_MEMBER_EXPRESSION => {
-			let children =
-				&p.events.as_slice()[target.start_pos as usize..target.finish_pos as usize];
-			if children.iter().any(|event| {
-				matches!(
-					event,
-					Event::Start {
-						kind: JS_REFERENCE_PRIVATE_MEMBER,
-						..
-					}
-				)
-			}) {
-				// Private members are not valid inside assignment targets, bail out and force a reparse
-				Err(())
-			} else {
-				Ok(JS_STATIC_MEMBER_ASSIGNMENT_TARGET)
-			}
-		}
-		JS_COMPUTED_MEMBER_EXPRESSION => Ok(JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET),
-		JS_REFERENCE_IDENTIFIER_EXPRESSION => Ok(JS_IDENTIFIER_ASSIGNMENT_TARGET),
-		_ => Err(()),
-	};
+/// Parses a [JsObjectAssignmentTarget]
+fn object_assignment_target(p: &mut Parser) -> CompletedMarker {
+	let m = p.start();
 
-	match result {
-		Ok(new_kind) => {
-			target.change_kind(p, new_kind);
-			Ok(target)
+	p.expect(T!['{']);
+	let elements = p.start();
+
+	while !matches!(p.cur(), EOF | T!['}']) {
+		if p.at(T![...]) {
+			object_rest_property_assignment_target(p);
+			break;
 		}
-		Err(_) => {
-			target.undo_completion(p).abandon(p);
-			Err(())
+
+		let element = try_property_assignment_target(p);
+
+		if element.is_err() {
+			p.error(
+				p.err_builder("Expected a property name, but found none")
+					.primary(p.cur_tok().range, ""),
+			);
+
+			let unknown = p.start();
+			let recovery_set = token_set!(EOF, T![,], T![']'], T![...], T![;]);
+			while !p.at_ts(recovery_set) && !p.has_linebreak_before_n(0) {
+				p.bump_any();
+			}
+
+			unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
 		}
+
+		if !p.at(T!['}']) {
+			p.expect(T![,]);
+		}
+	}
+
+	elements.complete(p, LIST);
+	p.expect(T!['}']);
+
+	m.complete(p, JS_OBJECT_ASSIGNMENT_TARGET)
+}
+
+const PROPERTY_ASSIGNMENT_TARGET_START_TOKENS: TokenSet =
+	token_set![T![ident], T![yield], T![await], T![:], T![=]];
+
+fn try_property_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()> {
+	if !p.at_ts(PROPERTY_ASSIGNMENT_TARGET_START_TOKENS) {
+		return Err(());
+	}
+
+	let m = p.start();
+	let mut property_name = identifier_name(p)
+		.expect("The parser is currently at an identifier, calling identifier_name should succeed");
+	let is_shorthand_property = !p.eat(T![:]);
+
+	if is_shorthand_property {
+		property_name.change_kind(p, JS_IDENTIFIER_ASSIGNMENT_TARGET);
+	} else {
+		property_name.change_kind(p, JS_REFERENCE_IDENTIFIER_MEMBER);
+
+		assignment_target(p);
+	}
+
+	{
+		let mut guard = p.with_state(ParserState {
+			expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
+			..p.state.clone()
+		});
+		optional_equals_value_clause(&mut *guard);
+	}
+
+	Ok(m.complete(
+		p,
+		if is_shorthand_property {
+			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
+		} else {
+			JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
+		},
+	))
+}
+
+fn object_rest_property_assignment_target(p: &mut Parser) {
+	let m = p.start();
+	p.expect(T![...]);
+
+	simple_assignment_target(p);
+
+	if p.eat(T![,]) {
+		p.error(
+			p.err_builder("rest element may not have a trailing comma")
+				.primary(p.cur_tok().range, "Remove the trailing comma here"),
+		);
+		m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+	} else {
+		m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET);
 	}
 }
 
-//
-// fn map_target_assignment_events(p: &mut Parser, target: &CompletedMarker) {
-// 	// let mut pending_events: Vec<Pending> = Vec::new();
-//
-// 	// This is to naive... the LHS may contain some array expressions, for example in the default initializers
-// 	for event in p.events[target.start_pos as usize..target.finish_pos as usize].iter_mut() {
-// 		match event {
-// 			Event::Start {
-// 				kind: TOMBSTONE | LIST,
-// 				..
-// 			} => {}
-// 			Event::Start { kind, .. } => {
-// 				if let Ok(mapped_kind) = try_map_kind_to_assignment_target(*kind) {
-// 					*kind = mapped_kind;
-// 				} else {
-// 					*kind = JS_UNKNOWN_ASSIGNMENT_TARGET;
-// 					// TODO insert error
-// 					// target.change_kind(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
-// 				}
-// 			}
-// 			Event::Finish { .. } => {}
-//
-// 			Event::Token { .. } | Event::Missing | Event::MultipleTokens { .. } => {}
-// 		}
-// 	}
-// }
+fn try_expression_to_simple_assignment_target(
+	p: &mut Parser,
+	mut target: CompletedMarker,
+) -> Result<CompletedMarker, ()> {
+	let mapped_kind = match target.kind() {
+		JS_STATIC_MEMBER_EXPRESSION => JS_STATIC_MEMBER_ASSIGNMENT_TARGET,
+		JS_COMPUTED_MEMBER_EXPRESSION => JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET,
+		JS_REFERENCE_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT_TARGET,
+		JS_UNKNOWN_EXPRESSION | ERROR => JS_UNKNOWN_ASSIGNMENT_TARGET,
+		_ => {
+			target.undo_completion(p).abandon(p);
+			return Err(());
+		}
+	};
+
+	target.change_kind(p, mapped_kind);
+	Ok(target)
+}

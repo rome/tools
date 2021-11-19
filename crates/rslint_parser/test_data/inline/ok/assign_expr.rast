@@ -1,6 +1,6 @@
-JS_ROOT@0..159
+JS_ROOT@0..198
   LIST@0..0
-  LIST@0..103
+  LIST@0..197
     JS_EXPRESSION_STATEMENT@0..21
       JS_ASSIGNMENT_EXPRESSION@0..20
         JS_IDENTIFIER_ASSIGNMENT_TARGET@0..3
@@ -98,8 +98,110 @@ JS_ROOT@0..159
         JS_REFERENCE_IDENTIFIER_EXPRESSION@99..102
           IDENT@99..102 "baz"
       SEMICOLON@102..103 ";"
-  WHITESPACE@103..104 "\n"
-  COMMENT@104..127 "// ({ bar, baz } = {});"
-  WHITESPACE@127..128 "\n"
-  COMMENT@128..158 "// ({ bar: [baz], foo ..."
-  WHITESPACE@158..159 "\n"
+    WHITESPACE@103..104 "\n"
+    JS_EXPRESSION_STATEMENT@104..123
+      JS_ASSIGNMENT_EXPRESSION@104..122
+        JS_ARRAY_ASSIGNMENT_TARGET@104..116
+          L_BRACK@104..105 "["
+          LIST@105..115
+            JS_ARRAY_HOLE@105..105
+            COMMA@105..106 ","
+            JS_ARRAY_HOLE@106..106
+            COMMA@106..107 ","
+            JS_ARRAY_HOLE@107..107
+            COMMA@107..108 ","
+            JS_IDENTIFIER_ASSIGNMENT_TARGET@108..111
+              IDENT@108..111 "foo"
+            COMMA@111..112 ","
+            JS_IDENTIFIER_ASSIGNMENT_TARGET@112..115
+              IDENT@112..115 "bar"
+          R_BRACK@115..116 "]"
+        WHITESPACE@116..117 " "
+        EQ@117..118 "="
+        WHITESPACE@118..119 " "
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@119..122
+          IDENT@119..122 "baz"
+      SEMICOLON@122..123 ";"
+    WHITESPACE@123..124 "\n"
+    JS_EXPRESSION_STATEMENT@124..144
+      JS_PARENTHESIZED_EXPRESSION@124..143
+        L_PAREN@124..125 "("
+        JS_ASSIGNMENT_EXPRESSION@125..142
+          JS_OBJECT_ASSIGNMENT_TARGET@125..137
+            L_CURLY@125..126 "{"
+            WHITESPACE@126..127 " "
+            LIST@127..135
+              JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@127..130
+                JS_IDENTIFIER_ASSIGNMENT_TARGET@127..130
+                  IDENT@127..130 "bar"
+              COMMA@130..131 ","
+              WHITESPACE@131..132 " "
+              JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@132..135
+                JS_IDENTIFIER_ASSIGNMENT_TARGET@132..135
+                  IDENT@132..135 "baz"
+            WHITESPACE@135..136 " "
+            R_CURLY@136..137 "}"
+          WHITESPACE@137..138 " "
+          EQ@138..139 "="
+          WHITESPACE@139..140 " "
+          JS_OBJECT_EXPRESSION@140..142
+            L_CURLY@140..141 "{"
+            LIST@141..141
+            R_CURLY@141..142 "}"
+        R_PAREN@142..143 ")"
+      SEMICOLON@143..144 ";"
+    WHITESPACE@144..145 "\n"
+    JS_EXPRESSION_STATEMENT@145..197
+      JS_PARENTHESIZED_EXPRESSION@145..196
+        L_PAREN@145..146 "("
+        JS_ASSIGNMENT_EXPRESSION@146..195
+          JS_OBJECT_ASSIGNMENT_TARGET@146..190
+            L_CURLY@146..147 "{"
+            WHITESPACE@147..148 " "
+            LIST@148..188
+              JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET@148..166
+                JS_REFERENCE_IDENTIFIER_MEMBER@148..151
+                  IDENT@148..151 "bar"
+                COLON@151..152 ":"
+                WHITESPACE@152..153 " "
+                JS_ARRAY_ASSIGNMENT_TARGET@153..166
+                  L_BRACK@153..154 "["
+                  LIST@154..165
+                    JS_ASSIGNMENT_TARGET_WITH_DEFAULT@154..165
+                      JS_IDENTIFIER_ASSIGNMENT_TARGET@154..157
+                        IDENT@154..157 "baz"
+                      WHITESPACE@157..158 " "
+                      EQ@158..159 "="
+                      WHITESPACE@159..160 " "
+                      JS_STRING_LITERAL_EXPRESSION@160..165
+                        JS_STRING_LITERAL@160..165 "\"baz\""
+                  R_BRACK@165..166 "]"
+              COMMA@166..167 ","
+              WHITESPACE@167..168 " "
+              JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@168..179
+                JS_IDENTIFIER_ASSIGNMENT_TARGET@168..171
+                  IDENT@168..171 "foo"
+                WHITESPACE@171..172 " "
+                JS_EQUAL_VALUE_CLAUSE@172..179
+                  EQ@172..173 "="
+                  WHITESPACE@173..174 " "
+                  JS_STRING_LITERAL_EXPRESSION@174..179
+                    JS_STRING_LITERAL@174..179 "\"foo\""
+              COMMA@179..180 ","
+              WHITESPACE@180..181 " "
+              JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET@181..188
+                DOT2@181..184 "..."
+                JS_IDENTIFIER_ASSIGNMENT_TARGET@184..188
+                  IDENT@184..188 "rest"
+            WHITESPACE@188..189 " "
+            R_CURLY@189..190 "}"
+          WHITESPACE@190..191 " "
+          EQ@191..192 "="
+          WHITESPACE@192..193 " "
+          JS_OBJECT_EXPRESSION@193..195
+            L_CURLY@193..194 "{"
+            LIST@194..194
+            R_CURLY@194..195 "}"
+        R_PAREN@195..196 ")"
+      SEMICOLON@196..197 ";"
+  WHITESPACE@197..198 "\n"

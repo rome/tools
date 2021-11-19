@@ -696,7 +696,7 @@ fn optional_member_token(p: &mut Parser) -> Option<Range<usize>> {
 	}
 }
 
-fn optional_equals_value_clause(p: &mut Parser) -> Option<CompletedMarker> {
+pub(crate) fn optional_equals_value_clause(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![=]) {
 		let m = p.start();
 		p.bump_any(); // eat the = token

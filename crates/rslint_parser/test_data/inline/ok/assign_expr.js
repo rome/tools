@@ -3,5 +3,6 @@ foo -= bar;
 (foo = bar);
 [foo, bar] = baz;
 [foo, bar = "default", ...rest] = baz;
-// ({ bar, baz } = {});
-// ({ bar: [baz], foo } = {});
+[,,,foo,bar] = baz;
+({ bar, baz } = {});
+({ bar: [baz = "baz"], foo = "foo", ...rest } = {});

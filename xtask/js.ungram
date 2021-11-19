@@ -624,7 +624,6 @@ JsEmptyClassMember = ';'
 // ASSIGNMENT TARGETS
 ///////////////
 
-// TODO split into simple assignment target
 JsAnyAssignmentTarget =
 	JsAnySimpleAssignmentTarget
 	| JsArrayAssignmentTarget
@@ -663,7 +662,6 @@ JsComputedMemberAssignmentTarget =
 JsArrayAssignmentTarget =
 	'['
 	elements: (JsAnyArrayAssignmentTargetElement (',' JsAnyArrayAssignmentTargetElement)* ','?)
-	// TODO rest
 	']'
 
 JsAnyArrayAssignmentTargetElement =
@@ -677,6 +675,38 @@ JsAnyArrayAssignmentTargetElement =
 JsArrayAssignmentTargetRestElement =
 	'...'
 	target: JsAnyAssignmentTarget
+
+// ({a, b: x, ...rest} = c)
+//  ^^^^^^^^^^^^^^^^^^
+JsObjectAssignmentTarget =
+	'{'
+	properties: (JsAnyPropertyAssignmentTarget (',' JsAnyPropertyAssignmentTarget)* ','?)
+	'}'
+
+JsAnyPropertyAssignmentTarget =
+	JsShorthandPropertyAssignmentTarget
+	| JsObjectPropertyAssignmentTarget
+	| JsObjectRestPropertyAssignmentTarget
+
+// ({ x } = b) or ({ x = "test" } = b)
+//    ^              ^^^^^^^^^^
+JsShorthandPropertyAssignmentTarget =
+	identifier: JsIdentifierAssignmentTarget
+	init: JsEqualValueClause?
+
+// ({ x: a } = b) or ({ x: a = "test" } = b)
+//    ^^^^              ^^^^^^^^^^^^^
+JsObjectPropertyAssignmentTarget =
+	member: JsReferenceIdentifierMember
+	':'
+	target: JsAnyAssignmentTarget
+	init: JsEqualValueClause?
+
+// ({ a, ...b } = a)
+//       ^^^^
+JsObjectRestPropertyAssignmentTarget =
+	'...'
+	target: JsAnySimpleAssignmentTarget
 
 ///////////////
 // LITERALS
