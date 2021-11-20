@@ -1,6 +1,6 @@
 JS_ROOT@0..25
   LIST@0..0
-  LIST@0..25
+  LIST@0..24
     JS_EXPRESSION_STATEMENT@0..10
       JS_LOGICAL_EXPRESSION@0..10
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
@@ -15,10 +15,11 @@ JS_ROOT@0..25
         PIPE2@13..16 "||" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@16..17
           IDENT@16..17 "b" [] []
-    JS_EXPRESSION_STATEMENT@17..25
-      JS_LOGICAL_EXPRESSION@17..25
+    JS_EXPRESSION_STATEMENT@17..24
+      JS_LOGICAL_EXPRESSION@17..24
         JS_REFERENCE_IDENTIFIER_EXPRESSION@17..20
           IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")]
         AMP2@20..23 "&&" [] [Whitespace(" ")]
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@23..25
-          IDENT@23..25 "b" [] [Whitespace("\n")]
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@23..24
+          IDENT@23..24 "b" [] []
+  EOF@24..25 "" [Whitespace("\n")] []

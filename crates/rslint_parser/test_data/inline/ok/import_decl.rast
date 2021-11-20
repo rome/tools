@@ -1,7 +1,7 @@
 JS_ROOT@0..28
   LIST@0..0
-  LIST@0..28
-    IMPORT_DECL@0..28
+  LIST@0..27
+    IMPORT_DECL@0..27
       IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
       LIST@7..16
         WILDCARD_IMPORT@7..16
@@ -12,4 +12,5 @@ JS_ROOT@0..28
       FROM_KW@16..21 "from" [] [Whitespace(" ")]
       JS_STRING_LITERAL@21..26
         JS_STRING_LITERAL_TOKEN@21..26 "\"bla\"" [] []
-      SEMICOLON@26..28 ";" [] [Whitespace("\n")]
+      SEMICOLON@26..27 ";" [] []
+  EOF@27..28 "" [Whitespace("\n")] []

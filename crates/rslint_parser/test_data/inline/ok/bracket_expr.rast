@@ -1,6 +1,6 @@
 JS_ROOT@0..56
   LIST@0..0
-  LIST@0..56
+  LIST@0..55
     JS_EXPRESSION_STATEMENT@0..8
       BRACKET_EXPR@0..8
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
@@ -42,12 +42,13 @@ JS_ROOT@0..56
         JS_REFERENCE_IDENTIFIER_EXPRESSION@40..43
           IDENT@40..43 "baz" [] []
         R_BRACK@43..44 "]" [] []
-    JS_EXPRESSION_STATEMENT@44..56
-      BRACKET_EXPR@44..56
+    JS_EXPRESSION_STATEMENT@44..55
+      BRACKET_EXPR@44..55
         JS_REFERENCE_IDENTIFIER_EXPRESSION@44..48
           IDENT@44..48 "foo" [Whitespace("\n")] []
         QUESTIONDOT@48..50 "?." [] []
         L_BRACK@50..51 "[" [] []
         JS_REFERENCE_IDENTIFIER_EXPRESSION@51..54
           IDENT@51..54 "bar" [] []
-        R_BRACK@54..56 "]" [] [Whitespace("\n")]
+        R_BRACK@54..55 "]" [] []
+  EOF@55..56 "" [Whitespace("\n")] []

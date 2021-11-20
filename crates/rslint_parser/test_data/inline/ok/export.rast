@@ -1,9 +1,9 @@
 JS_ROOT@0..27
   LIST@0..0
-  LIST@0..27
-    EXPORT_DECL@0..27
+  LIST@0..26
+    EXPORT_DECL@0..26
       EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
-      EXPORT_NAMED@7..27
+      EXPORT_NAMED@7..26
         L_CURLY@7..9 "{" [] [Whitespace(" ")]
         LIST@9..13
           SPECIFIER@9..13
@@ -13,4 +13,5 @@ JS_ROOT@0..27
         FROM_KW@15..20 "from" [] [Whitespace(" ")]
         JS_STRING_LITERAL@20..25
           JS_STRING_LITERAL_TOKEN@20..25 "\"bla\"" [] []
-        SEMICOLON@25..27 ";" [] [Whitespace("\n")]
+        SEMICOLON@25..26 ";" [] []
+  EOF@26..27 "" [Whitespace("\n")] []

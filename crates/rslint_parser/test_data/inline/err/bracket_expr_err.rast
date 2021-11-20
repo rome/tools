@@ -1,6 +1,6 @@
 JS_ROOT@0..19
   LIST@0..0
-  LIST@0..19
+  LIST@0..18
     JS_EXPRESSION_STATEMENT@0..5
       BRACKET_EXPR@0..5
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
@@ -14,12 +14,13 @@ JS_ROOT@0..19
         QUESTIONDOT@9..11 "?." [] []
         L_BRACK@11..12 "[" [] []
         R_BRACK@12..13 "]" [] []
-    JS_EXPRESSION_STATEMENT@13..19
-      BRACKET_EXPR@13..19
+    JS_EXPRESSION_STATEMENT@13..18
+      BRACKET_EXPR@13..18
         JS_REFERENCE_IDENTIFIER_EXPRESSION@13..17
           IDENT@13..17 "foo" [Whitespace("\n")] []
-        L_BRACK@17..19 "[" [] [Whitespace("\n")]
-        ERROR@19..19
+        L_BRACK@17..18 "[" [] []
+        ERROR@18..18
+  EOF@18..19 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ bracket_expr_err.js:1:5

@@ -1,6 +1,6 @@
 JS_ROOT@0..65
   LIST@0..0
-  LIST@0..65
+  LIST@0..64
     JS_EXPRESSION_STATEMENT@0..11
       JS_ARRAY_EXPRESSION@0..10
         L_BRACK@0..1 "[" [] []
@@ -64,7 +64,7 @@ JS_ROOT@0..65
           COMMA@47..48 "," [] []
         R_BRACK@48..49 "]" [] []
       SEMICOLON@49..50 ";" [] []
-    JS_EXPRESSION_STATEMENT@50..65
+    JS_EXPRESSION_STATEMENT@50..64
       JS_ARRAY_EXPRESSION@50..63
         L_BRACK@50..52 "[" [Whitespace("\n")] []
         LIST@52..62
@@ -78,4 +78,5 @@ JS_ROOT@0..65
             JS_REFERENCE_IDENTIFIER_EXPRESSION@61..62
               IDENT@61..62 "b" [] []
         R_BRACK@62..63 "]" [] []
-      SEMICOLON@63..65 ";" [] [Whitespace("\n")]
+      SEMICOLON@63..64 ";" [] []
+  EOF@64..65 "" [Whitespace("\n")] []

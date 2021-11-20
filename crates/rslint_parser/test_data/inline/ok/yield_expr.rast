@@ -1,7 +1,7 @@
 JS_ROOT@0..53
   LIST@0..0
-  LIST@0..53
-    JS_FUNCTION_DECLARATION@0..53
+  LIST@0..52
+    JS_FUNCTION_DECLARATION@0..52
       FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       STAR@9..10 "*" [] []
       JS_IDENTIFIER_BINDING@10..13
@@ -10,7 +10,7 @@ JS_ROOT@0..53
         L_PAREN@13..14 "(" [] []
         LIST@14..14
         R_PAREN@14..16 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@16..53
+      JS_FUNCTION_BODY@16..52
         L_CURLY@16..17 "{" [] []
         LIST@17..17
         LIST@17..50
@@ -31,4 +31,5 @@ JS_ROOT@0..53
             JS_YIELD_EXPRESSION@42..49
               YIELD_KW@42..49 "yield" [Whitespace("\n ")] []
             SEMICOLON@49..50 ";" [] []
-        R_CURLY@50..53 "}" [Whitespace("\n")] [Whitespace("\n")]
+        R_CURLY@50..52 "}" [Whitespace("\n")] []
+  EOF@52..53 "" [Whitespace("\n")] []

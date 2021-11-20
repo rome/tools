@@ -145,11 +145,10 @@ impl<'a> LosslessTreeSink<'a> {
 
 	/// Finishes the tree and return the root node with possible parser errors.
 	///
-	/// If tree is finished with pending trivia, but no tokens were generated, for example,
-	/// a completely commented file, a [SyntaxKind::EOF] will be generated and all pending trivia
+	/// If tree is finished without a [SyntaxKind::EOF], one will be generated and all pending trivia
 	/// will be appended to its leading trivia.
 	pub fn finish(mut self) -> (SyntaxNode, Vec<ParserError>) {
-		if self.needs_eof && !self.next_token_leading_trivia.1.is_empty() {
+		if self.needs_eof {
 			self.do_token(SyntaxKind::EOF, 0.into());
 		}
 
@@ -161,16 +160,10 @@ impl<'a> LosslessTreeSink<'a> {
 		(self.inner.finish(), self.errors)
 	}
 
-	fn is_eof(&self) -> bool {
-		match self.tokens.get(self.token_pos) {
-			Some(token) if token.kind == SyntaxKind::EOF => true,
-			None => true,
-			_ => false,
-		}
-	}
-
 	fn do_token(&mut self, kind: SyntaxKind, len: TextSize) {
-		self.needs_eof = false;
+		if kind == SyntaxKind::EOF {
+			self.needs_eof = false;
+		}
 
 		let token_range = TextRange::at(self.text_pos, len);
 
@@ -179,23 +172,11 @@ impl<'a> LosslessTreeSink<'a> {
 
 		// Everything until the next linebreak (but not including it)
 		// will be the trailing trivia...
-		let (mut trailing_range, mut trailing) = self.get_trivia(true);
+		let (trailing_range, trailing) = self.get_trivia(true);
 
 		// ... and everything after and including the linebreak will be in the next
-		// token leading trivia...
-		let next_token_leading = {
-			let (range, pieces) = self.get_trivia(false);
-			// ... unless there is no more tokens. Then treat the remaining
-			// trivia as the trailing of the last one.
-			// See "finish_node" for when we do not have any tokens.
-			if self.is_eof() {
-				trailing_range = trailing_range.cover(range);
-				trailing.extend(pieces);
-				(TextRange::new(0.into(), 0.into()), vec![])
-			} else {
-				(range, pieces)
-			}
-		};
+		// token leading trivia. If there is none, we will use the EOF.
+		let next_token_leading = self.get_trivia(false);
 
 		let (leading_range, leading) =
 			std::mem::replace(&mut self.next_token_leading_trivia, next_token_leading);
@@ -203,6 +184,7 @@ impl<'a> LosslessTreeSink<'a> {
 		let range = leading_range.cover(token_range).cover(trailing_range);
 		let text = &self.text[range];
 
+		println!("{:?} {:?}", kind, range);
 		self.inner.token_with_trivia(kind, text, leading, trailing);
 	}
 

@@ -1,7 +1,7 @@
 JS_ROOT@0..38
   LIST@0..0
-  LIST@0..38
-    JS_SWITCH_STATEMENT@0..38
+  LIST@0..37
+    JS_SWITCH_STATEMENT@0..37
       SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       L_PAREN@7..8 "(" [] []
       JS_REFERENCE_IDENTIFIER_EXPRESSION@8..11
@@ -19,4 +19,5 @@ JS_ROOT@0..38
           DEFAULT_KW@25..34 "default" [Whitespace("\n ")] []
           COLON@34..35 ":" [] []
           LIST@35..35
-      R_CURLY@35..38 "}" [Whitespace("\n")] [Whitespace("\n")]
+      R_CURLY@35..37 "}" [Whitespace("\n")] []
+  EOF@37..38 "" [Whitespace("\n")] []

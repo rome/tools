@@ -1,6 +1,6 @@
 JS_ROOT@0..209
   LIST@0..0
-  LIST@0..209
+  LIST@0..207
     JS_CLASS_DECLARATION@0..142
       CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@6..14
@@ -94,7 +94,7 @@ JS_ROOT@0..209
             LIST@139..139
             R_CURLY@139..140 "}" [] []
       R_CURLY@140..142 "}" [Whitespace("\n")] []
-    JS_CLASS_DECLARATION@142..209
+    JS_CLASS_DECLARATION@142..207
       CLASS_KW@142..150 "class" [Whitespace("\n\n")] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@150..161
         IDENT@150..161 "NotGetters" [] [Whitespace(" ")]
@@ -138,4 +138,5 @@ JS_ROOT@0..209
             LIST@204..204
             LIST@204..204
             R_CURLY@204..205 "}" [] []
-      R_CURLY@205..209 "}" [Whitespace("\n")] [Whitespace("\n\n")]
+      R_CURLY@205..207 "}" [Whitespace("\n")] []
+  EOF@207..209 "" [Whitespace("\n\n")] []

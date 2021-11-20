@@ -1,6 +1,6 @@
 JS_ROOT@0..52
   LIST@0..0
-  LIST@0..52
+  LIST@0..51
     JS_WHILE_STATEMENT@0..13
       WHILE_KW@0..6 "while" [] [Whitespace(" ")]
       JS_BOOLEAN_LITERAL@6..11
@@ -24,13 +24,14 @@ JS_ROOT@0..52
         L_CURLY@35..36 "{" [] []
         LIST@36..36
         R_CURLY@36..37 "}" [] []
-    JS_WHILE_STATEMENT@37..52
+    JS_WHILE_STATEMENT@37..51
       WHILE_KW@37..44 "while" [Whitespace("\n")] [Whitespace(" ")]
       JS_BOOLEAN_LITERAL@44..48
         TRUE_KW@44..48 "true" [] []
       R_PAREN@48..50 ")" [] [Whitespace(" ")]
-      ERROR@50..52
-        R_CURLY@50..52 "}" [] [Whitespace("\n")]
+      ERROR@50..51
+        R_CURLY@50..51 "}" [] []
+  EOF@51..52 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `true`
   ┌─ while_stmt_err.js:1:7

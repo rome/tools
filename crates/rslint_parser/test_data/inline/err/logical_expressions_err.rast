@@ -1,6 +1,6 @@
 JS_ROOT@0..37
   LIST@0..0
-  LIST@0..37
+  LIST@0..36
     JS_EXPRESSION_STATEMENT@0..11
       JS_LOGICAL_EXPRESSION@0..10
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
@@ -21,18 +21,19 @@ JS_ROOT@0..37
         JS_REFERENCE_IDENTIFIER_EXPRESSION@20..23
           IDENT@20..23 "bar" [] []
       SEMICOLON@23..24 ";" [] []
-    JS_EXPRESSION_STATEMENT@24..37
-      CALL_EXPR@24..37
+    JS_EXPRESSION_STATEMENT@24..36
+      CALL_EXPR@24..36
         JS_REFERENCE_IDENTIFIER_EXPRESSION@24..28
           IDENT@24..28 "foo" [Whitespace("\n")] []
-        ARG_LIST@28..37
+        ARG_LIST@28..36
           L_PAREN@28..29 "(" [] []
           LIST@29..35
             JS_LOGICAL_EXPRESSION@29..35
               JS_REFERENCE_IDENTIFIER_EXPRESSION@29..33
                 IDENT@29..33 "foo" [] [Whitespace(" ")]
               PIPE2@33..35 "||" [] []
-          R_PAREN@35..37 ")" [] [Whitespace("\n")]
+          R_PAREN@35..36 ")" [] []
+  EOF@36..37 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an expression for the right hand side of a `??`, but found an operator instead
   ┌─ logical_expressions_err.js:1:8

@@ -1,6 +1,6 @@
 JS_ROOT@0..155
   LIST@0..0
-  LIST@0..155
+  LIST@0..154
     JS_VARIABLE_DECLARATION_STATEMENT@0..10
       JS_VARIABLE_DECLARATION@0..9
         VAR_KW@0..4 "var" [] [Whitespace(" ")]
@@ -93,7 +93,7 @@ JS_ROOT@0..155
                 LIST@89..89
                 R_CURLY@89..90 "}" [] []
       SEMICOLON@90..91 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@91..155
+    JS_VARIABLE_DECLARATION_STATEMENT@91..154
       JS_VARIABLE_DECLARATION@91..153
         LET_KW@91..96 "let" [Whitespace("\n")] [Whitespace(" ")]
         LIST@96..153
@@ -132,4 +132,5 @@ JS_ROOT@0..155
               EQ@150..152 "=" [] [Whitespace(" ")]
               JS_NUMBER_LITERAL@152..153
                 JS_NUMBER_LITERAL_TOKEN@152..153 "6" [] []
-      SEMICOLON@153..155 ";" [] [Whitespace("\n")]
+      SEMICOLON@153..154 ";" [] []
+  EOF@154..155 "" [Whitespace("\n")] []

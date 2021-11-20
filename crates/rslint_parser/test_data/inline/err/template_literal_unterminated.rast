@@ -20,6 +20,7 @@ JS_ROOT@0..20
                       IDENT@11..14 "foo" [] []
                     R_CURLY@14..15 "}" [] []
                   TEMPLATE_CHUNK@15..20 " bar\n" [] []
+  EOF@20..20 "" [] []
 --
 error: unterminated template literal
   ┌─ template_literal_unterminated.js:2:1

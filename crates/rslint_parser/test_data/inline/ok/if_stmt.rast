@@ -1,6 +1,6 @@
 JS_ROOT@0..88
   LIST@0..0
-  LIST@0..88
+  LIST@0..87
     JS_IF_STATEMENT@0..20
       IF_KW@0..3 "if" [] [Whitespace(" ")]
       L_PAREN@3..4 "(" [] []
@@ -36,7 +36,7 @@ JS_ROOT@0..88
       JS_EXPRESSION_STATEMENT@44..49
         JS_BOOLEAN_LITERAL@44..49
           FALSE_KW@44..49 "false" [] []
-    JS_IF_STATEMENT@49..88
+    JS_IF_STATEMENT@49..87
       IF_KW@49..53 "if" [Whitespace("\n")] [Whitespace(" ")]
       L_PAREN@53..54 "(" [] []
       JS_REFERENCE_IDENTIFIER_EXPRESSION@54..57
@@ -46,9 +46,9 @@ JS_ROOT@0..88
         L_CURLY@59..60 "{" [] []
         LIST@60..60
         R_CURLY@60..62 "}" [] [Whitespace(" ")]
-      JS_ELSE_CLAUSE@62..88
+      JS_ELSE_CLAUSE@62..87
         ELSE_KW@62..67 "else" [] [Whitespace(" ")]
-        JS_IF_STATEMENT@67..88
+        JS_IF_STATEMENT@67..87
           IF_KW@67..70 "if" [] [Whitespace(" ")]
           L_PAREN@70..71 "(" [] []
           JS_BOOLEAN_LITERAL@71..75
@@ -58,9 +58,10 @@ JS_ROOT@0..88
             L_CURLY@77..78 "{" [] []
             LIST@78..78
             R_CURLY@78..80 "}" [] [Whitespace(" ")]
-          JS_ELSE_CLAUSE@80..88
+          JS_ELSE_CLAUSE@80..87
             ELSE_KW@80..85 "else" [] [Whitespace(" ")]
-            JS_BLOCK_STATEMENT@85..88
+            JS_BLOCK_STATEMENT@85..87
               L_CURLY@85..86 "{" [] []
               LIST@86..86
-              R_CURLY@86..88 "}" [] [Whitespace("\n")]
+              R_CURLY@86..87 "}" [] []
+  EOF@87..88 "" [Whitespace("\n")] []

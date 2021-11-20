@@ -1,6 +1,6 @@
 JS_ROOT@0..59
   LIST@0..0
-  LIST@0..59
+  LIST@0..58
     JS_VARIABLE_DECLARATION_STATEMENT@0..30
       JS_VARIABLE_DECLARATION@0..30
         LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -27,11 +27,11 @@ JS_ROOT@0..59
                 L_CURLY@28..29 "{" [] []
                 LIST@29..29
                 R_CURLY@29..30 "}" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@30..59
-      JS_VARIABLE_DECLARATION@30..59
+    JS_VARIABLE_DECLARATION_STATEMENT@30..58
+      JS_VARIABLE_DECLARATION@30..58
         LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@35..59
-          JS_VARIABLE_DECLARATOR@35..59
+        LIST@35..58
+          JS_VARIABLE_DECLARATOR@35..58
             OBJECT_PATTERN@35..54
               L_CURLY@35..37 "{" [] [Whitespace(" ")]
               LIST@37..52
@@ -47,9 +47,10 @@ JS_ROOT@0..59
                   NAME@48..52
                     IDENT@48..52 "baz" [] [Whitespace(" ")]
               R_CURLY@52..54 "}" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@54..59
+            JS_EQUAL_VALUE_CLAUSE@54..58
               EQ@54..56 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@56..59
+              JS_OBJECT_EXPRESSION@56..58
                 L_CURLY@56..57 "{" [] []
                 LIST@57..57
-                R_CURLY@57..59 "}" [] [Whitespace("\n")]
+                R_CURLY@57..58 "}" [] []
+  EOF@58..59 "" [Whitespace("\n")] []

@@ -1,17 +1,17 @@
 JS_ROOT@0..31
   LIST@0..0
-  LIST@0..31
-    JS_VARIABLE_DECLARATION_STATEMENT@0..31
-      JS_VARIABLE_DECLARATION@0..31
+  LIST@0..30
+    JS_VARIABLE_DECLARATION_STATEMENT@0..30
+      JS_VARIABLE_DECLARATION@0..30
         LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..31
-          JS_VARIABLE_DECLARATOR@4..31
+        LIST@4..30
+          JS_VARIABLE_DECLARATOR@4..30
             SINGLE_PATTERN@4..6
               NAME@4..6
                 IDENT@4..6 "b" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..31
+            JS_EQUAL_VALUE_CLAUSE@6..30
               EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@8..31
+              JS_OBJECT_EXPRESSION@8..30
                 L_CURLY@8..10 "{" [] [Whitespace(" ")]
                 LIST@10..29
                   INITIALIZED_PROP@10..17
@@ -27,4 +27,5 @@ JS_ROOT@0..31
                     EQ@23..25 "=" [] [Whitespace(" ")]
                     JS_REFERENCE_IDENTIFIER_EXPRESSION@25..29
                       IDENT@25..29 "bar" [] [Whitespace(" ")]
-                R_CURLY@29..31 "}" [] [Whitespace("\n")]
+                R_CURLY@29..30 "}" [] []
+  EOF@30..31 "" [Whitespace("\n")] []

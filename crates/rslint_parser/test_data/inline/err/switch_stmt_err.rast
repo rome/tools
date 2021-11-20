@@ -1,6 +1,6 @@
 JS_ROOT@0..24
   LIST@0..0
-  LIST@0..24
+  LIST@0..23
     JS_SWITCH_STATEMENT@0..13
       SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       JS_REFERENCE_IDENTIFIER_EXPRESSION@7..11
@@ -8,11 +8,12 @@ JS_ROOT@0..24
       L_CURLY@11..12 "{" [] []
       LIST@12..12
       R_CURLY@12..13 "}" [] []
-    JS_SWITCH_STATEMENT@13..24
+    JS_SWITCH_STATEMENT@13..23
       SWITCH_KW@13..21 "switch" [Whitespace("\n")] [Whitespace(" ")]
       L_CURLY@21..22 "{" [] []
       LIST@22..22
-      R_CURLY@22..24 "}" [] [Whitespace("\n")]
+      R_CURLY@22..23 "}" [] []
+  EOF@23..24 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `foo`
   ┌─ switch_stmt_err.js:1:8

@@ -1,6 +1,6 @@
 JS_ROOT@0..607
   LIST@0..0
-  LIST@0..607
+  LIST@0..606
     JS_CLASS_DECLARATION@0..168
       CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@6..11
@@ -210,7 +210,7 @@ JS_ROOT@0..607
             LIST@345..345
             R_CURLY@345..367 "}" [] [Whitespace(" "), Comments("// Method called set")]
       R_CURLY@367..369 "}" [Whitespace("\n")] []
-    JS_CLASS_DECLARATION@369..607
+    JS_CLASS_DECLARATION@369..606
       CLASS_KW@369..377 "class" [Whitespace("\n\n")] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@377..384
         IDENT@377..384 "Static" [] [Whitespace(" ")]
@@ -328,4 +328,5 @@ JS_ROOT@0..607
             LIST@603..603
             LIST@603..603
             R_CURLY@603..604 "}" [] []
-      R_CURLY@604..607 "}" [Whitespace("\n")] [Whitespace("\n")]
+      R_CURLY@604..606 "}" [Whitespace("\n")] []
+  EOF@606..607 "" [Whitespace("\n")] []

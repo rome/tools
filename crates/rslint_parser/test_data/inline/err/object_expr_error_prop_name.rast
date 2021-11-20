@@ -1,6 +1,6 @@
 JS_ROOT@0..40
   LIST@0..0
-  LIST@0..40
+  LIST@0..39
     JS_VARIABLE_DECLARATION_STATEMENT@0..26
       JS_VARIABLE_DECLARATION@0..26
         LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -43,9 +43,15 @@ JS_ROOT@0..40
                   ERROR@36..37
                     L_CURLY@36..37 "{" [] []
                 R_CURLY@37..38 "}" [] []
+<<<<<<< HEAD
 >>>>>>> ea5c966a0 (SyntaxToken fmt::Debug also printing trivia)
     ERROR@38..40
       R_CURLY@38..40 "}" [] [Whitespace("\n")]
+=======
+    ERROR@38..39
+      R_CURLY@38..39 "}" [] []
+  EOF@39..40 "" [Whitespace("\n")] []
+>>>>>>> ff20f0a5a (forcing EOF token at the end of the parsing)
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ object_expr_error_prop_name.js:1:11

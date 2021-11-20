@@ -1,6 +1,6 @@
 JS_ROOT@0..32
   LIST@0..0
-  LIST@0..32
+  LIST@0..31
     JS_VARIABLE_DECLARATION_STATEMENT@0..8
       JS_VARIABLE_DECLARATION@0..8
         VAR_KW@0..4 "var" [] [Whitespace(" ")]
@@ -25,7 +25,7 @@ JS_ROOT@0..32
               EQ@17..19 "=" [] [Whitespace(" ")]
               JS_NUMBER_LITERAL@19..21
                 JS_NUMBER_LITERAL_TOKEN@19..21 "5" [] [Whitespace(" ")]
-    JS_VARIABLE_DECLARATION_STATEMENT@21..32
+    JS_VARIABLE_DECLARATION_STATEMENT@21..31
       JS_VARIABLE_DECLARATION@21..30
         LET_KW@21..25 "let" [] [Whitespace(" ")]
         LIST@25..30
@@ -37,7 +37,8 @@ JS_ROOT@0..32
               EQ@27..29 "=" [] [Whitespace(" ")]
               JS_NUMBER_LITERAL@29..30
                 JS_NUMBER_LITERAL_TOKEN@29..30 "5" [] []
-      SEMICOLON@30..32 ";" [] [Whitespace("\n")]
+      SEMICOLON@30..31 ";" [] []
+  EOF@31..32 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected an expression, but found `;` instead
   ┌─ var_decl_err.js:1:8

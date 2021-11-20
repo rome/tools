@@ -1,7 +1,7 @@
 JS_ROOT@0..255
   LIST@0..0
-  LIST@0..255
-    JS_CLASS_DECLARATION@0..255
+  LIST@0..253
+    JS_CLASS_DECLARATION@0..253
       CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@6..10
         IDENT@6..10 "foo" [] [Whitespace(" ")]
@@ -76,4 +76,5 @@ JS_ROOT@0..255
             EQ@248..250 "=" [] [Whitespace(" ")]
             JS_NUMBER_LITERAL@250..251
               JS_NUMBER_LITERAL_TOKEN@250..251 "1" [] []
-      R_CURLY@251..255 "}" [Whitespace("\n")] [Whitespace("\n\n")]
+      R_CURLY@251..253 "}" [Whitespace("\n")] []
+  EOF@253..255 "" [Whitespace("\n\n")] []

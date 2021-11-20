@@ -1,7 +1,7 @@
 JS_ROOT@0..15
   LIST@0..0
-  LIST@0..15
-    JS_VARIABLE_DECLARATION_STATEMENT@0..15
+  LIST@0..14
+    JS_VARIABLE_DECLARATION_STATEMENT@0..14
       JS_VARIABLE_DECLARATION@0..13
         LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..13
@@ -13,4 +13,5 @@ JS_ROOT@0..15
               EQ@6..8 "=" [] [Whitespace(" ")]
               JS_REFERENCE_IDENTIFIER_EXPRESSION@8..13
                 IDENT@8..13 "async" [] []
-      SEMICOLON@13..15 ";" [] [Whitespace("\n")]
+      SEMICOLON@13..14 ";" [] []
+  EOF@14..15 "" [Whitespace("\n")] []

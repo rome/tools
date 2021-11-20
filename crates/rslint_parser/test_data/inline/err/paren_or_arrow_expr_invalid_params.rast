@@ -1,6 +1,6 @@
 JS_ROOT@0..28
   LIST@0..0
-  LIST@0..28
+  LIST@0..27
     JS_EXPRESSION_STATEMENT@0..6
       JS_ARROW_FUNCTION_EXPRESSION@0..6
         JS_PARAMETER_LIST@0..5
@@ -35,10 +35,11 @@ JS_ROOT@0..28
       R_PAREN@20..22 ")" [] [Whitespace(" ")]
     ERROR@22..25
       FAT_ARROW@22..25 "=>" [] [Whitespace(" ")]
-    JS_BLOCK_STATEMENT@25..28
+    JS_BLOCK_STATEMENT@25..27
       L_CURLY@25..26 "{" [] []
       LIST@26..26
-      R_CURLY@26..28 "}" [] [Whitespace("\n")]
+      R_CURLY@26..27 "}" [] []
+  EOF@27..28 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an identifier or pattern, but found none
   ┌─ paren_or_arrow_expr_invalid_params.js:1:2

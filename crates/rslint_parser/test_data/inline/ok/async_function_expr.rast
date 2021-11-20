@@ -1,6 +1,6 @@
 JS_ROOT@0..62
   LIST@0..0
-  LIST@0..62
+  LIST@0..61
     JS_VARIABLE_DECLARATION_STATEMENT@0..28
       JS_VARIABLE_DECLARATION@0..27
         LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -24,7 +24,7 @@ JS_ROOT@0..62
                   LIST@26..26
                   R_CURLY@26..27 "}" [] []
       SEMICOLON@27..28 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@28..62
+    JS_VARIABLE_DECLARATION_STATEMENT@28..61
       JS_VARIABLE_DECLARATION@28..60
         LET_KW@28..33 "let" [Whitespace("\n")] [Whitespace(" ")]
         LIST@33..60
@@ -48,4 +48,5 @@ JS_ROOT@0..62
                   LIST@59..59
                   LIST@59..59
                   R_CURLY@59..60 "}" [] []
-      SEMICOLON@60..62 ";" [] [Whitespace("\n")]
+      SEMICOLON@60..61 ";" [] []
+  EOF@61..62 "" [Whitespace("\n")] []

@@ -1,6 +1,6 @@
 JS_ROOT@0..144
   LIST@0..0
-  LIST@0..144
+  LIST@0..143
     JS_DO_WHILE_STATEMENT@0..35
       DO_KW@0..3 "do" [] [Whitespace(" ")]
       JS_EXPRESSION_STATEMENT@3..24
@@ -62,7 +62,7 @@ JS_ROOT@0..144
               JS_NUMBER_LITERAL@88..89
                 JS_NUMBER_LITERAL_TOKEN@88..89 "1" [] []
       SEMICOLON@89..90 ";" [] []
-    JS_DO_WHILE_STATEMENT@90..144
+    JS_DO_WHILE_STATEMENT@90..143
       DO_KW@90..93 "do" [Whitespace("\n")] []
       JS_DO_WHILE_STATEMENT@93..127
         DO_KW@93..98 "do" [Whitespace("\n\t")] [Whitespace(" ")]
@@ -98,4 +98,5 @@ JS_ROOT@0..144
         L_ANGLE@137..139 "<" [] [Whitespace(" ")]
         JS_NUMBER_LITERAL@139..142
           JS_NUMBER_LITERAL_TOKEN@139..142 "100" [] []
-      R_PAREN@142..144 ")" [] [Whitespace("\n")]
+      R_PAREN@142..143 ")" [] []
+  EOF@143..144 "" [Whitespace("\n")] []

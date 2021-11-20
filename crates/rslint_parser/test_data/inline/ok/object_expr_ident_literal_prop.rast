@@ -1,17 +1,17 @@
 JS_ROOT@0..20
   LIST@0..0
-  LIST@0..20
-    JS_VARIABLE_DECLARATION_STATEMENT@0..20
-      JS_VARIABLE_DECLARATION@0..20
+  LIST@0..19
+    JS_VARIABLE_DECLARATION_STATEMENT@0..19
+      JS_VARIABLE_DECLARATION@0..19
         LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..20
-          JS_VARIABLE_DECLARATOR@4..20
+        LIST@4..19
+          JS_VARIABLE_DECLARATOR@4..19
             SINGLE_PATTERN@4..6
               NAME@4..6
                 IDENT@4..6 "b" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..20
+            JS_EQUAL_VALUE_CLAUSE@6..19
               EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@8..20
+              JS_OBJECT_EXPRESSION@8..19
                 L_CURLY@8..10 "{" [] [Whitespace(" ")]
                 LIST@10..18
                   JS_PROPERTY_OBJECT_MEMBER@10..18
@@ -20,4 +20,5 @@ JS_ROOT@0..20
                     COLON@11..13 ":" [] [Whitespace(" ")]
                     JS_BOOLEAN_LITERAL@13..18
                       TRUE_KW@13..18 "true" [] [Whitespace(" ")]
-                R_CURLY@18..20 "}" [] [Whitespace("\n")]
+                R_CURLY@18..19 "}" [] []
+  EOF@19..20 "" [Whitespace("\n")] []

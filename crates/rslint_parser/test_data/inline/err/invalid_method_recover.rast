@@ -1,6 +1,6 @@
 JS_ROOT@0..48
   LIST@0..0
-  LIST@0..48
+  LIST@0..47
     JS_CLASS_DECLARATION@0..46
       CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       L_CURLY@6..7 "{" [] []
@@ -42,8 +42,9 @@ JS_ROOT@0..48
                 R_CURLY@39..43 "}" [Whitespace("\n  ")] []
           SEMICOLON@43..44 ";" [] []
       R_CURLY@44..46 "}" [Whitespace("\n")] []
-    JS_EMPTY_STATEMENT@46..48
-      SEMICOLON@46..48 ";" [] [Whitespace("\n")]
+    JS_EMPTY_STATEMENT@46..47
+      SEMICOLON@46..47 ";" [] []
+  EOF@47..48 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: class declarations must have a name
   ┌─ invalid_method_recover.js:1:7

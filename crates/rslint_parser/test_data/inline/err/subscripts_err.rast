@@ -24,6 +24,7 @@ JS_ROOT@0..20
         BACKTICK@17..18 "`" [] []
         LIST@18..20
           TEMPLATE_CHUNK@18..20 "b\n" [] []
+  EOF@20..20 "" [] []
 --
 error: unterminated template literal
   ┌─ subscripts_err.js:3:1

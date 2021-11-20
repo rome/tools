@@ -1,6 +1,6 @@
 JS_ROOT@0..101
   LIST@0..0
-  LIST@0..101
+  LIST@0..100
     JS_CLASS_DECLARATION@0..48
       CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@6..10
@@ -35,7 +35,7 @@ JS_ROOT@0..101
                 SEMICOLON@42..43 ";" [] []
             R_CURLY@43..46 "}" [Whitespace("\n\t")] []
       R_CURLY@46..48 "}" [Whitespace("\n")] []
-    JS_CLASS_DECLARATION@48..101
+    JS_CLASS_DECLARATION@48..100
       CLASS_KW@48..56 "class" [Whitespace("\n\n")] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@56..60
         IDENT@56..60 "Bar" [] [Whitespace(" ")]
@@ -68,4 +68,5 @@ JS_ROOT@0..101
                     IDENT@93..94 "b" [] []
                 SEMICOLON@94..95 ";" [] []
             R_CURLY@95..98 "}" [Whitespace("\n\t")] []
-      R_CURLY@98..101 "}" [Whitespace("\n")] [Whitespace("\n")]
+      R_CURLY@98..100 "}" [Whitespace("\n")] []
+  EOF@100..101 "" [Whitespace("\n")] []

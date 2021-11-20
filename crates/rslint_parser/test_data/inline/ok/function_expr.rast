@@ -1,6 +1,6 @@
 JS_ROOT@0..48
   LIST@0..0
-  LIST@0..48
+  LIST@0..47
     JS_VARIABLE_DECLARATION_STATEMENT@0..21
       JS_VARIABLE_DECLARATION@0..21
         LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -22,17 +22,17 @@ JS_ROOT@0..48
                   LIST@20..20
                   LIST@20..20
                   R_CURLY@20..21 "}" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@21..48
-      JS_VARIABLE_DECLARATION@21..48
+    JS_VARIABLE_DECLARATION_STATEMENT@21..47
+      JS_VARIABLE_DECLARATION@21..47
         LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@26..48
-          JS_VARIABLE_DECLARATOR@26..48
+        LIST@26..47
+          JS_VARIABLE_DECLARATOR@26..47
             SINGLE_PATTERN@26..28
               NAME@26..28
                 IDENT@26..28 "b" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@28..48
+            JS_EQUAL_VALUE_CLAUSE@28..47
               EQ@28..30 "=" [] [Whitespace(" ")]
-              JS_FUNCTION_EXPRESSION@30..48
+              JS_FUNCTION_EXPRESSION@30..47
                 FUNCTION_KW@30..39 "function" [] [Whitespace(" ")]
                 JS_IDENTIFIER_BINDING@39..42
                   IDENT@39..42 "foo" [] []
@@ -40,8 +40,9 @@ JS_ROOT@0..48
                   L_PAREN@42..43 "(" [] []
                   LIST@43..43
                   R_PAREN@43..45 ")" [] [Whitespace(" ")]
-                JS_FUNCTION_BODY@45..48
+                JS_FUNCTION_BODY@45..47
                   L_CURLY@45..46 "{" [] []
                   LIST@46..46
                   LIST@46..46
-                  R_CURLY@46..48 "}" [] [Whitespace("\n")]
+                  R_CURLY@46..47 "}" [] []
+  EOF@47..48 "" [Whitespace("\n")] []

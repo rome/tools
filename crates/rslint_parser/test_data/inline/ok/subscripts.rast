@@ -1,6 +1,6 @@
 JS_ROOT@0..33
   LIST@0..0
-  LIST@0..33
+  LIST@0..32
     JS_EXPRESSION_STATEMENT@0..8
       TEMPLATE@0..8
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
@@ -9,8 +9,8 @@ JS_ROOT@0..33
         LIST@4..7
           TEMPLATE_CHUNK@4..7 "bar" [] []
         BACKTICK@7..8 "`" [] []
-    JS_EXPRESSION_STATEMENT@8..33
-      BRACKET_EXPR@8..33
+    JS_EXPRESSION_STATEMENT@8..32
+      BRACKET_EXPR@8..32
         CALL_EXPR@8..27
           CALL_EXPR@8..22
             CALL_EXPR@8..17
@@ -37,4 +37,5 @@ JS_ROOT@0..33
         L_BRACK@27..28 "[" [] []
         JS_REFERENCE_IDENTIFIER_EXPRESSION@28..31
           IDENT@28..31 "bar" [] []
-        R_BRACK@31..33 "]" [] [Whitespace("\n")]
+        R_BRACK@31..32 "]" [] []
+  EOF@32..33 "" [Whitespace("\n")] []

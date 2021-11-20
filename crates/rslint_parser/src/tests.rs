@@ -226,11 +226,11 @@ pub fn jsroot_display_text_and_trimmed() {
 }
 
 #[test]
-pub fn token_range_must_be_correct() {
+pub fn jsroot_ranges() {
 	//               0123456789A
 	let code = " let a = 1;";
 	let root = parse_module(code, 0);
-	let syntax = root.syntax();
+	let syntax = dbg!(root.syntax());
 
 	let first_let = syntax.first_token().unwrap();
 	let range = first_let.text_range();

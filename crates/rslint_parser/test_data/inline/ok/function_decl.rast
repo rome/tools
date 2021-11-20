@@ -1,6 +1,6 @@
 JS_ROOT@0..142
   LIST@0..0
-  LIST@0..142
+  LIST@0..141
     JS_FUNCTION_DECLARATION@0..17
       FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@9..12
@@ -73,7 +73,7 @@ JS_ROOT@0..142
         LIST@107..107
         LIST@107..107
         R_CURLY@107..108 "}" [] []
-    JS_FUNCTION_DECLARATION@108..142
+    JS_FUNCTION_DECLARATION@108..141
       FUNCTION_KW@108..118 "function" [Whitespace("\n")] [Whitespace(" ")]
       STAR@118..119 "*" [] []
       JS_IDENTIFIER_BINDING@119..122
@@ -82,7 +82,7 @@ JS_ROOT@0..142
         L_PAREN@122..123 "(" [] []
         LIST@123..123
         R_PAREN@123..125 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@125..142
+      JS_FUNCTION_BODY@125..141
         L_CURLY@125..126 "{" [] []
         LIST@126..126
         LIST@126..139
@@ -92,4 +92,5 @@ JS_ROOT@0..142
               JS_REFERENCE_IDENTIFIER_EXPRESSION@135..138
                 IDENT@135..138 "foo" [] []
             SEMICOLON@138..139 ";" [] []
-        R_CURLY@139..142 "}" [Whitespace("\n")] [Whitespace("\n")]
+        R_CURLY@139..141 "}" [Whitespace("\n")] []
+  EOF@141..142 "" [Whitespace("\n")] []

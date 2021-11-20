@@ -1,6 +1,6 @@
 JS_ROOT@0..12
   LIST@0..0
-  LIST@0..12
+  LIST@0..11
     JS_CLASS_DECLARATION@0..10
       CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@6..7
@@ -16,9 +16,15 @@ JS_ROOT@0..12
         ERROR@8..9
           L_CURLY@8..9 "{" [] []
       R_CURLY@9..10 "}" [] []
+<<<<<<< HEAD
 >>>>>>> ea5c966a0 (SyntaxToken fmt::Debug also printing trivia)
     ERROR@10..12
       R_CURLY@10..12 "}" [] [Whitespace("\n")]
+=======
+    ERROR@10..11
+      R_CURLY@10..11 "}" [] []
+  EOF@11..12 "" [Whitespace("\n")] []
+>>>>>>> ff20f0a5a (forcing EOF token at the end of the parsing)
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ block_stmt_in_class.js:1:9

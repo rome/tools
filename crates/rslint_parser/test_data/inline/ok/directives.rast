@@ -2,7 +2,7 @@ JS_ROOT@0..360
   LIST@0..20
     JS_DIRECTIVE@0..20
       JS_STRING_LITERAL_TOKEN@0..20 "\"use new\"" [Comments("// SCRIPT"), Whitespace("\n\n")] []
-  LIST@20..360
+  LIST@20..359
     JS_VARIABLE_DECLARATION_STATEMENT@20..33
       JS_VARIABLE_DECLARATION@20..32
         LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")]
@@ -130,11 +130,12 @@ JS_ROOT@0..360
                         JS_STRING_LITERAL_TOKEN@282..297 "\"use strict\"" [Whitespace("\n\n\t")] []
                       SEMICOLON@297..318 ";" [] [Whitespace("  "), Comments("// not a directive")]
                   R_CURLY@318..320 "}" [Whitespace("\n")] []
-    JS_BLOCK_STATEMENT@320..360
+    JS_BLOCK_STATEMENT@320..359
       L_CURLY@320..323 "{" [Whitespace("\n\n")] []
       LIST@323..357
         JS_EXPRESSION_STATEMENT@323..357
           JS_STRING_LITERAL@323..337
             JS_STRING_LITERAL_TOKEN@323..337 "\"use strict\"" [Whitespace("\n\t")] []
           SEMICOLON@337..357 ";" [] [Whitespace(" "), Comments("// not a directive")]
-      R_CURLY@357..360 "}" [Whitespace("\n")] [Whitespace("\n")]
+      R_CURLY@357..359 "}" [Whitespace("\n")] []
+  EOF@359..360 "" [Whitespace("\n")] []

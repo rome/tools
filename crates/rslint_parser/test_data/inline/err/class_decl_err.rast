@@ -1,6 +1,6 @@
 JS_ROOT@0..137
   LIST@0..0
-  LIST@0..137
+  LIST@0..136
     JS_CLASS_DECLARATION@0..8
       CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       L_CURLY@6..7 "{" [] []
@@ -90,7 +90,7 @@ JS_ROOT@0..137
       L_CURLY@106..107 "{" [] []
       LIST@107..107
       R_CURLY@107..108 "}" [] []
-    JS_CLASS_DECLARATION@108..137
+    JS_CLASS_DECLARATION@108..136
       CLASS_KW@108..115 "class" [Whitespace("\n")] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@115..117
         IDENT@115..117 "A" [] [Whitespace(" ")]
@@ -104,7 +104,8 @@ JS_ROOT@0..137
             IDENT@130..134 "foo" [] [Whitespace(" ")]
       L_CURLY@134..135 "{" [] []
       LIST@135..135
-      R_CURLY@135..137 "}" [] [Whitespace("\n")]
+      R_CURLY@135..136 "}" [] []
+  EOF@136..137 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: class declarations must have a name
   ┌─ class_decl_err.js:1:7

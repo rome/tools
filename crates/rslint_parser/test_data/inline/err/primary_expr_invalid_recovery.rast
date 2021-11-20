@@ -1,6 +1,6 @@
 JS_ROOT@0..18
   LIST@0..0
-  LIST@0..18
+  LIST@0..17
     JS_VARIABLE_DECLARATION_STATEMENT@0..11
       JS_VARIABLE_DECLARATION@0..9
         LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -14,7 +14,7 @@ JS_ROOT@0..18
               ERROR@8..9
                 ERROR_TOKEN@8..9 "\\" [] []
       SEMICOLON@9..11 ";" [] [Whitespace(" ")]
-    JS_EXPRESSION_STATEMENT@11..18
+    JS_EXPRESSION_STATEMENT@11..17
       CALL_EXPR@11..16
         JS_REFERENCE_IDENTIFIER_EXPRESSION@11..14
           IDENT@11..14 "foo" [] []
@@ -22,7 +22,8 @@ JS_ROOT@0..18
           L_PAREN@14..15 "(" [] []
           LIST@15..15
           R_PAREN@15..16 ")" [] []
-      SEMICOLON@16..18 ";" [] [Whitespace("\n")]
+      SEMICOLON@16..17 ";" [] []
+  EOF@17..18 "" [Whitespace("\n")] []
 --
 error: unexpected token `\`
   ┌─ primary_expr_invalid_recovery.js:1:9

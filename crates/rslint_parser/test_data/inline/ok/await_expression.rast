@@ -1,6 +1,6 @@
 JS_ROOT@0..116
   LIST@0..0
-  LIST@0..116
+  LIST@0..115
     JS_FUNCTION_DECLARATION@0..76
       ASYNC_KW@0..6 "async" [] [Whitespace(" ")]
       FUNCTION_KW@6..15 "function" [] [Whitespace(" ")]
@@ -51,7 +51,7 @@ JS_ROOT@0..116
                     R_PAREN@72..73 ")" [] []
             SEMICOLON@73..74 ";" [] []
         R_CURLY@74..76 "}" [Whitespace("\n")] []
-    JS_FUNCTION_DECLARATION@76..116
+    JS_FUNCTION_DECLARATION@76..115
       ASYNC_KW@76..84 "async" [Whitespace("\n\n")] [Whitespace(" ")]
       FUNCTION_KW@84..93 "function" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@93..98
@@ -60,7 +60,7 @@ JS_ROOT@0..116
         L_PAREN@98..99 "(" [] []
         LIST@99..99
         R_PAREN@99..101 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@101..116
+      JS_FUNCTION_BODY@101..115
         L_CURLY@101..102 "{" [] []
         LIST@102..102
         LIST@102..113
@@ -69,4 +69,5 @@ JS_ROOT@0..116
             JS_NUMBER_LITERAL@111..112
               JS_NUMBER_LITERAL_TOKEN@111..112 "4" [] []
             SEMICOLON@112..113 ";" [] []
-        R_CURLY@113..116 "}" [Whitespace("\n")] [Whitespace("\n")]
+        R_CURLY@113..115 "}" [Whitespace("\n")] []
+  EOF@115..116 "" [Whitespace("\n")] []

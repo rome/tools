@@ -88,7 +88,7 @@ use std::{
 	hash::{Hash, Hasher},
 	iter,
 	mem::{self, ManuallyDrop},
-	ops::Range,
+	ops::{Range},
 	ptr,
 };
 
@@ -573,6 +573,12 @@ impl Iterator for SyntaxTriviaPiecesIterator {
 	}
 }
 
+impl DoubleEndedIterator for SyntaxTriviaPiecesIterator {
+	fn next_back(&mut self) -> Option<Self::Item> {
+		todo!()
+	}
+}
+
 impl SyntaxTrivia {
 	pub(crate) fn text(&self) -> &str {
 		let green_token = self.token.green();
@@ -580,15 +586,6 @@ impl SyntaxTrivia {
 			green_token.text_leading_trivia()
 		} else {
 			green_token.text_trailing_trivia()
-		}
-	}
-
-	pub(crate) fn text_len(&self) -> TextSize {
-		let green_token = self.token.green();
-		if self.is_leading {
-			green_token.leading_trivia().text_len()
-		} else {
-			green_token.trailing_trivia().text_len()
 		}
 	}
 
@@ -719,17 +716,37 @@ impl SyntaxNode {
 	}
 
 	pub fn text_trimmed_range(&self) -> TextRange {
-		let leading_len = self
-			.first_leading_trivia()
-			.map(|x| x.text_len())
-			.unwrap_or_else(|| 0.into());
-		let trailing_len = self
-			.last_trailing_trivia()
-			.map(|x| x.text_len())
-			.unwrap_or_else(|| 0.into());
-
 		let range = self.text_range();
-		TextRange::new(range.start() + leading_len, range.end() - trailing_len)
+		let mut start = range.start();
+		let mut end = range.end();
+
+		// Remove all trivia from the start of the node
+		let mut token = self.first_token();
+		while let Some(t) = token.take() {
+			let (leading_len, trailing_len, total_len) = t.green().leading_trailing_total_len();
+			let token_len: u32 = (total_len - leading_len - trailing_len).into();
+			if token_len == 0 {
+				start += total_len;
+				token = t.next_token();
+			} else {
+				start += leading_len;
+			}
+		}
+
+		// Remove all trivia from the end of the node
+		let mut token = self.last_token();
+		while let Some(t) = token.take() {
+			let (leading_len, trailing_len, total_len) = t.green().leading_trailing_total_len();
+			let token_len: u32 = (total_len - leading_len - trailing_len).into();
+			if token_len == 0 {
+				end -= total_len;
+				token = t.prev_token();
+			} else {
+				end -= trailing_len;
+			}
+		}
+
+		TextRange::new(start, end.max(start))
 	}
 
 	pub fn first_leading_trivia(&self) -> Option<SyntaxTrivia> {

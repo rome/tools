@@ -1,14 +1,15 @@
 JS_ROOT@0..20
   LIST@0..0
-  LIST@0..20
+  LIST@0..19
     JS_RETURN_STATEMENT@0..7
       RETURN_KW@0..6 "return" [] []
       SEMICOLON@6..7 ";" [] []
-    JS_RETURN_STATEMENT@7..20
+    JS_RETURN_STATEMENT@7..19
       RETURN_KW@7..15 "return" [Whitespace("\n")] [Whitespace(" ")]
       JS_REFERENCE_IDENTIFIER_EXPRESSION@15..18
         IDENT@15..18 "foo" [] []
-      SEMICOLON@18..20 ";" [] [Whitespace("\n")]
+      SEMICOLON@18..19 ";" [] []
+  EOF@19..20 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Illegal return statement outside of a function
   ┌─ return_stmt_err.js:1:1

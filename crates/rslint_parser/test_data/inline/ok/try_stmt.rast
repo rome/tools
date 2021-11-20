@@ -1,6 +1,6 @@
 JS_ROOT@0..112
   LIST@0..0
-  LIST@0..112
+  LIST@0..111
     JS_TRY_STATEMENT@0..15
       TRY_KW@0..4 "try" [] [Whitespace(" ")]
       JS_BLOCK_STATEMENT@4..7
@@ -73,15 +73,16 @@ JS_ROOT@0..112
           L_CURLY@91..92 "{" [] []
           LIST@92..92
           R_CURLY@92..93 "}" [] []
-    JS_TRY_FINALLY_STATEMENT@93..112
+    JS_TRY_FINALLY_STATEMENT@93..111
       TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")]
       JS_BLOCK_STATEMENT@98..101
         L_CURLY@98..99 "{" [] []
         LIST@99..99
         R_CURLY@99..101 "}" [] [Whitespace(" ")]
-      JS_FINALLY_CLAUSE@101..112
+      JS_FINALLY_CLAUSE@101..111
         FINALLY_KW@101..109 "finally" [] [Whitespace(" ")]
-        JS_BLOCK_STATEMENT@109..112
+        JS_BLOCK_STATEMENT@109..111
           L_CURLY@109..110 "{" [] []
           LIST@110..110
-          R_CURLY@110..112 "}" [] [Whitespace("\n")]
+          R_CURLY@110..111 "}" [] []
+  EOF@111..112 "" [Whitespace("\n")] []

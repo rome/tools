@@ -1,6 +1,6 @@
 JS_ROOT@0..27
   LIST@0..0
-  LIST@0..27
+  LIST@0..26
     JS_VARIABLE_DECLARATION_STATEMENT@0..11
       JS_VARIABLE_DECLARATION@0..10
         LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -16,21 +16,22 @@ JS_ROOT@0..27
                 LIST@9..9
                 R_CURLY@9..10 "}" [] []
       SEMICOLON@10..11 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@11..27
-      JS_VARIABLE_DECLARATION@11..27
+    JS_VARIABLE_DECLARATION_STATEMENT@11..26
+      JS_VARIABLE_DECLARATION@11..26
         LET_KW@11..16 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@16..27
-          JS_VARIABLE_DECLARATOR@16..27
+        LIST@16..26
+          JS_VARIABLE_DECLARATOR@16..26
             SINGLE_PATTERN@16..18
               NAME@16..18
                 IDENT@16..18 "b" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@18..27
+            JS_EQUAL_VALUE_CLAUSE@18..26
               EQ@18..20 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@20..27
+              JS_OBJECT_EXPRESSION@20..26
                 L_CURLY@20..21 "{" [] []
                 LIST@21..25
                   JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@21..24
                     JS_REFERENCE_IDENTIFIER_EXPRESSION@21..24
                       IDENT@21..24 "foo" [] []
                   COMMA@24..25 "," [] []
-                R_CURLY@25..27 "}" [] [Whitespace("\n")]
+                R_CURLY@25..26 "}" [] []
+  EOF@26..27 "" [Whitespace("\n")] []
