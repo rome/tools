@@ -7,24 +7,13 @@ JS_ROOT@0..12
         IDENT@6..7 "S" [] []
       L_CURLY@7..8 "{" [] []
       LIST@8..9
-<<<<<<< HEAD
         JS_UNKNOWN_MEMBER@8..9
           ERROR@8..9
-            L_CURLY@8..9 "{"
-      R_CURLY@9..10 "}"
-=======
-        ERROR@8..9
-          L_CURLY@8..9 "{" [] []
+            L_CURLY@8..9 "{" [] []
       R_CURLY@9..10 "}" [] []
-<<<<<<< HEAD
->>>>>>> ea5c966a0 (SyntaxToken fmt::Debug also printing trivia)
-    ERROR@10..12
-      R_CURLY@10..12 "}" [] [Whitespace("\n")]
-=======
     ERROR@10..11
       R_CURLY@10..11 "}" [] []
   EOF@11..12 "" [Whitespace("\n")] []
->>>>>>> ff20f0a5a (forcing EOF token at the end of the parsing)
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ block_stmt_in_class.js:1:9

@@ -22,34 +22,7 @@ JS_ROOT@0..137
         JS_OBJECT_EXPRESSION@44..46
           L_CURLY@44..45 "{" [] []
           LIST@45..45
-<<<<<<< HEAD
-          R_CURLY@45..46 "}"
-<<<<<<< HEAD
-      WHITESPACE@46..47 "\n"
-      LIST@47..71
-        JS_PROPERTY_CLASS_MEMBER@47..52
-          JS_LITERAL_MEMBER_NAME@47..52
-            IDENT@47..52 "class"
-        WHITESPACE@52..53 "\n"
-        JS_UNKNOWN_MEMBER@53..58
-          JS_LITERAL_MEMBER_NAME@53..58
-            IDENT@53..58 "class"
-        WHITESPACE@58..59 " "
-        JS_UNKNOWN_MEMBER@59..64
-          JS_LITERAL_MEMBER_NAME@59..62
-            IDENT@59..62 "foo"
-          WHITESPACE@62..63 " "
-          ERROR@63..64
-            L_CURLY@63..64 "{"
-        WHITESPACE@64..65 " "
-        JS_SETTER_CLASS_MEMBER@65..71
-          SET_KW@65..68 "set"
-          WHITESPACE@68..69 " "
-          OBJECT_PATTERN@69..71
-=======
-=======
           R_CURLY@45..46 "}" [] []
->>>>>>> ea5c966a0 (SyntaxToken fmt::Debug also printing trivia)
       LIST@46..72
         JS_PROPERTY_CLASS_MEMBER@46..52
           JS_LITERAL_MEMBER_NAME@46..52
@@ -57,20 +30,15 @@ JS_ROOT@0..137
         JS_UNKNOWN_MEMBER@52..59
           JS_LITERAL_MEMBER_NAME@52..59
             IDENT@52..59 "class" [Whitespace("\n")] [Whitespace(" ")]
-        JS_UNKNOWN_MEMBER@59..63
+        JS_UNKNOWN_MEMBER@59..65
           JS_LITERAL_MEMBER_NAME@59..63
             IDENT@59..63 "foo" [] [Whitespace(" ")]
-        ERROR@63..65
-          L_CURLY@63..65 "{" [] [Whitespace(" ")]
+          ERROR@63..65
+            L_CURLY@63..65 "{" [] [Whitespace(" ")]
         JS_SETTER_CLASS_MEMBER@65..72
           SET_KW@65..69 "set" [] [Whitespace(" ")]
           OBJECT_PATTERN@69..72
-<<<<<<< HEAD
->>>>>>> 27e9fc4c5 (LosslessTreeSinker attaching trivia to tokens)
-            L_CURLY@69..70 "{"
-=======
             L_CURLY@69..70 "{" [] []
->>>>>>> ea5c966a0 (SyntaxToken fmt::Debug also printing trivia)
             LIST@70..70
             R_CURLY@70..72 "}" [] [Whitespace(" ")]
       R_CURLY@72..73 "}" [] []

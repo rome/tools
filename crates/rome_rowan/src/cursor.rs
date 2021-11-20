@@ -88,7 +88,7 @@ use std::{
 	hash::{Hash, Hasher},
 	iter,
 	mem::{self, ManuallyDrop},
-	ops::{Range},
+	ops::Range,
 	ptr,
 };
 
