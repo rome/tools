@@ -184,7 +184,6 @@ impl<'a> LosslessTreeSink<'a> {
 		let range = leading_range.cover(token_range).cover(trailing_range);
 		let text = &self.text[range];
 
-		println!("{:?} {:?}", kind, range);
 		self.inner.token_with_trivia(kind, text, leading, trailing);
 	}
 
