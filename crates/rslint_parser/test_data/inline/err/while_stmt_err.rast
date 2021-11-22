@@ -36,7 +36,7 @@
       2: JS_BOOLEAN_LITERAL@44..48
         0: TRUE_KW@44..48 "true" [] []
       3: R_PAREN@48..50 ")" [] [Whitespace(" ")]
-      4: ERROR@50..51
+      4: JS_UNKNOWN_STATEMENT@50..51
         0: R_CURLY@50..51 "}" [] []
   3: EOF@51..52 "" [Whitespace("\n")] []
 --

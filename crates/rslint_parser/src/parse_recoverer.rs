@@ -86,7 +86,6 @@ impl ParseRecoverer {
 
 	fn is_at_braces(&self, parser: &Parser) -> bool {
 		matches!(parser.cur(), T!['{'] | T!['}'] if self.include_braces)
-
 	}
 
 	fn is_at_token_set(&self, parser: &Parser) -> bool {
