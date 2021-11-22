@@ -1,46 +1,49 @@
-JS_ROOT@0..40
-  LIST@0..0
-  LIST@0..39
-    JS_VARIABLE_DECLARATION_STATEMENT@0..26
-      JS_VARIABLE_DECLARATION@0..26
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..26
-          JS_VARIABLE_DECLARATOR@4..26
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..26
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@8..26
-                L_CURLY@8..10 "{" [] [Whitespace(" ")]
-                LIST@10..25
-                  JS_PROPERTY_OBJECT_MEMBER@10..25
-                    ERROR@10..17
-                      JS_REGEX_LITERAL_TOKEN@10..17 "/: 6, /" [] []
-                    COLON@17..19 ":" [] [Whitespace(" ")]
-                    JS_REGEX_LITERAL@19..25
-                      JS_REGEX_LITERAL_TOKEN@19..25 "/foo/" [] [Whitespace(" ")]
-                R_CURLY@25..26 "}" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@26..38
-      JS_VARIABLE_DECLARATION@26..38
-        LET_KW@26..31 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@31..38
-          JS_VARIABLE_DECLARATOR@31..38
-            SINGLE_PATTERN@31..33
-              NAME@31..33
-                IDENT@31..33 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@33..38
-              EQ@33..35 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@35..38
-                L_CURLY@35..36 "{" [] []
-                LIST@36..37
-                  JS_UNKNOWN_MEMBER@36..37
-                    ERROR@36..37
-                      L_CURLY@36..37 "{" [] []
-                R_CURLY@37..38 "}" [] []
-    ERROR@38..39
-      R_CURLY@38..39 "}" [] []
-  EOF@39..40 "" [Whitespace("\n")] []
+0: JS_ROOT@0..40
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..39
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..26
+      0: JS_VARIABLE_DECLARATION@0..26
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..26
+          0: JS_VARIABLE_DECLARATOR@4..26
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..26
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@8..26
+                0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+                1: LIST@10..25
+                  0: JS_PROPERTY_OBJECT_MEMBER@10..25
+                    0: ERROR@10..17
+                      0: JS_REGEX_LITERAL_TOKEN@10..17 "/: 6, /" [] []
+                    1: COLON@17..19 ":" [] [Whitespace(" ")]
+                    2: JS_REGEX_LITERAL@19..25
+                      0: JS_REGEX_LITERAL_TOKEN@19..25 "/foo/" [] [Whitespace(" ")]
+                2: R_CURLY@25..26 "}" [] []
+      1: (empty)
+    1: JS_VARIABLE_DECLARATION_STATEMENT@26..38
+      0: JS_VARIABLE_DECLARATION@26..38
+        0: LET_KW@26..31 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@31..38
+          0: JS_VARIABLE_DECLARATOR@31..38
+            0: SINGLE_PATTERN@31..33
+              0: NAME@31..33
+                0: IDENT@31..33 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@33..38
+              0: EQ@33..35 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@35..38
+                0: L_CURLY@35..36 "{" [] []
+                1: LIST@36..37
+                  0: JS_UNKNOWN_MEMBER@36..37
+                    0: ERROR@36..37
+                      0: L_CURLY@36..37 "{" [] []
+                2: R_CURLY@37..38 "}" [] []
+      1: (empty)
+    2: ERROR@38..39
+      0: R_CURLY@38..39 "}" [] []
+  3: EOF@39..40 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ object_expr_error_prop_name.js:1:11

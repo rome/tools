@@ -1,20 +1,23 @@
-JS_ROOT@0..28
-  LIST@0..0
-  LIST@0..27
-    JS_THROW_STATEMENT@0..5
-      THROW_KW@0..5 "throw" [] []
-    JS_EXPRESSION_STATEMENT@5..27
-      NEW_EXPR@5..27
-        NEW_KW@5..10 "new" [Whitespace("\n")] [Whitespace(" ")]
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@10..15
-          IDENT@10..15 "Error" [] []
-        ARG_LIST@15..27
-          L_PAREN@15..16 "(" [] []
-          LIST@16..26
-            JS_STRING_LITERAL@16..26
-              JS_STRING_LITERAL_TOKEN@16..26 "\"oh no :(\"" [] []
-          R_PAREN@26..27 ")" [] []
-  EOF@27..28 "" [Whitespace("\n")] []
+0: JS_ROOT@0..28
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..27
+    0: JS_THROW_STATEMENT@0..5
+      0: THROW_KW@0..5 "throw" [] []
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@5..27
+      0: NEW_EXPR@5..27
+        0: NEW_KW@5..10 "new" [Whitespace("\n")] [Whitespace(" ")]
+        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@10..15
+          0: IDENT@10..15 "Error" [] []
+        2: ARG_LIST@15..27
+          0: L_PAREN@15..16 "(" [] []
+          1: LIST@16..26
+            0: JS_STRING_LITERAL@16..26
+              0: JS_STRING_LITERAL_TOKEN@16..26 "\"oh no :(\"" [] []
+          2: R_PAREN@26..27 ")" [] []
+      1: (empty)
+  3: EOF@27..28 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Linebreaks between a throw statement and the error to be thrown are not allowed
   ┌─ throw_stmt_err.js:2:1

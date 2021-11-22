@@ -1,31 +1,42 @@
-JS_ROOT@0..42
-  LIST@0..0
-  LIST@0..41
-    JS_DO_WHILE_STATEMENT@0..41
-      DO_KW@0..3 "do" [] [Whitespace(" ")]
-      JS_WHILE_STATEMENT@3..41
-        WHILE_KW@3..9 "while" [] [Whitespace(" ")]
-        L_PAREN@9..10 "(" [] []
-        JS_BOOLEAN_LITERAL@10..14
-          TRUE_KW@10..14 "true" [] []
-        R_PAREN@14..15 ")" [] []
-        JS_DO_WHILE_STATEMENT@15..41
-          DO_KW@15..19 "do" [Whitespace("\n")] [Whitespace(" ")]
-          JS_WHILE_STATEMENT@19..41
-            WHILE_KW@19..25 "while" [] [Whitespace(" ")]
-            L_PAREN@25..26 "(" [] []
-            R_PAREN@26..27 ")" [] []
-            JS_DO_WHILE_STATEMENT@27..41
-              DO_KW@27..31 "do" [Whitespace("\n")] [Whitespace(" ")]
-              JS_WHILE_STATEMENT@31..41
-                WHILE_KW@31..37 "while" [] [Whitespace(" ")]
-                JS_BOOLEAN_LITERAL@37..41
-                  TRUE_KW@37..41 "true" [] []
-                ERROR@41..41
-              ERROR@41..41
-          ERROR@41..41
-      ERROR@41..41
-  EOF@41..42 "" [Whitespace("\n")] []
+0: JS_ROOT@0..42
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..41
+    0: JS_DO_WHILE_STATEMENT@0..41
+      0: DO_KW@0..3 "do" [] [Whitespace(" ")]
+      1: JS_WHILE_STATEMENT@3..41
+        0: WHILE_KW@3..9 "while" [] [Whitespace(" ")]
+        1: L_PAREN@9..10 "(" [] []
+        2: JS_BOOLEAN_LITERAL@10..14
+          0: TRUE_KW@10..14 "true" [] []
+        3: R_PAREN@14..15 ")" [] []
+        4: JS_DO_WHILE_STATEMENT@15..41
+          0: DO_KW@15..19 "do" [Whitespace("\n")] [Whitespace(" ")]
+          1: JS_WHILE_STATEMENT@19..41
+            0: WHILE_KW@19..25 "while" [] [Whitespace(" ")]
+            1: L_PAREN@25..26 "(" [] []
+            2: R_PAREN@26..27 ")" [] []
+            3: JS_DO_WHILE_STATEMENT@27..41
+              0: DO_KW@27..31 "do" [Whitespace("\n")] [Whitespace(" ")]
+              1: JS_WHILE_STATEMENT@31..41
+                0: WHILE_KW@31..37 "while" [] [Whitespace(" ")]
+                1: (empty)
+                2: JS_BOOLEAN_LITERAL@37..41
+                  0: TRUE_KW@37..41 "true" [] []
+                3: (empty)
+              2: (empty)
+              3: (empty)
+              4: (empty)
+              5: (empty)
+          2: (empty)
+          3: (empty)
+          4: (empty)
+          5: (empty)
+      2: (empty)
+      3: (empty)
+      4: (empty)
+      5: (empty)
+  3: EOF@41..42 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ do_while_stmt_err.js:2:11

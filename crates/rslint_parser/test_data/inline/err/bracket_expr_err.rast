@@ -1,26 +1,30 @@
-JS_ROOT@0..19
-  LIST@0..0
-  LIST@0..18
-    JS_EXPRESSION_STATEMENT@0..5
-      BRACKET_EXPR@0..5
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo" [] []
-        L_BRACK@3..4 "[" [] []
-        R_BRACK@4..5 "]" [] []
-    JS_EXPRESSION_STATEMENT@5..13
-      BRACKET_EXPR@5..13
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@5..9
-          IDENT@5..9 "foo" [Whitespace("\n")] []
-        QUESTIONDOT@9..11 "?." [] []
-        L_BRACK@11..12 "[" [] []
-        R_BRACK@12..13 "]" [] []
-    JS_EXPRESSION_STATEMENT@13..18
-      BRACKET_EXPR@13..18
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@13..17
-          IDENT@13..17 "foo" [Whitespace("\n")] []
-        L_BRACK@17..18 "[" [] []
-        ERROR@18..18
-  EOF@18..19 "" [Whitespace("\n")] []
+0: JS_ROOT@0..19
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..18
+    0: JS_EXPRESSION_STATEMENT@0..5
+      0: BRACKET_EXPR@0..5
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
+          0: IDENT@0..3 "foo" [] []
+        1: L_BRACK@3..4 "[" [] []
+        2: R_BRACK@4..5 "]" [] []
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@5..13
+      0: BRACKET_EXPR@5..13
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@5..9
+          0: IDENT@5..9 "foo" [Whitespace("\n")] []
+        1: QUESTIONDOT@9..11 "?." [] []
+        2: L_BRACK@11..12 "[" [] []
+        3: R_BRACK@12..13 "]" [] []
+      1: (empty)
+    2: JS_EXPRESSION_STATEMENT@13..18
+      0: BRACKET_EXPR@13..18
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@13..17
+          0: IDENT@13..17 "foo" [Whitespace("\n")] []
+        1: L_BRACK@17..18 "[" [] []
+        2: (empty)
+      1: (empty)
+  3: EOF@18..19 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ bracket_expr_err.js:1:5

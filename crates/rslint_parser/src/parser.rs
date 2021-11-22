@@ -5,6 +5,7 @@
 
 use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
+use rslint_syntax::SyntaxKind::EOF;
 use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
@@ -179,6 +180,16 @@ impl<'t> Parser<'t> {
 		true
 	}
 
+	/// Consumes the next optional token if `kind` matches or inserts a missing marker
+	pub fn eat_optional(&mut self, kind: SyntaxKind) -> bool {
+		if self.eat(kind) {
+			true
+		} else {
+			self.missing();
+			false
+		}
+	}
+
 	/// Recover from an error with a recovery set or by using a `{` or `}`.
 	pub fn err_recover(
 		&mut self,
@@ -198,7 +209,7 @@ impl<'t> Parser<'t> {
 			_ => (),
 		}
 
-		if self.at_ts(recovery) {
+		if self.at_ts(recovery) || self.cur() == EOF {
 			self.error(error);
 			return Some(());
 		}
@@ -214,6 +225,9 @@ impl<'t> Parser<'t> {
 	pub fn err_recover_no_err(&mut self, recovery: TokenSet, include_braces: bool) {
 		match self.cur() {
 			T!['{'] | T!['}'] if include_braces => {
+				return;
+			}
+			EOF => {
 				return;
 			}
 			_ => (),
@@ -256,9 +270,7 @@ impl<'t> Parser<'t> {
 	/// Advances the parser by one token
 	pub fn bump_any(&mut self) {
 		let kind = self.nth(0);
-		if kind == SyntaxKind::EOF {
-			return;
-		}
+		assert_ne!(kind, EOF);
 		self.do_bump(kind)
 	}
 

@@ -1,60 +1,63 @@
-JS_ROOT@0..72
-  LIST@0..0
-  LIST@0..71
-    JS_VARIABLE_DECLARATION_STATEMENT@0..17
-      JS_VARIABLE_DECLARATION@0..16
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..16
-          JS_VARIABLE_DECLARATOR@4..16
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..16
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_CLASS_EXPRESSION@8..16
-                CLASS_KW@8..14 "class" [] [Whitespace(" ")]
-                L_CURLY@14..15 "{" [] []
-                LIST@15..15
-                R_CURLY@15..16 "}" [] []
-      SEMICOLON@16..17 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@17..57
-      JS_VARIABLE_DECLARATION@17..57
-        LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@22..57
-          JS_VARIABLE_DECLARATOR@22..57
-            SINGLE_PATTERN@22..24
-              NAME@22..24
-                IDENT@22..24 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@24..57
-              EQ@24..26 "=" [] [Whitespace(" ")]
-              JS_CLASS_EXPRESSION@26..57
-                CLASS_KW@26..32 "class" [] [Whitespace(" ")]
-                JS_IDENTIFIER_BINDING@32..36
-                  IDENT@32..36 "foo" [] [Whitespace(" ")]
-                L_CURLY@36..37 "{" [] []
-                LIST@37..55
-                  JS_CONSTRUCTOR_CLASS_MEMBER@37..55
-                    JS_LITERAL_MEMBER_NAME@37..50
-                      IDENT@37..50 "constructor" [Whitespace("\n ")] []
-                    JS_CONSTRUCTOR_PARAMETER_LIST@50..53
-                      L_PAREN@50..51 "(" [] []
-                      LIST@51..51
-                      R_PAREN@51..53 ")" [] [Whitespace(" ")]
-                    JS_FUNCTION_BODY@53..55
-                      L_CURLY@53..54 "{" [] []
-                      LIST@54..54
-                      LIST@54..54
-                      R_CURLY@54..55 "}" [] []
-                R_CURLY@55..57 "}" [Whitespace("\n")] []
-    JS_EXPRESSION_STATEMENT@57..71
-      BRACKET_EXPR@57..71
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@57..61
-          IDENT@57..61 "foo" [Whitespace("\n")] []
-        L_BRACK@61..62 "[" [] []
-        JS_CLASS_EXPRESSION@62..70
-          CLASS_KW@62..68 "class" [] [Whitespace(" ")]
-          L_CURLY@68..69 "{" [] []
-          LIST@69..69
-          R_CURLY@69..70 "}" [] []
-        R_BRACK@70..71 "]" [] []
-  EOF@71..72 "" [Whitespace("\n")] []
+0: JS_ROOT@0..72
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..71
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..17
+      0: JS_VARIABLE_DECLARATION@0..16
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..16
+          0: JS_VARIABLE_DECLARATOR@4..16
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..16
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_CLASS_EXPRESSION@8..16
+                0: CLASS_KW@8..14 "class" [] [Whitespace(" ")]
+                1: L_CURLY@14..15 "{" [] []
+                2: LIST@15..15
+                3: R_CURLY@15..16 "}" [] []
+      1: SEMICOLON@16..17 ";" [] []
+    1: JS_VARIABLE_DECLARATION_STATEMENT@17..57
+      0: JS_VARIABLE_DECLARATION@17..57
+        0: LET_KW@17..22 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@22..57
+          0: JS_VARIABLE_DECLARATOR@22..57
+            0: SINGLE_PATTERN@22..24
+              0: NAME@22..24
+                0: IDENT@22..24 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@24..57
+              0: EQ@24..26 "=" [] [Whitespace(" ")]
+              1: JS_CLASS_EXPRESSION@26..57
+                0: CLASS_KW@26..32 "class" [] [Whitespace(" ")]
+                1: JS_IDENTIFIER_BINDING@32..36
+                  0: IDENT@32..36 "foo" [] [Whitespace(" ")]
+                2: L_CURLY@36..37 "{" [] []
+                3: LIST@37..55
+                  0: JS_CONSTRUCTOR_CLASS_MEMBER@37..55
+                    0: JS_LITERAL_MEMBER_NAME@37..50
+                      0: IDENT@37..50 "constructor" [Whitespace("\n ")] []
+                    1: JS_CONSTRUCTOR_PARAMETER_LIST@50..53
+                      0: L_PAREN@50..51 "(" [] []
+                      1: LIST@51..51
+                      2: R_PAREN@51..53 ")" [] [Whitespace(" ")]
+                    2: JS_FUNCTION_BODY@53..55
+                      0: L_CURLY@53..54 "{" [] []
+                      1: LIST@54..54
+                      2: LIST@54..54
+                      3: R_CURLY@54..55 "}" [] []
+                4: R_CURLY@55..57 "}" [Whitespace("\n")] []
+      1: (empty)
+    2: JS_EXPRESSION_STATEMENT@57..71
+      0: BRACKET_EXPR@57..71
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@57..61
+          0: IDENT@57..61 "foo" [Whitespace("\n")] []
+        1: L_BRACK@61..62 "[" [] []
+        2: JS_CLASS_EXPRESSION@62..70
+          0: CLASS_KW@62..68 "class" [] [Whitespace(" ")]
+          1: L_CURLY@68..69 "{" [] []
+          2: LIST@69..69
+          3: R_CURLY@69..70 "}" [] []
+        3: R_BRACK@70..71 "]" [] []
+      1: (empty)
+  3: EOF@71..72 "" [Whitespace("\n")] []

@@ -1,20 +1,21 @@
-JS_ROOT@0..18
-  LIST@0..0
-  LIST@0..17
-    JS_VARIABLE_DECLARATION_STATEMENT@0..17
-      JS_VARIABLE_DECLARATION@0..16
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..16
-          JS_VARIABLE_DECLARATOR@4..16
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "s" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..16
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              ERROR@8..16
-                ERROR_TOKEN@8..16 "\"\\u{200\"" [] []
-      SEMICOLON@16..17 ";" [] []
-  EOF@17..18 "" [Whitespace("\n")] []
+0: JS_ROOT@0..18
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..17
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..17
+      0: JS_VARIABLE_DECLARATION@0..16
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..16
+          0: JS_VARIABLE_DECLARATOR@4..16
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "s" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..16
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: ERROR@8..16
+                0: ERROR_TOKEN@8..16 "\"\\u{200\"" [] []
+      1: SEMICOLON@16..17 ";" [] []
+  3: EOF@17..18 "" [Whitespace("\n")] []
 --
 error: expected hex digits for a unicode code point escape, but encountered an invalid character
   ┌─ unterminated_unicode_codepoint.js:1:16

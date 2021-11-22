@@ -1,50 +1,51 @@
-JS_ROOT@0..41
-  LIST@0..0
-  LIST@0..40
-    JS_CLASS_DECLARATION@0..40
-      CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      JS_IDENTIFIER_BINDING@6..10
-        IDENT@6..10 "foo" [] [Whitespace(" ")]
-      L_CURLY@10..12 "{" [] [Whitespace(" ")]
-      LIST@12..39
-        JS_EMPTY_CLASS_MEMBER@12..13
-          SEMICOLON@12..13 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@13..14
-          SEMICOLON@13..14 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@14..15
-          SEMICOLON@14..15 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@15..16
-          SEMICOLON@15..16 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@16..17
-          SEMICOLON@16..17 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@17..18
-          SEMICOLON@17..18 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@18..19
-          SEMICOLON@18..19 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@19..20
-          SEMICOLON@19..20 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@20..21
-          SEMICOLON@20..21 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@21..23
-          SEMICOLON@21..23 ";" [] [Whitespace(" ")]
-        JS_GETTER_CLASS_MEMBER@23..35
-          GET_KW@23..27 "get" [] [Whitespace(" ")]
-          JS_LITERAL_MEMBER_NAME@27..30
-            IDENT@27..30 "foo" [] []
-          L_PAREN@30..31 "(" [] []
-          R_PAREN@31..33 ")" [] [Whitespace(" ")]
-          JS_FUNCTION_BODY@33..35
-            L_CURLY@33..34 "{" [] []
-            LIST@34..34
-            LIST@34..34
-            R_CURLY@34..35 "}" [] []
-        JS_EMPTY_CLASS_MEMBER@35..36
-          SEMICOLON@35..36 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@36..37
-          SEMICOLON@36..37 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@37..38
-          SEMICOLON@37..38 ";" [] []
-        JS_EMPTY_CLASS_MEMBER@38..39
-          SEMICOLON@38..39 ";" [] []
-      R_CURLY@39..40 "}" [] []
-  EOF@40..41 "" [Whitespace("\n")] []
+0: JS_ROOT@0..41
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..40
+    0: JS_CLASS_DECLARATION@0..40
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..10
+        0: IDENT@6..10 "foo" [] [Whitespace(" ")]
+      2: L_CURLY@10..12 "{" [] [Whitespace(" ")]
+      3: LIST@12..39
+        0: JS_EMPTY_CLASS_MEMBER@12..13
+          0: SEMICOLON@12..13 ";" [] []
+        1: JS_EMPTY_CLASS_MEMBER@13..14
+          0: SEMICOLON@13..14 ";" [] []
+        2: JS_EMPTY_CLASS_MEMBER@14..15
+          0: SEMICOLON@14..15 ";" [] []
+        3: JS_EMPTY_CLASS_MEMBER@15..16
+          0: SEMICOLON@15..16 ";" [] []
+        4: JS_EMPTY_CLASS_MEMBER@16..17
+          0: SEMICOLON@16..17 ";" [] []
+        5: JS_EMPTY_CLASS_MEMBER@17..18
+          0: SEMICOLON@17..18 ";" [] []
+        6: JS_EMPTY_CLASS_MEMBER@18..19
+          0: SEMICOLON@18..19 ";" [] []
+        7: JS_EMPTY_CLASS_MEMBER@19..20
+          0: SEMICOLON@19..20 ";" [] []
+        8: JS_EMPTY_CLASS_MEMBER@20..21
+          0: SEMICOLON@20..21 ";" [] []
+        9: JS_EMPTY_CLASS_MEMBER@21..23
+          0: SEMICOLON@21..23 ";" [] [Whitespace(" ")]
+        10: JS_GETTER_CLASS_MEMBER@23..35
+          0: GET_KW@23..27 "get" [] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@27..30
+            0: IDENT@27..30 "foo" [] []
+          2: L_PAREN@30..31 "(" [] []
+          3: R_PAREN@31..33 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@33..35
+            0: L_CURLY@33..34 "{" [] []
+            1: LIST@34..34
+            2: LIST@34..34
+            3: R_CURLY@34..35 "}" [] []
+        11: JS_EMPTY_CLASS_MEMBER@35..36
+          0: SEMICOLON@35..36 ";" [] []
+        12: JS_EMPTY_CLASS_MEMBER@36..37
+          0: SEMICOLON@36..37 ";" [] []
+        13: JS_EMPTY_CLASS_MEMBER@37..38
+          0: SEMICOLON@37..38 ";" [] []
+        14: JS_EMPTY_CLASS_MEMBER@38..39
+          0: SEMICOLON@38..39 ";" [] []
+      4: R_CURLY@39..40 "}" [] []
+  3: EOF@40..41 "" [Whitespace("\n")] []

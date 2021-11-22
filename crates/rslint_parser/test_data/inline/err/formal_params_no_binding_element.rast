@@ -1,22 +1,23 @@
-JS_ROOT@0..22
-  LIST@0..0
-  LIST@0..21
-    JS_FUNCTION_DECLARATION@0..21
-      FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
-      JS_IDENTIFIER_BINDING@9..12
-        IDENT@9..12 "foo" [] []
-      JS_PARAMETER_LIST@12..19
-        L_PAREN@12..13 "(" [] []
-        LIST@13..17
-          ERROR@13..17
-            TRUE_KW@13..17 "true" [] []
-        R_PAREN@17..19 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@19..21
-        L_CURLY@19..20 "{" [] []
-        LIST@20..20
-        LIST@20..20
-        R_CURLY@20..21 "}" [] []
-  EOF@21..22 "" [Whitespace("\n")] []
+0: JS_ROOT@0..22
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..21
+    0: JS_FUNCTION_DECLARATION@0..21
+      0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@9..12
+        0: IDENT@9..12 "foo" [] []
+      2: JS_PARAMETER_LIST@12..19
+        0: L_PAREN@12..13 "(" [] []
+        1: LIST@13..17
+          0: ERROR@13..17
+            0: TRUE_KW@13..17 "true" [] []
+        2: R_PAREN@17..19 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@19..21
+        0: L_CURLY@19..20 "{" [] []
+        1: LIST@20..20
+        2: LIST@20..20
+        3: R_CURLY@20..21 "}" [] []
+  3: EOF@21..22 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an identifier or pattern, but found none
   ┌─ formal_params_no_binding_element.js:1:14

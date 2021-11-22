@@ -1,40 +1,41 @@
-JS_ROOT@0..35
-  LIST@0..0
-  LIST@0..34
-    JS_EXPRESSION_STATEMENT@0..11
-      CALL_EXPR@0..10
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo" [] []
-        ARG_LIST@3..10
-          L_PAREN@3..4 "(" [] []
-          LIST@4..9
-            JS_BINARY_EXPRESSION@4..9
-              JS_REFERENCE_IDENTIFIER_EXPRESSION@4..8
-                IDENT@4..8 "foo" [] [Whitespace(" ")]
-              PLUS@8..9 "+" [] []
-          R_PAREN@9..10 ")" [] []
-      SEMICOLON@10..11 ";" [] []
-    JS_EXPRESSION_STATEMENT@11..22
-      JS_BINARY_EXPRESSION@11..21
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@11..16
-          IDENT@11..16 "foo" [Whitespace("\n")] [Whitespace(" ")]
-        PLUS@16..18 "+" [] [Whitespace(" ")]
-        JS_BINARY_EXPRESSION@18..21
-          STAR@18..20 "*" [] [Whitespace(" ")]
-          JS_NUMBER_LITERAL@20..21
-            JS_NUMBER_LITERAL_TOKEN@20..21 "2" [] []
-      SEMICOLON@21..22 ";" [] []
-    JS_EXPRESSION_STATEMENT@22..34
-      JS_BINARY_EXPRESSION@22..33
-        JS_UNARY_EXPRESSION@22..28
-          BANG@22..24 "!" [Whitespace("\n")] []
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@24..28
-            IDENT@24..28 "foo" [] [Whitespace(" ")]
-        STAR@28..30 "*" [] [Whitespace(" ")]
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@30..33
-          IDENT@30..33 "bar" [] []
-      SEMICOLON@33..34 ";" [] []
-  EOF@34..35 "" [Whitespace("\n")] []
+0: JS_ROOT@0..35
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..34
+    0: JS_EXPRESSION_STATEMENT@0..11
+      0: CALL_EXPR@0..10
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
+          0: IDENT@0..3 "foo" [] []
+        1: ARG_LIST@3..10
+          0: L_PAREN@3..4 "(" [] []
+          1: LIST@4..9
+            0: JS_BINARY_EXPRESSION@4..9
+              0: JS_REFERENCE_IDENTIFIER_EXPRESSION@4..8
+                0: IDENT@4..8 "foo" [] [Whitespace(" ")]
+              1: PLUS@8..9 "+" [] []
+          2: R_PAREN@9..10 ")" [] []
+      1: SEMICOLON@10..11 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@11..22
+      0: JS_BINARY_EXPRESSION@11..21
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@11..16
+          0: IDENT@11..16 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        1: PLUS@16..18 "+" [] [Whitespace(" ")]
+        2: JS_BINARY_EXPRESSION@18..21
+          0: STAR@18..20 "*" [] [Whitespace(" ")]
+          1: JS_NUMBER_LITERAL@20..21
+            0: JS_NUMBER_LITERAL_TOKEN@20..21 "2" [] []
+      1: SEMICOLON@21..22 ";" [] []
+    2: JS_EXPRESSION_STATEMENT@22..34
+      0: JS_BINARY_EXPRESSION@22..33
+        0: JS_UNARY_EXPRESSION@22..28
+          0: BANG@22..24 "!" [Whitespace("\n")] []
+          1: JS_REFERENCE_IDENTIFIER_EXPRESSION@24..28
+            0: IDENT@24..28 "foo" [] [Whitespace(" ")]
+        1: STAR@28..30 "*" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@30..33
+          0: IDENT@30..33 "bar" [] []
+      1: SEMICOLON@33..34 ";" [] []
+  3: EOF@34..35 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an expression, but found none
   ┌─ binary_expressions_err.js:1:10

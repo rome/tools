@@ -1,96 +1,97 @@
-JS_ROOT@0..142
-  LIST@0..0
-  LIST@0..141
-    JS_FUNCTION_DECLARATION@0..17
-      FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
-      JS_IDENTIFIER_BINDING@9..12
-        IDENT@9..12 "foo" [] []
-      JS_PARAMETER_LIST@12..15
-        L_PAREN@12..13 "(" [] []
-        LIST@13..13
-        R_PAREN@13..15 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@15..17
-        L_CURLY@15..16 "{" [] []
-        LIST@16..16
-        LIST@16..16
-        R_CURLY@16..17 "}" [] []
-    JS_FUNCTION_DECLARATION@17..36
-      FUNCTION_KW@17..27 "function" [Whitespace("\n")] [Whitespace(" ")]
-      STAR@27..28 "*" [] []
-      JS_IDENTIFIER_BINDING@28..31
-        IDENT@28..31 "foo" [] []
-      JS_PARAMETER_LIST@31..34
-        L_PAREN@31..32 "(" [] []
-        LIST@32..32
-        R_PAREN@32..34 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@34..36
-        L_CURLY@34..35 "{" [] []
-        LIST@35..35
-        LIST@35..35
-        R_CURLY@35..36 "}" [] []
-    JS_FUNCTION_DECLARATION@36..59
-      FUNCTION_KW@36..46 "function" [Whitespace("\n")] [Whitespace(" ")]
-      JS_IDENTIFIER_BINDING@46..49
-        IDENT@46..49 "foo" [] []
-      JS_PARAMETER_LIST@49..57
-        L_PAREN@49..50 "(" [] []
-        LIST@50..55
-          SINGLE_PATTERN@50..55
-            NAME@50..55
-              IDENT@50..55 "await" [] []
-        R_PAREN@55..57 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@57..59
-        L_CURLY@57..58 "{" [] []
-        LIST@58..58
-        LIST@58..58
-        R_CURLY@58..59 "}" [] []
-    JS_FUNCTION_DECLARATION@59..84
-      ASYNC_KW@59..66 "async" [Whitespace("\n")] [Whitespace(" ")]
-      FUNCTION_KW@66..75 "function" [] [Whitespace(" ")]
-      STAR@75..76 "*" [] []
-      JS_IDENTIFIER_BINDING@76..79
-        IDENT@76..79 "foo" [] []
-      JS_PARAMETER_LIST@79..82
-        L_PAREN@79..80 "(" [] []
-        LIST@80..80
-        R_PAREN@80..82 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@82..84
-        L_CURLY@82..83 "{" [] []
-        LIST@83..83
-        LIST@83..83
-        R_CURLY@83..84 "}" [] []
-    JS_FUNCTION_DECLARATION@84..108
-      ASYNC_KW@84..91 "async" [Whitespace("\n")] [Whitespace(" ")]
-      FUNCTION_KW@91..100 "function" [] [Whitespace(" ")]
-      JS_IDENTIFIER_BINDING@100..103
-        IDENT@100..103 "foo" [] []
-      JS_PARAMETER_LIST@103..106
-        L_PAREN@103..104 "(" [] []
-        LIST@104..104
-        R_PAREN@104..106 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@106..108
-        L_CURLY@106..107 "{" [] []
-        LIST@107..107
-        LIST@107..107
-        R_CURLY@107..108 "}" [] []
-    JS_FUNCTION_DECLARATION@108..141
-      FUNCTION_KW@108..118 "function" [Whitespace("\n")] [Whitespace(" ")]
-      STAR@118..119 "*" [] []
-      JS_IDENTIFIER_BINDING@119..122
-        IDENT@119..122 "foo" [] []
-      JS_PARAMETER_LIST@122..125
-        L_PAREN@122..123 "(" [] []
-        LIST@123..123
-        R_PAREN@123..125 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@125..141
-        L_CURLY@125..126 "{" [] []
-        LIST@126..126
-        LIST@126..139
-          JS_EXPRESSION_STATEMENT@126..139
-            JS_YIELD_EXPRESSION@126..138
-              YIELD_KW@126..135 "yield" [Whitespace("\n  ")] [Whitespace(" ")]
-              JS_REFERENCE_IDENTIFIER_EXPRESSION@135..138
-                IDENT@135..138 "foo" [] []
-            SEMICOLON@138..139 ";" [] []
-        R_CURLY@139..141 "}" [Whitespace("\n")] []
-  EOF@141..142 "" [Whitespace("\n")] []
+0: JS_ROOT@0..142
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..141
+    0: JS_FUNCTION_DECLARATION@0..17
+      0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@9..12
+        0: IDENT@9..12 "foo" [] []
+      2: JS_PARAMETER_LIST@12..15
+        0: L_PAREN@12..13 "(" [] []
+        1: LIST@13..13
+        2: R_PAREN@13..15 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@15..17
+        0: L_CURLY@15..16 "{" [] []
+        1: LIST@16..16
+        2: LIST@16..16
+        3: R_CURLY@16..17 "}" [] []
+    1: JS_FUNCTION_DECLARATION@17..36
+      0: FUNCTION_KW@17..27 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: STAR@27..28 "*" [] []
+      2: JS_IDENTIFIER_BINDING@28..31
+        0: IDENT@28..31 "foo" [] []
+      3: JS_PARAMETER_LIST@31..34
+        0: L_PAREN@31..32 "(" [] []
+        1: LIST@32..32
+        2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@34..36
+        0: L_CURLY@34..35 "{" [] []
+        1: LIST@35..35
+        2: LIST@35..35
+        3: R_CURLY@35..36 "}" [] []
+    2: JS_FUNCTION_DECLARATION@36..59
+      0: FUNCTION_KW@36..46 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@46..49
+        0: IDENT@46..49 "foo" [] []
+      2: JS_PARAMETER_LIST@49..57
+        0: L_PAREN@49..50 "(" [] []
+        1: LIST@50..55
+          0: SINGLE_PATTERN@50..55
+            0: NAME@50..55
+              0: IDENT@50..55 "await" [] []
+        2: R_PAREN@55..57 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@57..59
+        0: L_CURLY@57..58 "{" [] []
+        1: LIST@58..58
+        2: LIST@58..58
+        3: R_CURLY@58..59 "}" [] []
+    3: JS_FUNCTION_DECLARATION@59..84
+      0: ASYNC_KW@59..66 "async" [Whitespace("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@66..75 "function" [] [Whitespace(" ")]
+      2: STAR@75..76 "*" [] []
+      3: JS_IDENTIFIER_BINDING@76..79
+        0: IDENT@76..79 "foo" [] []
+      4: JS_PARAMETER_LIST@79..82
+        0: L_PAREN@79..80 "(" [] []
+        1: LIST@80..80
+        2: R_PAREN@80..82 ")" [] [Whitespace(" ")]
+      5: JS_FUNCTION_BODY@82..84
+        0: L_CURLY@82..83 "{" [] []
+        1: LIST@83..83
+        2: LIST@83..83
+        3: R_CURLY@83..84 "}" [] []
+    4: JS_FUNCTION_DECLARATION@84..108
+      0: ASYNC_KW@84..91 "async" [Whitespace("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@91..100 "function" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@100..103
+        0: IDENT@100..103 "foo" [] []
+      3: JS_PARAMETER_LIST@103..106
+        0: L_PAREN@103..104 "(" [] []
+        1: LIST@104..104
+        2: R_PAREN@104..106 ")" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@106..108
+        0: L_CURLY@106..107 "{" [] []
+        1: LIST@107..107
+        2: LIST@107..107
+        3: R_CURLY@107..108 "}" [] []
+    5: JS_FUNCTION_DECLARATION@108..141
+      0: FUNCTION_KW@108..118 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: STAR@118..119 "*" [] []
+      2: JS_IDENTIFIER_BINDING@119..122
+        0: IDENT@119..122 "foo" [] []
+      3: JS_PARAMETER_LIST@122..125
+        0: L_PAREN@122..123 "(" [] []
+        1: LIST@123..123
+        2: R_PAREN@123..125 ")" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@125..141
+        0: L_CURLY@125..126 "{" [] []
+        1: LIST@126..126
+        2: LIST@126..139
+          0: JS_EXPRESSION_STATEMENT@126..139
+            0: JS_YIELD_EXPRESSION@126..138
+              0: YIELD_KW@126..135 "yield" [Whitespace("\n  ")] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@135..138
+                0: IDENT@135..138 "foo" [] []
+            1: SEMICOLON@138..139 ";" [] []
+        3: R_CURLY@139..141 "}" [Whitespace("\n")] []
+  3: EOF@141..142 "" [Whitespace("\n")] []

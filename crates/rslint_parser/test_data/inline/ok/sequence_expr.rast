@@ -1,23 +1,25 @@
-JS_ROOT@0..14
-  LIST@0..0
-  LIST@0..13
-    JS_EXPRESSION_STATEMENT@0..13
-      JS_SEQUENCE_EXPRESSION@0..13
-        JS_NUMBER_LITERAL@0..1
-          JS_NUMBER_LITERAL_TOKEN@0..1 "1" [] []
-        COMMA@1..3 "," [] [Whitespace(" ")]
-        JS_SEQUENCE_EXPRESSION@3..13
-          JS_NUMBER_LITERAL@3..4
-            JS_NUMBER_LITERAL_TOKEN@3..4 "2" [] []
-          COMMA@4..6 "," [] [Whitespace(" ")]
-          JS_SEQUENCE_EXPRESSION@6..13
-            JS_NUMBER_LITERAL@6..7
-              JS_NUMBER_LITERAL_TOKEN@6..7 "3" [] []
-            COMMA@7..9 "," [] [Whitespace(" ")]
-            JS_SEQUENCE_EXPRESSION@9..13
-              JS_NUMBER_LITERAL@9..10
-                JS_NUMBER_LITERAL_TOKEN@9..10 "4" [] []
-              COMMA@10..12 "," [] [Whitespace(" ")]
-              JS_NUMBER_LITERAL@12..13
-                JS_NUMBER_LITERAL_TOKEN@12..13 "5" [] []
-  EOF@13..14 "" [Whitespace("\n")] []
+0: JS_ROOT@0..14
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..13
+    0: JS_EXPRESSION_STATEMENT@0..13
+      0: JS_SEQUENCE_EXPRESSION@0..13
+        0: JS_NUMBER_LITERAL@0..1
+          0: JS_NUMBER_LITERAL_TOKEN@0..1 "1" [] []
+        1: COMMA@1..3 "," [] [Whitespace(" ")]
+        2: JS_SEQUENCE_EXPRESSION@3..13
+          0: JS_NUMBER_LITERAL@3..4
+            0: JS_NUMBER_LITERAL_TOKEN@3..4 "2" [] []
+          1: COMMA@4..6 "," [] [Whitespace(" ")]
+          2: JS_SEQUENCE_EXPRESSION@6..13
+            0: JS_NUMBER_LITERAL@6..7
+              0: JS_NUMBER_LITERAL_TOKEN@6..7 "3" [] []
+            1: COMMA@7..9 "," [] [Whitespace(" ")]
+            2: JS_SEQUENCE_EXPRESSION@9..13
+              0: JS_NUMBER_LITERAL@9..10
+                0: JS_NUMBER_LITERAL_TOKEN@9..10 "4" [] []
+              1: COMMA@10..12 "," [] [Whitespace(" ")]
+              2: JS_NUMBER_LITERAL@12..13
+                0: JS_NUMBER_LITERAL_TOKEN@12..13 "5" [] []
+      1: (empty)
+  3: EOF@13..14 "" [Whitespace("\n")] []

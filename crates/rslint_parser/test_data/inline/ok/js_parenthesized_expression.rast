@@ -1,20 +1,22 @@
-JS_ROOT@0..14
-  LIST@0..0
-  LIST@0..13
-    JS_EXPRESSION_STATEMENT@0..13
-      CALL_EXPR@0..13
-        JS_PARENTHESIZED_EXPRESSION@0..7
-          L_PAREN@0..1 "(" [] []
-          JS_PARENTHESIZED_EXPRESSION@1..6
-            L_PAREN@1..2 "(" [] []
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@2..5
-              IDENT@2..5 "foo" [] []
-            R_PAREN@5..6 ")" [] []
-          R_PAREN@6..7 ")" [] []
-        ARG_LIST@7..13
-          L_PAREN@7..9 "(" [Whitespace("\n")] []
-          LIST@9..12
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
-              IDENT@9..12 "foo" [] []
-          R_PAREN@12..13 ")" [] []
-  EOF@13..14 "" [Whitespace("\n")] []
+0: JS_ROOT@0..14
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..13
+    0: JS_EXPRESSION_STATEMENT@0..13
+      0: CALL_EXPR@0..13
+        0: JS_PARENTHESIZED_EXPRESSION@0..7
+          0: L_PAREN@0..1 "(" [] []
+          1: JS_PARENTHESIZED_EXPRESSION@1..6
+            0: L_PAREN@1..2 "(" [] []
+            1: JS_REFERENCE_IDENTIFIER_EXPRESSION@2..5
+              0: IDENT@2..5 "foo" [] []
+            2: R_PAREN@5..6 ")" [] []
+          2: R_PAREN@6..7 ")" [] []
+        1: ARG_LIST@7..13
+          0: L_PAREN@7..9 "(" [Whitespace("\n")] []
+          1: LIST@9..12
+            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
+              0: IDENT@9..12 "foo" [] []
+          2: R_PAREN@12..13 ")" [] []
+      1: (empty)
+  3: EOF@13..14 "" [Whitespace("\n")] []

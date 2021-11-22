@@ -1,17 +1,18 @@
-JS_ROOT@0..15
-  LIST@0..0
-  LIST@0..14
-    JS_VARIABLE_DECLARATION_STATEMENT@0..14
-      JS_VARIABLE_DECLARATION@0..13
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..13
-          JS_VARIABLE_DECLARATOR@4..13
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..13
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_REFERENCE_IDENTIFIER_EXPRESSION@8..13
-                IDENT@8..13 "async" [] []
-      SEMICOLON@13..14 ";" [] []
-  EOF@14..15 "" [Whitespace("\n")] []
+0: JS_ROOT@0..15
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..14
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..14
+      0: JS_VARIABLE_DECLARATION@0..13
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..13
+          0: JS_VARIABLE_DECLARATOR@4..13
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..13
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..13
+                0: IDENT@8..13 "async" [] []
+      1: SEMICOLON@13..14 ";" [] []
+  3: EOF@14..15 "" [Whitespace("\n")] []

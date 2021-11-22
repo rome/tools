@@ -69,7 +69,7 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 /// Returns false if neither a semicolon was present and the current position doesn't allow an automatic
 /// semicolon insertion.
 pub(crate) fn optional_semi(p: &mut Parser) -> bool {
-	if p.eat(T![;]) {
+	if p.eat_optional(T![;]) {
 		return true;
 	}
 

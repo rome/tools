@@ -1,88 +1,89 @@
-JS_ROOT@0..112
-  LIST@0..0
-  LIST@0..111
-    JS_TRY_STATEMENT@0..15
-      TRY_KW@0..4 "try" [] [Whitespace(" ")]
-      JS_BLOCK_STATEMENT@4..7
-        L_CURLY@4..5 "{" [] []
-        LIST@5..5
-        R_CURLY@5..7 "}" [] [Whitespace(" ")]
-      JS_CATCH_CLAUSE@7..15
-        CATCH_KW@7..13 "catch" [] [Whitespace(" ")]
-        JS_BLOCK_STATEMENT@13..15
-          L_CURLY@13..14 "{" [] []
-          LIST@14..14
-          R_CURLY@14..15 "}" [] []
-    JS_TRY_STATEMENT@15..35
-      TRY_KW@15..20 "try" [Whitespace("\n")] [Whitespace(" ")]
-      JS_BLOCK_STATEMENT@20..23
-        L_CURLY@20..21 "{" [] []
-        LIST@21..21
-        R_CURLY@21..23 "}" [] [Whitespace(" ")]
-      JS_CATCH_CLAUSE@23..35
-        CATCH_KW@23..29 "catch" [] [Whitespace(" ")]
-        JS_CATCH_DECLARATION@29..33
-          L_PAREN@29..30 "(" [] []
-          SINGLE_PATTERN@30..31
-            NAME@30..31
-              IDENT@30..31 "e" [] []
-          R_PAREN@31..33 ")" [] [Whitespace(" ")]
-        JS_BLOCK_STATEMENT@33..35
-          L_CURLY@33..34 "{" [] []
-          LIST@34..34
-          R_CURLY@34..35 "}" [] []
-    JS_TRY_FINALLY_STATEMENT@35..62
-      TRY_KW@35..40 "try" [Whitespace("\n")] [Whitespace(" ")]
-      JS_BLOCK_STATEMENT@40..43
-        L_CURLY@40..41 "{" [] []
-        LIST@41..41
-        R_CURLY@41..43 "}" [] [Whitespace(" ")]
-      JS_CATCH_CLAUSE@43..52
-        CATCH_KW@43..49 "catch" [] [Whitespace(" ")]
-        JS_BLOCK_STATEMENT@49..52
-          L_CURLY@49..50 "{" [] []
-          LIST@50..50
-          R_CURLY@50..52 "}" [] [Whitespace(" ")]
-      JS_FINALLY_CLAUSE@52..62
-        FINALLY_KW@52..60 "finally" [] [Whitespace(" ")]
-        JS_BLOCK_STATEMENT@60..62
-          L_CURLY@60..61 "{" [] []
-          LIST@61..61
-          R_CURLY@61..62 "}" [] []
-    JS_TRY_FINALLY_STATEMENT@62..93
-      TRY_KW@62..67 "try" [Whitespace("\n")] [Whitespace(" ")]
-      JS_BLOCK_STATEMENT@67..70
-        L_CURLY@67..68 "{" [] []
-        LIST@68..68
-        R_CURLY@68..70 "}" [] [Whitespace(" ")]
-      JS_CATCH_CLAUSE@70..83
-        CATCH_KW@70..76 "catch" [] [Whitespace(" ")]
-        JS_CATCH_DECLARATION@76..80
-          L_PAREN@76..77 "(" [] []
-          SINGLE_PATTERN@77..78
-            NAME@77..78
-              IDENT@77..78 "e" [] []
-          R_PAREN@78..80 ")" [] [Whitespace(" ")]
-        JS_BLOCK_STATEMENT@80..83
-          L_CURLY@80..81 "{" [] []
-          LIST@81..81
-          R_CURLY@81..83 "}" [] [Whitespace(" ")]
-      JS_FINALLY_CLAUSE@83..93
-        FINALLY_KW@83..91 "finally" [] [Whitespace(" ")]
-        JS_BLOCK_STATEMENT@91..93
-          L_CURLY@91..92 "{" [] []
-          LIST@92..92
-          R_CURLY@92..93 "}" [] []
-    JS_TRY_FINALLY_STATEMENT@93..111
-      TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")]
-      JS_BLOCK_STATEMENT@98..101
-        L_CURLY@98..99 "{" [] []
-        LIST@99..99
-        R_CURLY@99..101 "}" [] [Whitespace(" ")]
-      JS_FINALLY_CLAUSE@101..111
-        FINALLY_KW@101..109 "finally" [] [Whitespace(" ")]
-        JS_BLOCK_STATEMENT@109..111
-          L_CURLY@109..110 "{" [] []
-          LIST@110..110
-          R_CURLY@110..111 "}" [] []
-  EOF@111..112 "" [Whitespace("\n")] []
+0: JS_ROOT@0..112
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..111
+    0: JS_TRY_STATEMENT@0..15
+      0: TRY_KW@0..4 "try" [] [Whitespace(" ")]
+      1: JS_BLOCK_STATEMENT@4..7
+        0: L_CURLY@4..5 "{" [] []
+        1: LIST@5..5
+        2: R_CURLY@5..7 "}" [] [Whitespace(" ")]
+      2: JS_CATCH_CLAUSE@7..15
+        0: CATCH_KW@7..13 "catch" [] [Whitespace(" ")]
+        1: JS_BLOCK_STATEMENT@13..15
+          0: L_CURLY@13..14 "{" [] []
+          1: LIST@14..14
+          2: R_CURLY@14..15 "}" [] []
+    1: JS_TRY_STATEMENT@15..35
+      0: TRY_KW@15..20 "try" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_BLOCK_STATEMENT@20..23
+        0: L_CURLY@20..21 "{" [] []
+        1: LIST@21..21
+        2: R_CURLY@21..23 "}" [] [Whitespace(" ")]
+      2: JS_CATCH_CLAUSE@23..35
+        0: CATCH_KW@23..29 "catch" [] [Whitespace(" ")]
+        1: JS_CATCH_DECLARATION@29..33
+          0: L_PAREN@29..30 "(" [] []
+          1: SINGLE_PATTERN@30..31
+            0: NAME@30..31
+              0: IDENT@30..31 "e" [] []
+          2: R_PAREN@31..33 ")" [] [Whitespace(" ")]
+        2: JS_BLOCK_STATEMENT@33..35
+          0: L_CURLY@33..34 "{" [] []
+          1: LIST@34..34
+          2: R_CURLY@34..35 "}" [] []
+    2: JS_TRY_FINALLY_STATEMENT@35..62
+      0: TRY_KW@35..40 "try" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_BLOCK_STATEMENT@40..43
+        0: L_CURLY@40..41 "{" [] []
+        1: LIST@41..41
+        2: R_CURLY@41..43 "}" [] [Whitespace(" ")]
+      2: JS_CATCH_CLAUSE@43..52
+        0: CATCH_KW@43..49 "catch" [] [Whitespace(" ")]
+        1: JS_BLOCK_STATEMENT@49..52
+          0: L_CURLY@49..50 "{" [] []
+          1: LIST@50..50
+          2: R_CURLY@50..52 "}" [] [Whitespace(" ")]
+      3: JS_FINALLY_CLAUSE@52..62
+        0: FINALLY_KW@52..60 "finally" [] [Whitespace(" ")]
+        1: JS_BLOCK_STATEMENT@60..62
+          0: L_CURLY@60..61 "{" [] []
+          1: LIST@61..61
+          2: R_CURLY@61..62 "}" [] []
+    3: JS_TRY_FINALLY_STATEMENT@62..93
+      0: TRY_KW@62..67 "try" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_BLOCK_STATEMENT@67..70
+        0: L_CURLY@67..68 "{" [] []
+        1: LIST@68..68
+        2: R_CURLY@68..70 "}" [] [Whitespace(" ")]
+      2: JS_CATCH_CLAUSE@70..83
+        0: CATCH_KW@70..76 "catch" [] [Whitespace(" ")]
+        1: JS_CATCH_DECLARATION@76..80
+          0: L_PAREN@76..77 "(" [] []
+          1: SINGLE_PATTERN@77..78
+            0: NAME@77..78
+              0: IDENT@77..78 "e" [] []
+          2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
+        2: JS_BLOCK_STATEMENT@80..83
+          0: L_CURLY@80..81 "{" [] []
+          1: LIST@81..81
+          2: R_CURLY@81..83 "}" [] [Whitespace(" ")]
+      3: JS_FINALLY_CLAUSE@83..93
+        0: FINALLY_KW@83..91 "finally" [] [Whitespace(" ")]
+        1: JS_BLOCK_STATEMENT@91..93
+          0: L_CURLY@91..92 "{" [] []
+          1: LIST@92..92
+          2: R_CURLY@92..93 "}" [] []
+    4: JS_TRY_FINALLY_STATEMENT@93..111
+      0: TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_BLOCK_STATEMENT@98..101
+        0: L_CURLY@98..99 "{" [] []
+        1: LIST@99..99
+        2: R_CURLY@99..101 "}" [] [Whitespace(" ")]
+      2: JS_FINALLY_CLAUSE@101..111
+        0: FINALLY_KW@101..109 "finally" [] [Whitespace(" ")]
+        1: JS_BLOCK_STATEMENT@109..111
+          0: L_CURLY@109..110 "{" [] []
+          1: LIST@110..110
+          2: R_CURLY@110..111 "}" [] []
+  3: EOF@111..112 "" [Whitespace("\n")] []

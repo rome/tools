@@ -1,44 +1,47 @@
-JS_ROOT@0..32
-  LIST@0..0
-  LIST@0..31
-    JS_VARIABLE_DECLARATION_STATEMENT@0..8
-      JS_VARIABLE_DECLARATION@0..8
-        VAR_KW@0..4 "var" [] [Whitespace(" ")]
-        LIST@4..8
-          JS_VARIABLE_DECLARATOR@4..8
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..8
-              EQ@6..7 "=" [] []
-              ERROR@7..8
-                SEMICOLON@7..8 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@8..21
-      JS_VARIABLE_DECLARATION@8..21
-        CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@15..21
-          JS_VARIABLE_DECLARATOR@15..21
-            SINGLE_PATTERN@15..17
-              NAME@15..17
-                IDENT@15..17 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@17..21
-              EQ@17..19 "=" [] [Whitespace(" ")]
-              JS_NUMBER_LITERAL@19..21
-                JS_NUMBER_LITERAL_TOKEN@19..21 "5" [] [Whitespace(" ")]
-    JS_VARIABLE_DECLARATION_STATEMENT@21..31
-      JS_VARIABLE_DECLARATION@21..30
-        LET_KW@21..25 "let" [] [Whitespace(" ")]
-        LIST@25..30
-          JS_VARIABLE_DECLARATOR@25..30
-            SINGLE_PATTERN@25..27
-              NAME@25..27
-                IDENT@25..27 "b" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@27..30
-              EQ@27..29 "=" [] [Whitespace(" ")]
-              JS_NUMBER_LITERAL@29..30
-                JS_NUMBER_LITERAL_TOKEN@29..30 "5" [] []
-      SEMICOLON@30..31 ";" [] []
-  EOF@31..32 "" [Whitespace("\n")] []
+0: JS_ROOT@0..32
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..31
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..8
+      0: JS_VARIABLE_DECLARATION@0..8
+        0: VAR_KW@0..4 "var" [] [Whitespace(" ")]
+        1: LIST@4..8
+          0: JS_VARIABLE_DECLARATOR@4..8
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..8
+              0: EQ@6..7 "=" [] []
+              1: ERROR@7..8
+                0: SEMICOLON@7..8 ";" [] []
+      1: (empty)
+    1: JS_VARIABLE_DECLARATION_STATEMENT@8..21
+      0: JS_VARIABLE_DECLARATION@8..21
+        0: CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@15..21
+          0: JS_VARIABLE_DECLARATOR@15..21
+            0: SINGLE_PATTERN@15..17
+              0: NAME@15..17
+                0: IDENT@15..17 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@17..21
+              0: EQ@17..19 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL@19..21
+                0: JS_NUMBER_LITERAL_TOKEN@19..21 "5" [] [Whitespace(" ")]
+      1: (empty)
+    2: JS_VARIABLE_DECLARATION_STATEMENT@21..31
+      0: JS_VARIABLE_DECLARATION@21..30
+        0: LET_KW@21..25 "let" [] [Whitespace(" ")]
+        1: LIST@25..30
+          0: JS_VARIABLE_DECLARATOR@25..30
+            0: SINGLE_PATTERN@25..27
+              0: NAME@25..27
+                0: IDENT@25..27 "b" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@27..30
+              0: EQ@27..29 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL@29..30
+                0: JS_NUMBER_LITERAL_TOKEN@29..30 "5" [] []
+      1: SEMICOLON@30..31 ";" [] []
+  3: EOF@31..32 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected an expression, but found `;` instead
   ┌─ var_decl_err.js:1:8

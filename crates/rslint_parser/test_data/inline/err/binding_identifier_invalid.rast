@@ -1,73 +1,75 @@
-JS_ROOT@0..83
-  LIST@0..0
-  LIST@0..82
-    JS_EXPRESSION_STATEMENT@0..30
-      JS_ARROW_FUNCTION_EXPRESSION@0..30
-        ASYNC_KW@0..6 "async" [] [Whitespace(" ")]
-        JS_PARAMETER_LIST@6..9
-          L_PAREN@6..7 "(" [] []
-          LIST@7..7
-          R_PAREN@7..9 ")" [] [Whitespace(" ")]
-        FAT_ARROW@9..12 "=>" [] [Whitespace(" ")]
-        JS_FUNCTION_BODY@12..30
-          L_CURLY@12..14 "{" [] [Whitespace(" ")]
-          LIST@14..14
-          LIST@14..29
-            JS_VARIABLE_DECLARATION_STATEMENT@14..29
-              JS_VARIABLE_DECLARATION@14..27
-                LET_KW@14..18 "let" [] [Whitespace(" ")]
-                LIST@18..27
-                  JS_VARIABLE_DECLARATOR@18..27
-                    SINGLE_PATTERN@18..24
-                      NAME@18..24
-                        IDENT@18..24 "await" [] [Whitespace(" ")]
-                    JS_EQUAL_VALUE_CLAUSE@24..27
-                      EQ@24..26 "=" [] [Whitespace(" ")]
-                      JS_NUMBER_LITERAL@26..27
-                        JS_NUMBER_LITERAL_TOKEN@26..27 "5" [] []
-              SEMICOLON@27..29 ";" [] [Whitespace(" ")]
-          R_CURLY@29..30 "}" [] []
-    JS_FUNCTION_DECLARATION@30..68
-      FUNCTION_KW@30..40 "function" [Whitespace("\n")] [Whitespace(" ")]
-      STAR@40..41 "*" [] []
-      JS_IDENTIFIER_BINDING@41..44
-        IDENT@41..44 "foo" [] []
-      JS_PARAMETER_LIST@44..47
-        L_PAREN@44..45 "(" [] []
-        LIST@45..45
-        R_PAREN@45..47 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@47..68
-        L_CURLY@47..48 "{" [] []
-        LIST@48..48
-        LIST@48..66
-          JS_VARIABLE_DECLARATION_STATEMENT@48..66
-            JS_VARIABLE_DECLARATION@48..65
-              LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")]
-              LIST@56..65
-                JS_VARIABLE_DECLARATOR@56..65
-                  SINGLE_PATTERN@56..62
-                    NAME@56..62
-                      IDENT@56..62 "yield" [] [Whitespace(" ")]
-                  JS_EQUAL_VALUE_CLAUSE@62..65
-                    EQ@62..64 "=" [] [Whitespace(" ")]
-                    JS_NUMBER_LITERAL@64..65
-                      JS_NUMBER_LITERAL_TOKEN@64..65 "5" [] []
-            SEMICOLON@65..66 ";" [] []
-        R_CURLY@66..68 "}" [Whitespace("\n")] []
-    JS_VARIABLE_DECLARATION_STATEMENT@68..82
-      JS_VARIABLE_DECLARATION@68..81
-        LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@73..81
-          JS_VARIABLE_DECLARATOR@73..81
-            SINGLE_PATTERN@73..78
-              NAME@73..78
-                IDENT@73..78 "eval" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@78..81
-              EQ@78..80 "=" [] [Whitespace(" ")]
-              JS_NUMBER_LITERAL@80..81
-                JS_NUMBER_LITERAL_TOKEN@80..81 "5" [] []
-      SEMICOLON@81..82 ";" [] []
-  EOF@82..83 "" [Whitespace("\n")] []
+0: JS_ROOT@0..83
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..82
+    0: JS_EXPRESSION_STATEMENT@0..30
+      0: JS_ARROW_FUNCTION_EXPRESSION@0..30
+        0: ASYNC_KW@0..6 "async" [] [Whitespace(" ")]
+        1: JS_PARAMETER_LIST@6..9
+          0: L_PAREN@6..7 "(" [] []
+          1: LIST@7..7
+          2: R_PAREN@7..9 ")" [] [Whitespace(" ")]
+        2: FAT_ARROW@9..12 "=>" [] [Whitespace(" ")]
+        3: JS_FUNCTION_BODY@12..30
+          0: L_CURLY@12..14 "{" [] [Whitespace(" ")]
+          1: LIST@14..14
+          2: LIST@14..29
+            0: JS_VARIABLE_DECLARATION_STATEMENT@14..29
+              0: JS_VARIABLE_DECLARATION@14..27
+                0: LET_KW@14..18 "let" [] [Whitespace(" ")]
+                1: LIST@18..27
+                  0: JS_VARIABLE_DECLARATOR@18..27
+                    0: SINGLE_PATTERN@18..24
+                      0: NAME@18..24
+                        0: IDENT@18..24 "await" [] [Whitespace(" ")]
+                    1: JS_EQUAL_VALUE_CLAUSE@24..27
+                      0: EQ@24..26 "=" [] [Whitespace(" ")]
+                      1: JS_NUMBER_LITERAL@26..27
+                        0: JS_NUMBER_LITERAL_TOKEN@26..27 "5" [] []
+              1: SEMICOLON@27..29 ";" [] [Whitespace(" ")]
+          3: R_CURLY@29..30 "}" [] []
+      1: (empty)
+    1: JS_FUNCTION_DECLARATION@30..68
+      0: FUNCTION_KW@30..40 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: STAR@40..41 "*" [] []
+      2: JS_IDENTIFIER_BINDING@41..44
+        0: IDENT@41..44 "foo" [] []
+      3: JS_PARAMETER_LIST@44..47
+        0: L_PAREN@44..45 "(" [] []
+        1: LIST@45..45
+        2: R_PAREN@45..47 ")" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@47..68
+        0: L_CURLY@47..48 "{" [] []
+        1: LIST@48..48
+        2: LIST@48..66
+          0: JS_VARIABLE_DECLARATION_STATEMENT@48..66
+            0: JS_VARIABLE_DECLARATION@48..65
+              0: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")]
+              1: LIST@56..65
+                0: JS_VARIABLE_DECLARATOR@56..65
+                  0: SINGLE_PATTERN@56..62
+                    0: NAME@56..62
+                      0: IDENT@56..62 "yield" [] [Whitespace(" ")]
+                  1: JS_EQUAL_VALUE_CLAUSE@62..65
+                    0: EQ@62..64 "=" [] [Whitespace(" ")]
+                    1: JS_NUMBER_LITERAL@64..65
+                      0: JS_NUMBER_LITERAL_TOKEN@64..65 "5" [] []
+            1: SEMICOLON@65..66 ";" [] []
+        3: R_CURLY@66..68 "}" [Whitespace("\n")] []
+    2: JS_VARIABLE_DECLARATION_STATEMENT@68..82
+      0: JS_VARIABLE_DECLARATION@68..81
+        0: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@73..81
+          0: JS_VARIABLE_DECLARATOR@73..81
+            0: SINGLE_PATTERN@73..78
+              0: NAME@73..78
+                0: IDENT@73..78 "eval" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@78..81
+              0: EQ@78..80 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL@80..81
+                0: JS_NUMBER_LITERAL_TOKEN@80..81 "5" [] []
+      1: SEMICOLON@81..82 ";" [] []
+  3: EOF@82..83 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Illegal use of `await` as an identifier in an async context
   ┌─ binding_identifier_invalid.js:1:19

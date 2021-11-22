@@ -1,56 +1,59 @@
-JS_ROOT@0..59
-  LIST@0..0
-  LIST@0..58
-    JS_VARIABLE_DECLARATION_STATEMENT@0..30
-      JS_VARIABLE_DECLARATION@0..30
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..30
-          JS_VARIABLE_DECLARATOR@4..30
-            OBJECT_PATTERN@4..26
-              L_CURLY@4..6 "{" [] [Whitespace(" ")]
-              LIST@6..24
-                KEY_VALUE_PATTERN@6..18
-                  NAME@6..13
-                    IDENT@6..13 "default" [] []
-                  COLON@13..15 ":" [] [Whitespace(" ")]
-                  SINGLE_PATTERN@15..18
-                    NAME@15..18
-                      IDENT@15..18 "foo" [] []
-                COMMA@18..20 "," [] [Whitespace(" ")]
-                SINGLE_PATTERN@20..24
-                  NAME@20..24
-                    IDENT@20..24 "bar" [] [Whitespace(" ")]
-              R_CURLY@24..26 "}" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@26..30
-              EQ@26..28 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@28..30
-                L_CURLY@28..29 "{" [] []
-                LIST@29..29
-                R_CURLY@29..30 "}" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@30..58
-      JS_VARIABLE_DECLARATION@30..58
-        LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@35..58
-          JS_VARIABLE_DECLARATOR@35..58
-            OBJECT_PATTERN@35..54
-              L_CURLY@35..37 "{" [] [Whitespace(" ")]
-              LIST@37..52
-                ASSIGN_PATTERN@37..46
-                  SINGLE_PATTERN@37..41
-                    NAME@37..41
-                      IDENT@37..41 "foo" [] [Whitespace(" ")]
-                  EQ@41..43 "=" [] [Whitespace(" ")]
-                  JS_REFERENCE_IDENTIFIER_EXPRESSION@43..46
-                    IDENT@43..46 "bar" [] []
-                COMMA@46..48 "," [] [Whitespace(" ")]
-                SINGLE_PATTERN@48..52
-                  NAME@48..52
-                    IDENT@48..52 "baz" [] [Whitespace(" ")]
-              R_CURLY@52..54 "}" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@54..58
-              EQ@54..56 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@56..58
-                L_CURLY@56..57 "{" [] []
-                LIST@57..57
-                R_CURLY@57..58 "}" [] []
-  EOF@58..59 "" [Whitespace("\n")] []
+0: JS_ROOT@0..59
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..58
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..30
+      0: JS_VARIABLE_DECLARATION@0..30
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..30
+          0: JS_VARIABLE_DECLARATOR@4..30
+            0: OBJECT_PATTERN@4..26
+              0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
+              1: LIST@6..24
+                0: KEY_VALUE_PATTERN@6..18
+                  0: NAME@6..13
+                    0: IDENT@6..13 "default" [] []
+                  1: COLON@13..15 ":" [] [Whitespace(" ")]
+                  2: SINGLE_PATTERN@15..18
+                    0: NAME@15..18
+                      0: IDENT@15..18 "foo" [] []
+                1: COMMA@18..20 "," [] [Whitespace(" ")]
+                2: SINGLE_PATTERN@20..24
+                  0: NAME@20..24
+                    0: IDENT@20..24 "bar" [] [Whitespace(" ")]
+              2: R_CURLY@24..26 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@26..30
+              0: EQ@26..28 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@28..30
+                0: L_CURLY@28..29 "{" [] []
+                1: LIST@29..29
+                2: R_CURLY@29..30 "}" [] []
+      1: (empty)
+    1: JS_VARIABLE_DECLARATION_STATEMENT@30..58
+      0: JS_VARIABLE_DECLARATION@30..58
+        0: LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@35..58
+          0: JS_VARIABLE_DECLARATOR@35..58
+            0: OBJECT_PATTERN@35..54
+              0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
+              1: LIST@37..52
+                0: ASSIGN_PATTERN@37..46
+                  0: SINGLE_PATTERN@37..41
+                    0: NAME@37..41
+                      0: IDENT@37..41 "foo" [] [Whitespace(" ")]
+                  1: EQ@41..43 "=" [] [Whitespace(" ")]
+                  2: JS_REFERENCE_IDENTIFIER_EXPRESSION@43..46
+                    0: IDENT@43..46 "bar" [] []
+                1: COMMA@46..48 "," [] [Whitespace(" ")]
+                2: SINGLE_PATTERN@48..52
+                  0: NAME@48..52
+                    0: IDENT@48..52 "baz" [] [Whitespace(" ")]
+              2: R_CURLY@52..54 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@54..58
+              0: EQ@54..56 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@56..58
+                0: L_CURLY@56..57 "{" [] []
+                1: LIST@57..57
+                2: R_CURLY@57..58 "}" [] []
+      1: (empty)
+  3: EOF@58..59 "" [Whitespace("\n")] []

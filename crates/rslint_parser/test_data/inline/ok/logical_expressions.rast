@@ -1,25 +1,29 @@
-JS_ROOT@0..25
-  LIST@0..0
-  LIST@0..24
-    JS_EXPRESSION_STATEMENT@0..10
-      JS_LOGICAL_EXPRESSION@0..10
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
-          IDENT@0..4 "foo" [] [Whitespace(" ")]
-        QUESTION2@4..7 "??" [] [Whitespace(" ")]
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@7..10
-          IDENT@7..10 "bar" [] []
-    JS_EXPRESSION_STATEMENT@10..17
-      JS_LOGICAL_EXPRESSION@10..17
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@10..13
-          IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")]
-        PIPE2@13..16 "||" [] [Whitespace(" ")]
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@16..17
-          IDENT@16..17 "b" [] []
-    JS_EXPRESSION_STATEMENT@17..24
-      JS_LOGICAL_EXPRESSION@17..24
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@17..20
-          IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")]
-        AMP2@20..23 "&&" [] [Whitespace(" ")]
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@23..24
-          IDENT@23..24 "b" [] []
-  EOF@24..25 "" [Whitespace("\n")] []
+0: JS_ROOT@0..25
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..24
+    0: JS_EXPRESSION_STATEMENT@0..10
+      0: JS_LOGICAL_EXPRESSION@0..10
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
+          0: IDENT@0..4 "foo" [] [Whitespace(" ")]
+        1: QUESTION2@4..7 "??" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@7..10
+          0: IDENT@7..10 "bar" [] []
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@10..17
+      0: JS_LOGICAL_EXPRESSION@10..17
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@10..13
+          0: IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")]
+        1: PIPE2@13..16 "||" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@16..17
+          0: IDENT@16..17 "b" [] []
+      1: (empty)
+    2: JS_EXPRESSION_STATEMENT@17..24
+      0: JS_LOGICAL_EXPRESSION@17..24
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@17..20
+          0: IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")]
+        1: AMP2@20..23 "&&" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@23..24
+          0: IDENT@23..24 "b" [] []
+      1: (empty)
+  3: EOF@24..25 "" [Whitespace("\n")] []

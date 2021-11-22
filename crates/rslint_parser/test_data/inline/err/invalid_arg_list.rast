@@ -1,37 +1,41 @@
-JS_ROOT@0..21
-  LIST@0..0
-  LIST@0..20
-    JS_EXPRESSION_STATEMENT@0..8
-      CALL_EXPR@0..7
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo" [] []
-        ARG_LIST@3..7
-          L_PAREN@3..4 "(" [] []
-          LIST@4..7
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@4..5
-              IDENT@4..5 "a" [] []
-            COMMA@5..6 "," [] []
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@6..7
-              IDENT@6..7 "b" [] []
-      SEMICOLON@7..8 ";" [] []
-    JS_EXPRESSION_STATEMENT@8..17
-      CALL_EXPR@8..17
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@8..12
-          IDENT@8..12 "foo" [Whitespace("\n")] []
-        ARG_LIST@12..17
-          L_PAREN@12..13 "(" [] []
-          LIST@13..17
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@13..14
-              IDENT@13..14 "a" [] []
-            COMMA@14..15 "," [] []
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@15..17
-              IDENT@15..17 "b" [] [Whitespace(" ")]
-    JS_VARIABLE_DECLARATION_STATEMENT@17..20
-      JS_VARIABLE_DECLARATION@17..20
-        VAR_KW@17..20 "var" [] []
-        LIST@20..20
-          ERROR@20..20
-  EOF@20..21 "" [Whitespace("\n")] []
+0: JS_ROOT@0..21
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..20
+    0: JS_EXPRESSION_STATEMENT@0..8
+      0: CALL_EXPR@0..7
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
+          0: IDENT@0..3 "foo" [] []
+        1: ARG_LIST@3..7
+          0: L_PAREN@3..4 "(" [] []
+          1: LIST@4..7
+            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@4..5
+              0: IDENT@4..5 "a" [] []
+            1: COMMA@5..6 "," [] []
+            2: JS_REFERENCE_IDENTIFIER_EXPRESSION@6..7
+              0: IDENT@6..7 "b" [] []
+          2: (empty)
+      1: SEMICOLON@7..8 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@8..17
+      0: CALL_EXPR@8..17
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..12
+          0: IDENT@8..12 "foo" [Whitespace("\n")] []
+        1: ARG_LIST@12..17
+          0: L_PAREN@12..13 "(" [] []
+          1: LIST@13..17
+            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@13..14
+              0: IDENT@13..14 "a" [] []
+            1: COMMA@14..15 "," [] []
+            2: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..17
+              0: IDENT@15..17 "b" [] [Whitespace(" ")]
+          2: (empty)
+      1: (empty)
+    2: JS_VARIABLE_DECLARATION_STATEMENT@17..20
+      0: JS_VARIABLE_DECLARATION@17..20
+        0: VAR_KW@17..20 "var" [] []
+        1: LIST@20..20
+      1: (empty)
+  3: EOF@20..21 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `')'` but instead found `;`
   ┌─ invalid_arg_list.js:1:8

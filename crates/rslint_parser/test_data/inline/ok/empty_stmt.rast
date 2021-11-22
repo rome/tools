@@ -1,6 +1,7 @@
-JS_ROOT@0..2
-  LIST@0..0
-  LIST@0..1
-    JS_EMPTY_STATEMENT@0..1
-      SEMICOLON@0..1 ";" [] []
-  EOF@1..2 "" [Whitespace("\n")] []
+0: JS_ROOT@0..2
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..1
+    0: JS_EMPTY_STATEMENT@0..1
+      0: SEMICOLON@0..1 ";" [] []
+  3: EOF@1..2 "" [Whitespace("\n")] []

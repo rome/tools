@@ -1,30 +1,32 @@
-JS_ROOT@0..20
-  LIST@0..0
-  LIST@0..20
-    JS_EXPRESSION_STATEMENT@0..20
-      TEMPLATE@0..20
-        DOT_EXPR@0..17
-          BRACKET_EXPR@0..12
-            DOT_EXPR@0..10
-              CALL_EXPR@0..5
-                JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-                  IDENT@0..3 "foo" [] []
-                ARG_LIST@3..5
-                  L_PAREN@3..4 "(" [] []
-                  LIST@4..4
-                  R_PAREN@4..5 ")" [] []
-              QUESTIONDOT@5..7 "?." [] []
-              NAME@7..10
-                IDENT@7..10 "baz" [] []
-            L_BRACK@10..11 "[" [] []
-            R_BRACK@11..12 "]" [] []
-          DOT@12..13 "." [] []
-          NAME@13..17
-            IDENT@13..17 "BAR" [Whitespace("\n")] []
-        BACKTICK@17..18 "`" [] []
-        LIST@18..20
-          TEMPLATE_CHUNK@18..20 "b\n" [] []
-  EOF@20..20 "" [] []
+0: JS_ROOT@0..20
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..20
+    0: JS_EXPRESSION_STATEMENT@0..20
+      0: TEMPLATE@0..20
+        0: DOT_EXPR@0..17
+          0: BRACKET_EXPR@0..12
+            0: DOT_EXPR@0..10
+              0: CALL_EXPR@0..5
+                0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
+                  0: IDENT@0..3 "foo" [] []
+                1: ARG_LIST@3..5
+                  0: L_PAREN@3..4 "(" [] []
+                  1: LIST@4..4
+                  2: R_PAREN@4..5 ")" [] []
+              1: QUESTIONDOT@5..7 "?." [] []
+              2: NAME@7..10
+                0: IDENT@7..10 "baz" [] []
+            1: L_BRACK@10..11 "[" [] []
+            2: R_BRACK@11..12 "]" [] []
+          1: DOT@12..13 "." [] []
+          2: NAME@13..17
+            0: IDENT@13..17 "BAR" [Whitespace("\n")] []
+        1: BACKTICK@17..18 "`" [] []
+        2: LIST@18..20
+          0: TEMPLATE_CHUNK@18..20 "b\n" [] []
+      1: (empty)
+  3: EOF@20..20 "" [] []
 --
 error: unterminated template literal
   ┌─ subscripts_err.js:3:1

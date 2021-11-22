@@ -81,6 +81,7 @@
 //      when the tree is mutable.
 //    - TBD
 
+use std::iter::{Enumerate, FusedIterator};
 use std::{
 	borrow::Cow,
 	cell::Cell,
@@ -94,6 +95,7 @@ use std::{
 
 use countme::Count;
 
+use crate::green::{Slot, Slots};
 use crate::{
 	green::{Child, Children},
 	TriviaPiece,
@@ -710,6 +712,13 @@ impl SyntaxNode {
 		})
 	}
 
+	pub(crate) fn slots(&self) -> SyntaxSlots {
+		SyntaxSlots {
+			parent: self,
+			raw: self.green_ref().slots().enumerate(),
+		}
+	}
+
 	#[inline]
 	pub fn text_range(&self) -> TextRange {
 		self.data().text_range()
@@ -817,6 +826,7 @@ impl SyntaxNode {
 			})
 		})
 	}
+
 	pub fn last_child(&self) -> Option<SyntaxNode> {
 		self.green_ref().children().rev().find_map(|child| {
 			child.element().into_node().map(|green| {
@@ -921,6 +931,10 @@ impl SyntaxNode {
 	#[inline]
 	pub fn preorder_with_tokens(&self) -> PreorderWithTokens {
 		PreorderWithTokens::new(self.clone())
+	}
+
+	pub(crate) fn preorder_slots(&self) -> SlotsPreorder {
+		SlotsPreorder::new(self.clone())
 	}
 
 	pub fn token_at_offset(&self, offset: TextSize) -> TokenAtOffset<SyntaxToken> {
@@ -1518,6 +1532,127 @@ impl Iterator for PreorderWithTokens {
 					Some(sibling) => WalkEvent::Enter(sibling),
 					None => WalkEvent::Leave(el.parent()?.into()),
 				},
+			})
+		});
+		next
+	}
+}
+
+#[derive(Debug, Clone)]
+pub(crate) enum SyntaxSlot {
+	Node(SyntaxNode),
+	Token(SyntaxToken),
+	Empty { parent: SyntaxNode, index: u32 },
+}
+
+impl From<SyntaxElement> for SyntaxSlot {
+	fn from(element: SyntaxElement) -> Self {
+		match element {
+			SyntaxElement::Node(node) => SyntaxSlot::Node(node),
+			SyntaxElement::Token(token) => SyntaxSlot::Token(token),
+		}
+	}
+}
+
+pub(crate) struct SyntaxSlots<'a> {
+	parent: &'a SyntaxNode,
+	raw: Enumerate<Slots<'a>>,
+}
+
+impl<'a> SyntaxSlots<'a> {
+	fn map_item(&self, item: (usize, &Slot)) -> SyntaxSlot {
+		let (slot_index, slot) = item;
+		let slot_index = slot_index as u32;
+
+		match slot {
+			Slot::Empty { .. } => SyntaxSlot::Empty {
+				parent: self.parent.clone(),
+				index: slot_index,
+			},
+			Slot::Token { rel_offset, token } => SyntaxSlot::Token(SyntaxToken::new(
+				token,
+				self.parent.clone(),
+				slot_index,
+				self.parent.offset() + rel_offset,
+			)),
+			Slot::Node { rel_offset, node } => SyntaxSlot::Node(SyntaxNode::new_child(
+				node,
+				self.parent.clone(),
+				slot_index,
+				self.parent.offset() + rel_offset,
+			)),
+		}
+	}
+}
+
+impl<'a> Iterator for SyntaxSlots<'a> {
+	type Item = SyntaxSlot;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		let next = self.raw.next()?;
+		Some(self.map_item(next))
+	}
+
+	fn nth(&mut self, n: usize) -> Option<Self::Item> {
+		let nth = self.raw.nth(n)?;
+		Some(self.map_item(nth))
+	}
+}
+
+impl<'a> ExactSizeIterator for SyntaxSlots<'a> {
+	fn len(&self) -> usize {
+		self.raw.len()
+	}
+}
+impl<'a> FusedIterator for SyntaxSlots<'a> {}
+
+pub(crate) struct SlotsPreorder {
+	start: SyntaxNode,
+	next: Option<WalkEvent<SyntaxSlot>>,
+}
+
+impl SlotsPreorder {
+	fn new(start: SyntaxNode) -> Self {
+		let next = Some(WalkEvent::Enter(SyntaxSlot::Node(start.clone())));
+		SlotsPreorder { start, next }
+	}
+}
+
+impl Iterator for SlotsPreorder {
+	type Item = WalkEvent<SyntaxSlot>;
+
+	fn next(&mut self) -> Option<WalkEvent<SyntaxSlot>> {
+		let next = self.next.take();
+		self.next = next.as_ref().and_then(|next| {
+			Some(match next {
+				WalkEvent::Enter(slot) => match slot {
+					SyntaxSlot::Empty { .. } | SyntaxSlot::Token(_) => {
+						WalkEvent::Leave(slot.clone())
+					}
+					SyntaxSlot::Node(node) => match node.slots().next() {
+						None => WalkEvent::Leave(SyntaxSlot::Node(node.clone())),
+						Some(first_slot) => WalkEvent::Enter(first_slot),
+					},
+				},
+				WalkEvent::Leave(slot) => {
+					let (parent, slot_index) = match slot {
+						SyntaxSlot::Empty { parent, index } => (parent.clone(), *index as usize),
+						SyntaxSlot::Token(token) => (token.parent()?, token.index()),
+						SyntaxSlot::Node(node) => {
+							if node == &self.start {
+								return None;
+							}
+
+							(node.parent()?, node.index())
+						}
+					};
+
+					let next_slot = parent.slots().nth(slot_index + 1);
+					match next_slot {
+						Some(slot) => WalkEvent::Enter(slot),
+						None => WalkEvent::Leave(SyntaxSlot::Node(parent)),
+					}
+				}
 			})
 		});
 		next
