@@ -3,9 +3,9 @@ JS_ROOT@0..14
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..13
       JS_IMPORT_CALL_EXPRESSION@0..13
-        IMPORT_KW@0..6 "import"
-        L_PAREN@6..7 "("
+        IMPORT_KW@0..6 "import" [] []
+        L_PAREN@6..7 "(" [] []
         JS_STRING_LITERAL@7..12
-          JS_STRING_LITERAL_TOKEN@7..12 "\"foo\""
-        R_PAREN@12..13 ")"
-  WHITESPACE@13..14 "\n"
+          JS_STRING_LITERAL_TOKEN@7..12 "\"foo\"" [] []
+        R_PAREN@12..13 ")" [] []
+  EOF@13..14 "" [Whitespace("\n")] []

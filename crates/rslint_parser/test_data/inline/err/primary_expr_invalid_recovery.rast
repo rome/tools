@@ -1,33 +1,29 @@
 JS_ROOT@0..18
   LIST@0..0
   LIST@0..17
-    JS_VARIABLE_DECLARATION_STATEMENT@0..10
+    JS_VARIABLE_DECLARATION_STATEMENT@0..11
       JS_VARIABLE_DECLARATION@0..9
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..9
           JS_VARIABLE_DECLARATOR@4..9
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "a"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..9
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               ERROR@8..9
-                ERROR_TOKEN@8..9 "\\"
-      SEMICOLON@9..10 ";"
-    WHITESPACE@10..11 " "
+                ERROR_TOKEN@8..9 "\\" [] []
+      SEMICOLON@9..11 ";" [] [Whitespace(" ")]
     JS_EXPRESSION_STATEMENT@11..17
       CALL_EXPR@11..16
         JS_REFERENCE_IDENTIFIER_EXPRESSION@11..14
-          IDENT@11..14 "foo"
+          IDENT@11..14 "foo" [] []
         ARG_LIST@14..16
-          L_PAREN@14..15 "("
+          L_PAREN@14..15 "(" [] []
           LIST@15..15
-          R_PAREN@15..16 ")"
-      SEMICOLON@16..17 ";"
-  WHITESPACE@17..18 "\n"
+          R_PAREN@15..16 ")" [] []
+      SEMICOLON@16..17 ";" [] []
+  EOF@17..18 "" [Whitespace("\n")] []
 --
 error: unexpected token `\`
   ┌─ primary_expr_invalid_recovery.js:1:9

@@ -3,54 +3,44 @@ JS_ROOT@0..48
   LIST@0..47
     JS_VARIABLE_DECLARATION_STATEMENT@0..47
       JS_VARIABLE_DECLARATION@0..47
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..47
           JS_VARIABLE_DECLARATOR@4..47
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "a"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..47
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_OBJECT_EXPRESSION@8..47
-                L_CURLY@8..9 "{"
-                WHITESPACE@9..12 "\n  "
-                LIST@12..45
-                  JS_METHOD_OBJECT_MEMBER@12..26
-                    ASYNC_KW@12..17 "async"
-                    WHITESPACE@17..18 " "
+                L_CURLY@8..9 "{" [] []
+                LIST@9..45
+                  JS_METHOD_OBJECT_MEMBER@9..26
+                    ASYNC_KW@9..18 "async" [Whitespace("\n  ")] [Whitespace(" ")]
                     JS_LITERAL_MEMBER_NAME@18..21
-                      IDENT@18..21 "foo"
-                    JS_PARAMETER_LIST@21..23
-                      L_PAREN@21..22 "("
+                      IDENT@18..21 "foo" [] []
+                    JS_PARAMETER_LIST@21..24
+                      L_PAREN@21..22 "(" [] []
                       LIST@22..22
-                      R_PAREN@22..23 ")"
-                    WHITESPACE@23..24 " "
+                      R_PAREN@22..24 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@24..26
-                      L_CURLY@24..25 "{"
+                      L_CURLY@24..25 "{" [] []
                       LIST@25..25
                       LIST@25..25
-                      R_CURLY@25..26 "}"
-                  COMMA@26..27 ","
-                  WHITESPACE@27..30 "\n  "
-                  JS_METHOD_OBJECT_MEMBER@30..45
-                    ASYNC_KW@30..35 "async"
-                    WHITESPACE@35..36 " "
-                    STAR@36..37 "*"
+                      R_CURLY@25..26 "}" [] []
+                  COMMA@26..27 "," [] []
+                  JS_METHOD_OBJECT_MEMBER@27..45
+                    ASYNC_KW@27..36 "async" [Whitespace("\n  ")] [Whitespace(" ")]
+                    STAR@36..37 "*" [] []
                     JS_LITERAL_MEMBER_NAME@37..40
-                      IDENT@37..40 "foo"
-                    JS_PARAMETER_LIST@40..42
-                      L_PAREN@40..41 "("
+                      IDENT@37..40 "foo" [] []
+                    JS_PARAMETER_LIST@40..43
+                      L_PAREN@40..41 "(" [] []
                       LIST@41..41
-                      R_PAREN@41..42 ")"
-                    WHITESPACE@42..43 " "
+                      R_PAREN@41..43 ")" [] [Whitespace(" ")]
                     JS_FUNCTION_BODY@43..45
-                      L_CURLY@43..44 "{"
+                      L_CURLY@43..44 "{" [] []
                       LIST@44..44
                       LIST@44..44
-                      R_CURLY@44..45 "}"
-                WHITESPACE@45..46 "\n"
-                R_CURLY@46..47 "}"
-  WHITESPACE@47..48 "\n"
+                      R_CURLY@44..45 "}" [] []
+                R_CURLY@45..47 "}" [Whitespace("\n")] []
+  EOF@47..48 "" [Whitespace("\n")] []

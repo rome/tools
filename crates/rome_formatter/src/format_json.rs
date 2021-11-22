@@ -15,8 +15,8 @@ fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 		SyntaxKind::NULL_KW => token("null"),
 		SyntaxKind::TRUE_KW => token("true"),
 		SyntaxKind::FALSE_KW => token("false"),
-		SyntaxKind::JS_STRING_LITERAL_TOKEN => token(syntax_token.text()),
-		SyntaxKind::JS_NUMBER_LITERAL_TOKEN => token(syntax_token.text()),
+		SyntaxKind::JS_STRING_LITERAL_TOKEN => token(syntax_token.text_trimmed()),
+		SyntaxKind::JS_NUMBER_LITERAL_TOKEN => token(syntax_token.text_trimmed()),
 		SyntaxKind::MINUS => token("-"),
 		_ => panic!("Unsupported JSON token {:?}", syntax_token),
 	}

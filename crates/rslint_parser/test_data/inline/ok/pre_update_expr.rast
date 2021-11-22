@@ -3,13 +3,12 @@ JS_ROOT@0..12
   LIST@0..11
     JS_EXPRESSION_STATEMENT@0..5
       JS_PRE_UPDATE_EXPRESSION@0..5
-        PLUS2@0..2 "++"
+        PLUS2@0..2 "++" [] []
         JS_REFERENCE_IDENTIFIER_EXPRESSION@2..5
-          IDENT@2..5 "foo"
-    WHITESPACE@5..6 "\n"
-    JS_EXPRESSION_STATEMENT@6..11
-      JS_PRE_UPDATE_EXPRESSION@6..11
-        MINUS2@6..8 "--"
+          IDENT@2..5 "foo" [] []
+    JS_EXPRESSION_STATEMENT@5..11
+      JS_PRE_UPDATE_EXPRESSION@5..11
+        MINUS2@5..8 "--" [Whitespace("\n")] []
         JS_REFERENCE_IDENTIFIER_EXPRESSION@8..11
-          IDENT@8..11 "foo"
-  WHITESPACE@11..12 "\n"
+          IDENT@8..11 "foo" [] []
+  EOF@11..12 "" [Whitespace("\n")] []

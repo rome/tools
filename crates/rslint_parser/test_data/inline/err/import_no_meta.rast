@@ -3,18 +3,17 @@ JS_ROOT@0..24
   LIST@0..23
     JS_EXPRESSION_STATEMENT@0..10
       ERROR@0..10
-        IMPORT_KW@0..6 "import"
-        DOT@6..7 "."
+        IMPORT_KW@0..6 "import" [] []
+        DOT@6..7 "." [] []
         ERROR@7..10
-          IDENT@7..10 "foo"
-    WHITESPACE@10..11 "\n"
-    JS_EXPRESSION_STATEMENT@11..23
-      ERROR@11..23
-        IMPORT_KW@11..17 "import"
-        DOT@17..18 "."
+          IDENT@7..10 "foo" [] []
+    JS_EXPRESSION_STATEMENT@10..23
+      ERROR@10..23
+        IMPORT_KW@10..17 "import" [Whitespace("\n")] []
+        DOT@17..18 "." [] []
         ERROR@18..23
-          IDENT@18..23 "metaa"
-  WHITESPACE@23..24 "\n"
+          IDENT@18..23 "metaa" [] []
+  EOF@23..24 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected `meta` following an import keyword, but found `foo`
   ┌─ import_no_meta.js:1:8

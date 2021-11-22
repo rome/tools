@@ -2,416 +2,331 @@ JS_ROOT@0..607
   LIST@0..0
   LIST@0..606
     JS_CLASS_DECLARATION@0..168
-      CLASS_KW@0..5 "class"
-      WHITESPACE@5..6 " "
-      JS_IDENTIFIER_BINDING@6..10
-        IDENT@6..10 "Test"
-      WHITESPACE@10..11 " "
-      L_CURLY@11..12 "{"
-      WHITESPACE@12..14 "\n\t"
-      LIST@14..166
-        JS_METHOD_CLASS_MEMBER@14..25
-          JS_LITERAL_MEMBER_NAME@14..20
-            IDENT@14..20 "method"
-          JS_PARAMETER_LIST@20..22
-            L_PAREN@20..21 "("
+      CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      JS_IDENTIFIER_BINDING@6..11
+        IDENT@6..11 "Test" [] [Whitespace(" ")]
+      L_CURLY@11..12 "{" [] []
+      LIST@12..166
+        JS_METHOD_CLASS_MEMBER@12..25
+          JS_LITERAL_MEMBER_NAME@12..20
+            IDENT@12..20 "method" [Whitespace("\n\t")] []
+          JS_PARAMETER_LIST@20..23
+            L_PAREN@20..21 "(" [] []
             LIST@21..21
-            R_PAREN@21..22 ")"
-          WHITESPACE@22..23 " "
+            R_PAREN@21..23 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@23..25
-            L_CURLY@23..24 "{"
+            L_CURLY@23..24 "{" [] []
             LIST@24..24
             LIST@24..24
-            R_CURLY@24..25 "}"
-        WHITESPACE@25..27 "\n\t"
-        JS_METHOD_CLASS_MEMBER@27..49
-          ASYNC_KW@27..32 "async"
-          WHITESPACE@32..33 " "
+            R_CURLY@24..25 "}" [] []
+        JS_METHOD_CLASS_MEMBER@25..49
+          ASYNC_KW@25..33 "async" [Whitespace("\n\t")] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@33..44
-            IDENT@33..44 "asyncMethod"
-          JS_PARAMETER_LIST@44..46
-            L_PAREN@44..45 "("
+            IDENT@33..44 "asyncMethod" [] []
+          JS_PARAMETER_LIST@44..47
+            L_PAREN@44..45 "(" [] []
             LIST@45..45
-            R_PAREN@45..46 ")"
-          WHITESPACE@46..47 " "
+            R_PAREN@45..47 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@47..49
-            L_CURLY@47..48 "{"
+            L_CURLY@47..48 "{" [] []
             LIST@48..48
             LIST@48..48
-            R_CURLY@48..49 "}"
-        WHITESPACE@49..51 "\n\t"
-        JS_METHOD_CLASS_MEMBER@51..83
-          ASYNC_KW@51..56 "async"
-          STAR@56..57 "*"
-          WHITESPACE@57..58 " "
+            R_CURLY@48..49 "}" [] []
+        JS_METHOD_CLASS_MEMBER@49..83
+          ASYNC_KW@49..56 "async" [Whitespace("\n\t")] []
+          STAR@56..58 "*" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@58..78
-            IDENT@58..78 "asyncGeneratorMethod"
-          JS_PARAMETER_LIST@78..80
-            L_PAREN@78..79 "("
+            IDENT@58..78 "asyncGeneratorMethod" [] []
+          JS_PARAMETER_LIST@78..81
+            L_PAREN@78..79 "(" [] []
             LIST@79..79
-            R_PAREN@79..80 ")"
-          WHITESPACE@80..81 " "
+            R_PAREN@79..81 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@81..83
-            L_CURLY@81..82 "{"
+            L_CURLY@81..82 "{" [] []
             LIST@82..82
             LIST@82..82
-            R_CURLY@82..83 "}"
-        WHITESPACE@83..85 "\n\t"
-        JS_METHOD_CLASS_MEMBER@85..107
-          STAR@85..86 "*"
-          WHITESPACE@86..87 " "
+            R_CURLY@82..83 "}" [] []
+        JS_METHOD_CLASS_MEMBER@83..107
+          STAR@83..87 "*" [Whitespace("\n\t")] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@87..102
-            IDENT@87..102 "generatorMethod"
-          JS_PARAMETER_LIST@102..104
-            L_PAREN@102..103 "("
+            IDENT@87..102 "generatorMethod" [] []
+          JS_PARAMETER_LIST@102..105
+            L_PAREN@102..103 "(" [] []
             LIST@103..103
-            R_PAREN@103..104 ")"
-          WHITESPACE@104..105 " "
+            R_PAREN@103..105 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@105..107
-            L_CURLY@105..106 "{"
+            L_CURLY@105..106 "{" [] []
             LIST@106..106
             LIST@106..106
-            R_CURLY@106..107 "}"
-        WHITESPACE@107..110 "\n\n\t"
-        JS_METHOD_CLASS_MEMBER@110..120
-          JS_LITERAL_MEMBER_NAME@110..115
-            JS_STRING_LITERAL_TOKEN@110..115 "\"foo\""
-          JS_PARAMETER_LIST@115..117
-            L_PAREN@115..116 "("
+            R_CURLY@106..107 "}" [] []
+        JS_METHOD_CLASS_MEMBER@107..120
+          JS_LITERAL_MEMBER_NAME@107..115
+            JS_STRING_LITERAL_TOKEN@107..115 "\"foo\"" [Whitespace("\n\n\t")] []
+          JS_PARAMETER_LIST@115..118
+            L_PAREN@115..116 "(" [] []
             LIST@116..116
-            R_PAREN@116..117 ")"
-          WHITESPACE@117..118 " "
+            R_PAREN@116..118 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@118..120
-            L_CURLY@118..119 "{"
+            L_CURLY@118..119 "{" [] []
             LIST@119..119
             LIST@119..119
-            R_CURLY@119..120 "}"
-        WHITESPACE@120..122 "\n\t"
-        JS_METHOD_CLASS_MEMBER@122..142
-          JS_COMPUTED_MEMBER_NAME@122..137
-            L_BRACK@122..123 "["
+            R_CURLY@119..120 "}" [] []
+        JS_METHOD_CLASS_MEMBER@120..142
+          JS_COMPUTED_MEMBER_NAME@120..137
+            L_BRACK@120..123 "[" [Whitespace("\n\t")] []
             JS_BINARY_EXPRESSION@123..136
-              JS_STRING_LITERAL@123..128
-                JS_STRING_LITERAL_TOKEN@123..128 "\"foo\""
-              WHITESPACE@128..129 " "
-              PLUS@129..130 "+"
-              WHITESPACE@130..131 " "
+              JS_STRING_LITERAL@123..129
+                JS_STRING_LITERAL_TOKEN@123..129 "\"foo\"" [] [Whitespace(" ")]
+              PLUS@129..131 "+" [] [Whitespace(" ")]
               JS_STRING_LITERAL@131..136
-                JS_STRING_LITERAL_TOKEN@131..136 "\"bar\""
-            R_BRACK@136..137 "]"
-          JS_PARAMETER_LIST@137..139
-            L_PAREN@137..138 "("
+                JS_STRING_LITERAL_TOKEN@131..136 "\"bar\"" [] []
+            R_BRACK@136..137 "]" [] []
+          JS_PARAMETER_LIST@137..140
+            L_PAREN@137..138 "(" [] []
             LIST@138..138
-            R_PAREN@138..139 ")"
-          WHITESPACE@139..140 " "
+            R_PAREN@138..140 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@140..142
-            L_CURLY@140..141 "{"
+            L_CURLY@140..141 "{" [] []
             LIST@141..141
             LIST@141..141
-            R_CURLY@141..142 "}"
-        WHITESPACE@142..144 "\n\t"
-        JS_METHOD_CLASS_MEMBER@144..150
-          JS_LITERAL_MEMBER_NAME@144..145
-            JS_NUMBER_LITERAL_TOKEN@144..145 "5"
-          JS_PARAMETER_LIST@145..147
-            L_PAREN@145..146 "("
+            R_CURLY@141..142 "}" [] []
+        JS_METHOD_CLASS_MEMBER@142..150
+          JS_LITERAL_MEMBER_NAME@142..145
+            JS_NUMBER_LITERAL_TOKEN@142..145 "5" [Whitespace("\n\t")] []
+          JS_PARAMETER_LIST@145..148
+            L_PAREN@145..146 "(" [] []
             LIST@146..146
-            R_PAREN@146..147 ")"
-          WHITESPACE@147..148 " "
+            R_PAREN@146..148 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@148..150
-            L_CURLY@148..149 "{"
+            L_CURLY@148..149 "{" [] []
             LIST@149..149
             LIST@149..149
-            R_CURLY@149..150 "}"
-        WHITESPACE@150..153 "\n\n\t"
-        JS_METHOD_CLASS_MEMBER@153..166
-          JS_PRIVATE_CLASS_MEMBER_NAME@153..161
-            HASH@153..154 "#"
-            IDENT@154..161 "private"
-          JS_PARAMETER_LIST@161..163
-            L_PAREN@161..162 "("
+            R_CURLY@149..150 "}" [] []
+        JS_METHOD_CLASS_MEMBER@150..166
+          JS_PRIVATE_CLASS_MEMBER_NAME@150..161
+            HASH@150..154 "#" [Whitespace("\n\n\t")] []
+            IDENT@154..161 "private" [] []
+          JS_PARAMETER_LIST@161..164
+            L_PAREN@161..162 "(" [] []
             LIST@162..162
-            R_PAREN@162..163 ")"
-          WHITESPACE@163..164 " "
+            R_PAREN@162..164 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@164..166
-            L_CURLY@164..165 "{"
+            L_CURLY@164..165 "{" [] []
             LIST@165..165
             LIST@165..165
-            R_CURLY@165..166 "}"
-      WHITESPACE@166..167 "\n"
-      R_CURLY@167..168 "}"
-    WHITESPACE@168..170 "\n\n"
-    JS_CLASS_DECLARATION@170..369
-      CLASS_KW@170..175 "class"
-      WHITESPACE@175..176 " "
-      JS_IDENTIFIER_BINDING@176..194
-        IDENT@176..194 "ContextualKeywords"
-      WHITESPACE@194..195 " "
-      L_CURLY@195..196 "{"
-      WHITESPACE@196..198 "\n\t"
-      COMMENT@198..222 "// Methods called static"
-      WHITESPACE@222..224 "\n\t"
-      LIST@224..346
-        JS_METHOD_CLASS_MEMBER@224..235
-          IDENT@224..230 "static"
-          JS_PARAMETER_LIST@230..232
-            L_PAREN@230..231 "("
+            R_CURLY@165..166 "}" [] []
+      R_CURLY@166..168 "}" [Whitespace("\n")] []
+    JS_CLASS_DECLARATION@168..369
+      CLASS_KW@168..176 "class" [Whitespace("\n\n")] [Whitespace(" ")]
+      JS_IDENTIFIER_BINDING@176..195
+        IDENT@176..195 "ContextualKeywords" [] [Whitespace(" ")]
+      L_CURLY@195..196 "{" [] []
+      LIST@196..367
+        JS_METHOD_CLASS_MEMBER@196..235
+          IDENT@196..230 "static" [Whitespace("\n\t"), Comments("// Methods called static"), Whitespace("\n\t")] []
+          JS_PARAMETER_LIST@230..233
+            L_PAREN@230..231 "(" [] []
             LIST@231..231
-            R_PAREN@231..232 ")"
-          WHITESPACE@232..233 " "
+            R_PAREN@231..233 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@233..235
-            L_CURLY@233..234 "{"
+            L_CURLY@233..234 "{" [] []
             LIST@234..234
             LIST@234..234
-            R_CURLY@234..235 "}"
-        WHITESPACE@235..237 "\n\t"
-        JS_METHOD_CLASS_MEMBER@237..254
-          ASYNC_KW@237..242 "async"
-          WHITESPACE@242..243 " "
+            R_CURLY@234..235 "}" [] []
+        JS_METHOD_CLASS_MEMBER@235..254
+          ASYNC_KW@235..243 "async" [Whitespace("\n\t")] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@243..249
-            IDENT@243..249 "static"
-          JS_PARAMETER_LIST@249..251
-            L_PAREN@249..250 "("
+            IDENT@243..249 "static" [] []
+          JS_PARAMETER_LIST@249..252
+            L_PAREN@249..250 "(" [] []
             LIST@250..250
-            R_PAREN@250..251 ")"
-          WHITESPACE@251..252 " "
+            R_PAREN@250..252 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@252..254
-            L_CURLY@252..253 "{"
+            L_CURLY@252..253 "{" [] []
             LIST@253..253
             LIST@253..253
-            R_CURLY@253..254 "}"
-        WHITESPACE@254..256 "\n\t"
-        JS_METHOD_CLASS_MEMBER@256..269
-          STAR@256..257 "*"
-          WHITESPACE@257..258 " "
+            R_CURLY@253..254 "}" [] []
+        JS_METHOD_CLASS_MEMBER@254..269
+          STAR@254..258 "*" [Whitespace("\n\t")] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@258..264
-            IDENT@258..264 "static"
-          JS_PARAMETER_LIST@264..266
-            L_PAREN@264..265 "("
+            IDENT@258..264 "static" [] []
+          JS_PARAMETER_LIST@264..267
+            L_PAREN@264..265 "(" [] []
             LIST@265..265
-            R_PAREN@265..266 ")"
-          WHITESPACE@266..267 " "
+            R_PAREN@265..267 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@267..269
-            L_CURLY@267..268 "{"
+            L_CURLY@267..268 "{" [] []
             LIST@268..268
             LIST@268..268
-            R_CURLY@268..269 "}"
-        WHITESPACE@269..271 "\n\t"
-        JS_METHOD_CLASS_MEMBER@271..289
-          ASYNC_KW@271..276 "async"
-          STAR@276..277 "*"
-          WHITESPACE@277..278 " "
+            R_CURLY@268..269 "}" [] []
+        JS_METHOD_CLASS_MEMBER@269..289
+          ASYNC_KW@269..276 "async" [Whitespace("\n\t")] []
+          STAR@276..278 "*" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@278..284
-            IDENT@278..284 "static"
-          JS_PARAMETER_LIST@284..286
-            L_PAREN@284..285 "("
+            IDENT@278..284 "static" [] []
+          JS_PARAMETER_LIST@284..287
+            L_PAREN@284..285 "(" [] []
             LIST@285..285
-            R_PAREN@285..286 ")"
-          WHITESPACE@286..287 " "
+            R_PAREN@285..287 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@287..289
-            L_CURLY@287..288 "{"
+            L_CURLY@287..288 "{" [] []
             LIST@288..288
             LIST@288..288
-            R_CURLY@288..289 "}"
-        WHITESPACE@289..292 "\n\n\t"
-        JS_METHOD_CLASS_MEMBER@292..304
-          JS_LITERAL_MEMBER_NAME@292..299
-            IDENT@292..299 "declare"
-          JS_PARAMETER_LIST@299..301
-            L_PAREN@299..300 "("
+            R_CURLY@288..289 "}" [] []
+        JS_METHOD_CLASS_MEMBER@289..304
+          JS_LITERAL_MEMBER_NAME@289..299
+            IDENT@289..299 "declare" [Whitespace("\n\n\t")] []
+          JS_PARAMETER_LIST@299..302
+            L_PAREN@299..300 "(" [] []
             LIST@300..300
-            R_PAREN@300..301 ")"
-          WHITESPACE@301..302 " "
+            R_PAREN@300..302 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@302..304
-            L_CURLY@302..303 "{"
+            L_CURLY@302..303 "{" [] []
             LIST@303..303
             LIST@303..303
-            R_CURLY@303..304 "}"
-        WHITESPACE@304..307 "\n\n\t"
-        JS_METHOD_CLASS_MEMBER@307..315
-          JS_LITERAL_MEMBER_NAME@307..310
-            IDENT@307..310 "get"
-          JS_PARAMETER_LIST@310..312
-            L_PAREN@310..311 "("
+            R_CURLY@303..304 "}" [] []
+        JS_METHOD_CLASS_MEMBER@304..336
+          JS_LITERAL_MEMBER_NAME@304..310
+            IDENT@304..310 "get" [Whitespace("\n\n\t")] []
+          JS_PARAMETER_LIST@310..313
+            L_PAREN@310..311 "(" [] []
             LIST@311..311
-            R_PAREN@311..312 ")"
-          WHITESPACE@312..313 " "
-          JS_FUNCTION_BODY@313..315
-            L_CURLY@313..314 "{"
+            R_PAREN@311..313 ")" [] [Whitespace(" ")]
+          JS_FUNCTION_BODY@313..336
+            L_CURLY@313..314 "{" [] []
             LIST@314..314
             LIST@314..314
-            R_CURLY@314..315 "}"
-        WHITESPACE@315..316 " "
-        COMMENT@316..336 "// Method called get"
-        WHITESPACE@336..338 "\n\t"
-        JS_METHOD_CLASS_MEMBER@338..346
-          JS_LITERAL_MEMBER_NAME@338..341
-            IDENT@338..341 "set"
-          JS_PARAMETER_LIST@341..343
-            L_PAREN@341..342 "("
+            R_CURLY@314..336 "}" [] [Whitespace(" "), Comments("// Method called get")]
+        JS_METHOD_CLASS_MEMBER@336..367
+          JS_LITERAL_MEMBER_NAME@336..341
+            IDENT@336..341 "set" [Whitespace("\n\t")] []
+          JS_PARAMETER_LIST@341..344
+            L_PAREN@341..342 "(" [] []
             LIST@342..342
-            R_PAREN@342..343 ")"
-          WHITESPACE@343..344 " "
-          JS_FUNCTION_BODY@344..346
-            L_CURLY@344..345 "{"
+            R_PAREN@342..344 ")" [] [Whitespace(" ")]
+          JS_FUNCTION_BODY@344..367
+            L_CURLY@344..345 "{" [] []
             LIST@345..345
             LIST@345..345
-            R_CURLY@345..346 "}"
-      WHITESPACE@346..347 " "
-      COMMENT@347..367 "// Method called set"
-      WHITESPACE@367..368 "\n"
-      R_CURLY@368..369 "}"
-    WHITESPACE@369..371 "\n\n"
-    JS_CLASS_DECLARATION@371..606
-      CLASS_KW@371..376 "class"
-      WHITESPACE@376..377 " "
-      JS_IDENTIFIER_BINDING@377..383
-        IDENT@377..383 "Static"
-      WHITESPACE@383..384 " "
-      L_CURLY@384..385 "{"
-      WHITESPACE@385..387 "\n\t"
-      LIST@387..604
-        JS_METHOD_CLASS_MEMBER@387..405
-          STATIC_KW@387..393 "static"
-          WHITESPACE@393..394 " "
+            R_CURLY@345..367 "}" [] [Whitespace(" "), Comments("// Method called set")]
+      R_CURLY@367..369 "}" [Whitespace("\n")] []
+    JS_CLASS_DECLARATION@369..606
+      CLASS_KW@369..377 "class" [Whitespace("\n\n")] [Whitespace(" ")]
+      JS_IDENTIFIER_BINDING@377..384
+        IDENT@377..384 "Static" [] [Whitespace(" ")]
+      L_CURLY@384..385 "{" [] []
+      LIST@385..604
+        JS_METHOD_CLASS_MEMBER@385..405
+          STATIC_KW@385..394 "static" [Whitespace("\n\t")] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@394..400
-            IDENT@394..400 "method"
-          JS_PARAMETER_LIST@400..402
-            L_PAREN@400..401 "("
+            IDENT@394..400 "method" [] []
+          JS_PARAMETER_LIST@400..403
+            L_PAREN@400..401 "(" [] []
             LIST@401..401
-            R_PAREN@401..402 ")"
-          WHITESPACE@402..403 " "
+            R_PAREN@401..403 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@403..405
-            L_CURLY@403..404 "{"
+            L_CURLY@403..404 "{" [] []
             LIST@404..404
             LIST@404..404
-            R_CURLY@404..405 "}"
-        WHITESPACE@405..407 "\n\t"
-        JS_METHOD_CLASS_MEMBER@407..436
-          STATIC_KW@407..413 "static"
-          WHITESPACE@413..414 " "
-          ASYNC_KW@414..419 "async"
-          WHITESPACE@419..420 " "
+            R_CURLY@404..405 "}" [] []
+        JS_METHOD_CLASS_MEMBER@405..436
+          STATIC_KW@405..414 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          ASYNC_KW@414..420 "async" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@420..431
-            IDENT@420..431 "asyncMethod"
-          JS_PARAMETER_LIST@431..433
-            L_PAREN@431..432 "("
+            IDENT@420..431 "asyncMethod" [] []
+          JS_PARAMETER_LIST@431..434
+            L_PAREN@431..432 "(" [] []
             LIST@432..432
-            R_PAREN@432..433 ")"
-          WHITESPACE@433..434 " "
+            R_PAREN@432..434 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@434..436
-            L_CURLY@434..435 "{"
+            L_CURLY@434..435 "{" [] []
             LIST@435..435
             LIST@435..435
-            R_CURLY@435..436 "}"
-        WHITESPACE@436..438 "\n\t"
-        JS_METHOD_CLASS_MEMBER@438..477
-          STATIC_KW@438..444 "static"
-          WHITESPACE@444..445 " "
-          ASYNC_KW@445..450 "async"
-          STAR@450..451 "*"
-          WHITESPACE@451..452 " "
+            R_CURLY@435..436 "}" [] []
+        JS_METHOD_CLASS_MEMBER@436..477
+          STATIC_KW@436..445 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          ASYNC_KW@445..450 "async" [] []
+          STAR@450..452 "*" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@452..472
-            IDENT@452..472 "asyncGeneratorMethod"
-          JS_PARAMETER_LIST@472..474
-            L_PAREN@472..473 "("
+            IDENT@452..472 "asyncGeneratorMethod" [] []
+          JS_PARAMETER_LIST@472..475
+            L_PAREN@472..473 "(" [] []
             LIST@473..473
-            R_PAREN@473..474 ")"
-          WHITESPACE@474..475 " "
+            R_PAREN@473..475 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@475..477
-            L_CURLY@475..476 "{"
+            L_CURLY@475..476 "{" [] []
             LIST@476..476
             LIST@476..476
-            R_CURLY@476..477 "}"
-        WHITESPACE@477..479 "\n\t"
-        JS_METHOD_CLASS_MEMBER@479..508
-          STATIC_KW@479..485 "static"
-          WHITESPACE@485..486 " "
-          STAR@486..487 "*"
-          WHITESPACE@487..488 " "
+            R_CURLY@476..477 "}" [] []
+        JS_METHOD_CLASS_MEMBER@477..508
+          STATIC_KW@477..486 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          STAR@486..488 "*" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@488..503
-            IDENT@488..503 "generatorMethod"
-          JS_PARAMETER_LIST@503..505
-            L_PAREN@503..504 "("
+            IDENT@488..503 "generatorMethod" [] []
+          JS_PARAMETER_LIST@503..506
+            L_PAREN@503..504 "(" [] []
             LIST@504..504
-            R_PAREN@504..505 ")"
-          WHITESPACE@505..506 " "
+            R_PAREN@504..506 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@506..508
-            L_CURLY@506..507 "{"
+            L_CURLY@506..507 "{" [] []
             LIST@507..507
             LIST@507..507
-            R_CURLY@507..508 "}"
-        WHITESPACE@508..511 "\n\n\t"
-        JS_METHOD_CLASS_MEMBER@511..529
-          STATIC_KW@511..517 "static"
-          WHITESPACE@517..518 " "
+            R_CURLY@507..508 "}" [] []
+        JS_METHOD_CLASS_MEMBER@508..529
+          STATIC_KW@508..518 "static" [Whitespace("\n\n\t")] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@518..524
-            IDENT@518..524 "static"
-          JS_PARAMETER_LIST@524..526
-            L_PAREN@524..525 "("
+            IDENT@518..524 "static" [] []
+          JS_PARAMETER_LIST@524..527
+            L_PAREN@524..525 "(" [] []
             LIST@525..525
-            R_PAREN@525..526 ")"
-          WHITESPACE@526..527 " "
+            R_PAREN@525..527 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@527..529
-            L_CURLY@527..528 "{"
+            L_CURLY@527..528 "{" [] []
             LIST@528..528
             LIST@528..528
-            R_CURLY@528..529 "}"
-        WHITESPACE@529..531 "\n\t"
-        JS_METHOD_CLASS_MEMBER@531..555
-          STATIC_KW@531..537 "static"
-          WHITESPACE@537..538 " "
-          ASYNC_KW@538..543 "async"
-          WHITESPACE@543..544 " "
+            R_CURLY@528..529 "}" [] []
+        JS_METHOD_CLASS_MEMBER@529..555
+          STATIC_KW@529..538 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          ASYNC_KW@538..544 "async" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@544..550
-            IDENT@544..550 "static"
-          JS_PARAMETER_LIST@550..552
-            L_PAREN@550..551 "("
+            IDENT@544..550 "static" [] []
+          JS_PARAMETER_LIST@550..553
+            L_PAREN@550..551 "(" [] []
             LIST@551..551
-            R_PAREN@551..552 ")"
-          WHITESPACE@552..553 " "
+            R_PAREN@551..553 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@553..555
-            L_CURLY@553..554 "{"
+            L_CURLY@553..554 "{" [] []
             LIST@554..554
             LIST@554..554
-            R_CURLY@554..555 "}"
-        WHITESPACE@555..557 "\n\t"
-        JS_METHOD_CLASS_MEMBER@557..582
-          STATIC_KW@557..563 "static"
-          WHITESPACE@563..564 " "
-          ASYNC_KW@564..569 "async"
-          STAR@569..570 "*"
-          WHITESPACE@570..571 " "
+            R_CURLY@554..555 "}" [] []
+        JS_METHOD_CLASS_MEMBER@555..582
+          STATIC_KW@555..564 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          ASYNC_KW@564..569 "async" [] []
+          STAR@569..571 "*" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@571..577
-            IDENT@571..577 "static"
-          JS_PARAMETER_LIST@577..579
-            L_PAREN@577..578 "("
+            IDENT@571..577 "static" [] []
+          JS_PARAMETER_LIST@577..580
+            L_PAREN@577..578 "(" [] []
             LIST@578..578
-            R_PAREN@578..579 ")"
-          WHITESPACE@579..580 " "
+            R_PAREN@578..580 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@580..582
-            L_CURLY@580..581 "{"
+            L_CURLY@580..581 "{" [] []
             LIST@581..581
             LIST@581..581
-            R_CURLY@581..582 "}"
-        WHITESPACE@582..584 "\n\t"
-        JS_METHOD_CLASS_MEMBER@584..604
-          STATIC_KW@584..590 "static"
-          WHITESPACE@590..591 " "
-          STAR@591..592 "*"
-          WHITESPACE@592..593 " "
+            R_CURLY@581..582 "}" [] []
+        JS_METHOD_CLASS_MEMBER@582..604
+          STATIC_KW@582..591 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          STAR@591..593 "*" [] [Whitespace(" ")]
           JS_LITERAL_MEMBER_NAME@593..599
-            IDENT@593..599 "static"
-          JS_PARAMETER_LIST@599..601
-            L_PAREN@599..600 "("
+            IDENT@593..599 "static" [] []
+          JS_PARAMETER_LIST@599..602
+            L_PAREN@599..600 "(" [] []
             LIST@600..600
-            R_PAREN@600..601 ")"
-          WHITESPACE@601..602 " "
+            R_PAREN@600..602 ")" [] [Whitespace(" ")]
           JS_FUNCTION_BODY@602..604
-            L_CURLY@602..603 "{"
+            L_CURLY@602..603 "{" [] []
             LIST@603..603
             LIST@603..603
-            R_CURLY@603..604 "}"
-      WHITESPACE@604..605 "\n"
-      R_CURLY@605..606 "}"
-  WHITESPACE@606..607 "\n"
+            R_CURLY@603..604 "}" [] []
+      R_CURLY@604..606 "}" [Whitespace("\n")] []
+  EOF@606..607 "" [Whitespace("\n")] []

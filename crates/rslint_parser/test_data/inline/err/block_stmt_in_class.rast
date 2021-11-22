@@ -2,19 +2,18 @@ JS_ROOT@0..12
   LIST@0..0
   LIST@0..11
     JS_CLASS_DECLARATION@0..10
-      CLASS_KW@0..5 "class"
-      WHITESPACE@5..6 " "
+      CLASS_KW@0..6 "class" [] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@6..7
-        IDENT@6..7 "S"
-      L_CURLY@7..8 "{"
+        IDENT@6..7 "S" [] []
+      L_CURLY@7..8 "{" [] []
       LIST@8..9
         JS_UNKNOWN_MEMBER@8..9
           ERROR@8..9
-            L_CURLY@8..9 "{"
-      R_CURLY@9..10 "}"
+            L_CURLY@8..9 "{" [] []
+      R_CURLY@9..10 "}" [] []
     ERROR@10..11
-      R_CURLY@10..11 "}"
-  WHITESPACE@11..12 "\n"
+      R_CURLY@10..11 "}" [] []
+  EOF@11..12 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ block_stmt_in_class.js:1:9

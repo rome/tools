@@ -1,6 +1,7 @@
 use crate::{
 	ParserError, SyntaxKind, SyntaxNode, SyntaxTreeBuilder, TextRange, TextSize, TreeSink,
 };
+use rome_rowan::TriviaPiece;
 use rslint_lexer::Token;
 use std::mem;
 
@@ -14,6 +15,10 @@ pub struct LossyTreeSink<'a> {
 	state: State,
 	inner: SyntaxTreeBuilder,
 	errors: Vec<ParserError>,
+	/// Signal that the sink must generate an EOF token when its finishing. See [LosslessTreeSink::finish] for more details.
+	needs_eof: bool,
+	/// Trivia start offset and its [TriviaPiece].
+	next_token_leading_trivia: (TextRange, Vec<TriviaPiece>),
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -30,9 +35,9 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 			State::PendingFinish => self.inner.finish_node(),
 			State::Normal => (),
 		}
-		self.eat_trivias();
+
 		let len = TextSize::from(
-			self.tokens[self.token_pos..amount as usize]
+			self.tokens[self.token_pos..self.token_pos + amount as usize]
 				.iter()
 				.map(|x| x.len)
 				.sum::<usize>() as u32,
@@ -51,9 +56,9 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 			State::PendingFinish => self.inner.finish_node(),
 			State::Normal => (),
 		}
-		self.eat_trivias();
+
 		let len = TextSize::from(self.tokens[self.token_pos].len as u32);
-		self.do_token(kind, len, false);
+		self.do_token(kind, len);
 	}
 
 	fn missing(&mut self) {
@@ -70,18 +75,13 @@ impl<'a> TreeSink for LossyTreeSink<'a> {
 		match mem::replace(&mut self.state, State::Normal) {
 			State::PendingStart => {
 				self.inner.start_node(kind);
+				self.next_token_leading_trivia = self.get_trivia(false);
 				return;
 			}
 			State::PendingFinish => self.inner.finish_node(),
 			State::Normal => (),
 		}
 
-		let n_trivias = self.tokens[self.token_pos..]
-			.iter()
-			.take_while(|it| it.kind.is_trivia())
-			.count();
-
-		self.eat_n_trivias(n_trivias);
 		self.inner.start_node(kind);
 	}
 
@@ -108,6 +108,8 @@ impl<'a> LossyTreeSink<'a> {
 			state: State::PendingStart,
 			inner: SyntaxTreeBuilder::default(),
 			errors: vec![],
+			needs_eof: true,
+			next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
 		}
 	}
 
@@ -128,6 +130,8 @@ impl<'a> LossyTreeSink<'a> {
 					state: State::PendingStart,
 					inner: SyntaxTreeBuilder::default(),
 					errors: vec![],
+					needs_eof: true,
+					next_token_leading_trivia: (TextRange::at(0.into(), 0.into()), vec![]),
 				};
 			}
 			len += tok.len;
@@ -135,42 +139,99 @@ impl<'a> LossyTreeSink<'a> {
 		panic!("Token start does not line up to a token or is out of bounds")
 	}
 
+	/// Finishes the tree and return the root node with possible parser errors.
+	///
+	/// If tree is finished with pending trivia, but no tokens were generated, for example,
+	/// a completely commented file, a [SyntaxKind::EOF] will be generated and all pending trivia
+	/// will be appended to its leading trivia.
 	pub fn finish(mut self) -> (SyntaxNode, Vec<ParserError>) {
+		if self.needs_eof {
+			self.do_token(SyntaxKind::EOF, 0.into());
+		}
+
 		match mem::replace(&mut self.state, State::Normal) {
-			State::PendingFinish => {
-				self.eat_trivias();
-				self.inner.finish_node()
-			}
+			State::PendingFinish => self.inner.finish_node(),
 			State::PendingStart | State::Normal => unreachable!(),
 		}
 
 		(self.inner.finish(), self.errors)
 	}
 
-	fn eat_trivias(&mut self) {
+	fn is_eof(&self) -> bool {
+		match self.tokens.get(self.token_pos) {
+			Some(token) if token.kind == SyntaxKind::EOF => true,
+			None => true,
+			_ => false,
+		}
+	}
+
+	fn do_token(&mut self, kind: SyntaxKind, len: TextSize) {
+		let token_range = TextRange::at(self.text_pos, len);
+
+		self.text_pos += len;
+		self.token_pos += 1;
+
+		// Everything until the next linebreak (but not including it)
+		// will be the trailing trivia...
+		let (mut trailing_range, mut trailing) = self.get_trivia(true);
+
+		// ... and everything after and including the linebreak will be in the next
+		// token leading trivia...
+		let next_token_leading = {
+			let (range, pieces) = self.get_trivia(false);
+			// ... unless there is no more tokens. Then treat the remaining
+			// trivia as the trailing of the last one.
+			// See "finish_node" for when we do not have any tokens.
+			if self.is_eof() {
+				trailing_range = trailing_range.cover(range);
+				trailing.extend(pieces);
+				(TextRange::new(0.into(), 0.into()), vec![])
+			} else {
+				(range, pieces)
+			}
+		};
+
+		let (leading_range, leading) =
+			std::mem::replace(&mut self.next_token_leading_trivia, next_token_leading);
+
+		let range = leading_range.cover(token_range).cover(trailing_range);
+		let text = &self.text[range];
+
+		self.inner.token_with_trivia(kind, text, leading, trailing);
+	}
+
+	fn get_trivia(&mut self, break_on_newline: bool) -> (TextRange, Vec<TriviaPiece>) {
+		let mut trivia = vec![];
+
+		let start_text_pos = self.text_pos;
+		let mut length = TextSize::of("");
+
 		while let Some(&token) = self.tokens.get(self.token_pos) {
 			if !token.kind.is_trivia() {
 				break;
 			}
-			self.do_token(token.kind, TextSize::from(token.len as u32), true);
-		}
-	}
 
-	fn eat_n_trivias(&mut self, n: usize) {
-		for _ in 0..n {
-			let token = self.tokens[self.token_pos];
-			assert!(token.kind.is_trivia());
-			self.do_token(token.kind, TextSize::from(token.len as u32), true);
-		}
-	}
+			let pos: u32 = self.text_pos.into();
+			let pos = pos as usize;
+			let text = &self.text[pos..(pos + token.len)];
+			if break_on_newline && text.chars().any(rslint_lexer::is_linebreak) {
+				break;
+			}
 
-	fn do_token(&mut self, kind: SyntaxKind, len: TextSize, skip: bool) {
-		let range = TextRange::at(self.text_pos, len);
-		let text = &self.text[range];
-		self.text_pos += len;
-		self.token_pos += 1;
-		if !skip {
-			self.inner.token(kind, text);
+			self.token_pos += 1;
+			let len = TextSize::from(token.len as u32);
+			self.text_pos += len;
+			length += len;
+
+			let current_trivia = match token.kind {
+				SyntaxKind::WHITESPACE => continue,
+				SyntaxKind::COMMENT => TriviaPiece::Comments(token.len),
+				_ => unreachable!("Not Trivia"),
+			};
+
+			trivia.push(current_trivia);
 		}
+
+		(TextRange::at(start_text_pos, length), trivia)
 	}
 }

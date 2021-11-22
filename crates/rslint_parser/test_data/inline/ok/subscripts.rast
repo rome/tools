@@ -4,39 +4,38 @@ JS_ROOT@0..33
     JS_EXPRESSION_STATEMENT@0..8
       TEMPLATE@0..8
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo"
-        BACKTICK@3..4 "`"
+          IDENT@0..3 "foo" [] []
+        BACKTICK@3..4 "`" [] []
         LIST@4..7
-          TEMPLATE_CHUNK@4..7 "bar"
-        BACKTICK@7..8 "`"
-    WHITESPACE@8..9 "\n"
-    JS_EXPRESSION_STATEMENT@9..32
-      BRACKET_EXPR@9..32
-        CALL_EXPR@9..27
-          CALL_EXPR@9..22
-            CALL_EXPR@9..17
-              JS_REFERENCE_IDENTIFIER_EXPRESSION@9..12
-                IDENT@9..12 "foo"
+          TEMPLATE_CHUNK@4..7 "bar" [] []
+        BACKTICK@7..8 "`" [] []
+    JS_EXPRESSION_STATEMENT@8..32
+      BRACKET_EXPR@8..32
+        CALL_EXPR@8..27
+          CALL_EXPR@8..22
+            CALL_EXPR@8..17
+              JS_REFERENCE_IDENTIFIER_EXPRESSION@8..12
+                IDENT@8..12 "foo" [Whitespace("\n")] []
               ARG_LIST@12..17
-                L_PAREN@12..13 "("
+                L_PAREN@12..13 "(" [] []
                 LIST@13..16
                   JS_REFERENCE_IDENTIFIER_EXPRESSION@13..16
-                    IDENT@13..16 "bar"
-                R_PAREN@16..17 ")"
+                    IDENT@13..16 "bar" [] []
+                R_PAREN@16..17 ")" [] []
             ARG_LIST@17..22
-              L_PAREN@17..18 "("
+              L_PAREN@17..18 "(" [] []
               LIST@18..21
                 JS_REFERENCE_IDENTIFIER_EXPRESSION@18..21
-                  IDENT@18..21 "baz"
-              R_PAREN@21..22 ")"
+                  IDENT@18..21 "baz" [] []
+              R_PAREN@21..22 ")" [] []
           ARG_LIST@22..27
-            L_PAREN@22..23 "("
+            L_PAREN@22..23 "(" [] []
             LIST@23..26
               JS_REFERENCE_IDENTIFIER_EXPRESSION@23..26
-                IDENT@23..26 "baz"
-            R_PAREN@26..27 ")"
-        L_BRACK@27..28 "["
+                IDENT@23..26 "baz" [] []
+            R_PAREN@26..27 ")" [] []
+        L_BRACK@27..28 "[" [] []
         JS_REFERENCE_IDENTIFIER_EXPRESSION@28..31
-          IDENT@28..31 "bar"
-        R_BRACK@31..32 "]"
-  WHITESPACE@32..33 "\n"
+          IDENT@28..31 "bar" [] []
+        R_BRACK@31..32 "]" [] []
+  EOF@32..33 "" [Whitespace("\n")] []

@@ -3,25 +3,22 @@ JS_ROOT@0..12
   LIST@0..11
     JS_VARIABLE_DECLARATION_STATEMENT@0..11
       JS_VARIABLE_DECLARATION@0..11
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..11
           JS_VARIABLE_DECLARATOR@4..11
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "b"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "b" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..11
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_OBJECT_EXPRESSION@8..11
-                L_CURLY@8..9 "{"
+                L_CURLY@8..9 "{" [] []
                 LIST@9..10
                   JS_PROPERTY_OBJECT_MEMBER@9..10
                     JS_LITERAL_MEMBER_NAME@9..10
-                      JS_NUMBER_LITERAL_TOKEN@9..10 "5"
-                R_CURLY@10..11 "}"
-  WHITESPACE@11..12 "\n"
+                      JS_NUMBER_LITERAL_TOKEN@9..10 "5" [] []
+                R_CURLY@10..11 "}" [] []
+  EOF@11..12 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `:` but instead found `}`
   ┌─ object_expr_non_ident_literal_prop.js:1:11

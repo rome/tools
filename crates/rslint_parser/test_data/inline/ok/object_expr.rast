@@ -3,42 +3,35 @@ JS_ROOT@0..27
   LIST@0..26
     JS_VARIABLE_DECLARATION_STATEMENT@0..11
       JS_VARIABLE_DECLARATION@0..10
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
+        LET_KW@0..4 "let" [] [Whitespace(" ")]
         LIST@4..10
           JS_VARIABLE_DECLARATOR@4..10
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "a"
-            WHITESPACE@5..6 " "
+            SINGLE_PATTERN@4..6
+              NAME@4..6
+                IDENT@4..6 "a" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@6..10
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
+              EQ@6..8 "=" [] [Whitespace(" ")]
               JS_OBJECT_EXPRESSION@8..10
-                L_CURLY@8..9 "{"
+                L_CURLY@8..9 "{" [] []
                 LIST@9..9
-                R_CURLY@9..10 "}"
-      SEMICOLON@10..11 ";"
-    WHITESPACE@11..12 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@12..26
-      JS_VARIABLE_DECLARATION@12..26
-        LET_KW@12..15 "let"
-        WHITESPACE@15..16 " "
+                R_CURLY@9..10 "}" [] []
+      SEMICOLON@10..11 ";" [] []
+    JS_VARIABLE_DECLARATION_STATEMENT@11..26
+      JS_VARIABLE_DECLARATION@11..26
+        LET_KW@11..16 "let" [Whitespace("\n")] [Whitespace(" ")]
         LIST@16..26
           JS_VARIABLE_DECLARATOR@16..26
-            SINGLE_PATTERN@16..17
-              NAME@16..17
-                IDENT@16..17 "b"
-            WHITESPACE@17..18 " "
+            SINGLE_PATTERN@16..18
+              NAME@16..18
+                IDENT@16..18 "b" [] [Whitespace(" ")]
             JS_EQUAL_VALUE_CLAUSE@18..26
-              EQ@18..19 "="
-              WHITESPACE@19..20 " "
+              EQ@18..20 "=" [] [Whitespace(" ")]
               JS_OBJECT_EXPRESSION@20..26
-                L_CURLY@20..21 "{"
+                L_CURLY@20..21 "{" [] []
                 LIST@21..25
                   JS_SHORTHAND_PROPERTY_OBJECT_MEMBER@21..24
                     JS_REFERENCE_IDENTIFIER_EXPRESSION@21..24
-                      IDENT@21..24 "foo"
-                  COMMA@24..25 ","
-                R_CURLY@25..26 "}"
-  WHITESPACE@26..27 "\n"
+                      IDENT@21..24 "foo" [] []
+                  COMMA@24..25 "," [] []
+                R_CURLY@25..26 "}" [] []
+  EOF@26..27 "" [Whitespace("\n")] []

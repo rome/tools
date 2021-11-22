@@ -1,6 +1,7 @@
 use crate::ast::{ArgList, JsRoot};
-use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode};
+use crate::{parse_module, parse_text, AstNode, Parse, ParserError, SyntaxNode, SyntaxToken};
 use expect_test::expect_file;
+use rome_rowan::TextSize;
 use rslint_errors::file::SimpleFile;
 use rslint_errors::termcolor::Buffer;
 use rslint_errors::{file::SimpleFiles, Emitter};
@@ -171,4 +172,135 @@ fn assert_errors_are_absent(errors: &[ParserError], path: &Path, syntax: &Syntax
 		std::str::from_utf8(buffer.as_slice()).unwrap(),
 		syntax
 	);
+}
+
+#[test]
+pub fn test_trivia_attached_to_tokens() {
+	use crate::util::SyntaxNodeExt;
+
+	let text = "/**/let a = 1; // nice variable \n /*hey*/ let \t b = 2; // another nice variable";
+	let m = parse_module(text, 0);
+	let s = dbg!(m.syntax());
+	let tokens = s.tokens();
+
+	let is_let = |x: &&SyntaxToken| x.text_trimmed() == "let";
+	let first_let = tokens.iter().find(is_let).unwrap();
+
+	// first let leading trivia asserts
+	let pieces: Vec<_> = first_let.leading_trivia().pieces().collect();
+	matches!(pieces.get(0).map(|x| x.text()), Some("/**/"));
+	matches!(pieces.get(1), None);
+
+	// first let trailing trivia asserts
+	let pieces: Vec<_> = first_let.trailing_trivia().pieces().collect();
+	matches!(pieces.get(0).map(|x| x.text()), Some(" "));
+	matches!(pieces.get(1), None);
+
+	// second let leading trivia asserts
+	let second_let = tokens.iter().filter(is_let).nth(1).unwrap();
+	let pieces: Vec<_> = second_let.leading_trivia().pieces().collect();
+	assert_eq!(3, pieces.len());
+	matches!(pieces.get(0).map(|x| x.text()), Some("\n "));
+	matches!(pieces.get(1).map(|x| x.text()), Some("/*hey*/"));
+	matches!(pieces.get(2).map(|x| x.text()), Some(" "));
+
+	// second let trailing trivia asserts
+	let pieces: Vec<_> = second_let.trailing_trivia().pieces().collect();
+	assert_eq!(1, pieces.len());
+	matches!(pieces.get(0).map(|x| x.text()), Some(" \t "));
+}
+
+#[test]
+pub fn jsroot_display_text_and_trimmed() {
+	let code = " let a = 1; \n ";
+	let root = parse_module(code, 0);
+	let syntax = dbg!(root.syntax());
+
+	assert_eq!(format!("{}", syntax), code);
+
+	let syntax_text = syntax.text();
+	assert_eq!(format!("{}", syntax_text), code);
+
+	let syntax_text = syntax.text_trimmed();
+	assert_eq!(format!("{}", syntax_text), code.trim());
+}
+
+#[test]
+pub fn jsroot_ranges() {
+	//               0123456789A
+	let code = " let a = 1;";
+	let root = parse_module(code, 0);
+	let syntax = dbg!(root.syntax());
+
+	let first_let = syntax.first_token().unwrap();
+	let range = first_let.text_range();
+	assert_eq!(0usize, range.start().into());
+	assert_eq!(5usize, range.end().into());
+
+	let range = first_let.text_trimmed_range();
+	assert_eq!(1usize, range.start().into());
+	assert_eq!(4usize, range.end().into());
+
+	let eq = syntax
+		.descendants_tokens()
+		.find(|x| x.text_trimmed() == "=")
+		.unwrap();
+	let range = eq.text_range();
+	assert_eq!(7usize, range.start().into());
+	assert_eq!(9usize, range.end().into());
+
+	let range = eq.text_trimmed_range();
+	assert_eq!(7usize, range.start().into());
+	assert_eq!(8usize, range.end().into());
+}
+
+#[test]
+pub fn node_range_must_be_correct() {
+	//               0123456789A123456789B123456789
+	let text = " function foo() { let a = 1; }";
+	let root = parse_module(text, 0);
+
+	let var_decl = root
+		.syntax()
+		.descendants()
+		.find(|x| x.kind() == SyntaxKind::JS_VARIABLE_DECLARATION_STATEMENT)
+		.unwrap();
+
+	let range = var_decl.text_range();
+	assert_eq!(18usize, range.start().into());
+	assert_eq!(29usize, range.end().into());
+
+	let range = var_decl.text_trimmed_range();
+	assert_eq!(18usize, range.start().into());
+	assert_eq!(28usize, range.end().into());
+}
+
+#[test]
+pub fn last_trivia_must_be_appended_to_eof() {
+	//               0123456789A123456789B123456789CC
+	let text = " function foo() { let a = 1; }\n";
+	let root = parse_module(text, 0);
+	let syntax = root.syntax();
+
+	let range = syntax.text_range();
+	let start = range.start();
+	let end = range.end();
+
+	assert_eq!(TextSize::from(0), start);
+	assert_eq!(TextSize::from(31), end);
+}
+
+#[test]
+pub fn just_trivia_must_be_appended_to_eof() {
+	//               0123456789A123456789B123456789C123
+	let text = "// just trivia... nothing else....";
+	let root = parse_module(text, 0);
+	let syntax = root.syntax();
+
+	let range = syntax.text_range();
+	let start = range.start();
+	let end = range.end();
+
+	assert_eq!(TextSize::from(0), start);
+	assert_eq!(TextSize::from(34), end);
 }

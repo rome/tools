@@ -4,12 +4,11 @@ JS_ROOT@0..12
     JS_EXPRESSION_STATEMENT@0..5
       JS_POST_UPDATE_EXPRESSION@0..5
         JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo"
-        PLUS2@3..5 "++"
-    WHITESPACE@5..6 "\n"
-    JS_EXPRESSION_STATEMENT@6..11
-      JS_POST_UPDATE_EXPRESSION@6..11
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@6..9
-          IDENT@6..9 "foo"
-        MINUS2@9..11 "--"
-  WHITESPACE@11..12 "\n"
+          IDENT@0..3 "foo" [] []
+        PLUS2@3..5 "++" [] []
+    JS_EXPRESSION_STATEMENT@5..11
+      JS_POST_UPDATE_EXPRESSION@5..11
+        JS_REFERENCE_IDENTIFIER_EXPRESSION@5..9
+          IDENT@5..9 "foo" [Whitespace("\n")] []
+        MINUS2@9..11 "--" [] []
+  EOF@11..12 "" [Whitespace("\n")] []

@@ -8,7 +8,6 @@
 pub enum SyntaxKind {
 	#[doc(hidden)]
 	TOMBSTONE,
-	#[doc(hidden)]
 	EOF,
 	#[doc = r" Polymorph list type"]
 	LIST,
