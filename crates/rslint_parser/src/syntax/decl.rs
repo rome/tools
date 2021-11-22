@@ -4,6 +4,7 @@ use super::expr::assign_expr;
 use super::pat::pattern;
 use super::typescript::*;
 use crate::parse_recovery::ParseRecovery;
+use crate::parser::{ExpectedNodeError, ParseResult};
 use crate::syntax::function::function_body;
 use crate::{SyntaxKind::*, *};
 
@@ -225,7 +226,7 @@ pub(super) fn parameters_list(
 	p.expect(T![')']);
 }
 
-pub(super) fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {
+pub(super) fn arrow_body(p: &mut Parser) -> ParseResult<CompletedMarker> {
 	let mut guard = p.with_state(ParserState {
 		in_function: true,
 		..p.state.clone()
@@ -234,5 +235,7 @@ pub(super) fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {
 		function_body(&mut *guard)
 	} else {
 		assign_expr(&mut *guard)
+			.ok_or_else(|| ExpectedNodeError::new("function body"))
+			.into()
 	}
 }

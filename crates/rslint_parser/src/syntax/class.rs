@@ -1,4 +1,5 @@
 use crate::parse_recovery::ParseRecovery;
+use crate::parser::ParsedSyntax;
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
 use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -544,13 +545,13 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				let completed = if is_getter {
 					p.expect(T![')']);
 					ts_return_type(p);
-					function_body(p);
+					function_body(p).required(p);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
 					formal_param_pat(p);
 					p.expect(T![')']);
-					function_body(p);
+					function_body(p).required(p);
 
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
@@ -714,7 +715,7 @@ fn method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	ts_parameter_types(p);
 	parameter_list(p);
 	ts_return_type(p);
-	function_body(p);
+	function_body(p).required(p);
 
 	m.complete(p, JS_METHOD_CLASS_MEMBER)
 }
@@ -758,7 +759,9 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 			..p.state.clone()
 		});
 
-		block_impl(&mut guard, JS_FUNCTION_BODY, None);
+		let p = &mut *guard;
+
+		block_impl(p, JS_FUNCTION_BODY).required(p);
 	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns

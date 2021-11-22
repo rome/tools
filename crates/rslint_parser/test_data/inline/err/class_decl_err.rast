@@ -46,6 +46,7 @@
             1: LIST@70..70
             2: R_CURLY@70..72 "}" [] [Whitespace(" ")]
           3: (empty)
+          4: (empty)
       4: R_CURLY@72..73 "}" [] []
     3: JS_CLASS_DECLARATION@73..108
       0: CLASS_KW@73..80 "class" [Whitespace("\n")] [Whitespace(" ")]
@@ -143,7 +144,7 @@ error[SyntaxError]: expected `')'` but instead found `}`
   │                    ^ unexpected
 
 --
-error[SyntaxError]: expected a block statement but instead found `}`
+error[SyntaxError]: expected a function body but found '}' instead
   ┌─ class_decl_err.js:5:20
   │
 5 │ class foo { set {} }

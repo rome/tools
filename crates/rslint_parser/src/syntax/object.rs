@@ -1,4 +1,5 @@
 use crate::parse_recovery::ParseRecovery;
+use crate::parser::ParsedSyntax;
 use crate::syntax::decl::{formal_param_pat, parameter_list, BASE_METHOD_RECOVERY_SET};
 use crate::syntax::expr::{assign_expr, expr, identifier_name, literal_expression};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -175,7 +176,7 @@ fn getter_object_member(p: &mut Parser) -> CompletedMarker {
 
 	ts_return_type(p);
 
-	function_body(p);
+	function_body(p).required(p);
 
 	m.complete(p, JS_GETTER_OBJECT_MEMBER)
 }
@@ -195,7 +196,7 @@ fn setter_object_member(p: &mut Parser) -> CompletedMarker {
 	formal_param_pat(p);
 	p.expect(T![')']);
 
-	function_body(p);
+	function_body(p).required(p);
 
 	p.state.allow_object_expr = true;
 	m.complete(p, JS_SETTER_OBJECT_MEMBER)
@@ -297,7 +298,7 @@ fn method_object_member_body(p: &mut Parser) -> Result<(), ()> {
 		ts_parameter_types(p);
 		parameter_list(p);
 		ts_return_type(p);
-		function_body(p);
+		function_body(p).required(p);
 		Ok(())
 	} else {
 		let err = p

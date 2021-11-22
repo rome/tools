@@ -8,6 +8,7 @@ use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
 use crate::parse_recovery::ParseRecovery;
+use crate::parser::ParsedSyntax;
 use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
 use crate::syntax::object::object_expr;
@@ -812,8 +813,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				}
 			}
 			p.expect_no_recover(T![=>])?;
-			arrow_body(p)?;
-			Some(())
+			arrow_body(p).ok()
 		};
 		// we can't just rewind the parser, since the function rewinds, and cloning and replacing the
 		// events does not work apparently, therefore we need to clone the entire parser
@@ -854,7 +854,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			}
 
 			p.bump_any();
-			arrow_body(p);
+			arrow_body(p).required(p);
 			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 		}
 	}
@@ -987,10 +987,14 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 						}
 					}
 					p.expect(T![=>]);
-					arrow_body(&mut *p.with_state(ParserState {
-						in_async: true,
-						..p.state.clone()
-					}));
+					{
+						let mut guard = p.with_state(ParserState {
+							in_async: true,
+							..p.state.clone()
+						});
+						arrow_body(&mut *guard).required(&mut *guard);
+					}
+
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
 					reference_identifier_expression(p)?
@@ -1021,7 +1025,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				ident.change_kind(p, JS_IDENTIFIER_BINDING);
 				let m = ident.precede(p);
 				p.bump_any();
-				arrow_body(p);
+				arrow_body(p).required(p);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
 				ident

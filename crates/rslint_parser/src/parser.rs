@@ -3,13 +3,22 @@
 //! the parser yields events like `Start node`, `Error`, etc.
 //! These events are then applied to a `TreeSink`.
 
+mod parse_recovery;
+mod parse_result;
+
 use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
-use rslint_syntax::SyntaxKind::EOF;
+use rslint_syntax::SyntaxKind::{EOF, JS_UNKNOWN_STATEMENT, LIST};
 use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
 
+pub use parse_result::{
+	ConditionalParsedSyntax, ConditionalSyntax, ExpectedNodeError, ParseResult, ParsedSyntax,
+	SloppyMode, SyntaxFeature,
+};
+
+pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
 
 /// An extremely fast, error tolerant, completely lossless JavaScript parser
@@ -318,6 +327,7 @@ impl<'t> Parser<'t> {
 	///
 	/// # Panics
 	/// Panics if the AST node represented by the marker does not match the generic
+	#[deprecated(note = "Unsafe and fairly expensive.")]
 	pub fn parse_marker<T: AstNode>(&self, marker: &CompletedMarker) -> T {
 		let events = self
 			.events
@@ -738,5 +748,51 @@ mod tests {
 
 		let m = p.start();
 		m.abandon(&mut p);
+	}
+}
+
+struct ParseListConfiguration<P> {
+	start_token: SyntaxKind,
+	end_token: SyntaxKind,
+	delimiter_token: SyntaxKind,
+	parse_element: P,
+}
+
+struct ParseList<P> {
+	start_token: SyntaxKind,
+	end_token: SyntaxKind,
+	delimiter_token: SyntaxKind,
+	parse_element: P,
+}
+
+fn parse_list<P>(p: &mut Parser, config: ParseListConfiguration<P>) -> Option<CompletedMarker>
+where
+	P: Fn(&mut Parser) -> ParseResult<CompletedMarker>,
+{
+	let list = p.start();
+	let mut empty = true;
+
+	while !p.at(config.end_token) && !p.at(EOF) {
+		empty = false;
+
+		p.expect(config.delimiter_token);
+		let recovery = ParseRecovery::new(
+			JS_UNKNOWN_STATEMENT,
+			token_set![config.end_token, config.delimiter_token],
+		);
+
+		let element = (config.parse_element)(p);
+		if element.with_recovery(p, recovery).is_err() {
+			// Recovery failed
+			break;
+		}
+	}
+
+	if empty {
+		list.abandon(p);
+		p.missing();
+		None
+	} else {
+		Some(list.complete(p, LIST))
 	}
 }

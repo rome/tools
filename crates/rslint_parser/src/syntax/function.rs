@@ -1,3 +1,4 @@
+use crate::parser::{ExpectedNodeError, ParseResult, ParsedSyntax};
 use crate::syntax::decl::parameter_list;
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{block_impl, is_semi};
@@ -74,20 +75,20 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 	if kind == JS_FUNCTION_DECLARATION {
 		function_body_or_declaration(guard);
 	} else {
-		function_body(guard);
+		function_body(guard).required(guard);
 	}
 
 	m.complete(guard, kind)
 }
 
-pub(super) fn function_body(p: &mut Parser) -> Option<CompletedMarker> {
+pub(super) fn function_body(p: &mut Parser) -> ParseResult<CompletedMarker> {
 	let mut guard = p.with_state(ParserState {
 		in_constructor: false,
 		in_function: true,
 		..p.state.clone()
 	});
 
-	block_impl(&mut *guard, JS_FUNCTION_BODY, None)
+	block_impl(&mut *guard, JS_FUNCTION_BODY).map_err(|_| ExpectedNodeError::new("function body"))
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should
@@ -100,18 +101,23 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 	if p.typescript() && !p.at(T!['{']) && is_semi(p, 0) {
 		p.eat(T![;]);
 	} else {
-		let mut complete = function_body(p);
-		if let Some(ref mut block) = complete {
-			if p.state.in_declare {
-				let err = p
-					.err_builder(
-						"function implementations cannot be given in ambient (declare) contexts",
-					)
-					.primary(block.range(p), "");
+		let body = function_body(p);
+		if p.state.in_declare {
+			match body {
+				Ok(mut body) => {
+					let err = p
+						.err_builder(
+							"function implementations cannot be given in ambient (declare) contexts",
+						)
+						.primary(body.range(p), "");
 
-				p.error(err);
-				block.change_kind(p, ERROR);
+					p.error(err);
+					body.change_kind(p, ERROR);
+				}
+				_ => p.missing(),
 			}
+		} else {
+			body.required(p);
 		}
 	}
 }

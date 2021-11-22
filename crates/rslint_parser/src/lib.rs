@@ -84,7 +84,7 @@ pub use crate::{
 	lossy_tree_sink::LossyTreeSink,
 	numbers::BigInt,
 	parse::*,
-	parser::{Checkpoint, CompletedMarker, Marker, Parser},
+	parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
 	state::{ParserState, StrictMode},
 	syntax_node::*,
 	token_set::TokenSet,
