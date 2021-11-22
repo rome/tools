@@ -218,6 +218,7 @@ fn object_assignment_target(p: &mut Parser) -> CompletedMarker {
 	let elements = p.start();
 
 	while !matches!(p.cur(), EOF | T!['}']) {
+		// if let Ok(rest) = object_rest_property_assignment_target { ... }
 		if p.at(T![...]) {
 			object_rest_property_assignment_target(p);
 			break;
