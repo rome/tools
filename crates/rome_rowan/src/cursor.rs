@@ -1538,6 +1538,8 @@ impl Iterator for PreorderWithTokens {
 	}
 }
 
+/// Represents a cursor to a green node slot. A slot either contains an element or is empty
+/// if the child isn't present in the source.
 #[derive(Debug, Clone)]
 pub(crate) enum SyntaxSlot {
 	Node(SyntaxNode),
@@ -1554,6 +1556,7 @@ impl From<SyntaxElement> for SyntaxSlot {
 	}
 }
 
+/// Iterator over a node's slots
 pub(crate) struct SyntaxSlots<'a> {
 	parent: &'a SyntaxNode,
 	raw: Enumerate<Slots<'a>>,
@@ -1606,6 +1609,7 @@ impl<'a> ExactSizeIterator for SyntaxSlots<'a> {
 }
 impl<'a> FusedIterator for SyntaxSlots<'a> {}
 
+/// Iterator to visit a node's slots in pre-order.
 pub(crate) struct SlotsPreorder {
 	start: SyntaxNode,
 	next: Option<WalkEvent<SyntaxSlot>>,
