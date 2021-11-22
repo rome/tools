@@ -18,8 +18,8 @@ impl ToFormatElement for JsAnyExpression {
 				object_expression.to_format_element(formatter)
 			}
 			JsAnyExpression::JsParenthesizedExpression(_) => todo!(),
-			JsAnyExpression::BracketExpr(_) => todo!(),
-			JsAnyExpression::DotExpr(_) => todo!(),
+			JsAnyExpression::JsComputedMemberExpression(_) => todo!(),
+			JsAnyExpression::JsStaticMemberExpression(_) => todo!(),
 			JsAnyExpression::NewExpr(_) => todo!(),
 			JsAnyExpression::CallExpr(call_expression) => {
 				call_expression.to_format_element(formatter)
@@ -33,11 +33,9 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::JsClassExpression(_) => todo!(),
 			JsAnyExpression::NewTarget(_) => todo!(),
 			JsAnyExpression::ImportMeta(_) => todo!(),
-			JsAnyExpression::SuperCall(super_call) => super_call.to_format_element(formatter),
 			JsAnyExpression::JsImportCallExpression(_) => todo!(),
 			JsAnyExpression::JsYieldExpression(_) => todo!(),
 			JsAnyExpression::JsAwaitExpression(_) => todo!(),
-			JsAnyExpression::PrivatePropAccess(_) => todo!(),
 			JsAnyExpression::TsNonNull(_) => todo!(),
 			JsAnyExpression::TsAssertion(_) => todo!(),
 			JsAnyExpression::TsConstAssertion(_) => todo!(),
@@ -45,6 +43,7 @@ impl ToFormatElement for JsAnyExpression {
 			JsAnyExpression::JsPostUpdateExpression(_) => todo!(),
 			JsAnyExpression::JsUnknownExpression(_) => todo!(),
 			JsAnyExpression::JsLogicalExpression(_) => todo!(),
+			JsAnyExpression::JsSuperExpression(expr) => expr.to_format_element(formatter),
 		}
 	}
 }

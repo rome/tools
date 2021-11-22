@@ -199,13 +199,7 @@ fn setter_object_member(p: &mut Parser) -> CompletedMarker {
 pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker> {
 	match p.cur() {
 		JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => literal(p),
-		T!['['] => {
-			let m = p.start();
-			p.bump_any();
-			assign_expr(p);
-			p.expect(T![']']);
-			Some(m.complete(p, COMPUTED_PROPERTY_NAME))
-		}
+		T!['['] => Some(computed_member_name(p)),
 		_ if binding => super::pat::binding_identifier(p),
 		_ => identifier_name(p),
 	}

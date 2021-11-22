@@ -2,7 +2,7 @@ use crate::{
 	block_indent, empty_element, format_elements, group_elements, hard_line_break, join_elements,
 	space_token, FormatElement, FormatResult, Formatter, ToFormatElement,
 };
-use rslint_parser::ast::{JsClassDeclaration, SuperCall};
+use rslint_parser::ast::JsClassDeclaration;
 
 impl ToFormatElement for JsClassDeclaration {
 	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
@@ -27,13 +27,5 @@ impl ToFormatElement for JsClassDeclaration {
 				formatter.format_token(&self.r_curly_token()?)?
 			])
 		])
-	}
-}
-
-impl ToFormatElement for SuperCall {
-	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
-		let super_token = formatter.format_token(&self.super_token()?)?;
-		let arguments = formatter.format_node(self.arguments()?)?;
-		Ok(format_elements![super_token, arguments])
 	}
 }

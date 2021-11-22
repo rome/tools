@@ -49,7 +49,7 @@
                 4: R_CURLY@55..57 "}" [Whitespace("\n")] []
       1: (empty)
     2: JS_EXPRESSION_STATEMENT@57..71
-      0: BRACKET_EXPR@57..71
+      0: JS_COMPUTED_MEMBER_EXPRESSION@57..71
         0: JS_REFERENCE_IDENTIFIER_EXPRESSION@57..61
           0: IDENT@57..61 "foo" [Whitespace("\n")] []
         1: L_BRACK@61..62 "[" [] []

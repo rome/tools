@@ -248,6 +248,7 @@ JsAnyExpression =
 	| JsBinaryExpression
 	| JsClassExpression
 	| JsConditionalExpression
+	| JsComputedMemberExpression
 	| JsFunctionExpression
 	| JsImportCallExpression
 	| JsLogicalExpression
@@ -255,21 +256,19 @@ JsAnyExpression =
 	| JsParenthesizedExpression
 	| JsReferenceIdentifierExpression
 	| JsSequenceExpression
+	| JsStaticMemberExpression
+	| JsSuperExpression
 	| JsThisExpression
 	| JsUnaryExpression
 	| JsPreUpdateExpression
 	| JsPostUpdateExpression
 	| JsYieldExpression
 	| Template
-	| BracketExpr
-	| DotExpr
 	| NewExpr
 	| CallExpr
 	| AssignExpr
 	| NewTarget
 	| ImportMeta
-	| SuperCall
-	| PrivatePropAccess
 	| TsNonNull
 	| TsAssertion
 	| TsConstAssertion
@@ -281,10 +280,7 @@ Template = '`'
 
 JsThisExpression = 'this'
 
-// Dot expression
-// TODO: review the 'super' token
-// https://github.com/rome/tools/issues/1729
-DotExpr = 'super'? object:JsAnyExpression '.' prop:Name
+JsSuperExpression = 'super'
 
 // new expression
 NewExpr = 'new' type_args:TsTypeArgs? object:JsAnyExpression arguments:ArgList
@@ -302,9 +298,6 @@ JsYieldExpression =
 	'yield'
 	'*'?
 	argument: JsAnyExpression?
-
-// super call expression
-SuperCall = 'super' arguments:ArgList
 
 JsImportCallExpression =
 	'import'
@@ -383,9 +376,20 @@ JsSequenceExpression =
 JsParenthesizedExpression =
 	'(' expression: JsAnyExpression ')'
 
-// bracket expression
-BracketExpr =  'super'? manual__object:JsAnyExpression '[' manual__prop:JsAnyExpression ']'
+// a.b
+// a.#b
+JsStaticMemberExpression =
+	object: JsAnyExpression
+	operator: ('.' | '?.')
+	member: JsAnyReferenceMember
 
+// a[b]
+JsComputedMemberExpression =
+	object: JsAnyExpression
+	optional_chain_token: '?.'?
+	'['
+	manual__member: JsAnyExpression
+	']'
 
 JsBinaryExpression =
     left: JsAnyExpression
@@ -481,19 +485,12 @@ JsShorthandPropertyObjectMember = name: JsReferenceIdentifierExpression
 
 // TODO #1725 Delete after finishing work around Classes & Assignment targets
 PropName =
-	ComputedPropertyName
+	JsComputedMemberName
 	| JsStringLiteral
 	| JsNumberLiteral
 	| Ident
 	| Name
 	| JsUnknownBinding
-
-
-// computed property
-ComputedPropertyName = '[' expr: JsAnyExpression ']'
-
-// private property access
-PrivatePropAccess = lhs:JsAnyExpression '.' rhs:PrivateName
 
 // initialised property
 InitializedProp = key:Name '=' value:JsAnyExpression
@@ -704,11 +701,7 @@ ExprPattern = expr: JsAnyExpression
 
 SpreadElement = '...' element:JsAnyExpression
 
-PrivateName = '#' name: Name
-
 Name = 'ident'
-
-Condition = '(' condition:JsAnyExpression ')'
 
 JsReferenceIdentifierExpression = name: 'ident'
 
@@ -846,6 +839,28 @@ JsComputedMemberName =
 	'['
 	expression: JsAnyExpression
 	']'
+
+
+JsAnyReferenceMember =
+	JsReferenceIdentifierMember
+	| JsReferencePrivateMember
+
+// A reference to a member
+// a.b
+//   ^
+// let { b: c } = a
+//       ^
+JsReferenceIdentifierMember =
+	name: 'ident'
+
+// A reference to a private member
+// a.#b
+//   ^^
+// let { #b: c } = a
+//       ^^
+JsReferencePrivateMember =
+	'#'
+	name: 'ident'
 
 
 JsParameterList =

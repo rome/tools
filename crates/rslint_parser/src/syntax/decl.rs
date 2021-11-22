@@ -1,6 +1,6 @@
 //! Class and function declarations.
 
-use super::expr::{assign_expr, identifier_name};
+use super::expr::assign_expr;
 use super::pat::pattern;
 use super::typescript::*;
 use crate::syntax::function::function_body;
@@ -16,17 +16,6 @@ pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
 	JS_NUMBER_LITERAL_TOKEN,
 	JS_STRING_LITERAL_TOKEN
 ];
-
-pub(super) fn maybe_private_name(p: &mut Parser) -> Option<CompletedMarker> {
-	if p.at(T![#]) {
-		let m = p.start();
-		p.bump_any();
-		identifier_name(p);
-		Some(m.complete(p, PRIVATE_NAME))
-	} else {
-		identifier_name(p)
-	}
-}
 
 #[allow(clippy::unnecessary_unwrap)]
 pub(super) fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {

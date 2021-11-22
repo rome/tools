@@ -131,7 +131,7 @@ fn parse_common(
 /// Or turned into a typed [`Script`](Script) with [`tree`](Parse::tree).
 ///
 /// ```
-/// use rslint_parser::{ast::BracketExpr, parse_text, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
+/// use rslint_parser::{ast::JsComputedMemberExpression, parse_text, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
 ///
 /// let parse = parse_text("foo.bar[2]", 0);
 /// // Parse returns a JS Root which contains two lists, the directives and the statements, let's get the statements
@@ -143,10 +143,10 @@ fn parse_common(
 /// println!("{:#?}", untyped_expr_node);
 ///
 /// // You can then cast syntax nodes into a typed AST node.
-/// let typed_ast_node = BracketExpr::cast(untyped_expr_node.first_child().unwrap()).unwrap();
+/// let typed_ast_node = JsComputedMemberExpression::cast(untyped_expr_node.first_child().unwrap()).unwrap();
 ///
 /// // Everything on every ast node is optional because of error recovery.
-/// let prop = dbg!(typed_ast_node.prop()).unwrap();
+/// let prop = dbg!(typed_ast_node.member()).unwrap();
 ///
 /// // You can then go back to an untyped SyntaxNode and get its range, text, parents, children, etc.
 /// assert_eq!(prop.syntax().text(), "2");
@@ -173,7 +173,7 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<JsRoot> {
 /// The [`util`](crate::util) module has utility functions for dealing with this easily.
 ///
 /// ```
-/// use rslint_parser::{ast::BracketExpr, parse_text_lossy, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
+/// use rslint_parser::{ast::JsComputedMemberExpression, parse_text_lossy, AstNode, SyntaxToken, SyntaxNodeExt, util, SyntaxList};
 ///
 /// let parse = parse_text_lossy("foo.bar[2]", 0);
 /// // Parse returns a JS Root with two children, an empty list of directives and the list of statements, let's get the statements
@@ -185,10 +185,10 @@ pub fn parse_text(text: &str, file_id: usize) -> Parse<JsRoot> {
 /// println!("{:#?}", untyped_expr_node);
 ///
 /// // You can then cast syntax nodes into a typed AST node.
-/// let typed_ast_node = BracketExpr::cast(untyped_expr_node.first_child().unwrap()).unwrap();
+/// let typed_ast_node = JsComputedMemberExpression::cast(untyped_expr_node.first_child().unwrap()).unwrap();
 ///
 /// // Everything on every ast node is optional because of error recovery.
-/// let prop = typed_ast_node.prop().unwrap();
+/// let prop = typed_ast_node.member().unwrap();
 ///
 /// // You can then go back to an untyped SyntaxNode and get its range, text, parents, children, etc.
 /// assert_eq!(prop.syntax().text(), "2");

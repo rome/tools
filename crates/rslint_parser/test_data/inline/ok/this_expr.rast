@@ -7,11 +7,11 @@
         0: THIS_KW@0..4 "this" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@4..13
-      0: DOT_EXPR@4..13
+      0: JS_STATIC_MEMBER_EXPRESSION@4..13
         0: JS_THIS_EXPRESSION@4..9
           0: THIS_KW@4..9 "this" [Whitespace("\n")] []
         1: DOT@9..10 "." [] []
-        2: NAME@10..13
+        2: JS_REFERENCE_IDENTIFIER_MEMBER@10..13
           0: IDENT@10..13 "foo" [] []
       1: (empty)
   3: EOF@13..14 "" [Whitespace("\n")] []

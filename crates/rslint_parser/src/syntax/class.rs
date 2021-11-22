@@ -3,7 +3,7 @@ use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::object::{computed_member_name, literal_member_name};
 use crate::syntax::pat::opt_binding_identifier;
-use crate::syntax::stmt::{is_semi, optional_semi};
+use crate::syntax::stmt::{block_impl, is_semi, optional_semi};
 use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
@@ -715,7 +715,15 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 		p.error(err);
 	}
 
-	function_body(p);
+	{
+		let mut guard = p.with_state(ParserState {
+			in_function: true,
+			in_constructor: true,
+			..p.state.clone()
+		});
+
+		block_impl(&mut guard, JS_FUNCTION_BODY, None);
+	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
 
@@ -790,7 +798,7 @@ fn ts_access_modifier<'a>(p: &'a Parser) -> Option<&'a str> {
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
 fn class_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let result = match p.cur() {
-		T![#] => private_member_name(p),
+		T![#] => private_class_member_name(p),
 		T!['['] => computed_member_name(p),
 		_ => literal_member_name(p)?,
 	};
@@ -798,7 +806,7 @@ fn class_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(result)
 }
 
-fn private_member_name(p: &mut Parser) -> CompletedMarker {
+pub(crate) fn private_class_member_name(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T![#]);
 	p.expect(T![ident]);

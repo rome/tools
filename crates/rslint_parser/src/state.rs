@@ -29,6 +29,8 @@ pub struct ParserState {
 	pub in_generator: bool,
 	/// Whether the parser is inside of a function
 	pub in_function: bool,
+	/// Whatever the parser is inside of a constructor
+	pub in_constructor: bool,
 	/// Whether we potentially are in a place to parse an arrow expression
 	pub potential_arrow_start: bool,
 	/// Whether we are in an async function
@@ -70,6 +72,7 @@ impl Default for ParserState {
 			labels: HashMap::new(),
 			in_generator: false,
 			in_function: false,
+			in_constructor: false,
 			potential_arrow_start: false,
 			in_async: false,
 			strict: None,
