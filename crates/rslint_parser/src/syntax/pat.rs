@@ -163,8 +163,7 @@ pub fn array_binding_pattern(
 	let elements_list = p.start();
 
 	while !p.at(EOF) && !p.at(T![']']) {
-		if p.at(T![,]) {
-			p.bump_any(); // bump ,
+		if p.eat(T![,]) {
 			continue;
 		}
 		if p.at(T![...]) {
