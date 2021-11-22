@@ -1,4 +1,5 @@
 JS_ROOT@0..44
+  (empty-slot)
   LIST@0..0
   LIST@0..43
     JS_EXPRESSION_STATEMENT@0..9
@@ -11,6 +12,7 @@ JS_ROOT@0..44
           LIST@8..8
           LIST@8..8
           R_CURLY@8..9 "}" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@9..21
       JS_ARROW_FUNCTION_EXPRESSION@9..21
         JS_IDENTIFIER_BINDING@9..16
@@ -21,6 +23,7 @@ JS_ROOT@0..44
           LIST@20..20
           LIST@20..20
           R_CURLY@20..21 "}" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@21..33
       JS_ARROW_FUNCTION_EXPRESSION@21..33
         JS_IDENTIFIER_BINDING@21..28
@@ -31,6 +34,7 @@ JS_ROOT@0..44
           LIST@32..32
           LIST@32..32
           R_CURLY@32..33 "}" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@33..43
       JS_ARROW_FUNCTION_EXPRESSION@33..43
         JS_IDENTIFIER_BINDING@33..38
@@ -41,4 +45,5 @@ JS_ROOT@0..44
           LIST@42..42
           LIST@42..42
           R_CURLY@42..43 "}" [] []
+      (empty-slot)
   EOF@43..44 "" [Whitespace("\n")] []

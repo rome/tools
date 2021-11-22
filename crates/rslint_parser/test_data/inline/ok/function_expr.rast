@@ -1,4 +1,5 @@
 JS_ROOT@0..48
+  (empty-slot)
   LIST@0..0
   LIST@0..47
     JS_VARIABLE_DECLARATION_STATEMENT@0..21
@@ -22,6 +23,7 @@ JS_ROOT@0..48
                   LIST@20..20
                   LIST@20..20
                   R_CURLY@20..21 "}" [] []
+      (empty-slot)
     JS_VARIABLE_DECLARATION_STATEMENT@21..47
       JS_VARIABLE_DECLARATION@21..47
         LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")]
@@ -45,4 +47,5 @@ JS_ROOT@0..48
                   LIST@46..46
                   LIST@46..46
                   R_CURLY@46..47 "}" [] []
+      (empty-slot)
   EOF@47..48 "" [Whitespace("\n")] []

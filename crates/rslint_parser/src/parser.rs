@@ -5,6 +5,7 @@
 
 use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
+use rslint_syntax::SyntaxKind::EOF;
 use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
@@ -179,6 +180,16 @@ impl<'t> Parser<'t> {
 		true
 	}
 
+	/// Consumes the next optional token if `kind` matches or inserts a missing marker
+	pub fn optional_token(&mut self, kind: SyntaxKind) -> bool {
+		if self.eat(kind) {
+			true
+		} else {
+			self.missing();
+			false
+		}
+	}
+
 	/// Recover from an error with a recovery set or by using a `{` or `}`.
 	pub fn err_recover(
 		&mut self,
@@ -198,7 +209,7 @@ impl<'t> Parser<'t> {
 			_ => (),
 		}
 
-		if self.at_ts(recovery) {
+		if self.at_ts(recovery) || self.cur() == EOF {
 			self.error(error);
 			return Some(());
 		}
@@ -256,9 +267,7 @@ impl<'t> Parser<'t> {
 	/// Advances the parser by one token
 	pub fn bump_any(&mut self) {
 		let kind = self.nth(0);
-		if kind == SyntaxKind::EOF {
-			return;
-		}
+		assert_ne!(kind, EOF);
 		self.do_bump(kind)
 	}
 
@@ -314,7 +323,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Try to eat a specific token kind, if the kind is not there then add a missing marker and add an error to the events stack.
-	pub fn expect(&mut self, kind: SyntaxKind) -> bool {
+	pub fn required_token(&mut self, kind: SyntaxKind) -> bool {
 		if self.eat(kind) {
 			true
 		} else {
@@ -468,7 +477,7 @@ impl<'t> Parser<'t> {
 		if self.state.no_recovery {
 			Some(true).filter(|_| self.eat(kind))
 		} else {
-			Some(self.expect(kind))
+			Some(self.required_token(kind))
 		}
 	}
 
@@ -769,7 +778,7 @@ mod tests {
 		let mut p = Parser::new(token_source, 0, Syntax::default());
 
 		let m = p.start();
-		p.expect(SyntaxKind::JS_STRING_LITERAL_TOKEN);
+		p.required_token(SyntaxKind::JS_STRING_LITERAL_TOKEN);
 		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL);
 	}
 

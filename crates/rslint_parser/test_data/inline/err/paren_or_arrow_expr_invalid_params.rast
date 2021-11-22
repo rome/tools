@@ -1,4 +1,5 @@
 JS_ROOT@0..28
+  (empty-slot)
   LIST@0..0
   LIST@0..27
     JS_EXPRESSION_STATEMENT@0..6
@@ -10,7 +11,9 @@ JS_ROOT@0..28
               JS_NUMBER_LITERAL_TOKEN@1..3 "5" [] [Whitespace(" ")]
             ERROR@3..5
               PLUS@3..5 "+" [] [Whitespace(" ")]
+          (empty-slot)
         JS_NUMBER_LITERAL_TOKEN@5..6 "5" [] []
+      (empty-slot)
     ERROR@6..8
       R_PAREN@6..8 ")" [] [Whitespace(" ")]
     ERROR@8..11
@@ -28,9 +31,12 @@ JS_ROOT@0..28
           COMMA@16..18 "," [] [Whitespace(" ")]
           ERROR@18..19
             COMMA@18..19 "," [] []
+          (empty-slot)
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@19..20
       JS_REFERENCE_IDENTIFIER_EXPRESSION@19..20
         IDENT@19..20 "b" [] []
+      (empty-slot)
     ERROR@20..22
       R_PAREN@20..22 ")" [] [Whitespace(" ")]
     ERROR@22..25

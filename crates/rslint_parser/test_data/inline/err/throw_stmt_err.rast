@@ -1,8 +1,10 @@
 JS_ROOT@0..28
+  (empty-slot)
   LIST@0..0
   LIST@0..27
     JS_THROW_STATEMENT@0..5
       THROW_KW@0..5 "throw" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@5..27
       NEW_EXPR@5..27
         NEW_KW@5..10 "new" [Whitespace("\n")] [Whitespace(" ")]
@@ -14,6 +16,7 @@ JS_ROOT@0..28
             JS_STRING_LITERAL@16..26
               JS_STRING_LITERAL_TOKEN@16..26 "\"oh no :(\"" [] []
           R_PAREN@26..27 ")" [] []
+      (empty-slot)
   EOF@27..28 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Linebreaks between a throw statement and the error to be thrown are not allowed

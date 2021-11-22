@@ -1,4 +1,5 @@
 JS_ROOT@0..144
+  (empty-slot)
   LIST@0..0
   LIST@0..143
     JS_DO_WHILE_STATEMENT@0..35
@@ -23,6 +24,7 @@ JS_ROOT@0..144
       JS_BOOLEAN_LITERAL@30..34
         TRUE_KW@30..34 "true" [] []
       R_PAREN@34..35 ")" [] []
+      (empty-slot)
     JS_DO_WHILE_STATEMENT@35..78
       DO_KW@35..40 "do" [Whitespace("\n\n")] [Whitespace(" ")]
       JS_BLOCK_STATEMENT@40..65
@@ -42,6 +44,7 @@ JS_ROOT@0..144
                   JS_STRING_LITERAL@55..61
                     JS_STRING_LITERAL_TOKEN@55..61 "\"test\"" [] []
                 R_PAREN@61..62 ")" [] []
+            (empty-slot)
         R_CURLY@62..65 "}" [Whitespace("\n")] [Whitespace(" ")]
       WHILE_KW@65..71 "while" [] [Whitespace(" ")]
       L_PAREN@71..72 "(" [] []
@@ -80,6 +83,7 @@ JS_ROOT@0..144
                   PLUS@108..110 "+" [] [Whitespace(" ")]
                   JS_NUMBER_LITERAL@110..111
                     JS_NUMBER_LITERAL_TOKEN@110..111 "1" [] []
+              (empty-slot)
           R_CURLY@111..115 "}" [Whitespace("\n\t")] [Whitespace(" ")]
         WHILE_KW@115..120 "while" [] []
         L_PAREN@120..121 "(" [] []
@@ -90,6 +94,7 @@ JS_ROOT@0..144
           JS_NUMBER_LITERAL@125..126
             JS_NUMBER_LITERAL_TOKEN@125..126 "5" [] []
         R_PAREN@126..127 ")" [] []
+        (empty-slot)
       WHILE_KW@127..134 "while" [Whitespace("\n")] [Whitespace(" ")]
       L_PAREN@134..135 "(" [] []
       JS_BINARY_EXPRESSION@135..142
@@ -99,4 +104,5 @@ JS_ROOT@0..144
         JS_NUMBER_LITERAL@139..142
           JS_NUMBER_LITERAL_TOKEN@139..142 "100" [] []
       R_PAREN@142..143 ")" [] []
+      (empty-slot)
   EOF@143..144 "" [Whitespace("\n")] []

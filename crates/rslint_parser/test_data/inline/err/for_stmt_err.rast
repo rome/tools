@@ -1,8 +1,10 @@
 JS_ROOT@0..40
+  (empty-slot)
   LIST@0..0
   LIST@0..39
     FOR_STMT@0..39
       FOR_KW@0..4 "for" [] [Whitespace(" ")]
+      (empty-slot)
       SEMICOLON@4..5 ";" [] []
       SEMICOLON@5..7 ";" [] [Whitespace(" ")]
       FOR_STMT_UPDATE@7..9
@@ -10,8 +12,10 @@ JS_ROOT@0..40
           L_CURLY@7..8 "{" [] []
           LIST@8..8
           R_CURLY@8..9 "}" [] []
+      (empty-slot)
       FOR_STMT@9..39
         FOR_KW@9..14 "for" [Whitespace("\n")] [Whitespace(" ")]
+        (empty-slot)
         FOR_STMT_INIT@14..23
           JS_VARIABLE_DECLARATION@14..23
             LET_KW@14..18 "let" [] [Whitespace(" ")]
@@ -38,6 +42,7 @@ JS_ROOT@0..40
             PLUS2@33..35 "++" [] []
             JS_REFERENCE_IDENTIFIER_EXPRESSION@35..37
               IDENT@35..37 "i" [] [Whitespace(" ")]
+        (empty-slot)
         JS_BLOCK_STATEMENT@37..39
           L_CURLY@37..38 "{" [] []
           LIST@38..38

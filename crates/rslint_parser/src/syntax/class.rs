@@ -51,7 +51,7 @@ impl From<ClassKind> for SyntaxKind {
 
 fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T![class]);
+	p.required_token(T![class]);
 
 	// class bodies are implicitly strict
 	let mut guard = p.with_state(ParserState {
@@ -100,9 +100,9 @@ fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 	extends_clause(&mut guard);
 	implements_clause(&mut guard);
 
-	guard.expect(T!['{']);
+	guard.required_token(T!['{']);
 	class_members(&mut *guard);
-	guard.expect(T!['}']);
+	guard.required_token(T!['}']);
 
 	m.complete(&mut *guard, kind.into())
 }
@@ -504,17 +504,17 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 
 				// So we've seen a get that now must be followed by a getter/setter name
 				class_member_name(p);
-				p.expect(T!['(']);
+				p.required_token(T!['(']);
 
 				let completed = if is_getter {
-					p.expect(T![')']);
+					p.required_token(T![')']);
 					ts_return_type(p);
 					function_body(p);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
 					formal_param_pat(p);
-					p.expect(T![')']);
+					p.required_token(T![')']);
 					function_body(p);
 
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
@@ -800,8 +800,8 @@ fn class_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 
 fn private_member_name(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T![#]);
-	p.expect(T![ident]);
+	p.required_token(T![#]);
+	p.required_token(T![ident]);
 	m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME)
 }
 

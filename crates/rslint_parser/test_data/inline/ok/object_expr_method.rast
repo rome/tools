@@ -1,4 +1,5 @@
 JS_ROOT@0..83
+  (empty-slot)
   LIST@0..0
   LIST@0..82
     JS_VARIABLE_DECLARATION_STATEMENT@0..82
@@ -92,4 +93,5 @@ JS_ROOT@0..83
                       LIST@79..79
                       R_CURLY@79..80 "}" [] []
                 R_CURLY@80..82 "}" [Whitespace("\n")] []
+      (empty-slot)
   EOF@82..83 "" [Whitespace("\n")] []

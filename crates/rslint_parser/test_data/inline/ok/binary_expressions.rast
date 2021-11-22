@@ -1,4 +1,5 @@
 JS_ROOT@0..114
+  (empty-slot)
   LIST@0..0
   LIST@0..113
     JS_EXPRESSION_STATEMENT@0..5
@@ -8,6 +9,7 @@ JS_ROOT@0..114
         STAR@2..4 "*" [] [Whitespace(" ")]
         JS_NUMBER_LITERAL@4..5
           JS_NUMBER_LITERAL_TOKEN@4..5 "5" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@5..17
       JS_BINARY_EXPRESSION@5..17
         JS_NUMBER_LITERAL@5..8
@@ -19,6 +21,7 @@ JS_ROOT@0..114
           STAR2@13..16 "**" [] [Whitespace(" ")]
           JS_NUMBER_LITERAL@16..17
             JS_NUMBER_LITERAL_TOKEN@16..17 "7" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@17..39
       JS_BINARY_EXPRESSION@17..39
         JS_NUMBER_LITERAL@17..20
@@ -45,6 +48,7 @@ JS_ROOT@0..114
           STAR@36..38 "*" [] [Whitespace(" ")]
           JS_NUMBER_LITERAL@38..39
             JS_NUMBER_LITERAL_TOKEN@38..39 "3" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@39..45
       JS_BINARY_EXPRESSION@39..45
         JS_NUMBER_LITERAL@39..42
@@ -52,6 +56,7 @@ JS_ROOT@0..114
         SLASH@42..44 "/" [] [Whitespace(" ")]
         JS_NUMBER_LITERAL@44..45
           JS_NUMBER_LITERAL_TOKEN@44..45 "2" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@45..55
       JS_BINARY_EXPRESSION@45..55
         JS_NUMBER_LITERAL@45..49
@@ -59,6 +64,7 @@ JS_ROOT@0..114
         IN_KW@49..52 "in" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@52..55
           IDENT@52..55 "foo" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@55..76
       JS_BINARY_EXPRESSION@55..76
         JS_REFERENCE_IDENTIFIER_EXPRESSION@55..60
@@ -66,6 +72,7 @@ JS_ROOT@0..114
         INSTANCEOF_KW@60..71 "instanceof" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@71..76
           IDENT@71..76 "Array" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@76..90
       JS_BINARY_EXPRESSION@76..90
         JS_BINARY_EXPRESSION@76..87
@@ -81,6 +88,7 @@ JS_ROOT@0..114
         PLUS@87..89 "+" [] [Whitespace(" ")]
         JS_NUMBER_LITERAL@89..90
           JS_NUMBER_LITERAL_TOKEN@89..90 "1" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@90..113
       JS_BINARY_EXPRESSION@90..113
         JS_BINARY_EXPRESSION@90..97
@@ -104,4 +112,5 @@ JS_ROOT@0..114
             STAR2@109..112 "**" [] [Whitespace(" ")]
             JS_NUMBER_LITERAL@112..113
               JS_NUMBER_LITERAL_TOKEN@112..113 "6" [] []
+      (empty-slot)
   EOF@113..114 "" [Whitespace("\n")] []

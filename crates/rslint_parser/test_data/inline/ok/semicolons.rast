@@ -1,4 +1,5 @@
 JS_ROOT@0..84
+  (empty-slot)
   LIST@0..0
   LIST@0..83
     JS_VARIABLE_DECLARATION_STATEMENT@0..14
@@ -44,6 +45,7 @@ JS_ROOT@0..84
             SINGLE_PATTERN@41..44
               NAME@41..44
                 IDENT@41..44 "foo" [] []
+      (empty-slot)
     JS_VARIABLE_DECLARATION_STATEMENT@44..52
       JS_VARIABLE_DECLARATION@44..52
         LET_KW@44..49 "let" [Whitespace("\n")] [Whitespace(" ")]
@@ -52,6 +54,7 @@ JS_ROOT@0..84
             SINGLE_PATTERN@49..52
               NAME@49..52
                 IDENT@49..52 "foo" [] []
+      (empty-slot)
     JS_FUNCTION_DECLARATION@52..83
       FUNCTION_KW@52..62 "function" [Whitespace("\n")] [Whitespace(" ")]
       JS_IDENTIFIER_BINDING@62..65
@@ -68,5 +71,6 @@ JS_ROOT@0..84
             RETURN_KW@70..77 "return" [] [Whitespace(" ")]
             JS_BOOLEAN_LITERAL@77..82
               TRUE_KW@77..82 "true" [] [Whitespace(" ")]
+            (empty-slot)
         R_CURLY@82..83 "}" [] []
   EOF@83..84 "" [Whitespace("\n")] []

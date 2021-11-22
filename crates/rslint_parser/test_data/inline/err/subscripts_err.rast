@@ -1,4 +1,5 @@
 JS_ROOT@0..20
+  (empty-slot)
   LIST@0..0
   LIST@0..20
     JS_EXPRESSION_STATEMENT@0..20
@@ -24,6 +25,7 @@ JS_ROOT@0..20
         BACKTICK@17..18 "`" [] []
         LIST@18..20
           TEMPLATE_CHUNK@18..20 "b\n" [] []
+      (empty-slot)
   EOF@20..20 "" [] []
 --
 error: unterminated template literal

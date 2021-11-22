@@ -1,25 +1,33 @@
 JS_ROOT@0..33
+  (empty-slot)
   LIST@0..0
   LIST@0..32
     JS_EXPRESSION_STATEMENT@0..1
       JS_NUMBER_LITERAL@0..1
         JS_NUMBER_LITERAL_TOKEN@0..1 "5" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@1..6
       JS_BOOLEAN_LITERAL@1..6
         TRUE_KW@1..6 "true" [Whitespace("\n")] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@6..12
       JS_BOOLEAN_LITERAL@6..12
         FALSE_KW@6..12 "false" [Whitespace("\n")] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@12..15
       JS_BIG_INT_LITERAL@12..15
         JS_BIG_INT_LITERAL_TOKEN@12..15 "5n" [Whitespace("\n")] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@15..21
       JS_STRING_LITERAL@15..21
         JS_STRING_LITERAL_TOKEN@15..21 "\"foo\"" [Whitespace("\n")] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@21..27
       JS_STRING_LITERAL@21..27
         JS_STRING_LITERAL_TOKEN@21..27 "'bar'" [Whitespace("\n")] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@27..32
       JS_NULL_LITERAL@27..32
         NULL_KW@27..32 "null" [Whitespace("\n")] []
+      (empty-slot)
   EOF@32..33 "" [Whitespace("\n")] []

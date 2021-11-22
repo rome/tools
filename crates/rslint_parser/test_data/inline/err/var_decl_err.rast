@@ -1,4 +1,5 @@
 JS_ROOT@0..32
+  (empty-slot)
   LIST@0..0
   LIST@0..31
     JS_VARIABLE_DECLARATION_STATEMENT@0..8
@@ -13,6 +14,7 @@ JS_ROOT@0..32
               EQ@6..7 "=" [] []
               ERROR@7..8
                 SEMICOLON@7..8 ";" [] []
+      (empty-slot)
     JS_VARIABLE_DECLARATION_STATEMENT@8..21
       JS_VARIABLE_DECLARATION@8..21
         CONST_KW@8..15 "const" [Whitespace("\n")] [Whitespace(" ")]
@@ -25,6 +27,7 @@ JS_ROOT@0..32
               EQ@17..19 "=" [] [Whitespace(" ")]
               JS_NUMBER_LITERAL@19..21
                 JS_NUMBER_LITERAL_TOKEN@19..21 "5" [] [Whitespace(" ")]
+      (empty-slot)
     JS_VARIABLE_DECLARATION_STATEMENT@21..31
       JS_VARIABLE_DECLARATION@21..30
         LET_KW@21..25 "let" [] [Whitespace(" ")]

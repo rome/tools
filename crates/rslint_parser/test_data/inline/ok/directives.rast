@@ -1,4 +1,5 @@
 JS_ROOT@0..360
+  (empty-slot)
   LIST@0..20
     JS_DIRECTIVE@0..20
       JS_STRING_LITERAL_TOKEN@0..20 "\"use new\"" [Comments("// SCRIPT"), Whitespace("\n\n")] []
@@ -130,6 +131,7 @@ JS_ROOT@0..360
                         JS_STRING_LITERAL_TOKEN@282..297 "\"use strict\"" [Whitespace("\n\n\t")] []
                       SEMICOLON@297..318 ";" [] [Whitespace("  "), Comments("// not a directive")]
                   R_CURLY@318..320 "}" [Whitespace("\n")] []
+      (empty-slot)
     JS_BLOCK_STATEMENT@320..359
       L_CURLY@320..323 "{" [Whitespace("\n\n")] []
       LIST@323..357

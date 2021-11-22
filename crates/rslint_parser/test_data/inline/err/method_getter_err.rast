@@ -1,4 +1,5 @@
 JS_ROOT@0..22
+  (empty-slot)
   LIST@0..0
   LIST@0..21
     JS_CLASS_DECLARATION@0..21
@@ -9,6 +10,8 @@ JS_ROOT@0..22
       LIST@11..19
         JS_GETTER_CLASS_MEMBER@11..19
           GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")]
+          (empty-slot)
+          (empty-slot)
           JS_FUNCTION_BODY@17..19
             L_CURLY@17..18 "{" [] []
             LIST@18..18

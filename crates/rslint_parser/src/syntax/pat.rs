@@ -158,12 +158,13 @@ pub fn array_binding_pattern(
 	assignment: bool,
 ) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T!['[']);
+	p.required_token(T!['[']);
 
 	let elements_list = p.start();
 
 	while !p.at(EOF) && !p.at(T![']']) {
-		if p.eat(T![,]) {
+		if p.at(T![,]) {
+			p.bump_any(); // bump ,
 			continue;
 		}
 		if p.at(T![...]) {
@@ -181,19 +182,19 @@ pub fn array_binding_pattern(
 			);
 		}
 		if !p.at(T![']']) {
-			p.expect(T![,]);
+			p.required_token(T![,]);
 		}
 	}
 
 	elements_list.complete(p, LIST);
 
-	p.expect(T![']']);
+	p.required_token(T![']']);
 	m.complete(p, ARRAY_PATTERN)
 }
 
 pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T!['{']);
+	p.required_token(T!['{']);
 	let props_list = p.start();
 	let mut first = true;
 
@@ -201,7 +202,7 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 		if first {
 			first = false;
 		} else {
-			p.expect(T![,]);
+			p.required_token(T![,]);
 			if p.at(T!['}']) {
 				break;
 			}
@@ -220,7 +221,7 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 	}
 	props_list.complete(p, LIST);
 
-	p.expect(T!['}']);
+	p.required_token(T!['}']);
 	m.complete(p, OBJECT_PATTERN)
 }
 

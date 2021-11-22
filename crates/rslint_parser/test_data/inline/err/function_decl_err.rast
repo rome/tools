@@ -1,4 +1,5 @@
 JS_ROOT@0..114
+  (empty-slot)
   LIST@0..0
   LIST@0..113
     JS_FUNCTION_DECLARATION@0..13
@@ -15,13 +16,16 @@ JS_ROOT@0..114
     JS_FUNCTION_DECLARATION@13..41
       FUNCTION_KW@13..23 "function" [Whitespace("\n")] [Whitespace(" ")]
       JS_PARAMETER_LIST@23..39
+        (empty-slot)
         LIST@23..37
           ERROR@23..24
             L_CURLY@23..24 "{" [] []
+          (empty-slot)
           ERROR@24..25
             R_CURLY@24..25 "}" [] []
           ERROR@25..35
             FUNCTION_KW@25..35 "function" [Whitespace("\n")] [Whitespace(" ")]
+          (empty-slot)
           ERROR@35..36
             STAR@35..36 "*" [] []
           ERROR@36..37
@@ -74,6 +78,7 @@ JS_ROOT@0..114
     JS_EXPRESSION_STATEMENT@102..109
       JS_REFERENCE_IDENTIFIER_EXPRESSION@102..109
         IDENT@102..109 "yield" [Whitespace("\n")] [Whitespace(" ")]
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@109..113
       JS_REFERENCE_IDENTIFIER_EXPRESSION@109..112
         IDENT@109..112 "foo" [] []

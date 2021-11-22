@@ -1,4 +1,5 @@
 JS_ROOT@0..72
+  (empty-slot)
   LIST@0..0
   LIST@0..71
     JS_VARIABLE_DECLARATION_STATEMENT@0..17
@@ -46,6 +47,7 @@ JS_ROOT@0..72
                       LIST@54..54
                       R_CURLY@54..55 "}" [] []
                 R_CURLY@55..57 "}" [Whitespace("\n")] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@57..71
       BRACKET_EXPR@57..71
         JS_REFERENCE_IDENTIFIER_EXPRESSION@57..61
@@ -57,4 +59,5 @@ JS_ROOT@0..72
           LIST@69..69
           R_CURLY@69..70 "}" [] []
         R_BRACK@70..71 "]" [] []
+      (empty-slot)
   EOF@71..72 "" [Whitespace("\n")] []

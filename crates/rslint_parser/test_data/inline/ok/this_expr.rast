@@ -1,9 +1,11 @@
 JS_ROOT@0..14
+  (empty-slot)
   LIST@0..0
   LIST@0..13
     JS_EXPRESSION_STATEMENT@0..4
       JS_THIS_EXPRESSION@0..4
         THIS_KW@0..4 "this" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@4..13
       DOT_EXPR@4..13
         JS_THIS_EXPRESSION@4..9
@@ -11,4 +13,5 @@ JS_ROOT@0..14
         DOT@9..10 "." [] []
         NAME@10..13
           IDENT@10..13 "foo" [] []
+      (empty-slot)
   EOF@13..14 "" [Whitespace("\n")] []

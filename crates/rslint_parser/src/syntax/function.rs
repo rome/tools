@@ -42,7 +42,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 		p.bump_remap(T![async]);
 	}
 
-	p.expect(T![function]);
+	p.required_token(T![function]);
 
 	let in_generator = p.eat(T![*]);
 	let guard = &mut *p.with_state(ParserState {

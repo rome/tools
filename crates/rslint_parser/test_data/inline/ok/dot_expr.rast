@@ -1,4 +1,5 @@
 JS_ROOT@0..54
+  (empty-slot)
   LIST@0..0
   LIST@0..53
     JS_EXPRESSION_STATEMENT@0..7
@@ -8,6 +9,7 @@ JS_ROOT@0..54
         DOT@3..4 "." [] []
         NAME@4..7
           IDENT@4..7 "bar" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@7..17
       DOT_EXPR@7..17
         JS_REFERENCE_IDENTIFIER_EXPRESSION@7..11
@@ -15,6 +17,7 @@ JS_ROOT@0..54
         DOT@11..12 "." [] []
         NAME@12..17
           IDENT@12..17 "await" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@17..27
       DOT_EXPR@17..27
         JS_REFERENCE_IDENTIFIER_EXPRESSION@17..21
@@ -22,6 +25,7 @@ JS_ROOT@0..54
         DOT@21..22 "." [] []
         NAME@22..27
           IDENT@22..27 "yield" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@27..35
       DOT_EXPR@27..35
         JS_REFERENCE_IDENTIFIER_EXPRESSION@27..31
@@ -29,6 +33,7 @@ JS_ROOT@0..54
         DOT@31..32 "." [] []
         NAME@32..35
           IDENT@32..35 "for" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@35..44
       DOT_EXPR@35..44
         JS_REFERENCE_IDENTIFIER_EXPRESSION@35..39
@@ -36,6 +41,7 @@ JS_ROOT@0..54
         QUESTIONDOT@39..41 "?." [] []
         NAME@41..44
           IDENT@41..44 "for" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@44..53
       DOT_EXPR@44..53
         JS_REFERENCE_IDENTIFIER_EXPRESSION@44..48
@@ -43,4 +49,5 @@ JS_ROOT@0..54
         QUESTIONDOT@48..50 "?." [] []
         NAME@50..53
           IDENT@50..53 "bar" [] []
+      (empty-slot)
   EOF@53..54 "" [Whitespace("\n")] []

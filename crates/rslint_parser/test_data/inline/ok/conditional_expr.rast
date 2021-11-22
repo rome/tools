@@ -1,4 +1,5 @@
 JS_ROOT@0..44
+  (empty-slot)
   LIST@0..0
   LIST@0..43
     JS_EXPRESSION_STATEMENT@0..15
@@ -11,6 +12,7 @@ JS_ROOT@0..44
         COLON@10..12 ":" [] [Whitespace(" ")]
         JS_REFERENCE_IDENTIFIER_EXPRESSION@12..15
           IDENT@12..15 "baz" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@15..43
       JS_CONDITIONAL_EXPRESSION@15..43
         JS_REFERENCE_IDENTIFIER_EXPRESSION@15..20
@@ -28,4 +30,5 @@ JS_ROOT@0..44
           COLON@38..40 ":" [] [Whitespace(" ")]
           JS_REFERENCE_IDENTIFIER_EXPRESSION@40..43
             IDENT@40..43 "baz" [] []
+      (empty-slot)
   EOF@43..44 "" [Whitespace("\n")] []

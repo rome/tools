@@ -1,4 +1,5 @@
 JS_ROOT@0..113
+  (empty-slot)
   LIST@0..0
   LIST@0..112
     JS_EXPRESSION_STATEMENT@0..9
@@ -10,6 +11,7 @@ JS_ROOT@0..113
           L_PAREN@7..8 "(" [] []
           LIST@8..8
           R_PAREN@8..9 ")" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@9..18
       NEW_EXPR@9..17
         NEW_KW@9..14 "new" [Whitespace("\n")] [Whitespace(" ")]
@@ -21,6 +23,7 @@ JS_ROOT@0..113
         NEW_KW@18..22 "new" [Whitespace("\n")] []
         DOT@22..23 "." [] []
         IDENT@23..29 "target" [] []
+      (empty-slot)
     JS_EXPRESSION_STATEMENT@29..52
       NEW_EXPR@29..51
         NEW_KW@29..34 "new" [Whitespace("\n")] [Whitespace(" ")]
@@ -90,4 +93,5 @@ JS_ROOT@0..113
                   NAME@108..111
                     IDENT@108..111 "bar" [] []
           R_PAREN@111..112 ")" [] []
+      (empty-slot)
   EOF@112..113 "" [Whitespace("\n")] []

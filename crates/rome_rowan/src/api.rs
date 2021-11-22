@@ -1,5 +1,6 @@
 use std::{fmt, iter, marker::PhantomData, ops::Range};
 
+use crate::cursor::SyntaxSlot;
 use crate::{
 	cursor::{self},
 	Direction, GreenNode, NodeOrToken, SyntaxKind, SyntaxText, TextRange, TextSize, TokenAtOffset,
@@ -55,7 +56,7 @@ pub struct SyntaxTriviaPieceComments<L: Language>(SyntaxTriviaPiece<L>);
 /// [SyntaxTriviaPiece] gives access to the most granular information about the trivia
 /// that was specified by the lexer at the token creation time.
 ///
-/// For example:  
+/// For example:
 ///
 /// ```ignore
 /// builder.token_with_trivia(
@@ -227,15 +228,20 @@ impl<L: Language> fmt::Debug for SyntaxNode<L> {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		if f.alternate() {
 			let mut level = 0;
-			for event in self.preorder_with_tokens() {
+			for event in self.raw.preorder_slots() {
 				match event {
 					WalkEvent::Enter(element) => {
 						for _ in 0..level {
 							write!(f, "  ")?;
 						}
 						match element {
-							NodeOrToken::Node(node) => writeln!(f, "{:?}", node)?,
-							NodeOrToken::Token(token) => writeln!(f, "{:?}", token)?,
+							SyntaxSlot::Node(node) => {
+								writeln!(f, "{:?}", SyntaxNode::<L>::from(node))?
+							}
+							SyntaxSlot::Token(token) => {
+								writeln!(f, "{:?}", SyntaxToken::<L>::from(token))?
+							}
+							SyntaxSlot::Empty { .. } => writeln!(f, "(empty-slot)")?,
 						}
 						level += 1;
 					}
