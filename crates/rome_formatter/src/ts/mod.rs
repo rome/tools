@@ -36,6 +36,7 @@ mod test {
 	#[test]
 	fn function_block() {
 		let src = r#"function foo() { return 'something' }"#;
+
 		let tree = parse_text(src, 0);
 		let result = Formatter::default().format_root(&tree.syntax()).unwrap();
 		assert_eq!(

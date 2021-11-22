@@ -1,36 +1,30 @@
-JS_ROOT@0..46
-  LIST@0..0
-  LIST@0..45
-    JS_LABELED_STATEMENT@0..7
-      IDENT@0..3 "foo"
-      COLON@3..4 ":"
-      WHITESPACE@4..5 " "
-      JS_BLOCK_STATEMENT@5..7
-        L_CURLY@5..6 "{"
-        LIST@6..6
-        R_CURLY@6..7 "}"
-    WHITESPACE@7..8 "\n"
-    JS_LABELED_STATEMENT@8..16
-      IDENT@8..12 "rust"
-      COLON@12..13 ":"
-      WHITESPACE@13..14 " "
-      JS_BLOCK_STATEMENT@14..16
-        L_CURLY@14..15 "{"
-        LIST@15..15
-        R_CURLY@15..16 "}"
-    WHITESPACE@16..17 "\n"
-    JS_BREAK_STATEMENT@17..23
-      BREAK_KW@17..22 "break"
-      SEMICOLON@22..23 ";"
-    WHITESPACE@23..24 "\n"
-    JS_BREAK_STATEMENT@24..34
-      BREAK_KW@24..29 "break"
-      WHITESPACE@29..30 " "
-      IDENT@30..33 "foo"
-      SEMICOLON@33..34 ";"
-    WHITESPACE@34..35 "\n"
-    JS_BREAK_STATEMENT@35..45
-      BREAK_KW@35..40 "break"
-      WHITESPACE@40..41 " "
-      IDENT@41..45 "rust"
-  WHITESPACE@45..46 "\n"
+0: JS_ROOT@0..46
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..45
+    0: JS_LABELED_STATEMENT@0..7
+      0: IDENT@0..3 "foo" [] []
+      1: COLON@3..5 ":" [] [Whitespace(" ")]
+      2: JS_BLOCK_STATEMENT@5..7
+        0: L_CURLY@5..6 "{" [] []
+        1: LIST@6..6
+        2: R_CURLY@6..7 "}" [] []
+    1: JS_LABELED_STATEMENT@7..16
+      0: IDENT@7..12 "rust" [Whitespace("\n")] []
+      1: COLON@12..14 ":" [] [Whitespace(" ")]
+      2: JS_BLOCK_STATEMENT@14..16
+        0: L_CURLY@14..15 "{" [] []
+        1: LIST@15..15
+        2: R_CURLY@15..16 "}" [] []
+    2: JS_BREAK_STATEMENT@16..23
+      0: BREAK_KW@16..22 "break" [Whitespace("\n")] []
+      1: SEMICOLON@22..23 ";" [] []
+    3: JS_BREAK_STATEMENT@23..34
+      0: BREAK_KW@23..30 "break" [Whitespace("\n")] [Whitespace(" ")]
+      1: IDENT@30..33 "foo" [] []
+      2: SEMICOLON@33..34 ";" [] []
+    4: JS_BREAK_STATEMENT@34..45
+      0: BREAK_KW@34..41 "break" [Whitespace("\n")] [Whitespace(" ")]
+      1: IDENT@41..45 "rust" [] []
+      2: (empty)
+  3: EOF@45..46 "" [Whitespace("\n")] []

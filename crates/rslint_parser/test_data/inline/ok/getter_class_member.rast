@@ -1,181 +1,143 @@
-JS_ROOT@0..203
-  LIST@0..0
-  LIST@0..202
-    JS_CLASS_DECLARATION@0..138
-      CLASS_KW@0..5 "class"
-      WHITESPACE@5..6 " "
-      JS_IDENTIFIER_BINDING@6..13
-        IDENT@6..13 "Getters"
-      WHITESPACE@13..14 " "
-      L_CURLY@14..15 "{"
-      WHITESPACE@15..17 "\n\t"
-      LIST@17..136
-        JS_GETTER_CLASS_MEMBER@17..29
-          GET_KW@17..20 "get"
-          WHITESPACE@20..21 " "
-          JS_LITERAL_MEMBER_NAME@21..24
-            IDENT@21..24 "foo"
-          L_PAREN@24..25 "("
-          R_PAREN@25..26 ")"
-          WHITESPACE@26..27 " "
-          JS_FUNCTION_BODY@27..29
-            L_CURLY@27..28 "{"
-            LIST@28..28
-            LIST@28..28
-            R_CURLY@28..29 "}"
-        WHITESPACE@29..31 "\n\t"
-        JS_GETTER_CLASS_MEMBER@31..46
-          GET_KW@31..34 "get"
-          WHITESPACE@34..35 " "
-          JS_LITERAL_MEMBER_NAME@35..41
-            IDENT@35..41 "static"
-          L_PAREN@41..42 "("
-          R_PAREN@42..43 ")"
-          WHITESPACE@43..44 " "
-          JS_FUNCTION_BODY@44..46
-            L_CURLY@44..45 "{"
-            LIST@45..45
-            LIST@45..45
-            R_CURLY@45..46 "}"
-        WHITESPACE@46..48 "\n\t"
-        JS_GETTER_CLASS_MEMBER@48..67
-          STATIC_KW@48..54 "static"
-          WHITESPACE@54..55 " "
-          GET_KW@55..58 "get"
-          WHITESPACE@58..59 " "
-          JS_LITERAL_MEMBER_NAME@59..62
-            IDENT@59..62 "bar"
-          L_PAREN@62..63 "("
-          R_PAREN@63..64 ")"
-          WHITESPACE@64..65 " "
-          JS_FUNCTION_BODY@65..67
-            L_CURLY@65..66 "{"
-            LIST@66..66
-            LIST@66..66
-            R_CURLY@66..67 "}"
-        WHITESPACE@67..69 "\n\t"
-        JS_GETTER_CLASS_MEMBER@69..83
-          GET_KW@69..72 "get"
-          WHITESPACE@72..73 " "
-          JS_LITERAL_MEMBER_NAME@73..78
-            JS_STRING_LITERAL_TOKEN@73..78 "\"baz\""
-          L_PAREN@78..79 "("
-          R_PAREN@79..80 ")"
-          WHITESPACE@80..81 " "
-          JS_FUNCTION_BODY@81..83
-            L_CURLY@81..82 "{"
-            LIST@82..82
-            LIST@82..82
-            R_CURLY@82..83 "}"
-        WHITESPACE@83..85 "\n\t"
-        JS_GETTER_CLASS_MEMBER@85..105
-          GET_KW@85..88 "get"
-          WHITESPACE@88..89 " "
-          JS_COMPUTED_MEMBER_NAME@89..100
-            L_BRACK@89..90 "["
-            JS_BINARY_EXPRESSION@90..99
-              JS_STRING_LITERAL@90..93
-                JS_STRING_LITERAL_TOKEN@90..93 "\"a\""
-              WHITESPACE@93..94 " "
-              PLUS@94..95 "+"
-              WHITESPACE@95..96 " "
-              JS_STRING_LITERAL@96..99
-                JS_STRING_LITERAL_TOKEN@96..99 "\"b\""
-            R_BRACK@99..100 "]"
-          L_PAREN@100..101 "("
-          R_PAREN@101..102 ")"
-          WHITESPACE@102..103 " "
-          JS_FUNCTION_BODY@103..105
-            L_CURLY@103..104 "{"
-            LIST@104..104
-            LIST@104..104
-            R_CURLY@104..105 "}"
-        WHITESPACE@105..107 "\n\t"
-        JS_GETTER_CLASS_MEMBER@107..117
-          GET_KW@107..110 "get"
-          WHITESPACE@110..111 " "
-          JS_LITERAL_MEMBER_NAME@111..112
-            JS_NUMBER_LITERAL_TOKEN@111..112 "5"
-          L_PAREN@112..113 "("
-          R_PAREN@113..114 ")"
-          WHITESPACE@114..115 " "
-          JS_FUNCTION_BODY@115..117
-            L_CURLY@115..116 "{"
-            LIST@116..116
-            LIST@116..116
-            R_CURLY@116..117 "}"
-        WHITESPACE@117..119 "\n\t"
-        JS_GETTER_CLASS_MEMBER@119..136
-          GET_KW@119..122 "get"
-          WHITESPACE@122..123 " "
-          JS_PRIVATE_CLASS_MEMBER_NAME@123..131
-            HASH@123..124 "#"
-            IDENT@124..131 "private"
-          L_PAREN@131..132 "("
-          R_PAREN@132..133 ")"
-          WHITESPACE@133..134 " "
-          JS_FUNCTION_BODY@134..136
-            L_CURLY@134..135 "{"
-            LIST@135..135
-            LIST@135..135
-            R_CURLY@135..136 "}"
-      WHITESPACE@136..137 "\n"
-      R_CURLY@137..138 "}"
-    WHITESPACE@138..139 "\n"
-    JS_CLASS_DECLARATION@139..202
-      CLASS_KW@139..144 "class"
-      WHITESPACE@144..145 " "
-      JS_IDENTIFIER_BINDING@145..155
-        IDENT@145..155 "NotGetters"
-      WHITESPACE@155..156 " "
-      L_CURLY@156..157 "{"
-      WHITESPACE@157..159 "\n\t"
-      LIST@159..200
-        JS_METHOD_CLASS_MEMBER@159..167
-          JS_LITERAL_MEMBER_NAME@159..162
-            IDENT@159..162 "get"
-          JS_PARAMETER_LIST@162..164
-            L_PAREN@162..163 "("
-            LIST@163..163
-            R_PAREN@163..164 ")"
-          WHITESPACE@164..165 " "
-          JS_FUNCTION_BODY@165..167
-            L_CURLY@165..166 "{"
-            LIST@166..166
-            LIST@166..166
-            R_CURLY@166..167 "}"
-        WHITESPACE@167..169 "\n\t"
-        JS_METHOD_CLASS_MEMBER@169..183
-          ASYNC_KW@169..174 "async"
-          WHITESPACE@174..175 " "
-          JS_LITERAL_MEMBER_NAME@175..178
-            IDENT@175..178 "get"
-          JS_PARAMETER_LIST@178..180
-            L_PAREN@178..179 "("
-            LIST@179..179
-            R_PAREN@179..180 ")"
-          WHITESPACE@180..181 " "
-          JS_FUNCTION_BODY@181..183
-            L_CURLY@181..182 "{"
-            LIST@182..182
-            LIST@182..182
-            R_CURLY@182..183 "}"
-        WHITESPACE@183..185 "\n\t"
-        JS_METHOD_CLASS_MEMBER@185..200
-          STATIC_KW@185..191 "static"
-          WHITESPACE@191..192 " "
-          JS_LITERAL_MEMBER_NAME@192..195
-            IDENT@192..195 "get"
-          JS_PARAMETER_LIST@195..197
-            L_PAREN@195..196 "("
-            LIST@196..196
-            R_PAREN@196..197 ")"
-          WHITESPACE@197..198 " "
-          JS_FUNCTION_BODY@198..200
-            L_CURLY@198..199 "{"
-            LIST@199..199
-            LIST@199..199
-            R_CURLY@199..200 "}"
-      WHITESPACE@200..201 "\n"
-      R_CURLY@201..202 "}"
-  WHITESPACE@202..203 "\n"
+0: JS_ROOT@0..203
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..202
+    0: JS_CLASS_DECLARATION@0..138
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..14
+        0: IDENT@6..14 "Getters" [] [Whitespace(" ")]
+      2: L_CURLY@14..15 "{" [] []
+      3: LIST@15..136
+        0: JS_GETTER_CLASS_MEMBER@15..29
+          0: GET_KW@15..21 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@21..24
+            0: IDENT@21..24 "foo" [] []
+          2: L_PAREN@24..25 "(" [] []
+          3: R_PAREN@25..27 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@27..29
+            0: L_CURLY@27..28 "{" [] []
+            1: LIST@28..28
+            2: LIST@28..28
+            3: R_CURLY@28..29 "}" [] []
+        1: JS_GETTER_CLASS_MEMBER@29..46
+          0: GET_KW@29..35 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@35..41
+            0: IDENT@35..41 "static" [] []
+          2: L_PAREN@41..42 "(" [] []
+          3: R_PAREN@42..44 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@44..46
+            0: L_CURLY@44..45 "{" [] []
+            1: LIST@45..45
+            2: LIST@45..45
+            3: R_CURLY@45..46 "}" [] []
+        2: JS_GETTER_CLASS_MEMBER@46..67
+          0: STATIC_KW@46..55 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: GET_KW@55..59 "get" [] [Whitespace(" ")]
+          2: JS_LITERAL_MEMBER_NAME@59..62
+            0: IDENT@59..62 "bar" [] []
+          3: L_PAREN@62..63 "(" [] []
+          4: R_PAREN@63..65 ")" [] [Whitespace(" ")]
+          5: JS_FUNCTION_BODY@65..67
+            0: L_CURLY@65..66 "{" [] []
+            1: LIST@66..66
+            2: LIST@66..66
+            3: R_CURLY@66..67 "}" [] []
+        3: JS_GETTER_CLASS_MEMBER@67..83
+          0: GET_KW@67..73 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@73..78
+            0: JS_STRING_LITERAL_TOKEN@73..78 "\"baz\"" [] []
+          2: L_PAREN@78..79 "(" [] []
+          3: R_PAREN@79..81 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@81..83
+            0: L_CURLY@81..82 "{" [] []
+            1: LIST@82..82
+            2: LIST@82..82
+            3: R_CURLY@82..83 "}" [] []
+        4: JS_GETTER_CLASS_MEMBER@83..105
+          0: GET_KW@83..89 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: JS_COMPUTED_MEMBER_NAME@89..100
+            0: L_BRACK@89..90 "[" [] []
+            1: JS_BINARY_EXPRESSION@90..99
+              0: JS_STRING_LITERAL@90..94
+                0: JS_STRING_LITERAL_TOKEN@90..94 "\"a\"" [] [Whitespace(" ")]
+              1: PLUS@94..96 "+" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL@96..99
+                0: JS_STRING_LITERAL_TOKEN@96..99 "\"b\"" [] []
+            2: R_BRACK@99..100 "]" [] []
+          2: L_PAREN@100..101 "(" [] []
+          3: R_PAREN@101..103 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@103..105
+            0: L_CURLY@103..104 "{" [] []
+            1: LIST@104..104
+            2: LIST@104..104
+            3: R_CURLY@104..105 "}" [] []
+        5: JS_GETTER_CLASS_MEMBER@105..117
+          0: GET_KW@105..111 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@111..112
+            0: JS_NUMBER_LITERAL_TOKEN@111..112 "5" [] []
+          2: L_PAREN@112..113 "(" [] []
+          3: R_PAREN@113..115 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@115..117
+            0: L_CURLY@115..116 "{" [] []
+            1: LIST@116..116
+            2: LIST@116..116
+            3: R_CURLY@116..117 "}" [] []
+        6: JS_GETTER_CLASS_MEMBER@117..136
+          0: GET_KW@117..123 "get" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: JS_PRIVATE_CLASS_MEMBER_NAME@123..131
+            0: HASH@123..124 "#" [] []
+            1: IDENT@124..131 "private" [] []
+          2: L_PAREN@131..132 "(" [] []
+          3: R_PAREN@132..134 ")" [] [Whitespace(" ")]
+          4: JS_FUNCTION_BODY@134..136
+            0: L_CURLY@134..135 "{" [] []
+            1: LIST@135..135
+            2: LIST@135..135
+            3: R_CURLY@135..136 "}" [] []
+      4: R_CURLY@136..138 "}" [Whitespace("\n")] []
+    1: JS_CLASS_DECLARATION@138..202
+      0: CLASS_KW@138..145 "class" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@145..156
+        0: IDENT@145..156 "NotGetters" [] [Whitespace(" ")]
+      2: L_CURLY@156..157 "{" [] []
+      3: LIST@157..200
+        0: JS_METHOD_CLASS_MEMBER@157..167
+          0: JS_LITERAL_MEMBER_NAME@157..162
+            0: IDENT@157..162 "get" [Whitespace("\n\t")] []
+          1: JS_PARAMETER_LIST@162..165
+            0: L_PAREN@162..163 "(" [] []
+            1: LIST@163..163
+            2: R_PAREN@163..165 ")" [] [Whitespace(" ")]
+          2: JS_FUNCTION_BODY@165..167
+            0: L_CURLY@165..166 "{" [] []
+            1: LIST@166..166
+            2: LIST@166..166
+            3: R_CURLY@166..167 "}" [] []
+        1: JS_METHOD_CLASS_MEMBER@167..183
+          0: ASYNC_KW@167..175 "async" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@175..178
+            0: IDENT@175..178 "get" [] []
+          2: JS_PARAMETER_LIST@178..181
+            0: L_PAREN@178..179 "(" [] []
+            1: LIST@179..179
+            2: R_PAREN@179..181 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@181..183
+            0: L_CURLY@181..182 "{" [] []
+            1: LIST@182..182
+            2: LIST@182..182
+            3: R_CURLY@182..183 "}" [] []
+        2: JS_METHOD_CLASS_MEMBER@183..200
+          0: STATIC_KW@183..192 "static" [Whitespace("\n\t")] [Whitespace(" ")]
+          1: JS_LITERAL_MEMBER_NAME@192..195
+            0: IDENT@192..195 "get" [] []
+          2: JS_PARAMETER_LIST@195..198
+            0: L_PAREN@195..196 "(" [] []
+            1: LIST@196..196
+            2: R_PAREN@196..198 ")" [] [Whitespace(" ")]
+          3: JS_FUNCTION_BODY@198..200
+            0: L_CURLY@198..199 "{" [] []
+            1: LIST@199..199
+            2: LIST@199..199
+            3: R_CURLY@199..200 "}" [] []
+      4: R_CURLY@200..202 "}" [Whitespace("\n")] []
+  3: EOF@202..203 "" [Whitespace("\n")] []

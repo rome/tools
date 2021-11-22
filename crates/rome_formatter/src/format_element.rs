@@ -146,11 +146,12 @@ pub const fn soft_line_break_or_space() -> FormatElement {
 /// assert_eq!(r#""Hello\tWorld""#, format_element(&elements, FormatOptions::default()).code());
 /// ```
 #[inline]
-pub fn token(text: &str) -> FormatElement {
+pub fn token<S: Into<String>>(text: S) -> FormatElement {
+	let text = text.into();
 	if text.is_empty() {
 		FormatElement::Empty
 	} else {
-		FormatElement::Token(Token::new(text))
+		FormatElement::Token(Token(text))
 	}
 }
 
@@ -731,6 +732,86 @@ impl FormatElement {
 	pub fn is_empty(&self) -> bool {
 		self == &FormatElement::Empty
 	}
+
+	/// Remove all spaces, line breaks, indents from the start of
+	/// the [FormatElement].
+	/// Including "whitespace" characters of the [FormatElement::Token] variant.
+	pub fn trim_start(&self) -> FormatElement {
+		match self {
+			FormatElement::Empty => FormatElement::Empty,
+			FormatElement::Space => FormatElement::Empty,
+			FormatElement::Line(_) => FormatElement::Empty,
+			FormatElement::Indent(i) => i.content.trim_start(),
+			FormatElement::Group(g) => g.content.trim_start(),
+			FormatElement::ConditionalGroupContent(g) => g.content.trim_start(),
+			FormatElement::List(list) => {
+				let mut content: Vec<_> = list
+					.iter()
+					.skip_while(|e| match e {
+						FormatElement::Empty => true,
+						FormatElement::Space => true,
+						FormatElement::Line(_) => true,
+						FormatElement::Indent(_) => true,
+						FormatElement::Token(t) => {
+							let s = t.trim_start();
+							s.is_empty()
+						}
+						_ => false,
+					})
+					.map(Clone::clone)
+					.collect();
+				if let Some(FormatElement::Token(s)) = content.get_mut(0) {
+					s.0 = s.trim_start().to_string()
+				}
+				FormatElement::List(List::new(content))
+			}
+			FormatElement::Token(s) => token(s.trim_start()),
+		}
+	}
+
+	/// Remove all spaces, line breaks, indents from the end of
+	/// the [FormatElement].
+	/// Including "whitespace" characters of the [FormatElement::Token] variant.
+	pub fn trim_end(&self) -> FormatElement {
+		match self {
+			FormatElement::Empty => FormatElement::Empty,
+			FormatElement::Space => FormatElement::Empty,
+			FormatElement::Line(_) => FormatElement::Empty,
+			FormatElement::Indent(i) => i.content.trim_end(),
+			FormatElement::Group(g) => g.content.trim_end(),
+			FormatElement::ConditionalGroupContent(g) => g.content.trim_end(),
+			FormatElement::List(list) => {
+				let idx_first_non_empty = list.iter().rev().position(|e| match e {
+					FormatElement::Empty => false,
+					FormatElement::Space => false,
+					FormatElement::Line(_) => false,
+					FormatElement::Indent(_) => false,
+					FormatElement::Token(t) => {
+						let s = t.trim_end();
+						!s.is_empty()
+					}
+					_ => true,
+				});
+
+				match idx_first_non_empty {
+					Some(idx_first_non_empty) => {
+						let idx_first_non_empty = list.len() - idx_first_non_empty;
+						let mut content: Vec<_> = list
+							.iter()
+							.take(idx_first_non_empty)
+							.map(Clone::clone)
+							.collect();
+						if let Some(FormatElement::Token(s)) = content.last_mut() {
+							s.0 = s.trim_end().to_string()
+						}
+						FormatElement::List(List::new(content))
+					}
+					None => FormatElement::List(List::new(vec![])),
+				}
+			}
+			FormatElement::Token(s) => token(s.trim_end()),
+		}
+	}
 }
 
 impl From<Group> for FormatElement {
@@ -873,5 +954,27 @@ mod tests {
 				token("b")
 			]))
 		);
+	}
+
+	#[test]
+	fn format_element_trim() {
+		use crate::format_element::*;
+		let f = concat_elements([
+			FormatElement::Empty,
+			FormatElement::Indent(Indent::new(FormatElement::Empty)),
+			FormatElement::Line(Line::new(LineMode::Hard)),
+			FormatElement::Space,
+			FormatElement::Token(Token::new(" \t \n")),
+			FormatElement::List(List::new(vec![FormatElement::Empty])),
+			FormatElement::Group(Group::new(FormatElement::Empty)),
+			FormatElement::ConditionalGroupContent(ConditionalGroupContent::new(
+				FormatElement::Empty,
+				GroupPrintMode::Flat,
+			)),
+		]);
+
+		let f = f.trim_start();
+		matches!(f.trim_start(), FormatElement::Empty);
+		matches!(f.trim_end(), FormatElement::Empty);
 	}
 }

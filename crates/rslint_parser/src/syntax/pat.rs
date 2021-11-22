@@ -15,7 +15,13 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 		T!['{'] if p.state.allow_object_expr => object_binding_pattern(p, parameters),
 		_ if assignment => {
 			let m = p.start();
-			let mut complete = lhs_expr(p)?;
+			let mut complete = if let Some(expr) = lhs_expr(p) {
+				expr
+			} else {
+				m.abandon(p);
+				return None;
+			};
+
 			if complete.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION {
 				complete.change_kind(p, NAME);
 			}
@@ -193,7 +199,6 @@ pub fn array_binding_pattern(
 	m.complete(p, ARRAY_PATTERN)
 }
 
-
 // test_err object_binding_pattern
 // let { 5 } } = { eval: "foo" };
 // let { eval } = { eval: "foo" };
@@ -251,6 +256,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	let name = if let Some(n) = name {
 		n
 	} else {
+		m.abandon(p);
 		ParseRecoverer::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			JS_UNKNOWN_BINDING,
@@ -260,17 +266,13 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 	};
 
 	if name.kind() != NAME {
-		let unknown_node_kind = if p.state.allow_object_expr {
-			JS_UNKNOWN_PATTERN
-		} else {
-			JS_UNKNOWN_BINDING
-		};
+		m.abandon(p);
 		let err = p
 			.err_builder("Expected an identifier for a pattern, but found none")
 			.primary(name.range(p), "");
 
 		p.error(err);
-		return Some(m.complete(p, unknown_node_kind));
+		return None;
 	}
 
 	let sp_marker = name.precede(p).complete(p, SINGLE_PATTERN);
@@ -278,6 +280,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		assign_expr(p);
 		Some(m.complete(p, ASSIGN_PATTERN))
 	} else {
+		m.abandon(p);
 		Some(sp_marker)
 	}
 }

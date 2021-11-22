@@ -42,7 +42,13 @@ pub(super) fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 		}
 	}
 
-	let pat = pattern(p, true, false)?;
+	let pat = if let Some(pattern) = pattern(p, true, false) {
+		pattern
+	} else {
+		m.abandon(p);
+		return None;
+	};
+
 	let pat_range = pat.range(p);
 	let mut kind = pat.kind();
 	pat.undo_completion(p).abandon(p);

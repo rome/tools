@@ -73,7 +73,6 @@ pub fn generate_syntax_kinds(grammar: KindsSrc) -> Result<String> {
 			// but never end up in the final tree
 			#[doc(hidden)]
 			TOMBSTONE,
-			#[doc(hidden)]
 			EOF,
 			/// Polymorph list type
 			LIST,

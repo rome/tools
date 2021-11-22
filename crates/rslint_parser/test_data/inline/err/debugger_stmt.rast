@@ -1,49 +1,41 @@
-JS_ROOT@0..61
-  LIST@0..0
-  LIST@0..60
-    JS_FUNCTION_DECLARATION@0..60
-      FUNCTION_KW@0..8 "function"
-      WHITESPACE@8..9 " "
-      JS_IDENTIFIER_BINDING@9..12
-        IDENT@9..12 "foo"
-      JS_PARAMETER_LIST@12..14
-        L_PAREN@12..13 "("
-        LIST@13..13
-        R_PAREN@13..14 ")"
-      WHITESPACE@14..15 " "
-      JS_FUNCTION_BODY@15..60
-        L_CURLY@15..16 "{"
-        WHITESPACE@16..18 "\n\t"
-        LIST@18..18
-        LIST@18..58
-          JS_DEBUGGER_STATEMENT@18..26
-            DEBUGGER_KW@18..26 "debugger"
-          WHITESPACE@26..27 " "
-          JS_BLOCK_STATEMENT@27..58
-            L_CURLY@27..28 "{"
-            WHITESPACE@28..31 "\n\t\t"
-            LIST@31..55
-              JS_VARIABLE_DECLARATION_STATEMENT@31..55
-                JS_VARIABLE_DECLARATION@31..54
-                  VAR_KW@31..34 "var"
-                  WHITESPACE@34..35 " "
-                  LIST@35..54
-                    JS_VARIABLE_DECLARATOR@35..54
-                      SINGLE_PATTERN@35..44
-                        NAME@35..44
-                          IDENT@35..44 "something"
-                      WHITESPACE@44..45 " "
-                      JS_EQUAL_VALUE_CLAUSE@45..54
-                        EQ@45..46 "="
-                        WHITESPACE@46..47 " "
-                        JS_STRING_LITERAL@47..54
-                          JS_STRING_LITERAL_TOKEN@47..54 "\"lorem\""
-                SEMICOLON@54..55 ";"
-            WHITESPACE@55..57 "\n\t"
-            R_CURLY@57..58 "}"
-        WHITESPACE@58..59 "\n"
-        R_CURLY@59..60 "}"
-  WHITESPACE@60..61 "\n"
+0: JS_ROOT@0..61
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..60
+    0: JS_FUNCTION_DECLARATION@0..60
+      0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@9..12
+        0: IDENT@9..12 "foo" [] []
+      2: JS_PARAMETER_LIST@12..15
+        0: L_PAREN@12..13 "(" [] []
+        1: LIST@13..13
+        2: R_PAREN@13..15 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@15..60
+        0: L_CURLY@15..16 "{" [] []
+        1: LIST@16..16
+        2: LIST@16..58
+          0: JS_DEBUGGER_STATEMENT@16..27
+            0: DEBUGGER_KW@16..27 "debugger" [Whitespace("\n\t")] [Whitespace(" ")]
+            1: (empty)
+          1: JS_BLOCK_STATEMENT@27..58
+            0: L_CURLY@27..28 "{" [] []
+            1: LIST@28..55
+              0: JS_VARIABLE_DECLARATION_STATEMENT@28..55
+                0: JS_VARIABLE_DECLARATION@28..54
+                  0: VAR_KW@28..35 "var" [Whitespace("\n\t\t")] [Whitespace(" ")]
+                  1: LIST@35..54
+                    0: JS_VARIABLE_DECLARATOR@35..54
+                      0: SINGLE_PATTERN@35..45
+                        0: NAME@35..45
+                          0: IDENT@35..45 "something" [] [Whitespace(" ")]
+                      1: JS_EQUAL_VALUE_CLAUSE@45..54
+                        0: EQ@45..47 "=" [] [Whitespace(" ")]
+                        1: JS_STRING_LITERAL@47..54
+                          0: JS_STRING_LITERAL_TOKEN@47..54 "\"lorem\"" [] []
+                1: SEMICOLON@54..55 ";" [] []
+            2: R_CURLY@55..58 "}" [Whitespace("\n\t")] []
+        3: R_CURLY@58..60 "}" [Whitespace("\n")] []
+  3: EOF@60..61 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ debugger_stmt.js:2:11

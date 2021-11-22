@@ -1,84 +1,76 @@
-JS_ROOT@0..96
-  LIST@0..0
-  LIST@0..95
-    JS_VARIABLE_DECLARATION_STATEMENT@0..26
-      JS_VARIABLE_DECLARATION@0..26
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
-        LIST@4..26
-          JS_VARIABLE_DECLARATOR@4..26
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "a"
-            WHITESPACE@5..6 " "
-            JS_EQUAL_VALUE_CLAUSE@6..26
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
-              JS_OBJECT_EXPRESSION@8..26
-                L_CURLY@8..9 "{"
-                WHITESPACE@9..10 " "
-                LIST@10..24
-                  JS_PROPERTY_OBJECT_MEMBER@10..24
-                    ERROR@10..17
-                      JS_REGEX_LITERAL_TOKEN@10..17 "/: 6, /"
-                    COLON@17..18 ":"
-                    WHITESPACE@18..19 " "
-                    JS_REGEX_LITERAL@19..24
-                      JS_REGEX_LITERAL_TOKEN@19..24 "/foo/"
-                WHITESPACE@24..25 " "
-                R_CURLY@25..26 "}"
-    WHITESPACE@26..27 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@27..38
-      JS_VARIABLE_DECLARATION@27..38
-        LET_KW@27..30 "let"
-        WHITESPACE@30..31 " "
-        LIST@31..38
-          JS_VARIABLE_DECLARATOR@31..38
-            SINGLE_PATTERN@31..32
-              NAME@31..32
-                IDENT@31..32 "a"
-            WHITESPACE@32..33 " "
-            JS_EQUAL_VALUE_CLAUSE@33..38
-              EQ@33..34 "="
-              WHITESPACE@34..35 " "
-              JS_OBJECT_EXPRESSION@35..38
-                L_CURLY@35..36 "{"
-                LIST@36..37
-                  ERROR@36..37
-                    L_CURLY@36..37 "{"
-                R_CURLY@37..38 "}"
-    JS_UNKNOWN_STATEMENT@38..39
-      R_CURLY@38..39 "}"
-    WHITESPACE@39..40 "\n"
-    JS_EXPRESSION_STATEMENT@40..48
-      JS_REFERENCE_IDENTIFIER_EXPRESSION@40..48
-        IDENT@40..48 "test_err"
-    WHITESPACE@48..49 " "
-    JS_EXPRESSION_STATEMENT@49..83
-      JS_REFERENCE_IDENTIFIER_EXPRESSION@49..83
-        IDENT@49..83 "object_expr_non_ident ..."
-    WHITESPACE@83..84 "\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@84..95
-      JS_VARIABLE_DECLARATION@84..95
-        LET_KW@84..87 "let"
-        WHITESPACE@87..88 " "
-        LIST@88..95
-          JS_VARIABLE_DECLARATOR@88..95
-            SINGLE_PATTERN@88..89
-              NAME@88..89
-                IDENT@88..89 "b"
-            WHITESPACE@89..90 " "
-            JS_EQUAL_VALUE_CLAUSE@90..95
-              EQ@90..91 "="
-              WHITESPACE@91..92 " "
-              JS_OBJECT_EXPRESSION@92..95
-                L_CURLY@92..93 "{"
-                LIST@93..94
-                  JS_PROPERTY_OBJECT_MEMBER@93..94
-                    JS_LITERAL_MEMBER_NAME@93..94
-                      JS_NUMBER_LITERAL_TOKEN@93..94 "5"
-                R_CURLY@94..95 "}"
-  WHITESPACE@95..96 "\n"
+0: JS_ROOT@0..96
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..95
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..26
+      0: JS_VARIABLE_DECLARATION@0..26
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..26
+          0: JS_VARIABLE_DECLARATOR@4..26
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..26
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@8..26
+                0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+                1: LIST@10..25
+                  0: JS_PROPERTY_OBJECT_MEMBER@10..25
+                    0: ERROR@10..17
+                      0: JS_REGEX_LITERAL_TOKEN@10..17 "/: 6, /" [] []
+                    1: COLON@17..19 ":" [] [Whitespace(" ")]
+                    2: JS_REGEX_LITERAL@19..25
+                      0: JS_REGEX_LITERAL_TOKEN@19..25 "/foo/" [] [Whitespace(" ")]
+                2: R_CURLY@25..26 "}" [] []
+      1: (empty)
+    1: JS_VARIABLE_DECLARATION_STATEMENT@26..38
+      0: JS_VARIABLE_DECLARATION@26..38
+        0: LET_KW@26..31 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@31..38
+          0: JS_VARIABLE_DECLARATOR@31..38
+            0: SINGLE_PATTERN@31..33
+              0: NAME@31..33
+                0: IDENT@31..33 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@33..38
+              0: EQ@33..35 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@35..38
+                0: L_CURLY@35..36 "{" [] []
+                1: LIST@36..37
+                  0: JS_UNKNOWN_MEMBER@36..37
+                    0: ERROR@36..37
+                      0: L_CURLY@36..37 "{" [] []
+                2: R_CURLY@37..38 "}" [] []
+      1: (empty)
+    2: JS_UNKNOWN_STATEMENT@38..39
+      0: R_CURLY@38..39 "}" [] []
+    3: JS_EXPRESSION_STATEMENT@39..49
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@39..49
+        0: IDENT@39..49 "test_err" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+    4: JS_EXPRESSION_STATEMENT@49..83
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@49..83
+        0: IDENT@49..83 "object_expr_non_ident_literal_prop" [] []
+      1: (empty)
+    5: JS_VARIABLE_DECLARATION_STATEMENT@83..95
+      0: JS_VARIABLE_DECLARATION@83..95
+        0: LET_KW@83..88 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@88..95
+          0: JS_VARIABLE_DECLARATOR@88..95
+            0: SINGLE_PATTERN@88..90
+              0: NAME@88..90
+                0: IDENT@88..90 "b" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@90..95
+              0: EQ@90..92 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@92..95
+                0: L_CURLY@92..93 "{" [] []
+                1: LIST@93..94
+                  0: JS_PROPERTY_OBJECT_MEMBER@93..94
+                    0: JS_LITERAL_MEMBER_NAME@93..94
+                      0: JS_NUMBER_LITERAL_TOKEN@93..94 "5" [] []
+                    1: (empty)
+                2: R_CURLY@94..95 "}" [] []
+      1: (empty)
+  3: EOF@95..96 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ object_expr_error_prop_name.js:1:11

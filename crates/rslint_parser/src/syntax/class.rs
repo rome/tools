@@ -201,13 +201,13 @@ fn class_members(p: &mut Parser) -> CompletedMarker {
 	members.complete(p, LIST)
 }
 
-fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
-	let member_marker = p.start();
+fn class_member(p: &mut Parser) -> CompletedMarker {
+	let mut member_marker = p.start();
 
 	// test class_empty_element
 	// class foo { ;;;;;;;;;; get foo() {};;;;}
 	if p.eat(T![;]) {
-		return Some(member_marker.complete(p, JS_EMPTY_CLASS_MEMBER));
+		return member_marker.complete(p, JS_EMPTY_CLASS_MEMBER);
 	}
 
 	// test static_method
@@ -230,17 +230,16 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 		// declare() and declare: foo
 		if is_method_class_member(p, offset) {
 			literal_member_name(p); // bump declare as identifier
-			return Some(method_class_member_body(p, member_marker));
+			return method_class_member_body(p, member_marker);
 		} else if is_property_class_member(p, offset) {
 			literal_member_name(p); // bump declare as identifier
-			return Some(property_class_member_body(p, member_marker));
+			return property_class_member_body(p, member_marker);
 		} else {
 			let msg = if p.typescript() {
 				"a `declare` modifier cannot be applied to a class element"
 			} else {
 				"`declare` modifiers can only be used in TypeScript files"
 			};
-
 			let err = p.err_builder(msg).primary(p.cur_tok().range, "");
 
 			p.error(err);
@@ -268,14 +267,14 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 				m.complete(p, ERROR);
 			}
 
-			return Some(method_class_member(p, member_marker));
+			return method_class_member(p, member_marker);
 		} else if is_property_class_member(p, offset) {
 			if declare {
 				p.bump_remap(T![declare]);
 			}
 			p.bump_any();
 
-			return Some(property_class_member_body(p, member_marker));
+			return property_class_member_body(p, member_marker);
 		}
 	}
 
@@ -287,15 +286,15 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 		if is_method_class_member(p, offset) {
 			consume_modifiers(p, declare, has_access_modifier, is_static, true);
-			return Some(method_class_member_body(p, member_marker));
+			return method_class_member_body(p, member_marker);
 		} else if is_property_class_member(p, offset) {
 			consume_modifiers(p, declare, has_access_modifier, is_static, true);
 
-			return Some(if declare {
+			return if declare {
 				property_declaration_class_member_body(p, member_marker, JS_LITERAL_MEMBER_NAME)
 			} else {
 				property_class_member_body(p, member_marker)
-			});
+			};
 		}
 
 		// Seems that static is a keyword since the parser wasn't able to parse a valid method or property named static
@@ -340,16 +339,21 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 			p.error(err);
 		}
-		if let Some(mut sig) = try_parse_index_signature(p, member_marker.clone()) {
-			sig.err_if_not_ts(
-				p,
-				"class index signatures can only be used in TypeScript files",
-			);
-			return Some(sig);
-		} else {
-			p.rewind(check);
-		}
+		member_marker = match try_parse_index_signature(p, member_marker) {
+			Ok(mut sig) => {
+				sig.err_if_not_ts(
+					p,
+					"class index signatures can only be used in TypeScript files",
+				);
+				return sig;
+			}
+			Err(m) => {
+				p.rewind(check);
+				m
+			}
+		};
 	};
+
 	let generator_range = p.cur_tok().range;
 
 	if p.eat(T![*]) {
@@ -376,7 +380,7 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 			guard.error(err);
 		}
 
-		return Some(method_class_member(&mut *guard, member_marker));
+		return method_class_member(&mut *guard, member_marker);
 	};
 
 	if p.cur_src() == "async"
@@ -411,7 +415,7 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 			guard.error(err);
 		}
 
-		return Some(method_class_member(&mut *guard, member_marker));
+		return method_class_member(&mut *guard, member_marker);
 	}
 
 	let member_name = p.cur_src();
@@ -430,7 +434,7 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 			p.error(err);
 		}
 
-		return Some(if is_constructor {
+		return if is_constructor {
 			let constructor = constructor_class_member_body(p, member_marker);
 
 			if is_static {
@@ -453,7 +457,7 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 			constructor
 		} else {
 			method_class_member_body(p, member_marker)
-		});
+		};
 	}
 
 	if let Some(member) = member {
@@ -472,7 +476,7 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 				p.error(err);
 			}
 
-			return Some(property);
+			return property;
 		}
 
 		if member.kind() == JS_LITERAL_MEMBER_NAME {
@@ -513,7 +517,6 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 				// 	static set(a) {}
 				// }
 
-
 				// The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
 				// out that the 'get' or 'set' isn't a member name in this context but instead are the
 				// 'get'/'set' keywords for getters/setters. That's why we need to undo the member name node,
@@ -552,12 +555,9 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
 
-				return Some(completed);
+				return completed;
 			}
 		}
-
-		// We don't know what kind of member this is, wrap the member name in an unknown member
-		member.precede(p).complete(p, JS_UNKNOWN_MEMBER);
 	}
 
 	let err = p
@@ -569,7 +569,8 @@ fn class_member(p: &mut Parser) -> Option<CompletedMarker> {
 		err,
 	)
 	.recover(p);
-	None
+
+	member_marker.complete(p, JS_UNKNOWN_MEMBER)
 }
 
 const PROPERTY_START_SET: TokenSet = token_set![T![!], T![:], T![=], T!['}']];

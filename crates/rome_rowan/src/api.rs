@@ -1,5 +1,6 @@
 use std::{fmt, iter, marker::PhantomData, ops::Range};
 
+use crate::cursor::SyntaxSlot;
 use crate::{
 	cursor::{self},
 	Direction, GreenNode, NodeOrToken, SyntaxKind, SyntaxText, TextRange, TextSize, TokenAtOffset,
@@ -55,7 +56,7 @@ pub struct SyntaxTriviaPieceComments<L: Language>(SyntaxTriviaPiece<L>);
 /// [SyntaxTriviaPiece] gives access to the most granular information about the trivia
 /// that was specified by the lexer at the token creation time.
 ///
-/// For example:  
+/// For example:
 ///
 /// ```ignore
 /// builder.token_with_trivia(
@@ -98,7 +99,7 @@ impl<L: Language> SyntaxTriviaPiece<L> {
 	/// ```
 	pub fn text(&self) -> &str {
 		let txt = self.raw.text();
-		let start = self.offset;
+		let start = self.offset - self.raw.offset();
 		let end = start + self.text_len();
 
 		&txt[start.into()..end.into()]
@@ -227,15 +228,23 @@ impl<L: Language> fmt::Debug for SyntaxNode<L> {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		if f.alternate() {
 			let mut level = 0;
-			for event in self.preorder_with_tokens() {
+			for event in self.raw.preorder_slots() {
 				match event {
 					WalkEvent::Enter(element) => {
 						for _ in 0..level {
 							write!(f, "  ")?;
 						}
 						match element {
-							NodeOrToken::Node(node) => writeln!(f, "{:?}", node)?,
-							NodeOrToken::Token(token) => writeln!(f, "{:?}", token)?,
+							SyntaxSlot::Node(node) => {
+								writeln!(f, "{}: {:?}", node.index(), SyntaxNode::<L>::from(node))?
+							}
+							SyntaxSlot::Token(token) => writeln!(
+								f,
+								"{}: {:?}",
+								token.index(),
+								SyntaxToken::<L>::from(token)
+							)?,
+							SyntaxSlot::Empty { index, .. } => writeln!(f, "{}: (empty)", index)?,
 						}
 						level += 1;
 					}
@@ -256,20 +265,69 @@ impl<L: Language> fmt::Display for SyntaxNode<L> {
 	}
 }
 
-impl<L: Language> fmt::Debug for SyntaxToken<L> {
-	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-		write!(f, "{:?}@{:?}", self.kind(), self.text_range())?;
-		if self.text().len() < 25 {
-			return write!(f, " {:?}", self.text());
-		}
-		let text = self.text();
+fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+	let text = text.as_ref();
+	if text.len() < 25 {
+		return write!(f, "{:?}", text);
+	} else {
 		for idx in 21..25 {
 			if text.is_char_boundary(idx) {
 				let text = format!("{} ...", &text[..idx]);
-				return write!(f, " {:?}", text);
+				return write!(f, "{:?}", text);
 			}
 		}
-		unreachable!()
+		return write!(f, "");
+	}
+}
+
+fn print_debug_trivia_piece<L: Language>(
+	piece: SyntaxTriviaPiece<L>,
+	f: &mut fmt::Formatter<'_>,
+) -> fmt::Result {
+	match piece.trivia {
+		TriviaPiece::Whitespace(_) => {
+			write!(f, "Whitespace(")?;
+			print_debug_str(piece.text(), f)?;
+			write!(f, ")")
+		}
+		TriviaPiece::Comments(_) => {
+			write!(f, "Comments(")?;
+			print_debug_str(piece.text(), f)?;
+			write!(f, ")")
+		}
+	}
+}
+
+impl<L: Language> fmt::Debug for SyntaxToken<L> {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		write!(
+			f,
+			"{:?}@{:?} {:?} ",
+			self.kind(),
+			self.text_range(),
+			self.text_trimmed()
+		)?;
+
+		write!(f, "[")?;
+		let mut first_piece = true;
+		for piece in self.leading_trivia().pieces() {
+			if !first_piece {
+				write!(f, ", ")?;
+			}
+			first_piece = false;
+			print_debug_trivia_piece(piece, f)?;
+		}
+		write!(f, "] [")?;
+
+		let mut first_piece = true;
+		for piece in self.trailing_trivia().pieces() {
+			if !first_piece {
+				write!(f, ", ")?;
+			}
+			first_piece = false;
+			print_debug_trivia_piece(piece, f)?;
+		}
+		write!(f, "]")
 	}
 }
 
@@ -311,7 +369,7 @@ impl<L: Language> Iterator for SyntaxTriviaPiecesIterator<L> {
 }
 
 impl<L: Language> SyntaxTrivia<L> {
-	/// Returns the text of all descendants tokens combined, including all trivia.
+	/// Returns all [SyntaxTriviaPiece] of this trivia.
 	///
 	/// ```
 	/// use rome_rowan::*;
@@ -408,7 +466,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -434,7 +492,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -464,7 +522,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -492,7 +550,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -527,7 +585,7 @@ impl<L: Language> SyntaxNode<L> {
 	///     builder.token_with_trivia(
 	///         SyntaxKind(1),
 	///         "; \t\t",
-	///         vec![TriviaPiece::Whitespace(3)],
+	///         vec![],
 	///         vec![TriviaPiece::Whitespace(3)],
 	///     );
 	/// });
@@ -620,6 +678,11 @@ impl<L: Language> SyntaxNode<L> {
 
 	pub fn descendants(&self) -> impl Iterator<Item = SyntaxNode<L>> {
 		self.raw.descendants().map(SyntaxNode::from)
+	}
+
+	pub fn descendants_tokens(&self) -> impl Iterator<Item = SyntaxToken<L>> {
+		self.descendants_with_tokens()
+			.filter_map(|x| x.as_token().cloned())
 	}
 
 	pub fn descendants_with_tokens(&self) -> impl Iterator<Item = SyntaxElement<L>> {

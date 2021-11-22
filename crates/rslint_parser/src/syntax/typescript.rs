@@ -450,11 +450,10 @@ pub fn ts_type_member(p: &mut Parser) -> Option<CompletedMarker> {
 		(p.start(), false)
 	};
 
-	if let Some(idx) = try_parse_index_signature(p, m.clone()) {
-		return Some(idx);
+	match try_parse_index_signature(p, m) {
+		Ok(idx) => Some(idx),
+		Err(m) => ts_property_or_method_sig(p, m, readonly),
 	}
-
-	ts_property_or_method_sig(p, m, readonly)
 }
 
 fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Option<CompletedMarker> {
@@ -500,28 +499,44 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 	})
 }
 
-pub(crate) fn try_parse_index_signature(p: &mut Parser, m: Marker) -> Option<CompletedMarker> {
+pub(crate) fn try_parse_index_signature(
+	p: &mut Parser,
+	m: Marker,
+) -> Result<CompletedMarker, Marker> {
 	if !p.at(T!['['])
 		|| !(token_set![T![ident], T![await], T![yield]].contains(p.nth(1))
 			|| p.nth(1).is_keyword())
 		|| !token_set![T![:], T![,]].contains(p.nth(2))
 	{
-		return None;
+		return Err(m);
 	}
 
-	p.expect_no_recover(T!['['])?;
+	if p.expect_no_recover(T!['[']).is_none() {
+		return Err(m);
+	}
+
 	let pat_m = p.start();
 	identifier_name(p);
-	p.expect_no_recover(T![:])?;
-	no_recover!(p, ts_type(p));
-	pat_m.complete(p, SINGLE_PATTERN);
-	p.expect_no_recover(T![']'])?;
-
-	if p.eat(T![:]) {
-		no_recover!(p, ts_type(p));
+	if p.expect_no_recover(T![:]).is_none() {
+		return Err(m);
 	}
+
+	if ts_type(p).is_none() && p.state.no_recovery {
+		return Err(m);
+	}
+
+	pat_m.complete(p, SINGLE_PATTERN);
+
+	if p.expect_no_recover(T![']']).is_none() {
+		return Err(m);
+	}
+
+	if p.eat(T![:]) && ts_type(p).is_none() && p.state.no_recovery {
+		return Err(m);
+	}
+
 	type_member_semi(p);
-	Some(m.complete(p, TS_INDEX_SIGNATURE))
+	Ok(m.complete(p, TS_INDEX_SIGNATURE))
 }
 
 pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<CompletedMarker> {
@@ -659,15 +674,20 @@ pub fn ts_type(p: &mut Parser) -> Option<CompletedMarker> {
 
 pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<CompletedMarker> {
 	let m = p.start();
-	if !fn_type {
-		p.expect_no_recover(T![new])?;
+	if !fn_type && p.expect_no_recover(T![new]).is_none() {
+		m.abandon(p);
+		return None;
 	}
 
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
 	parameter_list(p);
-	no_recover!(p, ts_type_or_type_predicate_ann(p, T![=>]));
+	if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {
+		m.abandon(p);
+		return None;
+	}
+
 	Some(m.complete(
 		p,
 		if fn_type {
@@ -801,12 +821,15 @@ fn intersection_or_union(
 		types_list.complete(p, LIST);
 		Some(m.complete(p, kind))
 	} else if !saw_op && ty.is_none() {
+		types_list.abandon(p);
 		m.abandon(p);
 		None
 	} else if !saw_op {
+		types_list.abandon(p);
 		m.abandon(p);
 		ty
 	} else {
+		types_list.complete(p, LIST);
 		Some(m.complete(p, kind))
 	}
 }
@@ -1040,7 +1063,11 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 
 pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
-	p.expect_no_recover(T![<])?;
+	if p.expect_no_recover(T![<]).is_none() {
+		m.abandon(p);
+		return None;
+	}
+
 	let mut first = true;
 
 	let args_list = p.start();
@@ -1058,15 +1085,26 @@ pub fn ts_type_args(p: &mut Parser) -> Option<CompletedMarker> {
 				.primary(range, "help: remove this comma");
 
 			p.error(err);
-		} else {
-			p.expect_no_recover(T![,])?;
+		} else if p.expect_no_recover(T![,]).is_none() {
+			args_list.abandon(p);
+			m.abandon(p);
+			return None;
 		}
-		no_recover!(p, ts_type(p));
+
+		if ts_type(p).is_none() && p.state.no_recovery {
+			args_list.abandon(p);
+			m.abandon(p);
+			return None;
+		}
 	}
 	args_list.complete(p, LIST);
 
-	p.expect_no_recover(T![>])?;
-	Some(m.complete(p, TS_TYPE_ARGS))
+	if p.expect_no_recover(T![>]).is_none() {
+		m.abandon(p);
+		None
+	} else {
+		Some(m.complete(p, TS_TYPE_ARGS))
+	}
 }
 
 // FIXME: `<T() => {}` causes infinite recursion if the parser isnt being run with `no_recovery`
@@ -1296,6 +1334,7 @@ pub(crate) fn maybe_eat_incorrect_modifier(p: &mut Parser) -> Option<CompletedMa
 	} else if ts_modifier(p, &["readonly"]).is_some() {
 		Some(maybe_err.complete(p, ERROR))
 	} else {
+		maybe_err.abandon(p);
 		None
 	}
 }

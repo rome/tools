@@ -1,41 +1,33 @@
-JS_ROOT@0..31
-  LIST@0..0
-  LIST@0..30
-    JS_VARIABLE_DECLARATION_STATEMENT@0..30
-      JS_VARIABLE_DECLARATION@0..30
-        LET_KW@0..3 "let"
-        WHITESPACE@3..4 " "
-        LIST@4..30
-          JS_VARIABLE_DECLARATOR@4..30
-            SINGLE_PATTERN@4..5
-              NAME@4..5
-                IDENT@4..5 "b"
-            WHITESPACE@5..6 " "
-            JS_EQUAL_VALUE_CLAUSE@6..30
-              EQ@6..7 "="
-              WHITESPACE@7..8 " "
-              JS_OBJECT_EXPRESSION@8..30
-                L_CURLY@8..9 "{"
-                WHITESPACE@9..10 " "
-                LIST@10..28
-                  INITIALIZED_PROP@10..17
-                    NAME@10..13
-                      IDENT@10..13 "foo"
-                    WHITESPACE@13..14 " "
-                    EQ@14..15 "="
-                    WHITESPACE@15..16 " "
-                    JS_NUMBER_LITERAL@16..17
-                      JS_NUMBER_LITERAL_TOKEN@16..17 "4"
-                  COMMA@17..18 ","
-                  WHITESPACE@18..19 " "
-                  INITIALIZED_PROP@19..28
-                    NAME@19..22
-                      IDENT@19..22 "foo"
-                    WHITESPACE@22..23 " "
-                    EQ@23..24 "="
-                    WHITESPACE@24..25 " "
-                    JS_REFERENCE_IDENTIFIER_EXPRESSION@25..28
-                      IDENT@25..28 "bar"
-                WHITESPACE@28..29 " "
-                R_CURLY@29..30 "}"
-  WHITESPACE@30..31 "\n"
+0: JS_ROOT@0..31
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..30
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..30
+      0: JS_VARIABLE_DECLARATION@0..30
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..30
+          0: JS_VARIABLE_DECLARATOR@4..30
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "b" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..30
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@8..30
+                0: L_CURLY@8..10 "{" [] [Whitespace(" ")]
+                1: LIST@10..29
+                  0: INITIALIZED_PROP@10..17
+                    0: NAME@10..14
+                      0: IDENT@10..14 "foo" [] [Whitespace(" ")]
+                    1: EQ@14..16 "=" [] [Whitespace(" ")]
+                    2: JS_NUMBER_LITERAL@16..17
+                      0: JS_NUMBER_LITERAL_TOKEN@16..17 "4" [] []
+                  1: COMMA@17..19 "," [] [Whitespace(" ")]
+                  2: INITIALIZED_PROP@19..29
+                    0: NAME@19..23
+                      0: IDENT@19..23 "foo" [] [Whitespace(" ")]
+                    1: EQ@23..25 "=" [] [Whitespace(" ")]
+                    2: JS_REFERENCE_IDENTIFIER_EXPRESSION@25..29
+                      0: IDENT@25..29 "bar" [] [Whitespace(" ")]
+                2: R_CURLY@29..30 "}" [] []
+      1: (empty)
+  3: EOF@30..31 "" [Whitespace("\n")] []

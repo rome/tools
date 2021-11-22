@@ -1,44 +1,34 @@
-JS_ROOT@0..44
-  LIST@0..0
-  LIST@0..43
-    JS_EXPRESSION_STATEMENT@0..15
-      JS_CONDITIONAL_EXPRESSION@0..15
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo"
-        WHITESPACE@3..4 " "
-        QUESTION@4..5 "?"
-        WHITESPACE@5..6 " "
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@6..9
-          IDENT@6..9 "bar"
-        WHITESPACE@9..10 " "
-        COLON@10..11 ":"
-        WHITESPACE@11..12 " "
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@12..15
-          IDENT@12..15 "baz"
-    WHITESPACE@15..16 "\n"
-    JS_EXPRESSION_STATEMENT@16..43
-      JS_CONDITIONAL_EXPRESSION@16..43
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@16..19
-          IDENT@16..19 "foo"
-        WHITESPACE@19..20 " "
-        QUESTION@20..21 "?"
-        WHITESPACE@21..22 " "
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@22..25
-          IDENT@22..25 "bar"
-        WHITESPACE@25..26 " "
-        COLON@26..27 ":"
-        WHITESPACE@27..28 " "
-        JS_CONDITIONAL_EXPRESSION@28..43
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@28..31
-            IDENT@28..31 "baz"
-          WHITESPACE@31..32 " "
-          QUESTION@32..33 "?"
-          WHITESPACE@33..34 " "
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@34..37
-            IDENT@34..37 "bar"
-          WHITESPACE@37..38 " "
-          COLON@38..39 ":"
-          WHITESPACE@39..40 " "
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@40..43
-            IDENT@40..43 "baz"
-  WHITESPACE@43..44 "\n"
+0: JS_ROOT@0..44
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..43
+    0: JS_EXPRESSION_STATEMENT@0..15
+      0: JS_CONDITIONAL_EXPRESSION@0..15
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..4
+          0: IDENT@0..4 "foo" [] [Whitespace(" ")]
+        1: QUESTION@4..6 "?" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@6..10
+          0: IDENT@6..10 "bar" [] [Whitespace(" ")]
+        3: COLON@10..12 ":" [] [Whitespace(" ")]
+        4: JS_REFERENCE_IDENTIFIER_EXPRESSION@12..15
+          0: IDENT@12..15 "baz" [] []
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@15..43
+      0: JS_CONDITIONAL_EXPRESSION@15..43
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..20
+          0: IDENT@15..20 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        1: QUESTION@20..22 "?" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@22..26
+          0: IDENT@22..26 "bar" [] [Whitespace(" ")]
+        3: COLON@26..28 ":" [] [Whitespace(" ")]
+        4: JS_CONDITIONAL_EXPRESSION@28..43
+          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@28..32
+            0: IDENT@28..32 "baz" [] [Whitespace(" ")]
+          1: QUESTION@32..34 "?" [] [Whitespace(" ")]
+          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@34..38
+            0: IDENT@34..38 "bar" [] [Whitespace(" ")]
+          3: COLON@38..40 ":" [] [Whitespace(" ")]
+          4: JS_REFERENCE_IDENTIFIER_EXPRESSION@40..43
+            0: IDENT@40..43 "baz" [] []
+      1: (empty)
+  3: EOF@43..44 "" [Whitespace("\n")] []

@@ -7,14 +7,13 @@ use rslint_parser::ast::{
 impl ToFormatElement for JsStringLiteral {
 	fn to_format_element(&self, _: &Formatter) -> FormatResult<FormatElement> {
 		let value_token = self.value_token()?;
-		let quoted = value_token.text();
+		let quoted = value_token.text_trimmed();
 
 		// uses single quotes
 		if quoted.starts_with('\'') {
-			let mut double_quoted = String::from(quoted);
-			double_quoted.replace_range(0..1, "\"");
-			double_quoted.replace_range(double_quoted.len() - 1..double_quoted.len(), "\"");
-			Ok(token(double_quoted.as_str()))
+			let s = &quoted[1..quoted.len() - 1];
+			let s = format!("\"{}\"", s);
+			Ok(token(s))
 		} else {
 			Ok(token(quoted))
 		}

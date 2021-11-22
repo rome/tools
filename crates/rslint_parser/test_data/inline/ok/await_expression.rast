@@ -1,91 +1,74 @@
-JS_ROOT@0..116
-  LIST@0..0
-  LIST@0..115
-    JS_FUNCTION_DECLARATION@0..76
-      ASYNC_KW@0..5 "async"
-      WHITESPACE@5..6 " "
-      FUNCTION_KW@6..14 "function"
-      WHITESPACE@14..15 " "
-      JS_IDENTIFIER_BINDING@15..19
-        IDENT@15..19 "test"
-      JS_PARAMETER_LIST@19..21
-        L_PAREN@19..20 "("
-        LIST@20..20
-        R_PAREN@20..21 ")"
-      WHITESPACE@21..22 " "
-      JS_FUNCTION_BODY@22..76
-        L_CURLY@22..23 "{"
-        WHITESPACE@23..25 "\n\t"
-        LIST@25..25
-        LIST@25..74
-          JS_EXPRESSION_STATEMENT@25..39
-            JS_AWAIT_EXPRESSION@25..38
-              AWAIT_KW@25..30 "await"
-              WHITESPACE@30..31 " "
-              CALL_EXPR@31..38
-                JS_REFERENCE_IDENTIFIER_EXPRESSION@31..36
-                  IDENT@31..36 "inner"
-                ARG_LIST@36..38
-                  L_PAREN@36..37 "("
-                  LIST@37..37
-                  R_PAREN@37..38 ")"
-            SEMICOLON@38..39 ";"
-          WHITESPACE@39..42 "\n\n\t"
-          JS_EXPRESSION_STATEMENT@42..74
-            JS_BINARY_EXPRESSION@42..73
-              JS_AWAIT_EXPRESSION@42..57
-                AWAIT_KW@42..47 "await"
-                WHITESPACE@47..48 " "
-                JS_PARENTHESIZED_EXPRESSION@48..57
-                  L_PAREN@48..49 "("
-                  CALL_EXPR@49..56
-                    JS_REFERENCE_IDENTIFIER_EXPRESSION@49..54
-                      IDENT@49..54 "inner"
-                    ARG_LIST@54..56
-                      L_PAREN@54..55 "("
-                      LIST@55..55
-                      R_PAREN@55..56 ")"
-                  R_PAREN@56..57 ")"
-              WHITESPACE@57..58 " "
-              PLUS@58..59 "+"
-              WHITESPACE@59..60 " "
-              JS_AWAIT_EXPRESSION@60..73
-                AWAIT_KW@60..65 "await"
-                WHITESPACE@65..66 " "
-                CALL_EXPR@66..73
-                  JS_REFERENCE_IDENTIFIER_EXPRESSION@66..71
-                    IDENT@66..71 "inner"
-                  ARG_LIST@71..73
-                    L_PAREN@71..72 "("
-                    LIST@72..72
-                    R_PAREN@72..73 ")"
-            SEMICOLON@73..74 ";"
-        WHITESPACE@74..75 "\n"
-        R_CURLY@75..76 "}"
-    WHITESPACE@76..78 "\n\n"
-    JS_FUNCTION_DECLARATION@78..115
-      ASYNC_KW@78..83 "async"
-      WHITESPACE@83..84 " "
-      FUNCTION_KW@84..92 "function"
-      WHITESPACE@92..93 " "
-      JS_IDENTIFIER_BINDING@93..98
-        IDENT@93..98 "inner"
-      JS_PARAMETER_LIST@98..100
-        L_PAREN@98..99 "("
-        LIST@99..99
-        R_PAREN@99..100 ")"
-      WHITESPACE@100..101 " "
-      JS_FUNCTION_BODY@101..115
-        L_CURLY@101..102 "{"
-        WHITESPACE@102..104 "\n\t"
-        LIST@104..104
-        LIST@104..113
-          JS_RETURN_STATEMENT@104..113
-            RETURN_KW@104..110 "return"
-            WHITESPACE@110..111 " "
-            JS_NUMBER_LITERAL@111..112
-              JS_NUMBER_LITERAL_TOKEN@111..112 "4"
-            SEMICOLON@112..113 ";"
-        WHITESPACE@113..114 "\n"
-        R_CURLY@114..115 "}"
-  WHITESPACE@115..116 "\n"
+0: JS_ROOT@0..116
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..115
+    0: JS_FUNCTION_DECLARATION@0..76
+      0: ASYNC_KW@0..6 "async" [] [Whitespace(" ")]
+      1: FUNCTION_KW@6..15 "function" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@15..19
+        0: IDENT@15..19 "test" [] []
+      3: JS_PARAMETER_LIST@19..22
+        0: L_PAREN@19..20 "(" [] []
+        1: LIST@20..20
+        2: R_PAREN@20..22 ")" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@22..76
+        0: L_CURLY@22..23 "{" [] []
+        1: LIST@23..23
+        2: LIST@23..74
+          0: JS_EXPRESSION_STATEMENT@23..39
+            0: JS_AWAIT_EXPRESSION@23..38
+              0: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")]
+              1: CALL_EXPR@31..38
+                0: JS_REFERENCE_IDENTIFIER_EXPRESSION@31..36
+                  0: IDENT@31..36 "inner" [] []
+                1: ARG_LIST@36..38
+                  0: L_PAREN@36..37 "(" [] []
+                  1: LIST@37..37
+                  2: R_PAREN@37..38 ")" [] []
+            1: SEMICOLON@38..39 ";" [] []
+          1: JS_EXPRESSION_STATEMENT@39..74
+            0: JS_BINARY_EXPRESSION@39..73
+              0: JS_AWAIT_EXPRESSION@39..58
+                0: AWAIT_KW@39..48 "await" [Whitespace("\n\n\t")] [Whitespace(" ")]
+                1: JS_PARENTHESIZED_EXPRESSION@48..58
+                  0: L_PAREN@48..49 "(" [] []
+                  1: CALL_EXPR@49..56
+                    0: JS_REFERENCE_IDENTIFIER_EXPRESSION@49..54
+                      0: IDENT@49..54 "inner" [] []
+                    1: ARG_LIST@54..56
+                      0: L_PAREN@54..55 "(" [] []
+                      1: LIST@55..55
+                      2: R_PAREN@55..56 ")" [] []
+                  2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
+              1: PLUS@58..60 "+" [] [Whitespace(" ")]
+              2: JS_AWAIT_EXPRESSION@60..73
+                0: AWAIT_KW@60..66 "await" [] [Whitespace(" ")]
+                1: CALL_EXPR@66..73
+                  0: JS_REFERENCE_IDENTIFIER_EXPRESSION@66..71
+                    0: IDENT@66..71 "inner" [] []
+                  1: ARG_LIST@71..73
+                    0: L_PAREN@71..72 "(" [] []
+                    1: LIST@72..72
+                    2: R_PAREN@72..73 ")" [] []
+            1: SEMICOLON@73..74 ";" [] []
+        3: R_CURLY@74..76 "}" [Whitespace("\n")] []
+    1: JS_FUNCTION_DECLARATION@76..115
+      0: ASYNC_KW@76..84 "async" [Whitespace("\n\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@84..93 "function" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@93..98
+        0: IDENT@93..98 "inner" [] []
+      3: JS_PARAMETER_LIST@98..101
+        0: L_PAREN@98..99 "(" [] []
+        1: LIST@99..99
+        2: R_PAREN@99..101 ")" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@101..115
+        0: L_CURLY@101..102 "{" [] []
+        1: LIST@102..102
+        2: LIST@102..113
+          0: JS_RETURN_STATEMENT@102..113
+            0: RETURN_KW@102..111 "return" [Whitespace("\n\t")] [Whitespace(" ")]
+            1: JS_NUMBER_LITERAL@111..112
+              0: JS_NUMBER_LITERAL_TOKEN@111..112 "4" [] []
+            2: SEMICOLON@112..113 ";" [] []
+        3: R_CURLY@113..115 "}" [Whitespace("\n")] []
+  3: EOF@115..116 "" [Whitespace("\n")] []
