@@ -71,7 +71,7 @@ impl ParseRecoverer {
 
 	/// Checks if the parsing phase is recoverable by checking curly braces and [tokens set](TokenSet)
 	fn parsing_is_recoverable(&self, parser: &Parser) -> bool {
-		self.is_at_token_set(parser) || self.is_at_braces(parser)
+		self.is_at_token_set(parser) || self.is_at_braces(parser) || self.is_at_eof(parser)
 	}
 
 	/// It returns the diagnostic
@@ -86,9 +86,14 @@ impl ParseRecoverer {
 
 	fn is_at_braces(&self, parser: &Parser) -> bool {
 		matches!(parser.cur(), T!['{'] | T!['}'] if self.include_braces)
+
 	}
 
 	fn is_at_token_set(&self, parser: &Parser) -> bool {
 		parser.at_ts(self.recovery)
+	}
+
+	fn is_at_eof(&self, parser: &Parser) -> bool {
+		parser.cur() == SyntaxKind::EOF
 	}
 }
