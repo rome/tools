@@ -44,7 +44,7 @@
       3: LIST@61..98
         0: JS_CONSTRUCTOR_CLASS_MEMBER@61..98
           0: JS_LITERAL_MEMBER_NAME@61..76
-            0: JS_STRING_LITERAL_TOKEN@61..76 "\"constructor\"" [Whitespace("\n\t")] []
+            0: JS_STRING_LITERAL@61..76 "\"constructor\"" [Whitespace("\n\t")] []
           1: JS_CONSTRUCTOR_PARAMETER_LIST@76..80
             0: L_PAREN@76..77 "(" [] []
             1: LIST@77..78

@@ -25,8 +25,8 @@
                 0: IDENT@15..17 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@17..21
               0: EQ@17..19 "=" [] [Whitespace(" ")]
-              1: JS_NUMBER_LITERAL@19..21
-                0: JS_NUMBER_LITERAL_TOKEN@19..21 "5" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL_EXPRESSION@19..21
+                0: JS_NUMBER_LITERAL@19..21 "5" [] [Whitespace(" ")]
       1: (empty)
     2: JS_VARIABLE_DECLARATION_STATEMENT@21..31
       0: JS_VARIABLE_DECLARATION@21..30
@@ -38,8 +38,8 @@
                 0: IDENT@25..27 "b" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@27..30
               0: EQ@27..29 "=" [] [Whitespace(" ")]
-              1: JS_NUMBER_LITERAL@29..30
-                0: JS_NUMBER_LITERAL_TOKEN@29..30 "5" [] []
+              1: JS_NUMBER_LITERAL_EXPRESSION@29..30
+                0: JS_NUMBER_LITERAL@29..30 "5" [] []
       1: SEMICOLON@30..31 ";" [] []
   3: EOF@31..32 "" [Whitespace("\n")] []
 --

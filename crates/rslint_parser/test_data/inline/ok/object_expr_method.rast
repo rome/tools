@@ -30,7 +30,7 @@
                   1: COMMA@20..21 "," [] []
                   2: JS_METHOD_OBJECT_MEMBER@21..40
                     0: JS_LITERAL_MEMBER_NAME@21..28
-                      0: JS_STRING_LITERAL_TOKEN@21..28 "\"bar\"" [Whitespace("\n\t")] []
+                      0: JS_STRING_LITERAL@21..28 "\"bar\"" [Whitespace("\n\t")] []
                     1: JS_PARAMETER_LIST@28..38
                       0: L_PAREN@28..29 "(" [] []
                       1: LIST@29..36
@@ -56,11 +56,11 @@
                     0: JS_COMPUTED_MEMBER_NAME@41..58
                       0: L_BRACK@41..44 "[" [Whitespace("\n\t")] []
                       1: JS_BINARY_EXPRESSION@44..57
-                        0: JS_STRING_LITERAL@44..50
-                          0: JS_STRING_LITERAL_TOKEN@44..50 "\"foo\"" [] [Whitespace(" ")]
+                        0: JS_STRING_LITERAL_EXPRESSION@44..50
+                          0: JS_STRING_LITERAL@44..50 "\"foo\"" [] [Whitespace(" ")]
                         1: PLUS@50..52 "+" [] [Whitespace(" ")]
-                        2: JS_STRING_LITERAL@52..57
-                          0: JS_STRING_LITERAL_TOKEN@52..57 "\"bar\"" [] []
+                        2: JS_STRING_LITERAL_EXPRESSION@52..57
+                          0: JS_STRING_LITERAL@52..57 "\"bar\"" [] []
                       2: R_BRACK@57..58 "]" [] []
                     1: JS_PARAMETER_LIST@58..62
                       0: L_PAREN@58..59 "(" [] []
@@ -77,7 +77,7 @@
                   5: COMMA@64..65 "," [] []
                   6: JS_METHOD_OBJECT_MEMBER@65..80
                     0: JS_LITERAL_MEMBER_NAME@65..68
-                      0: JS_NUMBER_LITERAL_TOKEN@65..68 "5" [Whitespace("\n\t")] []
+                      0: JS_NUMBER_LITERAL@65..68 "5" [Whitespace("\n\t")] []
                     1: JS_PARAMETER_LIST@68..78
                       0: L_PAREN@68..69 "(" [] []
                       1: LIST@69..76

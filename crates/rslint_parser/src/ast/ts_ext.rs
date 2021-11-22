@@ -39,7 +39,7 @@ impl TsImport {
 		self.syntax()
 			.tokens()
 			.into_iter()
-			.find(|t| t.kind() == JS_STRING_LITERAL_TOKEN)
+			.find(|t| t.kind() == JS_STRING_LITERAL)
 	}
 }
 

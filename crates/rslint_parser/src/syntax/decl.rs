@@ -13,8 +13,8 @@ pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
 	T![await],
 	T![;],
 	T!['}'],
-	JS_NUMBER_LITERAL_TOKEN,
-	JS_STRING_LITERAL_TOKEN
+	JS_NUMBER_LITERAL,
+	JS_STRING_LITERAL
 ];
 
 #[allow(clippy::unnecessary_unwrap)]

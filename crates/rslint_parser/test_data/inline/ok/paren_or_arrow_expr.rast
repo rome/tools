@@ -29,11 +29,11 @@
       0: JS_PARENTHESIZED_EXPRESSION@19..27
         0: L_PAREN@19..21 "(" [Whitespace("\n")] []
         1: JS_BINARY_EXPRESSION@21..26
-          0: JS_NUMBER_LITERAL@21..23
-            0: JS_NUMBER_LITERAL_TOKEN@21..23 "5" [] [Whitespace(" ")]
+          0: JS_NUMBER_LITERAL_EXPRESSION@21..23
+            0: JS_NUMBER_LITERAL@21..23 "5" [] [Whitespace(" ")]
           1: PLUS@23..25 "+" [] [Whitespace(" ")]
-          2: JS_NUMBER_LITERAL@25..26
-            0: JS_NUMBER_LITERAL_TOKEN@25..26 "5" [] []
+          2: JS_NUMBER_LITERAL_EXPRESSION@25..26
+            0: JS_NUMBER_LITERAL@25..26 "5" [] []
         2: R_PAREN@26..27 ")" [] []
       1: SEMICOLON@27..28 ";" [] []
     3: JS_EXPRESSION_STATEMENT@28..64

@@ -17,10 +17,10 @@
                 1: LIST@10..25
                   0: JS_PROPERTY_OBJECT_MEMBER@10..25
                     0: ERROR@10..17
-                      0: JS_REGEX_LITERAL_TOKEN@10..17 "/: 6, /" [] []
+                      0: JS_REGEX_LITERAL@10..17 "/: 6, /" [] []
                     1: COLON@17..19 ":" [] [Whitespace(" ")]
-                    2: JS_REGEX_LITERAL@19..25
-                      0: JS_REGEX_LITERAL_TOKEN@19..25 "/foo/" [] [Whitespace(" ")]
+                    2: JS_REGEX_LITERAL_EXPRESSION@19..25
+                      0: JS_REGEX_LITERAL@19..25 "/foo/" [] [Whitespace(" ")]
                 2: R_CURLY@25..26 "}" [] []
       1: (empty)
     1: JS_VARIABLE_DECLARATION_STATEMENT@26..38

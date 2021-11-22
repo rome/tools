@@ -62,7 +62,7 @@
             3: R_CURLY@106..107 "}" [] []
         4: JS_METHOD_CLASS_MEMBER@107..120
           0: JS_LITERAL_MEMBER_NAME@107..115
-            0: JS_STRING_LITERAL_TOKEN@107..115 "\"foo\"" [Whitespace("\n\n\t")] []
+            0: JS_STRING_LITERAL@107..115 "\"foo\"" [Whitespace("\n\n\t")] []
           1: JS_PARAMETER_LIST@115..118
             0: L_PAREN@115..116 "(" [] []
             1: LIST@116..116
@@ -76,11 +76,11 @@
           0: JS_COMPUTED_MEMBER_NAME@120..137
             0: L_BRACK@120..123 "[" [Whitespace("\n\t")] []
             1: JS_BINARY_EXPRESSION@123..136
-              0: JS_STRING_LITERAL@123..129
-                0: JS_STRING_LITERAL_TOKEN@123..129 "\"foo\"" [] [Whitespace(" ")]
+              0: JS_STRING_LITERAL_EXPRESSION@123..129
+                0: JS_STRING_LITERAL@123..129 "\"foo\"" [] [Whitespace(" ")]
               1: PLUS@129..131 "+" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL@131..136
-                0: JS_STRING_LITERAL_TOKEN@131..136 "\"bar\"" [] []
+              2: JS_STRING_LITERAL_EXPRESSION@131..136
+                0: JS_STRING_LITERAL@131..136 "\"bar\"" [] []
             2: R_BRACK@136..137 "]" [] []
           1: JS_PARAMETER_LIST@137..140
             0: L_PAREN@137..138 "(" [] []
@@ -93,7 +93,7 @@
             3: R_CURLY@141..142 "}" [] []
         6: JS_METHOD_CLASS_MEMBER@142..150
           0: JS_LITERAL_MEMBER_NAME@142..145
-            0: JS_NUMBER_LITERAL_TOKEN@142..145 "5" [Whitespace("\n\t")] []
+            0: JS_NUMBER_LITERAL@142..145 "5" [Whitespace("\n\t")] []
           1: JS_PARAMETER_LIST@145..148
             0: L_PAREN@145..146 "(" [] []
             1: LIST@146..146

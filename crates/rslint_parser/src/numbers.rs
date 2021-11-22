@@ -42,7 +42,7 @@ pub fn parse_js_big_int(num: &str) -> Option<BigInt> {
 #[cfg(test)]
 mod tests {
 	use crate::{
-		ast::{AstNode, JsBigIntLiteral, JsNumberLiteral},
+		ast::{AstNode, JsBigIntLiteralExpression, JsNumberLiteralExpression},
 		parse_expr,
 	};
 	use num_bigint::ToBigInt;
@@ -50,7 +50,7 @@ mod tests {
 	macro_rules! assert_float {
 		($literal:literal, $value:expr) => {
 			let parsed = parse_expr($literal, 0);
-			if let Some(literal) = JsNumberLiteral::cast(parsed.syntax()) {
+			if let Some(literal) = JsNumberLiteralExpression::cast(parsed.syntax()) {
 				assert_eq!(literal.as_number(), Some($value));
 			} else {
 				panic!(
@@ -64,7 +64,7 @@ mod tests {
 	macro_rules! assert_bigint {
 		($literal:literal, $value:expr) => {
 			let parsed = parse_expr($literal, 0);
-			if let Some(literal) = JsBigIntLiteral::cast(parsed.syntax()) {
+			if let Some(literal) = JsBigIntLiteralExpression::cast(parsed.syntax()) {
 				let val = ($value as u64).to_bigint();
 				assert_eq!(literal.as_number(), val);
 			} else {

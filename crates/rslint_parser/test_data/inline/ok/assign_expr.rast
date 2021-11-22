@@ -15,8 +15,8 @@
             0: JS_REFERENCE_IDENTIFIER_EXPRESSION@13..15
               0: IDENT@13..15 "b" [] [Whitespace(" ")]
             1: QUESTION2EQ@15..19 "??=" [] [Whitespace(" ")]
-            2: JS_NUMBER_LITERAL@19..20
-              0: JS_NUMBER_LITERAL_TOKEN@19..20 "3" [] []
+            2: JS_NUMBER_LITERAL_EXPRESSION@19..20
+              0: JS_NUMBER_LITERAL@19..20 "3" [] []
       1: SEMICOLON@20..21 ";" [] []
     1: JS_EXPRESSION_STATEMENT@21..33
       0: ASSIGN_EXPR@21..32

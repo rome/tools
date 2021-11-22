@@ -4,9 +4,10 @@ use crate::{
 	space_token, token,
 };
 use rslint_parser::ast::{
-	JsAnyObjectMember, JsArrayExpression, JsBooleanLiteral, JsLiteralMemberName, JsNullLiteral,
-	JsNumberLiteral, JsObjectExpression, JsParenthesizedExpression, JsPropertyObjectMember,
-	JsStringLiteral, JsUnaryExpression,
+	JsAnyObjectMember, JsArrayExpression, JsBooleanLiteralExpression, JsLiteralMemberName,
+	JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression,
+	JsParenthesizedExpression, JsPropertyObjectMember, JsStringLiteralExpression,
+	JsUnaryExpression,
 };
 use rslint_parser::{parse_text, AstNode, SyntaxKind, SyntaxNode, SyntaxNodeExt, SyntaxToken};
 
@@ -15,8 +16,8 @@ fn tokenize_token(syntax_token: SyntaxToken) -> FormatElement {
 		SyntaxKind::NULL_KW => token("null"),
 		SyntaxKind::TRUE_KW => token("true"),
 		SyntaxKind::FALSE_KW => token("false"),
-		SyntaxKind::JS_STRING_LITERAL_TOKEN => token(syntax_token.text_trimmed()),
-		SyntaxKind::JS_NUMBER_LITERAL_TOKEN => token(syntax_token.text_trimmed()),
+		SyntaxKind::JS_STRING_LITERAL => token(syntax_token.text_trimmed()),
+		SyntaxKind::JS_NUMBER_LITERAL => token(syntax_token.text_trimmed()),
 		SyntaxKind::MINUS => token("-"),
 		_ => panic!("Unsupported JSON token {:?}", syntax_token),
 	}
@@ -27,18 +28,24 @@ fn tokenize_node(node: SyntaxNode) -> FormatElement {
 		SyntaxKind::JS_LITERAL_MEMBER_NAME => {
 			tokenize_token(node.to::<JsLiteralMemberName>().value().unwrap())
 		}
-		SyntaxKind::JS_STRING_LITERAL => {
-			tokenize_token(node.to::<JsStringLiteral>().value_token().unwrap())
+		SyntaxKind::JS_STRING_LITERAL_EXPRESSION => tokenize_token(
+			node.to::<JsStringLiteralExpression>()
+				.value_token()
+				.unwrap(),
+		),
+		SyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION => tokenize_token(
+			node.to::<JsBooleanLiteralExpression>()
+				.value_token()
+				.unwrap(),
+		),
+		SyntaxKind::JS_NULL_LITERAL_EXPRESSION => {
+			tokenize_token(node.to::<JsNullLiteralExpression>().value_token().unwrap())
 		}
-		SyntaxKind::JS_BOOLEAN_LITERAL => {
-			tokenize_token(node.to::<JsBooleanLiteral>().value_token().unwrap())
-		}
-		SyntaxKind::JS_NULL_LITERAL => {
-			tokenize_token(node.to::<JsNullLiteral>().value_token().unwrap())
-		}
-		SyntaxKind::JS_NUMBER_LITERAL => {
-			tokenize_token(node.to::<JsNumberLiteral>().value_token().unwrap())
-		}
+		SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION => tokenize_token(
+			node.to::<JsNumberLiteralExpression>()
+				.value_token()
+				.unwrap(),
+		),
 		SyntaxKind::JS_UNARY_EXPRESSION => {
 			let expr = JsUnaryExpression::cast(node).unwrap();
 			format_elements![

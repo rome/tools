@@ -14,7 +14,7 @@
         0: L_CURLY@27..28 "{" [] []
         1: LIST@28..43
           0: JS_DIRECTIVE@28..43
-            0: JS_STRING_LITERAL_TOKEN@28..42 "\"use strict\"" [Whitespace("\n\t")] []
+            0: JS_STRING_LITERAL@28..42 "\"use strict\"" [Whitespace("\n\t")] []
             1: SEMICOLON@42..43 ";" [] []
         2: LIST@43..158
           0: JS_FUNCTION_DECLARATION@43..84
@@ -29,7 +29,7 @@
               0: L_CURLY@64..65 "{" [] []
               1: LIST@65..81
                 0: JS_DIRECTIVE@65..81
-                  0: JS_STRING_LITERAL_TOKEN@65..80 "\"use strict\"" [Whitespace("\n\t\t")] []
+                  0: JS_STRING_LITERAL@65..80 "\"use strict\"" [Whitespace("\n\t\t")] []
                   1: SEMICOLON@80..81 ";" [] []
               2: LIST@81..81
               3: R_CURLY@81..84 "}" [Whitespace("\n\t")] []
@@ -57,7 +57,7 @@
                     0: L_CURLY@133..134 "{" [] []
                     1: LIST@134..151
                       0: JS_DIRECTIVE@134..151
-                        0: JS_STRING_LITERAL_TOKEN@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] []
+                        0: JS_STRING_LITERAL@134..150 "\"use strict\"" [Whitespace("\n\t\t\t")] []
                         1: SEMICOLON@150..151 ";" [] []
                     2: LIST@151..151
                     3: R_CURLY@151..155 "}" [Whitespace("\n\t\t")] []

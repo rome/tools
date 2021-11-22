@@ -1,7 +1,7 @@
 //! TypeScript specific functions.
 
 use super::decl::*;
-use super::expr::{assign_expr, identifier_name, lhs_expr, literal};
+use super::expr::{assign_expr, identifier_name, lhs_expr, literal_expression};
 use super::stmt::{semi, statements, variable_declaration_statement};
 use crate::syntax::class::class_declaration;
 use crate::syntax::expr::any_reference_member;
@@ -219,7 +219,7 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 
 	if p.cur_src() == "module" {
-		if p.nth_at(1, JS_STRING_LITERAL_TOKEN) {
+		if p.nth_at(1, JS_STRING_LITERAL) {
 			return ts_ambient_external_module_decl(p, true);
 		} else if token_set![T![ident], T![yield], T![await]].contains(p.nth(1)) {
 			p.bump_remap(T![module]);
@@ -311,7 +311,7 @@ pub fn ts_ambient_external_module_decl(
 	if p.cur_src() == "global" {
 		p.bump_any();
 	} else {
-		p.expect(JS_STRING_LITERAL_TOKEN);
+		p.expect(JS_STRING_LITERAL);
 	}
 	if p.at(T!['{']) {
 		ts_module_block(p);
@@ -462,8 +462,8 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 		p.expect_no_recover(T![']'])?;
 	} else {
 		match p.cur() {
-			JS_STRING_LITERAL_TOKEN | JS_NUMBER_LITERAL_TOKEN => {
-				literal(p);
+			JS_STRING_LITERAL | JS_NUMBER_LITERAL => {
+				literal_expression(p);
 			}
 			_ => {
 				let mut complete = any_reference_member(p)?;
@@ -598,7 +598,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 		let member = p.start();
 		let err_occured = if !p.at_ts(token_set![T![ident], T![yield], T![await]])
 			&& !p.cur().is_keyword()
-			&& !p.at(JS_STRING_LITERAL_TOKEN)
+			&& !p.at(JS_STRING_LITERAL)
 		{
 			let err = p
 				.err_builder("expected an identifier or string for an enum variant, but found none")
@@ -611,7 +611,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 			);
 			true
 		} else {
-			if !p.eat(JS_STRING_LITERAL_TOKEN) {
+			if !p.eat(JS_STRING_LITERAL) {
 				identifier_name(p).unwrap().undo_completion(p).abandon(p);
 			}
 			false
@@ -953,11 +953,12 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				ts_type_ref(p, None)
 			}
 		}
-		JS_NUMBER_LITERAL_TOKEN
-		| JS_STRING_LITERAL_TOKEN
-		| TRUE_KW
-		| FALSE_KW
-		| JS_REGEX_LITERAL_TOKEN => Some(literal(p).unwrap().precede(p).complete(p, TS_LITERAL)),
+		JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | JS_REGEX_LITERAL => Some(
+			literal_expression(p)
+				.unwrap()
+				.precede(p)
+				.complete(p, TS_LITERAL),
+		),
 		BACKTICK => {
 			let m = p.start();
 			p.bump_any();
@@ -984,12 +985,12 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 		T![-] => {
 			let m = p.start();
 			p.bump_any();
-			if p.at(JS_NUMBER_LITERAL_TOKEN) {
+			if p.at(JS_NUMBER_LITERAL) {
 				let _m = p.start();
 				p.bump_any();
-				_m.complete(p, JS_NUMBER_LITERAL);
+				_m.complete(p, JS_NUMBER_LITERAL_EXPRESSION);
 			} else {
-				p.expect_no_recover(JS_NUMBER_LITERAL_TOKEN)?;
+				p.expect_no_recover(JS_NUMBER_LITERAL)?;
 			}
 			Some(m.complete(p, TS_LITERAL))
 		}
@@ -1043,11 +1044,11 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 					T![this],
 					T![import],
 					T![-],
-					JS_NUMBER_LITERAL_TOKEN,
-					JS_STRING_LITERAL_TOKEN,
+					JS_NUMBER_LITERAL,
+					JS_STRING_LITERAL,
 					TRUE_KW,
 					FALSE_KW,
-					JS_REGEX_LITERAL_TOKEN,
+					JS_REGEX_LITERAL,
 					BACKTICK,
 					T![&],
 					T![|]
@@ -1174,7 +1175,7 @@ pub fn ts_import(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	p.expect_no_recover(T![import])?;
 	p.expect_no_recover(T!['('])?;
-	p.expect_no_recover(JS_STRING_LITERAL_TOKEN)?;
+	p.expect_no_recover(JS_STRING_LITERAL)?;
 	p.expect_no_recover(T![')'])?;
 	if p.eat(T![.]) {
 		ts_entity_name(p, None, false);

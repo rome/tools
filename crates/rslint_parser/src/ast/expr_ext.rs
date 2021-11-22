@@ -25,7 +25,7 @@ impl JsLiteralMemberName {
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
 	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-	///   builder.token(SyntaxKind::JS_STRING_LITERAL_TOKEN, "\"abcd\"");
+	///   builder.token(SyntaxKind::JS_STRING_LITERAL, "\"abcd\"");
 	/// });
 	///
 	/// let static_member_name = node.to::<JsLiteralMemberName>();
@@ -41,7 +41,7 @@ impl JsLiteralMemberName {
 	/// use rslint_parser::ast::JsLiteralMemberName;
 	///
 	/// let node: SyntaxNode = TreeBuilder::wrap_with_node(SyntaxKind::JS_LITERAL_MEMBER_NAME, |builder| {
-	///   builder.token(SyntaxKind::JS_NUMBER_LITERAL_TOKEN, "5");
+	///   builder.token(SyntaxKind::JS_NUMBER_LITERAL, "5");
 	/// });
 	///
 	/// let static_member_name = node.to::<JsLiteralMemberName>();
@@ -69,7 +69,7 @@ impl JsLiteralMemberName {
 		let name = value.text_trimmed();
 
 		let result = match value.kind() {
-			JS_STRING_LITERAL_TOKEN => String::from(&name[1..name.len() - 1]),
+			JS_STRING_LITERAL => String::from(&name[1..name.len() - 1]),
 			_ => String::from(name),
 		};
 
@@ -357,19 +357,19 @@ impl JsObjectExpression {
 	}
 }
 
-impl JsNumberLiteral {
+impl JsNumberLiteralExpression {
 	pub fn as_number(&self) -> Option<f64> {
 		parse_js_number(self.value_token().unwrap().text())
 	}
 }
 
-impl JsBigIntLiteral {
+impl JsBigIntLiteralExpression {
 	pub fn as_number(&self) -> Option<BigInt> {
 		parse_js_big_int(self.value_token().ok()?.text())
 	}
 }
 
-impl JsStringLiteral {
+impl JsStringLiteralExpression {
 	/// Get the inner text of a string not including the quotes
 	pub fn inner_string_text(&self) -> SyntaxText {
 		let start = self.syntax().text_range().start() + TextSize::from(1);

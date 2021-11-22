@@ -87,8 +87,8 @@ impl Formatter {
 	/// use rome_rowan::{NodeOrToken, TreeBuilder};
 	///
 	/// let mut builder = TreeBuilder::<'_, JsLanguage>::new();
-	/// builder.start_node(SyntaxKind::JS_STRING_LITERAL);
-	/// builder.token(SyntaxKind::JS_STRING_LITERAL_TOKEN, "'abc'");
+	/// builder.start_node(SyntaxKind::JS_STRING_LITERAL_EXPRESSION);
+	/// builder.token(SyntaxKind::JS_STRING_LITERAL, "'abc'");
 	/// builder.finish_node();
 	/// let node = builder.finish();
 	///
