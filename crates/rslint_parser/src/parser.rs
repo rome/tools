@@ -227,6 +227,9 @@ impl<'t> Parser<'t> {
 			T!['{'] | T!['}'] if include_braces => {
 				return;
 			}
+			EOF => {
+				return;
+			}
 			_ => (),
 		}
 
