@@ -1,48 +1,48 @@
-JS_ROOT@0..48
-  (empty-slot)
-  LIST@0..0
-  LIST@0..47
-    JS_VARIABLE_DECLARATION_STATEMENT@0..47
-      JS_VARIABLE_DECLARATION@0..47
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..47
-          JS_VARIABLE_DECLARATOR@4..47
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..47
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@8..47
-                L_CURLY@8..9 "{" [] []
-                LIST@9..45
-                  JS_METHOD_OBJECT_MEMBER@9..26
-                    ASYNC_KW@9..18 "async" [Whitespace("\n  ")] [Whitespace(" ")]
-                    JS_LITERAL_MEMBER_NAME@18..21
-                      IDENT@18..21 "foo" [] []
-                    JS_PARAMETER_LIST@21..24
-                      L_PAREN@21..22 "(" [] []
-                      LIST@22..22
-                      R_PAREN@22..24 ")" [] [Whitespace(" ")]
-                    JS_FUNCTION_BODY@24..26
-                      L_CURLY@24..25 "{" [] []
-                      LIST@25..25
-                      LIST@25..25
-                      R_CURLY@25..26 "}" [] []
-                  COMMA@26..27 "," [] []
-                  JS_METHOD_OBJECT_MEMBER@27..45
-                    ASYNC_KW@27..36 "async" [Whitespace("\n  ")] [Whitespace(" ")]
-                    STAR@36..37 "*" [] []
-                    JS_LITERAL_MEMBER_NAME@37..40
-                      IDENT@37..40 "foo" [] []
-                    JS_PARAMETER_LIST@40..43
-                      L_PAREN@40..41 "(" [] []
-                      LIST@41..41
-                      R_PAREN@41..43 ")" [] [Whitespace(" ")]
-                    JS_FUNCTION_BODY@43..45
-                      L_CURLY@43..44 "{" [] []
-                      LIST@44..44
-                      LIST@44..44
-                      R_CURLY@44..45 "}" [] []
-                R_CURLY@45..47 "}" [Whitespace("\n")] []
-      (empty-slot)
-  EOF@47..48 "" [Whitespace("\n")] []
+0: JS_ROOT@0..48
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..47
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..47
+      0: JS_VARIABLE_DECLARATION@0..47
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..47
+          0: JS_VARIABLE_DECLARATOR@4..47
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..47
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@8..47
+                0: L_CURLY@8..9 "{" [] []
+                1: LIST@9..45
+                  0: JS_METHOD_OBJECT_MEMBER@9..26
+                    0: ASYNC_KW@9..18 "async" [Whitespace("\n  ")] [Whitespace(" ")]
+                    1: JS_LITERAL_MEMBER_NAME@18..21
+                      0: IDENT@18..21 "foo" [] []
+                    2: JS_PARAMETER_LIST@21..24
+                      0: L_PAREN@21..22 "(" [] []
+                      1: LIST@22..22
+                      2: R_PAREN@22..24 ")" [] [Whitespace(" ")]
+                    3: JS_FUNCTION_BODY@24..26
+                      0: L_CURLY@24..25 "{" [] []
+                      1: LIST@25..25
+                      2: LIST@25..25
+                      3: R_CURLY@25..26 "}" [] []
+                  1: COMMA@26..27 "," [] []
+                  2: JS_METHOD_OBJECT_MEMBER@27..45
+                    0: ASYNC_KW@27..36 "async" [Whitespace("\n  ")] [Whitespace(" ")]
+                    1: STAR@36..37 "*" [] []
+                    2: JS_LITERAL_MEMBER_NAME@37..40
+                      0: IDENT@37..40 "foo" [] []
+                    3: JS_PARAMETER_LIST@40..43
+                      0: L_PAREN@40..41 "(" [] []
+                      1: LIST@41..41
+                      2: R_PAREN@41..43 ")" [] [Whitespace(" ")]
+                    4: JS_FUNCTION_BODY@43..45
+                      0: L_CURLY@43..44 "{" [] []
+                      1: LIST@44..44
+                      2: LIST@44..44
+                      3: R_CURLY@44..45 "}" [] []
+                2: R_CURLY@45..47 "}" [Whitespace("\n")] []
+      1: (empty)
+  3: EOF@47..48 "" [Whitespace("\n")] []

@@ -1,28 +1,28 @@
-JS_ROOT@0..20
-  (empty-slot)
-  LIST@0..0
-  LIST@0..20
-    JS_VARIABLE_DECLARATION_STATEMENT@0..20
-      JS_VARIABLE_DECLARATION@0..20
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..20
-          JS_VARIABLE_DECLARATOR@4..20
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..20
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              TEMPLATE@8..20
-                BACKTICK@8..9 "`" [] []
-                LIST@9..20
-                  TEMPLATE_ELEMENT@9..15
-                    DOLLARCURLY@9..11 "${" [] []
-                    JS_REFERENCE_IDENTIFIER_EXPRESSION@11..14
-                      IDENT@11..14 "foo" [] []
-                    R_CURLY@14..15 "}" [] []
-                  TEMPLATE_CHUNK@15..20 " bar\n" [] []
-      (empty-slot)
-  EOF@20..20 "" [] []
+0: JS_ROOT@0..20
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..20
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..20
+      0: JS_VARIABLE_DECLARATION@0..20
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..20
+          0: JS_VARIABLE_DECLARATOR@4..20
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..20
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: TEMPLATE@8..20
+                0: BACKTICK@8..9 "`" [] []
+                1: LIST@9..20
+                  0: TEMPLATE_ELEMENT@9..15
+                    0: DOLLARCURLY@9..11 "${" [] []
+                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@11..14
+                      0: IDENT@11..14 "foo" [] []
+                    2: R_CURLY@14..15 "}" [] []
+                  1: TEMPLATE_CHUNK@15..20 " bar\n" [] []
+      1: (empty)
+  3: EOF@20..20 "" [] []
 --
 error: unterminated template literal
   ┌─ template_literal_unterminated.js:2:1

@@ -1,49 +1,49 @@
-JS_ROOT@0..44
-  (empty-slot)
-  LIST@0..0
-  LIST@0..43
-    JS_EXPRESSION_STATEMENT@0..9
-      JS_ARROW_FUNCTION_EXPRESSION@0..9
-        JS_IDENTIFIER_BINDING@0..4
-          IDENT@0..4 "foo" [] [Whitespace(" ")]
-        FAT_ARROW@4..7 "=>" [] [Whitespace(" ")]
-        JS_FUNCTION_BODY@7..9
-          L_CURLY@7..8 "{" [] []
-          LIST@8..8
-          LIST@8..8
-          R_CURLY@8..9 "}" [] []
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@9..21
-      JS_ARROW_FUNCTION_EXPRESSION@9..21
-        JS_IDENTIFIER_BINDING@9..16
-          IDENT@9..16 "yield" [Whitespace("\n")] [Whitespace(" ")]
-        FAT_ARROW@16..19 "=>" [] [Whitespace(" ")]
-        JS_FUNCTION_BODY@19..21
-          L_CURLY@19..20 "{" [] []
-          LIST@20..20
-          LIST@20..20
-          R_CURLY@20..21 "}" [] []
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@21..33
-      JS_ARROW_FUNCTION_EXPRESSION@21..33
-        JS_IDENTIFIER_BINDING@21..28
-          IDENT@21..28 "await" [Whitespace("\n")] [Whitespace(" ")]
-        FAT_ARROW@28..31 "=>" [] [Whitespace(" ")]
-        JS_FUNCTION_BODY@31..33
-          L_CURLY@31..32 "{" [] []
-          LIST@32..32
-          LIST@32..32
-          R_CURLY@32..33 "}" [] []
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@33..43
-      JS_ARROW_FUNCTION_EXPRESSION@33..43
-        JS_IDENTIFIER_BINDING@33..38
-          IDENT@33..38 "foo" [Whitespace("\n")] [Whitespace(" ")]
-        FAT_ARROW@38..40 "=>" [] []
-        JS_FUNCTION_BODY@40..43
-          L_CURLY@40..42 "{" [Whitespace("\n")] []
-          LIST@42..42
-          LIST@42..42
-          R_CURLY@42..43 "}" [] []
-      (empty-slot)
-  EOF@43..44 "" [Whitespace("\n")] []
+0: JS_ROOT@0..44
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..43
+    0: JS_EXPRESSION_STATEMENT@0..9
+      0: JS_ARROW_FUNCTION_EXPRESSION@0..9
+        0: JS_IDENTIFIER_BINDING@0..4
+          0: IDENT@0..4 "foo" [] [Whitespace(" ")]
+        1: FAT_ARROW@4..7 "=>" [] [Whitespace(" ")]
+        2: JS_FUNCTION_BODY@7..9
+          0: L_CURLY@7..8 "{" [] []
+          1: LIST@8..8
+          2: LIST@8..8
+          3: R_CURLY@8..9 "}" [] []
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@9..21
+      0: JS_ARROW_FUNCTION_EXPRESSION@9..21
+        0: JS_IDENTIFIER_BINDING@9..16
+          0: IDENT@9..16 "yield" [Whitespace("\n")] [Whitespace(" ")]
+        1: FAT_ARROW@16..19 "=>" [] [Whitespace(" ")]
+        2: JS_FUNCTION_BODY@19..21
+          0: L_CURLY@19..20 "{" [] []
+          1: LIST@20..20
+          2: LIST@20..20
+          3: R_CURLY@20..21 "}" [] []
+      1: (empty)
+    2: JS_EXPRESSION_STATEMENT@21..33
+      0: JS_ARROW_FUNCTION_EXPRESSION@21..33
+        0: JS_IDENTIFIER_BINDING@21..28
+          0: IDENT@21..28 "await" [Whitespace("\n")] [Whitespace(" ")]
+        1: FAT_ARROW@28..31 "=>" [] [Whitespace(" ")]
+        2: JS_FUNCTION_BODY@31..33
+          0: L_CURLY@31..32 "{" [] []
+          1: LIST@32..32
+          2: LIST@32..32
+          3: R_CURLY@32..33 "}" [] []
+      1: (empty)
+    3: JS_EXPRESSION_STATEMENT@33..43
+      0: JS_ARROW_FUNCTION_EXPRESSION@33..43
+        0: JS_IDENTIFIER_BINDING@33..38
+          0: IDENT@33..38 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        1: FAT_ARROW@38..40 "=>" [] []
+        2: JS_FUNCTION_BODY@40..43
+          0: L_CURLY@40..42 "{" [Whitespace("\n")] []
+          1: LIST@42..42
+          2: LIST@42..42
+          3: R_CURLY@42..43 "}" [] []
+      1: (empty)
+  3: EOF@43..44 "" [Whitespace("\n")] []

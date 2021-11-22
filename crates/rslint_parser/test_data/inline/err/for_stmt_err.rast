@@ -1,53 +1,53 @@
-JS_ROOT@0..40
-  (empty-slot)
-  LIST@0..0
-  LIST@0..39
-    FOR_STMT@0..39
-      FOR_KW@0..4 "for" [] [Whitespace(" ")]
-      (empty-slot)
-      SEMICOLON@4..5 ";" [] []
-      SEMICOLON@5..7 ";" [] [Whitespace(" ")]
-      FOR_STMT_UPDATE@7..9
-        JS_OBJECT_EXPRESSION@7..9
-          L_CURLY@7..8 "{" [] []
-          LIST@8..8
-          R_CURLY@8..9 "}" [] []
-      (empty-slot)
-      FOR_STMT@9..39
-        FOR_KW@9..14 "for" [Whitespace("\n")] [Whitespace(" ")]
-        (empty-slot)
-        FOR_STMT_INIT@14..23
-          JS_VARIABLE_DECLARATION@14..23
-            LET_KW@14..18 "let" [] [Whitespace(" ")]
-            LIST@18..23
-              JS_VARIABLE_DECLARATOR@18..23
-                SINGLE_PATTERN@18..20
-                  NAME@18..20
-                    IDENT@18..20 "i" [] [Whitespace(" ")]
-                JS_EQUAL_VALUE_CLAUSE@20..23
-                  EQ@20..22 "=" [] [Whitespace(" ")]
-                  JS_NUMBER_LITERAL@22..23
-                    JS_NUMBER_LITERAL_TOKEN@22..23 "5" [] []
-        SEMICOLON@23..25 ";" [] [Whitespace(" ")]
-        FOR_STMT_TEST@25..31
-          JS_BINARY_EXPRESSION@25..31
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@25..27
-              IDENT@25..27 "i" [] [Whitespace(" ")]
-            L_ANGLE@27..29 "<" [] [Whitespace(" ")]
-            JS_NUMBER_LITERAL@29..31
-              JS_NUMBER_LITERAL_TOKEN@29..31 "10" [] []
-        SEMICOLON@31..33 ";" [] [Whitespace(" ")]
-        FOR_STMT_UPDATE@33..37
-          JS_PRE_UPDATE_EXPRESSION@33..37
-            PLUS2@33..35 "++" [] []
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@35..37
-              IDENT@35..37 "i" [] [Whitespace(" ")]
-        (empty-slot)
-        JS_BLOCK_STATEMENT@37..39
-          L_CURLY@37..38 "{" [] []
-          LIST@38..38
-          R_CURLY@38..39 "}" [] []
-  EOF@39..40 "" [Whitespace("\n")] []
+0: JS_ROOT@0..40
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..39
+    0: FOR_STMT@0..39
+      0: FOR_KW@0..4 "for" [] [Whitespace(" ")]
+      1: (empty)
+      2: SEMICOLON@4..5 ";" [] []
+      3: SEMICOLON@5..7 ";" [] [Whitespace(" ")]
+      4: FOR_STMT_UPDATE@7..9
+        0: JS_OBJECT_EXPRESSION@7..9
+          0: L_CURLY@7..8 "{" [] []
+          1: LIST@8..8
+          2: R_CURLY@8..9 "}" [] []
+      5: (empty)
+      6: FOR_STMT@9..39
+        0: FOR_KW@9..14 "for" [Whitespace("\n")] [Whitespace(" ")]
+        1: (empty)
+        2: FOR_STMT_INIT@14..23
+          0: JS_VARIABLE_DECLARATION@14..23
+            0: LET_KW@14..18 "let" [] [Whitespace(" ")]
+            1: LIST@18..23
+              0: JS_VARIABLE_DECLARATOR@18..23
+                0: SINGLE_PATTERN@18..20
+                  0: NAME@18..20
+                    0: IDENT@18..20 "i" [] [Whitespace(" ")]
+                1: JS_EQUAL_VALUE_CLAUSE@20..23
+                  0: EQ@20..22 "=" [] [Whitespace(" ")]
+                  1: JS_NUMBER_LITERAL@22..23
+                    0: JS_NUMBER_LITERAL_TOKEN@22..23 "5" [] []
+        3: SEMICOLON@23..25 ";" [] [Whitespace(" ")]
+        4: FOR_STMT_TEST@25..31
+          0: JS_BINARY_EXPRESSION@25..31
+            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@25..27
+              0: IDENT@25..27 "i" [] [Whitespace(" ")]
+            1: L_ANGLE@27..29 "<" [] [Whitespace(" ")]
+            2: JS_NUMBER_LITERAL@29..31
+              0: JS_NUMBER_LITERAL_TOKEN@29..31 "10" [] []
+        5: SEMICOLON@31..33 ";" [] [Whitespace(" ")]
+        6: FOR_STMT_UPDATE@33..37
+          0: JS_PRE_UPDATE_EXPRESSION@33..37
+            0: PLUS2@33..35 "++" [] []
+            1: JS_REFERENCE_IDENTIFIER_EXPRESSION@35..37
+              0: IDENT@35..37 "i" [] [Whitespace(" ")]
+        7: (empty)
+        8: JS_BLOCK_STATEMENT@37..39
+          0: L_CURLY@37..38 "{" [] []
+          1: LIST@38..38
+          2: R_CURLY@38..39 "}" [] []
+  3: EOF@39..40 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `;`
   ┌─ for_stmt_err.js:1:5

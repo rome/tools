@@ -1,22 +1,22 @@
-JS_ROOT@0..24
-  (empty-slot)
-  LIST@0..0
-  LIST@0..23
-    JS_EXPRESSION_STATEMENT@0..10
-      ERROR@0..10
-        IMPORT_KW@0..6 "import" [] []
-        DOT@6..7 "." [] []
-        ERROR@7..10
-          IDENT@7..10 "foo" [] []
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@10..23
-      ERROR@10..23
-        IMPORT_KW@10..17 "import" [Whitespace("\n")] []
-        DOT@17..18 "." [] []
-        ERROR@18..23
-          IDENT@18..23 "metaa" [] []
-      (empty-slot)
-  EOF@23..24 "" [Whitespace("\n")] []
+0: JS_ROOT@0..24
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..23
+    0: JS_EXPRESSION_STATEMENT@0..10
+      0: ERROR@0..10
+        0: IMPORT_KW@0..6 "import" [] []
+        1: DOT@6..7 "." [] []
+        2: ERROR@7..10
+          0: IDENT@7..10 "foo" [] []
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@10..23
+      0: ERROR@10..23
+        0: IMPORT_KW@10..17 "import" [Whitespace("\n")] []
+        1: DOT@17..18 "." [] []
+        2: ERROR@18..23
+          0: IDENT@18..23 "metaa" [] []
+      1: (empty)
+  3: EOF@23..24 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected `meta` following an import keyword, but found `foo`
   ┌─ import_no_meta.js:1:8

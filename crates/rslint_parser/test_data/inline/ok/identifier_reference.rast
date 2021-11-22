@@ -1,17 +1,17 @@
-JS_ROOT@0..19
-  (empty-slot)
-  LIST@0..0
-  LIST@0..18
-    JS_EXPRESSION_STATEMENT@0..4
-      JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-        IDENT@0..3 "foo" [] []
-      SEMICOLON@3..4 ";" [] []
-    JS_EXPRESSION_STATEMENT@4..11
-      JS_REFERENCE_IDENTIFIER_EXPRESSION@4..10
-        IDENT@4..10 "yield" [Whitespace("\n")] []
-      SEMICOLON@10..11 ";" [] []
-    JS_EXPRESSION_STATEMENT@11..18
-      JS_REFERENCE_IDENTIFIER_EXPRESSION@11..17
-        IDENT@11..17 "await" [Whitespace("\n")] []
-      SEMICOLON@17..18 ";" [] []
-  EOF@18..19 "" [Whitespace("\n")] []
+0: JS_ROOT@0..19
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..18
+    0: JS_EXPRESSION_STATEMENT@0..4
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
+        0: IDENT@0..3 "foo" [] []
+      1: SEMICOLON@3..4 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@4..11
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@4..10
+        0: IDENT@4..10 "yield" [Whitespace("\n")] []
+      1: SEMICOLON@10..11 ";" [] []
+    2: JS_EXPRESSION_STATEMENT@11..18
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@11..17
+        0: IDENT@11..17 "await" [Whitespace("\n")] []
+      1: SEMICOLON@17..18 ";" [] []
+  3: EOF@18..19 "" [Whitespace("\n")] []

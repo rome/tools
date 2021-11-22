@@ -1,8 +1,8 @@
-JS_ROOT@0..10
-  (empty-slot)
-  LIST@0..0
-  LIST@0..9
-    JS_DEBUGGER_STATEMENT@0..9
-      DEBUGGER_KW@0..8 "debugger" [] []
-      SEMICOLON@8..9 ";" [] []
-  EOF@9..10 "" [Whitespace("\n")] []
+0: JS_ROOT@0..10
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..9
+    0: JS_DEBUGGER_STATEMENT@0..9
+      0: DEBUGGER_KW@0..8 "debugger" [] []
+      1: SEMICOLON@8..9 ";" [] []
+  3: EOF@9..10 "" [Whitespace("\n")] []

@@ -1,51 +1,51 @@
-JS_ROOT@0..48
-  (empty-slot)
-  LIST@0..0
-  LIST@0..47
-    JS_VARIABLE_DECLARATION_STATEMENT@0..21
-      JS_VARIABLE_DECLARATION@0..21
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..21
-          JS_VARIABLE_DECLARATOR@4..21
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..21
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_FUNCTION_EXPRESSION@8..21
-                FUNCTION_KW@8..16 "function" [] []
-                JS_PARAMETER_LIST@16..19
-                  L_PAREN@16..17 "(" [] []
-                  LIST@17..17
-                  R_PAREN@17..19 ")" [] [Whitespace(" ")]
-                JS_FUNCTION_BODY@19..21
-                  L_CURLY@19..20 "{" [] []
-                  LIST@20..20
-                  LIST@20..20
-                  R_CURLY@20..21 "}" [] []
-      (empty-slot)
-    JS_VARIABLE_DECLARATION_STATEMENT@21..47
-      JS_VARIABLE_DECLARATION@21..47
-        LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@26..47
-          JS_VARIABLE_DECLARATOR@26..47
-            SINGLE_PATTERN@26..28
-              NAME@26..28
-                IDENT@26..28 "b" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@28..47
-              EQ@28..30 "=" [] [Whitespace(" ")]
-              JS_FUNCTION_EXPRESSION@30..47
-                FUNCTION_KW@30..39 "function" [] [Whitespace(" ")]
-                JS_IDENTIFIER_BINDING@39..42
-                  IDENT@39..42 "foo" [] []
-                JS_PARAMETER_LIST@42..45
-                  L_PAREN@42..43 "(" [] []
-                  LIST@43..43
-                  R_PAREN@43..45 ")" [] [Whitespace(" ")]
-                JS_FUNCTION_BODY@45..47
-                  L_CURLY@45..46 "{" [] []
-                  LIST@46..46
-                  LIST@46..46
-                  R_CURLY@46..47 "}" [] []
-      (empty-slot)
-  EOF@47..48 "" [Whitespace("\n")] []
+0: JS_ROOT@0..48
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..47
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..21
+      0: JS_VARIABLE_DECLARATION@0..21
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..21
+          0: JS_VARIABLE_DECLARATOR@4..21
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..21
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_FUNCTION_EXPRESSION@8..21
+                0: FUNCTION_KW@8..16 "function" [] []
+                1: JS_PARAMETER_LIST@16..19
+                  0: L_PAREN@16..17 "(" [] []
+                  1: LIST@17..17
+                  2: R_PAREN@17..19 ")" [] [Whitespace(" ")]
+                2: JS_FUNCTION_BODY@19..21
+                  0: L_CURLY@19..20 "{" [] []
+                  1: LIST@20..20
+                  2: LIST@20..20
+                  3: R_CURLY@20..21 "}" [] []
+      1: (empty)
+    1: JS_VARIABLE_DECLARATION_STATEMENT@21..47
+      0: JS_VARIABLE_DECLARATION@21..47
+        0: LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@26..47
+          0: JS_VARIABLE_DECLARATOR@26..47
+            0: SINGLE_PATTERN@26..28
+              0: NAME@26..28
+                0: IDENT@26..28 "b" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@28..47
+              0: EQ@28..30 "=" [] [Whitespace(" ")]
+              1: JS_FUNCTION_EXPRESSION@30..47
+                0: FUNCTION_KW@30..39 "function" [] [Whitespace(" ")]
+                1: JS_IDENTIFIER_BINDING@39..42
+                  0: IDENT@39..42 "foo" [] []
+                2: JS_PARAMETER_LIST@42..45
+                  0: L_PAREN@42..43 "(" [] []
+                  1: LIST@43..43
+                  2: R_PAREN@43..45 ")" [] [Whitespace(" ")]
+                3: JS_FUNCTION_BODY@45..47
+                  0: L_CURLY@45..46 "{" [] []
+                  1: LIST@46..46
+                  2: LIST@46..46
+                  3: R_CURLY@46..47 "}" [] []
+      1: (empty)
+  3: EOF@47..48 "" [Whitespace("\n")] []

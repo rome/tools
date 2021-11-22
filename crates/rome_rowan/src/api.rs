@@ -236,12 +236,15 @@ impl<L: Language> fmt::Debug for SyntaxNode<L> {
 						}
 						match element {
 							SyntaxSlot::Node(node) => {
-								writeln!(f, "{:?}", SyntaxNode::<L>::from(node))?
+								writeln!(f, "{}: {:?}", node.index(), SyntaxNode::<L>::from(node))?
 							}
-							SyntaxSlot::Token(token) => {
-								writeln!(f, "{:?}", SyntaxToken::<L>::from(token))?
-							}
-							SyntaxSlot::Empty { .. } => writeln!(f, "(empty-slot)")?,
+							SyntaxSlot::Token(token) => writeln!(
+								f,
+								"{}: {:?}",
+								token.index(),
+								SyntaxToken::<L>::from(token)
+							)?,
+							SyntaxSlot::Empty { index, .. } => writeln!(f, "{}: (empty)", index)?,
 						}
 						level += 1;
 					}

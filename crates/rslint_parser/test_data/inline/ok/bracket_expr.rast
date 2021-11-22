@@ -1,60 +1,60 @@
-JS_ROOT@0..56
-  (empty-slot)
-  LIST@0..0
-  LIST@0..55
-    JS_EXPRESSION_STATEMENT@0..8
-      BRACKET_EXPR@0..8
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
-          IDENT@0..3 "foo" [] []
-        L_BRACK@3..4 "[" [] []
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@4..7
-          IDENT@4..7 "bar" [] []
-        R_BRACK@7..8 "]" [] []
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@8..19
-      BRACKET_EXPR@8..19
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@8..12
-          IDENT@8..12 "foo" [Whitespace("\n")] []
-        L_BRACK@12..13 "[" [] []
-        JS_BINARY_EXPRESSION@13..18
-          JS_NUMBER_LITERAL@13..15
-            JS_NUMBER_LITERAL_TOKEN@13..15 "5" [] [Whitespace(" ")]
-          PLUS@15..17 "+" [] [Whitespace(" ")]
-          JS_NUMBER_LITERAL@17..18
-            JS_NUMBER_LITERAL_TOKEN@17..18 "5" [] []
-        R_BRACK@18..19 "]" [] []
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@19..30
-      BRACKET_EXPR@19..30
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@19..23
-          IDENT@19..23 "foo" [Whitespace("\n")] []
-        L_BRACK@23..24 "[" [] []
-        JS_STRING_LITERAL@24..29
-          JS_STRING_LITERAL_TOKEN@24..29 "\"bar\"" [] []
-        R_BRACK@29..30 "]" [] []
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@30..44
-      BRACKET_EXPR@30..44
-        BRACKET_EXPR@30..39
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@30..34
-            IDENT@30..34 "foo" [Whitespace("\n")] []
-          L_BRACK@34..35 "[" [] []
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@35..38
-            IDENT@35..38 "bar" [] []
-          R_BRACK@38..39 "]" [] []
-        L_BRACK@39..40 "[" [] []
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@40..43
-          IDENT@40..43 "baz" [] []
-        R_BRACK@43..44 "]" [] []
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@44..55
-      BRACKET_EXPR@44..55
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@44..48
-          IDENT@44..48 "foo" [Whitespace("\n")] []
-        QUESTIONDOT@48..50 "?." [] []
-        L_BRACK@50..51 "[" [] []
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@51..54
-          IDENT@51..54 "bar" [] []
-        R_BRACK@54..55 "]" [] []
-      (empty-slot)
-  EOF@55..56 "" [Whitespace("\n")] []
+0: JS_ROOT@0..56
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..55
+    0: JS_EXPRESSION_STATEMENT@0..8
+      0: BRACKET_EXPR@0..8
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
+          0: IDENT@0..3 "foo" [] []
+        1: L_BRACK@3..4 "[" [] []
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@4..7
+          0: IDENT@4..7 "bar" [] []
+        3: R_BRACK@7..8 "]" [] []
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@8..19
+      0: BRACKET_EXPR@8..19
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..12
+          0: IDENT@8..12 "foo" [Whitespace("\n")] []
+        1: L_BRACK@12..13 "[" [] []
+        2: JS_BINARY_EXPRESSION@13..18
+          0: JS_NUMBER_LITERAL@13..15
+            0: JS_NUMBER_LITERAL_TOKEN@13..15 "5" [] [Whitespace(" ")]
+          1: PLUS@15..17 "+" [] [Whitespace(" ")]
+          2: JS_NUMBER_LITERAL@17..18
+            0: JS_NUMBER_LITERAL_TOKEN@17..18 "5" [] []
+        3: R_BRACK@18..19 "]" [] []
+      1: (empty)
+    2: JS_EXPRESSION_STATEMENT@19..30
+      0: BRACKET_EXPR@19..30
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@19..23
+          0: IDENT@19..23 "foo" [Whitespace("\n")] []
+        1: L_BRACK@23..24 "[" [] []
+        2: JS_STRING_LITERAL@24..29
+          0: JS_STRING_LITERAL_TOKEN@24..29 "\"bar\"" [] []
+        3: R_BRACK@29..30 "]" [] []
+      1: (empty)
+    3: JS_EXPRESSION_STATEMENT@30..44
+      0: BRACKET_EXPR@30..44
+        0: BRACKET_EXPR@30..39
+          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@30..34
+            0: IDENT@30..34 "foo" [Whitespace("\n")] []
+          1: L_BRACK@34..35 "[" [] []
+          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@35..38
+            0: IDENT@35..38 "bar" [] []
+          3: R_BRACK@38..39 "]" [] []
+        1: L_BRACK@39..40 "[" [] []
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@40..43
+          0: IDENT@40..43 "baz" [] []
+        3: R_BRACK@43..44 "]" [] []
+      1: (empty)
+    4: JS_EXPRESSION_STATEMENT@44..55
+      0: BRACKET_EXPR@44..55
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@44..48
+          0: IDENT@44..48 "foo" [Whitespace("\n")] []
+        1: QUESTIONDOT@48..50 "?." [] []
+        2: L_BRACK@50..51 "[" [] []
+        3: JS_REFERENCE_IDENTIFIER_EXPRESSION@51..54
+          0: IDENT@51..54 "bar" [] []
+        4: R_BRACK@54..55 "]" [] []
+      1: (empty)
+  3: EOF@55..56 "" [Whitespace("\n")] []

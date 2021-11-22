@@ -1,24 +1,24 @@
-JS_ROOT@0..24
-  (empty-slot)
-  LIST@0..0
-  LIST@0..23
-    JS_SWITCH_STATEMENT@0..13
-      SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
-      (empty-slot)
-      JS_REFERENCE_IDENTIFIER_EXPRESSION@7..11
-        IDENT@7..11 "foo" [] [Whitespace(" ")]
-      (empty-slot)
-      L_CURLY@11..12 "{" [] []
-      LIST@12..12
-      R_CURLY@12..13 "}" [] []
-    JS_SWITCH_STATEMENT@13..23
-      SWITCH_KW@13..21 "switch" [Whitespace("\n")] [Whitespace(" ")]
-      (empty-slot)
-      (empty-slot)
-      L_CURLY@21..22 "{" [] []
-      LIST@22..22
-      R_CURLY@22..23 "}" [] []
-  EOF@23..24 "" [Whitespace("\n")] []
+0: JS_ROOT@0..24
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..23
+    0: JS_SWITCH_STATEMENT@0..13
+      0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
+      1: (empty)
+      2: JS_REFERENCE_IDENTIFIER_EXPRESSION@7..11
+        0: IDENT@7..11 "foo" [] [Whitespace(" ")]
+      3: (empty)
+      4: L_CURLY@11..12 "{" [] []
+      5: LIST@12..12
+      6: R_CURLY@12..13 "}" [] []
+    1: JS_SWITCH_STATEMENT@13..23
+      0: SWITCH_KW@13..21 "switch" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: (empty)
+      3: L_CURLY@21..22 "{" [] []
+      4: LIST@22..22
+      5: R_CURLY@22..23 "}" [] []
+  3: EOF@23..24 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `foo`
   ┌─ switch_stmt_err.js:1:8

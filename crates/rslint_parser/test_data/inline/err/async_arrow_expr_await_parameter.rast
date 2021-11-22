@@ -1,32 +1,32 @@
-JS_ROOT@0..26
-  (empty-slot)
-  LIST@0..0
-  LIST@0..25
-    JS_VARIABLE_DECLARATION_STATEMENT@0..14
-      JS_VARIABLE_DECLARATION@0..14
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..14
-          JS_VARIABLE_DECLARATOR@4..14
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..14
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_REFERENCE_IDENTIFIER_EXPRESSION@8..14
-                IDENT@8..14 "async" [] [Whitespace(" ")]
-      (empty-slot)
-    JS_EXPRESSION_STATEMENT@14..25
-      JS_ARROW_FUNCTION_EXPRESSION@14..25
-        JS_IDENTIFIER_BINDING@14..20
-          IDENT@14..20 "await" [] [Whitespace(" ")]
-        FAT_ARROW@20..23 "=>" [] [Whitespace(" ")]
-        JS_FUNCTION_BODY@23..25
-          L_CURLY@23..24 "{" [] []
-          LIST@24..24
-          LIST@24..24
-          R_CURLY@24..25 "}" [] []
-      (empty-slot)
-  EOF@25..26 "" [Whitespace("\n")] []
+0: JS_ROOT@0..26
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..25
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..14
+      0: JS_VARIABLE_DECLARATION@0..14
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..14
+          0: JS_VARIABLE_DECLARATOR@4..14
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..14
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..14
+                0: IDENT@8..14 "async" [] [Whitespace(" ")]
+      1: (empty)
+    1: JS_EXPRESSION_STATEMENT@14..25
+      0: JS_ARROW_FUNCTION_EXPRESSION@14..25
+        0: JS_IDENTIFIER_BINDING@14..20
+          0: IDENT@14..20 "await" [] [Whitespace(" ")]
+        1: FAT_ARROW@20..23 "=>" [] [Whitespace(" ")]
+        2: JS_FUNCTION_BODY@23..25
+          0: L_CURLY@23..24 "{" [] []
+          1: LIST@24..24
+          2: LIST@24..24
+          3: R_CURLY@24..25 "}" [] []
+      1: (empty)
+  3: EOF@25..26 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
   ┌─ async_arrow_expr_await_parameter.js:1:15

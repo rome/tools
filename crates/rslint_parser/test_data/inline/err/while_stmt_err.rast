@@ -1,44 +1,44 @@
-JS_ROOT@0..52
-  (empty-slot)
-  LIST@0..0
-  LIST@0..51
-    JS_WHILE_STATEMENT@0..13
-      WHILE_KW@0..6 "while" [] [Whitespace(" ")]
-      (empty-slot)
-      JS_BOOLEAN_LITERAL@6..11
-        TRUE_KW@6..11 "true" [] [Whitespace(" ")]
-      (empty-slot)
-      JS_BLOCK_STATEMENT@11..13
-        L_CURLY@11..12 "{" [] []
-        LIST@12..12
-        R_CURLY@12..13 "}" [] []
-    JS_WHILE_STATEMENT@13..22
-      WHILE_KW@13..20 "while" [Whitespace("\n")] [Whitespace(" ")]
-      (empty-slot)
-      (empty-slot)
-      JS_BLOCK_STATEMENT@20..22
-        L_CURLY@20..21 "{" [] []
-        LIST@21..21
-        R_CURLY@21..22 "}" [] []
-    JS_WHILE_STATEMENT@22..37
-      WHILE_KW@22..29 "while" [Whitespace("\n")] [Whitespace(" ")]
-      L_PAREN@29..30 "(" [] []
-      JS_BOOLEAN_LITERAL@30..35
-        TRUE_KW@30..35 "true" [] [Whitespace(" ")]
-      (empty-slot)
-      JS_BLOCK_STATEMENT@35..37
-        L_CURLY@35..36 "{" [] []
-        LIST@36..36
-        R_CURLY@36..37 "}" [] []
-    JS_WHILE_STATEMENT@37..51
-      WHILE_KW@37..44 "while" [Whitespace("\n")] [Whitespace(" ")]
-      (empty-slot)
-      JS_BOOLEAN_LITERAL@44..48
-        TRUE_KW@44..48 "true" [] []
-      R_PAREN@48..50 ")" [] [Whitespace(" ")]
-      ERROR@50..51
-        R_CURLY@50..51 "}" [] []
-  EOF@51..52 "" [Whitespace("\n")] []
+0: JS_ROOT@0..52
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..51
+    0: JS_WHILE_STATEMENT@0..13
+      0: WHILE_KW@0..6 "while" [] [Whitespace(" ")]
+      1: (empty)
+      2: JS_BOOLEAN_LITERAL@6..11
+        0: TRUE_KW@6..11 "true" [] [Whitespace(" ")]
+      3: (empty)
+      4: JS_BLOCK_STATEMENT@11..13
+        0: L_CURLY@11..12 "{" [] []
+        1: LIST@12..12
+        2: R_CURLY@12..13 "}" [] []
+    1: JS_WHILE_STATEMENT@13..22
+      0: WHILE_KW@13..20 "while" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: (empty)
+      3: JS_BLOCK_STATEMENT@20..22
+        0: L_CURLY@20..21 "{" [] []
+        1: LIST@21..21
+        2: R_CURLY@21..22 "}" [] []
+    2: JS_WHILE_STATEMENT@22..37
+      0: WHILE_KW@22..29 "while" [Whitespace("\n")] [Whitespace(" ")]
+      1: L_PAREN@29..30 "(" [] []
+      2: JS_BOOLEAN_LITERAL@30..35
+        0: TRUE_KW@30..35 "true" [] [Whitespace(" ")]
+      3: (empty)
+      4: JS_BLOCK_STATEMENT@35..37
+        0: L_CURLY@35..36 "{" [] []
+        1: LIST@36..36
+        2: R_CURLY@36..37 "}" [] []
+    3: JS_WHILE_STATEMENT@37..51
+      0: WHILE_KW@37..44 "while" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: JS_BOOLEAN_LITERAL@44..48
+        0: TRUE_KW@44..48 "true" [] []
+      3: R_PAREN@48..50 ")" [] [Whitespace(" ")]
+      4: ERROR@50..51
+        0: R_CURLY@50..51 "}" [] []
+  3: EOF@51..52 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `true`
   ┌─ while_stmt_err.js:1:7

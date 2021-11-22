@@ -1,20 +1,20 @@
-JS_ROOT@0..12
-  (empty-slot)
-  LIST@0..0
-  LIST@0..11
-    JS_CLASS_DECLARATION@0..10
-      CLASS_KW@0..6 "class" [] [Whitespace(" ")]
-      JS_IDENTIFIER_BINDING@6..7
-        IDENT@6..7 "S" [] []
-      L_CURLY@7..8 "{" [] []
-      LIST@8..9
-        JS_UNKNOWN_MEMBER@8..9
-          ERROR@8..9
-            L_CURLY@8..9 "{" [] []
-      R_CURLY@9..10 "}" [] []
-    ERROR@10..11
-      R_CURLY@10..11 "}" [] []
-  EOF@11..12 "" [Whitespace("\n")] []
+0: JS_ROOT@0..12
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..11
+    0: JS_CLASS_DECLARATION@0..10
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..7
+        0: IDENT@6..7 "S" [] []
+      2: L_CURLY@7..8 "{" [] []
+      3: LIST@8..9
+        0: JS_UNKNOWN_MEMBER@8..9
+          0: ERROR@8..9
+            0: L_CURLY@8..9 "{" [] []
+      4: R_CURLY@9..10 "}" [] []
+    1: ERROR@10..11
+      0: R_CURLY@10..11 "}" [] []
+  3: EOF@11..12 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
   ┌─ block_stmt_in_class.js:1:9

@@ -1,23 +1,23 @@
-JS_ROOT@0..36
-  (empty-slot)
-  LIST@0..0
-  LIST@0..35
-    JS_THROW_STATEMENT@0..23
-      THROW_KW@0..6 "throw" [] [Whitespace(" ")]
-      NEW_EXPR@6..22
-        NEW_KW@6..10 "new" [] [Whitespace(" ")]
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@10..15
-          IDENT@10..15 "Error" [] []
-        ARG_LIST@15..22
-          L_PAREN@15..16 "(" [] []
-          LIST@16..21
-            JS_STRING_LITERAL@16..21
-              JS_STRING_LITERAL_TOKEN@16..21 "\"foo\"" [] []
-          R_PAREN@21..22 ")" [] []
-      SEMICOLON@22..23 ";" [] []
-    JS_THROW_STATEMENT@23..35
-      THROW_KW@23..30 "throw" [Whitespace("\n")] [Whitespace(" ")]
-      JS_STRING_LITERAL@30..35
-        JS_STRING_LITERAL_TOKEN@30..35 "\"foo\"" [] []
-      (empty-slot)
-  EOF@35..36 "" [Whitespace("\n")] []
+0: JS_ROOT@0..36
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..35
+    0: JS_THROW_STATEMENT@0..23
+      0: THROW_KW@0..6 "throw" [] [Whitespace(" ")]
+      1: NEW_EXPR@6..22
+        0: NEW_KW@6..10 "new" [] [Whitespace(" ")]
+        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@10..15
+          0: IDENT@10..15 "Error" [] []
+        2: ARG_LIST@15..22
+          0: L_PAREN@15..16 "(" [] []
+          1: LIST@16..21
+            0: JS_STRING_LITERAL@16..21
+              0: JS_STRING_LITERAL_TOKEN@16..21 "\"foo\"" [] []
+          2: R_PAREN@21..22 ")" [] []
+      2: SEMICOLON@22..23 ";" [] []
+    1: JS_THROW_STATEMENT@23..35
+      0: THROW_KW@23..30 "throw" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_STRING_LITERAL@30..35
+        0: JS_STRING_LITERAL_TOKEN@30..35 "\"foo\"" [] []
+      2: (empty)
+  3: EOF@35..36 "" [Whitespace("\n")] []

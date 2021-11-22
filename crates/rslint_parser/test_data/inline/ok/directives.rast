@@ -1,143 +1,143 @@
-JS_ROOT@0..360
-  (empty-slot)
-  LIST@0..20
-    JS_DIRECTIVE@0..20
-      JS_STRING_LITERAL_TOKEN@0..20 "\"use new\"" [Comments("// SCRIPT"), Whitespace("\n\n")] []
-  LIST@20..359
-    JS_VARIABLE_DECLARATION_STATEMENT@20..33
-      JS_VARIABLE_DECLARATION@20..32
-        LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")]
-        LIST@26..32
-          JS_VARIABLE_DECLARATOR@26..32
-            SINGLE_PATTERN@26..28
-              NAME@26..28
-                IDENT@26..28 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@28..32
-              EQ@28..30 "=" [] [Whitespace(" ")]
-              JS_NUMBER_LITERAL@30..32
-                JS_NUMBER_LITERAL_TOKEN@30..32 "10" [] []
-      SEMICOLON@32..33 ";" [] []
-    JS_EXPRESSION_STATEMENT@33..67
-      JS_STRING_LITERAL@33..47
-        JS_STRING_LITERAL_TOKEN@33..47 "\"use strict\"" [Whitespace("\n\n")] []
-      SEMICOLON@47..67 ";" [] [Whitespace(" "), Comments("// not a directive")]
-    JS_FUNCTION_DECLARATION@67..152
-      FUNCTION_KW@67..78 "function" [Whitespace("\n\n")] [Whitespace(" ")]
-      JS_IDENTIFIER_BINDING@78..82
-        IDENT@78..82 "test" [] []
-      JS_PARAMETER_LIST@82..85
-        L_PAREN@82..83 "(" [] []
-        LIST@83..83
-        R_PAREN@83..85 ")" [] [Whitespace(" ")]
-      JS_FUNCTION_BODY@85..152
-        L_CURLY@85..86 "{" [] []
-        LIST@86..101
-          JS_DIRECTIVE@86..101
-            JS_STRING_LITERAL_TOKEN@86..100 "'use strict'" [Whitespace("\n\t")] []
-            SEMICOLON@100..101 ";" [] []
-        LIST@101..150
-          JS_VARIABLE_DECLARATION_STATEMENT@101..115
-            JS_VARIABLE_DECLARATION@101..114
-              LET_KW@101..108 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
-              LIST@108..114
-                JS_VARIABLE_DECLARATOR@108..114
-                  SINGLE_PATTERN@108..110
-                    NAME@108..110
-                      IDENT@108..110 "a" [] [Whitespace(" ")]
-                  JS_EQUAL_VALUE_CLAUSE@110..114
-                    EQ@110..112 "=" [] [Whitespace(" ")]
-                    JS_NUMBER_LITERAL@112..114
-                      JS_NUMBER_LITERAL_TOKEN@112..114 "10" [] []
-            SEMICOLON@114..115 ";" [] []
-          JS_EXPRESSION_STATEMENT@115..150
-            JS_STRING_LITERAL@115..130
-              JS_STRING_LITERAL_TOKEN@115..130 "'use strict'" [Whitespace("\n\n\t")] []
-            SEMICOLON@130..150 ";" [] [Whitespace(" "), Comments("// not a directive")]
-        R_CURLY@150..152 "}" [Whitespace("\n")] []
-    JS_EXPRESSION_STATEMENT@152..236
-      JS_PARENTHESIZED_EXPRESSION@152..235
-        L_PAREN@152..155 "(" [Whitespace("\n\n")] []
-        JS_FUNCTION_EXPRESSION@155..234
-          FUNCTION_KW@155..164 "function" [] [Whitespace(" ")]
-          JS_PARAMETER_LIST@164..167
-            L_PAREN@164..165 "(" [] []
-            LIST@165..165
-            R_PAREN@165..167 ")" [] [Whitespace(" ")]
-          JS_FUNCTION_BODY@167..234
-            L_CURLY@167..168 "{" [] []
-            LIST@168..183
-              JS_DIRECTIVE@168..183
-                JS_STRING_LITERAL_TOKEN@168..182 "\"use strict\"" [Whitespace("\n\t")] []
-                SEMICOLON@182..183 ";" [] []
-            LIST@183..232
-              JS_VARIABLE_DECLARATION_STATEMENT@183..197
-                JS_VARIABLE_DECLARATION@183..196
-                  LET_KW@183..190 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
-                  LIST@190..196
-                    JS_VARIABLE_DECLARATOR@190..196
-                      SINGLE_PATTERN@190..192
-                        NAME@190..192
-                          IDENT@190..192 "a" [] [Whitespace(" ")]
-                      JS_EQUAL_VALUE_CLAUSE@192..196
-                        EQ@192..194 "=" [] [Whitespace(" ")]
-                        JS_NUMBER_LITERAL@194..196
-                          JS_NUMBER_LITERAL_TOKEN@194..196 "10" [] []
-                SEMICOLON@196..197 ";" [] []
-              JS_EXPRESSION_STATEMENT@197..232
-                JS_STRING_LITERAL@197..212
-                  JS_STRING_LITERAL_TOKEN@197..212 "\"use strict\"" [Whitespace("\n\n\t")] []
-                SEMICOLON@212..232 ";" [] [Whitespace(" "), Comments("// not a directive")]
-            R_CURLY@232..234 "}" [Whitespace("\n")] []
-        R_PAREN@234..235 ")" [] []
-      SEMICOLON@235..236 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@236..320
-      JS_VARIABLE_DECLARATION@236..320
-        LET_KW@236..242 "let" [Whitespace("\n\n")] [Whitespace(" ")]
-        LIST@242..320
-          JS_VARIABLE_DECLARATOR@242..320
-            SINGLE_PATTERN@242..244
-              NAME@242..244
-                IDENT@242..244 "b" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@244..320
-              EQ@244..246 "=" [] [Whitespace(" ")]
-              JS_ARROW_FUNCTION_EXPRESSION@246..320
-                JS_PARAMETER_LIST@246..249
-                  L_PAREN@246..247 "(" [] []
-                  LIST@247..247
-                  R_PAREN@247..249 ")" [] [Whitespace(" ")]
-                FAT_ARROW@249..252 "=>" [] [Whitespace(" ")]
-                JS_FUNCTION_BODY@252..320
-                  L_CURLY@252..253 "{" [] []
-                  LIST@253..268
-                    JS_DIRECTIVE@253..268
-                      JS_STRING_LITERAL_TOKEN@253..267 "\"use strict\"" [Whitespace("\n\t")] []
-                      SEMICOLON@267..268 ";" [] []
-                  LIST@268..318
-                    JS_VARIABLE_DECLARATION_STATEMENT@268..282
-                      JS_VARIABLE_DECLARATION@268..281
-                        LET_KW@268..275 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
-                        LIST@275..281
-                          JS_VARIABLE_DECLARATOR@275..281
-                            SINGLE_PATTERN@275..277
-                              NAME@275..277
-                                IDENT@275..277 "a" [] [Whitespace(" ")]
-                            JS_EQUAL_VALUE_CLAUSE@277..281
-                              EQ@277..279 "=" [] [Whitespace(" ")]
-                              JS_NUMBER_LITERAL@279..281
-                                JS_NUMBER_LITERAL_TOKEN@279..281 "10" [] []
-                      SEMICOLON@281..282 ";" [] []
-                    JS_EXPRESSION_STATEMENT@282..318
-                      JS_STRING_LITERAL@282..297
-                        JS_STRING_LITERAL_TOKEN@282..297 "\"use strict\"" [Whitespace("\n\n\t")] []
-                      SEMICOLON@297..318 ";" [] [Whitespace("  "), Comments("// not a directive")]
-                  R_CURLY@318..320 "}" [Whitespace("\n")] []
-      (empty-slot)
-    JS_BLOCK_STATEMENT@320..359
-      L_CURLY@320..323 "{" [Whitespace("\n\n")] []
-      LIST@323..357
-        JS_EXPRESSION_STATEMENT@323..357
-          JS_STRING_LITERAL@323..337
-            JS_STRING_LITERAL_TOKEN@323..337 "\"use strict\"" [Whitespace("\n\t")] []
-          SEMICOLON@337..357 ";" [] [Whitespace(" "), Comments("// not a directive")]
-      R_CURLY@357..359 "}" [Whitespace("\n")] []
-  EOF@359..360 "" [Whitespace("\n")] []
+0: JS_ROOT@0..360
+  0: (empty)
+  1: LIST@0..20
+    0: JS_DIRECTIVE@0..20
+      0: JS_STRING_LITERAL_TOKEN@0..20 "\"use new\"" [Comments("// SCRIPT"), Whitespace("\n\n")] []
+  2: LIST@20..359
+    0: JS_VARIABLE_DECLARATION_STATEMENT@20..33
+      0: JS_VARIABLE_DECLARATION@20..32
+        0: LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")]
+        1: LIST@26..32
+          0: JS_VARIABLE_DECLARATOR@26..32
+            0: SINGLE_PATTERN@26..28
+              0: NAME@26..28
+                0: IDENT@26..28 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@28..32
+              0: EQ@28..30 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL@30..32
+                0: JS_NUMBER_LITERAL_TOKEN@30..32 "10" [] []
+      1: SEMICOLON@32..33 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@33..67
+      0: JS_STRING_LITERAL@33..47
+        0: JS_STRING_LITERAL_TOKEN@33..47 "\"use strict\"" [Whitespace("\n\n")] []
+      1: SEMICOLON@47..67 ";" [] [Whitespace(" "), Comments("// not a directive")]
+    2: JS_FUNCTION_DECLARATION@67..152
+      0: FUNCTION_KW@67..78 "function" [Whitespace("\n\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@78..82
+        0: IDENT@78..82 "test" [] []
+      2: JS_PARAMETER_LIST@82..85
+        0: L_PAREN@82..83 "(" [] []
+        1: LIST@83..83
+        2: R_PAREN@83..85 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@85..152
+        0: L_CURLY@85..86 "{" [] []
+        1: LIST@86..101
+          0: JS_DIRECTIVE@86..101
+            0: JS_STRING_LITERAL_TOKEN@86..100 "'use strict'" [Whitespace("\n\t")] []
+            1: SEMICOLON@100..101 ";" [] []
+        2: LIST@101..150
+          0: JS_VARIABLE_DECLARATION_STATEMENT@101..115
+            0: JS_VARIABLE_DECLARATION@101..114
+              0: LET_KW@101..108 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
+              1: LIST@108..114
+                0: JS_VARIABLE_DECLARATOR@108..114
+                  0: SINGLE_PATTERN@108..110
+                    0: NAME@108..110
+                      0: IDENT@108..110 "a" [] [Whitespace(" ")]
+                  1: JS_EQUAL_VALUE_CLAUSE@110..114
+                    0: EQ@110..112 "=" [] [Whitespace(" ")]
+                    1: JS_NUMBER_LITERAL@112..114
+                      0: JS_NUMBER_LITERAL_TOKEN@112..114 "10" [] []
+            1: SEMICOLON@114..115 ";" [] []
+          1: JS_EXPRESSION_STATEMENT@115..150
+            0: JS_STRING_LITERAL@115..130
+              0: JS_STRING_LITERAL_TOKEN@115..130 "'use strict'" [Whitespace("\n\n\t")] []
+            1: SEMICOLON@130..150 ";" [] [Whitespace(" "), Comments("// not a directive")]
+        3: R_CURLY@150..152 "}" [Whitespace("\n")] []
+    3: JS_EXPRESSION_STATEMENT@152..236
+      0: JS_PARENTHESIZED_EXPRESSION@152..235
+        0: L_PAREN@152..155 "(" [Whitespace("\n\n")] []
+        1: JS_FUNCTION_EXPRESSION@155..234
+          0: FUNCTION_KW@155..164 "function" [] [Whitespace(" ")]
+          1: JS_PARAMETER_LIST@164..167
+            0: L_PAREN@164..165 "(" [] []
+            1: LIST@165..165
+            2: R_PAREN@165..167 ")" [] [Whitespace(" ")]
+          2: JS_FUNCTION_BODY@167..234
+            0: L_CURLY@167..168 "{" [] []
+            1: LIST@168..183
+              0: JS_DIRECTIVE@168..183
+                0: JS_STRING_LITERAL_TOKEN@168..182 "\"use strict\"" [Whitespace("\n\t")] []
+                1: SEMICOLON@182..183 ";" [] []
+            2: LIST@183..232
+              0: JS_VARIABLE_DECLARATION_STATEMENT@183..197
+                0: JS_VARIABLE_DECLARATION@183..196
+                  0: LET_KW@183..190 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
+                  1: LIST@190..196
+                    0: JS_VARIABLE_DECLARATOR@190..196
+                      0: SINGLE_PATTERN@190..192
+                        0: NAME@190..192
+                          0: IDENT@190..192 "a" [] [Whitespace(" ")]
+                      1: JS_EQUAL_VALUE_CLAUSE@192..196
+                        0: EQ@192..194 "=" [] [Whitespace(" ")]
+                        1: JS_NUMBER_LITERAL@194..196
+                          0: JS_NUMBER_LITERAL_TOKEN@194..196 "10" [] []
+                1: SEMICOLON@196..197 ";" [] []
+              1: JS_EXPRESSION_STATEMENT@197..232
+                0: JS_STRING_LITERAL@197..212
+                  0: JS_STRING_LITERAL_TOKEN@197..212 "\"use strict\"" [Whitespace("\n\n\t")] []
+                1: SEMICOLON@212..232 ";" [] [Whitespace(" "), Comments("// not a directive")]
+            3: R_CURLY@232..234 "}" [Whitespace("\n")] []
+        2: R_PAREN@234..235 ")" [] []
+      1: SEMICOLON@235..236 ";" [] []
+    4: JS_VARIABLE_DECLARATION_STATEMENT@236..320
+      0: JS_VARIABLE_DECLARATION@236..320
+        0: LET_KW@236..242 "let" [Whitespace("\n\n")] [Whitespace(" ")]
+        1: LIST@242..320
+          0: JS_VARIABLE_DECLARATOR@242..320
+            0: SINGLE_PATTERN@242..244
+              0: NAME@242..244
+                0: IDENT@242..244 "b" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@244..320
+              0: EQ@244..246 "=" [] [Whitespace(" ")]
+              1: JS_ARROW_FUNCTION_EXPRESSION@246..320
+                0: JS_PARAMETER_LIST@246..249
+                  0: L_PAREN@246..247 "(" [] []
+                  1: LIST@247..247
+                  2: R_PAREN@247..249 ")" [] [Whitespace(" ")]
+                1: FAT_ARROW@249..252 "=>" [] [Whitespace(" ")]
+                2: JS_FUNCTION_BODY@252..320
+                  0: L_CURLY@252..253 "{" [] []
+                  1: LIST@253..268
+                    0: JS_DIRECTIVE@253..268
+                      0: JS_STRING_LITERAL_TOKEN@253..267 "\"use strict\"" [Whitespace("\n\t")] []
+                      1: SEMICOLON@267..268 ";" [] []
+                  2: LIST@268..318
+                    0: JS_VARIABLE_DECLARATION_STATEMENT@268..282
+                      0: JS_VARIABLE_DECLARATION@268..281
+                        0: LET_KW@268..275 "let" [Whitespace("\n\n\t")] [Whitespace(" ")]
+                        1: LIST@275..281
+                          0: JS_VARIABLE_DECLARATOR@275..281
+                            0: SINGLE_PATTERN@275..277
+                              0: NAME@275..277
+                                0: IDENT@275..277 "a" [] [Whitespace(" ")]
+                            1: JS_EQUAL_VALUE_CLAUSE@277..281
+                              0: EQ@277..279 "=" [] [Whitespace(" ")]
+                              1: JS_NUMBER_LITERAL@279..281
+                                0: JS_NUMBER_LITERAL_TOKEN@279..281 "10" [] []
+                      1: SEMICOLON@281..282 ";" [] []
+                    1: JS_EXPRESSION_STATEMENT@282..318
+                      0: JS_STRING_LITERAL@282..297
+                        0: JS_STRING_LITERAL_TOKEN@282..297 "\"use strict\"" [Whitespace("\n\n\t")] []
+                      1: SEMICOLON@297..318 ";" [] [Whitespace("  "), Comments("// not a directive")]
+                  3: R_CURLY@318..320 "}" [Whitespace("\n")] []
+      1: (empty)
+    5: JS_BLOCK_STATEMENT@320..359
+      0: L_CURLY@320..323 "{" [Whitespace("\n\n")] []
+      1: LIST@323..357
+        0: JS_EXPRESSION_STATEMENT@323..357
+          0: JS_STRING_LITERAL@323..337
+            0: JS_STRING_LITERAL_TOKEN@323..337 "\"use strict\"" [Whitespace("\n\t")] []
+          1: SEMICOLON@337..357 ";" [] [Whitespace(" "), Comments("// not a directive")]
+      2: R_CURLY@357..359 "}" [Whitespace("\n")] []
+  3: EOF@359..360 "" [Whitespace("\n")] []

@@ -1,27 +1,27 @@
-JS_ROOT@0..12
-  (empty-slot)
-  LIST@0..0
-  LIST@0..11
-    JS_VARIABLE_DECLARATION_STATEMENT@0..11
-      JS_VARIABLE_DECLARATION@0..11
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..11
-          JS_VARIABLE_DECLARATOR@4..11
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "b" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..11
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              JS_OBJECT_EXPRESSION@8..11
-                L_CURLY@8..9 "{" [] []
-                LIST@9..10
-                  JS_PROPERTY_OBJECT_MEMBER@9..10
-                    JS_LITERAL_MEMBER_NAME@9..10
-                      JS_NUMBER_LITERAL_TOKEN@9..10 "5" [] []
-                    (empty-slot)
-                R_CURLY@10..11 "}" [] []
-      (empty-slot)
-  EOF@11..12 "" [Whitespace("\n")] []
+0: JS_ROOT@0..12
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..11
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..11
+      0: JS_VARIABLE_DECLARATION@0..11
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..11
+          0: JS_VARIABLE_DECLARATOR@4..11
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "b" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..11
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@8..11
+                0: L_CURLY@8..9 "{" [] []
+                1: LIST@9..10
+                  0: JS_PROPERTY_OBJECT_MEMBER@9..10
+                    0: JS_LITERAL_MEMBER_NAME@9..10
+                      0: JS_NUMBER_LITERAL_TOKEN@9..10 "5" [] []
+                    1: (empty)
+                2: R_CURLY@10..11 "}" [] []
+      1: (empty)
+  3: EOF@11..12 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `:` but instead found `}`
   ┌─ object_expr_non_ident_literal_prop.js:1:11

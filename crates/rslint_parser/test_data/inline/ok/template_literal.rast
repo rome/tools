@@ -1,77 +1,77 @@
-JS_ROOT@0..67
-  (empty-slot)
-  LIST@0..0
-  LIST@0..66
-    JS_VARIABLE_DECLARATION_STATEMENT@0..21
-      JS_VARIABLE_DECLARATION@0..20
-        LET_KW@0..4 "let" [] [Whitespace(" ")]
-        LIST@4..20
-          JS_VARIABLE_DECLARATOR@4..20
-            SINGLE_PATTERN@4..6
-              NAME@4..6
-                IDENT@4..6 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@6..20
-              EQ@6..8 "=" [] [Whitespace(" ")]
-              TEMPLATE@8..20
-                BACKTICK@8..9 "`" [] []
-                LIST@9..19
-                  TEMPLATE_CHUNK@9..13 "foo " [] []
-                  TEMPLATE_ELEMENT@13..19
-                    DOLLARCURLY@13..15 "${" [] []
-                    JS_REFERENCE_IDENTIFIER_EXPRESSION@15..18
-                      IDENT@15..18 "bar" [] []
-                    R_CURLY@18..19 "}" [] []
-                BACKTICK@19..20 "`" [] []
-      SEMICOLON@20..21 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@21..33
-      JS_VARIABLE_DECLARATION@21..32
-        LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@26..32
-          JS_VARIABLE_DECLARATOR@26..32
-            SINGLE_PATTERN@26..28
-              NAME@26..28
-                IDENT@26..28 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@28..32
-              EQ@28..30 "=" [] [Whitespace(" ")]
-              TEMPLATE@30..32
-                BACKTICK@30..31 "`" [] []
-                LIST@31..31
-                BACKTICK@31..32 "`" [] []
-      SEMICOLON@32..33 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@33..51
-      JS_VARIABLE_DECLARATION@33..50
-        LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@38..50
-          JS_VARIABLE_DECLARATOR@38..50
-            SINGLE_PATTERN@38..40
-              NAME@38..40
-                IDENT@38..40 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@40..50
-              EQ@40..42 "=" [] [Whitespace(" ")]
-              TEMPLATE@42..50
-                BACKTICK@42..43 "`" [] []
-                LIST@43..49
-                  TEMPLATE_ELEMENT@43..49
-                    DOLLARCURLY@43..45 "${" [] []
-                    JS_REFERENCE_IDENTIFIER_EXPRESSION@45..48
-                      IDENT@45..48 "foo" [] []
-                    R_CURLY@48..49 "}" [] []
-                BACKTICK@49..50 "`" [] []
-      SEMICOLON@50..51 ";" [] []
-    JS_VARIABLE_DECLARATION_STATEMENT@51..66
-      JS_VARIABLE_DECLARATION@51..65
-        LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")]
-        LIST@56..65
-          JS_VARIABLE_DECLARATOR@56..65
-            SINGLE_PATTERN@56..58
-              NAME@56..58
-                IDENT@56..58 "a" [] [Whitespace(" ")]
-            JS_EQUAL_VALUE_CLAUSE@58..65
-              EQ@58..60 "=" [] [Whitespace(" ")]
-              TEMPLATE@60..65
-                BACKTICK@60..61 "`" [] []
-                LIST@61..64
-                  TEMPLATE_CHUNK@61..64 "foo" [] []
-                BACKTICK@64..65 "`" [] []
-      SEMICOLON@65..66 ";" [] []
-  EOF@66..67 "" [Whitespace("\n")] []
+0: JS_ROOT@0..67
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..66
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..21
+      0: JS_VARIABLE_DECLARATION@0..20
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..20
+          0: JS_VARIABLE_DECLARATOR@4..20
+            0: SINGLE_PATTERN@4..6
+              0: NAME@4..6
+                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@6..20
+              0: EQ@6..8 "=" [] [Whitespace(" ")]
+              1: TEMPLATE@8..20
+                0: BACKTICK@8..9 "`" [] []
+                1: LIST@9..19
+                  0: TEMPLATE_CHUNK@9..13 "foo " [] []
+                  1: TEMPLATE_ELEMENT@13..19
+                    0: DOLLARCURLY@13..15 "${" [] []
+                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..18
+                      0: IDENT@15..18 "bar" [] []
+                    2: R_CURLY@18..19 "}" [] []
+                2: BACKTICK@19..20 "`" [] []
+      1: SEMICOLON@20..21 ";" [] []
+    1: JS_VARIABLE_DECLARATION_STATEMENT@21..33
+      0: JS_VARIABLE_DECLARATION@21..32
+        0: LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@26..32
+          0: JS_VARIABLE_DECLARATOR@26..32
+            0: SINGLE_PATTERN@26..28
+              0: NAME@26..28
+                0: IDENT@26..28 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@28..32
+              0: EQ@28..30 "=" [] [Whitespace(" ")]
+              1: TEMPLATE@30..32
+                0: BACKTICK@30..31 "`" [] []
+                1: LIST@31..31
+                2: BACKTICK@31..32 "`" [] []
+      1: SEMICOLON@32..33 ";" [] []
+    2: JS_VARIABLE_DECLARATION_STATEMENT@33..51
+      0: JS_VARIABLE_DECLARATION@33..50
+        0: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@38..50
+          0: JS_VARIABLE_DECLARATOR@38..50
+            0: SINGLE_PATTERN@38..40
+              0: NAME@38..40
+                0: IDENT@38..40 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@40..50
+              0: EQ@40..42 "=" [] [Whitespace(" ")]
+              1: TEMPLATE@42..50
+                0: BACKTICK@42..43 "`" [] []
+                1: LIST@43..49
+                  0: TEMPLATE_ELEMENT@43..49
+                    0: DOLLARCURLY@43..45 "${" [] []
+                    1: JS_REFERENCE_IDENTIFIER_EXPRESSION@45..48
+                      0: IDENT@45..48 "foo" [] []
+                    2: R_CURLY@48..49 "}" [] []
+                2: BACKTICK@49..50 "`" [] []
+      1: SEMICOLON@50..51 ";" [] []
+    3: JS_VARIABLE_DECLARATION_STATEMENT@51..66
+      0: JS_VARIABLE_DECLARATION@51..65
+        0: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@56..65
+          0: JS_VARIABLE_DECLARATOR@56..65
+            0: SINGLE_PATTERN@56..58
+              0: NAME@56..58
+                0: IDENT@56..58 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@58..65
+              0: EQ@58..60 "=" [] [Whitespace(" ")]
+              1: TEMPLATE@60..65
+                0: BACKTICK@60..61 "`" [] []
+                1: LIST@61..64
+                  0: TEMPLATE_CHUNK@61..64 "foo" [] []
+                2: BACKTICK@64..65 "`" [] []
+      1: SEMICOLON@65..66 ";" [] []
+  3: EOF@66..67 "" [Whitespace("\n")] []
