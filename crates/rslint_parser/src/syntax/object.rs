@@ -20,7 +20,7 @@ const STARTS_OBJ_PROP: TokenSet = token_set![
 // let b = {foo,}
 pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.required_token(T!['{']);
+	p.expect(T!['{']);
 	let props_list = p.start();
 	let mut first = true;
 
@@ -28,7 +28,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 		if first {
 			first = false;
 		} else {
-			p.required_token(T![,]);
+			p.expect(T![,]);
 
 			if p.at(T!['}']) {
 				break;
@@ -40,7 +40,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 
 	props_list.complete(p, LIST);
 
-	p.required_token(T!['}']);
+	p.expect(T!['}']);
 	m.complete(p, JS_OBJECT_EXPRESSION)
 }
 
@@ -128,7 +128,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 				} else {
 					// let b = { a: true }
 					// If the member name was a literal OR we're at a colon
-					p.required_token(T![:]);
+					p.expect(T![:]);
 					assign_expr(p);
 					Some(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				}
@@ -163,8 +163,8 @@ fn getter_object_member(p: &mut Parser) -> CompletedMarker {
 
 	object_member_name(p);
 
-	p.required_token(T!['(']);
-	p.required_token(T![')']);
+	p.expect(T!['(']);
+	p.expect(T![')']);
 
 	ts_return_type(p);
 
@@ -184,9 +184,9 @@ fn setter_object_member(p: &mut Parser) -> CompletedMarker {
 
 	object_member_name(p);
 
-	p.state.allow_object_expr = p.required_token(T!['(']);
+	p.state.allow_object_expr = p.expect(T!['(']);
 	formal_param_pat(p);
-	p.required_token(T![')']);
+	p.expect(T![')']);
 
 	function_body(p);
 
@@ -203,7 +203,7 @@ pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker
 			let m = p.start();
 			p.bump_any();
 			assign_expr(p);
-			p.required_token(T![']']);
+			p.expect(T![']']);
 			Some(m.complete(p, COMPUTED_PROPERTY_NAME))
 		}
 		_ if binding => super::pat::binding_identifier(p),
@@ -224,9 +224,9 @@ fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 pub(crate) fn computed_member_name(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 
-	p.required_token(T!['[']);
+	p.expect(T!['[']);
 	expr(p);
-	p.required_token(T![']']);
+	p.expect(T![']']);
 	m.complete(p, JS_COMPUTED_MEMBER_NAME)
 }
 

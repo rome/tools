@@ -124,7 +124,7 @@ pub(super) fn parameters_list(
 ) {
 	let mut first = true;
 
-	p.state.allow_object_expr = p.required_token(T!['(']);
+	p.state.allow_object_expr = p.expect(T!['(']);
 
 	let parameters_list = p.start();
 
@@ -135,7 +135,7 @@ pub(super) fn parameters_list(
 			p.eat(T![,]);
 			break;
 		} else {
-			p.required_token(T![,]);
+			p.expect(T![,]);
 		}
 
 		if p.at(T![...]) {
@@ -228,7 +228,7 @@ pub(super) fn parameters_list(
 
 	parameters_list.complete(p, LIST);
 	p.state.allow_object_expr = true;
-	p.required_token(T![')']);
+	p.expect(T![')']);
 }
 
 pub(super) fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {

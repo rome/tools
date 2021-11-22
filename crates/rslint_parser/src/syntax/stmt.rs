@@ -69,7 +69,7 @@ pub fn semi(p: &mut Parser, err_range: Range<usize>) {
 /// Returns false if neither a semicolon was present and the current position doesn't allow an automatic
 /// semicolon insertion.
 pub(crate) fn optional_semi(p: &mut Parser) -> bool {
-	if p.optional_token(T![;]) {
+	if p.eat_optional(T![;]) {
 		return true;
 	}
 
@@ -244,7 +244,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 pub fn debugger_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	let range = p.cur_tok().range;
-	p.required_token(T![debugger]);
+	p.expect(T![debugger]);
 	semi(p, range);
 	m.complete(p, JS_DEBUGGER_STATEMENT)
 }
@@ -259,7 +259,7 @@ pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 	// new Error("oh no :(")
 	let m = p.start();
 	let start = p.cur_tok().range.start;
-	p.required_token(T![throw]);
+	p.expect(T![throw]);
 	if p.has_linebreak_before_n(0) {
 		let mut err = p
 			.err_builder(
@@ -289,7 +289,7 @@ pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 pub fn break_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	let start = p.cur_tok().range;
-	p.required_token(T![break]);
+	p.expect(T![break]);
 
 	let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
 		let label_token = p.cur_tok();
@@ -325,7 +325,7 @@ pub fn break_stmt(p: &mut Parser) -> CompletedMarker {
 pub fn continue_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	let start = p.cur_tok().range;
-	p.required_token(T![continue]);
+	p.expect(T![continue]);
 
 	let end = if !p.has_linebreak_before_n(0) && p.at(T![ident]) {
 		let label_token = p.cur_tok();
@@ -363,7 +363,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 	// return foo;
 	let m = p.start();
 	let start = p.cur_tok().range.start;
-	p.required_token(T![return]);
+	p.expect(T![return]);
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
 		p.expr_with_semi_recovery(false, ERROR);
 	}
@@ -385,7 +385,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 // ;
 pub fn empty_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.required_token(T![;]);
+	p.expect(T![;]);
 	m.complete(p, JS_EMPTY_STATEMENT)
 }
 
@@ -433,7 +433,7 @@ pub(super) fn block_impl(
 
 	statements(&mut *guard, false, true, recovery_set);
 
-	guard.required_token(T!['}']);
+	guard.expect(T!['}']);
 
 	if let Some(old_parser_state) = old_parser_state {
 		guard.state = old_parser_state;
@@ -572,9 +572,9 @@ pub fn condition(p: &mut Parser) -> CompletedMarker {
 
 /// An expression wrapped in parentheses such as `()`
 pub fn parenthesized_expression(p: &mut Parser) {
-	p.state.allow_object_expr = p.required_token(T!['(']);
+	p.state.allow_object_expr = p.expect(T!['(']);
 	expr(p);
-	p.required_token(T![')']);
+	p.expect(T![')']);
 	p.state.allow_object_expr = true;
 }
 
@@ -591,7 +591,7 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 	// if else {}
 	// if () {} else {}
 	let m = p.start();
-	p.required_token(T![if]);
+	p.expect(T![if]);
 
 	// (test)
 	parenthesized_expression(&mut *p.with_state(ParserState {
@@ -617,7 +617,7 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 /// A with statement such as `with (foo) something()`
 pub fn with_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.required_token(T![with]);
+	p.expect(T![with]);
 	parenthesized_expression(p);
 
 	stmt(p, None);
@@ -646,7 +646,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 	// while (true {}
 	// while true) }
 	let m = p.start();
-	p.required_token(T![while]);
+	p.expect(T![while]);
 	parenthesized_expression(p);
 	stmt(
 		&mut *p.with_state(ParserState {
@@ -801,7 +801,7 @@ pub(crate) fn variable_declarator(
 fn variable_initializer(p: &mut Parser) {
 	let m = p.start();
 
-	p.required_token(T![=]);
+	p.expect(T![=]);
 	p.expr_with_semi_recovery(true, ERROR);
 
 	m.complete(p, SyntaxKind::JS_EQUAL_VALUE_CLAUSE);
@@ -818,7 +818,7 @@ pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
 	// do while true
 	let m = p.start();
 	let start = p.cur_tok().range.start;
-	p.required_token(T![do]);
+	p.expect(T![do]);
 	stmt(
 		&mut *p.with_state(ParserState {
 			continue_allowed: true,
@@ -827,7 +827,7 @@ pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
 		}),
 		None,
 	);
-	p.required_token(T![while]);
+	p.expect(T![while]);
 	parenthesized_expression(p);
 	semi(p, start..p.cur_tok().range.end);
 	m.complete(p, JS_DO_WHILE_STATEMENT)
@@ -857,7 +857,7 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 			for_each_head(p, is_in)
 		} else {
 			p.state.for_head_error = None;
-			p.required_token(T![;]);
+			p.expect(T![;]);
 			normal_for_head(p);
 			FOR_STMT
 		}
@@ -894,7 +894,7 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 			return for_each_head(p, is_in);
 		}
 
-		p.required_token(T![;]);
+		p.expect(T![;]);
 		normal_for_head(p);
 		FOR_STMT
 	}
@@ -915,7 +915,7 @@ fn normal_for_head(p: &mut Parser) {
 		let m = p.start();
 		expr(p);
 		m.complete(p, FOR_STMT_TEST);
-		p.required_token(T![;]);
+		p.expect(T![;]);
 	}
 
 	if !p.at(T![')']) {
@@ -936,13 +936,13 @@ pub fn for_stmt(p: &mut Parser) -> CompletedMarker {
 	// for ;; {}
 	// for let i = 5; i < 10; i++ {}
 	let m = p.start();
-	p.required_token(T![for]);
+	p.expect(T![for]);
 	// FIXME: This should emit an error for non-for-of
 	p.eat(T![await]);
 
-	p.required_token(T!['(']);
+	p.expect(T!['(']);
 	let kind = for_head(p);
-	p.required_token(T![')']);
+	p.expect(T![')']);
 	stmt(
 		&mut *p.with_state(ParserState {
 			continue_allowed: true,
@@ -961,7 +961,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 	match p.cur() {
 		T![default] => {
 			p.bump_any();
-			p.required_token(T![:]);
+			p.expect(T![:]);
 			// We stop the range here because we dont want to include the entire clause
 			// including the statement list following it
 			let end = p.cur_tok().range.end;
@@ -976,7 +976,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 		T![case] => {
 			p.bump_any();
 			expr(p);
-			p.required_token(T![:]);
+			p.expect(T![:]);
 			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
 				stmt(p, None);
@@ -1019,9 +1019,9 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 	// switch foo {}
 	// switch {}
 	let m = p.start();
-	p.required_token(T![switch]);
+	p.expect(T![switch]);
 	parenthesized_expression(p);
-	p.required_token(T!['{']);
+	p.expect(T!['{']);
 	let cases_list = p.start();
 	let mut first_default: Option<Range<usize>> = None;
 
@@ -1049,13 +1049,13 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 		}
 	}
 	cases_list.complete(p, LIST);
-	p.required_token(T!['}']);
+	p.expect(T!['}']);
 	m.complete(p, JS_SWITCH_STATEMENT)
 }
 
 fn catch_clause(p: &mut Parser) {
 	let m = p.start();
-	p.required_token(T![catch]);
+	p.expect(T![catch]);
 
 	if p.at(T!['(']) {
 		catch_declaration(p);
@@ -1104,7 +1104,7 @@ fn catch_declaration(p: &mut Parser) {
 	} else {
 		error_marker.abandon(p);
 	}
-	p.required_token(T![')']);
+	p.expect(T![')']);
 
 	declaration_marker.complete(p, JS_CATCH_DECLARATION);
 }
@@ -1127,7 +1127,7 @@ pub fn try_stmt(p: &mut Parser) -> CompletedMarker {
 	// and block_items would not exit, and if we exited on any error that would greatly limit
 	// block_items error recovery
 	let m = p.start();
-	p.required_token(T![try]);
+	p.expect(T![try]);
 	block_stmt(p, None);
 
 	if p.at(T![catch]) {

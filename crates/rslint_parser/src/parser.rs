@@ -181,7 +181,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Consumes the next optional token if `kind` matches or inserts a missing marker
-	pub fn optional_token(&mut self, kind: SyntaxKind) -> bool {
+	pub fn eat_optional(&mut self, kind: SyntaxKind) -> bool {
 		if self.eat(kind) {
 			true
 		} else {
@@ -323,7 +323,7 @@ impl<'t> Parser<'t> {
 	}
 
 	/// Try to eat a specific token kind, if the kind is not there then add a missing marker and add an error to the events stack.
-	pub fn required_token(&mut self, kind: SyntaxKind) -> bool {
+	pub fn expect(&mut self, kind: SyntaxKind) -> bool {
 		if self.eat(kind) {
 			true
 		} else {
@@ -477,7 +477,7 @@ impl<'t> Parser<'t> {
 		if self.state.no_recovery {
 			Some(true).filter(|_| self.eat(kind))
 		} else {
-			Some(self.required_token(kind))
+			Some(self.expect(kind))
 		}
 	}
 
@@ -778,7 +778,7 @@ mod tests {
 		let mut p = Parser::new(token_source, 0, Syntax::default());
 
 		let m = p.start();
-		p.required_token(SyntaxKind::JS_STRING_LITERAL_TOKEN);
+		p.expect(SyntaxKind::JS_STRING_LITERAL_TOKEN);
 		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL);
 	}
 

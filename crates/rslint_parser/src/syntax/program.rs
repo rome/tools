@@ -24,7 +24,7 @@ macro_rules! at_ident_name {
 
 pub fn parse(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.optional_token(T![js_shebang]);
+	p.eat_optional(T![js_shebang]);
 
 	let old_parser_state = directives(p);
 	statements(p, true, false, None);
@@ -38,7 +38,7 @@ pub fn parse(p: &mut Parser) -> CompletedMarker {
 
 fn named_list(p: &mut Parser) -> Marker {
 	let m = p.start();
-	p.required_token(T!['{']);
+	p.expect(T!['{']);
 	let mut first = true;
 	let specifiers_list = p.start();
 	while !p.at(EOF) && !p.at(T!['}']) {
@@ -48,13 +48,13 @@ fn named_list(p: &mut Parser) -> Marker {
 			p.bump_any();
 			break;
 		} else {
-			p.required_token(T![,]);
+			p.expect(T![,]);
 		}
 
 		specifier(p);
 	}
 	specifiers_list.complete(p, LIST);
-	p.required_token(T!['}']);
+	p.expect(T!['}']);
 	m
 }
 
@@ -103,7 +103,7 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 		..p.state.clone()
 	});
 
-	p.required_token(T![import]);
+	p.expect(T![import]);
 
 	if p.at_ts(token_set![T![ident], T![async], T![yield]]) && p.nth_at(1, T![=]) {
 		let mut complete = ts_import_equals_decl(p, m);
@@ -147,7 +147,7 @@ pub fn import_decl(p: &mut Parser) -> CompletedMarker {
 	if p.at_ts(token_set![T![async], T![yield], T![ident]]) {
 		imported_binding(p);
 		if p.cur_src() != "from" {
-			p.required_token(T![,]);
+			p.expect(T![,]);
 		}
 	}
 
@@ -222,7 +222,7 @@ fn imported_binding(p: &mut Parser) {
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	let m = p.start();
-	p.required_token(T![export]);
+	p.expect(T![export]);
 
 	let declare = p.typescript() && p.cur_src() == "declare";
 
@@ -463,10 +463,10 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		if exports_ns || export_default {
-			p.required_token(T![,]);
+			p.expect(T![,]);
 		}
 
-		p.required_token(T!['{']);
+		p.expect(T!['{']);
 
 		let mut first = true;
 		let specifiers = p.start();
@@ -481,7 +481,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		}
 
 		specifiers.complete(p, LIST);
-		p.required_token(T!['}']);
+		p.expect(T!['}']);
 
 		if p.cur_src() == "from" {
 			from_clause_and_semi(p, start);
@@ -513,7 +513,7 @@ fn from_clause_and_semi(p: &mut Parser, start: usize) {
 pub fn ts_import_equals_decl(p: &mut Parser, m: Marker) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	identifier_name(p);
-	p.required_token(T![=]);
+	p.expect(T![=]);
 
 	if p.cur_src() == "require" && p.nth_at(1, T!['(']) {
 		ts_external_module_ref(p);
@@ -536,8 +536,8 @@ pub fn ts_external_module_ref(p: &mut Parser) -> CompletedMarker {
 		p.bump_remap(T![require]);
 	}
 
-	p.required_token(T!['(']);
-	p.required_token(JS_STRING_LITERAL_TOKEN);
-	p.required_token(T![')']);
+	p.expect(T!['(']);
+	p.expect(JS_STRING_LITERAL_TOKEN);
+	p.expect(T![')']);
 	m.complete(p, TS_EXTERNAL_MODULE_REF)
 }
