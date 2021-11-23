@@ -1,91 +1,73 @@
-JS_ROOT@0..101
-  LIST@0..0
-  LIST@0..100
-    JS_CLASS_DECLARATION@0..48
-      CLASS_KW@0..5 "class"
-      WHITESPACE@5..6 " "
-      JS_IDENTIFIER_BINDING@6..9
-        IDENT@6..9 "Foo"
-      WHITESPACE@9..10 " "
-      L_CURLY@10..11 "{"
-      WHITESPACE@11..13 "\n\t"
-      LIST@13..46
-        JS_CONSTRUCTOR_CLASS_MEMBER@13..46
-          JS_LITERAL_MEMBER_NAME@13..24
-            IDENT@13..24 "constructor"
-          JS_CONSTRUCTOR_PARAMETER_LIST@24..27
-            L_PAREN@24..25 "("
-            LIST@25..26
-              SINGLE_PATTERN@25..26
-                NAME@25..26
-                  IDENT@25..26 "a"
-            R_PAREN@26..27 ")"
-          WHITESPACE@27..28 " "
-          JS_FUNCTION_BODY@28..46
-            L_CURLY@28..29 "{"
-            WHITESPACE@29..32 "\n\t\t"
-            LIST@32..32
-            LIST@32..43
-              JS_EXPRESSION_STATEMENT@32..43
-                JS_ASSIGNMENT_EXPRESSION@32..42
-                  JS_STATIC_MEMBER_ASSIGNMENT_TARGET@32..38
-                    JS_THIS_EXPRESSION@32..36
-                      THIS_KW@32..36 "this"
-                    DOT@36..37 "."
-                    JS_REFERENCE_IDENTIFIER_MEMBER@37..38
-                      IDENT@37..38 "a"
-                  WHITESPACE@38..39 " "
-                  EQ@39..40 "="
-                  WHITESPACE@40..41 " "
-                  JS_REFERENCE_IDENTIFIER_EXPRESSION@41..42
-                    IDENT@41..42 "a"
-                SEMICOLON@42..43 ";"
-            WHITESPACE@43..45 "\n\t"
-            R_CURLY@45..46 "}"
-      WHITESPACE@46..47 "\n"
-      R_CURLY@47..48 "}"
-    WHITESPACE@48..50 "\n\n"
-    JS_CLASS_DECLARATION@50..100
-      CLASS_KW@50..55 "class"
-      WHITESPACE@55..56 " "
-      JS_IDENTIFIER_BINDING@56..59
-        IDENT@56..59 "Bar"
-      WHITESPACE@59..60 " "
-      L_CURLY@60..61 "{"
-      WHITESPACE@61..63 "\n\t"
-      LIST@63..98
-        JS_CONSTRUCTOR_CLASS_MEMBER@63..98
-          JS_LITERAL_MEMBER_NAME@63..76
-            JS_STRING_LITERAL@63..76 "\"constructor\""
-          JS_CONSTRUCTOR_PARAMETER_LIST@76..79
-            L_PAREN@76..77 "("
-            LIST@77..78
-              SINGLE_PATTERN@77..78
-                NAME@77..78
-                  IDENT@77..78 "b"
-            R_PAREN@78..79 ")"
-          WHITESPACE@79..80 " "
-          JS_FUNCTION_BODY@80..98
-            L_CURLY@80..81 "{"
-            WHITESPACE@81..84 "\n\t\t"
-            LIST@84..84
-            LIST@84..95
-              JS_EXPRESSION_STATEMENT@84..95
-                JS_ASSIGNMENT_EXPRESSION@84..94
-                  JS_STATIC_MEMBER_ASSIGNMENT_TARGET@84..90
-                    JS_THIS_EXPRESSION@84..88
-                      THIS_KW@84..88 "this"
-                    DOT@88..89 "."
-                    JS_REFERENCE_IDENTIFIER_MEMBER@89..90
-                      IDENT@89..90 "b"
-                  WHITESPACE@90..91 " "
-                  EQ@91..92 "="
-                  WHITESPACE@92..93 " "
-                  JS_REFERENCE_IDENTIFIER_EXPRESSION@93..94
-                    IDENT@93..94 "b"
-                SEMICOLON@94..95 ";"
-            WHITESPACE@95..97 "\n\t"
-            R_CURLY@97..98 "}"
-      WHITESPACE@98..99 "\n"
-      R_CURLY@99..100 "}"
-  WHITESPACE@100..101 "\n"
+0: JS_ROOT@0..101
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..100
+    0: JS_CLASS_DECLARATION@0..48
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..10
+        0: IDENT@6..10 "Foo" [] [Whitespace(" ")]
+      2: L_CURLY@10..11 "{" [] []
+      3: LIST@11..46
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@11..46
+          0: JS_LITERAL_MEMBER_NAME@11..24
+            0: IDENT@11..24 "constructor" [Whitespace("\n\t")] []
+          1: JS_CONSTRUCTOR_PARAMETER_LIST@24..28
+            0: L_PAREN@24..25 "(" [] []
+            1: LIST@25..26
+              0: SINGLE_PATTERN@25..26
+                0: NAME@25..26
+                  0: IDENT@25..26 "a" [] []
+            2: R_PAREN@26..28 ")" [] [Whitespace(" ")]
+          2: JS_FUNCTION_BODY@28..46
+            0: L_CURLY@28..29 "{" [] []
+            1: LIST@29..29
+            2: LIST@29..43
+              0: JS_EXPRESSION_STATEMENT@29..43
+                0: JS_ASSIGNMENT_EXPRESSION@29..42
+                  0: JS_STATIC_MEMBER_ASSIGNMENT_TARGET@29..39
+                    0: JS_THIS_EXPRESSION@29..36
+                      0: THIS_KW@29..36 "this" [Whitespace("\n\t\t")] []
+                    1: DOT@36..37 "." [] []
+                    2: JS_REFERENCE_IDENTIFIER_MEMBER@37..39
+                      0: IDENT@37..39 "a" [] [Whitespace(" ")]
+                  1: EQ@39..41 "=" [] [Whitespace(" ")]
+                  2: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..42
+                    0: IDENT@41..42 "a" [] []
+                1: SEMICOLON@42..43 ";" [] []
+            3: R_CURLY@43..46 "}" [Whitespace("\n\t")] []
+      4: R_CURLY@46..48 "}" [Whitespace("\n")] []
+    1: JS_CLASS_DECLARATION@48..100
+      0: CLASS_KW@48..56 "class" [Whitespace("\n\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@56..60
+        0: IDENT@56..60 "Bar" [] [Whitespace(" ")]
+      2: L_CURLY@60..61 "{" [] []
+      3: LIST@61..98
+        0: JS_CONSTRUCTOR_CLASS_MEMBER@61..98
+          0: JS_LITERAL_MEMBER_NAME@61..76
+            0: JS_STRING_LITERAL@61..76 "\"constructor\"" [Whitespace("\n\t")] []
+          1: JS_CONSTRUCTOR_PARAMETER_LIST@76..80
+            0: L_PAREN@76..77 "(" [] []
+            1: LIST@77..78
+              0: SINGLE_PATTERN@77..78
+                0: NAME@77..78
+                  0: IDENT@77..78 "b" [] []
+            2: R_PAREN@78..80 ")" [] [Whitespace(" ")]
+          2: JS_FUNCTION_BODY@80..98
+            0: L_CURLY@80..81 "{" [] []
+            1: LIST@81..81
+            2: LIST@81..95
+              0: JS_EXPRESSION_STATEMENT@81..95
+                0: JS_ASSIGNMENT_EXPRESSION@81..94
+                  0: JS_STATIC_MEMBER_ASSIGNMENT_TARGET@81..91
+                    0: JS_THIS_EXPRESSION@81..88
+                      0: THIS_KW@81..88 "this" [Whitespace("\n\t\t")] []
+                    1: DOT@88..89 "." [] []
+                    2: JS_REFERENCE_IDENTIFIER_MEMBER@89..91
+                      0: IDENT@89..91 "b" [] [Whitespace(" ")]
+                  1: EQ@91..93 "=" [] [Whitespace(" ")]
+                  2: JS_REFERENCE_IDENTIFIER_EXPRESSION@93..94
+                    0: IDENT@93..94 "b" [] []
+                1: SEMICOLON@94..95 ";" [] []
+            3: R_CURLY@95..98 "}" [Whitespace("\n\t")] []
+      4: R_CURLY@98..100 "}" [Whitespace("\n")] []
+  3: EOF@100..101 "" [Whitespace("\n")] []

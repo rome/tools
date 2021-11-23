@@ -1,42 +1,37 @@
-JS_ROOT@0..27
-  LIST@0..0
-  LIST@0..26
-    JS_BLOCK_STATEMENT@0..2
-      L_CURLY@0..1 "{"
-      LIST@1..1
-      R_CURLY@1..2 "}"
-    WHITESPACE@2..3 "\n"
-    JS_BLOCK_STATEMENT@3..11
-      L_CURLY@3..4 "{"
-      LIST@4..10
-        JS_BLOCK_STATEMENT@4..10
-          L_CURLY@4..5 "{"
-          LIST@5..9
-            JS_BLOCK_STATEMENT@5..9
-              L_CURLY@5..6 "{"
-              LIST@6..8
-                JS_BLOCK_STATEMENT@6..8
-                  L_CURLY@6..7 "{"
-                  LIST@7..7
-                  R_CURLY@7..8 "}"
-              R_CURLY@8..9 "}"
-          R_CURLY@9..10 "}"
-      R_CURLY@10..11 "}"
-    WHITESPACE@11..12 "\n"
-    JS_BLOCK_STATEMENT@12..26
-      L_CURLY@12..13 "{"
-      WHITESPACE@13..14 " "
-      LIST@14..24
-        JS_EXPRESSION_STATEMENT@14..24
-          JS_ASSIGNMENT_EXPRESSION@14..23
-            JS_IDENTIFIER_ASSIGNMENT_TARGET@14..17
-              IDENT@14..17 "foo"
-            WHITESPACE@17..18 " "
-            EQ@18..19 "="
-            WHITESPACE@19..20 " "
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@20..23
-              IDENT@20..23 "bar"
-          SEMICOLON@23..24 ";"
-      WHITESPACE@24..25 " "
-      R_CURLY@25..26 "}"
-  WHITESPACE@26..27 "\n"
+0: JS_ROOT@0..27
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..26
+    0: JS_BLOCK_STATEMENT@0..2
+      0: L_CURLY@0..1 "{" [] []
+      1: LIST@1..1
+      2: R_CURLY@1..2 "}" [] []
+    1: JS_BLOCK_STATEMENT@2..11
+      0: L_CURLY@2..4 "{" [Whitespace("\n")] []
+      1: LIST@4..10
+        0: JS_BLOCK_STATEMENT@4..10
+          0: L_CURLY@4..5 "{" [] []
+          1: LIST@5..9
+            0: JS_BLOCK_STATEMENT@5..9
+              0: L_CURLY@5..6 "{" [] []
+              1: LIST@6..8
+                0: JS_BLOCK_STATEMENT@6..8
+                  0: L_CURLY@6..7 "{" [] []
+                  1: LIST@7..7
+                  2: R_CURLY@7..8 "}" [] []
+              2: R_CURLY@8..9 "}" [] []
+          2: R_CURLY@9..10 "}" [] []
+      2: R_CURLY@10..11 "}" [] []
+    2: JS_BLOCK_STATEMENT@11..26
+      0: L_CURLY@11..14 "{" [Whitespace("\n")] [Whitespace(" ")]
+      1: LIST@14..25
+        0: JS_EXPRESSION_STATEMENT@14..25
+          0: JS_ASSIGNMENT_EXPRESSION@14..23
+            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@14..18
+              0: IDENT@14..18 "foo" [] [Whitespace(" ")]
+            1: EQ@18..20 "=" [] [Whitespace(" ")]
+            2: JS_REFERENCE_IDENTIFIER_EXPRESSION@20..23
+              0: IDENT@20..23 "bar" [] []
+          1: SEMICOLON@23..25 ";" [] [Whitespace(" ")]
+      2: R_CURLY@25..26 "}" [] []
+  3: EOF@26..27 "" [Whitespace("\n")] []

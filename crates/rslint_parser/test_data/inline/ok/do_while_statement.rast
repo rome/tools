@@ -1,130 +1,108 @@
-JS_ROOT@0..144
-  LIST@0..0
-  LIST@0..143
-    JS_DO_WHILE_STATEMENT@0..35
-      DO_KW@0..2 "do"
-      WHITESPACE@2..3 " "
-      JS_EXPRESSION_STATEMENT@3..23
-        CALL_EXPR@3..22
-          JS_STATIC_MEMBER_EXPRESSION@3..14
-            JS_REFERENCE_IDENTIFIER_EXPRESSION@3..10
-              IDENT@3..10 "console"
-            DOT@10..11 "."
-            JS_REFERENCE_IDENTIFIER_MEMBER@11..14
-              IDENT@11..14 "log"
-          ARG_LIST@14..22
-            L_PAREN@14..15 "("
-            LIST@15..21
-              JS_STRING_LITERAL_EXPRESSION@15..21
-                JS_STRING_LITERAL@15..21 "\"test\""
-            R_PAREN@21..22 ")"
-        SEMICOLON@22..23 ";"
-      WHITESPACE@23..24 " "
-      WHILE_KW@24..29 "while"
-      L_PAREN@29..30 "("
-      JS_BOOLEAN_LITERAL_EXPRESSION@30..34
-        TRUE_KW@30..34 "true"
-      R_PAREN@34..35 ")"
-    WHITESPACE@35..37 "\n\n"
-    JS_DO_WHILE_STATEMENT@37..78
-      DO_KW@37..39 "do"
-      WHITESPACE@39..40 " "
-      JS_BLOCK_STATEMENT@40..64
-        L_CURLY@40..41 "{"
-        WHITESPACE@41..43 "\n\t"
-        LIST@43..62
-          JS_EXPRESSION_STATEMENT@43..62
-            CALL_EXPR@43..62
-              JS_STATIC_MEMBER_EXPRESSION@43..54
-                JS_REFERENCE_IDENTIFIER_EXPRESSION@43..50
-                  IDENT@43..50 "console"
-                DOT@50..51 "."
-                JS_REFERENCE_IDENTIFIER_MEMBER@51..54
-                  IDENT@51..54 "log"
-              ARG_LIST@54..62
-                L_PAREN@54..55 "("
-                LIST@55..61
-                  JS_STRING_LITERAL_EXPRESSION@55..61
-                    JS_STRING_LITERAL@55..61 "\"test\""
-                R_PAREN@61..62 ")"
-        WHITESPACE@62..63 "\n"
-        R_CURLY@63..64 "}"
-      WHITESPACE@64..65 " "
-      WHILE_KW@65..70 "while"
-      WHITESPACE@70..71 " "
-      L_PAREN@71..72 "("
-      JS_BOOLEAN_LITERAL_EXPRESSION@72..76
-        TRUE_KW@72..76 "true"
-      R_PAREN@76..77 ")"
-      SEMICOLON@77..78 ";"
-    WHITESPACE@78..80 "\n\n"
-    JS_VARIABLE_DECLARATION_STATEMENT@80..90
-      JS_VARIABLE_DECLARATION@80..89
-        LET_KW@80..83 "let"
-        WHITESPACE@83..84 " "
-        LIST@84..89
-          JS_VARIABLE_DECLARATOR@84..89
-            SINGLE_PATTERN@84..85
-              NAME@84..85
-                IDENT@84..85 "a"
-            WHITESPACE@85..86 " "
-            JS_EQUAL_VALUE_CLAUSE@86..89
-              EQ@86..87 "="
-              WHITESPACE@87..88 " "
-              JS_NUMBER_LITERAL_EXPRESSION@88..89
-                JS_NUMBER_LITERAL@88..89 "1"
-      SEMICOLON@89..90 ";"
-    WHITESPACE@90..91 "\n"
-    JS_DO_WHILE_STATEMENT@91..143
-      DO_KW@91..93 "do"
-      WHITESPACE@93..95 "\n\t"
-      JS_DO_WHILE_STATEMENT@95..127
-        DO_KW@95..97 "do"
-        WHITESPACE@97..98 " "
-        JS_BLOCK_STATEMENT@98..114
-          L_CURLY@98..99 "{"
-          WHITESPACE@99..102 "\n\t\t"
-          LIST@102..111
-            JS_EXPRESSION_STATEMENT@102..111
-              JS_ASSIGNMENT_EXPRESSION@102..111
-                JS_IDENTIFIER_ASSIGNMENT_TARGET@102..103
-                  IDENT@102..103 "a"
-                WHITESPACE@103..104 " "
-                EQ@104..105 "="
-                WHITESPACE@105..106 " "
-                JS_BINARY_EXPRESSION@106..111
-                  JS_REFERENCE_IDENTIFIER_EXPRESSION@106..107
-                    IDENT@106..107 "a"
-                  WHITESPACE@107..108 " "
-                  PLUS@108..109 "+"
-                  WHITESPACE@109..110 " "
-                  JS_NUMBER_LITERAL_EXPRESSION@110..111
-                    JS_NUMBER_LITERAL@110..111 "1"
-          WHITESPACE@111..113 "\n\t"
-          R_CURLY@113..114 "}"
-        WHITESPACE@114..115 " "
-        WHILE_KW@115..120 "while"
-        L_PAREN@120..121 "("
-        JS_BINARY_EXPRESSION@121..126
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@121..122
-            IDENT@121..122 "a"
-          WHITESPACE@122..123 " "
-          L_ANGLE@123..124 "<"
-          WHITESPACE@124..125 " "
-          JS_NUMBER_LITERAL_EXPRESSION@125..126
-            JS_NUMBER_LITERAL@125..126 "5"
-        R_PAREN@126..127 ")"
-      WHITESPACE@127..128 "\n"
-      WHILE_KW@128..133 "while"
-      WHITESPACE@133..134 " "
-      L_PAREN@134..135 "("
-      JS_BINARY_EXPRESSION@135..142
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@135..136
-          IDENT@135..136 "a"
-        WHITESPACE@136..137 " "
-        L_ANGLE@137..138 "<"
-        WHITESPACE@138..139 " "
-        JS_NUMBER_LITERAL_EXPRESSION@139..142
-          JS_NUMBER_LITERAL@139..142 "100"
-      R_PAREN@142..143 ")"
-  WHITESPACE@143..144 "\n"
+0: JS_ROOT@0..144
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..143
+    0: JS_DO_WHILE_STATEMENT@0..35
+      0: DO_KW@0..3 "do" [] [Whitespace(" ")]
+      1: JS_EXPRESSION_STATEMENT@3..24
+        0: CALL_EXPR@3..22
+          0: JS_STATIC_MEMBER_EXPRESSION@3..14
+            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@3..10
+              0: IDENT@3..10 "console" [] []
+            1: DOT@10..11 "." [] []
+            2: JS_REFERENCE_IDENTIFIER_MEMBER@11..14
+              0: IDENT@11..14 "log" [] []
+          1: ARG_LIST@14..22
+            0: L_PAREN@14..15 "(" [] []
+            1: LIST@15..21
+              0: JS_STRING_LITERAL_EXPRESSION@15..21
+                0: JS_STRING_LITERAL@15..21 "\"test\"" [] []
+            2: R_PAREN@21..22 ")" [] []
+        1: SEMICOLON@22..24 ";" [] [Whitespace(" ")]
+      2: WHILE_KW@24..29 "while" [] []
+      3: L_PAREN@29..30 "(" [] []
+      4: JS_BOOLEAN_LITERAL_EXPRESSION@30..34
+        0: TRUE_KW@30..34 "true" [] []
+      5: R_PAREN@34..35 ")" [] []
+      6: (empty)
+    1: JS_DO_WHILE_STATEMENT@35..78
+      0: DO_KW@35..40 "do" [Whitespace("\n\n")] [Whitespace(" ")]
+      1: JS_BLOCK_STATEMENT@40..65
+        0: L_CURLY@40..41 "{" [] []
+        1: LIST@41..62
+          0: JS_EXPRESSION_STATEMENT@41..62
+            0: CALL_EXPR@41..62
+              0: JS_STATIC_MEMBER_EXPRESSION@41..54
+                0: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..50
+                  0: IDENT@41..50 "console" [Whitespace("\n\t")] []
+                1: DOT@50..51 "." [] []
+                2: JS_REFERENCE_IDENTIFIER_MEMBER@51..54
+                  0: IDENT@51..54 "log" [] []
+              1: ARG_LIST@54..62
+                0: L_PAREN@54..55 "(" [] []
+                1: LIST@55..61
+                  0: JS_STRING_LITERAL_EXPRESSION@55..61
+                    0: JS_STRING_LITERAL@55..61 "\"test\"" [] []
+                2: R_PAREN@61..62 ")" [] []
+            1: (empty)
+        2: R_CURLY@62..65 "}" [Whitespace("\n")] [Whitespace(" ")]
+      2: WHILE_KW@65..71 "while" [] [Whitespace(" ")]
+      3: L_PAREN@71..72 "(" [] []
+      4: JS_BOOLEAN_LITERAL_EXPRESSION@72..76
+        0: TRUE_KW@72..76 "true" [] []
+      5: R_PAREN@76..77 ")" [] []
+      6: SEMICOLON@77..78 ";" [] []
+    2: JS_VARIABLE_DECLARATION_STATEMENT@78..90
+      0: JS_VARIABLE_DECLARATION@78..89
+        0: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")]
+        1: LIST@84..89
+          0: JS_VARIABLE_DECLARATOR@84..89
+            0: SINGLE_PATTERN@84..86
+              0: NAME@84..86
+                0: IDENT@84..86 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@86..89
+              0: EQ@86..88 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL_EXPRESSION@88..89
+                0: JS_NUMBER_LITERAL@88..89 "1" [] []
+      1: SEMICOLON@89..90 ";" [] []
+    3: JS_DO_WHILE_STATEMENT@90..143
+      0: DO_KW@90..93 "do" [Whitespace("\n")] []
+      1: JS_DO_WHILE_STATEMENT@93..127
+        0: DO_KW@93..98 "do" [Whitespace("\n\t")] [Whitespace(" ")]
+        1: JS_BLOCK_STATEMENT@98..115
+          0: L_CURLY@98..99 "{" [] []
+          1: LIST@99..111
+            0: JS_EXPRESSION_STATEMENT@99..111
+              0: JS_ASSIGNMENT_EXPRESSION@99..111
+                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@99..104
+                  0: IDENT@99..104 "a" [Whitespace("\n\t\t")] [Whitespace(" ")]
+                1: EQ@104..106 "=" [] [Whitespace(" ")]
+                2: JS_BINARY_EXPRESSION@106..111
+                  0: JS_REFERENCE_IDENTIFIER_EXPRESSION@106..108
+                    0: IDENT@106..108 "a" [] [Whitespace(" ")]
+                  1: PLUS@108..110 "+" [] [Whitespace(" ")]
+                  2: JS_NUMBER_LITERAL_EXPRESSION@110..111
+                    0: JS_NUMBER_LITERAL@110..111 "1" [] []
+              1: (empty)
+          2: R_CURLY@111..115 "}" [Whitespace("\n\t")] [Whitespace(" ")]
+        2: WHILE_KW@115..120 "while" [] []
+        3: L_PAREN@120..121 "(" [] []
+        4: JS_BINARY_EXPRESSION@121..126
+          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@121..123
+            0: IDENT@121..123 "a" [] [Whitespace(" ")]
+          1: L_ANGLE@123..125 "<" [] [Whitespace(" ")]
+          2: JS_NUMBER_LITERAL_EXPRESSION@125..126
+            0: JS_NUMBER_LITERAL@125..126 "5" [] []
+        5: R_PAREN@126..127 ")" [] []
+        6: (empty)
+      2: WHILE_KW@127..134 "while" [Whitespace("\n")] [Whitespace(" ")]
+      3: L_PAREN@134..135 "(" [] []
+      4: JS_BINARY_EXPRESSION@135..142
+        0: JS_REFERENCE_IDENTIFIER_EXPRESSION@135..137
+          0: IDENT@135..137 "a" [] [Whitespace(" ")]
+        1: L_ANGLE@137..139 "<" [] [Whitespace(" ")]
+        2: JS_NUMBER_LITERAL_EXPRESSION@139..142
+          0: JS_NUMBER_LITERAL@139..142 "100" [] []
+      5: R_PAREN@142..143 ")" [] []
+      6: (empty)
+  3: EOF@143..144 "" [Whitespace("\n")] []

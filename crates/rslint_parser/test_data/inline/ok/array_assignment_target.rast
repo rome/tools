@@ -1,98 +1,79 @@
-JS_ROOT@0..86
-  LIST@0..0
-  LIST@0..85
-    JS_EXPRESSION_STATEMENT@0..21
-      JS_ASSIGNMENT_EXPRESSION@0..20
-        JS_IDENTIFIER_ASSIGNMENT_TARGET@0..3
-          IDENT@0..3 "foo"
-        WHITESPACE@3..4 " "
-        PLUSEQ@4..6 "+="
-        WHITESPACE@6..7 " "
-        JS_ASSIGNMENT_EXPRESSION@7..20
-          JS_IDENTIFIER_ASSIGNMENT_TARGET@7..10
-            IDENT@7..10 "bar"
-          WHITESPACE@10..11 " "
-          EQ@11..12 "="
-          WHITESPACE@12..13 " "
-          JS_ASSIGNMENT_EXPRESSION@13..20
-            JS_IDENTIFIER_ASSIGNMENT_TARGET@13..14
-              IDENT@13..14 "b"
-            WHITESPACE@14..15 " "
-            QUESTION2EQ@15..18 "??="
-            WHITESPACE@18..19 " "
-            JS_NUMBER_LITERAL_EXPRESSION@19..20
-              JS_NUMBER_LITERAL@19..20 "3"
-      SEMICOLON@20..21 ";"
-    WHITESPACE@21..22 "\n"
-    JS_EXPRESSION_STATEMENT@22..33
-      JS_ASSIGNMENT_EXPRESSION@22..32
-        JS_IDENTIFIER_ASSIGNMENT_TARGET@22..25
-          IDENT@22..25 "foo"
-        WHITESPACE@25..26 " "
-        MINUSEQ@26..28 "-="
-        WHITESPACE@28..29 " "
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@29..32
-          IDENT@29..32 "bar"
-      SEMICOLON@32..33 ";"
-    WHITESPACE@33..34 "\n"
-    JS_EXPRESSION_STATEMENT@34..46
-      JS_PARENTHESIZED_EXPRESSION@34..45
-        L_PAREN@34..35 "("
-        JS_ASSIGNMENT_EXPRESSION@35..44
-          JS_IDENTIFIER_ASSIGNMENT_TARGET@35..38
-            IDENT@35..38 "foo"
-          WHITESPACE@38..39 " "
-          EQ@39..40 "="
-          WHITESPACE@40..41 " "
-          JS_REFERENCE_IDENTIFIER_EXPRESSION@41..44
-            IDENT@41..44 "bar"
-        R_PAREN@44..45 ")"
-      SEMICOLON@45..46 ";"
-    WHITESPACE@46..47 "\n"
-    JS_EXPRESSION_STATEMENT@47..64
-      JS_ASSIGNMENT_EXPRESSION@47..63
-        JS_ARRAY_ASSIGNMENT_TARGET@47..57
-          L_BRACK@47..48 "["
-          LIST@48..56
-            JS_IDENTIFIER_ASSIGNMENT_TARGET@48..51
-              IDENT@48..51 "foo"
-            COMMA@51..52 ","
-            WHITESPACE@52..53 " "
-            JS_IDENTIFIER_ASSIGNMENT_TARGET@53..56
-              IDENT@53..56 "bar"
-          R_BRACK@56..57 "]"
-        WHITESPACE@57..58 " "
-        EQ@58..59 "="
-        WHITESPACE@59..60 " "
-        JS_REFERENCE_IDENTIFIER_EXPRESSION@60..63
-          IDENT@60..63 "baz"
-      SEMICOLON@63..64 ";"
-    WHITESPACE@64..65 "\n"
-    JS_EXPRESSION_STATEMENT@65..85
-      JS_PARENTHESIZED_EXPRESSION@65..84
-        L_PAREN@65..66 "("
-        JS_ASSIGNMENT_EXPRESSION@66..83
-          JS_OBJECT_ASSIGNMENT_TARGET@66..78
-            L_CURLY@66..67 "{"
-            WHITESPACE@67..68 " "
-            LIST@68..76
-              JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@68..71
-                JS_IDENTIFIER_ASSIGNMENT_TARGET@68..71
-                  IDENT@68..71 "bar"
-              COMMA@71..72 ","
-              WHITESPACE@72..73 " "
-              JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@73..76
-                JS_IDENTIFIER_ASSIGNMENT_TARGET@73..76
-                  IDENT@73..76 "baz"
-            WHITESPACE@76..77 " "
-            R_CURLY@77..78 "}"
-          WHITESPACE@78..79 " "
-          EQ@79..80 "="
-          WHITESPACE@80..81 " "
-          JS_OBJECT_EXPRESSION@81..83
-            L_CURLY@81..82 "{"
-            LIST@82..82
-            R_CURLY@82..83 "}"
-        R_PAREN@83..84 ")"
-      SEMICOLON@84..85 ";"
-  WHITESPACE@85..86 "\n"
+0: JS_ROOT@0..86
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..85
+    0: JS_EXPRESSION_STATEMENT@0..21
+      0: JS_ASSIGNMENT_EXPRESSION@0..20
+        0: JS_IDENTIFIER_ASSIGNMENT_TARGET@0..4
+          0: IDENT@0..4 "foo" [] [Whitespace(" ")]
+        1: PLUSEQ@4..7 "+=" [] [Whitespace(" ")]
+        2: JS_ASSIGNMENT_EXPRESSION@7..20
+          0: JS_IDENTIFIER_ASSIGNMENT_TARGET@7..11
+            0: IDENT@7..11 "bar" [] [Whitespace(" ")]
+          1: EQ@11..13 "=" [] [Whitespace(" ")]
+          2: JS_ASSIGNMENT_EXPRESSION@13..20
+            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@13..15
+              0: IDENT@13..15 "b" [] [Whitespace(" ")]
+            1: QUESTION2EQ@15..19 "??=" [] [Whitespace(" ")]
+            2: JS_NUMBER_LITERAL_EXPRESSION@19..20
+              0: JS_NUMBER_LITERAL@19..20 "3" [] []
+      1: SEMICOLON@20..21 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@21..33
+      0: JS_ASSIGNMENT_EXPRESSION@21..32
+        0: JS_IDENTIFIER_ASSIGNMENT_TARGET@21..26
+          0: IDENT@21..26 "foo" [Whitespace("\n")] [Whitespace(" ")]
+        1: MINUSEQ@26..29 "-=" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@29..32
+          0: IDENT@29..32 "bar" [] []
+      1: SEMICOLON@32..33 ";" [] []
+    2: JS_EXPRESSION_STATEMENT@33..46
+      0: JS_PARENTHESIZED_EXPRESSION@33..45
+        0: L_PAREN@33..35 "(" [Whitespace("\n")] []
+        1: JS_ASSIGNMENT_EXPRESSION@35..44
+          0: JS_IDENTIFIER_ASSIGNMENT_TARGET@35..39
+            0: IDENT@35..39 "foo" [] [Whitespace(" ")]
+          1: EQ@39..41 "=" [] [Whitespace(" ")]
+          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..44
+            0: IDENT@41..44 "bar" [] []
+        2: R_PAREN@44..45 ")" [] []
+      1: SEMICOLON@45..46 ";" [] []
+    3: JS_EXPRESSION_STATEMENT@46..64
+      0: JS_ASSIGNMENT_EXPRESSION@46..63
+        0: JS_ARRAY_ASSIGNMENT_TARGET@46..58
+          0: L_BRACK@46..48 "[" [Whitespace("\n")] []
+          1: LIST@48..56
+            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@48..51
+              0: IDENT@48..51 "foo" [] []
+            1: COMMA@51..53 "," [] [Whitespace(" ")]
+            2: JS_IDENTIFIER_ASSIGNMENT_TARGET@53..56
+              0: IDENT@53..56 "bar" [] []
+          2: R_BRACK@56..58 "]" [] [Whitespace(" ")]
+        1: EQ@58..60 "=" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@60..63
+          0: IDENT@60..63 "baz" [] []
+      1: SEMICOLON@63..64 ";" [] []
+    4: JS_EXPRESSION_STATEMENT@64..85
+      0: JS_PARENTHESIZED_EXPRESSION@64..84
+        0: L_PAREN@64..66 "(" [Whitespace("\n")] []
+        1: JS_ASSIGNMENT_EXPRESSION@66..83
+          0: JS_OBJECT_ASSIGNMENT_TARGET@66..79
+            0: L_CURLY@66..68 "{" [] [Whitespace(" ")]
+            1: LIST@68..77
+              0: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@68..71
+                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@68..71
+                  0: IDENT@68..71 "bar" [] []
+                1: (empty)
+              1: COMMA@71..73 "," [] [Whitespace(" ")]
+              2: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@73..77
+                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@73..77
+                  0: IDENT@73..77 "baz" [] [Whitespace(" ")]
+                1: (empty)
+            2: R_CURLY@77..79 "}" [] [Whitespace(" ")]
+          1: EQ@79..81 "=" [] [Whitespace(" ")]
+          2: JS_OBJECT_EXPRESSION@81..83
+            0: L_CURLY@81..82 "{" [] []
+            1: LIST@82..82
+            2: R_CURLY@82..83 "}" [] []
+        2: R_PAREN@83..84 ")" [] []
+      1: SEMICOLON@84..85 ";" [] []
+  3: EOF@85..86 "" [Whitespace("\n")] []
