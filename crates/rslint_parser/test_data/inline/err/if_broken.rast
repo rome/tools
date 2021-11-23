@@ -5,7 +5,7 @@
     0: JS_IF_STATEMENT@0..10
       0: IF_KW@0..3 "if" [] [Whitespace(" ")]
       1: L_PAREN@3..4 "(" [] []
-      2: JS_BOOLEAN_LITERAL@4..8
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@4..8
         0: TRUE_KW@4..8 "true" [] []
       3: R_PAREN@8..9 ")" [] []
       4: JS_UNKNOWN_STATEMENT@9..10

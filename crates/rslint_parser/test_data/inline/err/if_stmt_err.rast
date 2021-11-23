@@ -49,7 +49,7 @@
     3: JS_IF_STATEMENT@60..71
       0: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@64..65 "(" [] []
-      2: JS_BOOLEAN_LITERAL@65..69
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@65..69
         0: TRUE_KW@65..69 "true" [] []
       3: R_PAREN@69..70 ")" [] []
       4: JS_UNKNOWN_STATEMENT@70..71

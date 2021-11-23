@@ -26,11 +26,11 @@
         0: IDENT@44..48 "foo" [] [Whitespace(" ")]
       2: JS_EXTENDS_CLAUSE@48..64
         0: EXTENDS_KW@48..56 "extends" [] [Whitespace(" ")]
-        1: DOT_EXPR@56..64
+        1: JS_STATIC_MEMBER_EXPRESSION@56..64
           0: JS_REFERENCE_IDENTIFIER_EXPRESSION@56..59
             0: IDENT@56..59 "foo" [] []
           1: DOT@59..60 "." [] []
-          2: NAME@60..64
+          2: JS_REFERENCE_IDENTIFIER_MEMBER@60..64
             0: IDENT@60..64 "bar" [] [Whitespace(" ")]
       3: L_CURLY@64..65 "{" [] []
       4: LIST@65..65

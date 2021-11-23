@@ -10,8 +10,8 @@
             0: OBJECT_PATTERN@4..10
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: LIST@6..8
-                0: JS_NUMBER_LITERAL@6..8
-                  0: JS_NUMBER_LITERAL_TOKEN@6..8 "5" [] [Whitespace(" ")]
+                0: JS_NUMBER_LITERAL_EXPRESSION@6..8
+                  0: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")]
               2: R_CURLY@8..10 "}" [] [Whitespace(" ")]
       1: (empty)
     1: JS_UNKNOWN_STATEMENT@10..12
@@ -25,8 +25,8 @@
           0: IDENT@16..20 "eval" [] []
           1: COLON@20..22 ":" [] [Whitespace(" ")]
           2: JS_EXPRESSION_STATEMENT@22..28
-            0: JS_STRING_LITERAL@22..28
-              0: JS_STRING_LITERAL_TOKEN@22..28 "\"foo\"" [] [Whitespace(" ")]
+            0: JS_STRING_LITERAL_EXPRESSION@22..28
+              0: JS_STRING_LITERAL@22..28 "\"foo\"" [] [Whitespace(" ")]
             1: (empty)
       2: R_CURLY@28..29 "}" [] []
     4: JS_EMPTY_STATEMENT@29..30
@@ -51,8 +51,8 @@
                     0: JS_LITERAL_MEMBER_NAME@48..52
                       0: IDENT@48..52 "eval" [] []
                     1: COLON@52..54 ":" [] [Whitespace(" ")]
-                    2: JS_STRING_LITERAL@54..60
-                      0: JS_STRING_LITERAL_TOKEN@54..60 "\"foo\"" [] [Whitespace(" ")]
+                    2: JS_STRING_LITERAL_EXPRESSION@54..60
+                      0: JS_STRING_LITERAL@54..60 "\"foo\"" [] [Whitespace(" ")]
                 2: R_CURLY@60..61 "}" [] []
       1: SEMICOLON@61..62 ";" [] []
     6: JS_VARIABLE_DECLARATION_STATEMENT@62..94
@@ -63,11 +63,11 @@
             0: OBJECT_PATTERN@67..76
               0: L_CURLY@67..69 "{" [] [Whitespace(" ")]
               1: LIST@69..74
-                0: JS_NUMBER_LITERAL@69..70
-                  0: JS_NUMBER_LITERAL_TOKEN@69..70 "5" [] []
+                0: JS_NUMBER_LITERAL_EXPRESSION@69..70
+                  0: JS_NUMBER_LITERAL@69..70 "5" [] []
                 1: COMMA@70..72 "," [] [Whitespace(" ")]
-                2: JS_NUMBER_LITERAL@72..74
-                  0: JS_NUMBER_LITERAL_TOKEN@72..74 "6" [] [Whitespace(" ")]
+                2: JS_NUMBER_LITERAL_EXPRESSION@72..74
+                  0: JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")]
               2: R_CURLY@74..76 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@76..93
               0: EQ@76..78 "=" [] [Whitespace(" ")]
@@ -78,8 +78,8 @@
                     0: JS_LITERAL_MEMBER_NAME@80..84
                       0: IDENT@80..84 "eval" [] []
                     1: COLON@84..86 ":" [] [Whitespace(" ")]
-                    2: JS_STRING_LITERAL@86..92
-                      0: JS_STRING_LITERAL_TOKEN@86..92 "\"foo\"" [] [Whitespace(" ")]
+                    2: JS_STRING_LITERAL_EXPRESSION@86..92
+                      0: JS_STRING_LITERAL@86..92 "\"foo\"" [] [Whitespace(" ")]
                 2: R_CURLY@92..93 "}" [] []
       1: SEMICOLON@93..94 ";" [] []
     7: JS_VARIABLE_DECLARATION_STATEMENT@94..123

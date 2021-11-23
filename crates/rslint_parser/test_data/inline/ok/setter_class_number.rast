@@ -54,7 +54,7 @@
         3: JS_SETTER_CLASS_MEMBER@70..87
           0: SET_KW@70..76 "set" [Whitespace("\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@76..81
-            0: JS_STRING_LITERAL_TOKEN@76..81 "\"baz\"" [] []
+            0: JS_STRING_LITERAL@76..81 "\"baz\"" [] []
           2: L_PAREN@81..82 "(" [] []
           3: SINGLE_PATTERN@82..83
             0: NAME@82..83
@@ -70,11 +70,11 @@
           1: JS_COMPUTED_MEMBER_NAME@93..104
             0: L_BRACK@93..94 "[" [] []
             1: JS_BINARY_EXPRESSION@94..103
-              0: JS_STRING_LITERAL@94..98
-                0: JS_STRING_LITERAL_TOKEN@94..98 "\"a\"" [] [Whitespace(" ")]
+              0: JS_STRING_LITERAL_EXPRESSION@94..98
+                0: JS_STRING_LITERAL@94..98 "\"a\"" [] [Whitespace(" ")]
               1: PLUS@98..100 "+" [] [Whitespace(" ")]
-              2: JS_STRING_LITERAL@100..103
-                0: JS_STRING_LITERAL_TOKEN@100..103 "\"b\"" [] []
+              2: JS_STRING_LITERAL_EXPRESSION@100..103
+                0: JS_STRING_LITERAL@100..103 "\"b\"" [] []
             2: R_BRACK@103..104 "]" [] []
           2: L_PAREN@104..105 "(" [] []
           3: SINGLE_PATTERN@105..106
@@ -89,7 +89,7 @@
         5: JS_SETTER_CLASS_MEMBER@110..123
           0: SET_KW@110..116 "set" [Whitespace("\n\t")] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@116..117
-            0: JS_NUMBER_LITERAL_TOKEN@116..117 "5" [] []
+            0: JS_NUMBER_LITERAL@116..117 "5" [] []
           2: L_PAREN@117..118 "(" [] []
           3: SINGLE_PATTERN@118..119
             0: NAME@118..119

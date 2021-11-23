@@ -33,8 +33,8 @@
                       2: LIST@27..41
                         0: JS_RETURN_STATEMENT@27..41
                           0: RETURN_KW@27..39 "return" [Whitespace("\n    ")] [Whitespace(" ")]
-                          1: JS_NUMBER_LITERAL@39..40
-                            0: JS_NUMBER_LITERAL_TOKEN@39..40 "5" [] []
+                          1: JS_NUMBER_LITERAL_EXPRESSION@39..40
+                            0: JS_NUMBER_LITERAL@39..40 "5" [] []
                           2: SEMICOLON@40..41 ";" [] []
                       3: R_CURLY@41..44 "}" [Whitespace("\n ")] []
                 2: R_CURLY@44..46 "}" [Whitespace("\n")] []

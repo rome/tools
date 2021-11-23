@@ -60,16 +60,16 @@
                   0: IDENT@48..50 "i" [] [Whitespace(" ")]
               1: JS_EQUAL_VALUE_CLAUSE@50..53
                 0: EQ@50..52 "=" [] [Whitespace(" ")]
-                1: JS_NUMBER_LITERAL@52..53
-                  0: JS_NUMBER_LITERAL_TOKEN@52..53 "5" [] []
+                1: JS_NUMBER_LITERAL_EXPRESSION@52..53
+                  0: JS_NUMBER_LITERAL@52..53 "5" [] []
       3: SEMICOLON@53..55 ";" [] [Whitespace(" ")]
       4: FOR_STMT_TEST@55..61
         0: JS_BINARY_EXPRESSION@55..61
           0: JS_REFERENCE_IDENTIFIER_EXPRESSION@55..57
             0: IDENT@55..57 "i" [] [Whitespace(" ")]
           1: L_ANGLE@57..59 "<" [] [Whitespace(" ")]
-          2: JS_NUMBER_LITERAL@59..61
-            0: JS_NUMBER_LITERAL_TOKEN@59..61 "10" [] []
+          2: JS_NUMBER_LITERAL_EXPRESSION@59..61
+            0: JS_NUMBER_LITERAL@59..61 "10" [] []
       5: SEMICOLON@61..63 ";" [] [Whitespace(" ")]
       6: FOR_STMT_UPDATE@63..67
         0: JS_PRE_UPDATE_EXPRESSION@63..67
