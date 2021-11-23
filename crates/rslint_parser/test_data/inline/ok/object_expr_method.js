@@ -1,5 +1,4 @@
 let b = {
- foo() {},
 foo() {},
 "bar"(a, b, c) {},
 ["foo" + "bar"](a) {},

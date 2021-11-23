@@ -70,16 +70,14 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			m.complete(p, SINGLE_PATTERN)
 		}
 		_ => {
-			let mut unknown_node_kind = JS_UNKNOWN_BINDING;
 			let err = p
 				.err_builder("Expected an identifier or pattern, but found none")
 				.primary(p.cur_tok().range, "");
 			let mut ts = token_set![T![ident], T![yield], T![await], T!['['],];
 			if p.state.allow_object_expr {
-				unknown_node_kind = JS_UNKNOWN_PATTERN;
 				ts = ts.union(token_set![T!['{']]);
 			}
-			ParseRecoverer::with_error(ts, unknown_node_kind, err).recover(p);
+			ParseRecoverer::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
 			return None;
 		}
 	})
@@ -181,7 +179,6 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
-			// TODO: find a away to land
 			ParseRecoverer::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				JS_UNKNOWN_PATTERN,

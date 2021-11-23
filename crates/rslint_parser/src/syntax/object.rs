@@ -48,7 +48,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
 fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
-		// test object_expr_getter_getter
+		// test object_expr_getter
 		// let a = {
 		//  get foo() {
 		//    return foo;
@@ -62,7 +62,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			Some(getter_object_member(p))
 		}
 
-		// test object_expr_getter_setter
+		// test object_expr_setter
 		// let b = {
 		//  set [foo](bar) {
 		//     return 5;
@@ -105,11 +105,10 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 			// test object_expr_method
 			// let b = {
-			//  foo() {},
-				// foo() {},
-				// "bar"(a, b, c) {},
-				// ["foo" + "bar"](a) {},
-				// 5(...rest) {}
+			// foo() {},
+			// "bar"(a, b, c) {},
+			// ["foo" + "bar"](a) {},
+			// 5(...rest) {}
 			// }
 			if p.at(T!['(']) || p.at(T![<]) {
 				method_object_member_body(p).ok()?;
