@@ -15,7 +15,7 @@ mod function;
 mod js_parse_error;
 mod object;
 mod pat;
-pub(crate) mod program;
+pub mod program;
 mod stmt;
 mod typescript;
 mod util;

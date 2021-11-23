@@ -9,7 +9,6 @@ use super::typescript::*;
 use super::util::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParsedSyntax;
 use crate::syntax::assignment_target::expression_to_assignment_target;
 use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
@@ -212,35 +211,8 @@ fn assign_expr_recursive(
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
 ) -> Option<CompletedMarker> {
-	// TODO: dont always reparse as pattern since it will yield wonky errors for `(foo = true) = bar`
 	if p.at_ts(ASSIGN_TOKENS) {
-		expression_to_assignment_target(p, target, checkpoint);
-		// if p.at(T![=]) {
-		// if !is_valid_target(p, &target) && target.kind() != TEMPLATE {
-		// 	p.rewind(checkpoint);
-		// 	target = pattern(p, false, true)?;
-		// }
-		// } else {
-		// 	if !is_valid_target(p, &target) {
-		// 		let err = p
-		// 			.err_builder(&format!(
-		// 				"Invalid assignment to `{}`",
-		// 				p.source(target.range(p)).trim()
-		// 			))
-		// 			.primary(target.range(p), "This expression cannot be assigned to");
-		//
-		// 		p.error(err);
-		// 	}
-		// 	let text = p.source(target.range(p));
-		// 	if (text == "eval" || text == "arguments") && p.state.strict.is_some() && p.typescript()
-		// 	{
-		// 		let err = p
-		// 			.err_builder("`eval` and `arguments` cannot be assigned to")
-		// 			.primary(target.range(p), "");
-		//
-		// 		p.error(err);
-		// 	}
-		// }
+		let target = expression_to_assignment_target(p, target, checkpoint);
 		let m = target.precede(p);
 		p.bump_any(); // operator
 		expr_or_assignment_target(p);

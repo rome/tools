@@ -161,6 +161,7 @@ JsRoot {
           0: JS_LITERAL_MEMBER_NAME@46..52
             0: IDENT@46..52 "class" [Whitespace("\n")] []
           1: (empty)
+          2: (empty)
         1: JS_UNKNOWN_MEMBER@52..59
           0: JS_LITERAL_MEMBER_NAME@52..59
             0: IDENT@52..59 "class" [Whitespace("\n")] [Whitespace(" ")]

@@ -9,14 +9,13 @@
           1: LIST@1..11
             0: JS_IDENTIFIER_ASSIGNMENT_TARGET@1..3
               0: IDENT@1..3 "a" [] [Whitespace(" ")]
-            1: (empty)
-            2: JS_IDENTIFIER_ASSIGNMENT_TARGET@3..4
+            1: JS_IDENTIFIER_ASSIGNMENT_TARGET@3..4
               0: IDENT@3..4 "a" [] []
-            3: COMMA@4..6 "," [] [Whitespace(" ")]
-            4: JS_UNKNOWN_ASSIGNMENT_TARGET@6..9
+            2: COMMA@4..6 "," [] [Whitespace(" ")]
+            3: JS_UNKNOWN_ASSIGNMENT_TARGET@6..9
               0: PLUS2@6..8 "++" [] []
               1: IDENT@8..9 "b" [] []
-            5: COMMA@9..11 "," [] [Whitespace(" ")]
+            4: COMMA@9..11 "," [] [Whitespace(" ")]
           2: R_BRACK@11..13 "]" [] [Whitespace(" ")]
         1: EQ@13..15 "=" [] [Whitespace(" ")]
         2: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..19
@@ -58,8 +57,9 @@
               1: EQ@54..56 "=" [] [Whitespace(" ")]
             1: COMMA@56..58 "," [] [Whitespace(" ")]
             2: JS_ASSIGNMENT_TARGET_WITH_DEFAULT@58..66
-              0: EQ@58..60 "=" [] [Whitespace(" ")]
-              1: JS_STRING_LITERAL_EXPRESSION@60..66
+              0: (empty)
+              1: EQ@58..60 "=" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL_EXPRESSION@60..66
                 0: JS_STRING_LITERAL@60..66 "\"test\"" [] []
           2: R_BRACK@66..68 "]" [] [Whitespace(" ")]
         1: EQ@68..70 "=" [] [Whitespace(" ")]
@@ -76,12 +76,10 @@
               1: LIST@78..81
                 0: JS_IDENTIFIER_ASSIGNMENT_TARGET@78..80
                   0: IDENT@78..80 "a" [] [Whitespace(" ")]
-                1: (empty)
-                2: JS_IDENTIFIER_ASSIGNMENT_TARGET@80..81
+                1: JS_IDENTIFIER_ASSIGNMENT_TARGET@80..81
                   0: IDENT@80..81 "b" [] []
               2: R_BRACK@81..83 "]" [] [Whitespace(" ")]
-            1: (empty)
-            2: JS_ARRAY_ASSIGNMENT_TARGET@83..86
+            1: JS_ARRAY_ASSIGNMENT_TARGET@83..86
               0: L_BRACK@83..84 "[" [] []
               1: LIST@84..85
                 0: JS_IDENTIFIER_ASSIGNMENT_TARGET@84..85
@@ -99,10 +97,9 @@
           1: LIST@96..100
             0: JS_IDENTIFIER_ASSIGNMENT_TARGET@96..97
               0: IDENT@96..97 "a" [] []
-            1: (empty)
-            2: ERROR@97..99
+            1: JS_UNKNOWN_EXPRESSION@97..99
               0: COLON@97..99 ":" [] [Whitespace(" ")]
-            3: JS_UNKNOWN_ASSIGNMENT_TARGET@99..100
+            2: JS_UNKNOWN_ASSIGNMENT_TARGET@99..100
               0: IDENT@99..100 "b" [] []
           2: R_BRACK@100..102 "]" [] [Whitespace(" ")]
         1: EQ@102..104 "=" [] [Whitespace(" ")]
@@ -118,18 +115,18 @@ error[SyntaxError]: expected `,` but instead found `a`
   │    ^ unexpected
 
 --
-error[SyntaxError]: Missing assignment target
+error[SyntaxError]: expected an assignment target, a rest element, or a comma but instead found '++b'
   ┌─ array_assignment_target_err.js:1:7
   │
 1 │ [a a, ++b, ] = test;
-  │       ^^ Expected an identifier, member expression, or an array or object pattern here
+  │       ^^^ Expected an assignment target, a rest element, or a comma here
 
 --
-error[SyntaxError]: Missing assignment target
+error[SyntaxError]: expected an assignment target, a rest element, or a comma but instead found '++b'
   ┌─ array_assignment_target_err.js:2:5
   │
 2 │ [a, ++b, c, ...rest,] = test;
-  │     ^^ Expected an identifier, member expression, or an array or object pattern here
+  │     ^^^ Expected an assignment target, a rest element, or a comma here
 
 --
 error[SyntaxError]: rest element may not have a trailing comma
@@ -153,11 +150,11 @@ error[SyntaxError]: Expected an expression, but found none
   │        ^ Expected an expression here
 
 --
-error[SyntaxError]: Missing assignment target
+error[SyntaxError]: expected an identifier, or an assignment target but instead found '='
   ┌─ array_assignment_target_err.js:3:8
   │
 3 │ [a = , = "test"] = test;
-  │        ^ Expected an identifier, member expression, or an array or object pattern here
+  │        ^ Expected an identifier, or an assignment target here
 
 --
 error[SyntaxError]: expected `,` but instead found `b`
@@ -188,11 +185,11 @@ error[SyntaxError]: Expected an expression, but found none
   │   ^ Expected an expression here
 
 --
-error[SyntaxError]: Missing assignment target
+error[SyntaxError]: expected an assignment target, a rest element, or a comma but instead found 'b'
   ┌─ array_assignment_target_err.js:5:5
   │
 5 │ [a: b] = c
-  │     ^ Expected an identifier, member expression, or an array or object pattern here
+  │     ^ Expected an assignment target, a rest element, or a comma here
 
 --
 [a a, ++b, ] = test;

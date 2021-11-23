@@ -10,7 +10,7 @@
           2: R_PAREN@2..4 ")" [] [Whitespace(" ")]
           3: EQ@4..6 "=" [] [Whitespace(" ")]
         1: IDENT@6..7 "b" [] []
-        2: ERROR@7..8
+        2: JS_UNKNOWN_EXPRESSION@7..8
           0: SEMICOLON@7..8 ";" [] []
       1: (empty)
     1: JS_EXPRESSION_STATEMENT@8..17
@@ -20,7 +20,7 @@
           1: IDENT@11..13 "a" [] [Whitespace(" ")]
           2: EQ@13..15 "=" [] [Whitespace(" ")]
         1: IDENT@15..16 "b" [] []
-        2: ERROR@16..17
+        2: JS_UNKNOWN_EXPRESSION@16..17
           0: SEMICOLON@16..17 ";" [] []
       1: (empty)
   3: EOF@17..18 "" [Whitespace("\n")] []

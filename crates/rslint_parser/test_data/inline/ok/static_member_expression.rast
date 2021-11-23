@@ -253,6 +253,7 @@ JsRoot {
             0: HASH@67..70 "#" [Whitespace("\n\t")] []
             1: IDENT@70..73 "bar" [] []
           1: (empty)
+          2: (empty)
         1: JS_METHOD_CLASS_MEMBER@73..149
           0: JS_LITERAL_MEMBER_NAME@73..80
             0: IDENT@73..80 "test" [Whitespace("\n\n\t")] []

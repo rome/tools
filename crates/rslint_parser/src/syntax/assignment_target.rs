@@ -1,11 +1,15 @@
-use crate::syntax::class::optional_equals_value_clause;
+use crate::parser::ParsedSyntax;
+use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{
-	conditional_expr, expr, expr_or_assignment_target, identifier_name, primary_expr,
-	EXPR_RECOVERY_SET,
+	conditional_expr, expr_or_assignment_target, identifier_name, EXPR_RECOVERY_SET,
 };
+use crate::syntax::js_parse_error::{
+	expected_array_assignment_target_element, expected_assignment_target,
+	expected_property_assignment_target,
+};
+use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser};
 use crate::{SyntaxKind::*, *};
-use rslint_errors::Diagnostic;
 
 /// Converts the passed in target (expression) to an assignment target
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
@@ -21,15 +25,18 @@ pub(crate) fn expression_to_assignment_target(
 	let expression_end = p.token_pos();
 	p.rewind(checkpoint);
 
-	match try_assignment_target(p) {
-		Ok(target) => target,
-		Err(_) => {
+	match parse_assignment_target(p) {
+		Present(target) => target,
+		Absent => {
 			let unknown = p.start();
+			// Eat all tokens until we reached the end of the original expression. This is better than
+			// any other error recovery because it's already know where the expression ends.
 			while p.token_pos() <= expression_end {
 				p.bump_any();
 			}
 
 			let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+
 			let expression_range = completed.range(p);
 			p.error(
 				p.err_builder(&format!(
@@ -46,104 +53,54 @@ pub(crate) fn expression_to_assignment_target(
 // * members
 // * Re-add parenthesized assignment target, allowed in some places
 
-/// Parses an assignment target and inserts and creates an unknown assignment target if
-/// the current token isn't a valid start for an assignment target
-pub(crate) fn assignment_target(p: &mut Parser) -> Option<CompletedMarker> {
-	let result = try_assignment_target(p).ok();
-
-	if result == None {
-		p.error(missing_assignment_target_error(p));
-	}
-
-	result
-}
-
-fn missing_assignment_target_error(p: &Parser) -> Diagnostic {
-	p.err_builder("Missing assignment target").primary(
-		p.cur_tok().range,
-		"Expected an identifier, member expression, or an array or object pattern here",
-	)
-}
-
-/// Tries to parse an assignment target and returns the node's completed marker if successful.
-/// Returns an [Err] if the parser isn't positioned at an assignment target without adding an error.
-fn try_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()> {
+pub(crate) fn parse_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
-		T!['['] => Ok(array_assignment_target(p)),
-		T!['{'] if p.state.allow_object_expr => Ok(object_assignment_target(p)),
-		_ => try_simple_assignment_target(p),
+		T!['['] => parse_array_assignment_target(p),
+		T!['{'] if p.state.allow_object_expr => parse_object_assignment_target(p),
+		_ => parse_simple_assignment_target(p),
 	}
 }
 
-fn simple_assignment_target(p: &mut Parser) -> Option<CompletedMarker> {
-	let result = try_simple_assignment_target(p).ok();
-
-	if result == None {
-		p.error(
-			p.err_builder("Expected an identifier or a member expression, but found none")
-				.primary(p.cur_tok().range, ""),
-		);
-	}
-
-	result
-}
-
-fn try_simple_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()> {
+pub(crate) fn parse_simple_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	let checkpoint = p.checkpoint();
-	let expr = conditional_expr(p).ok_or(())?;
 
-	let assignment_target = try_expression_to_simple_assignment_target(p, expr);
-	if assignment_target.is_err() {
-		// This function shouldn't emit any error if it fails to parse the expression.
-		// Ideally, rewind wouldn't be needed here because there's a try_expr function that tries to parse
-		// the expression and otherwise returns an Error but doesn't add any diagnostics
-		p.rewind(checkpoint);
+	if let Some(expr) = conditional_expr(p) {
+		let assignment_target = try_expression_to_simple_assignment_target(p, expr);
+		match assignment_target {
+			Ok(target) => Present(target),
+			Err(_) => {
+				// Ideally, rewind wouldn't be needed here because there's a try_expr function that tries to parse
+				// the expression and otherwise returns an Error but doesn't add any diagnostics
+				p.rewind(checkpoint);
+				Absent
+			}
+		}
+	} else {
+		Absent
 	}
-
-	assignment_target
 }
 
-fn assignment_target_with_optional_default(p: &mut Parser) -> Option<CompletedMarker> {
-	let result = try_assignment_target_with_optional_default(p).ok();
-
-	if result == None {
-		p.error(missing_assignment_target_error(p));
-	}
-
-	result
-}
-
-/// Parses an assignment target and wraps it as a [JsAssignmentTargetWithDefault] if the target
-/// is followed by a `=` token. Returns [Err] if the parser can't parse the assignment target nor
-/// the default clause.
-fn try_assignment_target_with_optional_default(p: &mut Parser) -> Result<CompletedMarker, ()> {
-	let target = try_assignment_target(p);
+fn parse_assignment_target_with_optional_default(p: &mut Parser) -> ParsedSyntax {
+	let target = parse_assignment_target(p);
 
 	if p.at(T![=]) {
-		let with_default = match target {
-			Ok(target) => target.precede(p),
-			Err(_) => {
-				// It's possible to recover from the missing assignment target since the parser is still making
-				// progress by eating the default part. Just make sure the parser marks the target as missing.
-				p.error(missing_assignment_target_error(p));
-				p.start()
-			}
-		};
-
+		let with_default = target.precede_or_missing_with_error(p, expected_assignment_target);
 		p.bump_any(); // eat the = token
 		expr_or_assignment_target(p);
-
-		Ok(with_default.complete(p, JS_ASSIGNMENT_TARGET_WITH_DEFAULT))
+		Present(with_default.complete(p, JS_ASSIGNMENT_TARGET_WITH_DEFAULT))
 	} else {
 		target
 	}
 }
 
-/// Parses a [JsArrayAssignmentTarget] with all its elements
-fn array_assignment_target(p: &mut Parser) -> CompletedMarker {
+fn parse_array_assignment_target(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T!['[']) {
+		return Absent;
+	}
+
 	let m = p.start();
 
-	p.expect(T!['[']);
+	p.bump(T!['[']);
 	let elements = p.start();
 
 	while !p.at(EOF) && !p.at(T![']']) {
@@ -153,8 +110,7 @@ fn array_assignment_target(p: &mut Parser) -> CompletedMarker {
 			continue;
 		}
 
-		if p.at(T![...]) {
-			array_assignment_target_rest_element(p);
+		if parse_array_assignment_target_rest_element(p).is_present() {
 			break;
 		}
 
@@ -164,22 +120,21 @@ fn array_assignment_target(p: &mut Parser) -> CompletedMarker {
 				..p.state.clone()
 			});
 
-			try_assignment_target_with_optional_default(&mut *guard)
+			let recovery = ParseRecovery::new(
+				JS_UNKNOWN_ASSIGNMENT_TARGET,
+				token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]),
+			)
+			.enable_recovery_on_line_break();
+			parse_assignment_target_with_optional_default(&mut *guard).or_recover(
+				&mut *guard,
+				recovery,
+				expected_array_assignment_target_element,
+			)
 		};
 
 		if element.is_err() {
-			// Use a custom error recovery here. The parser eats all tokens until it finds the end of the array (or file),
-			// or any token that starts a new assignment target and puts them into an unknown assignment target
-			p.error(missing_assignment_target_error(p));
-
-			let unknown = p.start();
-			while !p.at_ts(token_set!(EOF, T![,], T![']'], T![=], T![;], T![...]))
-				&& !p.has_linebreak_before_n(0)
-			{
-				p.bump_any();
-			}
-
-			unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+			// Failed to recover
+			break;
 		}
 
 		if !p.at(T![']']) {
@@ -190,55 +145,58 @@ fn array_assignment_target(p: &mut Parser) -> CompletedMarker {
 	elements.complete(p, LIST);
 	p.expect(T![']']);
 
-	m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET)
+	Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET))
 }
 
-fn array_assignment_target_rest_element(p: &mut Parser) {
-	let m = p.start();
-	p.expect(T![...]);
+fn parse_array_assignment_target_rest_element(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T![...]) {
+		return Absent;
+	}
 
-	assignment_target_with_optional_default(p);
+	let m = p.start();
+	p.bump(T![...]);
+
+	parse_assignment_target_with_optional_default(p)
+		.or_missing_with_error(p, expected_assignment_target);
 
 	if p.eat(T![,]) {
 		p.error(
 			p.err_builder("rest element may not have a trailing comma")
 				.primary(p.cur_tok().range, "Remove the trailing comma here"),
 		);
-		m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+		Present(m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET))
 	} else {
-		m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT);
+		Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT))
 	}
 }
 
-/// Parses a [JsObjectAssignmentTarget]
-fn object_assignment_target(p: &mut Parser) -> CompletedMarker {
+fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T!['{']) {
+		return Absent;
+	}
+
 	let m = p.start();
 
-	p.expect(T!['{']);
+	p.bump(T!['{']);
 	let elements = p.start();
 
 	while !matches!(p.cur(), EOF | T!['}']) {
-		// if let Ok(rest) = object_rest_property_assignment_target { ... }
-		if p.at(T![...]) {
-			object_rest_property_assignment_target(p);
+		if parse_object_rest_property_assignment_target(p).is_present() {
 			break;
 		}
 
-		let element = try_property_assignment_target(p);
+		let element = parse_property_assignment_target(p).or_recover(
+			p,
+			ParseRecovery::new(
+				JS_UNKNOWN_ASSIGNMENT_TARGET,
+				token_set!(EOF, T![,], T![']'], T![...], T![;]),
+			)
+			.enable_recovery_on_line_break(),
+			expected_property_assignment_target,
+		);
 
 		if element.is_err() {
-			p.error(
-				p.err_builder("Expected a property name, but found none")
-					.primary(p.cur_tok().range, ""),
-			);
-
-			let unknown = p.start();
-			let recovery_set = token_set!(EOF, T![,], T![']'], T![...], T![;]);
-			while !p.at_ts(recovery_set) && !p.has_linebreak_before_n(0) {
-				p.bump_any();
-			}
-
-			unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+			break;
 		}
 
 		if !p.at(T!['}']) {
@@ -249,15 +207,15 @@ fn object_assignment_target(p: &mut Parser) -> CompletedMarker {
 	elements.complete(p, LIST);
 	p.expect(T!['}']);
 
-	m.complete(p, JS_OBJECT_ASSIGNMENT_TARGET)
+	Present(m.complete(p, JS_OBJECT_ASSIGNMENT_TARGET))
 }
 
 const PROPERTY_ASSIGNMENT_TARGET_START_TOKENS: TokenSet =
 	token_set![T![ident], T![yield], T![await], T![:], T![=]];
 
-fn try_property_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()> {
+fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at_ts(PROPERTY_ASSIGNMENT_TARGET_START_TOKENS) {
-		return Err(());
+		return Absent;
 	}
 
 	let m = p.start();
@@ -270,7 +228,7 @@ fn try_property_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()>
 	} else {
 		property_name.change_kind(p, JS_REFERENCE_IDENTIFIER_MEMBER);
 
-		assignment_target(p);
+		parse_assignment_target(p).or_missing_with_error(p, expected_assignment_target);
 	}
 
 	{
@@ -278,10 +236,10 @@ fn try_property_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()>
 			expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
 			..p.state.clone()
 		});
-		optional_equals_value_clause(&mut *guard);
+		parse_equal_value_clause(&mut *guard).or_missing(&mut *guard);
 	}
 
-	Ok(m.complete(
+	Present(m.complete(
 		p,
 		if is_shorthand_property {
 			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
@@ -291,20 +249,24 @@ fn try_property_assignment_target(p: &mut Parser) -> Result<CompletedMarker, ()>
 	))
 }
 
-fn object_rest_property_assignment_target(p: &mut Parser) {
-	let m = p.start();
-	p.expect(T![...]);
+fn parse_object_rest_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T![...]) {
+		return Absent;
+	}
 
-	simple_assignment_target(p);
+	let m = p.start();
+	p.bump(T![...]);
+
+	parse_simple_assignment_target(p).or_missing_with_error(p, expected_assignment_target);
 
 	if p.eat(T![,]) {
 		p.error(
 			p.err_builder("rest element may not have a trailing comma")
 				.primary(p.cur_tok().range, "Remove the trailing comma here"),
 		);
-		m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+		Present(m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET))
 	} else {
-		m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET);
+		Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET))
 	}
 }
 
