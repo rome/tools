@@ -77,7 +77,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			ParseRecoverer::with_error(ts, ERROR, err).recover(p);
+			ParseRecoverer::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
 			return None;
 		}
 	})
@@ -100,11 +100,13 @@ pub fn opt_binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 // }
 // let eval = 5;
 pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
+	let mut kind_to_change = NAME;
 	if p.at(T![yield]) && p.state.in_generator {
 		let err = p
 			.err_builder("Illegal use of `yield` as an identifier in generator function")
 			.primary(p.cur_tok().range, "");
 
+		kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
@@ -112,7 +114,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 		let err = p
 			.err_builder("Illegal use of `await` as an identifier in an async context")
 			.primary(p.cur_tok().range, "");
-
+		kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
@@ -125,12 +127,12 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 				p.cur_src()
 			))
 			.primary(p.cur_tok().range, "");
-
+		kind_to_change = JS_UNKNOWN_BINDING;
 		p.error(err);
 	}
 
 	let mut m = reference_identifier_expression(p)?;
-	m.change_kind(p, NAME);
+	m.change_kind(p, kind_to_change);
 	Some(m)
 }
 
@@ -152,6 +154,8 @@ pub fn binding_element(
 	left
 }
 
+// test_err
+// let [ default: , hey , ] = []
 pub fn array_binding_pattern(
 	p: &mut Parser,
 	parameters: bool,
@@ -177,7 +181,7 @@ pub fn array_binding_pattern(
 		} else if binding_element(p, parameters, assignment).is_none() {
 			ParseRecoverer::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
-				ERROR,
+				JS_UNKNOWN_PATTERN,
 			)
 			.recover(p);
 		}
@@ -192,6 +196,11 @@ pub fn array_binding_pattern(
 	m.complete(p, ARRAY_PATTERN)
 }
 
+// test_err object_binding_pattern
+// let { 5 } } = { eval: "foo" };
+// let { eval } = { eval: "foo" };
+// let { 5, 6 } = { eval: "foo" };
+// let { default: , bar } = {};
 pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 	let m = p.start();
 	p.expect(T!['{']);
@@ -247,7 +256,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		m.abandon(p);
 		ParseRecoverer::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
-			ERROR,
+			JS_UNKNOWN_BINDING,
 		)
 		.recover(p);
 		return None;

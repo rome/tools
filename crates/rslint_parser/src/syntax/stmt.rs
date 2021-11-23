@@ -148,6 +148,13 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 	Some(res)
 }
 
+// test_err double_label
+// label1: {
+// 	label2: {
+// 		label1: {}
+// 	}
+// }
+
 fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
@@ -222,7 +229,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 					&format!("`{}` is first used as a label here", text),
 				)
 				.primary(
-					p.cur_tok().range,
+					text_range,
 					&format!("a second use of `{}` here is not allowed", text),
 				);
 
@@ -246,6 +253,14 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 /// A debugger statement such as `debugger;`
 // test debugger_stmt
 // debugger;
+
+// test_err debugger_stmt
+// function foo() {
+// 	debugger {
+// 		var something = "lorem";
+// 	}
+// }
+
 pub fn debugger_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	let range = p.cur_tok().range;
@@ -584,6 +599,7 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 	// if (true) else
 	// if else {}
 	// if () {} else {}
+	// if (true)}}}} {}
 	let m = p.start();
 	p.expect(T![if]);
 
@@ -660,6 +676,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 // let bar, foo;
 // const a = 5;
 // const { foo: [bar], baz } = {};
+// let foo = "lorem", bar = "ipsum", third = "value", fourth = 6;
 pub fn variable_declaration_statement(p: &mut Parser) -> CompletedMarker {
 	// test_err var_decl_err
 	// var a =;
@@ -929,6 +946,7 @@ pub fn for_stmt(p: &mut Parser) -> CompletedMarker {
 	// test_err for_stmt_err
 	// for ;; {}
 	// for let i = 5; i < 10; i++ {}
+	// for let i = 5; i < 10; ++i {}
 	let m = p.start();
 	p.expect(T![for]);
 	// FIXME: This should emit an error for non-for-of
@@ -1115,8 +1133,11 @@ fn catch_declaration(p: &mut Parser) {
 /// }
 /// ```
 // test try_stmt
+// try {} catch {}
 // try {} catch (e) {}
 // try {} catch {} finally {}
+// try {} catch (e) {} finally {}
+// try {} finally {}
 pub fn try_stmt(p: &mut Parser) -> CompletedMarker {
 	// TODO: recover from `try catch` and `try finally`. The issue is block_items
 	// will cause infinite recursion because parsing a stmt would not consume the catch token

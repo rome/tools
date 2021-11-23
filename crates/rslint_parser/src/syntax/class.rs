@@ -30,6 +30,8 @@ pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 // class extends {}
 // class
 // class foo { set {} }
+// class A extends bar extends foo {}
+// class A extends bar, foo {}
 /// Parses a class declaration
 pub(super) fn class_declaration(p: &mut Parser) -> CompletedMarker {
 	class(p, ClassKind::Declaration)
@@ -482,6 +484,38 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 			let member_name = member.text(p);
 			if matches!(member_name, "get" | "set") && !is_at_line_break_or_generator {
 				let is_getter = member_name == "get";
+
+				// test getter_class_member
+				// class Getters {
+				// 	get foo() {}
+				// 	get static() {}
+				// 	static get bar() {}
+				// 	get "baz"() {}
+				// 	get ["a" + "b"]() {}
+				// 	get 5() {}
+				// 	get #private() {}
+				// }
+				// class NotGetters {
+				// 	get() {}
+				// 	async get() {}
+				// 	static get() {}
+				// }
+
+				// test setter_class_number
+				// class Setters {
+				// 	set foo(a) {}
+				// 	set static(a) {}
+				// 	static set bar(a) {}
+				// 	set "baz"(a) {}
+				// 	set ["a" + "b"](a) {}
+				// 	set 5(a) {}
+				// 	set #private(a) {}
+				// }
+				// class NotSetters {
+				// 	set(a) {}
+				// 	async set(a) {}
+				// 	static set(a) {}
+				// }
 
 				// The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
 				// out that the 'get' or 'set' isn't a member name in this context but instead are the

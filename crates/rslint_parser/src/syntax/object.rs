@@ -48,7 +48,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
 fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
-		// test object_expr_getter_setter
+		// test object_expr_getter
 		// let a = {
 		//  get foo() {
 		//    return foo;
@@ -62,7 +62,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			Some(getter_object_member(p))
 		}
 
-		// test object_expr_getter_setter
+		// test object_expr_setter
 		// let b = {
 		//  set [foo](bar) {
 		//     return 5;
@@ -105,7 +105,10 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 			// test object_expr_method
 			// let b = {
-			//  foo() {},
+			// foo() {},
+			// "bar"(a, b, c) {},
+			// ["foo" + "bar"](a) {},
+			// 5(...rest) {}
 			// }
 			if p.at(T!['(']) || p.at(T![<]) {
 				method_object_member_body(p).ok()?;
@@ -206,7 +209,7 @@ pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker
 	}
 }
 
-// test object_prop_name
+// test object_member_name
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 /// Parses a `JsAnyObjectMemberName` and returns its completion marker
 fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
@@ -227,7 +230,6 @@ pub(crate) fn computed_member_name(p: &mut Parser) -> CompletedMarker {
 
 pub(super) fn literal_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
-
 	match p.cur() {
 		JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident] => {
 			p.bump_any();

@@ -1,7 +1,7 @@
-0: JS_ROOT@0..61
+0: JS_ROOT@0..78
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..60
+  2: LIST@0..77
     0: JS_IF_STATEMENT@0..17
       0: IF_KW@0..3 "if" [] [Whitespace(" ")]
       1: L_PAREN@3..4 "(" [] []
@@ -46,7 +46,25 @@
           0: L_CURLY@58..59 "{" [] []
           1: LIST@59..59
           2: R_CURLY@59..60 "}" [] []
-  3: EOF@60..61 "" [Whitespace("\n")] []
+    3: JS_IF_STATEMENT@60..71
+      0: IF_KW@60..64 "if" [Whitespace("\n")] [Whitespace(" ")]
+      1: L_PAREN@64..65 "(" [] []
+      2: JS_BOOLEAN_LITERAL@65..69
+        0: TRUE_KW@65..69 "true" [] []
+      3: R_PAREN@69..70 ")" [] []
+      4: JS_UNKNOWN_STATEMENT@70..71
+        0: R_CURLY@70..71 "}" [] []
+    4: JS_UNKNOWN_STATEMENT@71..72
+      0: R_CURLY@71..72 "}" [] []
+    5: JS_UNKNOWN_STATEMENT@72..73
+      0: R_CURLY@72..73 "}" [] []
+    6: JS_UNKNOWN_STATEMENT@73..75
+      0: R_CURLY@73..75 "}" [] [Whitespace(" ")]
+    7: JS_BLOCK_STATEMENT@75..77
+      0: L_CURLY@75..76 "{" [] []
+      1: LIST@76..76
+      2: R_CURLY@76..77 "}" [] []
+  3: EOF@77..78 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected a statement or declaration, but found none
   ┌─ if_stmt_err.js:1:11
@@ -97,7 +115,36 @@ error[SyntaxError]: Expected an expression, but found none
   │     ^ Expected an expression here
 
 --
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_stmt_err.js:5:10
+  │
+5 │ if (true)}}}} {}
+  │          ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_stmt_err.js:5:11
+  │
+5 │ if (true)}}}} {}
+  │           ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_stmt_err.js:5:12
+  │
+5 │ if (true)}}}} {}
+  │            ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ if_stmt_err.js:5:13
+  │
+5 │ if (true)}}}} {}
+  │             ^ Expected a statement or declaration here
+
+--
 if (true) else {}
 if (true) else
 if else {}
 if () {} else {}
+if (true)}}}} {}

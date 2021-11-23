@@ -1,0 +1,38 @@
+0: JS_ROOT@0..67
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..66
+    0: JS_CLASS_DECLARATION@0..12
+      0: CLASS_KW@0..6 "class" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@6..10
+        0: IDENT@6..10 "foo" [] [Whitespace(" ")]
+      2: L_CURLY@10..11 "{" [] []
+      3: LIST@11..11
+      4: R_CURLY@11..12 "}" [] []
+    1: JS_CLASS_DECLARATION@12..37
+      0: CLASS_KW@12..19 "class" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@19..23
+        0: IDENT@19..23 "foo" [] [Whitespace(" ")]
+      2: JS_EXTENDS_CLAUSE@23..35
+        0: EXTENDS_KW@23..31 "extends" [] [Whitespace(" ")]
+        1: JS_REFERENCE_IDENTIFIER_EXPRESSION@31..35
+          0: IDENT@31..35 "bar" [] [Whitespace(" ")]
+      3: L_CURLY@35..36 "{" [] []
+      4: LIST@36..36
+      5: R_CURLY@36..37 "}" [] []
+    2: JS_CLASS_DECLARATION@37..66
+      0: CLASS_KW@37..44 "class" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@44..48
+        0: IDENT@44..48 "foo" [] [Whitespace(" ")]
+      2: JS_EXTENDS_CLAUSE@48..64
+        0: EXTENDS_KW@48..56 "extends" [] [Whitespace(" ")]
+        1: DOT_EXPR@56..64
+          0: JS_REFERENCE_IDENTIFIER_EXPRESSION@56..59
+            0: IDENT@56..59 "foo" [] []
+          1: DOT@59..60 "." [] []
+          2: NAME@60..64
+            0: IDENT@60..64 "bar" [] [Whitespace(" ")]
+      3: L_CURLY@64..65 "{" [] []
+      4: LIST@65..65
+      5: R_CURLY@65..66 "}" [] []
+  3: EOF@66..67 "" [Whitespace("\n")] []
