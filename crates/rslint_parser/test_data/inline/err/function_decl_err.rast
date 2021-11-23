@@ -23,12 +23,12 @@
           1: (empty)
           2: JS_UNKNOWN_PATTERN@24..25
             0: R_CURLY@24..25 "}" [] []
-          3: ERROR@25..35
+          3: JS_UNKNOWN_EXPRESSION@25..35
             0: FUNCTION_KW@25..35 "function" [Whitespace("\n")] [Whitespace(" ")]
           4: (empty)
           5: JS_UNKNOWN_PATTERN@35..36
             0: STAR@35..36 "*" [] []
-          6: ERROR@36..37
+          6: JS_UNKNOWN_EXPRESSION@36..37
             0: L_PAREN@36..37 "(" [] []
         2: R_PAREN@37..39 ")" [] [Whitespace(" ")]
       2: JS_FUNCTION_BODY@39..41

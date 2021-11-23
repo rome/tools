@@ -110,6 +110,9 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			// ["foo" + "bar"](a) {},
 			// 5(...rest) {}
 			// }
+
+			// test_err object_expr_method
+			// let b = { foo) }
 			if p.at(T!['(']) || p.at(T![<]) {
 				method_object_member_body(p).ok()?;
 				Some(m.complete(p, JS_METHOD_OBJECT_MEMBER))
@@ -301,7 +304,7 @@ fn method_object_member_body(p: &mut Parser) -> Result<(), ()> {
 			.err_builder("expected a method definition, but found none")
 			.primary(p.cur_tok().range, "");
 
-		ParseRecovery::with_error(BASE_METHOD_RECOVERY_SET, ERROR, err).recover(p);
+		ParseRecovery::with_error(BASE_METHOD_RECOVERY_SET, JS_UNKNOWN_MEMBER, err).recover(p);
 		Err(())
 	};
 

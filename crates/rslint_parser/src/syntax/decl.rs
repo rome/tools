@@ -209,7 +209,7 @@ pub(super) fn parameters_list(
 						T![...],
 						T![')'],
 					],
-					ERROR,
+					JS_UNKNOWN_EXPRESSION,
 				)
 				.enabled_braces_check()
 				.recover(p);

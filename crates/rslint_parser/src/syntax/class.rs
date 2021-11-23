@@ -565,7 +565,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 		.primary(p.cur_tok().range, "");
 	ParseRecovery::with_error(
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
-		ERROR,
+		JS_UNKNOWN_MEMBER,
 		err,
 	)
 	.recover(p);
