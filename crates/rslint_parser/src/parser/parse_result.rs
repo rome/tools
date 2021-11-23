@@ -137,7 +137,7 @@ pub trait ParsedSyntax {
 	/// configured in the [ParseRecovery], signaling that it successfully recovered.
 	///
 	/// Returns `RecoveryError::EOF` if the parser is currently positioned at the `EOF` token
-	fn with_recovery(self, p: &mut Parser, recovery: ParseRecovery) -> RecoveryResult;
+	fn or_recover(self, p: &mut Parser, recovery: ParseRecovery) -> RecoveryResult;
 
 	/// Makes this a [ConditionalSyntax] that is only supported if the passed [feature] is available
 	/// in the current parsing context.
@@ -209,7 +209,7 @@ impl ParsedSyntax for ParseResult<CompletedMarker> {
 		})
 	}
 
-	fn with_recovery(self, p: &mut Parser, recovery: ParseRecovery) -> RecoveryResult {
+	fn or_recover(self, p: &mut Parser, recovery: ParseRecovery) -> RecoveryResult {
 		match self {
 			Ok(syntax) => Ok(syntax),
 			Err(error) => match recovery.recover(p) {
