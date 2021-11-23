@@ -29,7 +29,7 @@
           0: JS_REFERENCE_IDENTIFIER_EXPRESSION@15..16
             0: IDENT@15..16 "a" [] []
           1: COMMA@16..18 "," [] [Whitespace(" ")]
-          2: ERROR@18..19
+          2: JS_UNKNOWN_EXPRESSION@18..19
             0: COMMA@18..19 "," [] []
           3: (empty)
       1: (empty)
