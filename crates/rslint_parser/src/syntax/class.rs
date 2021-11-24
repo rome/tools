@@ -230,10 +230,10 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 	if declare && !has_access_modifier {
 		// declare() and declare: foo
 		if is_method_class_member(p, offset) {
-			literal_member_name(p).make_required(p); // bump declare as identifier
+			literal_member_name(p).unwrap(); // bump declare as identifier
 			return method_class_member_body(p, member_marker);
 		} else if is_property_class_member(p, offset) {
-			literal_member_name(p).make_required(p); // bump declare as identifier
+			literal_member_name(p).unwrap(); // bump declare as identifier
 			return property_class_member_body(p, member_marker);
 		} else {
 			let msg = if p.typescript() {

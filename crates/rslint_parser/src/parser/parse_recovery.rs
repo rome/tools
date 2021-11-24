@@ -8,6 +8,9 @@ use std::fmt::{Display, Formatter};
 pub enum RecoveryError {
 	/// Recovery failed because the parser reached the end of file
 	Eof,
+
+	// Recovery failed because it didn't eat any tokens
+	AlreadyRecovered,
 }
 
 impl Error for RecoveryError {}
@@ -16,6 +19,7 @@ impl Display for RecoveryError {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		match self {
 			RecoveryError::Eof => write!(f, "EOF"),
+			RecoveryError::AlreadyRecovered => write!(f, "already recovered"),
 		}
 	}
 }
@@ -59,14 +63,20 @@ impl ParseRecovery {
 			return Err(RecoveryError::Eof);
 		}
 
+		if self.recovered(p) {
+			return Err(RecoveryError::AlreadyRecovered);
+		}
+
 		let m = p.start();
 
-		while !(p.at_ts(self.recovery_set)
-			|| p.at(EOF) || (self.line_break && p.has_linebreak_before_n(0)))
-		{
+		while !self.recovered(p) {
 			p.bump_any();
 		}
 
 		Ok(m.complete(p, self.node_kind))
+	}
+
+	fn recovered(&self, p: &Parser) -> bool {
+		p.at_ts(self.recovery_set) || p.at(EOF) || (self.line_break && p.has_linebreak_before_n(0))
 	}
 }

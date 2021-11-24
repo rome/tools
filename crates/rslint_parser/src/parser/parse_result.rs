@@ -228,7 +228,7 @@ impl ParsedSyntax for ParseResult {
 					Ok(recovered)
 				}
 
-				Err(RecoveryError::Eof) => {
+				Err(_) => {
 					let diagnostic = error.into_diagnostic(p, p.cur_tok().range);
 					p.error(diagnostic);
 					Err(RecoveryError::Eof)
