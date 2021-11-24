@@ -167,7 +167,7 @@ fn object_member(p: &mut Parser) -> ParseResult {
 					// do it's error recovery
 					m.abandon(p);
 					p.rewind(checkpoint);
-					Err(ExpectedError::expected_node("object member"))
+					Err(ExpectedError::new("an object member"))
 				}
 			}
 		}
@@ -177,7 +177,7 @@ fn object_member(p: &mut Parser) -> ParseResult {
 /// Parses a getter object member: `{ get a() { return "a"; } }`
 fn getter_object_member(p: &mut Parser) -> ParseResult {
 	if !p.at(T![ident]) || p.cur_src() != "get" {
-		return Err(ExpectedError::expected_node("getter"));
+		return Err(ExpectedError::new("a getter"));
 	}
 
 	let m = p.start();
@@ -199,7 +199,7 @@ fn getter_object_member(p: &mut Parser) -> ParseResult {
 /// Parses a setter object member like `{ set a(value) { .. } }`
 fn setter_object_member(p: &mut Parser) -> ParseResult {
 	if !p.at(T![ident]) || p.cur_src() != "set" {
-		return Err(ExpectedError::expected_node("setter"));
+		return Err(ExpectedError::new("a setter"));
 	}
 	let m = p.start();
 
@@ -237,12 +237,9 @@ fn object_member_name(p: &mut Parser) -> ParseResult {
 		_ => literal_member_name(p),
 	}
 	.map_err(|_| {
-		ExpectedError::expected_any([
-			"computed member name",
-			"string literal",
-			"number literal",
-			"identifier",
-		])
+		ExpectedError::new(
+			"a computed member name, a string literal, a number literal, or an identifier",
+		)
 	})
 }
 
@@ -252,7 +249,7 @@ fn is_at_object_member_name(p: &Parser) -> bool {
 
 pub(crate) fn computed_member_name(p: &mut Parser) -> ParseResult {
 	if !p.at(T!['[']) {
-		return Err(ExpectedError::expected_node("computed member name"));
+		return Err(ExpectedError::new("a computed member name"));
 	}
 
 	let m = p.start();
@@ -273,8 +270,8 @@ pub(super) fn literal_member_name(p: &mut Parser) -> ParseResult {
 		}
 		_ => {
 			m.abandon(p);
-			return Err(ExpectedError::expected_node(
-				"identifier, a keyword, or a string or number literal",
+			return Err(ExpectedError::new(
+				"an identifier, a keyword, or a string or number literal",
 			));
 		}
 	}
@@ -285,7 +282,7 @@ pub(super) fn literal_member_name(p: &mut Parser) -> ParseResult {
 fn method_object_member(p: &mut Parser) -> ParseResult {
 	let is_async = is_parser_at_async_method_member(p);
 	if !is_async && !p.at(T![*]) && !is_at_object_member_name(p) {
-		return Err(ExpectedError::expected_node("object method member"));
+		return Err(ExpectedError::new("an object method member"));
 	}
 
 	let m = p.start();

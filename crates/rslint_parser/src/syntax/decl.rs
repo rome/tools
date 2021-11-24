@@ -234,6 +234,6 @@ pub(super) fn arrow_body(p: &mut Parser) -> ParseResult {
 	if guard.at(T!['{']) {
 		function_body(&mut *guard)
 	} else {
-		assign_expr(&mut *guard).ok_or_else(|| ExpectedError::expected_node("function body"))
+		assign_expr(&mut *guard).ok_or_else(|| ExpectedError::new("a function body"))
 	}
 }

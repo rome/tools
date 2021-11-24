@@ -9,7 +9,7 @@ pub(crate) mod single_token_parse_recovery;
 
 use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
-use rslint_syntax::SyntaxKind::{EOF, JS_UNKNOWN_STATEMENT, LIST};
+use rslint_syntax::SyntaxKind::EOF;
 use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
@@ -784,51 +784,5 @@ mod tests {
 
 		let m = p.start();
 		m.abandon(&mut p);
-	}
-}
-
-struct ParseListConfiguration<P> {
-	start_token: SyntaxKind,
-	end_token: SyntaxKind,
-	delimiter_token: SyntaxKind,
-	parse_element: P,
-}
-
-struct ParseList<P> {
-	start_token: SyntaxKind,
-	end_token: SyntaxKind,
-	delimiter_token: SyntaxKind,
-	parse_element: P,
-}
-
-fn parse_list<P>(p: &mut Parser, config: ParseListConfiguration<P>) -> Option<CompletedMarker>
-where
-	P: Fn(&mut Parser) -> ParseResult,
-{
-	let list = p.start();
-	let mut empty = true;
-
-	while !p.at(config.end_token) && !p.at(EOF) {
-		empty = false;
-
-		p.expect_required(config.delimiter_token);
-		let recovery = ParseRecovery::new(
-			JS_UNKNOWN_STATEMENT,
-			token_set![config.end_token, config.delimiter_token],
-		);
-
-		let element = (config.parse_element)(p);
-		if element.or_recover(p, recovery).is_err() {
-			// Recovery failed
-			break;
-		}
-	}
-
-	if empty {
-		list.abandon(p);
-		p.missing();
-		None
-	} else {
-		Some(list.complete(p, LIST))
 	}
 }

@@ -412,7 +412,7 @@ pub fn empty_stmt(p: &mut Parser) -> ParseResult {
 		p.bump_any(); // bump ;
 		m.complete(p, JS_EMPTY_STATEMENT).to_parse_result()
 	} else {
-		Err(ExpectedError::expected_node("empty statement"))
+		Err(ExpectedError::new("an empty statement"))
 	}
 }
 
@@ -428,7 +428,7 @@ pub(crate) fn block_stmt(p: &mut Parser) -> ParseResult {
 /// A block wrapped in curly brackets. Can either be a function body or a block statement.
 pub(super) fn block_impl(p: &mut Parser, block_kind: SyntaxKind) -> ParseResult {
 	if !p.at(T!['{']) {
-		return Err(ExpectedError::expected_node("block statement"));
+		return Err(ExpectedError::new("a block statement"));
 	}
 
 	let m = p.start();
@@ -594,7 +594,7 @@ pub fn if_stmt(p: &mut Parser) -> ParseResult {
 	// if () {} else {}
 	// if (true)}}}} {}
 	if !p.at(T![if]) {
-		return Err(ExpectedError::expected_node("if statement"));
+		return Err(ExpectedError::new("an if statement"));
 	}
 
 	let m = p.start();
@@ -625,7 +625,7 @@ pub fn if_stmt(p: &mut Parser) -> ParseResult {
 /// A with statement such as `with (foo) something()`
 pub fn with_stmt(p: &mut Parser) -> ParseResult {
 	if !p.at(T![with]) {
-		return Err(ExpectedError::expected_node("with statement"));
+		return Err(ExpectedError::new("a with statement"));
 	}
 
 	let m = p.start();
@@ -1069,7 +1069,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 
 fn parse_catch_clause(p: &mut Parser) -> ParseResult {
 	if !p.at(T![catch]) {
-		return Err(ExpectedError::expected_node("catch statement"));
+		return Err(ExpectedError::new("a catch statement"));
 	}
 
 	let m = p.start();
@@ -1083,7 +1083,7 @@ fn parse_catch_clause(p: &mut Parser) -> ParseResult {
 
 fn catch_declaration(p: &mut Parser) -> ParseResult {
 	if !p.at(T!['(']) {
-		return Err(ExpectedError::expected_node("catch declaration"));
+		return Err(ExpectedError::new("a catch declaration"));
 	}
 
 	let declaration_marker = p.start();
@@ -1152,7 +1152,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParseResult {
 	// block_items error recovery
 
 	if !p.at(T![try]) {
-		return Err(ExpectedError::expected_node("try statement"));
+		return Err(ExpectedError::new("a try statement"));
 	}
 
 	let m = p.start();

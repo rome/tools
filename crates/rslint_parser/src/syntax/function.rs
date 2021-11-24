@@ -88,8 +88,7 @@ pub(super) fn function_body(p: &mut Parser) -> ParseResult {
 		..p.state.clone()
 	});
 
-	block_impl(&mut *guard, JS_FUNCTION_BODY)
-		.map_err(|_| ExpectedError::expected_node("function body"))
+	block_impl(&mut *guard, JS_FUNCTION_BODY).map_err(|_| ExpectedError::new("a function body"))
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should

@@ -52,84 +52,46 @@ impl From<CompletedMarker> for ParseResult {
 /// Returned from `parse_` functions if none of its children are present
 #[derive(Debug, Clone)]
 pub struct ExpectedError {
-	names: String,
-	primary: Option<String>,
+	message: &'static str,
+	primary: Option<&'static str>,
 }
 
 impl ExpectedError {
-	/// Creates a new error that a node with the given name was expected
-	pub fn expected_node(name: &str) -> Self {
+	/// Creates a new error that the parser expected some content that wasn't present.
+	/// The passed message is displayed in between: `expected {message} but instead found...`
+	pub fn new(message: &'static str) -> Self {
 		Self {
-			names: format!("{} {}", Self::article(name), name),
-			primary: None,
-		}
-	}
-
-	/// Creates a new error that any of the passed in nodes are expected but aren't present
-	pub fn expected_any<'a, N>(names: N) -> Self
-	where
-		N: IntoIterator<Item = &'a str>,
-		N::IntoIter: ExactSizeIterator,
-	{
-		let mut joined_names = String::new();
-		let names = names.into_iter();
-		let len = names.len();
-
-		for (index, name) in names.enumerate() {
-			if index > 0 {
-				joined_names.push_str(", ");
-			}
-
-			if index == len - 1 {
-				joined_names.push_str("or ");
-			}
-
-			joined_names.push_str(Self::article(name));
-			joined_names.push(' ');
-			joined_names.push_str(name);
-		}
-
-		Self {
-			names: joined_names,
+			message,
 			primary: None,
 		}
 	}
 
 	/// Overrides the default primary message with a custom one
-	pub fn with_primary(mut self, primary: String) -> Self {
+	pub fn with_primary(mut self, primary: &'static str) -> Self {
 		self.primary = Some(primary);
 		self
 	}
 
-	fn article(name: &str) -> &'static str {
-		match name.chars().next() {
-			Some('a' | 'e' | 'i' | 'o' | 'u') => "an",
-			_ => "a",
-		}
-	}
-
-	// TODO: Probably better to extract this into an ErrorBuilder that provides different helpers
-	// to build common errors like expected_token, expected_node, and so on. Could also provide a more
-	// ergonomic API like ErrorBuilder.expected(name).with_span(span).build() or ErrorBuilder.expected(name).but_eof().build();
 	pub(crate) fn into_diagnostic(self, p: &Parser, span: impl Span) -> Diagnostic {
 		let range = &span.as_range();
-		let names = &self.names.to_string();
 
 		let msg = if range.is_empty() && p.tokens.source().get(range.to_owned()) == None {
-			format!("expected {} but instead found end of file", names)
+			format!("expected {} but instead found end of file", self.message)
 		} else {
 			format!(
 				"expected {} but instead found '{}'",
-				names,
+				self.message,
 				p.source(span.as_text_range())
 			)
 		};
 
-		p.err_builder(&msg).primary(
-			span,
-			self.primary
-				.unwrap_or_else(|| format!("Expected {} here", names)),
-		)
+		let diag = p.err_builder(&msg);
+
+		if let Some(primary) = self.primary {
+			diag.primary(span, primary)
+		} else {
+			diag.primary(span, format!("Expected {} here", self.message))
+		}
 	}
 }
 
@@ -137,7 +99,7 @@ impl Error for ExpectedError {}
 
 impl Display for ExpectedError {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "expected {}", self.names)
+		write!(f, "expected {}", self.message)
 	}
 }
 
