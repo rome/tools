@@ -4,7 +4,7 @@ use super::expr::assign_expr;
 use super::pat::pattern;
 use super::typescript::*;
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::{ExpectedError, ParseResult};
+use crate::parser::{AbsentError, ParseResult};
 use crate::syntax::function::function_body;
 use crate::{SyntaxKind::*, *};
 
@@ -235,6 +235,6 @@ pub(super) fn arrow_body(p: &mut Parser) -> ParseResult {
 	if guard.at(T!['{']) {
 		function_body(&mut *guard)
 	} else {
-		assign_expr(&mut *guard).ok_or_else(|| ExpectedError::new("a function body"))
+		assign_expr(&mut *guard).ok_or(AbsentError)
 	}
 }

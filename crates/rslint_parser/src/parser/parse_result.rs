@@ -1,32 +1,18 @@
-use crate::parser::parse_recovery::{RecoveryError, RecoveryResult};
+use crate::parser::parse_recovery::RecoveryResult;
 use crate::parser::ParseRecovery;
-use crate::{CompletedMarker, Marker, Parser};
+use crate::{CompletedMarker, Marker, Parser, SyntaxFeature};
 use rslint_errors::{Diagnostic, Span};
 use rslint_syntax::SyntaxKind;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
-
-pub trait SyntaxFeature: Sized {
-	/// Returns [true] if the current parsing context supports this syntax feature
-	fn is_available(&self, p: &mut Parser) -> bool;
-}
-
-/// Syntax feature that tests if the current scope runs in sloppy / loose mode.
-#[doc(alias = "LooseMode")]
-pub struct SloppyMode;
-
-impl SyntaxFeature for SloppyMode {
-	fn is_available(&self, p: &mut Parser) -> bool {
-		p.state.strict.is_none()
-	}
-}
+use std::ops::Range;
 
 /// Result returned from a parse function.
 /// A parse function should return [Ok] if it is able to parse at least a partial node. For example,
 /// the `parse_for_statement` should return ok for `for (` even tough many of the required children are missing
 /// because it is still able to parse parts of the for statement.
 ///
-/// Parse rules return [Err] if the complete node is missing. In most cases, this means if the
+/// Parse rules return [Err] if the complete node is absent. In most cases, this means if the
 /// first expected token isn't present, for example if the `for` keyword isn't present when calling
 /// `parse_for_statement`. There are other rules that can recover even if the
 /// first expected token isn't present. For example, the `parse_assignment_target_with_optional_default`
@@ -35,8 +21,8 @@ impl SyntaxFeature for SloppyMode {
 /// missing `assignment_target`.
 ///
 /// The parse rule must rewind the parser if it parsed an incomplete node but can't correctly determine its type
-/// to ensure that the caller and do the proper error recovery.
-pub type ParseResult = Result<CompletedMarker, ExpectedError>;
+/// to ensure that the caller can do a proper error recovery.
+pub type ParseResult = Result<CompletedMarker, AbsentError>;
 
 impl From<CompletedMarker> for ParseResult {
 	fn from(marker: CompletedMarker) -> Self {
@@ -44,62 +30,17 @@ impl From<CompletedMarker> for ParseResult {
 	}
 }
 
-/// Error that an expected node or a selection of nodes aren't present in the source code
-///
-/// For example, `ExpectedNodeError::expected_node("statement")` expresses that a statement node was expected but
-/// none was found.
+/// Error that a node is absent (not there). It doesn't mean that the node was expected on the call side.
 ///
 /// Returned from `parse_` functions if none of its children are present
 #[derive(Debug, Clone)]
-pub struct ExpectedError {
-	message: &'static str,
-	primary: Option<&'static str>,
-}
+pub struct AbsentError;
 
-impl ExpectedError {
-	/// Creates a new error that the parser expected some content that wasn't present.
-	/// The passed message is displayed in between: `expected {message} but instead found...`
-	pub fn new(message: &'static str) -> Self {
-		Self {
-			message,
-			primary: None,
-		}
-	}
+impl Error for AbsentError {}
 
-	/// Overrides the default primary message with a custom one
-	pub fn with_primary(mut self, primary: &'static str) -> Self {
-		self.primary = Some(primary);
-		self
-	}
-
-	pub(crate) fn into_diagnostic(self, p: &Parser, span: impl Span) -> Diagnostic {
-		let range = &span.as_range();
-
-		let msg = if range.is_empty() && p.tokens.source().get(range.to_owned()) == None {
-			format!("expected {} but instead found end of file", self.message)
-		} else {
-			format!(
-				"expected {} but instead found '{}'",
-				self.message,
-				p.source(span.as_text_range())
-			)
-		};
-
-		let diag = p.err_builder(&msg);
-
-		if let Some(primary) = self.primary {
-			diag.primary(span, primary)
-		} else {
-			diag.primary(span, format!("Expected {} here", self.message))
-		}
-	}
-}
-
-impl Error for ExpectedError {}
-
-impl Display for ExpectedError {
+impl Display for AbsentError {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		write!(f, "expected {}", self.message)
+		write!(f, "missing node")
 	}
 }
 
@@ -109,44 +50,57 @@ pub trait ParsedSyntax {
 	///
 	/// It returns `Some(completed)` if the parse rule successfully parsed a node (this is `Ok(completed)`)
 	///
-	/// It adds a missing marker, adds a diagnostic that it expected a node of [ExpectedNodeError], and
-	/// returns `None` if the parse rule failed to parse the node (this is `Err`).
-	fn make_required(self, p: &mut Parser) -> Option<CompletedMarker>;
+	/// It adds a missing marker, creates a diagnostic using the passed in builder and adds it to the parse errors,
+	/// and returns `None` if the node is absent (`Err(AbsentError)`)
+	fn make_required<E>(self, p: &mut Parser, error_builder: E) -> Option<CompletedMarker>
+	where
+		E: FnOnce(&Parser, Range<usize>) -> Diagnostic;
 
 	/// Makes the node returned by the parse rule an optional child and returns the completed marker as an [Option].
 	///
 	/// It returns `Some(completed)` if the parse rule successfully parsed a node (this is `Ok(completed)`)
 	///
-	/// It adds a missing marker and returns `None` if the parse rule failed to parse the node (this is `Err`).
-	/// However, it doesn't add an error in that case.
+	/// It adds a missing marker and returns `None` if the node is absent.
 	fn make_optional(self, p: &mut Parser) -> Option<CompletedMarker>;
 
 	/// It creates a new marker that precedes the node returned by the parse rule.
 	///
 	/// It returns [CompletedMarker.precede] if this [Result] holds a parsed node.
-	/// It returns a new marker by calling [p.start()] if this [Result] doesn't contains a parsed node, adds
-	/// a missing marker, and a diagnostic that a node was expected but not present.
+	/// It returns a new marker by calling [p.start()] if the node is absent, adds
+	/// a missing marker, and creates a diagnostic using the passed error builder and adds it to the parser diagnostics.
 	///
 	/// See [CompletedMarker.precede]
 	#[must_use]
-	fn precede_required(self, p: &mut Parser) -> Marker;
+	fn precede_required<E>(self, p: &mut Parser, error_builder: E) -> Marker
+	where
+		E: FnOnce(&Parser, Range<usize>) -> Diagnostic;
 
 	/// It creates a new marker that precedes the node returned by the parse rule.
 	///
 	/// It returns [CompletedMarker.precede] if this [Result] holds a parsed node.
-	/// It returns a new marker by calling [p.start()] if this [Results] doesn't contain a parsed node
-	/// and adds a missing marker. No diagnostic will be added if the node isn't present (since it's optional)
+	/// It returns a new marker by calling [p.start()] if the node is absent
+	/// and adds a missing marker.
 	///
 	/// See [CompletedMarker.precede]
 	#[must_use]
 	fn precede_optional(self, p: &mut Parser) -> Marker;
 
-	/// Returns the node contained by this [Result] or tries to recover by wrapping any
-	/// unexpected tokens in an `Unknown*` node until the parser reaches one of the "safe tokens"
-	/// configured in the [ParseRecovery], signaling that it successfully recovered.
+	/// Returns the node contained by this [Result] or recovers the parsing by:
 	///
-	/// Returns `RecoveryError::EOF` if the parser is currently positioned at the `EOF` token
-	fn or_recover(self, p: &mut Parser, recovery: ParseRecovery) -> RecoveryResult;
+	/// * eating all unexpected tokens into an `Unknown*` node until the parser reaches one
+	///   of the "safe tokens" configured in the [ParseRecovery].
+	/// * Creating an error using the passed in error builder and adds it to the parsing diagnostics
+	///
+	/// The error recovery can fail if the parser is located at the EOF token or if the parser
+	/// is already at a valid position according to the [ParseRecovery].
+	fn or_recover<E>(
+		self,
+		p: &mut Parser,
+		recovery: ParseRecovery,
+		error_builder: E,
+	) -> RecoveryResult
+	where
+		E: FnOnce(&Parser, Range<usize>) -> Diagnostic;
 
 	/// Makes this a [ConditionalSyntax] that is only supported if the passed [feature] is available
 	/// in the current parsing context.
@@ -174,12 +128,15 @@ pub trait ParsedSyntax {
 }
 
 impl ParsedSyntax for ParseResult {
-	fn make_required(self, p: &mut Parser) -> Option<CompletedMarker> {
+	fn make_required<E>(self, p: &mut Parser, error_builder: E) -> Option<CompletedMarker>
+	where
+		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+	{
 		match self {
 			Ok(syntax) => Some(syntax),
-			Err(error) => {
+			Err(_) => {
 				p.missing();
-				let diagnostic = error.into_diagnostic(p, p.cur_tok().range);
+				let diagnostic = error_builder(p, p.cur_tok().range);
 				p.error(diagnostic);
 				None
 			}
@@ -197,16 +154,18 @@ impl ParsedSyntax for ParseResult {
 	}
 
 	#[must_use]
-	fn precede_required(self, p: &mut Parser) -> Marker {
-		self.map(|marker| marker.precede(p))
-			.unwrap_or_else(|error| {
-				let diagnostic = error.into_diagnostic(p, p.cur_tok().range);
-				p.error(diagnostic);
+	fn precede_required<E>(self, p: &mut Parser, error_builder: E) -> Marker
+	where
+		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+	{
+		self.map(|marker| marker.precede(p)).unwrap_or_else(|_| {
+			let diagnostic = error_builder(p, p.cur_tok().range);
+			p.error(diagnostic);
 
-				let m = p.start();
-				p.missing();
-				m
-			})
+			let m = p.start();
+			p.missing();
+			m
+		})
 	}
 
 	#[must_use]
@@ -218,20 +177,28 @@ impl ParsedSyntax for ParseResult {
 		})
 	}
 
-	fn or_recover(self, p: &mut Parser, recovery: ParseRecovery) -> RecoveryResult {
+	fn or_recover<E>(
+		self,
+		p: &mut Parser,
+		recovery: ParseRecovery,
+		error_builder: E,
+	) -> RecoveryResult
+	where
+		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
+	{
 		match self {
 			Ok(syntax) => Ok(syntax),
-			Err(error) => match recovery.recover(p) {
+			Err(_) => match recovery.recover(p) {
 				Ok(recovered) => {
-					let diagnostic = error.into_diagnostic(p, recovered.range(p));
+					let diagnostic = error_builder(p, recovered.range(p).as_range());
 					p.error(diagnostic);
 					Ok(recovered)
 				}
 
-				Err(_) => {
-					let diagnostic = error.into_diagnostic(p, p.cur_tok().range);
+				Err(recovery_error) => {
+					let diagnostic = error_builder(p, p.cur_tok().range);
 					p.error(diagnostic);
-					Err(RecoveryError::Eof)
+					Err(recovery_error)
 				}
 			},
 		}
@@ -249,22 +216,22 @@ impl ParsedSyntax for ParseResult {
 	{
 		match self {
 			Ok(c) => c.to_conditional_parse_result(p, feature, error_builder),
-			Err(e) => Err(ConditionalSyntaxError::Expected(e)),
+			Err(_) => Err(ConditionalSyntaxError::Absent),
 		}
 	}
 
 	fn into_unsupported(self) -> ConditionalSyntaxParseResult {
 		match self {
 			Ok(c) => Err(ConditionalSyntaxError::Unsupported(c)),
-			Err(expected) => Err(ConditionalSyntaxError::Expected(expected)),
+			Err(_) => Err(ConditionalSyntaxError::Absent),
 		}
 	}
 }
 
 #[derive(Debug)]
 pub enum ConditionalSyntaxError {
-	/// Expected a node of a specific type that wasn't present
-	Expected(ExpectedError),
+	/// The node isn't present in the source text. Same as [AbsentError]
+	Absent,
 
 	/// Parsed node that isn't supported in the current parsing context
 	Unsupported(CompletedMarker),
@@ -272,16 +239,16 @@ pub enum ConditionalSyntaxError {
 
 impl Error for ConditionalSyntaxError {}
 
-impl From<ExpectedError> for ConditionalSyntaxError {
-	fn from(expected: ExpectedError) -> Self {
-		ConditionalSyntaxError::Expected(expected)
+impl From<AbsentError> for ConditionalSyntaxError {
+	fn from(_: AbsentError) -> Self {
+		ConditionalSyntaxError::Absent
 	}
 }
 
 impl Display for ConditionalSyntaxError {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		match self {
-			ConditionalSyntaxError::Expected(node) => write!(f, "{}", node),
+			ConditionalSyntaxError::Absent => write!(f, "absent"),
 			ConditionalSyntaxError::Unsupported(c) => {
 				write!(f, "unsupported syntax {:?}", c.kind())
 			}
@@ -315,7 +282,7 @@ impl ConditionalParsedSyntax for ConditionalSyntaxParseResult {
 				completed.change_kind(p, unknown_kind);
 				Ok(completed)
 			}
-			ConditionalSyntaxError::Expected(c) => Err(c),
+			ConditionalSyntaxError::Absent => Err(AbsentError),
 		})
 	}
 

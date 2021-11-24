@@ -13,6 +13,7 @@ use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
 use crate::syntax::object::object_expr;
 use crate::syntax::stmt::is_semi;
+use crate::syntax::JsParseErrors;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -859,7 +860,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			}
 
 			p.bump_any();
-			arrow_body(p).make_required(p);
+			arrow_body(p).make_required(p, JsParseErrors::expected_arrow_body);
 			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 		}
 	}
@@ -998,7 +999,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 							in_async: true,
 							..p.state.clone()
 						});
-						arrow_body(&mut *guard).make_required(&mut *guard);
+						arrow_body(&mut *guard)
+							.make_required(&mut *guard, JsParseErrors::expected_arrow_body);
 					}
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
@@ -1031,7 +1033,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				ident.change_kind(p, JS_IDENTIFIER_BINDING);
 				let m = ident.precede(p);
 				p.bump_any();
-				arrow_body(p).make_required(p);
+				arrow_body(p).make_required(p, JsParseErrors::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
 				ident

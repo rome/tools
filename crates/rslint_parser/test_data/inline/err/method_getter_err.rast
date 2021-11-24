@@ -21,11 +21,11 @@
       4: R_CURLY@19..21 "}" [Whitespace("\n")] []
   3: EOF@21..22 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an identifier, a keyword, or a string or number literal but instead found '{'
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
   ┌─ method_getter_err.js:2:6
   │
 2 │  get {}
-  │      ^ Expected an identifier, a keyword, or a string or number literal here
+  │      ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
 --
 error[SyntaxError]: expected `'('` but instead found `{`

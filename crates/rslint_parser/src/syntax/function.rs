@@ -1,8 +1,9 @@
-use crate::parser::{ExpectedError, ParseResult, ParsedSyntax};
+use crate::parser::{ParseResult, ParsedSyntax};
 use crate::syntax::decl::parameter_list;
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{block_impl, is_semi};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
+use crate::syntax::JsParseErrors;
 use crate::{CompletedMarker, Parser, ParserState};
 use rslint_syntax::SyntaxKind::{
 	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION,
@@ -75,7 +76,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 	if kind == JS_FUNCTION_DECLARATION {
 		function_body_or_declaration(guard);
 	} else {
-		function_body(guard).make_required(guard);
+		function_body(guard).make_required(guard, JsParseErrors::expected_function_body);
 	}
 
 	m.complete(guard, kind)
@@ -88,7 +89,7 @@ pub(super) fn function_body(p: &mut Parser) -> ParseResult {
 		..p.state.clone()
 	});
 
-	block_impl(&mut *guard, JS_FUNCTION_BODY).map_err(|_| ExpectedError::new("a function body"))
+	block_impl(&mut *guard, JS_FUNCTION_BODY)
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should
@@ -117,7 +118,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 				_ => p.missing(),
 			}
 		} else {
-			body.make_required(p);
+			body.make_required(p, JsParseErrors::expected_function_body);
 		}
 	}
 }

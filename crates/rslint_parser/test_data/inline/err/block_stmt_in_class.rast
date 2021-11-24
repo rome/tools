@@ -17,11 +17,11 @@
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected an identifier, a keyword, or a string or number literal but instead found '{'
+error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
   ┌─ block_stmt_in_class.js:1:9
   │
 1 │ class S{{}}
-  │         ^ Expected an identifier, a keyword, or a string or number literal here
+  │         ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
 
 --
 error[SyntaxError]: expected `;`, a property, or a method for a class body, but found none

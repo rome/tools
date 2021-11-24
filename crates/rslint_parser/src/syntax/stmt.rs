@@ -8,11 +8,10 @@ use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::{
-	ConditionalParsedSyntax, ExpectedError, ParseResult, ParsedSyntax, SloppyMode,
-};
+use crate::parser::{AbsentError, ConditionalParsedSyntax, ParseResult, ParsedSyntax};
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
+use crate::syntax::JsParseErrors;
 use crate::{SyntaxKind::*, *};
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
@@ -416,7 +415,7 @@ pub fn empty_stmt(p: &mut Parser) -> ParseResult {
 		p.bump_any(); // bump ;
 		m.complete(p, JS_EMPTY_STATEMENT).to_parse_result()
 	} else {
-		Err(ExpectedError::new("an empty statement"))
+		Err(AbsentError)
 	}
 }
 
@@ -432,7 +431,7 @@ pub(crate) fn block_stmt(p: &mut Parser) -> ParseResult {
 /// A block wrapped in curly brackets. Can either be a function body or a block statement.
 pub(super) fn block_impl(p: &mut Parser, block_kind: SyntaxKind) -> ParseResult {
 	if !p.at(T!['{']) {
-		return Err(ExpectedError::new("a block statement"));
+		return Err(AbsentError);
 	}
 
 	let m = p.start();
@@ -598,7 +597,7 @@ pub fn if_stmt(p: &mut Parser) -> ParseResult {
 	// if () {} else {}
 	// if (true)}}}} {}
 	if !p.at(T![if]) {
-		return Err(ExpectedError::new("an if statement"));
+		return Err(AbsentError);
 	}
 
 	let m = p.start();
@@ -629,7 +628,7 @@ pub fn if_stmt(p: &mut Parser) -> ParseResult {
 /// A with statement such as `with (foo) something()`
 pub fn with_stmt(p: &mut Parser) -> ParseResult {
 	if !p.at(T![with]) {
-		return Err(ExpectedError::new("a with statement"));
+		return Err(AbsentError);
 	}
 
 	let m = p.start();
@@ -1075,21 +1074,21 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 
 fn parse_catch_clause(p: &mut Parser) -> ParseResult {
 	if !p.at(T![catch]) {
-		return Err(ExpectedError::new("a catch statement"));
+		return Err(AbsentError);
 	}
 
 	let m = p.start();
 	p.bump_any(); // bump catch
 
 	catch_declaration(p).make_optional(p);
-	block_stmt(p).make_required(p);
+	block_stmt(p).make_required(p, JsParseErrors::expected_block_statement);
 
 	Ok(m.complete(p, JS_CATCH_CLAUSE))
 }
 
 fn catch_declaration(p: &mut Parser) -> ParseResult {
 	if !p.at(T!['(']) {
-		return Err(ExpectedError::new("a catch declaration"));
+		return Err(AbsentError);
 	}
 
 	let declaration_marker = p.start();
@@ -1158,13 +1157,13 @@ pub fn parse_try_statement(p: &mut Parser) -> ParseResult {
 	// block_items error recovery
 
 	if !p.at(T![try]) {
-		return Err(ExpectedError::new("a try statement"));
+		return Err(AbsentError);
 	}
 
 	let m = p.start();
 	p.bump_any(); // eat try
 
-	block_stmt(p).make_required(p);
+	block_stmt(p).make_required(p, JsParseErrors::expected_block_statement);
 
 	let catch = parse_catch_clause(p);
 
@@ -1173,11 +1172,11 @@ pub fn parse_try_statement(p: &mut Parser) -> ParseResult {
 
 		let finalizer = p.start();
 		p.bump_any();
-		block_stmt(p).make_required(p);
+		block_stmt(p).make_required(p, JsParseErrors::expected_block_statement);
 		finalizer.complete(p, JS_FINALLY_CLAUSE);
 		Ok(m.complete(p, JS_TRY_FINALLY_STATEMENT))
 	} else {
-		catch.make_required(p);
+		catch.make_required(p, JsParseErrors::expected_catch_clause);
 		Ok(m.complete(p, JS_TRY_STATEMENT))
 	}
 }

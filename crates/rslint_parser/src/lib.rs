@@ -245,3 +245,18 @@ impl From<FileKind> for Syntax {
 		Syntax::new(kind)
 	}
 }
+
+pub trait SyntaxFeature: Sized {
+	/// Returns [true] if the current parsing context supports this syntax feature
+	fn is_available(&self, p: &mut Parser) -> bool;
+}
+
+/// Syntax feature that tests if the current scope runs in sloppy / loose mode.
+#[doc(alias = "LooseMode")]
+pub struct SloppyMode;
+
+impl SyntaxFeature for SloppyMode {
+	fn is_available(&self, p: &mut Parser) -> bool {
+		p.state.strict.is_none()
+	}
+}
