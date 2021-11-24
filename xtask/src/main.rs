@@ -50,6 +50,10 @@ fn main() -> Result<()> {
 			coverage::run(query, yastl::Pool::with_config(num_cpus::get(), pool), json);
 			Ok(())
 		}
+		"coverage-libs" => {
+			xtask::libs::run();
+			Ok(())
+		}
 		_ => {
 			eprintln!(
 				"\
@@ -63,7 +67,8 @@ SUBCOMMANDS:
     syntax
     docgen
     coverage [--json]
-		compare [--markdown]
+    coverage-libs
+    compare [--markdown]
 OPTIONS
     --markdown   Emits supported output into markdown format. Supported by compare subcommand
     --json       Emits supported output into json format. Supported by coverage subcommand

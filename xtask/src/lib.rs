@@ -5,6 +5,7 @@ pub mod compare;
 pub mod coverage;
 pub mod docgen;
 pub mod glue;
+pub mod libs;
 
 use std::{
 	env,

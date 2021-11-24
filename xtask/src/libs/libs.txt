@@ -1,0 +1,2 @@
+https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
+https://cdn.jsdelivr.net/npm/vue@3.2.22/dist/vue.global.prod.js
