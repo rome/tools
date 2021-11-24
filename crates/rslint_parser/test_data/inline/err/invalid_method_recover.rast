@@ -38,7 +38,7 @@
                               0: IDENT@36..37 "a" [] []
                           1: JS_EQUAL_VALUE_CLAUSE@37..39
                             0: EQ@37..38 "=" [] []
-                            1: JS_UNKNOWN_ASSIGNMENT_TARGET@38..39
+                            1: JS_UNKNOWN_EXPRESSION@38..39
                               0: SEMICOLON@38..39 ";" [] []
                     1: (empty)
                 3: R_CURLY@39..43 "}" [Whitespace("\n  ")] []

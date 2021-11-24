@@ -11,6 +11,8 @@ use std::cell::Cell;
 use std::ops::Range;
 
 use crate::parse_recovery::ParseRecovery;
+use crate::syntax::decl::BASE_METHOD_RECOVERY_SET;
+use crate::syntax::expr::EXPR_RECOVERY_SET;
 use crate::*;
 
 /// An extremely fast, error tolerant, completely lossless JavaScript parser
@@ -456,11 +458,7 @@ impl<'t> Parser<'t> {
 		start..end
 	}
 
-	pub fn expr_with_semi_recovery(
-		&mut self,
-		assign: bool,
-		unknown_syntax_kind: SyntaxKind,
-	) -> Option<CompletedMarker> {
+	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> Option<CompletedMarker> {
 		let func = if assign {
 			syntax::expr::assign_expr
 		} else {
@@ -471,7 +469,8 @@ impl<'t> Parser<'t> {
 			let err = self
 				.err_builder("expected an expression, but found `;` instead")
 				.primary(self.cur_tok().range, "");
-			ParseRecovery::with_error(token_set![], unknown_syntax_kind, err).recover(self);
+			ParseRecovery::with_error(token_set![], SyntaxKind::JS_UNKNOWN_EXPRESSION, err)
+				.recover(self);
 
 			return None;
 		}

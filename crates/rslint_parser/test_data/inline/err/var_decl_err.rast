@@ -1,7 +1,7 @@
-0: JS_ROOT@0..32
+0: JS_ROOT@0..43
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..31
+  2: LIST@0..42
     0: JS_VARIABLE_DECLARATION_STATEMENT@0..8
       0: JS_VARIABLE_DECLARATION@0..8
         0: VAR_KW@0..4 "var" [] [Whitespace(" ")]
@@ -12,7 +12,7 @@
                 0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..8
               0: EQ@6..7 "=" [] []
-              1: JS_UNKNOWN_ASSIGNMENT_TARGET@7..8
+              1: JS_UNKNOWN_EXPRESSION@7..8
                 0: SEMICOLON@7..8 ";" [] []
       1: (empty)
     1: JS_VARIABLE_DECLARATION_STATEMENT@8..21
@@ -41,7 +41,20 @@
               1: JS_NUMBER_LITERAL_EXPRESSION@29..30
                 0: JS_NUMBER_LITERAL@29..30 "5" [] []
       1: SEMICOLON@30..31 ";" [] []
-  3: EOF@31..32 "" [Whitespace("\n")] []
+    3: JS_VARIABLE_DECLARATION_STATEMENT@31..42
+      0: JS_VARIABLE_DECLARATION@31..42
+        0: CONST_KW@31..38 "const" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@38..42
+          0: JS_VARIABLE_DECLARATOR@38..42
+            0: SINGLE_PATTERN@38..40
+              0: NAME@38..40
+                0: IDENT@38..40 "a" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@40..42
+              0: EQ@40..41 "=" [] []
+              1: JS_UNKNOWN_EXPRESSION@41..42
+                0: SEMICOLON@41..42 ";" [] []
+      1: (empty)
+  3: EOF@42..43 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected an expression, but found `;` instead
   ┌─ var_decl_err.js:1:8
@@ -59,5 +72,13 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ ...Which is required to end this statement
 
 --
+error[SyntaxError]: expected an expression, but found `;` instead
+  ┌─ var_decl_err.js:3:10
+  │
+3 │ const a =;
+  │          ^
+
+--
 var a =;
 const a = 5 let b = 5;
+const a =;
