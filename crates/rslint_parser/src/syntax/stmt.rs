@@ -201,7 +201,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 		m.complete(p, ERROR);
 	}
 
-	let mut expr = p.expr_with_semi_recovery(false, ERROR)?;
+	let mut expr = p.expr_with_semi_recovery(false, JS_UNKNOWN_EXPRESSION)?;
 	// Labelled stmt
 	if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
 		expr.change_kind(p, NAME);
@@ -293,7 +293,7 @@ pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 
 		p.error(err);
 	} else {
-		p.expr_with_semi_recovery(false, ERROR);
+		p.expr_with_semi_recovery(false, JS_UNKNOWN_EXPRESSION);
 	}
 	semi(p, start..p.cur_tok().range.end);
 	m.complete(p, JS_THROW_STATEMENT)
@@ -385,7 +385,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	p.expect(T![return]);
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
-		p.expr_with_semi_recovery(false, ERROR);
+		p.expr_with_semi_recovery(false, JS_UNKNOWN_EXPRESSION);
 	}
 	semi(p, start..p.cur_tok().range.end);
 	let complete = m.complete(p, JS_RETURN_STATEMENT);
@@ -813,7 +813,7 @@ fn variable_initializer(p: &mut Parser) {
 	let m = p.start();
 
 	p.expect(T![=]);
-	p.expr_with_semi_recovery(true, ERROR);
+	p.expr_with_semi_recovery(true, JS_UNKNOWN_ASSIGNMENT_TARGET);
 
 	m.complete(p, SyntaxKind::JS_EQUAL_VALUE_CLAUSE);
 }
