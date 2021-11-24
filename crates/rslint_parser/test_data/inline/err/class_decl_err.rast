@@ -36,7 +36,7 @@
         2: JS_UNKNOWN_MEMBER@59..65
           0: JS_LITERAL_MEMBER_NAME@59..63
             0: IDENT@59..63 "foo" [] [Whitespace(" ")]
-          1: ERROR@63..65
+          1: JS_UNKNOWN_MEMBER@63..65
             0: L_CURLY@63..65 "{" [] [Whitespace(" ")]
         3: JS_SETTER_CLASS_MEMBER@65..72
           0: SET_KW@65..69 "set" [] [Whitespace(" ")]

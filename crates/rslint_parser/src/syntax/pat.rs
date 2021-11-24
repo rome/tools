@@ -106,7 +106,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 			.err_builder("Illegal use of `yield` as an identifier in generator function")
 			.primary(p.cur_tok().range, "");
 
-		kind_to_change = JS_UNKNOWN_BINDING;
+		kind_to_change = JS_UNKNOWN_PATTERN;
 		p.error(err);
 	}
 
@@ -114,7 +114,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 		let err = p
 			.err_builder("Illegal use of `await` as an identifier in an async context")
 			.primary(p.cur_tok().range, "");
-		kind_to_change = JS_UNKNOWN_BINDING;
+		kind_to_change = JS_UNKNOWN_PATTERN;
 		p.error(err);
 	}
 
@@ -127,7 +127,7 @@ pub fn binding_identifier(p: &mut Parser) -> Option<CompletedMarker> {
 				p.cur_src()
 			))
 			.primary(p.cur_tok().range, "");
-		kind_to_change = JS_UNKNOWN_BINDING;
+		kind_to_change = JS_UNKNOWN_PATTERN;
 		p.error(err);
 	}
 
