@@ -88,6 +88,7 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 }
 
 /// A generic statement such as a block, if, while, with, etc
+#[allow(deprecated)]
 pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option<CompletedMarker> {
 	let res = match p.cur() {
 		T![;] => empty_stmt(p).unwrap(), // It is only ever Err if there's no ;
@@ -158,6 +159,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 // 	}
 // }
 
+#[allow(deprecated)]
 fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 	let start = p.cur_tok().range.start;
 	// this is *technically* wrong because it would be an expr stmt in js but for our purposes
@@ -276,6 +278,7 @@ pub fn debugger_stmt(p: &mut Parser) -> CompletedMarker {
 // test throw_stmt
 // throw new Error("foo");
 // throw "foo"
+#[allow(deprecated)]
 pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 	// test_err throw_stmt_err
 	// throw
@@ -380,6 +383,7 @@ pub fn continue_stmt(p: &mut Parser) -> CompletedMarker {
 //   return foo;
 //   return
 // }
+#[allow(deprecated)]
 pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 	// test_err return_stmt_err
 	// return;
@@ -808,6 +812,7 @@ pub(crate) fn variable_declarator(
 	Some(m.complete(p, JS_VARIABLE_DECLARATOR))
 }
 
+#[allow(deprecated)]
 fn variable_initializer(p: &mut Parser) {
 	let m = p.start();
 
@@ -967,6 +972,7 @@ pub fn for_stmt(p: &mut Parser) -> CompletedMarker {
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
+#[allow(deprecated)]
 fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 	let start = p.cur_tok().range.start;
 	let m = p.start();

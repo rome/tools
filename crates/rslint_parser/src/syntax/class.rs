@@ -202,6 +202,7 @@ fn class_members(p: &mut Parser) -> CompletedMarker {
 	members.complete(p, LIST)
 }
 
+#[allow(deprecated)]
 fn class_member(p: &mut Parser) -> CompletedMarker {
 	let mut member_marker = p.start();
 

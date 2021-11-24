@@ -109,6 +109,7 @@ pub(super) fn parameter_list(p: &mut Parser) -> CompletedMarker {
 }
 
 /// Parses a (param, param) list into the current active node
+#[allow(deprecated)]
 pub(super) fn parameters_list(
 	p: &mut Parser,
 	parse_param: impl Fn(&mut Parser) -> Option<CompletedMarker>,

@@ -3,6 +3,7 @@ use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::syntax::object::object_prop_name;
 use crate::{SyntaxKind::*, *};
 
+#[allow(deprecated)]
 pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<CompletedMarker> {
 	Some(match p.cur() {
 		T![this] if parameters => {
@@ -157,6 +158,7 @@ pub fn binding_element(
 
 // test_err
 // let [ default: , hey , ] = []
+#[allow(deprecated)]
 pub fn array_binding_pattern(
 	p: &mut Parser,
 	parameters: bool,
@@ -238,6 +240,7 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 // test object_binding_prop
 // let { default: foo, bar } = {}
 // let { foo = bar, baz } = {}
+#[allow(deprecated)]
 fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMarker> {
 	let m = p.start();
 	let name = if (p.cur().is_keyword() || p.cur() == T![ident]) && p.nth(1) == T![:] {

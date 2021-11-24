@@ -709,6 +709,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 // test_err paren_or_arrow_expr_invalid_params
 // (5 + 5) => {}
 // (a, ,b) => {}
+#[allow(deprecated)]
 pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarker {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
@@ -930,6 +931,7 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
+#[allow(deprecated)]
 pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if let Some(m) = literal_expression(p) {
 		return Some(m);
@@ -1111,6 +1113,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(complete)
 }
 
+#[allow(deprecated)]
 pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
 		T![ident] | T![yield] | T![await] => {
