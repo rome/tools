@@ -201,7 +201,7 @@ pub(super) fn parameters_list(
 			} else {
 				// test_err formal_params_invalid
 				// function (a++, c) {}
-				ParseRecoverer::new(
+				ParseRecovery::new(
 					token_set![
 						T![ident],
 						T![await],
