@@ -6,7 +6,7 @@ use rslint_lexer::{SyntaxKind, T};
 ///
 /// By default it doesn't check curly braces, use [with_braces_included] to turn opt-in the check
 #[derive(Debug)]
-pub struct ParseRecovery {
+pub struct SingleTokenParseRecovery {
 	/// The [Diagnostic] to emit
 	error: Option<ParserError>,
 	/// It tells the parser to recover if the position is inside a set of [tokens](TokenSet)
@@ -18,7 +18,7 @@ pub struct ParseRecovery {
 	unknown_node_kind: SyntaxKind,
 }
 
-impl ParseRecovery {
+impl SingleTokenParseRecovery {
 	pub fn new(recovery: TokenSet, unknown_node_kind: SyntaxKind) -> Self {
 		Self {
 			error: None,

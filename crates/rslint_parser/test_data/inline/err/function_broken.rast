@@ -10,6 +10,7 @@
         0: L_PAREN@12..13 "(" [] []
         1: LIST@13..13
         2: R_PAREN@13..14 ")" [] []
+      3: (empty)
     1: JS_UNKNOWN_STATEMENT@14..15
       0: R_PAREN@14..15 ")" [] []
     2: JS_UNKNOWN_STATEMENT@15..16
@@ -36,11 +37,11 @@
       2: (empty)
   3: EOF@25..26 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected a block statement but instead found `)`
+error[SyntaxError]: expected a function body but instead found ')'
   ┌─ function_broken.js:1:15
   │
 1 │ function foo())})}{{{  {}
-  │               ^
+  │               ^ Expected a function body here
 
 --
 error[SyntaxError]: Expected a statement or declaration, but found none

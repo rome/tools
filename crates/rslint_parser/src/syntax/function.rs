@@ -1,4 +1,4 @@
-use crate::parser::{ExpectedNodeError, ParseResult, ParsedSyntax};
+use crate::parser::{ExpectedError, ParseResult, ParsedSyntax};
 use crate::syntax::decl::parameter_list;
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{block_impl, is_semi};
@@ -43,7 +43,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 		p.bump_remap(T![async]);
 	}
 
-	p.expect(T![function]);
+	p.expect_required(T![function]);
 
 	let in_generator = p.eat(T![*]);
 	let guard = &mut *p.with_state(ParserState {
@@ -75,20 +75,21 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 	if kind == JS_FUNCTION_DECLARATION {
 		function_body_or_declaration(guard);
 	} else {
-		function_body(guard).required(guard);
+		function_body(guard).make_required(guard);
 	}
 
 	m.complete(guard, kind)
 }
 
-pub(super) fn function_body(p: &mut Parser) -> ParseResult<CompletedMarker> {
+pub(super) fn function_body(p: &mut Parser) -> ParseResult {
 	let mut guard = p.with_state(ParserState {
 		in_constructor: false,
 		in_function: true,
 		..p.state.clone()
 	});
 
-	block_impl(&mut *guard, JS_FUNCTION_BODY).map_err(|_| ExpectedNodeError::new("function body"))
+	block_impl(&mut *guard, JS_FUNCTION_BODY)
+		.map_err(|_| ExpectedError::expected_node("function body"))
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should
@@ -117,7 +118,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 				_ => p.missing(),
 			}
 		} else {
-			body.required(p);
+			body.make_required(p);
 		}
 	}
 }

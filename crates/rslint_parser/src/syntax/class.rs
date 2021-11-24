@@ -1,5 +1,5 @@
-use crate::parse_recovery::ParseRecovery;
-use crate::parser::ParsedSyntax;
+use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
+use crate::parser::{ParseResult, ParsedSyntax};
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
 use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -55,7 +55,7 @@ impl From<ClassKind> for SyntaxKind {
 
 fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T![class]);
+	p.expect_required(T![class]);
 
 	// class bodies are implicitly strict
 	let mut guard = p.with_state(ParserState {
@@ -104,9 +104,9 @@ fn class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
 	extends_clause(&mut guard);
 	implements_clause(&mut guard);
 
-	guard.expect(T!['{']);
+	guard.expect_required(T!['{']);
 	class_members(&mut *guard);
-	guard.expect(T!['}']);
+	guard.expect_required(T!['}']);
 
 	m.complete(&mut *guard, kind.into())
 }
@@ -230,10 +230,10 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 	if declare && !has_access_modifier {
 		// declare() and declare: foo
 		if is_method_class_member(p, offset) {
-			literal_member_name(p); // bump declare as identifier
+			literal_member_name(p).make_required(p); // bump declare as identifier
 			return method_class_member_body(p, member_marker);
 		} else if is_property_class_member(p, offset) {
-			literal_member_name(p); // bump declare as identifier
+			literal_member_name(p).make_required(p); // bump declare as identifier
 			return property_class_member_body(p, member_marker);
 		} else {
 			let msg = if p.typescript() {
@@ -424,7 +424,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 		member_name,
 		"constructor" | "\"constructor\"" | "'constructor'"
 	);
-	let member = class_member_name(p);
+	let member = class_member_name(p).make_required(p);
 
 	if is_method_class_member(p, 0) {
 		if let Some(range) = readonly_range.clone() {
@@ -539,19 +539,19 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				}
 
 				// So we've seen a get that now must be followed by a getter/setter name
-				class_member_name(p);
-				p.expect(T!['(']);
+				class_member_name(p).make_required(p);
+				p.expect_required(T!['(']);
 
 				let completed = if is_getter {
-					p.expect(T![')']);
+					p.expect_required(T![')']);
 					ts_return_type(p);
-					function_body(p).required(p);
+					function_body(p).make_required(p);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
 					formal_param_pat(p);
-					p.expect(T![')']);
-					function_body(p).required(p);
+					p.expect_required(T![')']);
+					function_body(p).make_required(p);
 
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
@@ -564,7 +564,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 	let err = p
 		.err_builder("expected `;`, a property, or a method for a class body, but found none")
 		.primary(p.cur_tok().range, "");
-	ParseRecovery::with_error(
+	SingleTokenParseRecovery::with_error(
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
 		JS_UNKNOWN_MEMBER,
 		err,
@@ -705,7 +705,7 @@ fn is_method_class_member(p: &Parser, mut offset: usize) -> bool {
 }
 
 fn method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
-	class_member_name(p);
+	class_member_name(p).make_required(p);
 	method_class_member_body(p, m)
 }
 
@@ -715,7 +715,7 @@ fn method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	ts_parameter_types(p);
 	parameter_list(p);
 	ts_return_type(p);
-	function_body(p).required(p);
+	function_body(p).make_required(p);
 
 	m.complete(p, JS_METHOD_CLASS_MEMBER)
 }
@@ -761,7 +761,7 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 
 		let p = &mut *guard;
 
-		block_impl(p, JS_FUNCTION_BODY).required(p);
+		block_impl(p, JS_FUNCTION_BODY).make_required(p);
 	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns
@@ -835,20 +835,18 @@ fn ts_access_modifier<'a>(p: &'a Parser) -> Option<&'a str> {
 }
 
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
-fn class_member_name(p: &mut Parser) -> Option<CompletedMarker> {
-	let result = match p.cur() {
-		T![#] => private_class_member_name(p),
+fn class_member_name(p: &mut Parser) -> ParseResult {
+	match p.cur() {
+		T![#] => Ok(private_class_member_name(p)),
 		T!['['] => computed_member_name(p),
-		_ => literal_member_name(p)?,
-	};
-
-	Some(result)
+		_ => literal_member_name(p),
+	}
 }
 
 pub(crate) fn private_class_member_name(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T![#]);
-	p.expect(T![ident]);
+	p.expect_required(T![#]);
+	p.expect_required(T![ident]);
 	m.complete(p, JS_PRIVATE_CLASS_MEMBER_NAME)
 }
 

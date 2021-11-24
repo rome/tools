@@ -9,14 +9,15 @@
       2: L_CURLY@7..8 "{" [] []
       3: LIST@8..9
         0: JS_UNKNOWN_MEMBER@8..9
-          0: JS_UNKNOWN_MEMBER@8..9
+          0: (empty)
+          1: JS_UNKNOWN_MEMBER@8..9
             0: L_CURLY@8..9 "{" [] []
       4: R_CURLY@9..10 "}" [] []
     1: JS_UNKNOWN_STATEMENT@10..11
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
+error[SyntaxError]: expected an identifier, a keyword, or a string or number literal but instead found '{'
   ┌─ block_stmt_in_class.js:1:9
   │
 1 │ class S{{}}

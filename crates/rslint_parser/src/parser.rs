@@ -5,6 +5,7 @@
 
 mod parse_recovery;
 mod parse_result;
+pub(crate) mod single_token_parse_recovery;
 
 use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
@@ -14,9 +15,10 @@ use std::cell::Cell;
 use std::ops::Range;
 
 pub use parse_result::{
-	ConditionalParsedSyntax, ConditionalSyntax, ExpectedNodeError, ParseResult, ParsedSyntax,
-	SloppyMode, SyntaxFeature,
+	ConditionalParsedSyntax, ConditionalSyntaxError, ConditionalSyntaxParseResult, ExpectedError,
+	ParseResult, ParsedSyntax, SloppyMode, SyntaxFeature,
 };
+pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
@@ -282,7 +284,7 @@ impl<'t> Parser<'t> {
 			.expect("Parser source and tokens mismatch")
 	}
 
-	/// Try to eat a specific token kind, if the kind is not there then add a missing marker and add an error to the events stack.
+	/// Try to eat a specific token kind, if the kind is not there then adds an error to the events stack.
 	pub fn expect(&mut self, kind: SyntaxKind) -> bool {
 		if self.eat(kind) {
 			true
@@ -306,9 +308,18 @@ impl<'t> Parser<'t> {
 				.primary(self.cur_tok().range, "unexpected")
 			};
 
-			self.missing();
 			self.error(err);
 			false
+		}
+	}
+
+	/// Tries to eat a specific token kind, adds a missing marker and an error to the events stack if it's not there.
+	pub fn expect_required(&mut self, kind: SyntaxKind) -> bool {
+		if !self.expect(kind) {
+			self.missing();
+			false
+		} else {
+			true
 		}
 	}
 
@@ -438,7 +449,7 @@ impl<'t> Parser<'t> {
 		if self.state.no_recovery {
 			Some(true).filter(|_| self.eat(kind))
 		} else {
-			Some(self.expect(kind))
+			Some(self.expect_required(kind))
 		}
 	}
 
@@ -697,6 +708,31 @@ impl CompletedMarker {
 	pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
 		p.err_if_not_ts(self, err, SyntaxKind::ERROR);
 	}
+
+	pub fn to_parse_result(self) -> ParseResult {
+		Ok(self)
+	}
+
+	/// Converts this completed marker to a conditional parse result and adds
+	/// an error if the syntax is not supported in the current parsing context
+	pub fn to_conditional_parse_result<F, E>(
+		self,
+		p: &mut Parser,
+		feature: F,
+		error_builder: E,
+	) -> ConditionalSyntaxParseResult
+	where
+		F: SyntaxFeature,
+		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+	{
+		if feature.is_available(p) {
+			Ok(self)
+		} else {
+			let diagnostic = error_builder(p, &self);
+			p.error(diagnostic);
+			Err(ConditionalSyntaxError::Unsupported(self))
+		}
+	}
 }
 
 /// A structure signifying the Parser progress at one point in time
@@ -735,7 +771,7 @@ mod tests {
 		let mut p = Parser::new(token_source, 0, Syntax::default());
 
 		let m = p.start();
-		p.expect(SyntaxKind::JS_STRING_LITERAL);
+		p.expect_required(SyntaxKind::JS_STRING_LITERAL);
 		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL_EXPRESSION);
 	}
 
@@ -767,7 +803,7 @@ struct ParseList<P> {
 
 fn parse_list<P>(p: &mut Parser, config: ParseListConfiguration<P>) -> Option<CompletedMarker>
 where
-	P: Fn(&mut Parser) -> ParseResult<CompletedMarker>,
+	P: Fn(&mut Parser) -> ParseResult,
 {
 	let list = p.start();
 	let mut empty = true;
@@ -775,14 +811,14 @@ where
 	while !p.at(config.end_token) && !p.at(EOF) {
 		empty = false;
 
-		p.expect(config.delimiter_token);
+		p.expect_required(config.delimiter_token);
 		let recovery = ParseRecovery::new(
 			JS_UNKNOWN_STATEMENT,
 			token_set![config.end_token, config.delimiter_token],
 		);
 
 		let element = (config.parse_element)(p);
-		if element.with_recovery(p, recovery).is_err() {
+		if element.or_recover(p, recovery).is_err() {
 			// Recovery failed
 			break;
 		}

@@ -1,6 +1,7 @@
 use super::expr::{assign_expr, identifier_name, lhs_expr, reference_identifier_expression};
+use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::syntax::object::object_prop_name;
-use crate::{parse_recovery::ParseRecovery, SyntaxKind::*, *};
+use crate::{SyntaxKind::*, *};
 
 pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<CompletedMarker> {
 	Some(match p.cur() {
@@ -77,7 +78,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			ParseRecovery::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
+			SingleTokenParseRecovery::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
 			return None;
 		}
 	})
@@ -162,7 +163,7 @@ pub fn array_binding_pattern(
 	assignment: bool,
 ) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T!['[']);
+	p.expect_required(T!['[']);
 
 	let elements_list = p.start();
 
@@ -179,20 +180,20 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
-			ParseRecovery::new(
+			SingleTokenParseRecovery::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				JS_UNKNOWN_PATTERN,
 			)
 			.recover(p);
 		}
 		if !p.at(T![']']) {
-			p.expect(T![,]);
+			p.expect_required(T![,]);
 		}
 	}
 
 	elements_list.complete(p, LIST);
 
-	p.expect(T![']']);
+	p.expect_required(T![']']);
 	m.complete(p, ARRAY_PATTERN)
 }
 
@@ -203,7 +204,7 @@ pub fn array_binding_pattern(
 // let { default: , bar } = {};
 pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T!['{']);
+	p.expect_required(T!['{']);
 	let props_list = p.start();
 	let mut first = true;
 
@@ -211,7 +212,7 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 		if first {
 			first = false;
 		} else {
-			p.expect(T![,]);
+			p.expect_required(T![,]);
 			if p.at(T!['}']) {
 				break;
 			}
@@ -230,7 +231,7 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 	}
 	props_list.complete(p, LIST);
 
-	p.expect(T!['}']);
+	p.expect_required(T!['}']);
 	m.complete(p, OBJECT_PATTERN)
 }
 
@@ -254,7 +255,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		n
 	} else {
 		m.abandon(p);
-		ParseRecovery::new(
+		SingleTokenParseRecovery::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			JS_UNKNOWN_BINDING,
 		)

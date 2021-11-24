@@ -41,12 +41,13 @@
         3: JS_SETTER_CLASS_MEMBER@65..72
           0: SET_KW@65..69 "set" [] [Whitespace(" ")]
           1: (empty)
-          2: OBJECT_PATTERN@69..72
+          2: (empty)
+          3: OBJECT_PATTERN@69..72
             0: L_CURLY@69..70 "{" [] []
             1: LIST@70..70
             2: R_CURLY@70..72 "}" [] [Whitespace(" ")]
-          3: (empty)
           4: (empty)
+          5: (empty)
       4: R_CURLY@72..73 "}" [] []
     3: JS_CLASS_DECLARATION@73..108
       0: CLASS_KW@73..80 "class" [Whitespace("\n")] [Whitespace(" ")]
@@ -123,7 +124,7 @@ error[SyntaxError]: expected `;`, a property, or a method for a class body, but 
   │           ^
 
 --
-error[SyntaxError]: Expected an identifier, a keyword, or a string or number literal
+error[SyntaxError]: expected an identifier, a keyword, or a string or number literal but instead found '{'
   ┌─ class_decl_err.js:5:17
   │
 5 │ class foo { set {} }
@@ -144,11 +145,11 @@ error[SyntaxError]: expected `')'` but instead found `}`
   │                    ^ unexpected
 
 --
-error[SyntaxError]: expected a function body but found '}' instead
+error[SyntaxError]: expected a function body but instead found '}'
   ┌─ class_decl_err.js:5:20
   │
 5 │ class foo { set {} }
-  │                    ^
+  │                    ^ Expected a function body here
 
 --
 error[SyntaxError]: classes cannot extend multiple classes

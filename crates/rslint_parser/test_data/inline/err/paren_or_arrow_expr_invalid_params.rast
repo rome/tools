@@ -69,11 +69,11 @@ error[SyntaxError]: Expected an expression, but found none
   │       ^ Expected an expression here
 
 --
-error[SyntaxError]: expected a function body but found ')' instead
+error[SyntaxError]: expected a function body but instead found ')'
   ┌─ paren_or_arrow_expr_invalid_params.js:1:7
   │
 1 │ (5 + 5) => {}
-  │       ^
+  │       ^ Expected a function body here
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
