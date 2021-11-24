@@ -199,7 +199,9 @@ pub(super) fn parameters_list(
 				}
 				Some(res)
 			} else {
-				ParseRecovery::new(
+				// test_err formal_params_invalid
+				// function (a++, c) {}
+				ParseRecoverer::new(
 					token_set![
 						T![ident],
 						T![await],
@@ -209,7 +211,7 @@ pub(super) fn parameters_list(
 						T![...],
 						T![')'],
 					],
-					JS_UNKNOWN_EXPRESSION,
+					JS_UNKNOWN_PATTERN,
 				)
 				.enabled_braces_check()
 				.recover(p);

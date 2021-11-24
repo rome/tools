@@ -752,7 +752,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
                     .primary(temp.cur_tok().range, "");
 
-						ParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN_EXPRESSION, err)
+						ParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN_PATTERN, err)
 							.recover(&mut temp);
 					}
 				}
