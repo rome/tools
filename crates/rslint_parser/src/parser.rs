@@ -10,9 +10,6 @@ use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
 
-use crate::parse_recovery::ParseRecovery;
-use crate::syntax::decl::BASE_METHOD_RECOVERY_SET;
-use crate::syntax::expr::EXPR_RECOVERY_SET;
 use crate::*;
 
 /// An extremely fast, error tolerant, completely lossless JavaScript parser
@@ -466,11 +463,13 @@ impl<'t> Parser<'t> {
 		};
 
 		if self.at(T![;]) {
+			let m = self.start();
 			let err = self
 				.err_builder("expected an expression, but found `;` instead")
 				.primary(self.cur_tok().range, "");
-			ParseRecovery::with_error(token_set![], SyntaxKind::JS_UNKNOWN_EXPRESSION, err)
-				.recover(self);
+			self.error(err);
+			self.bump_any();
+			m.complete(self, SyntaxKind::JS_UNKNOWN_EXPRESSION);
 
 			return None;
 		}
