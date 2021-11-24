@@ -9,7 +9,14 @@ pub enum RecoveryError {
 	/// Recovery failed because the parser reached the end of file
 	Eof,
 
-	// Recovery failed because it didn't eat any tokens
+	/// Recovery failed because it didn't eat any tokens. Meaning, the parser is already in a recovered state.
+	/// This is an error because:
+	/// a) It shouldn't create a completed marker wrapping no tokens
+	/// b) This results in an infinite-loop if the recovery is used inside of a while loop. For example,
+	///    it's common that list parsing also recovers at the end of a statement or block. However, list elements
+	///    don't start with a `;` or `}` which is why parsing, for example, an array element fails again and
+	///    the array expression triggers another recovery. Handling this as an error ensures that list parsing
+	///    rules break out of the loop the same way as they would at the EOF.
 	AlreadyRecovered,
 }
 
@@ -76,6 +83,7 @@ impl ParseRecovery {
 		Ok(m.complete(p, self.node_kind))
 	}
 
+	#[inline]
 	fn recovered(&self, p: &Parser) -> bool {
 		p.at_ts(self.recovery_set) || p.at(EOF) || (self.line_break && p.has_linebreak_before_n(0))
 	}

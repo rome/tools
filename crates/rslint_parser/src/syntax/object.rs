@@ -37,13 +37,13 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 			}
 		}
 
-		let member = object_member(p).or_recover(
+		let recovered_member = object_member(p).or_recover(
 			p,
 			ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
 				.with_recovery_on_line_break(),
 		);
 
-		if member.is_err() {
+		if recovered_member.is_err() {
 			break;
 		}
 	}
@@ -165,6 +165,7 @@ fn object_member(p: &mut Parser) -> ParseResult {
 					// It turns out that this isn't a valid member after all. Make sure to throw
 					// away everything that has been parsed so far so that the caller can
 					// do it's error recovery
+					dbg!(p.cur_src());
 					m.abandon(p);
 					p.rewind(checkpoint);
 					Err(ExpectedError::new("an object member"))
