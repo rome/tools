@@ -1,6 +1,6 @@
 use super::expr::{assign_expr, identifier_name, lhs_expr, reference_identifier_expression};
 use crate::syntax::object::object_prop_name;
-use crate::{parse_recoverer::ParseRecoverer, SyntaxKind::*, *};
+use crate::{parse_recovery::ParseRecovery, SyntaxKind::*, *};
 
 pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<CompletedMarker> {
 	Some(match p.cur() {
@@ -77,7 +77,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
 			}
-			ParseRecoverer::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
+			ParseRecovery::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
 			return None;
 		}
 	})
@@ -179,7 +179,7 @@ pub fn array_binding_pattern(
 			m.complete(p, REST_PATTERN);
 			break;
 		} else if binding_element(p, parameters, assignment).is_none() {
-			ParseRecoverer::new(
+			ParseRecovery::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				JS_UNKNOWN_PATTERN,
 			)
@@ -254,7 +254,7 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		n
 	} else {
 		m.abandon(p);
-		ParseRecoverer::new(
+		ParseRecovery::new(
 			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
 			JS_UNKNOWN_BINDING,
 		)

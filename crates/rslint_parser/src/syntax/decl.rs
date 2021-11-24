@@ -3,7 +3,7 @@
 use super::expr::assign_expr;
 use super::pat::pattern;
 use super::typescript::*;
-use crate::parse_recoverer::ParseRecoverer;
+use crate::parse_recovery::ParseRecovery;
 use crate::syntax::function::function_body;
 use crate::{SyntaxKind::*, *};
 
@@ -199,7 +199,7 @@ pub(super) fn parameters_list(
 				}
 				Some(res)
 			} else {
-				ParseRecoverer::new(
+				ParseRecovery::new(
 					token_set![
 						T![ident],
 						T![await],

@@ -7,7 +7,7 @@ use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
-use crate::parse_recoverer::ParseRecoverer;
+use crate::parse_recovery::ParseRecovery;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
@@ -135,7 +135,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
 				return None;
 			}
-			ParseRecoverer::with_error(
+			ParseRecovery::with_error(
 				recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
 				JS_UNKNOWN_STATEMENT,
 				err,
@@ -1007,7 +1007,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			ParseRecoverer::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
+			ParseRecovery::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
 				.enabled_braces_check()
 				.recover(p);
 		}
