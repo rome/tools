@@ -28,6 +28,16 @@ use std::collections::HashMap;
 // function *foo() {
 //   yield foo;
 // }
+//
+// test_err function_decl_err
+// function() {}
+// function {}
+// function *() {}
+// async function() {}
+// async function *() {}
+// function *foo() {}
+// yield foo;
+// function test(): number {}
 pub(super) fn function_declaration(p: &mut Parser) -> CompletedMarker {
 	function(p, JS_FUNCTION_DECLARATION)
 		.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)

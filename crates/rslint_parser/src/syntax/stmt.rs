@@ -977,7 +977,6 @@ pub fn for_stmt(p: &mut Parser) -> CompletedMarker {
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
-#[allow(deprecated)]
 fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 	let start = p.cur_tok().range.start;
 	let m = p.start();
@@ -1018,6 +1017,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
+			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
 				.enabled_braces_check()
 				.recover(p);

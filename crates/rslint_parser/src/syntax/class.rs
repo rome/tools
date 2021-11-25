@@ -205,7 +205,6 @@ fn class_members(p: &mut Parser) -> CompletedMarker {
 	members.complete(p, LIST)
 }
 
-#[allow(deprecated)]
 fn class_member(p: &mut Parser) -> CompletedMarker {
 	let mut member_marker = p.start();
 
@@ -428,7 +427,8 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 		member_name,
 		"constructor" | "\"constructor\"" | "'constructor'"
 	);
-	let member = class_member_name(p).or_missing_with_error(p, js_parse_error::expected_class_member_name);
+	let member =
+		class_member_name(p).or_missing_with_error(p, js_parse_error::expected_class_member_name);
 
 	if is_method_class_member(p, 0) {
 		if let Some(range) = readonly_range.clone() {
@@ -543,19 +543,22 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				}
 
 				// So we've seen a get that now must be followed by a getter/setter name
-				class_member_name(p).or_missing_with_error(p, js_parse_error::expected_class_member_name);
+				class_member_name(p)
+					.or_missing_with_error(p, js_parse_error::expected_class_member_name);
 				p.expect_required(T!['(']);
 
 				let completed = if is_getter {
 					p.expect_required(T![')']);
 					ts_return_type(p);
-					function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
+					function_body(p)
+						.or_missing_with_error(p, js_parse_error::expected_function_body);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
 					formal_param_pat(p);
 					p.expect_required(T![')']);
-					function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
+					function_body(p)
+						.or_missing_with_error(p, js_parse_error::expected_function_body);
 
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
@@ -568,6 +571,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 	let err = p
 		.err_builder("expected `;`, a property, or a method for a class body, but found none")
 		.primary(p.cur_tok().range, "");
+	#[allow(deprecated)]
 	SingleTokenParseRecovery::with_error(
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
 		JS_UNKNOWN_MEMBER,
@@ -765,7 +769,8 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 
 		let p = &mut *guard;
 
-		block_impl(p, JS_FUNCTION_BODY).or_missing_with_error(p, js_parse_error::expected_function_body);
+		block_impl(p, JS_FUNCTION_BODY)
+			.or_missing_with_error(p, js_parse_error::expected_function_body);
 	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns

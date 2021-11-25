@@ -234,8 +234,8 @@ pub fn check_lhs(p: &mut Parser, expr: JsAnyExpression, marker: &CompletedMarker
 }
 
 /// Check if the var declaration in a for statement has multiple declarators, which is invalid
-#[allow(deprecated)]
 pub fn check_for_stmt_declaration(p: &mut Parser, marker: &CompletedMarker) {
+	#[allow(deprecated)]
 	let parsed = p.parse_marker::<ast::JsVariableDeclaration>(marker);
 	let excess = parsed.declarators().iter().skip(1).collect::<Vec<_>>();
 

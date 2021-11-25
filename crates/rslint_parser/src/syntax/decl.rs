@@ -110,7 +110,6 @@ pub(super) fn parameter_list(p: &mut Parser) -> CompletedMarker {
 }
 
 /// Parses a (param, param) list into the current active node
-#[allow(deprecated)]
 pub(super) fn parameters_list(
 	p: &mut Parser,
 	parse_param: impl Fn(&mut Parser) -> Option<CompletedMarker>,
@@ -204,6 +203,7 @@ pub(super) fn parameters_list(
 			} else {
 				// test_err formal_params_invalid
 				// function (a++, c) {}
+				#[allow(deprecated)]
 				SingleTokenParseRecovery::new(
 					token_set![
 						T![ident],

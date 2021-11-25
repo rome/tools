@@ -594,7 +594,6 @@ fn type_member_semi(p: &mut Parser) {
 	}
 }
 
-#[allow(deprecated)]
 pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.eat(T![const]);
@@ -624,6 +623,7 @@ pub fn ts_enum(p: &mut Parser) -> CompletedMarker {
 				.err_builder("expected an identifier or string for an enum variant, but found none")
 				.primary(p.cur_tok().range, "");
 
+			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(
 				token_set![T!['}'], T![ident], T![yield], T![await], T![=], T![,]],
 				ERROR,
@@ -944,7 +944,6 @@ pub fn ts_tuple(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(m.complete(p, TS_TUPLE))
 }
 
-#[allow(deprecated)]
 pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
 		T![ident] | T![void] | T![yield] | T![null] | T![await] | T![break] => {
@@ -1070,6 +1069,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				.err_builder("expected a type")
 				.primary(p.cur_tok().range, "");
 
+			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(
 				BASE_TS_RECOVERY_SET.union(token_set![
 					T![typeof],
@@ -1168,7 +1168,6 @@ pub fn ts_type_params(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(m.complete(p, TS_TYPE_PARAMS))
 }
 
-#[allow(deprecated)]
 fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
 	let mut should_complete =
@@ -1200,6 +1199,7 @@ fn type_param(p: &mut Parser) -> Option<CompletedMarker> {
 			.err_builder("expected a type parameter, but found none")
 			.primary(p.cur_tok().range, "");
 
+		#[allow(deprecated)]
 		SingleTokenParseRecovery::with_error(
 			token_set![T![ident], T![yield], T![await], T![>], T![=]],
 			ERROR,
@@ -1428,7 +1428,6 @@ pub fn ts_entity_name(
 	Some(lhs)
 }
 
-#[allow(deprecated)]
 pub fn ts_type_name(
 	p: &mut Parser,
 	recovery_set: impl Into<Option<TokenSet>>,
@@ -1449,6 +1448,7 @@ pub fn ts_type_name(
 		))
 		.primary(p.cur_tok().range, "");
 
+	#[allow(deprecated)]
 	SingleTokenParseRecovery::with_error(set, ERROR, err).recover(p);
 	None
 }

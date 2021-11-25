@@ -710,7 +710,6 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 // test_err paren_or_arrow_expr_invalid_params
 // (5 + 5) => {}
 // (a, ,b) => {}
-#[allow(deprecated)]
 pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarker {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
@@ -755,6 +754,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
                     .primary(temp.cur_tok().range, "");
 
+						#[allow(deprecated)]
 						SingleTokenParseRecovery::with_error(
 							EXPR_RECOVERY_SET,
 							JS_UNKNOWN_PATTERN,
@@ -932,7 +932,6 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 }
 
 /// A primary expression such as a literal, an object, an array, or `this`.
-#[allow(deprecated)]
 pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if let Some(m) = literal_expression(p) {
 		return Some(m);
@@ -999,8 +998,10 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 							in_async: true,
 							..p.state.clone()
 						});
-						arrow_body(&mut *guard)
-							.or_missing_with_error(&mut *guard, js_parse_error::expected_arrow_body);
+						arrow_body(&mut *guard).or_missing_with_error(
+							&mut *guard,
+							js_parse_error::expected_arrow_body,
+						);
 					}
 
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
@@ -1101,6 +1102,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
+			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(
 				p.state.expr_recovery_set,
 				JS_UNKNOWN_EXPRESSION,
@@ -1115,7 +1117,6 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	Some(complete)
 }
 
-#[allow(deprecated)]
 pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
 		T![ident] | T![yield] | T![await] => {
@@ -1128,6 +1129,7 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
+			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(
 				p.state.expr_recovery_set,
 				JS_UNKNOWN_EXPRESSION,
