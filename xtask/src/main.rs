@@ -51,7 +51,11 @@ fn main() -> Result<()> {
 			Ok(())
 		}
 		"coverage-libs" => {
-			xtask::libs::run();
+			let filter: String = args
+				.opt_value_from_str("--filter")
+				.unwrap()
+				.unwrap_or_else(|| ".*".to_string());
+			xtask::libs::run(filter);
 			Ok(())
 		}
 		_ => {

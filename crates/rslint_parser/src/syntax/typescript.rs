@@ -40,6 +40,13 @@ macro_rules! no_recover {
 			return None;
 		}
 	};
+	($p:expr, $m:expr, $t:expr, $res:expr) => {
+		if $res.is_none() && $p.state.no_recovery {
+			$m.abandon($p);
+			$p.rewind($t);
+			return None;
+		}
+	};
 }
 
 pub(crate) fn abstract_readonly_modifiers(
@@ -244,16 +251,26 @@ pub(crate) fn ts_decl(p: &mut Parser) -> Option<CompletedMarker> {
 }
 
 pub fn ts_type_alias_decl(p: &mut Parser) -> Option<CompletedMarker> {
+	let t = p.checkpoint();
+
 	let m = p.start();
 	let start = p.cur_tok().range.start;
 	p.bump_any();
-	no_recover!(p, identifier_name(p));
+	no_recover!(p, m, t, identifier_name(p));
 	if p.at(T![<]) {
 		no_recover!(p, ts_type_params(p));
 	}
+
 	let end = p.cur_tok().range.end;
-	p.expect_no_recover(T![=])?;
-	no_recover!(p, ts_type(p));
+
+	if p.expect_no_recover(T![=]).is_none() {
+		m.abandon(p);
+		p.rewind(t);
+		return None;
+	}
+
+	no_recover!(p, m, t, ts_type(p));
+
 	semi(p, start..end);
 	Some(m.complete(p, TS_TYPE_ALIAS_DECL))
 }
@@ -858,6 +875,8 @@ pub fn ts_type_operator_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
 }
 
 pub fn ts_array_type_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
+	let t = p.checkpoint();
+
 	let mut ty = ts_non_array_type(p);
 
 	while !p.has_linebreak_before_n(0) && p.at(T!['[']) {
@@ -866,8 +885,12 @@ pub fn ts_array_type_or_higher(p: &mut Parser) -> Option<CompletedMarker> {
 		if p.eat(T![']']) {
 			ty = Some(m.complete(p, TS_ARRAY));
 		} else {
-			no_recover!(p, ts_type(p));
-			p.expect_no_recover(T![']'])?;
+			no_recover!(p, m, t, ts_type(p));
+			if p.expect_no_recover(T![']']).is_none() {
+				m.abandon(p);
+				p.rewind(t);
+				return None;
+			}
 			ty = Some(m.complete(p, TS_INDEXED_ARRAY));
 		}
 	}
@@ -983,6 +1006,7 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 			Some(m.complete(p, TS_TEMPLATE))
 		}
 		T![-] => {
+			let t = p.checkpoint();
 			let m = p.start();
 			p.bump_any();
 			if p.at(JS_NUMBER_LITERAL) {
@@ -990,7 +1014,11 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				p.bump_any();
 				_m.complete(p, JS_NUMBER_LITERAL_EXPRESSION);
 			} else {
-				p.expect_no_recover(JS_NUMBER_LITERAL)?;
+				if p.expect_no_recover(JS_NUMBER_LITERAL).is_none() {
+					m.abandon(p);
+					p.rewind(t);
+					return None;
+				};
 			}
 			Some(m.complete(p, TS_LITERAL))
 		}
@@ -1023,10 +1051,15 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 		}
 		T!['['] => ts_tuple(p),
 		T!['('] => {
+			let t = p.checkpoint();
 			let m = p.start();
 			p.bump_any();
-			no_recover!(p, ts_type(p));
-			p.expect_no_recover(T![')'])?;
+			no_recover!(p, m, t, ts_type(p));
+			if p.expect_no_recover(T![')']).is_none() {
+				m.abandon(p);
+				p.rewind(t);
+				return None;
+			};
 			Some(m.complete(p, TS_PAREN))
 		}
 		_ => {
@@ -1341,6 +1374,8 @@ pub fn ts_type_ref(
 	p: &mut Parser,
 	recovery_set: impl Into<Option<TokenSet>> + Clone,
 ) -> Option<CompletedMarker> {
+	let t = p.checkpoint();
+
 	let m = p.start();
 	if let Some(err_m) = maybe_eat_incorrect_modifier(p) {
 		let err = p
@@ -1350,9 +1385,14 @@ pub fn ts_type_ref(
 		p.error(err);
 	}
 
-	ts_entity_name(p, recovery_set, true)?;
+	if ts_entity_name(p, recovery_set, true).is_none() {
+		m.abandon(p);
+		p.rewind(t);
+		return None;
+	}
+
 	if !p.has_linebreak_before_n(0) && p.at(T![<]) {
-		no_recover!(p, ts_type_args(p));
+		no_recover!(p, m, t, ts_type_args(p));
 	}
 
 	Some(m.complete(p, TS_TYPE_REF))

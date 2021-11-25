@@ -30,3 +30,5 @@ num_cpus = "1.13"
 ungrammar = "1.14.9"
 ureq = { version = "2.3.1" } 
 url = "2.2.2"
+timing = "0.2.3"
+ansi_rgb = "0.2.0"
