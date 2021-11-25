@@ -3,7 +3,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::decl::{arrow_body, parse_parameter_list};
+use super::decl::{parse_arrow_body, parse_parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
@@ -822,7 +822,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				}
 			}
 			p.expect_no_recover(T![=>])?;
-			arrow_body(p).ok()
+			parse_arrow_body(p).ok()
 		};
 		// we can't just rewind the parser, since the function rewinds, and cloning and replacing the
 		// events does not work apparently, therefore we need to clone the entire parser
@@ -863,7 +863,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			}
 
 			p.bump_any();
-			arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
+			parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 		}
 	}
@@ -1001,7 +1001,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 							in_async: true,
 							..p.state.clone()
 						});
-						arrow_body(&mut *guard).or_missing_with_error(
+						parse_arrow_body(&mut *guard).or_missing_with_error(
 							&mut *guard,
 							js_parse_error::expected_arrow_body,
 						);
@@ -1039,7 +1039,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				ident.change_kind(p, JS_IDENTIFIER_BINDING);
 				let m = ident.precede(p);
 				p.bump_any();
-				arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
+				parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
 				ident

@@ -227,7 +227,7 @@ pub(super) fn parse_parameters_list(
 	p.expect_required(T![')']);
 }
 
-pub(super) fn arrow_body(p: &mut Parser) -> ParsedSyntax {
+pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax {
 	let mut guard = p.with_state(ParserState {
 		in_function: true,
 		..p.state.clone()
