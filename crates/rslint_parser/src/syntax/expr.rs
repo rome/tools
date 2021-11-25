@@ -7,9 +7,11 @@ use super::decl::{arrow_body, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
-use crate::parse_recovery::ParseRecovery;
+#[allow(deprecated)]
+use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
+use crate::syntax::js_parse_error;
 use crate::syntax::object::object_expr;
 use crate::syntax::stmt::is_semi;
 use crate::{SyntaxKind::*, *};
@@ -249,7 +251,7 @@ fn assign_expr_recursive(
 // }
 pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T![yield]);
+	p.expect_required(T![yield]);
 
 	if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
 		p.eat(T![*]);
@@ -276,7 +278,7 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			in_cond_expr: true,
 			..p.state.clone()
 		}));
-		p.expect(T![:]);
+		p.expect_required(T![:]);
 		assign_expr(p);
 		return Some(m.complete(p, JS_CONDITIONAL_EXPRESSION));
 	}
@@ -397,9 +399,9 @@ fn binary_or_logical_expression_recursive(
 /// `"(" Expr ")"`
 pub fn paren_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T!['(']);
+	p.expect_required(T!['(']);
 	expr(p);
-	p.expect(T![')']);
+	p.expect_required(T![')']);
 	m.complete(p, JS_PARENTHESIZED_EXPRESSION)
 }
 
@@ -492,7 +494,7 @@ pub fn member_or_new_expr(p: &mut Parser, new_expr: bool) -> Option<CompletedMar
 
 fn super_expression(p: &mut Parser) -> CompletedMarker {
 	let super_marker = p.start();
-	p.expect(T![super]);
+	p.expect_required(T![super]);
 	super_marker.complete(p, JS_SUPER_EXPRESSION)
 }
 
@@ -582,7 +584,7 @@ pub fn static_member_expression(
 	operator: SyntaxKind,
 ) -> CompletedMarker {
 	let m = lhs.precede(p);
-	p.expect(operator);
+	p.expect_required(operator);
 
 	let member_name = any_reference_member(p);
 
@@ -617,8 +619,8 @@ fn reference_identifier_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 fn reference_private_member(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T![#]);
-	p.expect(T![ident]);
+	p.expect_required(T![#]);
+	p.expect_required(T![ident]);
 	m.complete(p, JS_REFERENCE_PRIVATE_MEMBER)
 }
 
@@ -640,12 +642,12 @@ pub fn computed_member_expression(
 	// foo[
 	let m = lhs.precede(p);
 	if optional_chain {
-		p.expect(T![?.]);
+		p.expect_required(T![?.]);
 	}
 
-	p.expect(T!['[']);
+	p.expect_required(T!['[']);
 	expr(p);
-	p.expect(T![']']);
+	p.expect_required(T![']']);
 
 	m.complete(p, JS_COMPUTED_MEMBER_EXPRESSION)
 }
@@ -676,7 +678,7 @@ pub fn identifier_name(p: &mut Parser) -> Option<CompletedMarker> {
 // foo(a,b var
 pub fn args(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T!['(']);
+	p.expect_required(T!['(']);
 	let args_list = p.start();
 
 	while !p.at(EOF) && !p.at(T![')']) {
@@ -694,7 +696,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 	}
 
 	args_list.complete(p, LIST);
-	p.expect(T![')']);
+	p.expect_required(T![')']);
 	m.complete(p, ARG_LIST)
 }
 
@@ -712,7 +714,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 	let m = p.start();
 	let checkpoint = p.checkpoint();
 	let start = p.cur_tok().range.start;
-	p.expect(T!['(']);
+	p.expect_required(T!['(']);
 	let mut spread_range = None;
 	let mut trailing_comma_marker = None;
 	let mut params_marker = None;
@@ -747,13 +749,18 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 					if temp.eat(T![=]) {
 						// formal params will handle this error
 						assign_expr(&mut *temp);
-						temp.expect(T![')']);
+						temp.expect_required(T![')']);
 					} else {
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
                     .primary(temp.cur_tok().range, "");
 
-						ParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN_PATTERN, err)
-							.recover(&mut temp);
+						#[allow(deprecated)]
+						SingleTokenParseRecovery::with_error(
+							EXPR_RECOVERY_SET,
+							JS_UNKNOWN_PATTERN,
+							err,
+						)
+						.recover(&mut temp);
 					}
 				}
 				break;
@@ -782,7 +789,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 					temp.bump_any(); // bump ; into sequence expression which may or may not miss a lhs
 				}
 			} else {
-				temp.expect(T![')']);
+				temp.expect_required(T![')']);
 				break;
 			}
 		}
@@ -812,8 +819,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				}
 			}
 			p.expect_no_recover(T![=>])?;
-			arrow_body(p)?;
-			Some(())
+			arrow_body(p).ok()
 		};
 		// we can't just rewind the parser, since the function rewinds, and cloning and replacing the
 		// events does not work apparently, therefore we need to clone the entire parser
@@ -854,7 +860,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			}
 
 			p.bump_any();
-			arrow_body(p);
+			arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 			return m.complete(p, JS_ARROW_FUNCTION_EXPRESSION);
 		}
 	}
@@ -986,11 +992,18 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 							);
 						}
 					}
-					p.expect(T![=>]);
-					arrow_body(&mut *p.with_state(ParserState {
-						in_async: true,
-						..p.state.clone()
-					}));
+					p.expect_required(T![=>]);
+					{
+						let mut guard = p.with_state(ParserState {
+							in_async: true,
+							..p.state.clone()
+						});
+						arrow_body(&mut *guard).or_missing_with_error(
+							&mut *guard,
+							js_parse_error::expected_arrow_body,
+						);
+					}
+
 					m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 				} else {
 					reference_identifier_expression(p)?
@@ -1021,7 +1034,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				ident.change_kind(p, JS_IDENTIFIER_BINDING);
 				let m = ident.precede(p);
 				p.bump_any();
-				arrow_body(p);
+				arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body);
 				m.complete(p, JS_ARROW_FUNCTION_EXPRESSION)
 			} else {
 				ident
@@ -1071,9 +1084,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 				// test import_call
 				// import("foo")
-				p.expect(T!['(']);
+				p.expect_required(T!['(']);
 				assign_expr(p);
-				p.expect(T![')']);
+				p.expect_required(T![')']);
 				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}
 		}
@@ -1089,9 +1102,14 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
-			ParseRecovery::with_error(p.state.expr_recovery_set, JS_UNKNOWN_EXPRESSION, err)
-				.enabled_braces_check()
-				.recover(p);
+			#[allow(deprecated)]
+			SingleTokenParseRecovery::with_error(
+				p.state.expr_recovery_set,
+				JS_UNKNOWN_EXPRESSION,
+				err,
+			)
+			.enabled_braces_check()
+			.recover(p);
 			return None;
 		}
 	};
@@ -1111,9 +1129,14 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
-			ParseRecovery::with_error(p.state.expr_recovery_set, JS_UNKNOWN_EXPRESSION, err)
-				.enabled_braces_check()
-				.recover(p);
+			#[allow(deprecated)]
+			SingleTokenParseRecovery::with_error(
+				p.state.expr_recovery_set,
+				JS_UNKNOWN_EXPRESSION,
+				err,
+			)
+			.enabled_braces_check()
+			.recover(p);
 			None
 		}
 	}
@@ -1127,7 +1150,7 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 // let a = `foo`;
 pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker {
 	let m = tag.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
-	p.expect(BACKTICK);
+	p.expect_required(BACKTICK);
 	let elements_list = p.start();
 
 	while !p.at(EOF) && !p.at(BACKTICK) {
@@ -1137,7 +1160,7 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
                 let e = p.start();
                 p.bump_any();
                 expr(p);
-                p.expect(T!['}']);
+                p.expect_required(T!['}']);
                 e.complete(p, TEMPLATE_ELEMENT);
             },
             t => unreachable!("Anything not template chunk or dollarcurly should have been eaten by the lexer, but {:?} was found", t),
@@ -1164,7 +1187,7 @@ pub fn template(p: &mut Parser, tag: Option<CompletedMarker>) -> CompletedMarker
 // [...a, ...b];
 pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T!['[']);
+	p.expect_required(T!['[']);
 	let elements_list = p.start();
 
 	while !p.at(EOF) {
@@ -1187,18 +1210,18 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 			break;
 		}
 
-		p.expect(T![,]);
+		p.expect_required(T![,]);
 	}
 	elements_list.complete(p, LIST);
 
-	p.expect(T![']']);
+	p.expect_required(T![']']);
 	m.complete(p, JS_ARRAY_EXPRESSION)
 }
 
 /// A spread element consisting of three dots and an assignment expression such as `...foo`
 pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	p.expect(T![...]);
+	p.expect_required(T![...]);
 	assign_expr(p);
 	m.complete(p, SPREAD_ELEMENT)
 }
@@ -1249,7 +1272,7 @@ pub fn lhs_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	}
 
 	if type_args.is_some() {
-		p.expect(T!['(']);
+		p.expect_required(T!['(']);
 	}
 
 	m.abandon(p);
@@ -1302,14 +1325,14 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 		let m = p.start();
 		p.bump_any();
 		if p.eat(T![const]) {
-			p.expect(T![>]);
+			p.expect_required(T![>]);
 			unary_expr(p);
 			let mut res = m.complete(p, TS_CONST_ASSERTION);
 			res.err_if_not_ts(p, "const assertions can only be used in TypeScript files");
 			return Some(res);
 		} else {
 			ts_type(p);
-			p.expect(T![>]);
+			p.expect_required(T![>]);
 			unary_expr(p);
 			let mut res = m.complete(p, TS_ASSERTION);
 			res.err_if_not_ts(p, "type assertions can only be used in TypeScript files");

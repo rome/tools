@@ -1,7 +1,7 @@
-0: JS_ROOT@0..114
+0: JS_ROOT@0..141
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..113
+  2: LIST@0..140
     0: JS_FUNCTION_DECLARATION@0..13
       0: FUNCTION_KW@0..8 "function" [] []
       1: JS_PARAMETER_LIST@8..11
@@ -83,7 +83,24 @@
       0: JS_REFERENCE_IDENTIFIER_EXPRESSION@109..112
         0: IDENT@109..112 "foo" [] []
       1: SEMICOLON@112..113 ";" [] []
-  3: EOF@113..114 "" [Whitespace("\n")] []
+    7: JS_UNKNOWN_STATEMENT@113..140
+      0: FUNCTION_KW@113..123 "function" [Whitespace("\n")] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@123..127
+        0: IDENT@123..127 "test" [] []
+      2: JS_PARAMETER_LIST@127..129
+        0: L_PAREN@127..128 "(" [] []
+        1: LIST@128..128
+        2: R_PAREN@128..129 ")" [] []
+      3: TS_TYPE_ANNOTATION@129..138
+        0: COLON@129..131 ":" [] [Whitespace(" ")]
+        1: TS_NUMBER@131..138
+          0: IDENT@131..138 "number" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@138..140
+        0: L_CURLY@138..139 "{" [] []
+        1: LIST@139..139
+        2: LIST@139..139
+        3: R_CURLY@139..140 "}" [] []
+  3: EOF@140..141 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected a name for the function in a function declaration, but found none
   ┌─ function_decl_err.js:1:9
@@ -165,6 +182,13 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ ...Which is required to end this statement
 
 --
+error[SyntaxError]: return types can only be used in TypeScript files
+  ┌─ function_decl_err.js:8:16
+  │
+8 │ function test(): number {}
+  │                ^^^^^^^^
+
+--
 function() {}
 function {}
 function *() {}
@@ -172,3 +196,4 @@ async function() {}
 async function *() {}
 function *foo() {}
 yield foo;
+function test(): number {}

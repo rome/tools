@@ -3,6 +3,11 @@
 //! the parser yields events like `Start node`, `Error`, etc.
 //! These events are then applied to a `TreeSink`.
 
+pub(crate) mod parse_error;
+mod parse_recovery;
+mod parsed_syntax;
+pub(crate) mod single_token_parse_recovery;
+
 use drop_bomb::DropBomb;
 use rslint_errors::Diagnostic;
 use rslint_syntax::SyntaxKind::EOF;
@@ -10,6 +15,12 @@ use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
 
+pub use parse_error::*;
+pub use parsed_syntax::{ConditionalParsedSyntax, InvalidParsedSyntax, ParsedSyntax};
+#[allow(deprecated)]
+pub use single_token_parse_recovery::SingleTokenParseRecovery;
+
+pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
 
 /// An extremely fast, error tolerant, completely lossless JavaScript parser
@@ -273,7 +284,7 @@ impl<'t> Parser<'t> {
 			.expect("Parser source and tokens mismatch")
 	}
 
-	/// Try to eat a specific token kind, if the kind is not there then add a missing marker and add an error to the events stack.
+	/// Try to eat a specific token kind, if the kind is not there then adds an error to the events stack.
 	pub fn expect(&mut self, kind: SyntaxKind) -> bool {
 		if self.eat(kind) {
 			true
@@ -297,9 +308,18 @@ impl<'t> Parser<'t> {
 				.primary(self.cur_tok().range, "unexpected")
 			};
 
-			self.missing();
 			self.error(err);
 			false
+		}
+	}
+
+	/// Tries to eat a specific token kind, adds a missing marker and an error to the events stack if it's not there.
+	pub fn expect_required(&mut self, kind: SyntaxKind) -> bool {
+		if !self.expect(kind) {
+			self.missing();
+			false
+		} else {
+			true
 		}
 	}
 
@@ -318,6 +338,7 @@ impl<'t> Parser<'t> {
 	///
 	/// # Panics
 	/// Panics if the AST node represented by the marker does not match the generic
+	#[deprecated(note = "Unsafe and fairly expensive.")]
 	pub fn parse_marker<T: AstNode>(&self, marker: &CompletedMarker) -> T {
 		let events = self
 			.events
@@ -428,7 +449,7 @@ impl<'t> Parser<'t> {
 		if self.state.no_recovery {
 			Some(true).filter(|_| self.eat(kind))
 		} else {
-			Some(self.expect(kind))
+			Some(self.expect_required(kind))
 		}
 	}
 
@@ -455,6 +476,9 @@ impl<'t> Parser<'t> {
 		start..end
 	}
 
+	#[deprecated(
+		note = "Use ParseRecovery instead which signals with a Result if the recovery was successful or not"
+	)]
 	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> Option<CompletedMarker> {
 		let func = if assign {
 			syntax::expr::assign_expr
@@ -725,7 +749,7 @@ mod tests {
 		let mut p = Parser::new(token_source, 0, Syntax::default());
 
 		let m = p.start();
-		p.expect(SyntaxKind::JS_STRING_LITERAL);
+		p.expect_required(SyntaxKind::JS_STRING_LITERAL);
 		m.complete(&mut p, SyntaxKind::JS_STRING_LITERAL_EXPRESSION);
 	}
 

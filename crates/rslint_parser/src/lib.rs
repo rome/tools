@@ -64,7 +64,6 @@ mod lossless_tree_sink;
 mod lossy_tree_sink;
 mod numbers;
 mod parse;
-pub(crate) mod parse_recovery;
 mod state;
 mod syntax_node;
 mod token_source;
@@ -84,7 +83,7 @@ pub use crate::{
 	lossy_tree_sink::LossyTreeSink,
 	numbers::BigInt,
 	parse::*,
-	parser::{Checkpoint, CompletedMarker, Marker, Parser},
+	parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser},
 	state::{ParserState, StrictMode},
 	syntax_node::*,
 	token_set::TokenSet,
@@ -100,6 +99,8 @@ pub use rslint_syntax::*;
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
 
+use crate::parser::{ConditionalParsedSyntax, ParsedSyntax};
+use rslint_errors::Diagnostic;
 use std::ops::Range;
 
 /// Abstracted token for `TokenSource`
@@ -244,5 +245,96 @@ impl Default for FileKind {
 impl From<FileKind> for Syntax {
 	fn from(kind: FileKind) -> Self {
 		Syntax::new(kind)
+	}
+}
+
+/// A syntax feature that may or may not be supported depending on the file type and parser configuration
+pub trait SyntaxFeature: Sized {
+	/// Returns `true` if the current parsing context supports this syntax feature.
+	fn is_supported(&self, p: &Parser) -> bool;
+
+	/// Returns `true` if the current parsing context doesn't support this syntax feature.
+	fn is_unsupported(&self, p: &Parser) -> bool {
+		!self.is_supported(p)
+	}
+
+	/// Creates a syntax that is only valid if this syntax feature is supported in the current
+	/// parsing context, adds a diagnostic if not.
+	///
+	/// Returns [Valid] if this syntax feature is supported.
+	///
+	/// Returns [Invalid], creates a diagnostic with the passed in error builder,
+	/// and adds it to the parsing diagnostics if this syntax feature isn't supported.
+	fn exclusive_syntax<S, E>(
+		&self,
+		p: &mut Parser,
+		syntax: S,
+		error_builder: E,
+	) -> ConditionalParsedSyntax
+	where
+		S: Into<ParsedSyntax>,
+		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+	{
+		syntax.into().exclusive_for(self, p, error_builder)
+	}
+
+	/// Creates a syntax that is only valid if this syntax feature is supported in the current
+	/// parsing context.
+	///
+	/// Returns [Valid] if this syntax feature is supported and [Invalid] if this syntax isn't supported.
+	fn exclusive_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ConditionalParsedSyntax
+	where
+		S: Into<ParsedSyntax>,
+	{
+		syntax.into().exclusive_for_no_error(self, p)
+	}
+
+	/// Creates a syntax that is only valid if the current parsing context doesn't support this syntax feature,
+	/// and adds a diagnostic if it does.
+	///
+	/// Returns [Valid] if the parsing context doesn't support this syntax feature
+	///
+	/// Creates a diagnostic using the passed error builder, adds it to the parsing diagnostics, and returns
+	/// [Invalid] if the parsing context does support this syntax feature.
+	fn excluding_syntax<S, E>(
+		&self,
+		p: &mut Parser,
+		syntax: S,
+		error_builder: E,
+	) -> ConditionalParsedSyntax
+	where
+		S: Into<ParsedSyntax>,
+		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+	{
+		syntax.into().excluding(self, p, error_builder)
+	}
+
+	/// Creates a syntax that is only valid if this syntax feature isn't supported in the current
+	/// parsing context.
+	///
+	/// Returns [Valid] if this syntax feature isn't supported and [Invalid] if it is.
+	fn excluding_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ConditionalParsedSyntax
+	where
+		S: Into<ParsedSyntax>,
+	{
+		syntax.into().excluding_no_error(self, p)
+	}
+}
+
+pub enum JsSyntaxFeature {
+	#[allow(unused)]
+	#[doc(alias = "LooseMode")]
+	SloppyMode,
+	StrictMode,
+	TypeScript,
+}
+
+impl SyntaxFeature for JsSyntaxFeature {
+	fn is_supported(&self, p: &Parser) -> bool {
+		match self {
+			JsSyntaxFeature::SloppyMode => p.state.strict.is_none(),
+			JsSyntaxFeature::StrictMode => p.state.strict.is_some(),
+			JsSyntaxFeature::TypeScript => p.syntax.file_kind == FileKind::TypeScript,
+		}
 	}
 }

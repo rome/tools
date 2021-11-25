@@ -3,7 +3,9 @@
 use super::expr::assign_expr;
 use super::pat::pattern;
 use super::typescript::*;
-use crate::parse_recovery::ParseRecovery;
+#[allow(deprecated)]
+use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
+use crate::parser::ParsedSyntax;
 use crate::syntax::function::function_body;
 use crate::{SyntaxKind::*, *};
 
@@ -114,7 +116,7 @@ pub(super) fn parameters_list(
 ) {
 	let mut first = true;
 
-	p.state.allow_object_expr = p.expect(T!['(']);
+	p.state.allow_object_expr = p.expect_required(T!['(']);
 
 	let parameters_list = p.start();
 
@@ -125,7 +127,7 @@ pub(super) fn parameters_list(
 			p.eat(T![,]);
 			break;
 		} else {
-			p.expect(T![,]);
+			p.expect_required(T![,]);
 		}
 
 		if p.at(T![...]) {
@@ -201,7 +203,8 @@ pub(super) fn parameters_list(
 			} else {
 				// test_err formal_params_invalid
 				// function (a++, c) {}
-				ParseRecovery::new(
+				#[allow(deprecated)]
+				SingleTokenParseRecovery::new(
 					token_set![
 						T![ident],
 						T![await],
@@ -222,10 +225,10 @@ pub(super) fn parameters_list(
 
 	parameters_list.complete(p, LIST);
 	p.state.allow_object_expr = true;
-	p.expect(T![')']);
+	p.expect_required(T![')']);
 }
 
-pub(super) fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {
+pub(super) fn arrow_body(p: &mut Parser) -> ParsedSyntax {
 	let mut guard = p.with_state(ParserState {
 		in_function: true,
 		..p.state.clone()
@@ -233,6 +236,6 @@ pub(super) fn arrow_body(p: &mut Parser) -> Option<CompletedMarker> {
 	if guard.at(T!['{']) {
 		function_body(&mut *guard)
 	} else {
-		assign_expr(&mut *guard)
+		assign_expr(&mut *guard).into()
 	}
 }

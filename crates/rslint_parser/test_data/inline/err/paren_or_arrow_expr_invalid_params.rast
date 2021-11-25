@@ -13,6 +13,7 @@
               0: PLUS@3..5 "+" [] [Whitespace(" ")]
           2: (empty)
         1: JS_NUMBER_LITERAL@5..6 "5" [] []
+        2: (empty)
       1: (empty)
     1: JS_UNKNOWN_STATEMENT@6..8
       0: R_PAREN@6..8 ")" [] [Whitespace(" ")]
@@ -66,6 +67,13 @@ error[SyntaxError]: Expected an expression, but found none
   │
 1 │ (5 + 5) => {}
   │       ^ Expected an expression here
+
+--
+error[SyntaxError]: expected a function body, or an expression but instead found ')'
+  ┌─ paren_or_arrow_expr_invalid_params.js:1:7
+  │
+1 │ (5 + 5) => {}
+  │       ^ Expected a function body, or an expression here
 
 --
 error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
