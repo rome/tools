@@ -4,7 +4,7 @@ use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::syntax::decl::{formal_param_pat, parameter_list};
 use crate::syntax::expr::{assign_expr, expr, identifier_name, literal_expression};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
-use crate::syntax::JsParseErrors;
+use crate::syntax::js_parse_error;
 use crate::{CompletedMarker, ParseRecovery, Parser, ParserState, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::T;
@@ -43,7 +43,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 			p,
 			ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
 				.with_recovery_on_line_break(),
-			JsParseErrors::expected_object_member,
+			js_parse_error::expected_object_member,
 		);
 
 		if recovered_member.is_err() {
@@ -115,7 +115,7 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 			let m = p.start();
 			let identifier_member_name = p.at(T![ident]) || p.cur().is_keyword();
 			let member_name =
-				object_member_name(p).make_required(p, JsParseErrors::expected_object_member);
+				object_member_name(p).make_required(p, js_parse_error::expected_object_member);
 
 			// test object_expr_method
 			// let b = {
@@ -189,14 +189,14 @@ fn getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_remap(T![get]);
 
-	object_member_name(p).make_required(p, JsParseErrors::expected_object_member_name);
+	object_member_name(p).make_required(p, js_parse_error::expected_object_member_name);
 
 	p.expect_required(T!['(']);
 	p.expect_required(T![')']);
 
 	ts_return_type(p);
 
-	function_body(p).make_required(p, JsParseErrors::expected_function_body);
+	function_body(p).make_required(p, js_parse_error::expected_function_body);
 
 	Present(m.complete(p, JS_GETTER_OBJECT_MEMBER))
 }
@@ -210,13 +210,13 @@ fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_remap(T![set]);
 
-	object_member_name(p).make_required(p, JsParseErrors::expected_object_member_name);
+	object_member_name(p).make_required(p, js_parse_error::expected_object_member_name);
 
 	p.state.allow_object_expr = p.expect_required(T!['(']);
 	formal_param_pat(p);
 	p.expect_required(T![')']);
 
-	function_body(p).make_required(p, JsParseErrors::expected_function_body);
+	function_body(p).make_required(p, js_parse_error::expected_function_body);
 
 	p.state.allow_object_expr = true;
 	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
@@ -297,7 +297,7 @@ fn method_object_member(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let in_generator = p.eat_optional(T![*]);
-	object_member_name(p).make_required(p, JsParseErrors::expected_object_member_name);
+	object_member_name(p).make_required(p, js_parse_error::expected_object_member_name);
 
 	{
 		let mut guard = p.with_state(ParserState {
@@ -319,7 +319,7 @@ fn method_object_member_body(p: &mut Parser) {
 	ts_parameter_types(p);
 	parameter_list(p);
 	ts_return_type(p);
-	function_body(p).make_required(p, JsParseErrors::expected_function_body);
+	function_body(p).make_required(p, js_parse_error::expected_function_body);
 
 	p.state = old;
 }

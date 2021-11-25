@@ -2,23 +2,20 @@ use crate::Parser;
 use rslint_errors::{Diagnostic, Span};
 use std::ops::Range;
 
-/// Provides factory functions to build common diagnostic messages
-pub struct ParseErrors;
+///! Provides helper functions to build common diagnostic messages
+
+/// Creates a diagnostic saying that the node [name] was expected at range
+pub(crate) fn expected_node(name: &str, range: Range<usize>) -> ExpectedNodeDiagnosticBuilder {
+	ExpectedNodeDiagnosticBuilder::with_single_node(name, range)
+}
+
+/// Creates a diagnostic saying that any of the nodes in [names] was expected at range
+pub(crate) fn expected_any(names: &[&str], range: Range<usize>) -> ExpectedNodeDiagnosticBuilder {
+	ExpectedNodeDiagnosticBuilder::with_any(names, range)
+}
 
 pub trait ToDiagnostic {
 	fn to_diagnostic(&self, p: &Parser) -> Diagnostic;
-}
-
-impl ParseErrors {
-	/// Creates a diagnostic saying that the node [name] was expected at range
-	pub fn expected_node(name: &str, range: Range<usize>) -> ExpectedNodeDiagnosticBuilder {
-		ExpectedNodeDiagnosticBuilder::with_single_node(name, range)
-	}
-
-	/// Creates a diagnostic saying that any of the nodes in [names] was expected at range
-	pub fn expected_any(names: &[&str], range: Range<usize>) -> ExpectedNodeDiagnosticBuilder {
-		ExpectedNodeDiagnosticBuilder::with_any(names, range)
-	}
 }
 
 pub struct ExpectedNodeDiagnosticBuilder {

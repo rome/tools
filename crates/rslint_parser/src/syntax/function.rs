@@ -1,10 +1,10 @@
 use crate::parser::ConditionalParsedSyntax::Valid;
 use crate::parser::ParsedSyntax;
 use crate::syntax::decl::parameter_list;
+use crate::syntax::js_parse_error;
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{block_impl, is_semi};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
-use crate::syntax::JsParseErrors;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser, ParserState};
@@ -104,7 +104,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	if kind == JS_FUNCTION_DECLARATION {
 		function_body_or_declaration(guard);
 	} else {
-		function_body(guard).make_required(guard, JsParseErrors::expected_function_body);
+		function_body(guard).make_required(guard, js_parse_error::expected_function_body);
 	}
 
 	let function = m.complete(guard, kind);
@@ -155,7 +155,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 				_ => p.missing(),
 			}
 		} else {
-			body.make_required(p, JsParseErrors::expected_function_body);
+			body.make_required(p, js_parse_error::expected_function_body);
 		}
 	}
 }

@@ -3,7 +3,7 @@
 //! the parser yields events like `Start node`, `Error`, etc.
 //! These events are then applied to a `TreeSink`.
 
-mod parse_error;
+pub(crate) mod parse_error;
 mod parse_recovery;
 mod parsed_syntax;
 pub(crate) mod single_token_parse_recovery;
@@ -15,10 +15,9 @@ use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
 
+pub use parse_error::*;
 pub use parsed_syntax::{ConditionalParsedSyntax, InvalidParsedSyntax, ParsedSyntax};
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
-
-pub use parse_error::{ParseErrors, ToDiagnostic};
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;

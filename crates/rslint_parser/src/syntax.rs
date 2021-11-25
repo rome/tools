@@ -11,12 +11,10 @@ mod class;
 pub mod decl;
 pub mod expr;
 mod function;
-mod js_parse_errors;
+mod js_parse_error;
 mod object;
 pub mod pat;
 pub mod program;
 pub mod stmt;
 pub mod typescript;
 pub mod util;
-
-pub(crate) use js_parse_errors::JsParseErrors;

@@ -11,7 +11,7 @@ use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
-use crate::syntax::JsParseErrors;
+use crate::syntax::js_parse_error;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::SyntaxFeature;
 use crate::{SyntaxKind::*, *};
@@ -1085,7 +1085,7 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // bump catch
 
 	catch_declaration(p).make_optional(p);
-	block_stmt(p).make_required(p, JsParseErrors::expected_block_statement);
+	block_stmt(p).make_required(p, js_parse_error::expected_block_statement);
 
 	Present(m.complete(p, JS_CATCH_CLAUSE))
 }
@@ -1167,7 +1167,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	p.bump_any(); // eat try
 
-	block_stmt(p).make_required(p, JsParseErrors::expected_block_statement);
+	block_stmt(p).make_required(p, js_parse_error::expected_block_statement);
 
 	let catch = parse_catch_clause(p);
 
@@ -1176,11 +1176,11 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 
 		let finalizer = p.start();
 		p.bump_any();
-		block_stmt(p).make_required(p, JsParseErrors::expected_block_statement);
+		block_stmt(p).make_required(p, js_parse_error::expected_block_statement);
 		finalizer.complete(p, JS_FINALLY_CLAUSE);
 		Present(m.complete(p, JS_TRY_FINALLY_STATEMENT))
 	} else {
-		catch.make_required(p, JsParseErrors::expected_catch_clause);
+		catch.make_required(p, js_parse_error::expected_catch_clause);
 		Present(m.complete(p, JS_TRY_STATEMENT))
 	}
 }
