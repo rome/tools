@@ -72,7 +72,7 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 				&& !p.has_linebreak_before_n(1)
 				&& STARTS_MEMBER_NAME.contains(p.nth(1)) =>
 		{
-			getter_object_member(p)
+			parse_getter_object_member(p)
 		}
 
 		// test object_expr_setter
@@ -181,7 +181,7 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses a getter object member: `{ get a() { return "a"; } }`
-fn getter_object_member(p: &mut Parser) -> ParsedSyntax {
+fn parse_getter_object_member(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![ident]) || p.cur_src() != "get" {
 		return Absent;
 	}

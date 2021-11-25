@@ -17,6 +17,7 @@ use crate::syntax::stmt::is_semi;
 use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::Absent;
+use crate::ParsedSyntax::Present;
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -84,13 +85,13 @@ pub const STARTS_EXPR: TokenSet = token_set![
 // "foo"
 // 'bar'
 // null
-pub fn literal_expression(p: &mut Parser) -> Option<CompletedMarker> {
+pub fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
 	let literal_kind = match p.cur_tok().kind {
 		SyntaxKind::JS_NUMBER_LITERAL => {
 			if p.cur_src().ends_with('n') {
 				let m = p.start();
 				p.bump_remap(SyntaxKind::JS_BIG_INT_LITERAL);
-				return Some(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
+				return Present(m.complete(p, JS_BIG_INT_LITERAL_EXPRESSION));
 			};
 
 			SyntaxKind::JS_NUMBER_LITERAL_EXPRESSION
@@ -99,12 +100,12 @@ pub fn literal_expression(p: &mut Parser) -> Option<CompletedMarker> {
 		SyntaxKind::NULL_KW => SyntaxKind::JS_NULL_LITERAL_EXPRESSION,
 		SyntaxKind::TRUE_KW | SyntaxKind::FALSE_KW => SyntaxKind::JS_BOOLEAN_LITERAL_EXPRESSION,
 		SyntaxKind::JS_REGEX_LITERAL => SyntaxKind::JS_REGEX_LITERAL_EXPRESSION,
-		_ => return None,
+		_ => return Absent,
 	};
 
 	let m = p.start();
 	p.bump_any();
-	Some(m.complete(p, literal_kind))
+	Present(m.complete(p, literal_kind))
 }
 
 /// An assignment expression such as `foo += bar` or `foo = 5`.
@@ -936,7 +937,7 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 /// A primary expression such as a literal, an object, an array, or `this`.
 pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
-	if let Some(m) = literal_expression(p) {
+	if let Some(m) = parse_literal_expression(p).ok() {
 		return Some(m);
 	}
 

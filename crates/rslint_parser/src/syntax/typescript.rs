@@ -1,7 +1,7 @@
 //! TypeScript specific functions.
 
 use super::decl::*;
-use super::expr::{assign_expr, identifier_name, lhs_expr, literal_expression};
+use super::expr::{assign_expr, identifier_name, lhs_expr, parse_literal_expression};
 use super::stmt::{semi, statements, variable_declaration_statement};
 #[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
@@ -483,7 +483,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 	} else {
 		match p.cur() {
 			JS_STRING_LITERAL | JS_NUMBER_LITERAL => {
-				literal_expression(p);
+				parse_literal_expression(p).ok();
 			}
 			_ => {
 				let mut complete = any_reference_member(p)?;
@@ -982,7 +982,8 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 			}
 		}
 		JS_NUMBER_LITERAL | JS_STRING_LITERAL | TRUE_KW | FALSE_KW | JS_REGEX_LITERAL => Some(
-			literal_expression(p)
+			parse_literal_expression(p)
+				.ok()
 				.unwrap()
 				.precede(p)
 				.complete(p, TS_LITERAL),
