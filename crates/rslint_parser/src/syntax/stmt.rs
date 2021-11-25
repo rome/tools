@@ -8,11 +8,12 @@ use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::parser::{ConditionalParsedSyntax, ParsedSyntax};
+use crate::parser::ParsedSyntax;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::syntax::JsParseErrors;
+use crate::JsSyntaxFeature::StrictMode;
+use crate::SyntaxFeature;
 use crate::{SyntaxKind::*, *};
 
 pub const STMT_RECOVERY_SET: TokenSet = token_set![
@@ -638,14 +639,16 @@ pub fn with_stmt(p: &mut Parser) -> ParsedSyntax {
 
 	stmt(p, None);
 
-	let conditional = m
-		.complete(p, JS_WITH_STATEMENT)
-		.to_conditional_parse_result(p, SloppyMode, |p, marker| {
-			p.err_builder("`with` statements are not allowed in strict mode")
-				.primary(marker.range(p), "")
-		});
+	let with_stmt = m.complete(p, JS_WITH_STATEMENT);
 
-	conditional.or_unsupported_to_unknown(p, JS_UNKNOWN_STATEMENT)
+	// or SloppyMode.exclusive_syntax(...) but this reads better with the error message, saying that
+	// it's only forbidden in strict mode
+	let conditional = StrictMode.excluding_syntax(p, with_stmt, |p, marker| {
+		p.err_builder("`with` statements are not allowed in strict mode")
+			.primary(marker.range(p), "")
+	});
+
+	conditional.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
 }
 
 /// A while statement such as `while(true) { do_something() }`

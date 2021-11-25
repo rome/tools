@@ -99,7 +99,8 @@ pub use rslint_syntax::*;
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
 
-use crate::parser::ParsedSyntax;
+use crate::parser::{ConditionalParsedSyntax, ParsedSyntax};
+use rslint_errors::Diagnostic;
 use std::ops::Range;
 
 /// Abstracted token for `TokenSource`
@@ -247,17 +248,82 @@ impl From<FileKind> for Syntax {
 	}
 }
 
+/// A syntax feature that may or may not be supported depending on the file type and parser configuration
 pub trait SyntaxFeature: Sized {
-	/// Returns [true] if the current parsing context supports this syntax feature
-	fn is_available(&self, p: &mut Parser) -> bool;
+	/// Returns `true` if the current parsing context supports this syntax feature.
+	fn is_supported(&self, p: &Parser) -> bool;
+
+	/// Returns `true` if the current parsing context doesn't support this syntax feature.
+	fn is_unsupported(&self, p: &Parser) -> bool {
+		!self.is_supported(p)
+	}
+
+	/// Creates a syntax that is only allowed if this syntax feature is supported in the current
+	/// parsing context, adds a diagnostic if not.
+	///
+	/// Returns [Supported] if this syntax feature is supported.
+	///
+	/// Returns [Unsupported], creates a diagnostic with the passed in error builder,
+	/// and adds it to the parsing diagnostics if this syntax feature isn't supported.
+	fn exclusive_syntax<S, E>(
+		&self,
+		p: &mut Parser,
+		syntax: S,
+		error_builder: E,
+	) -> ConditionalParsedSyntax
+	where
+		S: Into<ParsedSyntax>,
+		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+	{
+		syntax.into().exclusive_for(self, p, error_builder)
+	}
+
+	/// Creates a syntax that is only allowed if this syntax feature is supported in the current
+	/// parsing context.
+	///
+	/// Returns [Supported] if this syntax feature is supported and [Unsupported] if this syntax isn't supported.
+	fn exclusive_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ConditionalParsedSyntax
+	where
+		S: Into<ParsedSyntax>,
+	{
+		syntax.into().exclusive_for_no_error(self, p)
+	}
+
+	fn excluding_syntax<S, E>(
+		&self,
+		p: &mut Parser,
+		syntax: S,
+		error_builder: E,
+	) -> ConditionalParsedSyntax
+	where
+		S: Into<ParsedSyntax>,
+		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+	{
+		syntax.into().excluding(self, p, error_builder)
+	}
+
+	fn excluding_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ConditionalParsedSyntax
+	where
+		S: Into<ParsedSyntax>,
+	{
+		syntax.into().excluding_no_error(self, p)
+	}
 }
 
-/// Syntax feature that tests if the current scope runs in sloppy / loose mode.
-#[doc(alias = "LooseMode")]
-pub struct SloppyMode;
+pub enum JsSyntaxFeature {
+	#[allow(unused)]
+	#[doc(alias = "LooseMode")]
+	SloppyMode,
+	StrictMode,
+	TypeScript,
+}
 
-impl SyntaxFeature for SloppyMode {
-	fn is_available(&self, p: &mut Parser) -> bool {
-		p.state.strict.is_none()
+impl SyntaxFeature for JsSyntaxFeature {
+	fn is_supported(&self, p: &Parser) -> bool {
+		match self {
+			JsSyntaxFeature::SloppyMode => p.state.strict.is_none(),
+			JsSyntaxFeature::StrictMode => p.state.strict.is_some(),
+			JsSyntaxFeature::TypeScript => p.syntax.file_kind == FileKind::TypeScript,
+		}
 	}
 }

@@ -1,11 +1,10 @@
 use crate::parser::parse_recovery::RecoveryResult;
+use crate::parser::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::parser::ParseRecovery;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Marker, Parser, SyntaxFeature};
 use rslint_errors::{Diagnostic, Span};
 use rslint_syntax::SyntaxKind;
-use std::error::Error;
-use std::fmt::{Debug, Display, Formatter};
 use std::ops::Range;
 
 /// Result of a parse function.
@@ -185,38 +184,93 @@ impl ParsedSyntax {
 		}
 	}
 
-	/// Makes this a [ConditionalSyntax] that is only supported if the passed [feature] is available
-	/// in the current parsing context.
+	/// Restricts this parsed syntax to only be valid if the current parsing context supports the passed in language feature
+	/// and adds a diagnostic if not.
 	///
-	/// It adds a diagnostic using the passed in error builder and returns `Ok(unsupported)`
-	/// if the [feature] isn't available and the result contains a completed node (`Ok(completed)`).
+	/// Returns [Valid] if the parsing context supports the passed syntax feature.
 	///
-	/// It returns `Ok(Supported)` if the feature is available and this is `Ok(completed)`, and `Err` otherwise.
-	pub fn requires_syntax_feature<F, E>(
+	/// Creates a diagnostic using the passed error builder, adds it to the parsing diagnostics, and returns
+	/// [Invalid] if the parsing context doesn't support the passed syntax feature.
+	pub fn exclusive_for<F, E>(
 		self,
+		feature: &F,
 		p: &mut Parser,
-		feature: F,
 		error_builder: E,
-	) -> ConditionalSyntaxParseResult
+	) -> ConditionalParsedSyntax
 	where
 		F: SyntaxFeature,
 		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
 	{
-		match self {
-			Present(c) => c.to_conditional_parse_result(p, feature, error_builder),
-			Absent => Err(ConditionalSyntaxError::Absent),
+		if feature.is_supported(p) {
+			Valid(self)
+		} else {
+			if let Present(marker) = &self {
+				let diagnostic = error_builder(p, marker);
+				p.error(diagnostic);
+			}
+
+			Invalid(InvalidParsedSyntax(self))
 		}
 	}
 
-	/// Converts this result into [Unsupported] conditional syntax without adding an error.
-	/// Useful if this is a list and any of its elements is an unsupported node because the list
-	/// then needs be wrapped as unsupported too but no error should be added (the error on the element is sufficient).
+	/// Restricts this parsed syntax to only be valid if the current parsing context supports the passed in language feature.
 	///
-	/// This doesn't apply if the element can be converted into an `Unknown*` node.
-	pub fn into_unsupported(self) -> ConditionalSyntaxParseResult {
-		match self {
-			Present(c) => Err(ConditionalSyntaxError::Unsupported(c)),
-			Absent => Err(ConditionalSyntaxError::Absent),
+	/// Returns [Valid] if the parsing context supports the passed syntax feature.
+	///
+	/// Returns [Invalid] if the parsing context doesn't support the passed syntax feature.
+	pub fn exclusive_for_no_error<F>(self, feature: &F, p: &Parser) -> ConditionalParsedSyntax
+	where
+		F: SyntaxFeature,
+	{
+		if feature.is_supported(p) {
+			Valid(self)
+		} else {
+			Invalid(InvalidParsedSyntax(self))
+		}
+	}
+
+	/// Restricts this parsed syntax to only be valid if the current parsing context doesn't support the passed in language feature
+	/// and adds a diagnostic if it does.
+	///
+	/// Returns [Valid] if the parsing context doesn't support the passed syntax feature.
+	///
+	/// Creates a diagnostic using the passed error builder, adds it to the parsing diagnostics, and returns
+	/// [Invalid] if the parsing context does support the passed syntax feature.
+	pub fn excluding<F, E>(
+		self,
+		feature: &F,
+		p: &mut Parser,
+		error_builder: E,
+	) -> ConditionalParsedSyntax
+	where
+		F: SyntaxFeature,
+		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+	{
+		if feature.is_unsupported(p) {
+			Valid(self)
+		} else {
+			if let Present(marker) = &self {
+				let diagnostic = error_builder(p, marker);
+				p.error(diagnostic);
+			}
+
+			Invalid(InvalidParsedSyntax(self))
+		}
+	}
+
+	/// Restricts this parsed syntax to only be valid if the current parsing context doesn't support the passed in language feature.
+	///
+	/// Returns [Valid] if the parsing context doesn't support the passed syntax feature.
+	///
+	/// Returns [Invalid] if the parsing context does support the passed syntax feature.
+	pub fn excluding_no_error<F>(self, feature: &F, p: &Parser) -> ConditionalParsedSyntax
+	where
+		F: SyntaxFeature,
+	{
+		if feature.is_unsupported(p) {
+			Valid(self)
+		} else {
+			Invalid(InvalidParsedSyntax(self))
 		}
 	}
 }
@@ -236,60 +290,84 @@ impl From<Option<CompletedMarker>> for ParsedSyntax {
 	}
 }
 
-#[derive(Debug)]
-pub enum ConditionalSyntaxError {
-	/// The node isn't present in the source text. Same as [AbsentError]
-	Absent,
-
-	/// Parsed node that isn't supported in the current parsing context
-	Unsupported(CompletedMarker),
-}
-
-impl Error for ConditionalSyntaxError {}
-
-impl Display for ConditionalSyntaxError {
-	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-		match self {
-			ConditionalSyntaxError::Absent => write!(f, "absent"),
-			ConditionalSyntaxError::Unsupported(c) => {
-				write!(f, "unsupported syntax {:?}", c.kind())
-			}
-		}
-	}
-}
-
-/// Parse result for a parsing rule where the parsed syntax depends if a language feature is available
-/// or not. This may be because
-/// * Syntax is only available in strict or sloppy mode: For example, with statements
-/// * Syntax support depends on the file type: Typescript, JSX, Import / Export statements
-/// * Syntax depends on a newer language version: experimental features, private field existence test
+/// A parsed syntax that is only valid in some parsing contexts but not in others.
+/// One use case for this is for syntax that is only valid if the parsing context supports
+/// a certain language feature, for example:
 ///
-/// See [CompletedMarker.requires_syntax_feature] that creates an `Err(Unsupported)` if the feature
-/// isn't available in the current parsing context.
-pub type ConditionalSyntaxParseResult = Result<CompletedMarker, ConditionalSyntaxError>;
+/// * Syntax that is only supported in strict or sloppy mode: for example, with statements
+/// * Syntax that is only supported in certain file types: Typescript, JSX, Import / Export statements
+/// * Syntax that is only available in certain language versions: experimental features, private field existence test
+///
+/// A parse rule must explicitly handle conditional syntax in the case it is invalid because it
+/// represents content that shouldn't be there. This normally involves to wrap this syntax in an
+/// `Unknown*` node or one of its parent.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[must_use = "this `ConditionalParsedSyntax` may be an `Invalid` variant, which should be handled"]
+pub enum ConditionalParsedSyntax {
+	/// Syntax that is valid in the current parsing context
+	Valid(ParsedSyntax),
 
-pub trait ConditionalParsedSyntax {
-	/// Converts this to a [ParsedSyntax] by converting any contained `Unsupported` node to the passed
-	/// in `unknown_kind`.
-	fn or_unsupported_to_unknown(self, p: &mut Parser, unknown_kind: SyntaxKind) -> ParsedSyntax;
-
-	/// Returns true if this result contains a parsed node that isn't supported in this parsing context.
-	fn is_unsupported(&self) -> bool;
+	/// Syntax that is invalid in the current parsing context because it doesn't support a specific
+	/// language feature.
+	Invalid(InvalidParsedSyntax),
 }
 
-impl ConditionalParsedSyntax for ConditionalSyntaxParseResult {
-	fn or_unsupported_to_unknown(self, p: &mut Parser, unknown_kind: SyntaxKind) -> ParsedSyntax {
-		match self {
-			Ok(completed) => Present(completed),
-			Err(ConditionalSyntaxError::Unsupported(mut completed)) => {
-				completed.change_kind(p, unknown_kind);
-				Present(completed)
-			}
-			Err(ConditionalSyntaxError::Absent) => Absent,
-		}
+impl ConditionalParsedSyntax {
+	/// Returns `true` if this syntax is valid in this parsing context.
+	#[allow(unused)]
+	#[must_use]
+	pub fn is_valid(&self) -> bool {
+		matches!(self, Invalid(_))
 	}
 
-	fn is_unsupported(&self) -> bool {
-		matches!(self, Err(ConditionalSyntaxError::Unsupported(_)))
+	/// Returns `true` if this syntax is invalid in this parsing context.
+	#[allow(unused)]
+	pub fn is_invalid(&self) -> bool {
+		matches!(self, Valid(_))
+	}
+
+	/// Returns `true` if this syntax is present in the source text.
+	#[must_use]
+	pub fn is_present(&self) -> bool {
+		matches!(
+			self,
+			Valid(Present(_)) | Invalid(InvalidParsedSyntax(Present(_)))
+		)
+	}
+
+	/// Returns `true` if this syntax is absent from the source text.
+	pub fn is_absent(&self) -> bool {
+		matches!(self, Valid(Absent) | Invalid(InvalidParsedSyntax(Absent)))
+	}
+
+	/// Converts this into a parsed syntax by wrapping any present invalid syntax in an unknown node.
+	pub fn or_invalid_to_unknown(self, p: &mut Parser, unknown_kind: SyntaxKind) -> ParsedSyntax {
+		match self {
+			Valid(parsed) => parsed,
+			Invalid(unsupported) => unsupported.or_to_unknown(p, unknown_kind),
+		}
+	}
+}
+
+/// Parsed syntax that is invalid in this parsing context.
+#[must_use = "this 'UnsupportedParsedSyntax' contains syntax not supported in this parsing context, which must be handled."]
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct InvalidParsedSyntax(ParsedSyntax);
+
+impl InvalidParsedSyntax {
+	pub fn new(syntax: ParsedSyntax) -> Self {
+		Self(syntax)
+	}
+
+	/// Converts this into a parsed syntax by wrapping any present invalid syntax in an unknown node.
+	/// Is a no-op if the syntax is absent in the source text.
+	pub fn or_to_unknown(self, p: &mut Parser, unknown_kind: SyntaxKind) -> ParsedSyntax {
+		match self.0 {
+			Absent => Absent,
+			Present(mut unsupported) => {
+				unsupported.change_kind(p, unknown_kind);
+				Present(unsupported)
+			}
+		}
 	}
 }

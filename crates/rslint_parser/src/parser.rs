@@ -15,9 +15,7 @@ use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
 
-pub use parsed_syntax::{
-	ConditionalParsedSyntax, ConditionalSyntaxError, ConditionalSyntaxParseResult, ParsedSyntax,
-};
+pub use parsed_syntax::{ConditionalParsedSyntax, InvalidParsedSyntax, ParsedSyntax};
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use parse_error::{ParseErrors, ToDiagnostic};
@@ -712,27 +710,6 @@ impl CompletedMarker {
 
 	pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
 		p.err_if_not_ts(self, err, SyntaxKind::ERROR);
-	}
-
-	/// Converts this completed marker to a conditional parse result and adds
-	/// an error if the syntax is not supported in the current parsing context
-	pub fn to_conditional_parse_result<F, E>(
-		self,
-		p: &mut Parser,
-		feature: F,
-		error_builder: E,
-	) -> ConditionalSyntaxParseResult
-	where
-		F: SyntaxFeature,
-		E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
-	{
-		if feature.is_available(p) {
-			Ok(self)
-		} else {
-			let diagnostic = error_builder(p, &self);
-			p.error(diagnostic);
-			Err(ConditionalSyntaxError::Unsupported(self))
-		}
 	}
 }
 

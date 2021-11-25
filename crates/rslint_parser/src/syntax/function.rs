@@ -1,14 +1,17 @@
+use crate::parser::ConditionalParsedSyntax::Valid;
 use crate::parser::ParsedSyntax;
 use crate::syntax::decl::parameter_list;
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{block_impl, is_semi};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::syntax::JsParseErrors;
-use crate::ParsedSyntax::Present;
+use crate::JsSyntaxFeature::TypeScript;
+use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser, ParserState};
+use crate::{ConditionalParsedSyntax, SyntaxFeature};
 use rslint_syntax::SyntaxKind::{
 	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION,
-	JS_IDENTIFIER_BINDING, TS_TYPE_ANNOTATION,
+	JS_IDENTIFIER_BINDING, JS_UNKNOWN_EXPRESSION, JS_UNKNOWN_STATEMENT, TS_TYPE_ANNOTATION,
 };
 use rslint_syntax::{SyntaxKind, T};
 use std::collections::HashMap;
@@ -26,19 +29,22 @@ use std::collections::HashMap;
 // }
 pub(super) fn function_declaration(p: &mut Parser) -> CompletedMarker {
 	function(p, JS_FUNCTION_DECLARATION)
+		.or_invalid_to_unknown(p, JS_UNKNOWN_STATEMENT)
+		.ok()
+		.unwrap()
 }
 
 pub(super) fn function_expression(p: &mut Parser) -> CompletedMarker {
 	function(p, JS_FUNCTION_EXPRESSION)
+		.or_invalid_to_unknown(p, JS_UNKNOWN_EXPRESSION)
+		.ok()
+		.unwrap()
 }
 
-fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
+fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	let m = p.start();
 
-	if kind == JS_FUNCTION_DECLARATION {
-		// TS function declaration
-		p.eat(T![declare]);
-	}
+	let mut uses_ts_syntax = kind == JS_FUNCTION_DECLARATION && p.eat(T![declare]);
 
 	let in_async = p.at(T![ident]) && p.cur_src() == "async";
 	if in_async {
@@ -70,9 +76,30 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 		guard.error(err);
 	}
 
-	ts_parameter_types(guard);
+	let type_parameters =
+		parse_ts_parameter_types(guard).exclusive_for(&TypeScript, guard, |p, marker| {
+			p.err_builder("type parameters can only be used in TypeScript files")
+				.primary(marker.range(p), "")
+		});
+
+	uses_ts_syntax |= type_parameters.is_present();
+
+	if let Valid(type_parameters) = type_parameters {
+		type_parameters.make_optional(guard);
+	}
+
 	parameter_list(guard);
-	ts_return_type(guard);
+
+	let return_type = parse_ts_return_type(guard).exclusive_for(&TypeScript, guard, |p, marker| {
+		p.err_builder("return types can only be used in TypeScript files")
+			.primary(marker.range(p), "")
+	});
+
+	uses_ts_syntax |= return_type.is_present();
+
+	if let Valid(return_type) = return_type {
+		return_type.make_optional(guard);
+	}
 
 	if kind == JS_FUNCTION_DECLARATION {
 		function_body_or_declaration(guard);
@@ -80,7 +107,16 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 		function_body(guard).make_required(guard, JsParseErrors::expected_function_body);
 	}
 
-	m.complete(guard, kind)
+	let function = m.complete(guard, kind);
+
+	if uses_ts_syntax {
+		// change kind to TS specific kind?
+		// No need to add an error here because the return type / type parameters nodes already
+		// have an error
+		TypeScript.exclusive_syntax_no_error(guard, function)
+	} else {
+		Valid(function.into())
+	}
 }
 
 pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
@@ -124,11 +160,29 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 	}
 }
 
+fn parse_ts_parameter_types(p: &mut Parser) -> ParsedSyntax {
+	if p.at(T![<]) {
+		Present(ts_type_params(p).unwrap())
+	} else {
+		Absent
+	}
+}
+
 pub(crate) fn ts_parameter_types(p: &mut Parser) {
 	if p.at(T![<]) {
 		if let Some(ref mut ty) = ts_type_params(p) {
 			ty.err_if_not_ts(p, "type parameters can only be used in TypeScript files");
 		}
+	}
+}
+
+fn parse_ts_return_type(p: &mut Parser) -> ParsedSyntax {
+	if p.at(T![:]) {
+		let return_type = p.start();
+		ts_type_or_type_predicate_ann(p, T![:]);
+		Present(return_type.complete(p, TS_TYPE_ANNOTATION))
+	} else {
+		Absent
 	}
 }
 
