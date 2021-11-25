@@ -5,6 +5,7 @@ use crate::syntax::js_parse_error;
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{block_impl, is_semi};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
+use crate::ConditionalParsedSyntax::Invalid;
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser, ParserState};
@@ -109,11 +110,8 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 
 	let function = m.complete(guard, kind);
 
-	if uses_ts_syntax {
-		// change kind to TS specific kind?
-		// No need to add an error here because the return type / type parameters nodes already
-		// have an error
-		TypeScript.exclusive_syntax_no_error(guard, function)
+	if uses_ts_syntax && TypeScript.is_unsupported(guard) {
+		Invalid(function.into())
 	} else {
 		Valid(function.into())
 	}

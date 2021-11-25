@@ -371,3 +371,15 @@ impl InvalidParsedSyntax {
 		}
 	}
 }
+
+impl From<ParsedSyntax> for InvalidParsedSyntax {
+	fn from(syntax: ParsedSyntax) -> Self {
+		InvalidParsedSyntax::new(syntax)
+	}
+}
+
+impl From<CompletedMarker> for InvalidParsedSyntax {
+	fn from(marker: CompletedMarker) -> Self {
+		InvalidParsedSyntax::new(Present(marker))
+	}
+}
