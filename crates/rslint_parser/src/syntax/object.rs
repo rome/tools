@@ -169,7 +169,6 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 					// It turns out that this isn't a valid member after all. Make sure to throw
 					// away everything that has been parsed so far so that the caller can
 					// do it's error recovery
-					dbg!(p.cur_src());
 					m.abandon(p);
 					p.rewind(checkpoint);
 					Absent
