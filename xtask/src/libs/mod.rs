@@ -5,6 +5,39 @@ fn err_to_string<E: std::fmt::Debug>(e: E) -> String {
 	format!("{:?}", e)
 }
 
+#[cfg(feature = "dhat-on")]
+fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
+	use dhat::HeapStats;
+	use humansize::{file_size_opts as options, FileSize};
+
+	println!("\tMemory");
+	if let Some(heap) = &current.heap {
+		println!("\t\tCurrent Blocks: {}", heap.curr_blocks);
+		println!(
+			"\t\tCurrent Bytes: {}",
+			heap.curr_bytes.file_size(options::CONVENTIONAL).unwrap()
+		);
+		println!("\t\tMax Blocks: {}", heap.max_blocks);
+		println!(
+			"\t\tMax Bytes: {}",
+			heap.max_bytes.file_size(options::CONVENTIONAL).unwrap()
+		);
+	}
+
+	println!(
+		"\t\tTotal Blocks: {}",
+		current.total_blocks - before.total_blocks
+	);
+	println!(
+		"\t\tTotal Bytes: {}",
+		(current.total_bytes - before.total_bytes)
+			.file_size(options::CONVENTIONAL)
+			.unwrap()
+	);
+
+	current
+}
+
 pub fn get_code(lib: &str) -> Result<String, String> {
 	let url = url::Url::from_str(lib).map_err(err_to_string)?;
 	let segments = url
@@ -60,11 +93,21 @@ pub fn run(filter: String) {
 				let _ = std::panic::catch_unwind(|| {
 					let text = code;
 
+					// Tokenizer
+					println!("Tokenizer");
+					#[cfg(feature = "dhat-on")]
+					#[cfg(feature = "dhat-on")]
+					let stats = dhat::get_stats().unwrap();
 					let tokenizer_timing = timing::start();
 					let (tokens, mut errors) = rslint_parser::tokenize(text.as_str(), 0);
 					let tok_source = rslint_parser::TokenSource::new(text.as_str(), &tokens);
-					println!("\ttokenizer took {:?}", tokenizer_timing.stop());
+					println!("\tTime");
+					println!("\t\ttook {:?}", tokenizer_timing.stop());
+					#[cfg(feature = "dhat-on")]
+					let stats = print_diff(stats, dhat::get_stats().unwrap());
 
+					// Parser
+					println!("Parser");
 					let parser_timing = timing::start();
 					let (events, errors, tokens) = {
 						let mut parser = rslint_parser::Parser::new(
@@ -77,17 +120,25 @@ pub fn run(filter: String) {
 						errors.extend(p_errs);
 						(events, errors, tokens)
 					};
-					println!("\tparser took {:?}", parser_timing.stop());
+					println!("\tTime");
+					println!("\t\ttook {:?}", parser_timing.stop());
+					#[cfg(feature = "dhat-on")]
+					let stats = print_diff(stats, dhat::get_stats().unwrap());
 
+					// TreeSink
+					println!("TreeSink");
 					let treesink_timing = timing::start();
 					let mut tree_sink =
 						rslint_parser::LosslessTreeSink::new(text.as_str(), &tokens);
 					rslint_parser::process(&mut tree_sink, events, errors);
 					let (_green, _parse_errors) = tree_sink.finish();
-					println!("\ttree sink took {:?}", treesink_timing.stop());
+					println!("\tTime");
+					println!("\t\ttook {:?}", treesink_timing.stop());
+					#[cfg(feature = "dhat-on")]
+					let stats = print_diff(stats, dhat::get_stats().unwrap());
 				});
 				let dur = t.stop();
-				println!("total: {:?}", dur);
+				println!("Total Time: {:?}", dur);
 			}
 			Err(e) => println!("{:?}", e),
 		}

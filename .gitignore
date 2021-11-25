@@ -14,3 +14,6 @@ npm-shrinkwrap.json
 pnpm-lock.yaml
 **/node_modules
 **/dist
+
+# https://github.com/nnethercote/dhat-rs output file
+dhat-heap.json
