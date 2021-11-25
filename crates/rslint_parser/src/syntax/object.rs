@@ -115,8 +115,8 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 			let checkpoint = p.checkpoint();
 			let m = p.start();
 			let identifier_member_name = p.at(T![ident]) || p.cur().is_keyword();
-			let member_name =
-				object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member);
+			let member_name = object_member_name(p)
+				.or_missing_with_error(p, js_parse_error::expected_object_member);
 
 			// test object_expr_method
 			// let b = {
