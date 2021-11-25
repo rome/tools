@@ -16,8 +16,4 @@ pnpm-lock.yaml
 **/dist
 
 # https://github.com/nnethercote/dhat-rs output file
-<<<<<<< HEAD
 dhat-heap.json
-=======
-dhat-heap.json
->>>>>>> 59af8329f (memory profiling to xtask coverage-libs)
