@@ -1,3 +1,4 @@
+#[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};

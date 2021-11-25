@@ -17,6 +17,7 @@ use std::ops::Range;
 
 pub use parse_error::*;
 pub use parsed_syntax::{ConditionalParsedSyntax, InvalidParsedSyntax, ParsedSyntax};
+#[allow(deprecated)]
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
 pub use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};

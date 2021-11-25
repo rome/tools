@@ -1,3 +1,4 @@
+#[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
 use crate::parser::ParsedSyntax::{Absent, Present};
@@ -160,6 +161,7 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 				// test_err object_expr_non_ident_literal_prop
 				// let b = {5}
 
+				#[allow(deprecated)]
 				SingleTokenParseRecovery::new(token_set![T![:], T![,]], ERROR).recover(p);
 
 				if p.eat(T![:]) {

@@ -1,4 +1,5 @@
 use super::expr::{assign_expr, identifier_name, lhs_expr, reference_identifier_expression};
+#[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::syntax::object::object_prop_name;
 use crate::{SyntaxKind::*, *};

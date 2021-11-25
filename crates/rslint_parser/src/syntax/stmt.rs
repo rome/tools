@@ -7,12 +7,14 @@ use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+#[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::syntax::js_parse_error;
 use crate::JsSyntaxFeature::StrictMode;
+use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
 use crate::{SyntaxKind::*, *};
 

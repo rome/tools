@@ -3,6 +3,7 @@
 use super::expr::assign_expr;
 use super::pat::pattern;
 use super::typescript::*;
+#[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
 use crate::syntax::function::function_body;

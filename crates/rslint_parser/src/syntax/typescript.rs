@@ -3,6 +3,7 @@
 use super::decl::*;
 use super::expr::{assign_expr, identifier_name, lhs_expr, literal_expression};
 use super::stmt::{semi, statements, variable_declaration_statement};
+#[allow(deprecated)]
 use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::class::class_declaration;
 use crate::syntax::expr::any_reference_member;

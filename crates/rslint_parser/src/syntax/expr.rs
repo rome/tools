@@ -7,6 +7,7 @@ use super::decl::{arrow_body, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
+#[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
