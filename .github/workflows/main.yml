@@ -1,9 +1,10 @@
-name: CI
+
+# This workflow run when something is pushed on main and it does:
+  # - normal checks like in the normal PRs
+  # - runs the coverage and prints in the command line
+name: CI on main
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
@@ -73,4 +74,26 @@ jobs:
         with:
           command: test
           args: --workspace --verbose
+  coverage:
+    name: Test262 coverage
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+       os: [windows-latest, ubuntu-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.56.1
+          profile: minimal
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+      - name: Run Test262 suite
+        continue-on-error: true
+        run:  cargo xtask coverage
 
