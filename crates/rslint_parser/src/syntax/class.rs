@@ -1,3 +1,4 @@
+use crate::parse_recovery::ParseRecovery;
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
 use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -29,6 +30,8 @@ pub(super) fn class_expression(p: &mut Parser) -> CompletedMarker {
 // class extends {}
 // class
 // class foo { set {} }
+// class A extends bar extends foo {}
+// class A extends bar, foo {}
 /// Parses a class declaration
 pub(super) fn class_declaration(p: &mut Parser) -> CompletedMarker {
 	class(p, ClassKind::Declaration)
@@ -482,6 +485,38 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 			if matches!(member_name, "get" | "set") && !is_at_line_break_or_generator {
 				let is_getter = member_name == "get";
 
+				// test getter_class_member
+				// class Getters {
+				// 	get foo() {}
+				// 	get static() {}
+				// 	static get bar() {}
+				// 	get "baz"() {}
+				// 	get ["a" + "b"]() {}
+				// 	get 5() {}
+				// 	get #private() {}
+				// }
+				// class NotGetters {
+				// 	get() {}
+				// 	async get() {}
+				// 	static get() {}
+				// }
+
+				// test setter_class_number
+				// class Setters {
+				// 	set foo(a) {}
+				// 	set static(a) {}
+				// 	static set bar(a) {}
+				// 	set "baz"(a) {}
+				// 	set ["a" + "b"](a) {}
+				// 	set 5(a) {}
+				// 	set #private(a) {}
+				// }
+				// class NotSetters {
+				// 	set(a) {}
+				// 	async set(a) {}
+				// 	static set(a) {}
+				// }
+
 				// The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
 				// out that the 'get' or 'set' isn't a member name in this context but instead are the
 				// 'get'/'set' keywords for getters/setters. That's why we need to undo the member name node,
@@ -528,11 +563,12 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 	let err = p
 		.err_builder("expected `;`, a property, or a method for a class body, but found none")
 		.primary(p.cur_tok().range, "");
-	p.err_recover(
-		err,
+	ParseRecovery::with_error(
 		token_set![T![;], T![ident], T![async], T![yield], T!['}'], T![#]],
-		false,
-	);
+		JS_UNKNOWN_MEMBER,
+		err,
+	)
+	.recover(p);
 
 	member_marker.complete(p, JS_UNKNOWN_MEMBER)
 }

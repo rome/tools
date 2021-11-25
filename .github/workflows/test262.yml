@@ -93,7 +93,7 @@ jobs:
           issue-number: ${{ steps.pr-number.outputs.pr }}
           body-includes: Test262 comparison coverage results on ${{ matrix.os }}
 
-      - name: Update comment
+      - name: Update existing comment
         if: github.event_name == 'pull_request' && steps.previous-comment.outputs.comment-id
         uses: peter-evans/create-or-update-comment@v1.4.5
         continue-on-error: true

@@ -190,58 +190,6 @@ impl<'t> Parser<'t> {
 		}
 	}
 
-	/// Recover from an error with a recovery set or by using a `{` or `}`.
-	pub fn err_recover(
-		&mut self,
-		error: impl Into<ParserError>,
-		recovery: TokenSet,
-		include_braces: bool,
-	) -> Option<()> {
-		if self.state.no_recovery {
-			return None;
-		}
-
-		match self.cur() {
-			T!['{'] | T!['}'] if include_braces => {
-				self.error(error);
-				return Some(());
-			}
-			_ => (),
-		}
-
-		if self.at_ts(recovery) || self.cur() == EOF {
-			self.error(error);
-			return Some(());
-		}
-
-		let m = self.start();
-		self.error(error);
-		self.bump_any();
-		m.complete(self, SyntaxKind::ERROR);
-		Some(())
-	}
-
-	/// Recover from an error but don't add an error to the events
-	pub fn err_recover_no_err(&mut self, recovery: TokenSet, include_braces: bool) {
-		match self.cur() {
-			T!['{'] | T!['}'] if include_braces => {
-				return;
-			}
-			EOF => {
-				return;
-			}
-			_ => (),
-		}
-
-		if self.at_ts(recovery) {
-			return;
-		}
-
-		let m = self.start();
-		self.bump_any();
-		m.complete(self, SyntaxKind::ERROR);
-	}
-
 	/// Starts a new node in the syntax tree. All nodes and tokens
 	/// consumed between the `start` and the corresponding `Marker::complete`
 	/// belong to the same node.
@@ -507,11 +455,7 @@ impl<'t> Parser<'t> {
 		start..end
 	}
 
-	pub fn expr_with_semi_recovery(
-		&mut self,
-		assign: bool,
-		unknown_syntax_kind: SyntaxKind,
-	) -> Option<CompletedMarker> {
+	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> Option<CompletedMarker> {
 		let func = if assign {
 			syntax::expr::assign_expr
 		} else {
@@ -523,10 +467,10 @@ impl<'t> Parser<'t> {
 			let err = self
 				.err_builder("expected an expression, but found `;` instead")
 				.primary(self.cur_tok().range, "");
-
 			self.error(err);
 			self.bump_any();
-			m.complete(self, unknown_syntax_kind);
+			m.complete(self, SyntaxKind::JS_UNKNOWN_EXPRESSION);
+
 			return None;
 		}
 

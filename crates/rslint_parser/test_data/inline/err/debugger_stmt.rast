@@ -1,0 +1,53 @@
+0: JS_ROOT@0..61
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..60
+    0: JS_FUNCTION_DECLARATION@0..60
+      0: FUNCTION_KW@0..9 "function" [] [Whitespace(" ")]
+      1: JS_IDENTIFIER_BINDING@9..12
+        0: IDENT@9..12 "foo" [] []
+      2: JS_PARAMETER_LIST@12..15
+        0: L_PAREN@12..13 "(" [] []
+        1: LIST@13..13
+        2: R_PAREN@13..15 ")" [] [Whitespace(" ")]
+      3: JS_FUNCTION_BODY@15..60
+        0: L_CURLY@15..16 "{" [] []
+        1: LIST@16..16
+        2: LIST@16..58
+          0: JS_DEBUGGER_STATEMENT@16..27
+            0: DEBUGGER_KW@16..27 "debugger" [Whitespace("\n\t")] [Whitespace(" ")]
+            1: (empty)
+          1: JS_BLOCK_STATEMENT@27..58
+            0: L_CURLY@27..28 "{" [] []
+            1: LIST@28..55
+              0: JS_VARIABLE_DECLARATION_STATEMENT@28..55
+                0: JS_VARIABLE_DECLARATION@28..54
+                  0: VAR_KW@28..35 "var" [Whitespace("\n\t\t")] [Whitespace(" ")]
+                  1: LIST@35..54
+                    0: JS_VARIABLE_DECLARATOR@35..54
+                      0: SINGLE_PATTERN@35..45
+                        0: NAME@35..45
+                          0: IDENT@35..45 "something" [] [Whitespace(" ")]
+                      1: JS_EQUAL_VALUE_CLAUSE@45..54
+                        0: EQ@45..47 "=" [] [Whitespace(" ")]
+                        1: JS_STRING_LITERAL_EXPRESSION@47..54
+                          0: JS_STRING_LITERAL@47..54 "\"lorem\"" [] []
+                1: SEMICOLON@54..55 ";" [] []
+            2: R_CURLY@55..58 "}" [Whitespace("\n\t")] []
+        3: R_CURLY@58..60 "}" [Whitespace("\n")] []
+  3: EOF@60..61 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
+  ┌─ debugger_stmt.js:2:11
+  │
+2 │     debugger {
+  │     -------- ^ An explicit or implicit semicolon is expected here...
+  │     │         
+  │     ...Which is required to end this statement
+
+--
+function foo() {
+	debugger {
+		var something = "lorem";
+	}
+}

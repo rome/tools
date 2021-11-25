@@ -1,3 +1,4 @@
+use crate::parse_recovery::ParseRecovery;
 use crate::syntax::decl::{formal_param_pat, parameter_list, BASE_METHOD_RECOVERY_SET};
 use crate::syntax::expr::{assign_expr, expr, identifier_name, literal_expression};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -47,7 +48,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
 fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 	match p.cur() {
-		// test object_expr_getter_setter
+		// test object_expr_getter
 		// let a = {
 		//  get foo() {
 		//    return foo;
@@ -61,7 +62,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 			Some(getter_object_member(p))
 		}
 
-		// test object_expr_getter_setter
+		// test object_expr_setter
 		// let b = {
 		//  set [foo](bar) {
 		//     return 5;
@@ -104,8 +105,14 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 
 			// test object_expr_method
 			// let b = {
-			//  foo() {},
+			// foo() {},
+			// "bar"(a, b, c) {},
+			// ["foo" + "bar"](a) {},
+			// 5(...rest) {}
 			// }
+
+			// test_err object_expr_method
+			// let b = { foo) }
 			if p.at(T!['(']) || p.at(T![<]) {
 				method_object_member_body(p).ok()?;
 				Some(m.complete(p, JS_METHOD_OBJECT_MEMBER))
@@ -139,7 +146,7 @@ fn object_member(p: &mut Parser) -> Option<CompletedMarker> {
 				// test_err object_expr_non_ident_literal_prop
 				// let b = {5}
 
-				p.err_recover_no_err(token_set![T![:], T![,]], false);
+				ParseRecovery::new(token_set![T![:], T![,]], ERROR).recover(p);
 
 				if p.eat(T![:]) {
 					assign_expr(p);
@@ -205,7 +212,7 @@ pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker
 	}
 }
 
-// test object_prop_name
+// test object_member_name
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 /// Parses a `JsAnyObjectMemberName` and returns its completion marker
 fn object_member_name(p: &mut Parser) -> Option<CompletedMarker> {
@@ -226,7 +233,6 @@ pub(crate) fn computed_member_name(p: &mut Parser) -> CompletedMarker {
 
 pub(super) fn literal_member_name(p: &mut Parser) -> Option<CompletedMarker> {
 	let m = p.start();
-
 	match p.cur() {
 		JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident] => {
 			p.bump_any();
@@ -298,7 +304,7 @@ fn method_object_member_body(p: &mut Parser) -> Result<(), ()> {
 			.err_builder("expected a method definition, but found none")
 			.primary(p.cur_tok().range, "");
 
-		p.err_recover(err, BASE_METHOD_RECOVERY_SET, false);
+		ParseRecovery::with_error(BASE_METHOD_RECOVERY_SET, JS_UNKNOWN_MEMBER, err).recover(p);
 		Err(())
 	};
 

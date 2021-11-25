@@ -7,6 +7,7 @@ use super::decl::{arrow_body, parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
+use crate::parse_recovery::ParseRecovery;
 use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
 use crate::syntax::object::object_expr;
@@ -244,6 +245,7 @@ fn assign_expr_recursive(
 // function *foo() {
 //  yield foo;
 //  yield* foo;
+//  yield;
 // }
 pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
@@ -705,6 +707,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 
 // test_err paren_or_arrow_expr_invalid_params
 // (5 + 5) => {}
+// (a, ,b) => {}
 pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarker {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
@@ -749,7 +752,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
                     .primary(temp.cur_tok().range, "");
 
-						temp.err_recover(err, EXPR_RECOVERY_SET, false);
+						ParseRecovery::with_error(EXPR_RECOVERY_SET, JS_UNKNOWN_PATTERN, err)
+							.recover(&mut temp);
 					}
 				}
 				break;
@@ -1085,7 +1089,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let err = p
 				.err_builder("Expected an expression, but found none")
 				.primary(p.cur_tok().range, "Expected an expression here");
-			p.err_recover(err, p.state.expr_recovery_set, true);
+			ParseRecovery::with_error(p.state.expr_recovery_set, JS_UNKNOWN_EXPRESSION, err)
+				.enabled_braces_check()
+				.recover(p);
 			return None;
 		}
 	};
@@ -1105,7 +1111,9 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 				.err_builder("Expected an identifier, but found none")
 				.primary(p.cur_tok().range, "");
 
-			p.err_recover(err, p.state.expr_recovery_set, true);
+			ParseRecovery::with_error(p.state.expr_recovery_set, JS_UNKNOWN_EXPRESSION, err)
+				.enabled_braces_check()
+				.recover(p);
 			None
 		}
 	}

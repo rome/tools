@@ -1,0 +1,186 @@
+0: JS_ROOT@0..124
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..123
+    0: JS_VARIABLE_DECLARATION_STATEMENT@0..10
+      0: JS_VARIABLE_DECLARATION@0..10
+        0: LET_KW@0..4 "let" [] [Whitespace(" ")]
+        1: LIST@4..10
+          0: JS_VARIABLE_DECLARATOR@4..10
+            0: OBJECT_PATTERN@4..10
+              0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
+              1: LIST@6..8
+                0: JS_NUMBER_LITERAL_EXPRESSION@6..8
+                  0: JS_NUMBER_LITERAL@6..8 "5" [] [Whitespace(" ")]
+              2: R_CURLY@8..10 "}" [] [Whitespace(" ")]
+      1: (empty)
+    1: JS_UNKNOWN_STATEMENT@10..12
+      0: R_CURLY@10..12 "}" [] [Whitespace(" ")]
+    2: JS_UNKNOWN_STATEMENT@12..14
+      0: EQ@12..14 "=" [] [Whitespace(" ")]
+    3: JS_BLOCK_STATEMENT@14..29
+      0: L_CURLY@14..16 "{" [] [Whitespace(" ")]
+      1: LIST@16..28
+        0: JS_LABELED_STATEMENT@16..28
+          0: IDENT@16..20 "eval" [] []
+          1: COLON@20..22 ":" [] [Whitespace(" ")]
+          2: JS_EXPRESSION_STATEMENT@22..28
+            0: JS_STRING_LITERAL_EXPRESSION@22..28
+              0: JS_STRING_LITERAL@22..28 "\"foo\"" [] [Whitespace(" ")]
+            1: (empty)
+      2: R_CURLY@28..29 "}" [] []
+    4: JS_EMPTY_STATEMENT@29..30
+      0: SEMICOLON@29..30 ";" [] []
+    5: JS_VARIABLE_DECLARATION_STATEMENT@30..62
+      0: JS_VARIABLE_DECLARATION@30..61
+        0: LET_KW@30..35 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@35..61
+          0: JS_VARIABLE_DECLARATOR@35..61
+            0: OBJECT_PATTERN@35..44
+              0: L_CURLY@35..37 "{" [] [Whitespace(" ")]
+              1: LIST@37..42
+                0: JS_UNKNOWN_PATTERN@37..42
+                  0: IDENT@37..42 "eval" [] [Whitespace(" ")]
+              2: R_CURLY@42..44 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@44..61
+              0: EQ@44..46 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@46..61
+                0: L_CURLY@46..48 "{" [] [Whitespace(" ")]
+                1: LIST@48..60
+                  0: JS_PROPERTY_OBJECT_MEMBER@48..60
+                    0: JS_LITERAL_MEMBER_NAME@48..52
+                      0: IDENT@48..52 "eval" [] []
+                    1: COLON@52..54 ":" [] [Whitespace(" ")]
+                    2: JS_STRING_LITERAL_EXPRESSION@54..60
+                      0: JS_STRING_LITERAL@54..60 "\"foo\"" [] [Whitespace(" ")]
+                2: R_CURLY@60..61 "}" [] []
+      1: SEMICOLON@61..62 ";" [] []
+    6: JS_VARIABLE_DECLARATION_STATEMENT@62..94
+      0: JS_VARIABLE_DECLARATION@62..93
+        0: LET_KW@62..67 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@67..93
+          0: JS_VARIABLE_DECLARATOR@67..93
+            0: OBJECT_PATTERN@67..76
+              0: L_CURLY@67..69 "{" [] [Whitespace(" ")]
+              1: LIST@69..74
+                0: JS_NUMBER_LITERAL_EXPRESSION@69..70
+                  0: JS_NUMBER_LITERAL@69..70 "5" [] []
+                1: COMMA@70..72 "," [] [Whitespace(" ")]
+                2: JS_NUMBER_LITERAL_EXPRESSION@72..74
+                  0: JS_NUMBER_LITERAL@72..74 "6" [] [Whitespace(" ")]
+              2: R_CURLY@74..76 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@76..93
+              0: EQ@76..78 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@78..93
+                0: L_CURLY@78..80 "{" [] [Whitespace(" ")]
+                1: LIST@80..92
+                  0: JS_PROPERTY_OBJECT_MEMBER@80..92
+                    0: JS_LITERAL_MEMBER_NAME@80..84
+                      0: IDENT@80..84 "eval" [] []
+                    1: COLON@84..86 ":" [] [Whitespace(" ")]
+                    2: JS_STRING_LITERAL_EXPRESSION@86..92
+                      0: JS_STRING_LITERAL@86..92 "\"foo\"" [] [Whitespace(" ")]
+                2: R_CURLY@92..93 "}" [] []
+      1: SEMICOLON@93..94 ";" [] []
+    7: JS_VARIABLE_DECLARATION_STATEMENT@94..123
+      0: JS_VARIABLE_DECLARATION@94..122
+        0: LET_KW@94..99 "let" [Whitespace("\n")] [Whitespace(" ")]
+        1: LIST@99..122
+          0: JS_VARIABLE_DECLARATOR@99..122
+            0: OBJECT_PATTERN@99..118
+              0: L_CURLY@99..101 "{" [] [Whitespace(" ")]
+              1: LIST@101..116
+                0: KEY_VALUE_PATTERN@101..112
+                  0: NAME@101..108
+                    0: IDENT@101..108 "default" [] []
+                  1: COLON@108..110 ":" [] [Whitespace(" ")]
+                  2: JS_UNKNOWN_PATTERN@110..112
+                    0: COMMA@110..112 "," [] [Whitespace(" ")]
+                1: (empty)
+                2: SINGLE_PATTERN@112..116
+                  0: NAME@112..116
+                    0: IDENT@112..116 "bar" [] [Whitespace(" ")]
+              2: R_CURLY@116..118 "}" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@118..122
+              0: EQ@118..120 "=" [] [Whitespace(" ")]
+              1: JS_OBJECT_EXPRESSION@120..122
+                0: L_CURLY@120..121 "{" [] []
+                1: LIST@121..121
+                2: R_CURLY@121..122 "}" [] []
+      1: SEMICOLON@122..123 ";" [] []
+  3: EOF@123..124 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ object_binding_pattern.js:1:7
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │       ^
+
+--
+error[SyntaxError]: Object and Array patterns require initializers
+  ┌─ object_binding_pattern.js:1:5
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │     ^^^^^ this pattern is declared, but it is not given an initialized value
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ object_binding_pattern.js:1:11
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │           ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ object_binding_pattern.js:1:13
+  │
+1 │ let { 5 } } = { eval: "foo" };
+  │             ^ Expected a statement or declaration here
+
+--
+error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
+  ┌─ object_binding_pattern.js:2:7
+  │
+2 │ let { eval } = { eval: "foo" };
+  │       ^^^^
+
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ object_binding_pattern.js:2:7
+  │
+2 │ let { eval } = { eval: "foo" };
+  │       ^^^^
+
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ object_binding_pattern.js:3:7
+  │
+3 │ let { 5, 6 } = { eval: "foo" };
+  │       ^
+
+--
+error[SyntaxError]: Expected an identifier for a pattern, but found none
+  ┌─ object_binding_pattern.js:3:10
+  │
+3 │ let { 5, 6 } = { eval: "foo" };
+  │          ^
+
+--
+error[SyntaxError]: Expected an identifier or pattern, but found none
+  ┌─ object_binding_pattern.js:4:16
+  │
+4 │ let { default: , bar } = {};
+  │                ^
+
+--
+error[SyntaxError]: expected `,` but instead found `bar`
+  ┌─ object_binding_pattern.js:4:18
+  │
+4 │ let { default: , bar } = {};
+  │                  ^^^ unexpected
+
+--
+let { 5 } } = { eval: "foo" };
+let { eval } = { eval: "foo" };
+let { 5, 6 } = { eval: "foo" };
+let { default: , bar } = {};

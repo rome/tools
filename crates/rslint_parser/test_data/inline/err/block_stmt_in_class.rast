@@ -9,10 +9,10 @@
       2: L_CURLY@7..8 "{" [] []
       3: LIST@8..9
         0: JS_UNKNOWN_MEMBER@8..9
-          0: ERROR@8..9
+          0: JS_UNKNOWN_MEMBER@8..9
             0: L_CURLY@8..9 "{" [] []
       4: R_CURLY@9..10 "}" [] []
-    1: ERROR@10..11
+    1: JS_UNKNOWN_STATEMENT@10..11
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Whitespace("\n")] []
 --

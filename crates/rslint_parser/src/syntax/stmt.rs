@@ -7,6 +7,7 @@ use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use crate::parse_recovery::ParseRecovery;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::{SyntaxKind::*, *};
@@ -131,17 +132,28 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 
 			// We must explicitly handle this case or else infinite recursion can happen
 			if p.at_ts(token_set![T!['}'], T![import], T![export]]) {
-				p.err_and_bump(err, ERROR);
+				p.err_and_bump(err, JS_UNKNOWN_STATEMENT);
 				return None;
 			}
-
-			p.err_recover(err, recovery_set.into().unwrap_or(STMT_RECOVERY_SET), false);
+			ParseRecovery::with_error(
+				recovery_set.into().unwrap_or(STMT_RECOVERY_SET),
+				JS_UNKNOWN_STATEMENT,
+				err,
+			)
+			.recover(p);
 			return None;
 		}
 	};
 
 	Some(res)
 }
+
+// test_err double_label
+// label1: {
+// 	label2: {
+// 		label1: {}
+// 	}
+// }
 
 fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 	let start = p.cur_tok().range.start;
@@ -189,7 +201,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 		m.complete(p, ERROR);
 	}
 
-	let mut expr = p.expr_with_semi_recovery(false, ERROR)?;
+	let mut expr = p.expr_with_semi_recovery(false)?;
 	// Labelled stmt
 	if expr.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION && p.at(T![:]) {
 		expr.change_kind(p, NAME);
@@ -217,7 +229,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 					&format!("`{}` is first used as a label here", text),
 				)
 				.primary(
-					p.cur_tok().range,
+					text_range,
 					&format!("a second use of `{}` here is not allowed", text),
 				);
 
@@ -241,6 +253,14 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 /// A debugger statement such as `debugger;`
 // test debugger_stmt
 // debugger;
+
+// test_err debugger_stmt
+// function foo() {
+// 	debugger {
+// 		var something = "lorem";
+// 	}
+// }
+
 pub fn debugger_stmt(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	let range = p.cur_tok().range;
@@ -273,7 +293,7 @@ pub fn throw_stmt(p: &mut Parser) -> CompletedMarker {
 
 		p.error(err);
 	} else {
-		p.expr_with_semi_recovery(false, ERROR);
+		p.expr_with_semi_recovery(false);
 	}
 	semi(p, start..p.cur_tok().range.end);
 	m.complete(p, JS_THROW_STATEMENT)
@@ -365,7 +385,7 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 	let start = p.cur_tok().range.start;
 	p.expect(T![return]);
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
-		p.expr_with_semi_recovery(false, ERROR);
+		p.expr_with_semi_recovery(false);
 	}
 	semi(p, start..p.cur_tok().range.end);
 	let complete = m.complete(p, JS_RETURN_STATEMENT);
@@ -579,6 +599,7 @@ pub fn if_stmt(p: &mut Parser) -> CompletedMarker {
 	// if (true) else
 	// if else {}
 	// if () {} else {}
+	// if (true)}}}} {}
 	let m = p.start();
 	p.expect(T![if]);
 
@@ -655,6 +676,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 // let bar, foo;
 // const a = 5;
 // const { foo: [bar], baz } = {};
+// let foo = "lorem", bar = "ipsum", third = "value", fourth = 6;
 pub fn variable_declaration_statement(p: &mut Parser) -> CompletedMarker {
 	// test_err var_decl_err
 	// var a =;
@@ -791,7 +813,7 @@ fn variable_initializer(p: &mut Parser) {
 	let m = p.start();
 
 	p.expect(T![=]);
-	p.expr_with_semi_recovery(true, ERROR);
+	p.expr_with_semi_recovery(true);
 
 	m.complete(p, SyntaxKind::JS_EQUAL_VALUE_CLAUSE);
 }
@@ -924,6 +946,7 @@ pub fn for_stmt(p: &mut Parser) -> CompletedMarker {
 	// test_err for_stmt_err
 	// for ;; {}
 	// for let i = 5; i < 10; i++ {}
+	// for let i = 5; i < 10; ++i {}
 	let m = p.start();
 	p.expect(T![for]);
 	// FIXME: This should emit an error for non-for-of
@@ -984,7 +1007,9 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 					"Expected the start to a case or default clause here",
 				);
 
-			p.err_recover(err, STMT_RECOVERY_SET, true);
+			ParseRecovery::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
+				.enabled_braces_check()
+				.recover(p);
 		}
 	}
 	None
@@ -1019,7 +1044,7 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		if let Some(range) = switch_clause(&mut *temp) {
+		if let Some(default_range) = switch_clause(&mut *temp) {
 			if let Some(ref err_range) = first_default {
 				let err = temp
 					.err_builder(
@@ -1029,11 +1054,11 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 						err_range.to_owned(),
 						"the first default clause is defined here",
 					)
-					.primary(range, "a second clause here is not allowed");
+					.primary(default_range, "a second clause here is not allowed");
 
 				temp.error(err);
 			} else {
-				first_default = Some(range);
+				first_default = Some(default_range);
 			}
 		}
 	}
@@ -1108,8 +1133,11 @@ fn catch_declaration(p: &mut Parser) {
 /// }
 /// ```
 // test try_stmt
+// try {} catch {}
 // try {} catch (e) {}
 // try {} catch {} finally {}
+// try {} catch (e) {} finally {}
+// try {} finally {}
 pub fn try_stmt(p: &mut Parser) -> CompletedMarker {
 	// TODO: recover from `try catch` and `try finally`. The issue is block_items
 	// will cause infinite recursion because parsing a stmt would not consume the catch token
