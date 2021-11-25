@@ -2,7 +2,7 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
 use crate::parser::ParsedSyntax::{Absent, Present};
-use crate::syntax::decl::{formal_param_pat, parameter_list};
+use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list};
 use crate::syntax::expr::{assign_expr, expr};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
@@ -214,7 +214,7 @@ fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member_name);
 
 	p.state.allow_object_expr = p.expect_required(T!['(']);
-	formal_param_pat(p);
+	parse_formal_param_pat(p).or_missing(p);
 	p.expect_required(T![')']);
 
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
@@ -307,7 +307,7 @@ fn method_object_member_body(p: &mut Parser) {
 	p.state.in_function = true;
 
 	ts_parameter_types(p);
-	parameter_list(p);
+	parse_parameter_list(p);
 	ts_return_type(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 

@@ -3,7 +3,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-11).
 
-use super::decl::{arrow_body, parameter_list};
+use super::decl::{arrow_body, parse_parameter_list};
 use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
@@ -771,7 +771,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			let expr = assign_expr(&mut *temp);
 			if expr.is_some() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
-				params_marker = Some(parameter_list(&mut *temp));
+				params_marker = Some(parse_parameter_list(&mut *temp));
 				break;
 			}
 
@@ -812,7 +812,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				..p.state.clone()
 			});
 			p.rewind(checkpoint);
-			parameter_list(p);
+			parse_parameter_list(p);
 			if p.at(T![:]) {
 				if let Some(mut ret) = ts_type_or_type_predicate_ann(p, T![:]) {
 					ret.err_if_not_ts(
@@ -849,7 +849,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if params_marker.is_none() {
 				// Rewind the parser so we can reparse as formal parameters
 				p.rewind(checkpoint);
-				parameter_list(p);
+				parse_parameter_list(p);
 			}
 
 			if p.at(T![:]) {
@@ -978,7 +978,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					let m = p.start();
 					p.bump_remap(T![async]);
 					if p.at(T!['(']) {
-						parameter_list(p);
+						parse_parameter_list(p);
 					} else {
 						let m = p.start();
 						// test_err async_arrow_expr_await_parameter

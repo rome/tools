@@ -21,7 +21,7 @@ pub const BASE_METHOD_RECOVERY_SET: TokenSet = token_set![
 ];
 
 #[allow(clippy::unnecessary_unwrap)]
-pub(super) fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
+pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	if p.typescript() {
 		if let Some(modifier) = maybe_eat_incorrect_modifier(p) {
@@ -37,7 +37,7 @@ pub(super) fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 		pattern
 	} else {
 		m.abandon(p);
-		return None;
+		return ParsedSyntax::Absent;
 	};
 
 	let pat_range = pat.range(p);
@@ -99,20 +99,19 @@ pub(super) fn formal_param_pat(p: &mut Parser) -> Option<CompletedMarker> {
 
 		kind = ASSIGN_PATTERN;
 	}
-
-	Some(m.complete(p, kind))
+	ParsedSyntax::Present(m.complete(p, kind))
 }
 
-pub(super) fn parameter_list(p: &mut Parser) -> CompletedMarker {
+pub(super) fn parse_parameter_list(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	parameters_list(p, formal_param_pat);
+	parse_parameters_list(p, parse_formal_param_pat);
 	m.complete(p, JS_PARAMETER_LIST)
 }
 
 /// Parses a (param, param) list into the current active node
-pub(super) fn parameters_list(
+pub(super) fn parse_parameters_list(
 	p: &mut Parser,
-	parse_param: impl Fn(&mut Parser) -> Option<CompletedMarker>,
+	parse_param: impl Fn(&mut Parser) -> ParsedSyntax,
 ) {
 	let mut first = true;
 
@@ -189,7 +188,7 @@ pub(super) fn parameters_list(
 		} else {
 			// test_err formal_params_no_binding_element
 			// function foo(true) {}
-			if let Some(res) = parse_param(p) {
+			if let Some(res) = parse_param(p).ok() {
 				if res.kind() == ASSIGN_PATTERN && p.state.in_binding_list_for_signature {
 					let err = p
 						.err_builder(

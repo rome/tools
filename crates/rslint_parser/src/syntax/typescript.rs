@@ -504,7 +504,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 		if p.at(T![<]) {
 			no_recover!(p, ts_type_params(p));
 		}
-		parameter_list(p);
+		parse_parameter_list(p);
 		if p.at(T![:]) {
 			ts_type_or_type_predicate_ann(p, T![:]);
 		}
@@ -569,7 +569,7 @@ pub fn ts_signature_member(p: &mut Parser, construct_sig: bool) -> Option<Comple
 		no_recover!(p, ts_type_params(p));
 	}
 
-	parameter_list(&mut *p.with_state(ParserState {
+	parse_parameter_list(&mut *p.with_state(ParserState {
 		in_binding_list_for_signature: true,
 		..p.state.clone()
 	}));
@@ -703,7 +703,7 @@ pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<Comple
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
-	parameter_list(p);
+	parse_parameter_list(p);
 	if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {
 		m.abandon(p);
 		return None;

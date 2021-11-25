@@ -1,6 +1,6 @@
 use crate::parser::ConditionalParsedSyntax::Valid;
 use crate::parser::ParsedSyntax;
-use crate::syntax::decl::parameter_list;
+use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
 use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::{block_impl, is_semi};
@@ -100,7 +100,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 		type_parameters.or_missing(guard);
 	}
 
-	parameter_list(guard);
+	parse_parameter_list(guard);
 
 	let return_type = parse_ts_return_type(guard).exclusive_for(&TypeScript, guard, |p, marker| {
 		p.err_builder("return types can only be used in TypeScript files")

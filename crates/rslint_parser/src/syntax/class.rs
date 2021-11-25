@@ -1,7 +1,7 @@
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
-use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
+use crate::syntax::decl::{parse_formal_param_pat, parse_parameter_list, parse_parameters_list};
 use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
@@ -553,7 +553,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					formal_param_pat(p);
+					parse_formal_param_pat(p).or_missing(p);
 					p.expect_required(T![')']);
 					function_body(p)
 						.or_missing_with_error(p, js_parse_error::expected_function_body);
@@ -719,7 +719,7 @@ fn method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 fn method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	optional_member_token(p);
 	ts_parameter_types(p);
-	parameter_list(p);
+	parse_parameter_list(p);
 	ts_return_type(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
@@ -779,11 +779,11 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 
 fn constructor_parameter_list(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
-	parameters_list(p, constructor_parameter);
+	parse_parameters_list(p, constructor_parameter);
 	m.complete(p, JS_CONSTRUCTOR_PARAMETER_LIST)
 }
 
-fn constructor_parameter(p: &mut Parser) -> Option<CompletedMarker> {
+fn constructor_parameter(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
@@ -824,12 +824,12 @@ fn constructor_parameter(p: &mut Parser) -> Option<CompletedMarker> {
 
 	if !has_accessibility && !has_readonly {
 		m.abandon(p);
-		formal_param_pat(p)
+		parse_formal_param_pat(p)
 	} else {
-		if let Some(ref mut pat) = formal_param_pat(p) {
+		if let Some(ref mut pat) = parse_formal_param_pat(p).ok() {
 			pat.undo_completion(p).abandon(p);
 		}
-		Some(m.complete(p, TS_CONSTRUCTOR_PARAM))
+		Present(m.complete(p, TS_CONSTRUCTOR_PARAM))
 	}
 }
 
