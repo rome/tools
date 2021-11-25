@@ -1,5 +1,5 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::{ParseResult, ParsedSyntax};
+use crate::parser::ParsedSyntax;
 use crate::syntax::decl::{formal_param_pat, parameter_list, parameters_list};
 use crate::syntax::expr::assign_expr;
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
@@ -11,6 +11,7 @@ use crate::syntax::typescript::{
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
 };
 use crate::syntax::JsParseErrors;
+use crate::ParsedSyntax::Present;
 use crate::{CompletedMarker, Event, Marker, Parser, ParserState, StrictMode, TokenSet};
 use rslint_syntax::SyntaxKind::*;
 use rslint_syntax::{SyntaxKind, T};
@@ -232,10 +233,10 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 	if declare && !has_access_modifier {
 		// declare() and declare: foo
 		if is_method_class_member(p, offset) {
-			literal_member_name(p).unwrap(); // bump declare as identifier
+			literal_member_name(p).ok().unwrap(); // bump declare as identifier
 			return method_class_member_body(p, member_marker);
 		} else if is_property_class_member(p, offset) {
-			literal_member_name(p).unwrap(); // bump declare as identifier
+			literal_member_name(p).ok().unwrap(); // bump declare as identifier
 			return property_class_member_body(p, member_marker);
 		} else {
 			let msg = if p.typescript() {
@@ -837,9 +838,9 @@ fn ts_access_modifier<'a>(p: &'a Parser) -> Option<&'a str> {
 }
 
 /// Parses a `JsAnyClassMemberName` and returns its completion marker
-fn class_member_name(p: &mut Parser) -> ParseResult {
+fn class_member_name(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
-		T![#] => Ok(private_class_member_name(p)),
+		T![#] => Present(private_class_member_name(p)),
 		T!['['] => computed_member_name(p),
 		_ => literal_member_name(p),
 	}

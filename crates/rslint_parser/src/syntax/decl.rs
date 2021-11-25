@@ -4,7 +4,7 @@ use super::expr::assign_expr;
 use super::pat::pattern;
 use super::typescript::*;
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::{AbsentError, ParseResult};
+use crate::parser::ParsedSyntax;
 use crate::syntax::function::function_body;
 use crate::{SyntaxKind::*, *};
 
@@ -227,7 +227,7 @@ pub(super) fn parameters_list(
 	p.expect_required(T![')']);
 }
 
-pub(super) fn arrow_body(p: &mut Parser) -> ParseResult {
+pub(super) fn arrow_body(p: &mut Parser) -> ParsedSyntax {
 	let mut guard = p.with_state(ParserState {
 		in_function: true,
 		..p.state.clone()
@@ -235,6 +235,6 @@ pub(super) fn arrow_body(p: &mut Parser) -> ParseResult {
 	if guard.at(T!['{']) {
 		function_body(&mut *guard)
 	} else {
-		assign_expr(&mut *guard).ok_or(AbsentError)
+		assign_expr(&mut *guard).into()
 	}
 }

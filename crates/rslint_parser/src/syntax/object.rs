@@ -1,6 +1,7 @@
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::{AbsentError, ParseResult, ParsedSyntax};
-use crate::syntax::decl::{formal_param_pat, parameter_list, BASE_METHOD_RECOVERY_SET};
+use crate::parser::ParsedSyntax;
+use crate::parser::ParsedSyntax::{Absent, Present};
+use crate::syntax::decl::{formal_param_pat, parameter_list};
 use crate::syntax::expr::{assign_expr, expr, identifier_name, literal_expression};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::JsParseErrors;
@@ -57,7 +58,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 }
 
 /// An individual object property such as `"a": b` or `5: 6 + 6`.
-fn object_member(p: &mut Parser) -> ParseResult {
+fn object_member(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		// test object_expr_getter
 		// let a = {
@@ -100,7 +101,7 @@ fn object_member(p: &mut Parser) -> ParseResult {
 			let m = p.start();
 			p.bump_any();
 			assign_expr(p);
-			Ok(m.complete(p, JS_SPREAD))
+			Present(m.complete(p, JS_SPREAD))
 		}
 
 		T![*] => {
@@ -128,14 +129,14 @@ fn object_member(p: &mut Parser) -> ParseResult {
 			// let b = { foo) }
 			if p.at(T!['(']) || p.at(T![<]) {
 				method_object_member_body(p);
-				Ok(m.complete(p, JS_METHOD_OBJECT_MEMBER))
+				Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 			} else if let Some(mut member_name) = member_name {
 				// test object_expr_assign_prop
 				// let b = { foo = 4, foo = bar }
 				if p.eat(T![=]) {
 					member_name.change_kind(p, NAME);
 					assign_expr(p);
-					return Ok(m.complete(p, INITIALIZED_PROP));
+					return Present(m.complete(p, INITIALIZED_PROP));
 				}
 
 				// ({foo})
@@ -144,13 +145,13 @@ fn object_member(p: &mut Parser) -> ParseResult {
 					&& (matches!(p.cur(), T![,] | T!['}']) || p.has_linebreak_before_n(0))
 				{
 					member_name.change_kind(p, JS_REFERENCE_IDENTIFIER_EXPRESSION);
-					Ok(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
+					Present(m.complete(p, JS_SHORTHAND_PROPERTY_OBJECT_MEMBER))
 				} else {
 					// let b = { a: true }
 					// If the member name was a literal OR we're at a colon
 					p.expect_required(T![:]);
 					assign_expr(p);
-					Ok(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
+					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				}
 			} else {
 				// test_err object_expr_error_prop_name
@@ -163,7 +164,7 @@ fn object_member(p: &mut Parser) -> ParseResult {
 
 				if p.eat(T![:]) {
 					assign_expr(p);
-					Ok(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
+					Present(m.complete(p, JS_PROPERTY_OBJECT_MEMBER))
 				} else {
 					// It turns out that this isn't a valid member after all. Make sure to throw
 					// away everything that has been parsed so far so that the caller can
@@ -171,7 +172,7 @@ fn object_member(p: &mut Parser) -> ParseResult {
 					dbg!(p.cur_src());
 					m.abandon(p);
 					p.rewind(checkpoint);
-					Err(AbsentError)
+					Absent
 				}
 			}
 		}
@@ -179,9 +180,9 @@ fn object_member(p: &mut Parser) -> ParseResult {
 }
 
 /// Parses a getter object member: `{ get a() { return "a"; } }`
-fn getter_object_member(p: &mut Parser) -> ParseResult {
+fn getter_object_member(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![ident]) || p.cur_src() != "get" {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let m = p.start();
@@ -197,13 +198,13 @@ fn getter_object_member(p: &mut Parser) -> ParseResult {
 
 	function_body(p).make_required(p, JsParseErrors::expected_function_body);
 
-	Ok(m.complete(p, JS_GETTER_OBJECT_MEMBER))
+	Present(m.complete(p, JS_GETTER_OBJECT_MEMBER))
 }
 
 /// Parses a setter object member like `{ set a(value) { .. } }`
-fn setter_object_member(p: &mut Parser) -> ParseResult {
+fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![ident]) || p.cur_src() != "set" {
-		return Err(AbsentError);
+		return Absent;
 	}
 	let m = p.start();
 
@@ -218,7 +219,7 @@ fn setter_object_member(p: &mut Parser) -> ParseResult {
 	function_body(p).make_required(p, JsParseErrors::expected_function_body);
 
 	p.state.allow_object_expr = true;
-	Ok(m.complete(p, JS_SETTER_OBJECT_MEMBER))
+	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
 }
 
 // test object_prop_name
@@ -235,31 +236,30 @@ pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker
 // test object_member_name
 // let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
 /// Parses a `JsAnyObjectMemberName` and returns its completion marker
-fn object_member_name(p: &mut Parser) -> ParseResult {
+fn object_member_name(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
 		T!['['] => computed_member_name(p),
 		_ => literal_member_name(p),
 	}
-	.map_err(|_| AbsentError)
 }
 
 fn is_at_object_member_name(p: &Parser) -> bool {
 	p.at_ts(STARTS_MEMBER_NAME)
 }
 
-pub(crate) fn computed_member_name(p: &mut Parser) -> ParseResult {
+pub(crate) fn computed_member_name(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['[']) {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let m = p.start();
 	p.expect_required(T!['[']);
 	expr(p);
 	p.expect_required(T![']']);
-	Ok(m.complete(p, JS_COMPUTED_MEMBER_NAME))
+	Present(m.complete(p, JS_COMPUTED_MEMBER_NAME))
 }
 
-pub(super) fn literal_member_name(p: &mut Parser) -> ParseResult {
+pub(super) fn literal_member_name(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	match p.cur() {
 		JS_STRING_LITERAL | JS_NUMBER_LITERAL | T![ident] => {
@@ -270,17 +270,17 @@ pub(super) fn literal_member_name(p: &mut Parser) -> ParseResult {
 		}
 		_ => {
 			m.abandon(p);
-			return Err(AbsentError);
+			return Absent;
 		}
 	}
-	Ok(m.complete(p, JS_LITERAL_MEMBER_NAME))
+	Present(m.complete(p, JS_LITERAL_MEMBER_NAME))
 }
 
 /// Parses a method object member
-fn method_object_member(p: &mut Parser) -> ParseResult {
+fn method_object_member(p: &mut Parser) -> ParsedSyntax {
 	let is_async = is_parser_at_async_method_member(p);
 	if !is_async && !p.at(T![*]) && !is_at_object_member_name(p) {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let m = p.start();
@@ -308,7 +308,7 @@ fn method_object_member(p: &mut Parser) -> ParseResult {
 		method_object_member_body(&mut *guard);
 	}
 
-	Ok(m.complete(p, JS_METHOD_OBJECT_MEMBER))
+	Present(m.complete(p, JS_METHOD_OBJECT_MEMBER))
 }
 
 /// Parses the body of a method object member starting right after the member name.

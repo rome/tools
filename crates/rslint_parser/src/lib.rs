@@ -99,6 +99,7 @@ pub use rslint_syntax::*;
 /// It also includes labels and possibly notes
 pub type ParserError = rslint_errors::Diagnostic;
 
+use crate::parser::ParsedSyntax;
 use std::ops::Range;
 
 /// Abstracted token for `TokenSource`

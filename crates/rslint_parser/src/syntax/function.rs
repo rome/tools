@@ -1,9 +1,10 @@
-use crate::parser::{ParseResult, ParsedSyntax};
+use crate::parser::ParsedSyntax;
 use crate::syntax::decl::parameter_list;
 use crate::syntax::pat::opt_binding_identifier;
 use crate::syntax::stmt::{block_impl, is_semi};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::syntax::JsParseErrors;
+use crate::ParsedSyntax::Present;
 use crate::{CompletedMarker, Parser, ParserState};
 use rslint_syntax::SyntaxKind::{
 	ERROR, JS_FUNCTION_BODY, JS_FUNCTION_DECLARATION, JS_FUNCTION_EXPRESSION,
@@ -82,7 +83,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> CompletedMarker {
 	m.complete(guard, kind)
 }
 
-pub(super) fn function_body(p: &mut Parser) -> ParseResult {
+pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
 	let mut guard = p.with_state(ParserState {
 		in_constructor: false,
 		in_function: true,
@@ -105,7 +106,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 		let body = function_body(p);
 		if p.state.in_declare {
 			match body {
-				Ok(mut body) => {
+				Present(mut body) => {
 					let err = p
 						.err_builder(
 							"function implementations cannot be given in ambient (declare) contexts",

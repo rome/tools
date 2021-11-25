@@ -8,7 +8,6 @@ use super::pat::pattern;
 use super::typescript::*;
 use super::util::*;
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParsedSyntax;
 use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
 use crate::syntax::object::object_expr;

@@ -5,7 +5,7 @@
 
 mod parse_error;
 mod parse_recovery;
-mod parse_result;
+mod parsed_syntax;
 pub(crate) mod single_token_parse_recovery;
 
 use drop_bomb::DropBomb;
@@ -15,9 +15,8 @@ use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::ops::Range;
 
-pub use parse_result::{
-	AbsentError, ConditionalParsedSyntax, ConditionalSyntaxError, ConditionalSyntaxParseResult,
-	ParseResult, ParsedSyntax,
+pub use parsed_syntax::{
+	ConditionalParsedSyntax, ConditionalSyntaxError, ConditionalSyntaxParseResult, ParsedSyntax,
 };
 pub use single_token_parse_recovery::SingleTokenParseRecovery;
 
@@ -713,10 +712,6 @@ impl CompletedMarker {
 
 	pub fn err_if_not_ts(&mut self, p: &mut Parser, err: &str) {
 		p.err_if_not_ts(self, err, SyntaxKind::ERROR);
-	}
-
-	pub fn to_parse_result(self) -> ParseResult {
-		Ok(self)
 	}
 
 	/// Converts this completed marker to a conditional parse result and adds

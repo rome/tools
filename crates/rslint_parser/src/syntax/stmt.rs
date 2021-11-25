@@ -8,7 +8,8 @@ use super::program::{export_decl, import_decl};
 use super::typescript::*;
 use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::{AbsentError, ConditionalParsedSyntax, ParseResult, ParsedSyntax};
+use crate::parser::ParsedSyntax::{Absent, Present};
+use crate::parser::{ConditionalParsedSyntax, ParsedSyntax};
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::syntax::JsParseErrors;
@@ -90,10 +91,10 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 #[allow(deprecated)]
 pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option<CompletedMarker> {
 	let res = match p.cur() {
-		T![;] => empty_stmt(p).unwrap(), // It is only ever Err if there's no ;
-		T!['{'] => block_stmt(p).unwrap(), // It is only ever None if there is no `{`,
-		T![if] => if_stmt(p).unwrap(),   // It is only ever Err if there's no if
-		T![with] => with_stmt(p).unwrap(), // ever only Err if there's no with keyword
+		T![;] => empty_stmt(p).ok().unwrap(), // It is only ever Err if there's no ;
+		T!['{'] => block_stmt(p).ok().unwrap(), // It is only ever None if there is no `{`,
+		T![if] => if_stmt(p).ok().unwrap(),   // It is only ever Err if there's no if
+		T![with] => with_stmt(p).ok().unwrap(), // ever only Err if there's no with keyword
 		T![while] => while_stmt(p),
 		t if (t == T![const] && p.nth_at(1, T![enum])) || t == T![enum] => {
 			let mut res = ts_enum(p);
@@ -104,7 +105,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T![for] => for_stmt(p),
 		T![do] => do_stmt(p),
 		T![switch] => switch_stmt(p),
-		T![try] => parse_try_statement(p).unwrap(), // it is only ever Err if there's no try
+		T![try] => parse_try_statement(p).ok().unwrap(), // it is only ever Err if there's no try
 		T![return] => return_stmt(p),
 		T![break] => break_stmt(p),
 		T![continue] => continue_stmt(p),
@@ -409,13 +410,13 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 /// An empty statement denoted by a single semicolon.
 // test empty_stmt
 // ;
-pub fn empty_stmt(p: &mut Parser) -> ParseResult {
+pub fn empty_stmt(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![;]) {
 		let m = p.start();
 		p.bump_any(); // bump ;
-		m.complete(p, JS_EMPTY_STATEMENT).to_parse_result()
+		m.complete(p, JS_EMPTY_STATEMENT).into()
 	} else {
-		Err(AbsentError)
+		Absent
 	}
 }
 
@@ -424,14 +425,14 @@ pub fn empty_stmt(p: &mut Parser) -> ParseResult {
 // {}
 // {{{{}}}}
 // { foo = bar; }
-pub(crate) fn block_stmt(p: &mut Parser) -> ParseResult {
+pub(crate) fn block_stmt(p: &mut Parser) -> ParsedSyntax {
 	block_impl(p, JS_BLOCK_STATEMENT)
 }
 
 /// A block wrapped in curly brackets. Can either be a function body or a block statement.
-pub(super) fn block_impl(p: &mut Parser, block_kind: SyntaxKind) -> ParseResult {
+pub(super) fn block_impl(p: &mut Parser, block_kind: SyntaxKind) -> ParsedSyntax {
 	if !p.at(T!['{']) {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let m = p.start();
@@ -451,7 +452,7 @@ pub(super) fn block_impl(p: &mut Parser, block_kind: SyntaxKind) -> ParseResult 
 		p.state = old_parser_state;
 	}
 
-	Ok(m.complete(p, block_kind))
+	Present(m.complete(p, block_kind))
 }
 
 #[must_use]
@@ -589,7 +590,7 @@ pub fn parenthesized_expression(p: &mut Parser) {
 // if (true) {}
 // if (true) false
 // if (bar) {} else if (true) {} else {}
-pub fn if_stmt(p: &mut Parser) -> ParseResult {
+pub fn if_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err if_stmt_err
 	// if (true) else {}
 	// if (true) else
@@ -597,7 +598,7 @@ pub fn if_stmt(p: &mut Parser) -> ParseResult {
 	// if () {} else {}
 	// if (true)}}}} {}
 	if !p.at(T![if]) {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let m = p.start();
@@ -622,13 +623,13 @@ pub fn if_stmt(p: &mut Parser) -> ParseResult {
 		else_clause.complete(p, JS_ELSE_CLAUSE);
 	}
 
-	Ok(m.complete(p, JS_IF_STATEMENT))
+	Present(m.complete(p, JS_IF_STATEMENT))
 }
 
 /// A with statement such as `with (foo) something()`
-pub fn with_stmt(p: &mut Parser) -> ParseResult {
+pub fn with_stmt(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![with]) {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let m = p.start();
@@ -1072,9 +1073,9 @@ pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
 	m.complete(p, JS_SWITCH_STATEMENT)
 }
 
-fn parse_catch_clause(p: &mut Parser) -> ParseResult {
+fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![catch]) {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let m = p.start();
@@ -1083,12 +1084,12 @@ fn parse_catch_clause(p: &mut Parser) -> ParseResult {
 	catch_declaration(p).make_optional(p);
 	block_stmt(p).make_required(p, JsParseErrors::expected_block_statement);
 
-	Ok(m.complete(p, JS_CATCH_CLAUSE))
+	Present(m.complete(p, JS_CATCH_CLAUSE))
 }
 
-fn catch_declaration(p: &mut Parser) -> ParseResult {
+fn catch_declaration(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['(']) {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let declaration_marker = p.start();
@@ -1132,7 +1133,7 @@ fn catch_declaration(p: &mut Parser) -> ParseResult {
 	}
 	p.expect_required(T![')']);
 
-	Ok(declaration_marker.complete(p, JS_CATCH_DECLARATION))
+	Present(declaration_marker.complete(p, JS_CATCH_DECLARATION))
 }
 
 /// A try statement such as
@@ -1150,14 +1151,14 @@ fn catch_declaration(p: &mut Parser) -> ParseResult {
 // try {} catch {} finally {}
 // try {} catch (e) {} finally {}
 // try {} finally {}
-pub fn parse_try_statement(p: &mut Parser) -> ParseResult {
+pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 	// TODO: recover from `try catch` and `try finally`. The issue is block_items
 	// will cause infinite recursion because parsing a stmt would not consume the catch token
 	// and block_items would not exit, and if we exited on any error that would greatly limit
 	// block_items error recovery
 
 	if !p.at(T![try]) {
-		return Err(AbsentError);
+		return Absent;
 	}
 
 	let m = p.start();
@@ -1174,9 +1175,9 @@ pub fn parse_try_statement(p: &mut Parser) -> ParseResult {
 		p.bump_any();
 		block_stmt(p).make_required(p, JsParseErrors::expected_block_statement);
 		finalizer.complete(p, JS_FINALLY_CLAUSE);
-		Ok(m.complete(p, JS_TRY_FINALLY_STATEMENT))
+		Present(m.complete(p, JS_TRY_FINALLY_STATEMENT))
 	} else {
 		catch.make_required(p, JsParseErrors::expected_catch_clause);
-		Ok(m.complete(p, JS_TRY_STATEMENT))
+		Present(m.complete(p, JS_TRY_STATEMENT))
 	}
 }

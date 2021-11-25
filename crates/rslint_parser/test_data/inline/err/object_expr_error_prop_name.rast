@@ -72,18 +72,18 @@
       1: (empty)
   3: EOF@95..96 "" [Whitespace("\n")] []
 --
-error[SyntaxError]: expected a computed member name, a string literal, a number literal, or an identifier but instead found '/: 6, /'
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '/: 6, /'
   ┌─ object_expr_error_prop_name.js:1:11
   │
 1 │ let a = { /: 6, /: /foo/ }
-  │           ^^^^^^^ Expected a computed member name, a string literal, a number literal, or an identifier here
+  │           ^^^^^^^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
 --
-error[SyntaxError]: expected an object member but instead found '{'
+error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '{'
   ┌─ object_expr_error_prop_name.js:2:10
   │
 2 │ let a = {{}}
-  │          ^ Expected an object member here
+  │          ^ Expected a property, a shorthand property, a getter, a setter, or a method here
 
 --
 error[SyntaxError]: Expected a statement or declaration, but found none
