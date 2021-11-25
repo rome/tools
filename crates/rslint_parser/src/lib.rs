@@ -258,12 +258,12 @@ pub trait SyntaxFeature: Sized {
 		!self.is_supported(p)
 	}
 
-	/// Creates a syntax that is only allowed if this syntax feature is supported in the current
+	/// Creates a syntax that is only valid if this syntax feature is supported in the current
 	/// parsing context, adds a diagnostic if not.
 	///
-	/// Returns [Supported] if this syntax feature is supported.
+	/// Returns [Valid] if this syntax feature is supported.
 	///
-	/// Returns [Unsupported], creates a diagnostic with the passed in error builder,
+	/// Returns [Invalid], creates a diagnostic with the passed in error builder,
 	/// and adds it to the parsing diagnostics if this syntax feature isn't supported.
 	fn exclusive_syntax<S, E>(
 		&self,
@@ -278,10 +278,10 @@ pub trait SyntaxFeature: Sized {
 		syntax.into().exclusive_for(self, p, error_builder)
 	}
 
-	/// Creates a syntax that is only allowed if this syntax feature is supported in the current
+	/// Creates a syntax that is only valid if this syntax feature is supported in the current
 	/// parsing context.
 	///
-	/// Returns [Supported] if this syntax feature is supported and [Unsupported] if this syntax isn't supported.
+	/// Returns [Valid] if this syntax feature is supported and [Invalid] if this syntax isn't supported.
 	fn exclusive_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ConditionalParsedSyntax
 	where
 		S: Into<ParsedSyntax>,
@@ -289,6 +289,13 @@ pub trait SyntaxFeature: Sized {
 		syntax.into().exclusive_for_no_error(self, p)
 	}
 
+	/// Creates a syntax that is only valid if the current parsing context doesn't support this syntax feature,
+	/// and adds a diagnostic if it does.
+	///
+	/// Returns [Valid] if the parsing context doesn't support this syntax feature
+	///
+	/// Creates a diagnostic using the passed error builder, adds it to the parsing diagnostics, and returns
+	/// [Invalid] if the parsing context does support this syntax feature.
 	fn excluding_syntax<S, E>(
 		&self,
 		p: &mut Parser,
@@ -302,6 +309,10 @@ pub trait SyntaxFeature: Sized {
 		syntax.into().excluding(self, p, error_builder)
 	}
 
+	/// Creates a syntax that is only valid if this syntax feature isn't supported in the current
+	/// parsing context.
+	///
+	/// Returns [Valid] if this syntax feature isn't supported and [Invalid] if it is.
 	fn excluding_syntax_no_error<S>(&self, p: &Parser, syntax: S) -> ConditionalParsedSyntax
 	where
 		S: Into<ParsedSyntax>,
