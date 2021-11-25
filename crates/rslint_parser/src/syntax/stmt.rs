@@ -95,25 +95,25 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option<CompletedMarker> {
 	let res = match p.cur() {
 		T![;] => parse_empty_stmt(p).ok().unwrap(), // It is only ever Err if there's no ;
-		T!['{'] => block_stmt(p).ok().unwrap(),     // It is only ever None if there is no `{`,
-		T![if] => if_stmt(p).ok().unwrap(),         // It is only ever Err if there's no if
-		T![with] => with_stmt(p).ok().unwrap(),     // ever only Err if there's no with keyword
-		T![while] => while_stmt(p).ok().unwrap(),   // It is only ever Err if there's no while keyword
+		T!['{'] => parse_block_stmt(p).ok().unwrap(), // It is only ever None if there is no `{`,
+		T![if] => parse_if_stmt(p).ok().unwrap(),   // It is only ever Err if there's no if
+		T![with] => parse_with_stmt(p).ok().unwrap(), // ever only Err if there's no with keyword
+		T![while] => parse_while_stmt(p).ok().unwrap(), // It is only ever Err if there's no while keyword
 		t if (t == T![const] && p.nth_at(1, T![enum])) || t == T![enum] => {
 			let mut res = ts_enum(p);
 			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
 			res
 		}
 		T![var] | T![const] => variable_declaration_statement(p),
-		T![for] => for_stmt(p).ok().unwrap(),
-		T![do] => do_stmt(p).ok().unwrap(),
-		T![switch] => switch_stmt(p),
+		T![for] => parse_for_stmt(p).ok().unwrap(),
+		T![do] => parse_do_stmt(p).ok().unwrap(),
+		T![switch] => parse_switch_stmt(p),
 		T![try] => parse_try_statement(p).ok().unwrap(), // it is only ever Err if there's no try
-		T![return] => return_stmt(p).ok().unwrap(),
-		T![break] => break_stmt(p).ok().unwrap(),
-		T![continue] => continue_stmt(p).ok().unwrap(), // It is only ever Err if there's no continue keyword
-		T![throw] => throw_stmt(p).ok().unwrap(),
-		T![debugger] => debugger_stmt(p).ok().unwrap(),
+		T![return] => parse_return_stmt(p).ok().unwrap(),
+		T![break] => parse_break_stmt(p).ok().unwrap(),
+		T![continue] => parse_continue_stmt(p).ok().unwrap(), // It is only ever Err if there's no continue keyword
+		T![throw] => parse_throw_stmt(p).ok().unwrap(),
+		T![debugger] => parse_debugger_stmt(p).ok().unwrap(),
 		T![function] => function_declaration(p),
 		T![class] => class_declaration(p),
 		T![ident]
@@ -269,7 +269,7 @@ fn expr_stmt(p: &mut Parser) -> Option<CompletedMarker> {
 // 	}
 // }
 
-pub fn debugger_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_debugger_stmt(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![debugger]) {
 		return Absent;
 	}
@@ -285,7 +285,7 @@ pub fn debugger_stmt(p: &mut Parser) -> ParsedSyntax {
 // throw new Error("foo");
 // throw "foo"
 #[allow(deprecated)]
-pub fn throw_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_throw_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err throw_stmt_err
 	// throw
 	// new Error("oh no :(")
@@ -321,7 +321,7 @@ pub fn throw_stmt(p: &mut Parser) -> ParsedSyntax {
 // break;
 // break foo;
 // break rust
-pub fn break_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_break_stmt(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![break]) {
 		return Absent;
 	}
@@ -359,7 +359,7 @@ pub fn break_stmt(p: &mut Parser) -> ParsedSyntax {
 //   continue foo;
 //   continue
 // }
-pub fn continue_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_continue_stmt(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![continue]) {
 		return Absent;
 	}
@@ -398,7 +398,7 @@ pub fn continue_stmt(p: &mut Parser) -> ParsedSyntax {
 //   return
 // }
 #[allow(deprecated)]
-pub fn return_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_return_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err return_stmt_err
 	// return;
 	// return foo;
@@ -443,7 +443,7 @@ pub fn parse_empty_stmt(p: &mut Parser) -> ParsedSyntax {
 // {}
 // {{{{}}}}
 // { foo = bar; }
-pub(crate) fn block_stmt(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_block_stmt(p: &mut Parser) -> ParsedSyntax {
 	block_impl(p, JS_BLOCK_STATEMENT)
 }
 
@@ -608,7 +608,7 @@ pub fn parenthesized_expression(p: &mut Parser) {
 // if (true) {}
 // if (true) false
 // if (bar) {} else if (true) {} else {}
-pub fn if_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_if_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err if_stmt_err
 	// if (true) else {}
 	// if (true) else
@@ -645,7 +645,7 @@ pub fn if_stmt(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// A with statement such as `with (foo) something()`
-pub fn with_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_with_stmt(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![with]) {
 		return Absent;
 	}
@@ -672,7 +672,7 @@ pub fn with_stmt(p: &mut Parser) -> ParsedSyntax {
 // test while_stmt
 // while (true) {}
 // while (5) {}
-pub fn while_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_while_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err while_stmt_err
 	// while true {}
 	// while {}
@@ -849,7 +849,7 @@ fn variable_initializer(p: &mut Parser) {
 // test do_while_stmtR
 // do { } while (true)
 // do throw Error("foo") while (true)
-pub fn do_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_do_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err do_while_stmt_err
 	// do while (true)
 	// do while ()
@@ -973,7 +973,7 @@ fn normal_for_head(p: &mut Parser) {
 // for (let { foo, bar } of {}) {}
 // for (foo in {}) {}
 // for (;;) {}
-pub fn for_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_for_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err for_stmt_err
 	// for ;; {}
 	// for let i = 5; i < 10; i++ {}
@@ -1064,7 +1064,7 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 //  case bar:
 //  default:
 // }
-pub fn switch_stmt(p: &mut Parser) -> CompletedMarker {
+pub fn parse_switch_stmt(p: &mut Parser) -> CompletedMarker {
 	// test_err switch_stmt_err
 	// switch foo {}
 	// switch {}
@@ -1112,7 +1112,7 @@ fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {
 	p.bump_any(); // bump catch
 
 	catch_declaration(p).or_missing(p);
-	block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
+	parse_block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
 
 	Present(m.complete(p, JS_CATCH_CLAUSE))
 }
@@ -1194,7 +1194,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	p.bump_any(); // eat try
 
-	block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
+	parse_block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
 
 	let catch = parse_catch_clause(p);
 
@@ -1203,7 +1203,7 @@ pub fn parse_try_statement(p: &mut Parser) -> ParsedSyntax {
 
 		let finalizer = p.start();
 		p.bump_any();
-		block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
+		parse_block_stmt(p).or_missing_with_error(p, js_parse_error::expected_block_statement);
 		finalizer.complete(p, JS_FINALLY_CLAUSE);
 		Present(m.complete(p, JS_TRY_FINALLY_STATEMENT))
 	} else {
