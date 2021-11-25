@@ -94,11 +94,11 @@ pub(super) fn is_semi(p: &Parser, offset: usize) -> bool {
 #[allow(deprecated)]
 pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option<CompletedMarker> {
 	let res = match p.cur() {
-		T![;] => empty_stmt(p).ok().unwrap(), // It is only ever Err if there's no ;
-		T!['{'] => block_stmt(p).ok().unwrap(), // It is only ever None if there is no `{`,
-		T![if] => if_stmt(p).ok().unwrap(),   // It is only ever Err if there's no if
-		T![with] => with_stmt(p).ok().unwrap(), // ever only Err if there's no with keyword
-		T![while] => while_stmt(p).ok().unwrap(), // It is only ever Err if there's no while keyword
+		T![;] => parse_empty_stmt(p).ok().unwrap(), // It is only ever Err if there's no ;
+		T!['{'] => block_stmt(p).ok().unwrap(),     // It is only ever None if there is no `{`,
+		T![if] => if_stmt(p).ok().unwrap(),         // It is only ever Err if there's no if
+		T![with] => with_stmt(p).ok().unwrap(),     // ever only Err if there's no with keyword
+		T![while] => while_stmt(p).ok().unwrap(),   // It is only ever Err if there's no while keyword
 		t if (t == T![const] && p.nth_at(1, T![enum])) || t == T![enum] => {
 			let mut res = ts_enum(p);
 			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
@@ -109,7 +109,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T![do] => do_stmt(p).ok().unwrap(),
 		T![switch] => switch_stmt(p),
 		T![try] => parse_try_statement(p).ok().unwrap(), // it is only ever Err if there's no try
-		T![return] => return_stmt(p),
+		T![return] => return_stmt(p).ok().unwrap(),
 		T![break] => break_stmt(p).ok().unwrap(),
 		T![continue] => continue_stmt(p).ok().unwrap(), // It is only ever Err if there's no continue keyword
 		T![throw] => throw_stmt(p).ok().unwrap(),
@@ -398,14 +398,18 @@ pub fn continue_stmt(p: &mut Parser) -> ParsedSyntax {
 //   return
 // }
 #[allow(deprecated)]
-pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
+pub fn return_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err return_stmt_err
 	// return;
 	// return foo;
+	if !p.at(T![return]) {
+		return Absent;
+	}
 	let m = p.start();
 	let start = p.cur_tok().range.start;
 	p.expect_required(T![return]);
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
+		// TODO: review this part and make sure it plays well with the new recovery logic
 		p.expr_with_semi_recovery(false);
 	}
 	semi(p, start..p.cur_tok().range.end);
@@ -418,13 +422,13 @@ pub fn return_stmt(p: &mut Parser) -> CompletedMarker {
 
 		p.error(err);
 	}
-	complete
+	Present(complete)
 }
 
 /// An empty statement denoted by a single semicolon.
 // test empty_stmt
 // ;
-pub fn empty_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_empty_stmt(p: &mut Parser) -> ParsedSyntax {
 	if p.at(T![;]) {
 		let m = p.start();
 		p.bump_any(); // bump ;
