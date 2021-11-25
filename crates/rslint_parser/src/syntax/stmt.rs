@@ -98,7 +98,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T!['{'] => block_stmt(p).ok().unwrap(), // It is only ever None if there is no `{`,
 		T![if] => if_stmt(p).ok().unwrap(),   // It is only ever Err if there's no if
 		T![with] => with_stmt(p).ok().unwrap(), // ever only Err if there's no with keyword
-		T![while] => while_stmt(p),
+		T![while] => while_stmt(p).ok().unwrap(), // It is only ever Err if there's no while keyword
 		t if (t == T![const] && p.nth_at(1, T![enum])) || t == T![enum] => {
 			let mut res = ts_enum(p);
 			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
@@ -106,7 +106,7 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		}
 		T![var] | T![const] => variable_declaration_statement(p),
 		T![for] => for_stmt(p),
-		T![do] => do_stmt(p),
+		T![do] => do_stmt(p).ok().unwrap(),
 		T![switch] => switch_stmt(p),
 		T![try] => parse_try_statement(p).ok().unwrap(), // it is only ever Err if there's no try
 		T![return] => return_stmt(p),
@@ -657,14 +657,17 @@ pub fn with_stmt(p: &mut Parser) -> ParsedSyntax {
 // test while_stmt
 // while (true) {}
 // while (5) {}
-pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
+pub fn while_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err while_stmt_err
 	// while true {}
 	// while {}
 	// while (true {}
 	// while true) }
+	if !p.at(T![while]) {
+		return Absent;
+	}
 	let m = p.start();
-	p.expect_required(T![while]);
+	p.bump_any(); // while
 	parenthesized_expression(p);
 	stmt(
 		&mut *p.with_state(ParserState {
@@ -674,7 +677,7 @@ pub fn while_stmt(p: &mut Parser) -> CompletedMarker {
 		}),
 		None,
 	);
-	m.complete(p, JS_WHILE_STATEMENT)
+	Present(m.complete(p, JS_WHILE_STATEMENT))
 }
 
 /// A var, const, or let declaration statement such as `var a = 5, b;` or `let {a, b} = foo;`
@@ -831,14 +834,17 @@ fn variable_initializer(p: &mut Parser) {
 // test do_while_stmtR
 // do { } while (true)
 // do throw Error("foo") while (true)
-pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
+pub fn do_stmt(p: &mut Parser) -> ParsedSyntax {
 	// test_err do_while_stmt_err
 	// do while (true)
 	// do while ()
 	// do while true
+	if !p.at(T![do]) {
+		return Absent;
+	}
 	let m = p.start();
+	p.bump_any(); // do keyword
 	let start = p.cur_tok().range.start;
-	p.expect_required(T![do]);
 	stmt(
 		&mut *p.with_state(ParserState {
 			continue_allowed: true,
@@ -850,7 +856,7 @@ pub fn do_stmt(p: &mut Parser) -> CompletedMarker {
 	p.expect_required(T![while]);
 	parenthesized_expression(p);
 	semi(p, start..p.cur_tok().range.end);
-	m.complete(p, JS_DO_WHILE_STATEMENT)
+	Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
 
 #[allow(deprecated)]
