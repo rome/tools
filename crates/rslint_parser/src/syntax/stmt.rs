@@ -6,13 +6,15 @@ use super::expr::{expr, expr_or_assignment_target, EXPR_RECOVERY_SET, STARTS_EXP
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
-use super::util::{check_for_stmt_declaration, check_label_use, check_lhs};
+use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
+use crate::syntax::assignment_target::parse_assignment_target;
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::syntax::js_parse_error;
+use crate::syntax::js_parse_error::expected_assignment_target;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -926,26 +928,15 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 			include_in: false,
 			..p.state.clone()
 		});
-		let complete = expr(&mut *guard);
+		parse_assignment_target(&mut *guard)
+			.or_missing_with_error(&mut *guard, expected_assignment_target);
+
 		drop(guard);
 		m.complete(p, FOR_STMT_INIT);
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			let is_in = p.at(T![in]);
 			p.bump_any();
-
-			if let Some(ref expr) = complete {
-				check_lhs(p, p.parse_marker(expr), &complete.unwrap());
-				if p.typescript()
-					&& matches!(expr.kind(), JS_ARRAY_EXPRESSION | JS_OBJECT_EXPRESSION)
-				{
-					let err = p.err_builder("the left hand side of a `for..in` or `for..of` statement cannot be a destructuring pattern")
-                        .primary(expr.range(p), "");
-
-					p.error(err);
-				}
-			}
-
 			return for_each_head(p, is_in);
 		}
 

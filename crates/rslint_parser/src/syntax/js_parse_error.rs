@@ -88,3 +88,7 @@ pub(crate) fn expected_array_assignment_target_element(
 pub(crate) fn expected_property_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
 	expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
 }
+
+pub(crate) fn expected_simple_assignment_target(p: &Parser, range: Range<usize>) -> Diagnostic {
+	expected_any(&["identifier", "member expression"], range).to_diagnostic(p)
+}

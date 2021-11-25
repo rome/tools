@@ -164,7 +164,7 @@ JsRoot {
         5: SEMICOLON@31..33 ";" [] [Whitespace(" ")]
         6: FOR_STMT_UPDATE@33..37
           0: JS_POST_UPDATE_EXPRESSION@33..37
-            0: JS_REFERENCE_IDENTIFIER_EXPRESSION@33..34
+            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@33..34
               0: IDENT@33..34 "i" [] []
             1: PLUS2@34..37 "++" [] [Whitespace(" ")]
         7: (empty)
@@ -199,7 +199,7 @@ JsRoot {
       6: FOR_STMT_UPDATE@63..67
         0: JS_PRE_UPDATE_EXPRESSION@63..67
           0: PLUS2@63..65 "++" [] []
-          1: JS_REFERENCE_IDENTIFIER_EXPRESSION@65..67
+          1: JS_IDENTIFIER_ASSIGNMENT_TARGET@65..67
             0: IDENT@65..67 "i" [] [Whitespace(" ")]
       7: (empty)
       8: JS_BLOCK_STATEMENT@67..69

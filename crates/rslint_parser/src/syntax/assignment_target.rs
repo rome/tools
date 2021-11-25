@@ -5,11 +5,15 @@ use crate::syntax::expr::{
 };
 use crate::syntax::js_parse_error::{
 	expected_array_assignment_target_element, expected_assignment_target,
-	expected_property_assignment_target,
+	expected_property_assignment_target, expected_simple_assignment_target,
 };
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{CompletedMarker, Parser};
 use crate::{SyntaxKind::*, *};
+
+// test_err invalid_assignment_target
+// (a) = b;
+// ++a = b;
 
 /// Converts the passed in target (expression) to an assignment target
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.
@@ -27,31 +31,9 @@ pub(crate) fn expression_to_assignment_target(
 
 	match parse_assignment_target(p) {
 		Present(target) => target,
-		Absent => {
-			let unknown = p.start();
-			// Eat all tokens until we reached the end of the original expression. This is better than
-			// any other error recovery because it's already know where the expression ends.
-			while p.token_pos() <= expression_end {
-				p.bump_any();
-			}
-
-			let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
-
-			let expression_range = completed.range(p);
-			p.error(
-				p.err_builder(&format!(
-					"Invalid assignment to `{}`",
-					p.source(expression_range)
-				))
-				.primary(expression_range, "This expression cannot be assigned to"),
-			);
-			completed
-		}
+		Absent => wrap_expression_in_invalid_assignment(p, expression_end),
 	}
 }
-
-// * members
-// * Re-add parenthesized assignment target, allowed in some places
 
 pub(crate) fn parse_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	match p.cur() {
@@ -61,16 +43,75 @@ pub(crate) fn parse_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
+pub(crate) fn expression_to_simple_assignment_target(
+	p: &mut Parser,
+	target: CompletedMarker,
+	checkpoint: Checkpoint,
+) -> CompletedMarker {
+	if let Ok(assignment_target) = try_expression_to_simple_assignment_target(p, target) {
+		return assignment_target;
+	}
+
+	let expression_end = p.token_pos();
+	p.rewind(checkpoint);
+
+	// reparse for better error messages
+	match parse_simple_assignment_target(p) {
+		Present(target) => target,
+		Absent => wrap_expression_in_invalid_assignment(p, expression_end),
+	}
+}
+
+fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) -> CompletedMarker {
+	let unknown = p.start();
+	// Eat all tokens until we reached the end of the original expression. This is better than
+	// any other error recovery because it's already know where the expression ends.
+	while p.token_pos() < expression_end {
+		p.bump_any();
+	}
+
+	let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+
+	let expression_range = completed.range(p);
+	p.error(
+		p.err_builder(&format!(
+			"Invalid assignment to `{}`",
+			p.source(expression_range)
+		))
+		.primary(expression_range, "This expression cannot be assigned to"),
+	);
+
+	completed
+}
+
 pub(crate) fn parse_simple_assignment_target(p: &mut Parser) -> ParsedSyntax {
+	// FIXME this results in an infinite loop because we call into conditional expr again that then
+	// calls again into assignment target and so on.
+	// This is only ever needed when `try_expression_to_simple_assignment_target` fails
+	// because one of the parenthesized assignment targets were invalid.
+	// We should add a special case just for that
+	if p.at(T!['(']) {
+		let m = p.start();
+		p.bump(T!['(']);
+		parse_simple_assignment_target(p)
+			.or_missing_with_error(p, expected_simple_assignment_target);
+		p.expect_required(T![')']);
+
+		return Present(m.complete(p, JS_PARENTHESIZED_ASSIGNMENT_TARGET));
+	}
+
 	let checkpoint = p.checkpoint();
 
-	if let Some(expr) = conditional_expr(p) {
+	// TODO remove the rewind inside of the error handle once the `conditional_expr` returns a ParsedSyntax
+	let assignment_expression = conditional_expr(p);
+
+	if let Some(expr) = assignment_expression {
 		let assignment_target = try_expression_to_simple_assignment_target(p, expr);
 		match assignment_target {
 			Ok(target) => Present(target),
 			Err(_) => {
-				// Ideally, rewind wouldn't be needed here because there's a try_expr function that tries to parse
-				// the expression and otherwise returns an Error but doesn't add any diagnostics
+				// Ideally, rewind wouldn't be needed here but the expression adds `Error` nodes that we need
+				// to get rid of again. That is no longer needed when `conditional_expr` returns a ParsedSyntax
 				p.rewind(checkpoint);
 				Absent
 			}
@@ -93,6 +134,19 @@ fn parse_assignment_target_with_optional_default(p: &mut Parser) -> ParsedSyntax
 	}
 }
 
+// test array_assignment_target
+// foo += bar = b ??= 3;
+// foo -= bar;
+// (foo = bar);
+// [foo, bar] = baz;
+// ({ bar, baz } = {});
+//
+// test_err array_assignment_target_err
+// [a a, ++b, ] = test;
+// [a, ++b, c, ...rest,] = test;
+// [a = , = "test"] = test;
+// [[a b] [c]]= test;
+// [a: b] = c
 fn parse_array_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['[']) {
 		return Absent;
@@ -170,6 +224,9 @@ fn parse_array_assignment_target_rest_element(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
+// test object_assignment_target
+// ({ bar, baz } = {});
+// ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
 fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T!['{']) {
 		return Absent;
@@ -275,16 +332,59 @@ fn try_expression_to_simple_assignment_target(
 	mut target: CompletedMarker,
 ) -> Result<CompletedMarker, ()> {
 	let mapped_kind = match target.kind() {
-		JS_STATIC_MEMBER_EXPRESSION => JS_STATIC_MEMBER_ASSIGNMENT_TARGET,
-		JS_COMPUTED_MEMBER_EXPRESSION => JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET,
-		JS_REFERENCE_IDENTIFIER_EXPRESSION => JS_IDENTIFIER_ASSIGNMENT_TARGET,
-		JS_UNKNOWN_EXPRESSION | ERROR => JS_UNKNOWN_ASSIGNMENT_TARGET,
-		_ => {
-			target.undo_completion(p).abandon(p);
-			return Err(());
+		JS_PARENTHESIZED_EXPRESSION => {
+			// Parenthesized expressions are special because they contain nested assignment targets.
+			// For example, this is valid ((((a))))++. The following code traverses through all the children
+			// of the parenthesized expression and tries to change their kind to a valid assignment target.
+			let events = &mut p.events[target.start_pos as usize..target.finish_pos as usize];
+			let mut children_valid = true;
+
+			for event in events {
+				match event {
+					Event::Start {
+						kind: TOMBSTONE, ..
+					} => {}
+					Event::Start { kind, .. } => {
+						let new_kind = map_expression_to_simple_assignment_target_kind(kind);
+
+						if let Some(assignment_target_kind) = new_kind {
+							*kind = assignment_target_kind
+						} else {
+							children_valid = false;
+							// continue to convert other children
+						}
+					}
+					_ => {}
+				}
+			}
+
+			if children_valid {
+				Some(JS_PARENTHESIZED_ASSIGNMENT_TARGET)
+			} else {
+				None
+			}
 		}
+		kind => map_expression_to_simple_assignment_target_kind(&kind),
 	};
 
-	target.change_kind(p, mapped_kind);
-	Ok(target)
+	match mapped_kind {
+		Some(assignment_kind) => {
+			target.change_kind(p, assignment_kind);
+			Ok(target)
+		}
+		None => {
+			target.undo_completion(p).abandon(p);
+			Err(())
+		}
+	}
+}
+
+fn map_expression_to_simple_assignment_target_kind(kind: &SyntaxKind) -> Option<SyntaxKind> {
+	match kind {
+		JS_STATIC_MEMBER_EXPRESSION => Some(JS_STATIC_MEMBER_ASSIGNMENT_TARGET),
+		JS_COMPUTED_MEMBER_EXPRESSION => Some(JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET),
+		JS_REFERENCE_IDENTIFIER_EXPRESSION => Some(JS_IDENTIFIER_ASSIGNMENT_TARGET),
+		JS_PARENTHESIZED_EXPRESSION => Some(JS_PARENTHESIZED_ASSIGNMENT_TARGET),
+		_ => None,
+	}
 }

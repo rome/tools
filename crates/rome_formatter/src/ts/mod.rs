@@ -1,5 +1,6 @@
 mod any_js_array_element;
 mod arg_list;
+mod assignment_target;
 mod auxiliary;
 mod bindings;
 mod class;

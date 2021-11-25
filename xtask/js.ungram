@@ -148,7 +148,7 @@ ForStmt =
 	cons:JsAnyStatement
 
 ForStmtInit = inner:ForHead ';'
-ForHead = JsVariableDeclaration | JsAnyExpression
+ForHead = JsVariableDeclaration | JsAnyAssignmentTarget
 
 ForStmtTest = expr:JsAnyExpression ';'
 
@@ -410,12 +410,12 @@ JsUnaryExpression =
   argument: JsAnyExpression
 
 JsPreUpdateExpression =
-    operator:('++' | '--')
-    operand:JsAnyExpression
+    operator: ('++' | '--')
+    operand: JsAnySimpleAssignmentTarget
 
 JsPostUpdateExpression =
-    operand:JsAnyExpression
-    operator:('++' | '--')
+    operand: JsAnySimpleAssignmentTarget
+    operator: ('++' | '--')
 
 
 ///////////////
@@ -627,16 +627,23 @@ JsEmptyClassMember = ';'
 JsAnyAssignmentTarget =
 	JsAnySimpleAssignmentTarget
 	| JsArrayAssignmentTarget
+	| JsObjectAssignmentTarget
 
 JsAnySimpleAssignmentTarget =
 	JsIdentifierAssignmentTarget
 	| JsStaticMemberAssignmentTarget
 	| JsComputedMemberAssignmentTarget
+	| JsParenthesizedAssignmentTarget
 
 JsAssignmentTargetWithDefault =
 	target: JsAnyAssignmentTarget
 	'='
 	default: JsAnyExpression
+
+JsParenthesizedAssignmentTarget =
+	'('
+	target: JsAnySimpleAssignmentTarget
+	')'
 
 // b = "test"
 // ^

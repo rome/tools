@@ -1076,14 +1076,18 @@ impl JsPreUpdateExpression {
 	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
 		support::find_required_token(&self.syntax, &[T ! [++], T ! [--]])
 	}
-	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn operand(&self) -> SyntaxResult<JsAnySimpleAssignmentTarget> {
+		support::required_node(&self.syntax)
+	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsPostUpdateExpression {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsPostUpdateExpression {
-	pub fn operand(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
+	pub fn operand(&self) -> SyntaxResult<JsAnySimpleAssignmentTarget> {
+		support::required_node(&self.syntax)
+	}
 	pub fn operator(&self) -> SyntaxResult<SyntaxToken> {
 		support::find_required_token(&self.syntax, &[T ! [++], T ! [--]])
 	}
@@ -1699,6 +1703,21 @@ impl JsArrayAssignmentTarget {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsObjectAssignmentTarget {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsObjectAssignmentTarget {
+	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['{'])
+	}
+	pub fn properties(&self) -> AstSeparatedList<JsAnyPropertyAssignmentTarget> {
+		support::separated_list(&self.syntax, 0usize)
+	}
+	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['}'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsIdentifierAssignmentTarget {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1735,6 +1754,21 @@ impl JsComputedMemberAssignmentTarget {
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub struct JsParenthesizedAssignmentTarget {
+	pub(crate) syntax: SyntaxNode,
+}
+impl JsParenthesizedAssignmentTarget {
+	pub fn l_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T!['('])
+	}
+	pub fn target(&self) -> SyntaxResult<JsAnySimpleAssignmentTarget> {
+		support::required_node(&self.syntax)
+	}
+	pub fn r_paren_token(&self) -> SyntaxResult<SyntaxToken> {
+		support::required_token(&self.syntax, T![')'])
+	}
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct JsAssignmentTargetWithDefault {
 	pub(crate) syntax: SyntaxNode,
 }
@@ -1757,21 +1791,6 @@ impl JsArrayAssignmentTargetRestElement {
 	}
 	pub fn target(&self) -> SyntaxResult<JsAnyAssignmentTarget> {
 		support::required_node(&self.syntax)
-	}
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct JsObjectAssignmentTarget {
-	pub(crate) syntax: SyntaxNode,
-}
-impl JsObjectAssignmentTarget {
-	pub fn l_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['{'])
-	}
-	pub fn properties(&self) -> AstSeparatedList<JsAnyPropertyAssignmentTarget> {
-		support::separated_list(&self.syntax, 0usize)
-	}
-	pub fn r_curly_token(&self) -> SyntaxResult<SyntaxToken> {
-		support::required_token(&self.syntax, T!['}'])
 	}
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -2617,7 +2636,13 @@ pub enum JsAnyExpression {
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum ForHead {
 	JsVariableDeclaration(JsVariableDeclaration),
-	JsAnyExpression(JsAnyExpression),
+	JsAnyAssignmentTarget(JsAnyAssignmentTarget),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnyAssignmentTarget {
+	JsAnySimpleAssignmentTarget(JsAnySimpleAssignmentTarget),
+	JsArrayAssignmentTarget(JsArrayAssignmentTarget),
+	JsObjectAssignmentTarget(JsObjectAssignmentTarget),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnySwitchClause {
@@ -2660,11 +2685,6 @@ pub enum JsAnyArrayElement {
 	JsArrayHole(JsArrayHole),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum JsAnyAssignmentTarget {
-	JsAnySimpleAssignmentTarget(JsAnySimpleAssignmentTarget),
-	JsArrayAssignmentTarget(JsArrayAssignmentTarget),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
 	Pattern(Pattern),
 	JsAnyExpression(JsAnyExpression),
@@ -2673,6 +2693,13 @@ pub enum PatternOrExpr {
 pub enum JsAnyReferenceMember {
 	JsReferenceIdentifierMember(JsReferenceIdentifierMember),
 	JsReferencePrivateMember(JsReferencePrivateMember),
+}
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+pub enum JsAnySimpleAssignmentTarget {
+	JsIdentifierAssignmentTarget(JsIdentifierAssignmentTarget),
+	JsStaticMemberAssignmentTarget(JsStaticMemberAssignmentTarget),
+	JsComputedMemberAssignmentTarget(JsComputedMemberAssignmentTarget),
+	JsParenthesizedAssignmentTarget(JsParenthesizedAssignmentTarget),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyObjectMemberName {
@@ -2720,12 +2747,6 @@ pub enum JsAnyClassMemberName {
 pub enum JsAnyConstructorParameter {
 	TsConstructorParam(TsConstructorParam),
 	Pattern(Pattern),
-}
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub enum JsAnySimpleAssignmentTarget {
-	JsIdentifierAssignmentTarget(JsIdentifierAssignmentTarget),
-	JsStaticMemberAssignmentTarget(JsStaticMemberAssignmentTarget),
-	JsComputedMemberAssignmentTarget(JsComputedMemberAssignmentTarget),
 }
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum JsAnyArrayAssignmentTargetElement {
@@ -4180,6 +4201,17 @@ impl AstNode for JsArrayAssignmentTarget {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsObjectAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_TARGET }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsIdentifierAssignmentTarget {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_IDENTIFIER_ASSIGNMENT_TARGET }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4213,6 +4245,17 @@ impl AstNode for JsComputedMemberAssignmentTarget {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
+impl AstNode for JsParenthesizedAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PARENTHESIZED_ASSIGNMENT_TARGET }
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		if Self::can_cast(syntax.kind()) {
+			Some(Self { syntax })
+		} else {
+			None
+		}
+	}
+	fn syntax(&self) -> &SyntaxNode { &self.syntax }
+}
 impl AstNode for JsAssignmentTargetWithDefault {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ASSIGNMENT_TARGET_WITH_DEFAULT }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
@@ -4226,17 +4269,6 @@ impl AstNode for JsAssignmentTargetWithDefault {
 }
 impl AstNode for JsArrayAssignmentTargetRestElement {
 	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT }
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		if Self::can_cast(syntax.kind()) {
-			Some(Self { syntax })
-		} else {
-			None
-		}
-	}
-	fn syntax(&self) -> &SyntaxNode { &self.syntax }
-}
-impl AstNode for JsObjectAssignmentTarget {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_OBJECT_ASSIGNMENT_TARGET }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -5576,7 +5608,7 @@ impl AstNode for ForHead {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
 			JS_VARIABLE_DECLARATION => true,
-			k if JsAnyExpression::can_cast(k) => true,
+			k if JsAnyAssignmentTarget::can_cast(k) => true,
 			_ => false,
 		}
 	}
@@ -5586,8 +5618,8 @@ impl AstNode for ForHead {
 				ForHead::JsVariableDeclaration(JsVariableDeclaration { syntax })
 			}
 			_ => {
-				if let Some(js_any_expression) = JsAnyExpression::cast(syntax) {
-					return Some(ForHead::JsAnyExpression(js_any_expression));
+				if let Some(js_any_assignment_target) = JsAnyAssignmentTarget::cast(syntax) {
+					return Some(ForHead::JsAnyAssignmentTarget(js_any_assignment_target));
 				}
 				return None;
 			}
@@ -5597,7 +5629,54 @@ impl AstNode for ForHead {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			ForHead::JsVariableDeclaration(it) => &it.syntax,
-			ForHead::JsAnyExpression(it) => it.syntax(),
+			ForHead::JsAnyAssignmentTarget(it) => it.syntax(),
+		}
+	}
+}
+impl From<JsArrayAssignmentTarget> for JsAnyAssignmentTarget {
+	fn from(node: JsArrayAssignmentTarget) -> JsAnyAssignmentTarget {
+		JsAnyAssignmentTarget::JsArrayAssignmentTarget(node)
+	}
+}
+impl From<JsObjectAssignmentTarget> for JsAnyAssignmentTarget {
+	fn from(node: JsObjectAssignmentTarget) -> JsAnyAssignmentTarget {
+		JsAnyAssignmentTarget::JsObjectAssignmentTarget(node)
+	}
+}
+impl AstNode for JsAnyAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		match kind {
+			JS_ARRAY_ASSIGNMENT_TARGET | JS_OBJECT_ASSIGNMENT_TARGET => true,
+			k if JsAnySimpleAssignmentTarget::can_cast(k) => true,
+			_ => false,
+		}
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_ARRAY_ASSIGNMENT_TARGET => {
+				JsAnyAssignmentTarget::JsArrayAssignmentTarget(JsArrayAssignmentTarget { syntax })
+			}
+			JS_OBJECT_ASSIGNMENT_TARGET => {
+				JsAnyAssignmentTarget::JsObjectAssignmentTarget(JsObjectAssignmentTarget { syntax })
+			}
+			_ => {
+				if let Some(js_any_simple_assignment_target) =
+					JsAnySimpleAssignmentTarget::cast(syntax)
+				{
+					return Some(JsAnyAssignmentTarget::JsAnySimpleAssignmentTarget(
+						js_any_simple_assignment_target,
+					));
+				}
+				return None;
+			}
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnyAssignmentTarget::JsArrayAssignmentTarget(it) => &it.syntax,
+			JsAnyAssignmentTarget::JsObjectAssignmentTarget(it) => &it.syntax,
+			JsAnyAssignmentTarget::JsAnySimpleAssignmentTarget(it) => it.syntax(),
 		}
 	}
 }
@@ -5867,44 +5946,6 @@ impl AstNode for JsAnyArrayElement {
 		}
 	}
 }
-impl From<JsArrayAssignmentTarget> for JsAnyAssignmentTarget {
-	fn from(node: JsArrayAssignmentTarget) -> JsAnyAssignmentTarget {
-		JsAnyAssignmentTarget::JsArrayAssignmentTarget(node)
-	}
-}
-impl AstNode for JsAnyAssignmentTarget {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_ARRAY_ASSIGNMENT_TARGET => true,
-			k if JsAnySimpleAssignmentTarget::can_cast(k) => true,
-			_ => false,
-		}
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			JS_ARRAY_ASSIGNMENT_TARGET => {
-				JsAnyAssignmentTarget::JsArrayAssignmentTarget(JsArrayAssignmentTarget { syntax })
-			}
-			_ => {
-				if let Some(js_any_simple_assignment_target) =
-					JsAnySimpleAssignmentTarget::cast(syntax)
-				{
-					return Some(JsAnyAssignmentTarget::JsAnySimpleAssignmentTarget(
-						js_any_simple_assignment_target,
-					));
-				}
-				return None;
-			}
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			JsAnyAssignmentTarget::JsArrayAssignmentTarget(it) => &it.syntax,
-			JsAnyAssignmentTarget::JsAnySimpleAssignmentTarget(it) => it.syntax(),
-		}
-	}
-}
 impl AstNode for PatternOrExpr {
 	fn can_cast(kind: SyntaxKind) -> bool {
 		match kind {
@@ -5964,6 +6005,71 @@ impl AstNode for JsAnyReferenceMember {
 		match self {
 			JsAnyReferenceMember::JsReferenceIdentifierMember(it) => &it.syntax,
 			JsAnyReferenceMember::JsReferencePrivateMember(it) => &it.syntax,
+		}
+	}
+}
+impl From<JsIdentifierAssignmentTarget> for JsAnySimpleAssignmentTarget {
+	fn from(node: JsIdentifierAssignmentTarget) -> JsAnySimpleAssignmentTarget {
+		JsAnySimpleAssignmentTarget::JsIdentifierAssignmentTarget(node)
+	}
+}
+impl From<JsStaticMemberAssignmentTarget> for JsAnySimpleAssignmentTarget {
+	fn from(node: JsStaticMemberAssignmentTarget) -> JsAnySimpleAssignmentTarget {
+		JsAnySimpleAssignmentTarget::JsStaticMemberAssignmentTarget(node)
+	}
+}
+impl From<JsComputedMemberAssignmentTarget> for JsAnySimpleAssignmentTarget {
+	fn from(node: JsComputedMemberAssignmentTarget) -> JsAnySimpleAssignmentTarget {
+		JsAnySimpleAssignmentTarget::JsComputedMemberAssignmentTarget(node)
+	}
+}
+impl From<JsParenthesizedAssignmentTarget> for JsAnySimpleAssignmentTarget {
+	fn from(node: JsParenthesizedAssignmentTarget) -> JsAnySimpleAssignmentTarget {
+		JsAnySimpleAssignmentTarget::JsParenthesizedAssignmentTarget(node)
+	}
+}
+impl AstNode for JsAnySimpleAssignmentTarget {
+	fn can_cast(kind: SyntaxKind) -> bool {
+		matches!(
+			kind,
+			JS_IDENTIFIER_ASSIGNMENT_TARGET
+				| JS_STATIC_MEMBER_ASSIGNMENT_TARGET
+				| JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET
+				| JS_PARENTHESIZED_ASSIGNMENT_TARGET
+		)
+	}
+	fn cast(syntax: SyntaxNode) -> Option<Self> {
+		let res = match syntax.kind() {
+			JS_IDENTIFIER_ASSIGNMENT_TARGET => {
+				JsAnySimpleAssignmentTarget::JsIdentifierAssignmentTarget(
+					JsIdentifierAssignmentTarget { syntax },
+				)
+			}
+			JS_STATIC_MEMBER_ASSIGNMENT_TARGET => {
+				JsAnySimpleAssignmentTarget::JsStaticMemberAssignmentTarget(
+					JsStaticMemberAssignmentTarget { syntax },
+				)
+			}
+			JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET => {
+				JsAnySimpleAssignmentTarget::JsComputedMemberAssignmentTarget(
+					JsComputedMemberAssignmentTarget { syntax },
+				)
+			}
+			JS_PARENTHESIZED_ASSIGNMENT_TARGET => {
+				JsAnySimpleAssignmentTarget::JsParenthesizedAssignmentTarget(
+					JsParenthesizedAssignmentTarget { syntax },
+				)
+			}
+			_ => return None,
+		};
+		Some(res)
+	}
+	fn syntax(&self) -> &SyntaxNode {
+		match self {
+			JsAnySimpleAssignmentTarget::JsIdentifierAssignmentTarget(it) => &it.syntax,
+			JsAnySimpleAssignmentTarget::JsStaticMemberAssignmentTarget(it) => &it.syntax,
+			JsAnySimpleAssignmentTarget::JsComputedMemberAssignmentTarget(it) => &it.syntax,
+			JsAnySimpleAssignmentTarget::JsParenthesizedAssignmentTarget(it) => &it.syntax,
 		}
 	}
 }
@@ -6315,59 +6421,6 @@ impl AstNode for JsAnyConstructorParameter {
 		}
 	}
 }
-impl From<JsIdentifierAssignmentTarget> for JsAnySimpleAssignmentTarget {
-	fn from(node: JsIdentifierAssignmentTarget) -> JsAnySimpleAssignmentTarget {
-		JsAnySimpleAssignmentTarget::JsIdentifierAssignmentTarget(node)
-	}
-}
-impl From<JsStaticMemberAssignmentTarget> for JsAnySimpleAssignmentTarget {
-	fn from(node: JsStaticMemberAssignmentTarget) -> JsAnySimpleAssignmentTarget {
-		JsAnySimpleAssignmentTarget::JsStaticMemberAssignmentTarget(node)
-	}
-}
-impl From<JsComputedMemberAssignmentTarget> for JsAnySimpleAssignmentTarget {
-	fn from(node: JsComputedMemberAssignmentTarget) -> JsAnySimpleAssignmentTarget {
-		JsAnySimpleAssignmentTarget::JsComputedMemberAssignmentTarget(node)
-	}
-}
-impl AstNode for JsAnySimpleAssignmentTarget {
-	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
-			JS_IDENTIFIER_ASSIGNMENT_TARGET
-			| JS_STATIC_MEMBER_ASSIGNMENT_TARGET
-			| JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET => true,
-			_ => false,
-		}
-	}
-	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		let res = match syntax.kind() {
-			JS_IDENTIFIER_ASSIGNMENT_TARGET => {
-				JsAnySimpleAssignmentTarget::JsIdentifierAssignmentTarget(
-					JsIdentifierAssignmentTarget { syntax },
-				)
-			}
-			JS_STATIC_MEMBER_ASSIGNMENT_TARGET => {
-				JsAnySimpleAssignmentTarget::JsStaticMemberAssignmentTarget(
-					JsStaticMemberAssignmentTarget { syntax },
-				)
-			}
-			JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET => {
-				JsAnySimpleAssignmentTarget::JsComputedMemberAssignmentTarget(
-					JsComputedMemberAssignmentTarget { syntax },
-				)
-			}
-			_ => return None,
-		};
-		Some(res)
-	}
-	fn syntax(&self) -> &SyntaxNode {
-		match self {
-			JsAnySimpleAssignmentTarget::JsIdentifierAssignmentTarget(it) => &it.syntax,
-			JsAnySimpleAssignmentTarget::JsStaticMemberAssignmentTarget(it) => &it.syntax,
-			JsAnySimpleAssignmentTarget::JsComputedMemberAssignmentTarget(it) => &it.syntax,
-		}
-	}
-}
 impl From<JsAssignmentTargetWithDefault> for JsAnyArrayAssignmentTargetElement {
 	fn from(node: JsAssignmentTargetWithDefault) -> JsAnyArrayAssignmentTargetElement {
 		JsAnyArrayAssignmentTargetElement::JsAssignmentTargetWithDefault(node)
@@ -6443,12 +6496,12 @@ impl From<JsObjectRestPropertyAssignmentTarget> for JsAnyPropertyAssignmentTarge
 }
 impl AstNode for JsAnyPropertyAssignmentTarget {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		match kind {
+		matches!(
+			kind,
 			JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET
-			| JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
-			| JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET => true,
-			_ => false,
-		}
+				| JS_OBJECT_PROPERTY_ASSIGNMENT_TARGET
+				| JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET
+		)
 	}
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
@@ -7075,6 +7128,11 @@ impl std::fmt::Display for ForHead {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsAnyAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsAnySwitchClause {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -7105,17 +7163,17 @@ impl std::fmt::Display for JsAnyArrayElement {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for JsAnyAssignmentTarget {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
 impl std::fmt::Display for PatternOrExpr {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
 impl std::fmt::Display for JsAnyReferenceMember {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
+impl std::fmt::Display for JsAnySimpleAssignmentTarget {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -7146,11 +7204,6 @@ impl std::fmt::Display for JsAnyClassMemberName {
 	}
 }
 impl std::fmt::Display for JsAnyConstructorParameter {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsAnySimpleAssignmentTarget {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
@@ -7830,6 +7883,11 @@ impl std::fmt::Display for JsArrayAssignmentTarget {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsObjectAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsIdentifierAssignmentTarget {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
@@ -7845,17 +7903,17 @@ impl std::fmt::Display for JsComputedMemberAssignmentTarget {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
+impl std::fmt::Display for JsParenthesizedAssignmentTarget {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+		std::fmt::Display::fmt(self.syntax(), f)
+	}
+}
 impl std::fmt::Display for JsAssignmentTargetWithDefault {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
 impl std::fmt::Display for JsArrayAssignmentTargetRestElement {
-	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		std::fmt::Display::fmt(self.syntax(), f)
-	}
-}
-impl std::fmt::Display for JsObjectAssignmentTarget {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
