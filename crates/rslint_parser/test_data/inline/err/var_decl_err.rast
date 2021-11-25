@@ -12,7 +12,7 @@
                 0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..8
               0: EQ@6..7 "=" [] []
-              1: ERROR@7..8
+              1: JS_UNKNOWN_EXPRESSION@7..8
                 0: SEMICOLON@7..8 ";" [] []
       1: (empty)
     1: JS_VARIABLE_DECLARATION_STATEMENT@8..21

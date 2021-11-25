@@ -455,11 +455,7 @@ impl<'t> Parser<'t> {
 		start..end
 	}
 
-	pub fn expr_with_semi_recovery(
-		&mut self,
-		assign: bool,
-		unknown_syntax_kind: SyntaxKind,
-	) -> Option<CompletedMarker> {
+	pub fn expr_with_semi_recovery(&mut self, assign: bool) -> Option<CompletedMarker> {
 		let func = if assign {
 			syntax::expr::assign_expr
 		} else {
@@ -471,10 +467,10 @@ impl<'t> Parser<'t> {
 			let err = self
 				.err_builder("expected an expression, but found `;` instead")
 				.primary(self.cur_tok().range, "");
-
 			self.error(err);
 			self.bump_any();
-			m.complete(self, unknown_syntax_kind);
+			m.complete(self, SyntaxKind::JS_UNKNOWN_EXPRESSION);
+
 			return None;
 		}
 
