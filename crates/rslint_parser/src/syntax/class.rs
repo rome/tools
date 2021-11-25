@@ -428,7 +428,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 		member_name,
 		"constructor" | "\"constructor\"" | "'constructor'"
 	);
-	let member = class_member_name(p).make_required(p, js_parse_error::expected_class_member_name);
+	let member = class_member_name(p).or_missing_with_error(p, js_parse_error::expected_class_member_name);
 
 	if is_method_class_member(p, 0) {
 		if let Some(range) = readonly_range.clone() {
@@ -543,19 +543,19 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				}
 
 				// So we've seen a get that now must be followed by a getter/setter name
-				class_member_name(p).make_required(p, js_parse_error::expected_class_member_name);
+				class_member_name(p).or_missing_with_error(p, js_parse_error::expected_class_member_name);
 				p.expect_required(T!['(']);
 
 				let completed = if is_getter {
 					p.expect_required(T![')']);
 					ts_return_type(p);
-					function_body(p).make_required(p, js_parse_error::expected_function_body);
+					function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
 					formal_param_pat(p);
 					p.expect_required(T![')']);
-					function_body(p).make_required(p, js_parse_error::expected_function_body);
+					function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 					member_marker.complete(p, JS_SETTER_CLASS_MEMBER)
 				};
@@ -709,7 +709,7 @@ fn is_method_class_member(p: &Parser, mut offset: usize) -> bool {
 }
 
 fn method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
-	class_member_name(p).make_required(p, js_parse_error::expected_function_body);
+	class_member_name(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 	method_class_member_body(p, m)
 }
 
@@ -719,7 +719,7 @@ fn method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	ts_parameter_types(p);
 	parameter_list(p);
 	ts_return_type(p);
-	function_body(p).make_required(p, js_parse_error::expected_function_body);
+	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 	m.complete(p, JS_METHOD_CLASS_MEMBER)
 }
@@ -765,7 +765,7 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 
 		let p = &mut *guard;
 
-		block_impl(p, JS_FUNCTION_BODY).make_required(p, js_parse_error::expected_function_body);
+		block_impl(p, JS_FUNCTION_BODY).or_missing_with_error(p, js_parse_error::expected_function_body);
 	}
 
 	// FIXME(RDambrosio016): if there is no body we need to issue errors for any assign patterns

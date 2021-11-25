@@ -53,7 +53,7 @@ impl ParseRecovery {
 	}
 
 	/// Enable recovery on line breaks
-	pub fn with_recovery_on_line_break(mut self) -> Self {
+	pub fn enable_recovery_on_line_break(mut self) -> Self {
 		self.line_break = true;
 		self
 	}

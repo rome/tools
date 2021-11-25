@@ -86,7 +86,7 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	uses_ts_syntax |= type_parameters.is_present();
 
 	if let Valid(type_parameters) = type_parameters {
-		type_parameters.make_optional(guard);
+		type_parameters.or_missing(guard);
 	}
 
 	parameter_list(guard);
@@ -99,13 +99,13 @@ fn function(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	uses_ts_syntax |= return_type.is_present();
 
 	if let Valid(return_type) = return_type {
-		return_type.make_optional(guard);
+		return_type.or_missing(guard);
 	}
 
 	if kind == JS_FUNCTION_DECLARATION {
 		function_body_or_declaration(guard);
 	} else {
-		function_body(guard).make_required(guard, js_parse_error::expected_function_body);
+		function_body(guard).or_missing_with_error(guard, js_parse_error::expected_function_body);
 	}
 
 	let function = m.complete(guard, kind);
@@ -153,7 +153,7 @@ pub(super) fn function_body_or_declaration(p: &mut Parser) {
 				_ => p.missing(),
 			}
 		} else {
-			body.make_required(p, js_parse_error::expected_function_body);
+			body.or_missing_with_error(p, js_parse_error::expected_function_body);
 		}
 	}
 }

@@ -32,7 +32,12 @@ impl ExpectedNodeDiagnosticBuilder {
 	}
 
 	fn with_any(names: &[&str], range: Range<usize>) -> Self {
-		assert!(names.len() > 1, "Requires at least 2 names");
+		debug_assert!(names.len() > 1, "Requires at least 2 names");
+
+		if names.len() < 2 {
+			return Self::with_single_node(names.first().unwrap_or(&"<missing>"), range);
+		}
+
 		let mut joined_names = String::new();
 
 		for (index, name) in names.iter().enumerate() {

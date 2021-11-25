@@ -59,14 +59,12 @@ impl ParsedSyntax {
 		matches!(self, Absent)
 	}
 
-	/// Makes this a required syntax and returns the completed marker as an [Option].
-	///
-	/// It returns `Some(completed)` if the syntax is present in the source text, and otherwise
-	///
-	/// * adds a `missing` marker to the parent that this child isn't present.
-	/// * creates a diagnostic with the passed in error builder and adds it to the parse errors
-	/// * returns [None]
-	pub fn make_required<E>(self, p: &mut Parser, error_builder: E) -> Option<CompletedMarker>
+	/// It returns the syntax if present or adds a missing marker and a diagnostic at the current parser position.
+	pub fn or_missing_with_error<E>(
+		self,
+		p: &mut Parser,
+		error_builder: E,
+	) -> Option<CompletedMarker>
 	where
 		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
 	{
@@ -81,13 +79,8 @@ impl ParsedSyntax {
 		}
 	}
 
-	/// Makes this an optional syntax and returns the completed marker asn an [Option].
-	///
-	/// It returns `Some(completed)` if the syntax is present in the source text.
-	///
-	/// It adds a `missing` marker to the parent to indicate that this child isn't present and returns
-	/// [None] if the node is absent.
-	pub fn make_optional(self, p: &mut Parser) -> Option<CompletedMarker> {
+	/// It returns the syntax if present or adds a missing marker.
+	pub fn or_missing(self, p: &mut Parser) -> Option<CompletedMarker> {
 		match self {
 			Present(syntax) => Some(syntax),
 			Absent => {
@@ -97,21 +90,11 @@ impl ParsedSyntax {
 		}
 	}
 
-	/// It makes this syntax a required child of its parent and creates a new marker that precedes this syntax.
-	///
-	/// It returns [CompletedMarker.precede] if this syntax is present in the source text.
-	///
-	/// It...
-	/// * creates a new marker
-	/// * marks this syntax as missing
-	/// * creates a diagnostic with the passed error builder and adds it to the parser diagnostics
-	/// * and returns the new marker
-	///
-	/// if the syntax is absent in the source text.
-	///
+	/// It creates and returns a marker preceding this parsed syntax if it is present or starts
+	/// a new marker, marks the first slot as missing and adds an error to the current parser position.
 	/// See [CompletedMarker.precede]
 	#[must_use]
-	pub fn precede_required<E>(self, p: &mut Parser, error_builder: E) -> Marker
+	pub fn precede_or_missing_with_error<E>(self, p: &mut Parser, error_builder: E) -> Marker
 	where
 		E: FnOnce(&Parser, Range<usize>) -> Diagnostic,
 	{
@@ -128,16 +111,12 @@ impl ParsedSyntax {
 		}
 	}
 
-	/// It makes this syntax an optional child of its parent and creates a new marker that precedes this syntax.
-	///
-	/// It returns [CompletedMarker.precede] if this syntax is present in the source text.
-	///
-	/// It creates and returns a new marker and marks this syntax as missing if the syntax is
-	/// absent in the source text.
+	/// It creates and returns a marker preceding this parsed syntax if it is present or starts a new marker
+	/// and marks its first slot as missing.
 	///
 	/// See [CompletedMarker.precede]
 	#[must_use]
-	pub fn precede_optional(self, p: &mut Parser) -> Marker {
+	pub fn precede_or_missing(self, p: &mut Parser) -> Marker {
 		match self {
 			Present(completed) => completed.precede(p),
 			Absent => {
@@ -294,7 +273,7 @@ impl From<Option<CompletedMarker>> for ParsedSyntax {
 /// One use case for this is for syntax that is only valid if the parsing context supports
 /// a certain language feature, for example:
 ///
-/// * Syntax that is only supported in strict or sloppy mode: for example, with statements
+/// * Syntax that is only supported in strict or sloppy mode: for example, `with` statements
 /// * Syntax that is only supported in certain file types: Typescript, JSX, Import / Export statements
 /// * Syntax that is only available in certain language versions: experimental features, private field existence test
 ///

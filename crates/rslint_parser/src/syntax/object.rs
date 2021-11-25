@@ -43,7 +43,7 @@ pub(super) fn object_expr(p: &mut Parser) -> CompletedMarker {
 		let recovered_member = object_member(p).or_recover(
 			p,
 			ParseRecovery::new(JS_UNKNOWN_MEMBER, token_set![T![,], T!['}'], T![;], T![:]])
-				.with_recovery_on_line_break(),
+				.enable_recovery_on_line_break(),
 			js_parse_error::expected_object_member,
 		);
 
@@ -116,7 +116,7 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 			let m = p.start();
 			let identifier_member_name = p.at(T![ident]) || p.cur().is_keyword();
 			let member_name =
-				object_member_name(p).make_required(p, js_parse_error::expected_object_member);
+				object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member);
 
 			// test object_expr_method
 			// let b = {
@@ -190,14 +190,14 @@ fn getter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_remap(T![get]);
 
-	object_member_name(p).make_required(p, js_parse_error::expected_object_member_name);
+	object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member_name);
 
 	p.expect_required(T!['(']);
 	p.expect_required(T![')']);
 
 	ts_return_type(p);
 
-	function_body(p).make_required(p, js_parse_error::expected_function_body);
+	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 	Present(m.complete(p, JS_GETTER_OBJECT_MEMBER))
 }
@@ -211,13 +211,13 @@ fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.bump_remap(T![set]);
 
-	object_member_name(p).make_required(p, js_parse_error::expected_object_member_name);
+	object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member_name);
 
 	p.state.allow_object_expr = p.expect_required(T!['(']);
 	formal_param_pat(p);
 	p.expect_required(T![')']);
 
-	function_body(p).make_required(p, js_parse_error::expected_function_body);
+	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 	p.state.allow_object_expr = true;
 	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
@@ -298,7 +298,7 @@ fn method_object_member(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let in_generator = p.eat_optional(T![*]);
-	object_member_name(p).make_required(p, js_parse_error::expected_object_member_name);
+	object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member_name);
 
 	{
 		let mut guard = p.with_state(ParserState {
@@ -320,7 +320,7 @@ fn method_object_member_body(p: &mut Parser) {
 	ts_parameter_types(p);
 	parameter_list(p);
 	ts_return_type(p);
-	function_body(p).make_required(p, js_parse_error::expected_function_body);
+	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
 	p.state = old;
 }
