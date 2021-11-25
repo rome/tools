@@ -1013,12 +1013,10 @@ pub fn ts_non_array_type(p: &mut Parser) -> Option<CompletedMarker> {
 				let _m = p.start();
 				p.bump_any();
 				_m.complete(p, JS_NUMBER_LITERAL_EXPRESSION);
-			} else {
-				if p.expect_no_recover(JS_NUMBER_LITERAL).is_none() {
-					m.abandon(p);
-					p.rewind(t);
-					return None;
-				};
+			} else if p.expect_no_recover(JS_NUMBER_LITERAL).is_none() {
+				m.abandon(p);
+				p.rewind(t);
+				return None;
 			}
 			Some(m.complete(p, TS_LITERAL))
 		}
