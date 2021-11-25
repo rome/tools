@@ -7,7 +7,7 @@ use xtask::{
 };
 
 #[cfg(feature = "dhat-on")]
-use dhat::{DhatAlloc};
+use dhat::DhatAlloc;
 
 #[cfg(feature = "dhat-on")]
 #[global_allocator]
