@@ -32,3 +32,8 @@ ureq = { version = "2.3.1" }
 url = "2.2.2"
 timing = "0.2.3"
 ansi_rgb = "0.2.0"
+dhat = { version = "0.2.4", optional = true }
+humansize = "1.1.1"
+
+[features]
+dhat-on = ["dhat"]

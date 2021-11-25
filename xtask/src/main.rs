@@ -6,7 +6,17 @@ use xtask::{
 	project_root, run_rustfmt, Result,
 };
 
+#[cfg(feature = "dhat-on")]
+use dhat::{DhatAlloc};
+
+#[cfg(feature = "dhat-on")]
+#[global_allocator]
+static ALLOCATOR: DhatAlloc = DhatAlloc;
+
 fn main() -> Result<()> {
+	#[cfg(feature = "dhat-on")]
+	let _dhat = dhat::Dhat::start_heap_profiling();
+
 	let _d = pushd(project_root());
 
 	let mut args = Arguments::from_env();
