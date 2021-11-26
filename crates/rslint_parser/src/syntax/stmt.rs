@@ -98,16 +98,16 @@ pub fn stmt(p: &mut Parser, recovery_set: impl Into<Option<TokenSet>>) -> Option
 		T!['{'] => parse_block_stmt(p).ok().unwrap(),    // It is only ever None if there is no `{`,
 		T![if] => parse_if_statement(p).ok().unwrap(),   // It is only ever Err if there's no if
 		T![with] => parse_with_statement(p).ok().unwrap(), // ever only Err if there's no with keyword
-		T![while] => parse_while_stmt(p).ok().unwrap(),  // It is only ever Err if there's no while keyword
+		T![while] => parse_while_statement(p).ok().unwrap(), // It is only ever Err if there's no while keyword
 		t if (t == T![const] && p.nth_at(1, T![enum])) || t == T![enum] => {
 			let mut res = ts_enum(p);
 			res.err_if_not_ts(p, "enums can only be declared in TypeScript files");
 			res
 		}
 		T![var] | T![const] => variable_declaration_statement(p),
-		T![for] => parse_for_stmt(p).ok().unwrap(),
-		T![do] => parse_do_stmt(p).ok().unwrap(),
-		T![switch] => parse_switch_stmt(p),
+		T![for] => parse_for_statement(p).ok().unwrap(),
+		T![do] => parse_do_statement(p).ok().unwrap(),
+		T![switch] => parse_switch_statement(p).ok().unwrap(),
 		T![try] => parse_try_statement(p).ok().unwrap(), // it is only ever Err if there's no try
 		T![return] => parse_return_statement(p).ok().unwrap(),
 		T![break] => parse_break_statement(p).ok().unwrap(),
@@ -432,10 +432,8 @@ pub fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
 
 		p.error(err);
 		complete.change_kind(p, JS_UNKNOWN_STATEMENT);
-		Present(complete)
-	} else {
-		Present(complete)
 	}
+	Present(complete)
 }
 
 /// An empty statement denoted by a single semicolon.
@@ -687,7 +685,7 @@ pub fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
 // test while_stmt
 // while (true) {}
 // while (5) {}
-pub fn parse_while_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_while_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err while_stmt_err
 	// while true {}
 	// while {}
@@ -864,7 +862,7 @@ fn variable_initializer(p: &mut Parser) {
 // test do_while_stmtR
 // do { } while (true)
 // do throw Error("foo") while (true)
-pub fn parse_do_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err do_while_stmt_err
 	// do while (true)
 	// do while ()
@@ -988,7 +986,7 @@ fn normal_for_head(p: &mut Parser) {
 // for (let { foo, bar } of {}) {}
 // for (foo in {}) {}
 // for (;;) {}
-pub fn parse_for_stmt(p: &mut Parser) -> ParsedSyntax {
+pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err for_stmt_err
 	// for ;; {}
 	// for let i = 5; i < 10; i++ {}
@@ -1017,7 +1015,7 @@ pub fn parse_for_stmt(p: &mut Parser) -> ParsedSyntax {
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
-fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
+fn parse_switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 	let start = p.cur_tok().range.start;
 	let m = p.start();
 	match p.cur() {
@@ -1079,12 +1077,15 @@ fn switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 //  case bar:
 //  default:
 // }
-pub fn parse_switch_stmt(p: &mut Parser) -> CompletedMarker {
+pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err switch_stmt_err
 	// switch foo {}
 	// switch {}
+	if !p.at(T![switch]) {
+		return Absent;
+	}
 	let m = p.start();
-	p.expect_required(T![switch]);
+	p.bump_any(); // switch keyword
 	parenthesized_expression(p);
 	p.expect_required(T!['{']);
 	let cases_list = p.start();
@@ -1095,7 +1096,7 @@ pub fn parse_switch_stmt(p: &mut Parser) -> CompletedMarker {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		if let Some(default_range) = switch_clause(&mut *temp) {
+		if let Some(default_range) = parse_switch_clause(&mut *temp) {
 			if let Some(ref err_range) = first_default {
 				let err = temp
 					.err_builder(
@@ -1115,7 +1116,7 @@ pub fn parse_switch_stmt(p: &mut Parser) -> CompletedMarker {
 	}
 	cases_list.complete(p, LIST);
 	p.expect_required(T!['}']);
-	m.complete(p, JS_SWITCH_STATEMENT)
+	Present(m.complete(p, JS_SWITCH_STATEMENT))
 }
 
 fn parse_catch_clause(p: &mut Parser) -> ParsedSyntax {

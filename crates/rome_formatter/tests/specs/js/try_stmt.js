@@ -1,26 +1,26 @@
 try {
-	return "1"
+	var foo = 4
 } catch {
-	return "5"
+	var foo = 4
 }
 
 try {
-	return "1"
+	var foo = 4
 } catch (e) {
-	return "5"
+	var foo = 4
 }
 
 
 try {
-	return "1"
+	var foo = 4
 } finally    {
-	return "5"
+	var foo = 4
 }
 
 try {
-	return "1";
+	var foo = 4
 } catch {
-	return "187"
+	var foo = 4
 } finally {
-	return "5";
+	var foo = 4
 }
