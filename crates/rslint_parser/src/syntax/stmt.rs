@@ -417,13 +417,13 @@ pub fn parse_return_stmt(p: &mut Parser) -> ParsedSyntax {
 	}
 	let m = p.start();
 	let start = p.cur_tok().range.start;
-	p.expect_required(T![return]);
+	p.bump_any(); // return keyword
 	if !p.has_linebreak_before_n(0) && p.at_ts(STARTS_EXPR) {
 		// TODO: review this part and make sure it plays well with the new recovery logic
 		p.expr_with_semi_recovery(false);
 	}
 	semi(p, start..p.cur_tok().range.end);
-	let complete = m.complete(p, JS_RETURN_STATEMENT);
+	let mut complete = m.complete(p, JS_RETURN_STATEMENT);
 
 	if !p.state.in_function && !p.syntax.global_return {
 		let err = p
@@ -431,8 +431,11 @@ pub fn parse_return_stmt(p: &mut Parser) -> ParsedSyntax {
 			.primary(complete.range(p), "");
 
 		p.error(err);
+		complete.change_kind(p, JS_UNKNOWN_STATEMENT);
+		Present(complete)
+	} else {
+		Present(complete)
 	}
-	Present(complete)
 }
 
 /// An empty statement denoted by a single semicolon.
