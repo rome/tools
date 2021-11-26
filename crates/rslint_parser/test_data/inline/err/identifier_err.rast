@@ -1,0 +1,68 @@
+0: JS_ROOT@0..62
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..61
+    0: JS_EXPRESSION_STATEMENT@0..6
+      0: JS_UNKNOWN_EXPRESSION@0..5
+        0: IDENT@0..5 "yield" [] []
+      1: SEMICOLON@5..6 ";" [] []
+    1: JS_FUNCTION_DECLARATION@6..36
+      0: ASYNC_KW@6..13 "async" [Whitespace("\n")] [Whitespace(" ")]
+      1: FUNCTION_KW@13..22 "function" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@22..26
+        0: IDENT@22..26 "test" [] []
+      3: JS_PARAMETER_LIST@26..34
+        0: L_PAREN@26..27 "(" [] []
+        1: LIST@27..32
+          0: SINGLE_PATTERN@27..32
+            0: JS_UNKNOWN_PATTERN@27..32
+              0: IDENT@27..32 "await" [] []
+        2: R_PAREN@32..34 ")" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@34..36
+        0: L_CURLY@34..35 "{" [] []
+        1: LIST@35..35
+        2: LIST@35..35
+        3: R_CURLY@35..36 "}" [] []
+    2: JS_FUNCTION_DECLARATION@36..61
+      0: FUNCTION_KW@36..45 "function" [Whitespace("\n")] []
+      1: STAR@45..47 "*" [] [Whitespace(" ")]
+      2: JS_IDENTIFIER_BINDING@47..51
+        0: IDENT@47..51 "test" [] []
+      3: JS_PARAMETER_LIST@51..59
+        0: L_PAREN@51..52 "(" [] []
+        1: LIST@52..57
+          0: SINGLE_PATTERN@52..57
+            0: JS_UNKNOWN_PATTERN@52..57
+              0: IDENT@52..57 "yield" [] []
+        2: R_PAREN@57..59 ")" [] [Whitespace(" ")]
+      4: JS_FUNCTION_BODY@59..61
+        0: L_CURLY@59..60 "{" [] []
+        1: LIST@60..60
+        2: LIST@60..60
+        3: R_CURLY@60..61 "}" [] []
+  3: EOF@61..62 "" [Whitespace("\n")] []
+--
+error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
+  ┌─ identifier_err.js:1:1
+  │
+1 │ yield;
+  │ ^^^^^
+
+--
+error[SyntaxError]: Illegal use of `await` as an identifier in an async context
+  ┌─ identifier_err.js:2:21
+  │
+2 │ async function test(await) {}
+  │                     ^^^^^
+
+--
+error[SyntaxError]: Illegal use of `yield` as an identifier in generator function
+  ┌─ identifier_err.js:3:16
+  │
+3 │ function* test(yield) {}
+  │                ^^^^^
+
+--
+yield;
+async function test(await) {}
+function* test(yield) {}

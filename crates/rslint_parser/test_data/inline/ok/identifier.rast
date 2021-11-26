@@ -1,0 +1,13 @@
+0: JS_ROOT@0..12
+  0: (empty)
+  1: LIST@0..0
+  2: LIST@0..11
+    0: JS_EXPRESSION_STATEMENT@0..4
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@0..3
+        0: IDENT@0..3 "foo" [] []
+      1: SEMICOLON@3..4 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@4..11
+      0: JS_REFERENCE_IDENTIFIER_EXPRESSION@4..10
+        0: IDENT@4..10 "await" [Whitespace("\n")] []
+      1: SEMICOLON@10..11 ";" [] []
+  3: EOF@11..12 "" [Whitespace("\n")] []

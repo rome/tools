@@ -1149,11 +1149,14 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 // yield;
 // await;
 //
-// test_err identifier
-// yield;
+// test identifier
+// foo;
 // await;
 //
-//
+// test_err identifier_err
+// yield;
+// async function test(await) {}
+// function* test(yield) {}
 pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	match p.cur() {
 		T![yield] | T![await] | T![ident] => {

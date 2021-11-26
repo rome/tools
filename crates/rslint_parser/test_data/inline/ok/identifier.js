@@ -1,2 +1,2 @@
-yield;
+foo;
 await;
