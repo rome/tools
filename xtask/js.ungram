@@ -142,24 +142,25 @@ ForStmt =
 	'for'
 	'('
 	init:ForStmtInit?
+	first_semi: ';'
 	test:ForStmtTest?
+	manual__second_semi: ';'
 	update:ForStmtUpdate?
 	')'
 	cons:JsAnyStatement
 
-ForStmtInit = inner:ForHead ';'
-ForHead = JsVariableDeclaration | JsAnyAssignmentTarget
-
-ForStmtTest = expr:JsAnyExpression ';'
-
+ForStmtInit = inner: ForHead
+ForHead = JsVariableDeclaration | JsAnyExpression
+ForStmtTest = expr:JsAnyExpression
 ForStmtUpdate = expr:JsAnyExpression
 
 
 // for..in statement
-ForInStmt = 'for' '(' left:ForStmtInit 'in' right:JsAnyExpression ')' cons:JsAnyStatement
+ForInStmt = 'for' '(' left:ForLeft 'in' right:JsAnyExpression ')' cons:JsAnyStatement
 
 // for..of statement
-ForOfStmt = 'for' '(' left:ForStmtInit 'of' right:JsAnyExpression ')' cons:JsAnyStatement
+ForOfStmt = 'for' '(' left:ForLeft 'of' right:JsAnyExpression ')' cons:JsAnyStatement
+ForLeft = JsAnyAssignmentTarget | JsVariableDeclaration
 
 
 JsBreakStatement =

@@ -1,3 +1,158 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsDoWhileStatement {
+            do_token: DO_KW@0..3 "do" [] [Whitespace(" ")],
+            body: JsExpressionStatement {
+                expression: CallExpr {
+                    type_args: missing (optional),
+                    callee: JsStaticMemberExpression {
+                        object: JsReferenceIdentifierExpression {
+                            name_token: IDENT@3..10 "console" [] [],
+                        },
+                        operator: DOT@10..11 "." [] [],
+                        member: JsReferenceIdentifierMember {
+                            name_token: IDENT@11..14 "log" [] [],
+                        },
+                    },
+                    arguments: ArgList {
+                        l_paren_token: L_PAREN@14..15 "(" [] [],
+                        args: [
+                            JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@15..21 "\"test\"" [] [],
+                            }
+                            ,
+                        ],
+                        r_paren_token: R_PAREN@21..22 ")" [] [],
+                    },
+                },
+                semicolon_token: SEMICOLON@22..24 ";" [] [Whitespace(" ")],
+            },
+            while_token: WHILE_KW@24..29 "while" [] [],
+            l_paren_token: L_PAREN@29..30 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@30..34 "true" [] [],
+            },
+            r_paren_token: R_PAREN@34..35 ")" [] [],
+            semicolon_token: missing (optional),
+        },
+        JsDoWhileStatement {
+            do_token: DO_KW@35..40 "do" [Whitespace("\n\n")] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@40..41 "{" [] [],
+                statements: [
+                    JsExpressionStatement {
+                        expression: CallExpr {
+                            type_args: missing (optional),
+                            callee: JsStaticMemberExpression {
+                                object: JsReferenceIdentifierExpression {
+                                    name_token: IDENT@41..50 "console" [Whitespace("\n\t")] [],
+                                },
+                                operator: DOT@50..51 "." [] [],
+                                member: JsReferenceIdentifierMember {
+                                    name_token: IDENT@51..54 "log" [] [],
+                                },
+                            },
+                            arguments: ArgList {
+                                l_paren_token: L_PAREN@54..55 "(" [] [],
+                                args: [
+                                    JsStringLiteralExpression {
+                                        value_token: JS_STRING_LITERAL@55..61 "\"test\"" [] [],
+                                    }
+                                    ,
+                                ],
+                                r_paren_token: R_PAREN@61..62 ")" [] [],
+                            },
+                        },
+                        semicolon_token: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@62..65 "}" [Whitespace("\n")] [Whitespace(" ")],
+            },
+            while_token: WHILE_KW@65..71 "while" [] [Whitespace(" ")],
+            l_paren_token: L_PAREN@71..72 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@72..76 "true" [] [],
+            },
+            r_paren_token: R_PAREN@76..77 ")" [] [],
+            semicolon_token: SEMICOLON@77..78 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")],
+                declarators: [
+                    JsVariableDeclarator {
+                        id: SinglePattern {
+                            name: Name {
+                                ident_token: IDENT@84..86 "a" [] [Whitespace(" ")],
+                            },
+                            question_mark_token: missing (optional),
+                            excl_token: missing (optional),
+                            ty: missing (optional),
+                        },
+                        init: JsEqualValueClause {
+                            eq_token: EQ@86..88 "=" [] [Whitespace(" ")],
+                            expression: JsNumberLiteralExpression {
+                                value_token: JS_NUMBER_LITERAL@88..89 "1" [] [],
+                            },
+                        },
+                    }
+                    ,
+                ],
+            },
+            semicolon_token: SEMICOLON@89..90 ";" [] [],
+        },
+        JsDoWhileStatement {
+            do_token: DO_KW@90..93 "do" [Whitespace("\n")] [],
+            body: JsDoWhileStatement {
+                do_token: DO_KW@93..98 "do" [Whitespace("\n\t")] [Whitespace(" ")],
+                body: JsBlockStatement {
+                    l_curly_token: L_CURLY@98..99 "{" [] [],
+                    statements: [
+                        JsExpressionStatement {
+                            expression: JsAssignmentExpression {
+                                left: JsIdentifierAssignmentTarget {
+                                    name_token: IDENT@99..104 "a" [Whitespace("\n\t\t")] [Whitespace(" ")],
+                                },
+                                operator_token: EQ@104..106 "=" [] [Whitespace(" ")],
+                                right: JsBinaryExpression {
+                                    left: JsReferenceIdentifierExpression {
+                                        name_token: IDENT@106..108 "a" [] [Whitespace(" ")],
+                                    },
+                                    operator: PLUS@108..110 "+" [] [Whitespace(" ")],
+                                },
+                            },
+                            semicolon_token: missing (optional),
+                        },
+                    ],
+                    r_curly_token: R_CURLY@111..115 "}" [Whitespace("\n\t")] [Whitespace(" ")],
+                },
+                while_token: WHILE_KW@115..120 "while" [] [],
+                l_paren_token: L_PAREN@120..121 "(" [] [],
+                test: JsBinaryExpression {
+                    left: JsReferenceIdentifierExpression {
+                        name_token: IDENT@121..123 "a" [] [Whitespace(" ")],
+                    },
+                    operator: L_ANGLE@123..125 "<" [] [Whitespace(" ")],
+                },
+                r_paren_token: R_PAREN@126..127 ")" [] [],
+                semicolon_token: missing (optional),
+            },
+            while_token: WHILE_KW@127..134 "while" [Whitespace("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@134..135 "(" [] [],
+            test: JsBinaryExpression {
+                left: JsReferenceIdentifierExpression {
+                    name_token: IDENT@135..137 "a" [] [Whitespace(" ")],
+                },
+                operator: L_ANGLE@137..139 "<" [] [Whitespace(" ")],
+            },
+            r_paren_token: R_PAREN@142..143 ")" [] [],
+            semicolon_token: missing (optional),
+        },
+    ],
+}
+
 0: JS_ROOT@0..144
   0: (empty)
   1: LIST@0..0

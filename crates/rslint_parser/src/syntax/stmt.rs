@@ -2,7 +2,7 @@
 //!
 //! See the [ECMAScript spec](https://www.ecma-international.org/ecma-262/5.1/#sec-12).
 
-use super::expr::{expr, expr_or_assignment_target, EXPR_RECOVERY_SET, STARTS_EXPR};
+use super::expr::{expr, expr_or_assignment, EXPR_RECOVERY_SET, STARTS_EXPR};
 use super::pat::*;
 use super::program::{export_decl, import_decl};
 use super::typescript::*;
@@ -10,11 +10,12 @@ use super::util::{check_for_stmt_declaration, check_label_use};
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
-use crate::syntax::assignment_target::parse_assignment_target;
+use crate::syntax::assignment_target::{
+	expression_to_assignment_target, SimpleAssignmentTargetExprKind,
+};
 use crate::syntax::class::class_declaration;
 use crate::syntax::function::function_declaration;
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_assignment_target;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::SyntaxFeature;
@@ -889,9 +890,8 @@ pub fn parse_do_statement(p: &mut Parser) -> ParsedSyntax {
 	Present(m.complete(p, JS_DO_WHILE_STATEMENT))
 }
 
-#[allow(deprecated)]
 fn for_head(p: &mut Parser) -> SyntaxKind {
-	let m = p.start();
+	let init_or_left = p.start();
 	if p.at(T![const]) || p.at(T![var]) || (p.cur_src() == "let" && FOLLOWS_LET.contains(p.nth(1)))
 	{
 		let mut guard = p.with_state(ParserState {
@@ -900,12 +900,13 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 		});
 		let decl = variable_declaration(&mut *guard, true);
 		drop(guard);
-		m.complete(p, FOR_STMT_INIT);
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			if let Some(err) = p.state.for_head_error.take() {
 				p.error(err);
 			}
+			// left is a union, no need for wrapping
+			init_or_left.abandon(p);
 			let is_in = p.at(T![in]);
 			p.bump_any();
 
@@ -913,6 +914,7 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 
 			for_each_head(p, is_in)
 		} else {
+			init_or_left.complete(p, FOR_STMT_INIT);
 			p.state.for_head_error = None;
 			p.expect_required(T![;]);
 			normal_for_head(p);
@@ -920,24 +922,37 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 		}
 	} else {
 		if p.eat(T![;]) {
-			m.abandon(p);
+			init_or_left.abandon(p);
 			normal_for_head(p);
 			return FOR_STMT;
 		}
-		let mut guard = p.with_state(ParserState {
-			include_in: false,
-			..p.state.clone()
-		});
-		parse_assignment_target(&mut *guard)
-			.or_missing_with_error(&mut *guard, expected_assignment_target);
 
-		drop(guard);
-		m.complete(p, FOR_STMT_INIT);
+		let checkpoint = p.checkpoint();
+		let init_expr = {
+			let mut guard = p.with_state(ParserState {
+				include_in: false,
+				..p.state.clone()
+			});
+			expr(&mut *guard)
+		};
 
 		if p.at(T![in]) || p.cur_src() == "of" {
+			if let Some(assignment_expr) = init_expr {
+				expression_to_assignment_target(
+					p,
+					assignment_expr,
+					checkpoint,
+					SimpleAssignmentTargetExprKind::Any,
+				);
+			}
+
+			// left is a union, no need for wrapping
+			init_or_left.abandon(p);
 			let is_in = p.at(T![in]);
 			p.bump_any();
 			return for_each_head(p, is_in);
+		} else {
+			init_or_left.complete(p, FOR_STMT_INIT);
 		}
 
 		p.expect_required(T![;]);
@@ -951,7 +966,7 @@ fn for_each_head(p: &mut Parser, is_in: bool) -> SyntaxKind {
 		expr(p);
 		FOR_IN_STMT
 	} else {
-		expr_or_assignment_target(p);
+		expr_or_assignment(p);
 		FOR_OF_STMT
 	}
 }

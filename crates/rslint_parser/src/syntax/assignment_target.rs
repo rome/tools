@@ -1,7 +1,7 @@
 use crate::parser::ParsedSyntax;
 use crate::syntax::class::parse_equal_value_clause;
 use crate::syntax::expr::{
-	conditional_expr, expr_or_assignment_target, identifier_name, EXPR_RECOVERY_SET,
+	conditional_expr, expr, expr_or_assignment, identifier_name, unary_expr, EXPR_RECOVERY_SET,
 };
 use crate::syntax::js_parse_error::{
 	expected_array_assignment_target_element, expected_assignment_target,
@@ -18,6 +18,7 @@ use crate::{SyntaxKind::*, *};
 // (((foo))) = bar;
 // a["test"] = bar;
 // a.call().chain().member = x;
+// ++count === 3
 
 // test_err invalid_assignment_target
 // ++a = b;
@@ -30,6 +31,7 @@ pub(crate) fn expression_to_assignment_target(
 	p: &mut Parser,
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
+	expr_kind: SimpleAssignmentTargetExprKind,
 ) -> CompletedMarker {
 	if let Present(assignment_target) =
 		try_expression_to_simple_assignment_target(p, target, checkpoint)
@@ -40,17 +42,20 @@ pub(crate) fn expression_to_assignment_target(
 	let expression_end = p.token_pos();
 	p.rewind(checkpoint);
 
-	match parse_assignment_target(p) {
+	match parse_assignment_target(p, expr_kind) {
 		Present(target) => target,
 		Absent => wrap_expression_in_invalid_assignment(p, expression_end),
 	}
 }
 
-pub(crate) fn parse_assignment_target(p: &mut Parser) -> ParsedSyntax {
+pub(crate) fn parse_assignment_target(
+	p: &mut Parser,
+	expression_kind: SimpleAssignmentTargetExprKind,
+) -> ParsedSyntax {
 	match p.cur() {
 		T!['['] => parse_array_assignment_target(p),
 		T!['{'] if p.state.allow_object_expr => parse_object_assignment_target(p),
-		_ => parse_simple_assignment_target(p),
+		_ => parse_simple_assignment_target(p, expression_kind),
 	}
 }
 
@@ -72,28 +77,41 @@ pub(crate) fn expression_to_simple_assignment_target(
 	}
 }
 
-pub(crate) fn parse_simple_assignment_target(p: &mut Parser) -> ParsedSyntax {
+pub(crate) enum SimpleAssignmentTargetExprKind {
+	Unary,
+	Conditional,
+	Any,
+}
+
+pub(crate) fn parse_simple_assignment_target(
+	p: &mut Parser,
+	expr_kind: SimpleAssignmentTargetExprKind,
+) -> ParsedSyntax {
 	let checkpoint = p.checkpoint();
 
-	// TODO remove the rewind inside of the error handle once the `conditional_expr` returns a ParsedSyntax
-	let assignment_expression = conditional_expr(p);
+	// TODO remove the rewind inside of the error handle once the `unary_expr` returns a ParsedSyntax
+	let assignment_expression = match expr_kind {
+		SimpleAssignmentTargetExprKind::Unary => unary_expr(p),
+		SimpleAssignmentTargetExprKind::Conditional => conditional_expr(p),
+		SimpleAssignmentTargetExprKind::Any => expr(p),
+	};
 
 	if let Some(expr) = assignment_expression {
 		Present(expression_to_simple_assignment_target(p, expr, checkpoint))
 	} else {
-		// Only necessary because `conditional_expr` always adds a "expected an expression" error.
+		// Only necessary because `unary_expr` always adds a "expected an expression" error.
 		p.rewind(checkpoint);
 		Absent
 	}
 }
 
 fn parse_assignment_target_with_optional_default(p: &mut Parser) -> ParsedSyntax {
-	let target = parse_assignment_target(p);
+	let target = parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional);
 
 	if p.at(T![=]) {
 		let with_default = target.precede_or_missing_with_error(p, expected_assignment_target);
 		p.bump_any(); // eat the = token
-		expr_or_assignment_target(p);
+		expr_or_assignment(p);
 		Present(with_default.complete(p, JS_ASSIGNMENT_TARGET_WITH_DEFAULT))
 	} else {
 		target
@@ -191,7 +209,8 @@ fn parse_array_assignment_target_rest_element(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	p.bump(T![...]);
 
-	parse_assignment_target(p).or_missing_with_error(p, expected_assignment_target);
+	parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+		.or_missing_with_error(p, expected_assignment_target);
 
 	Present(m.complete(p, JS_ARRAY_ASSIGNMENT_TARGET_REST_ELEMENT))
 }
@@ -285,7 +304,8 @@ fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 
 	if !is_shorthand_property {
 		p.bump(T![:]);
-		parse_assignment_target(p).or_missing_with_error(p, expected_assignment_target);
+		parse_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+			.or_missing_with_error(p, expected_assignment_target);
 	}
 
 	{
@@ -328,7 +348,8 @@ fn parse_object_rest_property_assignment_target(p: &mut Parser) -> ParsedSyntax 
 	let m = p.start();
 	p.bump(T![...]);
 
-	parse_simple_assignment_target(p).or_missing_with_error(p, expected_assignment_target);
+	parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
+		.or_missing_with_error(p, expected_assignment_target);
 
 	Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET))
 }
@@ -450,7 +471,7 @@ fn re_parse_parenthesized_expression_as_assignment_target(p: &mut Parser) -> Com
 		re_parse_parenthesized_expression_as_assignment_target(p);
 	} else {
 		// if the parenthesized expression contains any other assignment target, re-parse it too
-		parse_simple_assignment_target(p)
+		parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Conditional)
 			.or_missing_with_error(p, expected_simple_assignment_target);
 	}
 

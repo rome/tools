@@ -1,6 +1,6 @@
 //! Class and function declarations.
 
-use super::expr::expr_or_assignment_target;
+use super::expr::expr_or_assignment;
 use super::pat::pattern;
 use super::typescript::*;
 #[allow(deprecated)]
@@ -74,7 +74,7 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 		let start = p.cur_tok().range.start;
 		p.bump_any();
 
-		let expr = expr_or_assignment_target(p);
+		let expr = expr_or_assignment(p);
 		let end = expr
 			.map(|x| usize::from(x.range(p).end()))
 			.unwrap_or_else(|| p.cur_tok().range.start);
@@ -153,7 +153,7 @@ pub(super) fn parse_parameters_list(
 				let start = p.cur_tok().range.start;
 				let m = p.start();
 				p.bump_any();
-				let expr = expr_or_assignment_target(&mut *p);
+				let expr = expr_or_assignment(&mut *p);
 				let end = expr
 					.map(|x| usize::from(x.range(p).end()))
 					.unwrap_or_else(|| p.cur_tok().range.start);
@@ -232,6 +232,6 @@ pub(super) fn parse_arrow_body(p: &mut Parser) -> ParsedSyntax {
 	if guard.at(T!['{']) {
 		function_body(&mut *guard)
 	} else {
-		expr_or_assignment_target(&mut *guard).into()
+		expr_or_assignment(&mut *guard).into()
 	}
 }

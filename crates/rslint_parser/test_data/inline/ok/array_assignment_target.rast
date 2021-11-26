@@ -1,3 +1,144 @@
+JsRoot {
+    interpreter_token: missing (optional),
+    directives: [],
+    statements: [
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsArrayAssignmentTarget {
+                    l_brack_token: L_BRACK@0..1 "[" [] [],
+                    elements: [
+                        JsIdentifierAssignmentTarget {
+                            name_token: IDENT@1..4 "foo" [] [],
+                        }
+                        COMMA@4..6 "," [] [Whitespace(" ")],
+                        JsIdentifierAssignmentTarget {
+                            name_token: IDENT@6..9 "bar" [] [],
+                        }
+                        ,
+                    ],
+                    r_brack_token: R_BRACK@9..11 "]" [] [Whitespace(" ")],
+                },
+                operator_token: EQ@11..13 "=" [] [Whitespace(" ")],
+                right: JsReferenceIdentifierExpression {
+                    name_token: IDENT@13..16 "baz" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@16..17 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsArrayAssignmentTarget {
+                    l_brack_token: L_BRACK@17..19 "[" [Whitespace("\n")] [],
+                    elements: [
+                        JsArrayHole
+                        COMMA@19..20 "," [] [],
+                        JsArrayHole
+                        COMMA@20..21 "," [] [],
+                        JsArrayHole
+                        COMMA@21..22 "," [] [],
+                        JsIdentifierAssignmentTarget {
+                            name_token: IDENT@22..23 "b" [] [],
+                        }
+                        COMMA@23..24 "," [] [],
+                        JsArrayHole
+                        COMMA@24..25 "," [] [],
+                        JsIdentifierAssignmentTarget {
+                            name_token: IDENT@25..26 "c" [] [],
+                        }
+                        COMMA@26..27 "," [] [],
+                    ],
+                    r_brack_token: R_BRACK@27..29 "]" [] [Whitespace(" ")],
+                },
+                operator_token: EQ@29..31 "=" [] [Whitespace(" ")],
+                right: JsReferenceIdentifierExpression {
+                    name_token: IDENT@31..34 "baz" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@34..35 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsArrayAssignmentTarget {
+                    l_brack_token: L_BRACK@35..37 "[" [Whitespace("\n")] [],
+                    elements: [
+                        JsAssignmentTargetWithDefault {
+                            target: JsIdentifierAssignmentTarget {
+                                name_token: IDENT@37..39 "a" [] [Whitespace(" ")],
+                            },
+                            eq_token: EQ@39..41 "=" [] [Whitespace(" ")],
+                            default: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@41..47 "\"test\"" [] [],
+                            },
+                        }
+                        COMMA@47..49 "," [] [Whitespace(" ")],
+                        JsStaticMemberAssignmentTarget {
+                            object: JsReferenceIdentifierExpression {
+                                name_token: IDENT@49..50 "a" [] [],
+                            },
+                            dot_token: DOT@50..51 "." [] [],
+                            member: JsReferenceIdentifierMember {
+                                name_token: IDENT@51..52 "b" [] [],
+                            },
+                        }
+                        COMMA@52..54 "," [] [Whitespace(" ")],
+                        JsStaticMemberAssignmentTarget {
+                            object: CallExpr {
+                                type_args: missing (optional),
+                                callee: JsReferenceIdentifierExpression {
+                                    name_token: IDENT@54..58 "call" [] [],
+                                },
+                                arguments: ArgList {
+                                    l_paren_token: L_PAREN@58..59 "(" [] [],
+                                    args: [],
+                                    r_paren_token: R_PAREN@59..60 ")" [] [],
+                                },
+                            },
+                            dot_token: DOT@60..61 "." [] [],
+                            member: JsReferenceIdentifierMember {
+                                name_token: IDENT@61..62 "b" [] [],
+                            },
+                        }
+                        ,
+                    ],
+                    r_brack_token: R_BRACK@62..64 "]" [] [Whitespace(" ")],
+                },
+                operator_token: EQ@64..66 "=" [] [Whitespace(" ")],
+                right: JsReferenceIdentifierExpression {
+                    name_token: IDENT@66..69 "baz" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@69..70 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsAssignmentExpression {
+                left: JsArrayAssignmentTarget {
+                    l_brack_token: L_BRACK@70..72 "[" [Whitespace("\n")] [],
+                    elements: [
+                        JsParenthesizedAssignmentTarget {
+                            l_paren_token: L_PAREN@72..73 "(" [] [],
+                            target: JsParenthesizedAssignmentTarget {
+                                l_paren_token: L_PAREN@73..74 "(" [] [],
+                                target: JsIdentifierAssignmentTarget {
+                                    name_token: IDENT@74..75 "a" [] [],
+                                },
+                                r_paren_token: R_PAREN@75..76 ")" [] [],
+                            },
+                            r_paren_token: R_PAREN@76..77 ")" [] [],
+                        }
+                        ,
+                    ],
+                    r_brack_token: R_BRACK@77..79 "]" [] [Whitespace(" ")],
+                },
+                operator_token: EQ@79..81 "=" [] [Whitespace(" ")],
+                right: JsReferenceIdentifierExpression {
+                    name_token: IDENT@81..84 "baz" [] [],
+                },
+            },
+            semicolon_token: SEMICOLON@84..85 ";" [] [],
+        },
+    ],
+}
+
 0: JS_ROOT@0..86
   0: (empty)
   1: LIST@0..0

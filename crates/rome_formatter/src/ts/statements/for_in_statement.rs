@@ -1,4 +1,4 @@
-use rslint_parser::ast::ForInStmt;
+use rslint_parser::ast::{ForInStmt, ForLeft};
 
 use crate::{
 	format_elements, group_elements, soft_indent, soft_line_break_or_space, space_token,
@@ -30,5 +30,14 @@ impl ToFormatElement for ForInStmt {
 			space_token(),
 			cons
 		])
+	}
+}
+
+impl ToFormatElement for ForLeft {
+	fn to_format_element(&self, formatter: &Formatter) -> FormatResult<FormatElement> {
+		match self {
+			ForLeft::JsAnyAssignmentTarget(target) => target.to_format_element(formatter),
+			ForLeft::JsVariableDeclaration(decl) => decl.to_format_element(formatter),
+		}
 	}
 }

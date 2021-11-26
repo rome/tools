@@ -5,7 +5,7 @@ JsRoot {
         JsExpressionStatement {
             expression: JsPreUpdateExpression {
                 operator: PLUS2@0..2 "++" [] [],
-                operand: JsReferenceIdentifierExpression {
+                operand: JsIdentifierAssignmentTarget {
                     name_token: IDENT@2..5 "foo" [] [],
                 },
             },
@@ -14,7 +14,7 @@ JsRoot {
         JsExpressionStatement {
             expression: JsPreUpdateExpression {
                 operator: MINUS2@5..8 "--" [Whitespace("\n")] [],
-                operand: JsReferenceIdentifierExpression {
+                operand: JsIdentifierAssignmentTarget {
                     name_token: IDENT@8..11 "foo" [] [],
                 },
             },

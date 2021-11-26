@@ -11,7 +11,7 @@ use super::util::*;
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::syntax::assignment_target::{
 	expression_to_assignment_target, expression_to_simple_assignment_target,
-	parse_assignment_target,
+	parse_simple_assignment_target, SimpleAssignmentTargetExprKind,
 };
 use crate::syntax::class::class_expression;
 use crate::syntax::function::function_expression;
@@ -114,7 +114,7 @@ pub fn parse_literal_expression(p: &mut Parser) -> ParsedSyntax {
 }
 
 /// Parses an expression that might turn out to be an assignment target if an assignment operator is found
-pub(crate) fn expr_or_assignment_target(p: &mut Parser) -> Option<CompletedMarker> {
+pub(crate) fn expr_or_assignment(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![<])
 		&& (token_set![T![ident], T![await], T![yield]].contains(p.nth(1)) || p.nth(1).is_keyword())
 	{
@@ -168,10 +168,15 @@ fn assign_expr_recursive(
 	checkpoint: Checkpoint,
 ) -> Option<CompletedMarker> {
 	if p.at_ts(ASSIGN_TOKENS) {
-		let target = expression_to_assignment_target(p, target, checkpoint);
+		let target = expression_to_assignment_target(
+			p,
+			target,
+			checkpoint,
+			SimpleAssignmentTargetExprKind::Conditional,
+		);
 		let m = target.precede(p);
 		p.bump_any(); // operator
-		expr_or_assignment_target(p);
+		expr_or_assignment(p);
 		Some(m.complete(p, JS_ASSIGNMENT_EXPRESSION))
 	} else {
 		Some(target)
@@ -190,7 +195,7 @@ pub fn yield_expr(p: &mut Parser) -> CompletedMarker {
 
 	if !is_semi(p, 0) && (p.at(T![*]) || p.at_ts(STARTS_EXPR)) {
 		p.eat(T![*]);
-		expr_or_assignment_target(p);
+		expr_or_assignment(p);
 	}
 
 	m.complete(p, JS_YIELD_EXPRESSION)
@@ -209,12 +214,12 @@ pub fn conditional_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![?]) {
 		let m = lhs?.precede(p);
 		p.bump_any();
-		expr_or_assignment_target(&mut *p.with_state(ParserState {
+		expr_or_assignment(&mut *p.with_state(ParserState {
 			in_cond_expr: true,
 			..p.state.clone()
 		}));
 		p.expect_required(T![:]);
-		expr_or_assignment_target(p);
+		expr_or_assignment(p);
 		return Some(m.complete(p, JS_CONDITIONAL_EXPRESSION));
 	}
 	lhs
@@ -613,7 +618,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 		if p.at(T![...]) {
 			spread_element(p);
 		} else {
-			expr_or_assignment_target(p);
+			expr_or_assignment(p);
 		}
 
 		if p.at(T![,]) {
@@ -677,7 +682,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				if !temp.eat(T![')']) {
 					if temp.eat(T![=]) {
 						// formal params will handle this error
-						expr_or_assignment_target(&mut *temp);
+						expr_or_assignment(&mut *temp);
 						temp.expect_required(T![')']);
 					} else {
 						let err = temp.err_builder(&format!("expect a closing parenthesis after a spread element, but instead found `{}`", temp.cur_src()))
@@ -694,7 +699,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				}
 				break;
 			}
-			let expr = expr_or_assignment_target(&mut *temp);
+			let expr = expr_or_assignment(&mut *temp);
 			if expr.is_some() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
 				// TODO: review this when `paren_or_arrow_expr` is refactored to use the new API
@@ -837,13 +842,13 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 // test sequence_expr
 // 1, 2, 3, 4, 5
 pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
-	let first = expr_or_assignment_target(p)?;
+	let first = expr_or_assignment(p)?;
 
 	if p.at(T![,]) {
 		let sequence_expr_marker = first.precede(p);
 
 		p.bump_any();
-		expr(p)?;
+		expr(p);
 
 		Some(sequence_expr_marker.complete(p, JS_SEQUENCE_EXPRESSION))
 	} else {
@@ -1007,7 +1012,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 				// test import_call
 				// import("foo")
 				p.expect_required(T!['(']);
-				expr_or_assignment_target(p);
+				expr_or_assignment(p);
 				p.expect_required(T![')']);
 				m.complete(p, JS_IMPORT_CALL_EXPRESSION)
 			}
@@ -1178,7 +1183,7 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 		if p.at(T![...]) {
 			spread_element(p);
 		} else {
-			expr_or_assignment_target(p);
+			expr_or_assignment(p);
 		}
 
 		if p.at(T![']']) {
@@ -1197,7 +1202,7 @@ pub fn array_expr(p: &mut Parser) -> CompletedMarker {
 pub fn spread_element(p: &mut Parser) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T![...]);
-	expr_or_assignment_target(p);
+	expr_or_assignment(p);
 	m.complete(p, SPREAD_ELEMENT)
 }
 
@@ -1319,14 +1324,16 @@ pub fn unary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 	if p.at(T![++]) {
 		let m = p.start();
 		p.bump(T![++]);
-		parse_assignment_target(p).or_missing_with_error(p, expected_simple_assignment_target);
+		parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Unary)
+			.or_missing_with_error(p, expected_simple_assignment_target);
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		return Some(complete);
 	}
 	if p.at(T![--]) {
 		let m = p.start();
 		p.bump(T![--]);
-		parse_assignment_target(p).or_missing_with_error(p, expected_simple_assignment_target);
+		parse_simple_assignment_target(p, SimpleAssignmentTargetExprKind::Unary)
+			.or_missing_with_error(p, expected_simple_assignment_target);
 		let complete = m.complete(p, JS_PRE_UPDATE_EXPRESSION);
 		return Some(complete);
 	}

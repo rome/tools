@@ -2,7 +2,7 @@
 
 use syntax::stmt::FOLLOWS_LET;
 
-use super::expr::{expr, expr_or_assignment_target, identifier_name, primary_expr};
+use super::expr::{expr, expr_or_assignment, identifier_name, primary_expr};
 use super::pat::parse_identifier_binding;
 use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
@@ -408,7 +408,7 @@ pub fn export_decl(p: &mut Parser) -> CompletedMarker {
 		if p.cur_src() == "from" || (p.at(T![,]) && p.nth_at(1, T!['{'])) {
 			export_default = true;
 		} else {
-			expr_or_assignment_target(p);
+			expr_or_assignment(p);
 			semi(p, start..p.cur_tok().range.start);
 			return m.complete(p, EXPORT_DEFAULT_EXPR);
 		}
