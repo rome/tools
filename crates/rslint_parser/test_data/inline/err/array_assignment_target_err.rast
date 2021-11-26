@@ -97,10 +97,9 @@
           1: LIST@96..100
             0: JS_IDENTIFIER_ASSIGNMENT_TARGET@96..97
               0: IDENT@96..97 "a" [] []
-            1: JS_UNKNOWN_EXPRESSION@97..99
+            1: JS_UNKNOWN_ASSIGNMENT_TARGET@97..100
               0: COLON@97..99 ":" [] [Whitespace(" ")]
-            2: JS_UNKNOWN_ASSIGNMENT_TARGET@99..100
-              0: IDENT@99..100 "b" [] []
+              1: IDENT@99..100 "b" [] []
           2: R_BRACK@100..102 "]" [] [Whitespace(" ")]
         1: EQ@102..104 "=" [] [Whitespace(" ")]
         2: JS_REFERENCE_IDENTIFIER_EXPRESSION@104..105
@@ -115,18 +114,18 @@ error[SyntaxError]: expected `,` but instead found `a`
   │    ^ unexpected
 
 --
-error[SyntaxError]: expected an assignment target, a rest element, or a comma but instead found '++b'
+error[SyntaxError]: Invalid assignment to `++b`
   ┌─ array_assignment_target_err.js:1:7
   │
 1 │ [a a, ++b, ] = test;
-  │       ^^^ Expected an assignment target, a rest element, or a comma here
+  │       ^^^ This expression cannot be assigned to
 
 --
-error[SyntaxError]: expected an assignment target, a rest element, or a comma but instead found '++b'
+error[SyntaxError]: Invalid assignment to `++b`
   ┌─ array_assignment_target_err.js:2:5
   │
 2 │ [a, ++b, c, ...rest,] = test;
-  │     ^^^ Expected an assignment target, a rest element, or a comma here
+  │     ^^^ This expression cannot be assigned to
 
 --
 error[SyntaxError]: rest element may not have a trailing comma
@@ -141,13 +140,6 @@ error[SyntaxError]: Expected an expression, but found none
   │
 3 │ [a = , = "test"] = test;
   │      ^ Expected an expression here
-
---
-error[SyntaxError]: Expected an expression, but found none
-  ┌─ array_assignment_target_err.js:3:8
-  │
-3 │ [a = , = "test"] = test;
-  │        ^ Expected an expression here
 
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '='
@@ -178,18 +170,11 @@ error[SyntaxError]: expected `,` but instead found `:`
   │   ^ unexpected
 
 --
-error[SyntaxError]: Expected an expression, but found none
+error[SyntaxError]: expected an assignment target, a rest element, or a comma but instead found ': b'
   ┌─ array_assignment_target_err.js:5:3
   │
 5 │ [a: b] = c
-  │   ^ Expected an expression here
-
---
-error[SyntaxError]: expected an assignment target, a rest element, or a comma but instead found 'b'
-  ┌─ array_assignment_target_err.js:5:5
-  │
-5 │ [a: b] = c
-  │     ^ Expected an assignment target, a rest element, or a comma here
+  │   ^^^ Expected an assignment target, a rest element, or a comma here
 
 --
 [a a, ++b, ] = test;

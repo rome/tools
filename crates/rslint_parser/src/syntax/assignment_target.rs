@@ -22,7 +22,9 @@ pub(crate) fn expression_to_assignment_target(
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
 ) -> CompletedMarker {
-	if let Ok(assignment_target) = try_expression_to_simple_assignment_target(p, target) {
+	if let Present(assignment_target) =
+		try_expression_to_simple_assignment_target(p, target, checkpoint)
+	{
 		return assignment_target;
 	}
 
@@ -43,80 +45,35 @@ pub(crate) fn parse_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
+/// Re-parses an expression as a simple assignment target.
 pub(crate) fn expression_to_simple_assignment_target(
 	p: &mut Parser,
 	target: CompletedMarker,
 	checkpoint: Checkpoint,
 ) -> CompletedMarker {
-	if let Ok(assignment_target) = try_expression_to_simple_assignment_target(p, target) {
-		return assignment_target;
+	if let Present(assignment_target) =
+		try_expression_to_simple_assignment_target(p, target, checkpoint)
+	{
+		assignment_target
+	} else {
+		// Doesn't seem to be a valid assignment target. Recover and create an error.
+		let expression_end = p.token_pos();
+		p.rewind(checkpoint);
+		wrap_expression_in_invalid_assignment(p, expression_end)
 	}
-
-	let expression_end = p.token_pos();
-	p.rewind(checkpoint);
-
-	// reparse for better error messages
-	match parse_simple_assignment_target(p) {
-		Present(target) => target,
-		Absent => wrap_expression_in_invalid_assignment(p, expression_end),
-	}
-}
-
-fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) -> CompletedMarker {
-	let unknown = p.start();
-	// Eat all tokens until we reached the end of the original expression. This is better than
-	// any other error recovery because it's already know where the expression ends.
-	while p.token_pos() < expression_end {
-		p.bump_any();
-	}
-
-	let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
-
-	let expression_range = completed.range(p);
-	p.error(
-		p.err_builder(&format!(
-			"Invalid assignment to `{}`",
-			p.source(expression_range)
-		))
-		.primary(expression_range, "This expression cannot be assigned to"),
-	);
-
-	completed
 }
 
 pub(crate) fn parse_simple_assignment_target(p: &mut Parser) -> ParsedSyntax {
-	// FIXME this results in an infinite loop because we call into conditional expr again that then
-	// calls again into assignment target and so on.
-	// This is only ever needed when `try_expression_to_simple_assignment_target` fails
-	// because one of the parenthesized assignment targets were invalid.
-	// We should add a special case just for that
-	if p.at(T!['(']) {
-		let m = p.start();
-		p.bump(T!['(']);
-		parse_simple_assignment_target(p)
-			.or_missing_with_error(p, expected_simple_assignment_target);
-		p.expect_required(T![')']);
-
-		return Present(m.complete(p, JS_PARENTHESIZED_ASSIGNMENT_TARGET));
-	}
-
 	let checkpoint = p.checkpoint();
 
 	// TODO remove the rewind inside of the error handle once the `conditional_expr` returns a ParsedSyntax
 	let assignment_expression = conditional_expr(p);
 
 	if let Some(expr) = assignment_expression {
-		let assignment_target = try_expression_to_simple_assignment_target(p, expr);
-		match assignment_target {
-			Ok(target) => Present(target),
-			Err(_) => {
-				// Ideally, rewind wouldn't be needed here but the expression adds `Error` nodes that we need
-				// to get rid of again. That is no longer needed when `conditional_expr` returns a ParsedSyntax
-				p.rewind(checkpoint);
-				Absent
-			}
-		}
+		Present(expression_to_simple_assignment_target(p, expr, checkpoint))
 	} else {
+		// Only necessary because `conditional_expr` always adds a "expected an expression" error.
+		p.rewind(checkpoint);
 		Absent
 	}
 }
@@ -225,6 +182,7 @@ fn parse_array_assignment_target_rest_element(p: &mut Parser) -> ParsedSyntax {
 }
 
 // test object_assignment_target
+// ({} = {});
 // ({ bar, baz } = {});
 // ({ bar: [baz = "baz"], foo = "foo", ...rest } = {});
 fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
@@ -237,23 +195,39 @@ fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	p.bump(T!['{']);
 	let elements = p.start();
 
-	while !matches!(p.cur(), EOF | T!['}']) {
-		if parse_object_rest_property_assignment_target(p).is_present() {
-			break;
-		}
+	while !p.at(T!['}']) {
+		if let Present(mut rest) = parse_object_rest_property_assignment_target(p) {
+			if p.at(T!['}']) {
+				break;
+			}
 
-		let element = parse_property_assignment_target(p).or_recover(
-			p,
-			ParseRecovery::new(
-				JS_UNKNOWN_ASSIGNMENT_TARGET,
-				token_set!(EOF, T![,], T![']'], T![...], T![;]),
-			)
-			.enable_recovery_on_line_break(),
-			expected_property_assignment_target,
-		);
+			if p.at(T![,]) && p.nth_at(1, T!['}']) {
+				p.error(
+					p.err_builder("rest element may not have a trailing comma")
+						.primary(rest.range(p), "Remove the trailing comma here"),
+				);
+			} else {
+				p.error(
+					p.err_builder("rest element must be the last element")
+						.primary(rest.range(p), "Move the rest element to the end"),
+				);
+			}
 
-		if element.is_err() {
-			break;
+			rest.change_kind(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+		} else {
+			let element = parse_property_assignment_target(p).or_recover(
+				p,
+				ParseRecovery::new(
+					JS_UNKNOWN_ASSIGNMENT_TARGET,
+					token_set!(EOF, T![,], T!['}'], T![...], T![;]),
+				)
+				.enable_recovery_on_line_break(),
+				expected_property_assignment_target,
+			);
+
+			if element.is_err() {
+				break;
+			}
 		}
 
 		if !p.at(T!['}']) {
@@ -270,25 +244,49 @@ fn parse_object_assignment_target(p: &mut Parser) -> ParsedSyntax {
 const PROPERTY_ASSIGNMENT_TARGET_START_TOKENS: TokenSet =
 	token_set![T![ident], T![yield], T![await], T![:], T![=]];
 
+// test property_assignment_target
+// ({x}= {});
+// ({x: y}= {});
+// ({x: y.test().z}= {});
+// ({x: ((z))}= {});
+// ({x: z["computed"]}= {});
+// ({x = "default"}= {});
+// ({x: y = "default"}= {});
+//
+// test_err property_assignment_target_err
+// ({:y} = {});
+// ({=y} = {});
+// ({:="test"} = {});
+// ({:=} = {});
 fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at_ts(PROPERTY_ASSIGNMENT_TARGET_START_TOKENS) {
 		return Absent;
 	}
 
 	let m = p.start();
-	let mut property_name = identifier_name(p)
-		.expect("The parser is currently at an identifier, calling identifier_name should succeed");
-	let is_shorthand_property = !p.eat(T![:]);
+	let property_name = identifier_name(p);
+	let is_shorthand_property = !p.at(T![:]);
 
-	if is_shorthand_property {
-		property_name.change_kind(p, JS_IDENTIFIER_ASSIGNMENT_TARGET);
+	if let Some(mut property_name) = property_name {
+		property_name.change_kind(
+			p,
+			if is_shorthand_property {
+				JS_IDENTIFIER_ASSIGNMENT_TARGET
+			} else {
+				JS_REFERENCE_IDENTIFIER_MEMBER
+			},
+		);
 	} else {
-		property_name.change_kind(p, JS_REFERENCE_IDENTIFIER_MEMBER);
+		p.missing();
+	}
 
+	if !is_shorthand_property {
+		p.bump(T![:]);
 		parse_assignment_target(p).or_missing_with_error(p, expected_assignment_target);
 	}
 
 	{
+		// TODO remove after migrating expression to `ParsedSyntax`
 		let mut guard = p.with_state(ParserState {
 			expr_recovery_set: EXPR_RECOVERY_SET.union(token_set![T![,], T![...]]),
 			..p.state.clone()
@@ -306,6 +304,19 @@ fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	))
 }
 
+// test rest_property_assignment_target
+// ({ ...abcd } = a);
+// ({ ...(abcd) } = a);
+// ({ ...m.test } = c);
+// ({ ...m[call()] } = c);
+// ({ ...any.expression().b } = c);
+// ({ b: { ...a } } = c);
+//
+// test_err rest_property_assignment_target_err
+// ({ ... } = a);
+// ({ ...c = "default" } = a);
+// ({ ...{a} } = b);
+// ({ ...rest, other_assignment } = a);
 fn parse_object_rest_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![...]) {
 		return Absent;
@@ -316,70 +327,87 @@ fn parse_object_rest_property_assignment_target(p: &mut Parser) -> ParsedSyntax 
 
 	parse_simple_assignment_target(p).or_missing_with_error(p, expected_assignment_target);
 
-	if p.eat(T![,]) {
-		p.error(
-			p.err_builder("rest element may not have a trailing comma")
-				.primary(p.cur_tok().range, "Remove the trailing comma here"),
-		);
-		Present(m.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET))
-	} else {
-		Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET))
-	}
+	Present(m.complete(p, JS_OBJECT_REST_PROPERTY_ASSIGNMENT_TARGET))
 }
 
 fn try_expression_to_simple_assignment_target(
 	p: &mut Parser,
 	mut target: CompletedMarker,
-) -> Result<CompletedMarker, ()> {
-	let mapped_kind = match target.kind() {
-		JS_PARENTHESIZED_EXPRESSION => {
-			// Parenthesized expressions are special because they contain nested assignment targets.
-			// For example, this is valid ((((a))))++. The following code traverses through all the children
-			// of the parenthesized expression and tries to change their kind to a valid assignment target.
-			let events = &mut p.events[target.start_pos as usize..target.finish_pos as usize];
-			let mut children_valid = true;
+	checkpoint: Checkpoint,
+) -> ParsedSyntax {
+	if target.kind() == JS_PARENTHESIZED_EXPRESSION {
+		// Special treatment for parenthesized expressions because they can be nested and an error
+		// should only cover the sub-expressions that are indeed invalid assignment targets.
+		// This code traverses through all descendants of the parenthesized expression and tries to
+		// convert them to valid assignment targets. It returns the converted parenthesized expression if
+		// everything is valid and otherwise re-parses the parenthesized expression only:
+		let events = &mut p.events[target.start_pos as usize..target.finish_pos as usize];
+		let mut children_valid = true;
 
-			for event in events {
-				match event {
-					Event::Start {
-						kind: TOMBSTONE, ..
-					} => {}
-					Event::Start { kind, .. } => {
-						let new_kind = map_expression_to_simple_assignment_target_kind(kind);
-
-						if let Some(assignment_target_kind) = new_kind {
-							*kind = assignment_target_kind
-						} else {
-							children_valid = false;
-							// continue to convert other children
-						}
+		for event in events {
+			match event {
+				Event::Start {
+					kind: TOMBSTONE, ..
+				} => {}
+				Event::Start { kind, .. } => {
+					if let Some(assignment_target_kind) =
+						map_expression_to_simple_assignment_target_kind(*kind)
+					{
+						*kind = assignment_target_kind
+					} else {
+						children_valid = false;
+						// continue to convert other children
 					}
-					_ => {}
 				}
-			}
-
-			if children_valid {
-				Some(JS_PARENTHESIZED_ASSIGNMENT_TARGET)
-			} else {
-				None
+				_ => {}
 			}
 		}
-		kind => map_expression_to_simple_assignment_target_kind(&kind),
-	};
 
-	match mapped_kind {
-		Some(assignment_kind) => {
-			target.change_kind(p, assignment_kind);
-			Ok(target)
+		if children_valid {
+			Present(target)
+		} else {
+			p.rewind(checkpoint);
+
+			// You're wondering why this is OK? The reason is, that there's a valid outermost parenthesized
+			// assignment target. The problem is with one of the inner assignment targets and this is why we
+			// reparse it to add the necessariy diagnostics
+			Present(re_parse_parenthesized_expression_as_assignment_target(p))
 		}
-		None => {
-			target.undo_completion(p).abandon(p);
-			Err(())
-		}
+	} else if let Some(assignment_target_kind) =
+		map_expression_to_simple_assignment_target_kind(target.kind())
+	{
+		target.change_kind(p, assignment_target_kind);
+		Present(target)
+	} else {
+		Absent
 	}
 }
 
-fn map_expression_to_simple_assignment_target_kind(kind: &SyntaxKind) -> Option<SyntaxKind> {
+/// Re-parses a parenthesized expression as an assignment target.
+/// Only intended to be used if the parser fully rewinds to the position before a valid
+/// parenthesized expression.
+///
+/// # Panics
+/// If the parser isn't positioned at a parenthesized expression.
+fn re_parse_parenthesized_expression_as_assignment_target(p: &mut Parser) -> CompletedMarker {
+	let outer = p.start();
+	p.bump(T!['(']);
+
+	// re-parse any nested parenthesized assignment targets
+	if p.at(T!['(']) {
+		re_parse_parenthesized_expression_as_assignment_target(p);
+	} else {
+		// if the parenthesized expression contains any other assignment target, re-parse it too
+		parse_simple_assignment_target(p)
+			.or_missing_with_error(p, expected_simple_assignment_target);
+	}
+
+	p.expect_required(T![')']);
+
+	outer.complete(p, JS_PARENTHESIZED_ASSIGNMENT_TARGET)
+}
+
+fn map_expression_to_simple_assignment_target_kind(kind: SyntaxKind) -> Option<SyntaxKind> {
 	match kind {
 		JS_STATIC_MEMBER_EXPRESSION => Some(JS_STATIC_MEMBER_ASSIGNMENT_TARGET),
 		JS_COMPUTED_MEMBER_EXPRESSION => Some(JS_COMPUTED_MEMBER_ASSIGNMENT_TARGET),
@@ -387,4 +415,26 @@ fn map_expression_to_simple_assignment_target_kind(kind: &SyntaxKind) -> Option<
 		JS_PARENTHESIZED_EXPRESSION => Some(JS_PARENTHESIZED_ASSIGNMENT_TARGET),
 		_ => None,
 	}
+}
+
+fn wrap_expression_in_invalid_assignment(p: &mut Parser, expression_end: usize) -> CompletedMarker {
+	let unknown = p.start();
+	// Eat all tokens until we reached the end of the original expression. This is better than
+	// any other error recovery because it's already know where the expression ends.
+	while p.token_pos() < expression_end {
+		p.bump_any();
+	}
+
+	let completed = unknown.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+
+	let expression_range = completed.range(p);
+	p.error(
+		p.err_builder(&format!(
+			"Invalid assignment to `{}`",
+			p.source(expression_range)
+		))
+		.primary(expression_range, "This expression cannot be assigned to"),
+	);
+
+	completed
 }
