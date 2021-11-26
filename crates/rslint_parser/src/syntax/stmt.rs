@@ -1029,7 +1029,7 @@ fn parse_switch_clause(p: &mut Parser) -> ParsedSyntax {
 			}
 			cons_list.complete(p, LIST);
 
-			return Present(m.complete(p, JS_DEFAULT_CLAUSE));
+			Present(m.complete(p, JS_DEFAULT_CLAUSE))
 		}
 		T![case] => {
 			p.bump_any();
@@ -1040,7 +1040,7 @@ fn parse_switch_clause(p: &mut Parser) -> ParsedSyntax {
 				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
-			return Present(m.complete(p, JS_CASE_CLAUSE));
+			Present(m.complete(p, JS_CASE_CLAUSE))
 		}
 		_ => {
 			m.abandon(p);
@@ -1095,15 +1095,15 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 							"Multiple default clauses inside of a switch statement are not allowed",
 						)
 							.secondary(
-								default_found.range(&mut *temp),
+								default_found.range(&temp),
 								"the first default clause is defined here",
 							)
-							.primary(marker.range(&mut *temp), "a second clause here is not allowed");
+							.primary(marker.range(&temp), "a second clause here is not allowed");
 
 						temp.error(err);
 					}
 					None => {
-						default_found = Some(marker.clone());
+						default_found = Some(marker);
 					}
 				}
 			}
