@@ -73,9 +73,8 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..10
           0: JS_VARIABLE_DECLARATOR@4..10
-            0: SINGLE_PATTERN@4..6
-              0: NAME@4..6
-                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..10
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@8..10
@@ -88,9 +87,8 @@ JsRoot {
         0: LET_KW@11..16 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@16..26
           0: JS_VARIABLE_DECLARATOR@16..26
-            0: SINGLE_PATTERN@16..18
-              0: NAME@16..18
-                0: IDENT@16..18 "b" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@16..18
+              0: IDENT@16..18 "b" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@18..26
               0: EQ@18..20 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@20..26

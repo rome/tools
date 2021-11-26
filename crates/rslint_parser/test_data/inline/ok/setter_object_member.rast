@@ -168,9 +168,8 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..169
           0: JS_VARIABLE_DECLARATOR@4..169
-            0: SINGLE_PATTERN@4..6
-              0: NAME@4..6
-                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..169
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@8..169
@@ -181,9 +180,8 @@ JsRoot {
                     1: JS_LITERAL_MEMBER_NAME@15..18
                       0: IDENT@15..18 "foo" [] []
                     2: L_PAREN@18..19 "(" [] []
-                    3: SINGLE_PATTERN@19..24
-                      0: NAME@19..24
-                        0: IDENT@19..24 "value" [] []
+                    3: JS_IDENTIFIER_BINDING@19..24
+                      0: IDENT@19..24 "value" [] []
                     4: R_PAREN@24..26 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@26..30
                       0: L_CURLY@26..27 "{" [] []
@@ -196,9 +194,8 @@ JsRoot {
                     1: JS_LITERAL_MEMBER_NAME@38..43
                       0: JS_STRING_LITERAL@38..43 "\"bar\"" [] []
                     2: L_PAREN@43..44 "(" [] []
-                    3: SINGLE_PATTERN@44..49
-                      0: NAME@44..49
-                        0: IDENT@44..49 "value" [] []
+                    3: JS_IDENTIFIER_BINDING@44..49
+                      0: IDENT@44..49 "value" [] []
                     4: R_PAREN@49..51 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@51..55
                       0: L_CURLY@51..52 "{" [] []
@@ -218,9 +215,8 @@ JsRoot {
                           0: JS_STRING_LITERAL@70..73 "\"b\"" [] []
                       2: R_BRACK@73..74 "]" [] []
                     2: L_PAREN@74..75 "(" [] []
-                    3: SINGLE_PATTERN@75..80
-                      0: NAME@75..80
-                        0: IDENT@75..80 "value" [] []
+                    3: JS_IDENTIFIER_BINDING@75..80
+                      0: IDENT@75..80 "value" [] []
                     4: R_PAREN@80..82 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@82..86
                       0: L_CURLY@82..83 "{" [] []
@@ -233,9 +229,8 @@ JsRoot {
                     1: JS_LITERAL_MEMBER_NAME@94..95
                       0: JS_NUMBER_LITERAL@94..95 "5" [] []
                     2: L_PAREN@95..96 "(" [] []
-                    3: SINGLE_PATTERN@96..101
-                      0: NAME@96..101
-                        0: IDENT@96..101 "value" [] []
+                    3: JS_IDENTIFIER_BINDING@96..101
+                      0: IDENT@96..101 "value" [] []
                     4: R_PAREN@101..103 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@103..107
                       0: L_CURLY@103..104 "{" [] []

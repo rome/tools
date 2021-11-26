@@ -839,7 +839,7 @@ pub(crate) fn variable_declarator(
 
 	if p.at(T![=]) {
 		variable_initializer(p);
-	} else if marker.kind() != SINGLE_PATTERN && !for_stmt && !p.state.in_declare {
+	} else if marker.kind() != JS_IDENTIFIER_BINDING && !for_stmt && !p.state.in_declare {
 		let err = p
 			.err_builder("Object and Array patterns require initializers")
 			.primary(

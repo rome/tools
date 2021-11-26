@@ -563,7 +563,7 @@ pub(crate) fn try_parse_index_signature(
 		return Err(m);
 	}
 
-	pat_m.complete(p, SINGLE_PATTERN);
+	pat_m.complete(p, JS_IDENTIFIER_BINDING);
 
 	if p.expect_no_recover(T![']']).is_none() {
 		return Err(m);

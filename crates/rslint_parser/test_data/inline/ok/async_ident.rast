@@ -38,9 +38,8 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..13
           0: JS_VARIABLE_DECLARATOR@4..13
-            0: SINGLE_PATTERN@4..6
-              0: NAME@4..6
-                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..13
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_REFERENCE_IDENTIFIER_EXPRESSION@8..13

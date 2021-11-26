@@ -5,13 +5,13 @@ use rslint_parser::ast::{
 	JsBooleanLiteralExpression, JsCaseClause, JsCatchClause, JsClassDeclaration,
 	JsConstructorParameterList, JsContinueStatement, JsDebuggerStatement, JsDefaultClause,
 	JsDoWhileStatement, JsEmptyStatement, JsExpressionStatement, JsFinallyClause,
-	JsFunctionDeclaration, JsGetterClassMember, JsIfStatement, JsLabeledStatement,
-	JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression, JsParameterList,
-	JsPropertyClassMember, JsPropertyObjectMember, JsReferenceIdentifierExpression,
-	JsReturnStatement, JsRoot, JsSequenceExpression, JsSetterClassMember,
-	JsShorthandPropertyObjectMember, JsStringLiteralExpression, JsSwitchStatement, JsTryStatement,
-	JsVariableDeclarationStatement, JsVariableDeclarator, JsWhileStatement, JsWithStatement, Name,
-	SinglePattern,
+	JsFunctionDeclaration, JsGetterClassMember, JsIdentifierBinding, JsIfStatement,
+	JsLabeledStatement, JsNullLiteralExpression, JsNumberLiteralExpression, JsObjectExpression,
+	JsParameterList, JsPropertyClassMember, JsPropertyObjectMember,
+	JsReferenceIdentifierExpression, JsReturnStatement, JsRoot, JsSequenceExpression,
+	JsSetterClassMember, JsShorthandPropertyObjectMember, JsStringLiteralExpression,
+	JsSwitchStatement, JsTryStatement, JsVariableDeclarationStatement, JsVariableDeclarator,
+	JsWhileStatement, JsWithStatement, Name,
 };
 use rslint_parser::{AstNode, SyntaxKind, SyntaxNode};
 
@@ -61,10 +61,7 @@ impl ToFormatElement for SyntaxNode {
 			SyntaxKind::JS_ROOT => JsRoot::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
-			SyntaxKind::SINGLE_PATTERN => SinglePattern::cast(self.clone())
-				.unwrap()
-				.to_format_element(formatter),
-			SyntaxKind::SPREAD_ELEMENT => SinglePattern::cast(self.clone())
+			SyntaxKind::SPREAD_ELEMENT => JsIdentifierBinding::cast(self.clone())
 				.unwrap()
 				.to_format_element(formatter),
 			SyntaxKind::JS_VARIABLE_DECLARATION_STATEMENT => {

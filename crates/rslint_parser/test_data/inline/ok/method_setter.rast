@@ -57,9 +57,8 @@ JsRoot {
           1: JS_LITERAL_MEMBER_NAME@17..20
             0: IDENT@17..20 "bar" [] []
           2: L_PAREN@20..21 "(" [] []
-          3: SINGLE_PATTERN@21..22
-            0: NAME@21..22
-              0: IDENT@21..22 "a" [] []
+          3: JS_IDENTIFIER_BINDING@21..22
+            0: IDENT@21..22 "a" [] []
           4: R_PAREN@22..24 ")" [] [Whitespace(" ")]
           5: JS_FUNCTION_BODY@24..26
             0: L_CURLY@24..25 "{" [] []

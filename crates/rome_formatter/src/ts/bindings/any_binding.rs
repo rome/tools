@@ -9,7 +9,7 @@ impl ToFormatElement for JsAnyBinding {
 			JsAnyBinding::ObjectPattern(_) => todo!(),
 			JsAnyBinding::ArrayPattern(array_pattern) => array_pattern.to_format_element(formatter),
 			JsAnyBinding::ExprPattern(_) => todo!(),
-			JsAnyBinding::SinglePattern(single) => single.to_format_element(formatter),
+			JsAnyBinding::JsIdentifierBinding(single) => single.to_format_element(formatter),
 			JsAnyBinding::JsUnknownBinding(_) => todo!(),
 		}
 	}

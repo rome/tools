@@ -147,9 +147,8 @@ JsRoot {
         0: JS_PARAMETER_LIST@6..13
           0: L_PAREN@6..8 "(" [Whitespace("\n")] []
           1: LIST@8..11
-            0: SINGLE_PATTERN@8..11
-              0: NAME@8..11
-                0: IDENT@8..11 "foo" [] []
+            0: JS_IDENTIFIER_BINDING@8..11
+              0: IDENT@8..11 "foo" [] []
           2: R_PAREN@11..13 ")" [] [Whitespace(" ")]
         1: FAT_ARROW@13..16 "=>" [] [Whitespace(" ")]
         2: JS_FUNCTION_BODY@16..18
@@ -177,13 +176,11 @@ JsRoot {
             0: OBJECT_PATTERN@30..56
               0: L_CURLY@30..31 "{" [] []
               1: LIST@31..55
-                0: SINGLE_PATTERN@31..34
-                  0: NAME@31..34
-                    0: IDENT@31..34 "foo" [] []
+                0: JS_IDENTIFIER_BINDING@31..34
+                  0: IDENT@31..34 "foo" [] []
                 1: COMMA@34..36 "," [] [Whitespace(" ")]
-                2: SINGLE_PATTERN@36..39
-                  0: NAME@36..39
-                    0: IDENT@36..39 "bar" [] []
+                2: JS_IDENTIFIER_BINDING@36..39
+                  0: IDENT@36..39 "bar" [] []
                 3: COMMA@39..41 "," [] [Whitespace(" ")]
                 4: KEY_VALUE_PATTERN@41..55
                   0: NAME@41..42
@@ -192,15 +189,13 @@ JsRoot {
                   2: ARRAY_PATTERN@44..55
                     0: L_BRACK@44..45 "[" [] []
                     1: LIST@45..54
-                      0: SINGLE_PATTERN@45..46
-                        0: NAME@45..46
-                          0: IDENT@45..46 "f" [] []
+                      0: JS_IDENTIFIER_BINDING@45..46
+                        0: IDENT@45..46 "f" [] []
                       1: COMMA@46..48 "," [] [Whitespace(" ")]
                       2: REST_PATTERN@48..54
                         0: DOT2@48..51 "..." [] []
-                        1: SINGLE_PATTERN@51..54
-                          0: NAME@51..54
-                            0: IDENT@51..54 "baz" [] []
+                        1: JS_IDENTIFIER_BINDING@51..54
+                          0: IDENT@51..54 "baz" [] []
                     2: R_BRACK@54..55 "]" [] []
               2: R_CURLY@55..56 "}" [] []
           2: R_PAREN@56..58 ")" [] [Whitespace(" ")]
@@ -216,15 +211,13 @@ JsRoot {
         0: JS_PARAMETER_LIST@64..79
           0: L_PAREN@64..66 "(" [Whitespace("\n")] []
           1: LIST@66..77
-            0: SINGLE_PATTERN@66..69
-              0: NAME@66..69
-                0: IDENT@66..69 "foo" [] []
+            0: JS_IDENTIFIER_BINDING@66..69
+              0: IDENT@66..69 "foo" [] []
             1: COMMA@69..71 "," [] [Whitespace(" ")]
             2: JS_REST_PARAMETER@71..77
               0: DOT2@71..74 "..." [] []
-              1: SINGLE_PATTERN@74..77
-                0: NAME@74..77
-                  0: IDENT@74..77 "bar" [] []
+              1: JS_IDENTIFIER_BINDING@74..77
+                0: IDENT@74..77 "bar" [] []
           2: R_PAREN@77..79 ")" [] [Whitespace(" ")]
         1: FAT_ARROW@79..82 "=>" [] [Whitespace(" ")]
         2: JS_FUNCTION_BODY@82..84

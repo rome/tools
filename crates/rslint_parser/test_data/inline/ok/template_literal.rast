@@ -110,9 +110,8 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..20
           0: JS_VARIABLE_DECLARATOR@4..20
-            0: SINGLE_PATTERN@4..6
-              0: NAME@4..6
-                0: IDENT@4..6 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..20
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: TEMPLATE@8..20
@@ -131,9 +130,8 @@ JsRoot {
         0: LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@26..32
           0: JS_VARIABLE_DECLARATOR@26..32
-            0: SINGLE_PATTERN@26..28
-              0: NAME@26..28
-                0: IDENT@26..28 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@26..28
+              0: IDENT@26..28 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@28..32
               0: EQ@28..30 "=" [] [Whitespace(" ")]
               1: TEMPLATE@30..32
@@ -146,9 +144,8 @@ JsRoot {
         0: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@38..50
           0: JS_VARIABLE_DECLARATOR@38..50
-            0: SINGLE_PATTERN@38..40
-              0: NAME@38..40
-                0: IDENT@38..40 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@38..40
+              0: IDENT@38..40 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@40..50
               0: EQ@40..42 "=" [] [Whitespace(" ")]
               1: TEMPLATE@42..50
@@ -166,9 +163,8 @@ JsRoot {
         0: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@56..65
           0: JS_VARIABLE_DECLARATOR@56..65
-            0: SINGLE_PATTERN@56..58
-              0: NAME@56..58
-                0: IDENT@56..58 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@56..58
+              0: IDENT@56..58 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@58..65
               0: EQ@58..60 "=" [] [Whitespace(" ")]
               1: TEMPLATE@60..65

@@ -44,7 +44,7 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 		opt = Some(p.cur_tok().range);
 		let range = p.cur_tok().range;
 		match kind {
-			SINGLE_PATTERN | ARRAY_PATTERN | OBJECT_PATTERN => {
+			JS_IDENTIFIER_BINDING | ARRAY_PATTERN | OBJECT_PATTERN => {
 				p.bump_any();
 			}
 			_ if p.state.in_declare => {

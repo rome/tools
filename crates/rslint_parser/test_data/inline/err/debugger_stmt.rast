@@ -88,9 +88,8 @@ JsRoot {
                   0: VAR_KW@28..35 "var" [Whitespace("\n\t\t")] [Whitespace(" ")]
                   1: LIST@35..54
                     0: JS_VARIABLE_DECLARATOR@35..54
-                      0: SINGLE_PATTERN@35..45
-                        0: NAME@35..45
-                          0: IDENT@35..45 "something" [] [Whitespace(" ")]
+                      0: JS_IDENTIFIER_BINDING@35..45
+                        0: IDENT@35..45 "something" [] [Whitespace(" ")]
                       1: JS_EQUAL_VALUE_CLAUSE@45..54
                         0: EQ@45..47 "=" [] [Whitespace(" ")]
                         1: JS_STRING_LITERAL_EXPRESSION@47..54

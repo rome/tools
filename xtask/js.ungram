@@ -722,7 +722,7 @@ JsObjectRestPropertyAssignmentTarget =
 ///////////////
 
 JsAnyBinding =
-	SinglePattern
+	JsIdentifierBinding
 	| RestPattern
 	| AssignPattern
 	| ObjectPattern
@@ -730,9 +730,16 @@ JsAnyBinding =
 	| ExprPattern
 	| JsUnknownBinding
 
-// single pattern
-SinglePattern
-	= name:Name '?'? '!'? ty: TsTypeAnnotation?
+
+
+// Binds a value to an identifier.
+// let x = OR function(test) {}
+//     ^               ^^^^
+JsIdentifierBinding =
+	name: 'ident'
+	'?'?
+	'!'?
+	ty: TsTypeAnnotation?
 
 // rest pattern
 RestPattern = '...' pat:JsAnyBinding
@@ -748,7 +755,7 @@ ObjectPatternProp =
 	AssignPattern
 	| KeyValuePattern
 	| RestPattern
-	| SinglePattern
+	| JsIdentifierBinding
 	| JsUnknownBinding
 
 // assign pattern
@@ -901,15 +908,6 @@ WildcardImport = '*' 'as'? ident: Ident?
 
 // @ematipico this one is not entirely correct I think..
 ExportNamed = 'export' 'type'? 'from'?  '{' specifiers:(Specifier (',' Specifier)* ','?) * '}'
-
-///////////////
-// BINDINGS
-///////////////
-
-// Binds a value to an identifier.
-// let x = OR function(test) {}
-//     ^               ^^^^
-JsIdentifierBinding = name: 'ident'
 
 ///////////////
 // AUXILIARY
@@ -1225,7 +1223,7 @@ TsMethodSignature =
 TsImport = 'import' type_args:TsTypeArgs '.'? '(' qualifier:TsEntityName ')'
 
 // typescript index signature
-TsIndexSignature = 'readonly'? '[' pat:SinglePattern ':' ty:TsType ']'
+TsIndexSignature = 'readonly'? '[' pat:JsIdentifierBinding ':' ty:TsType ']'
 
 // typescript type of access
 TsAccessibility = 'private' | 'readonly'

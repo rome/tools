@@ -75,9 +75,8 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..46
           0: JS_VARIABLE_DECLARATOR@4..46
-            0: SINGLE_PATTERN@4..6
-              0: NAME@4..6
-                0: IDENT@4..6 "b" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@4..6
+              0: IDENT@4..6 "b" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@6..46
               0: EQ@6..8 "=" [] [Whitespace(" ")]
               1: JS_OBJECT_EXPRESSION@8..46
@@ -91,9 +90,8 @@ JsRoot {
                         0: IDENT@16..19 "foo" [] []
                       2: R_BRACK@19..20 "]" [] []
                     2: L_PAREN@20..21 "(" [] []
-                    3: SINGLE_PATTERN@21..24
-                      0: NAME@21..24
-                        0: IDENT@21..24 "bar" [] []
+                    3: JS_IDENTIFIER_BINDING@21..24
+                      0: IDENT@21..24 "bar" [] []
                     4: R_PAREN@24..26 ")" [] [Whitespace(" ")]
                     5: JS_FUNCTION_BODY@26..44
                       0: L_CURLY@26..27 "{" [] []

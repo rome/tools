@@ -209,9 +209,8 @@ JsRoot {
         0: LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")]
         1: LIST@84..89
           0: JS_VARIABLE_DECLARATOR@84..89
-            0: SINGLE_PATTERN@84..86
-              0: NAME@84..86
-                0: IDENT@84..86 "a" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@84..86
+              0: IDENT@84..86 "a" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@86..89
               0: EQ@86..88 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@88..89

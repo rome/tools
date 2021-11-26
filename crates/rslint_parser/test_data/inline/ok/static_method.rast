@@ -135,9 +135,8 @@ JsRoot {
           2: JS_PARAMETER_LIST@23..29
             0: L_PAREN@23..24 "(" [] []
             1: LIST@24..27
-              0: SINGLE_PATTERN@24..27
-                0: NAME@24..27
-                  0: IDENT@24..27 "bar" [] []
+              0: JS_IDENTIFIER_BINDING@24..27
+                0: IDENT@24..27 "bar" [] []
             2: R_PAREN@27..29 ")" [] [Whitespace(" ")]
           3: JS_FUNCTION_BODY@29..31
             0: L_CURLY@29..30 "{" [] []

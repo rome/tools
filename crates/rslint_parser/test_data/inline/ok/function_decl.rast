@@ -189,9 +189,8 @@ JsRoot {
       2: JS_PARAMETER_LIST@49..57
         0: L_PAREN@49..50 "(" [] []
         1: LIST@50..55
-          0: SINGLE_PATTERN@50..55
-            0: NAME@50..55
-              0: IDENT@50..55 "await" [] []
+          0: JS_IDENTIFIER_BINDING@50..55
+            0: IDENT@50..55 "await" [] []
         2: R_PAREN@55..57 ")" [] [Whitespace(" ")]
       3: JS_FUNCTION_BODY@57..59
         0: L_CURLY@57..58 "{" [] []

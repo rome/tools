@@ -12,36 +12,23 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 	Some(match p.cur() {
 		T![this] if parameters => {
 			let m = p.start();
-			let _m = p.start();
 			p.bump_remap(T![ident]);
-			_m.complete(p, NAME);
-			m.complete(p, SINGLE_PATTERN)
+			m.complete(p, JS_IDENTIFIER_BINDING)
 		}
 		T!['['] => array_binding_pattern(p, parameters, assignment),
 		T!['{'] if p.state.allow_object_expr => object_binding_pattern(p, parameters),
 		_ if assignment => {
-			let m = p.start();
-			let mut complete = if let Some(expr) = lhs_expr(p) {
-				expr
-			} else {
-				m.abandon(p);
-				return None;
-			};
+			let mut complete = lhs_expr(p)?;
 
 			if complete.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION {
-				complete.change_kind(p, NAME);
+				complete.change_kind(p, JS_IDENTIFIER_BINDING);
+				complete
+			} else {
+				let m = complete.precede(p);
+				m.complete(p, EXPR_PATTERN)
 			}
-			m.complete(
-				p,
-				if complete.kind() == NAME {
-					SINGLE_PATTERN
-				} else {
-					EXPR_PATTERN
-				},
-			)
 		}
 		T![ident] | T![yield] | T![await] => {
-			let m = p.start();
 			if p.state.should_record_names {
 				let string = p.cur_src().to_string();
 				if string == "let" {
@@ -72,19 +59,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 						.insert(p.cur_src().to_string(), p.cur_tok().range);
 				}
 			}
-
-			if let Present(mut identifier) = parse_identifier_binding(p) {
-				// TODO 1725 remove after changing patterns to use binding identifiers
-				let mapped_ident_kind = match identifier.kind() {
-					JS_IDENTIFIER_BINDING => NAME,
-					JS_UNKNOWN_BINDING => JS_UNKNOWN_PATTERN,
-					k => k,
-				};
-
-				identifier.change_kind(p, mapped_ident_kind);
-			}
-
-			m.complete(p, SINGLE_PATTERN)
+			parse_identifier_binding(p).ok()
 		}
 		_ => {
 			let err = p
@@ -295,12 +270,11 @@ fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMark
 		return Some(name);
 	}
 
-	let sp_marker = name.precede(p).complete(p, SINGLE_PATTERN);
 	if p.eat(T![=]) {
 		expr_or_assignment(p);
 		Some(m.complete(p, ASSIGN_PATTERN))
 	} else {
 		m.abandon(p);
-		Some(sp_marker)
+		Some(name)
 	}
 }

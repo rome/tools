@@ -148,9 +148,8 @@ JsRoot {
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
         1: LIST@4..13
           0: JS_VARIABLE_DECLARATOR@4..13
-            0: SINGLE_PATTERN@4..8
-              0: NAME@4..8
-                0: IDENT@4..8 "foo" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@4..8
+              0: IDENT@4..8 "foo" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@8..13
               0: EQ@8..10 "=" [] [Whitespace(" ")]
               1: JS_REFERENCE_IDENTIFIER_EXPRESSION@10..13
@@ -161,9 +160,8 @@ JsRoot {
         0: LET_KW@14..19 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@19..26
           0: JS_VARIABLE_DECLARATOR@19..26
-            0: SINGLE_PATTERN@19..23
-              0: NAME@19..23
-                0: IDENT@19..23 "foo" [] [Whitespace(" ")]
+            0: JS_IDENTIFIER_BINDING@19..23
+              0: IDENT@19..23 "foo" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@23..26
               0: EQ@23..25 "=" [] [Whitespace(" ")]
               1: JS_REFERENCE_IDENTIFIER_EXPRESSION@25..26
@@ -174,27 +172,24 @@ JsRoot {
         0: LET_KW@27..32 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@32..35
           0: JS_VARIABLE_DECLARATOR@32..35
-            0: SINGLE_PATTERN@32..35
-              0: NAME@32..35
-                0: IDENT@32..35 "foo" [] []
+            0: JS_IDENTIFIER_BINDING@32..35
+              0: IDENT@32..35 "foo" [] []
       1: SEMICOLON@35..36 ";" [] []
     3: JS_VARIABLE_DECLARATION_STATEMENT@36..44
       0: JS_VARIABLE_DECLARATION@36..44
         0: LET_KW@36..41 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@41..44
           0: JS_VARIABLE_DECLARATOR@41..44
-            0: SINGLE_PATTERN@41..44
-              0: NAME@41..44
-                0: IDENT@41..44 "foo" [] []
+            0: JS_IDENTIFIER_BINDING@41..44
+              0: IDENT@41..44 "foo" [] []
       1: (empty)
     4: JS_VARIABLE_DECLARATION_STATEMENT@44..52
       0: JS_VARIABLE_DECLARATION@44..52
         0: LET_KW@44..49 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@49..52
           0: JS_VARIABLE_DECLARATOR@49..52
-            0: SINGLE_PATTERN@49..52
-              0: NAME@49..52
-                0: IDENT@49..52 "foo" [] []
+            0: JS_IDENTIFIER_BINDING@49..52
+              0: IDENT@49..52 "foo" [] []
       1: (empty)
     5: JS_FUNCTION_DECLARATION@52..83
       0: FUNCTION_KW@52..62 "function" [Whitespace("\n")] [Whitespace(" ")]

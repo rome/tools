@@ -106,9 +106,8 @@ JsRoot {
                 0: LET_KW@14..18 "let" [] [Whitespace(" ")]
                 1: LIST@18..27
                   0: JS_VARIABLE_DECLARATOR@18..27
-                    0: SINGLE_PATTERN@18..24
-                      0: JS_UNKNOWN_BINDING@18..24
-                        0: IDENT@18..24 "await" [] [Whitespace(" ")]
+                    0: JS_UNKNOWN_BINDING@18..24
+                      0: IDENT@18..24 "await" [] [Whitespace(" ")]
                     1: JS_EQUAL_VALUE_CLAUSE@24..27
                       0: EQ@24..26 "=" [] [Whitespace(" ")]
                       1: JS_NUMBER_LITERAL_EXPRESSION@26..27
@@ -134,9 +133,8 @@ JsRoot {
               0: LET_KW@48..56 "let" [Whitespace("\n   ")] [Whitespace(" ")]
               1: LIST@56..65
                 0: JS_VARIABLE_DECLARATOR@56..65
-                  0: SINGLE_PATTERN@56..62
-                    0: JS_UNKNOWN_BINDING@56..62
-                      0: IDENT@56..62 "yield" [] [Whitespace(" ")]
+                  0: JS_UNKNOWN_BINDING@56..62
+                    0: IDENT@56..62 "yield" [] [Whitespace(" ")]
                   1: JS_EQUAL_VALUE_CLAUSE@62..65
                     0: EQ@62..64 "=" [] [Whitespace(" ")]
                     1: JS_NUMBER_LITERAL_EXPRESSION@64..65
@@ -148,9 +146,8 @@ JsRoot {
         0: LET_KW@68..73 "let" [Whitespace("\n")] [Whitespace(" ")]
         1: LIST@73..81
           0: JS_VARIABLE_DECLARATOR@73..81
-            0: SINGLE_PATTERN@73..78
-              0: JS_UNKNOWN_BINDING@73..78
-                0: IDENT@73..78 "eval" [] [Whitespace(" ")]
+            0: JS_UNKNOWN_BINDING@73..78
+              0: IDENT@73..78 "eval" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@78..81
               0: EQ@78..80 "=" [] [Whitespace(" ")]
               1: JS_NUMBER_LITERAL_EXPRESSION@80..81

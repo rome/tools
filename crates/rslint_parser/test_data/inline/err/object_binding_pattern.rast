@@ -284,9 +284,8 @@ JsRoot {
                   2: JS_UNKNOWN_BINDING@110..112
                     0: COMMA@110..112 "," [] [Whitespace(" ")]
                 1: (empty)
-                2: SINGLE_PATTERN@112..116
-                  0: NAME@112..116
-                    0: IDENT@112..116 "bar" [] [Whitespace(" ")]
+                2: JS_IDENTIFIER_BINDING@112..116
+                  0: IDENT@112..116 "bar" [] [Whitespace(" ")]
               2: R_CURLY@116..118 "}" [] [Whitespace(" ")]
             1: JS_EQUAL_VALUE_CLAUSE@118..122
               0: EQ@118..120 "=" [] [Whitespace(" ")]
