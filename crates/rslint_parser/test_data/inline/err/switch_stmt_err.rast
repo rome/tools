@@ -1,7 +1,7 @@
-0: JS_ROOT@0..24
+0: JS_ROOT@0..45
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..23
+  2: LIST@0..44
     0: JS_SWITCH_STATEMENT@0..13
       0: SWITCH_KW@0..7 "switch" [] [Whitespace(" ")]
       1: (empty)
@@ -18,7 +18,29 @@
       3: L_CURLY@21..22 "{" [] []
       4: LIST@22..22
       5: R_CURLY@22..23 "}" [] []
-  3: EOF@23..24 "" [Whitespace("\n")] []
+    2: JS_SWITCH_STATEMENT@23..33
+      0: SWITCH_KW@23..31 "switch" [Whitespace("\n")] [Whitespace(" ")]
+      1: (empty)
+      2: (empty)
+      3: L_CURLY@31..33 "{" [] [Whitespace(" ")]
+      4: LIST@33..33
+      5: (empty)
+    3: JS_VARIABLE_DECLARATION_STATEMENT@33..43
+      0: JS_VARIABLE_DECLARATION@33..43
+        0: VAR_KW@33..37 "var" [] [Whitespace(" ")]
+        1: LIST@37..43
+          0: JS_VARIABLE_DECLARATOR@37..43
+            0: SINGLE_PATTERN@37..39
+              0: NAME@37..39
+                0: IDENT@37..39 "i" [] [Whitespace(" ")]
+            1: JS_EQUAL_VALUE_CLAUSE@39..43
+              0: EQ@39..41 "=" [] [Whitespace(" ")]
+              1: JS_NUMBER_LITERAL_EXPRESSION@41..43
+                0: JS_NUMBER_LITERAL@41..43 "0" [] [Whitespace(" ")]
+      1: (empty)
+    4: JS_UNKNOWN_STATEMENT@43..44
+      0: R_CURLY@43..44 "}" [] []
+  3: EOF@44..45 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected `'('` but instead found `foo`
   ┌─ switch_stmt_err.js:1:8
@@ -55,5 +77,48 @@ error[SyntaxError]: expected `')'` but instead found `{`
   │        ^ unexpected
 
 --
+error[SyntaxError]: expected `'('` but instead found `{`
+  ┌─ switch_stmt_err.js:3:8
+  │
+3 │ switch { var i = 0 }
+  │        ^ unexpected
+
+--
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ switch_stmt_err.js:3:8
+  │
+3 │ switch { var i = 0 }
+  │        ^ Expected an expression here
+
+--
+error[SyntaxError]: expected `')'` but instead found `{`
+  ┌─ switch_stmt_err.js:3:8
+  │
+3 │ switch { var i = 0 }
+  │        ^ unexpected
+
+--
+error[SyntaxError]: expected a default, or a case but instead found 'var'
+  ┌─ switch_stmt_err.js:3:10
+  │
+3 │ switch { var i = 0 }
+  │          ^^^ Expected a default, or a case here
+
+--
+error[SyntaxError]: expected `'}'` but instead found `var`
+  ┌─ switch_stmt_err.js:3:10
+  │
+3 │ switch { var i = 0 }
+  │          ^^^ unexpected
+
+--
+error[SyntaxError]: Expected a statement or declaration, but found none
+  ┌─ switch_stmt_err.js:3:20
+  │
+3 │ switch { var i = 0 }
+  │                    ^ Expected a statement or declaration here
+
+--
 switch foo {}
 switch {}
+switch { var i = 0 }

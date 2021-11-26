@@ -18,7 +18,7 @@
               0: L_CURLY@25..26 "{" [] []
               1: LIST@26..26
               2: R_CURLY@26..27 "}" [] []
-        1: JS_DEFAULT_CLAUSE@27..40
+        1: JS_UNKNOWN_STATEMENT@27..40
           0: DEFAULT_KW@27..36 "default" [Whitespace("\n\t")] []
           1: COLON@36..38 ":" [] [Whitespace(" ")]
           2: LIST@38..40
@@ -33,9 +33,9 @@ error[SyntaxError]: Multiple default clauses inside of a switch statement are no
   ┌─ switch_stmt_double_default.js:3:2
   │
 2 │     default: {}
-  │     ---------- the first default clause is defined here
+  │     ----------- the first default clause is defined here
 3 │     default: {}
-  │     ^^^^^^^^^^ a second clause here is not allowed
+  │     ^^^^^^^^^^^ a second clause here is not allowed
 
 --
 switch (foo) {

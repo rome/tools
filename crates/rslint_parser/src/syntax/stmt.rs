@@ -1015,8 +1015,7 @@ pub fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
 }
 
 // We return the range in case its a default clause so we can report multiple default clauses in a better way
-fn parse_switch_clause(p: &mut Parser) -> Option<Range<usize>> {
-	let start = p.cur_tok().range.start;
+fn parse_switch_clause(p: &mut Parser) -> ParsedSyntax {
 	let m = p.start();
 	match p.cur() {
 		T![default] => {
@@ -1024,14 +1023,13 @@ fn parse_switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 			p.expect_required(T![:]);
 			// We stop the range here because we dont want to include the entire clause
 			// including the statement list following it
-			let end = p.cur_tok().range.end;
 			let cons_list = p.start();
 			while !p.at_ts(token_set![T![default], T![case], T!['}'], EOF]) {
 				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
-			m.complete(p, JS_DEFAULT_CLAUSE);
-			return Some(start..end);
+
+			return Present(m.complete(p, JS_DEFAULT_CLAUSE));
 		}
 		T![case] => {
 			p.bump_any();
@@ -1042,26 +1040,13 @@ fn parse_switch_clause(p: &mut Parser) -> Option<Range<usize>> {
 				stmt(p, None);
 			}
 			cons_list.complete(p, LIST);
-			m.complete(p, JS_CASE_CLAUSE);
+			return Present(m.complete(p, JS_CASE_CLAUSE));
 		}
 		_ => {
 			m.abandon(p);
-			let err = p
-				.err_builder(
-					"Expected a `case` or `default` clause in a switch statement, but found none",
-				)
-				.primary(
-					p.cur_tok().range,
-					"Expected the start to a case or default clause here",
-				);
-
-			#[allow(deprecated)]
-			SingleTokenParseRecovery::with_error(STMT_RECOVERY_SET, JS_UNKNOWN_STATEMENT, err)
-				.enabled_braces_check()
-				.recover(p);
+			Absent
 		}
 	}
-	None
 }
 
 /// A switch statement such as
@@ -1081,6 +1066,7 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	// test_err switch_stmt_err
 	// switch foo {}
 	// switch {}
+	// switch { var i = 0 }
 	if !p.at(T![switch]) {
 		return Absent;
 	}
@@ -1089,28 +1075,48 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	parenthesized_expression(p);
 	p.expect_required(T!['{']);
 	let cases_list = p.start();
-	let mut first_default: Option<Range<usize>> = None;
+	let mut default_found: Option<CompletedMarker> = None;
 
 	while !p.at(EOF) && !p.at(T!['}']) {
 		let mut temp = p.with_state(ParserState {
 			break_allowed: true,
 			..p.state.clone()
 		});
-		if let Some(default_range) = parse_switch_clause(&mut *temp) {
-			if let Some(ref err_range) = first_default {
-				let err = temp
-					.err_builder(
-						"Multiple default clauses inside of a switch statement are not allowed",
-					)
-					.secondary(
-						err_range.to_owned(),
-						"the first default clause is defined here",
-					)
-					.primary(default_range, "a second clause here is not allowed");
 
-				temp.error(err);
-			} else {
-				first_default = Some(default_range);
+		let clause = parse_switch_clause(&mut *temp);
+
+		if let Present(mut marker) = clause {
+			if marker.kind() == JS_DEFAULT_CLAUSE {
+				match default_found {
+					Some(default_found) => {
+						marker.change_kind(&mut *temp, JS_UNKNOWN_STATEMENT);
+						let err = temp
+						.err_builder(
+							"Multiple default clauses inside of a switch statement are not allowed",
+						)
+							.secondary(
+								default_found.range(&mut *temp),
+								"the first default clause is defined here",
+							)
+							.primary(marker.range(&mut *temp), "a second clause here is not allowed");
+
+						temp.error(err);
+					}
+					None => {
+						default_found = Some(marker.clone());
+					}
+				}
+			}
+		} else {
+			let recovered_element = clause.or_recover(
+				&mut *temp,
+				ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET)
+					.enable_recovery_on_line_break(),
+				js_parse_error::expected_case_or_default,
+			);
+
+			if recovered_element.is_err() {
+				break;
 			}
 		}
 	}
