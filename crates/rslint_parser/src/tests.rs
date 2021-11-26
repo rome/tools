@@ -20,17 +20,6 @@ fn parser_smoke_test() {
 }
 
 #[test]
-fn lib_tests() {
-	let path = Path::new(
-		r"C:\Users\Micha\git\rome\xtask\src\coverage\test262\test\language\expressions\class\class-name-ident-await-escaped-module.js",
-	);
-	let src = std::fs::read_to_string(path).unwrap();
-	let parsed = parse_text(&src, 0);
-
-	assert_errors_are_absent(parsed.errors(), path, &parsed.syntax());
-}
-
-#[test]
 fn parser_missing_smoke_test() {
 	let src = r#"
 		console.log("Hello world";
