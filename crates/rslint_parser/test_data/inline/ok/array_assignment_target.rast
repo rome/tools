@@ -2,78 +2,96 @@
   0: (empty)
   1: LIST@0..0
   2: LIST@0..85
-    0: JS_EXPRESSION_STATEMENT@0..21
-      0: JS_ASSIGNMENT_EXPRESSION@0..20
-        0: JS_IDENTIFIER_ASSIGNMENT_TARGET@0..4
-          0: IDENT@0..4 "foo" [] [Whitespace(" ")]
-        1: PLUSEQ@4..7 "+=" [] [Whitespace(" ")]
-        2: JS_ASSIGNMENT_EXPRESSION@7..20
-          0: JS_IDENTIFIER_ASSIGNMENT_TARGET@7..11
-            0: IDENT@7..11 "bar" [] [Whitespace(" ")]
-          1: EQ@11..13 "=" [] [Whitespace(" ")]
-          2: JS_ASSIGNMENT_EXPRESSION@13..20
-            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@13..15
-              0: IDENT@13..15 "b" [] [Whitespace(" ")]
-            1: QUESTION2EQ@15..19 "??=" [] [Whitespace(" ")]
-            2: JS_NUMBER_LITERAL_EXPRESSION@19..20
-              0: JS_NUMBER_LITERAL@19..20 "3" [] []
-      1: SEMICOLON@20..21 ";" [] []
-    1: JS_EXPRESSION_STATEMENT@21..33
-      0: JS_ASSIGNMENT_EXPRESSION@21..32
-        0: JS_IDENTIFIER_ASSIGNMENT_TARGET@21..26
-          0: IDENT@21..26 "foo" [Whitespace("\n")] [Whitespace(" ")]
-        1: MINUSEQ@26..29 "-=" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@29..32
-          0: IDENT@29..32 "bar" [] []
-      1: SEMICOLON@32..33 ";" [] []
-    2: JS_EXPRESSION_STATEMENT@33..46
-      0: JS_PARENTHESIZED_EXPRESSION@33..45
-        0: L_PAREN@33..35 "(" [Whitespace("\n")] []
-        1: JS_ASSIGNMENT_EXPRESSION@35..44
-          0: JS_IDENTIFIER_ASSIGNMENT_TARGET@35..39
-            0: IDENT@35..39 "foo" [] [Whitespace(" ")]
-          1: EQ@39..41 "=" [] [Whitespace(" ")]
-          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@41..44
-            0: IDENT@41..44 "bar" [] []
-        2: R_PAREN@44..45 ")" [] []
-      1: SEMICOLON@45..46 ";" [] []
-    3: JS_EXPRESSION_STATEMENT@46..64
-      0: JS_ASSIGNMENT_EXPRESSION@46..63
-        0: JS_ARRAY_ASSIGNMENT_TARGET@46..58
-          0: L_BRACK@46..48 "[" [Whitespace("\n")] []
-          1: LIST@48..56
-            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@48..51
-              0: IDENT@48..51 "foo" [] []
-            1: COMMA@51..53 "," [] [Whitespace(" ")]
-            2: JS_IDENTIFIER_ASSIGNMENT_TARGET@53..56
-              0: IDENT@53..56 "bar" [] []
-          2: R_BRACK@56..58 "]" [] [Whitespace(" ")]
-        1: EQ@58..60 "=" [] [Whitespace(" ")]
-        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@60..63
-          0: IDENT@60..63 "baz" [] []
-      1: SEMICOLON@63..64 ";" [] []
-    4: JS_EXPRESSION_STATEMENT@64..85
-      0: JS_PARENTHESIZED_EXPRESSION@64..84
-        0: L_PAREN@64..66 "(" [Whitespace("\n")] []
-        1: JS_ASSIGNMENT_EXPRESSION@66..83
-          0: JS_OBJECT_ASSIGNMENT_TARGET@66..79
-            0: L_CURLY@66..68 "{" [] [Whitespace(" ")]
-            1: LIST@68..77
-              0: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@68..71
-                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@68..71
-                  0: IDENT@68..71 "bar" [] []
-                1: (empty)
-              1: COMMA@71..73 "," [] [Whitespace(" ")]
-              2: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@73..77
-                0: JS_IDENTIFIER_ASSIGNMENT_TARGET@73..77
-                  0: IDENT@73..77 "baz" [] [Whitespace(" ")]
-                1: (empty)
-            2: R_CURLY@77..79 "}" [] [Whitespace(" ")]
-          1: EQ@79..81 "=" [] [Whitespace(" ")]
-          2: JS_OBJECT_EXPRESSION@81..83
-            0: L_CURLY@81..82 "{" [] []
-            1: LIST@82..82
-            2: R_CURLY@82..83 "}" [] []
-        2: R_PAREN@83..84 ")" [] []
+    0: JS_EXPRESSION_STATEMENT@0..17
+      0: JS_ASSIGNMENT_EXPRESSION@0..16
+        0: JS_ARRAY_ASSIGNMENT_TARGET@0..11
+          0: L_BRACK@0..1 "[" [] []
+          1: LIST@1..9
+            0: JS_IDENTIFIER_ASSIGNMENT_TARGET@1..4
+              0: IDENT@1..4 "foo" [] []
+            1: COMMA@4..6 "," [] [Whitespace(" ")]
+            2: JS_IDENTIFIER_ASSIGNMENT_TARGET@6..9
+              0: IDENT@6..9 "bar" [] []
+          2: R_BRACK@9..11 "]" [] [Whitespace(" ")]
+        1: EQ@11..13 "=" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@13..16
+          0: IDENT@13..16 "baz" [] []
+      1: SEMICOLON@16..17 ";" [] []
+    1: JS_EXPRESSION_STATEMENT@17..35
+      0: JS_ASSIGNMENT_EXPRESSION@17..34
+        0: JS_ARRAY_ASSIGNMENT_TARGET@17..29
+          0: L_BRACK@17..19 "[" [Whitespace("\n")] []
+          1: LIST@19..27
+            0: JS_ARRAY_HOLE@19..19
+            1: COMMA@19..20 "," [] []
+            2: JS_ARRAY_HOLE@20..20
+            3: COMMA@20..21 "," [] []
+            4: JS_ARRAY_HOLE@21..21
+            5: COMMA@21..22 "," [] []
+            6: JS_IDENTIFIER_ASSIGNMENT_TARGET@22..23
+              0: IDENT@22..23 "b" [] []
+            7: COMMA@23..24 "," [] []
+            8: JS_ARRAY_HOLE@24..24
+            9: COMMA@24..25 "," [] []
+            10: JS_IDENTIFIER_ASSIGNMENT_TARGET@25..26
+              0: IDENT@25..26 "c" [] []
+            11: COMMA@26..27 "," [] []
+          2: R_BRACK@27..29 "]" [] [Whitespace(" ")]
+        1: EQ@29..31 "=" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@31..34
+          0: IDENT@31..34 "baz" [] []
+      1: SEMICOLON@34..35 ";" [] []
+    2: JS_EXPRESSION_STATEMENT@35..70
+      0: JS_ASSIGNMENT_EXPRESSION@35..69
+        0: JS_ARRAY_ASSIGNMENT_TARGET@35..64
+          0: L_BRACK@35..37 "[" [Whitespace("\n")] []
+          1: LIST@37..62
+            0: JS_ASSIGNMENT_TARGET_WITH_DEFAULT@37..47
+              0: JS_IDENTIFIER_ASSIGNMENT_TARGET@37..39
+                0: IDENT@37..39 "a" [] [Whitespace(" ")]
+              1: EQ@39..41 "=" [] [Whitespace(" ")]
+              2: JS_STRING_LITERAL_EXPRESSION@41..47
+                0: JS_STRING_LITERAL@41..47 "\"test\"" [] []
+            1: COMMA@47..49 "," [] [Whitespace(" ")]
+            2: JS_STATIC_MEMBER_ASSIGNMENT_TARGET@49..52
+              0: JS_REFERENCE_IDENTIFIER_EXPRESSION@49..50
+                0: IDENT@49..50 "a" [] []
+              1: DOT@50..51 "." [] []
+              2: JS_REFERENCE_IDENTIFIER_MEMBER@51..52
+                0: IDENT@51..52 "b" [] []
+            3: COMMA@52..54 "," [] [Whitespace(" ")]
+            4: JS_STATIC_MEMBER_ASSIGNMENT_TARGET@54..62
+              0: CALL_EXPR@54..60
+                0: JS_REFERENCE_IDENTIFIER_EXPRESSION@54..58
+                  0: IDENT@54..58 "call" [] []
+                1: ARG_LIST@58..60
+                  0: L_PAREN@58..59 "(" [] []
+                  1: LIST@59..59
+                  2: R_PAREN@59..60 ")" [] []
+              1: DOT@60..61 "." [] []
+              2: JS_REFERENCE_IDENTIFIER_MEMBER@61..62
+                0: IDENT@61..62 "b" [] []
+          2: R_BRACK@62..64 "]" [] [Whitespace(" ")]
+        1: EQ@64..66 "=" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@66..69
+          0: IDENT@66..69 "baz" [] []
+      1: SEMICOLON@69..70 ";" [] []
+    3: JS_EXPRESSION_STATEMENT@70..85
+      0: JS_ASSIGNMENT_EXPRESSION@70..84
+        0: JS_ARRAY_ASSIGNMENT_TARGET@70..79
+          0: L_BRACK@70..72 "[" [Whitespace("\n")] []
+          1: LIST@72..77
+            0: JS_PARENTHESIZED_ASSIGNMENT_TARGET@72..77
+              0: L_PAREN@72..73 "(" [] []
+              1: JS_PARENTHESIZED_ASSIGNMENT_TARGET@73..76
+                0: L_PAREN@73..74 "(" [] []
+                1: JS_IDENTIFIER_ASSIGNMENT_TARGET@74..75
+                  0: IDENT@74..75 "a" [] []
+                2: R_PAREN@75..76 ")" [] []
+              2: R_PAREN@76..77 ")" [] []
+          2: R_BRACK@77..79 "]" [] [Whitespace(" ")]
+        1: EQ@79..81 "=" [] [Whitespace(" ")]
+        2: JS_REFERENCE_IDENTIFIER_EXPRESSION@81..84
+          0: IDENT@81..84 "baz" [] []
       1: SEMICOLON@84..85 ";" [] []
   3: EOF@85..86 "" [Whitespace("\n")] []

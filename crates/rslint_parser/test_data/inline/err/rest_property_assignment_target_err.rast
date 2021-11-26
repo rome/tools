@@ -25,16 +25,12 @@
           0: JS_OBJECT_ASSIGNMENT_TARGET@16..37
             0: L_CURLY@16..18 "{" [] [Whitespace(" ")]
             1: LIST@18..35
-              0: JS_UNKNOWN_ASSIGNMENT_TARGET@18..23
+              0: JS_UNKNOWN_ASSIGNMENT_TARGET@18..35
                 0: DOT2@18..21 "..." [] []
                 1: JS_IDENTIFIER_ASSIGNMENT_TARGET@21..23
                   0: IDENT@21..23 "c" [] [Whitespace(" ")]
-              1: JS_SHORTHAND_PROPERTY_ASSIGNMENT_TARGET@23..35
-                0: (empty)
-                1: JS_EQUAL_VALUE_CLAUSE@23..35
-                  0: EQ@23..25 "=" [] [Whitespace(" ")]
-                  1: JS_STRING_LITERAL_EXPRESSION@25..35
-                    0: JS_STRING_LITERAL@25..35 "\"default\"" [] [Whitespace(" ")]
+                2: EQ@23..25 "=" [] [Whitespace(" ")]
+                3: JS_STRING_LITERAL@25..35 "\"default\"" [] [Whitespace(" ")]
             2: R_CURLY@35..37 "}" [] [Whitespace(" ")]
           1: EQ@37..39 "=" [] [Whitespace(" ")]
           2: JS_REFERENCE_IDENTIFIER_EXPRESSION@39..40
@@ -91,25 +87,11 @@ error[SyntaxError]: expected an identifier, or an assignment target but instead 
   │        ^ Expected an identifier, or an assignment target here
 
 --
-error[SyntaxError]: rest element must be the last element
-  ┌─ rest_property_assignment_target_err.js:2:4
-  │
-2 │ ({ ...c = "default" } = a);
-  │    ^^^^ Move the rest element to the end
-
---
-error[SyntaxError]: expected `,` but instead found `=`
+error[SyntaxError]: rest element cannot have default
   ┌─ rest_property_assignment_target_err.js:2:9
   │
 2 │ ({ ...c = "default" } = a);
-  │         ^ unexpected
-
---
-error[SyntaxError]: Expected an identifier or keyword
-  ┌─ rest_property_assignment_target_err.js:2:9
-  │
-2 │ ({ ...c = "default" } = a);
-  │         ^ Expected an identifier or keyword here
+  │         ^^^^^^^^^^^^ Remove the default value here
 
 --
 error[SyntaxError]: Invalid assignment to `{a}`

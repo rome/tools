@@ -19,14 +19,14 @@ fn parser_smoke_test() {
 	assert!(parse_module(src, 0).ok().is_ok());
 }
 
-#[test]
-fn lib_tests() {
-	let src = fs::read_to_string(Path::new(
-		r"C:\Users\Micha\git\rome\xtask\src\coverage\test262\test\language\module-code\parse-err-syntax-2.js",
-	)).unwrap();
-
-	assert!(parse_module(&src, 0).ok().is_ok());
-}
+// #[test]
+// fn lib_tests() {
+// 	let src = fs::read_to_string(Path::new(
+// 		r"C:\Users\Micha\git\rome\crates\rslint_parser\test_data\inline\err\rest_property_assignment_target_err.js",
+// 	)).unwrap();
+//
+// 	assert!(parse_module(&src, 0).ok().is_ok());
+// }
 
 #[test]
 fn parser_missing_smoke_test() {
