@@ -938,12 +938,23 @@ fn for_head(p: &mut Parser) -> SyntaxKind {
 
 		if p.at(T![in]) || p.cur_src() == "of" {
 			if let Some(assignment_expr) = init_expr {
-				expression_to_assignment_target(
+				let mut assignment = expression_to_assignment_target(
 					p,
 					assignment_expr,
 					checkpoint,
 					SimpleAssignmentTargetExprKind::Any,
 				);
+
+				if p.typescript()
+					&& p.at(T![in]) && matches!(
+					assignment.kind(),
+					JS_ARRAY_ASSIGNMENT_TARGET | JS_OBJECT_ASSIGNMENT_TARGET
+				) {
+					let err = p.err_builder("the left hand side of a `for..in` statement cannot be a destructuring pattern")
+							.primary(assignment.range(p), "");
+					p.error(err);
+					assignment.change_kind(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
+				}
 			}
 
 			// left is a union, no need for wrapping
