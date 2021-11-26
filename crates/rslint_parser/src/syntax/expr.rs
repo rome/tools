@@ -1156,58 +1156,44 @@ pub fn reference_identifier_expression(p: &mut Parser) -> Option<CompletedMarker
 //
 pub(crate) fn parse_identifier(p: &mut Parser, kind: SyntaxKind) -> ConditionalParsedSyntax {
 	match p.cur() {
-		T![yield] => {
+		T![yield] | T![await] | T![ident] => {
 			let m = p.start();
-			p.bump_remap(T![ident]);
-			let completed = m.complete(p, kind);
+			let name = p.cur_src();
 
-			if p.state.in_generator {
-				let err = p
-					.err_builder("Illegal use of `yield` as an identifier in generator function")
-					.primary(completed.range(p), "");
-				p.error(err);
+			let mut valid = false;
 
-				Invalid(completed.into())
-			} else if StrictMode.is_supported(p) {
-				let err = p
-					.err_builder("Illegal use of `yield` as an identifier in strict mode")
-					.primary(completed.range(p), "");
-				p.error(err);
-				Invalid(completed.into())
-			} else {
-				Valid(completed.into())
-			}
-		}
-		T![await] => {
-			let m = p.start();
-			p.bump_remap(T![ident]);
-			let completed = m.complete(p, kind);
-
-			if p.state.in_async {
+			if name == "await" && p.state.in_async {
 				let err = p
 					.err_builder("Illegal use of `await` as an identifier in an async context")
-					.primary(completed.range(p), "");
+					.primary(p.cur_tok().range, "");
 				p.error(err);
-
-				Invalid(completed.into())
-			} else if StrictMode.is_supported(p) {
+			} else if name == "yield" && p.state.in_generator {
 				let err = p
-					.err_builder("Illegal use of `await` as an identifier in strict mode")
-					.primary(completed.range(p), "");
+					.err_builder("Illegal use of `yield` as an identifier in generator function")
+					.primary(p.cur_tok().range, "");
 				p.error(err);
-				Invalid(completed.into())
+			} else if StrictMode.is_supported(p) && (name == "yield") {
+				let err = p
+					.err_builder(&format!(
+						"Illegal use of `{}` as an identifier in strict mode",
+						name
+					))
+					.primary(p.cur_tok().range, "");
+				p.error(err);
 			} else {
-				Valid(completed.into())
+				valid = true;
 			}
-		}
-		T![ident] => {
-			let m = p.start();
-			p.bump_any();
+
+			p.bump_remap(T![ident]);
 			let completed = m.complete(p, kind);
 
-			Valid(completed.into())
+			if valid {
+				Valid(completed.into())
+			} else {
+				Invalid(completed.into())
+			}
 		}
-		_ => Valid(Absent),
+		_ => Invalid(Absent.into()),
 	}
 }
 
