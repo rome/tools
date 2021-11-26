@@ -118,10 +118,12 @@ error[SyntaxError]: Invalid assignment to `++b`
 
 --
 error[SyntaxError]: rest element may not have a trailing comma
-  ┌─ array_assignment_target_err.js:2:8
+  ┌─ array_assignment_target_err.js:2:15
   │
 2 │ [a, c, ...rest,] = test;
-  │        ^^^^^^^ Remove the trailing comma here
+  │        -------^ Remove the trailing comma here
+  │        │       
+  │        Rest element
 
 --
 error[SyntaxError]: Expected an expression, but found none

@@ -1,7 +1,7 @@
-0: JS_ROOT@0..98
+0: JS_ROOT@0..118
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..97
+  2: LIST@0..117
     0: JS_EXPRESSION_STATEMENT@0..14
       0: JS_PARENTHESIZED_EXPRESSION@0..13
         0: L_PAREN@0..1 "(" [] []
@@ -78,7 +78,25 @@
             0: IDENT@94..95 "a" [] []
         2: R_PAREN@95..96 ")" [] []
       1: SEMICOLON@96..97 ";" [] []
-  3: EOF@97..98 "" [Whitespace("\n")] []
+    4: JS_EXPRESSION_STATEMENT@97..117
+      0: JS_PARENTHESIZED_EXPRESSION@97..116
+        0: L_PAREN@97..99 "(" [Whitespace("\n")] []
+        1: JS_ASSIGNMENT_EXPRESSION@99..115
+          0: JS_OBJECT_ASSIGNMENT_TARGET@99..112
+            0: L_CURLY@99..101 "{" [] [Whitespace(" ")]
+            1: LIST@101..110
+              0: JS_UNKNOWN_ASSIGNMENT_TARGET@101..108
+                0: DOT2@101..104 "..." [] []
+                1: JS_IDENTIFIER_ASSIGNMENT_TARGET@104..108
+                  0: IDENT@104..108 "rest" [] []
+              1: COMMA@108..110 "," [] [Whitespace(" ")]
+            2: R_CURLY@110..112 "}" [] [Whitespace(" ")]
+          1: EQ@112..114 "=" [] [Whitespace(" ")]
+          2: JS_REFERENCE_IDENTIFIER_EXPRESSION@114..115
+            0: IDENT@114..115 "a" [] []
+        2: R_PAREN@115..116 ")" [] []
+      1: SEMICOLON@116..117 ";" [] []
+  3: EOF@117..118 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: expected an identifier, or an assignment target but instead found '}'
   ┌─ rest_property_assignment_target_err.js:1:8
@@ -87,11 +105,13 @@ error[SyntaxError]: expected an identifier, or an assignment target but instead 
   │        ^ Expected an identifier, or an assignment target here
 
 --
-error[SyntaxError]: rest element cannot have default
+error[SyntaxError]: rest element cannot have a default
   ┌─ rest_property_assignment_target_err.js:2:9
   │
 2 │ ({ ...c = "default" } = a);
-  │         ^^^^^^^^^^^^ Remove the default value here
+  │    ---- ^^^^^^^^^^^^ Remove the default value here
+  │    │     
+  │    Rest element
 
 --
 error[SyntaxError]: Invalid assignment to `{a}`
@@ -108,7 +128,17 @@ error[SyntaxError]: rest element must be the last element
   │    ^^^^^^^ Move the rest element to the end
 
 --
+error[SyntaxError]: rest element may not have a trailing comma
+  ┌─ rest_property_assignment_target_err.js:5:11
+  │
+5 │ ({ ...rest, } = a);
+  │    -------^ Remove the trailing comma here
+  │    │       
+  │    Rest element
+
+--
 ({ ... } = a);
 ({ ...c = "default" } = a);
 ({ ...{a} } = b);
 ({ ...rest, other_assignment } = a);
+({ ...rest, } = a);

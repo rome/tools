@@ -340,6 +340,7 @@ fn parse_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 // ({ ...c = "default" } = a);
 // ({ ...{a} } = b);
 // ({ ...rest, other_assignment } = a);
+// ({ ...rest, } = a);
 fn parse_object_rest_property_assignment_target(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![...]) {
 		return Absent;
@@ -426,6 +427,7 @@ fn valid_rest_or_to_unknown(
 	}
 
 	if p.at(T![=]) {
+		let rest_range = rest.range(p);
 		let rest_marker = rest.undo_completion(p);
 		let default_start = p.cur_tok().range.start;
 		p.bump(T![=]);
@@ -433,16 +435,21 @@ fn valid_rest_or_to_unknown(
 		if let Ok(recovered) = recovery.recover(p) {
 			recovered.undo_completion(p).abandon(p); // append recovered content to parent
 		}
-		p.error(p.err_builder("rest element cannot have default").primary(
-			default_start..p.cur_tok().range.start,
-			"Remove the default value here",
-		));
+		p.error(
+			p.err_builder("rest element cannot have a default")
+				.primary(
+					default_start..p.cur_tok().range.start,
+					"Remove the default value here",
+				)
+				.secondary(rest_range, "Rest element"),
+		);
 
 		rest_marker.complete(p, JS_UNKNOWN_ASSIGNMENT_TARGET);
 	} else if p.at(T![,]) && p.nth_at(1, end_token) {
 		p.error(
 			p.err_builder("rest element may not have a trailing comma")
-				.primary(rest.range(p), "Remove the trailing comma here"),
+				.primary(p.cur_tok().range, "Remove the trailing comma here")
+				.secondary(rest.range(p), "Rest element"),
 		);
 	} else {
 		p.error(

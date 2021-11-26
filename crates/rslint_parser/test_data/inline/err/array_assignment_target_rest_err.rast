@@ -66,11 +66,13 @@ error[SyntaxError]: expected an identifier, or an assignment target but instead 
   │        ^ Expected an identifier, or an assignment target here
 
 --
-error[SyntaxError]: rest element cannot have default
+error[SyntaxError]: rest element cannot have a default
   ┌─ array_assignment_target_rest_err.js:2:9
   │
 2 │ ([ ...c = "default" ] = a);
-  │         ^^^^^^^^^^^^ Remove the default value here
+  │    ---- ^^^^^^^^^^^^ Remove the default value here
+  │    │     
+  │    Rest element
 
 --
 error[SyntaxError]: rest element must be the last element
