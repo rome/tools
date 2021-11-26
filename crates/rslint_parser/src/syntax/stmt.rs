@@ -321,6 +321,9 @@ pub fn parse_throw_stmt(p: &mut Parser) -> ParsedSyntax {
 // break;
 // break foo;
 // break rust
+
+// test_err break_stmt
+// function foo() { break; }
 pub fn parse_break_stmt(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![break]) {
 		return Absent;
@@ -335,6 +338,7 @@ pub fn parse_break_stmt(p: &mut Parser) -> ParsedSyntax {
 
 		label_token.range.end
 	} else {
+		p.missing();
 		start.end
 	};
 
@@ -346,9 +350,10 @@ pub fn parse_break_stmt(p: &mut Parser) -> ParsedSyntax {
 			.primary(start.start..end, "");
 
 		p.error(err);
+		Present(m.complete(p, JS_UNKNOWN_STATEMENT))
+	} else {
+		Present(m.complete(p, JS_BREAK_STATEMENT))
 	}
-
-	Present(m.complete(p, JS_BREAK_STATEMENT))
 }
 
 /// A continue statement with an optional label such as `continue a;`

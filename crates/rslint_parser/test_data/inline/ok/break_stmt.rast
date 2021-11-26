@@ -58,7 +58,8 @@ JsRoot {
         2: R_CURLY@15..16 "}" [] []
     2: JS_BREAK_STATEMENT@16..23
       0: BREAK_KW@16..22 "break" [Whitespace("\n")] []
-      1: SEMICOLON@22..23 ";" [] []
+      1: (empty)
+      2: SEMICOLON@22..23 ";" [] []
     3: JS_BREAK_STATEMENT@23..34
       0: BREAK_KW@23..30 "break" [Whitespace("\n")] [Whitespace(" ")]
       1: IDENT@30..33 "foo" [] []
