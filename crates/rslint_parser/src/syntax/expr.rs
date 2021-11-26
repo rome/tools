@@ -1028,6 +1028,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 			let mut ident = reference_identifier_expression(p)?;
 			if p.state.potential_arrow_start && p.at(T![=>]) && !p.has_linebreak_before_n(0) {
 				// test arrow_expr_single_param
+				// // SCRIPT
 				// foo => {}
 				// yield => {}
 				// await => {}
