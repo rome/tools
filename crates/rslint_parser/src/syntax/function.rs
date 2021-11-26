@@ -20,7 +20,6 @@ use std::collections::HashMap;
 /// A function declaration, this could be async and or a generator. This takes a marker
 /// because you need to first advance over async or start a marker and feed it in.
 // test function_decl
-// // SCRIPT
 // function foo() {}
 // function *foo() {}
 // function foo(await) {}

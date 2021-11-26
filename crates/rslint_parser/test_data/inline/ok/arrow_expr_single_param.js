@@ -1,4 +1,3 @@
-// SCRIPT
 foo => {}
 yield => {}
 await => {}
