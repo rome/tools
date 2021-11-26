@@ -504,7 +504,7 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				// 	static get() {}
 				// }
 
-				// test setter_class_number
+				// test setter_class_member
 				// class Setters {
 				// 	set foo(a) {}
 				// 	set static(a) {}
@@ -518,6 +518,11 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 				// 	set(a) {}
 				// 	async set(a) {}
 				// 	static set(a) {}
+				// }
+
+				// test_err setter_class_member
+				// class Setters {
+				//   set foo() {}
 				// }
 
 				// The tree currently holds a STATIC_MEMBER_NAME node that wraps a ident token but we now found
@@ -553,7 +558,9 @@ fn class_member(p: &mut Parser) -> CompletedMarker {
 
 					member_marker.complete(p, JS_GETTER_CLASS_MEMBER)
 				} else {
-					parse_formal_param_pat(p).or_missing(p);
+					// TODO: review error handling once the pattern functions is refactored
+					parse_formal_param_pat(p)
+						.or_missing_with_error(p, js_parse_error::expected_parameter);
 					p.expect_required(T![')']);
 					function_body(p)
 						.or_missing_with_error(p, js_parse_error::expected_function_body);

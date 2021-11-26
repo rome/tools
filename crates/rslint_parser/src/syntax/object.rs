@@ -214,7 +214,8 @@ fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
 	object_member_name(p).or_missing_with_error(p, js_parse_error::expected_object_member_name);
 
 	p.state.allow_object_expr = p.expect_required(T!['(']);
-	parse_formal_param_pat(p).or_missing(p);
+	// TODO: review error handling once the pattern functions is refactored
+	parse_formal_param_pat(p).or_missing_with_error(p, js_parse_error::expected_parameter);
 	p.expect_required(T![')']);
 
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
