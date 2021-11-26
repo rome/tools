@@ -17,13 +17,13 @@ use crate::syntax::assignment_target::{
 use crate::syntax::class::class_expression;
 use crate::syntax::function::parse_function_expression;
 use crate::syntax::js_parse_error;
-use crate::syntax::js_parse_error::expected_simple_assignment_target;
+use crate::syntax::js_parse_error::{expected_parameter, expected_simple_assignment_target};
 use crate::syntax::object::parse_object_expression;
+use crate::syntax::pat::parse_identifier_binding;
 use crate::syntax::stmt::is_semi;
 use crate::ConditionalParsedSyntax::{Invalid, Valid};
 use crate::JsSyntaxFeature::StrictMode;
-use crate::ParsedSyntax::Absent;
-use crate::ParsedSyntax::Present;
+use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
 
 pub const EXPR_RECOVERY_SET: TokenSet = token_set![VAR_KW, R_PAREN, L_PAREN, L_BRACK, R_BRACK];
@@ -908,11 +908,9 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					p.bump_remap(T![async]);
 					let parsed_parameters = parse_parameter_list(p);
 					if parsed_parameters.is_absent() {
-						let m = p.start();
 						// test_err async_arrow_expr_await_parameter
 						// let a = async await => {}
-						p.bump_remap(T![ident]);
-						m.complete(p, JS_IDENTIFIER_BINDING);
+						parse_identifier_binding(p).or_missing_with_error(p, expected_parameter);
 					}
 
 					if p.at(T![:]) {
