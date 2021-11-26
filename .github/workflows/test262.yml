@@ -1,8 +1,6 @@
-name: CI
+# Test coverage job. It is run on pull request because it prints the results via comment
+name: Test262 coverage and comparison
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
