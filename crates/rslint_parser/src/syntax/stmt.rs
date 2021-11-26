@@ -364,6 +364,9 @@ pub fn parse_break_stmt(p: &mut Parser) -> ParsedSyntax {
 //   continue foo;
 //   continue
 // }
+
+// test_err continue_stmt
+// function foo() { continue; }
 pub fn parse_continue_stmt(p: &mut Parser) -> ParsedSyntax {
 	if !p.at(T![continue]) {
 		return Absent;
@@ -379,6 +382,7 @@ pub fn parse_continue_stmt(p: &mut Parser) -> ParsedSyntax {
 
 		label_token.range.end
 	} else {
+		p.missing();
 		start.end
 	};
 
@@ -390,9 +394,10 @@ pub fn parse_continue_stmt(p: &mut Parser) -> ParsedSyntax {
 			.primary(start.start..end, "");
 
 		p.error(err);
+		Present(m.complete(p, JS_UNKNOWN_STATEMENT))
+	} else {
+		Present(m.complete(p, JS_CONTINUE_STATEMENT))
 	}
-
-	Present(m.complete(p, JS_CONTINUE_STATEMENT))
 }
 
 /// A return statement with an optional value such as `return a;`
