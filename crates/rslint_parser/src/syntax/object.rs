@@ -81,6 +81,13 @@ fn object_member(p: &mut Parser) -> ParsedSyntax {
 		//     return 5;
 		//  }
 		// }
+
+		// test_err object_expr_setter
+		// let b = {
+		//  set foo() {
+		//     return 5;
+		//  }
+		// }
 		T![ident]
 			if p.cur_src() == "set"
 				&& !p.has_linebreak_before_n(1)
