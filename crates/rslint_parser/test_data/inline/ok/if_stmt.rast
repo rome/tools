@@ -122,6 +122,7 @@ JsRoot {
         0: L_CURLY@31..32 "{" [] []
         1: LIST@32..32
         2: R_CURLY@32..33 "}" [] []
+      5: (empty)
     2: JS_IF_STATEMENT@33..49
       0: IF_KW@33..37 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@37..38 "(" [] []
@@ -132,6 +133,7 @@ JsRoot {
         0: JS_BOOLEAN_LITERAL_EXPRESSION@44..49
           0: FALSE_KW@44..49 "false" [] []
         1: (empty)
+      5: (empty)
     3: JS_IF_STATEMENT@49..87
       0: IF_KW@49..53 "if" [Whitespace("\n")] [Whitespace(" ")]
       1: L_PAREN@53..54 "(" [] []

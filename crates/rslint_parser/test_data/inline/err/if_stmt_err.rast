@@ -54,6 +54,7 @@
       3: R_PAREN@69..70 ")" [] []
       4: JS_UNKNOWN_STATEMENT@70..71
         0: R_CURLY@70..71 "}" [] []
+      5: (empty)
     4: JS_UNKNOWN_STATEMENT@71..72
       0: R_CURLY@71..72 "}" [] []
     5: JS_UNKNOWN_STATEMENT@72..73

@@ -7,7 +7,7 @@ use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type}
 use crate::syntax::js_parse_error;
 use crate::syntax::object::{computed_member_name, literal_member_name};
 use crate::syntax::pat::parse_identifier_binding;
-use crate::syntax::stmt::{block_impl, is_semi, optional_semi};
+use crate::syntax::stmt::{is_semi, optional_semi, parse_block_impl};
 use crate::syntax::typescript::{
 	abstract_readonly_modifiers, maybe_ts_type_annotation, try_parse_index_signature,
 	ts_heritage_clause, ts_modifier, ts_type_params, DISALLOWED_TYPE_NAMES,
@@ -774,7 +774,7 @@ fn constructor_class_member_body(p: &mut Parser, member_marker: Marker) -> Compl
 
 		let p = &mut *guard;
 
-		block_impl(p, JS_FUNCTION_BODY)
+		parse_block_impl(p, JS_FUNCTION_BODY)
 			.or_missing_with_error(p, js_parse_error::expected_function_body);
 	}
 

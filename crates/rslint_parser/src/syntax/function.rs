@@ -3,7 +3,7 @@ use crate::parser::ParsedSyntax;
 use crate::syntax::decl::parse_parameter_list;
 use crate::syntax::js_parse_error;
 use crate::syntax::pat::parse_identifier_binding;
-use crate::syntax::stmt::{block_impl, is_semi};
+use crate::syntax::stmt::{is_semi, parse_block_impl};
 use crate::syntax::typescript::{ts_type_or_type_predicate_ann, ts_type_params};
 use crate::ConditionalParsedSyntax::Invalid;
 use crate::JsSyntaxFeature::TypeScript;
@@ -135,7 +135,7 @@ pub(super) fn function_body(p: &mut Parser) -> ParsedSyntax {
 		..p.state.clone()
 	});
 
-	block_impl(&mut *guard, JS_FUNCTION_BODY)
+	parse_block_impl(&mut *guard, JS_FUNCTION_BODY)
 }
 
 // TODO 1725 This is probably not ideal (same with the `declare` keyword). We should
