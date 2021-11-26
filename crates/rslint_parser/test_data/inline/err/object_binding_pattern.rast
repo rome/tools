@@ -281,7 +281,7 @@ JsRoot {
                   0: NAME@101..108
                     0: IDENT@101..108 "default" [] []
                   1: COLON@108..110 ":" [] [Whitespace(" ")]
-                  2: JS_UNKNOWN_PATTERN@110..112
+                  2: JS_UNKNOWN_BINDING@110..112
                     0: COMMA@110..112 "," [] [Whitespace(" ")]
                 1: (empty)
                 2: SINGLE_PATTERN@112..116

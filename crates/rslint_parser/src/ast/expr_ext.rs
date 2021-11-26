@@ -264,16 +264,16 @@ impl JsUnaryExpression {
 }
 
 impl KeyValuePattern {
-	pub fn value(&self) -> Option<Pattern> {
+	pub fn value(&self) -> Option<JsAnyBinding> {
 		// This is to easily handle both `NAME NAME` and `: NAME`
 		if self.syntax().children().count() == 2 {
-			Pattern::cast(self.syntax().last_child().unwrap())
+			JsAnyBinding::cast(self.syntax().last_child().unwrap())
 		} else {
 			match self.colon_token() {
 				Ok(colon_token) => colon_token
 					.next_sibling_or_token()?
 					.into_node()?
-					.try_to::<Pattern>(),
+					.try_to::<JsAnyBinding>(),
 				Err(_) => None,
 			}
 		}
@@ -379,18 +379,18 @@ impl JsArrowFunctionExpression {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum PatternOrExpr {
-	Pattern(Pattern),
+	Pattern(JsAnyBinding),
 	Expr(JsAnyExpression),
 }
 
 impl AstNode for PatternOrExpr {
 	fn can_cast(kind: SyntaxKind) -> bool {
-		JsAnyExpression::can_cast(kind) || Pattern::can_cast(kind)
+		JsAnyExpression::can_cast(kind) || JsAnyBinding::can_cast(kind)
 	}
 
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
-		Some(if Pattern::can_cast(syntax.kind()) {
-			PatternOrExpr::Pattern(Pattern::cast(syntax).unwrap())
+		Some(if JsAnyBinding::can_cast(syntax.kind()) {
+			PatternOrExpr::Pattern(JsAnyBinding::cast(syntax).unwrap())
 		} else {
 			PatternOrExpr::Expr(JsAnyExpression::cast(syntax).unwrap())
 		})

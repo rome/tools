@@ -196,7 +196,7 @@ pub(super) fn parse_parameters_list(
 			let recovered_result = parse_param(p).or_recover(
 				p,
 				ParseRecovery::new(
-					JS_UNKNOWN_PATTERN,
+					JS_UNKNOWN_BINDING,
 					token_set![
 						T![ident],
 						T![await],

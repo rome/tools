@@ -698,7 +698,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 						#[allow(deprecated)]
 						SingleTokenParseRecovery::with_error(
 							EXPR_RECOVERY_SET,
-							JS_UNKNOWN_PATTERN,
+							JS_UNKNOWN_BINDING,
 							err,
 						)
 						.recover(&mut temp);

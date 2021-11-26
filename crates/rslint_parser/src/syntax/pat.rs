@@ -98,7 +98,7 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 				ts = ts.union(token_set![T![,], T![')']]);
 			}
 			#[allow(deprecated)]
-			SingleTokenParseRecovery::with_error(ts, JS_UNKNOWN_PATTERN, err).recover(p);
+			SingleTokenParseRecovery::with_error(ts, JS_UNKNOWN_BINDING, err).recover(p);
 			return None;
 		}
 	})
@@ -195,7 +195,7 @@ pub fn array_binding_pattern(
 		} else if binding_element(p, parameters, assignment).is_none() {
 			SingleTokenParseRecovery::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
-				JS_UNKNOWN_PATTERN,
+				JS_UNKNOWN_BINDING,
 			)
 			.recover(p);
 		}
