@@ -112,7 +112,7 @@
         0: L_PAREN@153..154 "(" [] []
         1: LIST@154..159
           0: SINGLE_PATTERN@154..159
-            0: JS_UNKNOWN_PATTERN@154..159
+            0: NAME@154..159
               0: IDENT@154..159 "await" [] []
         2: R_PAREN@159..161 ")" [] [Whitespace(" ")]
       3: JS_FUNCTION_BODY@161..163
@@ -230,13 +230,6 @@ error[SyntaxError]: return types can only be used in TypeScript files
   │
 8 │ function test(): number {}
   │                ^^^^^^^^
-
---
-error[SyntaxError]: Illegal use of `await` as an identifier in strict mode
-  ┌─ function_decl_err.js:9:14
-  │
-9 │ function foo(await) {}
-  │              ^^^^^
 
 --
 error[SyntaxError]: Illegal use of `yield` as an identifier in strict mode
