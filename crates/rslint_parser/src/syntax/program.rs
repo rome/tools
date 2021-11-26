@@ -3,7 +3,7 @@
 use syntax::stmt::FOLLOWS_LET;
 
 use super::expr::{assign_expr, expr, identifier_name, primary_expr};
-use super::pat::binding_identifier;
+use super::pat::parse_identifier_binding;
 use super::stmt::{semi, statements, variable_declaration_statement};
 use super::typescript::*;
 use crate::syntax::class::class_declaration;
@@ -214,7 +214,7 @@ fn imported_binding(p: &mut Parser) {
 		in_generator: false,
 		..p.state.clone()
 	});
-	binding_identifier(p);
+	parse_identifier_binding(p).ok();
 }
 
 pub fn export_decl(p: &mut Parser) -> CompletedMarker {

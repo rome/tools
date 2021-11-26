@@ -3,7 +3,7 @@ use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
 use crate::parser::ParsedSyntax;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::syntax::decl::{formal_param_pat, parameter_list};
-use crate::syntax::expr::{assign_expr, expr, identifier_name, literal_expression};
+use crate::syntax::expr::{assign_expr, expr};
 use crate::syntax::function::{function_body, ts_parameter_types, ts_return_type};
 use crate::syntax::js_parse_error;
 use crate::{CompletedMarker, ParseRecovery, Parser, ParserState, TokenSet};
@@ -221,17 +221,6 @@ fn setter_object_member(p: &mut Parser) -> ParsedSyntax {
 
 	p.state.allow_object_expr = true;
 	Present(m.complete(p, JS_SETTER_OBJECT_MEMBER))
-}
-
-// test object_prop_name
-// let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
-pub fn object_prop_name(p: &mut Parser, binding: bool) -> Option<CompletedMarker> {
-	match p.cur() {
-		JS_STRING_LITERAL | JS_NUMBER_LITERAL => literal_expression(p),
-		T!['['] => computed_member_name(p).ok(),
-		_ if binding => super::pat::binding_identifier(p),
-		_ => identifier_name(p),
-	}
 }
 
 // test object_member_name

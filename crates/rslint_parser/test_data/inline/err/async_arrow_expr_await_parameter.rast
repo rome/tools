@@ -37,4 +37,11 @@ error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statem
   │ ...Which is required to end this statement
 
 --
+error[SyntaxError]: Illegal use of `await` as an identifier in strict mode
+  ┌─ async_arrow_expr_await_parameter.js:1:15
+  │
+1 │ let a = async await => {}
+  │               ^^^^^
+
+--
 let a = async await => {}

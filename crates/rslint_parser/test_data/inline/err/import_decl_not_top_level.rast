@@ -8,7 +8,7 @@
         0: ERROR@1..25
           0: IMPORT_KW@1..10 "import" [Whitespace("\n ")] [Whitespace(" ")]
           1: LIST@10..14
-            0: NAME@10..14
+            0: JS_IDENTIFIER_BINDING@10..14
               0: IDENT@10..14 "foo" [] [Whitespace(" ")]
           2: FROM_KW@14..19 "from" [] [Whitespace(" ")]
           3: JS_STRING_LITERAL@19..24 "\"bar\"" [] []
