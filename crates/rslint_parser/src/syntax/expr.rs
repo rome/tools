@@ -714,6 +714,7 @@ pub fn args(p: &mut Parser) -> CompletedMarker {
 // test_err paren_or_arrow_expr_invalid_params
 // (5 + 5) => {}
 // (a, ,b) => {}
+// (a, b) =>
 pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarker {
 	let m = p.start();
 	let checkpoint = p.checkpoint();
@@ -772,7 +773,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			let expr = assign_expr(&mut *temp);
 			if expr.is_some() && temp.at(T![:]) {
 				temp.rewind(checkpoint);
-				params_marker = Some(parse_parameter_list(&mut *temp));
+				// TODO: review this when `paren_or_arrow_expr` is refactored to use the new API
+				params_marker = Some(parse_parameter_list(&mut *temp).ok().unwrap());
 				break;
 			}
 
@@ -813,7 +815,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				..p.state.clone()
 			});
 			p.rewind(checkpoint);
-			parse_parameter_list(p);
+			parse_parameter_list(p).or_missing(p);
 			if p.at(T![:]) {
 				if let Some(mut ret) = ts_type_or_type_predicate_ann(p, T![:]) {
 					ret.err_if_not_ts(
@@ -823,7 +825,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				}
 			}
 			p.expect_no_recover(T![=>])?;
-			parse_arrow_body(p).ok()
+			parse_arrow_body(p).or_missing_with_error(p, js_parse_error::expected_arrow_body)
 		};
 		// we can't just rewind the parser, since the function rewinds, and cloning and replacing the
 		// events does not work apparently, therefore we need to clone the entire parser
@@ -850,7 +852,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if params_marker.is_none() {
 				// Rewind the parser so we can reparse as formal parameters
 				p.rewind(checkpoint);
-				parse_parameter_list(p);
+				parse_parameter_list(p).or_missing(p);
 			}
 
 			if p.at(T![:]) {
@@ -979,7 +981,7 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					let m = p.start();
 					p.bump_remap(T![async]);
 					if p.at(T!['(']) {
-						parse_parameter_list(p);
+						parse_parameter_list(p).or_missing(p);
 					} else {
 						let m = p.start();
 						// test_err async_arrow_expr_await_parameter

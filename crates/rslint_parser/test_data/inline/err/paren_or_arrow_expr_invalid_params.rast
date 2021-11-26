@@ -1,7 +1,7 @@
-0: JS_ROOT@0..28
+0: JS_ROOT@0..38
   0: (empty)
   1: LIST@0..0
-  2: LIST@0..27
+  2: LIST@0..37
     0: JS_EXPRESSION_STATEMENT@0..6
       0: JS_ARROW_FUNCTION_EXPRESSION@0..6
         0: JS_PARAMETER_LIST@0..5
@@ -46,7 +46,23 @@
       0: L_CURLY@25..26 "{" [] []
       1: LIST@26..26
       2: R_CURLY@26..27 "}" [] []
-  3: EOF@27..28 "" [Whitespace("\n")] []
+    9: JS_EXPRESSION_STATEMENT@27..37
+      0: JS_ARROW_FUNCTION_EXPRESSION@27..37
+        0: JS_PARAMETER_LIST@27..35
+          0: L_PAREN@27..29 "(" [Whitespace("\n")] []
+          1: LIST@29..33
+            0: SINGLE_PATTERN@29..30
+              0: NAME@29..30
+                0: IDENT@29..30 "a" [] []
+            1: COMMA@30..32 "," [] [Whitespace(" ")]
+            2: SINGLE_PATTERN@32..33
+              0: NAME@32..33
+                0: IDENT@32..33 "b" [] []
+          2: R_PAREN@33..35 ")" [] [Whitespace(" ")]
+        1: FAT_ARROW@35..37 "=>" [] []
+        2: (empty)
+      1: (empty)
+  3: EOF@37..38 "" [Whitespace("\n")] []
 --
 error[SyntaxError]: Expected an identifier or pattern, but found none
   ┌─ paren_or_arrow_expr_invalid_params.js:1:2
@@ -148,5 +164,20 @@ error[SyntaxError]: Expected a statement or declaration, but found none
   │         ^^ Expected a statement or declaration here
 
 --
+error[SyntaxError]: Expected an expression, but found none
+  ┌─ paren_or_arrow_expr_invalid_params.js:4:1
+  │
+4 │ 
+  │ ^ Expected an expression here
+
+--
+error[SyntaxError]: expected a function body, or an expression but instead found ''
+  ┌─ paren_or_arrow_expr_invalid_params.js:4:1
+  │
+4 │ 
+  │ ^ Expected a function body, or an expression here
+
+--
 (5 + 5) => {}
 (a, ,b) => {}
+(a, b) =>

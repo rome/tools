@@ -315,7 +315,7 @@ fn method_object_member_body(p: &mut Parser) {
 	p.state.in_function = true;
 
 	ts_parameter_types(p);
-	parse_parameter_list(p);
+	parse_parameter_list(p).or_missing(p);
 	ts_return_type(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 

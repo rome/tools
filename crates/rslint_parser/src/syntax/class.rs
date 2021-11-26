@@ -726,7 +726,7 @@ fn method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 fn method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	optional_member_token(p);
 	ts_parameter_types(p);
-	parse_parameter_list(p);
+	parse_parameter_list(p).or_missing(p);
 	ts_return_type(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 
@@ -791,7 +791,7 @@ fn constructor_parameter_list(p: &mut Parser) -> CompletedMarker {
 }
 
 fn constructor_parameter(p: &mut Parser) -> ParsedSyntax {
-	let m = p.start();
+	let modifiers_marker = p.start();
 	let has_accessibility = if ts_access_modifier(p).is_some() {
 		let range = p.cur_tok().range;
 		let maybe_err = p.start();
@@ -830,13 +830,13 @@ fn constructor_parameter(p: &mut Parser) -> ParsedSyntax {
 	};
 
 	if !has_accessibility && !has_readonly {
-		m.abandon(p);
+		modifiers_marker.abandon(p);
 		parse_formal_param_pat(p)
 	} else {
-		if let Some(ref mut pat) = parse_formal_param_pat(p).ok() {
+		if let Present(ref mut pat) = parse_formal_param_pat(p) {
 			pat.undo_completion(p).abandon(p);
 		}
-		Present(m.complete(p, TS_CONSTRUCTOR_PARAM))
+		Present(modifiers_marker.complete(p, TS_CONSTRUCTOR_PARAM))
 	}
 }
 
