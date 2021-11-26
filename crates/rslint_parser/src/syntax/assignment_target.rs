@@ -13,12 +13,16 @@ use crate::{SyntaxKind::*, *};
 
 // test assignment_target
 // foo += bar = b ??= 3;
-// foo -= bar;
+// a.foo -= bar;
 // (foo = bar);
+// (((foo))) = bar;
+// a["test"] = bar;
+// a.call().chain().member = x;
 
 // test_err invalid_assignment_target
-// (a) = b;
 // ++a = b;
+// (++a) = b;
+// (a = b;
 
 /// Converts the passed in target (expression) to an assignment target
 /// The passed checkpoint allows to restore the parser to the state before it started parsing the expression.

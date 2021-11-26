@@ -1,3 +1,6 @@
 foo += bar = b ??= 3;
-foo -= bar;
+a.foo -= bar;
 (foo = bar);
+(((foo))) = bar;
+a["test"] = bar;
+a.call().chain().member = x;
