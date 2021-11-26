@@ -939,7 +939,7 @@ pub fn expr(p: &mut Parser) -> Option<CompletedMarker> {
 
 /// A primary expression such as a literal, an object, an array, or `this`.
 pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
-	if let Some(m) = parse_literal_expression(p).ok() {
+	if let Present(m) = parse_literal_expression(p) {
 		return Some(m);
 	}
 

@@ -189,7 +189,7 @@ pub(super) fn parse_parameters_list(
 		} else {
 			// test_err formal_params_no_binding_element
 			// function foo(true) {}
-			if let Some(res) = parse_param(p).ok() {
+			if let Present(res) = parse_param(p) {
 				if res.kind() == ASSIGN_PATTERN && p.state.in_binding_list_for_signature {
 					let err = p
 						.err_builder(
