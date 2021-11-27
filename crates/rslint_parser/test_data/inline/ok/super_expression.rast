@@ -1,264 +1,126 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsClassDeclaration(
-            JsClassDeclaration {
-                class_token: Ok(
-                    CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-                ),
-                id: Ok(
-                    JsIdentifierBinding {
-                        name_token: Ok(
-                            IDENT@6..11 "Test" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                implements_clause: None,
-                extends_clause: Some(
-                    JsExtendsClause {
-                        extends_token: Ok(
-                            EXTENDS_KW@11..19 "extends" [] [Whitespace(" ")],
-                        ),
-                        super_class: Ok(
-                            JsReferenceIdentifierExpression(
-                                JsReferenceIdentifierExpression {
-                                    name_token: Ok(
-                                        IDENT@19..21 "B" [] [Whitespace(" ")],
-                                    ),
-                                },
-                            ),
-                        ),
-                    },
-                ),
-                l_curly_token: Ok(
-                    L_CURLY@21..22 "{" [] [],
-                ),
-                members: [
-                    JsConstructorClassMember(
-                        JsConstructorClassMember {
-                            access_modifier: None,
-                            name: Ok(
-                                JsLiteralMemberName {
-                                    value: Ok(
-                                        IDENT@22..35 "constructor" [Whitespace("\n\t")] [],
-                                    ),
-                                },
-                            ),
-                            parameter_list: Ok(
-                                JsConstructorParameterList {
-                                    l_paren_token: Ok(
-                                        L_PAREN@35..36 "(" [] [],
-                                    ),
-                                    parameters: [],
-                                    r_paren_token: Ok(
-                                        R_PAREN@36..38 ")" [] [Whitespace(" ")],
-                                    ),
-                                },
-                            ),
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@38..39 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [
-                                        JsExpressionStatement(
-                                            JsExpressionStatement {
-                                                expression: Ok(
-                                                    CallExpr(
-                                                        CallExpr {
-                                                            type_args: None,
-                                                            callee: Ok(
-                                                                JsSuperExpression(
-                                                                    JsSuperExpression {
-                                                                        super_token: Ok(
-                                                                            SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] [],
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                            ),
-                                                            arguments: Ok(
-                                                                ArgList {
-                                                                    l_paren_token: Ok(
-                                                                        L_PAREN@47..48 "(" [] [],
-                                                                    ),
-                                                                    args: [],
-                                                                    r_paren_token: Ok(
-                                                                        R_PAREN@48..49 ")" [] [],
-                                                                    ),
-                                                                },
-                                                            ),
-                                                        },
-                                                    ),
-                                                ),
-                                                semicolon_token: Some(
-                                                    SEMICOLON@49..50 ";" [] [],
-                                                ),
-                                            },
-                                        ),
-                                    ],
-                                    r_curly_token: Ok(
-                                        R_CURLY@50..53 "}" [Whitespace("\n\t")] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                    JsMethodClassMember(
-                        JsMethodClassMember {
-                            access_modifier: None,
-                            static_token: None,
-                            abstract_token: None,
-                            async_token: None,
-                            star_token: None,
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            IDENT@53..60 "test" [Whitespace("\n\n\t")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            type_parameters: None,
-                            parameter_list: Ok(
-                                JsParameterList {
-                                    l_paren_token: Ok(
-                                        L_PAREN@60..61 "(" [] [],
-                                    ),
-                                    parameters: [],
-                                    r_paren_token: Ok(
-                                        R_PAREN@61..63 ")" [] [Whitespace(" ")],
-                                    ),
-                                },
-                            ),
-                            return_type: None,
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@63..64 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [
-                                        JsExpressionStatement(
-                                            JsExpressionStatement {
-                                                expression: Ok(
-                                                    CallExpr(
-                                                        CallExpr {
-                                                            type_args: None,
-                                                            callee: Ok(
-                                                                JsStaticMemberExpression(
-                                                                    JsStaticMemberExpression {
-                                                                        object: Ok(
-                                                                            JsSuperExpression(
-                                                                                JsSuperExpression {
-                                                                                    super_token: Ok(
-                                                                                        SUPER_KW@64..72 "super" [Whitespace("\n\t\t")] [],
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                        ),
-                                                                        operator: Ok(
-                                                                            DOT@72..73 "." [] [],
-                                                                        ),
-                                                                        member: Ok(
-                                                                            JsReferenceIdentifierMember(
-                                                                                JsReferenceIdentifierMember {
-                                                                                    name_token: Ok(
-                                                                                        IDENT@73..77 "test" [] [],
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                            ),
-                                                            arguments: Ok(
-                                                                ArgList {
-                                                                    l_paren_token: Ok(
-                                                                        L_PAREN@77..78 "(" [] [],
-                                                                    ),
-                                                                    args: [
-                                                                        AstSeparatedElement {
-                                                                            node: JsReferenceIdentifierExpression(
-                                                                                JsReferenceIdentifierExpression {
-                                                                                    name_token: Ok(
-                                                                                        IDENT@78..79 "a" [] [],
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                            trailing_separator: Some(
-                                                                                COMMA@79..81 "," [] [Whitespace(" ")],
-                                                                            ),
-                                                                        },
-                                                                        AstSeparatedElement {
-                                                                            node: JsReferenceIdentifierExpression(
-                                                                                JsReferenceIdentifierExpression {
-                                                                                    name_token: Ok(
-                                                                                        IDENT@81..82 "b" [] [],
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                            trailing_separator: None,
-                                                                        },
-                                                                    ],
-                                                                    r_paren_token: Ok(
-                                                                        R_PAREN@82..83 ")" [] [],
-                                                                    ),
-                                                                },
-                                                            ),
-                                                        },
-                                                    ),
-                                                ),
-                                                semicolon_token: Some(
-                                                    SEMICOLON@83..84 ";" [] [],
-                                                ),
-                                            },
-                                        ),
-                                        JsExpressionStatement(
-                                            JsExpressionStatement {
-                                                expression: Ok(
-                                                    JsComputedMemberExpression(
-                                                        JsComputedMemberExpression {
-                                                            object: Ok(
-                                                                JsSuperExpression(
-                                                                    JsSuperExpression {
-                                                                        super_token: Ok(
-                                                                            SUPER_KW@84..92 "super" [Whitespace("\n\t\t")] [],
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                            ),
-                                                            optional_chain_token_token: None,
-                                                            l_brack_token: Ok(
-                                                                L_BRACK@92..93 "[" [] [],
-                                                            ),
-                                                            r_brack_token: Ok(
-                                                                R_BRACK@94..95 "]" [] [],
-                                                            ),
-                                                        },
-                                                    ),
-                                                ),
-                                                semicolon_token: Some(
-                                                    SEMICOLON@95..96 ";" [] [],
-                                                ),
-                                            },
-                                        ),
-                                    ],
-                                    r_curly_token: Ok(
-                                        R_CURLY@96..99 "}" [Whitespace("\n\t")] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                ],
-                r_curly_token: Ok(
-                    R_CURLY@99..101 "}" [Whitespace("\n")] [],
-                ),
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..11 "Test" [] [Whitespace(" ")],
             },
-        ),
+            implements_clause: missing (optional),
+            extends_clause: JsExtendsClause {
+                extends_token: EXTENDS_KW@11..19 "extends" [] [Whitespace(" ")],
+                super_class: JsReferenceIdentifierExpression {
+                    name_token: IDENT@19..21 "B" [] [Whitespace(" ")],
+                },
+            },
+            l_curly_token: L_CURLY@21..22 "{" [] [],
+            members: [
+                JsConstructorClassMember {
+                    access_modifier: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@22..35 "constructor" [Whitespace("\n\t")] [],
+                    },
+                    parameter_list: JsConstructorParameterList {
+                        l_paren_token: L_PAREN@35..36 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@36..38 ")" [] [Whitespace(" ")],
+                    },
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@38..39 "{" [] [],
+                        directives: [],
+                        statements: [
+                            JsExpressionStatement {
+                                expression: CallExpr {
+                                    type_args: missing (optional),
+                                    callee: JsSuperExpression {
+                                        super_token: SUPER_KW@39..47 "super" [Whitespace("\n\t\t")] [],
+                                    },
+                                    arguments: ArgList {
+                                        l_paren_token: L_PAREN@47..48 "(" [] [],
+                                        args: [],
+                                        r_paren_token: R_PAREN@48..49 ")" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@49..50 ";" [] [],
+                            },
+                        ],
+                        r_curly_token: R_CURLY@50..53 "}" [Whitespace("\n\t")] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@53..60 "test" [Whitespace("\n\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@60..61 "(" [] [],
+                        parameters: [],
+                        r_paren_token: R_PAREN@61..63 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@63..64 "{" [] [],
+                        directives: [],
+                        statements: [
+                            JsExpressionStatement {
+                                expression: CallExpr {
+                                    type_args: missing (optional),
+                                    callee: JsStaticMemberExpression {
+                                        object: JsSuperExpression {
+                                            super_token: SUPER_KW@64..72 "super" [Whitespace("\n\t\t")] [],
+                                        },
+                                        operator: DOT@72..73 "." [] [],
+                                        member: JsReferenceIdentifierMember {
+                                            name_token: IDENT@73..77 "test" [] [],
+                                        },
+                                    },
+                                    arguments: ArgList {
+                                        l_paren_token: L_PAREN@77..78 "(" [] [],
+                                        args: [
+                                            AstSeparatedElement {
+                                                node: JsReferenceIdentifierExpression {
+                                                    name_token: IDENT@78..79 "a" [] [],
+                                                },
+                                                trailing_separator: Some(
+                                                    COMMA@79..81 "," [] [Whitespace(" ")],
+                                                ),
+                                            },
+                                            AstSeparatedElement {
+                                                node: JsReferenceIdentifierExpression {
+                                                    name_token: IDENT@81..82 "b" [] [],
+                                                },
+                                                trailing_separator: None,
+                                            },
+                                        ],
+                                        r_paren_token: R_PAREN@82..83 ")" [] [],
+                                    },
+                                },
+                                semicolon_token: SEMICOLON@83..84 ";" [] [],
+                            },
+                            JsExpressionStatement {
+                                expression: JsComputedMemberExpression {
+                                    object: JsSuperExpression {
+                                        super_token: SUPER_KW@84..92 "super" [Whitespace("\n\t\t")] [],
+                                    },
+                                    optional_chain_token_token: missing (optional),
+                                    l_brack_token: L_BRACK@92..93 "[" [] [],
+                                    r_brack_token: R_BRACK@94..95 "]" [] [],
+                                },
+                                semicolon_token: SEMICOLON@95..96 ";" [] [],
+                            },
+                        ],
+                        r_curly_token: R_CURLY@96..99 "}" [Whitespace("\n\t")] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@99..101 "}" [Whitespace("\n")] [],
+        },
     ],
 }
 

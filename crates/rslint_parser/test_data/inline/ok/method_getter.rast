@@ -1,69 +1,37 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsClassDeclaration(
-            JsClassDeclaration {
-                class_token: Ok(
-                    CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-                ),
-                id: Ok(
-                    JsIdentifierBinding {
-                        name_token: Ok(
-                            IDENT@6..10 "foo" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                implements_clause: None,
-                extends_clause: None,
-                l_curly_token: Ok(
-                    L_CURLY@10..11 "{" [] [],
-                ),
-                members: [
-                    JsGetterClassMember(
-                        JsGetterClassMember {
-                            access_modifier: None,
-                            abstract_token: None,
-                            static_token: None,
-                            get_token: Ok(
-                                GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")],
-                            ),
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            IDENT@17..20 "bar" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            l_paren_token: Ok(
-                                L_PAREN@20..21 "(" [] [],
-                            ),
-                            r_paren_token: Ok(
-                                R_PAREN@21..23 ")" [] [Whitespace(" ")],
-                            ),
-                            return_type: None,
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@23..24 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@24..25 "}" [] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                ],
-                r_curly_token: Ok(
-                    R_CURLY@25..27 "}" [Whitespace("\n")] [],
-                ),
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..10 "foo" [] [Whitespace(" ")],
             },
-        ),
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@10..11 "{" [] [],
+            members: [
+                JsGetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    get_token: GET_KW@11..17 "get" [Whitespace("\n ")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@17..20 "bar" [] [],
+                    },
+                    l_paren_token: L_PAREN@20..21 "(" [] [],
+                    r_paren_token: R_PAREN@21..23 ")" [] [Whitespace(" ")],
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@23..24 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@24..25 "}" [] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@25..27 "}" [Whitespace("\n")] [],
+        },
     ],
 }
 

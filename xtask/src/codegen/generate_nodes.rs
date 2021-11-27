@@ -143,8 +143,18 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 				let string_name = name.to_string();
 
-				quote! {
-					.field(#string_name, &self.#name())
+				if field.is_many() {
+					quote! {
+						.field(#string_name, &self.#name())
+					}
+				} else if field.is_optional() {
+					quote! {
+						.field(#string_name, &support::DebugOptionalNode(self.#name()))
+					}
+				} else {
+					quote! {
+						.field(#string_name, &support::DebugSyntaxResult(self.#name()))
+					}
 				}
 			});
 
@@ -346,6 +356,11 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 				})
 				.collect();
 
+			let all_variant_names = en
+				.variants
+				.iter()
+				.map(|variant| format_ident!("{}", variant));
+
 			(
 				quote! {
 					// #[doc = #doc]
@@ -387,7 +402,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 							match self {
 							#(
-								#name::#variants(it) => std::fmt::Debug::fmt(it, f),
+								#name::#all_variant_names(it) => std::fmt::Debug::fmt(it, f),
 							)*
 						}
 							}

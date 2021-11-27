@@ -1,55 +1,25 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsReferenceIdentifierExpression(
-                        JsReferenceIdentifierExpression {
-                            name_token: Ok(
-                                IDENT@0..3 "foo" [] [],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@3..4 ";" [] [],
-                ),
+        JsExpressionStatement {
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@0..3 "foo" [] [],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsReferenceIdentifierExpression(
-                        JsReferenceIdentifierExpression {
-                            name_token: Ok(
-                                IDENT@4..10 "yield" [Whitespace("\n")] [],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@10..11 ";" [] [],
-                ),
+            semicolon_token: SEMICOLON@3..4 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@4..10 "yield" [Whitespace("\n")] [],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsReferenceIdentifierExpression(
-                        JsReferenceIdentifierExpression {
-                            name_token: Ok(
-                                IDENT@11..17 "await" [Whitespace("\n")] [],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@17..18 ";" [] [],
-                ),
+            semicolon_token: SEMICOLON@10..11 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsReferenceIdentifierExpression {
+                name_token: IDENT@11..17 "await" [Whitespace("\n")] [],
             },
-        ),
+            semicolon_token: SEMICOLON@17..18 ";" [] [],
+        },
     ],
 }
 

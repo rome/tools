@@ -1,74 +1,36 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    CallExpr(
-                        CallExpr {
-                            type_args: None,
-                            callee: Ok(
-                                JsParenthesizedExpression(
-                                    JsParenthesizedExpression {
-                                        l_paren_token: Ok(
-                                            L_PAREN@0..1 "(" [] [],
-                                        ),
-                                        expression: Ok(
-                                            JsParenthesizedExpression(
-                                                JsParenthesizedExpression {
-                                                    l_paren_token: Ok(
-                                                        L_PAREN@1..2 "(" [] [],
-                                                    ),
-                                                    expression: Ok(
-                                                        JsReferenceIdentifierExpression(
-                                                            JsReferenceIdentifierExpression {
-                                                                name_token: Ok(
-                                                                    IDENT@2..5 "foo" [] [],
-                                                                ),
-                                                            },
-                                                        ),
-                                                    ),
-                                                    r_paren_token: Ok(
-                                                        R_PAREN@5..6 ")" [] [],
-                                                    ),
-                                                },
-                                            ),
-                                        ),
-                                        r_paren_token: Ok(
-                                            R_PAREN@6..7 ")" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            arguments: Ok(
-                                ArgList {
-                                    l_paren_token: Ok(
-                                        L_PAREN@7..9 "(" [Whitespace("\n")] [],
-                                    ),
-                                    args: [
-                                        AstSeparatedElement {
-                                            node: JsReferenceIdentifierExpression(
-                                                JsReferenceIdentifierExpression {
-                                                    name_token: Ok(
-                                                        IDENT@9..12 "foo" [] [],
-                                                    ),
-                                                },
-                                            ),
-                                            trailing_separator: None,
-                                        },
-                                    ],
-                                    r_paren_token: Ok(
-                                        R_PAREN@12..13 ")" [] [],
-                                    ),
-                                },
-                            ),
+        JsExpressionStatement {
+            expression: CallExpr {
+                type_args: missing (optional),
+                callee: JsParenthesizedExpression {
+                    l_paren_token: L_PAREN@0..1 "(" [] [],
+                    expression: JsParenthesizedExpression {
+                        l_paren_token: L_PAREN@1..2 "(" [] [],
+                        expression: JsReferenceIdentifierExpression {
+                            name_token: IDENT@2..5 "foo" [] [],
                         },
-                    ),
-                ),
-                semicolon_token: None,
+                        r_paren_token: R_PAREN@5..6 ")" [] [],
+                    },
+                    r_paren_token: R_PAREN@6..7 ")" [] [],
+                },
+                arguments: ArgList {
+                    l_paren_token: L_PAREN@7..9 "(" [Whitespace("\n")] [],
+                    args: [
+                        AstSeparatedElement {
+                            node: JsReferenceIdentifierExpression {
+                                name_token: IDENT@9..12 "foo" [] [],
+                            },
+                            trailing_separator: None,
+                        },
+                    ],
+                    r_paren_token: R_PAREN@12..13 ")" [] [],
+                },
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

@@ -1,168 +1,86 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsVariableDeclarationStatement(
-            JsVariableDeclarationStatement {
-                declaration: Ok(
-                    JsVariableDeclaration {
-                        kind_token: Ok(
-                            LET_KW@0..4 "let" [] [Whitespace(" ")],
-                        ),
-                        declarators: [
-                            AstSeparatedElement {
-                                node: JsVariableDeclarator {
-                                    id: Ok(
-                                        SinglePattern(
-                                            SinglePattern {
-                                                name: Ok(
-                                                    Name {
-                                                        ident_token: Ok(
-                                                            IDENT@4..6 "a" [] [Whitespace(" ")],
-                                                        ),
-                                                    },
-                                                ),
-                                                question_mark_token: None,
-                                                excl_token: None,
-                                                ty: None,
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    AstSeparatedElement {
+                        node: JsVariableDeclarator {
+                            id: SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
+                                },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            },
+                            init: JsEqualValueClause {
+                                eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                                expression: JsObjectExpression {
+                                    l_curly_token: L_CURLY@8..9 "{" [] [],
+                                    members: [
+                                        AstSeparatedElement {
+                                            node: JsPropertyObjectMember {
+                                                name: JsLiteralMemberName {
+                                                    value: JS_STRING_LITERAL@9..14 "\"foo\"" [] [],
+                                                },
+                                                colon_token: COLON@14..16 ":" [] [Whitespace(" ")],
                                             },
-                                        ),
-                                    ),
-                                    init: Some(
-                                        JsEqualValueClause {
-                                            eq_token: Ok(
-                                                EQ@6..8 "=" [] [Whitespace(" ")],
-                                            ),
-                                            expression: Ok(
-                                                JsObjectExpression(
-                                                    JsObjectExpression {
-                                                        l_curly_token: Ok(
-                                                            L_CURLY@8..9 "{" [] [],
-                                                        ),
-                                                        members: [
-                                                            AstSeparatedElement {
-                                                                node: JsPropertyObjectMember(
-                                                                    JsPropertyObjectMember {
-                                                                        name: Ok(
-                                                                            JsLiteralMemberName(
-                                                                                JsLiteralMemberName {
-                                                                                    value: Ok(
-                                                                                        JS_STRING_LITERAL@9..14 "\"foo\"" [] [],
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                        ),
-                                                                        colon_token: Ok(
-                                                                            COLON@14..16 ":" [] [Whitespace(" ")],
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                                trailing_separator: Some(
-                                                                    COMMA@19..21 "," [] [Whitespace(" ")],
-                                                                ),
-                                                            },
-                                                            AstSeparatedElement {
-                                                                node: JsPropertyObjectMember(
-                                                                    JsPropertyObjectMember {
-                                                                        name: Ok(
-                                                                            JsComputedMemberName(
-                                                                                JsComputedMemberName {
-                                                                                    l_brack_token: Ok(
-                                                                                        L_BRACK@21..22 "[" [] [],
-                                                                                    ),
-                                                                                    expression: Ok(
-                                                                                        JsBinaryExpression(
-                                                                                            JsBinaryExpression {
-                                                                                                left: Ok(
-                                                                                                    JsAnyLiteralExpression(
-                                                                                                        JsNumberLiteralExpression(
-                                                                                                            JsNumberLiteralExpression {
-                                                                                                                value_token: Ok(
-                                                                                                                    JS_NUMBER_LITERAL@22..24 "6" [] [Whitespace(" ")],
-                                                                                                                ),
-                                                                                                            },
-                                                                                                        ),
-                                                                                                    ),
-                                                                                                ),
-                                                                                                operator: Ok(
-                                                                                                    PLUS@24..26 "+" [] [Whitespace(" ")],
-                                                                                                ),
-                                                                                            },
-                                                                                        ),
-                                                                                    ),
-                                                                                    r_brack_token: Ok(
-                                                                                        R_BRACK@27..28 "]" [] [],
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                        ),
-                                                                        colon_token: Ok(
-                                                                            COLON@28..30 ":" [] [Whitespace(" ")],
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                                trailing_separator: Some(
-                                                                    COMMA@33..35 "," [] [Whitespace(" ")],
-                                                                ),
-                                                            },
-                                                            AstSeparatedElement {
-                                                                node: JsPropertyObjectMember(
-                                                                    JsPropertyObjectMember {
-                                                                        name: Ok(
-                                                                            JsLiteralMemberName(
-                                                                                JsLiteralMemberName {
-                                                                                    value: Ok(
-                                                                                        IDENT@35..38 "bar" [] [],
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                        ),
-                                                                        colon_token: Ok(
-                                                                            COLON@38..40 ":" [] [Whitespace(" ")],
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                                trailing_separator: Some(
-                                                                    COMMA@43..45 "," [] [Whitespace(" ")],
-                                                                ),
-                                                            },
-                                                            AstSeparatedElement {
-                                                                node: JsPropertyObjectMember(
-                                                                    JsPropertyObjectMember {
-                                                                        name: Ok(
-                                                                            JsLiteralMemberName(
-                                                                                JsLiteralMemberName {
-                                                                                    value: Ok(
-                                                                                        JS_NUMBER_LITERAL@45..46 "7" [] [],
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                        ),
-                                                                        colon_token: Ok(
-                                                                            COLON@46..48 ":" [] [Whitespace(" ")],
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                                trailing_separator: None,
-                                                            },
-                                                        ],
-                                                        r_curly_token: Ok(
-                                                            R_CURLY@51..52 "}" [] [],
-                                                        ),
-                                                    },
-                                                ),
+                                            trailing_separator: Some(
+                                                COMMA@19..21 "," [] [Whitespace(" ")],
                                             ),
                                         },
-                                    ),
+                                        AstSeparatedElement {
+                                            node: JsPropertyObjectMember {
+                                                name: JsComputedMemberName {
+                                                    l_brack_token: L_BRACK@21..22 "[" [] [],
+                                                    expression: JsBinaryExpression {
+                                                        left: JsNumberLiteralExpression {
+                                                            value_token: JS_NUMBER_LITERAL@22..24 "6" [] [Whitespace(" ")],
+                                                        },
+                                                        operator: PLUS@24..26 "+" [] [Whitespace(" ")],
+                                                    },
+                                                    r_brack_token: R_BRACK@27..28 "]" [] [],
+                                                },
+                                                colon_token: COLON@28..30 ":" [] [Whitespace(" ")],
+                                            },
+                                            trailing_separator: Some(
+                                                COMMA@33..35 "," [] [Whitespace(" ")],
+                                            ),
+                                        },
+                                        AstSeparatedElement {
+                                            node: JsPropertyObjectMember {
+                                                name: JsLiteralMemberName {
+                                                    value: IDENT@35..38 "bar" [] [],
+                                                },
+                                                colon_token: COLON@38..40 ":" [] [Whitespace(" ")],
+                                            },
+                                            trailing_separator: Some(
+                                                COMMA@43..45 "," [] [Whitespace(" ")],
+                                            ),
+                                        },
+                                        AstSeparatedElement {
+                                            node: JsPropertyObjectMember {
+                                                name: JsLiteralMemberName {
+                                                    value: JS_NUMBER_LITERAL@45..46 "7" [] [],
+                                                },
+                                                colon_token: COLON@46..48 ":" [] [Whitespace(" ")],
+                                            },
+                                            trailing_separator: None,
+                                        },
+                                    ],
+                                    r_curly_token: R_CURLY@51..52 "}" [] [],
                                 },
-                                trailing_separator: None,
                             },
-                        ],
+                        },
+                        trailing_separator: None,
                     },
-                ),
-                semicolon_token: None,
+                ],
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

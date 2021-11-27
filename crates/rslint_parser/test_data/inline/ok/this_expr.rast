@@ -1,53 +1,25 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsThisExpression(
-                        JsThisExpression {
-                            this_token: Ok(
-                                THIS_KW@0..4 "this" [] [],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+        JsExpressionStatement {
+            expression: JsThisExpression {
+                this_token: THIS_KW@0..4 "this" [] [],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsStaticMemberExpression(
-                        JsStaticMemberExpression {
-                            object: Ok(
-                                JsThisExpression(
-                                    JsThisExpression {
-                                        this_token: Ok(
-                                            THIS_KW@4..9 "this" [Whitespace("\n")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                DOT@9..10 "." [] [],
-                            ),
-                            member: Ok(
-                                JsReferenceIdentifierMember(
-                                    JsReferenceIdentifierMember {
-                                        name_token: Ok(
-                                            IDENT@10..13 "foo" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsThisExpression {
+                    this_token: THIS_KW@4..9 "this" [Whitespace("\n")] [],
+                },
+                operator: DOT@9..10 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@10..13 "foo" [] [],
+                },
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

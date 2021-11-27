@@ -426,9 +426,8 @@ pub struct AstEnumSrc {
 }
 
 impl Field {
-	#[allow(dead_code)]
 	pub fn is_many(&self) -> bool {
-		matches!(self, Field::Node { .. })
+		matches!(self, Field::Node { has_many: true, .. })
 	}
 
 	pub fn method_name(&self) -> proc_macro2::Ident {

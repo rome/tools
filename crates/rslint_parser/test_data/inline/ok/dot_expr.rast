@@ -1,199 +1,79 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsStaticMemberExpression(
-                        JsStaticMemberExpression {
-                            object: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@0..3 "foo" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                DOT@3..4 "." [] [],
-                            ),
-                            member: Ok(
-                                JsReferenceIdentifierMember(
-                                    JsReferenceIdentifierMember {
-                                        name_token: Ok(
-                                            IDENT@4..7 "bar" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..3 "foo" [] [],
+                },
+                operator: DOT@3..4 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@4..7 "bar" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsStaticMemberExpression(
-                        JsStaticMemberExpression {
-                            object: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@7..11 "foo" [Whitespace("\n")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                DOT@11..12 "." [] [],
-                            ),
-                            member: Ok(
-                                JsReferenceIdentifierMember(
-                                    JsReferenceIdentifierMember {
-                                        name_token: Ok(
-                                            IDENT@12..17 "await" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@7..11 "foo" [Whitespace("\n")] [],
+                },
+                operator: DOT@11..12 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@12..17 "await" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsStaticMemberExpression(
-                        JsStaticMemberExpression {
-                            object: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@17..21 "foo" [Whitespace("\n")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                DOT@21..22 "." [] [],
-                            ),
-                            member: Ok(
-                                JsReferenceIdentifierMember(
-                                    JsReferenceIdentifierMember {
-                                        name_token: Ok(
-                                            IDENT@22..27 "yield" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@17..21 "foo" [Whitespace("\n")] [],
+                },
+                operator: DOT@21..22 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@22..27 "yield" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsStaticMemberExpression(
-                        JsStaticMemberExpression {
-                            object: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@27..31 "foo" [Whitespace("\n")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                DOT@31..32 "." [] [],
-                            ),
-                            member: Ok(
-                                JsReferenceIdentifierMember(
-                                    JsReferenceIdentifierMember {
-                                        name_token: Ok(
-                                            IDENT@32..35 "for" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@27..31 "foo" [Whitespace("\n")] [],
+                },
+                operator: DOT@31..32 "." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@32..35 "for" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsStaticMemberExpression(
-                        JsStaticMemberExpression {
-                            object: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@35..39 "foo" [Whitespace("\n")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                QUESTIONDOT@39..41 "?." [] [],
-                            ),
-                            member: Ok(
-                                JsReferenceIdentifierMember(
-                                    JsReferenceIdentifierMember {
-                                        name_token: Ok(
-                                            IDENT@41..44 "for" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@35..39 "foo" [Whitespace("\n")] [],
+                },
+                operator: QUESTIONDOT@39..41 "?." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@41..44 "for" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsStaticMemberExpression(
-                        JsStaticMemberExpression {
-                            object: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@44..48 "foo" [Whitespace("\n")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                QUESTIONDOT@48..50 "?." [] [],
-                            ),
-                            member: Ok(
-                                JsReferenceIdentifierMember(
-                                    JsReferenceIdentifierMember {
-                                        name_token: Ok(
-                                            IDENT@50..53 "bar" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsStaticMemberExpression {
+                object: JsReferenceIdentifierExpression {
+                    name_token: IDENT@44..48 "foo" [Whitespace("\n")] [],
+                },
+                operator: QUESTIONDOT@48..50 "?." [] [],
+                member: JsReferenceIdentifierMember {
+                    name_token: IDENT@50..53 "bar" [] [],
+                },
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

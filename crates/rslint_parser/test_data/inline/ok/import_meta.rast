@@ -1,24 +1,14 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    ImportMeta(
-                        ImportMeta {
-                            import_token: Ok(
-                                IMPORT_KW@0..6 "import" [] [],
-                            ),
-                            dot_token: Ok(
-                                DOT@6..7 "." [] [],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+        JsExpressionStatement {
+            expression: ImportMeta {
+                import_token: IMPORT_KW@0..6 "import" [] [],
+                dot_token: DOT@6..7 "." [] [],
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

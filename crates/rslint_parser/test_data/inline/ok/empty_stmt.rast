@@ -1,14 +1,10 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsEmptyStatement(
-            JsEmptyStatement {
-                semicolon_token: Ok(
-                    SEMICOLON@0..1 ";" [] [],
-                ),
-            },
-        ),
+        JsEmptyStatement {
+            semicolon_token: SEMICOLON@0..1 ";" [] [],
+        },
     ],
 }
 

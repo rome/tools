@@ -1,223 +1,99 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsFunctionDeclaration(
-            JsFunctionDeclaration {
-                async_token: Some(
-                    ASYNC_KW@0..6 "async" [] [Whitespace(" ")],
-                ),
-                function_token: Ok(
-                    FUNCTION_KW@6..15 "function" [] [Whitespace(" ")],
-                ),
-                star_token: None,
-                id: Ok(
-                    JsIdentifierBinding {
-                        name_token: Ok(
-                            IDENT@15..19 "test" [] [],
-                        ),
-                    },
-                ),
-                type_parameters: None,
-                parameter_list: Ok(
-                    JsParameterList {
-                        l_paren_token: Ok(
-                            L_PAREN@19..20 "(" [] [],
-                        ),
-                        parameters: [],
-                        r_paren_token: Ok(
-                            R_PAREN@20..22 ")" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                return_type: None,
-                body: Ok(
-                    JsFunctionBody {
-                        l_curly_token: Ok(
-                            L_CURLY@22..23 "{" [] [],
-                        ),
-                        directives: [],
-                        statements: [
-                            JsExpressionStatement(
-                                JsExpressionStatement {
-                                    expression: Ok(
-                                        JsAwaitExpression(
-                                            JsAwaitExpression {
-                                                await_token: Ok(
-                                                    AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")],
-                                                ),
-                                                argument: Ok(
-                                                    CallExpr(
-                                                        CallExpr {
-                                                            type_args: None,
-                                                            callee: Ok(
-                                                                JsReferenceIdentifierExpression(
-                                                                    JsReferenceIdentifierExpression {
-                                                                        name_token: Ok(
-                                                                            IDENT@31..36 "inner" [] [],
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                            ),
-                                                            arguments: Ok(
-                                                                ArgList {
-                                                                    l_paren_token: Ok(
-                                                                        L_PAREN@36..37 "(" [] [],
-                                                                    ),
-                                                                    args: [],
-                                                                    r_paren_token: Ok(
-                                                                        R_PAREN@37..38 ")" [] [],
-                                                                    ),
-                                                                },
-                                                            ),
-                                                        },
-                                                    ),
-                                                ),
-                                            },
-                                        ),
-                                    ),
-                                    semicolon_token: Some(
-                                        SEMICOLON@38..39 ";" [] [],
-                                    ),
-                                },
-                            ),
-                            JsExpressionStatement(
-                                JsExpressionStatement {
-                                    expression: Ok(
-                                        JsBinaryExpression(
-                                            JsBinaryExpression {
-                                                left: Ok(
-                                                    JsAwaitExpression(
-                                                        JsAwaitExpression {
-                                                            await_token: Ok(
-                                                                AWAIT_KW@39..48 "await" [Whitespace("\n\n\t")] [Whitespace(" ")],
-                                                            ),
-                                                            argument: Ok(
-                                                                JsParenthesizedExpression(
-                                                                    JsParenthesizedExpression {
-                                                                        l_paren_token: Ok(
-                                                                            L_PAREN@48..49 "(" [] [],
-                                                                        ),
-                                                                        expression: Ok(
-                                                                            CallExpr(
-                                                                                CallExpr {
-                                                                                    type_args: None,
-                                                                                    callee: Ok(
-                                                                                        JsReferenceIdentifierExpression(
-                                                                                            JsReferenceIdentifierExpression {
-                                                                                                name_token: Ok(
-                                                                                                    IDENT@49..54 "inner" [] [],
-                                                                                                ),
-                                                                                            },
-                                                                                        ),
-                                                                                    ),
-                                                                                    arguments: Ok(
-                                                                                        ArgList {
-                                                                                            l_paren_token: Ok(
-                                                                                                L_PAREN@54..55 "(" [] [],
-                                                                                            ),
-                                                                                            args: [],
-                                                                                            r_paren_token: Ok(
-                                                                                                R_PAREN@55..56 ")" [] [],
-                                                                                            ),
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                            ),
-                                                                        ),
-                                                                        r_paren_token: Ok(
-                                                                            R_PAREN@56..58 ")" [] [Whitespace(" ")],
-                                                                        ),
-                                                                    },
-                                                                ),
-                                                            ),
-                                                        },
-                                                    ),
-                                                ),
-                                                operator: Ok(
-                                                    PLUS@58..60 "+" [] [Whitespace(" ")],
-                                                ),
-                                            },
-                                        ),
-                                    ),
-                                    semicolon_token: Some(
-                                        SEMICOLON@73..74 ";" [] [],
-                                    ),
-                                },
-                            ),
-                        ],
-                        r_curly_token: Ok(
-                            R_CURLY@74..76 "}" [Whitespace("\n")] [],
-                        ),
-                    },
-                ),
+        JsFunctionDeclaration {
+            async_token: ASYNC_KW@0..6 "async" [] [Whitespace(" ")],
+            function_token: FUNCTION_KW@6..15 "function" [] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@15..19 "test" [] [],
             },
-        ),
-        JsFunctionDeclaration(
-            JsFunctionDeclaration {
-                async_token: Some(
-                    ASYNC_KW@76..84 "async" [Whitespace("\n\n")] [Whitespace(" ")],
-                ),
-                function_token: Ok(
-                    FUNCTION_KW@84..93 "function" [] [Whitespace(" ")],
-                ),
-                star_token: None,
-                id: Ok(
-                    JsIdentifierBinding {
-                        name_token: Ok(
-                            IDENT@93..98 "inner" [] [],
-                        ),
-                    },
-                ),
-                type_parameters: None,
-                parameter_list: Ok(
-                    JsParameterList {
-                        l_paren_token: Ok(
-                            L_PAREN@98..99 "(" [] [],
-                        ),
-                        parameters: [],
-                        r_paren_token: Ok(
-                            R_PAREN@99..101 ")" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                return_type: None,
-                body: Ok(
-                    JsFunctionBody {
-                        l_curly_token: Ok(
-                            L_CURLY@101..102 "{" [] [],
-                        ),
-                        directives: [],
-                        statements: [
-                            JsReturnStatement(
-                                JsReturnStatement {
-                                    return_token: Ok(
-                                        RETURN_KW@102..111 "return" [Whitespace("\n\t")] [Whitespace(" ")],
-                                    ),
-                                    argument: Some(
-                                        JsAnyLiteralExpression(
-                                            JsNumberLiteralExpression(
-                                                JsNumberLiteralExpression {
-                                                    value_token: Ok(
-                                                        JS_NUMBER_LITERAL@111..112 "4" [] [],
-                                                    ),
-                                                },
-                                            ),
-                                        ),
-                                    ),
-                                    semicolon_token: Some(
-                                        SEMICOLON@112..113 ";" [] [],
-                                    ),
-                                },
-                            ),
-                        ],
-                        r_curly_token: Ok(
-                            R_CURLY@113..115 "}" [Whitespace("\n")] [],
-                        ),
-                    },
-                ),
+            type_parameters: missing (optional),
+            parameter_list: JsParameterList {
+                l_paren_token: L_PAREN@19..20 "(" [] [],
+                parameters: [],
+                r_paren_token: R_PAREN@20..22 ")" [] [Whitespace(" ")],
             },
-        ),
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@22..23 "{" [] [],
+                directives: [],
+                statements: [
+                    JsExpressionStatement {
+                        expression: JsAwaitExpression {
+                            await_token: AWAIT_KW@23..31 "await" [Whitespace("\n\t")] [Whitespace(" ")],
+                            argument: CallExpr {
+                                type_args: missing (optional),
+                                callee: JsReferenceIdentifierExpression {
+                                    name_token: IDENT@31..36 "inner" [] [],
+                                },
+                                arguments: ArgList {
+                                    l_paren_token: L_PAREN@36..37 "(" [] [],
+                                    args: [],
+                                    r_paren_token: R_PAREN@37..38 ")" [] [],
+                                },
+                            },
+                        },
+                        semicolon_token: SEMICOLON@38..39 ";" [] [],
+                    },
+                    JsExpressionStatement {
+                        expression: JsBinaryExpression {
+                            left: JsAwaitExpression {
+                                await_token: AWAIT_KW@39..48 "await" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                                argument: JsParenthesizedExpression {
+                                    l_paren_token: L_PAREN@48..49 "(" [] [],
+                                    expression: CallExpr {
+                                        type_args: missing (optional),
+                                        callee: JsReferenceIdentifierExpression {
+                                            name_token: IDENT@49..54 "inner" [] [],
+                                        },
+                                        arguments: ArgList {
+                                            l_paren_token: L_PAREN@54..55 "(" [] [],
+                                            args: [],
+                                            r_paren_token: R_PAREN@55..56 ")" [] [],
+                                        },
+                                    },
+                                    r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
+                                },
+                            },
+                            operator: PLUS@58..60 "+" [] [Whitespace(" ")],
+                        },
+                        semicolon_token: SEMICOLON@73..74 ";" [] [],
+                    },
+                ],
+                r_curly_token: R_CURLY@74..76 "}" [Whitespace("\n")] [],
+            },
+        },
+        JsFunctionDeclaration {
+            async_token: ASYNC_KW@76..84 "async" [Whitespace("\n\n")] [Whitespace(" ")],
+            function_token: FUNCTION_KW@84..93 "function" [] [Whitespace(" ")],
+            star_token: missing (optional),
+            id: JsIdentifierBinding {
+                name_token: IDENT@93..98 "inner" [] [],
+            },
+            type_parameters: missing (optional),
+            parameter_list: JsParameterList {
+                l_paren_token: L_PAREN@98..99 "(" [] [],
+                parameters: [],
+                r_paren_token: R_PAREN@99..101 ")" [] [Whitespace(" ")],
+            },
+            return_type: missing (optional),
+            body: JsFunctionBody {
+                l_curly_token: L_CURLY@101..102 "{" [] [],
+                directives: [],
+                statements: [
+                    JsReturnStatement {
+                        return_token: RETURN_KW@102..111 "return" [Whitespace("\n\t")] [Whitespace(" ")],
+                        argument: JsNumberLiteralExpression {
+                            value_token: JS_NUMBER_LITERAL@111..112 "4" [] [],
+                        },
+                        semicolon_token: SEMICOLON@112..113 ";" [] [],
+                    },
+                ],
+                r_curly_token: R_CURLY@113..115 "}" [Whitespace("\n")] [],
+            },
+        },
     ],
 }
 

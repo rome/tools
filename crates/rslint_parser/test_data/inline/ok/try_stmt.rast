@@ -1,278 +1,130 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsTryStatement(
-            JsTryStatement {
-                try_token: Ok(
-                    TRY_KW@0..4 "try" [] [Whitespace(" ")],
-                ),
-                body: Ok(
-                    JsBlockStatement {
-                        l_curly_token: Ok(
-                            L_CURLY@4..5 "{" [] [],
-                        ),
-                        statements: [],
-                        r_curly_token: Ok(
-                            R_CURLY@5..7 "}" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                catch_clause: Ok(
-                    JsCatchClause {
-                        catch_token: Ok(
-                            CATCH_KW@7..13 "catch" [] [Whitespace(" ")],
-                        ),
-                        declaration: None,
-                        body: Ok(
-                            JsBlockStatement {
-                                l_curly_token: Ok(
-                                    L_CURLY@13..14 "{" [] [],
-                                ),
-                                statements: [],
-                                r_curly_token: Ok(
-                                    R_CURLY@14..15 "}" [] [],
-                                ),
-                            },
-                        ),
-                    },
-                ),
+        JsTryStatement {
+            try_token: TRY_KW@0..4 "try" [] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@4..5 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@5..7 "}" [] [Whitespace(" ")],
             },
-        ),
-        JsTryStatement(
-            JsTryStatement {
-                try_token: Ok(
-                    TRY_KW@15..20 "try" [Whitespace("\n")] [Whitespace(" ")],
-                ),
-                body: Ok(
-                    JsBlockStatement {
-                        l_curly_token: Ok(
-                            L_CURLY@20..21 "{" [] [],
-                        ),
-                        statements: [],
-                        r_curly_token: Ok(
-                            R_CURLY@21..23 "}" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                catch_clause: Ok(
-                    JsCatchClause {
-                        catch_token: Ok(
-                            CATCH_KW@23..29 "catch" [] [Whitespace(" ")],
-                        ),
-                        declaration: Some(
-                            JsCatchDeclaration {
-                                l_paren_token: Ok(
-                                    L_PAREN@29..30 "(" [] [],
-                                ),
-                                binding: Ok(
-                                    SinglePattern(
-                                        SinglePattern {
-                                            name: Ok(
-                                                Name {
-                                                    ident_token: Ok(
-                                                        IDENT@30..31 "e" [] [],
-                                                    ),
-                                                },
-                                            ),
-                                            question_mark_token: None,
-                                            excl_token: None,
-                                            ty: None,
-                                        },
-                                    ),
-                                ),
-                                r_paren_token: Ok(
-                                    R_PAREN@31..33 ")" [] [Whitespace(" ")],
-                                ),
-                            },
-                        ),
-                        body: Ok(
-                            JsBlockStatement {
-                                l_curly_token: Ok(
-                                    L_CURLY@33..34 "{" [] [],
-                                ),
-                                statements: [],
-                                r_curly_token: Ok(
-                                    R_CURLY@34..35 "}" [] [],
-                                ),
-                            },
-                        ),
-                    },
-                ),
+            catch_clause: JsCatchClause {
+                catch_token: CATCH_KW@7..13 "catch" [] [Whitespace(" ")],
+                declaration: missing (optional),
+                body: JsBlockStatement {
+                    l_curly_token: L_CURLY@13..14 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@14..15 "}" [] [],
+                },
             },
-        ),
-        JsTryFinallyStatement(
-            JsTryFinallyStatement {
-                try_token: Ok(
-                    TRY_KW@35..40 "try" [Whitespace("\n")] [Whitespace(" ")],
-                ),
-                body: Ok(
-                    JsBlockStatement {
-                        l_curly_token: Ok(
-                            L_CURLY@40..41 "{" [] [],
-                        ),
-                        statements: [],
-                        r_curly_token: Ok(
-                            R_CURLY@41..43 "}" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                catch_clause: Some(
-                    JsCatchClause {
-                        catch_token: Ok(
-                            CATCH_KW@43..49 "catch" [] [Whitespace(" ")],
-                        ),
-                        declaration: None,
-                        body: Ok(
-                            JsBlockStatement {
-                                l_curly_token: Ok(
-                                    L_CURLY@49..50 "{" [] [],
-                                ),
-                                statements: [],
-                                r_curly_token: Ok(
-                                    R_CURLY@50..52 "}" [] [Whitespace(" ")],
-                                ),
-                            },
-                        ),
-                    },
-                ),
-                finally_clause: Ok(
-                    JsFinallyClause {
-                        finally_token: Ok(
-                            FINALLY_KW@52..60 "finally" [] [Whitespace(" ")],
-                        ),
-                        body: Ok(
-                            JsBlockStatement {
-                                l_curly_token: Ok(
-                                    L_CURLY@60..61 "{" [] [],
-                                ),
-                                statements: [],
-                                r_curly_token: Ok(
-                                    R_CURLY@61..62 "}" [] [],
-                                ),
-                            },
-                        ),
-                    },
-                ),
+        },
+        JsTryStatement {
+            try_token: TRY_KW@15..20 "try" [Whitespace("\n")] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@20..21 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@21..23 "}" [] [Whitespace(" ")],
             },
-        ),
-        JsTryFinallyStatement(
-            JsTryFinallyStatement {
-                try_token: Ok(
-                    TRY_KW@62..67 "try" [Whitespace("\n")] [Whitespace(" ")],
-                ),
-                body: Ok(
-                    JsBlockStatement {
-                        l_curly_token: Ok(
-                            L_CURLY@67..68 "{" [] [],
-                        ),
-                        statements: [],
-                        r_curly_token: Ok(
-                            R_CURLY@68..70 "}" [] [Whitespace(" ")],
-                        ),
+            catch_clause: JsCatchClause {
+                catch_token: CATCH_KW@23..29 "catch" [] [Whitespace(" ")],
+                declaration: JsCatchDeclaration {
+                    l_paren_token: L_PAREN@29..30 "(" [] [],
+                    binding: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@30..31 "e" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
                     },
-                ),
-                catch_clause: Some(
-                    JsCatchClause {
-                        catch_token: Ok(
-                            CATCH_KW@70..76 "catch" [] [Whitespace(" ")],
-                        ),
-                        declaration: Some(
-                            JsCatchDeclaration {
-                                l_paren_token: Ok(
-                                    L_PAREN@76..77 "(" [] [],
-                                ),
-                                binding: Ok(
-                                    SinglePattern(
-                                        SinglePattern {
-                                            name: Ok(
-                                                Name {
-                                                    ident_token: Ok(
-                                                        IDENT@77..78 "e" [] [],
-                                                    ),
-                                                },
-                                            ),
-                                            question_mark_token: None,
-                                            excl_token: None,
-                                            ty: None,
-                                        },
-                                    ),
-                                ),
-                                r_paren_token: Ok(
-                                    R_PAREN@78..80 ")" [] [Whitespace(" ")],
-                                ),
-                            },
-                        ),
-                        body: Ok(
-                            JsBlockStatement {
-                                l_curly_token: Ok(
-                                    L_CURLY@80..81 "{" [] [],
-                                ),
-                                statements: [],
-                                r_curly_token: Ok(
-                                    R_CURLY@81..83 "}" [] [Whitespace(" ")],
-                                ),
-                            },
-                        ),
-                    },
-                ),
-                finally_clause: Ok(
-                    JsFinallyClause {
-                        finally_token: Ok(
-                            FINALLY_KW@83..91 "finally" [] [Whitespace(" ")],
-                        ),
-                        body: Ok(
-                            JsBlockStatement {
-                                l_curly_token: Ok(
-                                    L_CURLY@91..92 "{" [] [],
-                                ),
-                                statements: [],
-                                r_curly_token: Ok(
-                                    R_CURLY@92..93 "}" [] [],
-                                ),
-                            },
-                        ),
-                    },
-                ),
+                    r_paren_token: R_PAREN@31..33 ")" [] [Whitespace(" ")],
+                },
+                body: JsBlockStatement {
+                    l_curly_token: L_CURLY@33..34 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@34..35 "}" [] [],
+                },
             },
-        ),
-        JsTryFinallyStatement(
-            JsTryFinallyStatement {
-                try_token: Ok(
-                    TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")],
-                ),
-                body: Ok(
-                    JsBlockStatement {
-                        l_curly_token: Ok(
-                            L_CURLY@98..99 "{" [] [],
-                        ),
-                        statements: [],
-                        r_curly_token: Ok(
-                            R_CURLY@99..101 "}" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                catch_clause: None,
-                finally_clause: Ok(
-                    JsFinallyClause {
-                        finally_token: Ok(
-                            FINALLY_KW@101..109 "finally" [] [Whitespace(" ")],
-                        ),
-                        body: Ok(
-                            JsBlockStatement {
-                                l_curly_token: Ok(
-                                    L_CURLY@109..110 "{" [] [],
-                                ),
-                                statements: [],
-                                r_curly_token: Ok(
-                                    R_CURLY@110..111 "}" [] [],
-                                ),
-                            },
-                        ),
-                    },
-                ),
+        },
+        JsTryFinallyStatement {
+            try_token: TRY_KW@35..40 "try" [Whitespace("\n")] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@40..41 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@41..43 "}" [] [Whitespace(" ")],
             },
-        ),
+            catch_clause: JsCatchClause {
+                catch_token: CATCH_KW@43..49 "catch" [] [Whitespace(" ")],
+                declaration: missing (optional),
+                body: JsBlockStatement {
+                    l_curly_token: L_CURLY@49..50 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@50..52 "}" [] [Whitespace(" ")],
+                },
+            },
+            finally_clause: JsFinallyClause {
+                finally_token: FINALLY_KW@52..60 "finally" [] [Whitespace(" ")],
+                body: JsBlockStatement {
+                    l_curly_token: L_CURLY@60..61 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@61..62 "}" [] [],
+                },
+            },
+        },
+        JsTryFinallyStatement {
+            try_token: TRY_KW@62..67 "try" [Whitespace("\n")] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@67..68 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@68..70 "}" [] [Whitespace(" ")],
+            },
+            catch_clause: JsCatchClause {
+                catch_token: CATCH_KW@70..76 "catch" [] [Whitespace(" ")],
+                declaration: JsCatchDeclaration {
+                    l_paren_token: L_PAREN@76..77 "(" [] [],
+                    binding: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@77..78 "e" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@78..80 ")" [] [Whitespace(" ")],
+                },
+                body: JsBlockStatement {
+                    l_curly_token: L_CURLY@80..81 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@81..83 "}" [] [Whitespace(" ")],
+                },
+            },
+            finally_clause: JsFinallyClause {
+                finally_token: FINALLY_KW@83..91 "finally" [] [Whitespace(" ")],
+                body: JsBlockStatement {
+                    l_curly_token: L_CURLY@91..92 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@92..93 "}" [] [],
+                },
+            },
+        },
+        JsTryFinallyStatement {
+            try_token: TRY_KW@93..98 "try" [Whitespace("\n")] [Whitespace(" ")],
+            body: JsBlockStatement {
+                l_curly_token: L_CURLY@98..99 "{" [] [],
+                statements: [],
+                r_curly_token: R_CURLY@99..101 "}" [] [Whitespace(" ")],
+            },
+            catch_clause: missing (optional),
+            finally_clause: JsFinallyClause {
+                finally_token: FINALLY_KW@101..109 "finally" [] [Whitespace(" ")],
+                body: JsBlockStatement {
+                    l_curly_token: L_CURLY@109..110 "{" [] [],
+                    statements: [],
+                    r_curly_token: R_CURLY@110..111 "}" [] [],
+                },
+            },
+        },
     ],
 }
 

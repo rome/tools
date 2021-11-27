@@ -1,53 +1,25 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsPreUpdateExpression(
-                        JsPreUpdateExpression {
-                            operator: Ok(
-                                PLUS2@0..2 "++" [] [],
-                            ),
-                            operand: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@2..5 "foo" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+        JsExpressionStatement {
+            expression: JsPreUpdateExpression {
+                operator: PLUS2@0..2 "++" [] [],
+                operand: JsReferenceIdentifierExpression {
+                    name_token: IDENT@2..5 "foo" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsPreUpdateExpression(
-                        JsPreUpdateExpression {
-                            operator: Ok(
-                                MINUS2@5..8 "--" [Whitespace("\n")] [],
-                            ),
-                            operand: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@8..11 "foo" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsPreUpdateExpression {
+                operator: MINUS2@5..8 "--" [Whitespace("\n")] [],
+                operand: JsReferenceIdentifierExpression {
+                    name_token: IDENT@8..11 "foo" [] [],
+                },
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

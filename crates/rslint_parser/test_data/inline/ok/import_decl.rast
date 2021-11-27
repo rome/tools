@@ -1,54 +1,23 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        ImportDecl(
-            ImportDecl {
-                import_token: Ok(
-                    IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
-                ),
-                imports: [
-                    WildcardImport(
-                        WildcardImport {
-                            star_token: Ok(
-                                STAR@7..9 "*" [] [Whitespace(" ")],
-                            ),
-                            as_token: Some(
-                                AS_KW@9..12 "as" [] [Whitespace(" ")],
-                            ),
-                            ident: None,
-                        },
-                    ),
-                ],
-                type_token: None,
-                from_token: Ok(
-                    FROM_KW@16..21 "from" [] [Whitespace(" ")],
-                ),
-                source_token: Ok(
-                    JS_STRING_LITERAL@21..26 "\"bla\"" [] [],
-                ),
-                asserted_object: Err(
-                    MissingRequiredChild(
-                        0: IMPORT_DECL@0..27
-                          0: IMPORT_KW@0..7 "import" [] [Whitespace(" ")]
-                          1: LIST@7..16
-                            0: WILDCARD_IMPORT@7..16
-                              0: STAR@7..9 "*" [] [Whitespace(" ")]
-                              1: AS_KW@9..12 "as" [] [Whitespace(" ")]
-                              2: NAME@12..16
-                                0: IDENT@12..16 "foo" [] [Whitespace(" ")]
-                          2: FROM_KW@16..21 "from" [] [Whitespace(" ")]
-                          3: JS_STRING_LITERAL@21..26 "\"bla\"" [] []
-                          4: SEMICOLON@26..27 ";" [] []
-                        ,
-                    ),
-                ),
-                assert_token: None,
-                semicolon_token: Some(
-                    SEMICOLON@26..27 ";" [] [],
-                ),
-            },
-        ),
+        ImportDecl {
+            import_token: IMPORT_KW@0..7 "import" [] [Whitespace(" ")],
+            imports: [
+                WildcardImport {
+                    star_token: STAR@7..9 "*" [] [Whitespace(" ")],
+                    as_token: AS_KW@9..12 "as" [] [Whitespace(" ")],
+                    ident: missing (optional),
+                },
+            ],
+            type_token: missing (optional),
+            from_token: FROM_KW@16..21 "from" [] [Whitespace(" ")],
+            source_token: JS_STRING_LITERAL@21..26 "\"bla\"" [] [],
+            asserted_object: missing (required),
+            assert_token: missing (optional),
+            semicolon_token: SEMICOLON@26..27 ";" [] [],
+        },
     ],
 }
 

@@ -1,59 +1,27 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsConditionalExpression(
-                        JsConditionalExpression {
-                            test: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@0..4 "foo" [] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            question_mark_token: Ok(
-                                QUESTION@4..6 "?" [] [Whitespace(" ")],
-                            ),
-                            colon_token: Ok(
-                                COLON@10..12 ":" [] [Whitespace(" ")],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+        JsExpressionStatement {
+            expression: JsConditionalExpression {
+                test: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@4..6 "?" [] [Whitespace(" ")],
+                colon_token: COLON@10..12 ":" [] [Whitespace(" ")],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsConditionalExpression(
-                        JsConditionalExpression {
-                            test: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@15..20 "foo" [Whitespace("\n")] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            question_mark_token: Ok(
-                                QUESTION@20..22 "?" [] [Whitespace(" ")],
-                            ),
-                            colon_token: Ok(
-                                COLON@26..28 ":" [] [Whitespace(" ")],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsConditionalExpression {
+                test: JsReferenceIdentifierExpression {
+                    name_token: IDENT@15..20 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                question_mark_token: QUESTION@20..22 "?" [] [Whitespace(" ")],
+                colon_token: COLON@26..28 ":" [] [Whitespace(" ")],
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

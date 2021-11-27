@@ -1,219 +1,115 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsVariableDeclarationStatement(
-            JsVariableDeclarationStatement {
-                declaration: Ok(
-                    JsVariableDeclaration {
-                        kind_token: Ok(
-                            LET_KW@0..4 "let" [] [Whitespace(" ")],
-                        ),
-                        declarators: [
-                            AstSeparatedElement {
-                                node: JsVariableDeclarator {
-                                    id: Ok(
-                                        SinglePattern(
-                                            SinglePattern {
-                                                name: Ok(
-                                                    Name {
-                                                        ident_token: Ok(
-                                                            IDENT@4..6 "a" [] [Whitespace(" ")],
-                                                        ),
-                                                    },
-                                                ),
-                                                question_mark_token: None,
-                                                excl_token: None,
-                                                ty: None,
-                                            },
-                                        ),
-                                    ),
-                                    init: Some(
-                                        JsEqualValueClause {
-                                            eq_token: Ok(
-                                                EQ@6..8 "=" [] [Whitespace(" ")],
-                                            ),
-                                            expression: Ok(
-                                                Template(
-                                                    Template {
-                                                        backtick_token: Ok(
-                                                            BACKTICK@8..9 "`" [] [],
-                                                        ),
-                                                    },
-                                                ),
-                                            ),
-                                        },
-                                    ),
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@0..4 "let" [] [Whitespace(" ")],
+                declarators: [
+                    AstSeparatedElement {
+                        node: JsVariableDeclarator {
+                            id: SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@4..6 "a" [] [Whitespace(" ")],
                                 },
-                                trailing_separator: None,
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
                             },
-                        ],
-                    },
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@20..21 ";" [] [],
-                ),
-            },
-        ),
-        JsVariableDeclarationStatement(
-            JsVariableDeclarationStatement {
-                declaration: Ok(
-                    JsVariableDeclaration {
-                        kind_token: Ok(
-                            LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")],
-                        ),
-                        declarators: [
-                            AstSeparatedElement {
-                                node: JsVariableDeclarator {
-                                    id: Ok(
-                                        SinglePattern(
-                                            SinglePattern {
-                                                name: Ok(
-                                                    Name {
-                                                        ident_token: Ok(
-                                                            IDENT@26..28 "a" [] [Whitespace(" ")],
-                                                        ),
-                                                    },
-                                                ),
-                                                question_mark_token: None,
-                                                excl_token: None,
-                                                ty: None,
-                                            },
-                                        ),
-                                    ),
-                                    init: Some(
-                                        JsEqualValueClause {
-                                            eq_token: Ok(
-                                                EQ@28..30 "=" [] [Whitespace(" ")],
-                                            ),
-                                            expression: Ok(
-                                                Template(
-                                                    Template {
-                                                        backtick_token: Ok(
-                                                            BACKTICK@30..31 "`" [] [],
-                                                        ),
-                                                    },
-                                                ),
-                                            ),
-                                        },
-                                    ),
+                            init: JsEqualValueClause {
+                                eq_token: EQ@6..8 "=" [] [Whitespace(" ")],
+                                expression: Template {
+                                    backtick_token: BACKTICK@8..9 "`" [] [],
                                 },
-                                trailing_separator: None,
                             },
-                        ],
+                        },
+                        trailing_separator: None,
                     },
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@32..33 ";" [] [],
-                ),
+                ],
             },
-        ),
-        JsVariableDeclarationStatement(
-            JsVariableDeclarationStatement {
-                declaration: Ok(
-                    JsVariableDeclaration {
-                        kind_token: Ok(
-                            LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")],
-                        ),
-                        declarators: [
-                            AstSeparatedElement {
-                                node: JsVariableDeclarator {
-                                    id: Ok(
-                                        SinglePattern(
-                                            SinglePattern {
-                                                name: Ok(
-                                                    Name {
-                                                        ident_token: Ok(
-                                                            IDENT@38..40 "a" [] [Whitespace(" ")],
-                                                        ),
-                                                    },
-                                                ),
-                                                question_mark_token: None,
-                                                excl_token: None,
-                                                ty: None,
-                                            },
-                                        ),
-                                    ),
-                                    init: Some(
-                                        JsEqualValueClause {
-                                            eq_token: Ok(
-                                                EQ@40..42 "=" [] [Whitespace(" ")],
-                                            ),
-                                            expression: Ok(
-                                                Template(
-                                                    Template {
-                                                        backtick_token: Ok(
-                                                            BACKTICK@42..43 "`" [] [],
-                                                        ),
-                                                    },
-                                                ),
-                                            ),
-                                        },
-                                    ),
+            semicolon_token: SEMICOLON@20..21 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@21..26 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    AstSeparatedElement {
+                        node: JsVariableDeclarator {
+                            id: SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@26..28 "a" [] [Whitespace(" ")],
                                 },
-                                trailing_separator: None,
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
                             },
-                        ],
-                    },
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@50..51 ";" [] [],
-                ),
-            },
-        ),
-        JsVariableDeclarationStatement(
-            JsVariableDeclarationStatement {
-                declaration: Ok(
-                    JsVariableDeclaration {
-                        kind_token: Ok(
-                            LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")],
-                        ),
-                        declarators: [
-                            AstSeparatedElement {
-                                node: JsVariableDeclarator {
-                                    id: Ok(
-                                        SinglePattern(
-                                            SinglePattern {
-                                                name: Ok(
-                                                    Name {
-                                                        ident_token: Ok(
-                                                            IDENT@56..58 "a" [] [Whitespace(" ")],
-                                                        ),
-                                                    },
-                                                ),
-                                                question_mark_token: None,
-                                                excl_token: None,
-                                                ty: None,
-                                            },
-                                        ),
-                                    ),
-                                    init: Some(
-                                        JsEqualValueClause {
-                                            eq_token: Ok(
-                                                EQ@58..60 "=" [] [Whitespace(" ")],
-                                            ),
-                                            expression: Ok(
-                                                Template(
-                                                    Template {
-                                                        backtick_token: Ok(
-                                                            BACKTICK@60..61 "`" [] [],
-                                                        ),
-                                                    },
-                                                ),
-                                            ),
-                                        },
-                                    ),
+                            init: JsEqualValueClause {
+                                eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
+                                expression: Template {
+                                    backtick_token: BACKTICK@30..31 "`" [] [],
                                 },
-                                trailing_separator: None,
                             },
-                        ],
+                        },
+                        trailing_separator: None,
                     },
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@65..66 ";" [] [],
-                ),
+                ],
             },
-        ),
+            semicolon_token: SEMICOLON@32..33 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@33..38 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    AstSeparatedElement {
+                        node: JsVariableDeclarator {
+                            id: SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@38..40 "a" [] [Whitespace(" ")],
+                                },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            },
+                            init: JsEqualValueClause {
+                                eq_token: EQ@40..42 "=" [] [Whitespace(" ")],
+                                expression: Template {
+                                    backtick_token: BACKTICK@42..43 "`" [] [],
+                                },
+                            },
+                        },
+                        trailing_separator: None,
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@50..51 ";" [] [],
+        },
+        JsVariableDeclarationStatement {
+            declaration: JsVariableDeclaration {
+                kind_token: LET_KW@51..56 "let" [Whitespace("\n")] [Whitespace(" ")],
+                declarators: [
+                    AstSeparatedElement {
+                        node: JsVariableDeclarator {
+                            id: SinglePattern {
+                                name: Name {
+                                    ident_token: IDENT@56..58 "a" [] [Whitespace(" ")],
+                                },
+                                question_mark_token: missing (optional),
+                                excl_token: missing (optional),
+                                ty: missing (optional),
+                            },
+                            init: JsEqualValueClause {
+                                eq_token: EQ@58..60 "=" [] [Whitespace(" ")],
+                                expression: Template {
+                                    backtick_token: BACKTICK@60..61 "`" [] [],
+                                },
+                            },
+                        },
+                        trailing_separator: None,
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@65..66 ";" [] [],
+        },
     ],
 }
 

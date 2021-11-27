@@ -1,323 +1,177 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrayExpression(
-                        JsArrayExpression {
-                            l_brack_token: Ok(
-                                L_BRACK@0..1 "[" [] [],
-                            ),
-                            elements: [
-                                AstSeparatedElement {
-                                    node: JsAnyExpression(
-                                        JsReferenceIdentifierExpression(
-                                            JsReferenceIdentifierExpression {
-                                                name_token: Ok(
-                                                    IDENT@1..4 "foo" [] [],
-                                                ),
-                                            },
-                                        ),
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@4..6 "," [] [Whitespace(" ")],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsAnyExpression(
-                                        JsReferenceIdentifierExpression(
-                                            JsReferenceIdentifierExpression {
-                                                name_token: Ok(
-                                                    IDENT@6..9 "bar" [] [],
-                                                ),
-                                            },
-                                        ),
-                                    ),
-                                    trailing_separator: None,
-                                },
-                            ],
-                            r_brack_token: Ok(
-                                R_BRACK@9..10 "]" [] [],
-                            ),
+        JsExpressionStatement {
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@0..1 "[" [] [],
+                elements: [
+                    AstSeparatedElement {
+                        node: JsReferenceIdentifierExpression {
+                            name_token: IDENT@1..4 "foo" [] [],
                         },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@10..11 ";" [] [],
-                ),
-            },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrayExpression(
-                        JsArrayExpression {
-                            l_brack_token: Ok(
-                                L_BRACK@11..13 "[" [Whitespace("\n")] [],
-                            ),
-                            elements: [
-                                AstSeparatedElement {
-                                    node: JsAnyExpression(
-                                        JsReferenceIdentifierExpression(
-                                            JsReferenceIdentifierExpression {
-                                                name_token: Ok(
-                                                    IDENT@13..16 "foo" [] [],
-                                                ),
-                                            },
-                                        ),
-                                    ),
-                                    trailing_separator: None,
-                                },
-                            ],
-                            r_brack_token: Ok(
-                                R_BRACK@16..17 "]" [] [],
-                            ),
+                        trailing_separator: Some(
+                            COMMA@4..6 "," [] [Whitespace(" ")],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsReferenceIdentifierExpression {
+                            name_token: IDENT@6..9 "bar" [] [],
                         },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@17..18 ";" [] [],
-                ),
+                        trailing_separator: None,
+                    },
+                ],
+                r_brack_token: R_BRACK@9..10 "]" [] [],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrayExpression(
-                        JsArrayExpression {
-                            l_brack_token: Ok(
-                                L_BRACK@18..20 "[" [Whitespace("\n")] [],
-                            ),
-                            elements: [
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@20..21 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsAnyExpression(
-                                        JsReferenceIdentifierExpression(
-                                            JsReferenceIdentifierExpression {
-                                                name_token: Ok(
-                                                    IDENT@21..24 "foo" [] [],
-                                                ),
-                                            },
-                                        ),
-                                    ),
-                                    trailing_separator: None,
-                                },
-                            ],
-                            r_brack_token: Ok(
-                                R_BRACK@24..25 "]" [] [],
-                            ),
+            semicolon_token: SEMICOLON@10..11 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@11..13 "[" [Whitespace("\n")] [],
+                elements: [
+                    AstSeparatedElement {
+                        node: JsReferenceIdentifierExpression {
+                            name_token: IDENT@13..16 "foo" [] [],
                         },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@25..26 ";" [] [],
-                ),
+                        trailing_separator: None,
+                    },
+                ],
+                r_brack_token: R_BRACK@16..17 "]" [] [],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrayExpression(
-                        JsArrayExpression {
-                            l_brack_token: Ok(
-                                L_BRACK@26..28 "[" [Whitespace("\n")] [],
-                            ),
-                            elements: [
-                                AstSeparatedElement {
-                                    node: JsAnyExpression(
-                                        JsReferenceIdentifierExpression(
-                                            JsReferenceIdentifierExpression {
-                                                name_token: Ok(
-                                                    IDENT@28..31 "foo" [] [],
-                                                ),
-                                            },
-                                        ),
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@31..32 "," [] [],
-                                    ),
-                                },
-                            ],
-                            r_brack_token: Ok(
-                                R_BRACK@32..33 "]" [] [],
-                            ),
+            semicolon_token: SEMICOLON@17..18 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@18..20 "[" [Whitespace("\n")] [],
+                elements: [
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@20..21 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsReferenceIdentifierExpression {
+                            name_token: IDENT@21..24 "foo" [] [],
                         },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@33..34 ";" [] [],
-                ),
+                        trailing_separator: None,
+                    },
+                ],
+                r_brack_token: R_BRACK@24..25 "]" [] [],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrayExpression(
-                        JsArrayExpression {
-                            l_brack_token: Ok(
-                                L_BRACK@34..36 "[" [Whitespace("\n")] [],
-                            ),
-                            elements: [
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@36..37 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@37..38 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@38..39 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@39..40 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@40..41 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsAnyExpression(
-                                        JsReferenceIdentifierExpression(
-                                            JsReferenceIdentifierExpression {
-                                                name_token: Ok(
-                                                    IDENT@41..44 "foo" [] [],
-                                                ),
-                                            },
-                                        ),
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@44..45 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@45..46 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@46..47 "," [] [],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: JsArrayHole(
-                                        JsArrayHole,
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@47..48 "," [] [],
-                                    ),
-                                },
-                            ],
-                            r_brack_token: Ok(
-                                R_BRACK@48..49 "]" [] [],
-                            ),
+            semicolon_token: SEMICOLON@25..26 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@26..28 "[" [Whitespace("\n")] [],
+                elements: [
+                    AstSeparatedElement {
+                        node: JsReferenceIdentifierExpression {
+                            name_token: IDENT@28..31 "foo" [] [],
                         },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@49..50 ";" [] [],
-                ),
+                        trailing_separator: Some(
+                            COMMA@31..32 "," [] [],
+                        ),
+                    },
+                ],
+                r_brack_token: R_BRACK@32..33 "]" [] [],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrayExpression(
-                        JsArrayExpression {
-                            l_brack_token: Ok(
-                                L_BRACK@50..52 "[" [Whitespace("\n")] [],
-                            ),
-                            elements: [
-                                AstSeparatedElement {
-                                    node: SpreadElement(
-                                        SpreadElement {
-                                            dotdotdot_token: Ok(
-                                                DOT2@52..55 "..." [] [],
-                                            ),
-                                            element: Ok(
-                                                JsReferenceIdentifierExpression(
-                                                    JsReferenceIdentifierExpression {
-                                                        name_token: Ok(
-                                                            IDENT@55..56 "a" [] [],
-                                                        ),
-                                                    },
-                                                ),
-                                            ),
-                                        },
-                                    ),
-                                    trailing_separator: Some(
-                                        COMMA@56..58 "," [] [Whitespace(" ")],
-                                    ),
-                                },
-                                AstSeparatedElement {
-                                    node: SpreadElement(
-                                        SpreadElement {
-                                            dotdotdot_token: Ok(
-                                                DOT2@58..61 "..." [] [],
-                                            ),
-                                            element: Ok(
-                                                JsReferenceIdentifierExpression(
-                                                    JsReferenceIdentifierExpression {
-                                                        name_token: Ok(
-                                                            IDENT@61..62 "b" [] [],
-                                                        ),
-                                                    },
-                                                ),
-                                            ),
-                                        },
-                                    ),
-                                    trailing_separator: None,
-                                },
-                            ],
-                            r_brack_token: Ok(
-                                R_BRACK@62..63 "]" [] [],
-                            ),
+            semicolon_token: SEMICOLON@33..34 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@34..36 "[" [Whitespace("\n")] [],
+                elements: [
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@36..37 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@37..38 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@38..39 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@39..40 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@40..41 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsReferenceIdentifierExpression {
+                            name_token: IDENT@41..44 "foo" [] [],
                         },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@63..64 ";" [] [],
-                ),
+                        trailing_separator: Some(
+                            COMMA@44..45 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@45..46 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@46..47 "," [] [],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: JsArrayHole,
+                        trailing_separator: Some(
+                            COMMA@47..48 "," [] [],
+                        ),
+                    },
+                ],
+                r_brack_token: R_BRACK@48..49 "]" [] [],
             },
-        ),
+            semicolon_token: SEMICOLON@49..50 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsArrayExpression {
+                l_brack_token: L_BRACK@50..52 "[" [Whitespace("\n")] [],
+                elements: [
+                    AstSeparatedElement {
+                        node: SpreadElement {
+                            dotdotdot_token: DOT2@52..55 "..." [] [],
+                            element: JsReferenceIdentifierExpression {
+                                name_token: IDENT@55..56 "a" [] [],
+                            },
+                        },
+                        trailing_separator: Some(
+                            COMMA@56..58 "," [] [Whitespace(" ")],
+                        ),
+                    },
+                    AstSeparatedElement {
+                        node: SpreadElement {
+                            dotdotdot_token: DOT2@58..61 "..." [] [],
+                            element: JsReferenceIdentifierExpression {
+                                name_token: IDENT@61..62 "b" [] [],
+                            },
+                        },
+                        trailing_separator: None,
+                    },
+                ],
+                r_brack_token: R_BRACK@62..63 "]" [] [],
+            },
+            semicolon_token: SEMICOLON@63..64 ";" [] [],
+        },
     ],
 }
 

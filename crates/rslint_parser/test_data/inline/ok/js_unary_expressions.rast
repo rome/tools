@@ -1,246 +1,90 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsUnaryExpression(
-                        JsUnaryExpression {
-                            operator: Ok(
-                                DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
-                            ),
-                            argument: Ok(
-                                JsComputedMemberExpression(
-                                    JsComputedMemberExpression {
-                                        object: Ok(
-                                            JsReferenceIdentifierExpression(
-                                                JsReferenceIdentifierExpression {
-                                                    name_token: Ok(
-                                                        IDENT@7..8 "a" [] [],
-                                                    ),
-                                                },
-                                            ),
-                                        ),
-                                        optional_chain_token_token: None,
-                                        l_brack_token: Ok(
-                                            L_BRACK@8..9 "[" [] [],
-                                        ),
-                                        r_brack_token: Ok(
-                                            R_BRACK@15..16 "]" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@16..17 ";" [] [],
-                ),
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: DELETE_KW@0..7 "delete" [] [Whitespace(" ")],
+                argument: JsComputedMemberExpression {
+                    object: JsReferenceIdentifierExpression {
+                        name_token: IDENT@7..8 "a" [] [],
+                    },
+                    optional_chain_token_token: missing (optional),
+                    l_brack_token: L_BRACK@8..9 "[" [] [],
+                    r_brack_token: R_BRACK@15..16 "]" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsUnaryExpression(
-                        JsUnaryExpression {
-                            operator: Ok(
-                                VOID_KW@17..23 "void" [Whitespace("\n")] [Whitespace(" ")],
-                            ),
-                            argument: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@23..24 "a" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@24..25 ";" [] [],
-                ),
+            semicolon_token: SEMICOLON@16..17 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: VOID_KW@17..23 "void" [Whitespace("\n")] [Whitespace(" ")],
+                argument: JsReferenceIdentifierExpression {
+                    name_token: IDENT@23..24 "a" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsUnaryExpression(
-                        JsUnaryExpression {
-                            operator: Ok(
-                                TYPEOF_KW@25..33 "typeof" [Whitespace("\n")] [Whitespace(" ")],
-                            ),
-                            argument: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@33..34 "a" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@34..35 ";" [] [],
-                ),
+            semicolon_token: SEMICOLON@24..25 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: TYPEOF_KW@25..33 "typeof" [Whitespace("\n")] [Whitespace(" ")],
+                argument: JsReferenceIdentifierExpression {
+                    name_token: IDENT@33..34 "a" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsUnaryExpression(
-                        JsUnaryExpression {
-                            operator: Ok(
-                                PLUS@35..37 "+" [Whitespace("\n")] [],
-                            ),
-                            argument: Ok(
-                                JsAnyLiteralExpression(
-                                    JsNumberLiteralExpression(
-                                        JsNumberLiteralExpression {
-                                            value_token: Ok(
-                                                JS_NUMBER_LITERAL@37..38 "1" [] [],
-                                            ),
-                                        },
-                                    ),
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@38..39 ";" [] [],
-                ),
+            semicolon_token: SEMICOLON@34..35 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: PLUS@35..37 "+" [Whitespace("\n")] [],
+                argument: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@37..38 "1" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsUnaryExpression(
-                        JsUnaryExpression {
-                            operator: Ok(
-                                MINUS@39..41 "-" [Whitespace("\n")] [],
-                            ),
-                            argument: Ok(
-                                JsAnyLiteralExpression(
-                                    JsNumberLiteralExpression(
-                                        JsNumberLiteralExpression {
-                                            value_token: Ok(
-                                                JS_NUMBER_LITERAL@41..42 "1" [] [],
-                                            ),
-                                        },
-                                    ),
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@42..43 ";" [] [],
-                ),
+            semicolon_token: SEMICOLON@38..39 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: MINUS@39..41 "-" [Whitespace("\n")] [],
+                argument: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@41..42 "1" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsUnaryExpression(
-                        JsUnaryExpression {
-                            operator: Ok(
-                                TILDE@43..45 "~" [Whitespace("\n")] [],
-                            ),
-                            argument: Ok(
-                                JsAnyLiteralExpression(
-                                    JsNumberLiteralExpression(
-                                        JsNumberLiteralExpression {
-                                            value_token: Ok(
-                                                JS_NUMBER_LITERAL@45..46 "1" [] [],
-                                            ),
-                                        },
-                                    ),
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@46..47 ";" [] [],
-                ),
+            semicolon_token: SEMICOLON@42..43 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: TILDE@43..45 "~" [Whitespace("\n")] [],
+                argument: JsNumberLiteralExpression {
+                    value_token: JS_NUMBER_LITERAL@45..46 "1" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsUnaryExpression(
-                        JsUnaryExpression {
-                            operator: Ok(
-                                BANG@47..49 "!" [Whitespace("\n")] [],
-                            ),
-                            argument: Ok(
-                                JsAnyLiteralExpression(
-                                    JsBooleanLiteralExpression(
-                                        JsBooleanLiteralExpression {
-                                            value_token: Ok(
-                                                TRUE_KW@49..53 "true" [] [],
-                                            ),
-                                        },
-                                    ),
-                                ),
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@53..54 ";" [] [],
-                ),
+            semicolon_token: SEMICOLON@46..47 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsUnaryExpression {
+                operator: BANG@47..49 "!" [Whitespace("\n")] [],
+                argument: JsBooleanLiteralExpression {
+                    value_token: TRUE_KW@49..53 "true" [] [],
+                },
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsBinaryExpression(
-                        JsBinaryExpression {
-                            left: Ok(
-                                JsBinaryExpression(
-                                    JsBinaryExpression {
-                                        left: Ok(
-                                            JsUnaryExpression(
-                                                JsUnaryExpression {
-                                                    operator: Ok(
-                                                        MINUS@54..57 "-" [Whitespace("\n\n")] [],
-                                                    ),
-                                                    argument: Ok(
-                                                        JsReferenceIdentifierExpression(
-                                                            JsReferenceIdentifierExpression {
-                                                                name_token: Ok(
-                                                                    IDENT@57..59 "a" [] [Whitespace(" ")],
-                                                                ),
-                                                            },
-                                                        ),
-                                                    ),
-                                                },
-                                            ),
-                                        ),
-                                        operator: Ok(
-                                            PLUS@59..61 "+" [] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                PLUS@64..66 "+" [] [Whitespace(" ")],
-                            ),
+            semicolon_token: SEMICOLON@53..54 ";" [] [],
+        },
+        JsExpressionStatement {
+            expression: JsBinaryExpression {
+                left: JsBinaryExpression {
+                    left: JsUnaryExpression {
+                        operator: MINUS@54..57 "-" [Whitespace("\n\n")] [],
+                        argument: JsReferenceIdentifierExpression {
+                            name_token: IDENT@57..59 "a" [] [Whitespace(" ")],
                         },
-                    ),
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@68..69 ";" [] [],
-                ),
+                    },
+                    operator: PLUS@59..61 "+" [] [Whitespace(" ")],
+                },
+                operator: PLUS@64..66 "+" [] [Whitespace(" ")],
             },
-        ),
+            semicolon_token: SEMICOLON@68..69 ";" [] [],
+        },
     ],
 }
 

@@ -1,53 +1,25 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsPostUpdateExpression(
-                        JsPostUpdateExpression {
-                            operand: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@0..3 "foo" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                PLUS2@3..5 "++" [] [],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+        JsExpressionStatement {
+            expression: JsPostUpdateExpression {
+                operand: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..3 "foo" [] [],
+                },
+                operator: PLUS2@3..5 "++" [] [],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsPostUpdateExpression(
-                        JsPostUpdateExpression {
-                            operand: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@5..9 "foo" [Whitespace("\n")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                MINUS2@9..11 "--" [] [],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsPostUpdateExpression {
+                operand: JsReferenceIdentifierExpression {
+                    name_token: IDENT@5..9 "foo" [Whitespace("\n")] [],
+                },
+                operator: MINUS2@9..11 "--" [] [],
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

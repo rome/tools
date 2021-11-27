@@ -1,17 +1,11 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsDebuggerStatement(
-            JsDebuggerStatement {
-                debugger_token: Ok(
-                    DEBUGGER_KW@0..8 "debugger" [] [],
-                ),
-                semicolon_token: Some(
-                    SEMICOLON@8..9 ";" [] [],
-                ),
-            },
-        ),
+        JsDebuggerStatement {
+            debugger_token: DEBUGGER_KW@0..8 "debugger" [] [],
+            semicolon_token: SEMICOLON@8..9 ";" [] [],
+        },
     ],
 }
 

@@ -384,9 +384,10 @@ mod support {
 		AstNode, AstNodeList, AstSeparatedList, SyntaxElementChildren, SyntaxKind, SyntaxNode,
 		SyntaxToken,
 	};
-	use crate::ast::AstChildren;
+	use crate::ast::{AstChildren, JsAnyParameter};
 	use crate::SyntaxList;
 	use crate::{SyntaxError, SyntaxResult};
+	use std::fmt::{Debug, Formatter};
 
 	pub(super) fn node<N: AstNode>(parent: &SyntaxNode) -> Option<N> {
 		parent.children().find_map(N::cast)
@@ -458,6 +459,32 @@ mod support {
 	) -> SyntaxResult<SyntaxToken> {
 		find_token(parent, possible_kinds)
 			.ok_or_else(|| SyntaxError::MissingRequiredChild(parent.clone()))
+	}
+
+	/// New-type wrapper to flatten the debug output of syntax result fields when printing [AstNode]s.
+	/// Omits the [Ok] if the node is present and prints `missing (required)` if the child is missing
+	pub(super) struct DebugSyntaxResult<N>(pub(super) SyntaxResult<N>);
+
+	impl<N: Debug> Debug for DebugSyntaxResult<N> {
+		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+			match &self.0 {
+				Ok(node) => std::fmt::Debug::fmt(node, f),
+				Err(SyntaxError::MissingRequiredChild(_)) => f.write_str("missing (required)"),
+			}
+		}
+	}
+
+	/// New-type wrapper to flatten the debug output of optional children when printing [AstNode]s.
+	/// Omits the [Some] if the node is present and prints `missing (optional)` if the child is missing
+	pub(super) struct DebugOptionalNode<N>(pub(super) Option<N>);
+
+	impl<N: Debug> Debug for DebugOptionalNode<N> {
+		fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+			match &self.0 {
+				Some(node) => std::fmt::Debug::fmt(node, f),
+				None => f.write_str("missing (optional)"),
+			}
+		}
 	}
 }
 

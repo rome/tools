@@ -1,647 +1,319 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsClassDeclaration(
-            JsClassDeclaration {
-                class_token: Ok(
-                    CLASS_KW@0..6 "class" [] [Whitespace(" ")],
-                ),
-                id: Ok(
-                    JsIdentifierBinding {
-                        name_token: Ok(
-                            IDENT@6..14 "Setters" [] [Whitespace(" ")],
-                        ),
-                    },
-                ),
-                implements_clause: None,
-                extends_clause: None,
-                l_curly_token: Ok(
-                    L_CURLY@14..15 "{" [] [],
-                ),
-                members: [
-                    JsSetterClassMember(
-                        JsSetterClassMember {
-                            access_modifier: None,
-                            abstract_token: None,
-                            static_token: None,
-                            set_token: Ok(
-                                SET_KW@15..21 "set" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            IDENT@21..24 "foo" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            l_paren_token: Ok(
-                                L_PAREN@24..25 "(" [] [],
-                            ),
-                            parameter: Ok(
-                                SinglePattern(
-                                    SinglePattern {
-                                        name: Ok(
-                                            Name {
-                                                ident_token: Ok(
-                                                    IDENT@25..26 "a" [] [],
-                                                ),
-                                            },
-                                        ),
-                                        question_mark_token: None,
-                                        excl_token: None,
-                                        ty: None,
-                                    },
-                                ),
-                            ),
-                            r_paren_token: Ok(
-                                R_PAREN@26..28 ")" [] [Whitespace(" ")],
-                            ),
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@28..29 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@29..30 "}" [] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                    JsSetterClassMember(
-                        JsSetterClassMember {
-                            access_modifier: None,
-                            abstract_token: None,
-                            static_token: None,
-                            set_token: Ok(
-                                SET_KW@30..36 "set" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            IDENT@36..42 "static" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            l_paren_token: Ok(
-                                L_PAREN@42..43 "(" [] [],
-                            ),
-                            parameter: Ok(
-                                SinglePattern(
-                                    SinglePattern {
-                                        name: Ok(
-                                            Name {
-                                                ident_token: Ok(
-                                                    IDENT@43..44 "a" [] [],
-                                                ),
-                                            },
-                                        ),
-                                        question_mark_token: None,
-                                        excl_token: None,
-                                        ty: None,
-                                    },
-                                ),
-                            ),
-                            r_paren_token: Ok(
-                                R_PAREN@44..46 ")" [] [Whitespace(" ")],
-                            ),
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@46..47 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@47..48 "}" [] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                    JsSetterClassMember(
-                        JsSetterClassMember {
-                            access_modifier: None,
-                            abstract_token: None,
-                            static_token: Some(
-                                STATIC_KW@48..57 "static" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            set_token: Ok(
-                                SET_KW@57..61 "set" [] [Whitespace(" ")],
-                            ),
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            IDENT@61..64 "bar" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            l_paren_token: Ok(
-                                L_PAREN@64..65 "(" [] [],
-                            ),
-                            parameter: Ok(
-                                SinglePattern(
-                                    SinglePattern {
-                                        name: Ok(
-                                            Name {
-                                                ident_token: Ok(
-                                                    IDENT@65..66 "a" [] [],
-                                                ),
-                                            },
-                                        ),
-                                        question_mark_token: None,
-                                        excl_token: None,
-                                        ty: None,
-                                    },
-                                ),
-                            ),
-                            r_paren_token: Ok(
-                                R_PAREN@66..68 ")" [] [Whitespace(" ")],
-                            ),
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@68..69 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@69..70 "}" [] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                    JsSetterClassMember(
-                        JsSetterClassMember {
-                            access_modifier: None,
-                            abstract_token: None,
-                            static_token: None,
-                            set_token: Ok(
-                                SET_KW@70..76 "set" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            JS_STRING_LITERAL@76..81 "\"baz\"" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            l_paren_token: Ok(
-                                L_PAREN@81..82 "(" [] [],
-                            ),
-                            parameter: Ok(
-                                SinglePattern(
-                                    SinglePattern {
-                                        name: Ok(
-                                            Name {
-                                                ident_token: Ok(
-                                                    IDENT@82..83 "a" [] [],
-                                                ),
-                                            },
-                                        ),
-                                        question_mark_token: None,
-                                        excl_token: None,
-                                        ty: None,
-                                    },
-                                ),
-                            ),
-                            r_paren_token: Ok(
-                                R_PAREN@83..85 ")" [] [Whitespace(" ")],
-                            ),
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@85..86 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@86..87 "}" [] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                    JsSetterClassMember(
-                        JsSetterClassMember {
-                            access_modifier: None,
-                            abstract_token: None,
-                            static_token: None,
-                            set_token: Ok(
-                                SET_KW@87..93 "set" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            name: Ok(
-                                JsComputedMemberName(
-                                    JsComputedMemberName {
-                                        l_brack_token: Ok(
-                                            L_BRACK@93..94 "[" [] [],
-                                        ),
-                                        expression: Ok(
-                                            JsBinaryExpression(
-                                                JsBinaryExpression {
-                                                    left: Ok(
-                                                        JsAnyLiteralExpression(
-                                                            JsStringLiteralExpression(
-                                                                JsStringLiteralExpression {
-                                                                    value_token: Ok(
-                                                                        JS_STRING_LITERAL@94..98 "\"a\"" [] [Whitespace(" ")],
-                                                                    ),
-                                                                },
-                                                            ),
-                                                        ),
-                                                    ),
-                                                    operator: Ok(
-                                                        PLUS@98..100 "+" [] [Whitespace(" ")],
-                                                    ),
-                                                },
-                                            ),
-                                        ),
-                                        r_brack_token: Ok(
-                                            R_BRACK@103..104 "]" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            l_paren_token: Ok(
-                                L_PAREN@104..105 "(" [] [],
-                            ),
-                            parameter: Ok(
-                                SinglePattern(
-                                    SinglePattern {
-                                        name: Ok(
-                                            Name {
-                                                ident_token: Ok(
-                                                    IDENT@105..106 "a" [] [],
-                                                ),
-                                            },
-                                        ),
-                                        question_mark_token: None,
-                                        excl_token: None,
-                                        ty: None,
-                                    },
-                                ),
-                            ),
-                            r_paren_token: Ok(
-                                R_PAREN@106..108 ")" [] [Whitespace(" ")],
-                            ),
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@108..109 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@109..110 "}" [] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                    JsSetterClassMember(
-                        JsSetterClassMember {
-                            access_modifier: None,
-                            abstract_token: None,
-                            static_token: None,
-                            set_token: Ok(
-                                SET_KW@110..116 "set" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            JS_NUMBER_LITERAL@116..117 "5" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            l_paren_token: Ok(
-                                L_PAREN@117..118 "(" [] [],
-                            ),
-                            parameter: Ok(
-                                SinglePattern(
-                                    SinglePattern {
-                                        name: Ok(
-                                            Name {
-                                                ident_token: Ok(
-                                                    IDENT@118..119 "a" [] [],
-                                                ),
-                                            },
-                                        ),
-                                        question_mark_token: None,
-                                        excl_token: None,
-                                        ty: None,
-                                    },
-                                ),
-                            ),
-                            r_paren_token: Ok(
-                                R_PAREN@119..121 ")" [] [Whitespace(" ")],
-                            ),
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@121..122 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@122..123 "}" [] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                    JsSetterClassMember(
-                        JsSetterClassMember {
-                            access_modifier: None,
-                            abstract_token: None,
-                            static_token: None,
-                            set_token: Ok(
-                                SET_KW@123..129 "set" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            name: Ok(
-                                JsPrivateClassMemberName(
-                                    JsPrivateClassMemberName {
-                                        hash_token: Ok(
-                                            HASH@129..130 "#" [] [],
-                                        ),
-                                        id_token: Ok(
-                                            IDENT@130..137 "private" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            l_paren_token: Ok(
-                                L_PAREN@137..138 "(" [] [],
-                            ),
-                            parameter: Ok(
-                                SinglePattern(
-                                    SinglePattern {
-                                        name: Ok(
-                                            Name {
-                                                ident_token: Ok(
-                                                    IDENT@138..139 "a" [] [],
-                                                ),
-                                            },
-                                        ),
-                                        question_mark_token: None,
-                                        excl_token: None,
-                                        ty: None,
-                                    },
-                                ),
-                            ),
-                            r_paren_token: Ok(
-                                R_PAREN@139..141 ")" [] [Whitespace(" ")],
-                            ),
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@141..142 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@142..143 "}" [] [],
-                                    ),
-                                },
-                            ),
-                        },
-                    ),
-                ],
-                r_curly_token: Ok(
-                    R_CURLY@143..145 "}" [Whitespace("\n")] [],
-                ),
+        JsClassDeclaration {
+            class_token: CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@6..14 "Setters" [] [Whitespace(" ")],
             },
-        ),
-        JsClassDeclaration(
-            JsClassDeclaration {
-                class_token: Ok(
-                    CLASS_KW@145..152 "class" [Whitespace("\n")] [Whitespace(" ")],
-                ),
-                id: Ok(
-                    JsIdentifierBinding {
-                        name_token: Ok(
-                            IDENT@152..163 "NotSetters" [] [Whitespace(" ")],
-                        ),
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@14..15 "{" [] [],
+            members: [
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    set_token: SET_KW@15..21 "set" [Whitespace("\n\t")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@21..24 "foo" [] [],
                     },
-                ),
-                implements_clause: None,
-                extends_clause: None,
-                l_curly_token: Ok(
-                    L_CURLY@163..164 "{" [] [],
-                ),
-                members: [
-                    JsMethodClassMember(
-                        JsMethodClassMember {
-                            access_modifier: None,
-                            static_token: None,
-                            abstract_token: None,
-                            async_token: None,
-                            star_token: None,
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            IDENT@164..169 "set" [Whitespace("\n\t")] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            type_parameters: None,
-                            parameter_list: Ok(
-                                JsParameterList {
-                                    l_paren_token: Ok(
-                                        L_PAREN@169..170 "(" [] [],
-                                    ),
-                                    parameters: [
-                                        AstSeparatedElement {
-                                            node: Pattern(
-                                                SinglePattern(
-                                                    SinglePattern {
-                                                        name: Ok(
-                                                            Name {
-                                                                ident_token: Ok(
-                                                                    IDENT@170..171 "a" [] [],
-                                                                ),
-                                                            },
-                                                        ),
-                                                        question_mark_token: None,
-                                                        excl_token: None,
-                                                        ty: None,
-                                                    },
-                                                ),
-                                            ),
-                                            trailing_separator: None,
-                                        },
-                                    ],
-                                    r_paren_token: Ok(
-                                        R_PAREN@171..173 ")" [] [Whitespace(" ")],
-                                    ),
-                                },
-                            ),
-                            return_type: None,
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@173..174 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@174..175 "}" [] [],
-                                    ),
-                                },
-                            ),
+                    l_paren_token: L_PAREN@24..25 "(" [] [],
+                    parameter: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@25..26 "a" [] [],
                         },
-                    ),
-                    JsMethodClassMember(
-                        JsMethodClassMember {
-                            access_modifier: None,
-                            static_token: None,
-                            abstract_token: None,
-                            async_token: Some(
-                                ASYNC_KW@175..183 "async" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            star_token: None,
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            IDENT@183..186 "set" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            type_parameters: None,
-                            parameter_list: Ok(
-                                JsParameterList {
-                                    l_paren_token: Ok(
-                                        L_PAREN@186..187 "(" [] [],
-                                    ),
-                                    parameters: [
-                                        AstSeparatedElement {
-                                            node: Pattern(
-                                                SinglePattern(
-                                                    SinglePattern {
-                                                        name: Ok(
-                                                            Name {
-                                                                ident_token: Ok(
-                                                                    IDENT@187..188 "a" [] [],
-                                                                ),
-                                                            },
-                                                        ),
-                                                        question_mark_token: None,
-                                                        excl_token: None,
-                                                        ty: None,
-                                                    },
-                                                ),
-                                            ),
-                                            trailing_separator: None,
-                                        },
-                                    ],
-                                    r_paren_token: Ok(
-                                        R_PAREN@188..190 ")" [] [Whitespace(" ")],
-                                    ),
-                                },
-                            ),
-                            return_type: None,
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@190..191 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@191..192 "}" [] [],
-                                    ),
-                                },
-                            ),
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@26..28 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@28..29 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@29..30 "}" [] [],
+                    },
+                },
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    set_token: SET_KW@30..36 "set" [Whitespace("\n\t")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@36..42 "static" [] [],
+                    },
+                    l_paren_token: L_PAREN@42..43 "(" [] [],
+                    parameter: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@43..44 "a" [] [],
                         },
-                    ),
-                    JsMethodClassMember(
-                        JsMethodClassMember {
-                            access_modifier: None,
-                            static_token: Some(
-                                STATIC_KW@192..201 "static" [Whitespace("\n\t")] [Whitespace(" ")],
-                            ),
-                            abstract_token: None,
-                            async_token: None,
-                            star_token: None,
-                            name: Ok(
-                                JsLiteralMemberName(
-                                    JsLiteralMemberName {
-                                        value: Ok(
-                                            IDENT@201..204 "set" [] [],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            type_parameters: None,
-                            parameter_list: Ok(
-                                JsParameterList {
-                                    l_paren_token: Ok(
-                                        L_PAREN@204..205 "(" [] [],
-                                    ),
-                                    parameters: [
-                                        AstSeparatedElement {
-                                            node: Pattern(
-                                                SinglePattern(
-                                                    SinglePattern {
-                                                        name: Ok(
-                                                            Name {
-                                                                ident_token: Ok(
-                                                                    IDENT@205..206 "a" [] [],
-                                                                ),
-                                                            },
-                                                        ),
-                                                        question_mark_token: None,
-                                                        excl_token: None,
-                                                        ty: None,
-                                                    },
-                                                ),
-                                            ),
-                                            trailing_separator: None,
-                                        },
-                                    ],
-                                    r_paren_token: Ok(
-                                        R_PAREN@206..208 ")" [] [Whitespace(" ")],
-                                    ),
-                                },
-                            ),
-                            return_type: None,
-                            body: Ok(
-                                JsFunctionBody {
-                                    l_curly_token: Ok(
-                                        L_CURLY@208..209 "{" [] [],
-                                    ),
-                                    directives: [],
-                                    statements: [],
-                                    r_curly_token: Ok(
-                                        R_CURLY@209..210 "}" [] [],
-                                    ),
-                                },
-                            ),
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@44..46 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@46..47 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@47..48 "}" [] [],
+                    },
+                },
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: STATIC_KW@48..57 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    set_token: SET_KW@57..61 "set" [] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: IDENT@61..64 "bar" [] [],
+                    },
+                    l_paren_token: L_PAREN@64..65 "(" [] [],
+                    parameter: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@65..66 "a" [] [],
                         },
-                    ),
-                ],
-                r_curly_token: Ok(
-                    R_CURLY@210..212 "}" [Whitespace("\n")] [],
-                ),
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@66..68 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@68..69 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@69..70 "}" [] [],
+                    },
+                },
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    set_token: SET_KW@70..76 "set" [Whitespace("\n\t")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: JS_STRING_LITERAL@76..81 "\"baz\"" [] [],
+                    },
+                    l_paren_token: L_PAREN@81..82 "(" [] [],
+                    parameter: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@82..83 "a" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@83..85 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@85..86 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@86..87 "}" [] [],
+                    },
+                },
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    set_token: SET_KW@87..93 "set" [Whitespace("\n\t")] [Whitespace(" ")],
+                    name: JsComputedMemberName {
+                        l_brack_token: L_BRACK@93..94 "[" [] [],
+                        expression: JsBinaryExpression {
+                            left: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@94..98 "\"a\"" [] [Whitespace(" ")],
+                            },
+                            operator: PLUS@98..100 "+" [] [Whitespace(" ")],
+                        },
+                        r_brack_token: R_BRACK@103..104 "]" [] [],
+                    },
+                    l_paren_token: L_PAREN@104..105 "(" [] [],
+                    parameter: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@105..106 "a" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@106..108 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@108..109 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@109..110 "}" [] [],
+                    },
+                },
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    set_token: SET_KW@110..116 "set" [Whitespace("\n\t")] [Whitespace(" ")],
+                    name: JsLiteralMemberName {
+                        value: JS_NUMBER_LITERAL@116..117 "5" [] [],
+                    },
+                    l_paren_token: L_PAREN@117..118 "(" [] [],
+                    parameter: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@118..119 "a" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@119..121 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@121..122 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@122..123 "}" [] [],
+                    },
+                },
+                JsSetterClassMember {
+                    access_modifier: missing (optional),
+                    abstract_token: missing (optional),
+                    static_token: missing (optional),
+                    set_token: SET_KW@123..129 "set" [Whitespace("\n\t")] [Whitespace(" ")],
+                    name: JsPrivateClassMemberName {
+                        hash_token: HASH@129..130 "#" [] [],
+                        id_token: IDENT@130..137 "private" [] [],
+                    },
+                    l_paren_token: L_PAREN@137..138 "(" [] [],
+                    parameter: SinglePattern {
+                        name: Name {
+                            ident_token: IDENT@138..139 "a" [] [],
+                        },
+                        question_mark_token: missing (optional),
+                        excl_token: missing (optional),
+                        ty: missing (optional),
+                    },
+                    r_paren_token: R_PAREN@139..141 ")" [] [Whitespace(" ")],
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@141..142 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@142..143 "}" [] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@143..145 "}" [Whitespace("\n")] [],
+        },
+        JsClassDeclaration {
+            class_token: CLASS_KW@145..152 "class" [Whitespace("\n")] [Whitespace(" ")],
+            id: JsIdentifierBinding {
+                name_token: IDENT@152..163 "NotSetters" [] [Whitespace(" ")],
             },
-        ),
+            implements_clause: missing (optional),
+            extends_clause: missing (optional),
+            l_curly_token: L_CURLY@163..164 "{" [] [],
+            members: [
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@164..169 "set" [Whitespace("\n\t")] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@169..170 "(" [] [],
+                        parameters: [
+                            AstSeparatedElement {
+                                node: SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@170..171 "a" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                },
+                                trailing_separator: None,
+                            },
+                        ],
+                        r_paren_token: R_PAREN@171..173 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@173..174 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@174..175 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: missing (optional),
+                    abstract_token: missing (optional),
+                    async_token: ASYNC_KW@175..183 "async" [Whitespace("\n\t")] [Whitespace(" ")],
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@183..186 "set" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@186..187 "(" [] [],
+                        parameters: [
+                            AstSeparatedElement {
+                                node: SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@187..188 "a" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                },
+                                trailing_separator: None,
+                            },
+                        ],
+                        r_paren_token: R_PAREN@188..190 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@190..191 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@191..192 "}" [] [],
+                    },
+                },
+                JsMethodClassMember {
+                    access_modifier: missing (optional),
+                    static_token: STATIC_KW@192..201 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                    abstract_token: missing (optional),
+                    async_token: missing (optional),
+                    star_token: missing (optional),
+                    name: JsLiteralMemberName {
+                        value: IDENT@201..204 "set" [] [],
+                    },
+                    type_parameters: missing (optional),
+                    parameter_list: JsParameterList {
+                        l_paren_token: L_PAREN@204..205 "(" [] [],
+                        parameters: [
+                            AstSeparatedElement {
+                                node: SinglePattern {
+                                    name: Name {
+                                        ident_token: IDENT@205..206 "a" [] [],
+                                    },
+                                    question_mark_token: missing (optional),
+                                    excl_token: missing (optional),
+                                    ty: missing (optional),
+                                },
+                                trailing_separator: None,
+                            },
+                        ],
+                        r_paren_token: R_PAREN@206..208 ")" [] [Whitespace(" ")],
+                    },
+                    return_type: missing (optional),
+                    body: JsFunctionBody {
+                        l_curly_token: L_CURLY@208..209 "{" [] [],
+                        directives: [],
+                        statements: [],
+                        r_curly_token: R_CURLY@209..210 "}" [] [],
+                    },
+                },
+            ],
+            r_curly_token: R_CURLY@210..212 "}" [Whitespace("\n")] [],
+        },
     ],
 }
 

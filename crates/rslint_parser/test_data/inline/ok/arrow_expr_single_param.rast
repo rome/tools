@@ -1,111 +1,55 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrowFunctionExpression(
-                        JsArrowFunctionExpression {
-                            async_token: None,
-                            type_parameters: None,
-                            parameter_list: Some(
-                                JsIdentifierBinding(
-                                    JsIdentifierBinding {
-                                        name_token: Ok(
-                                            IDENT@0..4 "foo" [] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            fat_arrow_token: Ok(
-                                FAT_ARROW@4..7 "=>" [] [Whitespace(" ")],
-                            ),
-                            return_type: None,
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameter_list: JsIdentifierBinding {
+                    name_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@4..7 "=>" [] [Whitespace(" ")],
+                return_type: missing (optional),
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrowFunctionExpression(
-                        JsArrowFunctionExpression {
-                            async_token: None,
-                            type_parameters: None,
-                            parameter_list: Some(
-                                JsIdentifierBinding(
-                                    JsIdentifierBinding {
-                                        name_token: Ok(
-                                            IDENT@9..16 "yield" [Whitespace("\n")] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            fat_arrow_token: Ok(
-                                FAT_ARROW@16..19 "=>" [] [Whitespace(" ")],
-                            ),
-                            return_type: None,
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameter_list: JsIdentifierBinding {
+                    name_token: IDENT@9..16 "yield" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@16..19 "=>" [] [Whitespace(" ")],
+                return_type: missing (optional),
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrowFunctionExpression(
-                        JsArrowFunctionExpression {
-                            async_token: None,
-                            type_parameters: None,
-                            parameter_list: Some(
-                                JsIdentifierBinding(
-                                    JsIdentifierBinding {
-                                        name_token: Ok(
-                                            IDENT@21..28 "await" [Whitespace("\n")] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            fat_arrow_token: Ok(
-                                FAT_ARROW@28..31 "=>" [] [Whitespace(" ")],
-                            ),
-                            return_type: None,
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameter_list: JsIdentifierBinding {
+                    name_token: IDENT@21..28 "await" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@28..31 "=>" [] [Whitespace(" ")],
+                return_type: missing (optional),
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsArrowFunctionExpression(
-                        JsArrowFunctionExpression {
-                            async_token: None,
-                            type_parameters: None,
-                            parameter_list: Some(
-                                JsIdentifierBinding(
-                                    JsIdentifierBinding {
-                                        name_token: Ok(
-                                            IDENT@33..38 "foo" [Whitespace("\n")] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            fat_arrow_token: Ok(
-                                FAT_ARROW@38..40 "=>" [] [],
-                            ),
-                            return_type: None,
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsArrowFunctionExpression {
+                async_token: missing (optional),
+                type_parameters: missing (optional),
+                parameter_list: JsIdentifierBinding {
+                    name_token: IDENT@33..38 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                fat_arrow_token: FAT_ARROW@38..40 "=>" [] [],
+                return_type: missing (optional),
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 

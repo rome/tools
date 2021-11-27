@@ -1,76 +1,34 @@
 JsRoot {
-    interpreter_token: None,
+    interpreter_token: missing (optional),
     directives: [],
     statements: [
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsLogicalExpression(
-                        JsLogicalExpression {
-                            left: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@0..4 "foo" [] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                QUESTION2@4..7 "??" [] [Whitespace(" ")],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+        JsExpressionStatement {
+            expression: JsLogicalExpression {
+                left: JsReferenceIdentifierExpression {
+                    name_token: IDENT@0..4 "foo" [] [Whitespace(" ")],
+                },
+                operator: QUESTION2@4..7 "??" [] [Whitespace(" ")],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsLogicalExpression(
-                        JsLogicalExpression {
-                            left: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                PIPE2@13..16 "||" [] [Whitespace(" ")],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsLogicalExpression {
+                left: JsReferenceIdentifierExpression {
+                    name_token: IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                operator: PIPE2@13..16 "||" [] [Whitespace(" ")],
             },
-        ),
-        JsExpressionStatement(
-            JsExpressionStatement {
-                expression: Ok(
-                    JsLogicalExpression(
-                        JsLogicalExpression {
-                            left: Ok(
-                                JsReferenceIdentifierExpression(
-                                    JsReferenceIdentifierExpression {
-                                        name_token: Ok(
-                                            IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")],
-                                        ),
-                                    },
-                                ),
-                            ),
-                            operator: Ok(
-                                AMP2@20..23 "&&" [] [Whitespace(" ")],
-                            ),
-                        },
-                    ),
-                ),
-                semicolon_token: None,
+            semicolon_token: missing (optional),
+        },
+        JsExpressionStatement {
+            expression: JsLogicalExpression {
+                left: JsReferenceIdentifierExpression {
+                    name_token: IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")],
+                },
+                operator: AMP2@20..23 "&&" [] [Whitespace(" ")],
             },
-        ),
+            semicolon_token: missing (optional),
+        },
     ],
 }
 
