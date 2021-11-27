@@ -221,7 +221,9 @@ JsRoot {
                     abstract_token: missing (optional),
                     async_token: missing (optional),
                     star_token: missing (optional),
-                    name: missing (required),
+                    name: JsLiteralMemberName {
+                        value: IDENT@196..230 "static" [Whitespace("\n\t"), Comments("// Methods called static"), Whitespace("\n\t")] [],
+                    },
                     type_parameters: missing (optional),
                     parameter_list: JsParameterList {
                         l_paren_token: L_PAREN@230..231 "(" [] [],
@@ -702,7 +704,8 @@ JsRoot {
       2: L_CURLY@195..196 "{" [] []
       3: LIST@196..367
         0: JS_METHOD_CLASS_MEMBER@196..235
-          0: IDENT@196..230 "static" [Whitespace("\n\t"), Comments("// Methods called static"), Whitespace("\n\t")] []
+          0: JS_LITERAL_MEMBER_NAME@196..230
+            0: IDENT@196..230 "static" [Whitespace("\n\t"), Comments("// Methods called static"), Whitespace("\n\t")] []
           1: JS_PARAMETER_LIST@230..233
             0: L_PAREN@230..231 "(" [] []
             1: LIST@231..231

@@ -384,7 +384,7 @@ mod support {
 		AstNode, AstNodeList, AstSeparatedList, SyntaxElementChildren, SyntaxKind, SyntaxNode,
 		SyntaxToken,
 	};
-	use crate::ast::{AstChildren, JsAnyParameter};
+	use crate::ast::AstChildren;
 	use crate::SyntaxList;
 	use crate::{SyntaxError, SyntaxResult};
 	use std::fmt::{Debug, Formatter};
