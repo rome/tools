@@ -1,3 +1,82 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsThrowStatement(
+            JsThrowStatement {
+                throw_token: Ok(
+                    THROW_KW@0..6 "throw" [] [Whitespace(" ")],
+                ),
+                argument: Ok(
+                    NewExpr(
+                        NewExpr {
+                            new_token: Ok(
+                                NEW_KW@6..10 "new" [] [Whitespace(" ")],
+                            ),
+                            type_args: None,
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@10..15 "Error" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            arguments: Ok(
+                                ArgList {
+                                    l_paren_token: Ok(
+                                        L_PAREN@15..16 "(" [] [],
+                                    ),
+                                    args: [
+                                        AstSeparatedElement {
+                                            node: JsAnyLiteralExpression(
+                                                JsStringLiteralExpression(
+                                                    JsStringLiteralExpression {
+                                                        value_token: Ok(
+                                                            JS_STRING_LITERAL@16..21 "\"foo\"" [] [],
+                                                        ),
+                                                    },
+                                                ),
+                                            ),
+                                            trailing_separator: None,
+                                        },
+                                    ],
+                                    r_paren_token: Ok(
+                                        R_PAREN@21..22 ")" [] [],
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@22..23 ";" [] [],
+                ),
+            },
+        ),
+        JsThrowStatement(
+            JsThrowStatement {
+                throw_token: Ok(
+                    THROW_KW@23..30 "throw" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                argument: Ok(
+                    JsAnyLiteralExpression(
+                        JsStringLiteralExpression(
+                            JsStringLiteralExpression {
+                                value_token: Ok(
+                                    JS_STRING_LITERAL@30..35 "\"foo\"" [] [],
+                                ),
+                            },
+                        ),
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..36
   0: (empty)
   1: LIST@0..0

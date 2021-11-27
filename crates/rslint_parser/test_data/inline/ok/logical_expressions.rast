@@ -1,3 +1,79 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsLogicalExpression(
+                        JsLogicalExpression {
+                            left: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@0..4 "foo" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                QUESTION2@4..7 "??" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsLogicalExpression(
+                        JsLogicalExpression {
+                            left: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@10..13 "a" [Whitespace("\n")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                PIPE2@13..16 "||" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsLogicalExpression(
+                        JsLogicalExpression {
+                            left: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@17..20 "a" [Whitespace("\n")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                AMP2@20..23 "&&" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..25
   0: (empty)
   1: LIST@0..0

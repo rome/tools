@@ -1,3 +1,463 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsStaticMemberExpression(
+                        JsStaticMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@0..3 "foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                DOT@3..4 "." [] [],
+                            ),
+                            member: Ok(
+                                JsReferenceIdentifierMember(
+                                    JsReferenceIdentifierMember {
+                                        name_token: Ok(
+                                            IDENT@4..7 "bar" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsStaticMemberExpression(
+                        JsStaticMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@7..11 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                DOT@11..12 "." [] [],
+                            ),
+                            member: Ok(
+                                JsReferenceIdentifierMember(
+                                    JsReferenceIdentifierMember {
+                                        name_token: Ok(
+                                            IDENT@12..17 "await" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsStaticMemberExpression(
+                        JsStaticMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@17..21 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                DOT@21..22 "." [] [],
+                            ),
+                            member: Ok(
+                                JsReferenceIdentifierMember(
+                                    JsReferenceIdentifierMember {
+                                        name_token: Ok(
+                                            IDENT@22..27 "yield" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsStaticMemberExpression(
+                        JsStaticMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@27..31 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                DOT@31..32 "." [] [],
+                            ),
+                            member: Ok(
+                                JsReferenceIdentifierMember(
+                                    JsReferenceIdentifierMember {
+                                        name_token: Ok(
+                                            IDENT@32..35 "for" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsStaticMemberExpression(
+                        JsStaticMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@35..39 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                QUESTIONDOT@39..41 "?." [] [],
+                            ),
+                            member: Ok(
+                                JsReferenceIdentifierMember(
+                                    JsReferenceIdentifierMember {
+                                        name_token: Ok(
+                                            IDENT@41..44 "for" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsStaticMemberExpression(
+                        JsStaticMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@44..48 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                QUESTIONDOT@48..50 "?." [] [],
+                            ),
+                            member: Ok(
+                                JsReferenceIdentifierMember(
+                                    JsReferenceIdentifierMember {
+                                        name_token: Ok(
+                                            IDENT@50..53 "bar" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsClassDeclaration(
+            JsClassDeclaration {
+                class_token: Ok(
+                    CLASS_KW@53..61 "class" [Whitespace("\n\n")] [Whitespace(" ")],
+                ),
+                id: Ok(
+                    JsIdentifierBinding {
+                        name_token: Ok(
+                            IDENT@61..66 "Test" [] [Whitespace(" ")],
+                        ),
+                    },
+                ),
+                implements_clause: None,
+                extends_clause: None,
+                l_curly_token: Ok(
+                    L_CURLY@66..67 "{" [] [],
+                ),
+                members: [
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsPrivateClassMemberName(
+                                    JsPrivateClassMemberName {
+                                        hash_token: Ok(
+                                            HASH@67..70 "#" [Whitespace("\n\t")] [],
+                                        ),
+                                        id_token: Ok(
+                                            IDENT@70..73 "bar" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsMethodClassMember(
+                        JsMethodClassMember {
+                            access_modifier: None,
+                            static_token: None,
+                            abstract_token: None,
+                            async_token: None,
+                            star_token: None,
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@73..80 "test" [Whitespace("\n\n\t")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            type_parameters: None,
+                            parameter_list: Ok(
+                                JsParameterList {
+                                    l_paren_token: Ok(
+                                        L_PAREN@80..81 "(" [] [],
+                                    ),
+                                    parameters: [
+                                        AstSeparatedElement {
+                                            node: Pattern(
+                                                SinglePattern(
+                                                    SinglePattern {
+                                                        name: Ok(
+                                                            Name {
+                                                                ident_token: Ok(
+                                                                    IDENT@81..86 "other" [] [],
+                                                                ),
+                                                            },
+                                                        ),
+                                                        question_mark_token: None,
+                                                        excl_token: None,
+                                                        ty: None,
+                                                    },
+                                                ),
+                                            ),
+                                            trailing_separator: None,
+                                        },
+                                    ],
+                                    r_paren_token: Ok(
+                                        R_PAREN@86..88 ")" [] [Whitespace(" ")],
+                                    ),
+                                },
+                            ),
+                            return_type: None,
+                            body: Ok(
+                                JsFunctionBody {
+                                    l_curly_token: Ok(
+                                        L_CURLY@88..89 "{" [] [],
+                                    ),
+                                    directives: [],
+                                    statements: [
+                                        JsExpressionStatement(
+                                            JsExpressionStatement {
+                                                expression: Ok(
+                                                    JsStaticMemberExpression(
+                                                        JsStaticMemberExpression {
+                                                            object: Ok(
+                                                                JsThisExpression(
+                                                                    JsThisExpression {
+                                                                        this_token: Ok(
+                                                                            THIS_KW@89..96 "this" [Whitespace("\n\t\t")] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                            operator: Ok(
+                                                                DOT@96..97 "." [] [],
+                                                            ),
+                                                            member: Ok(
+                                                                JsReferencePrivateMember(
+                                                                    JsReferencePrivateMember {
+                                                                        hash_token: Ok(
+                                                                            HASH@97..98 "#" [] [],
+                                                                        ),
+                                                                        name_token: Ok(
+                                                                            IDENT@98..101 "bar" [] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                                semicolon_token: Some(
+                                                    SEMICOLON@101..102 ";" [] [],
+                                                ),
+                                            },
+                                        ),
+                                        JsExpressionStatement(
+                                            JsExpressionStatement {
+                                                expression: Ok(
+                                                    JsStaticMemberExpression(
+                                                        JsStaticMemberExpression {
+                                                            object: Ok(
+                                                                JsThisExpression(
+                                                                    JsThisExpression {
+                                                                        this_token: Ok(
+                                                                            THIS_KW@102..109 "this" [Whitespace("\n\t\t")] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                            operator: Ok(
+                                                                QUESTIONDOT@109..111 "?." [] [],
+                                                            ),
+                                                            member: Ok(
+                                                                JsReferencePrivateMember(
+                                                                    JsReferencePrivateMember {
+                                                                        hash_token: Ok(
+                                                                            HASH@111..112 "#" [] [],
+                                                                        ),
+                                                                        name_token: Ok(
+                                                                            IDENT@112..115 "bar" [] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                                semicolon_token: Some(
+                                                    SEMICOLON@115..116 ";" [] [],
+                                                ),
+                                            },
+                                        ),
+                                        JsExpressionStatement(
+                                            JsExpressionStatement {
+                                                expression: Ok(
+                                                    JsStaticMemberExpression(
+                                                        JsStaticMemberExpression {
+                                                            object: Ok(
+                                                                JsReferenceIdentifierExpression(
+                                                                    JsReferenceIdentifierExpression {
+                                                                        name_token: Ok(
+                                                                            IDENT@116..125 "other" [Whitespace("\n\n\t\t")] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                            operator: Ok(
+                                                                DOT@125..126 "." [] [],
+                                                            ),
+                                                            member: Ok(
+                                                                JsReferencePrivateMember(
+                                                                    JsReferencePrivateMember {
+                                                                        hash_token: Ok(
+                                                                            HASH@126..127 "#" [] [],
+                                                                        ),
+                                                                        name_token: Ok(
+                                                                            IDENT@127..130 "bar" [] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                                semicolon_token: Some(
+                                                    SEMICOLON@130..131 ";" [] [],
+                                                ),
+                                            },
+                                        ),
+                                        JsExpressionStatement(
+                                            JsExpressionStatement {
+                                                expression: Ok(
+                                                    JsStaticMemberExpression(
+                                                        JsStaticMemberExpression {
+                                                            object: Ok(
+                                                                JsReferenceIdentifierExpression(
+                                                                    JsReferenceIdentifierExpression {
+                                                                        name_token: Ok(
+                                                                            IDENT@131..139 "other" [Whitespace("\n\t\t")] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                            operator: Ok(
+                                                                QUESTIONDOT@139..141 "?." [] [],
+                                                            ),
+                                                            member: Ok(
+                                                                JsReferencePrivateMember(
+                                                                    JsReferencePrivateMember {
+                                                                        hash_token: Ok(
+                                                                            HASH@141..142 "#" [] [],
+                                                                        ),
+                                                                        name_token: Ok(
+                                                                            IDENT@142..145 "bar" [] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                                semicolon_token: Some(
+                                                    SEMICOLON@145..146 ";" [] [],
+                                                ),
+                                            },
+                                        ),
+                                    ],
+                                    r_curly_token: Ok(
+                                        R_CURLY@146..149 "}" [Whitespace("\n\t")] [],
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                ],
+                r_curly_token: Ok(
+                    R_CURLY@149..151 "}" [Whitespace("\n")] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..152
   0: (empty)
   1: LIST@0..0

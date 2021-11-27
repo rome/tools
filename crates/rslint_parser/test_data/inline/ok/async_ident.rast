@@ -1,3 +1,63 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement(
+            JsVariableDeclarationStatement {
+                declaration: Ok(
+                    JsVariableDeclaration {
+                        kind_token: Ok(
+                            LET_KW@0..4 "let" [] [Whitespace(" ")],
+                        ),
+                        declarators: [
+                            AstSeparatedElement {
+                                node: JsVariableDeclarator {
+                                    id: Ok(
+                                        SinglePattern(
+                                            SinglePattern {
+                                                name: Ok(
+                                                    Name {
+                                                        ident_token: Ok(
+                                                            IDENT@4..6 "a" [] [Whitespace(" ")],
+                                                        ),
+                                                    },
+                                                ),
+                                                question_mark_token: None,
+                                                excl_token: None,
+                                                ty: None,
+                                            },
+                                        ),
+                                    ),
+                                    init: Some(
+                                        JsEqualValueClause {
+                                            eq_token: Ok(
+                                                EQ@6..8 "=" [] [Whitespace(" ")],
+                                            ),
+                                            expression: Ok(
+                                                JsReferenceIdentifierExpression(
+                                                    JsReferenceIdentifierExpression {
+                                                        name_token: Ok(
+                                                            IDENT@8..13 "async" [] [],
+                                                        ),
+                                                    },
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                },
+                                trailing_separator: None,
+                            },
+                        ],
+                    },
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@13..14 ";" [] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..15
   0: (empty)
   1: LIST@0..0

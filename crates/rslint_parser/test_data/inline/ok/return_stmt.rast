@@ -1,3 +1,40 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsArrowFunctionExpression(
+                        JsArrowFunctionExpression {
+                            async_token: None,
+                            type_parameters: None,
+                            parameter_list: Some(
+                                JsParameterList(
+                                    JsParameterList {
+                                        l_paren_token: Ok(
+                                            L_PAREN@0..1 "(" [] [],
+                                        ),
+                                        parameters: [],
+                                        r_paren_token: Ok(
+                                            R_PAREN@1..3 ")" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            fat_arrow_token: Ok(
+                                FAT_ARROW@3..6 "=>" [] [Whitespace(" ")],
+                            ),
+                            return_type: None,
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..43
   0: (empty)
   1: LIST@0..0

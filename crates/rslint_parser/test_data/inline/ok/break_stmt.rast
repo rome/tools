@@ -1,3 +1,91 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsLabeledStatement(
+            JsLabeledStatement {
+                label_token: Ok(
+                    IDENT@0..3 "foo" [] [],
+                ),
+                colon_token: Ok(
+                    COLON@3..5 ":" [] [Whitespace(" ")],
+                ),
+                body: Ok(
+                    JsBlockStatement(
+                        JsBlockStatement {
+                            l_curly_token: Ok(
+                                L_CURLY@5..6 "{" [] [],
+                            ),
+                            statements: [],
+                            r_curly_token: Ok(
+                                R_CURLY@6..7 "}" [] [],
+                            ),
+                        },
+                    ),
+                ),
+            },
+        ),
+        JsLabeledStatement(
+            JsLabeledStatement {
+                label_token: Ok(
+                    IDENT@7..12 "rust" [Whitespace("\n")] [],
+                ),
+                colon_token: Ok(
+                    COLON@12..14 ":" [] [Whitespace(" ")],
+                ),
+                body: Ok(
+                    JsBlockStatement(
+                        JsBlockStatement {
+                            l_curly_token: Ok(
+                                L_CURLY@14..15 "{" [] [],
+                            ),
+                            statements: [],
+                            r_curly_token: Ok(
+                                R_CURLY@15..16 "}" [] [],
+                            ),
+                        },
+                    ),
+                ),
+            },
+        ),
+        JsBreakStatement(
+            JsBreakStatement {
+                break_token: Ok(
+                    BREAK_KW@16..22 "break" [Whitespace("\n")] [],
+                ),
+                label_token: None,
+                semicolon_token: Some(
+                    SEMICOLON@22..23 ";" [] [],
+                ),
+            },
+        ),
+        JsBreakStatement(
+            JsBreakStatement {
+                break_token: Ok(
+                    BREAK_KW@23..30 "break" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                label_token: Some(
+                    IDENT@30..33 "foo" [] [],
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@33..34 ";" [] [],
+                ),
+            },
+        ),
+        JsBreakStatement(
+            JsBreakStatement {
+                break_token: Ok(
+                    BREAK_KW@34..41 "break" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                label_token: Some(
+                    IDENT@41..45 "rust" [] [],
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..46
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,170 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsClassDeclaration(
+            JsClassDeclaration {
+                class_token: Ok(
+                    CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                ),
+                id: Ok(
+                    JsIdentifierBinding {
+                        name_token: Ok(
+                            IDENT@6..10 "foo" [] [Whitespace(" ")],
+                        ),
+                    },
+                ),
+                implements_clause: None,
+                extends_clause: None,
+                l_curly_token: Ok(
+                    L_CURLY@10..12 "{" [] [Whitespace(" ")],
+                ),
+                members: [
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@12..13 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@13..14 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@14..15 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@15..16 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@16..17 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@17..18 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@18..19 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@19..20 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@20..21 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@21..23 ";" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                    JsGetterClassMember(
+                        JsGetterClassMember {
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            get_token: Ok(
+                                GET_KW@23..27 "get" [] [Whitespace(" ")],
+                            ),
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@27..30 "foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            l_paren_token: Ok(
+                                L_PAREN@30..31 "(" [] [],
+                            ),
+                            r_paren_token: Ok(
+                                R_PAREN@31..33 ")" [] [Whitespace(" ")],
+                            ),
+                            return_type: None,
+                            body: Ok(
+                                JsFunctionBody {
+                                    l_curly_token: Ok(
+                                        L_CURLY@33..34 "{" [] [],
+                                    ),
+                                    directives: [],
+                                    statements: [],
+                                    r_curly_token: Ok(
+                                        R_CURLY@34..35 "}" [] [],
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@35..36 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@36..37 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@37..38 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsEmptyClassMember(
+                        JsEmptyClassMember {
+                            semicolon_token: Ok(
+                                SEMICOLON@38..39 ";" [] [],
+                            ),
+                        },
+                    ),
+                ],
+                r_curly_token: Ok(
+                    R_CURLY@39..40 "}" [] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..41
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,56 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsThisExpression(
+                        JsThisExpression {
+                            this_token: Ok(
+                                THIS_KW@0..4 "this" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsStaticMemberExpression(
+                        JsStaticMemberExpression {
+                            object: Ok(
+                                JsThisExpression(
+                                    JsThisExpression {
+                                        this_token: Ok(
+                                            THIS_KW@4..9 "this" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                DOT@9..10 "." [] [],
+                            ),
+                            member: Ok(
+                                JsReferenceIdentifierMember(
+                                    JsReferenceIdentifierMember {
+                                        name_token: Ok(
+                                            IDENT@10..13 "foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..14
   0: (empty)
   1: LIST@0..0

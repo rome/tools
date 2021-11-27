@@ -130,11 +130,31 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					}
 				}
 			});
+
+			let fields = node.fields.iter().map(|field| {
+				let name = match field {
+					Field::Token {
+						name,
+						kind: TokenKind::Many(_),
+						..
+					} => format_ident!("{}", name),
+					_ => field.method_name(),
+				};
+
+				let string_name = name.to_string();
+
+				quote! {
+					.field(#string_name, &self.#name())
+				}
+			});
+
+			let string_name = name.to_string();
+
 			Some((
 				quote! {
 					// TODO: review documentation
 					// #[doc = #documentation]
-					#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+					#[derive(Clone, PartialEq, Eq, Hash)]
 					pub struct #name {
 						pub(crate) syntax: SyntaxNode,
 					}
@@ -142,6 +162,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					impl #name {
 						#(#methods)*
 					}
+
 				},
 				quote! {
 					impl AstNode for #name {
@@ -152,6 +173,14 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 							if Self::can_cast(syntax.kind()) { Some(Self { syntax }) } else { None }
 						}
 						fn syntax(&self) -> &SyntaxNode { &self.syntax }
+					}
+
+					impl std::fmt::Debug for #name {
+						fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+							f.debug_struct(#string_name)
+								#(#fields)*
+								.finish()
+						}
 					}
 				},
 			))
@@ -320,7 +349,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 			(
 				quote! {
 					// #[doc = #doc]
-					#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+					#[derive(Clone, PartialEq, Eq, Hash)]
 					pub enum #name {
 						#(#variants_for_enum),*
 					}
@@ -352,6 +381,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 
 							}
 						}
+					}
+
+					impl std::fmt::Debug for #name {
+						fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+							match self {
+							#(
+								#name::#variants(it) => std::fmt::Debug::fmt(it, f),
+							)*
+						}
+							}
 					}
 				},
 			)

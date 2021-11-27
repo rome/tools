@@ -1,3 +1,450 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [
+        JsDirective {
+            value_token: Ok(
+                JS_STRING_LITERAL@0..20 "\"use new\"" [Comments("// SCRIPT"), Whitespace("\n\n")] [],
+            ),
+            semicolon_token: None,
+        },
+    ],
+    statements: [
+        JsVariableDeclarationStatement(
+            JsVariableDeclarationStatement {
+                declaration: Ok(
+                    JsVariableDeclaration {
+                        kind_token: Ok(
+                            LET_KW@20..26 "let" [Whitespace("\n\n")] [Whitespace(" ")],
+                        ),
+                        declarators: [
+                            AstSeparatedElement {
+                                node: JsVariableDeclarator {
+                                    id: Ok(
+                                        SinglePattern(
+                                            SinglePattern {
+                                                name: Ok(
+                                                    Name {
+                                                        ident_token: Ok(
+                                                            IDENT@26..28 "a" [] [Whitespace(" ")],
+                                                        ),
+                                                    },
+                                                ),
+                                                question_mark_token: None,
+                                                excl_token: None,
+                                                ty: None,
+                                            },
+                                        ),
+                                    ),
+                                    init: Some(
+                                        JsEqualValueClause {
+                                            eq_token: Ok(
+                                                EQ@28..30 "=" [] [Whitespace(" ")],
+                                            ),
+                                            expression: Ok(
+                                                JsAnyLiteralExpression(
+                                                    JsNumberLiteralExpression(
+                                                        JsNumberLiteralExpression {
+                                                            value_token: Ok(
+                                                                JS_NUMBER_LITERAL@30..32 "10" [] [],
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                },
+                                trailing_separator: None,
+                            },
+                        ],
+                    },
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@32..33 ";" [] [],
+                ),
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsAnyLiteralExpression(
+                        JsStringLiteralExpression(
+                            JsStringLiteralExpression {
+                                value_token: Ok(
+                                    JS_STRING_LITERAL@33..47 "\"use strict\"" [Whitespace("\n\n")] [],
+                                ),
+                            },
+                        ),
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@47..67 ";" [] [Whitespace(" "), Comments("// not a directive")],
+                ),
+            },
+        ),
+        JsFunctionDeclaration(
+            JsFunctionDeclaration {
+                async_token: None,
+                function_token: Ok(
+                    FUNCTION_KW@67..78 "function" [Whitespace("\n\n")] [Whitespace(" ")],
+                ),
+                star_token: None,
+                id: Ok(
+                    JsIdentifierBinding {
+                        name_token: Ok(
+                            IDENT@78..82 "test" [] [],
+                        ),
+                    },
+                ),
+                type_parameters: None,
+                parameter_list: Ok(
+                    JsParameterList {
+                        l_paren_token: Ok(
+                            L_PAREN@82..83 "(" [] [],
+                        ),
+                        parameters: [],
+                        r_paren_token: Ok(
+                            R_PAREN@83..85 ")" [] [Whitespace(" ")],
+                        ),
+                    },
+                ),
+                return_type: None,
+                body: Ok(
+                    JsFunctionBody {
+                        l_curly_token: Ok(
+                            L_CURLY@85..86 "{" [] [],
+                        ),
+                        directives: [
+                            JsDirective {
+                                value_token: Ok(
+                                    JS_STRING_LITERAL@86..100 "'use strict'" [Whitespace("\n\t")] [],
+                                ),
+                                semicolon_token: Some(
+                                    SEMICOLON@100..101 ";" [] [],
+                                ),
+                            },
+                        ],
+                        statements: [
+                            JsVariableDeclarationStatement(
+                                JsVariableDeclarationStatement {
+                                    declaration: Ok(
+                                        JsVariableDeclaration {
+                                            kind_token: Ok(
+                                                LET_KW@101..108 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                                            ),
+                                            declarators: [
+                                                AstSeparatedElement {
+                                                    node: JsVariableDeclarator {
+                                                        id: Ok(
+                                                            SinglePattern(
+                                                                SinglePattern {
+                                                                    name: Ok(
+                                                                        Name {
+                                                                            ident_token: Ok(
+                                                                                IDENT@108..110 "a" [] [Whitespace(" ")],
+                                                                            ),
+                                                                        },
+                                                                    ),
+                                                                    question_mark_token: None,
+                                                                    excl_token: None,
+                                                                    ty: None,
+                                                                },
+                                                            ),
+                                                        ),
+                                                        init: Some(
+                                                            JsEqualValueClause {
+                                                                eq_token: Ok(
+                                                                    EQ@110..112 "=" [] [Whitespace(" ")],
+                                                                ),
+                                                                expression: Ok(
+                                                                    JsAnyLiteralExpression(
+                                                                        JsNumberLiteralExpression(
+                                                                            JsNumberLiteralExpression {
+                                                                                value_token: Ok(
+                                                                                    JS_NUMBER_LITERAL@112..114 "10" [] [],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                ),
+                                                            },
+                                                        ),
+                                                    },
+                                                    trailing_separator: None,
+                                                },
+                                            ],
+                                        },
+                                    ),
+                                    semicolon_token: Some(
+                                        SEMICOLON@114..115 ";" [] [],
+                                    ),
+                                },
+                            ),
+                            JsExpressionStatement(
+                                JsExpressionStatement {
+                                    expression: Ok(
+                                        JsAnyLiteralExpression(
+                                            JsStringLiteralExpression(
+                                                JsStringLiteralExpression {
+                                                    value_token: Ok(
+                                                        JS_STRING_LITERAL@115..130 "'use strict'" [Whitespace("\n\n\t")] [],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                    semicolon_token: Some(
+                                        SEMICOLON@130..150 ";" [] [Whitespace(" "), Comments("// not a directive")],
+                                    ),
+                                },
+                            ),
+                        ],
+                        r_curly_token: Ok(
+                            R_CURLY@150..152 "}" [Whitespace("\n")] [],
+                        ),
+                    },
+                ),
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsParenthesizedExpression(
+                        JsParenthesizedExpression {
+                            l_paren_token: Ok(
+                                L_PAREN@152..155 "(" [Whitespace("\n\n")] [],
+                            ),
+                            expression: Ok(
+                                JsFunctionExpression(
+                                    JsFunctionExpression {
+                                        async_token: None,
+                                        function_token: Ok(
+                                            FUNCTION_KW@155..164 "function" [] [Whitespace(" ")],
+                                        ),
+                                        star_token: None,
+                                        id: None,
+                                        type_parameters: None,
+                                        parameters: Ok(
+                                            JsParameterList {
+                                                l_paren_token: Ok(
+                                                    L_PAREN@164..165 "(" [] [],
+                                                ),
+                                                parameters: [],
+                                                r_paren_token: Ok(
+                                                    R_PAREN@165..167 ")" [] [Whitespace(" ")],
+                                                ),
+                                            },
+                                        ),
+                                        return_type: None,
+                                        body: Ok(
+                                            JsFunctionBody {
+                                                l_curly_token: Ok(
+                                                    L_CURLY@167..168 "{" [] [],
+                                                ),
+                                                directives: [
+                                                    JsDirective {
+                                                        value_token: Ok(
+                                                            JS_STRING_LITERAL@168..182 "\"use strict\"" [Whitespace("\n\t")] [],
+                                                        ),
+                                                        semicolon_token: Some(
+                                                            SEMICOLON@182..183 ";" [] [],
+                                                        ),
+                                                    },
+                                                ],
+                                                statements: [
+                                                    JsVariableDeclarationStatement(
+                                                        JsVariableDeclarationStatement {
+                                                            declaration: Ok(
+                                                                JsVariableDeclaration {
+                                                                    kind_token: Ok(
+                                                                        LET_KW@183..190 "let" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                                                                    ),
+                                                                    declarators: [
+                                                                        AstSeparatedElement {
+                                                                            node: JsVariableDeclarator {
+                                                                                id: Ok(
+                                                                                    SinglePattern(
+                                                                                        SinglePattern {
+                                                                                            name: Ok(
+                                                                                                Name {
+                                                                                                    ident_token: Ok(
+                                                                                                        IDENT@190..192 "a" [] [Whitespace(" ")],
+                                                                                                    ),
+                                                                                                },
+                                                                                            ),
+                                                                                            question_mark_token: None,
+                                                                                            excl_token: None,
+                                                                                            ty: None,
+                                                                                        },
+                                                                                    ),
+                                                                                ),
+                                                                                init: Some(
+                                                                                    JsEqualValueClause {
+                                                                                        eq_token: Ok(
+                                                                                            EQ@192..194 "=" [] [Whitespace(" ")],
+                                                                                        ),
+                                                                                        expression: Ok(
+                                                                                            JsAnyLiteralExpression(
+                                                                                                JsNumberLiteralExpression(
+                                                                                                    JsNumberLiteralExpression {
+                                                                                                        value_token: Ok(
+                                                                                                            JS_NUMBER_LITERAL@194..196 "10" [] [],
+                                                                                                        ),
+                                                                                                    },
+                                                                                                ),
+                                                                                            ),
+                                                                                        ),
+                                                                                    },
+                                                                                ),
+                                                                            },
+                                                                            trailing_separator: None,
+                                                                        },
+                                                                    ],
+                                                                },
+                                                            ),
+                                                            semicolon_token: Some(
+                                                                SEMICOLON@196..197 ";" [] [],
+                                                            ),
+                                                        },
+                                                    ),
+                                                    JsExpressionStatement(
+                                                        JsExpressionStatement {
+                                                            expression: Ok(
+                                                                JsAnyLiteralExpression(
+                                                                    JsStringLiteralExpression(
+                                                                        JsStringLiteralExpression {
+                                                                            value_token: Ok(
+                                                                                JS_STRING_LITERAL@197..212 "\"use strict\"" [Whitespace("\n\n\t")] [],
+                                                                            ),
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                            ),
+                                                            semicolon_token: Some(
+                                                                SEMICOLON@212..232 ";" [] [Whitespace(" "), Comments("// not a directive")],
+                                                            ),
+                                                        },
+                                                    ),
+                                                ],
+                                                r_curly_token: Ok(
+                                                    R_CURLY@232..234 "}" [Whitespace("\n")] [],
+                                                ),
+                                            },
+                                        ),
+                                    },
+                                ),
+                            ),
+                            r_paren_token: Ok(
+                                R_PAREN@234..235 ")" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@235..236 ";" [] [],
+                ),
+            },
+        ),
+        JsVariableDeclarationStatement(
+            JsVariableDeclarationStatement {
+                declaration: Ok(
+                    JsVariableDeclaration {
+                        kind_token: Ok(
+                            LET_KW@236..242 "let" [Whitespace("\n\n")] [Whitespace(" ")],
+                        ),
+                        declarators: [
+                            AstSeparatedElement {
+                                node: JsVariableDeclarator {
+                                    id: Ok(
+                                        SinglePattern(
+                                            SinglePattern {
+                                                name: Ok(
+                                                    Name {
+                                                        ident_token: Ok(
+                                                            IDENT@242..244 "b" [] [Whitespace(" ")],
+                                                        ),
+                                                    },
+                                                ),
+                                                question_mark_token: None,
+                                                excl_token: None,
+                                                ty: None,
+                                            },
+                                        ),
+                                    ),
+                                    init: Some(
+                                        JsEqualValueClause {
+                                            eq_token: Ok(
+                                                EQ@244..246 "=" [] [Whitespace(" ")],
+                                            ),
+                                            expression: Ok(
+                                                JsArrowFunctionExpression(
+                                                    JsArrowFunctionExpression {
+                                                        async_token: None,
+                                                        type_parameters: None,
+                                                        parameter_list: Some(
+                                                            JsParameterList(
+                                                                JsParameterList {
+                                                                    l_paren_token: Ok(
+                                                                        L_PAREN@246..247 "(" [] [],
+                                                                    ),
+                                                                    parameters: [],
+                                                                    r_paren_token: Ok(
+                                                                        R_PAREN@247..249 ")" [] [Whitespace(" ")],
+                                                                    ),
+                                                                },
+                                                            ),
+                                                        ),
+                                                        fat_arrow_token: Ok(
+                                                            FAT_ARROW@249..252 "=>" [] [Whitespace(" ")],
+                                                        ),
+                                                        return_type: None,
+                                                    },
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                },
+                                trailing_separator: None,
+                            },
+                        ],
+                    },
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsBlockStatement(
+            JsBlockStatement {
+                l_curly_token: Ok(
+                    L_CURLY@320..323 "{" [Whitespace("\n\n")] [],
+                ),
+                statements: [
+                    JsExpressionStatement(
+                        JsExpressionStatement {
+                            expression: Ok(
+                                JsAnyLiteralExpression(
+                                    JsStringLiteralExpression(
+                                        JsStringLiteralExpression {
+                                            value_token: Ok(
+                                                JS_STRING_LITERAL@323..337 "\"use strict\"" [Whitespace("\n\t")] [],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            semicolon_token: Some(
+                                SEMICOLON@337..357 ";" [] [Whitespace(" "), Comments("// not a directive")],
+                            ),
+                        },
+                    ),
+                ],
+                r_curly_token: Ok(
+                    R_CURLY@357..359 "}" [Whitespace("\n")] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..360
   0: (empty)
   1: LIST@0..20

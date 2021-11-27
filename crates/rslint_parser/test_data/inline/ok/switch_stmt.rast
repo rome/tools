@@ -1,3 +1,71 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsSwitchStatement(
+            JsSwitchStatement {
+                switch_token: Ok(
+                    SWITCH_KW@0..7 "switch" [] [Whitespace(" ")],
+                ),
+                l_paren_token: Ok(
+                    L_PAREN@7..8 "(" [] [],
+                ),
+                discriminant: Ok(
+                    JsReferenceIdentifierExpression(
+                        JsReferenceIdentifierExpression {
+                            name_token: Ok(
+                                IDENT@8..11 "foo" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                r_paren_token: Ok(
+                    R_PAREN@11..13 ")" [] [Whitespace(" ")],
+                ),
+                l_curly_token: Ok(
+                    L_CURLY@13..14 "{" [] [],
+                ),
+                cases: [
+                    JsCaseClause(
+                        JsCaseClause {
+                            case_token: Ok(
+                                CASE_KW@14..21 "case" [Whitespace("\n ")] [Whitespace(" ")],
+                            ),
+                            test: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@21..24 "bar" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            colon_token: Ok(
+                                COLON@24..25 ":" [] [],
+                            ),
+                            consequent: [],
+                        },
+                    ),
+                    JsDefaultClause(
+                        JsDefaultClause {
+                            default_token: Ok(
+                                DEFAULT_KW@25..34 "default" [Whitespace("\n ")] [],
+                            ),
+                            colon_token: Ok(
+                                COLON@34..35 ":" [] [],
+                            ),
+                            consequent: [],
+                        },
+                    ),
+                ],
+                r_curly_token: Ok(
+                    R_CURLY@35..37 "}" [Whitespace("\n")] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..38
   0: (empty)
   1: LIST@0..0

@@ -70,7 +70,8 @@ fn parser_tests() {
 		let parse = try_parse(path.to_str().unwrap(), text);
 		let errors = parse.errors();
 		assert_errors_are_absent(errors, path, &parse.syntax());
-		format!("{:#?}", parse.syntax())
+
+		format!("{:#?}\n\n{:#?}", parse.tree(), parse.syntax())
 	});
 
 	dir_tests(&test_data_dir(), &["inline/err"], "rast", |text, path| {

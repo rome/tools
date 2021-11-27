@@ -1,3 +1,96 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsBlockStatement(
+            JsBlockStatement {
+                l_curly_token: Ok(
+                    L_CURLY@0..1 "{" [] [],
+                ),
+                statements: [],
+                r_curly_token: Ok(
+                    R_CURLY@1..2 "}" [] [],
+                ),
+            },
+        ),
+        JsBlockStatement(
+            JsBlockStatement {
+                l_curly_token: Ok(
+                    L_CURLY@2..4 "{" [Whitespace("\n")] [],
+                ),
+                statements: [
+                    JsBlockStatement(
+                        JsBlockStatement {
+                            l_curly_token: Ok(
+                                L_CURLY@4..5 "{" [] [],
+                            ),
+                            statements: [
+                                JsBlockStatement(
+                                    JsBlockStatement {
+                                        l_curly_token: Ok(
+                                            L_CURLY@5..6 "{" [] [],
+                                        ),
+                                        statements: [
+                                            JsBlockStatement(
+                                                JsBlockStatement {
+                                                    l_curly_token: Ok(
+                                                        L_CURLY@6..7 "{" [] [],
+                                                    ),
+                                                    statements: [],
+                                                    r_curly_token: Ok(
+                                                        R_CURLY@7..8 "}" [] [],
+                                                    ),
+                                                },
+                                            ),
+                                        ],
+                                        r_curly_token: Ok(
+                                            R_CURLY@8..9 "}" [] [],
+                                        ),
+                                    },
+                                ),
+                            ],
+                            r_curly_token: Ok(
+                                R_CURLY@9..10 "}" [] [],
+                            ),
+                        },
+                    ),
+                ],
+                r_curly_token: Ok(
+                    R_CURLY@10..11 "}" [] [],
+                ),
+            },
+        ),
+        JsBlockStatement(
+            JsBlockStatement {
+                l_curly_token: Ok(
+                    L_CURLY@11..14 "{" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                statements: [
+                    JsExpressionStatement(
+                        JsExpressionStatement {
+                            expression: Ok(
+                                AssignExpr(
+                                    AssignExpr {
+                                        operator: Ok(
+                                            EQ@18..20 "=" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            semicolon_token: Some(
+                                SEMICOLON@23..25 ";" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ],
+                r_curly_token: Ok(
+                    R_CURLY@25..26 "}" [] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..27
   0: (empty)
   1: LIST@0..0

@@ -1,3 +1,126 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsFunctionDeclaration(
+            JsFunctionDeclaration {
+                async_token: None,
+                function_token: Ok(
+                    FUNCTION_KW@0..9 "function" [] [Whitespace(" ")],
+                ),
+                star_token: Some(
+                    STAR@9..10 "*" [] [],
+                ),
+                id: Ok(
+                    JsIdentifierBinding {
+                        name_token: Ok(
+                            IDENT@10..13 "foo" [] [],
+                        ),
+                    },
+                ),
+                type_parameters: None,
+                parameter_list: Ok(
+                    JsParameterList {
+                        l_paren_token: Ok(
+                            L_PAREN@13..14 "(" [] [],
+                        ),
+                        parameters: [],
+                        r_paren_token: Ok(
+                            R_PAREN@14..16 ")" [] [Whitespace(" ")],
+                        ),
+                    },
+                ),
+                return_type: None,
+                body: Ok(
+                    JsFunctionBody {
+                        l_curly_token: Ok(
+                            L_CURLY@16..17 "{" [] [],
+                        ),
+                        directives: [],
+                        statements: [
+                            JsExpressionStatement(
+                                JsExpressionStatement {
+                                    expression: Ok(
+                                        JsYieldExpression(
+                                            JsYieldExpression {
+                                                yield_token: Ok(
+                                                    YIELD_KW@17..25 "yield" [Whitespace("\n ")] [Whitespace(" ")],
+                                                ),
+                                                star_token: None,
+                                                argument: Some(
+                                                    JsReferenceIdentifierExpression(
+                                                        JsReferenceIdentifierExpression {
+                                                            name_token: Ok(
+                                                                IDENT@25..28 "foo" [] [],
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                            },
+                                        ),
+                                    ),
+                                    semicolon_token: Some(
+                                        SEMICOLON@28..29 ";" [] [],
+                                    ),
+                                },
+                            ),
+                            JsExpressionStatement(
+                                JsExpressionStatement {
+                                    expression: Ok(
+                                        JsYieldExpression(
+                                            JsYieldExpression {
+                                                yield_token: Ok(
+                                                    YIELD_KW@29..36 "yield" [Whitespace("\n ")] [],
+                                                ),
+                                                star_token: Some(
+                                                    STAR@36..38 "*" [] [Whitespace(" ")],
+                                                ),
+                                                argument: Some(
+                                                    JsReferenceIdentifierExpression(
+                                                        JsReferenceIdentifierExpression {
+                                                            name_token: Ok(
+                                                                IDENT@38..41 "foo" [] [],
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                            },
+                                        ),
+                                    ),
+                                    semicolon_token: Some(
+                                        SEMICOLON@41..42 ";" [] [],
+                                    ),
+                                },
+                            ),
+                            JsExpressionStatement(
+                                JsExpressionStatement {
+                                    expression: Ok(
+                                        JsYieldExpression(
+                                            JsYieldExpression {
+                                                yield_token: Ok(
+                                                    YIELD_KW@42..49 "yield" [Whitespace("\n ")] [],
+                                                ),
+                                                star_token: None,
+                                                argument: None,
+                                            },
+                                        ),
+                                    ),
+                                    semicolon_token: Some(
+                                        SEMICOLON@49..50 ";" [] [],
+                                    ),
+                                },
+                            ),
+                        ],
+                        r_curly_token: Ok(
+                            R_CURLY@50..52 "}" [Whitespace("\n")] [],
+                        ),
+                    },
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..53
   0: (empty)
   1: LIST@0..0

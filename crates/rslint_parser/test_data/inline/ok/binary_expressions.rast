@@ -1,3 +1,258 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsAnyLiteralExpression(
+                                    JsNumberLiteralExpression(
+                                        JsNumberLiteralExpression {
+                                            value_token: Ok(
+                                                JS_NUMBER_LITERAL@0..2 "5" [] [Whitespace(" ")],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            operator: Ok(
+                                STAR@2..4 "*" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsAnyLiteralExpression(
+                                    JsNumberLiteralExpression(
+                                        JsNumberLiteralExpression {
+                                            value_token: Ok(
+                                                JS_NUMBER_LITERAL@5..8 "6" [Whitespace("\n")] [Whitespace(" ")],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            operator: Ok(
+                                STAR2@8..11 "**" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsAnyLiteralExpression(
+                                    JsNumberLiteralExpression(
+                                        JsNumberLiteralExpression {
+                                            value_token: Ok(
+                                                JS_NUMBER_LITERAL@17..20 "1" [Whitespace("\n")] [Whitespace(" ")],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            operator: Ok(
+                                PLUS@20..22 "+" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsAnyLiteralExpression(
+                                    JsNumberLiteralExpression(
+                                        JsNumberLiteralExpression {
+                                            value_token: Ok(
+                                                JS_NUMBER_LITERAL@39..42 "1" [Whitespace("\n")] [Whitespace(" ")],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            operator: Ok(
+                                SLASH@42..44 "/" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsAnyLiteralExpression(
+                                    JsNumberLiteralExpression(
+                                        JsNumberLiteralExpression {
+                                            value_token: Ok(
+                                                JS_NUMBER_LITERAL@45..49 "74" [Whitespace("\n")] [Whitespace(" ")],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            operator: Ok(
+                                IN_KW@49..52 "in" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@55..60 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                INSTANCEOF_KW@60..71 "instanceof" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsLogicalExpression(
+                        JsLogicalExpression {
+                            left: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@76..81 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                QUESTION2@81..84 "??" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsBinaryExpression(
+                                    JsBinaryExpression {
+                                        left: Ok(
+                                            JsBinaryExpression(
+                                                JsBinaryExpression {
+                                                    left: Ok(
+                                                        JsAnyLiteralExpression(
+                                                            JsNumberLiteralExpression(
+                                                                JsNumberLiteralExpression {
+                                                                    value_token: Ok(
+                                                                        JS_NUMBER_LITERAL@87..90 "1" [Whitespace("\n")] [Whitespace(" ")],
+                                                                    ),
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    operator: Ok(
+                                                        PLUS@90..92 "+" [] [Whitespace(" ")],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                        operator: Ok(
+                                            PLUS@94..96 "+" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                PLUS@98..100 "+" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsBinaryExpression(
+                                    JsBinaryExpression {
+                                        left: Ok(
+                                            JsAnyLiteralExpression(
+                                                JsNumberLiteralExpression(
+                                                    JsNumberLiteralExpression {
+                                                        value_token: Ok(
+                                                            JS_NUMBER_LITERAL@101..104 "5" [Whitespace("\n")] [Whitespace(" ")],
+                                                        ),
+                                                    },
+                                                ),
+                                            ),
+                                        ),
+                                        operator: Ok(
+                                            PLUS@104..106 "+" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                MINUS@108..110 "-" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..125
   0: (empty)
   1: LIST@0..0

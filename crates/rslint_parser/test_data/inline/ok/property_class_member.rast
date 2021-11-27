@@ -1,3 +1,413 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsClassDeclaration(
+            JsClassDeclaration {
+                class_token: Ok(
+                    CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                ),
+                id: Ok(
+                    JsIdentifierBinding {
+                        name_token: Ok(
+                            IDENT@6..10 "foo" [] [Whitespace(" ")],
+                        ),
+                    },
+                ),
+                implements_clause: None,
+                extends_clause: None,
+                l_curly_token: Ok(
+                    L_CURLY@10..11 "{" [] [],
+                ),
+                members: [
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@11..21 "property" [Whitespace("\n\t")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@21..30 "declare" [Whitespace("\n\t")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: Some(
+                                SEMICOLON@30..31 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@31..53 "initializedProperty" [Whitespace("\n\t")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: Some(
+                                JsEqualValueClause {
+                                    eq_token: Ok(
+                                        EQ@53..55 "=" [] [Whitespace(" ")],
+                                    ),
+                                    expression: Ok(
+                                        JsAnyLiteralExpression(
+                                            JsStringLiteralExpression(
+                                                JsStringLiteralExpression {
+                                                    value_token: Ok(
+                                                        JS_STRING_LITERAL@55..58 "\"a\"" [] [],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                            ),
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            JS_STRING_LITERAL@58..64 "\"a\"" [Whitespace("\n\n\t")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: Some(
+                                SEMICOLON@64..65 ";" [] [],
+                            ),
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            JS_NUMBER_LITERAL@65..68 "5" [Whitespace("\n\t")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsComputedMemberName(
+                                    JsComputedMemberName {
+                                        l_brack_token: Ok(
+                                            L_BRACK@68..71 "[" [Whitespace("\n\t")] [],
+                                        ),
+                                        expression: Ok(
+                                            JsBinaryExpression(
+                                                JsBinaryExpression {
+                                                    left: Ok(
+                                                        JsAnyLiteralExpression(
+                                                            JsStringLiteralExpression(
+                                                                JsStringLiteralExpression {
+                                                                    value_token: Ok(
+                                                                        JS_STRING_LITERAL@71..75 "\"a\"" [] [Whitespace(" ")],
+                                                                    ),
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    operator: Ok(
+                                                        PLUS@75..77 "+" [] [Whitespace(" ")],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                        r_brack_token: Ok(
+                                            R_BRACK@80..81 "]" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: Some(
+                                STATIC_KW@81..91 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                            ),
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@91..105 "staticProperty" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: Some(
+                                STATIC_KW@105..114 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                            ),
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@114..140 "staticInitializedProperty" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: Some(
+                                JsEqualValueClause {
+                                    eq_token: Ok(
+                                        EQ@140..142 "=" [] [Whitespace(" ")],
+                                    ),
+                                    expression: Ok(
+                                        JsAnyLiteralExpression(
+                                            JsNumberLiteralExpression(
+                                                JsNumberLiteralExpression {
+                                                    value_token: Ok(
+                                                        JS_NUMBER_LITERAL@142..143 "1" [] [],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                            ),
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsPrivateClassMemberName(
+                                    JsPrivateClassMemberName {
+                                        hash_token: Ok(
+                                            HASH@143..147 "#" [Whitespace("\n\n\t")] [],
+                                        ),
+                                        id_token: Ok(
+                                            IDENT@147..154 "private" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: None,
+                            name: Ok(
+                                JsPrivateClassMemberName(
+                                    JsPrivateClassMemberName {
+                                        hash_token: Ok(
+                                            HASH@154..157 "#" [Whitespace("\n\t")] [],
+                                        ),
+                                        id_token: Ok(
+                                            IDENT@157..176 "privateInitialized" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: Some(
+                                JsEqualValueClause {
+                                    eq_token: Ok(
+                                        EQ@176..178 "=" [] [Whitespace(" ")],
+                                    ),
+                                    expression: Ok(
+                                        JsAnyLiteralExpression(
+                                            JsStringLiteralExpression(
+                                                JsStringLiteralExpression {
+                                                    value_token: Ok(
+                                                        JS_STRING_LITERAL@178..181 "\"a\"" [] [],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                            ),
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: Some(
+                                STATIC_KW@181..191 "static" [Whitespace("\n\n\t")] [Whitespace(" ")],
+                            ),
+                            name: Ok(
+                                JsPrivateClassMemberName(
+                                    JsPrivateClassMemberName {
+                                        hash_token: Ok(
+                                            HASH@191..192 "#" [] [],
+                                        ),
+                                        id_token: Ok(
+                                            IDENT@192..205 "staticPrivate" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: None,
+                            semicolon_token: None,
+                        },
+                    ),
+                    JsPropertyClassMember(
+                        JsPropertyClassMember {
+                            declare_token: None,
+                            access_modifier: None,
+                            abstract_token: None,
+                            static_token: Some(
+                                STATIC_KW@205..214 "static" [Whitespace("\n\t")] [Whitespace(" ")],
+                            ),
+                            name: Ok(
+                                JsPrivateClassMemberName(
+                                    JsPrivateClassMemberName {
+                                        hash_token: Ok(
+                                            HASH@214..215 "#" [] [],
+                                        ),
+                                        id_token: Ok(
+                                            IDENT@215..248 "staticPrivateInitializedProperty" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            question_mark_token: None,
+                            excl_token: None,
+                            ty: None,
+                            value: Some(
+                                JsEqualValueClause {
+                                    eq_token: Ok(
+                                        EQ@248..250 "=" [] [Whitespace(" ")],
+                                    ),
+                                    expression: Ok(
+                                        JsAnyLiteralExpression(
+                                            JsNumberLiteralExpression(
+                                                JsNumberLiteralExpression {
+                                                    value_token: Ok(
+                                                        JS_NUMBER_LITERAL@250..251 "1" [] [],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                },
+                            ),
+                            semicolon_token: None,
+                        },
+                    ),
+                ],
+                r_curly_token: Ok(
+                    R_CURLY@251..253 "}" [Whitespace("\n")] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..255
   0: (empty)
   1: LIST@0..0

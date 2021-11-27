@@ -1,3 +1,367 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsDoWhileStatement(
+            JsDoWhileStatement {
+                do_token: Ok(
+                    DO_KW@0..3 "do" [] [Whitespace(" ")],
+                ),
+                body: Ok(
+                    JsExpressionStatement(
+                        JsExpressionStatement {
+                            expression: Ok(
+                                CallExpr(
+                                    CallExpr {
+                                        type_args: None,
+                                        callee: Ok(
+                                            JsStaticMemberExpression(
+                                                JsStaticMemberExpression {
+                                                    object: Ok(
+                                                        JsReferenceIdentifierExpression(
+                                                            JsReferenceIdentifierExpression {
+                                                                name_token: Ok(
+                                                                    IDENT@3..10 "console" [] [],
+                                                                ),
+                                                            },
+                                                        ),
+                                                    ),
+                                                    operator: Ok(
+                                                        DOT@10..11 "." [] [],
+                                                    ),
+                                                    member: Ok(
+                                                        JsReferenceIdentifierMember(
+                                                            JsReferenceIdentifierMember {
+                                                                name_token: Ok(
+                                                                    IDENT@11..14 "log" [] [],
+                                                                ),
+                                                            },
+                                                        ),
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                        arguments: Ok(
+                                            ArgList {
+                                                l_paren_token: Ok(
+                                                    L_PAREN@14..15 "(" [] [],
+                                                ),
+                                                args: [
+                                                    AstSeparatedElement {
+                                                        node: JsAnyLiteralExpression(
+                                                            JsStringLiteralExpression(
+                                                                JsStringLiteralExpression {
+                                                                    value_token: Ok(
+                                                                        JS_STRING_LITERAL@15..21 "\"test\"" [] [],
+                                                                    ),
+                                                                },
+                                                            ),
+                                                        ),
+                                                        trailing_separator: None,
+                                                    },
+                                                ],
+                                                r_paren_token: Ok(
+                                                    R_PAREN@21..22 ")" [] [],
+                                                ),
+                                            },
+                                        ),
+                                    },
+                                ),
+                            ),
+                            semicolon_token: Some(
+                                SEMICOLON@22..24 ";" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                while_token: Ok(
+                    WHILE_KW@24..29 "while" [] [],
+                ),
+                l_paren_token: Ok(
+                    L_PAREN@29..30 "(" [] [],
+                ),
+                test: Ok(
+                    JsAnyLiteralExpression(
+                        JsBooleanLiteralExpression(
+                            JsBooleanLiteralExpression {
+                                value_token: Ok(
+                                    TRUE_KW@30..34 "true" [] [],
+                                ),
+                            },
+                        ),
+                    ),
+                ),
+                r_paren_token: Ok(
+                    R_PAREN@34..35 ")" [] [],
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsDoWhileStatement(
+            JsDoWhileStatement {
+                do_token: Ok(
+                    DO_KW@35..40 "do" [Whitespace("\n\n")] [Whitespace(" ")],
+                ),
+                body: Ok(
+                    JsBlockStatement(
+                        JsBlockStatement {
+                            l_curly_token: Ok(
+                                L_CURLY@40..41 "{" [] [],
+                            ),
+                            statements: [
+                                JsExpressionStatement(
+                                    JsExpressionStatement {
+                                        expression: Ok(
+                                            CallExpr(
+                                                CallExpr {
+                                                    type_args: None,
+                                                    callee: Ok(
+                                                        JsStaticMemberExpression(
+                                                            JsStaticMemberExpression {
+                                                                object: Ok(
+                                                                    JsReferenceIdentifierExpression(
+                                                                        JsReferenceIdentifierExpression {
+                                                                            name_token: Ok(
+                                                                                IDENT@41..50 "console" [Whitespace("\n\t")] [],
+                                                                            ),
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                                operator: Ok(
+                                                                    DOT@50..51 "." [] [],
+                                                                ),
+                                                                member: Ok(
+                                                                    JsReferenceIdentifierMember(
+                                                                        JsReferenceIdentifierMember {
+                                                                            name_token: Ok(
+                                                                                IDENT@51..54 "log" [] [],
+                                                                            ),
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                            },
+                                                        ),
+                                                    ),
+                                                    arguments: Ok(
+                                                        ArgList {
+                                                            l_paren_token: Ok(
+                                                                L_PAREN@54..55 "(" [] [],
+                                                            ),
+                                                            args: [
+                                                                AstSeparatedElement {
+                                                                    node: JsAnyLiteralExpression(
+                                                                        JsStringLiteralExpression(
+                                                                            JsStringLiteralExpression {
+                                                                                value_token: Ok(
+                                                                                    JS_STRING_LITERAL@55..61 "\"test\"" [] [],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                    ),
+                                                                    trailing_separator: None,
+                                                                },
+                                                            ],
+                                                            r_paren_token: Ok(
+                                                                R_PAREN@61..62 ")" [] [],
+                                                            ),
+                                                        },
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                        semicolon_token: None,
+                                    },
+                                ),
+                            ],
+                            r_curly_token: Ok(
+                                R_CURLY@62..65 "}" [Whitespace("\n")] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                while_token: Ok(
+                    WHILE_KW@65..71 "while" [] [Whitespace(" ")],
+                ),
+                l_paren_token: Ok(
+                    L_PAREN@71..72 "(" [] [],
+                ),
+                test: Ok(
+                    JsAnyLiteralExpression(
+                        JsBooleanLiteralExpression(
+                            JsBooleanLiteralExpression {
+                                value_token: Ok(
+                                    TRUE_KW@72..76 "true" [] [],
+                                ),
+                            },
+                        ),
+                    ),
+                ),
+                r_paren_token: Ok(
+                    R_PAREN@76..77 ")" [] [],
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@77..78 ";" [] [],
+                ),
+            },
+        ),
+        JsVariableDeclarationStatement(
+            JsVariableDeclarationStatement {
+                declaration: Ok(
+                    JsVariableDeclaration {
+                        kind_token: Ok(
+                            LET_KW@78..84 "let" [Whitespace("\n\n")] [Whitespace(" ")],
+                        ),
+                        declarators: [
+                            AstSeparatedElement {
+                                node: JsVariableDeclarator {
+                                    id: Ok(
+                                        SinglePattern(
+                                            SinglePattern {
+                                                name: Ok(
+                                                    Name {
+                                                        ident_token: Ok(
+                                                            IDENT@84..86 "a" [] [Whitespace(" ")],
+                                                        ),
+                                                    },
+                                                ),
+                                                question_mark_token: None,
+                                                excl_token: None,
+                                                ty: None,
+                                            },
+                                        ),
+                                    ),
+                                    init: Some(
+                                        JsEqualValueClause {
+                                            eq_token: Ok(
+                                                EQ@86..88 "=" [] [Whitespace(" ")],
+                                            ),
+                                            expression: Ok(
+                                                JsAnyLiteralExpression(
+                                                    JsNumberLiteralExpression(
+                                                        JsNumberLiteralExpression {
+                                                            value_token: Ok(
+                                                                JS_NUMBER_LITERAL@88..89 "1" [] [],
+                                                            ),
+                                                        },
+                                                    ),
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                },
+                                trailing_separator: None,
+                            },
+                        ],
+                    },
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@89..90 ";" [] [],
+                ),
+            },
+        ),
+        JsDoWhileStatement(
+            JsDoWhileStatement {
+                do_token: Ok(
+                    DO_KW@90..93 "do" [Whitespace("\n")] [],
+                ),
+                body: Ok(
+                    JsDoWhileStatement(
+                        JsDoWhileStatement {
+                            do_token: Ok(
+                                DO_KW@93..98 "do" [Whitespace("\n\t")] [Whitespace(" ")],
+                            ),
+                            body: Ok(
+                                JsBlockStatement(
+                                    JsBlockStatement {
+                                        l_curly_token: Ok(
+                                            L_CURLY@98..99 "{" [] [],
+                                        ),
+                                        statements: [
+                                            JsExpressionStatement(
+                                                JsExpressionStatement {
+                                                    expression: Ok(
+                                                        AssignExpr(
+                                                            AssignExpr {
+                                                                operator: Ok(
+                                                                    EQ@104..106 "=" [] [Whitespace(" ")],
+                                                                ),
+                                                            },
+                                                        ),
+                                                    ),
+                                                    semicolon_token: None,
+                                                },
+                                            ),
+                                        ],
+                                        r_curly_token: Ok(
+                                            R_CURLY@111..115 "}" [Whitespace("\n\t")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            while_token: Ok(
+                                WHILE_KW@115..120 "while" [] [],
+                            ),
+                            l_paren_token: Ok(
+                                L_PAREN@120..121 "(" [] [],
+                            ),
+                            test: Ok(
+                                JsBinaryExpression(
+                                    JsBinaryExpression {
+                                        left: Ok(
+                                            JsReferenceIdentifierExpression(
+                                                JsReferenceIdentifierExpression {
+                                                    name_token: Ok(
+                                                        IDENT@121..123 "a" [] [Whitespace(" ")],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                        operator: Ok(
+                                            L_ANGLE@123..125 "<" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            r_paren_token: Ok(
+                                R_PAREN@126..127 ")" [] [],
+                            ),
+                            semicolon_token: None,
+                        },
+                    ),
+                ),
+                while_token: Ok(
+                    WHILE_KW@127..134 "while" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                l_paren_token: Ok(
+                    L_PAREN@134..135 "(" [] [],
+                ),
+                test: Ok(
+                    JsBinaryExpression(
+                        JsBinaryExpression {
+                            left: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@135..137 "a" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                L_ANGLE@137..139 "<" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                r_paren_token: Ok(
+                    R_PAREN@142..143 ")" [] [],
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..144
   0: (empty)
   1: LIST@0..0

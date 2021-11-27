@@ -1,3 +1,376 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsVariableDeclarationStatement(
+            JsVariableDeclarationStatement {
+                declaration: Ok(
+                    JsVariableDeclaration {
+                        kind_token: Ok(
+                            LET_KW@0..4 "let" [] [Whitespace(" ")],
+                        ),
+                        declarators: [
+                            AstSeparatedElement {
+                                node: JsVariableDeclarator {
+                                    id: Ok(
+                                        SinglePattern(
+                                            SinglePattern {
+                                                name: Ok(
+                                                    Name {
+                                                        ident_token: Ok(
+                                                            IDENT@4..6 "b" [] [Whitespace(" ")],
+                                                        ),
+                                                    },
+                                                ),
+                                                question_mark_token: None,
+                                                excl_token: None,
+                                                ty: None,
+                                            },
+                                        ),
+                                    ),
+                                    init: Some(
+                                        JsEqualValueClause {
+                                            eq_token: Ok(
+                                                EQ@6..8 "=" [] [Whitespace(" ")],
+                                            ),
+                                            expression: Ok(
+                                                JsObjectExpression(
+                                                    JsObjectExpression {
+                                                        l_curly_token: Ok(
+                                                            L_CURLY@8..9 "{" [] [],
+                                                        ),
+                                                        members: [
+                                                            AstSeparatedElement {
+                                                                node: JsMethodObjectMember(
+                                                                    JsMethodObjectMember {
+                                                                        async_token: None,
+                                                                        star_token: None,
+                                                                        name: Ok(
+                                                                            JsLiteralMemberName(
+                                                                                JsLiteralMemberName {
+                                                                                    value: Ok(
+                                                                                        IDENT@9..13 "foo" [Whitespace("\n")] [],
+                                                                                    ),
+                                                                                },
+                                                                            ),
+                                                                        ),
+                                                                        type_params: None,
+                                                                        parameter_list: Ok(
+                                                                            JsParameterList {
+                                                                                l_paren_token: Ok(
+                                                                                    L_PAREN@13..14 "(" [] [],
+                                                                                ),
+                                                                                parameters: [],
+                                                                                r_paren_token: Ok(
+                                                                                    R_PAREN@14..16 ")" [] [Whitespace(" ")],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                        return_type: None,
+                                                                        body: Ok(
+                                                                            JsFunctionBody {
+                                                                                l_curly_token: Ok(
+                                                                                    L_CURLY@16..17 "{" [] [],
+                                                                                ),
+                                                                                directives: [],
+                                                                                statements: [],
+                                                                                r_curly_token: Ok(
+                                                                                    R_CURLY@17..18 "}" [] [],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                                trailing_separator: Some(
+                                                                    COMMA@18..19 "," [] [],
+                                                                ),
+                                                            },
+                                                            AstSeparatedElement {
+                                                                node: JsMethodObjectMember(
+                                                                    JsMethodObjectMember {
+                                                                        async_token: None,
+                                                                        star_token: None,
+                                                                        name: Ok(
+                                                                            JsLiteralMemberName(
+                                                                                JsLiteralMemberName {
+                                                                                    value: Ok(
+                                                                                        JS_STRING_LITERAL@19..25 "\"bar\"" [Whitespace("\n")] [],
+                                                                                    ),
+                                                                                },
+                                                                            ),
+                                                                        ),
+                                                                        type_params: None,
+                                                                        parameter_list: Ok(
+                                                                            JsParameterList {
+                                                                                l_paren_token: Ok(
+                                                                                    L_PAREN@25..26 "(" [] [],
+                                                                                ),
+                                                                                parameters: [
+                                                                                    AstSeparatedElement {
+                                                                                        node: Pattern(
+                                                                                            SinglePattern(
+                                                                                                SinglePattern {
+                                                                                                    name: Ok(
+                                                                                                        Name {
+                                                                                                            ident_token: Ok(
+                                                                                                                IDENT@26..27 "a" [] [],
+                                                                                                            ),
+                                                                                                        },
+                                                                                                    ),
+                                                                                                    question_mark_token: None,
+                                                                                                    excl_token: None,
+                                                                                                    ty: None,
+                                                                                                },
+                                                                                            ),
+                                                                                        ),
+                                                                                        trailing_separator: Some(
+                                                                                            COMMA@27..29 "," [] [Whitespace(" ")],
+                                                                                        ),
+                                                                                    },
+                                                                                    AstSeparatedElement {
+                                                                                        node: Pattern(
+                                                                                            SinglePattern(
+                                                                                                SinglePattern {
+                                                                                                    name: Ok(
+                                                                                                        Name {
+                                                                                                            ident_token: Ok(
+                                                                                                                IDENT@29..30 "b" [] [],
+                                                                                                            ),
+                                                                                                        },
+                                                                                                    ),
+                                                                                                    question_mark_token: None,
+                                                                                                    excl_token: None,
+                                                                                                    ty: None,
+                                                                                                },
+                                                                                            ),
+                                                                                        ),
+                                                                                        trailing_separator: Some(
+                                                                                            COMMA@30..32 "," [] [Whitespace(" ")],
+                                                                                        ),
+                                                                                    },
+                                                                                    AstSeparatedElement {
+                                                                                        node: Pattern(
+                                                                                            SinglePattern(
+                                                                                                SinglePattern {
+                                                                                                    name: Ok(
+                                                                                                        Name {
+                                                                                                            ident_token: Ok(
+                                                                                                                IDENT@32..33 "c" [] [],
+                                                                                                            ),
+                                                                                                        },
+                                                                                                    ),
+                                                                                                    question_mark_token: None,
+                                                                                                    excl_token: None,
+                                                                                                    ty: None,
+                                                                                                },
+                                                                                            ),
+                                                                                        ),
+                                                                                        trailing_separator: None,
+                                                                                    },
+                                                                                ],
+                                                                                r_paren_token: Ok(
+                                                                                    R_PAREN@33..35 ")" [] [Whitespace(" ")],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                        return_type: None,
+                                                                        body: Ok(
+                                                                            JsFunctionBody {
+                                                                                l_curly_token: Ok(
+                                                                                    L_CURLY@35..36 "{" [] [],
+                                                                                ),
+                                                                                directives: [],
+                                                                                statements: [],
+                                                                                r_curly_token: Ok(
+                                                                                    R_CURLY@36..37 "}" [] [],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                                trailing_separator: Some(
+                                                                    COMMA@37..38 "," [] [],
+                                                                ),
+                                                            },
+                                                            AstSeparatedElement {
+                                                                node: JsMethodObjectMember(
+                                                                    JsMethodObjectMember {
+                                                                        async_token: None,
+                                                                        star_token: None,
+                                                                        name: Ok(
+                                                                            JsComputedMemberName(
+                                                                                JsComputedMemberName {
+                                                                                    l_brack_token: Ok(
+                                                                                        L_BRACK@38..40 "[" [Whitespace("\n")] [],
+                                                                                    ),
+                                                                                    expression: Ok(
+                                                                                        JsBinaryExpression(
+                                                                                            JsBinaryExpression {
+                                                                                                left: Ok(
+                                                                                                    JsAnyLiteralExpression(
+                                                                                                        JsStringLiteralExpression(
+                                                                                                            JsStringLiteralExpression {
+                                                                                                                value_token: Ok(
+                                                                                                                    JS_STRING_LITERAL@40..46 "\"foo\"" [] [Whitespace(" ")],
+                                                                                                                ),
+                                                                                                            },
+                                                                                                        ),
+                                                                                                    ),
+                                                                                                ),
+                                                                                                operator: Ok(
+                                                                                                    PLUS@46..48 "+" [] [Whitespace(" ")],
+                                                                                                ),
+                                                                                            },
+                                                                                        ),
+                                                                                    ),
+                                                                                    r_brack_token: Ok(
+                                                                                        R_BRACK@53..54 "]" [] [],
+                                                                                    ),
+                                                                                },
+                                                                            ),
+                                                                        ),
+                                                                        type_params: None,
+                                                                        parameter_list: Ok(
+                                                                            JsParameterList {
+                                                                                l_paren_token: Ok(
+                                                                                    L_PAREN@54..55 "(" [] [],
+                                                                                ),
+                                                                                parameters: [
+                                                                                    AstSeparatedElement {
+                                                                                        node: Pattern(
+                                                                                            SinglePattern(
+                                                                                                SinglePattern {
+                                                                                                    name: Ok(
+                                                                                                        Name {
+                                                                                                            ident_token: Ok(
+                                                                                                                IDENT@55..56 "a" [] [],
+                                                                                                            ),
+                                                                                                        },
+                                                                                                    ),
+                                                                                                    question_mark_token: None,
+                                                                                                    excl_token: None,
+                                                                                                    ty: None,
+                                                                                                },
+                                                                                            ),
+                                                                                        ),
+                                                                                        trailing_separator: None,
+                                                                                    },
+                                                                                ],
+                                                                                r_paren_token: Ok(
+                                                                                    R_PAREN@56..58 ")" [] [Whitespace(" ")],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                        return_type: None,
+                                                                        body: Ok(
+                                                                            JsFunctionBody {
+                                                                                l_curly_token: Ok(
+                                                                                    L_CURLY@58..59 "{" [] [],
+                                                                                ),
+                                                                                directives: [],
+                                                                                statements: [],
+                                                                                r_curly_token: Ok(
+                                                                                    R_CURLY@59..60 "}" [] [],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                                trailing_separator: Some(
+                                                                    COMMA@60..61 "," [] [],
+                                                                ),
+                                                            },
+                                                            AstSeparatedElement {
+                                                                node: JsMethodObjectMember(
+                                                                    JsMethodObjectMember {
+                                                                        async_token: None,
+                                                                        star_token: None,
+                                                                        name: Ok(
+                                                                            JsLiteralMemberName(
+                                                                                JsLiteralMemberName {
+                                                                                    value: Ok(
+                                                                                        JS_NUMBER_LITERAL@61..63 "5" [Whitespace("\n")] [],
+                                                                                    ),
+                                                                                },
+                                                                            ),
+                                                                        ),
+                                                                        type_params: None,
+                                                                        parameter_list: Ok(
+                                                                            JsParameterList {
+                                                                                l_paren_token: Ok(
+                                                                                    L_PAREN@63..64 "(" [] [],
+                                                                                ),
+                                                                                parameters: [
+                                                                                    AstSeparatedElement {
+                                                                                        node: JsRestParameter(
+                                                                                            JsRestParameter {
+                                                                                                dotdotdot_token: Ok(
+                                                                                                    DOT2@64..67 "..." [] [],
+                                                                                                ),
+                                                                                                binding: Ok(
+                                                                                                    SinglePattern(
+                                                                                                        SinglePattern {
+                                                                                                            name: Ok(
+                                                                                                                Name {
+                                                                                                                    ident_token: Ok(
+                                                                                                                        IDENT@67..71 "rest" [] [],
+                                                                                                                    ),
+                                                                                                                },
+                                                                                                            ),
+                                                                                                            question_mark_token: None,
+                                                                                                            excl_token: None,
+                                                                                                            ty: None,
+                                                                                                        },
+                                                                                                    ),
+                                                                                                ),
+                                                                                            },
+                                                                                        ),
+                                                                                        trailing_separator: None,
+                                                                                    },
+                                                                                ],
+                                                                                r_paren_token: Ok(
+                                                                                    R_PAREN@71..73 ")" [] [Whitespace(" ")],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                        return_type: None,
+                                                                        body: Ok(
+                                                                            JsFunctionBody {
+                                                                                l_curly_token: Ok(
+                                                                                    L_CURLY@73..74 "{" [] [],
+                                                                                ),
+                                                                                directives: [],
+                                                                                statements: [],
+                                                                                r_curly_token: Ok(
+                                                                                    R_CURLY@74..75 "}" [] [],
+                                                                                ),
+                                                                            },
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                                trailing_separator: None,
+                                                            },
+                                                        ],
+                                                        r_curly_token: Ok(
+                                                            R_CURLY@75..77 "}" [Whitespace("\n")] [],
+                                                        ),
+                                                    },
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                },
+                                trailing_separator: None,
+                            },
+                        ],
+                    },
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..78
   0: (empty)
   1: LIST@0..0

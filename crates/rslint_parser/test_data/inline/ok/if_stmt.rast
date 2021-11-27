@@ -1,3 +1,249 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsIfStatement(
+            JsIfStatement {
+                if_token: Ok(
+                    IF_KW@0..3 "if" [] [Whitespace(" ")],
+                ),
+                l_paren_token: Ok(
+                    L_PAREN@3..4 "(" [] [],
+                ),
+                test: Ok(
+                    JsAnyLiteralExpression(
+                        JsBooleanLiteralExpression(
+                            JsBooleanLiteralExpression {
+                                value_token: Ok(
+                                    TRUE_KW@4..8 "true" [] [],
+                                ),
+                            },
+                        ),
+                    ),
+                ),
+                r_paren_token: Ok(
+                    R_PAREN@8..10 ")" [] [Whitespace(" ")],
+                ),
+                consequent: Ok(
+                    JsBlockStatement(
+                        JsBlockStatement {
+                            l_curly_token: Ok(
+                                L_CURLY@10..11 "{" [] [],
+                            ),
+                            statements: [],
+                            r_curly_token: Ok(
+                                R_CURLY@11..13 "}" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                else_clause: Some(
+                    JsElseClause {
+                        else_token: Ok(
+                            ELSE_KW@13..18 "else" [] [Whitespace(" ")],
+                        ),
+                        alternate: Ok(
+                            JsBlockStatement(
+                                JsBlockStatement {
+                                    l_curly_token: Ok(
+                                        L_CURLY@18..19 "{" [] [],
+                                    ),
+                                    statements: [],
+                                    r_curly_token: Ok(
+                                        R_CURLY@19..20 "}" [] [],
+                                    ),
+                                },
+                            ),
+                        ),
+                    },
+                ),
+            },
+        ),
+        JsIfStatement(
+            JsIfStatement {
+                if_token: Ok(
+                    IF_KW@20..24 "if" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                l_paren_token: Ok(
+                    L_PAREN@24..25 "(" [] [],
+                ),
+                test: Ok(
+                    JsAnyLiteralExpression(
+                        JsBooleanLiteralExpression(
+                            JsBooleanLiteralExpression {
+                                value_token: Ok(
+                                    TRUE_KW@25..29 "true" [] [],
+                                ),
+                            },
+                        ),
+                    ),
+                ),
+                r_paren_token: Ok(
+                    R_PAREN@29..31 ")" [] [Whitespace(" ")],
+                ),
+                consequent: Ok(
+                    JsBlockStatement(
+                        JsBlockStatement {
+                            l_curly_token: Ok(
+                                L_CURLY@31..32 "{" [] [],
+                            ),
+                            statements: [],
+                            r_curly_token: Ok(
+                                R_CURLY@32..33 "}" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                else_clause: None,
+            },
+        ),
+        JsIfStatement(
+            JsIfStatement {
+                if_token: Ok(
+                    IF_KW@33..37 "if" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                l_paren_token: Ok(
+                    L_PAREN@37..38 "(" [] [],
+                ),
+                test: Ok(
+                    JsAnyLiteralExpression(
+                        JsBooleanLiteralExpression(
+                            JsBooleanLiteralExpression {
+                                value_token: Ok(
+                                    TRUE_KW@38..42 "true" [] [],
+                                ),
+                            },
+                        ),
+                    ),
+                ),
+                r_paren_token: Ok(
+                    R_PAREN@42..44 ")" [] [Whitespace(" ")],
+                ),
+                consequent: Ok(
+                    JsExpressionStatement(
+                        JsExpressionStatement {
+                            expression: Ok(
+                                JsAnyLiteralExpression(
+                                    JsBooleanLiteralExpression(
+                                        JsBooleanLiteralExpression {
+                                            value_token: Ok(
+                                                FALSE_KW@44..49 "false" [] [],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            semicolon_token: None,
+                        },
+                    ),
+                ),
+                else_clause: None,
+            },
+        ),
+        JsIfStatement(
+            JsIfStatement {
+                if_token: Ok(
+                    IF_KW@49..53 "if" [Whitespace("\n")] [Whitespace(" ")],
+                ),
+                l_paren_token: Ok(
+                    L_PAREN@53..54 "(" [] [],
+                ),
+                test: Ok(
+                    JsReferenceIdentifierExpression(
+                        JsReferenceIdentifierExpression {
+                            name_token: Ok(
+                                IDENT@54..57 "bar" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                r_paren_token: Ok(
+                    R_PAREN@57..59 ")" [] [Whitespace(" ")],
+                ),
+                consequent: Ok(
+                    JsBlockStatement(
+                        JsBlockStatement {
+                            l_curly_token: Ok(
+                                L_CURLY@59..60 "{" [] [],
+                            ),
+                            statements: [],
+                            r_curly_token: Ok(
+                                R_CURLY@60..62 "}" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                else_clause: Some(
+                    JsElseClause {
+                        else_token: Ok(
+                            ELSE_KW@62..67 "else" [] [Whitespace(" ")],
+                        ),
+                        alternate: Ok(
+                            JsIfStatement(
+                                JsIfStatement {
+                                    if_token: Ok(
+                                        IF_KW@67..70 "if" [] [Whitespace(" ")],
+                                    ),
+                                    l_paren_token: Ok(
+                                        L_PAREN@70..71 "(" [] [],
+                                    ),
+                                    test: Ok(
+                                        JsAnyLiteralExpression(
+                                            JsBooleanLiteralExpression(
+                                                JsBooleanLiteralExpression {
+                                                    value_token: Ok(
+                                                        TRUE_KW@71..75 "true" [] [],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                    r_paren_token: Ok(
+                                        R_PAREN@75..77 ")" [] [Whitespace(" ")],
+                                    ),
+                                    consequent: Ok(
+                                        JsBlockStatement(
+                                            JsBlockStatement {
+                                                l_curly_token: Ok(
+                                                    L_CURLY@77..78 "{" [] [],
+                                                ),
+                                                statements: [],
+                                                r_curly_token: Ok(
+                                                    R_CURLY@78..80 "}" [] [Whitespace(" ")],
+                                                ),
+                                            },
+                                        ),
+                                    ),
+                                    else_clause: Some(
+                                        JsElseClause {
+                                            else_token: Ok(
+                                                ELSE_KW@80..85 "else" [] [Whitespace(" ")],
+                                            ),
+                                            alternate: Ok(
+                                                JsBlockStatement(
+                                                    JsBlockStatement {
+                                                        l_curly_token: Ok(
+                                                            L_CURLY@85..86 "{" [] [],
+                                                        ),
+                                                        statements: [],
+                                                        r_curly_token: Ok(
+                                                            R_CURLY@86..87 "}" [] [],
+                                                        ),
+                                                    },
+                                                ),
+                                            ),
+                                        },
+                                    ),
+                                },
+                            ),
+                        ),
+                    },
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..88
   0: (empty)
   1: LIST@0..0

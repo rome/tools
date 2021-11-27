@@ -1,3 +1,41 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsImportCallExpression(
+                        JsImportCallExpression {
+                            import_token: Ok(
+                                IMPORT_KW@0..6 "import" [] [],
+                            ),
+                            l_paren_token: Ok(
+                                L_PAREN@6..7 "(" [] [],
+                            ),
+                            argument: Ok(
+                                JsAnyLiteralExpression(
+                                    JsStringLiteralExpression(
+                                        JsStringLiteralExpression {
+                                            value_token: Ok(
+                                                JS_STRING_LITERAL@7..12 "\"foo\"" [] [],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            r_paren_token: Ok(
+                                R_PAREN@12..13 ")" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..14
   0: (empty)
   1: LIST@0..0

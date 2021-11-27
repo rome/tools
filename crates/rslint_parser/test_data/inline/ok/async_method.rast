@@ -1,3 +1,126 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsClassDeclaration(
+            JsClassDeclaration {
+                class_token: Ok(
+                    CLASS_KW@0..6 "class" [] [Whitespace(" ")],
+                ),
+                id: Ok(
+                    JsIdentifierBinding {
+                        name_token: Ok(
+                            IDENT@6..10 "foo" [] [Whitespace(" ")],
+                        ),
+                    },
+                ),
+                implements_clause: None,
+                extends_clause: None,
+                l_curly_token: Ok(
+                    L_CURLY@10..11 "{" [] [],
+                ),
+                members: [
+                    JsMethodClassMember(
+                        JsMethodClassMember {
+                            access_modifier: None,
+                            static_token: None,
+                            abstract_token: None,
+                            async_token: Some(
+                                ASYNC_KW@11..19 "async" [Whitespace("\n ")] [Whitespace(" ")],
+                            ),
+                            star_token: None,
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@19..22 "foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            type_parameters: None,
+                            parameter_list: Ok(
+                                JsParameterList {
+                                    l_paren_token: Ok(
+                                        L_PAREN@22..23 "(" [] [],
+                                    ),
+                                    parameters: [],
+                                    r_paren_token: Ok(
+                                        R_PAREN@23..25 ")" [] [Whitespace(" ")],
+                                    ),
+                                },
+                            ),
+                            return_type: None,
+                            body: Ok(
+                                JsFunctionBody {
+                                    l_curly_token: Ok(
+                                        L_CURLY@25..26 "{" [] [],
+                                    ),
+                                    directives: [],
+                                    statements: [],
+                                    r_curly_token: Ok(
+                                        R_CURLY@26..27 "}" [] [],
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                    JsMethodClassMember(
+                        JsMethodClassMember {
+                            access_modifier: None,
+                            static_token: None,
+                            abstract_token: None,
+                            async_token: Some(
+                                ASYNC_KW@27..35 "async" [Whitespace("\n ")] [Whitespace(" ")],
+                            ),
+                            star_token: Some(
+                                STAR@35..36 "*" [] [],
+                            ),
+                            name: Ok(
+                                JsLiteralMemberName(
+                                    JsLiteralMemberName {
+                                        value: Ok(
+                                            IDENT@36..39 "foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            type_parameters: None,
+                            parameter_list: Ok(
+                                JsParameterList {
+                                    l_paren_token: Ok(
+                                        L_PAREN@39..40 "(" [] [],
+                                    ),
+                                    parameters: [],
+                                    r_paren_token: Ok(
+                                        R_PAREN@40..42 ")" [] [Whitespace(" ")],
+                                    ),
+                                },
+                            ),
+                            return_type: None,
+                            body: Ok(
+                                JsFunctionBody {
+                                    l_curly_token: Ok(
+                                        L_CURLY@42..43 "{" [] [],
+                                    ),
+                                    directives: [],
+                                    statements: [],
+                                    r_curly_token: Ok(
+                                        R_CURLY@43..44 "}" [] [],
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                ],
+                r_curly_token: Ok(
+                    R_CURLY@44..46 "}" [Whitespace("\n")] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..47
   0: (empty)
   1: LIST@0..0

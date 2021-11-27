@@ -1,3 +1,160 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsComputedMemberExpression(
+                        JsComputedMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@0..3 "foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            optional_chain_token_token: None,
+                            l_brack_token: Ok(
+                                L_BRACK@3..4 "[" [] [],
+                            ),
+                            r_brack_token: Ok(
+                                R_BRACK@7..8 "]" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsComputedMemberExpression(
+                        JsComputedMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@8..12 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            optional_chain_token_token: None,
+                            l_brack_token: Ok(
+                                L_BRACK@12..13 "[" [] [],
+                            ),
+                            r_brack_token: Ok(
+                                R_BRACK@18..19 "]" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsComputedMemberExpression(
+                        JsComputedMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@19..23 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            optional_chain_token_token: None,
+                            l_brack_token: Ok(
+                                L_BRACK@23..24 "[" [] [],
+                            ),
+                            r_brack_token: Ok(
+                                R_BRACK@29..30 "]" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsComputedMemberExpression(
+                        JsComputedMemberExpression {
+                            object: Ok(
+                                JsComputedMemberExpression(
+                                    JsComputedMemberExpression {
+                                        object: Ok(
+                                            JsReferenceIdentifierExpression(
+                                                JsReferenceIdentifierExpression {
+                                                    name_token: Ok(
+                                                        IDENT@30..34 "foo" [Whitespace("\n")] [],
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                        optional_chain_token_token: None,
+                                        l_brack_token: Ok(
+                                            L_BRACK@34..35 "[" [] [],
+                                        ),
+                                        r_brack_token: Ok(
+                                            R_BRACK@38..39 "]" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            optional_chain_token_token: None,
+                            l_brack_token: Ok(
+                                L_BRACK@39..40 "[" [] [],
+                            ),
+                            r_brack_token: Ok(
+                                R_BRACK@43..44 "]" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsComputedMemberExpression(
+                        JsComputedMemberExpression {
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@44..48 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            optional_chain_token_token: Some(
+                                QUESTIONDOT@48..50 "?." [] [],
+                            ),
+                            l_brack_token: Ok(
+                                L_BRACK@50..51 "[" [] [],
+                            ),
+                            r_brack_token: Ok(
+                                R_BRACK@54..55 "]" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..56
   0: (empty)
   1: LIST@0..0

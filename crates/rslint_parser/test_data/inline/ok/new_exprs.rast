@@ -1,3 +1,339 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    NewExpr(
+                        NewExpr {
+                            new_token: Ok(
+                                NEW_KW@0..4 "new" [] [Whitespace(" ")],
+                            ),
+                            type_args: None,
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@4..7 "Foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            arguments: Ok(
+                                ArgList {
+                                    l_paren_token: Ok(
+                                        L_PAREN@7..8 "(" [] [],
+                                    ),
+                                    args: [],
+                                    r_paren_token: Ok(
+                                        R_PAREN@8..9 ")" [] [],
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    NewExpr(
+                        NewExpr {
+                            new_token: Ok(
+                                NEW_KW@9..14 "new" [Whitespace("\n")] [Whitespace(" ")],
+                            ),
+                            type_args: None,
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@14..17 "foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            arguments: Err(
+                                MissingRequiredChild(
+                                    0: NEW_EXPR@9..17
+                                      0: NEW_KW@9..14 "new" [Whitespace("\n")] [Whitespace(" ")]
+                                      1: JS_REFERENCE_IDENTIFIER_EXPRESSION@14..17
+                                        0: IDENT@14..17 "foo" [] []
+                                    ,
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@17..18 ";" [] [],
+                ),
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    NewTarget(
+                        NewTarget {
+                            new_token: Ok(
+                                NEW_KW@18..22 "new" [Whitespace("\n")] [],
+                            ),
+                            dot_token: Ok(
+                                DOT@22..23 "." [] [],
+                            ),
+                            target_token: Err(
+                                MissingRequiredChild(
+                                    0: NEW_TARGET@18..29
+                                      0: NEW_KW@18..22 "new" [Whitespace("\n")] []
+                                      1: DOT@22..23 "." [] []
+                                      2: IDENT@23..29 "target" [] []
+                                    ,
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    NewExpr(
+                        NewExpr {
+                            new_token: Ok(
+                                NEW_KW@29..34 "new" [Whitespace("\n")] [Whitespace(" ")],
+                            ),
+                            type_args: None,
+                            object: Ok(
+                                NewExpr(
+                                    NewExpr {
+                                        new_token: Ok(
+                                            NEW_KW@34..38 "new" [] [Whitespace(" ")],
+                                        ),
+                                        type_args: None,
+                                        object: Ok(
+                                            NewExpr(
+                                                NewExpr {
+                                                    new_token: Ok(
+                                                        NEW_KW@38..42 "new" [] [Whitespace(" ")],
+                                                    ),
+                                                    type_args: None,
+                                                    object: Ok(
+                                                        NewExpr(
+                                                            NewExpr {
+                                                                new_token: Ok(
+                                                                    NEW_KW@42..46 "new" [] [Whitespace(" ")],
+                                                                ),
+                                                                type_args: None,
+                                                                object: Ok(
+                                                                    JsReferenceIdentifierExpression(
+                                                                        JsReferenceIdentifierExpression {
+                                                                            name_token: Ok(
+                                                                                IDENT@46..49 "Foo" [] [],
+                                                                            ),
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                                arguments: Ok(
+                                                                    ArgList {
+                                                                        l_paren_token: Ok(
+                                                                            L_PAREN@49..50 "(" [] [],
+                                                                        ),
+                                                                        args: [],
+                                                                        r_paren_token: Ok(
+                                                                            R_PAREN@50..51 ")" [] [],
+                                                                        ),
+                                                                    },
+                                                                ),
+                                                            },
+                                                        ),
+                                                    ),
+                                                    arguments: Err(
+                                                        MissingRequiredChild(
+                                                            1: NEW_EXPR@38..51
+                                                              0: NEW_KW@38..42 "new" [] [Whitespace(" ")]
+                                                              1: NEW_EXPR@42..51
+                                                                0: NEW_KW@42..46 "new" [] [Whitespace(" ")]
+                                                                1: JS_REFERENCE_IDENTIFIER_EXPRESSION@46..49
+                                                                  0: IDENT@46..49 "Foo" [] []
+                                                                2: ARG_LIST@49..51
+                                                                  0: L_PAREN@49..50 "(" [] []
+                                                                  1: LIST@50..50
+                                                                  2: R_PAREN@50..51 ")" [] []
+                                                            ,
+                                                        ),
+                                                    ),
+                                                },
+                                            ),
+                                        ),
+                                        arguments: Err(
+                                            MissingRequiredChild(
+                                                1: NEW_EXPR@34..51
+                                                  0: NEW_KW@34..38 "new" [] [Whitespace(" ")]
+                                                  1: NEW_EXPR@38..51
+                                                    0: NEW_KW@38..42 "new" [] [Whitespace(" ")]
+                                                    1: NEW_EXPR@42..51
+                                                      0: NEW_KW@42..46 "new" [] [Whitespace(" ")]
+                                                      1: JS_REFERENCE_IDENTIFIER_EXPRESSION@46..49
+                                                        0: IDENT@46..49 "Foo" [] []
+                                                      2: ARG_LIST@49..51
+                                                        0: L_PAREN@49..50 "(" [] []
+                                                        1: LIST@50..50
+                                                        2: R_PAREN@50..51 ")" [] []
+                                                ,
+                                            ),
+                                        ),
+                                    },
+                                ),
+                            ),
+                            arguments: Err(
+                                MissingRequiredChild(
+                                    0: NEW_EXPR@29..51
+                                      0: NEW_KW@29..34 "new" [Whitespace("\n")] [Whitespace(" ")]
+                                      1: NEW_EXPR@34..51
+                                        0: NEW_KW@34..38 "new" [] [Whitespace(" ")]
+                                        1: NEW_EXPR@38..51
+                                          0: NEW_KW@38..42 "new" [] [Whitespace(" ")]
+                                          1: NEW_EXPR@42..51
+                                            0: NEW_KW@42..46 "new" [] [Whitespace(" ")]
+                                            1: JS_REFERENCE_IDENTIFIER_EXPRESSION@46..49
+                                              0: IDENT@46..49 "Foo" [] []
+                                            2: ARG_LIST@49..51
+                                              0: L_PAREN@49..50 "(" [] []
+                                              1: LIST@50..50
+                                              2: R_PAREN@50..51 ")" [] []
+                                    ,
+                                ),
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@51..52 ";" [] [],
+                ),
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    NewExpr(
+                        NewExpr {
+                            new_token: Ok(
+                                NEW_KW@52..57 "new" [Whitespace("\n")] [Whitespace(" ")],
+                            ),
+                            type_args: None,
+                            object: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@57..60 "Foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            arguments: Ok(
+                                ArgList {
+                                    l_paren_token: Ok(
+                                        L_PAREN@60..61 "(" [] [],
+                                    ),
+                                    args: [
+                                        AstSeparatedElement {
+                                            node: JsReferenceIdentifierExpression(
+                                                JsReferenceIdentifierExpression {
+                                                    name_token: Ok(
+                                                        IDENT@61..64 "bar" [] [],
+                                                    ),
+                                                },
+                                            ),
+                                            trailing_separator: Some(
+                                                COMMA@64..66 "," [] [Whitespace(" ")],
+                                            ),
+                                        },
+                                        AstSeparatedElement {
+                                            node: JsReferenceIdentifierExpression(
+                                                JsReferenceIdentifierExpression {
+                                                    name_token: Ok(
+                                                        IDENT@66..69 "baz" [] [],
+                                                    ),
+                                                },
+                                            ),
+                                            trailing_separator: Some(
+                                                COMMA@69..71 "," [] [Whitespace(" ")],
+                                            ),
+                                        },
+                                        AstSeparatedElement {
+                                            node: JsBinaryExpression(
+                                                JsBinaryExpression {
+                                                    left: Ok(
+                                                        JsAnyLiteralExpression(
+                                                            JsNumberLiteralExpression(
+                                                                JsNumberLiteralExpression {
+                                                                    value_token: Ok(
+                                                                        JS_NUMBER_LITERAL@71..73 "6" [] [Whitespace(" ")],
+                                                                    ),
+                                                                },
+                                                            ),
+                                                        ),
+                                                    ),
+                                                    operator: Ok(
+                                                        PLUS@73..75 "+" [] [Whitespace(" ")],
+                                                    ),
+                                                },
+                                            ),
+                                            trailing_separator: Some(
+                                                COMMA@76..78 "," [] [Whitespace(" ")],
+                                            ),
+                                        },
+                                        AstSeparatedElement {
+                                            node: JsBinaryExpression(
+                                                JsBinaryExpression {
+                                                    left: Ok(
+                                                        JsComputedMemberExpression(
+                                                            JsComputedMemberExpression {
+                                                                object: Ok(
+                                                                    JsReferenceIdentifierExpression(
+                                                                        JsReferenceIdentifierExpression {
+                                                                            name_token: Ok(
+                                                                                IDENT@78..81 "foo" [] [],
+                                                                            ),
+                                                                        },
+                                                                    ),
+                                                                ),
+                                                                optional_chain_token_token: None,
+                                                                l_brack_token: Ok(
+                                                                    L_BRACK@81..82 "[" [] [],
+                                                                ),
+                                                                r_brack_token: Ok(
+                                                                    R_BRACK@85..87 "]" [] [Whitespace(" ")],
+                                                                ),
+                                                            },
+                                                        ),
+                                                    ),
+                                                    operator: Ok(
+                                                        PLUS@87..89 "+" [] [Whitespace(" ")],
+                                                    ),
+                                                },
+                                            ),
+                                            trailing_separator: None,
+                                        },
+                                    ],
+                                    r_paren_token: Ok(
+                                        R_PAREN@111..112 ")" [] [],
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..113
   0: (empty)
   1: LIST@0..0

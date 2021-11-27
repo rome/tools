@@ -1,3 +1,35 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsSequenceExpression(
+                        JsSequenceExpression {
+                            left: Ok(
+                                JsAnyLiteralExpression(
+                                    JsNumberLiteralExpression(
+                                        JsNumberLiteralExpression {
+                                            value_token: Ok(
+                                                JS_NUMBER_LITERAL@0..1 "1" [] [],
+                                            ),
+                                        },
+                                    ),
+                                ),
+                            ),
+                            comma_token: Ok(
+                                COMMA@1..3 "," [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..14
   0: (empty)
   1: LIST@0..0

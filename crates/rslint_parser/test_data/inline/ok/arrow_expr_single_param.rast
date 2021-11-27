@@ -1,3 +1,114 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsArrowFunctionExpression(
+                        JsArrowFunctionExpression {
+                            async_token: None,
+                            type_parameters: None,
+                            parameter_list: Some(
+                                JsIdentifierBinding(
+                                    JsIdentifierBinding {
+                                        name_token: Ok(
+                                            IDENT@0..4 "foo" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            fat_arrow_token: Ok(
+                                FAT_ARROW@4..7 "=>" [] [Whitespace(" ")],
+                            ),
+                            return_type: None,
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsArrowFunctionExpression(
+                        JsArrowFunctionExpression {
+                            async_token: None,
+                            type_parameters: None,
+                            parameter_list: Some(
+                                JsIdentifierBinding(
+                                    JsIdentifierBinding {
+                                        name_token: Ok(
+                                            IDENT@9..16 "yield" [Whitespace("\n")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            fat_arrow_token: Ok(
+                                FAT_ARROW@16..19 "=>" [] [Whitespace(" ")],
+                            ),
+                            return_type: None,
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsArrowFunctionExpression(
+                        JsArrowFunctionExpression {
+                            async_token: None,
+                            type_parameters: None,
+                            parameter_list: Some(
+                                JsIdentifierBinding(
+                                    JsIdentifierBinding {
+                                        name_token: Ok(
+                                            IDENT@21..28 "await" [Whitespace("\n")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            fat_arrow_token: Ok(
+                                FAT_ARROW@28..31 "=>" [] [Whitespace(" ")],
+                            ),
+                            return_type: None,
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsArrowFunctionExpression(
+                        JsArrowFunctionExpression {
+                            async_token: None,
+                            type_parameters: None,
+                            parameter_list: Some(
+                                JsIdentifierBinding(
+                                    JsIdentifierBinding {
+                                        name_token: Ok(
+                                            IDENT@33..38 "foo" [Whitespace("\n")] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            fat_arrow_token: Ok(
+                                FAT_ARROW@38..40 "=>" [] [],
+                            ),
+                            return_type: None,
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..44
   0: (empty)
   1: LIST@0..0

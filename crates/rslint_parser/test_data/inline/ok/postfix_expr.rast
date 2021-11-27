@@ -1,3 +1,56 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsPostUpdateExpression(
+                        JsPostUpdateExpression {
+                            operand: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@0..3 "foo" [] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                PLUS2@3..5 "++" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsPostUpdateExpression(
+                        JsPostUpdateExpression {
+                            operand: Ok(
+                                JsReferenceIdentifierExpression(
+                                    JsReferenceIdentifierExpression {
+                                        name_token: Ok(
+                                            IDENT@5..9 "foo" [Whitespace("\n")] [],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            operator: Ok(
+                                MINUS2@9..11 "--" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: None,
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..12
   0: (empty)
   1: LIST@0..0

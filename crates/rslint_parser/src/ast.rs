@@ -11,6 +11,8 @@ mod stmt_ext;
 mod ts_ext;
 
 use crate::{syntax_node::*, util::SyntaxNodeExt, SyntaxKind, SyntaxList, TextRange};
+use std::error::Error;
+use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -86,7 +88,7 @@ impl<N: AstNode> Iterator for AstChildren<N> {
 }
 
 /// List of homogenous nodes
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct AstNodeList<N> {
 	inner: SyntaxList,
 	ph: PhantomData<N>,
@@ -98,6 +100,12 @@ impl<N> Default for AstNodeList<N> {
 			inner: SyntaxList::default(),
 			ph: PhantomData,
 		}
+	}
+}
+
+impl<N: AstNode + Debug> Debug for AstNodeList<N> {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		f.debug_list().entries(self.iter()).finish()
 	}
 }
 
@@ -193,10 +201,16 @@ pub struct AstSeparatedElement<N> {
 
 /// List of nodes where every two nodes are separated by a token.
 /// For example, the elements of an array where every two elements are separated by a comma token.
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct AstSeparatedList<N> {
 	list: SyntaxList,
 	ph: PhantomData<N>,
+}
+
+impl<N: AstNode + Debug> Debug for AstSeparatedList<N> {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		f.debug_list().entries(self.elements()).finish()
+	}
 }
 
 impl<N: AstNode> AstSeparatedList<N> {
@@ -353,6 +367,16 @@ pub type SyntaxResult<ResultType> = Result<ResultType, SyntaxError>;
 pub enum SyntaxError {
 	/// Error thrown when a mandatory node is not found
 	MissingRequiredChild(SyntaxNode),
+}
+
+impl Error for SyntaxError {}
+
+impl std::fmt::Display for SyntaxError {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		match self {
+			SyntaxError::MissingRequiredChild(_) => write!(f, "missing required child"),
+		}
+	}
 }
 
 mod support {

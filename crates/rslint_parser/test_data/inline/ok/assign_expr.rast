@@ -1,3 +1,114 @@
+JsRoot {
+    interpreter_token: None,
+    directives: [],
+    statements: [
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    AssignExpr(
+                        AssignExpr {
+                            operator: Ok(
+                                PLUSEQ@4..7 "+=" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@20..21 ";" [] [],
+                ),
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    AssignExpr(
+                        AssignExpr {
+                            operator: Ok(
+                                MINUSEQ@26..29 "-=" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@32..33 ";" [] [],
+                ),
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    AssignExpr(
+                        AssignExpr {
+                            operator: Ok(
+                                EQ@45..47 "=" [] [Whitespace(" ")],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@50..51 ";" [] [],
+                ),
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsParenthesizedExpression(
+                        JsParenthesizedExpression {
+                            l_paren_token: Ok(
+                                L_PAREN@51..53 "(" [Whitespace("\n")] [],
+                            ),
+                            expression: Ok(
+                                AssignExpr(
+                                    AssignExpr {
+                                        operator: Ok(
+                                            EQ@66..68 "=" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            r_paren_token: Ok(
+                                R_PAREN@70..71 ")" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@71..72 ";" [] [],
+                ),
+            },
+        ),
+        JsExpressionStatement(
+            JsExpressionStatement {
+                expression: Ok(
+                    JsParenthesizedExpression(
+                        JsParenthesizedExpression {
+                            l_paren_token: Ok(
+                                L_PAREN@72..74 "(" [Whitespace("\n")] [],
+                            ),
+                            expression: Ok(
+                                AssignExpr(
+                                    AssignExpr {
+                                        operator: Ok(
+                                            EQ@94..96 "=" [] [Whitespace(" ")],
+                                        ),
+                                    },
+                                ),
+                            ),
+                            r_paren_token: Ok(
+                                R_PAREN@98..99 ")" [] [],
+                            ),
+                        },
+                    ),
+                ),
+                semicolon_token: Some(
+                    SEMICOLON@99..100 ";" [] [],
+                ),
+            },
+        ),
+    ],
+}
+
 0: JS_ROOT@0..101
   0: (empty)
   1: LIST@0..0
