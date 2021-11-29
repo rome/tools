@@ -45,7 +45,9 @@ If you work on some parser and you create new nodes or modify existing ones, wil
 
 #### `cargo xtask syntax`
 
-This command will update the syntax of of the parsers.
+This command will update the syntax of the parsers.
+
+The source is generated from the [`ungram` files](https://github.com/rome/tools/blob/main/xtask/js.ungram).
 
 #### `cargo xtask codegen`
 
@@ -162,8 +164,19 @@ let a = {  : "" }
 let b = { new_feature :  }
 ```
 
-Now run the command `env UPDATE_EXPECT=1 cargo test` which will tell the
-test suite to generate and update the `.rast` files.
+Now run the command:
+Unix/macOS
 
-If tests that are inside the `ok/` folder fails or if tests that are inside the `err/`
-folder don't fail, the whole test suite will fail.
+```bash
+env UPDATE_EXPECT=1 cargo test
+```
+
+Windows
+
+```powershell
+set UPDATE_EXPECT=1 & cargo test
+```
+The command will tell the test suite to generate and update the `.rast` files.
+
+If tests that are inside the `ok/` folder fail or if tests that are inside the `err/`
+folder don't emit, the whole test suite will fail.
