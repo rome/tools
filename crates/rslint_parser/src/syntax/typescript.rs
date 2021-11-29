@@ -8,6 +8,7 @@ use crate::parser::SingleTokenParseRecovery;
 use crate::syntax::class::class_declaration;
 use crate::syntax::expr::any_reference_member;
 use crate::syntax::function::function_declaration;
+use crate::syntax::js_parse_error;
 use crate::syntax::pat::parse_identifier_binding;
 use crate::{SyntaxKind::*, *};
 
@@ -504,7 +505,7 @@ fn ts_property_or_method_sig(p: &mut Parser, m: Marker, readonly: bool) -> Optio
 		if p.at(T![<]) {
 			no_recover!(p, ts_type_params(p));
 		}
-		parse_parameter_list(p).or_missing(p);
+		parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
 		if p.at(T![:]) {
 			ts_type_or_type_predicate_ann(p, T![:]);
 		}
@@ -706,7 +707,7 @@ pub fn ts_fn_or_constructor_type(p: &mut Parser, fn_type: bool) -> Option<Comple
 	if p.at(T![<]) {
 		ts_type_params(p);
 	}
-	parse_parameter_list(p).or_missing(p);
+	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
 	if ts_type_or_type_predicate_ann(p, T![=>]).is_none() && p.state.no_recovery {
 		m.abandon(p);
 		return None;

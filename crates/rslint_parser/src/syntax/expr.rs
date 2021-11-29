@@ -815,7 +815,7 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 				..p.state.clone()
 			});
 			p.rewind(checkpoint);
-			parse_parameter_list(p).or_missing(p);
+			parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
 			if p.at(T![:]) {
 				if let Some(mut ret) = ts_type_or_type_predicate_ann(p, T![:]) {
 					ret.err_if_not_ts(
@@ -852,7 +852,8 @@ pub fn paren_or_arrow_expr(p: &mut Parser, can_be_arrow: bool) -> CompletedMarke
 			if params_marker.is_none() {
 				// Rewind the parser so we can reparse as formal parameters
 				p.rewind(checkpoint);
-				parse_parameter_list(p).or_missing(p);
+				parse_parameter_list(p)
+					.or_missing_with_error(p, js_parse_error::expected_parameters);
 			}
 
 			if p.at(T![:]) {
@@ -981,7 +982,8 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					let m = p.start();
 					p.bump_remap(T![async]);
 					if p.at(T!['(']) {
-						parse_parameter_list(p).or_missing(p);
+						parse_parameter_list(p)
+							.or_missing_with_error(p, js_parse_error::expected_parameters);
 					} else {
 						let m = p.start();
 						// test_err async_arrow_expr_await_parameter

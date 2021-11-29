@@ -1,4 +1,5 @@
 function() {}
+function foo {}
 function {}
 function *() {}
 async function() {}

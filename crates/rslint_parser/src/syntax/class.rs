@@ -726,7 +726,7 @@ fn method_class_member(p: &mut Parser, m: Marker) -> CompletedMarker {
 fn method_class_member_body(p: &mut Parser, m: Marker) -> CompletedMarker {
 	optional_member_token(p);
 	ts_parameter_types(p);
-	parse_parameter_list(p).or_missing(p);
+	parse_parameter_list(p).or_missing_with_error(p, js_parse_error::expected_parameters);
 	ts_return_type(p);
 	function_body(p).or_missing_with_error(p, js_parse_error::expected_function_body);
 

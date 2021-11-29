@@ -5,7 +5,7 @@ use super::pat::pattern;
 use super::typescript::*;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParsedSyntax::Present;
+use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::syntax::function::function_body;
 use crate::{SyntaxKind::*, *};
 
@@ -103,7 +103,11 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 	ParsedSyntax::Present(m.complete(p, kind))
 }
 
+/// parse the whole list of parameters, brackets included
 pub(super) fn parse_parameter_list(p: &mut Parser) -> ParsedSyntax {
+	if !p.at(T!['(']) {
+		return Absent;
+	}
 	let m = p.start();
 	parse_parameters_list(p, parse_formal_param_pat);
 	Present(m.complete(p, JS_PARAMETER_LIST))
