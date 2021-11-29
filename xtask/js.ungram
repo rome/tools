@@ -731,7 +731,6 @@ JsAnyBinding =
 	| JsUnknownBinding
 
 
-
 // Binds a value to an identifier.
 // let x = OR function(test) {}
 //     ^               ^^^^
@@ -753,7 +752,7 @@ ObjectPattern = '{' elements:(ObjectPatternProp (',' ObjectPatternProp)* ','?) '
 // object pattern prop
 ObjectPatternProp =
 	AssignPattern
-	| KeyValuePattern
+	| JsPropertyBinding
 	| RestPattern
 	| JsIdentifierBinding
 	| JsUnknownBinding
@@ -761,8 +760,12 @@ ObjectPatternProp =
 // assign pattern
 AssignPattern = key:JsAnyBinding ty: TsTypeAnnotation? '=' value:JsAnyExpression
 
-// key value pattern
-KeyValuePattern = key:PropName ':' manual__value:JsAnyBinding
+// let { a: b.m } = {}
+//       ^^^^^^
+JsPropertyBinding =
+	member: JsAnyObjectMemberName
+	':'
+	binding: JsAnyBinding
 
 
 // expression pattern

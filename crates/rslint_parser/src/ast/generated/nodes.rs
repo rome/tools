@@ -1897,14 +1897,17 @@ impl ExprPattern {
 	pub fn expr(&self) -> SyntaxResult<JsAnyExpression> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct KeyValuePattern {
+pub struct JsPropertyBinding {
 	pub(crate) syntax: SyntaxNode,
 }
-impl KeyValuePattern {
-	pub fn key(&self) -> SyntaxResult<PropName> { support::required_node(&self.syntax) }
+impl JsPropertyBinding {
+	pub fn member(&self) -> SyntaxResult<JsAnyObjectMemberName> {
+		support::required_node(&self.syntax)
+	}
 	pub fn colon_token(&self) -> SyntaxResult<SyntaxToken> {
 		support::required_token(&self.syntax, T ! [:])
 	}
+	pub fn binding(&self) -> SyntaxResult<JsAnyBinding> { support::required_node(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsBigIntLiteralExpression {
@@ -2749,7 +2752,7 @@ pub enum JsAnyPropertyAssignmentTarget {
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub enum ObjectPatternProp {
 	AssignPattern(AssignPattern),
-	KeyValuePattern(KeyValuePattern),
+	JsPropertyBinding(JsPropertyBinding),
 	RestPattern(RestPattern),
 	JsIdentifierBinding(JsIdentifierBinding),
 	JsUnknownBinding(JsUnknownBinding),
@@ -6335,8 +6338,8 @@ impl std::fmt::Debug for ExprPattern {
 			.finish()
 	}
 }
-impl AstNode for KeyValuePattern {
-	fn can_cast(kind: SyntaxKind) -> bool { kind == KEY_VALUE_PATTERN }
+impl AstNode for JsPropertyBinding {
+	fn can_cast(kind: SyntaxKind) -> bool { kind == JS_PROPERTY_BINDING }
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		if Self::can_cast(syntax.kind()) {
 			Some(Self { syntax })
@@ -6346,14 +6349,15 @@ impl AstNode for KeyValuePattern {
 	}
 	fn syntax(&self) -> &SyntaxNode { &self.syntax }
 }
-impl std::fmt::Debug for KeyValuePattern {
+impl std::fmt::Debug for JsPropertyBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		f.debug_struct("KeyValuePattern")
-			.field("key", &support::DebugSyntaxResult(self.key()))
+		f.debug_struct("JsPropertyBinding")
+			.field("member", &support::DebugSyntaxResult(self.member()))
 			.field(
 				"colon_token",
 				&support::DebugSyntaxResult(self.colon_token()),
 			)
+			.field("binding", &support::DebugSyntaxResult(self.binding()))
 			.finish()
 	}
 }
@@ -9520,8 +9524,10 @@ impl std::fmt::Debug for JsAnyPropertyAssignmentTarget {
 impl From<AssignPattern> for ObjectPatternProp {
 	fn from(node: AssignPattern) -> ObjectPatternProp { ObjectPatternProp::AssignPattern(node) }
 }
-impl From<KeyValuePattern> for ObjectPatternProp {
-	fn from(node: KeyValuePattern) -> ObjectPatternProp { ObjectPatternProp::KeyValuePattern(node) }
+impl From<JsPropertyBinding> for ObjectPatternProp {
+	fn from(node: JsPropertyBinding) -> ObjectPatternProp {
+		ObjectPatternProp::JsPropertyBinding(node)
+	}
 }
 impl From<RestPattern> for ObjectPatternProp {
 	fn from(node: RestPattern) -> ObjectPatternProp { ObjectPatternProp::RestPattern(node) }
@@ -9541,7 +9547,7 @@ impl AstNode for ObjectPatternProp {
 		matches!(
 			kind,
 			ASSIGN_PATTERN
-				| KEY_VALUE_PATTERN
+				| JS_PROPERTY_BINDING
 				| REST_PATTERN | JS_IDENTIFIER_BINDING
 				| JS_UNKNOWN_BINDING
 		)
@@ -9549,7 +9555,9 @@ impl AstNode for ObjectPatternProp {
 	fn cast(syntax: SyntaxNode) -> Option<Self> {
 		let res = match syntax.kind() {
 			ASSIGN_PATTERN => ObjectPatternProp::AssignPattern(AssignPattern { syntax }),
-			KEY_VALUE_PATTERN => ObjectPatternProp::KeyValuePattern(KeyValuePattern { syntax }),
+			JS_PROPERTY_BINDING => {
+				ObjectPatternProp::JsPropertyBinding(JsPropertyBinding { syntax })
+			}
 			REST_PATTERN => ObjectPatternProp::RestPattern(RestPattern { syntax }),
 			JS_IDENTIFIER_BINDING => {
 				ObjectPatternProp::JsIdentifierBinding(JsIdentifierBinding { syntax })
@@ -9562,7 +9570,7 @@ impl AstNode for ObjectPatternProp {
 	fn syntax(&self) -> &SyntaxNode {
 		match self {
 			ObjectPatternProp::AssignPattern(it) => &it.syntax,
-			ObjectPatternProp::KeyValuePattern(it) => &it.syntax,
+			ObjectPatternProp::JsPropertyBinding(it) => &it.syntax,
 			ObjectPatternProp::RestPattern(it) => &it.syntax,
 			ObjectPatternProp::JsIdentifierBinding(it) => &it.syntax,
 			ObjectPatternProp::JsUnknownBinding(it) => &it.syntax,
@@ -9573,7 +9581,7 @@ impl std::fmt::Debug for ObjectPatternProp {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match self {
 			ObjectPatternProp::AssignPattern(it) => std::fmt::Debug::fmt(it, f),
-			ObjectPatternProp::KeyValuePattern(it) => std::fmt::Debug::fmt(it, f),
+			ObjectPatternProp::JsPropertyBinding(it) => std::fmt::Debug::fmt(it, f),
 			ObjectPatternProp::RestPattern(it) => std::fmt::Debug::fmt(it, f),
 			ObjectPatternProp::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
 			ObjectPatternProp::JsUnknownBinding(it) => std::fmt::Debug::fmt(it, f),
@@ -11083,7 +11091,7 @@ impl std::fmt::Display for ExprPattern {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}
 }
-impl std::fmt::Display for KeyValuePattern {
+impl std::fmt::Display for JsPropertyBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		std::fmt::Display::fmt(self.syntax(), f)
 	}

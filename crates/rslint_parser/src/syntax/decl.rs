@@ -24,7 +24,7 @@ pub(super) fn parse_formal_param_pat(p: &mut Parser) -> ParsedSyntax {
 	}
 
 	let checkpoint = p.checkpoint();
-	let pat = if let Some(pattern) = pattern(p, true, false) {
+	let pat = if let Some(pattern) = pattern(p, true) {
 		pattern
 	} else {
 		p.rewind(checkpoint);
@@ -134,7 +134,7 @@ pub(super) fn parse_parameters_list(
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump_any();
-			pattern(p, true, false);
+			pattern(p, true);
 
 			// rest patterns cannot be optional: `...foo?: number[]`
 			if p.at(T![?]) {

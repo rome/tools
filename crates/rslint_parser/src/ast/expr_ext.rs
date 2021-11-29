@@ -263,7 +263,7 @@ impl JsUnaryExpression {
 	}
 }
 
-impl KeyValuePattern {
+impl JsPropertyBinding {
 	pub fn value(&self) -> Option<JsAnyBinding> {
 		// This is to easily handle both `NAME NAME` and `: NAME`
 		if self.syntax().children().count() == 2 {

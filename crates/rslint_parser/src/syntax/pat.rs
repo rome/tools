@@ -1,33 +1,24 @@
-use super::expr::{expr_or_assignment, identifier_name, lhs_expr};
+use super::expr::expr_or_assignment;
 #[allow(deprecated)]
 use crate::parser::single_token_parse_recovery::SingleTokenParseRecovery;
-use crate::parser::ParserProgress;
-use crate::syntax::expr::{parse_identifier, parse_literal_expression};
-use crate::syntax::object::parse_computed_member_name;
+use crate::syntax::expr::parse_identifier;
+use crate::syntax::js_parse_error::{
+	expected_object_binding_member, expected_object_binding_member_name, expected_object_member,
+};
+use crate::syntax::object::object_member_name;
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{SyntaxKind::*, *};
 
-pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<CompletedMarker> {
+pub fn pattern(p: &mut Parser, parameters: bool) -> Option<CompletedMarker> {
 	Some(match p.cur() {
 		T![this] if parameters => {
 			let m = p.start();
 			p.bump_remap(T![ident]);
 			m.complete(p, JS_IDENTIFIER_BINDING)
 		}
-		T!['['] => array_binding_pattern(p, parameters, assignment),
+		T!['['] => array_binding_pattern(p, parameters),
 		T!['{'] if p.state.allow_object_expr => object_binding_pattern(p, parameters),
-		_ if assignment => {
-			let mut complete = lhs_expr(p)?;
-
-			if complete.kind() == JS_REFERENCE_IDENTIFIER_EXPRESSION {
-				complete.change_kind(p, JS_IDENTIFIER_BINDING);
-				complete
-			} else {
-				let m = complete.precede(p);
-				m.complete(p, EXPR_PATTERN)
-			}
-		}
 		T![ident] | T![yield] | T![await] => {
 			if p.state.should_record_names {
 				let string = p.cur_src().to_string();
@@ -65,28 +56,15 @@ pub fn pattern(p: &mut Parser, parameters: bool, assignment: bool) -> Option<Com
 			let err = p
 				.err_builder("Expected an identifier or pattern, but found none")
 				.primary(p.cur_tok().range, "");
-			let mut ts = token_set![T![ident], T![yield], T![await], T!['['], T![;]];
+			let mut ts = token_set![T![ident], T![yield], T![await], T!['['],];
 			if p.state.allow_object_expr {
 				ts = ts.union(token_set![T!['{']]);
-			}
-			if parameters {
-				ts = ts.union(token_set![T![,], T![')']]);
 			}
 			#[allow(deprecated)]
 			SingleTokenParseRecovery::with_error(ts, JS_UNKNOWN_BINDING, err).recover(p);
 			return None;
 		}
 	})
-}
-
-// test object_prop_name
-// let a = {"foo": foo, [6 + 6]: foo, bar: foo, 7: foo}
-pub fn object_binding_prop_name(p: &mut Parser) -> Option<CompletedMarker> {
-	match p.cur() {
-		JS_STRING_LITERAL | JS_NUMBER_LITERAL => parse_literal_expression(p).ok(),
-		T!['['] => parse_computed_member_name(p).ok(),
-		_ => parse_identifier_binding(p).ok(),
-	}
 }
 
 // test_err binding_identifier_invalid
@@ -121,12 +99,8 @@ pub fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 	}
 }
 
-pub fn binding_element(
-	p: &mut Parser,
-	parameters: bool,
-	assignment: bool,
-) -> Option<CompletedMarker> {
-	let left = pattern(p, parameters, assignment);
+pub fn binding_element(p: &mut Parser, parameters: bool) -> Option<CompletedMarker> {
+	let left = pattern(p, parameters);
 
 	if p.at(T![=]) {
 		let m = left.map(|m| m.precede(p)).unwrap_or_else(|| p.start());
@@ -141,21 +115,13 @@ pub fn binding_element(
 
 // test_err
 // let [ default: , hey , ] = []
-#[allow(deprecated)]
-pub fn array_binding_pattern(
-	p: &mut Parser,
-	parameters: bool,
-	assignment: bool,
-) -> CompletedMarker {
+fn array_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMarker {
 	let m = p.start();
 	p.expect_required(T!['[']);
 
 	let elements_list = p.start();
-	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) && !p.at(T![']']) {
-		progress.assert_progressing(p);
-
 		if p.eat(T![,]) {
 			continue;
 		}
@@ -163,11 +129,11 @@ pub fn array_binding_pattern(
 			let m = p.start();
 			p.bump_any();
 
-			pattern(p, parameters, assignment);
+			pattern(p, parameters);
 
 			m.complete(p, REST_PATTERN);
 			break;
-		} else if binding_element(p, parameters, assignment).is_none() {
+		} else if binding_element(p, parameters).is_none() {
 			SingleTokenParseRecovery::new(
 				token_set![T![await], T![ident], T![yield], T![:], T![=], T![']']],
 				JS_UNKNOWN_BINDING,
@@ -195,11 +161,8 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 	p.expect_required(T!['{']);
 	let props_list = p.start();
 	let mut first = true;
-	let mut progress = ParserProgress::default();
 
 	while !p.at(EOF) && !p.at(T!['}']) {
-		progress.assert_progressing(p);
-
 		if first {
 			first = false;
 		} else {
@@ -209,16 +172,33 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 			}
 		}
 
+		if p.at(T![,]) {
+			p.missing(); // missing element
+			continue;
+		}
+
 		if p.at(T![...]) {
 			let m = p.start();
 			p.bump_any();
 
-			pattern(p, parameters, false);
+			pattern(p, parameters);
 			m.complete(p, REST_PATTERN);
 			break;
 		}
 
-		object_binding_prop(p, parameters);
+		let recovery_result = object_binding_prop(p, parameters).or_recover(
+			p,
+			ParseRecovery::new(
+				JS_UNKNOWN_BINDING,
+				token_set![T![,], T!['}'], T![=], T![...], T![=],],
+			)
+			.enable_recovery_on_line_break(),
+			expected_object_binding_member,
+		);
+
+		if recovery_result.is_err() {
+			break;
+		}
 	}
 	props_list.complete(p, LIST);
 
@@ -229,48 +209,24 @@ pub fn object_binding_pattern(p: &mut Parser, parameters: bool) -> CompletedMark
 // test object_binding_prop
 // let { default: foo, bar } = {}
 // let { foo = bar, baz } = {}
-fn object_binding_prop(p: &mut Parser, parameters: bool) -> Option<CompletedMarker> {
-	let m = p.start();
-	let name = if (p.cur().is_keyword() || p.cur() == T![ident]) && p.nth(1) == T![:] {
-		identifier_name(p)
+fn object_binding_prop(p: &mut Parser, parameters: bool) -> ParsedSyntax {
+	let inner = if p.nth_at(1, T![:]) {
+		let m = p.start();
+		object_member_name(p).or_missing_with_error(p, expected_object_member);
+		p.bump(T![:]);
+		binding_element(p, parameters);
+		Present(m.complete(p, JS_PROPERTY_BINDING))
 	} else {
-		object_binding_prop_name(p)
+		parse_identifier_binding(p)
 	};
 
-	if p.eat(T![:]) {
-		binding_element(p, parameters, false);
-		return Some(m.complete(p, KEY_VALUE_PATTERN));
-	}
-
-	let name = if let Some(n) = name {
-		n
-	} else {
-		m.abandon(p);
-		#[allow(deprecated)]
-		SingleTokenParseRecovery::new(
-			token_set![T![await], T![ident], T![yield], T![:], T![=], T!['}']],
-			JS_UNKNOWN_BINDING,
-		)
-		.recover(p);
-		return None;
-	};
-
-	if name.kind() != JS_IDENTIFIER_BINDING {
-		m.abandon(p);
-		name.change_kind(p, JS_UNKNOWN_PATTERN);
-		let err = p
-			.err_builder("Expected an identifier for a pattern, but found none")
-			.primary(name.range(p), "");
-
-		p.error(err);
-		return Some(name);
-	}
-
-	if p.eat(T![=]) {
+	if p.at(T![=]) {
+		let assign_pattern =
+			inner.precede_or_missing_with_error(p, expected_object_binding_member_name);
+		p.bump(T![=]);
 		expr_or_assignment(p);
-		Some(m.complete(p, ASSIGN_PATTERN))
+		Present(assign_pattern.complete(p, ASSIGN_PATTERN))
 	} else {
-		m.abandon(p);
-		Some(name)
+		inner
 	}
 }

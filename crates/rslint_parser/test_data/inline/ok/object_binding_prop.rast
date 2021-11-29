@@ -10,19 +10,26 @@ JsRoot {
                         id: ObjectPattern {
                             l_curly_token: L_CURLY@4..6 "{" [] [Whitespace(" ")],
                             elements: [
-                                KeyValuePattern {
-                                    key: Name {
-                                        ident_token: IDENT@6..13 "default" [] [],
+                                JsPropertyBinding {
+                                    member: JsLiteralMemberName {
+                                        value: IDENT@6..13 "default" [] [],
                                     },
                                     colon_token: COLON@13..15 ":" [] [Whitespace(" ")],
-                                },
+                                    binding: JsIdentifierBinding {
+                                        name_token: IDENT@15..18 "foo" [] [],
+                                        question_mark_token: missing (optional),
+                                        excl_token: missing (optional),
+                                        ty: missing (optional),
+                                    },
+                                }
                                 COMMA@18..20 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
                                     name_token: IDENT@20..24 "bar" [] [Whitespace(" ")],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                },
+                                }
+                                ,
                             ],
                             r_curly_token: R_CURLY@24..26 "}" [] [Whitespace(" ")],
                         },
@@ -34,7 +41,8 @@ JsRoot {
                                 r_curly_token: R_CURLY@29..30 "}" [] [],
                             },
                         },
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),
@@ -59,14 +67,15 @@ JsRoot {
                                     value: JsReferenceIdentifierExpression {
                                         name_token: IDENT@43..46 "bar" [] [],
                                     },
-                                },
+                                }
                                 COMMA@46..48 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
                                     name_token: IDENT@48..52 "baz" [] [Whitespace(" ")],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                },
+                                }
+                                ,
                             ],
                             r_curly_token: R_CURLY@52..54 "}" [] [Whitespace(" ")],
                         },
@@ -78,7 +87,8 @@ JsRoot {
                                 r_curly_token: R_CURLY@57..58 "}" [] [],
                             },
                         },
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: missing (optional),
@@ -98,8 +108,8 @@ JsRoot {
             0: OBJECT_PATTERN@4..26
               0: L_CURLY@4..6 "{" [] [Whitespace(" ")]
               1: LIST@6..24
-                0: KEY_VALUE_PATTERN@6..18
-                  0: NAME@6..13
+                0: JS_PROPERTY_BINDING@6..18
+                  0: JS_LITERAL_MEMBER_NAME@6..13
                     0: IDENT@6..13 "default" [] []
                   1: COLON@13..15 ":" [] [Whitespace(" ")]
                   2: JS_IDENTIFIER_BINDING@15..18

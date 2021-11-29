@@ -24,7 +24,8 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        },
+                        }
+                        ,
                     ],
                     r_paren_token: R_PAREN@11..13 ")" [] [Whitespace(" ")],
                 },
@@ -61,24 +62,49 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                },
+                                }
                                 COMMA@34..36 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
                                     name_token: IDENT@36..39 "bar" [] [],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                },
+                                }
                                 COMMA@39..41 "," [] [Whitespace(" ")],
-                                KeyValuePattern {
-                                    key: Name {
-                                        ident_token: IDENT@41..42 "b" [] [],
+                                JsPropertyBinding {
+                                    member: JsLiteralMemberName {
+                                        value: IDENT@41..42 "b" [] [],
                                     },
                                     colon_token: COLON@42..44 ":" [] [Whitespace(" ")],
-                                },
+                                    binding: ArrayPattern {
+                                        l_brack_token: L_BRACK@44..45 "[" [] [],
+                                        elements: [
+                                            JsIdentifierBinding {
+                                                name_token: IDENT@45..46 "f" [] [],
+                                                question_mark_token: missing (optional),
+                                                excl_token: missing (optional),
+                                                ty: missing (optional),
+                                            },
+                                            RestPattern {
+                                                dotdotdot_token: DOT2@48..51 "..." [] [],
+                                                pat: JsIdentifierBinding {
+                                                    name_token: IDENT@51..54 "baz" [] [],
+                                                    question_mark_token: missing (optional),
+                                                    excl_token: missing (optional),
+                                                    ty: missing (optional),
+                                                },
+                                            },
+                                        ],
+                                        r_brack_token: R_BRACK@54..55 "]" [] [],
+                                        excl_token: missing (required),
+                                        ty: missing (optional),
+                                    },
+                                }
+                                ,
                             ],
                             r_curly_token: R_CURLY@55..56 "}" [] [],
-                        },
+                        }
+                        ,
                     ],
                     r_paren_token: R_PAREN@56..58 ")" [] [Whitespace(" ")],
                 },
@@ -99,7 +125,7 @@ JsRoot {
                             question_mark_token: missing (optional),
                             excl_token: missing (optional),
                             ty: missing (optional),
-                        },
+                        }
                         COMMA@69..71 "," [] [Whitespace(" ")],
                         JsRestParameter {
                             dotdotdot_token: DOT2@71..74 "..." [] [],
@@ -109,7 +135,8 @@ JsRoot {
                                 excl_token: missing (optional),
                                 ty: missing (optional),
                             },
-                        },
+                        }
+                        ,
                     ],
                     r_paren_token: R_PAREN@77..79 ")" [] [Whitespace(" ")],
                 },
@@ -172,8 +199,8 @@ JsRoot {
                 2: JS_IDENTIFIER_BINDING@36..39
                   0: IDENT@36..39 "bar" [] []
                 3: COMMA@39..41 "," [] [Whitespace(" ")]
-                4: KEY_VALUE_PATTERN@41..55
-                  0: NAME@41..42
+                4: JS_PROPERTY_BINDING@41..55
+                  0: JS_LITERAL_MEMBER_NAME@41..42
                     0: IDENT@41..42 "b" [] []
                   1: COLON@42..44 ":" [] [Whitespace(" ")]
                   2: ARRAY_PATTERN@44..55

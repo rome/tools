@@ -19,7 +19,8 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@8..9 "5" [] [],
                             },
                         },
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@9..10 ";" [] [],
@@ -37,14 +38,15 @@ JsRoot {
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                },
+                                }
                                 COMMA@20..22 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
                                     name_token: IDENT@22..26 "bar" [] [Whitespace(" ")],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                },
+                                }
+                                ,
                             ],
                             r_curly_token: R_CURLY@26..28 "}" [] [Whitespace(" ")],
                         },
@@ -54,7 +56,8 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@30..31 "5" [] [],
                             },
                         },
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@31..32 ";" [] [],
@@ -71,7 +74,7 @@ JsRoot {
                             ty: missing (optional),
                         },
                         init: missing (optional),
-                    },
+                    }
                     COMMA@40..42 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
@@ -81,7 +84,8 @@ JsRoot {
                             ty: missing (optional),
                         },
                         init: missing (optional),
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@45..46 ";" [] [],
@@ -103,7 +107,8 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@57..58 "5" [] [],
                             },
                         },
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@58..59 ";" [] [],
@@ -116,19 +121,34 @@ JsRoot {
                         id: ObjectPattern {
                             l_curly_token: L_CURLY@66..68 "{" [] [Whitespace(" ")],
                             elements: [
-                                KeyValuePattern {
-                                    key: Name {
-                                        ident_token: IDENT@68..71 "foo" [] [],
+                                JsPropertyBinding {
+                                    member: JsLiteralMemberName {
+                                        value: IDENT@68..71 "foo" [] [],
                                     },
                                     colon_token: COLON@71..73 ":" [] [Whitespace(" ")],
-                                },
+                                    binding: ArrayPattern {
+                                        l_brack_token: L_BRACK@73..74 "[" [] [],
+                                        elements: [
+                                            JsIdentifierBinding {
+                                                name_token: IDENT@74..77 "bar" [] [],
+                                                question_mark_token: missing (optional),
+                                                excl_token: missing (optional),
+                                                ty: missing (optional),
+                                            },
+                                        ],
+                                        r_brack_token: R_BRACK@77..78 "]" [] [],
+                                        excl_token: missing (required),
+                                        ty: missing (optional),
+                                    },
+                                }
                                 COMMA@78..80 "," [] [Whitespace(" ")],
                                 JsIdentifierBinding {
                                     name_token: IDENT@80..84 "baz" [] [Whitespace(" ")],
                                     question_mark_token: missing (optional),
                                     excl_token: missing (optional),
                                     ty: missing (optional),
-                                },
+                                }
+                                ,
                             ],
                             r_curly_token: R_CURLY@84..86 "}" [] [Whitespace(" ")],
                         },
@@ -140,7 +160,8 @@ JsRoot {
                                 r_curly_token: R_CURLY@89..90 "}" [] [],
                             },
                         },
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@90..91 ";" [] [],
@@ -162,7 +183,7 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@102..109 "\"lorem\"" [] [],
                             },
                         },
-                    },
+                    }
                     COMMA@109..111 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
@@ -177,7 +198,7 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@117..124 "\"ipsum\"" [] [],
                             },
                         },
-                    },
+                    }
                     COMMA@124..126 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
@@ -192,7 +213,7 @@ JsRoot {
                                 value_token: JS_STRING_LITERAL@134..141 "\"value\"" [] [],
                             },
                         },
-                    },
+                    }
                     COMMA@141..143 "," [] [Whitespace(" ")],
                     JsVariableDeclarator {
                         id: JsIdentifierBinding {
@@ -207,7 +228,8 @@ JsRoot {
                                 value_token: JS_NUMBER_LITERAL@152..153 "6" [] [],
                             },
                         },
-                    },
+                    }
+                    ,
                 ],
             },
             semicolon_token: SEMICOLON@153..154 ";" [] [],
@@ -282,8 +304,8 @@ JsRoot {
             0: OBJECT_PATTERN@66..86
               0: L_CURLY@66..68 "{" [] [Whitespace(" ")]
               1: LIST@68..84
-                0: KEY_VALUE_PATTERN@68..78
-                  0: NAME@68..71
+                0: JS_PROPERTY_BINDING@68..78
+                  0: JS_LITERAL_MEMBER_NAME@68..71
                     0: IDENT@68..71 "foo" [] []
                   1: COLON@71..73 ":" [] [Whitespace(" ")]
                   2: ARRAY_PATTERN@73..78
