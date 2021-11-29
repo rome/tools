@@ -9,25 +9,25 @@ use crate::{
 use quote::{format_ident, quote};
 
 // these node won't generate any code
-const BUILT_IN_TYPE: &str = "SyntaxElement";
+const SYNTAX_ELEMENT_TYPE: &str = "SyntaxElement";
 
 pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 	let filtered_enums: Vec<_> = ast
 		.enums
 		.iter()
-		.filter(|e| e.name.as_str() != BUILT_IN_TYPE)
+		.filter(|e| e.name.as_str() != SYNTAX_ELEMENT_TYPE)
 		.collect();
 
 	let filtered_nodes: Vec<_> = ast
 		.nodes
 		.iter()
-		.filter(|e| e.name.as_str() != BUILT_IN_TYPE)
+		.filter(|e| e.name.as_str() != SYNTAX_ELEMENT_TYPE)
 		.collect();
 
 	let (node_defs, node_boilerplate_impls): (Vec<_>, Vec<_>) = filtered_nodes
 		.iter()
 		.filter_map(|node| {
-			if node.name.as_str() == BUILT_IN_TYPE {
+			if node.name.as_str() == SYNTAX_ELEMENT_TYPE {
 				return None;
 			}
 
@@ -85,16 +85,16 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 					separated,
 					..
 				} => {
-					let is_built_in_tpe = &ty.eq(BUILT_IN_TYPE);
+					let is_syntax_type = &ty.eq(SYNTAX_ELEMENT_TYPE);
 					let ty = format_ident!("{}", &ty);
 
 					let method_name = field.method_name();
 					// this is when we encounter a node that has "Unknown" in its name
 					// it will return tokens a and nodes regardless because there's an error
 					// inside the code
-					if *is_built_in_tpe {
+					if *is_syntax_type {
 						quote! {
-							pub fn #method_name(&self) -> SyntaxElementChildren {
+							pub fn items(&self) -> SyntaxElementChildren {
 								support::elements(&self.syntax)
 							}
 						}
@@ -138,6 +138,7 @@ pub fn generate_nodes(ast: &AstSrc) -> Result<String> {
 						kind: TokenKind::Many(_),
 						..
 					} => format_ident!("{}", name),
+					Field::Node { ty, .. } if ty == SYNTAX_ELEMENT_TYPE => format_ident!("items"),
 					_ => field.method_name(),
 				};
 

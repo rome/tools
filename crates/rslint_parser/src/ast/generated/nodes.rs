@@ -12,42 +12,42 @@ pub struct JsUnknownStatement {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownStatement {
-	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownExpression {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownExpression {
-	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownPattern {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownPattern {
-	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownMember {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownMember {
-	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownBinding {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownBinding {
-	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct JsUnknownAssignmentTarget {
 	pub(crate) syntax: SyntaxNode,
 }
 impl JsUnknownAssignmentTarget {
-	pub fn syntax_element(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
+	pub fn items(&self) -> SyntaxElementChildren { support::elements(&self.syntax) }
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct Ident {
@@ -2695,7 +2695,7 @@ impl AstNode for JsUnknownStatement {
 impl std::fmt::Debug for JsUnknownStatement {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownStatement")
-			.field("syntax_element", &self.syntax_element())
+			.field("items", &self.items())
 			.finish()
 	}
 }
@@ -2713,7 +2713,7 @@ impl AstNode for JsUnknownExpression {
 impl std::fmt::Debug for JsUnknownExpression {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownExpression")
-			.field("syntax_element", &self.syntax_element())
+			.field("items", &self.items())
 			.finish()
 	}
 }
@@ -2731,7 +2731,7 @@ impl AstNode for JsUnknownPattern {
 impl std::fmt::Debug for JsUnknownPattern {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownPattern")
-			.field("syntax_element", &self.syntax_element())
+			.field("items", &self.items())
 			.finish()
 	}
 }
@@ -2749,7 +2749,7 @@ impl AstNode for JsUnknownMember {
 impl std::fmt::Debug for JsUnknownMember {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownMember")
-			.field("syntax_element", &self.syntax_element())
+			.field("items", &self.items())
 			.finish()
 	}
 }
@@ -2767,7 +2767,7 @@ impl AstNode for JsUnknownBinding {
 impl std::fmt::Debug for JsUnknownBinding {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownBinding")
-			.field("syntax_element", &self.syntax_element())
+			.field("items", &self.items())
 			.finish()
 	}
 }
@@ -2785,7 +2785,7 @@ impl AstNode for JsUnknownAssignmentTarget {
 impl std::fmt::Debug for JsUnknownAssignmentTarget {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		f.debug_struct("JsUnknownAssignmentTarget")
-			.field("syntax_element", &self.syntax_element())
+			.field("items", &self.items())
 			.finish()
 	}
 }
