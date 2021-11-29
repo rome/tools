@@ -127,7 +127,7 @@ pub(super) fn parameters_list(
 			p.eat(T![,]);
 			break;
 		} else {
-			p.expect(T![,]);
+			p.expect_required(T![,]);
 		}
 
 		if p.at(T![...]) {
