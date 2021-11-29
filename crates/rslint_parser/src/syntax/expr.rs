@@ -981,16 +981,18 @@ pub fn primary_expr(p: &mut Parser) -> Option<CompletedMarker> {
 					// async (foo, bar, ...baz) => foo
 					let m = p.start();
 					p.bump_remap(T![async]);
-					if p.at(T!['(']) {
-						parse_parameter_list(p)
-							.or_missing_with_error(p, js_parse_error::expected_parameters);
-					} else {
+					let parsed_parameters = parse_parameter_list(p);
+					if parsed_parameters.is_absent() {
 						let m = p.start();
 						// test_err async_arrow_expr_await_parameter
 						// let a = async await => {}
 						p.bump_remap(T![ident]);
 						m.complete(p, JS_IDENTIFIER_BINDING);
+					} else {
+						parsed_parameters
+							.or_missing_with_error(p, js_parse_error::expected_parameters);
 					}
+
 					if p.at(T![:]) {
 						let complete = ts_type_or_type_predicate_ann(p, T![:]);
 						if let Some(mut complete) = complete {

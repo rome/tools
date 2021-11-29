@@ -1,4 +1,0 @@
-switch (foo) {
-	default: {}
-	default: {}
-}

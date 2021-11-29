@@ -1025,8 +1025,11 @@ fn parse_switch_clause(
 			// in case we have two `default` expression, we mark the second one
 			// as `JS_CASE_CLAUSE` where the the "default" keyword is an Unknown node
 			let syntax_kind = if first_default.is_some() {
-				// we bump the "default" keyword but we mark it as unknown
-				p.bump_remap(JS_UNKNOWN_PATTERN);
+				// missing "case" keyword
+				p.missing();
+				let discriminant = p.start();
+				p.bump_any(); // interpret `default` as the test of the case
+				discriminant.complete(p, IDENT);
 				JS_CASE_CLAUSE
 			} else {
 				p.bump_any();
@@ -1092,6 +1095,12 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 	// switch foo {}
 	// switch {}
 	// switch { var i = 0 }
+	// switch { var i = 0; case "bar": {} }
+	// switch (foo) {
+	// 	default: {}
+	// 	default: {}
+	// }
+
 	if !p.at(T![switch]) {
 		return Absent;
 	}
@@ -1115,15 +1124,26 @@ pub fn parse_switch_statement(p: &mut Parser) -> ParsedSyntax {
 				first_default = Some(marker);
 			}
 		} else {
+			let m = temp.start();
+			temp.missing(); // case
+			temp.missing(); // discriminant
+			temp.missing(); // colon
+
 			let recovered_element = clause.or_recover(
 				&mut *temp,
-				ParseRecovery::new(JS_UNKNOWN_STATEMENT, STMT_RECOVERY_SET)
-					.enable_recovery_on_line_break(),
+				ParseRecovery::new(
+					JS_UNKNOWN_STATEMENT,
+					token_set![T![default], T![case], T!['}']],
+				)
+				.enable_recovery_on_line_break(),
 				js_parse_error::expected_case_or_default,
 			);
 
 			if recovered_element.is_err() {
+				m.abandon(&mut *temp);
 				break;
+			} else {
+				m.complete(&mut *temp, JS_CASE_CLAUSE);
 			}
 		}
 	}
